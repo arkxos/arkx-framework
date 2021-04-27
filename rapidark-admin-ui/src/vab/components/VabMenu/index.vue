@@ -43,7 +43,7 @@
     data() {
       return {
         itemOrMenu: this.item,
-        menuComponent: 'MenuItem',
+        menuComponent: 'MyMenuItem',
       }
     },
     computed: {
@@ -56,7 +56,7 @@
       if (showChildren.length) {
         if (showChildren.length === 1 && this.item.alwaysShow !== true)
           this.itemOrMenu = this.item.children[0]
-        else this.menuComponent = 'Submenu'
+        else this.menuComponent = 'MySubmenu'
       }
     },
     methods: {

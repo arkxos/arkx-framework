@@ -62,7 +62,11 @@
     "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2",
     "xlsx": "^0.16.9",
-    "zx-markdown-editor": "^0.0.2"
+    "zx-markdown-editor": "^0.0.2",
+    "iview": "^3.5.4",
+    "iview-area": "^1.5.17",
+    "tree-table-vue": "^1.1.0",
+    "@riophae/vue-treeselect": "0.0.38"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.12",
@@ -93,7 +97,9 @@
     "vab-templates": "^0.0.3",
     "vue-eslint-parser": "^7.6.0",
     "vue-template-compiler": "^2.6.12",
-    "webpackbar": "^5.0.0-3"
+    "webpackbar": "^5.0.0-3",
+    "less": "^3.10.3",
+    "less-loader": "^4.0.5"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

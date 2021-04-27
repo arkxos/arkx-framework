@@ -17,7 +17,7 @@
       </vab-query-form>
     </el-col>
 
-    <el-col v-for="(item, index) in queryIcon" :key="index" :span="6">
+    <el-col v-for="(item, index) in queryIcon" :key="index" :span="4">
       <el-card shadow="hover" @click.native="handleIcon(item)">
         <vab-icon :icon="item" />
       </el-card>
@@ -52,7 +52,7 @@
         queryIcon: [],
         queryForm: {
           pageNo: 1,
-          pageSize: 16,
+          pageSize: 100,
           title: '',
         },
       }

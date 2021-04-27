@@ -782,6 +782,31 @@ export const asyncRoutes = [
   },
 ]
 
+export const asyncRoutesSimple = [
+  {
+    path: '/',
+    name: 'Root',
+    component: Layout,
+    redirect: '/index',
+    meta: {
+      title: '首页',
+      icon: 'home-2-line',
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/index'),
+        meta: {
+          title: '首页',
+          icon: 'home-2-line',
+          noClosable: true,
+        },
+      }
+    ]
+  }]
+
+
 const router = createRouter()
 
 export function resetRouter(routes = constantRoutes) {

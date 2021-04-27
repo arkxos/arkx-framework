@@ -83,7 +83,8 @@
         extra: 'settings/extra',
       }),
       handleRoutes() {
-        return this.routes.filter((item) => item.hidden !== true && item.meta)
+        let routes = this.routes.filter((item) => item.hidden !== true && item.meta)
+        return routes;
       },
       handlePartialRoutes() {
         const activeMenu = this.routes.find((_) => _.name === this.extra.first)

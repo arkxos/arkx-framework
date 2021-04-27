@@ -1,8 +1,15 @@
 import request from '@/utils/request'
+import config from '@/config'
 
-export function getRouterList(params) {
+/**
+ * 获取登录用户菜单权限
+ */
+export function getRouterList() {
+  const params = {
+    serviceId: config.serviceId
+  }
   return request({
-    url: '/router/getList',
+    url: 'base/current/user/menu', // '/router/getList',
     method: 'get',
     params,
   })

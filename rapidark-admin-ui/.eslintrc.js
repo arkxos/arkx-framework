@@ -17,6 +17,13 @@ module.exports = {
     'no-console': 'off',
     'no-debugger': 'off',
     'vue/no-v-html': 'off',
+    'prettier/prettier': 'off',
+    'no-unused-vars': 'off',
+    'no-undef': 'off',
+    'vue/no-mutating-props': 'off',
+    'vue/html-self-closing': 'off',
+    'vue/require-default-prop': 'off',
+    'vue/component-definition-name-casing': 'off',
     'vue/html-self-closing': [
       'error',
       {
@@ -31,66 +38,68 @@ module.exports = {
     ],
     // Vue.js风格指南(https://cn.vuejs.org/v2/style-guide/)
     // Vue组件排序
-    'vue/order-in-components': [
-      'warn',
-      {
-        order: [
-          'el',
-          'name',
-          'key',
-          'parent',
-          'functional',
-          ['delimiters', 'comments'],
-          ['components', 'directives', 'filters'],
-          'extends',
-          'mixins',
-          ['provide', 'inject'],
-          'ROUTER_GUARDS',
-          'layout',
-          'middleware',
-          'validate',
-          'scrollToTop',
-          'transition',
-          'loading',
-          'inheritAttrs',
-          'model',
-          ['props', 'propsData'],
-          'emits',
-          'setup',
-          'fetch',
-          'asyncData',
-          'data',
-          'head',
-          'computed',
-          'watch',
-          'watchQuery',
-          'LIFECYCLE_HOOKS',
-          'methods',
-          ['template', 'render'],
-          'renderError'
-        ]
-      }
-    ],
+    'vue/order-in-components': 'off',
+    //   [
+    //   'warn',
+    //   {
+    //     order: [
+    //       'el',
+    //       'name',
+    //       'key',
+    //       'parent',
+    //       'functional',
+    //       ['delimiters', 'comments'],
+    //       ['components', 'directives', 'filters'],
+    //       'extends',
+    //       'mixins',
+    //       ['provide', 'inject'],
+    //       'ROUTER_GUARDS',
+    //       'layout',
+    //       'middleware',
+    //       'validate',
+    //       'scrollToTop',
+    //       'transition',
+    //       'loading',
+    //       'inheritAttrs',
+    //       'model',
+    //       ['props', 'propsData'],
+    //       'emits',
+    //       'setup',
+    //       'fetch',
+    //       'asyncData',
+    //       'data',
+    //       'head',
+    //       'computed',
+    //       'watch',
+    //       'watchQuery',
+    //       'LIFECYCLE_HOOKS',
+    //       'methods',
+    //       ['template', 'render'],
+    //       'renderError'
+    //     ]
+    //   }
+    // ],
     // Vue属性排序
-    'vue/attributes-order': [
-      'warn',
-      {
-        order: [
-          'DEFINITION',
-          'LIST_RENDERING',
-          'CONDITIONALS',
-          'RENDER_MODIFIERS',
-          'GLOBAL',
-          'UNIQUE',
-          'TWO_WAY_BINDING',
-          'OTHER_DIRECTIVES',
-          'OTHER_ATTR',
-          'EVENTS',
-          'CONTENT',
-        ],
-        alphabetical: true, //字母顺序
-      },
-    ],
+    'vue/attributes-order': 'off'
+    //   [
+    //   'warn',
+    //   {
+    //     order: [
+    //       'DEFINITION',
+    //       'LIST_RENDERING',
+    //       'CONDITIONALS',
+    //       'RENDER_MODIFIERS',
+    //       'GLOBAL',
+    //       'UNIQUE',
+    //       'TWO_WAY_BINDING',
+    //       'OTHER_DIRECTIVES',
+    //       'OTHER_ATTR',
+    //       'EVENTS',
+    //       'CONTENT',
+    //     ],
+    //     alphabetical: true, //字母顺序
+    //   },
+    // ],
   },
   overrides: [
     {

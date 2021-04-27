@@ -10,13 +10,18 @@ import { recordRoute } from '@/config'
  */
 export function convertRouter(asyncRoutes) {
   return asyncRoutes.map((route) => {
-    if (route.component) {
-      if (route.component === 'Layout') {
+    let component = route.component || route.path;
+    if (component || route.parentId === 0 || route.parentId === '0') {
+      if (component === 'Layout' || route.parentId === 0 || route.parentId === '0') {
+        route.path = '/'
         route.component = (resolve) => require(['@/vab/layouts'], resolve)
       } else {
-        const index = route.component.indexOf('views')
+        if (!component || !component.indexOf) {
+          console.log('route')
+        }
+        const index = component.indexOf('views')
         const path =
-          index > 0 ? route.component.slice(index) : `views/${route.component}`
+          index > 0 ? component.slice(index) : `views/${component}`
         route.component = (resolve) => require([`@/${path}`], resolve)
       }
     }
@@ -42,7 +47,10 @@ export function filterRoutes(routes, rolesControl, baseUrl = '/') {
       else return true
     })
     .map((route) => {
-      if (route.path !== '*' && !isExternal(route.path))
+      if (!route.path) {
+        route.path = '/'
+      }
+      if (route.path && route.path !== '*' && !isExternal(route.path))
         route.fullPath = resolve(baseUrl, route.path)
       if (route.children)
         route.children = filterRoutes(

@@ -23,7 +23,7 @@
   import { translateTitle } from '@/utils/i18n'
 
   export default {
-    name: 'Submenu',
+    name: 'MySubmenu',
     props: {
       itemOrMenu: {
         type: Object,

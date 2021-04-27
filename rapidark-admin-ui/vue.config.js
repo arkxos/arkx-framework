@@ -57,7 +57,7 @@ module.exports = {
     // 1.这里配置了跨域及代理只针对开发环境生效
     // 2.不建议你在前端配置跨域，建议你后端配置Allow-Origin,Method,Headers，放行token字段，一步到位
     // 3.后端配置了跨域，就不需要前端再配置，会发生Origin冲突
-    // proxy: {
+    proxy: {
     //   [baseURL]: {
     //     target: `http://你的后端接口地址`,
     //     ws: true,
@@ -66,7 +66,28 @@ module.exports = {
     //       ['^' + baseURL]: '',
     //     },
     //   },
-    // },
+      '/admin': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/admin': 'admin'
+        }
+      },
+      '/base': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/base': 'base'
+        }
+      },
+      '/code': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/code': 'code'
+        }
+      }
+    },
     after: require('./mock'),
   },
   configureWebpack() {
@@ -75,6 +96,7 @@ module.exports = {
         alias: {
           '~': resolve('.'),
           '@': resolve('src'),
+          '_c': resolve('src/components'),
         },
       },
       plugins: [

@@ -32,7 +32,7 @@
   import { mapActions, mapGetters } from 'vuex'
 
   export default {
-    name: 'MenuItem',
+    name: 'MyMenuItem',
     props: {
       itemOrMenu: {
         type: Object,
