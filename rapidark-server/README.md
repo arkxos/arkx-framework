@@ -18,10 +18,6 @@
 #### 使用手册
 <a target="_blank" href="https://gitee.com/rapidark_io/open-platform/wikis/pages">使用手册</a>
 
-#### 技术支持
-![技术支持](/docs/技术支持.jpg)
-+ 学习交流(千人群):760809808 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=3c1017efeda485820c9eddee13a125d99261f7504746aa4824bc5c7c2b9a4234"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud交流群" title="open-cloud交流群"></a>
-
 #### 功能介绍
 ![功能介绍](/docs/功能介绍.png)
 
@@ -115,17 +111,7 @@ open-platform
     如图:
     ![nacos](https://gitee.com/uploads/images/2019/0425/231436_fce24434_791541.png "nacos.png")
 
-启动rabbitmq：
-docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
-http://localhost:15672/
-guest / guest
-docker run -itd --name my-redis -p 6379:6379 redis
-5、通过 redis-cli 连接测试使用 redis 服务
-执行命令：docker exec -it my-redis /bin/bash   进入docker终端，在终端中输入：redis-cli， set test 1
-ps：安装过程中，如果发现容器启动失败，使用docker logs查看容器日志
-本例中docker容器名为redis,查看日志命令为：docker logs -f -t --tail 100 redis
 
-admin/123456
 
 4. 修改主pom.xml
     初始化maven项目

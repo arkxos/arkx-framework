@@ -94,6 +94,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
         /**
          * 按照异常类型进行处理
          */
+        ex.printStackTrace();
         ResultBody resultBody;
         ServerHttpRequest request = exchange.getRequest();
         if ("/favicon.ico".equals(exchange.getRequest().getURI().getPath())) {

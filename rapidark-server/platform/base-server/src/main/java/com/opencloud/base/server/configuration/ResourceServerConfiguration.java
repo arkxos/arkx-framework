@@ -27,7 +27,7 @@ import javax.sql.DataSource;
  * @description:
  */
 @Configuration
-@EnableResourceServer
+@EnableResourceServer// 声明资源服务,即可开启token验证保护
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
