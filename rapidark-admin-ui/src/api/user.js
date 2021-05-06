@@ -3,6 +3,7 @@ import { encryptedData } from '@/utils/encrypt'
 import { loginRSA } from '@/config'
 import { getToken } from '@/libs/util'
 import config from '@/config'
+import store from '@/store'
 
 /**
  * 用户登录
@@ -48,9 +49,10 @@ export function getUserInfo() {
  * 登出
  */
 export function logout() {
+  const token = store.getters['user/token']
   return request({
     url: 'admin/logout/token',
-    data: { token: getToken() },
+    data: { token: token },
     method: 'post'
     // url: '/logout',
     // method: 'get',
