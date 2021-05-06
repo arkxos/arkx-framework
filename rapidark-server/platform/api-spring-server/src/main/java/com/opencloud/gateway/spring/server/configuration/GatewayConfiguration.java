@@ -53,8 +53,9 @@ import java.util.TimeZone;
 
 /**
  * 网关配置类
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2021/4/29 16:22
+ * @version 1.0
  */
 @Slf4j
 @Configuration

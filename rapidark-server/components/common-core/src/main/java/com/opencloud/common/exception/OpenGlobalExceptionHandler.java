@@ -98,7 +98,11 @@ public class OpenGlobalExceptionHandler {
         int httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
         String message = ex.getMessage();
         String className = ex.getClass().getName();
-        if (className.contains("UsernameNotFoundException")) {
+        if (className.contains("NullPointerException")
+        || ex instanceof RuntimeException) {
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
+            code = ErrorCode.ERROR;
+        } else if (className.contains("UsernameNotFoundException")) {
             httpStatus = HttpStatus.UNAUTHORIZED.value();
             code = ErrorCode.USERNAME_NOT_FOUND;
         } else if (className.contains("BadCredentialsException")) {
