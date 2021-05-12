@@ -86,6 +86,13 @@ module.exports = {
         pathRewrite: {
           '^/code': 'code'
         }
+      },
+      '/org': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/org': 'org'
+        }
       }
     },
     after: require('./mock'),

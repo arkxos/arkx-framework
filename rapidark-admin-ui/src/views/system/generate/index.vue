@@ -108,7 +108,7 @@ export default {
       formItem: {
         type: 'mysql',
         driverName: 'com.mysql.cj.jdbc.Driver',
-        url: 'jdbc:mysql://localhost:3306/open-platform?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai',
+        url: 'jdbc:mysql://localhost:3306/open_platform?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai',
         username: 'root',
         password: 'root',
         author: 'admin',
