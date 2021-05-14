@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencloud.base.client.model.entity.BaseAction;
 import com.opencloud.base.client.model.entity.BaseApp;
 import com.opencloud.base.client.model.entity.BaseMenu;
+import com.opencloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.opencloud.base.server.service.BaseActionService;
 import com.opencloud.base.server.service.BaseAppService;
 import com.opencloud.base.server.service.BaseMenuService;
@@ -18,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -181,17 +183,7 @@ public class BaseMenuController {
 
     /**
      * 编辑菜单资源
-     *
-     * @param menuCode 菜单编码
-     * @param menuName 菜单名称
-     * @param icon     图标
-     * @param scheme   请求前缀
-     * @param path     请求路径
-     * @param target   打开方式
-     * @param status   是否启用
-     * @param parentId 父节点ID
-     * @param priority 优先级越小越靠前
-     * @param menuDesc 描述
+     * @param command
      * @return
      */
     @ApiOperation(value = "编辑菜单资源", notes = "编辑菜单资源")
@@ -210,33 +202,20 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "serviceId", required = false, value = "前端应用", paramType = "form")
     })
     @PostMapping("/menu/update")
-    public ResultBody updateMenu(
-            @RequestParam("menuId") Long menuId,
-            @RequestParam(value = "menuCode") String menuCode,
-            @RequestParam(value = "menuName") String menuName,
-            @RequestParam(value = "icon", required = false) String icon,
-            @RequestParam(value = "scheme", required = false, defaultValue = "/") String scheme,
-            @RequestParam(value = "path", required = false, defaultValue = "") String path,
-            @RequestParam(value = "target", required = false, defaultValue = "_self") String target,
-            @RequestParam(value = "status", defaultValue = "1") Integer status,
-            @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId,
-            @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
-            @RequestParam(value = "menuDesc", required = false, defaultValue = "") String menuDesc,
-            @RequestParam(value = "serviceId", required = false, defaultValue = "") String serviceId
-    ) {
+    public ResultBody updateMenu(@RequestBody @Valid UpdateMenuCommand command) {
         BaseMenu menu = new BaseMenu();
-        menu.setMenuId(menuId);
-        menu.setMenuCode(menuCode);
-        menu.setMenuName(menuName);
-        menu.setIcon(icon);
-        menu.setPath(path);
-        menu.setScheme(scheme);
-        menu.setTarget(target);
-        menu.setStatus(status);
-        menu.setParentId(parentId);
-        menu.setPriority(priority);
-        menu.setMenuDesc(menuDesc);
-        menu.setServiceId(serviceId);
+        menu.setMenuId(command.getMenuId());
+        menu.setMenuCode(command.getMenuCode());
+        menu.setMenuName(command.getMenuName());
+        menu.setIcon(command.getIcon());
+        menu.setPath(command.getPath());
+        menu.setScheme(command.getScheme());
+        menu.setTarget(command.getTarget());
+        menu.setStatus(command.getStatus());
+        menu.setParentId(command.getParentId());
+        menu.setPriority(command.getPriority());
+        menu.setMenuDesc(command.getMenuDesc());
+        menu.setServiceId(command.getServiceId());
         baseResourceMenuService.updateMenu(menu);
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
