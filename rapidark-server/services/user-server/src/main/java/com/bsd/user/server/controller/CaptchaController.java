@@ -1,7 +1,7 @@
 package com.bsd.user.server.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.nacos.common.util.Md5Utils;
+import com.alibaba.nacos.common.utils.MD5Utils;
 import com.bsd.user.server.model.dto.CaptchaInitDTO;
 import com.bsd.user.server.model.dto.CaptchaInitResultDTO;
 import com.bsd.user.server.model.dto.CaptchaValidateDTO;
@@ -64,7 +64,7 @@ public class CaptchaController {
         //业务参数
         CaptchaInitDTO captchaInitDTO = new CaptchaInitDTO();
         captchaInitDTO.setIp(WebUtils.getRemoteAddress(request));
-        captchaInitDTO.setUserId(CAPTCHA_INIT_USER_PREFIX + Md5Utils.getMD5(userId, "UTF-8"));//用户ID MD5加密一下,避免泄露
+        captchaInitDTO.setUserId(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId, "UTF-8"));//用户ID MD5加密一下,避免泄露
         captchaInitDTO.setClientType(clientType);
         log.info("init:{}", captchaInitDTO);
         //调用初始化接口
@@ -99,7 +99,7 @@ public class CaptchaController {
                                @RequestParam(value = "seccode") String seccode,
                                HttpServletRequest request) {
         //获取session中的数据
-        String initStr = (String) redisUtils.get(CAPTCHA_INIT_USER_PREFIX + Md5Utils.getMD5(userId, "UTF-8"));
+        String initStr = (String) redisUtils.get(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId, "UTF-8"));
         if (StringUtils.isEmpty(initStr)) {
             return ResultBody.failed().msg("二次验证之前未调用初始化接口");
         }

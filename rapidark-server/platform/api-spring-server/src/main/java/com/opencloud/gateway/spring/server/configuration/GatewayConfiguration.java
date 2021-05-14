@@ -21,7 +21,7 @@ import com.opencloud.gateway.spring.server.service.feign.BaseAuthorityServiceCli
 import com.opencloud.gateway.spring.server.service.feign.GatewayServiceClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnEnabledEndpoint;
+import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnAvailableEndpoint;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -171,7 +171,7 @@ public class GatewayConfiguration {
      * @return
      */
     @Bean
-    @ConditionalOnEnabledEndpoint
+    @ConditionalOnAvailableEndpoint
     @ConditionalOnClass({Endpoint.class})
     public ApiEndpoint apiEndpoint(ApplicationContext context, BusProperties bus) {
         ApiEndpoint endpoint = new ApiEndpoint(context, bus.getId());
