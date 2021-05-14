@@ -27,7 +27,7 @@
         <maven-dockerfile-plugin.version>1.4.13</maven-dockerfile-plugin.version>
 
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
-        <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
+        <spring-boot-admin.version>2.3.1</spring-boot-admin.version>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <alibaba.cloud.version>2.2.5.RELEASE</alibaba.cloud.version>
         <alibaba.fastjson.version>1.2.66</alibaba.fastjson.version>
