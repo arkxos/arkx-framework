@@ -54,7 +54,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class GeneratorServiceImpl implements GeneratorService {
+
     private static final Logger log = LoggerFactory.getLogger(GeneratorServiceImpl.class);
+
     @PersistenceContext
     private EntityManager em;
 
