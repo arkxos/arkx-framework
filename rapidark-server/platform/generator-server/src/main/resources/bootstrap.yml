@@ -42,3 +42,7 @@ opencloud:
         enabled: true
         description: 代码生成服务器
         title: 代码生成服务器
+
+#是否允许生成代码，生产环境设置为false
+generator:
+    enabled: true

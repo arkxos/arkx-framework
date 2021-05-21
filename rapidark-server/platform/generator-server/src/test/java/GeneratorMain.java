@@ -1,5 +1,5 @@
-import com.opencloud.generator.server.service.GenerateConfig;
-import com.opencloud.generator.server.service.GeneratorService;
+import com.opencloud.generator.server.mybatisplus.service.GenerateConfig;
+import com.opencloud.generator.server.mybatisplus.service.GeneratorService;
 
 import java.io.File;
 
