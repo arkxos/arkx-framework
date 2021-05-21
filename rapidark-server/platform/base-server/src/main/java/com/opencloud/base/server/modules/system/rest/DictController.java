@@ -13,25 +13,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.rest;
+package com.opencloud.base.server.modules.system.rest;
 
+import com.opencloud.base.server.modules.system.domain.Dict;
+import com.opencloud.base.server.modules.system.service.DictService;
+import com.opencloud.base.server.modules.system.service.dto.DictQueryCriteria;
+import com.opencloud.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.annotation.Log;
+//import me.zhengjie.annotation.Log;
+import me.zhengjie.base.IdsParam;
 import me.zhengjie.exception.BadRequestException;
-import me.zhengjie.modules.system.domain.Dict;
-import me.zhengjie.modules.system.service.DictService;
-import me.zhengjie.modules.system.service.dto.DictQueryCriteria;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Set;
 
 /**
 * @author Zheng Jie
@@ -40,7 +42,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "系统：字典管理")
-@RequestMapping("/api/dict")
+@RequestMapping("/dict")
 public class DictController {
 
     private final DictService dictService;
@@ -67,33 +69,33 @@ public class DictController {
         return new ResponseEntity<>(dictService.queryAll(resources,pageable),HttpStatus.OK);
     }
 
-    @Log("新增字典")
+//    @Log("新增字典")
     @ApiOperation("新增字典")
     @PostMapping
     @PreAuthorize("@el.check('dict:add')")
-    public ResponseEntity<Object> create(@Validated @RequestBody Dict resources){
+    public ResultBody<Object> create(@Validated @RequestBody Dict resources){
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
         }
         dictService.create(resources);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResultBody.ok();
     }
 
-    @Log("修改字典")
+//    @Log("修改字典")
     @ApiOperation("修改字典")
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
-    public ResponseEntity<Object> update(@Validated(Dict.Update.class) @RequestBody Dict resources){
+    public ResultBody<Object> update(@Validated(Dict.Update.class) @RequestBody Dict resources){
         dictService.update(resources);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResultBody.ok();
     }
 
-    @Log("删除字典")
+//    @Log("删除字典")
     @ApiOperation("删除字典")
     @DeleteMapping
     @PreAuthorize("@el.check('dict:del')")
-    public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){
-        dictService.delete(ids);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResultBody<Object> delete(@RequestBody IdsParam param){
+        dictService.delete(param.getIds());
+        return ResultBody.ok();
     }
 }
