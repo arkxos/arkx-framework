@@ -13,27 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service.dto;
+package com.opencloud.base.server.modules.system.service.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import me.zhengjie.base.BaseDTO;
-import java.io.Serializable;
-import java.util.List;
+import lombok.Data;
+import me.zhengjie.annotation.Query;
 
 /**
-* @author Zheng Jie
-* @date 2019-04-10
-*/
-@Getter
-@Setter
-public class DictDto extends BaseDTO implements Serializable {
+ * @author Zheng Jie
+ * 公共查询类
+ */
+@Data
+public class DictQueryCriteria {
 
-    private Long id;
-
-    private List<DictDetailDto> dictDetails;
-
-    private String name;
-
-    private String description;
+    @Query(blurry = "name,description")
+    private String blurry;
 }

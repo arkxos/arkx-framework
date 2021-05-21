@@ -13,19 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service.mapstruct;
+package com.opencloud.base.server.modules.system.repository;
 
-import me.zhengjie.base.BaseMapper;
-import me.zhengjie.modules.system.domain.Dict;
-import me.zhengjie.modules.system.service.dto.DictSmallDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.opencloud.base.server.modules.system.domain.DictDetail;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+import java.util.List;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DictSmallMapper extends BaseMapper<DictSmallDto, Dict> {
+public interface DictDetailRepository extends JpaRepository<DictDetail, Long>, JpaSpecificationExecutor<DictDetail> {
 
+    /**
+     * 根据字典名称查询
+     * @param name /
+     * @return /
+     */
+    List<DictDetail> findByDictName(String name);
 }

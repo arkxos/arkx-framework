@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service;
+package com.opencloud.base.server.modules.system.service;
 
-import me.zhengjie.modules.system.domain.Dict;
-import me.zhengjie.modules.system.service.dto.DictDto;
-import me.zhengjie.modules.system.service.dto.DictQueryCriteria;
+import com.opencloud.base.server.modules.system.domain.Dict;
+import com.opencloud.base.server.modules.system.service.dto.DictDto;
+import com.opencloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import org.springframework.data.domain.Pageable;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

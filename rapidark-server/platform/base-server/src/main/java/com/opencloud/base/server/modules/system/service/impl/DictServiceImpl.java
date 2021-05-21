@@ -13,18 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service.impl;
+package com.opencloud.base.server.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.opencloud.base.server.modules.system.domain.Dict;
+import com.opencloud.base.server.modules.system.repository.DictRepository;
+import com.opencloud.base.server.modules.system.service.DictService;
+import com.opencloud.base.server.modules.system.service.dto.DictDetailDto;
+import com.opencloud.base.server.modules.system.service.dto.DictDto;
+import com.opencloud.base.server.modules.system.service.dto.DictQueryCriteria;
+import com.opencloud.base.server.modules.system.service.mapstruct.DictMapper;
+import com.opencloud.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.modules.system.domain.Dict;
-import me.zhengjie.modules.system.service.dto.DictDetailDto;
-import me.zhengjie.modules.system.service.dto.DictQueryCriteria;
 import me.zhengjie.utils.*;
-import me.zhengjie.modules.system.repository.DictRepository;
-import me.zhengjie.modules.system.service.DictService;
-import me.zhengjie.modules.system.service.dto.DictDto;
-import me.zhengjie.modules.system.service.mapstruct.DictMapper;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

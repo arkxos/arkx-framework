@@ -13,24 +13,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.repository;
+package com.opencloud.base.server.modules.system.service.dto;
 
-import me.zhengjie.modules.system.domain.DictDetail;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-
+import lombok.Getter;
+import lombok.Setter;
+import me.zhengjie.base.BaseDTO;
+import java.io.Serializable;
 import java.util.List;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface DictDetailRepository extends JpaRepository<DictDetail, Long>, JpaSpecificationExecutor<DictDetail> {
+@Getter
+@Setter
+public class DictDto extends BaseDTO implements Serializable {
 
-    /**
-     * 根据字典名称查询
-     * @param name /
-     * @return /
-     */
-    List<DictDetail> findByDictName(String name);
+    private Long id;
+
+    private List<DictDetailDto> dictDetails;
+
+    private String name;
+
+    private String description;
 }

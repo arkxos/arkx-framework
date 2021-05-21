@@ -13,28 +13,31 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service.dto;
+package com.opencloud.base.server.modules.system.repository;
 
-import lombok.Getter;
-import lombok.Setter;
-import me.zhengjie.base.BaseDTO;
-import java.io.Serializable;
+import com.opencloud.base.server.modules.system.domain.Dict;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+import java.util.List;
+import java.util.Set;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-@Getter
-@Setter
-public class DictDetailDto extends BaseDTO implements Serializable {
+public interface DictRepository extends JpaRepository<Dict, Long>, JpaSpecificationExecutor<Dict> {
 
-    private Long id;
+    /**
+     * 删除
+     * @param ids /
+     */
+    void deleteByIdIn(Set<Long> ids);
 
-    private DictSmallDto dict;
-
-    private String label;
-
-    private String value;
-
-    private Integer dictSort;
+    /**
+     * 查询
+     * @param ids /
+     * @return /
+     */
+    List<Dict> findByIdIn(Set<Long> ids);
 }

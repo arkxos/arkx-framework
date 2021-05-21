@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service.mapstruct;
+package com.opencloud.base.server.modules.system.service.mapstruct;
 
+import com.opencloud.base.server.modules.system.domain.DictDetail;
+import com.opencloud.base.server.modules.system.service.dto.DictDetailDto;
 import me.zhengjie.base.BaseMapper;
-import me.zhengjie.modules.system.domain.DictDetail;
-import me.zhengjie.modules.system.service.dto.DictDetailDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

@@ -13,11 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service;
+package com.opencloud.base.server.modules.system.service;
 
-import me.zhengjie.modules.system.domain.DictDetail;
-import me.zhengjie.modules.system.service.dto.DictDetailDto;
-import me.zhengjie.modules.system.service.dto.DictDetailQueryCriteria;
+
+import com.opencloud.base.server.modules.system.domain.DictDetail;
+import com.opencloud.base.server.modules.system.service.dto.DictDetailDto;
+import com.opencloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;

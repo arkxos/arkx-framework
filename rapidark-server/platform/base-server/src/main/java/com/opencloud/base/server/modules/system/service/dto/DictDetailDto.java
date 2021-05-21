@@ -13,44 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.domain;
+package com.opencloud.base.server.modules.system.service.dto;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import me.zhengjie.base.BaseEntity;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import me.zhengjie.base.BaseDTO;
 import java.io.Serializable;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-@Entity
 @Getter
 @Setter
-@Table(name="sys_dict_detail")
-public class DictDetail extends BaseEntity implements Serializable {
+public class DictDetailDto extends BaseDTO implements Serializable {
 
-    @Id
-    @Column(name = "detail_id")
-    @NotNull(groups = Update.class)
-    @ApiModelProperty(value = "ID", hidden = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "dict_id")
-    @ManyToOne(fetch=FetchType.LAZY)
-    @ApiModelProperty(value = "字典", hidden = true)
-    private Dict dict;
+    private DictSmallDto dict;
 
-    @ApiModelProperty(value = "字典标签")
     private String label;
 
-    @ApiModelProperty(value = "字典值")
     private String value;
 
-    @ApiModelProperty(value = "排序")
-    private Integer dictSort = 999;
+    private Integer dictSort;
 }

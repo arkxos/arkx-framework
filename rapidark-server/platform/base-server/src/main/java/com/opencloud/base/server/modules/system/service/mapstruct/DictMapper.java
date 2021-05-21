@@ -13,21 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service.dto;
+package com.opencloud.base.server.modules.system.service.mapstruct;
 
-import lombok.Data;
-import me.zhengjie.annotation.Query;
+import com.opencloud.base.server.modules.system.domain.Dict;
+import com.opencloud.base.server.modules.system.service.dto.DictDto;
+import me.zhengjie.base.BaseMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-@Data
-public class DictDetailQueryCriteria {
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface DictMapper extends BaseMapper<DictDto, Dict> {
 
-    @Query(type = Query.Type.INNER_LIKE)
-    private String label;
-
-    @Query(propName = "name",joinName = "dict")
-    private String dictName;
 }

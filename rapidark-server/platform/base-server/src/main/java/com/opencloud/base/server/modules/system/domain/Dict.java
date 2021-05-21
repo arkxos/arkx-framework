@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.domain;
+package com.opencloud.base.server.modules.system.domain;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
