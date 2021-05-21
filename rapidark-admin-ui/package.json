@@ -98,8 +98,8 @@
     "vue-eslint-parser": "^7.6.0",
     "vue-template-compiler": "^2.6.12",
     "webpackbar": "^5.0.0-3",
-    "less": "^3.10.3",
-    "less-loader": "^4.0.5"
+    "less": "3.10.3",
+    "less-loader": "4.0.5"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

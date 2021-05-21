@@ -33,11 +33,9 @@
         </dependency>
         <!-- fastdfs -->
         <dependency>
-            <groupId>org.csource</groupId>
+            <groupId>cn.bestwu</groupId>
             <artifactId>fastdfs-client-java</artifactId>
-            <version>1.27-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/fastdfs-client-java-1.27-SNAPSHOT.jar</systemPath>
+            <version>1.27</version>
         </dependency>
     </dependencies>
 
