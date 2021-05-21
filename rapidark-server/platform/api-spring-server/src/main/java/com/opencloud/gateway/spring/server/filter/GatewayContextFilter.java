@@ -381,7 +381,11 @@ public class GatewayContextFilter implements WebFilter, Ordered {
                                 gatewayContext.setRequestBody(objectValue);
                                 Map<String, String> bodyMap = new HashMap<>(0);
                                 JSONObject.parseObject(objectValue).forEach((key, value) -> {
-                                    bodyMap.put(key, value.toString());
+                                    if (value == null) {
+                                        bodyMap.put(key, "");
+                                    } else {
+                                        bodyMap.put(key, value.toString());
+                                    }
                                 });
                                 gatewayContext.getAllRequestData().setAll(bodyMap);
                                 mutatedExchange.getAttributes().put(GatewayContext.CACHE_GATEWAY_CONTEXT, gatewayContext);
