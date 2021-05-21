@@ -22,6 +22,7 @@ import java.util.Map;
 @Api(tags = "系统功能按钮管理")
 @RestController
 public class BaseActionController {
+
     @Autowired
     private BaseActionService baseActionService;
     @Autowired

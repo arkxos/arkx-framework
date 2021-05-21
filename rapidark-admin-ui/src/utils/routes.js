@@ -10,6 +10,8 @@ import { recordRoute } from '@/config'
  */
 export function convertRouter(asyncRoutes) {
   return asyncRoutes.map((route) => {
+    console.log('convertRouter', route)
+    // route.hidden = route.visible === 0;
     let component = route.component || route.path;
     if (component || route.parentId === 0 || route.parentId === '0') {
       if (component === 'Layout' || route.parentId === 0 || route.parentId === '0') {
@@ -20,8 +22,7 @@ export function convertRouter(asyncRoutes) {
           console.log('route')
         }
         const index = component.indexOf('views')
-        const path =
-          index > 0 ? component.slice(index) : `views/${component}`
+        const path = index > 0 ? component.slice(index) : `views/${component}`
         route.component = (resolve) => require([`@/${path}`], resolve)
       }
     }

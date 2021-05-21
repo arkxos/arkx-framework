@@ -13,7 +13,10 @@ const state = () => ({
   cachedRoutes: [],
 })
 const getters = {
-  routes: (state) => state.routes,
+  routes: (state) => {
+    console.log('get routes', state.routes)
+    return state.routes
+  },
   cachedRoutes: (state) => state.cachedRoutes,
 }
 const mutations = {
@@ -23,6 +26,7 @@ const mutations = {
    * @param {*} routes
    */
   setRoutes(state, routes) {
+    console.log('set routes' , routes)
     state.routes = routes
   },
   /**
@@ -75,6 +79,8 @@ function convertRouterTypeData(array) {
       // 使用菜单id不使用menuCode防止修改后,刷新后缓存的页面无法找到
       name: `${item.menuCode}`,
       path: url || '',
+      component: item.component,
+      hidden: item.visible === 0,
       parentId: item.parentId,
       meta: {
         // access: access,
@@ -111,6 +117,7 @@ const actions = {
    * @returns
    */
   async setRoutes({ commit }, mode = 'none') {
+
     // 默认前端路由
     let routes = [...asyncRoutes]
     // 设置游客路由关闭路由拦截(不需要可以删除)
@@ -127,6 +134,7 @@ const actions = {
           'vab-hey-message-error'
         )
       }
+      console.log('setRoutes')
       let menus = formatRouters(list)
       if (menus[menus.length - 1].path !== '*') {
         menus.push({ path: '*', redirect: '/404', hidden: true })

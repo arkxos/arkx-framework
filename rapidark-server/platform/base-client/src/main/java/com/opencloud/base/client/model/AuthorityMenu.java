@@ -14,6 +14,7 @@ import java.util.Objects;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthorityMenu extends BaseMenu implements Serializable {
+
     private static final long serialVersionUID = 3474271304324863160L;
     /**
      * 权限ID

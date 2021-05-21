@@ -12,9 +12,10 @@
           :model="form"
           :rules="rules"
         >
-          <div class="title">hello !</div>
+<!--          <div class="title">hello !</div>-->
           <div class="title-tips">
-            {{ translateTitle('欢迎来到') }}{{ title }}！
+<!--            {{ translateTitle('欢迎来到') }}-->
+            {{ title }}
           </div>
           <el-form-item prop="username" style="margin-top: 40px">
             <el-input
@@ -64,9 +65,9 @@
           >
             {{ translateTitle('登录') }}
           </el-button>
-          <router-link to="/register">
+<!--          <router-link to="/register">
             <div style="margin-top: 20px">{{ translateTitle('注册') }}</div>
-          </router-link>
+          </router-link>-->
         </el-form>
       </el-col>
       <el-col :lg="1" :md="1" :sm="24" :xl="1" :xs="24">

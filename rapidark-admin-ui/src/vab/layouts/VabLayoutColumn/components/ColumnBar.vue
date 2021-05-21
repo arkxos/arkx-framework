@@ -84,6 +84,7 @@
       }),
       handleRoutes() {
         let routes = this.routes.filter((item) => item.hidden !== true && item.meta)
+        console.log('routes====', routes)
         return routes;
       },
       handlePartialRoutes() {

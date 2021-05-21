@@ -24,15 +24,17 @@ export const getMenus = () => {
  * @param menuDesc
  * @param serviceId
  */
-export const addMenu = ({ menuCode, menuName, icon, scheme, path, target, status, parentId, priority, menuDesc, serviceId }) => {
+export const addMenu = ({ menuCode, menuName, icon, scheme, path, component, target, status, visible, parentId, priority, menuDesc, serviceId }) => {
   const data = {
     menuCode: menuCode,
     menuName: menuName,
     icon: icon,
     scheme: scheme,
     path: path,
+    component: component,
     target: target,
     status: status,
+    visible: visible,
     parentId: parentId,
     priority: priority,
     menuDesc: menuDesc,
@@ -40,9 +42,6 @@ export const addMenu = ({ menuCode, menuName, icon, scheme, path, target, status
   }
   return request({
     url: 'base/menu/add',
-    headers: {
-      'Content-Type': 'multipart/form-data;charset=UTF-8'
-    },
     data,
     method: 'post'
   })
@@ -63,7 +62,7 @@ export const addMenu = ({ menuCode, menuName, icon, scheme, path, target, status
  * @param menuDesc
  * @param serviceId
  */
-export const updateMenu = ({ menuId, menuCode, menuName, icon, scheme, path, target, status, parentId, priority, menuDesc, serviceId }) => {
+export const updateMenu = ({ menuId, menuCode, menuName, icon, scheme, path, component, target, status, visible, parentId, priority, menuDesc, serviceId }) => {
   const data = {
     menuId: menuId,
     menuCode: menuCode,
@@ -71,8 +70,10 @@ export const updateMenu = ({ menuId, menuCode, menuName, icon, scheme, path, tar
     icon: icon,
     scheme: scheme,
     path: path,
+    component: component,
     target: target,
     status: status,
+    visible: visible,
     parentId: parentId,
     priority: priority,
     menuDesc: menuDesc,

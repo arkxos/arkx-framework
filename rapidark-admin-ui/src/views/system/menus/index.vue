@@ -60,7 +60,7 @@
             <FormItem label="菜单名称" prop="menuName">
               <Input v-model="formItem.menuName" placeholder="请输入内容"/>
             </FormItem>
-            <FormItem label="页面地址" prop="path">
+            <FormItem label="路由地址" prop="path">
               <Input v-model="formItem.path" placeholder="请输入内容">
               <Select v-model="formItem.scheme" slot="prepend" style="width: 80px">
                 <Option value="/">/</Option>
@@ -72,8 +72,12 @@
                 <Option :disabled="formItem.scheme==='/'" value="_blank">新窗口打开</Option>
               </Select>
               </Input>
-              <span v-if="formItem.scheme === '/'">前端组件：/view/module/{{formItem.path}}.vue</span>
+              <span v-if="formItem.scheme === '/'"></span>
               <span v-else>跳转地址：{{formItem.scheme}}{{formItem.path}}</span>
+            </FormItem>
+            <FormItem label="组件路径" prop="component">
+              <Input v-model="formItem.component" placeholder="请输入内容" />
+              <span v-if="formItem.scheme === '/'">前端组件：/view/module/{{formItem.path}}.vue</span>
             </FormItem>
             <FormItem label="图标">
               <Input v-model="formItem.icon" placeholder="请输入内容">
@@ -99,6 +103,12 @@
               <RadioGroup v-model="formItem.status" type="button">
                 <Radio label="0">禁用</Radio>
                 <Radio label="1">启用</Radio>
+              </RadioGroup>
+            </FormItem>
+            <FormItem label="菜单可见">
+              <RadioGroup v-model="formItem.visible" type="button">
+                <Radio label="1">是</Radio>
+                <Radio label="0">否</Radio>
               </RadioGroup>
             </FormItem>
             <FormItem label="描述">
@@ -176,6 +186,7 @@ export default {
         scheme: '/',
         target: '_self',
         status: 1,
+        visible: 1,
         parentId: '0',
         priority: 0,
         menuDesc: ''
@@ -223,6 +234,7 @@ export default {
         this.formItem = Object.assign({}, data.row)
       }
       this.formItem.status = this.formItem.status + ''
+      this.formItem.visible = this.formItem.visible + ''
     },
     handleReset () {
       const newData = {
@@ -232,9 +244,11 @@ export default {
         menuName: '',
         icon: 'md-document',
         path: '',
+        component: '',
         scheme: '/',
         target: '_self',
         status: '1',
+        visible: '1',
         parentId: '0',
         priority: 0,
         menuDesc: ''
@@ -248,6 +262,7 @@ export default {
         if (valid) {
           this.saving = true
           if (this.formItem.menuId) {
+            console.log('formItem', this.formItem)
             updateMenu(this.formItem).then(res => {
               if (res.code === 0) {
                 this.$Message.success('保存成功')

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.opencloud.common.mybatis.base.entity.AbstractEntity;
+import lombok.Data;
 
 /**
  * 系统资源-菜单信息
@@ -12,8 +13,10 @@ import com.opencloud.common.mybatis.base.entity.AbstractEntity;
  * @date: 2018/10/24 16:21
  * @description:
  */
+@Data
 @TableName("base_menu")
 public class BaseMenu extends AbstractEntity {
+
     private static final long serialVersionUID = -4414780909980518788L;
 
     /**
@@ -52,6 +55,9 @@ public class BaseMenu extends AbstractEntity {
      */
     private String path;
 
+    // 组件路径
+    private String component = "";
+
     /**
      * 打开方式:_self窗口内,_blank新窗口
      */
@@ -71,6 +77,9 @@ public class BaseMenu extends AbstractEntity {
      * 状态:0-无效 1-有效
      */
     private Integer status;
+
+    // 菜单可见
+    private Integer visible = 1;
 
     /**
      * 保留数据0-否 1-是 不允许删除

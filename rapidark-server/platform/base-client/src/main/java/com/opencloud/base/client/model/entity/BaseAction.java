@@ -14,6 +14,7 @@ import com.opencloud.common.mybatis.base.entity.AbstractEntity;
  */
 @TableName("base_action")
 public class BaseAction extends AbstractEntity {
+
     private static final long serialVersionUID = 1471599074044557390L;
 
     /**
