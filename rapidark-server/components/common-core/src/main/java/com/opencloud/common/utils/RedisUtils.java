@@ -1,18 +1,31 @@
 package com.opencloud.common.utils;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Redis工具类
+ * @author darkness
+ * @date 2021/5/20 14:56
+ * @version 1.0
  */
 public class RedisUtils<T> {
+
+    private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
+
     public RedisUtils(RedisTemplate<String, T> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
@@ -33,19 +46,99 @@ public class RedisUtils<T> {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
+    }
+
+    /**
+     * 指定缓存失效时间
+     *
+     * @param key      键
+     * @param time     时间(秒)
+     * @param timeUnit 单位
+     */
+    public boolean expire(String key, long time, TimeUnit timeUnit) {
+        try {
+            if (time > 0) {
+                redisTemplate.expire(key, time, timeUnit);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return false;
+        }
+        return true;
     }
 
     /**
      * 根据key 获取过期时间
      *
      * @param key 键 不能为null
-     * @return 时间(秒) 返回代表为永久有效
+     * @return 时间(秒) 返回0代表为永久有效
      */
     public long getExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 查找匹配key
+     *
+     * @param pattern key
+     * @return /
+     */
+    public List<String> scan(String pattern) {
+        ScanOptions options = ScanOptions.scanOptions().match(pattern).build();
+        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
+        RedisConnection rc = Objects.requireNonNull(factory).getConnection();
+        Cursor<byte[]> cursor = rc.scan(options);
+        List<String> result = new ArrayList<>();
+        while (cursor.hasNext()) {
+            result.add(new String(cursor.next()));
+        }
+        try {
+            RedisConnectionUtils.releaseConnection(rc, factory);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    /**
+     * 分页查询 key
+     *
+     * @param patternKey key
+     * @param page       页码
+     * @param size       每页数目
+     * @return /
+     */
+    public List<String> findKeysForPage(String patternKey, int page, int size) {
+        ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
+        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
+        RedisConnection rc = Objects.requireNonNull(factory).getConnection();
+        Cursor<byte[]> cursor = rc.scan(options);
+        List<String> result = new ArrayList<>(size);
+        int tmpIndex = 0;
+        int fromIndex = page * size;
+        int toIndex = page * size + size;
+        while (cursor.hasNext()) {
+            if (tmpIndex >= fromIndex && tmpIndex < toIndex) {
+                result.add(new String(cursor.next()));
+                tmpIndex++;
+                continue;
+            }
+            // 获取到满足条件的数据后,就可以退出了
+            if (tmpIndex >= toIndex) {
+                break;
+            }
+            tmpIndex++;
+            cursor.next();
+        }
+        try {
+            RedisConnectionUtils.releaseConnection(rc, factory);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return result;
     }
 
     /**
@@ -58,7 +151,7 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.hasKey(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -66,15 +159,27 @@ public class RedisUtils<T> {
     /**
      * 删除缓存
      *
-     * @param key 可以传一个值 或多个
+     * @param keys 可以传一个值 或多个
      */
     @SuppressWarnings("unchecked")
-    public void del(String... key) {
-        if (key != null && key.length > 0) {
-            if (key.length == 0) {
-                redisTemplate.delete(key[0]);
+    public void del(String... keys) {
+        if (keys != null && keys.length > 0) {
+            if (keys.length == 1) {
+                boolean result = redisTemplate.delete(keys[0]);
+                log.debug("--------------------------------------------");
+                log.debug(new StringBuilder("删除缓存：").append(keys[0]).append("，结果：").append(result).toString());
+                log.debug("--------------------------------------------");
             } else {
-                redisTemplate.delete(CollectionUtils.arrayToList(key));
+//                Set<Object> keySet = new HashSet<>();
+//                for (String key : keys) {
+//                    keySet.addAll(redisTemplate.keys(key));
+//                }
+//                long count = redisTemplate.delete(keySet);
+                long count = redisTemplate.delete(CollectionUtils.arrayToList(keys));
+                log.debug("--------------------------------------------");
+                log.debug("成功删除缓存：" + CollectionUtils.arrayToList(keys).toString());
+                log.debug("缓存删除数量：" + count + "个");
+                log.debug("--------------------------------------------");
             }
         }
     }
@@ -88,6 +193,19 @@ public class RedisUtils<T> {
      */
     public <T> T get(String key) {
         return key == null ? null : (T) redisTemplate.opsForValue().get(key);
+    }
+
+    /**
+     * 批量获取
+     *
+     * @param keys
+     * @return
+     */
+    public List<Object> multiGet(List<String> keys) {
+        List list = redisTemplate.opsForValue().multiGet(Sets.newHashSet(keys));
+        List resultList = Lists.newArrayList();
+        Optional.ofNullable(list).ifPresent(e-> list.forEach(ele-> Optional.ofNullable(ele).ifPresent(resultList::add)));
+        return resultList;
     }
 
     /**
@@ -117,7 +235,7 @@ public class RedisUtils<T> {
             redisTemplate.opsForValue().set(key, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -127,7 +245,7 @@ public class RedisUtils<T> {
      *
      * @param key   键
      * @param value 值
-     * @param time  时间(秒) time要大于1如果time小于等于0将设置无限期
+     * @param time  时间(秒) time要大于0 如果time小于等于0将设置无限期
      * @return true成功 false 失败
      */
     public boolean set(String key, T value, long time) {
@@ -139,7 +257,30 @@ public class RedisUtils<T> {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * 普通缓存放入并设置时间
+     *
+     * @param key      键
+     * @param value    值
+     * @param time     时间
+     * @param timeUnit 类型
+     * @return true成功 false 失败
+     */
+    public boolean set(String key, T value, long time, TimeUnit timeUnit) {
+        try {
+            if (time > 0) {
+                redisTemplate.opsForValue().set(key, value, time, timeUnit);
+            } else {
+                set(key, value);
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -189,9 +330,35 @@ public class RedisUtils<T> {
      *
      * @param key 键
      * @return 对应的多个键值
+     * @see com.opencloud.common.utils.RedisUtils#getMap
+     */
+    @Deprecated
+    public Map<Object, Object> hmget(String key) {
+        return getMap(key);
+
+    }
+
+    /**
+     * 获取hashKey对应的所有键值
+     *
+     * @param key 键
+     * @return 对应的多个键值
      */
     public Map<Object, Object> getMap(String key) {
         return redisTemplate.opsForHash().entries(key);
+    }
+
+    /**
+     * HashSet
+     *
+     * @param key 键
+     * @param map 对应多个键值
+     * @return true 成功 false 失败
+     * @see com.opencloud.common.utils.RedisUtils#setMap
+     */
+    @Deprecated
+    public boolean hmset(String key, Map<String, Object> map) {
+       return setMap(key, map);
     }
 
     /**
@@ -206,7 +373,7 @@ public class RedisUtils<T> {
             redisTemplate.opsForHash().putAll(key, map);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -227,7 +394,7 @@ public class RedisUtils<T> {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -245,7 +412,7 @@ public class RedisUtils<T> {
             redisTemplate.opsForHash().put(key, item, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -267,7 +434,7 @@ public class RedisUtils<T> {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -298,7 +465,7 @@ public class RedisUtils<T> {
      *
      * @param key  键
      * @param item 项
-     * @param by   要增加几(大于)
+     * @param by   要增加几(大于0)
      * @return
      */
     public double hincr(String key, String item, double by) {
@@ -310,7 +477,7 @@ public class RedisUtils<T> {
      *
      * @param key  键
      * @param item 项
-     * @param by   要减少记(小于)
+     * @param by   要减少记(小于0)
      * @return
      */
     public double hdecr(String key, String item, double by) {
@@ -323,12 +490,24 @@ public class RedisUtils<T> {
      *
      * @param key 键
      * @return
+     * @see com.opencloud.common.utils.RedisUtils#getSet
+     */
+    @Deprecated
+    public Set<T> sGet(String key) {
+        return getSet(key);
+    }
+
+    /**
+     * 根据key获取Set中的所有值
+     *
+     * @param key 键
+     * @return
      */
     public Set<T> getSet(String key) {
         try {
             return redisTemplate.opsForSet().members(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return null;
         }
     }
@@ -344,7 +523,7 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -360,7 +539,7 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return 0;
         }
     }
@@ -381,7 +560,7 @@ public class RedisUtils<T> {
             }
             return count;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return 0;
         }
     }
@@ -396,7 +575,7 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.opsForSet().size(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return 0;
         }
     }
@@ -413,11 +592,25 @@ public class RedisUtils<T> {
             Long count = redisTemplate.opsForSet().remove(key, values);
             return count;
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return 0;
         }
     }
     // ===============================list=================================
+
+    /**
+     * 获取list缓存的内容
+     *
+     * @param key   键
+     * @param start 开始
+     * @param end   结束 0 到 -1代表所有值
+     * @return
+     * @see com.opencloud.common.utils.RedisUtils#getList
+     */
+    @Deprecated
+    public List<T> lGet(String key, long start, long end) {
+        return getList(key, start, end);
+    }
 
     /**
      * 获取list缓存的内容
@@ -431,7 +624,7 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return null;
         }
     }
@@ -447,7 +640,7 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.opsForList().range(key, 0, -1);
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return null;
         }
     }
@@ -462,7 +655,7 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.opsForList().size(key);
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return 0;
         }
     }
@@ -478,9 +671,22 @@ public class RedisUtils<T> {
         try {
             return redisTemplate.opsForList().index(key, index);
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return null;
         }
+    }
+
+    /**
+     * 将list放入缓存
+     *
+     * @param key   键
+     * @param value 值
+     * @return
+     * @see com.opencloud.common.utils.RedisUtils#setList
+     */
+    @Deprecated
+    public boolean lSet(String key, T value) {
+        return setList(key, value);
     }
 
     /**
@@ -495,9 +701,23 @@ public class RedisUtils<T> {
             redisTemplate.opsForList().rightPush(key, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return false;
         }
+    }
+
+    /**
+     * 将list放入缓存
+     *
+     * @param key   键
+     * @param value 值
+     * @param time  时间(秒)
+     * @return
+     * @see com.opencloud.common.utils.RedisUtils#setList
+     */
+    @Deprecated
+    public boolean lSet(String key, T value, long time) {
+        return setList(key, value, time);
     }
 
     /**
@@ -516,9 +736,22 @@ public class RedisUtils<T> {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return false;
         }
+    }
+
+    /**
+     * 将list放入缓存
+     *
+     * @param key   键
+     * @param value 值
+     * @return
+     * @see com.opencloud.common.utils.RedisUtils#setList
+     */
+    @Deprecated
+    public boolean lSet(String key, List<T> value) {
+        return setList(key, value);
     }
 
     /**
@@ -533,9 +766,23 @@ public class RedisUtils<T> {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return false;
         }
+    }
+
+    /**
+     * 将list放入缓存
+     *
+     * @param key   键
+     * @param value 值
+     * @param time  时间(秒)
+     * @return
+     * @see com.opencloud.common.utils.RedisUtils#setList
+     */
+    @Deprecated
+    public boolean lSet(String key, List<T> value, long time) {
+        return setList(key, value, time);
     }
 
     /**
@@ -554,7 +801,7 @@ public class RedisUtils<T> {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -572,7 +819,7 @@ public class RedisUtils<T> {
             redisTemplate.opsForList().set(key, index, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -590,8 +837,26 @@ public class RedisUtils<T> {
             Long remove = redisTemplate.opsForList().remove(key, count, value);
             return remove;
         } catch (Exception e) {
-            e.printStackTrace();
+             log.error(e.getMessage(), e);
             return 0;
         }
+    }
+
+
+    /**
+     * @param prefix 前缀
+     * @param ids    id
+     */
+    public void delByKeys(String prefix, Set<Long> ids) {
+        Set<String> keys = new HashSet<>();
+        for (Long id : ids) {
+            keys.addAll(redisTemplate.keys(new StringBuffer(prefix).append(id).toString()));
+        }
+        long count = redisTemplate.delete(keys);
+        // 此处提示可自行删除
+        log.debug("--------------------------------------------");
+        log.debug("成功删除缓存：" + keys.toString());
+        log.debug("缓存删除数量：" + count + "个");
+        log.debug("--------------------------------------------");
     }
 }
