@@ -6,6 +6,13 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.opencloud.common.filter.XssStringJsonDeserializer;
 import com.opencloud.common.filter.XssStringJsonSerializer;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +23,10 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -74,7 +85,12 @@ public class JacksonAutoConfiguration {
                     writer.assignNullSerializer(nullBooleanJsonSerializer);
                 } else if (String.class.equals(rawClass) || Date.class.equals(rawClass)) {
                     writer.assignNullSerializer(nullStringJsonSerializer);
-                } else if (!Date.class.equals(rawClass)) {
+                } else if ((Date.class.equals(rawClass)
+                        || LocalDateTime.class.equals(rawClass)
+                        || LocalDate.class.equals(rawClass)
+                        || LocalTime.class.equals(rawClass))) {
+                    writer.assignNullSerializer(nullStringJsonSerializer);
+                } else {
                     writer.assignNullSerializer(nullMapJsonSerializer);
                 }
             }
@@ -151,6 +167,23 @@ public class JacksonAutoConfiguration {
                 WriteNullMapAsEmpty
         };
         objectMapper.setSerializerFactory(objectMapper.getSerializerFactory().withSerializerModifier(new FastJsonSerializerFeatureCompatibleForJackson(features)));
+
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        // 自定义 全局把时间转为 时间戳
+//        javaTimeModule.addSerializer(Date.class, new DateToLongSerializer());
+//        javaTimeModule.addSerializer(LocalDate.class, new LocalDateToLongSerializer());
+//        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeToLongSerializer());
+
+
+        objectMapper.registerModule(javaTimeModule);
+
         log.info("ObjectMapper [{}]", objectMapper);
         return objectMapper;
     }
