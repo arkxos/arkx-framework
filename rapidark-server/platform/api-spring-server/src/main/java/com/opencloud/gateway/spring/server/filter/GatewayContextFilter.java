@@ -380,13 +380,19 @@ public class GatewayContextFilter implements WebFilter, Ordered {
                             .doOnNext(objectValue -> {
                                 gatewayContext.setRequestBody(objectValue);
                                 Map<String, String> bodyMap = new HashMap<>(0);
-                                JSONObject.parseObject(objectValue).forEach((key, value) -> {
-                                    if (value == null) {
-                                        bodyMap.put(key, "");
-                                    } else {
-                                        bodyMap.put(key, value.toString());
+                                if (StringUtils.isNotEmpty(objectValue)) {
+                                    if (objectValue.startsWith("{")) {
+                                        JSONObject.parseObject(objectValue).forEach((key, value) -> {
+                                            if (value == null) {
+                                                bodyMap.put(key, "");
+                                            } else {
+                                                bodyMap.put(key, value.toString());
+                                            }
+                                        });
+                                    } else if (objectValue.startsWith("[")) {
+                                        bodyMap.put("requestBody", objectValue);
                                     }
-                                });
+                                }
                                 gatewayContext.getAllRequestData().setAll(bodyMap);
                                 mutatedExchange.getAttributes().put(GatewayContext.CACHE_GATEWAY_CONTEXT, gatewayContext);
                                 log.debug("[GatewayContext]Read JsonBody Success");
