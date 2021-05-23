@@ -30,13 +30,13 @@
       <el-table-column prop="createTime" label="创建日期" />
       <el-table-column label="操作" width="160px" align="center" fixed="right">
         <template slot-scope="scope">
-          <el-button size="mini" style="margin-right: 2px" type="text">
-            <router-link :to="'/system/generate/preview/' + scope.row.tableName">
+          <el-button size="mini" style="margin-right: 5px" type="text">
+            <router-link :to="'/system/generate/jpa/preview/' + scope.row.tableName">
               预览
             </router-link>
           </el-button>
-          <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text" @click="toDownload(scope.row.tableName)">下载</el-button>
-          <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text">
+          <el-button size="mini" style="margin-left: -1px;margin-right: 5px" type="text" @click="toDownload(scope.row.tableName)">下载</el-button>
+          <el-button size="mini" style="margin-left: -1px;margin-right: 5px" type="text">
             <router-link :to="'/system/generate/jpa/config/' + scope.row.tableName">
               配置
             </router-link>
