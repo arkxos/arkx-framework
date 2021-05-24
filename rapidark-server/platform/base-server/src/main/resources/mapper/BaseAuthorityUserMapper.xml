@@ -23,8 +23,8 @@
         a.authority,
         up.expire_time,
         'user' AS owner
-        FROM base_authority_user AS up
-        INNER JOIN base_authority AS a ON up.authority_id = a.authority_id
+        FROM base_authority_user up
+        INNER JOIN base_authority a ON up.authority_id = a.authority_id
         WHERE up.user_id = #{userId} AND a.status = 1
     </select>
 
@@ -36,9 +36,9 @@
         m.*,
         ua.user_id,
         ua.expire_time
-        FROM base_authority_user AS ua
-        INNER JOIN base_authority AS a ON ua.authority_id = a.authority_id
-        INNER JOIN base_menu AS m ON a.menu_id = m.menu_id
+        FROM base_authority_user ua
+        INNER JOIN base_authority a ON ua.authority_id = a.authority_id
+        INNER JOIN base_menu m ON a.menu_id = m.menu_id
         WHERE ua.user_id = #{userId} AND a.status = 1
         <if test="serviceId != null and serviceId != ''">
             AND m.service_id = #{serviceId}

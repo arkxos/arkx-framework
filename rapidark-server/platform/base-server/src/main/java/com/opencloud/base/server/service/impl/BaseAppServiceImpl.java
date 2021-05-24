@@ -71,7 +71,8 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
                 .eq(ObjectUtils.isNotEmpty(query.getAppId()), BaseApp::getAppId, query.getAppId())
                 .likeRight(ObjectUtils.isNotEmpty(query.getAppName()), BaseApp::getAppName, query.getAppName())
                 .likeRight(ObjectUtils.isNotEmpty(query.getAppNameEn()), BaseApp::getAppNameEn, query.getAppNameEn())
-                .orderByDesc(BaseApp::getCreateTime);
+//                .orderByDesc(BaseApp::getCreateTime)
+        ;
         return pageList(cq);
     }
 

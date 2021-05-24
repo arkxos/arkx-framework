@@ -27,8 +27,8 @@ import javax.annotation.PostConstruct;
  * @version 1.0
  * @date 2021/5/24 17:54
  */
-@Slf4j
 @Component
+@Slf4j
 public class MapperHotDeployPlugin {
 //    protected final Log log = LogFactory.getLog(getClass());
     @Value("${mybatis-plus.mapper-locations}")
@@ -140,7 +140,7 @@ public class MapperHotDeployPlugin {
      * @throws Exception
      */
     private void removeConfig(Configuration configuration) throws Exception {
-        Class<?> classConfig = configuration.getClass();
+        Class<?> classConfig = configuration.getClass().getSuperclass();
         clearMap(classConfig, configuration, "mappedStatements");
         clearMap(classConfig, configuration, "caches");
         clearMap(classConfig, configuration, "resultMaps");

@@ -49,10 +49,10 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
             "        a.service_id,\n" +
             "        a.path,\n" +
             "        r.url\n" +
-            "    FROM gateway_rate_limit_api AS i\n" +
-            "    INNER JOIN gateway_rate_limit AS p ON i.policy_id = p.policy_id\n" +
-            "    INNER JOIN base_api AS a ON i.api_id = a.api_id\n" +
-            "    INNER JOIN gateway_route AS r ON a.service_id = r.route_name\n" +
+            "    FROM gateway_rate_limit_api i\n" +
+            "    INNER JOIN gateway_rate_limit p ON i.policy_id = p.policy_id\n" +
+            "    INNER JOIN base_api a ON i.api_id = a.api_id\n" +
+            "    INNER JOIN gateway_route r ON a.service_id = r.route_name\n" +
             "    WHERE p.policy_type = 'url'";
 
 

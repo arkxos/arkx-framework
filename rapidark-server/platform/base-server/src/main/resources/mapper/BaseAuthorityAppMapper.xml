@@ -16,8 +16,8 @@
         a.authority,
         ap.expire_time,
         'app' AS owner
-        FROM base_authority_app AS ap
-        INNER JOIN base_authority AS a ON ap.authority_id = a.authority_id
+        FROM base_authority_app ap
+        INNER JOIN base_authority a ON ap.authority_id = a.authority_id
         WHERE ap.app_id = #{appId} AND a.status = 1
     </select>
 </mapper>

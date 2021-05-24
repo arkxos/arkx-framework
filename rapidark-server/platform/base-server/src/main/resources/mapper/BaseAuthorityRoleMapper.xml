@@ -23,8 +23,8 @@
         a.authority,
         rp.expire_time,
         'role' AS owner
-        FROM base_authority_role AS rp
-        INNER JOIN base_authority AS a ON rp.authority_id = a.authority_id
+        FROM base_authority_role rp
+        INNER JOIN base_authority a ON rp.authority_id = a.authority_id
         WHERE rp.role_id = #{roleId} AND a.status = 1
     </select>
 
@@ -36,9 +36,9 @@
         m.*,
         rp.role_id,
         rp.expire_time
-        FROM base_authority_role AS rp
-        INNER JOIN base_authority AS a ON rp.authority_id = a.authority_id
-        INNER JOIN base_menu AS m ON a.menu_id = m.menu_id
+        FROM base_authority_role rp
+        INNER JOIN base_authority a ON rp.authority_id = a.authority_id
+        INNER JOIN base_menu m ON a.menu_id = m.menu_id
         WHERE rp.role_id = #{roleId} AND a.status = 1
         <if test="serviceId != null and serviceId != ''">
             AND m.service_id = #{serviceId}

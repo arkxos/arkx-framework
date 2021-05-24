@@ -56,8 +56,8 @@
         a.authority_id,
         a.authority,
         m.*
-        FROM base_authority AS a
-        INNER JOIN base_menu AS m ON a.menu_id = m.menu_id
+        FROM base_authority a
+        INNER JOIN base_menu m ON a.menu_id = m.menu_id
         <where>
             <if test="serviceId != null and serviceId != ''">
                 AND m.service_id = #{serviceId}
@@ -73,13 +73,13 @@
         a.authority_id,
         a.authority,
         o.*
-        FROM base_authority AS a
-        INNER JOIN base_action AS o ON a.action_id = o.action_id
+        FROM base_authority a
+        INNER JOIN base_action o ON a.action_id = o.action_id
         <if test="roleId!=null">
-            INNER JOIN base_authority_role AS ra ON ra.authority_id = a.authority_id
+            INNER JOIN base_authority_role ra ON ra.authority_id = a.authority_id
         </if>
         <if test="userId!=null">
-            INNER JOIN base_authority_user AS ua ON ua.authority_id = a.authority_id
+            INNER JOIN base_authority_user ua ON ua.authority_id = a.authority_id
         </if>
         <where>
             <if test="status!=null">
@@ -103,9 +103,9 @@
         a.authority,
         api.*,
         route.path as prefix
-        FROM base_authority AS a
-        INNER JOIN base_api AS api ON a.api_id = api.api_id
-        INNER JOIN gateway_route AS route ON route.route_name = api.service_id
+        FROM base_authority a
+        INNER JOIN base_api api ON a.api_id = api.api_id
+        INNER JOIN gateway_route route ON route.route_name = api.service_id
         <where>
             <if test="status!=null">
                 AND api.status = #{status}
@@ -138,47 +138,56 @@
 
     <select id="selectAllAuthorityResource" resultMap="AuthorityResource">
         SELECT
-        a.authority_id,
-        a.authority,
-        menu.path,
-        menu.service_id,
-        '1' AS is_auth,
-        '1' AS is_open,
-        menu.`status`,
-        route.path AS prefix
-        FROM base_authority a
-        INNER JOIN base_menu menu ON a.menu_id = menu.menu_id
-        LEFT JOIN gateway_route route ON route.route_name = menu.service_id
-        WHERE menu.`status` = 1
-        UNION ALL
-        SELECT
-        a.authority_id,
-        a.authority,
-        api.path,
-        api.service_id,
-        api.is_auth,
-        api.is_open,
-        api.`status`,
-        route.path AS prefix
-        FROM base_authority a
-        INNER JOIN base_api api ON a.api_id = api.api_id
-        LEFT JOIN gateway_route route ON route.route_name = api.service_id
-        UNION ALL
-        SELECT
-        a.authority_id,
-        a.authority,
-        api.path,
-        api.service_id,
-        api.is_auth,
-        api.is_open,
-        api.`status`,
-        route.path AS prefix
-        FROM base_authority_action ac
-        INNER JOIN base_authority a ON a.action_id = ac.action_id
-        INNER JOIN base_authority a2 ON ac.authority_id = a2.authority_id
-        INNER JOIN base_api api ON a2.api_id = api.api_id
-        INNER JOIN base_action action ON ac.action_id = action.action_id
-        LEFT JOIN gateway_route route ON route.route_name = api.service_id
-        WHERE action.`status` = 1
+	a.authority_id,
+	a.authority,
+	menu.path,
+	menu.service_id,
+	1 AS is_auth,
+	1 AS is_open,
+	menu.status,
+	route.path AS prefix
+FROM
+	base_authority a
+	INNER JOIN base_menu menu ON a.menu_id = menu.menu_id
+	LEFT JOIN gateway_route route ON route.route_name = menu.service_id
+WHERE
+	menu.status = 1
+
+	UNION ALL
+
+SELECT
+	a.authority_id,
+	a.authority,
+	api.path,
+	api.service_id,
+	api.is_auth,
+	api.is_open,
+	api.status,
+	route.path AS prefix
+FROM
+	base_authority a
+	INNER JOIN base_api api ON a.api_id = api.api_id
+	LEFT JOIN gateway_route route ON route.route_name = api.service_id
+
+	UNION ALL
+
+SELECT
+	a.authority_id,
+	a.authority,
+	api.path,
+	api.service_id,
+	api.is_auth,
+	api.is_open,
+	api.status,
+	route.path AS prefix
+FROM
+	base_authority_action ac
+	INNER JOIN base_authority a ON a.action_id = ac.action_id
+	INNER JOIN base_authority a2 ON ac.authority_id = a2.authority_id
+	INNER JOIN base_api api ON a2.api_id = api.api_id
+	INNER JOIN base_action action ON ac.action_id = action.action_id
+	LEFT JOIN gateway_route route ON route.route_name = api.service_id
+WHERE
+	action.status = 1
     </select>
 </mapper>

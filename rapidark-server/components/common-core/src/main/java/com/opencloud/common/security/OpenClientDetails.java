@@ -138,7 +138,11 @@ public class OpenClientDetails implements ClientDetails, Serializable {
     }
 
     public void setAutoApproveScopes(Collection<String> autoApproveScopes) {
-        this.autoApproveScopes = new HashSet<String>(autoApproveScopes);
+        if (autoApproveScopes == null) {
+            this.autoApproveScopes = new HashSet<String>();
+        } else {
+            this.autoApproveScopes = new HashSet<String>(autoApproveScopes);
+        }
     }
 
     @Override
