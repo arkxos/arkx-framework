@@ -62,6 +62,7 @@ const actions = {
    */
   async login({ commit }, userInfo) {
     const { data } = await login(userInfo)
+    console.log('login data: ', data)
     const token = data[tokenName]
     if (token) {
       commit('setToken', token)

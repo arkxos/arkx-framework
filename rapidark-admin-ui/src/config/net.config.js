@@ -7,7 +7,7 @@ module.exports = {
   // 问号后边代表开发环境，冒号后边代表生产环境
   baseURL:
   // process.env.NODE_ENV === 'development' ? '/vab-mock-server' : '/vab-mock-server',
-    process.env.NODE_ENV === 'development' ? '' : '',
+    process.env.NODE_ENV === 'development' ? '' : '/server',
   // 配后端数据的接收方式application/json;charset=UTF-8 或 application/x-www-form-urlencoded;charset=UTF-8
   contentType: 'application/json;charset=UTF-8',
   // 最长请求时间
