@@ -38,7 +38,9 @@ public class ColumnInfo implements Serializable {
     @Id
     @Column(name = "column_id")
     @ApiModelProperty(value = "ID", hidden = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
+    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
     @ApiModelProperty(value = "表名")
@@ -84,7 +86,7 @@ public class ColumnInfo implements Serializable {
         this.tableName = tableName;
         this.columnName = columnName;
         this.columnType = columnType;
-        this.keyType = keyType;
+        this.keyType = keyType == null ? "" : keyType;
         this.extra = extra;
         this.notNull = notNull;
         if(GenUtil.PK.equalsIgnoreCase(keyType) && GenUtil.EXTRA.equalsIgnoreCase(extra)){
@@ -93,5 +95,12 @@ public class ColumnInfo implements Serializable {
         this.remark = remark;
         this.listShow = true;
         this.formShow = true;
+    }
+
+    public String getKeyType() {
+        if (this.keyType == null) {
+            return "";
+        }
+        return this.keyType;
     }
 }

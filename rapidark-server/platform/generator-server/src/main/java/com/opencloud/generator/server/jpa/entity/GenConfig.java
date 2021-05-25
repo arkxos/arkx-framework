@@ -42,7 +42,9 @@ public class GenConfig implements Serializable {
     @Id
     @Column(name = "config_id")
     @ApiModelProperty(value = "ID", hidden = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
+    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
     @NotBlank
@@ -75,4 +77,5 @@ public class GenConfig implements Serializable {
 
     @ApiModelProperty(value = "是否覆盖")
     private Boolean cover = false;
+
 }

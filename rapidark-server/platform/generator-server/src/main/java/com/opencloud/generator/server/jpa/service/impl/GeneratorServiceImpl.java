@@ -31,6 +31,7 @@ import me.zhengjie.utils.PageUtil;
 import me.zhengjie.utils.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +72,9 @@ public class GeneratorServiceImpl implements GeneratorService {
      */
     public boolean isOracleDataBase(){
         boolean res = false;
-        SessionFactory sessionFactory = em.unwrap(SessionFactory.class);
+        EntityManagerFactory entityManagerFactory = em.getEntityManagerFactory();
+        SessionFactoryImpl sessionFactory = (SessionFactoryImpl)entityManagerFactory.unwrap(SessionFactory.class);
+
         Session session = sessionFactory.openSession();
         if (session != null) {
             res = session.doReturningWork(
@@ -91,7 +95,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Override
     public Object getTables() {
-        isOracleDataBase();
+        boolean isOracle = isOracleDataBase();
         // 使用预编译防止sql注入
         String sql = "select table_name ,create_time , engine, table_collation, table_comment from information_schema.tables " +
                 "where table_schema = (select database()) " +
@@ -102,10 +106,22 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Override
     public Object getTables(String name, int[] startEnd) {
+        boolean isOracle = isOracleDataBase();
         // 使用预编译防止sql注入
-        String sql = "select table_name ,create_time , engine, table_collation, table_comment from information_schema.tables " +
-                "where table_schema = (select database()) " +
-                "and table_name like ? order by create_time desc";
+        String sql = "";
+        if (isOracle) {
+            sql = "select t.table_name ,uo.CREATED AS create_time , 'pdb' AS engine, 'utf8' AS table_collation, f.comments AS table_comment\n" +
+                    "  from user_tables t\n" +
+                    " inner join user_tab_comments f on t.table_name = f.table_name\n" +
+                    " LEFT JOIN user_objects uo ON t.table_name = uo.object_name" +
+                    " WHERE  " +
+                    " t.table_name like ? order by t.table_name asc";
+        } else {
+            sql = "select table_name ,create_time , engine, table_collation, table_comment from information_schema.tables " +
+                    "where table_schema = (select database()) " +
+                    "and table_name like ? order by create_time desc";
+        }
+
         Query query = em.createNativeQuery(sql);
         query.setFirstResult(startEnd[0]);
         query.setMaxResults(startEnd[1] - startEnd[0]);
@@ -116,8 +132,22 @@ public class GeneratorServiceImpl implements GeneratorService {
             Object[] arr = (Object[]) obj;
             tableInfos.add(new TableInfo(arr[0], arr[1], arr[2], arr[3], ObjectUtil.isNotEmpty(arr[4]) ? arr[4] : "-"));
         }
-        Query query1 = em.createNativeQuery("SELECT COUNT(*) from information_schema.tables where table_schema = (select database())");
-        Object totalElements = query1.getSingleResult();
+        Object totalElements = 0;
+        if (isOracle) {
+            Query query1 = em.createNativeQuery("SELECT COUNT(1) FROM (\n" +
+                    "\tselect t.table_name ,uo.CREATED AS create_time , 'pdb' AS engine, 'utf8' AS table_collation, f.comments AS table_comment\n" +
+                    "\t\tfrom user_tables t\n" +
+                    "\t inner join user_tab_comments f on t.table_name = f.table_name\n" +
+                    " LEFT JOIN user_objects uo ON t.table_name = uo.object_name" +
+                    "\t WHERE t.table_name like ?\n" +
+                    " )");
+            query1.setParameter(1, StringUtils.isNotBlank(name) ? ("%" + name + "%") : "%%");
+            totalElements = query1.getSingleResult();
+        } else {
+            Query query1 = em.createNativeQuery("SELECT COUNT(*) from information_schema.tables where table_schema = (select database())");
+            totalElements = query1.getSingleResult();
+        }
+
         return PageUtil.toPage(tableInfos, totalElements);
     }
 
@@ -135,10 +165,45 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Override
     public List<ColumnInfo> query(String tableName) {
         // 使用预编译防止sql注入
-        String sql = "select column_name, is_nullable, data_type, column_comment, column_key, extra from information_schema.columns " +
-                "where table_name = ? and table_schema = (select database()) order by ordinal_position";
+        String sql = "";
+        if (isOracleDataBase()) {
+            sql = "SELECT\n" +
+                    "\tutc.column_name AS column_name,\n" +
+                    "\tCASE utc.nullable WHEN 'N' THEN 'NO' ELSE 'YES' END is_nullable,\n" +
+                    "\tutc.data_type AS data_type,\n" +
+                    "\tucc.comments column_comment,\n" +
+                    "\tCASE UTC.COLUMN_NAME  WHEN (\n" +
+                    "\t\tSELECT\n" +
+                    "\t\t\tcol.column_name \n" +
+                    "\t\tFROM\n" +
+                    "\t\t\tuser_constraints con,\n" +
+                    "\t\t\tuser_cons_columns col \n" +
+                    "\t\tWHERE\n" +
+                    "\t\t\tcon.constraint_name = col.constraint_name \n" +
+                    "\t\t\tAND con.constraint_type = 'P' \n" +
+                    "\t\t\tAND col.table_name = ? \n" +
+                    "\t\t) THEN 'PRI' ELSE '' END AS column_key ,\n" +
+                    "\t'' as extra\n" +
+                    "\t--utc.data_length AS 最大长度,\n" +
+                    "\t--utc.data_default 默认值,\n" +
+                    "\t--UTC.table_name 表名\n" +
+                    "\n" +
+                    "FROM\n" +
+                    "\tuser_tab_columns utc,\n" +
+                    "\tuser_col_comments ucc \n" +
+                    "WHERE\n" +
+                    "\tutc.table_name = ucc.table_name \n" +
+                    "\tAND utc.column_name = ucc.column_name \n" +
+                    "\tAND utc.table_name = ?";
+        } else {
+            sql = "select column_name, is_nullable, data_type, column_comment, column_key, extra from information_schema.columns " +
+                    "where table_name = ? and table_schema = (select database()) order by ordinal_position";
+        }
         Query query = em.createNativeQuery(sql);
         query.setParameter(1, tableName);
+        if (isOracleDataBase()) {
+            query.setParameter(2, tableName);
+        }
         List result = query.getResultList();
         List<ColumnInfo> columnInfos = new ArrayList<>();
         for (Object obj : result) {
