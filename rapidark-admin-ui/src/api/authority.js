@@ -134,6 +134,9 @@ export const grantAuthorityApp = ({ appId, expireTime, authorityIds }) => {
   return request({
     url: 'base/authority/app/grant',
     data,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
     method: 'post'
   })
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencloud.base.client.model.entity.BaseApp;
 import com.opencloud.base.client.service.IBaseAppServiceClient;
 import com.opencloud.base.server.controller.cmd.CreateAppCommand;
+import com.opencloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.opencloud.base.server.service.BaseAppService;
 import com.opencloud.common.model.PageParams;
 import com.opencloud.common.model.ResultBody;
@@ -17,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -203,47 +205,22 @@ public class BaseAppController implements IBaseAppServiceClient {
 
     /**
      * 完善应用开发信息
-     *
-     * @param appId                应用名称
-     * @param grantTypes           授权类型(多个使用,号隔开)
-     * @param redirectUrls         第三方应用授权回调地址(多个使用,号隔开)
-     * @param scopes               用户授权范围(多个使用,号隔开)
-     * @param autoApproveScopes    用户自动授权范围(多个使用,号隔开)
-     * @param accessTokenValidity  令牌有效期(秒)
-     * @param refreshTokenValidity 刷新令牌有效期(秒)
      * @return
      */
     @ApiOperation(value = "完善应用开发信息", notes = "完善应用开发信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "grantTypes", value = "授权类型(多个使用,号隔开)", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "redirectUrls", value = "第三方应用授权回调地址", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "scopes", value = "用户授权范围(多个使用,号隔开)", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "autoApproveScopes", value = "用户自动授权范围(多个使用,号隔开)", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "accessTokenValidity", value = "令牌有效期(秒)", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "refreshTokenValidity", value = "刷新令牌有效期(秒)", required = true, paramType = "form")
-    })
     @PostMapping("/app/client/update")
-    public ResultBody<String> updateAppClientInfo(
-            @RequestParam("appId") String appId,
-            @RequestParam(value = "grantTypes") String grantTypes,
-            @RequestParam(value = "redirectUrls") String redirectUrls,
-            @RequestParam(value = "scopes") String scopes,
-            @RequestParam(value = "accessTokenValidity") Integer accessTokenValidity,
-            @RequestParam(value = "refreshTokenValidity") Integer refreshTokenValidity,
-            @RequestParam(value = "autoApproveScopes", required = false) String autoApproveScopes
-    ) {
-        BaseApp app = baseAppService.getAppInfo(appId);
-        OpenClientDetails client = new OpenClientDetails(app.getApiKey(), "", scopes, grantTypes, "", redirectUrls);
-        client.setAccessTokenValiditySeconds(accessTokenValidity);
-        client.setRefreshTokenValiditySeconds(refreshTokenValidity);
-        client.setAutoApproveScopes(autoApproveScopes != null ? Arrays.asList(autoApproveScopes.split(",")) : null);
+    public ResultBody<String> updateAppClientInfo(@Valid @RequestBody UpdateAppClientInfoCommand command) {
+        BaseApp app = baseAppService.getAppInfo(command.getAppId());
+        OpenClientDetails client = new OpenClientDetails(app.getApiKey(), "",
+                command.getScopes(), command.getGrantTypes(), "", command.getRedirectUrls());
+        client.setAccessTokenValiditySeconds(command.getAccessTokenValidity());
+        client.setRefreshTokenValiditySeconds(command.getRefreshTokenValidity());
+        client.setAutoApproveScopes(command.getAutoApproveScopes() != null ? Arrays.asList(command.getAutoApproveScopes().split(",")) : null);
         Map info = BeanConvertUtils.objectToMap(app);
         client.setAdditionalInformation(info);
         baseAppService.updateAppClientInfo(client);
         return ResultBody.ok();
     }
-
 
     /**
      * 重置应用秘钥

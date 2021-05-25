@@ -113,7 +113,11 @@ public class ResultBody<T> implements Serializable {
     }
 
     public ResultBody msg(String message) {
-        this.message = i18n(ErrorCode.getResultEnum(this.code).getMessage(), message);
+        if (ErrorCode.BAD_REQUEST.getCode() == this.code || ErrorCode.ERROR.getCode() == this.code) {
+            this.message = i18n(ErrorCode.getResultEnum(this.code).getMessage(), message) + "("+message+")";
+        } else {
+            this.message = i18n(ErrorCode.getResultEnum(this.code).getMessage(), message);
+        }
         return this;
     }
 

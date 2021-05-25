@@ -100,7 +100,7 @@
                 </Upload>
               </FormItem>
               <FormItem label="AppId">
-                <Input disabled v-model="formItem.appId" placeholder="请输入内容"/>
+                <Input readonly v-model="formItem.appId" placeholder="请输入内容"/>
               </FormItem>
               <FormItem label="开发者">
                 <Select v-model="formItem.developerId" filterable clearable>
@@ -350,10 +350,11 @@ export default {
           { required: true, type: 'array', min: 1, message: '用户授权范围不能为空', trigger: 'blur' }
         ],
         accessTokenValidity: [
-          { required: true, type: 'integer', min: 900, message: '访问令牌有效期不能少于900', trigger: 'blur' }
+          // { required: true, type: 'integer', min: 900, message: '访问令牌有效期不能少于900', trigger: 'blur' }
+          { required: true, type: 'integer', message: '访问令牌有效期不能少于900', trigger: 'blur' }
         ],
         refreshTokenValidity: [
-          { required: true, type: 'integer', min: 900, message: '刷新令牌有效期不能少于900', trigger: 'blur' }
+          { required: true, type: 'integer', message: '刷新令牌有效期不能少于900', trigger: 'blur' }
         ]
       },
       formItem: {

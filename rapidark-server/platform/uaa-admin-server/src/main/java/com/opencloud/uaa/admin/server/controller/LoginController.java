@@ -6,6 +6,8 @@ import com.opencloud.common.security.OpenUserDetails;
 import com.opencloud.common.security.oauth2.client.OpenOAuth2ClientDetails;
 import com.opencloud.common.security.oauth2.client.OpenOAuth2ClientProperties;
 import com.opencloud.common.utils.BeanConvertUtils;
+import com.opencloud.uaa.admin.server.controller.cmd.LogoutCommand;
+import com.opencloud.uaa.admin.server.controller.cmd.ThirdpartSystemLoginCommand;
 import com.opencloud.uaa.admin.server.service.feign.BaseUserServiceClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,23 +17,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerEndpointsConfiguration;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author: liuyadu
- * @date: 2018/11/9 15:43
- * @description:
+ * @author darkness
+ * @date 2021/5/25 13:44
+ * @version 1.0
+ * @param
+ * @return
  */
 @Api(tags = "用户认证中心")
 @RestController
 public class LoginController {
+
     @Autowired
     private OpenOAuth2ClientProperties clientProperties;
     @Autowired
@@ -54,7 +57,6 @@ public class LoginController {
         map.put("roles", baseUserServiceClient.getUserRoles(user.getUserId()).getData());
         return ResultBody.ok().data(map);
     }
-
 
     /**
      * 获取当前登录用户信息-SSO单点登录
@@ -83,26 +85,41 @@ public class LoginController {
     })
     @PostMapping("/login/token")
     public ResultBody<OAuth2AccessToken> getLoginToken(@RequestParam String username, @RequestParam String password) throws Exception {
-        OAuth2AccessToken result = getToken(username, password, null);
+        OAuth2AccessToken result = getFrontToken(username, password, null);
         return ResultBody.ok().data(result);
     }
 
+    /**
+     * 获取用户访问令牌
+     * 基于oauth2密码模式登录
+     *
+     * @return access_token
+     */
+    @ApiOperation(value = "第三方客户端系统登录获取用户访问令牌", notes = "基于oauth2密码模式登录,无需签名,返回access_token")
+    @PostMapping("/login/thirdpart/token")
+    public ResultBody<OAuth2AccessToken> getThirtpartLoginToken(@Valid @RequestBody ThirdpartSystemLoginCommand command) throws Exception {
+        // 使用oauth2密码模式登录.
+        Map<String, String> postParameters = new HashMap<>();
+        postParameters.put("client_id", command.getClientId());
+        postParameters.put("client_secret", command.getClientSecret());
+        postParameters.put("grant_type", "client_credentials");
+        OAuth2AccessToken result = OpenHelper.createAccessToken(endpoints, postParameters);
+        return ResultBody.ok().data(result);
+    }
 
     /**
      * 退出移除令牌
      *
-     * @param token
      */
     @ApiOperation(value = "退出并移除令牌", notes = "退出并移除令牌,令牌将失效")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", required = true, value = "访问令牌", paramType = "form")
     })
     @PostMapping("/logout/token")
-    public ResultBody removeToken(@RequestParam String token) {
-        tokenStore.removeAccessToken(tokenStore.readAccessToken(token));
+    public ResultBody removeToken(@Valid @RequestBody LogoutCommand command) {
+        tokenStore.removeAccessToken(tokenStore.readAccessToken(command.getToken()));
         return ResultBody.ok();
     }
-
 
     /**
      * 生成 oauth2 token
@@ -112,7 +129,7 @@ public class LoginController {
      * @param type
      * @return
      */
-    public OAuth2AccessToken getToken(String userName, String password, String type) throws Exception {
+    public OAuth2AccessToken getFrontToken(String userName, String password, String type) throws Exception {
         OpenOAuth2ClientDetails clientDetails = clientProperties.getOauth2().get("admin");
         // 使用oauth2密码模式登录.
         Map<String, String> postParameters = new HashMap<>();

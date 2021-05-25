@@ -230,7 +230,11 @@ public class GatewayContextFilter implements WebFilter, Ordered {
                                     formDataBodyBuilder.append(entryKey).append("=").append(URLEncoder.encode(value, charsetName)).append("&");
                                 }
                             } else {
-                                formDataBodyBuilder.append(entryKey).append("=").append(URLEncoder.encode(entryValue.get(0), charsetName)).append("&");
+                                String myEntryValue = entryValue.get(0);
+                                if (myEntryValue != null) {
+                                    myEntryValue = URLEncoder.encode(myEntryValue, charsetName);
+                                }
+                                formDataBodyBuilder.append(entryKey).append("=").append(myEntryValue).append("&");
                             }
                         }
                     } catch (UnsupportedEncodingException e) {

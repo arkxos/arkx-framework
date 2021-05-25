@@ -1,0 +1,25 @@
+package com.opencloud.uaa.admin.server.controller.cmd;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+
+/**
+ * @author darkness
+ * @version 1.0
+ * @date 2021/5/25 14:53
+ */
+@Data
+@ApiModel(value = "修改应用开发信息")
+public class ThirdpartSystemLoginCommand {
+
+    @ApiModelProperty(required = true, value = "客户端id")
+    @NotNull(message = "客户端id不能为空")
+    private String clientId;
+    @ApiModelProperty(required = true, value = "客户端秘钥")
+    @NotNull(message = "客户端秘钥不能为空")
+    private String clientSecret;
+
+}

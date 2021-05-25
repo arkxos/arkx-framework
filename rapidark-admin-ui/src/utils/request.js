@@ -132,7 +132,10 @@ instance.interceptors.request.use(
       //   config.data = qs.stringify({ ...config.data })
       // }
       if (!config.params && config.data) {
+        console.log('before config.params: ', config.params)
+        console.log('config.data: ', config.data)
         config.params = { ...config.data }
+        console.log('after config.params: ', config.params)
       }
     }
 

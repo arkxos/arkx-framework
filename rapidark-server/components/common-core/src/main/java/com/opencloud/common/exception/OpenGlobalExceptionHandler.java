@@ -98,11 +98,7 @@ public class OpenGlobalExceptionHandler {
         int httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
         String message = ex.getMessage();
         String className = ex.getClass().getName();
-        if (className.contains("NullPointerException")
-        || ex instanceof RuntimeException) {
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
-            code = ErrorCode.ERROR;
-        } else if (className.contains("UsernameNotFoundException")) {
+        if (className.contains("UsernameNotFoundException")) {
             httpStatus = HttpStatus.UNAUTHORIZED.value();
             code = ErrorCode.USERNAME_NOT_FOUND;
         } else if (className.contains("BadCredentialsException")) {
@@ -188,7 +184,7 @@ public class OpenGlobalExceptionHandler {
         } else if (className.contains("MethodArgumentNotValidException")) {
             BindingResult bindingResult = ((MethodArgumentNotValidException) ex).getBindingResult();
             code = ErrorCode.ALERT;
-            return ResultBody.failed().code(code.getCode()).msg(bindingResult.getFieldError().getDefaultMessage());
+            message = bindingResult.getFieldError().getDefaultMessage();
         } else if (className.contains("IllegalArgumentException")) {
             //参数错误
             code = ErrorCode.ALERT;
@@ -201,8 +197,14 @@ public class OpenGlobalExceptionHandler {
             code = ErrorCode.SIGNATURE_DENIED;
         } else if (message.equalsIgnoreCase(ErrorCode.TOO_MANY_REQUESTS.name())) {
             code = ErrorCode.TOO_MANY_REQUESTS;
+        } else if(className.contains("InvalidMediaTypeException")) {
+            httpStatus = HttpStatus.BAD_REQUEST.value();
+            code = ErrorCode.BAD_REQUEST;
+        } else {
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
+            code = ErrorCode.ERROR;
         }
-        return buildBody(ex, code, path, httpStatus);
+        return buildBody(ex, message, code, path, httpStatus);
     }
 
     /**
@@ -211,11 +213,11 @@ public class OpenGlobalExceptionHandler {
      * @param exception
      * @return
      */
-    private static ResultBody buildBody(Exception exception, ErrorCode resultCode, String path, int httpStatus) {
+    private static ResultBody buildBody(Exception exception, String message, ErrorCode resultCode, String path, int httpStatus) {
         if (resultCode == null) {
             resultCode = ErrorCode.ERROR;
         }
-        ResultBody resultBody = ResultBody.failed().code(resultCode.getCode()).msg(exception.getMessage()).path(path).httpStatus(httpStatus);
+        ResultBody resultBody = ResultBody.failed().code(resultCode.getCode()).msg(message).path(path).httpStatus(httpStatus);
         log.error("==> error:{} exception: {}", resultBody, exception);
         return resultBody;
     }

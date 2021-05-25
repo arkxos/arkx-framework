@@ -238,8 +238,10 @@ public class OpenHelper {
     public static OAuth2AccessToken createAccessToken(AuthorizationServerEndpointsConfiguration endpoints, Map<String, String> postParameters) throws Exception {
         String clientId = postParameters.get("client_id");
         String clientSecret = postParameters.get("client_secret");
+
         Assert.notNull(clientId, "client_id not null");
         Assert.notNull(clientSecret, "client_secret not null");
+
         clientId = clientId.trim();
         ClientDetailsService clientDetailsService = (ClientDetailsService) ReflectionUtils.getFieldValue(endpoints, "clientDetailsService");
         PasswordEncoder passwordEncoder = SpringContextHolder.getBean(PasswordEncoder.class);
