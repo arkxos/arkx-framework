@@ -34,7 +34,7 @@ public class ColUtil {
      * @param type 数据库字段类型
      * @return String
      */
-    static String cloToJava(String type) {
+    public static String cloToJava(String type) {
         Configuration config = getConfig();
         assert config != null;
         return config.getString(type, "unknowType");

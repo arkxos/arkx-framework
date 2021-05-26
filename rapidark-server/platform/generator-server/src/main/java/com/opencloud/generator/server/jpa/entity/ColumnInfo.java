@@ -15,6 +15,7 @@
  */
 package com.opencloud.generator.server.jpa.entity;
 
+import com.opencloud.generator.server.jpa.util.ColUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -95,6 +96,13 @@ public class ColumnInfo implements Serializable {
         this.remark = remark;
         this.listShow = true;
         this.formShow = true;
+
+        String colType = ColUtil.cloToJava(columnType);
+        if ("LocalDateTime".equals(colType)) {
+            this.formType = "Date";
+        } else {
+            this.formType = "Input";
+        }
     }
 
     public String getKeyType() {
