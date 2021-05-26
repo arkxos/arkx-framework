@@ -50,11 +50,25 @@ export default {
       readOnly: true
     })
     this.editor.setSize('auto', this.height)
-    this.editor.setValue(this.value)
+    this.editor.setValue(this.escapeStringHTML(this.value))
   },
   methods: {
     getValue() {
       return this.editor.getValue()
+    },
+    //把HTML格式的字符串转义成实体格式字符串
+    escapeHTMLString: function (str) {
+      str = str.replace(/</g,'&lt;');
+      str = str.replace(/>/g,'&gt;');
+      return str;
+    },
+    //把实体格式字符串转义成HTML格式的字符串
+    escapeStringHTML: function (str) {
+      str = str.replace(/&lt;/g,'<');
+      str = str.replace(/&gt;/g,'>');
+      str = str.replace(/&quot;/g,'"');
+
+      return str;
     }
   }
 }
