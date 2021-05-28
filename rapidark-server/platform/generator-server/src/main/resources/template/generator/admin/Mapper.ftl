@@ -1,5 +1,5 @@
 /*
-*  Copyright 2019-2020 Zheng Jie
+*  Copyright 2019-2021 RapidArk
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 package ${package}.service.mapstruct;
 
 import me.zhengjie.base.BaseMapper;
-import ${package}.domain.${className};
+import ${package}.entity.${className};
 import ${package}.service.dto.${className}Dto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 /**
-* @website https://el-admin.vip
+* @website http://rapidark.com
 * @author ${author}
 * @date ${date}
 **/

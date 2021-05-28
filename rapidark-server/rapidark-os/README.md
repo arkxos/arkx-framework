@@ -11,7 +11,7 @@
 #### 项目简介
 一个基于 Spring Boot 2.1.0 、 Spring Boot Jpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统
 
-**开发文档：**  [https://el-admin.vip](https://el-admin.vip)
+**开发文档：**  [http://rapidark.com](http://rapidark.com)
 
 **体验地址：**  [https://el-admin.xin](https://el-admin.xin)
 
@@ -102,7 +102,7 @@
 - 感谢 [d15801543974](https://github.com/d15801543974) 大佬提供的基于注解的通用查询方式
 
 #### 项目捐赠
-项目的发展离不开你的支持，请作者喝杯咖啡吧☕  [Donate](https://el-admin.vip/donation/)
+项目的发展离不开你的支持，请作者喝杯咖啡吧☕  [Donate](http://rapidark.com/donation/)
 
 #### 反馈交流
 - QQ交流群：一群：<strike>891137268</strike> 已满、二群：947578238

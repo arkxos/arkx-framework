@@ -1,5 +1,5 @@
 /*
-*  Copyright 2019-2020 Zheng Jie
+*  Copyright 2019-2021 RapidArk
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package ${package}.rest;
 
 import me.zhengjie.annotation.Log;
-import ${package}.domain.${className};
+import ${package}.entity.${className};
 import ${package}.service.${className}Service;
 import ${package}.service.dto.${className}QueryCriteria;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +31,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 /**
-* @website https://el-admin.vip
+* @website http://rapidark.com
 * @author ${author}
 * @date ${date}
 **/

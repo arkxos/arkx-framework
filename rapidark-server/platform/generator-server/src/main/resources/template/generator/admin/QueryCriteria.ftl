@@ -1,5 +1,5 @@
 /*
-*  Copyright 2019-2020 Zheng Jie
+*  Copyright 2019-2021 RapidArk
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import me.zhengjie.annotation.Query;
 </#if>
 
 /**
-* @website https://el-admin.vip
+* @website http://rapidark.com
 * @author ${author}
 * @date ${date}
 **/

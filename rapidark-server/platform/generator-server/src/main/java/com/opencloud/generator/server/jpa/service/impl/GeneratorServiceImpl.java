@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2020 Zheng Jie
+ *  Copyright 2019-2021 RapidArk
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -115,7 +115,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     " inner join user_tab_comments f on t.table_name = f.table_name\n" +
                     " LEFT JOIN user_objects uo ON t.table_name = uo.object_name" +
                     " WHERE  " +
-                    " t.table_name like ? order by t.table_name asc";
+                    " t.table_name like ? order by uo.CREATED desc, t.table_name asc";
         } else {
             sql = "select table_name ,create_time , engine, table_collation, table_comment from information_schema.tables " +
                     "where table_schema = (select database()) " +

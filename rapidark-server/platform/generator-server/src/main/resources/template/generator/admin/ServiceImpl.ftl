@@ -1,5 +1,5 @@
 /*
-*  Copyright 2019-2020 Zheng Jie
+*  Copyright 2019-2021 RapidArk
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 package ${package}.service.impl;
 
-import ${package}.domain.${className};
+import ${package}.entity.${className};
 <#if columns??>
     <#list columns as column>
         <#if column.columnKey = 'UNI'>
@@ -54,7 +54,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
-* @website https://el-admin.vip
+* @website http://rapidark.com
 * @description 服务实现
 * @author ${author}
 * @date ${date}

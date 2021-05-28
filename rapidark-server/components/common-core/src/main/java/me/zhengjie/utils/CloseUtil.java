@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2020 Zheng Jie
+ *  Copyright 2019-2021 RapidArk
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.io.Closeable;
 
 /**
  * @author Zheng Jie
- * @website https://el-admin.vip
+ * @website http://rapidark.com
  * @description 用于关闭各种连接，缺啥补啥
  * @date 2021-03-05
  **/

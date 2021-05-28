@@ -1,5 +1,5 @@
 /*
-*  Copyright 2019-2020 Zheng Jie
+*  Copyright 2019-2021 RapidArk
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
 */
 package ${package}.repository;
 
-import ${package}.domain.${className};
+import ${package}.entity.${className};
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
-* @website https://el-admin.vip
+* @website http://rapidark.com
 * @author ${author}
 * @date ${date}
 **/

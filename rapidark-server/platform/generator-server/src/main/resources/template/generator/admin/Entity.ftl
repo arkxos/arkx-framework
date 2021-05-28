@@ -1,5 +1,5 @@
 /*
-*  Copyright 2019-2020 Zheng Jie
+*  Copyright 2019-2021 RapidArk
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 */
-package ${package}.domain;
+package ${package}.entity;
 
 import lombok.Data;
 import cn.hutool.core.bean.BeanUtil;
@@ -38,7 +38,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
-* @website https://el-admin.vip
+* @website http://rapidark.com
 * @description /
 * @author ${author}
 * @date ${date}
