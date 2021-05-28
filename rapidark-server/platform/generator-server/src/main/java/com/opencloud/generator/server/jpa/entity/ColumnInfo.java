@@ -50,6 +50,9 @@ public class ColumnInfo implements Serializable {
     @ApiModelProperty(value = "数据库字段名称")
     private String columnName;
 
+    @ApiModelProperty(value = "数据库字段英文名称")
+    private String columnEnName;
+
     @ApiModelProperty(value = "数据库字段类型")
     private String columnType;
 
@@ -86,6 +89,7 @@ public class ColumnInfo implements Serializable {
     public ColumnInfo(String tableName, String columnName, Boolean notNull, String columnType, String remark, String keyType, String extra) {
         this.tableName = tableName;
         this.columnName = columnName;
+        this.columnEnName = columnName;
         this.columnType = columnType;
         this.keyType = keyType == null ? "" : keyType;
         this.extra = extra;

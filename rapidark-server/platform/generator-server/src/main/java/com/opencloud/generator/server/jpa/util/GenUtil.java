@@ -202,14 +202,16 @@ public class GenUtil {
         genMap.put("date", LocalDate.now().toString());
         // 表名
         genMap.put("tableName", genConfig.getTableName());
+        // 表英文名
+        genMap.put("tableEnName", genConfig.getTableEnName());
         // 大写开头的类名
-        String className = StringUtils.toCapitalizeCamelCase(genConfig.getTableName());
+        String className = StringUtils.toCapitalizeCamelCase(genConfig.getTableEnName());
         // 小写开头的类名
-        String changeClassName = StringUtils.toCamelCase(genConfig.getTableName());
+        String changeClassName = StringUtils.toCamelCase(genConfig.getTableEnName());
         // 判断是否去除表前缀
         if (StringUtils.isNotEmpty(genConfig.getPrefix())) {
-            className = StringUtils.toCapitalizeCamelCase(StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()));
-            changeClassName = StringUtils.toCamelCase(StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()));
+            className = StringUtils.toCapitalizeCamelCase(StrUtil.removePrefix(genConfig.getTableEnName(), genConfig.getPrefix()));
+            changeClassName = StringUtils.toCamelCase(StrUtil.removePrefix(genConfig.getTableEnName(), genConfig.getPrefix()));
         }
         // 保存类名
         genMap.put("className", className);
@@ -251,9 +253,9 @@ public class GenUtil {
             // 主键类型
             String colType = ColUtil.cloToJava(column.getColumnType());
             // 小写开头的字段名
-            String changeColumnName = StringUtils.toCamelCase(column.getColumnName());
+            String changeColumnName = StringUtils.toCamelCase(column.getColumnEnName());
             // 大写开头的字段名
-            String capitalColumnName = StringUtils.toCapitalizeCamelCase(column.getColumnName());
+            String capitalColumnName = StringUtils.toCapitalizeCamelCase(column.getColumnEnName());
             if (PK.equals(column.getKeyType())) {
                 // 存储主键类型
                 genMap.put("pkColumnType", colType);

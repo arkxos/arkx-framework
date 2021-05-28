@@ -35,6 +35,11 @@
           <el-form size="small" label-width="90px">
             <el-table v-loading="loading" :data="data" :max-height="tableHeight" size="small" style="width: 100%;margin-bottom: 15px">
               <el-table-column prop="columnName" label="字段名称" />
+              <el-table-column prop="columnEnName" label="字段英文名称">
+                <template slot-scope="scope">
+                  <el-input v-model="data[scope.$index].columnEnName" size="mini" class="edit-input" />
+                </template>
+              </el-table-column>
               <el-table-column prop="columnType" label="字段类型" />
               <el-table-column prop="remark" label="字段描述">
                 <template slot-scope="scope">
@@ -159,6 +164,10 @@
               <el-input v-model="form.author" style="width: 40%" />
               <span style="color: #C0C0C0;margin-left: 10px;">类上面的作者名称</span>
             </el-form-item>
+            <el-form-item label="表英文名称" prop="tableEnName">
+              <el-input v-model="form.tableEnName" style="width: 40%" />
+              <span style="color: #C0C0C0;margin-left: 10px;">表{{form.tableName}}对应的英文名称</span>
+            </el-form-item>
             <el-form-item label="模块名称" prop="moduleName">
               <el-input v-model="form.moduleName" style="width: 40%" />
               <span style="color: #C0C0C0;margin-left: 10px;">模块的名称，请选择项目中已存在的模块</span>
@@ -209,7 +218,7 @@ export default {
   data() {
     return {
       activeName: 'first', tableName: '', tableHeight: 550, columnLoading: false, configLoading: false, dicts: [], syncLoading: false, genLoading: false,
-      form: { id: null, tableName: '', author: '', pack: '', path: '', moduleName: '', cover: 'false', apiPath: '', prefix: '', apiAlias: null },
+      form: { id: null, tableName: '', tableEnName: '', author: '', pack: '', path: '', moduleName: '', cover: 'false', apiPath: '', prefix: '', apiAlias: null },
       rules: {
         author: [
           { required: true, message: '作者不能为空', trigger: 'blur' }

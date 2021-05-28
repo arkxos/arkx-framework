@@ -51,6 +51,10 @@ public class GenConfig implements Serializable {
     @ApiModelProperty(value = "表名")
     private String tableName;
 
+    @NotBlank
+    @ApiModelProperty(value = "表英文名")
+    private String tableEnName;
+
     @ApiModelProperty(value = "接口名称")
     private String apiAlias;
 
