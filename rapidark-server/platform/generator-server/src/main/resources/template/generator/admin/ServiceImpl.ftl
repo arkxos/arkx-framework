@@ -27,6 +27,7 @@ import me.zhengjie.exception.EntityExistException;
 </#if>
 import me.zhengjie.utils.ValidationUtil;
 import me.zhengjie.utils.FileUtil;
+import me.zhengjie.utils.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import ${package}.repository.${className}Repository;
 import ${package}.service.${className}Service;
@@ -93,7 +94,7 @@ public class ${className}ServiceImpl implements ${className}Service {
         resources.set${pkCapitalColName}(snowflake.nextId()); 
 </#if>
 <#if !auto && pkColumnType = 'String'>
-        resources.set${pkCapitalColName}(IdUtil.simpleUUID()); 
+        resources.set${pkCapitalColName}(UuidUtil.base58Uuid());
 </#if>
 <#if columns??>
     <#list columns as column>

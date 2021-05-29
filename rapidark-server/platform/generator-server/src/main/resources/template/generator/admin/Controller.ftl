@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+import com.opencloud.common.model.ResultBody;
 
 /**
 * @website http://rapidark.com
@@ -63,17 +64,17 @@ public class ${className}Controller {
     @Log("新增${apiAlias}")
     @ApiOperation("新增${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:add')")
-    public ResponseEntity<Object> create(@Validated @RequestBody ${className} resources){
-        return new ResponseEntity<>(${changeClassName}Service.create(resources),HttpStatus.CREATED);
+    public ResultBody<Object> create(@Validated @RequestBody ${className} resources){
+        return ResultBody.ok().data(${changeClassName}Service.create(resources));
     }
 
     @PutMapping
     @Log("修改${apiAlias}")
     @ApiOperation("修改${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:edit')")
-    public ResponseEntity<Object> update(@Validated @RequestBody ${className} resources){
+    public ResultBody<Object> update(@Validated @RequestBody ${className} resources){
         ${changeClassName}Service.update(resources);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResultBody.ok();
     }
 
     @Log("删除${apiAlias}")
