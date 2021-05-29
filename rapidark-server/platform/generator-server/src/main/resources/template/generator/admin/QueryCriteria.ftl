@@ -28,6 +28,7 @@ import java.util.List;
 <#if queryColumns??>
 import me.zhengjie.annotation.Query;
 </#if>
+import java.time.LocalDateTime;
 
 /**
 * @website http://rapidark.com

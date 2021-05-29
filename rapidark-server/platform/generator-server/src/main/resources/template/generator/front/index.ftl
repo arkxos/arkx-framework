@@ -32,7 +32,7 @@
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
       <crudOperation :permission="permission" />
       <!--表单组件-->
-      <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
+      <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" <#if isNotNullColumns??>:rules="rules"</#if> size="small" label-width="80px">
     <#if columns??>
       <#list columns as column>
@@ -91,7 +91,7 @@
             </#if>
             </#list>
         </#if>
-        <el-table-column v-if="checkPer(['admin','${changeClassName}:edit','${changeClassName}:del'])" label="操作" width="150px" align="center">
+        <el-table-column v-if="hasAuthority(['admin','${changeClassName}:edit','${changeClassName}:del'])" label="操作" width="150px" align="center">
           <template slot-scope="scope">
             <udOperation
               :data="scope.row"

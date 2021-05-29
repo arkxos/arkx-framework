@@ -27,6 +27,7 @@ import java.io.Serializable;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 </#if>
+import java.time.LocalDateTime;
 
 /**
 * @website http://rapidark.com

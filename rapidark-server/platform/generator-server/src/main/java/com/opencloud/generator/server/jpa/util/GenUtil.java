@@ -357,7 +357,7 @@ public class GenUtil {
         }
 
         if ("Entity".equals(templateName)) {
-            return packagePath + "domain" + File.separator + className + ".java";
+            return packagePath + "entity" + File.separator + className + ".java";
         }
 
         if ("Controller".equals(templateName)) {
