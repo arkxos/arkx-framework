@@ -11,6 +11,8 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import Treeselect from '@riophae/vue-treeselect'
 import ArkIcon from '@/components/ArkIcon/ArkIcon'
 import permission from './components/Permission'
+// 数据字典
+import dict from './components/Dict'
 
 /**
  * @description 正式环境默认使用mock，正式项目记得注释后再打包
@@ -30,6 +32,7 @@ Vue.use(permission)
 Vue.component(TreeTable.name, TreeTable)
 Vue.component('treeselect', Treeselect)
 Vue.component('ArkIcon', ArkIcon)
+Vue.use(dict)
 
 Vue.prototype.hasAuthority = function() {
   return true;
