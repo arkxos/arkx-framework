@@ -159,7 +159,7 @@
               @click="doSubmit"
             >保存</el-button>
           </div>
-          <el-form ref="form" :model="form" :rules="rules" size="small" label-width="78px">
+          <el-form ref="form" :model="form" :rules="rules" size="small" label-width="90px">
             <el-form-item label="作者名称" prop="author">
               <el-input v-model="form.author" style="width: 40%" />
               <span style="color: #C0C0C0;margin-left: 10px;">类上面的作者名称</span>
@@ -248,6 +248,20 @@ export default {
       this.init()
       get(this.tableName).then(data => {
         this.form = data
+        console.log('data', data)
+        /**
+         * { id: null, tableName: '', tableEnName: '', author: '', pack: '', path: '', moduleName: '', cover: 'false', apiPath: '', prefix: '', apiAlias: null }
+         * @type {string}
+         */
+        this.form.author = this.form.author || 'Darkness'
+        this.form.tableEnName = this.form.tableEnName || this.form.tableName
+        this.form.moduleName = this.form.moduleName || 'test'
+        this.form.pack = this.form.pack || 'com.xdreamaker.ltc'
+        this.form.author = this.form.author || 'Darkness'
+        this.form.author = this.form.author || 'Darkness'
+        this.form.author = this.form.author || 'Darkness'
+        this.form.author = this.form.author || 'Darkness'
+
         this.form.cover = this.form.cover.toString()
       })
       getDicts().then(data => {
