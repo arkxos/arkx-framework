@@ -110,14 +110,26 @@ public class GeneratorServiceImpl implements GeneratorService {
         // 使用预编译防止sql注入
         String sql = "";
         if (isOracle) {
-            sql = "select t.table_name ,uo.CREATED AS create_time , 'pdb' AS engine, 'utf8' AS table_collation, f.comments AS table_comment\n" +
-                    "  from user_tables t\n" +
-                    " inner join user_tab_comments f on t.table_name = f.table_name\n" +
-                    " LEFT JOIN user_objects uo ON t.table_name = uo.object_name" +
-                    " WHERE  " +
-                    " t.table_name like ? order by uo.CREATED desc, t.table_name asc";
+            sql = "SELECT\n" +
+                    "\tt.table_name,\n" +
+                    "\tcf.api_alias AS table_cn_name,\n" +
+                    "\tcf.table_en_name,\n" +
+                    "\tuo.CREATED AS create_time,\n" +
+                    "\t'pdb' AS engine,\n" +
+                    "\t'utf8' AS table_collation,\n" +
+                    "\tf.comments AS table_comment \n" +
+                    "FROM\n" +
+                    "\tuser_tables t\n" +
+                    "\tINNER JOIN user_tab_comments f ON t.table_name = f.table_name\n" +
+                    "\tLEFT JOIN user_objects uo ON t.table_name = uo.object_name\n" +
+                    "\tLEFT JOIN CODE_GEN_CONFIG cf ON t.table_name = cf.table_name \n" +
+                    "WHERE\n" +
+                    "\tt.table_name LIKE ?\n" +
+                    "ORDER BY\n" +
+                    "\tuo.CREATED DESC,\n" +
+                    "\tt.table_name ASC";
         } else {
-            sql = "select table_name ,create_time , engine, table_collation, table_comment from information_schema.tables " +
+            sql = "select table_name, table_name, table_name ,create_time , engine, table_collation, table_comment from information_schema.tables " +
                     "where table_schema = (select database()) " +
                     "and table_name like ? order by create_time desc";
         }
@@ -130,7 +142,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         List<TableInfo> tableInfos = new ArrayList<>();
         for (Object obj : result) {
             Object[] arr = (Object[]) obj;
-            tableInfos.add(new TableInfo(arr[0], arr[1], arr[2], arr[3], ObjectUtil.isNotEmpty(arr[4]) ? arr[4] : "-"));
+            tableInfos.add(new TableInfo(arr[0] + "", (String)arr[1], (String)arr[2], arr[3],arr[4],arr[5], ObjectUtil.isNotEmpty(arr[6]) ? arr[6] : "-"));
         }
         Object totalElements = 0;
         if (isOracle) {

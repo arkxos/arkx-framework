@@ -30,7 +30,13 @@ import lombok.NoArgsConstructor;
 public class TableInfo {
 
     /** 表名称 */
-    private Object tableName;
+    private String tableName;
+
+    /** 表名称 */
+    private String tableCnName;
+
+    /** 表名称 */
+    private String tableEnName;
 
     /** 创建日期 */
     private Object createTime;
