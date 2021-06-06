@@ -63,6 +63,11 @@ public class SwaggerAutoConfiguration {
                 .securitySchemes(Collections.singletonList(securityScheme()));
     }
 
+    @Bean
+    public CustomApiModelPropertyPositionBuilder customApiModelPropertyPositionBuilder() {
+        return new CustomApiModelPropertyPositionBuilder();
+    }
+
     /**
      * 构建全局参数
      * 这里主要针对网关服务外部访问数字验签所需参数
