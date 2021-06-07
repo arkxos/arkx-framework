@@ -22,7 +22,7 @@ module.exports = [
     },
   },
   {
-    url: '/login',
+    url: '/loginMock',
     type: 'post',
     response(config) {
       const { username } = config.body
@@ -68,7 +68,7 @@ module.exports = [
     },
   },
   {
-    url: '/userInfo',
+    url: '/userInfoMock',
     type: 'get',
     response(config) {
       const authorization =
@@ -104,7 +104,7 @@ module.exports = [
     },
   },
   {
-    url: '/logout',
+    url: '/logoutMock',
     type: 'get',
     response() {
       return {
