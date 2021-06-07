@@ -49,6 +49,8 @@ public class PreResponseFilter implements WebFilter {
         accessLogIgnores.add("/favicon.ico");
         if (apiProperties != null && apiProperties.getApiDebug()) {
             accessLogIgnores.add("/**/v2/api-docs/**");
+            accessLogIgnores.add("/**/v2/api-docs-ext");
+            accessLogIgnores.add("/**/v2/api-docs-ext/**");
             accessLogIgnores.add("/**/swagger-resources/**");
             accessLogIgnores.add("/webjars/**");
             accessLogIgnores.add("/doc.html");

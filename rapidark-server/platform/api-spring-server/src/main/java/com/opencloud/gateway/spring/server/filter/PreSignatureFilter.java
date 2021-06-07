@@ -52,6 +52,8 @@ public class PreSignatureFilter implements WebFilter {
             }
             if (apiProperties.getApiDebug()) {
                 signIgnores.add("/**/v2/api-docs/**");
+                signIgnores.add("/**/v2/api-docs-ext");
+                signIgnores.add("/**/v2/api-docs-ext/**");
                 signIgnores.add("/**/swagger-resources/**");
                 signIgnores.add("/webjars/**");
                 signIgnores.add("/doc.html");

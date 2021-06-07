@@ -90,6 +90,8 @@ public class GatewayContextFilter implements WebFilter, Ordered {
             }
             if (apiProperties.getApiDebug()) {
                 encryptIgnores.add("/**/v2/api-docs/**");
+                encryptIgnores.add("/**/v2/api-docs-ext");
+                encryptIgnores.add("/**/v2/api-docs-ext/**");
                 encryptIgnores.add("/**/swagger-resources/**");
                 encryptIgnores.add("/webjars/**");
                 encryptIgnores.add("/doc.html");

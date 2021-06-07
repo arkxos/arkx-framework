@@ -24,6 +24,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                     "/error",
                     "/static/**",
                     "/v2/api-docs/**",
+                    "/v2/api-docs-ext",
+                    "/v2/api-docs-ext/**",
                     "/swagger-resources/**",
                     "/webjars/**",
                     "/favicon.ico"

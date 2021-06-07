@@ -61,6 +61,8 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
             }
             if (apiProperties.getApiDebug()) {
                 permitAll.add("/**/v2/api-docs/**");
+                permitAll.add("/**/v2/api-docs-ext");
+                permitAll.add("/**/v2/api-docs-ext/**");
                 permitAll.add("/**/swagger-resources/**");
                 permitAll.add("/webjars/**");
                 permitAll.add("/doc.html");

@@ -17,6 +17,11 @@
             <artifactId>common-core</artifactId>
             <version>${opencloud.common.version}</version>
         </dependency>
+       <!-- <dependency>
+            <groupId>com.opencloud</groupId>
+            <artifactId>common-starter</artifactId>
+            <version>${opencloud.common.version}</version>
+        </dependency>-->
         <dependency>
             <groupId>com.opencloud</groupId>
             <artifactId>base-client</artifactId>
