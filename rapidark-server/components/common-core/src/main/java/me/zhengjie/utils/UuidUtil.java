@@ -56,7 +56,11 @@ public abstract class UuidUtil {
 
     public static String base58Uuid() {
         UUID uuid = UUID.randomUUID();
-        return base58Uuid(uuid);
+        String base58Uuid = base58Uuid(uuid);
+        if (base58Uuid.length() == 21) {
+            base58Uuid = "A" + base58Uuid;
+        }
+        return base58Uuid;
     }
 
     protected static String base58Uuid(UUID uuid) {
