@@ -1,5 +1,6 @@
 package com.opencloud.autoconfigure;
 
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import com.google.common.collect.Lists;
 import com.opencloud.common.swagger.OpenSwaggerProperties;
 import com.opencloud.common.utils.DateUtils;
@@ -22,6 +23,7 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
 
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ import java.util.Locale;
  */
 @Slf4j
 @Configuration
+//@EnableSwagger2
+@EnableSwaggerBootstrapUI
 @EnableConfigurationProperties({OpenSwaggerProperties.class})
 @ConditionalOnProperty(prefix = "opencloud.swagger2", name = "enabled", havingValue = "true")
 @Import({Swagger2DocumentationConfiguration.class})
@@ -66,6 +70,11 @@ public class SwaggerAutoConfiguration {
     @Bean
     public CustomApiModelPropertyPositionBuilder customApiModelPropertyPositionBuilder() {
         return new CustomApiModelPropertyPositionBuilder();
+    }
+
+    @Bean
+    public CustomOperationBuilderPlugin customOperationBuilderPlugin() {
+        return new CustomOperationBuilderPlugin();
     }
 
     /**
