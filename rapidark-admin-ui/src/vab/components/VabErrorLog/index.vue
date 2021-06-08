@@ -62,7 +62,7 @@
 <script>
   import { abbreviation, title } from '@/config'
   import { mapActions, mapGetters } from 'vuex'
-
+  import { decodeUnicode } from '@/utils/util'
   export default {
     name: 'VabErrorLog',
     data() {
