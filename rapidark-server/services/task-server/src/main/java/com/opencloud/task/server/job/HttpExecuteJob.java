@@ -1,5 +1,6 @@
 package com.opencloud.task.server.job;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.opencloud.base.client.constants.BaseConstants;
 import com.opencloud.base.client.model.entity.GatewayRoute;
@@ -19,6 +20,7 @@ import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,14 +102,33 @@ public class HttpExecuteJob implements Job {
     }
 
     public List<GatewayRoute> getApiRouteList() {
-        List<GatewayRoute> routes = redisUtils.getList(BaseConstants.ROUTE_LIST_CACHE_KEY);
-        if (routes.isEmpty()) {
+        List<String> routeJsonList = redisUtils.getList(BaseConstants.ROUTE_LIST_CACHE_KEY);
+        if (routeJsonList.isEmpty()) {
             ResultBody<List<GatewayRoute>> resultBody = gatewayServiceClient.getApiRouteList();
-            routes = resultBody.getData();
+            List<GatewayRoute> routes = resultBody.getData();
             if (!routes.isEmpty()) {
-                redisUtils.setList(BaseConstants.ROUTE_LIST_CACHE_KEY, routes, BaseConstants.ROUTE_LIST_CACHE_TIME);
+                List<String> jsonList = convertToJson(routes);
+                routeJsonList = jsonList;
+                redisUtils.setList(BaseConstants.ROUTE_LIST_CACHE_KEY, jsonList, BaseConstants.ROUTE_LIST_CACHE_TIME);
             }
         }
+        List<GatewayRoute> routes = convertFromJson(routeJsonList);
         return routes;
+    }
+
+    private List<String> convertToJson(List<GatewayRoute> routes) {
+        List<String> result = new ArrayList<>();
+        for (GatewayRoute route : routes) {
+            result.add(JSON.toJSONString(route));
+        }
+        return result;
+    }
+
+    private List<GatewayRoute> convertFromJson(List<String> routes) {
+        List<GatewayRoute> result = new ArrayList<>();
+        for (String route : routes) {
+            result.add(JSON.parseObject(route, GatewayRoute.class));
+        }
+        return result;
     }
 }
