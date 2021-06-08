@@ -19,6 +19,7 @@ import dict from './components/Dict'
  */
 import { baseURL } from './config'
 import { isExternal } from '@/utils/validate'
+import { decodeUnicode } from '@/utils/util'
 if (process.env.NODE_ENV === 'development-front' && !isExternal(baseURL)) {
   const { mockXHR } = require('@/utils/static')
   mockXHR()
@@ -33,6 +34,8 @@ Vue.component(TreeTable.name, TreeTable)
 Vue.component('treeselect', Treeselect)
 Vue.component('ArkIcon', ArkIcon)
 Vue.use(dict)
+
+Vue.prototype.decodeUnicode = decodeUnicode
 
 Vue.prototype.hasAuthority = function() {
   return true;
