@@ -107,7 +107,11 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
                 .filter(res -> {
                     boolean isAuth = res.getIsAuth() != null && res.getIsAuth().intValue() == 1 ? true : false;
                     // 无需认证,返回true
-                    return pathMatch.match(res.getPath(), requestPath) && !isAuth;
+                    boolean pathMatched = pathMatch.match(res.getPath(), requestPath);
+                    if (pathMatched) {
+                        // System.out.println("dd");
+                    }
+                    return pathMatched && !isAuth;
                 }).findFirst().isPresent();
     }
 
