@@ -150,15 +150,15 @@
             <id>online</id>
             <properties>
                 <!--当前环境,生产环境为空-->
-                <profile.name></profile.name>
+                <profile.name>online</profile.name>
                 <!--Nacos配置中心地址-->
-                <config.server-addr>172.18.108.117:8848</config.server-addr>
+                <config.server-addr>172.16.253.213:8848</config.server-addr>
                 <!--Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
-                <config.namespace></config.namespace>
+                <config.namespace>online</config.namespace>
                 <!--Nacos服务发现地址-->
-                <discovery.server-addr>172.18.108.117:8848</discovery.server-addr>
+                <discovery.server-addr>172.16.253.213:8848</discovery.server-addr>
                 <!--Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
-                <discovery.namespace></discovery.namespace>
+                <discovery.namespace>online</discovery.namespace>
             </properties>
         </profile>
         <!-- 云效私有仓库 -->
