@@ -13,18 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.service.impl;
+package com.opencloud.base.server.modules.mnt.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.modules.mnt.domain.Database;
-import me.zhengjie.modules.mnt.repository.DatabaseRepository;
-import me.zhengjie.modules.mnt.service.DatabaseService;
-import me.zhengjie.modules.mnt.service.dto.DatabaseDto;
-import me.zhengjie.modules.mnt.service.dto.DatabaseQueryCriteria;
-import me.zhengjie.modules.mnt.service.mapstruct.DatabaseMapper;
-import me.zhengjie.modules.mnt.util.SqlUtils;
+import com.opencloud.base.server.modules.mnt.domain.Database;
+import com.opencloud.base.server.modules.mnt.repository.DatabaseRepository;
+import com.opencloud.base.server.modules.mnt.service.DatabaseService;
+import com.opencloud.base.server.modules.mnt.service.dto.DatabaseDto;
+import com.opencloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
+import com.opencloud.base.server.modules.mnt.service.mapstruct.DatabaseMapper;
+import com.opencloud.base.server.modules.mnt.util.SqlUtils;
 import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageUtil;
 import me.zhengjie.utils.QueryHelp;

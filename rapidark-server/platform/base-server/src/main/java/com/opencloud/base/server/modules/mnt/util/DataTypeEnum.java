@@ -17,7 +17,7 @@
  *
  */
 
-package me.zhengjie.modules.mnt.util;
+package com.opencloud.base.server.modules.mnt.util;
 import lombok.extern.slf4j.Slf4j;
 
 /**

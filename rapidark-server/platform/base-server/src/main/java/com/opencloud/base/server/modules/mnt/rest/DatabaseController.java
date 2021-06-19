@@ -13,18 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.rest;
+package com.opencloud.base.server.modules.mnt.rest;
 
+import com.opencloud.base.server.modules.mnt.domain.Database;
+import com.opencloud.base.server.modules.mnt.service.DatabaseService;
+import com.opencloud.base.server.modules.mnt.service.dto.DatabaseDto;
+import com.opencloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
+import com.opencloud.base.server.modules.mnt.util.SqlUtils;
+import com.opencloud.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.exception.BadRequestException;
-import me.zhengjie.modules.mnt.domain.Database;
-import me.zhengjie.modules.mnt.service.DatabaseService;
-import me.zhengjie.modules.mnt.service.dto.DatabaseDto;
-import me.zhengjie.modules.mnt.service.dto.DatabaseQueryCriteria;
-import me.zhengjie.modules.mnt.util.SqlUtils;
 import me.zhengjie.utils.FileUtil;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,7 @@ import java.util.Set;
 @Api(tags = "运维：数据库管理")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/database")
+@RequestMapping("/database")
 public class DatabaseController {
 
 	private final String fileSavePath = FileUtil.getTmpDirPath()+"/";
@@ -70,35 +71,36 @@ public class DatabaseController {
     @ApiOperation(value = "新增数据库")
     @PostMapping
 	@PreAuthorize("@el.check('database:add')")
-    public ResponseEntity<Object> create(@Validated @RequestBody Database resources){
+    public ResultBody<Object> create(@Validated @RequestBody Database resources){
 		databaseService.create(resources);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResultBody.ok();
     }
 
     @Log("修改数据库")
     @ApiOperation(value = "修改数据库")
     @PutMapping
 	@PreAuthorize("@el.check('database:edit')")
-    public ResponseEntity<Object> update(@Validated @RequestBody Database resources){
+    public ResultBody<Object> update(@Validated @RequestBody Database resources){
         databaseService.update(resources);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResultBody.ok();
     }
 
     @Log("删除数据库")
     @ApiOperation(value = "删除数据库")
     @DeleteMapping
 	@PreAuthorize("@el.check('database:del')")
-    public ResponseEntity<Object> delete(@RequestBody Set<String> ids){
+    public ResultBody<Object> delete(@RequestBody Set<String> ids){
         databaseService.delete(ids);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResultBody.ok();
     }
 
 	@Log("测试数据库链接")
 	@ApiOperation(value = "测试数据库链接")
 	@PostMapping("/testConnect")
 	@PreAuthorize("@el.check('database:testConnect')")
-	public ResponseEntity<Object> testConnect(@Validated @RequestBody Database resources){
-		return new ResponseEntity<>(databaseService.testConnection(resources),HttpStatus.CREATED);
+	public ResultBody<Object> testConnect(@Validated @RequestBody Database resources){
+		boolean success = databaseService.testConnection(resources);
+		return ResultBody.ok().data(success);
 	}
 
 	@Log("执行SQL脚本")

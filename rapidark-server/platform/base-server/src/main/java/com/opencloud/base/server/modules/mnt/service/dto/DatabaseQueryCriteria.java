@@ -13,43 +13,32 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.service.dto;
+package com.opencloud.base.server.modules.mnt.service.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import me.zhengjie.base.BaseDTO;
-import java.io.Serializable;
+import lombok.Data;
+import me.zhengjie.annotation.Query;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
 * @author zhanghouying
 * @date 2019-08-24
 */
-@Getter
-@Setter
-public class DatabaseDto extends BaseDTO implements Serializable {
+@Data
+public class DatabaseQueryCriteria{
 
 	/**
-	 * id
+	 * 模糊
 	 */
-    private String id;
-
-	/**
-	 * 数据库名称
-	 */
+    @Query(type = Query.Type.INNER_LIKE)
     private String name;
 
 	/**
-	 * 数据库连接地址
+	 * 精确
 	 */
+    @Query
     private String jdbcUrl;
 
-	/**
-	 * 数据库密码
-	 */
-    private String pwd;
-
-	/**
-	 * 用户名
-	 */
-    private String userName;
+	@Query(type = Query.Type.BETWEEN)
+	private List<Timestamp> createTime;
 }

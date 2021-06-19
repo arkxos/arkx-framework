@@ -13,19 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.service.mapstruct;
+package com.opencloud.base.server.modules.mnt.repository;
 
-import me.zhengjie.base.BaseMapper;
-import me.zhengjie.modules.mnt.domain.Database;
-import me.zhengjie.modules.mnt.service.dto.DatabaseDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.opencloud.base.server.modules.mnt.domain.Database;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
 * @author zhanghouying
 * @date 2019-08-24
 */
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DatabaseMapper extends BaseMapper<DatabaseDto, Database> {
-
+public interface DatabaseRepository extends JpaRepository<Database, String>, JpaSpecificationExecutor<Database> {
 }

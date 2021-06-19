@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.service;
+package com.opencloud.base.server.modules.mnt.service;
 
-import me.zhengjie.modules.mnt.domain.Database;
-import me.zhengjie.modules.mnt.service.dto.DatabaseDto;
-import me.zhengjie.modules.mnt.service.dto.DatabaseQueryCriteria;
+import com.opencloud.base.server.modules.mnt.domain.Database;
+import com.opencloud.base.server.modules.mnt.service.dto.DatabaseDto;
+import com.opencloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
 import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletResponse;
