@@ -44,20 +44,16 @@
       </div>
       <div>
         <h3>请求头</h3>
-        <pre>
-             {{ currentRow.headers ? JSON.stringify(JSON.parse(currentRow.headers), null, 4) : ''}}
+        <pre>{{ displayJsonData(currentRow.headers) }}
         </pre>
         <h3>请求参数</h3>
-        <pre>
-              {{ currentRow.params ? JSON.stringify(JSON.parse(currentRow.params), null, 4) : ''}}
+        <pre>{{ displayJsonData(currentRow.params) }}
         </pre>
         <h3>错误信息</h3>
-        <pre>
-          {{currentRow.error}}
+        <pre>{{currentRow.error}}
         </pre>
         <h3>认证信息</h3>
-        <pre>
-              {{ currentRow.authentication ? JSON.stringify(JSON.parse(currentRow.authentication), null, 4) : ''}}
+        <pre>{{ displayJsonData(currentRow.authentication) }}
         </pre>
       </div>
     </Drawer>
@@ -67,6 +63,7 @@
 <script>
 import { getAccessLogs } from '@/api/gateway'
 import { readUserAgent } from '@/libs/util'
+import { escapeStringHTML } from '@/utils/util'
 
 export default {
   name: 'GatewayAccessLog',
@@ -194,6 +191,12 @@ export default {
     }
   },
   methods: {
+    displayJsonData(jsonDataString) {
+      if (!jsonDataString) {
+        return ''
+      }
+      return JSON.stringify(JSON.parse(escapeStringHTML(jsonDataString)), null, 4);
+    },
     openDrawer (data) {
       this.currentRow = data
       this.drawer = true
