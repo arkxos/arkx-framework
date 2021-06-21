@@ -144,7 +144,8 @@ const actions = {
       routes = convertRouter(menus)
     }
 
-    const initRoutes = constantRoutes.concat(asyncRoutes)
+    // const initRoutes = constantRoutes
+    const initRoutes = constantRoutes.concat(asyncRoutesSimple)
     // 根据权限和rolesControl过滤路由
     let finallyRoutes = filterRoutes([...initRoutes, ...routes], control)
     finallyRoutes = initRoutes.concat(routes) // constantRoutes.concat(finallyRoutes)
