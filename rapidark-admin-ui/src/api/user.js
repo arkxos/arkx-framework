@@ -52,10 +52,10 @@ export function logout() {
   const token = store.getters['user/token']
   return request({
     url: 'admin/logout/token',
-    headers: {
-      'Content-Type': 'multipart/form-data;charset=UTF-8'
-    },
-    params: { token: token },
+    // headers: {
+    //   'Content-Type': 'multipart/form-data;charset=UTF-8'
+    // },
+    data: { token: token },
     method: 'post'
     // url: '/logout',
     // method: 'get',

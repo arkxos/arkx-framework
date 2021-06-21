@@ -193,6 +193,12 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
                 // 加入角色标识
                 OpenAuthority authority = new OpenAuthority(role.getRoleId().toString(), OpenSecurityConstants.AUTHORITY_PREFIX_ROLE + role.getRoleCode(), null, "role");
                 authorities.add(authority);
+
+                // 查询角色拥有的权限
+                List<OpenAuthority> roleAuthorities = baseAuthorityService.findAuthorityByRole(role.getRoleId());
+                for (OpenAuthority roleAuthority : roleAuthorities) {
+                    authorities.add(roleAuthority);
+                }
             }
         }
 
