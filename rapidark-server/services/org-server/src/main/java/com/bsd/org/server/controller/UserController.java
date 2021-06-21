@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bsd.org.server.constants.BaseUserConst;
+import com.bsd.org.server.controller.command.AddDingDingUserCommand;
 import com.bsd.org.server.model.entity.User;
 import com.bsd.org.server.model.vo.UserDetailVO;
 import com.bsd.org.server.service.CompanyService;
@@ -22,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -198,32 +199,9 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ddUserid", required = true, value = "员工在当前企业内的钉钉唯一标识", paramType = "form"),
-            @ApiImplicitParam(name = "userName", required = true, value = "用户名", paramType = "form"),
-            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
-            @ApiImplicitParam(name = "nickName", required = true, value = "昵称", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, value = "状态:0-禁用 1-正常 2-锁定", paramType = "form"),
-            @ApiImplicitParam(name = "userType", required = true, value = "用户类型:super-超级管理员 normal-普通管理员", paramType = "form"),
-            @ApiImplicitParam(name = "email", required = false, value = "邮箱", paramType = "form"),
-            @ApiImplicitParam(name = "mobile", required = false, value = "号码", paramType = "form"),
-            @ApiImplicitParam(name = "userDesc", required = false, value = "用户描述", paramType = "form"),
-            @ApiImplicitParam(name = "avatar", required = false, value = "头像", paramType = "form"),
-    })
     @PostMapping("/add")
-    public ResultBody add(
-            @RequestParam(value = "userName") @NotEmpty(message = "用户名不能为空") String userName,
-            @RequestParam(value = "password") @NotEmpty(message = "密码不能为空") String password,
-            @RequestParam(value = "nickName") @NotEmpty(message = "昵称不能为空") String nickName,
-            @RequestParam(value = "status") @NotEmpty(message = "状态不能为空") Integer status,
-            @RequestParam(value = "userType") @NotEmpty(message = "用户类型不能为空") String userType,
-            @RequestParam(value = "ddUserid") @NotEmpty(message = "用户钉钉ID不能为空") String ddUserid,
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "mobile", required = false) String mobile,
-            @RequestParam(value = "userDesc", required = false) String userDesc,
-            @RequestParam(value = "avatar", required = false) String avatar
-    ) {
-        User user = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getDdUserid, ddUserid));
+    public ResultBody add(@Valid @RequestBody AddDingDingUserCommand command) {
+        User user = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getDdUserid, command.getDdUserid()));
         if (user == null) {
             return ResultBody.failed().msg("查询不到该钉钉唯一标识ID的用户信息");
         }
@@ -231,13 +209,16 @@ public class UserController {
             return ResultBody.failed().msg("该用户已经添加过系统用户信息");
         }
         //校验参数
-        if (status != BaseUserConst.USER_STATUS_FORBIDDEN && status != BaseUserConst.USER_STATUS_NORMAL && status != BaseUserConst.USER_STATUS_LOCK) {
+        if (command.getStatus() != BaseUserConst.USER_STATUS_FORBIDDEN
+                && command.getStatus() != BaseUserConst.USER_STATUS_NORMAL
+                && command.getStatus() != BaseUserConst.USER_STATUS_LOCK) {
             return ResultBody.failed().msg("用户状态参数有误,请填写指定范围");
         }
-        if (!BaseUserConst.USER_TYPE_NORMAL.equals(userType) && !BaseUserConst.USER_TYPE_SUPER.equals(userType)) {
+        if (!BaseUserConst.USER_TYPE_NORMAL.equals(command.getUserType()) && !BaseUserConst.USER_TYPE_SUPER.equals(command.getUserType())) {
             return ResultBody.failed().msg("用户类型参数有误,请填写指定范围");
         }
-        ResultBody resultBody = baseUserServiceClient.addUser(userName, password, nickName, status, userType, email, mobile, userDesc, avatar);
+
+        ResultBody resultBody = baseUserServiceClient.addUser(command);
         if (!resultBody.isOk()) {
             return ResultBody.failed().msg(resultBody.getMessage());
         }
@@ -246,7 +227,7 @@ public class UserController {
             return ResultBody.failed().msg("添加系统用户失败");
         }
         user.setUserId(userId);
-        boolean isSuc = userService.update(user, Wrappers.<User>lambdaQuery().eq(User::getDdUserid, ddUserid));
+        boolean isSuc = userService.update(user, Wrappers.<User>lambdaQuery().eq(User::getDdUserid, command.getDdUserid()));
         if (!isSuc) {
             return ResultBody.failed().msg("绑定系统用户ID失败");
         }

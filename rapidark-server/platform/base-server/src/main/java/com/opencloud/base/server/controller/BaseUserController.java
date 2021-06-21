@@ -5,6 +5,8 @@ import com.opencloud.base.client.model.UserAccount;
 import com.opencloud.base.client.model.entity.BaseRole;
 import com.opencloud.base.client.model.entity.BaseUser;
 import com.opencloud.base.client.service.IBaseUserServiceClient;
+import com.opencloud.base.client.service.command.AddUserCommand;
+import com.opencloud.base.server.controller.cmd.AddUserRolesCommand;
 import com.opencloud.base.server.service.BaseRoleService;
 import com.opencloud.base.server.service.BaseUserService;
 import com.opencloud.common.model.PageParams;
@@ -15,11 +17,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -79,41 +79,22 @@ public class BaseUserController implements IBaseUserServiceClient {
     /**
      * 添加系统用户
      *
-     * @param userName
-     * @param password
-     * @param nickName
-     * @param status
-     * @param userType
-     * @param email
-     * @param mobile
-     * @param userDesc
-     * @param avatar
      * @return
      */
     @Override
     @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
     @PostMapping("/user/add")
-    public ResultBody<Long> addUser(
-            @RequestParam(value = "userName") String userName,
-            @RequestParam(value = "password") String password,
-            @RequestParam(value = "nickName") String nickName,
-            @RequestParam(value = "status") Integer status,
-            @RequestParam(value = "userType") String userType,
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "mobile", required = false) String mobile,
-            @RequestParam(value = "userDesc", required = false) String userDesc,
-            @RequestParam(value = "avatar", required = false) String avatar
-    ) {
+    public ResultBody<Long> addUser(@Valid @RequestBody AddUserCommand command) {
         BaseUser user = new BaseUser();
-        user.setUserName(userName);
-        user.setPassword(password);
-        user.setNickName(nickName);
-        user.setUserType(userType);
-        user.setEmail(email);
-        user.setMobile(mobile);
-        user.setUserDesc(userDesc);
-        user.setAvatar(avatar);
-        user.setStatus(status);
+        user.setUserName(command.getUserName());
+        user.setPassword(command.getPassword());
+        user.setNickName(command.getNickName());
+        user.setUserType(command.getUserType());
+        user.setEmail(command.getEmail());
+        user.setMobile(command.getMobile());
+        user.setUserDesc(command.getUserDesc());
+        user.setAvatar(command.getAvatar());
+        user.setStatus(command.getStatus());
         baseUserService.addUser(user);
         return ResultBody.ok().data(user.getUserId());
     }
@@ -176,17 +157,12 @@ public class BaseUserController implements IBaseUserServiceClient {
     /**
      * 用户分配角色
      *
-     * @param userId
-     * @param roleIds
      * @return
      */
     @ApiOperation(value = "用户分配角色", notes = "用户分配角色")
     @PostMapping("/user/roles/add")
-    public ResultBody addUserRoles(
-            @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "roleIds", required = false) String roleIds
-    ) {
-        baseRoleService.saveUserRoles(userId, StringUtils.isNotBlank(roleIds) ? roleIds.split(",") : new String[]{});
+    public ResultBody addUserRoles(@Valid @RequestBody AddUserRolesCommand command) {
+        baseRoleService.saveUserRoles(command.getUserId(), StringUtils.isNotBlank(command.getRoleIds()) ? command.getRoleIds().split(",") : new String[]{});
         return ResultBody.ok();
     }
 

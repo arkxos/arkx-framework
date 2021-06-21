@@ -17,6 +17,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 public class RedisAuthenticationManager implements ReactiveAuthenticationManager {
+
     private TokenStore tokenStore;
 
     public RedisAuthenticationManager(TokenStore tokenStore) {

@@ -33,6 +33,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
 @Slf4j
 @Component
 public class AccessLogService {
+
     @Autowired
     private AmqpTemplate amqpTemplate;
 

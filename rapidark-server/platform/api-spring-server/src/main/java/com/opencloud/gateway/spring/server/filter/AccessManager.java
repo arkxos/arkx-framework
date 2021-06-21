@@ -37,6 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 @Component
 public class AccessManager implements ReactiveAuthorizationManager<AuthorizationContext> {
+
     private ResourceLocator resourceLocator;
 
     private ApiProperties apiProperties;
@@ -180,12 +181,8 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
                 return true;
             }
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            Iterator var6 = attributes.iterator();
-            while (var6.hasNext()) {
-                ConfigAttribute attribute = (ConfigAttribute) var6.next();
-                Iterator var8 = authorities.iterator();
-                while (var8.hasNext()) {
-                    GrantedAuthority authority = (GrantedAuthority) var8.next();
+            for (ConfigAttribute attribute : attributes) {
+                for (GrantedAuthority authority : authorities) {
                     if (attribute.getAttribute().equals(authority.getAuthority())) {
                         result++;
                         if (authority instanceof OpenAuthority) {

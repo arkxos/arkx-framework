@@ -30,10 +30,7 @@
           <td colspan="3">
             <el-popover trigger="hover" width="400">
               <div style="text-align: center">
-                <el-image
-                  :src="require('@/assets/skm.jpg')"
-                  style="width: 200px"
-                />
+
                 <p style="font-size: 13px">
                 </p>
               </div>
@@ -43,10 +40,7 @@
             </el-popover>
             <el-popover trigger="hover" width="400">
               <div style="text-align: center">
-                <el-image
-                  :src="require('@/assets/skm3.jpg')"
-                  style="width: 200px"
-                />
+
                 <p style="font-size: 13px">
                 </p>
               </div>

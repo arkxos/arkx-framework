@@ -2,11 +2,14 @@ package com.opencloud.base.client.service;
 
 import com.opencloud.base.client.model.UserAccount;
 import com.opencloud.base.client.model.entity.BaseRole;
+import com.opencloud.base.client.service.command.AddUserCommand;
 import com.opencloud.common.model.ResultBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -55,27 +58,8 @@ public interface IBaseUserServiceClient {
     /**
      * 添加系统用户
      *
-     * @param userName
-     * @param password
-     * @param nickName
-     * @param status
-     * @param userType
-     * @param email
-     * @param mobile
-     * @param userDesc
-     * @param avatar
      * @return
      */
     @PostMapping("/user/add")
-    ResultBody addUser(
-            @RequestParam(value = "userName") String userName,
-            @RequestParam(value = "password") String password,
-            @RequestParam(value = "nickName") String nickName,
-            @RequestParam(value = "status") Integer status,
-            @RequestParam(value = "userType") String userType,
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "mobile", required = false) String mobile,
-            @RequestParam(value = "userDesc", required = false) String userDesc,
-            @RequestParam(value = "avatar", required = false) String avatar
-    );
+    ResultBody addUser(@Valid @RequestBody AddUserCommand command);
 }

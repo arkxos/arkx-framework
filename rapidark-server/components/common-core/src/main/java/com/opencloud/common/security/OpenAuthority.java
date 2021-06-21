@@ -14,6 +14,7 @@ import java.util.Date;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class OpenAuthority implements GrantedAuthority {
+
     private static final long serialVersionUID = -4682269495406460314L;
 
     /**

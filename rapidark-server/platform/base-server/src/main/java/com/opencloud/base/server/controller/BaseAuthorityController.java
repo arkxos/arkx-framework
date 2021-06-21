@@ -6,6 +6,7 @@ import com.opencloud.base.client.model.AuthorityResource;
 import com.opencloud.base.client.model.entity.BaseAuthorityAction;
 import com.opencloud.base.client.model.entity.BaseUser;
 import com.opencloud.base.client.service.IBaseAuthorityServiceClient;
+import com.opencloud.base.server.controller.cmd.GrantAuthorityActionCommand;
 import com.opencloud.base.server.service.BaseAuthorityService;
 import com.opencloud.base.server.service.BaseUserService;
 import com.opencloud.common.constants.CommonConstants;
@@ -19,11 +20,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -237,21 +236,12 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     /**
      * 功能按钮绑定API
      *
-     * @param actionId
-     * @param authorityIds
      * @return
      */
     @ApiOperation(value = "功能按钮授权", notes = "功能按钮授权")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "actionId", required = true, value = "功能按钮ID", paramType = "form"),
-            @ApiImplicitParam(name = "authorityIds", required = false, value = "全新ID:多个用,号隔开", paramType = "form"),
-    })
     @PostMapping("/authority/action/grant")
-    public ResultBody grantAuthorityAction(
-            @RequestParam(value = "actionId") Long actionId,
-            @RequestParam(value = "authorityIds", required = false) String authorityIds
-    ) {
-        baseAuthorityService.addAuthorityAction(actionId, StringUtils.isNotBlank(authorityIds) ? authorityIds.split(",") : new String[]{});
+    public ResultBody grantAuthorityAction(@Valid @RequestBody GrantAuthorityActionCommand command) {
+        baseAuthorityService.addAuthorityAction(command.getActionId(), StringUtils.isNotBlank(command.getAuthorityIds()) ? command.getAuthorityIds().split(",") : new String[]{});
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }

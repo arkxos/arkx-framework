@@ -3,6 +3,8 @@ package com.opencloud.base.server.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencloud.base.client.model.entity.BaseRole;
 import com.opencloud.base.client.model.entity.BaseRoleUser;
+import com.opencloud.base.server.controller.cmd.AddRoleCommand;
+import com.opencloud.base.server.controller.cmd.UpdateRoleCommand;
 import com.opencloud.base.server.service.BaseRoleService;
 import com.opencloud.common.model.PageParams;
 import com.opencloud.common.model.ResultBody;
@@ -14,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -67,31 +70,16 @@ public class BaseRoleController {
     /**
      * 添加角色
      *
-     * @param roleCode 角色编码
-     * @param roleName 角色显示名称
-     * @param roleDesc 描述
-     * @param status   启用禁用
      * @return
      */
     @ApiOperation(value = "添加角色", notes = "添加角色")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleCode", value = "角色编码", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "roleName", value = "角色显示名称", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "roleDesc", value = "描述", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
-    })
     @PostMapping("/role/add")
-    public ResultBody<Long> addRole(
-            @RequestParam(value = "roleCode") String roleCode,
-            @RequestParam(value = "roleName") String roleName,
-            @RequestParam(value = "roleDesc", required = false) String roleDesc,
-            @RequestParam(value = "status", defaultValue = "1", required = false) Integer status
-    ) {
+    public ResultBody<Long> addRole(@RequestBody @Valid AddRoleCommand command) {
         BaseRole role = new BaseRole();
-        role.setRoleCode(roleCode);
-        role.setRoleName(roleName);
-        role.setStatus(status);
-        role.setRoleDesc(roleDesc);
+        role.setRoleCode(command.getRoleCode());
+        role.setRoleName(command.getRoleName());
+        role.setStatus(command.getStatus());
+        role.setRoleDesc(command.getRoleDesc());
         Long roleId = null;
         BaseRole result = baseRoleService.addRole(role);
         if (result != null) {
@@ -103,39 +91,20 @@ public class BaseRoleController {
     /**
      * 编辑角色
      *
-     * @param roleId   角色ID
-     * @param roleCode 角色编码
-     * @param roleName 角色显示名称
-     * @param roleDesc 描述
-     * @param status   启用禁用
      * @return
      */
     @ApiOperation(value = "编辑角色", notes = "编辑角色")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "roleCode", value = "角色编码", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "roleName", value = "角色显示名称", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "roleDesc", value = "描述", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
-    })
     @PostMapping("/role/update")
-    public ResultBody updateRole(
-            @RequestParam(value = "roleId") Long roleId,
-            @RequestParam(value = "roleCode") String roleCode,
-            @RequestParam(value = "roleName") String roleName,
-            @RequestParam(value = "roleDesc", required = false) String roleDesc,
-            @RequestParam(value = "status", defaultValue = "1", required = false) Integer status
-    ) {
+    public ResultBody updateRole(@Valid @RequestBody UpdateRoleCommand command) {
         BaseRole role = new BaseRole();
-        role.setRoleId(roleId);
-        role.setRoleCode(roleCode);
-        role.setRoleName(roleName);
-        role.setStatus(status);
-        role.setRoleDesc(roleDesc);
+        role.setRoleId(command.getRoleId());
+        role.setRoleCode(command.getRoleCode());
+        role.setRoleName(command.getRoleName());
+        role.setStatus(command.getStatus());
+        role.setRoleDesc(command.getRoleDesc());
         baseRoleService.updateRole(role);
         return ResultBody.ok();
     }
-
 
     /**
      * 删除角色
