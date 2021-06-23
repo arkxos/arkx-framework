@@ -42,7 +42,7 @@ module.exports = {
   // 是否开启登录拦截
   loginInterception: true,
   // 是否开启登录RSA加密
-  loginRSA: false,
+  loginRSA: true,
   // intelligence(前端导出路由)和all(后端导出路由)两种方式
   authentication: 'all',
   // 是否支持游客模式，支持情况下，访问白名单，可查看所有asyncRoutes

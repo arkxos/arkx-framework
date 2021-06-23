@@ -1,18 +1,24 @@
 package com.opencloud.uaa.admin.server.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.opencloud.common.model.ResultBody;
 import com.opencloud.common.security.OpenHelper;
 import com.opencloud.common.security.OpenUserDetails;
 import com.opencloud.common.security.oauth2.client.OpenOAuth2ClientDetails;
 import com.opencloud.common.security.oauth2.client.OpenOAuth2ClientProperties;
 import com.opencloud.common.utils.BeanConvertUtils;
+import com.opencloud.uaa.admin.server.controller.cmd.LoginCommand;
+import com.opencloud.uaa.admin.server.controller.cmd.LoginInfo;
 import com.opencloud.uaa.admin.server.controller.cmd.LogoutCommand;
 import com.opencloud.uaa.admin.server.controller.cmd.ThirdpartSystemLoginCommand;
 import com.opencloud.uaa.admin.server.service.feign.BaseUserServiceClient;
+import com.rapidark.boot.RsaProperties;
+import com.rapidark.common.utils.RSAUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerEndpointsConfiguration;
@@ -43,6 +49,8 @@ public class LoginController {
     AuthorizationServerEndpointsConfiguration endpoints;
     @Autowired
     private BaseUserServiceClient baseUserServiceClient;
+    @Autowired
+    private RsaProperties rsaProperties;
 
     /**
      * 获取用户基础信息
@@ -71,21 +79,30 @@ public class LoginController {
     }
 
     /**
+     * 获取公钥
+     * 基于oauth2密码模式登录
+     *
+     * @return publicKey
+     */
+    @ApiOperation(value = "获取公钥", notes = "获取公钥")
+    @GetMapping("/publicKey")
+    public ResultBody<String> getPublicKey() {
+        String result = rsaProperties.getPublicKey();
+        return ResultBody.ok().data(result);
+    }
+
+    /**
      * 获取用户访问令牌
      * 基于oauth2密码模式登录
      *
-     * @param username
-     * @param password
      * @return access_token
      */
     @ApiOperation(value = "登录获取用户访问令牌", notes = "基于oauth2密码模式登录,无需签名,返回access_token")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "form"),
-            @ApiImplicitParam(name = "password", required = true, value = "登录密码", paramType = "form")
-    })
     @PostMapping("/login/token")
-    public ResultBody<OAuth2AccessToken> getLoginToken(@RequestParam String username, @RequestParam String password) throws Exception {
-        OAuth2AccessToken result = getFrontToken(username, password, null);
+    public ResultBody<OAuth2AccessToken> getLoginToken(@Valid @RequestBody LoginCommand command) throws Exception {
+        String loginInfoString = RSAUtils.decryptByPrivateKey(command.getLoginInfo(), rsaProperties.getPrivateKey());
+        LoginInfo loginInfo = JSON.parseObject(loginInfoString, LoginInfo.class);
+        OAuth2AccessToken result = getFrontToken(loginInfo.getUsername(), loginInfo.getPassword(), null);
         return ResultBody.ok().data(result);
     }
 

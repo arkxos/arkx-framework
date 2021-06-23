@@ -16,11 +16,12 @@
 package me.zhengjie.modules.system.rest;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.rapidark.common.utils.RSAUtils;
+import com.rapidark.boot.RsaProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
-import me.zhengjie.config.RsaProperties;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.service.DataService;
@@ -45,6 +46,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
@@ -66,6 +69,8 @@ public class UserController {
     private final DeptService deptService;
     private final RoleService roleService;
     private final VerifyService verificationCodeService;
+    @Resource
+    private RsaProperties rsaProperties;
 
     @ApiOperation("导出用户数据")
     @GetMapping(value = "/download")
@@ -154,8 +159,8 @@ public class UserController {
     @ApiOperation("修改密码")
     @PostMapping(value = "/updatePass")
     public ResponseEntity<Object> updatePass(@RequestBody UserPassVo passVo) throws Exception {
-        String oldPass = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey,passVo.getOldPass());
-        String newPass = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey,passVo.getNewPass());
+        String oldPass = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),passVo.getOldPass());
+        String newPass = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),passVo.getNewPass());
         UserDto user = userService.findByName(SecurityUtils.getCurrentUsername());
         if(!passwordEncoder.matches(oldPass, user.getPassword())){
             throw new BadRequestException("修改失败，旧密码错误");
@@ -177,7 +182,7 @@ public class UserController {
     @ApiOperation("修改邮箱")
     @PostMapping(value = "/updateEmail/{code}")
     public ResponseEntity<Object> updateEmail(@PathVariable String code,@RequestBody User user) throws Exception {
-        String password = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey,user.getPassword());
+        String password = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),user.getPassword());
         UserDto userDto = userService.findByName(SecurityUtils.getCurrentUsername());
         if(!passwordEncoder.matches(password, userDto.getPassword())){
             throw new BadRequestException("密码错误");

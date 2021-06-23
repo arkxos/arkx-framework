@@ -2,6 +2,7 @@ package com.opencloud.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.rapidark.common.utils.RSAUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.BadPaddingException;
@@ -117,7 +118,7 @@ public class CryptoUtils {
                 case RSA:
                     try {
                         decryptStr = RSAUtils.decryptByPublicKey(paramString, clientSecret);
-                    } catch (InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                         return null;
                     }

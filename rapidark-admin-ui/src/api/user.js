@@ -12,15 +12,14 @@ import store from '@/store'
  */
 export async function login(data) {
   if (loginRSA) {
-    data = await encryptedData(data)
+    data = {
+      loginInfo: await encryptedData(data)
+    }
   }
   return request({
     url: '/admin/login/token', // '/login',
     method: 'post',
-    data: data,
-    headers: {
-      'Content-Type': 'multipart/form-data;charset=UTF-8'
-    },
+    data: data
   })
 }
 

@@ -32,6 +32,7 @@ import java.io.IOException;
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+
     @Autowired
     private TokenStore tokenStore;
 
@@ -42,7 +43,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login/**", "/oauth/**").permitAll()
+                .antMatchers("/login/**", "/oauth/**", "/publicKey").permitAll()
                 // 监控端点内部放行
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .anyRequest().authenticated()

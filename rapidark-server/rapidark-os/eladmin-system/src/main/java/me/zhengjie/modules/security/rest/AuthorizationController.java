@@ -17,7 +17,9 @@ package me.zhengjie.modules.security.rest;
 
 import cn.hutool.core.util.IdUtil;
 import com.opencloud.common.utils.RedisUtils;
+import com.rapidark.common.utils.RSAUtils;
 import com.wf.captcha.base.Captcha;
+import com.rapidark.boot.RsaProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.annotation.rest.AnonymousDeleteMapping;
 import me.zhengjie.annotation.rest.AnonymousGetMapping;
 import me.zhengjie.annotation.rest.AnonymousPostMapping;
-import me.zhengjie.config.RsaProperties;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.security.config.bean.LoginCodeEnum;
 import me.zhengjie.modules.security.config.bean.LoginProperties;
@@ -34,7 +35,6 @@ import me.zhengjie.modules.security.security.TokenProvider;
 import me.zhengjie.modules.security.service.dto.AuthUserDto;
 import me.zhengjie.modules.security.service.dto.JwtUserDto;
 import me.zhengjie.modules.security.service.OnlineUserService;
-import me.zhengjie.utils.RsaUtils;
 import me.zhengjie.utils.SecurityUtils;
 import me.zhengjie.utils.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -69,12 +69,14 @@ public class AuthorizationController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     @Resource
     private LoginProperties loginProperties;
+    @Resource
+    private RsaProperties rsaProperties;
 
     @ApiOperation("登录授权")
     @AnonymousPostMapping(value = "/login")
     public ResponseEntity<Object> login(@Validated @RequestBody AuthUserDto authUser, HttpServletRequest request) throws Exception {
         // 密码解密
-        String password = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, authUser.getPassword());
+        String password = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(), authUser.getPassword());
         // 查询验证码
         String code = (String) redisUtils.get(authUser.getUuid());
         // 清除验证码

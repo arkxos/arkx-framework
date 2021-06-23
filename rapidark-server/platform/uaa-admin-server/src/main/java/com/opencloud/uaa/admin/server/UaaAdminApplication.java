@@ -29,6 +29,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 平台认证服务
@@ -38,7 +39,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author liuyadu
  */
 @EnableFeignClients
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.opencloud", "com.rapidark", "com.xdreamaker"})
 @EnableDiscoveryClient
 public class UaaAdminApplication {
     public static void main(String[] args) {

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service("userDetailService")
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     private BaseUserServiceClient baseUserServiceClient;
     @Autowired

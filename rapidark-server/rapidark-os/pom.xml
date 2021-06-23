@@ -156,15 +156,11 @@
             <optional>true</optional>
         </dependency>
 
-
-
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-
-
 
         <!-- Java图形验证码 -->
         <dependency>
@@ -172,7 +168,6 @@
             <artifactId>easy-captcha</artifactId>
             <version>1.6.2</version>
         </dependency>
-
 
     </dependencies>
 

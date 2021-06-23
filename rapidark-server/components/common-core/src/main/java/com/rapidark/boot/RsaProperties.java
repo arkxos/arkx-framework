@@ -13,26 +13,35 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.config;
+package com.rapidark.boot;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Zheng Jie
- * @website http://rapidark.com
- * @description
- * @date 2020-05-18
- **/
+ * @author darkness
+ * @date 2021/6/23 17:18
+ * @version 1.0
+ */
 @Data
 @Component
+@ConfigurationProperties(prefix = "opencloud.rsa")
 public class RsaProperties {
 
-    public static String privateKey;
+    private String privateKey;
 
-    @Value("${rsa.private_key}")
+    private String publicKey;
+
+//    @Value("${opencloud.rsa.private-key}")
     public void setPrivateKey(String privateKey) {
-        RsaProperties.privateKey = privateKey;
+        this.privateKey = privateKey;
     }
+
+//    @Value("${opencloud.rsa.public-key}")
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
+    }
+
 }

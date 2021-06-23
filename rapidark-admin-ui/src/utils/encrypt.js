@@ -13,7 +13,7 @@ const MAX_ENCRYPT_BLOCK = 117
  * 最长解码长度
  * @type {number}
  */
-const MAX_DECRYPT_BLOCK = 128
+const MAX_DECRYPT_BLOCK = 256
 
 /**
  * @description RSA加密(支持长字符加密)
@@ -23,7 +23,7 @@ const MAX_DECRYPT_BLOCK = 128
 export async function encryptedData(data) {
   let publicKey
   const res = await getPublicKey()
-  publicKey = res.data.publicKey
+  publicKey = res.data
   if (res.data.mockServer) {
     publicKey = ''
   }
