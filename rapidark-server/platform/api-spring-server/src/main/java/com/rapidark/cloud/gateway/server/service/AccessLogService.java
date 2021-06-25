@@ -99,6 +99,9 @@ public class AccessLogService {
                     bizId = data.get("id");
                 }
                 if(StringUtils.isEmpty(bizId)) {
+                    bizId = data.get("protocolId");
+                }
+                if(StringUtils.isEmpty(bizId)) {
                     bizId = responseBodyJsonObject.getString("id");
                 }
                 bizStatus = responseBodyJsonObject.getInteger("code");
@@ -140,13 +143,20 @@ public class AccessLogService {
             }
 
             Mono<Authentication> authenticationMono = exchange.getPrincipal();
-            Mono<OpenUserDetails> authentication = authenticationMono
+            Mono<Object> authentication = authenticationMono
                     .filter(Authentication::isAuthenticated)
-                    .map(Authentication::getPrincipal)
-                    .cast(OpenUserDetails.class);
-            authentication.subscribe(user -> {
-                if (user != null) {
-                    map.put("authentication", JSONObject.toJSONString(user));
+                    .map(Authentication::getPrincipal);
+
+//                    .cast(OpenUserDetails.class);
+            authentication.subscribe(principal -> {
+                if (principal != null) {
+                    if (principal instanceof OpenUserDetails) {
+                        map.put("authentication", JSONObject.toJSONString(principal));
+                    } else if (principal instanceof String) {
+                        map.put("authentication", principal);
+                    } else {
+                        map.put("authentication", principal.toString());
+                    }
                 }
             });
             amqpTemplate.convertAndSend(QueueConstants.QUEUE_ACCESS_LOGS, map);

@@ -220,6 +220,9 @@ export default {
       if (!jsonDataString) {
         return ''
       }
+      if (!jsonDataString.startsWith('{')) {
+        return jsonDataString;
+      }
       return JSON.stringify(JSON.parse(escapeStringHTML(jsonDataString)), null, 4);
     },
     openDrawer (data) {
