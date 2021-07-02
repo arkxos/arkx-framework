@@ -41,6 +41,7 @@ const CODE_MESSAGE = {
 }
 
 const handleData = ({ config, data, status, statusText }) => {
+  console.log('=========handle response data')
   if (loadingInstance) loadingInstance.close()
   // 若data.code存在，覆盖默认code
   let code = data && data[statusName] ? data[statusName] : status
@@ -54,7 +55,7 @@ const handleData = ({ config, data, status, statusText }) => {
       // 正确内容：{ code: 200, data: {  }, msg: '操作正常' }
       // return data
       return data
-    case 401:
+    case 401 || 2000:
       store
         .dispatch('user/resetAll')
         .then(() =>
