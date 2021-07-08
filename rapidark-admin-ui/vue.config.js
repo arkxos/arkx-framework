@@ -35,7 +35,8 @@ process.env.VUE_APP_RELY = rely
 const resolve = (dir) => {
   return path.join(__dirname, dir)
 }
-
+console.log('-------------------------------------' + resolve('@xdh/my/ui/lib'))
+console.log('-------------------------------------' + path.resolve('node_modules/@xdh/my/ui/lib'))
 module.exports = {
   publicPath,
   assetsDir,
@@ -127,8 +128,11 @@ module.exports = {
           '~': resolve('.'),
           '@': resolve('src'),
           '_c': resolve('src/components'),
-          '@crud': resolve('src/components/Crud')
+          '@crud': resolve('src/components/Crud'),
+          // 'element-ui': resolve('node_modules/element-ui')
+          // '$ui': resolve('node_modules/@xdh/my/ui/lib')
         },
+        modules: ['node_modules'],
       },
       plugins: [
         new Webpack.ProvidePlugin(providePlugin),
@@ -140,6 +144,8 @@ module.exports = {
   },
   chainWebpack(config) {
     config.resolve.symlinks(true)
+    config.resolve.modules.add('node_modules')
+    config.resolve.alias.set('$ui', '@xdh/my/ui/lib')
     config.module.rule('svg').exclude.add(resolve('src/icon'))
     config.module
       .rule('vabIcon')
@@ -149,9 +155,11 @@ module.exports = {
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
       .options({ symbolId: 'vab-icon-[name]' })
+
     config.when(process.env.NODE_ENV === 'development', (config) => {
       config.devtool('source-map')
     })
+
     config.when(process.env.NODE_ENV === 'production', (config) => {
       config.performance.set('hints', false)
       config.devtool('none')
@@ -171,9 +179,11 @@ module.exports = {
           },
         },
       })
+
       config
         .plugin('banner')
         .use(Webpack.BannerPlugin, [`${webpackBanner}${dateTime}`])
+
       if (imageCompression)
         config.module
           .rule('images')
@@ -183,6 +193,7 @@ module.exports = {
             bypassOnDebug: true,
           })
           .end()
+
       if (buildGzip)
         config.plugin('compression').use(CompressionWebpackPlugin, [
           {
@@ -195,7 +206,8 @@ module.exports = {
             minRatio: 0.8,
           },
         ])
-      if (build7z)
+
+      if (build7z) {
         config.plugin('fileManager').use(FileManagerPlugin, [
           {
             events: {
@@ -210,6 +222,7 @@ module.exports = {
             },
           },
         ])
+      }
     })
   },
   runtimeCompiler: true,
