@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service;
+package com.rapidark.cloud.base.server.modules.system.service;
 
 import java.util.Map;
 

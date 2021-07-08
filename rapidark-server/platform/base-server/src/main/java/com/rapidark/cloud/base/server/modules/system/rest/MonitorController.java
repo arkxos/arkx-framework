@@ -13,12 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.rest;
+package com.rapidark.cloud.base.server.modules.system.rest;
 
+import com.rapidark.cloud.base.server.modules.system.service.MonitorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.modules.system.service.MonitorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "系统-服务监控管理")
-@RequestMapping("/api/monitor")
+@RequestMapping("/monitor")
 public class MonitorController {
 
     private final MonitorService serverService;

@@ -16,12 +16,14 @@
 
     <modules>
        <!-- <module>rapidark-starter-dependencies</module>-->
+        <module>rapidark-framework</module>
         <module>components</module>
         <module>platform</module>
         <module>services</module>
         <module>migration</module>
         <module>rapidark-os</module>
         <module>ltc-server</module>
+
     </modules>
     <properties>
         <java.version>11</java.version>
@@ -135,13 +137,13 @@
                 <!--当前环境-->
                 <profile.name>uat</profile.name>
                 <!--Nacos配置中心地址-->
-                <config.server-addr>172.18.55.14:8848</config.server-addr>
+                <config.server-addr>172.16.253.213:8848</config.server-addr>
                 <!--Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
-                <config.namespace></config.namespace>
+                <config.namespace>uat</config.namespace>
                 <!--Nacos服务发现地址-->
-                <discovery.server-addr>172.18.55.14:8848</discovery.server-addr>
+                <discovery.server-addr>172.16.253.213:8848</discovery.server-addr>
                 <!--Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
-                <discovery.namespace></discovery.namespace>
+                <discovery.namespace>uat</discovery.namespace>
             </properties>
         </profile>
         <!-- 生产 -->

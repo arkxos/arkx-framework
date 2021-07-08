@@ -25,6 +25,7 @@ import java.util.Date;
 @SpringBootApplication
 @MapperScan(basePackages = "com.rapidark.cloud.base.server.mapper")
 public class BaseApplication {
+
     public static void main(String[] args) {
 
         DriverManager.setLogWriter(new PrintWriter(System.out) {
