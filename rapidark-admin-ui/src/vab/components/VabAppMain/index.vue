@@ -1,6 +1,6 @@
 <template>
   <div class="vab-app-main">
-    <section>
+    <section style="background-color: rgba(40, 44, 52, 0);">
       <transition mode="out-in" name="fade-transform">
         <vab-keep-alive v-if="routerView" />
       </transition>
