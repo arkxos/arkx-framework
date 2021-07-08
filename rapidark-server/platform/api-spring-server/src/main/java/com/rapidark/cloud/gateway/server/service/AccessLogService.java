@@ -16,6 +16,7 @@ import org.springframework.cloud.gateway.route.Route;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -57,7 +58,7 @@ public class AccessLogService {
      * @param requestPath
      * @return
      */
-    public boolean ignore(String requestPath) {
+    private boolean ignore(String requestPath) {
         Iterator<String> iterator = ignores.iterator();
         while (iterator.hasNext()) {
             String path = iterator.next();
@@ -68,6 +69,7 @@ public class AccessLogService {
         return false;
     }
 
+    @Async
     public void sendLog(ServerWebExchange exchange, Exception ex) {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();

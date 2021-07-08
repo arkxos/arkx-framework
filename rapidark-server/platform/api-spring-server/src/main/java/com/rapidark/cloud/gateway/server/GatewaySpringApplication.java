@@ -33,6 +33,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 网关服务
@@ -41,6 +42,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *
  * @author liuyadu
  */
+@EnableAsync
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
