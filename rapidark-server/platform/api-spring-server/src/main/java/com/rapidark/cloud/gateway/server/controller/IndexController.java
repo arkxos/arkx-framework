@@ -1,17 +1,26 @@
 package com.rapidark.cloud.gateway.server.controller;
 
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
+import com.rapidark.common.model.ResultBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author: liuyadu
- * @date: 2018/11/5 16:33
- * @description:
+ * @author darkness
+ * @date 2021/7/6 16:03
+ * @version 1.0
  */
 @Controller
 public class IndexController {
+
     @Autowired
     private ApiProperties apiProperties;
 
@@ -22,4 +31,21 @@ public class IndexController {
         }
         return "index";
     }
+
+    @ResponseBody
+    @GetMapping("/test")
+    public ResultBody testGet() {
+        Map<String, String> data = new HashMap<>();
+        data.put("code", "0001");
+        return ResultBody.ok().data(data);
+    }
+
+    @ResponseBody
+    @PostMapping("/test")
+    public ResultBody testPost(@Valid @RequestBody TestCommand command) {
+        Map<String, String> data = new HashMap<>();
+        data.put("code", "0001");
+        return ResultBody.ok().data(data);
+    }
+
 }
