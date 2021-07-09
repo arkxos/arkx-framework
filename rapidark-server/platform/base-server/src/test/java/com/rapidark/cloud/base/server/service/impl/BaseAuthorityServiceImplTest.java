@@ -2,7 +2,7 @@ package com.rapidark.cloud.base.server.service.impl;
 
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.common.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;

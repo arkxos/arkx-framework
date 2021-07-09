@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -18,12 +16,14 @@ import com.alibaba.fastjson.JSON;
 import com.rapidark.soa.entity.StaffEntity;
 import com.rapidark.soa.repository.StaffRepository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Darkness
  * @date 2020年10月25日 下午3:23:49
  * @version V1.0
  */
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest(classes = SqlToyApplication.class)
 public class JpaSqlToyQueryTest {
 
@@ -33,21 +33,21 @@ public class JpaSqlToyQueryTest {
 	@Test
 	public void test() {
 		StaffEntity u = repository.findById("s01").get();
-		Assert.assertEquals("成功的测试用例", "张三", u.getName());
+		assertEquals("成功的测试用例", "张三", u.getName());
 	}
 	
 	@Test
 	public void test2() {
 		List<Map<String, Object>> datas = repository.queryListMapByNameAndAge("张", 25);
 		System.out.println(JSON.toJSONString(datas));
-		Assert.assertEquals("成功的测试用例", 3, datas.size());
+		assertEquals(3, datas.size(), "成功的测试用例");
 	}
 	
 	@Test
 	public void test3() {
 		List<StaffEntity> datas = repository.queryListEntityByNameAndAge("张", 25);
 		System.out.println(JSON.toJSONString(datas));
-		Assert.assertEquals("成功的测试用例", 3, datas.size());
+		assertEquals(3, datas.size());
 	}
 	
 	@Test
@@ -55,8 +55,8 @@ public class JpaSqlToyQueryTest {
 		Pageable pageable = PageRequest.of(0, 2);
 		Page<Map<String, Object>> datas = repository.queryPageMapByNameAndAge("张", 25, pageable);
 		System.out.println(JSON.toJSONString(datas));
-		Assert.assertEquals("成功的测试用例", 3, datas.getTotalElements());
-		Assert.assertEquals("成功的测试用例", 2, datas.getContent().size());
+		assertEquals( 3, datas.getTotalElements());
+		assertEquals(2, datas.getContent().size());
 	}
 	
 	@Test
@@ -64,7 +64,7 @@ public class JpaSqlToyQueryTest {
 		Pageable pageable = PageRequest.of(1, 2);
 		Page<StaffEntity> datas = repository.queryPageEntityByNameAndAge("张", 25, pageable);
 		System.out.println(JSON.toJSONString(datas));
-		Assert.assertEquals("成功的测试用例", 1, datas.getContent().size());
+		assertEquals(1, datas.getContent().size());
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class JpaSqlToyQueryTest {
 		
 		Page<StaffEntity> datas = repository.queryPageEntityByMap(params, pageable);
 		System.out.println(JSON.toJSONString(datas));
-		Assert.assertEquals("成功的测试用例", 1, datas.getContent().size());
+		assertEquals(1, datas.getContent().size());
 	}
 	
 }
