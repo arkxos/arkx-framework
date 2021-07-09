@@ -3,7 +3,7 @@ package com.rapidark.common.utils;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.*;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 

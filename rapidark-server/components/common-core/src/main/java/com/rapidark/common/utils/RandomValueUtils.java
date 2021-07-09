@@ -1,7 +1,7 @@
 package com.rapidark.common.utils;
 
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
