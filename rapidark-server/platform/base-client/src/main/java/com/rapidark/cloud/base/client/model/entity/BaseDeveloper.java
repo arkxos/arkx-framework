@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rapidark.common.annotation.TableAlias;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * 系统用户-管理员信息

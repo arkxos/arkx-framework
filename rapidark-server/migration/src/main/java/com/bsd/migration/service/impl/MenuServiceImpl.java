@@ -10,7 +10,7 @@ import com.bsd.migration.service.ActionService;
 import com.bsd.migration.service.MenuService;
 import com.bsd.migration.utils.OAuth2RequestUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;

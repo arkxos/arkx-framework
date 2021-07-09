@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.client.Jackson2ArrayOrStringDeserializer;
-import org.springframework.security.oauth2.provider.client.JacksonArrayOrStringDeserializer;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
@@ -17,60 +16,44 @@ import java.util.*;
  * @date: 2019/5/30 18:07
  * @description:
  */
-@org.codehaus.jackson.map.annotate.JsonSerialize(include = org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_DEFAULT)
-@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT)
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class OpenClientDetails implements ClientDetails, Serializable {
     private static final long serialVersionUID = -4888527753331687039L;
 
-    @org.codehaus.jackson.annotate.JsonProperty("client_id")
     @com.fasterxml.jackson.annotation.JsonProperty("client_id")
     private String clientId;
 
-    @org.codehaus.jackson.annotate.JsonProperty("client_secret")
     @com.fasterxml.jackson.annotation.JsonProperty("client_secret")
     private String clientSecret;
 
-    @org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
     @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
     private Set<String> scope = Collections.emptySet();
 
-    @org.codehaus.jackson.annotate.JsonProperty("resource_ids")
-    @org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
     @com.fasterxml.jackson.annotation.JsonProperty("resource_ids")
     @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
     private Set<String> resourceIds = Collections.emptySet();
 
-    @org.codehaus.jackson.annotate.JsonProperty("authorized_grant_types")
-    @org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
     @com.fasterxml.jackson.annotation.JsonProperty("authorized_grant_types")
     @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
     private Set<String> authorizedGrantTypes = Collections.emptySet();
 
-    @org.codehaus.jackson.annotate.JsonProperty("redirect_uri")
-    @org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
     @com.fasterxml.jackson.annotation.JsonProperty("redirect_uri")
     @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
     private Set<String> registeredRedirectUris;
 
-    @org.codehaus.jackson.annotate.JsonProperty("autoapprove")
-    @org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
     @com.fasterxml.jackson.annotation.JsonProperty("autoapprove")
     @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
     private Set<String> autoApproveScopes;
 
     private List<GrantedAuthority> authorities = Collections.emptyList();
 
-    @org.codehaus.jackson.annotate.JsonProperty("access_token_validity")
     @com.fasterxml.jackson.annotation.JsonProperty("access_token_validity")
     private Integer accessTokenValiditySeconds;
 
-    @org.codehaus.jackson.annotate.JsonProperty("refresh_token_validity")
     @com.fasterxml.jackson.annotation.JsonProperty("refresh_token_validity")
     private Integer refreshTokenValiditySeconds;
 
-    @org.codehaus.jackson.annotate.JsonProperty("additional_information")
     @com.fasterxml.jackson.annotation.JsonProperty("additional_information")
     private Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
 
@@ -127,7 +110,6 @@ public class OpenClientDetails implements ClientDetails, Serializable {
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public String getClientId() {
         return clientId;
@@ -158,21 +140,18 @@ public class OpenClientDetails implements ClientDetails, Serializable {
         return false;
     }
 
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Set<String> getAutoApproveScopes() {
         return autoApproveScopes;
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public boolean isSecretRequired() {
         return this.clientSecret != null;
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public String getClientSecret() {
         return clientSecret;
@@ -183,7 +162,6 @@ public class OpenClientDetails implements ClientDetails, Serializable {
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public boolean isScoped() {
         return this.scope != null && !this.scope.isEmpty();
@@ -199,7 +177,6 @@ public class OpenClientDetails implements ClientDetails, Serializable {
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Set<String> getResourceIds() {
         return resourceIds;
@@ -210,7 +187,6 @@ public class OpenClientDetails implements ClientDetails, Serializable {
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Set<String> getAuthorizedGrantTypes() {
         return authorizedGrantTypes;
@@ -221,7 +197,6 @@ public class OpenClientDetails implements ClientDetails, Serializable {
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Set<String> getRegisteredRedirectUri() {
         return registeredRedirectUris;
@@ -231,7 +206,6 @@ public class OpenClientDetails implements ClientDetails, Serializable {
         this.registeredRedirectUris = registeredRedirectUris == null ? null : new LinkedHashSet<String>(registeredRedirectUris);
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("authorities")
     @com.fasterxml.jackson.annotation.JsonProperty("authorities")
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
@@ -241,20 +215,17 @@ public class OpenClientDetails implements ClientDetails, Serializable {
         return this.authorities;
     }
 
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = new ArrayList<GrantedAuthority>(authorities);
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("authorities")
     @com.fasterxml.jackson.annotation.JsonProperty("authorities")
     public void setAuthoritiesExt(Collection<OpenAuthority> authorities) {
         this.authorities = new ArrayList<GrantedAuthority>(authorities);
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Integer getAccessTokenValiditySeconds() {
         return accessTokenValiditySeconds;
@@ -265,7 +236,6 @@ public class OpenClientDetails implements ClientDetails, Serializable {
     }
 
     @Override
-    @org.codehaus.jackson.annotate.JsonIgnore
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Integer getRefreshTokenValiditySeconds() {
         return refreshTokenValiditySeconds;
@@ -279,14 +249,12 @@ public class OpenClientDetails implements ClientDetails, Serializable {
         this.additionalInformation = new LinkedHashMap<String, Object>(additionalInformation);
     }
 
-    @org.codehaus.jackson.annotate.JsonAnySetter
     @com.fasterxml.jackson.annotation.JsonAnySetter
     @Override
     public Map<String, Object> getAdditionalInformation() {
         return Collections.unmodifiableMap(this.additionalInformation);
     }
 
-    @org.codehaus.jackson.annotate.JsonAnySetter
     @com.fasterxml.jackson.annotation.JsonAnySetter
     public void addAdditionalInformation(String key, Object value) {
         this.additionalInformation.put(key, value);

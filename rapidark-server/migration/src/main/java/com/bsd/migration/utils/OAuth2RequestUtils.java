@@ -3,7 +3,7 @@ package com.bsd.migration.utils;
 import com.bsd.migration.constants.CommonConstants;
 import com.bsd.migration.model.resp.Config;
 import lombok.extern.slf4j.Slf4j;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
