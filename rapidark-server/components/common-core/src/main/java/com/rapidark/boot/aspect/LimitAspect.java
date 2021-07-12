@@ -13,10 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.aspect;
+package com.rapidark.boot.aspect;
 
 import com.google.common.collect.ImmutableList;
-import me.zhengjie.annotation.Limit;
+import com.rapidark.boot.annotation.Limit;
+import com.rapidark.boot.annotation.LimitType;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.utils.RequestHolder;
 import me.zhengjie.utils.StringUtils;
@@ -35,7 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
- * @author /
+ * @author darkness
+ * @date 2021/7/12 12:34
+ * @version 1.0
  */
 @Aspect
 @Component
@@ -48,7 +51,7 @@ public class LimitAspect {
         this.redisTemplate = redisTemplate;
     }
 
-    @Pointcut("@annotation(me.zhengjie.annotation.Limit)")
+    @Pointcut("@annotation(com.rapidark.boot.annotation.Limit)")
     public void pointcut() {
     }
 
@@ -68,7 +71,11 @@ public class LimitAspect {
             }
         }
 
-        ImmutableList<Object> keys = ImmutableList.of(StringUtils.join(limit.prefix(), "_", key, "_", request.getRequestURI().replaceAll("/","_")));
+        ImmutableList<Object> keys = ImmutableList.of(
+                StringUtils.join(
+                        limit.prefix(), "_",
+                        key, "_",
+                        request.getRequestURI().replaceAll("/","_")));
 
         String luaScript = buildLuaScript();
         RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);

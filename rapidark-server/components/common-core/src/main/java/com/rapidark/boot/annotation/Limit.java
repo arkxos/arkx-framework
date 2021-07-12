@@ -13,29 +13,30 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.annotation;
+package com.rapidark.boot.annotation;
 
-import me.zhengjie.aspect.LimitType;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author jacky
+ * @author darkness
+ * @date 2021/7/12 12:33
+ * @version 1.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Limit {
 
-    // 资源名称，用于描述接口功能
-    String name() default "";
+    // key prefix
+    String prefix() default "";
 
     // 资源 key
     String key() default "";
 
-    // key prefix
-    String prefix() default "";
+    // 资源名称，用于描述接口功能
+    String name() default "";
 
     // 时间的，单位秒
     int period();

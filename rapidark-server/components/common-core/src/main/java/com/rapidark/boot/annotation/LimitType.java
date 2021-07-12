@@ -13,15 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.aspect;
+package com.rapidark.boot.annotation;
 
 /**
  * 限流枚举
- * @author /
+ * @author darkness
+ * @date 2021/7/12 12:33
+ * @version 1.0
  */
 public enum LimitType {
+
     // 默认
     CUSTOMER,
+
     //  by ip addr
     IP
+
 }
