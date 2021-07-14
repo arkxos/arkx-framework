@@ -4,6 +4,9 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -16,6 +19,7 @@ import java.util.Locale;
  * @version 2014-4-15
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
+
     private static final long ONE_MILLIS = 1000;
     private static final long ONE_MINUTE = 60;
     private static final long ONE_HOUR = 3600;
@@ -450,5 +454,16 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         System.out.println(formatDate(getAfterDay(new Date()), "yyyy-MM-dd"));
         System.out.println(formatDate(getAfterWeek(new Date()), "yyyy-MM-dd"));
         System.out.println(formatDate(getAfterYear(new Date()), "yyyy-MM-dd"));
+    }
+
+    private static DateTimeFormatter DefaultDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static DateTimeFormatter DefaultDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public static String toString(LocalDate dateTime) {
+        return DefaultDateFormatter.format(dateTime);
+    }
+
+    public static String toString(LocalDateTime dateTime) {
+        return DefaultDateTimeFormatter.format(dateTime);
     }
 }
