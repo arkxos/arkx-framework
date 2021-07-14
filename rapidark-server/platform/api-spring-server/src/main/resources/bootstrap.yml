@@ -7,6 +7,8 @@ spring:
             enabled: false
     application:
         name: ${artifactId}
+    profiles:
+        active: ${profile.name}
     cloud:
         #手动配置Bus id,
         bus:
@@ -69,8 +71,7 @@ spring:
                         rule-type: system
     main:
         allow-bean-definition-overriding: true
-    profiles:
-        active: ${profile.name}
+        lazy-initialization: false
     thymeleaf:
         cache: false
         encoding: UTF-8
