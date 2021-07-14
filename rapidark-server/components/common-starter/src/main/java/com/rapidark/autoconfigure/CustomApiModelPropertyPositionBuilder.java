@@ -34,33 +34,40 @@ public class CustomApiModelPropertyPositionBuilder implements ModelPropertyBuild
 
   @Override
   public void apply(ModelPropertyContext context) {
-    Optional<BeanPropertyDefinition> beanPropertyDefinitionOpt = context.getBeanPropertyDefinition();
-    Optional<ApiModelProperty> annotation = Optional.absent();
-    if (context.getAnnotatedElement().isPresent()) {
-      annotation = annotation.or(findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
-    }
-    if (context.getBeanPropertyDefinition().isPresent()) {
-      annotation = annotation.or(findPropertyAnnotation(context.getBeanPropertyDefinition().get(), ApiModelProperty.class));
-    }
-    if (beanPropertyDefinitionOpt.isPresent()) {
-      BeanPropertyDefinition beanPropertyDefinition = beanPropertyDefinitionOpt.get();
-      if (annotation.isPresent() && annotation.get().position() != 0) {
-        return;
+    try {
+      Optional<BeanPropertyDefinition> beanPropertyDefinitionOpt = context.getBeanPropertyDefinition();
+      Optional<ApiModelProperty> annotation = Optional.absent();
+      if (context.getAnnotatedElement().isPresent()) {
+        annotation = annotation.or(findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
       }
-      AnnotatedField field = beanPropertyDefinition.getField();
-      Class<?> clazz = field.getDeclaringClass();
-      Field[] declaredFields = clazz.getDeclaredFields();
-      Field declaredField;
-      try {
-        declaredField = clazz.getDeclaredField(field.getName());
-      } catch (NoSuchFieldException | SecurityException e) {
-        log.error("", e);
-        return;
+      if (context.getBeanPropertyDefinition().isPresent()) {
+        annotation = annotation.or(findPropertyAnnotation(context.getBeanPropertyDefinition().get(), ApiModelProperty.class));
       }
-      int indexOf = ArrayUtils.indexOf(declaredFields, declaredField);
-      if (indexOf != -1) {
-        context.getBuilder().position(indexOf);
+      if (beanPropertyDefinitionOpt.isPresent()) {
+        BeanPropertyDefinition beanPropertyDefinition = beanPropertyDefinitionOpt.get();
+        if (annotation.isPresent() && annotation.get().position() != 0) {
+          return;
+        }
+        AnnotatedField field = beanPropertyDefinition.getField();
+        if(field == null) {
+          return;
+        }
+        Class<?> clazz = field.getDeclaringClass();
+        Field[] declaredFields = clazz.getDeclaredFields();
+        Field declaredField;
+        try {
+          declaredField = clazz.getDeclaredField(field.getName());
+        } catch (NoSuchFieldException | SecurityException e) {
+          log.error("", e);
+          return;
+        }
+        int indexOf = ArrayUtils.indexOf(declaredFields, declaredField);
+        if (indexOf != -1) {
+          context.getBuilder().position(indexOf);
+        }
       }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }
