@@ -108,7 +108,7 @@ public class AccessLogService {
                 }
                 bizStatus = responseBodyJsonObject.getInteger("code");
 
-                if (bizStatus != 0) {
+                if (bizStatus != null && bizStatus != 0) {
                     error = responseBodyJsonObject.getString("message");
                 }
             }
@@ -140,7 +140,7 @@ public class AccessLogService {
             map.put("userAgent", userAgent);
             map.put("responseTime", new Date());
             map.put("error", error);
-            if (bizStatus != 0) {
+            if (bizStatus != null && bizStatus != 0) {
                 map.put("responseBody", responseBody);
             }
 
@@ -163,6 +163,7 @@ public class AccessLogService {
             });
             amqpTemplate.convertAndSend(QueueConstants.QUEUE_ACCESS_LOGS, map);
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("access logs save error:{}", e.getMessage());
         }
     }
