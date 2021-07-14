@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
 INPUT=$2
+JMXPORT=$3
 FILE_PATH=$(readlink -f ${INPUT})
 SERVICE=${INPUT##*/}
 SERVICE_NAME=${SERVICE%.*}
 DEPLOY_DIR=$(pwd)
 #JVM_OPTS="-server -Xms128m -Xmx768m -XX:+UseG1GC -XX:SurvivorRatio=6 -XX:MaxGCPauseMillis=400 -XX:G1ReservePercent=15 -XX:ParallelGCThreads=4 -XX:ConcGCThreads=1 -XX:InitiatingHeapOccupancyPercent=40 -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:../logs/gc.log"
+#JVM_OPTS="-javaagent:/root/ltc/apache-skywalking-apm-bin/agent/skywalking-agent.jar -Dskywalking.agent.service_name=$SERVICE_NAME -Dskywalking.collector.backend_service=127.0.0.1:11800 -server -Xms128m -Xmx768m -XX:+UseG1GC -XX:SurvivorRatio=6 -XX:MaxGCPauseMillis=400 -XX:G1ReservePercent=15 -XX:ParallelGCThreads=4 -XX:ConcGCThreads=1 -XX:InitiatingHeapOccupancyPercent=40 -XX:+PrintGCDetails -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=${JMXPORT} -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=106.12.176.108 "
 JVM_OPTS="-server -Xms128m -Xmx768m -XX:+UseG1GC -XX:SurvivorRatio=6 -XX:MaxGCPauseMillis=400 -XX:G1ReservePercent=15 -XX:ParallelGCThreads=4 -XX:ConcGCThreads=1 -XX:InitiatingHeapOccupancyPercent=40 -XX:+PrintGCDetails"
 
 if [[ "$1" == "" ]]; then

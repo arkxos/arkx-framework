@@ -328,6 +328,11 @@
             <version>4.4.12</version>
         </dependency>
             <dependency>
+                <groupId>com.sagframe</groupId>
+                <artifactId>sagacity-sqltoy-starter</artifactId>
+                <version>5.0.6</version>
+            </dependency>
+            <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>4.2.2</version>
