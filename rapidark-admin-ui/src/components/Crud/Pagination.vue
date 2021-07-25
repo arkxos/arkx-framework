@@ -2,7 +2,7 @@
 <template>
   <el-pagination
     :page-size.sync="page.size"
-    :total="page.total"
+    :total="page.total - 0"
     :current-page.sync="page.page"
     style="margin-top: 8px;"
     layout="total, prev, pager, next, sizes"
