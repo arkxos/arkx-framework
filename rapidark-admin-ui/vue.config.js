@@ -44,6 +44,7 @@ module.exports = {
   lintOnSave,
   transpileDependencies,
   devServer: {
+    disableHostCheck: true,
     hot: true,
     port: devPort,
     open: true,
