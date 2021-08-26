@@ -101,6 +101,17 @@ public class SqlToyTemplateQuery implements RepositoryQuery {
 		}
 		
 		List<?> result = queryData(namedQueryName, paramsMap, genericType);
+		if(this.isReturnTypeOptional()) {
+			if(result.isEmpty()) {
+				return Optional.empty();
+			}
+			if(result.size() > 1) {
+				throw new RuntimeException("query result greate than 1 row");
+			}
+			Object singleData = result.get(0);
+			return Optional.ofNullable(singleData);
+		}
+
 		return result;
 	}
 	
@@ -213,6 +224,10 @@ public class SqlToyTemplateQuery implements RepositoryQuery {
 	@Override
 	public JpaQueryMethod getQueryMethod() {
 		return queryMethod;
+	}
+
+	public boolean isReturnTypeOptional() {
+		return this.method.getReturnType() == Optional.class;
 	}
 	
 	public String getNamedQueryName() {
