@@ -12,7 +12,7 @@ module.exports = {
   // 配后端数据的接收方式application/json 或 application/x-www-form-urlencoded;charset=UTF-8
   contentType: 'application/json',
   // 最长请求时间
-  requestTimeout: 2 * 30 * 1000,
+  requestTimeout: 6 * 30 * 1000,
   // 操作正常code，支持String、Array、int多种类型
   successCode: [200, 0, '200', '0'],
   // 数据状态的字段名称
