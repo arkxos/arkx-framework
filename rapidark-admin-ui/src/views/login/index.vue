@@ -147,8 +147,8 @@
       },
     },
     mounted() {
-      this.form.username = 'admin'
-      this.form.password = '123456'
+      this.form.username = '';//'admin'
+      this.form.password = '';//'123456'
       // 为了演示效果，会在官网演示页自动登录到首页，正式开发可删除
       if (
         document.domain === 'vue-admin-beautiful.com' ||
