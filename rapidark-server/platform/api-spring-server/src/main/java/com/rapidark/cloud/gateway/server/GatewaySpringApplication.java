@@ -32,7 +32,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -53,6 +56,17 @@ public class GatewaySpringApplication implements CommandLineRunner {
     public ResourceLocator resourceLocator;
     @Autowired
     private JdbcRouteDefinitionLocator jdbcRouteDefinitionLocator;
+
+    @Bean
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("route_oschina", r -> r.path("/oschina/**").filters(f->f.stripPrefix(1)).uri("https://oschina.net"))
+                .route("route_baidu", r -> r.path("/baidu/**").filters(f->f.stripPrefix(1)).uri("https://baidu.com"))
+                .route("route_csdn", r -> r.path("/csdn/**").filters(f->f.stripPrefix(1)).uri("https://blog.csdn.net"))
+                .route("route_zero", r -> r.path("/zero/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
+                .route("route_zerogo", r -> r.path("/zerogo/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
+                .build();
+    }
 
     public static void main(String[] args) {
         RapidArkApplication.run(GatewaySpringApplication.class, args);

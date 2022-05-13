@@ -7,13 +7,13 @@ import com.rapidark.common.mybatis.base.entity.AbstractEntity;
 
 /**
  * 网关动态路由
- *
- * @author: liuyadu
- * @date: 2018/10/24 16:21
- * @description:
+ * @author darkness
+ * @date 2022/5/12 18:48
+ * @version 1.0
  */
 @TableName("gateway_route")
 public class GatewayRoute extends AbstractEntity {
+
     private static final long serialVersionUID = -2952097064941740301L;
 
     /**

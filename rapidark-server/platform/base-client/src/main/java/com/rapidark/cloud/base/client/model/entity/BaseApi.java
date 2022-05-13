@@ -7,13 +7,13 @@ import com.rapidark.common.mybatis.base.entity.AbstractEntity;
 
 /**
  * 系统资源-API接口
- *
- * @author: liuyadu
- * @date: 2018/10/24 16:21
- * @description:
+ * @author darkness
+ * @date 2022/5/12 18:59
+ * @version 1.0
  */
 @TableName("base_api")
 public class BaseApi extends AbstractEntity {
+
     private static final long serialVersionUID = -9099562653030770650L;
 
     /**

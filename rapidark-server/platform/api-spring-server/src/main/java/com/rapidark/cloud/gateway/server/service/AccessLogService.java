@@ -89,8 +89,11 @@ public class AccessLogService {
             if (gatewayContext != null) {
                 data = gatewayContext.getAllRequestData().toSingleValueMap();
                 responseBody = gatewayContext.getResponseBody();
-                responseBodyJsonObject = JSON.parseObject(responseBody);
-                bizId = responseBodyJsonObject.getString("bizId");
+                if(responseBody != null) {
+                    responseBodyJsonObject = JSON.parseObject(responseBody);
+                    bizId = responseBodyJsonObject.getString("bizId");
+                }
+
                 if(StringUtils.isEmpty(bizId)) {
                     bizId = data.get("bizId");
                 }
@@ -103,12 +106,15 @@ public class AccessLogService {
                 if(StringUtils.isEmpty(bizId)) {
                     bizId = data.get("protocolId");
                 }
-                if(StringUtils.isEmpty(bizId)) {
+                if(StringUtils.isEmpty(bizId) && responseBodyJsonObject != null) {
                     bizId = responseBodyJsonObject.getString("id");
                 }
-                bizStatus = responseBodyJsonObject.getInteger("code");
 
-                if (bizStatus != null && bizStatus != 0) {
+                if(responseBodyJsonObject != null) {
+                    bizStatus = responseBodyJsonObject.getInteger("code");
+                }
+
+                if (bizStatus != null && bizStatus != 0 && responseBodyJsonObject != null) {
                     error = responseBodyJsonObject.getString("message");
                 }
             }

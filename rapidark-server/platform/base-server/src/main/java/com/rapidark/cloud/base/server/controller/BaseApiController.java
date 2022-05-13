@@ -3,6 +3,7 @@ package com.rapidark.cloud.base.server.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.BaseApi;
+import com.rapidark.cloud.base.server.controller.cmd.AddApiCommand;
 import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
@@ -95,28 +96,19 @@ public class BaseApiController {
     })
     @PostMapping("/api/add")
     public ResultBody<Long> addApi(
-            @RequestParam(value = "apiCode") String apiCode,
-            @RequestParam(value = "apiName") String apiName,
-            @RequestParam(value = "apiCategory") String apiCategory,
-            @RequestParam(value = "serviceId") String serviceId,
-            @RequestParam(value = "path", required = false, defaultValue = "") String path,
-            @RequestParam(value = "status", defaultValue = "1") Integer status,
-            @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
-            @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc,
-            @RequestParam(value = "isAuth", required = false, defaultValue = "1") Integer isAuth,
-            @RequestParam(value = "isOpen", required = false, defaultValue = "0") Integer isOpen
+           @RequestBody AddApiCommand command
     ) {
         BaseApi api = new BaseApi();
-        api.setApiCode(apiCode);
-        api.setApiName(apiName);
-        api.setApiCategory(apiCategory);
-        api.setServiceId(serviceId);
-        api.setPath(path);
-        api.setStatus(status);
-        api.setPriority(priority);
-        api.setApiDesc(apiDesc);
-        api.setIsAuth(isAuth);
-        api.setIsOpen(isOpen);
+        api.setApiCode(command.getApiCode());
+        api.setApiName(command.getApiName());
+        api.setApiCategory(command.getApiCategory());
+        api.setServiceId(command.getServiceId());
+        api.setPath(command.getPath());
+        api.setStatus(command.getStatus());
+        api.setPriority(command.getPriority());
+        api.setApiDesc(command.getApiDesc());
+        api.setIsAuth(command.getIsAuth());
+        api.setIsOpen(command.getIsOpen());
         Long apiId = null;
         apiService.addApi(api);
         openRestTemplate.refreshGateway();

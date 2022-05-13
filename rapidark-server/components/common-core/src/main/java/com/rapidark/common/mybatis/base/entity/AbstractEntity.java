@@ -11,11 +11,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author: flyme
- * @date: 2018/3/7 15:01
- * @desc: 实体类父类
+ * 实体类父类
+ * @author darkness
+ * @date 2022/5/12 18:48
+ * @version 1.0
  */
 public abstract class AbstractEntity extends Model implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**
