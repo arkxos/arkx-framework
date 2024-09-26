@@ -3,6 +3,7 @@ package com.opencloud.base.server.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencloud.base.client.model.entity.BaseApp;
 import com.opencloud.base.client.service.IBaseAppServiceClient;
+import com.opencloud.base.server.controller.cmd.CreateAppCommand;
 import com.opencloud.base.server.service.BaseAppService;
 import com.opencloud.common.model.PageParams;
 import com.opencloud.common.model.ResultBody;
@@ -85,15 +86,6 @@ public class BaseAppController implements IBaseAppServiceClient {
     /**
      * 添加应用信息
      *
-     * @param appName     应用名称
-     * @param appNameEn   应用英文名称
-     * @param appOs       手机应用操作系统:ios-苹果 android-安卓
-     * @param appType     应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     * @param appIcon     应用图标
-     * @param appDesc     应用说明
-     * @param status      状态
-     * @param website     官网地址
-     * @param developerId 开发者
      * @return
      */
     @ApiOperation(value = "添加应用信息", notes = "添加应用信息")
@@ -114,34 +106,22 @@ public class BaseAppController implements IBaseAppServiceClient {
     })
     @PostMapping("/app/add")
     public ResultBody<String> addApp(
-            @RequestParam(value = "appName") String appName,
-            @RequestParam(value = "appNameEn") String appNameEn,
-            @RequestParam(value = "appType") String appType,
-            @RequestParam(value = "appIcon", required = false) String appIcon,
-            @RequestParam(value = "appOs", required = false) String appOs,
-            @RequestParam(value = "appDesc", required = false) String appDesc,
-            @RequestParam(value = "status", defaultValue = "1") Integer status,
-            @RequestParam(value = "website", required = false) String website,
-            @RequestParam(value = "developerId", required = false) Long developerId,
-            @RequestParam(value = "isSign", required = false, defaultValue = "0") Integer isSign,
-            @RequestParam(value = "isEncrypt", required = false, defaultValue = "0") Integer isEncrypt,
-            @RequestParam(value = "encryptType", required = false, defaultValue = "") String encryptType,
-            @RequestParam(value = "publicKey", required = false, defaultValue = "") String publicKey
+            @RequestBody CreateAppCommand command
     ) {
         BaseApp app = new BaseApp();
-        app.setAppName(appName);
-        app.setAppNameEn(appNameEn);
-        app.setAppType(appType);
-        app.setAppOs(appOs);
-        app.setAppIcon(appIcon);
-        app.setAppDesc(appDesc);
-        app.setStatus(status);
-        app.setWebsite(website);
-        app.setDeveloperId(developerId);
-        app.setIsSign(isSign);
-        app.setIsEncrypt(isEncrypt);
-        app.setEncryptType(encryptType);
-        app.setPublicKey(publicKey);
+        app.setAppName(command.getAppName());
+        app.setAppNameEn(command.getAppNameEn());
+        app.setAppType(command.getAppType());
+        app.setAppOs(command.getAppOs());
+        app.setAppIcon(command.getAppIcon());
+        app.setAppDesc(command.getAppDesc());
+        app.setStatus(command.getStatus());
+        app.setWebsite(command.getWebsite());
+        app.setDeveloperId(command.getDeveloperId());
+        app.setIsSign(command.getIsSign());
+        app.setIsEncrypt(command.getIsEncrypt());
+        app.setEncryptType(command.getEncryptType());
+        app.setPublicKey(command.getPublicKey());
         BaseApp result = baseAppService.addAppInfo(app);
         String appId = null;
         if (result != null) {
