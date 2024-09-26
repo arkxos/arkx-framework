@@ -5,6 +5,9 @@ export const refreshGateway = () => {
   return request({
     url: 'actuator/open/refresh',
     data,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
     method: 'post'
   })
 }

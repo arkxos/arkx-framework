@@ -78,9 +78,6 @@ export const updateMenu = ({ menuId, menuCode, menuName, icon, scheme, path, tar
   return request({
     url: 'base/menu/update',
     data: data,
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8;'
-    },
     method: 'post'
   })
 }
