@@ -113,6 +113,9 @@ export const grantAuthorityRole = ({ roleId, expireTime, authorityIds }) => {
   }
   return request({
     url: 'base/authority/role/grant',
+    headers: {
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
+    },
     data,
     method: 'post'
   })

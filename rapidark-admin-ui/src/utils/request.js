@@ -110,12 +110,32 @@ instance.interceptors.request.use(
     // 规范写法 不可随意自定义
     if (token) config.headers['Authorization'] = `Bearer ${token}`
 
-    if (
-      config.data &&
-      config.headers['Content-Type'] ===
-        'application/x-www-form-urlencoded;charset=UTF-8'
-    )
-      config.data = qs.stringify(config.data)
+    // if (
+    //   config.data &&
+    //   config.headers['Content-Type'] ===
+    //     'application/x-www-form-urlencoded;charset=UTF-8'
+    // ) {
+    //   config.data = qs.stringify(config.data)
+    // }
+    // console.log('before request')
+    if (config.headers && config.headers['Content-Type'] && config.headers['Content-Type'].match(/json/i)) {
+      // if (config.method === 'get') {
+        // config.params = { ...config.params }
+      // } else {
+        // config.data = { ...config.data }
+      // }
+    } else {
+      // config.headers['Accept'] = 'text/html'
+      // if (config.method === 'get') {
+      //   config.params = { ...config.params }
+      // } else {
+      //   config.data = qs.stringify({ ...config.data })
+      // }
+      if (!config.params && config.data) {
+        config.params = { ...config.data }
+      }
+    }
+
     if (debounce.some((item) => config.url.includes(item)))
       loadingInstance = Vue.prototype.$baseLoading()
     return config

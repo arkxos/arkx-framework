@@ -112,6 +112,7 @@ module.exports = {
           '~': resolve('.'),
           '@': resolve('src'),
           '_c': resolve('src/components'),
+          '@crud': resolve('src/components/Crud')
         },
       },
       plugins: [

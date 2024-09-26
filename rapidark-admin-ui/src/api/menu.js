@@ -40,6 +40,9 @@ export const addMenu = ({ menuCode, menuName, icon, scheme, path, target, status
   }
   return request({
     url: 'base/menu/add',
+    headers: {
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
+    },
     data,
     method: 'post'
   })

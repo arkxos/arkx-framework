@@ -19,8 +19,8 @@ export async function login(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    }
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
+    },
   })
 }
 
@@ -53,7 +53,7 @@ export function logout() {
   return request({
     url: 'admin/logout/token',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
     },
     params: { token: token },
     method: 'post'

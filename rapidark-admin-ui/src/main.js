@@ -10,6 +10,7 @@ import TreeTable from 'tree-table-vue'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import Treeselect from '@riophae/vue-treeselect'
 import ArkIcon from '@/components/ArkIcon/ArkIcon'
+import permission from './components/Permission'
 
 /**
  * @description 正式环境默认使用mock，正式项目记得注释后再打包
@@ -25,6 +26,7 @@ Vue.use(iView, {
   // i18n: (key, value) => i18n.t(key, value)
 })
 // 注册组件
+Vue.use(permission)
 Vue.component(TreeTable.name, TreeTable)
 Vue.component('treeselect', Treeselect)
 Vue.component('ArkIcon', ArkIcon)

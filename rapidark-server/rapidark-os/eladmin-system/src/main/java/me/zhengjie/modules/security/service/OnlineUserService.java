@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.security.service;
 
+import com.opencloud.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.modules.security.config.bean.SecurityProperties;
 import me.zhengjie.modules.security.service.dto.JwtUserDto;
@@ -32,7 +33,7 @@ import java.util.*;
  * @author Zheng Jie
  * @date 2019年10月26日21:56:27
  */
-@Service
+//@Service
 @Slf4j
 public class OnlineUserService {
 

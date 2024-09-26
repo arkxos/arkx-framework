@@ -20,6 +20,8 @@ module.exports = {
     'prettier/prettier': 'off',
     'no-unused-vars': 'off',
     'no-undef': 'off',
+    'no-prototype-builtins': 'off',
+    'vue/this-in-template': 'off',
     'vue/no-mutating-props': 'off',
     'vue/html-self-closing': 'off',
     'vue/require-default-prop': 'off',

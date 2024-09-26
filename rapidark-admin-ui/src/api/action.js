@@ -35,6 +35,9 @@ export const addAction = ({ actionCode, actionName, menuId, status, priority, ac
   return request({
     url: 'base/action/add',
     data,
+    headers: {
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
+    },
     method: 'post'
   })
 }
