@@ -93,7 +93,15 @@ module.exports = {
         pathRewrite: {
           '^/org': 'org'
         }
+      },
+      '/actuator': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/actuator': 'actuator'
+        }
       }
+
     },
     after: require('./mock'),
   },
