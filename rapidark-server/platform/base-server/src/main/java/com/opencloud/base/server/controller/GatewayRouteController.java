@@ -3,6 +3,8 @@ package com.opencloud.base.server.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencloud.base.client.constants.BaseConstants;
 import com.opencloud.base.client.model.entity.GatewayRoute;
+import com.opencloud.base.server.controller.cmd.AddRouteCommand;
+import com.opencloud.base.server.controller.cmd.UpdateRouteCommand;
 import com.opencloud.base.server.service.GatewayRouteService;
 import com.opencloud.common.model.PageParams;
 import com.opencloud.common.model.ResultBody;
@@ -14,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 /**
@@ -61,13 +64,6 @@ public class GatewayRouteController {
     /**
      * 添加路由
      *
-     * @param path        路径表达式
-     * @param routeName   描述
-     * @param serviceId   服务名方转发
-     * @param url         地址转发
-     * @param stripPrefix 忽略前缀
-     * @param retryable   支持重试
-     * @param status      是否启用
      * @return
      */
     @ApiOperation(value = "添加路由", notes = "添加路由")
@@ -84,31 +80,23 @@ public class GatewayRouteController {
     })
     @PostMapping("/gateway/route/add")
     public ResultBody<Long> addRoute(
-            @RequestParam(value = "routeName", required = true, defaultValue = "") String routeName,
-            @RequestParam(value = "routeType", required = false, defaultValue = BaseConstants.ROUTE_TYPE_SERVICE) String routeType,
-            @RequestParam(value = "routeDesc", required = true, defaultValue = "") String routeDesc,
-            @RequestParam(value = "path") String path,
-            @RequestParam(value = "serviceId", required = false) String serviceId,
-            @RequestParam(value = "url", required = false) String url,
-            @RequestParam(value = "stripPrefix", required = false, defaultValue = "1") Integer stripPrefix,
-            @RequestParam(value = "retryable", required = false, defaultValue = "0") Integer retryable,
-            @RequestParam(value = "status", defaultValue = "1") Integer status
-    ) {
+            @RequestBody @Valid AddRouteCommand command
+            ) {
         GatewayRoute route = new GatewayRoute();
-        route.setPath(path);
-        route.setRetryable(retryable);
-        route.setStripPrefix(stripPrefix);
-        route.setStatus(status);
-        route.setRouteName(routeName);
-        route.setRouteType(routeType);
-        route.setRouteDesc(routeDesc);
-        switch (routeType) {
+        route.setPath(command.getPath());
+        route.setRetryable(command.getRetryable());
+        route.setStripPrefix(command.getStripPrefix());
+        route.setStatus(command.getStatus());
+        route.setRouteName(command.getRouteName());
+        route.setRouteType(command.getRouteType());
+        route.setRouteDesc(command.getRouteDesc());
+        switch (command.getRouteType()) {
             case BaseConstants.ROUTE_TYPE_URL:
                 route.setServiceId(null);
-                route.setUrl(url.trim());
+                route.setUrl(command.getUrl().trim());
                 break;
             default:
-                route.setServiceId(serviceId.trim());
+                route.setServiceId(command.getServiceId().trim());
                 route.setUrl(null);
         }
         gatewayRouteService.addRoute(route);
@@ -120,14 +108,6 @@ public class GatewayRouteController {
     /**
      * 编辑路由
      *
-     * @param routeId     路由ID
-     * @param path        路径表达式
-     * @param serviceId   服务名方转发
-     * @param url         地址转发
-     * @param stripPrefix 忽略前缀
-     * @param retryable   支持重试
-     * @param status      是否启用
-     * @param routeName   描述
      * @return
      */
     @ApiOperation(value = "编辑路由", notes = "编辑路由")
@@ -145,33 +125,24 @@ public class GatewayRouteController {
     })
     @PostMapping("/gateway/route/update")
     public ResultBody updateRoute(
-            @RequestParam("routeId") Long routeId,
-            @RequestParam(value = "routeName", defaultValue = "") String routeName,
-            @RequestParam(value = "routeType", required = false, defaultValue = BaseConstants.ROUTE_TYPE_SERVICE) String routeType,
-            @RequestParam(value = "routeDesc", defaultValue = "") String routeDesc,
-            @RequestParam(value = "path") String path,
-            @RequestParam(value = "serviceId", required = false) String serviceId,
-            @RequestParam(value = "url", required = false) String url,
-            @RequestParam(value = "stripPrefix", required = false, defaultValue = "1") Integer stripPrefix,
-            @RequestParam(value = "retryable", required = false, defaultValue = "0") Integer retryable,
-            @RequestParam(value = "status", defaultValue = "1") Integer status
-    ) {
+            @RequestBody @Valid UpdateRouteCommand command
+            ) {
         GatewayRoute route = new GatewayRoute();
-        route.setRouteId(routeId);
-        route.setPath(path);
-        route.setRetryable(retryable);
-        route.setStripPrefix(stripPrefix);
-        route.setStatus(status);
-        route.setRouteName(routeName);
-        route.setRouteType(routeType);
-        route.setRouteDesc(routeDesc);
-        switch (routeType) {
+        route.setRouteId(command.getRouteId());
+        route.setPath(command.getPath());
+        route.setRetryable(command.getRetryable());
+        route.setStripPrefix(command.getStripPrefix());
+        route.setStatus(command.getStatus());
+        route.setRouteName(command.getRouteName());
+        route.setRouteType(command.getRouteType());
+        route.setRouteDesc(command.getRouteDesc());
+        switch (command.getRouteType()) {
             case "url":
                 route.setServiceId(null);
-                route.setUrl(url.trim());
+                route.setUrl(command.getUrl().trim());
                 break;
             default:
-                route.setServiceId(serviceId.trim());
+                route.setServiceId(command.getServiceId().trim());
                 route.setUrl(null);
         }
         gatewayRouteService.updateRoute(route);
