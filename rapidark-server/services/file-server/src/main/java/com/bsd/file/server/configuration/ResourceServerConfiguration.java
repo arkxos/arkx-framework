@@ -1,5 +1,6 @@
 package com.bsd.file.server.configuration;
 
+import com.rapidark.common.annotation.ArkResourceServer;
 import com.rapidark.common.exception.OpenAccessDeniedHandler;
 import com.rapidark.common.exception.OpenAuthenticationEntryPoint;
 import com.rapidark.common.security.OpenHelper;
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  * @author: liujianhong
  */
 @Configuration
+@ArkResourceServer
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     @Autowired

@@ -1,5 +1,6 @@
 package com.rapidark.cloud.uaa.admin.server.configuration;
 
+import com.rapidark.common.annotation.ArkResourceServer;
 import com.rapidark.common.exception.OpenAccessDeniedHandler;
 import com.rapidark.common.exception.OpenAuthenticationEntryPoint;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Configuration
+@ArkResourceServer
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 

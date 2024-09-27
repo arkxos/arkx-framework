@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  * @author: liujianhong
  */
 @Configuration
+@ArkResourceServer
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     @Autowired

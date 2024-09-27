@@ -1,5 +1,6 @@
 package com.rapidark.cloud.base.server.configuration;
 
+import com.rapidark.common.annotation.ArkResourceServer;
 import com.rapidark.common.exception.OpenAccessDeniedHandler;
 import com.rapidark.common.exception.OpenAuthenticationEntryPoint;
 import com.rapidark.common.security.OpenHelper;
@@ -27,6 +28,7 @@ import javax.sql.DataSource;
  * @description:
  */
 @Configuration
+@ArkResourceServer
 @EnableResourceServer// 声明资源服务,即可开启token验证保护
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     @Autowired
