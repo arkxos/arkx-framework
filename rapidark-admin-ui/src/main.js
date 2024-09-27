@@ -14,6 +14,10 @@ import permission from './components/Permission'
 // 数据字典
 import dict from './components/Dict'
 
+import 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
+
 /**
  * @description 正式环境默认使用mock，正式项目记得注释后再打包
  */
@@ -28,6 +32,12 @@ if (process.env.NODE_ENV === 'development-front' && !isExternal(baseURL)) {
 Vue.use(iView, {
   // i18n: (key, value) => i18n.t(key, value)
 })
+Vue.use(VXETable)
+// 给 vue 实例挂载内部对象，例如：
+// Vue.prototype.$XModal = VXETable.modal
+// Vue.prototype.$XPrint = VXETable.print
+// Vue.prototype.$XSaveFile = VXETable.saveFile
+// Vue.prototype.$XReadFile = VXETable.readFile
 // 注册组件
 Vue.use(permission)
 Vue.component(TreeTable.name, TreeTable)

@@ -5,6 +5,15 @@
  * 阿债 https://gitee.com/azhai/datetime.js
  */
 
+Date.prototype.getCurrentYearMonth = function() {
+  //获取完整的日期
+  const year = this.getFullYear();
+  let month = this.getMonth() + 1;
+  month = month < 10 ? ("0" + month) : month;
+  const yearMonth = year.toString() + month.toString();
+  return yearMonth;
+}
+
 Date.prototype.toMidnight = function() {
   this.setHours(0)
   this.setMinutes(0)

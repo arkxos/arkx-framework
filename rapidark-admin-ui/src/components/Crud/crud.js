@@ -343,6 +343,7 @@ function CRUD(options) {
      * 获取查询参数
      */
     getQueryParams: function() {
+      console.log('getQueryParams: ', crud.query)
       // 清除参数无值的情况
       Object.keys(crud.query).length !== 0 && Object.keys(crud.query).forEach(item => {
         if (crud.query[item] === null || crud.query[item] === '') crud.query[item] = undefined
