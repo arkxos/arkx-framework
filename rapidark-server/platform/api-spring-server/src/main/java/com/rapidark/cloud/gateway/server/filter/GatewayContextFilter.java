@@ -152,6 +152,9 @@ public class GatewayContextFilter implements WebFilter, Ordered {
             if (MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(contentType)) {
                 return readFormData(exchange, chain, gatewayContext);
             }
+            if (MediaType.MULTIPART_FORM_DATA.isCompatibleWith(contentType)) {
+//                return readFormData(exchange, chain, gatewayContext);
+            }
         }
 
         exchange.getAttributes().put(GatewayContext.CACHE_GATEWAY_CONTEXT, gatewayContext);

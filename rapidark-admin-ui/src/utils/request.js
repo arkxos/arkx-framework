@@ -125,7 +125,11 @@ instance.interceptors.request.use(
       // } else {
         // config.data = { ...config.data }
       // }
-    } else {
+    }
+    // else if(config.headers && config.headers['Content-Type'] && config.headers['Content-Type'].match(/multipart/i)) {
+    //   //
+    // }
+    else {
       // config.headers['Accept'] = 'text/html'
       // if (config.method === 'get') {
       //   config.params = { ...config.params }

@@ -44,7 +44,8 @@ export default {
       headers: {
         Authorization: getToken()
       },
-      rules: {}
+      rules: {},
+      databaseUploadApi: '/base/database/upload'
     }
   },
   computed: {

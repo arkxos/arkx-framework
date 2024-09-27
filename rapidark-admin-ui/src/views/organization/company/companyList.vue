@@ -120,7 +120,7 @@ export default {
       tableLoading: false,
       title: '新增企业',
       popup: false,
-      uploadUrl: this.baseUrl + '/file/oss/upload',
+      uploadUrl: '/file/oss/upload',
       data: [],
       columns: [
         {
