@@ -18,8 +18,8 @@ import dict from './components/Dict'
 import 'xe-utils'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/style.css'
-import api from '@/api/handling/index'
-import Component from '@/components/base/index'
+// import api from '@/api/handling/index'
+// import Component from '@/components/base/index'
 
 /**
  * @description 正式环境默认使用mock，正式项目记得注释后再打包
@@ -43,14 +43,14 @@ Vue.use(VXETable)
 // Vue.prototype.$XReadFile = VXETable.readFile
 // 注册组件
 Vue.use(permission)
-Vue.use(Component)
+// Vue.use(Component)
 Vue.component(TreeTable.name, TreeTable)
 Vue.component('treeselect', Treeselect)
 Vue.component('ArkIcon', ArkIcon)
 Vue.use(dict)
 
 // 将 api, utils 挂载在 Vue 的 prototype 下
-Vue.prototype.$api = api
+// Vue.prototype.$api = api
 Vue.prototype.decodeUnicode = decodeUnicode
 Vue.prototype.$utils = utils
 

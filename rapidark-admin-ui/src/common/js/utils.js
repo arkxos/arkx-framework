@@ -5,7 +5,7 @@ import { Message, MessageBox } from 'element-ui'
 import { BigNumber } from 'bignumber.js'
 
 import './uuid'
-import api from '@/api/handling/index'
+// import api from '@/api/handling/index'
 import axios from 'axios'
 import Vue from 'vue'
 
@@ -852,14 +852,14 @@ export const addressName = async (codeArr = [], detail = '', split = '') => {
     if (top) {
       let city = list.find((o) => o.areaId === top)
       if (city) {
-        const { areas } = await api.getAddressAreaInfoByParentid(city.areaId)
+        const { areas } = null;//await api.getAddressAreaInfoByParentid(city.areaId)
         res.push(city.areaName)
         arr.shift()
         await getArea(arr, areas)
       }
     }
   }
-  const proves = await api.getAllProvinces()
+  const proves = null;//await api.getAllProvinces()
   if (proves && proves.areas) {
     await getArea(codeArr, proves.areas)
   }
