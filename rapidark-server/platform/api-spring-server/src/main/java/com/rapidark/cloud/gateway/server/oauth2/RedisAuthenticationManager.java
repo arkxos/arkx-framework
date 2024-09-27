@@ -10,15 +10,21 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * @author: liuyadu
- * @date: 2019/5/9 10:53
- * @description:
+ *
+ * @author darkness
+ * @date 2022/5/14 17:38
+ * @version 1.0
  */
 @Slf4j
 public class RedisAuthenticationManager implements ReactiveAuthenticationManager {
 
     private TokenStore tokenStore;
+    private Map<String, OAuth2Authentication> cachedAuthenticationMap = new ConcurrentHashMap<>();
 
     public RedisAuthenticationManager(TokenStore tokenStore) {
         this.tokenStore = tokenStore;
@@ -31,10 +37,19 @@ public class RedisAuthenticationManager implements ReactiveAuthenticationManager
                 .cast(BearerTokenAuthenticationToken.class)
                 .map(BearerTokenAuthenticationToken::getToken)
                 .flatMap((token -> {
-                    OAuth2Authentication oAuth2Authentication = this.tokenStore.readAuthentication(token);
+                    OAuth2Authentication oAuth2Authentication = cachedAuthenticationMap.get(token);
+                    if(oAuth2Authentication == null) {
+                        oAuth2Authentication = this.tokenStore.readAuthentication(token);
+                    }
                     if (oAuth2Authentication == null) {
                         return Mono.error(new InvalidTokenException(ErrorCode.INVALID_TOKEN.getMessage()));
                     } else {
+                        if(!cachedAuthenticationMap.containsKey(token)) {
+                            cachedAuthenticationMap.put(token, oAuth2Authentication);
+                            if(cachedAuthenticationMap.size() > 100) {
+                                cachedAuthenticationMap.clear();
+                            }
+                        }
                         return Mono.just(oAuth2Authentication);
                     }
                 }))
