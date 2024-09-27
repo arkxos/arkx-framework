@@ -37,8 +37,8 @@
               预览
             </router-link>
           </el-button>
-          <el-button size="mini" style="margin-left: -1px;margin-right: 5px" type="text" @click="toDownload(scope.row.tableName)">下载</el-button>
-          <el-button size="mini" style="margin-left: -1px;margin-right: 5px" type="text">
+          <el-button size="mini" style="margin-right: 5px;margin-left: -1px;" type="text" @click="toDownload(scope.row.tableName)">下载</el-button>
+          <el-button size="mini" style="margin-right: 5px;margin-left: -1px;" type="text">
             <router-link :to="'/system/generate/jpa/config/' + scope.row.tableName">
               配置
             </router-link>
