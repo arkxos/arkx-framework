@@ -151,8 +151,8 @@
       this.form.password = '';//'123456'
       // 为了演示效果，会在官网演示页自动登录到首页，正式开发可删除
       if (
-        document.domain === 'vue-admin-beautiful.com' ||
-        document.domain === 'chu1204505056.gitee.io'
+        document.domain === 'rapidark.com' ||
+        document.domain === 'rapidark.gitee.io'
       )
         this.timer = setTimeout(() => {
           this.handleLogin()
