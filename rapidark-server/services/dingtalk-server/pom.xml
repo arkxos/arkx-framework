@@ -18,7 +18,7 @@
         <dependency>
             <artifactId>common-starter</artifactId>
             <groupId>com.rapidark.cloud</groupId>
-            <version>${opencloud.common.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taobao.top</groupId>

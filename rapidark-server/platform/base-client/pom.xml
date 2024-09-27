@@ -9,14 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base-client</artifactId>
-    <version>${opencloud.base-client.version}</version>
     <packaging>jar</packaging>
     <description>平台基础服务接口</description>
     <dependencies>
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
             <artifactId>common-core</artifactId>
-            <version>${opencloud.common.version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <build>

@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tenant-starter</artifactId>
-    <version>${opencloud.common.version}</version>
     <description>支持多租户,数据切换</description>
     <packaging>jar</packaging>
     <dependencies>

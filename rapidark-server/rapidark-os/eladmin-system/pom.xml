@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>eladmin</artifactId>
-        <groupId>me.zhengjie</groupId>
-        <version>2.6</version>
+        <artifactId>rapidark-os</artifactId>
+        <groupId>com.rapidark</groupId>
+        <version>12.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,23 +20,23 @@
 
     <dependencies>
         <!-- 代码生成模块 -->
-        <dependency>
-            <groupId>me.zhengjie</groupId>
-            <artifactId>eladmin-generator</artifactId>
-            <version>2.6</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>me.zhengjie</groupId>
-                    <artifactId>eladmin-common</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.rapidark</groupId>-->
+<!--            <artifactId>eladmin-generator</artifactId>-->
+<!--            <version>2.6</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.rapidark</groupId>-->
+<!--                    <artifactId>eladmin-common</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
         <!-- tools 模块包含了 common 和 logging 模块 -->
         <dependency>
-            <groupId>me.zhengjie</groupId>
+            <groupId>com.rapidark</groupId>
             <artifactId>eladmin-tools</artifactId>
-            <version>2.6</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- Spring boot websocket -->

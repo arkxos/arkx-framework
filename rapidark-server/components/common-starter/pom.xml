@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>common-starter</artifactId>
-    <version>${opencloud.common.version}</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -23,7 +22,7 @@
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
             <artifactId>common-core</artifactId>
-            <version>${opencloud.common.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!--使用Undertow 替换内置 Tomcat-->

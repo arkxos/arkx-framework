@@ -15,17 +15,17 @@
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
             <artifactId>common-starter</artifactId>
-            <version>${opencloud.common.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
             <artifactId>task-client</artifactId>
-            <version>${opencloud.task-client.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
             <artifactId>msg-client</artifactId>
-            <version>${opencloud.msg-client.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <!-- quartz -->
         <dependency>
@@ -35,7 +35,7 @@
         <dependency>
             <artifactId>base-client</artifactId>
             <groupId>com.rapidark.cloud</groupId>
-            <version>${opencloud.base-client.version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

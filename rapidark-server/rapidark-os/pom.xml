@@ -10,10 +10,9 @@
         <version>12.1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>me.zhengjie</groupId>
-    <artifactId>eladmin</artifactId>
+    <groupId>com.rapidark</groupId>
+    <artifactId>rapidark-os</artifactId>
     <packaging>pom</packaging>
-    <version>2.6</version>
 
     <modules>
         <module>eladmin-common</module>

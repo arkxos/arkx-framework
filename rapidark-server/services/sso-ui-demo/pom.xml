@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
             <artifactId>common-starter</artifactId>
-            <version>${opencloud.common.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

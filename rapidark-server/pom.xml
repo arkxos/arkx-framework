@@ -22,8 +22,6 @@
         <module>migration</module>
         <module>rapidark-os</module>
         <module>ltc-server</module>
-
-
     </modules>
     <properties>
         <java.version>11</java.version>
@@ -39,11 +37,11 @@
         <maven-dockerfile-plugin.version>1.4.13</maven-dockerfile-plugin.version>
 
         <!--自定义版本-->
-        <opencloud.common.version>12.1.0-SNAPSHOT</opencloud.common.version>
-        <opencloud.base-client.version>12.1.0-SNAPSHOT</opencloud.base-client.version>
-        <opencloud.msg-client.version>12.1.0-SNAPSHOT</opencloud.msg-client.version>
-        <opencloud.bpm-client.version>12.1.0-SNAPSHOT</opencloud.bpm-client.version>
-        <opencloud.task-client.version>12.1.0-SNAPSHOT</opencloud.task-client.version>
+<!--        <opencloud.common.version>12.1.0-SNAPSHOT</opencloud.common.version>-->
+<!--        <opencloud.base-client.version>12.1.0-SNAPSHOT</opencloud.base-client.version>-->
+<!--        <opencloud.msg-client.version>12.1.0-SNAPSHOT</opencloud.msg-client.version>-->
+<!--        <opencloud.bpm-client.version>12.1.0-SNAPSHOT</opencloud.bpm-client.version>-->
+<!--        <opencloud.task-client.version>12.1.0-SNAPSHOT</opencloud.task-client.version>-->
 
         <!--镜像仓库-->
         <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
@@ -196,7 +194,7 @@
 <!--            <dependency>-->
 <!--                <groupId>com.rapidark.cloud</groupId>-->
 <!--                <artifactId>rapidark-starter-dependencies</artifactId>-->
-<!--                <version>${opencloud.common.version}</version>-->
+<!--                <version>${project.version}</version>-->
 <!--                <type>pom</type>-->
 <!--                <scope>import</scope>-->
 <!--            </dependency>-->

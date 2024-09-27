@@ -18,17 +18,17 @@
         <dependency>
             <artifactId>common-starter</artifactId>
             <groupId>com.rapidark.cloud</groupId>
-            <version>${opencloud.common.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <artifactId>msg-client</artifactId>
             <groupId>com.rapidark.cloud</groupId>
-            <version>${opencloud.msg-client.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <artifactId>base-client</artifactId>
             <groupId>com.rapidark.cloud</groupId>
-            <version>${opencloud.base-client.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <!--JJWT库-->
         <dependency>

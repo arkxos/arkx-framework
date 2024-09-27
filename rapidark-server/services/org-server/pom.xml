@@ -18,7 +18,7 @@
         <dependency>
             <artifactId>common-starter</artifactId>
             <groupId>com.rapidark.cloud</groupId>
-            <version>${opencloud.common.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.bsd</groupId>
@@ -29,7 +29,7 @@
         <dependency>
             <artifactId>base-client</artifactId>
             <groupId>com.rapidark.cloud</groupId>
-            <version>${opencloud.base-client.version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <build>
