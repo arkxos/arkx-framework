@@ -4,10 +4,12 @@ import com.rapidark.common.constants.ErrorCode;
 
 /**
  * 基础错误异常
- *
- * @author admin
+ * @author darkness
+ * @date 2021/6/30 16:04
+ * @version 1.0
  */
 public class OpenException extends RuntimeException {
+
     private static final long serialVersionUID = 3655050728585279326L;
 
     private int code = ErrorCode.ERROR.getCode();
