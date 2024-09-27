@@ -45,7 +45,7 @@ import cn.hutool.core.util.IdUtil;
 </#if>
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import me.zhengjie.utils.PageUtil;
+import com.rapidark.common.utils.PageUtil;
 import me.zhengjie.utils.QueryHelp;
 import java.util.List;
 import java.util.Map;

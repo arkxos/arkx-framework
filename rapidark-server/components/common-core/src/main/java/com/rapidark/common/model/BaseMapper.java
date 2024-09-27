@@ -13,18 +13,42 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.service.mapstruct;
+package com.rapidark.common.model;
 
-import com.rapidark.common.model.BaseMapper;
-import me.zhengjie.modules.system.domain.Menu;
-import me.zhengjie.modules.system.service.dto.MenuDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import java.util.List;
 
 /**
- * @author Zheng Jie
- * @date 2018-12-17
+ * @author darkness
+ * @date 2021/7/16 17:42
+ * @version 1.0
  */
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface MenuMapper extends BaseMapper<MenuDto, Menu> {
+public interface BaseMapper<D, E> {
+
+    /**
+     * DTO转Entity
+     * @param dto /
+     * @return /
+     */
+    E toEntity(D dto);
+
+    /**
+     * Entity转DTO
+     * @param entity /
+     * @return /
+     */
+    D toDto(E entity);
+
+    /**
+     * DTO集合转Entity集合
+     * @param dtoList /
+     * @return /
+     */
+    List <E> toEntity(List<D> dtoList);
+
+    /**
+     * Entity集合转DTO集合
+     * @param entityList /
+     * @return /
+     */
+    List <D> toDto(List<E> entityList);
 }

@@ -23,7 +23,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 //import me.zhengjie.annotation.Log;
-import me.zhengjie.base.IdsParam;
+import com.rapidark.common.model.IdsParam;
 import me.zhengjie.exception.BadRequestException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

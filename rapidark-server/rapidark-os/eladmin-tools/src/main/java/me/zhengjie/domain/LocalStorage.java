@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import me.zhengjie.base.BaseEntity;
+import com.rapidark.common.model.BaseEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 

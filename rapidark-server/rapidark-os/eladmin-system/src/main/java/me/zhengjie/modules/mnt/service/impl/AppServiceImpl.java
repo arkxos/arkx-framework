@@ -24,7 +24,7 @@ import me.zhengjie.modules.mnt.service.dto.AppDto;
 import me.zhengjie.modules.mnt.service.dto.AppQueryCriteria;
 import me.zhengjie.modules.mnt.service.mapstruct.AppMapper;
 import me.zhengjie.utils.FileUtil;
-import me.zhengjie.utils.PageUtil;
+import com.rapidark.common.utils.PageUtil;
 import me.zhengjie.utils.QueryHelp;
 import me.zhengjie.utils.ValidationUtil;
 import org.springframework.data.domain.Page;

@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.system.service.mapstruct;
 
-import me.zhengjie.base.BaseMapper;
+import com.rapidark.common.model.BaseMapper;
 import me.zhengjie.modules.system.domain.Role;
 import me.zhengjie.modules.system.service.dto.RoleSmallDto;
 import org.mapstruct.Mapper;

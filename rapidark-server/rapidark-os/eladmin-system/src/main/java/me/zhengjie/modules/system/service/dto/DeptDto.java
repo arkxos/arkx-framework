@@ -18,7 +18,7 @@ package me.zhengjie.modules.system.service.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
-import me.zhengjie.base.BaseDTO;
+import com.rapidark.common.model.BaseDTO;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;

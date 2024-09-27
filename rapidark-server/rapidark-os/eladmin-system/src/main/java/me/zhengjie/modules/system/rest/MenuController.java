@@ -26,7 +26,7 @@ import me.zhengjie.modules.system.service.MenuService;
 import me.zhengjie.modules.system.service.dto.MenuDto;
 import me.zhengjie.modules.system.service.dto.MenuQueryCriteria;
 import me.zhengjie.modules.system.service.mapstruct.MenuMapper;
-import me.zhengjie.utils.PageUtil;
+import com.rapidark.common.utils.PageUtil;
 import me.zhengjie.utils.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

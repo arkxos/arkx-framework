@@ -18,7 +18,7 @@ package me.zhengjie.modules.system.service.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
-import me.zhengjie.base.BaseDTO;
+import com.rapidark.common.model.BaseDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;

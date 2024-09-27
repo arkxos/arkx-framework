@@ -15,7 +15,7 @@
  */
 package me.zhengjie.service.mapstruct;
 
-import me.zhengjie.base.BaseMapper;
+import com.rapidark.common.model.BaseMapper;
 import me.zhengjie.service.dto.LocalStorageDto;
 import me.zhengjie.domain.LocalStorage;
 import org.mapstruct.Mapper;

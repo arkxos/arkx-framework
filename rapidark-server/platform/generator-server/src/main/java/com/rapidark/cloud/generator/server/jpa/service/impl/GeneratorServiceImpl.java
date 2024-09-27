@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.utils.FileUtil;
 import com.rapidark.cloud.generator.server.jpa.util.GenUtil;
-import me.zhengjie.utils.PageUtil;
+import com.rapidark.common.utils.PageUtil;
 import me.zhengjie.utils.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
