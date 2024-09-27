@@ -3,7 +3,7 @@
  */
 module.exports = {
   // 标题，此项修改后需要重启项目！！！ (包括初次加载雪花屏的标题 页面的标题 浏览器的标题)
-  title: '南京市长期护理保险结算系统',
+  title: '南京市失能人员照护保险费用结算系统',
   // 标题分隔符
   titleSeparator: ' - ',
   // 标题是否反转
@@ -13,7 +13,7 @@ module.exports = {
   // 简写
   abbreviation: 'vab-admin-pro',
   // pro版本copyright可随意修改
-  copyright: 'chuzhixin 1204505056@qq.com',
+  copyright: 'rapidark rapidark@qq.com',
   // 缓存路由的最大数量
   keepAliveMaxNum: 20,
   // 路由模式，可选值为 history 或 hash

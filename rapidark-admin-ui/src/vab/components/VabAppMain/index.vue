@@ -5,7 +5,7 @@
         <vab-keep-alive v-if="routerView" />
       </transition>
     </section>
-    <vab-footer />
+<!--    <vab-footer />-->
   </div>
 </template>
 
