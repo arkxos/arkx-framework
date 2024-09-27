@@ -71,6 +71,7 @@ spring:
                         rule-type: system
     main:
         allow-bean-definition-overriding: true
+        allow-circular-references: true
         lazy-initialization: false
     thymeleaf:
         cache: false

@@ -28,13 +28,7 @@ public interface BaseMenuService extends IBaseService<BaseMenu> {
      */
     List<BaseMenu> findAllList();
 
-    /**
-     * 根据主键获取菜单
-     *
-     * @param menuId
-     * @return
-     */
-    BaseMenu getMenu(Long menuId);
+
 
     /**
      * 检查菜单编码是否存在

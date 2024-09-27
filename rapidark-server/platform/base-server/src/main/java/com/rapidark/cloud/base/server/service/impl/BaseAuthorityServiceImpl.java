@@ -1,6 +1,7 @@
 package com.rapidark.cloud.base.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rapidark.cloud.base.client.constants.ResourceType;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 系统权限管理
@@ -47,11 +49,11 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
     @Autowired
     private BaseAuthorityActionMapper baseAuthorityActionMapper;
     @Autowired
-    private BaseMenuService baseMenuService;
+    private BaseMenuQuery baseMenuQuery;
     @Autowired
-    private BaseActionService baseActionService;
+    private BaseActionMapper baseActionMapper;
     @Autowired
-    private BaseApiService baseApiService;
+    private BaseApiMapper baseApiMapper;
     @Autowired
     private BaseRoleService baseRoleService;
     @Autowired
@@ -136,19 +138,19 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
             baseAuthority = new BaseAuthority();
         }
         if (ResourceType.menu.equals(resourceType)) {
-            BaseMenu menu = baseMenuService.getMenu(resourceId);
+            BaseMenu menu = baseMenuQuery.getMenu(resourceId);
             authority = OpenSecurityConstants.AUTHORITY_PREFIX_MENU + menu.getMenuCode();
             baseAuthority.setMenuId(resourceId);
             baseAuthority.setStatus(menu.getStatus());
         }
         if (ResourceType.action.equals(resourceType)) {
-            BaseAction operation = baseActionService.getAction(resourceId);
+            BaseAction operation = baseActionMapper.selectById(resourceId);
             authority = OpenSecurityConstants.AUTHORITY_PREFIX_ACTION + operation.getActionCode();
             baseAuthority.setActionId(resourceId);
             baseAuthority.setStatus(operation.getStatus());
         }
         if (ResourceType.api.equals(resourceType)) {
-            BaseApi api = baseApiService.getApi(resourceId);
+            BaseApi api = baseApiMapper.selectById(resourceId);
             authority = OpenSecurityConstants.AUTHORITY_PREFIX_API + api.getApiCode();
             baseAuthority.setApiId(resourceId);
             baseAuthority.setStatus(api.getStatus());
@@ -602,7 +604,8 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
         if (StringUtils.isBlank(serviceId)) {
             return;
         }
-        List<String> invalidApiIds = baseApiService.listObjs(new QueryWrapper<BaseApi>().select("api_id").eq("service_id", serviceId).notIn(codes != null && !codes.isEmpty(), "api_code", codes), e -> e.toString());
+        List<String> invalidApiIds = baseApiMapper
+            .selectObjs(new QueryWrapper<BaseApi>().select("api_id").eq("service_id", serviceId).notIn(codes != null && !codes.isEmpty(), "api_code", codes)).stream().filter(Objects::nonNull).map(e -> e.toString()).collect(Collectors.toList());
         if (invalidApiIds != null) {
             // 防止删除默认api
             invalidApiIds.remove("1");
@@ -621,7 +624,7 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
                 // 移除权限数据
                 this.removeByIds(invalidAuthorityIds);
                 // 移除接口资源
-                baseApiService.removeByIds(invalidApiIds);
+                baseApiMapper.deleteBatchIds(invalidApiIds);
             }
         }
     }

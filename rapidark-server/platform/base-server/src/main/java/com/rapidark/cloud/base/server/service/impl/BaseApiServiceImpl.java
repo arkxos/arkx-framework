@@ -50,7 +50,7 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
                 .eq(ObjectUtils.isNotEmpty(query.getStatus()), BaseApi::getStatus, query.getStatus())
                 .eq(ObjectUtils.isNotEmpty(query.getIsAuth()), BaseApi::getIsAuth, query.getIsAuth());
         queryWrapper.orderByDesc("create_time");
-        return baseApiMapper.selectPage(pageParams, queryWrapper);
+        return baseApiMapper.selectPage((IPage<BaseApi>)pageParams, queryWrapper);
     }
 
     /**

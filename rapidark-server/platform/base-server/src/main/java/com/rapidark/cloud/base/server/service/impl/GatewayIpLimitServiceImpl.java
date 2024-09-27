@@ -46,7 +46,7 @@ public class GatewayIpLimitServiceImpl extends BaseServiceImpl<GatewayIpLimitMap
                 .likeRight(ObjectUtils.isNotEmpty(query.getPolicyName()), GatewayIpLimit::getPolicyName, query.getPolicyName())
                 .eq(ObjectUtils.isNotEmpty(query.getPolicyType()), GatewayIpLimit::getPolicyType, query.getPolicyType());
         queryWrapper.orderByDesc("create_time");
-        return gatewayIpLimitMapper.selectPage(pageParams, queryWrapper);
+        return gatewayIpLimitMapper.selectPage((IPage<GatewayIpLimit>)pageParams, queryWrapper);
     }
 
     /**

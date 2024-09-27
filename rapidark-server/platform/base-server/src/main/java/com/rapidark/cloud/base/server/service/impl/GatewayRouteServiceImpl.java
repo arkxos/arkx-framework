@@ -32,7 +32,7 @@ public class GatewayRouteServiceImpl extends BaseServiceImpl<GatewayRouteMapper,
     @Override
     public IPage<GatewayRoute> findListPage(PageParams pageParams) {
         QueryWrapper<GatewayRoute> queryWrapper = new QueryWrapper();
-        return page(pageParams, queryWrapper);
+        return page((IPage<GatewayRoute>)pageParams, queryWrapper);
     }
 
     /**

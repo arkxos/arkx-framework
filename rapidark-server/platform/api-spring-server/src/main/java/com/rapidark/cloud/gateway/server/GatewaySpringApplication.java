@@ -64,7 +64,7 @@ public class GatewaySpringApplication implements CommandLineRunner {
                 .route("route_baidu", r -> r.path("/baidu/**").filters(f->f.stripPrefix(1)).uri("https://baidu.com"))
                 .route("route_csdn", r -> r.path("/csdn/**").filters(f->f.stripPrefix(1)).uri("https://blog.csdn.net"))
                 .route("route_zero", r -> r.path("/zero/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
-                .route("route_zerogo", r -> r.path("/zerogo/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
+//                .route("route_zerogo", r -> r.path("/zerogo/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
                 .build();
     }
 

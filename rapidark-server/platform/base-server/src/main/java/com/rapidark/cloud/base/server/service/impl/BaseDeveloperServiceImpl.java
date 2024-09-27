@@ -132,7 +132,7 @@ public class BaseDeveloperServiceImpl extends BaseServiceImpl<BaseDeveloperMappe
                 .eq(ObjectUtils.isNotEmpty(query.getUserName()), BaseDeveloper::getUserName, query.getUserName())
                 .eq(ObjectUtils.isNotEmpty(query.getMobile()), BaseDeveloper::getMobile, query.getMobile());
         queryWrapper.orderByDesc("create_time");
-        return baseDeveloperMapper.selectPage(pageParams, queryWrapper);
+        return baseDeveloperMapper.selectPage((IPage<BaseDeveloper>)pageParams, queryWrapper);
     }
 
     /**

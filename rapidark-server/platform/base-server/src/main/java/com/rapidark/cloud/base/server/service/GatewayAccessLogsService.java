@@ -32,7 +32,7 @@ public class GatewayAccessLogsService {
      */
     public IPage<GatewayAccessLogs> findListPage(PageParams pageParams) {
         GatewayAccessLogs query = pageParams.mapToObject(GatewayAccessLogs.class);
-        QueryWrapper<GatewayAccessLogs> queryWrapper = new QueryWrapper();
+        QueryWrapper<GatewayAccessLogs> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
                 .eq(ObjectUtils.isNotEmpty(query.getBizId()), GatewayAccessLogs::getBizId, query.getBizId())
                 .eq(ObjectUtils.isNotEmpty(query.getBizStatus()), GatewayAccessLogs::getBizStatus, query.getBizStatus())
@@ -40,7 +40,7 @@ public class GatewayAccessLogsService {
                 .eq(ObjectUtils.isNotEmpty(query.getIp()), GatewayAccessLogs::getIp, query.getIp())
                 .eq(ObjectUtils.isNotEmpty(query.getServiceId()), GatewayAccessLogs::getServiceId, query.getServiceId());
         queryWrapper.orderByDesc("request_time");
-        return gatewayLogsMapper.selectPage(pageParams, queryWrapper);
+        return gatewayLogsMapper.selectPage((IPage<GatewayAccessLogs>)pageParams, queryWrapper);
     }
 
 }

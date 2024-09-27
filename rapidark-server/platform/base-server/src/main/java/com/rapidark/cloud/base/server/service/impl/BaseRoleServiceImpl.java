@@ -50,7 +50,7 @@ public class BaseRoleServiceImpl extends BaseServiceImpl<BaseRoleMapper, BaseRol
                 .likeRight(ObjectUtils.isNotEmpty(query.getRoleCode()), BaseRole::getRoleCode, query.getRoleCode())
                 .likeRight(ObjectUtils.isNotEmpty(query.getRoleName()), BaseRole::getRoleName, query.getRoleName());
         queryWrapper.orderByDesc("create_time");
-        return baseRoleMapper.selectPage(pageParams, queryWrapper);
+        return baseRoleMapper.selectPage((IPage<BaseRole>)pageParams, queryWrapper);
     }
 
     /**

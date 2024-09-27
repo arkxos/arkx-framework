@@ -9,6 +9,7 @@ import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.cloud.base.server.service.BaseAppService;
+import com.rapidark.cloud.base.server.service.BaseMenuQuery;
 import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
@@ -34,6 +35,8 @@ public class BaseMenuController {
 
     @Autowired
     private BaseMenuService baseResourceMenuService;
+    @Autowired
+    private BaseMenuQuery baseMenuQuery;
 
     @Autowired
     private BaseActionService baseResourceOperationService;
@@ -117,7 +120,7 @@ public class BaseMenuController {
     })
     @GetMapping("/menu/{menuId}/info")
     public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
-        return ResultBody.ok().data(baseResourceMenuService.getMenu(menuId));
+        return ResultBody.ok().data(baseMenuQuery.getMenu(menuId));
     }
 
     /**

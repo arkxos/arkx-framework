@@ -70,16 +70,7 @@ public class BaseMenuServiceImpl extends BaseServiceImpl<BaseMenuMapper, BaseMen
         return list;
     }
 
-    /**
-     * 根据主键获取菜单
-     *
-     * @param menuId
-     * @return
-     */
-    @Override
-    public BaseMenu getMenu(Long menuId) {
-        return baseMenuMapper.selectById(menuId);
-    }
+
 
     /**
      * 检查菜单编码是否存在
@@ -139,7 +130,7 @@ public class BaseMenuServiceImpl extends BaseServiceImpl<BaseMenuMapper, BaseMen
      */
     @Override
     public BaseMenu updateMenu(BaseMenu menu) {
-        BaseMenu saved = getMenu(menu.getMenuId());
+        BaseMenu saved = baseMenuMapper.selectById(menu.getMenuId());
         if (saved == null) {
             throw new OpenAlertException(String.format("%s信息不存在!", menu.getMenuId()));
         }
@@ -171,7 +162,7 @@ public class BaseMenuServiceImpl extends BaseServiceImpl<BaseMenuMapper, BaseMen
      */
     @Override
     public void removeMenu(Long menuId) {
-        BaseMenu menu = getMenu(menuId);
+        BaseMenu menu = baseMenuMapper.selectById(menuId);
         if (menu != null && menu.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除!"));
         }

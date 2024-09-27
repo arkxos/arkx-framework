@@ -46,7 +46,7 @@ public class GatewayRateLimitServiceImpl extends BaseServiceImpl<GatewayRateLimi
                 .likeRight(ObjectUtils.isNotEmpty(query.getPolicyName()), GatewayRateLimit::getPolicyName, query.getPolicyName())
                 .eq(ObjectUtils.isNotEmpty(query.getPolicyType()), GatewayRateLimit::getPolicyType, query.getPolicyType());
         queryWrapper.orderByDesc("create_time");
-        return gatewayRateLimitMapper.selectPage(pageParams, queryWrapper);
+        return gatewayRateLimitMapper.selectPage((IPage<GatewayRateLimit>)pageParams, queryWrapper);
     }
 
     /**

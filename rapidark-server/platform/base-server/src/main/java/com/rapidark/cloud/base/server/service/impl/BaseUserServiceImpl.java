@@ -144,7 +144,7 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
                 .eq(ObjectUtils.isNotEmpty(query.getUserName()), BaseUser::getUserName, query.getUserName())
                 .eq(ObjectUtils.isNotEmpty(query.getMobile()), BaseUser::getMobile, query.getMobile());
         queryWrapper.orderByDesc("create_time");
-        return baseUserMapper.selectPage(pageParams, queryWrapper);
+        return baseUserMapper.selectPage((IPage<BaseUser>)pageParams, queryWrapper);
     }
 
     /**

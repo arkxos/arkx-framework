@@ -26,17 +26,22 @@ spring:
                 server-addr: ${discovery.server-addr}
     main:
         allow-bean-definition-overriding: true
+        allow-circular-references: true
     # 解决restful 404错误 spring.mvc.throw-exception-if-no-handler-found=true spring.resources.add-mappings=false
     mvc:
         throw-exception-if-no-handler-found: true
-    resources:
-        add-mappings: false
+        pathmatch:
+            matching-strategy: ant_path_matcher
+
     thymeleaf:
         cache: false
         encoding: UTF-8
         mode: HTML
         prefix: classpath:/templates/
         suffix: .html
+    web:
+        resources:
+            add-mappings: false
 
 management:
     endpoints:
