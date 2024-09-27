@@ -12,6 +12,10 @@
     <version>${opencloud.common.version}</version>
     <packaging>jar</packaging>
     <dependencies>
+        <dependency>
+            <groupId>org.javamoney.moneta</groupId>
+            <artifactId>moneta-core</artifactId>
+        </dependency>
         <!--负载均衡-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

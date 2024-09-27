@@ -71,6 +71,20 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.javamoney/moneta -->
+            <dependency>
+                <groupId>org.javamoney</groupId>
+                <artifactId>moneta</artifactId>
+                <version>1.4.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.javamoney.moneta</groupId>
+                <artifactId>moneta-core</artifactId>
+                <version>1.4.2</version>
+            </dependency>
+
             <!--mapStruct依赖-->
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -293,6 +307,13 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>bintray-release</id>
+            <name>oss-jfrog-artifactory-release</name>
+            <url>
+                https://oss.jfrog.org/artifactory/oss-release-local
+            </url>
         </repository>
     </repositories>
 </project>
