@@ -8,12 +8,14 @@
     <packaging>pom</packaging>
     <version>3.1.0</version>
     <modules>
+        <module>rapidark-starter-dependencies</module>
         <module>components</module>
         <module>platform</module>
         <module>services</module>
         <module>migration</module>
         <module>ltc-server</module>
         <module>rapidark-os</module>
+
     </modules>
     <properties>
         <java.version>11</java.version>
@@ -29,31 +31,13 @@
         <maven-dockerfile-plugin.version>1.4.13</maven-dockerfile-plugin.version>
 
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
-        <spring-boot-admin.version>2.3.1</spring-boot-admin.version>
-        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-        <alibaba.cloud.version>2.2.5.RELEASE</alibaba.cloud.version>
-        <alibaba.fastjson.version>1.2.66</alibaba.fastjson.version>
-        <jaeger.version>3.1.1</jaeger.version>
-
-        <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
-        <apache.commons-text.version>1.8</apache.commons-text.version>
-        <apache.commons-io.version>2.6</apache.commons-io.version>
-        <apache.commons.beanutils>1.9.4</apache.commons.beanutils>
-
-        <mybatis-plus.version>3.3.1</mybatis-plus.version>
-        <com.google.zxing.version>3.4.0</com.google.zxing.version>
-        <hutool.version>5.2.3</hutool.version>
-        <logstash-logback-encoder.version>6.3</logstash-logback-encoder.version>
-        <swagger2.version>2.9.2</swagger2.version>
-        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
-        <mapstruct.version>1.4.1.Final</mapstruct.version>
 
         <!--自定义版本-->
-        <opencloud.common.version>3.1.0-SNAPSHOT</opencloud.common.version>
-        <opencloud.base-client.version>3.1.0-SNAPSHOT</opencloud.base-client.version>
-        <opencloud.msg-client.version>3.1.0-SNAPSHOT</opencloud.msg-client.version>
-        <opencloud.bpm-client.version>3.1.0-SNAPSHOT</opencloud.bpm-client.version>
-        <opencloud.task-client.version>3.1.0-SNAPSHOT</opencloud.task-client.version>
+        <opencloud.common.version>3.1.0</opencloud.common.version>
+        <opencloud.base-client.version>3.1.0</opencloud.base-client.version>
+        <opencloud.msg-client.version>3.1.0</opencloud.msg-client.version>
+        <opencloud.bpm-client.version>3.1.0</opencloud.bpm-client.version>
+        <opencloud.task-client.version>3.1.0</opencloud.task-client.version>
 
         <!--镜像仓库-->
         <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
@@ -204,54 +188,15 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <groupId>com.opencloud</groupId>
+                <artifactId>rapidark-starter-dependencies</artifactId>
+                <version>${opencloud.common.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${alibaba.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!--mapStruct依赖-->
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${mapstruct.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-processor</artifactId>
-                <version>${mapstruct.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>1</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-avro</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>com.oracle.ojdbc</groupId>
-                <artifactId>ojdbc10</artifactId>
-                <version>19.3.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 
     <build>
         <resources>
@@ -264,6 +209,15 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
