@@ -1,5 +1,6 @@
 server:
-    port: 8211
+    #port: 8211
+    port: ${random.int[10000,19999]}
     servlet:
         session:
             cookie:
