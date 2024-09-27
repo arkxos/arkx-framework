@@ -57,7 +57,7 @@ public class Company extends AbstractEntity {
     /**
      * 注册资金
      */
-    private BigDecimal registeredCapital;
+    private BigDecimal registeredCapital = new BigDecimal("0");
 
     /**
      * 员工人数
