@@ -47,6 +47,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @RemoteApplicationEventScan(basePackages = "com.opencloud")
 public class GatewaySpringApplication implements CommandLineRunner {
+
     @Autowired
     public ResourceLocator resourceLocator;
     @Autowired

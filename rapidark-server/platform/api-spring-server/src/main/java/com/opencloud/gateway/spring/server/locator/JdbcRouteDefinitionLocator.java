@@ -27,10 +27,13 @@ import java.util.Map;
 /**
  * 自定义动态路由加载器
  *
- * @author liuyadu
+ * @author darkness
+ * @date 2021/6/22 16:21
+ * @version 1.0
  */
 @Slf4j
 public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRefreshRouteEvent>, ApplicationEventPublisherAware {
+
     private JdbcTemplate jdbcTemplate;
     private ApplicationEventPublisher publisher;
     private InMemoryRouteDefinitionRepository repository;
@@ -113,36 +116,9 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
     private Mono<Void> loadRoutes() {
         //从数据库拿到路由配置
         try {
-            List<GatewayRoute> routeList = jdbcTemplate.query(SELECT_ROUTES, (rs, i) -> {
-                GatewayRoute result = new GatewayRoute();
-                result.setRouteId(rs.getLong("route_id"));
-                result.setPath(rs.getString("path"));
-                result.setServiceId(rs.getString("service_id"));
-                result.setUrl(rs.getString("url"));
-                result.setStatus(rs.getInt("status"));
-                result.setRetryable(rs.getInt("retryable"));
-                result.setStripPrefix(rs.getInt("strip_prefix"));
-                result.setIsPersist(rs.getInt("is_persist"));
-                result.setRouteName(rs.getString("route_name"));
-                result.setRouteType(rs.getString("route_type"));
-                return result;
-            });
-            List<RateLimitApi> limitApiList = jdbcTemplate.query(SELECT_LIMIT_PATH, (rs, i) -> {
-                RateLimitApi result = new RateLimitApi();
-                result.setPolicyId(rs.getLong("policy_id"));
-                result.setPolicyName(rs.getString("policy_name"));
-                result.setServiceId(rs.getString("service_id"));
-                result.setPath(rs.getString("path"));
-                result.setApiId(rs.getLong("api_id"));
-                result.setApiCode(rs.getString("api_code"));
-                result.setApiName(rs.getString("api_name"));
-                result.setApiCategory(rs.getString("api_category"));
-                result.setLimitQuota(rs.getLong("limit_quota"));
-                result.setIntervalUnit(rs.getString("interval_unit"));
-                result.setUrl(rs.getString("url"));
-                return result;
-            });
-            if (limitApiList.size() > 0) {
+            List<GatewayRoute> routeList = queryRouteListFromDb();
+            List<RateLimitApi> limitApiList = queryRateLimitApiListFromDb();
+            if (!limitApiList.isEmpty()) {
                 // 加载限流
                 limitApiList.forEach(item -> {
                     long[] array = ResourceLocator.getIntervalAndQuota(item.getIntervalUnit());
@@ -234,6 +210,41 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
             log.error("加载动态路由错误:", e);
         }
         return Mono.empty();
+    }
+
+    private List<RateLimitApi> queryRateLimitApiListFromDb() {
+        return jdbcTemplate.query(SELECT_LIMIT_PATH, (rs, i) -> {
+            RateLimitApi result = new RateLimitApi();
+            result.setPolicyId(rs.getLong("policy_id"));
+            result.setPolicyName(rs.getString("policy_name"));
+            result.setServiceId(rs.getString("service_id"));
+            result.setPath(rs.getString("path"));
+            result.setApiId(rs.getLong("api_id"));
+            result.setApiCode(rs.getString("api_code"));
+            result.setApiName(rs.getString("api_name"));
+            result.setApiCategory(rs.getString("api_category"));
+            result.setLimitQuota(rs.getLong("limit_quota"));
+            result.setIntervalUnit(rs.getString("interval_unit"));
+            result.setUrl(rs.getString("url"));
+            return result;
+        });
+    }
+
+    private List<GatewayRoute> queryRouteListFromDb() {
+        return jdbcTemplate.query(SELECT_ROUTES, (rs, i) -> {
+            GatewayRoute result = new GatewayRoute();
+            result.setRouteId(rs.getLong("route_id"));
+            result.setPath(rs.getString("path"));
+            result.setServiceId(rs.getString("service_id"));
+            result.setUrl(rs.getString("url"));
+            result.setStatus(rs.getInt("status"));
+            result.setRetryable(rs.getInt("retryable"));
+            result.setStripPrefix(rs.getInt("strip_prefix"));
+            result.setIsPersist(rs.getInt("is_persist"));
+            result.setRouteName(rs.getString("route_name"));
+            result.setRouteType(rs.getString("route_type"));
+            return result;
+        });
     }
 
     @Override
