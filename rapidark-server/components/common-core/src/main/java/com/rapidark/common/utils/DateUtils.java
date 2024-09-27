@@ -464,6 +464,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     public static String toString(LocalDateTime dateTime) {
+        if(dateTime == null) {
+            return "";
+        }
         return DefaultDateTimeFormatter.format(dateTime);
     }
 
