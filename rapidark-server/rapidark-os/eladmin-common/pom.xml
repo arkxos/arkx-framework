@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <properties>
-        <hutool.version>5.3.4</hutool.version>
     </properties>
 
     <artifactId>eladmin-common</artifactId>
@@ -20,7 +19,6 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>com.opencloud</groupId>
