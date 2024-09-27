@@ -175,7 +175,8 @@ public class RedisUtils<T> {
 //                    keySet.addAll(redisTemplate.keys(key));
 //                }
 //                long count = redisTemplate.delete(keySet);
-                long count = redisTemplate.delete(CollectionUtils.arrayToList(keys));
+                List<String> keyList = (List<String>)CollectionUtils.arrayToList(keys);
+                long count = redisTemplate.delete(keyList);
                 log.debug("--------------------------------------------");
                 log.debug("成功删除缓存：" + CollectionUtils.arrayToList(keys).toString());
                 log.debug("缓存删除数量：" + count + "个");

@@ -104,7 +104,8 @@ public class OpenUserConverter extends DefaultUserAuthenticationConverter {
      * @param map
      * @return
      */
-    private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
         if (!map.containsKey(AUTHORITIES)) {
             return AuthorityUtils.NO_AUTHORITIES;
         }

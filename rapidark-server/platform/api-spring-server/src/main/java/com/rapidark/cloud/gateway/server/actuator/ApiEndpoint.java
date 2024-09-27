@@ -4,6 +4,7 @@ import com.rapidark.common.event.RemoteRefreshRouteEvent;
 import com.rapidark.common.model.ResultBody;
 import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEndpoint;
 import org.springframework.cloud.bus.endpoint.AbstractBusEndpoint;
+import org.springframework.cloud.bus.event.Destination;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
         id = "open"
 )
 public class ApiEndpoint extends AbstractBusEndpoint {
-    public ApiEndpoint(ApplicationEventPublisher context, String id) {
-        super(context, id);
+
+    public ApiEndpoint(ApplicationEventPublisher context, String appId, Destination.Factory destinationFactory) {
+        super(context, appId, destinationFactory);
     }
 
     /**

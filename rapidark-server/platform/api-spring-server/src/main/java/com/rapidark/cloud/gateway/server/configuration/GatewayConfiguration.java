@@ -37,6 +37,7 @@ import org.springframework.boot.autoconfigure.jackson.JacksonProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.bus.BusProperties;
+import org.springframework.cloud.bus.event.Destination;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.route.InMemoryRouteDefinitionRepository;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
@@ -199,8 +200,8 @@ public class GatewayConfiguration {
     @Bean
     @ConditionalOnAvailableEndpoint
     @ConditionalOnClass({Endpoint.class})
-    public ApiEndpoint apiEndpoint(ApplicationContext context, BusProperties bus) {
-        ApiEndpoint endpoint = new ApiEndpoint(context, bus.getId());
+    public ApiEndpoint apiEndpoint(ApplicationContext context, BusProperties bus, Destination.Factory destinationFactory) {
+        ApiEndpoint endpoint = new ApiEndpoint(context, bus.getId(), destinationFactory);
         log.info("ApiEndpoint [{}]", endpoint);
         return endpoint;
     }
