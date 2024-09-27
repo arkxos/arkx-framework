@@ -33,8 +33,6 @@ import java.util.Map;
  * @author darkness
  * @date 2021/5/25 13:44
  * @version 1.0
- * @param
- * @return
  */
 @Api(tags = "用户认证中心")
 @RestController
