@@ -1,3 +1,13 @@
+# 安装依赖
+npm install --force --registry=https://registry.npm.taobao.org
+&&
+npm install -g cnpm -registry=https://registry.npm.taobao.org
+
+
+n# 本地开发 启动项目
+npm run serve
+
+
 <div align="center"><img width="200" src="https://gitee.com/chu1204505056/image/raw/master/logo/vab.svg" alt="VAB"/>
 <h1> admin-pro</h1>
 </div>

@@ -16,7 +16,7 @@
           <i class="el-icon-refresh" style="margin-left: 40px" @click="init" />
         </div>
       </el-card>
-      <my-panel :fit="true" title="状态" theme="border-left" style="margin-bottom: 10px; margin-right: 5px;">
+      <my-panel :fit="true" title="状态" theme="border-left" style="margin-right: 5px;margin-bottom: 10px;">
 
           <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" style="margin-bottom: 10px">
             <div class="title">CPU使用率</div>

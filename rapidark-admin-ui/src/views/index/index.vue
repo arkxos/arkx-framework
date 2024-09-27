@@ -29,7 +29,7 @@
   import Authorization from './components/Authorization'
   import ChinaMap from './components/ChinaMap'
   import IconList from './components/IconList'
-  import MyProject from './components/MyProject'
+  // import MyProject from './components/MyProject'
   import Plan from './components/Plan'
   import VersionInformation from './components/VersionInformation'
 
@@ -42,7 +42,7 @@
       ChinaMap,
       VersionInformation,
       IconList,
-      MyProject,
+      // MyProject,
       Plan,
     },
   }

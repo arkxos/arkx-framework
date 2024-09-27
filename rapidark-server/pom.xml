@@ -94,7 +94,27 @@
                 <discovery.namespace></discovery.namespace>
             </properties>
         </profile>
-        <!-- 开发 -->
+        <!-- 开发 本地中间件-->
+        <profile>
+            <id>dev-local</id>
+            <activation>
+                <!--默认激活配置-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!--当前环境-->
+                <profile.name>dev-local</profile.name>
+                <!--Nacos配置中心地址-->
+                <config.server-addr>127.0.0.1:8848</config.server-addr>
+                <!--Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
+                <config.namespace>dev-local</config.namespace>
+                <!--Nacos服务发现地址-->
+                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+                <!--Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
+                <discovery.namespace>dev-local</discovery.namespace>
+            </properties>
+        </profile>
+        <!-- 开发-外网中间件 -->
         <profile>
             <id>dev</id>
             <activation>
