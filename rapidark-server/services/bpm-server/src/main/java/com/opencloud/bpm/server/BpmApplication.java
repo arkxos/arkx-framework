@@ -1,5 +1,6 @@
 package com.opencloud.bpm.server;
 
+import com.rapidark.boot.RapidArkApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -15,6 +16,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication(exclude = {org.activiti.spring.boot.SecurityAutoConfiguration.class})
 public class BpmApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BpmApplication.class, args);
+        RapidArkApplication.run(BpmApplication.class, args);
     }
 }

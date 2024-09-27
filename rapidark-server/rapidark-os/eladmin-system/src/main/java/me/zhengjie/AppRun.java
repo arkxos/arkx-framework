@@ -15,6 +15,7 @@
  */
 package me.zhengjie;
 
+import com.rapidark.boot.RapidArkApplication;
 import io.swagger.annotations.Api;
 import me.zhengjie.annotation.rest.AnonymousGetMapping;
 import me.zhengjie.utils.SpringContextHolder;
@@ -43,7 +44,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppRun {
 
     public static void main(String[] args) {
-        SpringApplication.run(AppRun.class, args);
+        RapidArkApplication.run(AppRun.class, args);
     }
 
     @Bean

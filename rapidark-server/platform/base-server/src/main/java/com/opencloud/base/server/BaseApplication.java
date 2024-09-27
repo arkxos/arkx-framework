@@ -1,5 +1,6 @@
 package com.opencloud.base.server;
 
+import com.rapidark.boot.RapidArkApplication;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +21,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @MapperScan(basePackages = "com.opencloud.base.server.mapper")
 public class BaseApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BaseApplication.class, args);
+        RapidArkApplication.run(BaseApplication.class, args);
+
+        System.out.println("==========================================");
     }
 }

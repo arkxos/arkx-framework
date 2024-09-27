@@ -24,6 +24,7 @@
  */
 package com.opencloud.uaa.admin.server;
 
+import com.rapidark.boot.RapidArkApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -41,6 +42,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 public class UaaAdminApplication {
     public static void main(String[] args) {
-        SpringApplication.run(UaaAdminApplication.class, args);
+        RapidArkApplication.run(UaaAdminApplication.class, args);
     }
 }

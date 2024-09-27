@@ -26,6 +26,7 @@ package com.opencloud.gateway.spring.server;
 
 import com.opencloud.gateway.spring.server.locator.JdbcRouteDefinitionLocator;
 import com.opencloud.gateway.spring.server.locator.ResourceLocator;
+import com.rapidark.boot.RapidArkApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -52,7 +53,7 @@ public class GatewaySpringApplication implements CommandLineRunner {
     private JdbcRouteDefinitionLocator jdbcRouteDefinitionLocator;
 
     public static void main(String[] args) {
-        SpringApplication.run(GatewaySpringApplication.class, args);
+        RapidArkApplication.run(GatewaySpringApplication.class, args);
     }
 
     @Override

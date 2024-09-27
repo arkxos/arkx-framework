@@ -1,6 +1,7 @@
 package com.opencloud.msg.server;
 
 import com.opencloud.msg.server.service.EmailConfigService;
+import com.rapidark.boot.RapidArkApplication;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +19,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @MapperScan(basePackages = "com.opencloud.msg.server.mapper")
 public class MsgApplication implements CommandLineRunner {
     public static void main(String[] args) {
-        SpringApplication.run(MsgApplication.class, args);
+        RapidArkApplication.run(MsgApplication.class, args);
     }
 
     @Autowired
