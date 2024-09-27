@@ -148,6 +148,9 @@ public class ResourceLocator implements ApplicationListener<RemoteRefreshRouteEv
                     if (path == null) {
                         continue;
                     }
+                    if (path.startsWith("/bill")) {
+                        System.out.println(path);
+                    }
                     String fullPath = getFullPath(item.getServiceId(), path);
                     item.setPath(fullPath);
                     array = configAttributes.get(fullPath);

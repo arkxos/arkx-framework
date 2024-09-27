@@ -68,6 +68,9 @@ public class ResourceScanHandler {
                         baseApiService.addApi(api);
                     } else {
                         api.setApiId(save.getApiId());
+                        if (api.getPath().startsWith("/bill")){
+                            System.out.println("ddd");
+                        }
                         baseApiService.updateApi(api);
                     }
                 } catch (Exception e) {
