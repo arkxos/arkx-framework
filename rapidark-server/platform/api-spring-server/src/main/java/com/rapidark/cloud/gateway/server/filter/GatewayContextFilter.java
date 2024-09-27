@@ -333,7 +333,8 @@ public class GatewayContextFilter implements WebFilter, Ordered {
         HttpHeaders headers = exchange.getRequest().getHeaders();
         Charset charset = (headers.getContentType() != null && headers.getContentType().getCharset() != null)
                 ? headers.getContentType().getCharset() : StandardCharsets.UTF_8;
-        return DataBufferUtils.join(exchange.getRequest().getBody())
+        Flux<DataBuffer> requestBodyDataBuffer = exchange.getRequest().getBody();
+        Mono<Void> mono = DataBufferUtils.join(requestBodyDataBuffer)
                 .flatMap(dataBuffer -> {
                     /*
                      * read the body Flux<DataBuffer>, and release the buffer
@@ -404,6 +405,7 @@ public class GatewayContextFilter implements WebFilter, Ordered {
                                 log.debug("[GatewayContext]Read JsonBody Success");
                             }).then(chain.filter(mutatedExchange));
                 });
+        return mono;
     }
 
     /**

@@ -93,7 +93,7 @@ public class OpenGlobalExceptionHandler {
      * @param ex
      * @return
      */
-    public static ResultBody resolveException(Exception ex, String path) {
+    public static ResultBody resolveException(Throwable ex, String path) {
         ErrorCode code = ErrorCode.ERROR;
         int httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
         String message = ex.getMessage();
@@ -213,7 +213,7 @@ public class OpenGlobalExceptionHandler {
      * @param exception
      * @return
      */
-    private static ResultBody buildBody(Exception exception, String message, ErrorCode resultCode, String path, int httpStatus) {
+    private static ResultBody buildBody(Throwable exception, String message, ErrorCode resultCode, String path, int httpStatus) {
         if (resultCode == null) {
             resultCode = ErrorCode.ERROR;
         }

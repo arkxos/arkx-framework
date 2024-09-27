@@ -113,7 +113,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
             resultBody = ResultBody.failed().code(ErrorCode.SERVICE_UNAVAILABLE.getCode()).msg(ErrorCode.SERVICE_UNAVAILABLE.getMessage()).httpStatus(HttpStatus.SERVICE_UNAVAILABLE.value()).path(request.getURI().getPath());
             log.error("==> 错误解析:{}", resultBody);
         } else {
-            resultBody = OpenGlobalExceptionHandler.resolveException((Exception) ex, exchange.getRequest().getURI().getPath());
+            resultBody = OpenGlobalExceptionHandler.resolveException(ex, exchange.getRequest().getURI().getPath());
         }
         /**
          * 参考AbstractErrorWebExceptionHandler
