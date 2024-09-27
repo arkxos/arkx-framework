@@ -50,6 +50,10 @@
             <artifactId>javax.inject</artifactId>
             <version>1</version>
         </dependency>
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc10</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -29,6 +29,8 @@ import me.zhengjie.utils.FileUtil;
 import com.opencloud.generator.server.jpa.util.GenUtil;
 import me.zhengjie.utils.PageUtil;
 import me.zhengjie.utils.StringUtils;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -62,8 +64,34 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     private final ColumnInfoRepository columnInfoRepository;
 
+    /**
+     * 是否为Oracle数据库
+     * @return true:oracle,false:mysql或sql server
+     */
+    public boolean isOracleDataBase(){
+        boolean res = false;
+        SessionFactory sessionFactory = em.unwrap(SessionFactory.class);
+        Session session = sessionFactory.openSession();
+        if (session != null) {
+            res = session.doReturningWork(
+                    connection -> {
+                        String dbName = connection.getMetaData().getDatabaseProductName();
+                        System.out.println("dbName: " + dbName);
+                        if(StringUtils.equals("Oracle",dbName)){
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+            );
+            session.close();
+        }
+        return res;
+    }
+
     @Override
     public Object getTables() {
+        isOracleDataBase();
         // 使用预编译防止sql注入
         String sql = "select table_name ,create_time , engine, table_collation, table_comment from information_schema.tables " +
                 "where table_schema = (select database()) " +

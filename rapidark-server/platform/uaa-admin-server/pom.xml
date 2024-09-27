@@ -32,6 +32,10 @@
             <artifactId>nekohtml</artifactId>
             <version>1.9.22</version>
         </dependency>
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc10</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <!-- 打包名称 -->

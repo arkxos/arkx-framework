@@ -50,9 +50,9 @@
         a.service_id,
         a.path,
         p.ip_address
-        FROM gateway_ip_limit_api AS i
-        INNER JOIN gateway_ip_limit AS p ON i.policy_id = p.policy_id
-        INNER JOIN base_api AS a ON i.api_id = a.api_id
+        FROM gateway_ip_limit_api i
+        INNER JOIN gateway_ip_limit p ON i.policy_id = p.policy_id
+        INNER JOIN base_api a ON i.api_id = a.api_id
         <where>
             <if test="policyType!=null">
                 p.policy_type = #{policyType}
