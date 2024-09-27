@@ -216,7 +216,7 @@ public class RestApiHelper
 		HashMap<String, String> headers = new HashMap<>();
 		headers.put("Authorization", "Bearer 541e2b95-24ca-4192-97b7-a9367ac676cc");
 		headers.put("content-type", "application/json");
-		String responseText = RestApiHelper.doPost(url, "{\"bizType\":1,\"endDate\":\"2022-07-31\",\"handlingId\":\"YYf8bbFQqRrFYBxPpFNrHV\",\"isMedicalInstitution\":1,\"operateDate\":\"2021-06-23\",\"orgId\":\"pdtsty001\",\"orgName\":\"测试评定\",\"orgType\":1,\"startDate\":\"2021-06-22\",\"uniformSocialCreditCode\":\"pdtsty001\"}", headers);
+		String responseText = RestApiHelper.doPost(url, "{\"bizType\":1,\"endDate\":\"2022-07-31\",\"handlingId\":\"YYf8bbFQqRrFYBxPpFNrHV\",\"isMedicalInstitution\":1,\"operateDate\":\"2021-06-23\",\"orgId\":\"pdtsty001\",\"orgName\":\"测试评估\",\"orgType\":1,\"startDate\":\"2021-06-22\",\"uniformSocialCreditCode\":\"pdtsty001\"}", headers);
 		System.out.println(responseText);
 	}
 
