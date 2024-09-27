@@ -21,7 +21,7 @@
         <module>eladmin-tools</module>
     </modules>
 
-    <name>EL-ADMIN 后台管理</name>
+    <name>ADMIN 后台管理</name>
     <url>http://auauz.net</url>
 
     <!--<parent>
