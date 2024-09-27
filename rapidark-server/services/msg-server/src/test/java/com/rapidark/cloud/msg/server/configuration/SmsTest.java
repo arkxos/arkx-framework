@@ -3,7 +3,7 @@ package com.rapidark.cloud.msg.server.configuration;
 import com.rapidark.common.test.BaseTest;
 import com.rapidark.cloud.msg.client.model.SmsMessage;
 import com.rapidark.cloud.msg.server.dispatcher.MessageDispatcher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @description:
  */
 public class SmsTest extends BaseTest {
+
     @Autowired
     private MessageDispatcher dispatcher;
 

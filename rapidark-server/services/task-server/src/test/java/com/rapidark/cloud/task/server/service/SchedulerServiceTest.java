@@ -5,7 +5,7 @@ import com.rapidark.cloud.task.server.job.HttpExecuteJob;
 import com.rapidark.cloud.task.server.service.feign.EmailServiceClient;
 import com.rapidark.common.test.BaseTest;
 import com.rapidark.cloud.task.client.model.TaskInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;

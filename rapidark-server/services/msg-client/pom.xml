@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>msg-client</artifactId>
-    <version>${project.version}</version>
     <packaging>jar</packaging>
     <description>消息服务接口</description>
     <dependencies>

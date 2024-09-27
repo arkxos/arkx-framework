@@ -2,7 +2,7 @@ package com.rapidark.cloud.msg.server.configuration;
 
 import com.rapidark.cloud.msg.server.service.DelayMessageService;
 import com.rapidark.common.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;

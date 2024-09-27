@@ -11,7 +11,6 @@
 
     <groupId>com.bsd</groupId>
     <artifactId>dingtalk-server</artifactId>
-    <version>1.0.0</version>
 
     <dependencies>
         <!-- 引入公共包,需发布到本地仓库或私服 -->

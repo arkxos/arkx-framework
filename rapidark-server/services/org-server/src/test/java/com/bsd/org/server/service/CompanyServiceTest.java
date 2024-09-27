@@ -7,7 +7,7 @@ import com.bsd.org.server.model.vo.CompanyMenuVO;
 import com.bsd.org.server.model.vo.DepartmentMenuVO;
 import com.rapidark.common.test.BaseTest;
 import com.rapidark.common.utils.BeanConvertUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
