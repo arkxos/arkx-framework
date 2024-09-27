@@ -68,6 +68,7 @@ function formatRouters(array) {
 }
 
 function convertRouterTypeData(array) {
+  console.log('convertRouterTypeData', array)
   let list = array.map(item => {
     let path = startWith(item.path, '/') ? item.path.substring(1) : item.path
     let url = item.scheme + item.path
@@ -88,7 +89,8 @@ function convertRouterTypeData(array) {
         title: item.menuName,
         notCache: true,
         icon: item.icon || 'md-document',
-        hideInBread: false
+        hideInBread: false,
+        target: item.target
       },
       children: []
     }

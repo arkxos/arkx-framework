@@ -17,7 +17,7 @@ import permission from './components/Permission'
  */
 import { baseURL } from './config'
 import { isExternal } from '@/utils/validate'
-if (process.env.NODE_ENV === 'production' && !isExternal(baseURL)) {
+if (process.env.NODE_ENV === 'development' && !isExternal(baseURL)) {
   const { mockXHR } = require('@/utils/static')
   mockXHR()
 }
