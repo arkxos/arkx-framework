@@ -30,6 +30,7 @@ public @interface Query {
 
     // Dong ZhaoYang 2017/8/7 基本对象的属性名
     String propName() default "";
+
     // Dong ZhaoYang 2017/8/7 查询方式
     Type type() default Type.EQUAL;
 
