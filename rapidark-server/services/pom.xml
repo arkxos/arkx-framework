@@ -11,20 +11,20 @@
     <artifactId>services</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>msg-client</module>
-        <module>msg-server</module>
-        <module>bpm-client</module>
-        <module>bpm-server</module>
-        <module>task-client</module>
-        <module>task-server</module>
-        <module>tenant-demo</module>
-        <module>sso-ui-demo</module>
-        <module>file-server</module>
-        <module>dingtalk-server</module>
-        <module>payment-server</module>
-        <module>user-server</module>
-        <module>org-server</module>
-        <module>comment-server</module>
-        <module>axon-demo</module>
+<!--        <module>msg-client</module>-->
+<!--        <module>msg-server</module>-->
+<!--        <module>bpm-client</module>-->
+<!--        <module>bpm-server</module>-->
+<!--        <module>task-client</module>-->
+<!--        <module>task-server</module>-->
+<!--        <module>tenant-demo</module>-->
+<!--        <module>sso-ui-demo</module>-->
+<!--        <module>file-server</module>-->
+<!--        <module>dingtalk-server</module>-->
+<!--        <module>payment-server</module>-->
+<!--        <module>user-server</module>-->
+<!--        <module>org-server</module>-->
+<!--        <module>comment-server</module>-->
+<!--        <module>axon-demo</module>-->
     </modules>
 </project>

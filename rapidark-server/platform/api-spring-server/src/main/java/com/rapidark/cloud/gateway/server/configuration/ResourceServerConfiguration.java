@@ -110,7 +110,7 @@ public class ResourceServerConfiguration {
                 .httpBasic().disable()
                 .csrf().disable()
                 .authorizeExchange()
-                .pathMatchers("/").permitAll()
+                .pathMatchers("/", "/*/druid/**").permitAll()
                 // 动态权限验证
                 .anyExchange().access(accessManager)
                 .and().exceptionHandling()

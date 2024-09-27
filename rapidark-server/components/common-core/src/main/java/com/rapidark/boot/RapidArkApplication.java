@@ -3,6 +3,8 @@ package com.rapidark.boot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.net.ProxySelector;
+
 /**
  * @author darkness
  * @version 1.0
@@ -11,6 +13,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class RapidArkApplication {
 
     public static ConfigurableApplicationContext run(Class<?> primarySource, String... args) {
+        ProxySelector.setDefault(null);
+        System.setProperty("java.security.egd", "file:///dev/urandom");  // the 3 '/' are important to make it a URL
+
         ConfigurableApplicationContext context =  SpringApplication.run(primarySource, args);
 
         System.out.println("(♥◠‿◠)ﾉﾞ  RapidArk 12.0 启动成功   ლ(´ڡ`ლ)ﾞ  \n" +

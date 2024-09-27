@@ -20,8 +20,9 @@
         <module>platform</module>
         <module>services</module>
         <module>migration</module>
-        <module>ltc-server</module>
         <module>rapidark-os</module>
+        <module>ltc-server</module>
+
 
     </modules>
     <properties>
