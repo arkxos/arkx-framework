@@ -77,6 +77,7 @@ public class CustomOperationBuilderPlugin implements OperationBuilderPlugin {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             log.warn("加载swagger中方法api={}，设置顺序出错。", context.getName(), e);
         }
     }
