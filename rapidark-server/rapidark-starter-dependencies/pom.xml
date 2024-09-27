@@ -47,11 +47,23 @@
         <swagger2.version>2.9.2</swagger2.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
-
+        <axonframework.version>4.5.2</axonframework.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.axonframework/axon-spring-boot-starter -->
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-spring-boot-starter</artifactId>
+                <version>${axonframework.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.axonframework</groupId>
+                        <artifactId>axon-server-connector</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             <dependency>
                 <groupId>cn.easyproject</groupId>
                 <artifactId>orai18n</artifactId>
