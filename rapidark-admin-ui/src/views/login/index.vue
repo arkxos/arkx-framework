@@ -205,7 +205,7 @@
     position: relative;
     max-width: 100%;
     padding: 4.5vh;
-    margin: calc((100vh - 475px) / 2) 5vw 5vw;
+    margin: calc((100vh - 475px) / 2) 2vw 5vw;
     overflow: hidden;
     background: url('~@/assets/login_images/login_form.png');
     background-size: 100% 100%;
