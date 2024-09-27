@@ -20,7 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -29,10 +28,12 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.util.pattern.PathPattern;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.*;
@@ -40,6 +41,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * 自定义注解扫描
@@ -48,6 +50,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class RequestMappingScan implements ApplicationListener<ApplicationReadyEvent> {
+
     private AmqpTemplate amqpTemplate;
     private static final AntPathMatcher pathMatch = new AntPathMatcher();
     private ExecutorService executorService;
@@ -70,7 +73,7 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
         if (amqpTemplate == null) {
             return;
         }
-        Map<String, Object> resourceServer = applicationContext.getBeansWithAnnotation(EnableResourceServer.class);
+        Map<String, Object> resourceServer = applicationContext.getBeansWithAnnotation(ArkResourceServer.class);
         if (resourceServer == null || resourceServer.isEmpty()) {
             // 只扫描资源服务器
             return;
@@ -128,8 +131,17 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
             RequestMethodsRequestCondition methodsCondition = info.getMethodsCondition();
             String methods = getMethods(methodsCondition.getMethods());
             // 请求路径
+
+            Set<String> patterns = new HashSet<>();
             PatternsRequestCondition p = info.getPatternsCondition();
-            String urls = getUrls(p.getPatterns());
+            if(p != null) {
+                patterns = p.getPatterns();
+            }
+            PathPatternsRequestCondition p2 = info.getPathPatternsCondition();
+            if(p2 != null) {
+                patterns = p2.getPatterns().stream().map(PathPattern::getPatternString).collect(Collectors.toSet());
+            }
+            String urls = getUrls(patterns);
             Map<String, String> api = Maps.newHashMap();
             // 类名
             String className = method.getMethod().getDeclaringClass().getName();
@@ -143,7 +155,7 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
             // 是否需要安全认证 默认:1-是 0-否
             String isAuth = "1";
             // 匹配项目中.permitAll()配置
-            for (String url : p.getPatterns()) {
+            for (String url : patterns) {
                 for (RequestMatcher requestMatcher : permitAll) {
                     if (requestMatcher instanceof AntPathRequestMatcher) {
                         AntPathRequestMatcher pathRequestMatcher = (AntPathRequestMatcher) requestMatcher;
