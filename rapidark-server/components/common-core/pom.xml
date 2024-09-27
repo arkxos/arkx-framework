@@ -21,6 +21,10 @@
             <artifactId>spring-security-oauth2</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.easyproject</groupId>
             <artifactId>orai18n</artifactId>
             <version>12.1.0.2.0</version>
