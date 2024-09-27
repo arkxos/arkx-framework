@@ -1,5 +1,7 @@
 package com.rapidark.common.collection;
 
+import java.util.Objects;
+
 /**
  * 
  * @author Darkness
@@ -20,6 +22,20 @@ public class TwoTuple<A, B> {
 		second = b;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		TwoTuple<?, ?> twoTuple = (TwoTuple<?, ?>) o;
+		return Objects.equals(first, twoTuple.first) && Objects.equals(second, twoTuple.second);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(first, second);
+	}
+
+	@Override
 	public String toString() {
 		return "(" + first + ", " + second + ")";
 	}
