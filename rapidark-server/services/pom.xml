@@ -25,5 +25,6 @@
         <module>user-server</module>
         <module>org-server</module>
         <module>comment-server</module>
+        <module>axon-demo</module>
     </modules>
 </project>
