@@ -466,4 +466,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     public static String toString(LocalDateTime dateTime) {
         return DefaultDateTimeFormatter.format(dateTime);
     }
+
+    public static Integer getYearMonth(LocalDateTime dateTime) {
+        String month = dateTime.getMonthValue() < 10 ? ("0" + dateTime.getMonthValue()) : (dateTime.getMonthValue() + "");
+        return Integer.valueOf(dateTime.getYear() + "" + month);
+    }
 }
