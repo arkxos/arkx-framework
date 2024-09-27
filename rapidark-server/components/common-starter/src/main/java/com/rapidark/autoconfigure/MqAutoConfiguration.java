@@ -40,8 +40,8 @@ public class MqAutoConfiguration {
      */
     @Bean
     public Queue monthBillItemQueue() {
-        Queue queue = new Queue(QueueConstants.QUEUE_Lct_Bill_Item_Changed);
-        log.info("Query {} [{}]", QueueConstants.QUEUE_Lct_Bill_Item_Changed, queue);
+        Queue queue = new Queue(QueueConstants.QUEUE_Ltc_Bill_Transaction_Changed);
+        log.info("Query {} [{}]", QueueConstants.QUEUE_Ltc_Bill_Transaction_Changed, queue);
         return queue;
     }
 }
