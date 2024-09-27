@@ -8,8 +8,8 @@ module.exports = {
   baseURL:
   // process.env.NODE_ENV === 'development' ? '/vab-mock-server' : '/vab-mock-server',
     process.env.NODE_ENV === 'development' ? '' : '/server',
-  // 配后端数据的接收方式application/json;charset=UTF-8 或 application/x-www-form-urlencoded;charset=UTF-8
-  contentType: 'application/json;charset=UTF-8',
+  // 配后端数据的接收方式application/json 或 application/x-www-form-urlencoded;charset=UTF-8
+  contentType: 'application/json',
   // 最长请求时间
   requestTimeout: 2 * 30 * 1000,
   // 操作正常code，支持String、Array、int多种类型

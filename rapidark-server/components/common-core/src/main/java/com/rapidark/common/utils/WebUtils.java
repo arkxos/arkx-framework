@@ -510,7 +510,7 @@ public class WebUtils {
      * @return
      */
     public static void writeJson(HttpServletResponse response, Object object) {
-        writeJson(response, JSON.toJSONString(object), MediaType.APPLICATION_JSON_UTF8_VALUE);
+        writeJson(response, JSON.toJSONString(object), MediaType.APPLICATION_JSON_VALUE);
     }
 
     /**

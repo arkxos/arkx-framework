@@ -40,7 +40,7 @@ export const editCompany = ({ address, areaId, companyId, companyName, companyNa
     params,
     method: 'post',
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
+      'Content-Type': 'application/json'
     }
   })
 }

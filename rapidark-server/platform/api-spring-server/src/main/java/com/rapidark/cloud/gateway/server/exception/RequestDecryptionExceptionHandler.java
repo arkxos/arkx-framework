@@ -34,7 +34,7 @@ public class RequestDecryptionExceptionHandler implements CryptoExceptionHandler
         ResultBody resultBody = OpenGlobalExceptionHandler.resolveException(e, exchange.getRequest().getURI().getPath());
         return Mono.defer(() -> Mono.just(exchange.getResponse())).flatMap((response) -> {
             response.setStatusCode(HttpStatus.valueOf(resultBody.getHttpStatus()));
-            response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
+            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
             DataBufferFactory dataBufferFactory = response.bufferFactory();
             DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(resultBody).getBytes(Charset.defaultCharset()));
             // 保存日志

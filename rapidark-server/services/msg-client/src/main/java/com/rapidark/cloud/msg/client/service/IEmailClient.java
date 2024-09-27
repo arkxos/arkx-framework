@@ -24,7 +24,7 @@ public interface IEmailClient {
      * @return
      */
     @PostMapping(value = "/email/send",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResultBody<String> send(
             @RequestParam(value = "to") String to,
@@ -47,7 +47,7 @@ public interface IEmailClient {
      * @return
      */
     @PostMapping(value = "/email/send/tpl",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResultBody<String> sendByTpl(
             @RequestParam(value = "to") String to,

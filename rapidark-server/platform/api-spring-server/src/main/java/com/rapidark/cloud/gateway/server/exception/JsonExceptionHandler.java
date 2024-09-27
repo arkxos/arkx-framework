@@ -141,7 +141,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
         ResultBody result = exceptionHandlerResult.get();
         exceptionHandlerResult.remove();
         return ServerResponse.status(result.getHttpStatus())
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromObject(result));
     }
 
