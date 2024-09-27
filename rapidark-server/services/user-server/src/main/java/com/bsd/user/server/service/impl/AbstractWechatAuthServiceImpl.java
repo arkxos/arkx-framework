@@ -2,8 +2,8 @@ package com.bsd.user.server.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bsd.user.server.service.WechatAuthService;
-import com.opencloud.common.security.http.OpenRestTemplate;
-import com.opencloud.common.security.oauth2.client.OpenOAuth2ClientProperties;
+import com.rapidark.common.security.http.OpenRestTemplate;
+import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

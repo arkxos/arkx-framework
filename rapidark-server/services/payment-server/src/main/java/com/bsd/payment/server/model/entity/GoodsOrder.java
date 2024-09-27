@@ -1,7 +1,7 @@
 package com.bsd.payment.server.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.opencloud.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.common.mybatis.base.entity.AbstractEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

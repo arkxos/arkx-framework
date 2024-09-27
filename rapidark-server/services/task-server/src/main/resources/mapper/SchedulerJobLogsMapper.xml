@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.opencloud.task.server.mapper.SchedulerJobLogsMapper">
-    <resultMap id="BaseResultMap" type="com.opencloud.task.client.model.entity.SchedulerJobLogs">
+<mapper namespace="com.rapidark.cloud.task.server.mapper.SchedulerJobLogsMapper">
+    <resultMap id="BaseResultMap" type="com.rapidark.cloud.task.client.model.entity.SchedulerJobLogs">
         <!--
           WARNING - @mbg.generated
         -->

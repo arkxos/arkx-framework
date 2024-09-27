@@ -1,8 +1,8 @@
 package com.bsd.org.server.exception;
 
-import com.opencloud.common.constants.ErrorCode;
-import com.opencloud.common.exception.OpenGlobalExceptionHandler;
-import com.opencloud.common.model.ResultBody;
+import com.rapidark.common.constants.ErrorCode;
+import com.rapidark.common.exception.OpenGlobalExceptionHandler;
+import com.rapidark.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;

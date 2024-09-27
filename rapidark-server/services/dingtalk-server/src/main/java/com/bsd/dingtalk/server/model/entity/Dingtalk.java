@@ -1,7 +1,7 @@
 package com.bsd.dingtalk.server.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.opencloud.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.common.mybatis.base.entity.AbstractEntity;
 
 /**
  * 钉钉配置信息

@@ -17,8 +17,8 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EntPayService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
-import com.opencloud.common.model.ResultBody;
-import com.opencloud.common.utils.StringUtils;
+import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

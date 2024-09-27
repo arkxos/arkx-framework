@@ -1,0 +1,65 @@
+package com.rapidark.cloud.base.client.service;
+
+import com.rapidark.cloud.base.client.model.UserAccount;
+import com.rapidark.cloud.base.client.model.entity.BaseRole;
+import com.rapidark.cloud.base.client.service.command.AddUserCommand;
+import com.rapidark.common.model.ResultBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
+import java.util.List;
+
+/**
+ * @author liuyadu
+ */
+public interface IBaseUserServiceClient {
+    /**
+     * 系统用户登录
+     *
+     * @param username
+     * @return
+     */
+    @PostMapping("/user/login")
+    ResultBody<UserAccount> userLogin(@RequestParam(value = "username") String username);
+
+
+    /**
+     * 注册第三方系统登录账号
+     *
+     * @param account
+     * @param password
+     * @param accountType
+     * @return
+     */
+    @PostMapping("/user/register/thirdParty")
+    ResultBody addUserThirdParty(
+            @RequestParam(value = "account") String account,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "accountType") String accountType,
+            @RequestParam(value = "nickName") String nickName,
+            @RequestParam(value = "avatar") String avatar
+    );
+
+
+    /**
+     * 获取用户角色
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/user/roles")
+    ResultBody<List<BaseRole>> getUserRoles(
+            @RequestParam(value = "userId") Long userId
+    );
+
+    /**
+     * 添加系统用户
+     *
+     * @return
+     */
+    @PostMapping("/user/add")
+    ResultBody addUser(@Valid @RequestBody AddUserCommand command);
+}

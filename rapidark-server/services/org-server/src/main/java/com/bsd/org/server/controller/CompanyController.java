@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bsd.org.server.model.entity.Company;
 import com.bsd.org.server.model.vo.CompanyMenuVO;
 import com.bsd.org.server.service.CompanyService;
-import com.opencloud.common.model.ResultBody;
-import com.opencloud.common.security.OpenHelper;
-import com.opencloud.common.security.OpenUserDetails;
-import com.opencloud.common.utils.StringUtils;
+import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.security.OpenHelper;
+import com.rapidark.common.security.OpenUserDetails;
+import com.rapidark.common.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -80,7 +80,7 @@ public class CompanyController {
      * 获取所有企业信息
      *
      * @param
-     * @return com.opencloud.common.model.ResultBody
+     * @return com.rapidark.cloud.common.model.ResultBody
      * @author zhangzz
      * @date 2019/12/6
      */

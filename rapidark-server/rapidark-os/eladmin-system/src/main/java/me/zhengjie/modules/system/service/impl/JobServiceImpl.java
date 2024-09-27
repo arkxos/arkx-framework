@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
-import com.opencloud.common.utils.RedisUtils;
+import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.exception.EntityExistException;

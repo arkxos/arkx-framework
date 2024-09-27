@@ -1,7 +1,7 @@
 package com.bsd.user.server.mapper;
 
 import com.bsd.user.server.model.entity.UserAccount;
-import com.opencloud.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.common.mybatis.base.mapper.SuperMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

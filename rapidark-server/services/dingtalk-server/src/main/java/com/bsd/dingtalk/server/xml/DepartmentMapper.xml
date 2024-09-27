@@ -12,7 +12,7 @@
     </sql>
 
     <!-- 自定义分页 -->
-    <select id="pageList" resultType="com.opencloud.common.mybatis.EntityMap">
+    <select id="pageList" resultType="com.rapidark.common.mybatis.EntityMap">
         select ${ew.select} FROM
         <include refid="t_alias"/>
         <include refid="join"/>

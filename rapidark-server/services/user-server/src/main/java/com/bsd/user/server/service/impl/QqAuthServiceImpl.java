@@ -1,10 +1,10 @@
 package com.bsd.user.server.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.opencloud.common.security.http.OpenRestTemplate;
-import com.opencloud.common.security.oauth2.client.OpenOAuth2ClientDetails;
-import com.opencloud.common.security.oauth2.client.OpenOAuth2ClientProperties;
-import com.opencloud.common.security.oauth2.client.OpenOAuth2Service;
+import com.rapidark.common.security.http.OpenRestTemplate;
+import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientDetails;
+import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientProperties;
+import com.rapidark.common.security.oauth2.client.OpenOAuth2Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;

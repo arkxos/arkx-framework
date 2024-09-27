@@ -1,9 +1,9 @@
 package com.bsd.user.server.utils;
 
-import com.opencloud.common.exception.OpenAlertException;
-import com.opencloud.common.utils.EncryptUtils;
-import com.opencloud.common.utils.RandomValueUtils;
-import com.opencloud.common.utils.StringUtils;
+import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.common.utils.EncryptUtils;
+import com.rapidark.common.utils.RandomValueUtils;
+import com.rapidark.common.utils.StringUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.Jwts;

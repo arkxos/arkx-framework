@@ -1,8 +1,8 @@
 package com.bsd.file.server.configuration;
 
-import com.opencloud.common.exception.OpenAccessDeniedHandler;
-import com.opencloud.common.exception.OpenAuthenticationEntryPoint;
-import com.opencloud.common.security.OpenHelper;
+import com.rapidark.common.exception.OpenAccessDeniedHandler;
+import com.rapidark.common.exception.OpenAuthenticationEntryPoint;
+import com.rapidark.common.security.OpenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;

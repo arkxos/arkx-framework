@@ -1,6 +1,6 @@
 package com.bsd.user.server.configuration;
 
-import com.opencloud.common.utils.StringUtils;
+import com.rapidark.common.utils.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;

@@ -1,7 +1,7 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.opencloud.autoconfigure.AutoConfiguration,\
-  com.opencloud.autoconfigure.FeignAutoConfiguration,\
-  com.opencloud.autoconfigure.MqAutoConfiguration,\
-  com.opencloud.autoconfigure.SwaggerAutoConfiguration,\
-  com.opencloud.autoconfigure.WebMvcConfiguration,\
-  com.opencloud.autoconfigure.RedisCacheAutoConfiguration,\
-  com.opencloud.autoconfigure.JacksonAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rapidark.autoconfigure.AutoConfiguration,\
+  com.rapidark.autoconfigure.FeignAutoConfiguration,\
+  com.rapidark.autoconfigure.MqAutoConfiguration,\
+  com.rapidark.autoconfigure.SwaggerAutoConfiguration,\
+  com.rapidark.autoconfigure.WebMvcConfiguration,\
+  com.rapidark.autoconfigure.RedisCacheAutoConfiguration,\
+  com.rapidark.autoconfigure.JacksonAutoConfiguration

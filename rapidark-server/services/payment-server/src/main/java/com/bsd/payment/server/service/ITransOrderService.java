@@ -5,9 +5,9 @@ import com.bsd.payment.server.model.TransOrderPo;
 import com.bsd.payment.server.model.dto.QueryTransResultDTO;
 import com.bsd.payment.server.model.dto.TransResultDTO;
 import com.bsd.payment.server.model.entity.TransOrder;
-import com.opencloud.common.model.PageParams;
-import com.opencloud.common.model.ResultBody;
-import com.opencloud.common.mybatis.base.service.IBaseService;
+import com.rapidark.common.model.PageParams;
+import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.mybatis.base.service.IBaseService;
 
 import java.util.Date;
 

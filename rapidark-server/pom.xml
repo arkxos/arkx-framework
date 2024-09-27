@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.opencloud</groupId>
+        <groupId>com.rapidark.cloud</groupId>
         <artifactId>rapidark-starter-dependencies</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
+        <version>12.1.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.opencloud</groupId>
+    <groupId>com.rapidark.cloud</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
 
@@ -38,11 +38,11 @@
         <maven-dockerfile-plugin.version>1.4.13</maven-dockerfile-plugin.version>
 
         <!--自定义版本-->
-        <opencloud.common.version>3.1.0-SNAPSHOT</opencloud.common.version>
-        <opencloud.base-client.version>3.1.0-SNAPSHOT</opencloud.base-client.version>
-        <opencloud.msg-client.version>3.1.0-SNAPSHOT</opencloud.msg-client.version>
-        <opencloud.bpm-client.version>3.1.0-SNAPSHOT</opencloud.bpm-client.version>
-        <opencloud.task-client.version>3.1.0-SNAPSHOT</opencloud.task-client.version>
+        <opencloud.common.version>12.1.0-SNAPSHOT</opencloud.common.version>
+        <opencloud.base-client.version>12.1.0-SNAPSHOT</opencloud.base-client.version>
+        <opencloud.msg-client.version>12.1.0-SNAPSHOT</opencloud.msg-client.version>
+        <opencloud.bpm-client.version>12.1.0-SNAPSHOT</opencloud.bpm-client.version>
+        <opencloud.task-client.version>12.1.0-SNAPSHOT</opencloud.task-client.version>
 
         <!--镜像仓库-->
         <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
@@ -193,7 +193,7 @@
 <!--    <dependencyManagement>-->
 <!--        <dependencies>-->
 <!--            <dependency>-->
-<!--                <groupId>com.opencloud</groupId>-->
+<!--                <groupId>com.rapidark.cloud</groupId>-->
 <!--                <artifactId>rapidark-starter-dependencies</artifactId>-->
 <!--                <version>${opencloud.common.version}</version>-->
 <!--                <type>pom</type>-->

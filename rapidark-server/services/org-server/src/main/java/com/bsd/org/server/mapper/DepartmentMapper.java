@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.bsd.org.server.model.entity.Department;
 import com.bsd.org.server.model.vo.DepartmentVO;
-import com.opencloud.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.common.mybatis.base.mapper.SuperMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

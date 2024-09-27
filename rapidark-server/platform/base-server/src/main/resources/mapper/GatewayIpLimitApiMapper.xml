@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.opencloud.base.server.mapper.GatewayIpLimitApisMapper">
-    <resultMap id="BaseResultMap" type="com.opencloud.base.client.model.entity.GatewayIpLimitApi">
+<mapper namespace="com.rapidark.cloud.base.server.mapper.GatewayIpLimitApisMapper">
+    <resultMap id="BaseResultMap" type="com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi">
         <!--
           WARNING - @mbg.generated
         -->
@@ -9,7 +9,7 @@
         <result column="api_id" jdbcType="BIGINT" property="apiId"/>
     </resultMap>
 
-    <resultMap id="ApiResultMap" type="com.opencloud.base.client.model.entity.BaseApi">
+    <resultMap id="ApiResultMap" type="com.rapidark.cloud.base.client.model.entity.BaseApi">
         <!--
           WARNING - @mbg.generated
         -->
@@ -28,7 +28,7 @@
         <result column="auth_type" property="authType" jdbcType="INTEGER"/>
     </resultMap>
 
-    <resultMap id="IpLimitApi" extends="ApiResultMap" type="com.opencloud.base.client.model.IpLimitApi">
+    <resultMap id="IpLimitApi" extends="ApiResultMap" type="com.rapidark.cloud.base.client.model.IpLimitApi">
         <!--
           WARNING - @mbg.generated
         -->

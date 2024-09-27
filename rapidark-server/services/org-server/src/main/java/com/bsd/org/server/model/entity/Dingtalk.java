@@ -3,7 +3,7 @@ package com.bsd.org.server.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.opencloud.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.common.mybatis.base.entity.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

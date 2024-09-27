@@ -1,6 +1,6 @@
 package com.bsd.payment.server.util;
 
-import com.opencloud.common.utils.RandomHelper;
+import com.rapidark.common.utils.RandomHelper;
 
 import java.util.concurrent.atomic.AtomicLong;
 

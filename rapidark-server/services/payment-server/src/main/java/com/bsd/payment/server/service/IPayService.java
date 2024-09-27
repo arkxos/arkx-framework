@@ -2,7 +2,7 @@ package com.bsd.payment.server.service;
 
 import com.bsd.payment.server.model.dto.TransResultDTO;
 import com.bsd.payment.server.model.entity.TransOrder;
-import com.opencloud.common.model.ResultBody;
+import com.rapidark.common.model.ResultBody;
 
 /**
  * 支付通道服务接口

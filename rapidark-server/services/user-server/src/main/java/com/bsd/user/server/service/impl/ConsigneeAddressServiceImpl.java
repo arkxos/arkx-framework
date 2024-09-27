@@ -8,9 +8,9 @@ import com.bsd.user.server.model.entity.ConsigneeAddress;
 import com.bsd.user.server.model.entity.User;
 import com.bsd.user.server.service.ConsigneeAddressService;
 import com.bsd.user.server.service.UserService;
-import com.opencloud.common.exception.OpenAlertException;
-import com.opencloud.common.mybatis.base.service.impl.BaseServiceImpl;
-import com.opencloud.common.utils.StringUtils;
+import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

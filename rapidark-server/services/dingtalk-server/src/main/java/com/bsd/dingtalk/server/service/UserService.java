@@ -1,7 +1,7 @@
 package com.bsd.dingtalk.server.service;
 
 import com.bsd.dingtalk.server.model.entity.User;
-import com.opencloud.common.mybatis.base.service.IBaseService;
+import com.rapidark.common.mybatis.base.service.IBaseService;
 
 /**
  * 人员信息表（钉钉） 服务类

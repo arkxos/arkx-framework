@@ -2,8 +2,8 @@ package com.bsd.file.server.controller;
 
 import com.bsd.file.server.service.FastDFSService;
 import com.google.common.collect.Maps;
-import com.opencloud.common.exception.OpenAlertException;
-import com.opencloud.common.model.ResultBody;
+import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

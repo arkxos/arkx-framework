@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bsd.payment.server.util.RegexUtils;
 import com.github.binarywang.wxpay.config.WxPayConfig;
-import com.opencloud.common.utils.StringUtils;
+import com.rapidark.common.utils.StringUtils;
 
 import java.io.File;
 

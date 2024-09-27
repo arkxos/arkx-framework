@@ -19,7 +19,7 @@ import cn.hutool.extra.template.Template;
 import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
-import com.opencloud.common.utils.RedisUtils;
+import com.rapidark.common.utils.RedisUtils;
 import me.zhengjie.config.thread.ThreadPoolExecutorUtil;
 import me.zhengjie.domain.vo.EmailVo;
 import me.zhengjie.modules.quartz.domain.QuartzJob;

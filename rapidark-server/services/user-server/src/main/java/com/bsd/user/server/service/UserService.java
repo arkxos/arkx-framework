@@ -3,7 +3,7 @@ package com.bsd.user.server.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bsd.user.server.model.UserPo;
 import com.bsd.user.server.model.entity.User;
-import com.opencloud.common.mybatis.base.service.IBaseService;
+import com.rapidark.common.mybatis.base.service.IBaseService;
 
 import java.util.List;
 import java.util.Map;

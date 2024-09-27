@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import com.opencloud.common.model.ResultBody;
+import ResultBody;
 
 /**
 * @website http://rapidark.com

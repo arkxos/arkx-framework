@@ -9,9 +9,9 @@ import com.bsd.comment.server.mapper.CommentReplyMapper;
 import com.bsd.comment.server.model.entity.Comment;
 import com.bsd.comment.server.model.entity.CommentReply;
 import com.bsd.comment.server.service.CommentReplyService;
-import com.opencloud.common.exception.OpenAlertException;
-import com.opencloud.common.mybatis.base.service.impl.BaseServiceImpl;
-import com.opencloud.common.security.OpenHelper;
+import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.security.OpenHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

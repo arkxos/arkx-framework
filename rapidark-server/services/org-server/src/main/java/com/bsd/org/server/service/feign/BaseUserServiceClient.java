@@ -1,7 +1,7 @@
 package com.bsd.org.server.service.feign;
 
-import com.opencloud.base.client.constants.BaseConstants;
-import com.opencloud.base.client.service.IBaseUserServiceClient;
+import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.cloud.base.client.service.IBaseUserServiceClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 

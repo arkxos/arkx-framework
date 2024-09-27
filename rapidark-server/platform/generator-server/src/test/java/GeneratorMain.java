@@ -1,5 +1,5 @@
-import com.opencloud.generator.server.mybatisplus.service.GenerateConfig;
-import com.opencloud.generator.server.mybatisplus.service.GeneratorService;
+import com.rapidark.cloud.generator.server.mybatisplus.service.GenerateConfig;
+import com.rapidark.cloud.generator.server.mybatisplus.service.GeneratorService;
 
 import java.io.File;
 
@@ -12,7 +12,7 @@ public class GeneratorMain {
         config.setJdbcPassword("root");
         config.setJdbcDriver("com.mysql.cj.jdbc.Driver");
         config.setAuthor("liuyadu");
-        config.setParentPackage("com.opencloud");
+        config.setParentPackage("com.rapidark.cloud");
         config.setModuleName("base");
         config.setIncludeTables(new String[]{"base_tentant"});
         config.setTablePrefix(new String[]{"base_"});

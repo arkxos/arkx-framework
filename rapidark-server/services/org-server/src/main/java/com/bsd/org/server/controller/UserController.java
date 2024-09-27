@@ -10,10 +10,10 @@ import com.bsd.org.server.model.vo.UserDetailVO;
 import com.bsd.org.server.service.CompanyService;
 import com.bsd.org.server.service.UserService;
 import com.bsd.org.server.service.feign.BaseUserServiceClient;
-import com.opencloud.common.exception.OpenAlertException;
-import com.opencloud.common.model.ResultBody;
-import com.opencloud.common.security.OpenHelper;
-import com.opencloud.common.security.OpenUserDetails;
+import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.security.OpenHelper;
+import com.rapidark.common.security.OpenUserDetails;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -105,7 +105,7 @@ public class UserController {
      * 根据部门ID获取用户ID列表
      *
      * @param departmentId
-     * @return com.opencloud.common.model.ResultBody
+     * @return com.rapidark.cloud.common.model.ResultBody
      * @author zhangzz
      * @date 2019/12/9
      */

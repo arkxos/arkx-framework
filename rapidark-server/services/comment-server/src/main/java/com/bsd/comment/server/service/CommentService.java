@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bsd.comment.server.enums.CommentStatusEnum;
 import com.bsd.comment.server.model.entity.Comment;
 import com.bsd.comment.server.model.query.CommentQuery;
-import com.opencloud.common.mybatis.base.service.IBaseService;
+import com.rapidark.common.mybatis.base.service.IBaseService;
 
 import java.util.List;
 

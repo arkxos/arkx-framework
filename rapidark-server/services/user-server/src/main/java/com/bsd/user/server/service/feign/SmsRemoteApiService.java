@@ -1,7 +1,7 @@
 package com.bsd.user.server.service.feign;
 
-import com.opencloud.msg.client.constatns.MsgConstants;
-import com.opencloud.msg.client.service.ISmsClient;
+import com.rapidark.cloud.msg.client.constatns.MsgConstants;
+import com.rapidark.cloud.msg.client.service.ISmsClient;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**

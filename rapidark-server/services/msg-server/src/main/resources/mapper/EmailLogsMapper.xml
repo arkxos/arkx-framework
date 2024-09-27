@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.opencloud.msg.server.mapper.EmailLogsMapper">
+<mapper namespace="com.rapidark.cloud.msg.server.mapper.EmailLogsMapper">
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.opencloud.msg.client.model.entity.EmailLogs">
+    <resultMap id="BaseResultMap" type="com.rapidark.cloud.msg.client.model.entity.EmailLogs">
         <id column="log_id" property="logId"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
@@ -34,7 +34,7 @@
     <sql id="join"></sql>
 
     <!-- 自定义查询单个实体 -->
-    <select id="getEntityMap" resultType="com.opencloud.common.mybatis.EntityMap">
+    <select id="getEntityMap" resultType="com.rapidark.common.mybatis.EntityMap">
         SELECT * FROM
         <include refid="t_alias"/>
         <include refid="join"/>
@@ -42,7 +42,7 @@
     </select>
 
     <!-- 自定义关联查询分页 -->
-    <select id="pageList" resultType="com.opencloud.common.mybatis.EntityMap">
+    <select id="pageList" resultType="com.rapidark.common.mybatis.EntityMap">
         SELECT ${ew.select} FROM
         <include refid="t_alias"/>
         <include refid="join"/>

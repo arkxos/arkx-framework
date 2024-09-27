@@ -17,7 +17,7 @@ import com.bsd.payment.server.service.IPayService;
 import com.bsd.payment.server.util.AmountUtil;
 import com.bsd.payment.server.util.DateUtil;
 import com.bsd.payment.server.util.StrUtil;
-import com.opencloud.common.model.ResultBody;
+import com.rapidark.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

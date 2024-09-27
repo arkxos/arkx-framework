@@ -3,9 +3,9 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.opencloud</groupId>
+        <groupId>com.rapidark.cloud</groupId>
         <artifactId>platform</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
+        <version>12.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>api-spring-server</artifactId>
@@ -18,17 +18,17 @@
             <version>12.1.0.2.0</version>
         </dependency>
         <dependency>
-            <groupId>com.opencloud</groupId>
+            <groupId>com.rapidark.cloud</groupId>
             <artifactId>common-core</artifactId>
             <version>${opencloud.common.version}</version>
         </dependency>
        <!-- <dependency>
-            <groupId>com.opencloud</groupId>
+            <groupId>com.rapidark.cloud</groupId>
             <artifactId>common-starter</artifactId>
             <version>${opencloud.common.version}</version>
         </dependency>-->
         <dependency>
-            <groupId>com.opencloud</groupId>
+            <groupId>com.rapidark.cloud</groupId>
             <artifactId>base-client</artifactId>
             <version>${opencloud.base-client.version}</version>
         </dependency>

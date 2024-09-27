@@ -16,7 +16,7 @@
 package me.zhengjie.modules.security.rest;
 
 import cn.hutool.core.util.IdUtil;
-import com.opencloud.common.utils.RedisUtils;
+import com.rapidark.common.utils.RedisUtils;
 import com.rapidark.common.utils.RSAUtils;
 import com.wf.captcha.base.Captcha;
 import com.rapidark.boot.RsaProperties;

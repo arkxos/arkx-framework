@@ -2,7 +2,7 @@ package com.bsd.org.server.service;
 
 import com.bsd.org.server.model.entity.Company;
 import com.bsd.org.server.model.vo.CompanyMenuVO;
-import com.opencloud.common.mybatis.base.service.IBaseService;
+import com.rapidark.common.mybatis.base.service.IBaseService;
 
 import java.util.List;
 

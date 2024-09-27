@@ -10,9 +10,9 @@ import com.bsd.org.server.model.entity.Company;
 import com.bsd.org.server.model.entity.Dingtalk;
 import com.bsd.org.server.model.vo.DingtalkVO;
 import com.bsd.org.server.service.DingtalkService;
-import com.opencloud.common.exception.OpenAlertException;
-import com.opencloud.common.mybatis.base.service.impl.BaseServiceImpl;
-import com.opencloud.common.utils.StringUtils;
+import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

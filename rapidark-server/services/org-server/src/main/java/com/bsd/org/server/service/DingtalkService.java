@@ -3,7 +3,7 @@ package com.bsd.org.server.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bsd.org.server.model.entity.Dingtalk;
 import com.bsd.org.server.model.vo.DingtalkVO;
-import com.opencloud.common.mybatis.base.service.IBaseService;
+import com.rapidark.common.mybatis.base.service.IBaseService;
 
 /**
  * 钉钉配置信息 服务类

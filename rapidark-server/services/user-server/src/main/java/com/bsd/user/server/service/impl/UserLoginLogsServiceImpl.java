@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.bsd.user.server.mapper.UserLoginLogsMapper;
 import com.bsd.user.server.model.entity.UserLoginLogs;
 import com.bsd.user.server.service.UserLoginLogsService;
-import com.opencloud.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

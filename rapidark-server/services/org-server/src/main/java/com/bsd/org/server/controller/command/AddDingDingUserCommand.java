@@ -1,6 +1,6 @@
 package com.bsd.org.server.controller.command;
 
-import com.opencloud.base.client.service.command.AddUserCommand;
+import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

@@ -3,7 +3,7 @@ package com.bsd.payment.server.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bsd.payment.server.model.entity.PayChannel;
-import com.opencloud.common.model.PageParams;
+import com.rapidark.common.model.PageParams;
 
 import java.util.Map;
 

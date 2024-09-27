@@ -51,7 +51,7 @@
     <sql id="join"></sql>
 
     <!-- 自定义查询单个实体 -->
-    <select id="getEntityMap" resultType="com.opencloud.common.mybatis.EntityMap">
+    <select id="getEntityMap" resultType="com.rapidark.common.mybatis.EntityMap">
         SELECT * FROM
         <include refid="t_alias"/>
         <include refid="join"/>
@@ -59,7 +59,7 @@
     </select>
 
     <!-- 自定义关联查询分页 -->
-    <select id="pageList" resultType="com.opencloud.common.mybatis.EntityMap">
+    <select id="pageList" resultType="com.rapidark.common.mybatis.EntityMap">
         SELECT ${ew.select} FROM
         <include refid="t_alias"/>
         <include refid="join"/>
