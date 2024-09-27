@@ -73,7 +73,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     public boolean isOracleDataBase(){
         boolean res = false;
         EntityManagerFactory entityManagerFactory = em.getEntityManagerFactory();
-        SessionFactoryImpl sessionFactory = (SessionFactoryImpl)entityManagerFactory.unwrap(SessionFactory.class);
+        SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
         Session session = sessionFactory.openSession();
         if (session != null) {
@@ -196,9 +196,9 @@ public class GeneratorServiceImpl implements GeneratorService {
                     "\t\t\tAND col.table_name = ? \n" +
                     "\t\t) THEN 'PRI' ELSE '' END AS column_key ,\n" +
                     "\t'' as extra\n" +
-                    "\t--utc.data_length AS 最大长度,\n" +
-                    "\t--utc.data_default 默认值,\n" +
-                    "\t--UTC.table_name 表名\n" +
+//                    "\t--utc.data_length AS 最大长度,\n" +
+//                    "\t--utc.data_default 默认值,\n" +
+//                    "\t--UTC.table_name 表名\n" +
                     "\n" +
                     "FROM\n" +
                     "\tuser_tab_columns utc,\n" +
