@@ -7,6 +7,7 @@ package com.rapidark.common.constants;
  */
 
 public enum ErrorCode {
+
     /**
      * 成功
      */
@@ -37,6 +38,7 @@ public enum ErrorCode {
     ACCESS_DENIED_UPDATING(4034, "access_denied_updating"),
     ACCESS_DENIED_DISABLED(4035, "access_denied_disabled"),
     ACCESS_DENIED_NOT_OPEN(4036, "access_denied_not_open"),
+
     /**
      * 账号错误
      */
@@ -55,13 +57,13 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED(4005, "method_not_allowed"),
     MEDIA_TYPE_NOT_ACCEPTABLE(4006, "media_type_not_acceptable"),
     TOO_MANY_REQUESTS(4029, "too_many_requests"),
+
     /**
      * 系统错误
      */
     ERROR(5000, "error"),
     GATEWAY_TIMEOUT(5004, "gateway_timeout"),
     SERVICE_UNAVAILABLE(5003, "service_unavailable");
-
 
     private int code;
     private String message;

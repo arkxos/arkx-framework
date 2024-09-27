@@ -15,7 +15,6 @@ public class OpenException extends RuntimeException {
     private int code = ErrorCode.ERROR.getCode();
 
     public OpenException() {
-
     }
 
     public OpenException(String msg) {
