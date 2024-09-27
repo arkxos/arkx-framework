@@ -34,6 +34,10 @@ public class MqAutoConfiguration {
         return queue;
     }
 
+    /**
+     * 延迟队列: 创建一个延迟队列, 此队列中的消息没有消费者去消费, 到了过期时间之后变成死信, 变死信之后会根据
+     *           绑定的DLX和routingKey重新发送到指定交换机再到指定队列。
+     */
     @Bean
     public Queue monthBillItemQueue() {
         Queue queue = new Queue(QueueConstants.QUEUE_Lct_Bill_Item_Changed);
