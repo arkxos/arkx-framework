@@ -86,6 +86,10 @@ public class PreResponseFilter implements WebFilter {
                         }
 
                         response.getHeaders().setContentLength(content.length);
+
+                        // 保存日志
+                        accessLogService.sendLog(exchange, null);
+
                         return bufferFactory.wrap(content);
                     }));
                 }
@@ -94,8 +98,6 @@ public class PreResponseFilter implements WebFilter {
             }
         };
 
-        // 保存日志
-        accessLogService.sendLog(exchange, null);
         return chain.filter(exchange.mutate().response(decoratedResponse).build());
     }
 
@@ -129,6 +131,9 @@ public class PreResponseFilter implements WebFilter {
             }
 
             bodyStr = bodyObject.toJSONString();
+
+            gatewayContext.setResponseBody(bodyStr);
+
             if (isGzip) {
                 content = StringHelper.compress(bodyStr, StandardCharsets.UTF_8);
             } else {

@@ -11,6 +11,9 @@
         <result column="service_id" jdbcType="VARCHAR" property="serviceId"/>
         <result column="ip" jdbcType="VARCHAR" property="ip"/>
         <result column="http_status" jdbcType="VARCHAR" property="httpStatus"/>
+        <result column="biz_status" jdbcType="BIGINT" property="bizStatus"/>
+        <result column="biz_id" jdbcType="VARCHAR" property="bizId"/>
+        <result column="response_body" jdbcType="VARCHAR" property="responseBody"/>
         <result column="request_time" jdbcType="TIMESTAMP" property="requestTime"/>
         <result column="response_time" jdbcType="TIMESTAMP" property="responseTime"/>
         <result column="use_time" jdbcType="BIGINT" property="useTime"/>

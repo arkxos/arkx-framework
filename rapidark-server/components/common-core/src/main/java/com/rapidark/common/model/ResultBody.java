@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import com.rapidark.common.constants.ErrorCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -14,15 +16,21 @@ import java.util.ResourceBundle;
 /**
  * @author admin
  */
+@Getter
+@Setter
 @ApiModel(value = "响应结果")
 public class ResultBody<T> implements Serializable {
     private static final long serialVersionUID = -6190689122701100762L;
+
+    @ApiModelProperty(value = "业务编码")
+    private String bizId;
 
     /**
      * 响应编码
      */
     @ApiModelProperty(value = "响应编码:0-请求处理成功")
     private int code = 0;
+
     /**
      * 提示消息
      */
@@ -105,6 +113,11 @@ public class ResultBody<T> implements Serializable {
 
     public static ResultBody failed() {
         return new ResultBody().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage());
+    }
+
+    public ResultBody bizId(String bizId) {
+        this.bizId = bizId;
+        return this;
     }
 
     public ResultBody code(int code) {

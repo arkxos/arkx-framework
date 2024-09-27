@@ -1,11 +1,14 @@
 package com.rapidark.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.*;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +17,15 @@ import java.util.Map;
  * @author liuyadu
  */
 public class BeanConvertUtils {
+
+    static {
+        ConvertUtils.register(new LongConverter(null), Long.class);
+        ConvertUtils.register(new ShortConverter(null), Short.class);
+        ConvertUtils.register(new IntegerConverter(null), Integer.class);
+        ConvertUtils.register(new DoubleConverter(null), Double.class);
+        ConvertUtils.register(new BigDecimalConverter(null), BigDecimal.class);
+    }
+
     /**
      * 方法说明：将bean转化为另一种bean实体
      *  
@@ -87,6 +99,7 @@ public class BeanConvertUtils {
      */
     public static <T> T mapToObject(Map<String, Object> map, Class<T> t) {
         try {
+
             T instance = t.newInstance();
             org.apache.commons.beanutils.BeanUtils.populate(instance, map);
             return instance;

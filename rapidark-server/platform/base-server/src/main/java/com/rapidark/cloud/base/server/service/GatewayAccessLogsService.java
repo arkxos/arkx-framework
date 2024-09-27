@@ -34,6 +34,8 @@ public class GatewayAccessLogsService {
         GatewayAccessLogs query = pageParams.mapToObject(GatewayAccessLogs.class);
         QueryWrapper<GatewayAccessLogs> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
+                .eq(ObjectUtils.isNotEmpty(query.getBizId()), GatewayAccessLogs::getBizId, query.getBizId())
+                .eq(ObjectUtils.isNotEmpty(query.getBizStatus()), GatewayAccessLogs::getBizStatus, query.getBizStatus())
                 .like(ObjectUtils.isNotEmpty(query.getPath()), GatewayAccessLogs::getPath, query.getPath())
                 .eq(ObjectUtils.isNotEmpty(query.getIp()), GatewayAccessLogs::getIp, query.getIp())
                 .eq(ObjectUtils.isNotEmpty(query.getServiceId()), GatewayAccessLogs::getServiceId, query.getServiceId());

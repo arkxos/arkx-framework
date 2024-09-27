@@ -12,8 +12,8 @@ export const refreshGateway = () => {
   })
 }
 
-export const getAccessLogs = ({ page, limit, path, ip, serviceId }) => {
-  const params = { page: page, limit: limit, path: path, ip: ip, serviceId: serviceId }
+export const getAccessLogs = ({ page, limit, bizId, bizStatus, path, ip, serviceId }) => {
+  const params = { page: page, limit: limit, bizId: bizId, bizStatus: bizStatus, path: path, ip: ip, serviceId: serviceId }
   return request({
     url: 'base/gateway/access/logs',
     params,

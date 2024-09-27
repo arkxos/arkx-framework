@@ -21,6 +21,7 @@ import java.util.Map;
 @Configuration
 @Slf4j
 public class AccessLogsHandler {
+
     @Autowired
     private GatewayLogsMapper gatewayLogsMapper;
 

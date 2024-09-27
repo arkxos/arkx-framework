@@ -5,6 +5,12 @@
             :model="pageInfo"
             inline
             :label-width="80">
+        <FormItem label="业务状态" prop="bizStatus">
+          <Input type="text" v-model="pageInfo.bizStatus" placeholder="请输入关键字"/>
+        </FormItem>
+        <FormItem label="业务编码" prop="bizId">
+          <Input type="text" v-model="pageInfo.bizId" placeholder="请输入关键字"/>
+        </FormItem>
         <FormItem label="请求路径" prop="path">
           <Input type="text" v-model="pageInfo.path" placeholder="请输入关键字"/>
         </FormItem>
@@ -25,6 +31,11 @@
           <Badge v-if="row.httpStatus==='200'" status="success"/>
           <Badge v-else status="error"/>
           <span>{{row.httpStatus}}</span>
+        </template>
+        <template slot="bizStatus" slot-scope="{ row }">
+          <Badge v-if="row.bizStatus===0" status="success"/>
+          <Badge v-else status="error"/>
+          <span>{{row.bizStatus}}</span>
         </template>
         <template slot="detail" slot-scope="{ row }">
           <a @click="openDrawer(row)">详情</a>
@@ -76,6 +87,8 @@ export default {
         total: 0,
         page: 1,
         limit: 10,
+        bizId: '',
+        bizStatus: '',
         path: '',
         ip: '',
         serviceId: ''
@@ -90,6 +103,36 @@ export default {
           title: '请求地址',
           key: 'path',
           width: 220
+        },
+        {
+          title: '响应状态',
+          key: 'httpStatus',
+          slot: 'httpStatus',
+          width: 100
+        },
+        {
+          title: '业务状态',
+          key: 'bizStatus',
+          slot: 'bizStatus',
+          width: 100
+        },
+        {
+          title: '业务编号',
+          key: 'bizId',
+          width: 200
+        },
+        {
+          title: '耗时',
+          key: 'useTime',
+          render: (h, params) => {
+            return h('div', (params.row.useTime ? params.row.useTime : 0) + ' ms')
+          },
+          width: 100
+        },
+        {
+          title: '请求时间',
+          key: 'requestTime',
+          width: 200
         },
         {
           title: '请求方式',
@@ -161,25 +204,7 @@ export default {
           key: 'serviceId',
           width: 200
         },
-        {
-          title: '响应状态',
-          key: 'httpStatus',
-          slot: 'httpStatus',
-          width: 100
-        },
-        {
-          title: '耗时',
-          key: 'useTime',
-          render: (h, params) => {
-            return h('div', (params.row.useTime ? params.row.useTime : 0) + ' ms')
-          },
-          width: 100
-        },
-        {
-          title: '请求时间',
-          key: 'requestTime',
-          width: 200
-        },
+
         {
           title: '详情',
           slot: 'detail',

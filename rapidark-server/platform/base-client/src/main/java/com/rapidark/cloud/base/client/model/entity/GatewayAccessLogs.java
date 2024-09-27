@@ -3,6 +3,8 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +14,8 @@ import java.util.Date;
  *
  * @author liuyadu
  */
+@Getter
+@Setter
 @TableName("gateway_access_logs")
 public class GatewayAccessLogs implements Serializable {
 
@@ -42,6 +46,12 @@ public class GatewayAccessLogs implements Serializable {
      * 响应状态
      */
     private String httpStatus;
+
+    private String bizId;
+
+    private Integer bizStatus;
+
+    private String responseBody;
 
     /**
      * 请求时间

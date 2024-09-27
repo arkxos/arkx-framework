@@ -14,7 +14,9 @@ import org.springframework.util.MultiValueMap;
 @Setter
 @ToString
 public class GatewayContext {
+
     public static final String CACHE_GATEWAY_CONTEXT = "cacheGatewayContext";
+
     /**
      * cache request path
      */
@@ -26,7 +28,7 @@ public class GatewayContext {
     /**
      * cache Response Body
      */
-    private Object responseBody;
+    private String responseBody;
     /**
      * request headers
      */
@@ -47,4 +49,5 @@ public class GatewayContext {
      * cache encrypt secret
      */
     private String encryptSecret;
+
 }

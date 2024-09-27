@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.server.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
@@ -18,6 +19,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -75,10 +77,35 @@ public class AccessLogService {
             String requestPath = request.getURI().getPath();
             String method = request.getMethodValue();
             Map<String, String> headers = request.getHeaders().toSingleValueMap();
-            Map data = Maps.newHashMap();
+            Map<String, String> data = Maps.newHashMap();
             GatewayContext gatewayContext = exchange.getAttribute(GatewayContext.CACHE_GATEWAY_CONTEXT);
+            String responseBody = "";
+            String bizId = "";
+            Integer bizStatus = -1;
+            String error = null;
+            JSONObject responseBodyJsonObject = null;
             if (gatewayContext != null) {
                 data = gatewayContext.getAllRequestData().toSingleValueMap();
+                responseBody = gatewayContext.getResponseBody();
+                responseBodyJsonObject = JSON.parseObject(responseBody);
+                bizId = responseBodyJsonObject.getString("bizId");
+                if(StringUtils.isEmpty(bizId)) {
+                    bizId = data.get("bizId");
+                }
+                if(StringUtils.isEmpty(bizId)) {
+                    bizId = data.get("handlingId");
+                }
+                if(StringUtils.isEmpty(bizId)) {
+                    bizId = data.get("id");
+                }
+                if(StringUtils.isEmpty(bizId)) {
+                    bizId = responseBodyJsonObject.getString("id");
+                }
+                bizStatus = responseBodyJsonObject.getInteger("code");
+
+                if (bizStatus != 0) {
+                    error = responseBodyJsonObject.getString("message");
+                }
             }
             String serviceId = null;
             if (route != null) {
@@ -87,7 +114,7 @@ public class AccessLogService {
             String ip = ReactiveWebUtils.getRemoteAddress(exchange);
             String userAgent = headers.get(HttpHeaders.USER_AGENT);
             Object requestTime = exchange.getAttribute("requestTime");
-            String error = null;
+
             if (ex != null) {
                 error = ex.getMessage();
             }
@@ -99,6 +126,8 @@ public class AccessLogService {
             map.put("serviceId", serviceId == null ? defaultServiceId : serviceId);
             map.put("httpStatus", httpStatus);
             map.put("headers", JSONObject.toJSON(headers));
+            map.put("bizId", bizId);
+            map.put("bizStatus", bizStatus);
             map.put("path", requestPath);
             map.put("params", JSONObject.toJSON(data));
             map.put("ip", ip);
@@ -106,6 +135,10 @@ public class AccessLogService {
             map.put("userAgent", userAgent);
             map.put("responseTime", new Date());
             map.put("error", error);
+            if (bizStatus != 0) {
+                map.put("responseBody", responseBody);
+            }
+
             Mono<Authentication> authenticationMono = exchange.getPrincipal();
             Mono<OpenUserDetails> authentication = authenticationMono
                     .filter(Authentication::isAuthenticated)
