@@ -100,7 +100,15 @@ module.exports = {
         pathRewrite: {
           '^/actuator': 'actuator'
         }
+      },
+      '/ltc': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ltc': 'ltc'
+        }
       }
+
 
     },
     after: require('./mock'),
