@@ -37,6 +37,9 @@ export const addHttpJob = (data) => {
   return request({
     url: 'task/job/add/http',
     data,
+    headers: {
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
+    },
     method: 'post'
   })
 }

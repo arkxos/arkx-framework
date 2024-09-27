@@ -101,11 +101,18 @@ module.exports = {
           '^/actuator': 'actuator'
         }
       },
+      '/task': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+            '^/task': 'task'
+        }
+      },
       '/ltc': {
         target: process.env.VUE_APP_BASE_API,
         changeOrigin: true,
         pathRewrite: {
-          '^/ltc': 'ltc'
+            '^/ltc': 'ltc'
         }
       }
 

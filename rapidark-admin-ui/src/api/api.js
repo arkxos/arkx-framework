@@ -94,6 +94,9 @@ export const updateApi = ({ apiId, apiCode, apiName, apiCategory, serviceId, pat
   return request({
     url: 'base/api/update',
     data,
+    headers: {
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
+    },
     method: 'post'
   })
 }
