@@ -18,8 +18,9 @@ package me.zhengjie.base;
 import java.util.List;
 
 /**
- * @author Zheng Jie
- * @date 2018-11-23
+ * @author darkness
+ * @date 2021/7/16 17:42
+ * @version 1.0
  */
 public interface BaseMapper<D, E> {
 

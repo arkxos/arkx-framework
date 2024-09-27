@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 import com.rapidark.common.constants.ErrorCode;
+import com.rapidark.common.utils.StringUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -130,6 +131,9 @@ public class ResultBody<T> implements Serializable {
             this.message = i18n(ErrorCode.getResultEnum(this.code).getMessage(), message) + "("+message+")";
         } else {
             this.message = i18n(ErrorCode.getResultEnum(this.code).getMessage(), message);
+        }
+        if (!StringUtils.isEmpty(message)) {
+            this.message = message;
         }
         return this;
     }
