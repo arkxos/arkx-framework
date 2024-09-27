@@ -16,8 +16,12 @@
           <Badge v-else status="error" text="禁用"/>
         </template>
         <template slot="routeType" slot-scope="{ row }">
-          <span v-if="row.routeType==='service'"><Tag color="green">负载均衡</Tag>{{row.serviceId}}</span>
-          <span v-else-if="row.routeType==='url'"><Tag color="blue">反向代理</Tag>{{row.url}}</span>
+          <span v-if="row.routeType==='service'"><Tag color="green">负载均衡</Tag></span>
+          <span v-else-if="row.routeType==='url'"><Tag color="blue">反向代理</Tag></span>
+        </template>
+        <template slot="routeTarget" slot-scope="{ row }">
+          <span v-if="row.routeType==='service'">{{row.serviceId}}</span>
+          <span v-else-if="row.routeType==='url'">{{row.url}}</span>
         </template>
 
         <template slot="action" slot-scope="{ row }">
@@ -144,23 +148,27 @@ export default {
         {
           title: '路由名称',
           key: 'routeDesc',
-          width: 300
+          width: 200
         },
         {
           title: '路由标识',
           key: 'routeName',
-          width: 300
-
+          width: 150
         },
         {
           title: '路由前缀',
           key: 'path',
-          width: 200
+          width: 100
         },
         {
           title: '路由方式',
           slot: 'routeType',
-          width: 300
+          width: 120
+        },
+        {
+          title: '路由目标',
+          slot: 'routeTarget',
+          width: 220
         },
         {
           title: '忽略前缀',
@@ -187,6 +195,7 @@ export default {
   },
   methods: {
     handleModal (data) {
+      console.log('handle', data)
       if (data) {
         this.modalTitle = '编辑路由'
         this.formItem = Object.assign({}, this.formItem, data)
