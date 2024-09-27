@@ -14,11 +14,13 @@ import java.util.Date;
 
 /**
  * 请求前缀过滤器,增加请求时间
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:34
+ * @version 1.0
  */
 @Slf4j
 public class PreRequestFilter implements WebFilter {
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         // 添加自定义请求头
@@ -32,4 +34,5 @@ public class PreRequestFilter implements WebFilter {
         build.getAttributes().put("requestTime", new Date());
         return chain.filter(build);
     }
+
 }

@@ -6,9 +6,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 
 /**
- * @author: liuyadu
- * @date: 2018/10/24 16:49
- * @description:
+ *
+ * @author darkness
+ * @date 2022/5/14 17:38
+ * @version 1.0
  */
 @Component
 @FeignClient(value = BaseConstants.BASE_SERVER)

@@ -19,11 +19,13 @@ import java.nio.charset.Charset;
 
 /**
  * 网关权限异常处理,记录日志
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:28
+ * @version 1.0
  */
 @Slf4j
 public class JsonAccessDeniedHandler implements ServerAccessDeniedHandler {
+
     private AccessLogService accessLogService;
 
     public JsonAccessDeniedHandler(AccessLogService accessLogService) {

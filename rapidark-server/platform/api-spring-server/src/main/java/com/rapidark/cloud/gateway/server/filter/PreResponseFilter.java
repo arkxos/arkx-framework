@@ -30,11 +30,13 @@ import java.util.Set;
 
 /**
  * 响应前缀过滤器,增加访问日志及响应加密
- *
- * @author liujianhong
+ * @author darkness
+ * @date 2022/5/14 17:35
+ * @version 1.0
  */
 @Slf4j
 public class PreResponseFilter implements WebFilter {
+
     private AccessLogService accessLogService;
 
     private static final AntPathMatcher pathMatch = new AntPathMatcher();
@@ -103,8 +105,6 @@ public class PreResponseFilter implements WebFilter {
 
     /**
      * ResponseBody重装 & 加密
-     *
-     * @author liujianhong
      */
     private byte[] repackageBody(byte[] content, GatewayContext gatewayContext, HttpHeaders headers) {
         try {
@@ -148,8 +148,6 @@ public class PreResponseFilter implements WebFilter {
 
     /**
      * 判断是否需要写入访问日志
-     *
-     * @author liujianhong
      */
     protected boolean notAccessLog(String requestPath) {
         for (String path : accessLogIgnores) {

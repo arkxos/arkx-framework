@@ -57,8 +57,9 @@ import java.util.Set;
  * SpringCloud Gateway 记录缓存请求Body和Form表单,请求参数解密
  * GatewayContext gatewayContext = exchange.getAttribute(GatewayContext.CACHE_GATEWAY_CONTEXT);
  * https://github.com/chenggangpro/spring-cloud-gateway-plugin
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:33
+ * @version 1.0
  */
 @Slf4j
 @AllArgsConstructor
@@ -301,8 +302,6 @@ public class GatewayContextFilter implements WebFilter, Ordered {
 
     /**
      * FormData 解密
-     *
-     * @author liujianhong
      */
     private MultiValueMap<String, String> decryptFormData(MultiValueMap<String, String> fromData, GatewayContext gatewayContext) {
         if (gatewayContext.getEncryptType() != null && gatewayContext.getEncryptSecret() != null) {

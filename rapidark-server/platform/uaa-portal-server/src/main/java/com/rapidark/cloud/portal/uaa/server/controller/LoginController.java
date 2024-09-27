@@ -78,7 +78,6 @@ public class LoginController {
         return ResultBody.ok().data(result);
     }
 
-
     /**
      * 退出移除令牌
      *

@@ -6,13 +6,13 @@ import java.util.Set;
 
 /**
  * 网关属性配置类
- *
- * @author: liuyadu
- * @date: 2018/11/23 14:40
- * @description:
+ * @author darkness
+ * @date 2022/5/14 17:23
+ * @version 1.0
  */
 @ConfigurationProperties(prefix = "opencloud.api")
 public class ApiProperties {
+
     /**
      * 是否开启签名验证
      */

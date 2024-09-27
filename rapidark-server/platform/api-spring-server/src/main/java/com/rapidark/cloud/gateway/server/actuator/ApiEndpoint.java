@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 自定义网关监控端点
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:23
+ * @version 1.0
  */
-@RestControllerEndpoint(
-        id = "open"
-)
+@RestControllerEndpoint(id = "open")
 public class ApiEndpoint extends AbstractBusEndpoint {
 
     public ApiEndpoint(ApplicationEventPublisher context, String appId, Destination.Factory destinationFactory) {
@@ -34,4 +33,5 @@ public class ApiEndpoint extends AbstractBusEndpoint {
         this.publish(new RemoteRefreshRouteEvent(this, this.getInstanceId(), destination));
         return ResultBody.ok();
     }
+
 }

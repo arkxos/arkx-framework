@@ -18,11 +18,13 @@ import java.nio.charset.Charset;
 
 /**
  * 请求解密异常处理,记录日志
- *
- * @author liujianhong
+ * @author darkness
+ * @date 2022/5/14 17:31
+ * @version 1.0
  */
 @Slf4j
 public class RequestDecryptionExceptionHandler implements CryptoExceptionHandler {
+
     private AccessLogService accessLogService;
 
     public RequestDecryptionExceptionHandler(AccessLogService accessLogService) {

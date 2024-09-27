@@ -16,11 +16,13 @@ import java.util.regex.Pattern;
 
 /**
  * 转发路由前置过滤器
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:36
+ * @version 1.0
  */
 @Slf4j
 public class RouteToUrlFilter implements GlobalFilter, Ordered {
+
     static final Pattern schemePattern = Pattern.compile("[a-zA-Z]([a-zA-Z]|\\d|\\+|\\.|-)*:.*");
 
     static boolean hasAnotherScheme(URI uri) {

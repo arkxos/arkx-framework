@@ -13,12 +13,16 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 
 /**
- * @author liujianhong
+ *
+ * @author darkness
+ * @date 2022/5/14 17:26
+ * @version 1.0
  */
 @Slf4j
 @Configuration
 @AllArgsConstructor
 public class RouterFunctionConfiguration {
+
     private final SwaggerResourceHandler swaggerResourceHandler;
     private final SwaggerSecurityHandler swaggerSecurityHandler;
     private final SwaggerUiHandler swaggerUiHandler;

@@ -6,9 +6,10 @@ import org.springframework.web.server.ServerWebExchange;
 import java.util.Map;
 
 /**
- * @author: liuyadu
- * @date: 2019/5/17 17:37
- * @description:
+ *
+ * @author darkness
+ * @date 2022/5/14 17:39
+ * @version 1.0
  */
 public class ReactiveWebUtils {
     /**

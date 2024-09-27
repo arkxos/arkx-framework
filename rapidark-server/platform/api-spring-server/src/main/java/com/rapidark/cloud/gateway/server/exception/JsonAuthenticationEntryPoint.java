@@ -19,11 +19,13 @@ import java.nio.charset.Charset;
 
 /**
  * 网关认证异常处理,记录日志
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:30
+ * @version 1.0
  */
 @Slf4j
 public class JsonAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
+
     private AccessLogService accessLogService;
 
     public JsonAuthenticationEntryPoint(AccessLogService accessLogService) {

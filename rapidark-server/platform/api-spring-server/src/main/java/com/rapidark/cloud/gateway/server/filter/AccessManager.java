@@ -30,8 +30,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 访问权限控制管理类
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:32
+ * @version 1.0
  */
 @Slf4j
 @Component

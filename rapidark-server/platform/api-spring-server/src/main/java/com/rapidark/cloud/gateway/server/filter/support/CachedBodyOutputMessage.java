@@ -14,10 +14,12 @@ import java.util.function.Supplier;
 
 /**
  * Implementation of {@link ClientHttpRequest} that saves body as a field.
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:32
+ * @version 1.0
  */
 public class CachedBodyOutputMessage implements ReactiveHttpOutputMessage {
+
     private final DataBufferFactory bufferFactory;
 
     private final HttpHeaders httpHeaders;

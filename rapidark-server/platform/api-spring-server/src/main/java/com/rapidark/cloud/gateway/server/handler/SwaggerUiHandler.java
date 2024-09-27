@@ -15,9 +15,16 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 import java.util.Optional;
 
+/**
+ *
+ * @author darkness
+ * @date 2022/5/14 17:37
+ * @version 1.0
+ */
 @Slf4j
 @Component
 public class SwaggerUiHandler implements HandlerFunction<ServerResponse> {
+
     @Autowired(required = false)
     private UiConfiguration uiConfiguration;
 

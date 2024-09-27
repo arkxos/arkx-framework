@@ -29,11 +29,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author liuyadu
- * @classDesc: 统一异常处理
+ * 统一异常处理
+ * @author darkness
+ * @date 2022/5/14 17:30
+ * @version 1.0
  */
 @Slf4j
 public class JsonExceptionHandler implements ErrorWebExceptionHandler {
+
     private AccessLogService accessLogService;
 
     public JsonExceptionHandler(AccessLogService accessLogService) {

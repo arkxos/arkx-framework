@@ -16,11 +16,15 @@ import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import java.util.Optional;
 
 /**
- * @author liujianhong
+ *
+ * @author darkness
+ * @date 2022/5/14 17:37
+ * @version 1.0
  */
 @Slf4j
 @Component
 public class SwaggerSecurityHandler implements HandlerFunction<ServerResponse> {
+
     @Autowired(required = false)
     private SecurityConfiguration securityConfiguration;
 

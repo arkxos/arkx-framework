@@ -26,12 +26,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 数字验签前置过滤器
- *
- * @author: liuyadu
- * @date: 2018/11/28 18:26
- * @description:
+ * @author darkness
+ * @date 2022/5/14 17:35
+ * @version 1.0
  */
 public class PreSignatureFilter implements WebFilter {
+
     private JsonSignatureDeniedHandler signatureDeniedHandler;
     private BaseAppServiceClient baseAppServiceClient;
     private ApiProperties apiProperties;

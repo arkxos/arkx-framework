@@ -18,11 +18,13 @@ import java.nio.charset.Charset;
 
 /**
  * 网关验签异常处理,记录日志
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:31
+ * @version 1.0
  */
 @Slf4j
 public class JsonSignatureDeniedHandler implements ServerSignatureDeniedHandler {
+
     private AccessLogService accessLogService;
 
     public JsonSignatureDeniedHandler(AccessLogService accessLogService) {

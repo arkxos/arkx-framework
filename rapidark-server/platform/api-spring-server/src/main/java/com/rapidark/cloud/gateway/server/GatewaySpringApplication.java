@@ -40,10 +40,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 网关服务
- * 接口调用统一入口、数字验签、身份认证、接口鉴权、接口限流、黑白名单限制
- * 开发环境下提供在线调试文档.
- *
- * @author liuyadu
+ *  接口调用统一入口、数字验签、身份认证、接口鉴权、接口限流、黑白名单限制
+ *  开发环境下提供在线调试文档.
+ * @author darkness
+ * @date 2022/5/14 17:39
+ * @version 1.0
  */
 @EnableAsync
 @EnableFeignClients
@@ -60,10 +61,10 @@ public class GatewaySpringApplication implements CommandLineRunner {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("route_oschina", r -> r.path("/oschina/**").filters(f->f.stripPrefix(1)).uri("https://oschina.net"))
-                .route("route_baidu", r -> r.path("/baidu/**").filters(f->f.stripPrefix(1)).uri("https://baidu.com"))
-                .route("route_csdn", r -> r.path("/csdn/**").filters(f->f.stripPrefix(1)).uri("https://blog.csdn.net"))
-                .route("route_zero", r -> r.path("/zero/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
+//                .route("route_oschina", r -> r.path("/oschina/**").filters(f->f.stripPrefix(1)).uri("https://oschina.net"))
+//                .route("route_baidu", r -> r.path("/baidu/**").filters(f->f.stripPrefix(1)).uri("https://baidu.com"))
+//                .route("route_csdn", r -> r.path("/csdn/**").filters(f->f.stripPrefix(1)).uri("https://blog.csdn.net"))
+//                .route("route_zero", r -> r.path("/zero/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
 //                .route("route_zerogo", r -> r.path("/zerogo/**").filters(f->f.stripPrefix(1)).uri("http://127.0.0.1:8012"))
                 .build();
     }
@@ -77,4 +78,5 @@ public class GatewaySpringApplication implements CommandLineRunner {
         jdbcRouteDefinitionLocator.refresh();
         resourceLocator.refresh();
     }
+
 }

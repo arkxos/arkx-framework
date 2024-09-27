@@ -37,13 +37,13 @@ import reactor.core.publisher.Mono;
 
 /**
  * oauth2资源服务器配置
- *
- * @author: liuyadu
- * @date: 2019/5/8 18:45
- * @description:
+ * @author darkness
+ * @date 2022/5/14 17:25
+ * @version 1.0
  */
 @Configuration
 public class ResourceServerConfiguration {
+
     private static final String MAX_AGE = "18000L";
 
     @Autowired
@@ -88,7 +88,7 @@ public class ResourceServerConfiguration {
     }
 
     @Bean
-    SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
+    SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity serverHttpSecurity) {
         // 自定义oauth2 认证, 使用redis读取token,而非jwt方式
         JsonAuthenticationEntryPoint entryPoint = new JsonAuthenticationEntryPoint(accessLogService);
         JsonAccessDeniedHandler accessDeniedHandler = new JsonAccessDeniedHandler(accessLogService);
@@ -100,13 +100,15 @@ public class ResourceServerConfiguration {
             @Override
             public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
                 ServerWebExchange exchange = webFilterExchange.getExchange();
-                SecurityContextServerWebExchange securityContextServerWebExchange = new SecurityContextServerWebExchange(exchange, ReactiveSecurityContextHolder.getContext().subscriberContext(
-                        ReactiveSecurityContextHolder.withAuthentication(authentication)
+                SecurityContextServerWebExchange securityContextServerWebExchange =
+                        new SecurityContextServerWebExchange(exchange,
+                                ReactiveSecurityContextHolder.getContext().subscriberContext(
+                                    ReactiveSecurityContextHolder.withAuthentication(authentication)
                 ));
                 return webFilterExchange.getChain().filter(securityContextServerWebExchange);
             }
         });
-        http
+        serverHttpSecurity
                 .httpBasic().disable()
                 .csrf().disable()
                 .authorizeExchange()
@@ -128,6 +130,6 @@ public class ResourceServerConfiguration {
                 .addFilterAt(oauth2, SecurityWebFiltersOrder.AUTHENTICATION)
                 // 日志过滤器
                 .addFilterAt(new PreResponseFilter(accessLogService, apiProperties), SecurityWebFiltersOrder.SECURITY_CONTEXT_SERVER_WEB_EXCHANGE);
-        return http.build();
+        return serverHttpSecurity.build();
     }
 }

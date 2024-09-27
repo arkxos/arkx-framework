@@ -13,12 +13,16 @@ import reactor.core.publisher.Mono;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
 /**
- * @author liujianhong
+ *
+ * @author darkness
+ * @date 2022/5/14 17:36
+ * @version 1.0
  */
 @Slf4j
 @Component
 @AllArgsConstructor
 public class SwaggerResourceHandler implements HandlerFunction<ServerResponse> {
+
     private final SwaggerResourcesProvider swaggerResources;
 
     /**

@@ -15,11 +15,13 @@ import reactor.core.publisher.Mono;
 
 /**
  * 访问验证前置过滤器
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:34
+ * @version 1.0
  */
 @Slf4j
 public class PreCheckFilter implements WebFilter {
+
     private static final String STATUS_0 = "0";
     private static final String STATUS_2 = "2";
 

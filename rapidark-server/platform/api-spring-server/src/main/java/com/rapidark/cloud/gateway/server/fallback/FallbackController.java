@@ -8,13 +8,16 @@ import reactor.core.publisher.Mono;
 
 /**
  * 响应超时熔断处理器
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/14 17:31
+ * @version 1.0
  */
 @RestController
 public class FallbackController {
+
     @RequestMapping("/fallback")
     public Mono<ResultBody> fallback() {
         return Mono.just(ResultBody.failed().code(ErrorCode.GATEWAY_TIMEOUT.getCode()).msg("访问超时，请稍后再试!"));
     }
+    
 }

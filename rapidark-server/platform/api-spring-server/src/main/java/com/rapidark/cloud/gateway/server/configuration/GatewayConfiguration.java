@@ -73,6 +73,7 @@ import java.util.TimeZone;
 @Configuration
 @EnableConfigurationProperties({ApiProperties.class, OpenCommonProperties.class})
 public class GatewayConfiguration {
+
     @Bean
     @ConditionalOnMissingBean(SpringContextHolder.class)
     public SpringContextHolder springContextHolder() {
