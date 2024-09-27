@@ -22,7 +22,7 @@ import java.util.Date;
 @EnableCaching
 @EnableFeignClients
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {"com.rapidark.cloud", "com.rapidark", "com.xdreamaker"})
+@SpringBootApplication(scanBasePackages = {"com.rapidark.cloud", "com.rapidark"})
 @MapperScan(basePackages = "com.rapidark.cloud.base.server.mapper")
 public class BaseApplication {
 
