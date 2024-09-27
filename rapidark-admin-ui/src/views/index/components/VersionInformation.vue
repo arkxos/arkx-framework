@@ -35,7 +35,7 @@
                 </p>
               </div>
               <template #reference>
-                  <el-button type="primary">购买</el-button>
+<!--                  <el-button type="primary">购买</el-button>-->
               </template>
             </el-popover>
             <el-popover trigger="hover" width="400">
