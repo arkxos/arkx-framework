@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import CodeMirror from 'codemirror'
-import 'codemirror/lib/codemirror.css'
-// 替换主题这里需修改名称
-import 'codemirror/theme/idea.css'
-import 'codemirror/mode/clike/clike'
+// import CodeMirror from 'codemirror'
+// import 'codemirror/lib/codemirror.css'
+// // 替换主题这里需修改名称
+// import 'codemirror/theme/idea.css'
+// import 'codemirror/mode/clike/clike'
 import { escapeStringHTML } from '@/utils/util'
 
 export default {

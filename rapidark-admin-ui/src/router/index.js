@@ -37,6 +37,150 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true,
   },
+  {
+    path: '/main',
+    component: Layout,
+    name: '主页',
+    hidden: true,
+    children:[
+      {
+        path: '/loadBalanced',
+        name: '负载均衡管理',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/LoadBalanced'),
+        meta: {
+          title: '负载均衡管理',
+          icon: 'home-2-line',
+        },
+      },
+      // {
+      //   path: '/gatewayList',
+      //   name: '网关服务管理',
+      //   hidden: true,
+      //   component: () => import('@/views/gateway-manage/GatewayList'),
+      // },
+      {
+        path: '/clientList',
+        name: '客户端管理',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/ClientList'),
+        meta: {
+          title: '客户端管理',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/createGateway',
+        name: '创建网关服务',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/CreateGateway'),
+        meta: {
+          title: '创建网关服务',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/gatewayTopology',
+        name: '网关路由拓扑结构',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/GatewayTopology'),
+        meta: {
+          title: '网关路由拓扑结构',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/ipList',
+        name: 'IP名单管理',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/IpList'),
+        meta: {
+          title: 'IP名单管理',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/createClient',
+        name: '创建客户端',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/CreateClient'),
+        meta: {
+          title: '创建客户端',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/addGatewayClient',
+        name: '添加网关客户端',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/AddGatewayClient'),
+        meta: {
+          title: '添加网关客户端',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/addClientGateway',
+        name: '添加客户端网关',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/AddClientGateway'),
+        meta: {
+          title: '添加客户端网关',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/addGroovyScript',
+        name: '添加规则组件',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/AddGroovyScript'),
+        meta: {
+          title: '添加规则组件',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/createBalanced',
+        name: '创建负载均衡',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/CreateBalanced'),
+        meta: {
+          title: '创建负载均衡',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/apiDoc',
+        name: '接口文档',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/ApiDoc'),
+        meta: {
+          title: '接口文档',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/apiCount',
+        name: '接口统计',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/ApiCount'),
+        meta: {
+          title: '接口统计',
+          icon: 'home-2-line',
+        },
+      },
+      {
+        path: '/apiMonitor',
+        name: '接口监控',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/ApiMonitor'),
+        meta: {
+          title: '首页',
+          icon: 'home-2-line',
+        },
+      }
+    ]
+  },
 ]
 
 export const asyncRoutes = [

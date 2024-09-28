@@ -76,7 +76,7 @@
                 'vab-hey-message-error'
               )
             }
-            let path = this.$route.path + '/index.vue'
+            let path = this.$route.path + '/GatewayList.vue'
             const _path = this.$route.path
             switch (_path) {
               case '/workbench':

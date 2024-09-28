@@ -259,6 +259,80 @@
           pageNo: 1,
           pageSize: 10,
         },
+        columns: [
+          {
+            type: 'selection',
+            width: 60,
+            align: 'center'
+          },
+          {
+            title: 'md5编码',
+            key: 'apiCode',
+            width: 300
+          },
+          {
+            title: '名称',
+            key: 'apiName',
+            slot: 'apiName',
+            width: 300,
+            filters: [
+              {
+                label: '禁用',
+                value: 0
+              },
+              {
+                label: '启用',
+                value: 1
+              }
+            ],
+            filterMultiple: false,
+            filterMethod (value, row) {
+              if (value === 0) {
+                return row.status === 0
+              } else if (value === 1) {
+                return row.status === 1
+              }
+            }
+          },
+          {
+            title: '地址',
+            key: 'path',
+            width: 200
+          },
+          {
+            title: '分类',
+            key: 'apiCategory',
+            width: 100
+          },
+          {
+            title: '服务名称',
+            key: 'serviceId',
+            width: 200
+          },
+          {
+            title: '接口安全',
+            key: 'isAuth',
+            slot: 'isAuth',
+            width: 300
+          },
+          {
+            title: '描述',
+            key: 'apiDesc',
+            width: 200
+          },
+          {
+            title: '最后更新时间',
+            key: 'updateTime',
+            width: 180
+          },
+          {
+            title: '操作',
+            key: '',
+            slot: 'action',
+            fixed: 'right',
+            width: 120
+          }
+        ],
       }
     },
     beforeMount() {
