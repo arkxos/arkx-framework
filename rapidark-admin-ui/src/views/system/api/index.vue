@@ -1,114 +1,167 @@
 <template>
-  <div>
-    <Card shadow>
-      <Form ref="searchForm"
-            :model="pageInfo"
-            inline
-            :label-width="80">
-        <FormItem label="请求路径" prop="path">
-          <Input type="text" v-model="pageInfo.path" placeholder="请输入关键字"/>
-        </FormItem>
-        <FormItem label="接口名称" prop="apiName">
-          <Input type="text" v-model="pageInfo.apiName" placeholder="请输入关键字"/>
-        </FormItem>
-        <FormItem label="接口编码" prop="apiCode">
-          <Input type="text" v-model="pageInfo.apiCode" placeholder="请输入关键字"/>
-        </FormItem>
-        <FormItem label="服务名" prop="serviceId">
-          <Input type="text" v-model="pageInfo.serviceId" placeholder="请输入关键字"/>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" @click="handleSearch(1)">查询</Button>&nbsp;
-          <Button @click="handleResetForm('searchForm')">重置</Button>
-        </FormItem>
-      </Form>
-      <div class="search-con search-con-top">
-        <ButtonGroup>
-          <Button :disabled="hasAuthority('systemApiEdit')?false:true" class="search-btn" type="primary"
-                  @click="handleModal()">
-            <span>添加</span>
-          </Button>
-        </ButtonGroup>
-        <Dropdown v-if="tableSelection.length>0 && hasAuthority('systemApiEdit')" @on-click="handleBatchClick"
-                  style="margin-left: 20px">
-          <Button>
+  <my-layout style="padding: 0px 0px 0px 0px;">
+    <template #west>
+      <my-panel title="网关路由" fit class="my-panel--nopadding">
+        <vue-magic-tree
+          :setting="treeSetting"
+          :nodes="serviceNodes"
+          @onClick="onClick"
+          @onCheck="onCheck"
+          @onCreated="handleCreated"
+        />
+      </my-panel>
+    </template>
+
+    <my-panel title="API列表" class="my-panel--nopadding">
+      <div class="search-con search-con-top" style="margin-bottom: 10px;">
+        <el-button-group>
+          <el-button icon="el-icon-plus" type="primary" :disabled="hasAuthority('systemApiEdit')?false:true"
+                     @click="handleModal()">
+            添加
+          </el-button>
+        </el-button-group>
+        <!--      v-if="tableSelection.length>0"  && hasAuthority('systemApiEdit')-->
+        <el-dropdown  @click="handleBatchClick"
+                      style="margin-left: 20px">
+          <el-button>
             <span>批量操作</span>
-            <Icon type="ios-arrow-down"/>
-          </Button>
-          <DropdownMenu slot="list">
-            <DropdownItem name="remove">删除</DropdownItem>
-            <Dropdown placement="right-start">
-              <DropdownItem>
-                <span>状态</span>
-                <Icon type="ios-arrow-forward"/>
-              </DropdownItem>
-              <DropdownMenu slot="list">
-                <DropdownItem name="status1">启用</DropdownItem>
-                <DropdownItem name="status2">禁用</DropdownItem>
-                <DropdownItem name="status3">维护中</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown placement="right-start">
-              <DropdownItem>
-                <span>公开访问</span>
-                <Icon type="ios-arrow-forward"/>
-              </DropdownItem>
-              <DropdownMenu slot="list">
-                <DropdownItem name="open1">允许公开访问</DropdownItem>
-                <DropdownItem name="open2">拒绝公开访问</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown placement="right-start">
-              <DropdownItem>
-                <span>身份认证</span>
-                <Icon type="ios-arrow-forward"/>
-              </DropdownItem>
-              <DropdownMenu slot="list">
-                <DropdownItem name="auth1">开启身份认证</DropdownItem>
-                <DropdownItem name="auth2">关闭身份认证</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </DropdownMenu>
-        </Dropdown>
+            <i class="el-icon-arrow-down"></i>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item name="remove">删除</el-dropdown-item>
+              <el-dropdown-item name="remove">
+                <el-dropdown placement="right-start">
+                  <el-dropdown-item>
+                    <span>状态</span>
+                    <Icon type="ios-arrow-forward"/>
+                  </el-dropdown-item>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item name="status1">启用</el-dropdown-item>
+                      <el-dropdown-item name="status2">禁用</el-dropdown-item>
+                      <el-dropdown-item name="status3">维护中</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </el-dropdown-item>
+              <el-dropdown-item name="remove">
+                <el-dropdown placement="right-start">
+                  <el-dropdown-item>
+                    <span>公开访问</span>
+                    <Icon type="ios-arrow-forward"/>
+                  </el-dropdown-item>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item name="open1">允许公开访问</el-dropdown-item>
+                      <el-dropdown-item name="open2">拒绝公开访问</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </el-dropdown-item>
+              <el-dropdown-item name="remove">
+                <el-dropdown placement="right-start">
+                  <el-dropdown-item>
+                    <span>身份认证</span>
+                    <Icon type="ios-arrow-forward"/>
+                  </el-dropdown-item>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item name="auth1">开启身份认证</el-dropdown-item>
+                      <el-dropdown-item name="auth2">关闭身份认证</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
+      <!--      <el-alert show-icon :closable="false">-->
+      <!--        <span>自动扫描<code>@EnableResourceServer</code>资源服务器接口信息,注:自动添加的接口,都是未公开的. <code>只有公开的接口,才可以通过网关访问。否则将提示:"请求地址,拒绝访问!"</code></span>-->
+      <!--      </el-alert>-->
+
+      <el-form ref="searchForm"
+               :model="pageInfo"
+               inline
+               label-width="80">
+        <el-form-item label="请求路径" prop="path">
+          <el-input type="text" v-model="pageInfo.path" placeholder="请输入关键字"/>
+        </el-form-item>
+        <el-form-item label="接口名称" prop="apiName">
+          <el-input type="text" v-model="pageInfo.apiName" placeholder="请输入关键字" style="width: 120px;"/>
+        </el-form-item>
+        <el-form-item label="接口编码" prop="apiCode">
+          <el-input type="text" v-model="pageInfo.apiCode" placeholder="请输入关键字" style="width: 120px;"/>
+        </el-form-item>
+        <el-form-item label="服务名" prop="serviceId">
+          <el-input type="text" v-model="pageInfo.serviceId" placeholder="请输入关键字" style="width: 120px;"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button icon="el-icon-search" type="primary" @click="handleSearch(1)">查询</el-button>&nbsp;
+          <el-button @click="handleResetForm('searchForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
       <Alert show-icon>
         <span>自动扫描<code>@EnableResourceServer</code>资源服务器接口信息,注:自动添加的接口,都是未公开的. <code>只有公开的接口,才可以通过网关访问。否则将提示:"请求地址,拒绝访问!"</code></span>
       </Alert>
-      <Table @on-selection-change="handleTableSelectChange" border :columns="columns" :data="data" :loading="loading">
-        <template slot="apiName" slot-scope="{ row }">
-          <span>{{row.apiName}}</span>
-        </template>
-        <template slot="isAuth" slot-scope="{ row }">
-          <Tag color="green" v-if="row.isOpen===1">允许公开访问</Tag>
-          <Tag color="red" v-else-if="row.isOpen!==1">拒绝公开访问</Tag>
-          <Tag color="green" v-if="row.isAuth===1">开启身份认证</Tag>
-          <Tag color="red" v-else-if="row.isAuth!==1">关闭身份认证</Tag>
-          <Tag v-if="row.status===1" color="green">启用</Tag>
-          <Tag v-else-if="row.status===2" color="orange">维护中</Tag>
-          <Tag v-else color="red">禁用</Tag>
-        </template>
-        <template slot="action" slot-scope="{ row }">
-          <a :disabled="hasAuthority('systemApiEdit')?false:true" @click="handleModal(row)">
-            编辑</a>&nbsp;
-          <a :disabled="hasAuthority('systemApiEdit')?false:true" @click="handleRemove(row)">
-            删除</a>
-        </template>
-      </Table>
-      <Page transfer :total="pageInfo.total" :current="pageInfo.page" :page-size="pageInfo.limit" show-elevator
-            show-sizer
-            show-total
-            @on-change="handlePage" @on-page-size-change='handlePageSize'/>
-    </Card>
-    <Modal v-model="modalVisible"
-           :title="modalTitle"
-           width="50"
-           @on-cancel="handleReset">
+      <el-table @on-selection-change="handleTableSelectChange" border :data="data" :loading="loading">
+        <el-table-column align="center" show-overflow-tooltip type="selection" width="55" />
+        <el-table-column align="center" label="序号" show-overflow-tooltip width="55">
+          <template #default="{ $index }">
+            {{ $index + 1 }}
+          </template>
+        </el-table-column>
+        <!--        <el-table-column align="center" label="md5编码" prop="apiCode" width="300" show-overflow-tooltip />-->
+        <el-table-column align="left" label="名称" prop="apiName" width="200" show-overflow-tooltip
+                         :filters="[{ text: '启用', value: 1 }, { text: '禁用', value: 0 }]"
+                         :filter-multiple="false"
+                         :filter-method="filterStatus"
+                         filter-placement="bottom-end">
+          <template slot-scope="{ row }">
+            <span>{{row.apiName}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="left" label="地址" prop="path" width="200" show-overflow-tooltip />
+        <el-table-column align="center" label="分类" prop="apiCategory" width="100" show-overflow-tooltip />
+        <el-table-column align="center" label="接口安全" prop="isAuth" width="300" show-overflow-tooltip>
+          <template slot-scope="{ row }">
+            <el-tag v-if="row.isOpen===1" type="success">允许公开访问</el-tag>
+            <el-tag v-else-if="row.isOpen!==1" type="danger">拒绝公开访问</el-tag>
+            <el-tag v-if="row.isAuth===1" type="success">开启身份认证</el-tag>
+            <el-tag v-else-if="row.isAuth!==1" type="danger">关闭身份认证</el-tag>
+            <el-tag v-if="row.status===1" type="success">启用</el-tag>
+            <el-tag v-else-if="row.status===2" type="warning">维护中</el-tag>
+            <el-tag v-else type="danger">禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="服务名称" prop="serviceId" width="100" show-overflow-tooltip />
+        <el-table-column align="center" label="描述" prop="apiDesc" width="200" show-overflow-tooltip />
+        <el-table-column align="center" label="最后更新时间" prop="updateTime" width="180" show-overflow-tooltip />
+        <el-table-column align="center" label="操作" show-overflow-tooltip width="120" fixed="right">
+          <template #default="{ row }">
+            <el-button :disabled="hasAuthority('systemApiEdit')?false:true" type="text" @click="handleModal(row)">编辑</el-button>
+            <el-button :disabled="hasAuthority('systemApiEdit')?false:true" type="text" @click="handleRemove(row)">删除</el-button>
+
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination :total="pageInfo.total" :current-page="pageInfo.page" :page-size="pageInfo.limit"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     @current-change="handlePage" @size-change='handlePageSize'/>
+
+    </my-panel>
+
+    <el-dialog :visible.sync="modalVisible"
+               :title="modalTitle"
+               width="50"
+               @close="handleReset">
       <div>
-        <Alert show-icon v-if="formItem.apiId?true:false">
+        <el-alert show-icon v-if="formItem.apiId?true:false" :closable="false">
           <span>自动扫描接口swagger注解。</span>
-          <Poptip placement="bottom" title="示例代码">
-            <a>示例代码</a>
-            <div slot="content">
+          <el-popover placement="bottom" title="示例代码">
+            <a slot="reference">示例代码</a>
+            <div>
               <div v-highlight>
                 <pre>
                       // 接口介绍
@@ -122,66 +175,66 @@
                 </pre>
               </div>
             </div>
-          </Poptip>
-        </Alert>
-        <Form ref="form1" :model="formItem" :rules="formItemRules" :label-width="100">
-          <FormItem label="服务名称" prop="serviceId">
-            <Select :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.serviceId"
-                    filterable clearable>
-              <Option v-for="(item,index) in selectServiceList" :value="item.serviceId" :key="index">{{ item.serviceName }}</Option>
-            </Select>
-          </FormItem>
-          <FormItem label="接口分类" prop="apiCategory">
-            <Input v-model="formItem.apiCategory" placeholder="请输入内容"/>
-          </FormItem>
-          <FormItem label="接口编码" prop="apiCode">
-            <Input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.apiCode"
-                   placeholder="请输入内容"/>
-          </FormItem>
-          <FormItem label="接口名称" prop="apiName">
-            <Input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.apiName"
-                   placeholder="请输入内容"/>
-          </FormItem>
-          <FormItem label="请求地址" prop="path">
-            <Input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.path"
-                   placeholder="请输入内容"/>
-          </FormItem>
-          <FormItem label="优先级">
-            <InputNumber v-model="formItem.priority"/>
-          </FormItem>
-          <FormItem label="身份认证">
-            <RadioGroup v-model="formItem.isAuth" type="button">
-              <Radio :disabled="formItem.apiId && formItem.isPersist === 1?true:false" label="0">关闭</Radio>
-              <Radio :disabled="formItem.apiId && formItem.isPersist === 1?true:false" label="1">开启</Radio>
-            </RadioGroup>
+          </el-popover>
+        </el-alert>
+        <el-form ref="form1" :model="formItem" :rules="formItemRules" label-width="100px">
+          <el-form-item label="服务名称" prop="serviceId">
+            <el-select :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.serviceId"
+                       filterable clearable>
+              <el-option v-for="(item,index) in selectServiceList" :value="item.serviceId" :key="index">{{ item.serviceName }}</el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="接口分类" prop="apiCategory">
+            <el-input v-model="formItem.apiCategory" placeholder="请输入内容"/>
+          </el-form-item>
+          <el-form-item label="接口编码" prop="apiCode">
+            <el-input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.apiCode"
+                      placeholder="请输入内容"/>
+          </el-form-item>
+          <el-form-item label="接口名称" prop="apiName">
+            <el-input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.apiName"
+                      placeholder="请输入内容"/>
+          </el-form-item>
+          <el-form-item label="请求地址" prop="path">
+            <el-input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.path"
+                      placeholder="请输入内容"/>
+          </el-form-item>
+          <el-form-item label="优先级">
+            <el-input-number v-model="formItem.priority"/>
+          </el-form-item>
+          <el-form-item label="身份认证">
+            <el-radio-group v-model="formItem.isAuth" type="button">
+              <el-radio :disabled="formItem.apiId && formItem.isPersist === 1?true:false" label="0">关闭</el-radio>
+              <el-radio :disabled="formItem.apiId && formItem.isPersist === 1?true:false" label="1">开启</el-radio>
+            </el-radio-group>
             <p><code>开启：未认证登录,提示"认证失败,请重新登录!";关闭: 不需要认证登录</code></p>
-          </FormItem>
-          <FormItem label="公开访问">
-            <RadioGroup v-model="formItem.isOpen" type="button">
-              <Radio label="0">拒绝</Radio>
-              <Radio label="1">允许</Radio>
-            </RadioGroup>
+          </el-form-item>
+          <el-form-item label="公开访问">
+            <el-radio-group v-model="formItem.isOpen" type="button">
+              <el-radio label="0">拒绝</el-radio>
+              <el-radio label="1">允许</el-radio>
+            </el-radio-group>
             <p><code>拒绝:提示"请求地址,拒绝访问!"</code></p>
-          </FormItem>
-          <FormItem label="状态">
-            <RadioGroup v-model="formItem.status" type="button">
-              <Radio label="0">禁用</Radio>
-              <Radio label="1">启用</Radio>
-              <Radio label="2">维护中</Radio>
-            </RadioGroup>
+          </el-form-item>
+          <el-form-item label="状态">
+            <el-radio-group v-model="formItem.status" type="button">
+              <el-radio label="0">禁用</el-radio>
+              <el-radio label="1">启用</el-radio>
+              <el-radio label="2">维护中</el-radio>
+            </el-radio-group>
             <p><code>禁用：提示"请求地址,禁止访问!";维护中：提示"正在升级维护中,请稍后再试!";</code></p>
-          </FormItem>
-          <FormItem label="描述">
-            <Input v-model="formItem.apiDesc" type="textarea" placeholder="请输入内容"/>
-          </FormItem>
-        </Form>
-        <div class="drawer-footer">
-          <Button type="default" @click="handleReset">取消</Button>&nbsp;
-          <Button type="primary" @click="handleSubmit" :loading="saving">保存</Button>
-        </div>
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="formItem.apiDesc" type="textarea" placeholder="请输入内容"/>
+          </el-form-item>
+        </el-form>
       </div>
-    </Modal>
-  </div>
+      <template #footer>
+        <el-button type="default" @click="handleReset">取消</el-button>&nbsp;
+        <el-button type="primary" @click="handleSubmit" :loading="saving">保存</el-button>
+      </template>
+    </el-dialog>
+  </my-layout>
 </template>
 
 <script>
@@ -196,9 +249,13 @@ import {
   batchUpdateAuthApi
 } from '@/api/api'
 import { getServiceList } from '@/api/gateway'
+import { MyPanel, MyLayout  } from '$ui'
+
+import VueMagicTree from 'vue-magic-tree'
 
 export default {
   name: 'SystemApi',
+  components: { MyLayout, MyPanel, VueMagicTree },
   data () {
     const validateEn = (rule, value, callback) => {
       let reg = /^[_.a-zA-Z0-9]+$/
@@ -225,6 +282,7 @@ export default {
         apiCode: '',
         serviceId: ''
       },
+      rootNode: { id: 'root', name:'全部', children: [] },
       selectServiceList: [],
       formItemRules: {
         serviceId: [
@@ -258,85 +316,75 @@ export default {
         apiDesc: '',
         isOpen: 1
       },
-      columns: [
-        {
-          type: 'selection',
-          width: 60,
-          align: 'center'
+      data: [],
+      treeSetting: {
+        check: {
+          enable: false,
+          chkboxType: {"Y": "", "N": ""},
+          chkStyle: "radio",
+          radioType: "all"
         },
-        {
-          title: 'md5编码',
-          key: 'apiCode',
-          width: 300
+        view: {
+          // 开启图标显示功能
+          showIcon: true,
+          dblClickExpand: false
         },
-        {
-          title: '名称',
-          key: 'apiName',
-          slot: 'apiName',
-          width: 300,
-          filters: [
-            {
-              label: '禁用',
-              value: 0
-            },
-            {
-              label: '启用',
-              value: 1
-            }
-          ],
-          filterMultiple: false,
-          filterMethod (value, row) {
-            if (value === 0) {
-              return row.status === 0
-            } else if (value === 1) {
-              return row.status === 1
-            }
+        data: {
+          // 设置图标库(采用iconfont class形式)
+          iconMap: {
+            'folder': 'ri-folder-4-fill',
+            'pdf': 'ri-file-pdf-line',
+            'doc': 'ri-file-word-line',
+            'docx': 'ri-file-word-line',
+            'txt': 'ri-file-3-line',
+            'xls': 'ri-file-excel-line',
+            'xlsx': 'ri-file-excel-line',
+            'unknow': 'ri-file-list-2-line'
+          },
+          key: {
+            children: "children",
+            // 设置对应每个节点的节点类型，与数据中customType属性对应
+            nodeType: 'fileType'
+          },
+          simpleData: {
+            enable: false,
+            pIdKey: "parentId"
           }
         },
-        {
-          title: '地址',
-          key: 'path',
-          width: 200
+        async: {
+          enable: false,
+          url: ""
         },
-        {
-          title: '分类',
-          key: 'apiCategory',
-          width: 100
-        },
-        {
-          title: '服务名称',
-          key: 'serviceId',
-          width: 200
-        },
-        {
-          title: '接口安全',
-          key: 'isAuth',
-          slot: 'isAuth',
-          width: 300
-        },
-        {
-          title: '描述',
-          key: 'apiDesc',
-          width: 200
-        },
-        {
-          title: '最后更新时间',
-          key: 'updateTime',
-          width: 180
-        },
-        {
-          title: '操作',
-          key: '',
-          slot: 'action',
-          fixed: 'right',
-          width: 120
-        }
-      ],
-      data: []
+      },
+      serviceNodes: [this.rootNode],
     }
   },
   methods: {
+    onClick(evt, treeId, treeNode) {
+      console.log('tree click', treeId, treeNode)
+      if(treeNode.id === 'root') {
+        this.pageInfo.serviceId = ''
+      } else {
+        this.pageInfo.serviceId = treeNode.id
+      }
+
+      this.handleSearch()
+    },
+    onCheck(evt, treeId, treeNode) {
+
+    },
+    handleCreated(ztreeObj) {
+      ztreeObj.expandAll(true)
+    },
+    filterStatus(value, row) {
+      if (value === 0) {
+        return row.status === 0
+      } else if (value === 1) {
+        return row.status === 1
+      }
+    },
     handleModal (data) {
+      console.log('handleModal')
       if (data) {
         this.modalTitle = '编辑接口 - ' + data.apiName
         this.formItem = Object.assign({}, this.formItem, data)
@@ -438,6 +486,18 @@ export default {
       getServiceList().then(res => {
         if (res.code === 0) {
           this.selectServiceList = res.data
+
+          this.rootNode.children.length = 0
+          this.selectServiceList.forEach(item=>{
+            this.rootNode.children.push({
+              id: item.serviceId,
+              name: item.serviceName,
+              pid: 'root'
+            })
+          })
+          this.serviceNodes.length = 0;
+          this.serviceNodes.push(this.rootNode)
+          console.log('this.rootNode', this.rootNode)
         }
       })
     },
