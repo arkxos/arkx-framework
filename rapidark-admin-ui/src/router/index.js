@@ -53,12 +53,12 @@ export const constantRoutes = [
           icon: 'home-2-line',
         },
       },
-      // {
-      //   path: '/gatewayList',
-      //   name: '网关服务管理',
-      //   hidden: true,
-      //   component: () => import('@/views/gateway-manage/GatewayList'),
-      // },
+      {
+        path: '/gatewayList',
+        name: '网关服务管理',
+        hidden: true,
+        component: () => import('@/views/gateway-manage/GatewayList'),
+      },
       {
         path: '/clientList',
         name: '客户端管理',

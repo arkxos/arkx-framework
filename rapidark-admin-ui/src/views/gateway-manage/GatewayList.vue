@@ -29,7 +29,7 @@
         </el-col>
       </el-row>
       <el-table size="small" :data="tableData" style="width: 100%">
-        <el-table-column label="服务ID" width="250">
+        <el-table-column label="服务ID" width="150">
           <template slot-scope="scope">
             <el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.id}}</el-tag>
           </template>
@@ -39,17 +39,23 @@
             <el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="系统代号>服务名称" width="300">
+        <el-table-column label="系统代号>服务名称" width="250">
           <template slot-scope="scope">
             <span style="font-weight: bold;" v-if="scope.row.systemCode != undefined && scope.row.systemCode != ''">{{scope.row.systemCode}} ></span> {{scope.row.name}}
           </template>
         </el-table-column>
-        <el-table-column label="服务地址" :show-overflow-tooltip="true">
+        <el-table-column label="状态" width="80" prop="status" :formatter="formatterStatus">
+          <template slot-scope="scope">
+            <el-tag effect="dark" size="small" v-if="scope.row.status === '0'" type="">启用</el-tag>
+            <el-tag effect="dark" size="small" v-if="scope.row.status === '1'" type="danger">禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="服务地址" :show-overflow-tooltip="true" width="200">
           <template slot-scope="scope">
             <el-tag size="small" type="success" style="font-weight: bold;">{{scope.row.uri}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="断言路径">
+        <el-table-column label="断言路径" width="250">
           <template slot-scope="scope">
             {{scope.row.path}}
             <el-popover trigger="click" placement="bottom">
@@ -77,13 +83,8 @@
         </el-table-column>
         <el-table-column label="限流器" prop="filterRateLimiterName" width="100"></el-table-column>
         <el-table-column label="创建时间" width="140" prop="createTime"></el-table-column>
-        <el-table-column label="状态" width="80" prop="status" :formatter="formatterStatus">
-          <template slot-scope="scope">
-            <el-tag effect="dark" size="small" v-if="scope.row.status === '0'" type="">启用</el-tag>
-            <el-tag effect="dark" size="small" v-if="scope.row.status === '1'" type="danger">禁用</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="100">
+
+        <el-table-column label="操作" width="100" fixed="right">
           <template :v-if="scope.row.id != null" slot-scope="scope">
             <el-dropdown trigger="click" @command="handleCommandGateway">
               <el-button size="mini" type="warning">
@@ -289,26 +290,25 @@ export default {
 <style>
 .el-drawer__header {
   -ms-flex-align: center;
-  align-items: center;
-  color: #72767b;
-  display: -ms-flexbox;
   display: flex;
-  margin-bottom: 2px;
+  align-items: center;
   padding: 10px 20px 0;
+  margin-bottom: 2px;
+  color: #72767b;
 }
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
 .gateway-info-label{
-  text-align: right;
-  font-size: 14px;
   padding: 8px 0;
+  font-size: 14px;
   color: #606266;
+  text-align: right;
   vertical-align: middle;
 }
 .gateway-info-value{
-  font-size: 14px;
   padding: 8px 0px ;
+  font-size: 14px;
   line-height: 20px;
 }
 
