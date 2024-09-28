@@ -65,6 +65,8 @@ spring:
   jpa:
     show-sql: true
     hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       naming:
         # 采用@Column注解字段命名，否则会用砣峰命名规则生产数据库字段名
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -78,8 +80,8 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   mail:
-    username: 893951837@qq.com
-    password: Dreamer123
+    username: xxxxxx@qq.com
+    password: xxxxxx
     host: smtp.exmail.qq.com
     port:
     default-encoding: utf-8
