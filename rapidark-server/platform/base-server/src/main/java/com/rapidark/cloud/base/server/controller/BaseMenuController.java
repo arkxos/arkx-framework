@@ -6,6 +6,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseAction;
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
 import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
+import com.rapidark.cloud.base.server.controller.cmd.DeleteMenuCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
@@ -192,8 +193,8 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })
     @PostMapping("/menu/remove")
-    public ResultBody<Boolean> removeMenu(@RequestParam("menuId") Long menuId) {
-        baseResourceMenuService.removeMenu(menuId);
+    public ResultBody<Boolean> removeMenu(@Valid @RequestBody DeleteMenuCommand command) {
+        baseResourceMenuService.removeMenu(command.getMenuId());
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
