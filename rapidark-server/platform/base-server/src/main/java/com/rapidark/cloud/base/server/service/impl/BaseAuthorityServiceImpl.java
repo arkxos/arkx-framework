@@ -1,7 +1,6 @@
 package com.rapidark.cloud.base.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rapidark.cloud.base.client.constants.ResourceType;
@@ -59,7 +58,7 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
     @Autowired
     private BaseUserService baseUserService;
     @Autowired
-    private BaseAppService baseAppService;
+    private OpenAppService openAppService;
     @Autowired
     private RedisTokenStore redisTokenStore;
 
@@ -371,8 +370,8 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
         if (appId == null) {
             return;
         }
-        BaseApp baseApp = baseAppService.getAppInfo(appId);
-        if (baseApp == null) {
+        OpenApp openApp = openAppService.getAppInfo(appId);
+        if (openApp == null) {
             return;
         }
         // 清空应用已有授权
@@ -394,7 +393,7 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
         // 获取应用最新的权限列表
         List<OpenAuthority> authorities = findAuthorityByApp(appId);
         // 动态更新tokenStore客户端
-        OpenHelper.updateOpenClientAuthorities(redisTokenStore, baseApp.getApiKey(), authorities);
+        OpenHelper.updateOpenClientAuthorities(redisTokenStore, openApp.getApiKey(), authorities);
     }
 
     /**

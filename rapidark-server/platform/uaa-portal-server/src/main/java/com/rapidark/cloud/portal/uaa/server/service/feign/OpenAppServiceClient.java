@@ -1,7 +1,7 @@
-package com.rapidark.cloud.uaa.admin.server.service.feign;
+package com.rapidark.cloud.portal.uaa.server.service.feign;
 
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.base.client.service.IBaseAppServiceClient;
+import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @FeignClient(value = BaseConstants.BASE_SERVER)
-public interface BaseAppServiceClient extends IBaseAppServiceClient {
+public interface OpenAppServiceClient extends IOpenAppServiceClient {
 
 }

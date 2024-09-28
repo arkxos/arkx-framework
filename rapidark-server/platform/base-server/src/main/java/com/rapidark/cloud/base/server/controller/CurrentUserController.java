@@ -2,7 +2,7 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
-import com.rapidark.cloud.base.server.service.BaseAppService;
+import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.constants.CommonConstants;
@@ -37,7 +37,7 @@ public class CurrentUserController {
     @Autowired
     private BaseAuthorityService baseAuthorityService;
     @Autowired
-    private BaseAppService baseAppService;
+    private OpenAppService openAppService;
     @Autowired
     private RedisTokenStore redisTokenStore;
 
@@ -115,7 +115,7 @@ public class CurrentUserController {
         Assert.notNull(user, "登录过期，请重新登录");
         if (serviceId == null || "".equals(serviceId)) {
             // modify, add search menu with serviceId(appNameEn)
-            serviceId = baseAppService.getAppClientInfo(user.getClientId()).getAdditionalInformation().get("appNameEn").toString();
+            serviceId = openAppService.getAppClientInfo(user.getClientId()).getAdditionalInformation().get("appNameEn").toString();
         }
         serviceId = serviceId.trim();
         List<AuthorityMenu> result = baseAuthorityService.findAuthorityMenuByUser(user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), serviceId);

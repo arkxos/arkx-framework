@@ -1,10 +1,16 @@
 package com.rapidark.cloud.base.client.model.entity;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.common.annotation.TableAlias;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 系统应用-基础信息
@@ -13,90 +19,122 @@ import com.rapidark.common.mybatis.base.entity.AbstractEntity;
  */
 @TableName("base_app")
 @TableAlias("app")
-public class BaseApp extends AbstractEntity {
+public class OpenApp extends AbstractEntity {
+
     private static final long serialVersionUID = -4606067795040222681L;
 
     @TableId(type = IdType.INPUT)
+    @ApiModelProperty(value = "客户端ID")
     private String appId;
 
     /**
      * API访问key
      */
+    @ApiModelProperty(value = "API访问key")
     private String apiKey;
     /**
      * API访问密钥
      */
+    @NotBlank
+    @ApiModelProperty(value = "API访问密钥")
     private String secretKey;
 
     /**
      * app类型：server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用
      */
+    @NotBlank
+    @ApiModelProperty(value = "app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用")
     private String appType;
 
     /**
      * 应用图标
      */
+    @ApiModelProperty(value = "应用图标")
     private String appIcon;
 
     /**
      * app名称
      */
+    @NotBlank
+    @ApiModelProperty(value = "app名称")
     private String appName;
 
     /**
      * app英文名称
      */
+    @NotBlank
+    @ApiModelProperty(value = "app英文名称")
     private String appNameEn;
     /**
      * 移动应用操作系统：ios-苹果 android-安卓
      */
+    @ApiModelProperty(value = "移动应用操作系统:ios-苹果 android-安卓")
     private String appOs;
 
 
     /**
      * 用户ID:默认为0
      */
+    @NotNull
+    @ApiModelProperty(value = "开发者ID:默认为0")
     private Long developerId;
 
     /**
      * app描述
      */
+    @ApiModelProperty(value = "app描述")
     private String appDesc;
 
     /**
      * 官方网址
      */
+    @ApiModelProperty(value = "官网地址")
     private String website;
 
     /**
      * 状态:0-无效 1-有效
      */
+    @NotNull
+    @ApiModelProperty(value = "状态:0-无效 1-有效")
     private Integer status;
 
     /**
      * 保留数据0-否 1-是 不允许删除
      */
+    @NotNull
+    @ApiModelProperty(value = "保留数据0-否 1-是 不允许删除")
     private Integer isPersist;
 
     /**
      * 是否验签:0-否 1-是
      */
+    @NotNull
+    @ApiModelProperty(value = "是否验签:0-否 1-是 不允许删除")
     private Integer isSign;
 
     /**
      * 是否加密:0-否 1-是
      */
+    @NotNull
+    @ApiModelProperty(value = "是否加密:0-否 1-是 不允许删除")
     private Integer isEncrypt;
 
     /**
      * 加密类型:DES TripleDES AES RSA
      */
+    @NotBlank
+    @ApiModelProperty(value = "加密类型:DES TripleDES AES RSA")
     private String encryptType;
 
     /**
      * RSA加解密公钥
      */
+    @ApiModelProperty(value = "RSA加解密公钥")
     private String publicKey;
+
+    public void copy(OpenApp source){
+        BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));
+    }
 
     /**
      * @return app_id

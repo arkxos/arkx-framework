@@ -1,6 +1,6 @@
 package com.rapidark.cloud.uaa.admin.server.controller;
 
-import com.rapidark.cloud.uaa.admin.server.service.feign.BaseAppServiceClient;
+import com.rapidark.cloud.uaa.admin.server.service.feign.OpenAppServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -23,7 +23,7 @@ import java.util.Map;
 @Controller
 public class IndexController {
     @Autowired
-    private BaseAppServiceClient baseAppRemoteService;
+    private OpenAppServiceClient openAppRemoteService;
 
     /**
      * 欢迎页
@@ -65,7 +65,7 @@ public class IndexController {
         if (auth != null) {
             try {
                 AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
-                ClientDetails clientDetails = baseAppRemoteService.getAppClientInfo(authorizationRequest.getClientId()).getData();
+                ClientDetails clientDetails = openAppRemoteService.getAppClientInfo(authorizationRequest.getClientId()).getData();
                 model.put("app", clientDetails.getAdditionalInformation());
             } catch (Exception e) {
 

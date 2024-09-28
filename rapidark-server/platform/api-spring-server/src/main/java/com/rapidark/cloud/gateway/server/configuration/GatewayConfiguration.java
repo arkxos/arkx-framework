@@ -23,7 +23,7 @@ import com.rapidark.cloud.gateway.server.filter.GatewayContextFilter;
 import com.rapidark.cloud.gateway.server.filter.RouteToUrlFilter;
 import com.rapidark.cloud.gateway.server.locator.JdbcRouteDefinitionLocator;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;
-import com.rapidark.cloud.gateway.server.service.feign.BaseAppServiceClient;
+import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import com.rapidark.cloud.gateway.server.service.feign.BaseAuthorityServiceClient;
 import com.rapidark.cloud.gateway.server.service.feign.GatewayServiceClient;
 import lombok.extern.slf4j.Slf4j;
@@ -209,9 +209,9 @@ public class GatewayConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(GatewayContextFilter.class)
-    public GatewayContextFilter gatewayContextFilter(BaseAppServiceClient baseAppServiceClient, ApiProperties apiProperties, AccessLogService accessLogService) {
+    public GatewayContextFilter gatewayContextFilter(OpenAppServiceClient openAppServiceClient, ApiProperties apiProperties, AccessLogService accessLogService) {
         log.debug("Load GatewayContextFilter Config Bean");
-        return new GatewayContextFilter(baseAppServiceClient, apiProperties, new RequestDecryptionExceptionHandler(accessLogService));
+        return new GatewayContextFilter(openAppServiceClient, apiProperties, new RequestDecryptionExceptionHandler(accessLogService));
     }
 
     @Bean

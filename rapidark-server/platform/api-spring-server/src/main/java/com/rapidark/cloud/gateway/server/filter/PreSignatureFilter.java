@@ -2,11 +2,11 @@ package com.rapidark.cloud.gateway.server.filter;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import com.google.common.collect.Maps;
-import com.rapidark.cloud.base.client.model.entity.BaseApp;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
 import com.rapidark.cloud.gateway.server.exception.JsonSignatureDeniedHandler;
 import com.rapidark.cloud.gateway.server.filter.context.GatewayContext;
-import com.rapidark.cloud.gateway.server.service.feign.BaseAppServiceClient;
+import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenSignatureException;
 import com.rapidark.common.model.ResultBody;
@@ -33,14 +33,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PreSignatureFilter implements WebFilter {
 
     private JsonSignatureDeniedHandler signatureDeniedHandler;
-    private BaseAppServiceClient baseAppServiceClient;
+    private OpenAppServiceClient openAppServiceClient;
     private ApiProperties apiProperties;
     private static final AntPathMatcher pathMatch = new AntPathMatcher();
     private Set<String> signIgnores = new ConcurrentHashSet<>();
 
-    public PreSignatureFilter(BaseAppServiceClient baseAppServiceClient, ApiProperties apiProperties, JsonSignatureDeniedHandler signatureDeniedHandler) {
+    public PreSignatureFilter(OpenAppServiceClient openAppServiceClient, ApiProperties apiProperties, JsonSignatureDeniedHandler signatureDeniedHandler) {
         this.apiProperties = apiProperties;
-        this.baseAppServiceClient = baseAppServiceClient;
+        this.openAppServiceClient = openAppServiceClient;
         this.signatureDeniedHandler = signatureDeniedHandler;
         // 默认忽略签名
         signIgnores.add("/");
@@ -86,11 +86,11 @@ public class PreSignatureFilter implements WebFilter {
                 // 验证请求参数
                 SignatureUtils.validateParams(params);
                 //开始验证签名
-                if (baseAppServiceClient != null) {
+                if (openAppServiceClient != null) {
                     String appId = params.get(CommonConstants.APP_ID_KEY);
                     // 获取客户端信息
-                    ResultBody<BaseApp> result = baseAppServiceClient.getApp(appId);
-                    BaseApp app = result.getData();
+                    ResultBody<OpenApp> result = openAppServiceClient.getApp(appId);
+                    OpenApp app = result.getData();
                     if (app == null || app.getAppId() == null) {
                         return signatureDeniedHandler.handle(exchange, new OpenSignatureException("appId无效"));
                     }

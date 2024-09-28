@@ -1,11 +1,11 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.rapidark.cloud.base.client.model.entity.BaseApp;
-import com.rapidark.cloud.base.client.service.IBaseAppServiceClient;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
+import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.CreateAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
-import com.rapidark.cloud.base.server.service.BaseAppService;
+import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.OpenClientDetails;
@@ -15,25 +15,39 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import me.zhengjie.annotation.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
 /**
  * 系统用户信息
- *
- * @author liuyadu
- */
+ * @website http://rapidark.com
+ * @author Darkness
+ * @date 2022-05-25
+ **/
 @Api(tags = "系统应用管理")
 @RestController
-public class BaseAppController implements IBaseAppServiceClient {
+public class OpenAppController implements IOpenAppServiceClient {
     @Autowired
-    private BaseAppService baseAppService;
+    private OpenAppService openAppService;
     @Autowired
     private OpenRestTemplate openRestTemplate;
+
+//    @Log("导出数据")
+//    @ApiOperation("导出数据")
+//    @GetMapping(value = "/download")
+//    @PreAuthorize("@el.check('openClient:list')")
+//    public void download(HttpServletResponse response, OpenClientQueryCriteria criteria) throws IOException {
+//        openAppService.download(openAppService.queryAll(criteria), response);
+//    }
 
     /**
      * 获取分页应用列表
@@ -42,8 +56,8 @@ public class BaseAppController implements IBaseAppServiceClient {
      */
     @ApiOperation(value = "获取分页应用列表", notes = "获取分页应用列表")
     @GetMapping("/app")
-    public ResultBody<IPage<BaseApp>> getAppListPage(@RequestParam(required = false) Map map) {
-        IPage<BaseApp> IPage = baseAppService.findListPage(new PageParams(map));
+    public ResultBody<IPage<OpenApp>> getAppListPage(@RequestParam(required = false) Map map) {
+        IPage<OpenApp> IPage = openAppService.findListPage(new PageParams(map));
         return ResultBody.ok().data(IPage);
     }
 
@@ -59,10 +73,13 @@ public class BaseAppController implements IBaseAppServiceClient {
     })
     @GetMapping("/app/{appId}/info")
     @Override
-    public ResultBody<BaseApp> getApp(
+    public ResultBody<OpenApp> getApp(
             @PathVariable("appId") String appId
     ) {
-        BaseApp appInfo = baseAppService.getAppInfo(appId);
+        OpenApp appInfo = openAppService.getAppInfo(appId);
+        if(appInfo == null) {
+            return ResultBody.failed().msg("该客户端不存在");
+        }
         return ResultBody.ok().data(appInfo);
     }
 
@@ -81,7 +98,7 @@ public class BaseAppController implements IBaseAppServiceClient {
     public ResultBody<OpenClientDetails> getAppClientInfo(
             @PathVariable("clientId") String clientId
     ) {
-        OpenClientDetails clientInfo = baseAppService.getAppClientInfo(clientId);
+        OpenClientDetails clientInfo = openAppService.getAppClientInfo(clientId);
         return ResultBody.ok().data(clientInfo);
     }
 
@@ -106,11 +123,12 @@ public class BaseAppController implements IBaseAppServiceClient {
             @ApiImplicitParam(name = "encryptType", value = "加密类型", paramType = "form"),
             @ApiImplicitParam(name = "publicKey", value = "RSA公钥", paramType = "form")
     })
+    @Log("添加应用信息")
     @PostMapping("/app/add")
-    public ResultBody<String> addApp(
-            @RequestBody CreateAppCommand command
+    public ResultBody<String> addApp(@Validated
+                                         @RequestBody CreateAppCommand command
     ) {
-        BaseApp app = new BaseApp();
+        OpenApp app = new OpenApp();
         app.setAppName(command.getAppName());
         app.setAppNameEn(command.getAppNameEn());
         app.setAppType(command.getAppType());
@@ -124,7 +142,7 @@ public class BaseAppController implements IBaseAppServiceClient {
         app.setIsEncrypt(command.getIsEncrypt());
         app.setEncryptType(command.getEncryptType());
         app.setPublicKey(command.getPublicKey());
-        BaseApp result = baseAppService.addAppInfo(app);
+        OpenApp result = openAppService.addAppInfo(app);
         String appId = null;
         if (result != null) {
             appId = result.getAppId();
@@ -165,6 +183,7 @@ public class BaseAppController implements IBaseAppServiceClient {
             @ApiImplicitParam(name = "encryptType", value = "加密类型", paramType = "form"),
             @ApiImplicitParam(name = "publicKey", value = "RSA公钥", paramType = "form")
     })
+    @Log("编辑应用信息")
     @PostMapping("/app/update")
     public ResultBody updateApp(
             @RequestParam("appId") String appId,
@@ -182,7 +201,7 @@ public class BaseAppController implements IBaseAppServiceClient {
             @RequestParam(value = "encryptType", required = false, defaultValue = "") String encryptType,
             @RequestParam(value = "publicKey", required = false, defaultValue = "") String publicKey
     ) {
-        BaseApp app = new BaseApp();
+        OpenApp app = new OpenApp();
         app.setAppId(appId);
         app.setAppName(appName);
         app.setAppNameEn(appNameEn);
@@ -197,7 +216,7 @@ public class BaseAppController implements IBaseAppServiceClient {
         app.setIsEncrypt(isEncrypt);
         app.setEncryptType(encryptType);
         app.setPublicKey(publicKey);
-        baseAppService.updateInfo(app);
+        openAppService.updateInfo(app);
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
@@ -210,7 +229,7 @@ public class BaseAppController implements IBaseAppServiceClient {
     @ApiOperation(value = "完善应用开发信息", notes = "完善应用开发信息")
     @PostMapping("/app/client/update")
     public ResultBody<String> updateAppClientInfo(@Valid @RequestBody UpdateAppClientInfoCommand command) {
-        BaseApp app = baseAppService.getAppInfo(command.getAppId());
+        OpenApp app = openAppService.getAppInfo(command.getAppId());
         OpenClientDetails client = new OpenClientDetails(app.getApiKey(), "",
                 command.getScopes(), command.getGrantTypes(), "", command.getRedirectUrls());
         client.setAccessTokenValiditySeconds(command.getAccessTokenValidity());
@@ -218,7 +237,7 @@ public class BaseAppController implements IBaseAppServiceClient {
         client.setAutoApproveScopes(command.getAutoApproveScopes() != null ? Arrays.asList(command.getAutoApproveScopes().split(",")) : null);
         Map info = BeanConvertUtils.objectToMap(app);
         client.setAdditionalInformation(info);
-        baseAppService.updateAppClientInfo(client);
+        openAppService.updateAppClientInfo(client);
         return ResultBody.ok();
     }
 
@@ -236,7 +255,7 @@ public class BaseAppController implements IBaseAppServiceClient {
     public ResultBody<String> resetAppSecret(
             @RequestParam("appId") String appId
     ) {
-        String result = baseAppService.restSecret(appId);
+        String result = openAppService.restSecret(appId);
         return ResultBody.ok().data(result);
     }
 
@@ -246,6 +265,7 @@ public class BaseAppController implements IBaseAppServiceClient {
      * @param appId
      * @return
      */
+    @Log("删除应用信息")
     @ApiOperation(value = "删除应用信息", notes = "删除应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
@@ -254,7 +274,7 @@ public class BaseAppController implements IBaseAppServiceClient {
     public ResultBody removeApp(
             @RequestParam("appId") String appId
     ) {
-        baseAppService.removeApp(appId);
+        openAppService.removeApp(appId);
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }

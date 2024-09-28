@@ -1,15 +1,19 @@
 package com.rapidark.cloud.base.client.service;
 
-import com.rapidark.cloud.base.client.model.entity.BaseApp;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.OpenClientDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
- * @author liuyadu
+ *
+ * @author darkness
+ * @date 2022/5/25 15:24
+ * @version 1.0
  */
-public interface IBaseAppServiceClient {
+public interface IOpenAppServiceClient {
+
     /**
      * 获取应用基础信息
      *
@@ -17,7 +21,7 @@ public interface IBaseAppServiceClient {
      * @return
      */
     @GetMapping("/app/{appId}/info")
-    ResultBody<BaseApp> getApp(@PathVariable("appId") String appId);
+    ResultBody<OpenApp> getApp(@PathVariable("appId") String appId);
 
     /**
      * 获取应用开发配置信息

@@ -7,7 +7,7 @@ import com.rapidark.cloud.gateway.server.filter.*;
 import com.rapidark.cloud.gateway.server.locator.ResourceLocator;
 import com.rapidark.cloud.gateway.server.oauth2.RedisAuthenticationManager;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;
-import com.rapidark.cloud.gateway.server.service.feign.BaseAppServiceClient;
+import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,7 +55,7 @@ public class ResourceServerConfiguration {
     @Autowired
     private AccessLogService accessLogService;
     @Autowired
-    private BaseAppServiceClient baseAppServiceClient;
+    private OpenAppServiceClient openAppServiceClient;
 
     /**
      * 跨域配置
@@ -123,7 +123,7 @@ public class ResourceServerConfiguration {
                 // 跨域过滤器
                 .addFilterAt(corsFilter(), SecurityWebFiltersOrder.CORS)
                 // 签名验证过滤器
-                .addFilterAt(new PreSignatureFilter(baseAppServiceClient, apiProperties, new JsonSignatureDeniedHandler(accessLogService)), SecurityWebFiltersOrder.CSRF)
+                .addFilterAt(new PreSignatureFilter(openAppServiceClient, apiProperties, new JsonSignatureDeniedHandler(accessLogService)), SecurityWebFiltersOrder.CSRF)
                 // 访问验证前置过滤器
                 .addFilterAt(new PreCheckFilter(accessManager, accessDeniedHandler), SecurityWebFiltersOrder.CSRF)
                 // oauth2认证过滤器

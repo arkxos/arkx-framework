@@ -3,7 +3,7 @@ package com.xdreamaker.framework.ddd.es.continuance.producer.health;
 import com.xdreamaker.demo.axon.query.service.ContractViewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 

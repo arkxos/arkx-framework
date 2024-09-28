@@ -2,7 +2,8 @@ package com.xdreamaker.framework.ddd.es.continuance.producer.uuid;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.rapidark.cloud.base.client.model.entity.BaseApp;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.IBaseService;
 import com.rapidark.common.security.OpenClientDetails;
@@ -11,14 +11,14 @@ import com.rapidark.common.security.OpenClientDetails;
  *
  * @author liuyadu
  */
-public interface BaseAppService extends IBaseService<BaseApp> {
+public interface OpenAppService extends IBaseService<OpenApp> {
     /**
      * 查询应用列表
      *
      * @param pageParams
      * @return
      */
-    IPage<BaseApp> findListPage(PageParams pageParams);
+    IPage<OpenApp> findListPage(PageParams pageParams);
 
     /**
      * 获取app信息
@@ -26,7 +26,7 @@ public interface BaseAppService extends IBaseService<BaseApp> {
      * @param appId
      * @return
      */
-    BaseApp getAppInfo(String appId);
+    OpenApp getAppInfo(String appId);
 
     /**
      * 获取app和应用信息
@@ -50,7 +50,7 @@ public interface BaseAppService extends IBaseService<BaseApp> {
      * @param app 应用
      * @return 应用信息
      */
-    BaseApp addAppInfo(BaseApp app);
+    OpenApp addAppInfo(OpenApp app);
 
     /**
      * 修改应用
@@ -58,7 +58,7 @@ public interface BaseAppService extends IBaseService<BaseApp> {
      * @param app 应用
      * @return 应用信息
      */
-    BaseApp updateInfo(BaseApp app);
+    OpenApp updateInfo(OpenApp app);
 
 
     /**

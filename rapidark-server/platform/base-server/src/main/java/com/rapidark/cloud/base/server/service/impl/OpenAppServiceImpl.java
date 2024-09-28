@@ -3,9 +3,9 @@ package com.rapidark.cloud.base.server.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.base.client.model.entity.BaseApp;
-import com.rapidark.cloud.base.server.mapper.BaseAppMapper;
-import com.rapidark.cloud.base.server.service.BaseAppService;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
+import com.rapidark.cloud.base.server.mapper.OpenAppMapper;
+import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
@@ -39,9 +39,9 @@ import java.util.Map;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> implements BaseAppService {
+public class OpenAppServiceImpl extends BaseServiceImpl<OpenAppMapper, OpenApp> implements OpenAppService {
     @Autowired
-    private BaseAppMapper baseAppMapper;
+    private OpenAppMapper openAppMapper;
     @Autowired
     private BaseAuthorityService baseAuthorityService;
     @Autowired
@@ -62,16 +62,16 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
      * @return
      */
     @Override
-    public IPage<BaseApp> findListPage(PageParams pageParams) {
-        BaseApp query = pageParams.mapToObject(BaseApp.class);
-        CriteriaQuery<BaseApp> cq = new CriteriaQuery(pageParams);
+    public IPage<OpenApp> findListPage(PageParams pageParams) {
+        OpenApp query = pageParams.mapToObject(OpenApp.class);
+        CriteriaQuery<OpenApp> cq = new CriteriaQuery(pageParams);
         cq.lambda()
-                .eq(ObjectUtils.isNotEmpty(query.getDeveloperId()), BaseApp::getDeveloperId, query.getDeveloperId())
-                .eq(ObjectUtils.isNotEmpty(query.getAppType()), BaseApp::getAppType, query.getAppType())
-                .eq(ObjectUtils.isNotEmpty(query.getAppId()), BaseApp::getAppId, query.getAppId())
-                .likeRight(ObjectUtils.isNotEmpty(query.getAppName()), BaseApp::getAppName, query.getAppName())
-                .likeRight(ObjectUtils.isNotEmpty(query.getAppNameEn()), BaseApp::getAppNameEn, query.getAppNameEn())
-//                .orderByDesc(BaseApp::getCreateTime)
+                .eq(ObjectUtils.isNotEmpty(query.getDeveloperId()), OpenApp::getDeveloperId, query.getDeveloperId())
+                .eq(ObjectUtils.isNotEmpty(query.getAppType()), OpenApp::getAppType, query.getAppType())
+                .eq(ObjectUtils.isNotEmpty(query.getAppId()), OpenApp::getAppId, query.getAppId())
+                .likeRight(ObjectUtils.isNotEmpty(query.getAppName()), OpenApp::getAppName, query.getAppName())
+                .likeRight(ObjectUtils.isNotEmpty(query.getAppNameEn()), OpenApp::getAppNameEn, query.getAppNameEn())
+//                .orderByDesc(OpenApp::getCreateTime)
         ;
         return pageList(cq);
     }
@@ -84,8 +84,8 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
      */
     @Cacheable(value = "apps", key = "#appId")
     @Override
-    public BaseApp getAppInfo(String appId) {
-        return baseAppMapper.selectById(appId);
+    public OpenApp getAppInfo(String appId) {
+        return openAppMapper.selectById(appId);
     }
 
     /**
@@ -128,7 +128,7 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
      */
     @CachePut(value = "apps", key = "#app.appId")
     @Override
-    public BaseApp addAppInfo(BaseApp app) {
+    public OpenApp addAppInfo(OpenApp app) {
         String appId = String.valueOf(System.currentTimeMillis());
         String apiKey = RandomValueUtils.randomAlphanumeric(24);
         String secretKey = RandomValueUtils.randomAlphanumeric(32);
@@ -140,7 +140,7 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
         if (app.getIsPersist() == null) {
             app.setIsPersist(0);
         }
-        baseAppMapper.insert(app);
+        openAppMapper.insert(app);
         Map info = BeanConvertUtils.objectToMap(app);
         // 功能授权
         BaseClientDetails client = new BaseClientDetails();
@@ -165,11 +165,11 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
             @CacheEvict(value = {"apps"}, key = "'client:'+#app.appId")
     })
     @Override
-    public BaseApp updateInfo(BaseApp app) {
+    public OpenApp updateInfo(OpenApp app) {
         app.setUpdateTime(new Date());
-        baseAppMapper.updateById(app);
+        openAppMapper.updateById(app);
         // 修改客户端附加信息
-        BaseApp appInfo = getAppInfo(app.getAppId());
+        OpenApp appInfo = getAppInfo(app.getAppId());
         Map info = BeanConvertUtils.objectToMap(appInfo);
         BaseClientDetails client = (BaseClientDetails) jdbcClientDetailsService.loadClientByClientId(appInfo.getApiKey());
         client.setAdditionalInformation(info);
@@ -189,7 +189,7 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
             @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
     })
     public String restSecret(String appId) {
-        BaseApp appInfo = getAppInfo(appId);
+        OpenApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenAlertException(appId + "应用不存在!");
         }
@@ -200,7 +200,7 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
         String secretKey = RandomValueUtils.randomAlphanumeric(32);
         appInfo.setSecretKey(secretKey);
         appInfo.setUpdateTime(new Date());
-        baseAppMapper.updateById(appInfo);
+        openAppMapper.updateById(appInfo);
         jdbcClientDetailsService.updateClientSecret(appInfo.getApiKey(), secretKey);
         return secretKey;
     }
@@ -217,7 +217,7 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
     })
     @Override
     public void removeApp(String appId) {
-        BaseApp appInfo = getAppInfo(appId);
+        OpenApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenAlertException(appId + "应用不存在!");
         }
@@ -226,7 +226,7 @@ public class BaseAppServiceImpl extends BaseServiceImpl<BaseAppMapper, BaseApp> 
         }
         // 移除应用权限
         baseAuthorityService.removeAuthorityApp(appId);
-        baseAppMapper.deleteById(appInfo.getAppId());
+        openAppMapper.deleteById(appInfo.getAppId());
         jdbcClientDetailsService.removeClientDetails(appInfo.getApiKey());
     }
 

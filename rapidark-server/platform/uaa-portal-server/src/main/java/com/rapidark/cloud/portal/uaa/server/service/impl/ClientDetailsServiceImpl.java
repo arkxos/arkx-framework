@@ -1,6 +1,6 @@
 package com.rapidark.cloud.portal.uaa.server.service.impl;
 
-import com.rapidark.cloud.portal.uaa.server.service.feign.BaseAppServiceClient;
+import com.rapidark.cloud.portal.uaa.server.service.feign.OpenAppServiceClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -19,11 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class ClientDetailsServiceImpl implements ClientDetailsService {
     @Autowired
-    private BaseAppServiceClient baseAppServiceClient;
+    private OpenAppServiceClient openAppServiceClient;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        ClientDetails details = baseAppServiceClient.getAppClientInfo(clientId).getData();
+        ClientDetails details = openAppServiceClient.getAppClientInfo(clientId).getData();
         if (details != null && details.getClientId() != null && details.getAdditionalInformation() != null) {
             String status = details.getAdditionalInformation().getOrDefault("status", "0").toString();
             if (!"1".equals(status)) {

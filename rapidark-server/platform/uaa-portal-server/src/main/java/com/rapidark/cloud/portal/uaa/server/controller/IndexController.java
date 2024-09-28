@@ -3,7 +3,7 @@ package com.rapidark.cloud.portal.uaa.server.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.rapidark.common.model.ResultBody;
-import com.rapidark.cloud.portal.uaa.server.service.feign.BaseAppServiceClient;
+import com.rapidark.cloud.portal.uaa.server.service.feign.OpenAppServiceClient;
 import com.rapidark.cloud.portal.uaa.server.service.feign.BaseDeveloperServiceClient;
 import com.rapidark.cloud.portal.uaa.server.service.impl.GiteeAuthServiceImpl;
 import com.rapidark.cloud.portal.uaa.server.service.impl.QQAuthServiceImpl;
@@ -32,7 +32,7 @@ import java.util.Map;
 @Controller
 public class IndexController {
     @Autowired
-    private BaseAppServiceClient baseAppRemoteService;
+    private OpenAppServiceClient openAppRemoteService;
     @Autowired
     private BaseDeveloperServiceClient baseDeveloperServiceClient;
     @Autowired
@@ -84,7 +84,7 @@ public class IndexController {
         if (auth != null) {
             try {
                 AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
-                ClientDetails clientDetails = baseAppRemoteService.getAppClientInfo(authorizationRequest.getClientId()).getData();
+                ClientDetails clientDetails = openAppRemoteService.getAppClientInfo(authorizationRequest.getClientId()).getData();
                 model.put("app", clientDetails.getAdditionalInformation());
             } catch (Exception e) {
 

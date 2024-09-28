@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * 添加应用信息参数
  * @author darkness
  * @version 1.0
  * @date 2021/5/16 22:06

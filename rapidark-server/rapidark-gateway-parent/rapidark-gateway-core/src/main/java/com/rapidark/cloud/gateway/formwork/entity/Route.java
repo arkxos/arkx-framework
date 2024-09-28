@@ -11,10 +11,10 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
- * @Description 网关路由实体类
- * @Author jianglong
- * @Date 2020/05/11
- * @Version V1.0
+ * 网关路由实体类
+ * @author darkness
+ * @date 2022/5/24 14:21
+ * @version 1.0
  */
 @Entity
 @Table(name="route")

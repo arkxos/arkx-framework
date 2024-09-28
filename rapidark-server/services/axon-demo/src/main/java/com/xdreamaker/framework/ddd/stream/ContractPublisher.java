@@ -7,7 +7,7 @@ import com.xdreamaker.framework.ddd.stream.channel.OutputChannel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 

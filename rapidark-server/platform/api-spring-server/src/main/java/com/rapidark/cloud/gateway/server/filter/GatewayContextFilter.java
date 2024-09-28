@@ -3,12 +3,12 @@ package com.rapidark.cloud.gateway.server.filter;
 import cn.hutool.core.collection.ConcurrentHashSet;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.base.client.model.entity.BaseApp;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
 import com.rapidark.cloud.gateway.server.exception.RequestDecryptionExceptionHandler;
 import com.rapidark.cloud.gateway.server.filter.context.GatewayContext;
 import com.rapidark.cloud.gateway.server.filter.support.CachedBodyOutputMessage;
-import com.rapidark.cloud.gateway.server.service.feign.BaseAppServiceClient;
+import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenCryptoException;
 import com.rapidark.common.model.ResultBody;
@@ -70,15 +70,15 @@ public class GatewayContextFilter implements WebFilter, Ordered {
     private static final List<HttpMessageReader<?>> MESSAGE_READERS = HandlerStrategies.withDefaults().messageReaders();
 
     private RequestDecryptionExceptionHandler requestDecryptionExceptionHandler;
-    private BaseAppServiceClient baseAppServiceClient;
+    private OpenAppServiceClient openAppServiceClient;
     private ApiProperties apiProperties;
 
     private static final AntPathMatcher pathMatch = new AntPathMatcher();
     private Set<String> encryptIgnores = new ConcurrentHashSet<>();
 
-    public GatewayContextFilter(BaseAppServiceClient baseAppServiceClient, ApiProperties apiProperties, RequestDecryptionExceptionHandler requestDecryptionExceptionHandler) {
+    public GatewayContextFilter(OpenAppServiceClient openAppServiceClient, ApiProperties apiProperties, RequestDecryptionExceptionHandler requestDecryptionExceptionHandler) {
         this.apiProperties = apiProperties;
-        this.baseAppServiceClient = baseAppServiceClient;
+        this.openAppServiceClient = openAppServiceClient;
         this.requestDecryptionExceptionHandler = requestDecryptionExceptionHandler;
 
         // 默认忽略解密
@@ -113,14 +113,14 @@ public class GatewayContextFilter implements WebFilter, Ordered {
 
         MultiValueMap<String, String> params = request.getQueryParams();
         String method = request.getMethodValue();
-        if (apiProperties.getCheckEncrypt() && !notEncrypt(requestPath) && baseAppServiceClient != null) {
+        if (apiProperties.getCheckEncrypt() && !notEncrypt(requestPath) && openAppServiceClient != null) {
             // 验证请求参数
             Assert.notNull(headers.getFirst(CommonConstants.APP_ID_KEY), String.format("解密失败:%s不能为空", CommonConstants.APP_ID_KEY));
 
             // 获取客户端信息
             String appId = headers.getFirst(CommonConstants.APP_ID_KEY);
-            ResultBody<BaseApp> result = baseAppServiceClient.getApp(appId);
-            BaseApp app = result.getData();
+            ResultBody<OpenApp> result = openAppServiceClient.getApp(appId);
+            OpenApp app = result.getData();
             if (app == null || app.getAppId() == null) {
                 return requestDecryptionExceptionHandler.handle(exchange, new OpenCryptoException("appId无效"));
             }
