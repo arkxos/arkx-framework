@@ -9,7 +9,7 @@ import com.flying.fish.gateway.filter.factory.AuthorizeGatewayFilterFactory;
 import com.flying.fish.gateway.service.LoadRouteService;
 import com.flying.fish.gateway.vo.GatewayRouteConfig;
 import com.rapidark.cloud.gateway.formwork.config.ApplicationContextProvider;
-import com.rapidark.cloud.gateway.formwork.dao.RouteDao;
+import com.rapidark.cloud.gateway.formwork.repository.RouteRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Route;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 
@@ -50,7 +50,7 @@ public class RouteConfig {
     private AuthorizeGatewayFilterFactory authorizeGatewayFilterFactory;
 
     @Resource
-    private RouteDao routeDao;
+    private RouteRepository routeRepository;
 
     @Resource
     private KeyResolver uriKeyResolver;
@@ -114,7 +114,7 @@ public class RouteConfig {
     public RouteLocator routeLocators(RouteLocatorBuilder builder){
         Route query = new Route();
         query.setStatus(Constants.YES);
-        List<Route> routeList = routeDao.findAll(Example.of(query));
+        List<Route> routeList = routeRepository.findAll(Example.of(query));
         RouteLocatorBuilder.Builder routeBuilder = builder.routes();
         routeList.forEach(route->{
             RouteCache.put(route.getId(), route);

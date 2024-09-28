@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
+import com.rapidark.cloud.gateway.formwork.repository.RouteRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
@@ -9,14 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.bean.RouteReq;
 import com.rapidark.cloud.gateway.formwork.bean.RouteRsp;
-import com.rapidark.cloud.gateway.formwork.dao.RouteDao;
-import com.rapidark.cloud.gateway.formwork.entity.Client;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 import com.rapidark.cloud.gateway.formwork.entity.RegServer;
 import com.rapidark.cloud.gateway.formwork.entity.Route;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
 import javax.annotation.Resource;
@@ -32,7 +29,7 @@ import java.util.stream.Collectors;
  * @Version V1.0
  */
 @Service
-public class RouteService extends BaseService<Route,String,RouteDao> {
+public class RouteService extends BaseService<Route,String, RouteRepository> {
 
     @Resource
     private RegServerService regServerService;
@@ -41,7 +38,7 @@ public class RouteService extends BaseService<Route,String,RouteDao> {
     private MonitorService monitorService;
 
     @Resource
-    private RouteDao routeDao;
+    private RouteRepository routeRepository;
 
     /**
      * 删除网关路由以及已注册的客户端（关联表）
@@ -73,7 +70,7 @@ public class RouteService extends BaseService<Route,String,RouteDao> {
      * @return
      */
     public List<Route> monitorRouteList(){
-        return routeDao.monitorRouteList();
+        return routeRepository.monitorRouteList();
     }
 
     /**

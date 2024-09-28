@@ -1,11 +1,11 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
+import com.rapidark.cloud.gateway.formwork.repository.LoadServerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.dao.LoadServerDao;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
 import com.rapidark.cloud.gateway.formwork.entity.Route;
@@ -22,10 +22,10 @@ import java.util.*;
  * @Version V1.0
  */
 @Service
-public class LoadServerService extends BaseService<LoadServer, Long, LoadServerDao> {
+public class LoadServerService extends BaseService<LoadServer, Long, LoadServerRepository> {
 
     @Resource
-    private LoadServerDao loadServerDao;
+    private LoadServerRepository loadServerRepository;
 
     /**
      * 查询当前负载网关已加配置路由服务
@@ -34,7 +34,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      */
     @Transactional(readOnly = true)
     public List loadServerList(String balancedId){
-        return loadServerDao.queryLoadServerList(balancedId);
+        return loadServerRepository.queryLoadServerList(balancedId);
     }
 
     /**
@@ -54,7 +54,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      * @param balancedId
      */
     public void deleteAllByBalancedId(String balancedId){
-        loadServerDao.deleteAllByBalancedId(balancedId);
+        loadServerRepository.deleteAllByBalancedId(balancedId);
     }
 
     /**
@@ -63,7 +63,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      * @return
      */
     public List<LoadServer> queryByBalancedId(String balancedId){
-        return loadServerDao.queryByBalancedId(balancedId);
+        return loadServerRepository.queryByBalancedId(balancedId);
     }
 
     /**
@@ -72,7 +72,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      * @return
      */
     public List<LoadServer> queryByRouteId(String routeId){
-        return loadServerDao.queryByRouteId(routeId);
+        return loadServerRepository.queryByRouteId(routeId);
     }
 
     /**

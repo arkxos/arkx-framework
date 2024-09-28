@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.dao.ClientDao;
+import com.rapidark.cloud.gateway.formwork.repository.ClientRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Client;
 import com.rapidark.cloud.gateway.formwork.entity.RegServer;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
@@ -21,7 +21,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Service
-public class ClientService extends BaseService<Client,String,ClientDao> {
+public class ClientService extends BaseService<Client,String, ClientRepository> {
 
     @Resource
     private RegServerService regServerService;

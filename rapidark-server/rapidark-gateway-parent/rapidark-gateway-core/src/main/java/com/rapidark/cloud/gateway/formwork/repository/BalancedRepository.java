@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,6 +10,6 @@ import com.rapidark.cloud.gateway.formwork.entity.Balanced;
  * @Date 2020/06/28
  * @Version V1.0
  */
-public interface BalancedDao extends JpaRepository<Balanced, Long> {
+public interface BalancedRepository extends JpaRepository<Balanced, Long> {
 
 }

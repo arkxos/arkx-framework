@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +13,7 @@ import java.util.List;
  * @Date 2020/05/14
  * @Version V1.0
  */
-public interface RouteDao extends JpaRepository<Route, String> {
+public interface RouteRepository extends JpaRepository<Route, String> {
     /**
      * 查询开启监控的网关路由服务,条件：网关状态为0正常，监控状态为：0正常或(2告警+0可重试)
      * @return

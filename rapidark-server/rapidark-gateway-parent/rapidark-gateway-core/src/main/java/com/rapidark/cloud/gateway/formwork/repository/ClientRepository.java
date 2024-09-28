@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,6 +10,6 @@ import com.rapidark.cloud.gateway.formwork.entity.Client;
  * @Date 2020/05/15
  * @Version V1.0
  */
-public interface ClientDao extends JpaRepository<Client, String> {
+public interface ClientRepository extends JpaRepository<Client, String> {
 
 }

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,7 +15,7 @@ import java.util.List;
  * @Date 2020/05/16
  * @Version V1.0
  */
-public interface RegServerDao extends JpaRepository<RegServer, Long> {
+public interface RegServerRepository extends JpaRepository<RegServer, Long> {
 
     /**
      * 修改客户端下所有已注册网关服务的状态

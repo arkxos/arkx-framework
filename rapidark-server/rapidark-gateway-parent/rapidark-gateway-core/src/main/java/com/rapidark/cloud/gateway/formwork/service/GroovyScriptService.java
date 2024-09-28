@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.dao.GroovyScriptDao;
+import com.rapidark.cloud.gateway.formwork.repository.GroovyScriptRepository;
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
 import com.rapidark.cloud.gateway.formwork.util.GroovyScriptUtils;
 
@@ -24,10 +24,10 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyScriptDao> {
+public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyScriptRepository> {
 
     @Resource
-    private GroovyScriptDao groovyScriptDao;
+    private GroovyScriptRepository groovyScriptRepository;
 
     private final static String ORDER_NUM = "orderNum";
 
@@ -38,7 +38,7 @@ public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyS
      * @return
      */
     public int findMaxOrderNum(String routeId, String event) {
-        Integer orderNum = groovyScriptDao.findMaxOrderNum(routeId, event);
+        Integer orderNum = groovyScriptRepository.findMaxOrderNum(routeId, event);
         return orderNum == null ? 1 : orderNum;
     }
 
@@ -48,7 +48,7 @@ public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyS
      * @return
      */
     public List<Long> findIdList(String routeId){
-        return groovyScriptDao.findIdList(routeId);
+        return groovyScriptRepository.findIdList(routeId);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,6 +10,6 @@ import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
  * @Date 2020/11/25
  * @Version V1.0
  */
-public interface ApiDocDao extends JpaRepository<ApiDoc, String> {
+public interface ApiDocRepository extends JpaRepository<ApiDoc, String> {
 
 }

@@ -3,7 +3,7 @@ package com.rapidark.cloud.gateway.formwork.service;
 import org.springframework.stereotype.Service;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.dao.ApiDocDao;
+import com.rapidark.cloud.gateway.formwork.repository.ApiDocRepository;
 import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
 
 import javax.persistence.EntityManager;
@@ -15,6 +15,6 @@ import javax.persistence.EntityManager;
  * @Version V1.0
  */
 @Service
-public class ApiDocService extends BaseService<ApiDoc, String, ApiDocDao> {
+public class ApiDocService extends BaseService<ApiDoc, String, ApiDocRepository> {
     private EntityManager entityManager;
 }

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +13,7 @@ import java.util.List;
  * @Date 2022/2/21
  * @Version V1.0
  */
-public interface GroovyScriptDao extends JpaRepository<GroovyScript, Long> {
+public interface GroovyScriptRepository extends JpaRepository<GroovyScript, Long> {
 
     /**
      * 删除指定routeId下所有groovy脚本记录

@@ -5,8 +5,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.dao.SecureIpDao;
-import com.rapidark.cloud.gateway.formwork.entity.Client;
+import com.rapidark.cloud.gateway.formwork.repository.SecureIpRepository;
 import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
@@ -17,7 +16,7 @@ import com.rapidark.cloud.gateway.formwork.util.PageResult;
  * @Version V1.0
  */
 @Service
-public class SecureIpService extends BaseService<SecureIp, String, SecureIpDao> {
+public class SecureIpService extends BaseService<SecureIp, String, SecureIpRepository> {
 
     /**
      * 分页查询（支持模糊查询）

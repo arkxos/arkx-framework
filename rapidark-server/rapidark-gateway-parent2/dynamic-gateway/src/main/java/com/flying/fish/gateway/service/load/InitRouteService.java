@@ -3,7 +3,7 @@ package com.flying.fish.gateway.service.load;
 import com.flying.fish.gateway.cache.RouteCache;
 import com.flying.fish.gateway.service.DynamicRouteService;
 import com.flying.fish.gateway.service.LoadRouteService;
-import com.rapidark.cloud.gateway.formwork.dao.RouteDao;
+import com.rapidark.cloud.gateway.formwork.repository.RouteRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
 import com.rapidark.cloud.gateway.formwork.entity.Route;
@@ -38,7 +38,7 @@ public class InitRouteService {
     private List<RouteDefinition> routeDefinitions = new ArrayList<>();
 
     @Resource
-    private RouteDao routeDao;
+    private RouteRepository routeRepository;
     @Resource
     private BalancedService balancedService;
     @Resource
@@ -67,7 +67,7 @@ public class InitRouteService {
         Route query = new Route();
         query.setStatus(Constants.YES);
         try {
-            List<Route> routeList = routeDao.findAll(Example.of(query));
+            List<Route> routeList = routeRepository.findAll(Example.of(query));
             if (CollectionUtils.isEmpty(routeList)) {
                 log.error("初始化网关路由，无可用网关路由配置...");
                 return ;
@@ -103,7 +103,7 @@ public class InitRouteService {
             return ;
         }
         //查询所有可用的网关路由列表
-        List<Route> routeList = routeDao.findAll(Example.of(query));
+        List<Route> routeList = routeRepository.findAll(Example.of(query));
         if (CollectionUtils.isEmpty(routeList)){
             log.error("初始化网关负载均衡路由，无可用网关路由配置...");
             return ;

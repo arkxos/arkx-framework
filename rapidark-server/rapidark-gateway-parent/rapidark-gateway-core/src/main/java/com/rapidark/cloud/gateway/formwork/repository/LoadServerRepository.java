@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @Date 2020/06/28
  * @Version V1.0
  */
-public interface LoadServerDao extends JpaRepository<LoadServer, Long> {
+public interface LoadServerRepository extends JpaRepository<LoadServer, Long> {
 
     /**
      * 删除负载下所有的路由服务

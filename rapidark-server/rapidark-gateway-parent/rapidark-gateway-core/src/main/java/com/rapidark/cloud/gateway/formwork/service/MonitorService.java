@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
+import com.rapidark.cloud.gateway.formwork.repository.MonitorRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,6 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.formwork.bean.MonitorReq;
 import com.rapidark.cloud.gateway.formwork.bean.RouteRsp;
-import com.rapidark.cloud.gateway.formwork.dao.MonitorDao;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 import com.rapidark.cloud.gateway.formwork.entity.Route;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
  * @Version V1.0
  */
 @Service
-public class MonitorService extends BaseService<Monitor, String, MonitorDao> {
+public class MonitorService extends BaseService<Monitor, String, MonitorRepository> {
 
     @Resource
     private RouteService routeService;
     @Resource
-    private MonitorDao monitorDao;
+    private MonitorRepository monitorRepository;
 
     /**
      * 获取监控的服务列表
@@ -85,7 +85,7 @@ public class MonitorService extends BaseService<Monitor, String, MonitorDao> {
      * @return
      */
     public List<Monitor> validMonitorList(){
-        return monitorDao.validMonitorList();
+        return monitorRepository.validMonitorList();
     }
 
     /**
@@ -93,7 +93,7 @@ public class MonitorService extends BaseService<Monitor, String, MonitorDao> {
      * @return
      */
     public List<Monitor> validRouteMonitorList(){
-        return monitorDao.validRouteMonitorList();
+        return monitorRepository.validRouteMonitorList();
     }
 
 }

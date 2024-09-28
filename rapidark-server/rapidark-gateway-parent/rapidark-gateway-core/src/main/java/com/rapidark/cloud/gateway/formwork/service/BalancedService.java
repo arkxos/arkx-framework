@@ -1,11 +1,11 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
+import com.rapidark.cloud.gateway.formwork.repository.BalancedRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.dao.BalancedDao;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 
 import javax.annotation.Resource;
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @Version V1.0
  */
 @Service
-public class BalancedService extends BaseService<Balanced, String, BalancedDao> {
+public class BalancedService extends BaseService<Balanced, String, BalancedRepository> {
 
     @Resource
     private LoadServerService loadServerService;

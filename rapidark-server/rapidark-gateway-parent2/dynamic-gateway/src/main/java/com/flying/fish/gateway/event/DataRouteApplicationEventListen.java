@@ -2,7 +2,7 @@ package com.flying.fish.gateway.event;
 
 import com.flying.fish.gateway.cache.RouteCache;
 import com.flying.fish.gateway.service.LoadRouteService;
-import com.rapidark.cloud.gateway.formwork.dao.RouteDao;
+import com.rapidark.cloud.gateway.formwork.repository.RouteRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
 import com.rapidark.cloud.gateway.formwork.entity.Route;
@@ -15,8 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
-import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.event.EventListener;
@@ -24,9 +22,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +40,7 @@ import java.util.stream.Collectors;
 @Deprecated
 public class DataRouteApplicationEventListen implements RouteDefinitionLocator,ApplicationEventPublisherAware {
     @Resource
-    private RouteDao routeDao;
+    private RouteRepository routeRepository;
     @Resource
     private LoadRouteService loadRouteService;
     @Resource
@@ -112,7 +108,7 @@ public class DataRouteApplicationEventListen implements RouteDefinitionLocator,A
         //一定要清空routeDefinitions否则每次刷新会往集合中添加重复数据
         routeDefinitions.clear();
         try {
-            List<Route> list = routeDao.findAll(Example.of(query));
+            List<Route> list = routeRepository.findAll(Example.of(query));
             if (!CollectionUtils.isEmpty(list)) {
                 list.forEach(r -> {
                     RouteCache.put(r.getId(), r);
@@ -133,7 +129,7 @@ public class DataRouteApplicationEventListen implements RouteDefinitionLocator,A
         query.setStatus(Constants.YES);
         List<Route> balancedRouteList = new ArrayList<>();
         try {
-            List<Route> list = routeDao.findAll(Example.of(query));
+            List<Route> list = routeRepository.findAll(Example.of(query));
             List<Balanced> balancedList = balancedService.findAll(new Balanced());
             //先将所有负载路由清空
             routeDefinitions.removeIf(route -> route.getId().startsWith(RouteConstants.BALANCED));

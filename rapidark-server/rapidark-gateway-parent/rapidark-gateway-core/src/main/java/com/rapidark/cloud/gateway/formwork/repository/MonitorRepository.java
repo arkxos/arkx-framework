@@ -1,10 +1,9 @@
-package com.rapidark.cloud.gateway.formwork.dao;
+package com.rapidark.cloud.gateway.formwork.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @Date 2021/04/14
  * @Version V1.0
  */
-public interface MonitorDao extends JpaRepository<Monitor, String> {
+public interface MonitorRepository extends JpaRepository<Monitor, String> {
     /**
      * 获取监控配置，告警状态：0启用，1禁用，2告警
      * @return
