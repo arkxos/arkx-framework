@@ -117,6 +117,13 @@ module.exports = {
             '^/ltc': 'ltc'
         }
       },
+      '/gatewayManage': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/gatewayManage': 'gatewayManage'
+        }
+      },
       '/gateway': {
         target: process.env.VUE_APP_BASE_API,
         changeOrigin: true,
@@ -124,8 +131,6 @@ module.exports = {
           '^/gateway': ''
         }
       }
-
-
     },
     after: require('./mock'),
   },
