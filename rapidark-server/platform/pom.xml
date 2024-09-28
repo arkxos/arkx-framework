@@ -12,7 +12,7 @@
     <packaging>pom</packaging>
     <description>平台服务</description>
     <modules>
-        <module>rapidark-gateway-parent</module>
+        <module>rapidark-gateway-parent3</module>
         <module>api-spring-server</module>
         <module>uaa-admin-server</module>
         <module>base-client</module>
