@@ -1,0 +1,70 @@
+
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          # 启用本地化网关
+          enabled: true
+          # 将服务名转换为小写
+          lower-case-service-id: true
+      # 网关跨域配置
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+            - GET
+            - POST
+      # 路由示例（routes：路由，它由唯一标识（ID）、目标服务地址（uri）、一组断言（predicates）和一组过滤器组成（filters），filters 不是必需参数）
+      routes:
+      - id: limiter-uri-id
+        # 转发到指定url
+        uri: http://192.168.11.45:8770
+        predicates:
+        #- After=2017-01-20T17:42:47.789-07:00[America/Denver]
+        # 只限GET请求
+        - Method=GET
+        # 路径断言匹配,最新转发到：uri + path
+        - Path=/limiter/client/**
+        # Host主机匹配
+        - Host=mytest.com
+        # 远程请求IP匹配,符合IPv4格式
+        - RemoteAddr=192.168.11.1/24
+        filters:
+        # 开启相应过滤服务，注意SecureClientId对应SecureClientIdGatewayFilterFactory，GatewayFilterFactory为默认固定后缀,gateway只匹配前缀
+        - SecureClientId=false
+        - SecureIp=false
+        - SecureToken=false
+        # true则开启认证，false则不开启；指向AuthorizeGatewayFilterFactory
+        - Authorize=false
+        # StripPrefix=1表示过滤Path第一段（截取/test）
+        - StripPrefix=1
+        # 在转发url后加参数version=test1
+        - AddRequestParameter=version,test
+        # 重写Path转发请求地址,YAML规范限制$\用来代替$
+        - RewritePath=/foo/(?<segment>.*), /$\{segment}
+        # 添加熔断机制,当服务不可用时或超过了指定超时长，则转发到fallback
+        - name: CustomHystrix
+          args:
+            # 熔断器名称，默认为fallbackcmd
+            name: fallbackcmd
+            # 触发熔断的回调路径，需加前缀forward:
+            fallbackUri: forward:/fallback?routeId=1
+        # 添加限流机器，基于令牌桶算法，当服务超出限流约束，则直接拒决请求:RequestRateLimiter(默认),CustomRequestRateLimiter(自定义)
+        - name: CustomRequestRateLimiter
+          args:
+            # 用于限流的键的解析器的 Bean 对象的名字
+            key-resolver: '#{@uriKeyResolver}'
+            # 令牌桶每秒填充平均速率
+            redis-rate-limiter.replenishRate: 1
+            # 令牌桶总容量,若设为0，则拒绝所有请求
+            redis-rate-limiter.burstCapacity: 1
+        # 添加请求大小限制
+        - name: RequestSize
+          args:
+            # 限制请求大小为5000kb（不设置默认为5M），超过返回状态码413，参见：RequestSizeGatewayFilterFactory
+            maxSize: 5000000

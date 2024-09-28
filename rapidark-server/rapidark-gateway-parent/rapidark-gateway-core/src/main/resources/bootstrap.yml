@@ -1,0 +1,56 @@
+# ## ---------------------- 说明：---------------------- ##
+
+# Spring 集成 Nacos 加载配置文件优先级：bootstrap.properties ->bootstrap.yml ->application.properties ->application.yml
+
+# Nacos 控制台添加配置：
+# Data ID：example.properties
+# Group：DEFAULT_GROUP
+# 配置内容：useLocalCache=true
+
+# nacos服务Data ID名称，在 Nacos Spring Cloud 中，dataId 的完整格式如下：
+# {prefix}-${spring.profiles.active}.${file-extension}
+# prefix 默认为 spring.application.name 的值，也可以通过配置项 spring.cloud.nacos.config.prefix来配置
+# spring.profiles.active 即为当前环境对应的 profile
+# file-exetension 为配置内容的数据格式，可以通过配置项 spring.cloud.nacos.config.file-extension 来配置
+# spring.application.name=dynamic-gateway
+
+# 指定配置的后缀，支持 properties、yaml、yml，默认为 properties
+# spring.cloud.nacos.config.file-extension=properties
+
+# 参见： https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-config
+
+# Nacos server 的地址
+spring:
+  cloud:
+    # 注册到nacos，服务注册、发现和配置管理中心
+    nacos:
+      config:
+        namespace: ${config.namespace}
+        server-addr: ${config.server-addr}
+        #shared-dataids: common.properties,db.properties,redis.properties,rabbitmq.properties,file.properties
+        #refreshable-dataids: common.properties
+          #        server-addr: 127.0.0.1:8848
+          # 注意：管理模块和网关模块均采用统一的配置管理名称（dataId）和默认DEFAULT_GROUP组（group）
+          # 配置内容格式
+        file-extension: properties
+        # dataId名称，程序注册事件监听此dataId下的配置变化
+        prefix: rapidark-gateway
+
+        # 共享配置
+        shared-configs:
+          - dataid: common.properties
+            refresh: true # 自动刷新
+          - dataid: db.properties
+            refresh: true
+          - dataid: redis.properties
+            refresh: true
+          - dataid: rabbitmq.properties
+            refresh: true
+          - dataid: file.properties
+            refresh: true
+
+        discovery:
+          namespace: ${discovery.namespace}
+          server-addr: ${discovery.server-addr}
+
+        
