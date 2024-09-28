@@ -10,7 +10,7 @@
         <version>12.2.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rapidark-gateway-parent</artifactId>
+    <artifactId>rapidark-gateway-parent3</artifactId>
     <packaging>pom</packaging>
 
     <name>rapidark-gateway-parent</name>
