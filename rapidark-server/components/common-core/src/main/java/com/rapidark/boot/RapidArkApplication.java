@@ -13,8 +13,8 @@ import java.net.ProxySelector;
 public class RapidArkApplication {
 
     public static ConfigurableApplicationContext run(Class<?> primarySource, String... args) {
-        ProxySelector.setDefault(null);
-        System.setProperty("java.security.egd", "file:///dev/urandom");  // the 3 '/' are important to make it a URL
+//        ProxySelector.setDefault(null);
+//        System.setProperty("java.security.egd", "file:///dev/urandom");  // the 3 '/' are important to make it a URL
 
         ConfigurableApplicationContext context =  SpringApplication.run(primarySource, args);
 
