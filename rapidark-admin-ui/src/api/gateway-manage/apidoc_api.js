@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export const apiDocList = data => {
     return request({
-        url: '/apiDoc/list',
+        url: '/gatewayManage/apiDoc/list',
         method: 'get',
         data
     })
@@ -17,7 +17,7 @@ export const apiDocList = data => {
  */
 export const saveApiDoc = data => {
     return request({
-        url: '/apiDoc/save',
+        url: '/gatewayManage/apiDoc/save',
         method: 'post',
         data
     })
@@ -28,7 +28,7 @@ export const saveApiDoc = data => {
  */
 export const findByApiDoc = data => {
     return request({
-        url: '/apiDoc/findById',
+        url: '/gatewayManage/apiDoc/findById',
         method: 'get',
         data
     })

@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
  export const monitorList = data => {
     return request({
-        url: '/monitor/list',
+        url: '/gatewayManage/monitor/list',
         method: 'post',
         data
     })
@@ -18,7 +18,7 @@ import request from '@/utils/request'
  */
  export const closeMonitor = data => {
     return request({
-        url: '/monitor/close',
+        url: '/gatewayManage/monitor/close',
         method: 'get',
         data
     })

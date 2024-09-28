@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
 export const addIp = data => {
     return request({
-        url: '/ip/add',
+        url: '/gatewayManage/ip/add',
         method: 'post',
         data
     })
@@ -18,7 +18,7 @@ export const addIp = data => {
  */
 export const updateIp = data => {
     return request({
-        url: '/ip/update',
+        url: '/gatewayManage/ip/update',
         method: 'post',
         data
     })
@@ -29,7 +29,7 @@ export const updateIp = data => {
  */
 export const ipPageList = data => {
     return request({
-        url: '/ip/pageList',
+        url: '/gatewayManage/ip/pageList',
         method: 'post',
         data
     })
@@ -40,7 +40,7 @@ export const ipPageList = data => {
  */
 export const deleteIp = data => {
     return request({
-        url: '/ip/delete',
+        url: '/gatewayManage/ip/delete',
         method: 'get',
         data
     })

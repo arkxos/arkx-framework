@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export const addClient = data => {
     return request({
-        url: '/client/add',
+        url: '/gatewayManage/client/add',
         method: 'post',
         data
     })
@@ -17,7 +17,7 @@ export const addClient = data => {
  */
 export const updateClient = data => {
     return request({
-        url: '/client/update',
+        url: '/gatewayManage/client/update',
         method: 'post',
         data
     })
@@ -28,7 +28,7 @@ export const updateClient = data => {
  */
 export const clientPageList = data => {
     return request({
-        url: '/client/pageList',
+        url: '/gatewayManage/client/pageList',
         method: 'post',
         data
     })
@@ -39,7 +39,7 @@ export const clientPageList = data => {
  */
 export const startClient = data => {
     return request({
-        url: '/client/start',
+        url: '/gatewayManage/client/start',
         method: 'get',
         data
     })
@@ -50,7 +50,7 @@ export const startClient = data => {
  */
 export const stopClient = data => {
     return request({
-        url: '/client/stop',
+        url: '/gatewayManage/client/stop',
         method: 'get',
         data
     })
@@ -61,7 +61,7 @@ export const stopClient = data => {
  */
 export const deleteClient = data => {
     return request({
-        url: '/client/delete',
+        url: '/gatewayManage/client/delete',
         method: 'get',
         data
     })
