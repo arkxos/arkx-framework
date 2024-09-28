@@ -1,0 +1,41 @@
+# 本地服务访问
+server:
+  # 服务端口
+  port: 8768
+  # 服务IP
+  address: 0.0.0.0
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    # 应用服务名
+    name: admin-server
+  profiles:
+    active:
+  security:
+    user:
+      name: admin
+      password: admin
+
+# 启用服务健康检测，注册中心将通过http://host:port/actuator/health 检测服务的存活，默认10s一次
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。开发用*，上生产请取消。默认打开health和info
+        - "*"
+  health:
+    # 开启后打印详细信息
+    show-details: always
+    refresh:
+      enabled: true
+
+# 配置日志
+logging:
+  level:
+    # log 级别
+    org.springframework.cloud.gateway: debug

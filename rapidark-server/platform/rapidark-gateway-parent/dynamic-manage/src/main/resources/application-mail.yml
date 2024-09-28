@@ -1,0 +1,22 @@
+# ############# spring内置的email发送服务配置 ################
+spring:
+  mail:
+    username: xxxxxx@qq.com
+    password: xxxxxx
+    host: smtp.exmail.qq.com
+    port:
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          timeout: 100000
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
