@@ -14,6 +14,8 @@ module.exports = {
   },
   rules: {
     //'no-undef': 2,
+    'no-empty': 'off',
+    'vue/require-prop-types': 'off',
     'no-console': 'off',
     'no-debugger': 'off',
     'vue/no-v-html': 'off',
@@ -25,19 +27,23 @@ module.exports = {
     'vue/no-mutating-props': 'off',
     'vue/html-self-closing': 'off',
     'vue/require-default-prop': 'off',
+    'vue/no-unused-components': 'off',
+    'vue/attribute-hyphenation': 'off',
+    'no-irregular-whitespace': 'off',
+    'vue/no-lone-template': 'off',
     'vue/component-definition-name-casing': 'off',
-    'vue/html-self-closing': [
-      'error',
-      {
-        html: {
-          void: 'any',
-          normal: 'any',
-          component: 'always',
-        },
-        svg: 'always',
-        math: 'always',
-      },
-    ],
+    // 'vue/html-self-closing': [
+    //   'error',
+    //   {
+    //     html: {
+    //       void: 'any',
+    //       normal: 'any',
+    //       component: 'always',
+    //     },
+    //     svg: 'always',
+    //     math: 'always',
+    //   },
+    // ],
     // Vue.js风格指南(https://cn.vuejs.org/v2/style-guide/)
     // Vue组件排序
     'vue/order-in-components': 'off',
