@@ -1,10 +1,9 @@
 package com.flying.fish.gateway.tiemr;
 
-import com.flying.fish.formwork.util.RouteConstants;
+import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 import com.flying.fish.gateway.cache.RouteReqCache;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

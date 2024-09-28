@@ -1,10 +1,10 @@
 package com.flying.fish.gateway.config;
 
 
-import com.flying.fish.formwork.config.ApplicationContextProvider;
-import com.flying.fish.formwork.dao.RouteDao;
-import com.flying.fish.formwork.entity.Route;
-import com.flying.fish.formwork.util.Constants;
+import com.rapidark.cloud.gateway.formwork.config.ApplicationContextProvider;
+import com.rapidark.cloud.gateway.formwork.dao.RouteDao;
+import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.flying.fish.gateway.cache.RouteCache;
 import com.flying.fish.gateway.filter.ClientIdGatewayFilter;
 import com.flying.fish.gateway.filter.IpGatewayFilter;

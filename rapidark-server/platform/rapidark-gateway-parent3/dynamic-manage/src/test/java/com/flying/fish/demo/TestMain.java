@@ -1,6 +1,6 @@
 package com.flying.fish.demo;
 
-import com.flying.fish.formwork.util.Constants;
+import com.rapidark.cloud.gateway.formwork.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 

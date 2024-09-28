@@ -1,8 +1,8 @@
 package com.flying.fish.gateway.rest;
 
-import com.flying.fish.formwork.entity.Route;
-import com.flying.fish.formwork.service.RouteService;
-import com.flying.fish.formwork.util.ApiResult;
+import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.service.RouteService;
+import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.flying.fish.gateway.event.DataRouteApplicationEventListen;
 import com.flying.fish.gateway.service.DynamicRouteService;
 import com.flying.fish.gateway.service.LoadRouteService;

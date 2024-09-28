@@ -2,7 +2,7 @@ package com.flying.fish.gateway.component.groovy;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.nacos.common.util.Md5Utils;
-import com.flying.fish.formwork.base.BaseGroovyService;
+import com.rapidark.cloud.gateway.formwork.base.BaseGroovyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

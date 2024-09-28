@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.event;
 
-import com.flying.fish.formwork.util.RouteConstants;
+import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;

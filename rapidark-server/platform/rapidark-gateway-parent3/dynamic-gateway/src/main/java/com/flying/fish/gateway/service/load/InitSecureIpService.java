@@ -1,8 +1,8 @@
 package com.flying.fish.gateway.service.load;
 
-import com.flying.fish.formwork.entity.SecureIp;
-import com.flying.fish.formwork.service.SecureIpService;
-import com.flying.fish.formwork.util.Constants;
+import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
+import com.rapidark.cloud.gateway.formwork.service.SecureIpService;
+import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.flying.fish.gateway.cache.IpListCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.filter.authorize;
 
-import com.flying.fish.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.Route;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
 /**

@@ -1,16 +1,11 @@
 package com.flying.fish.gateway.event;
 
-import com.flying.fish.formwork.service.RegServerService;
-import com.flying.fish.gateway.cache.ClientIdCache;
-import com.flying.fish.gateway.cache.RegIpListCache;
+import com.rapidark.cloud.gateway.formwork.service.RegServerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.*;
 
 /**
  * @Description 监听DataClientApplicationEvent事件，并触发客户端数据重新加载（已过时）

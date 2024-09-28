@@ -1,17 +1,11 @@
 package com.flying.fish.gateway.event;
 
-import com.flying.fish.formwork.entity.SecureIp;
-import com.flying.fish.formwork.service.SecureIpService;
-import com.flying.fish.formwork.util.Constants;
-import com.flying.fish.gateway.cache.IpListCache;
+import com.rapidark.cloud.gateway.formwork.service.SecureIpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Description 监听DataIpApplicationEvent事件，并触发IP鉴权数据重新加载（已过时）

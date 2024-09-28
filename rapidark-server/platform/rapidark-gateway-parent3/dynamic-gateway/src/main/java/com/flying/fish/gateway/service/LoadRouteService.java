@@ -1,8 +1,8 @@
 package com.flying.fish.gateway.service;
 
-import com.flying.fish.formwork.entity.Route;
-import com.flying.fish.formwork.util.Constants;
-import com.flying.fish.formwork.util.RouteConstants;
+import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 import com.flying.fish.gateway.filter.ClientIdGatewayFilter;
 import com.flying.fish.gateway.filter.IpGatewayFilter;
 import com.flying.fish.gateway.filter.TokenGatewayFilter;

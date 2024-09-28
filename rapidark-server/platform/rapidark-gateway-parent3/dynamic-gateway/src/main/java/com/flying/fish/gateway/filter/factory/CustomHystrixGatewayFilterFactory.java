@@ -1,8 +1,8 @@
 package com.flying.fish.gateway.filter.factory;
 
-import com.flying.fish.formwork.util.HttpResponseUtils;
-import com.flying.fish.formwork.util.NetworkIpUtils;
-import com.flying.fish.formwork.util.RouteConstants;
+import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
+import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
+import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 import com.flying.fish.gateway.cache.RouteCache;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandKey;
@@ -11,7 +11,6 @@ import com.netflix.hystrix.HystrixObservableCommand;
 import com.netflix.hystrix.HystrixObservableCommand.Setter;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -98,7 +97,7 @@ public class CustomHystrixGatewayFilterFactory extends AbstractGatewayFilterFact
                 if (config.name.startsWith(RouteConstants.Hystrix.CUSTOM_HYSTRIX_NAME)){
                     Route route = exchange.getRequiredAttribute(GATEWAY_ROUTE_ATTR);
                     //添加自定义熔断器
-                    com.flying.fish.formwork.entity.Route cacheRoute = (com.flying.fish.formwork.entity.Route)RouteCache.get(route.getId());
+                    com.rapidark.cloud.gateway.formwork.entity.Route cacheRoute = (com.rapidark.cloud.gateway.formwork.entity.Route)RouteCache.get(route.getId());
                     //HystrixCommandGroupKey groupKey = HystrixCommandGroupKey.Factory.asKey(config.name);
                     //HystrixCommandKey commandKey = HystrixCommandKey.Factory.asKey(config.name);
                     //启用回调

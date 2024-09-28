@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.service.load;
 
-import com.flying.fish.formwork.service.RegServerService;
+import com.rapidark.cloud.gateway.formwork.service.RegServerService;
 import com.flying.fish.gateway.cache.RegServerCache;
 import com.flying.fish.gateway.vo.GatewayRegServer;
 import lombok.extern.slf4j.Slf4j;

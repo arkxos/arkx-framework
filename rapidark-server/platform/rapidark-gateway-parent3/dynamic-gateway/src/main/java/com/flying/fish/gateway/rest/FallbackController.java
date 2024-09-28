@@ -1,8 +1,8 @@
 package com.flying.fish.gateway.rest;
 
-import com.flying.fish.formwork.entity.Route;
-import com.flying.fish.formwork.util.ApiResult;
-import com.flying.fish.formwork.util.Constants;
+import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.util.ApiResult;
+import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.flying.fish.gateway.cache.RouteCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

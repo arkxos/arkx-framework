@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.component.groovy;
 
-import com.flying.fish.formwork.base.BaseGroovyService;
+import com.rapidark.cloud.gateway.formwork.base.BaseGroovyService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

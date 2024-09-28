@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.component;
 
-import com.flying.fish.formwork.base.BaseGroovyService;
+import com.rapidark.cloud.gateway.formwork.base.BaseGroovyService;
 import lombok.Data;
 
 import java.util.Map;

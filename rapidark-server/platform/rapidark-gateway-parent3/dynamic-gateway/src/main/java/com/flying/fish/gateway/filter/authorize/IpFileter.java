@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.filter.authorize;
 
-import com.flying.fish.formwork.util.NetworkIpUtils;
+import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
