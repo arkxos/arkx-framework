@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @Description 过滤网关路由的心跳检测,如果请求的headers中存在"Keepalive:flying-fish-gateway"则表示心跳请求
+ * @Description 过滤网关路由的心跳检测,如果请求的headers中存在"Keepalive:rapidark-gateway"则表示心跳请求
  * @Author JL
  * @Date 2021/04/27
  * @Version V1.0
@@ -27,13 +27,13 @@ public class CustomGlobalFilter implements WebFilter {
 
     private static final String APPLICATION_JSON = "application/json;charset=UTF-8";
     private static final String HEADER_KEEPALIVE = "Keepalive";
-    private static final String GATEWAY_KEEPALIVE = "flying-fish-gateway";
+    private static final String GATEWAY_KEEPALIVE = "rapidark-gateway";
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
         if (headers != null && headers.size()>0){
-            //"Keepalive", "flying-fish-gateway"
+            //"Keepalive", "rapidark-gateway"
             String keepalive = headers.getFirst(HEADER_KEEPALIVE);
             if (keepalive != null && keepalive.equals(GATEWAY_KEEPALIVE)){
                 log.info("心跳检测：{}", GATEWAY_KEEPALIVE);

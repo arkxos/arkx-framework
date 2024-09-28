@@ -30,5 +30,5 @@ spring:
         # 配置内容格式
         file-extension: properties
         # dataId名称，程序注册事件监听此dataId下的配置变化
-        prefix: flying-fish-gateway
+        prefix: rapidark-gateway
         
