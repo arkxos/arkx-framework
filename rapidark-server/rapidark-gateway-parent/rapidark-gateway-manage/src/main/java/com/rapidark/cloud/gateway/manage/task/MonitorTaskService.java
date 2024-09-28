@@ -93,6 +93,7 @@ public class MonitorTaskService {
                 //注意此处，需根据预估的真实队列总量计算，最大线程数按预估时间完成所有任务的总时长推算，在设定暂停时长，防止数据入队列太快，线程来不及处理，导致任务丢弃；
                 TimeUnit.MILLISECONDS.sleep(10 * 1000);
             }catch(Exception e){
+                e.printStackTrace();
                 log.error("执行监控任务失败！监控线程已退出...",e);
             }
         }

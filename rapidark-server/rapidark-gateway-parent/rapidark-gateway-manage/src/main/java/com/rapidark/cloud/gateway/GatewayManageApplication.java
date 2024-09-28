@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.manage;
+package com.rapidark.cloud.gateway;
 
 import com.rapidark.boot.RapidArkApplication;
 import lombok.extern.slf4j.Slf4j;

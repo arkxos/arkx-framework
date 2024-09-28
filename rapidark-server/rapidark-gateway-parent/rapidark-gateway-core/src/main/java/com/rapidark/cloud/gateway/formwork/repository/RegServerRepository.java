@@ -3,6 +3,7 @@ package com.rapidark.cloud.gateway.formwork.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rapidark.cloud.gateway.formwork.entity.RegServer;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Date 2020/05/16
  * @Version V1.0
  */
+@Repository
 public interface RegServerRepository extends JpaRepository<RegServer, Long> {
 
     /**

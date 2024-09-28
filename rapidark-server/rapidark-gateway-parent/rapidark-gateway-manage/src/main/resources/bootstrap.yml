@@ -48,15 +48,15 @@ spring:
 
         # 共享配置
         shared-configs:
-          - dataid: common.properties
+          - dataId: common.properties
             refresh: true # 自动刷新
-          - dataid: db.properties
+          - dataId: db.properties
             refresh: true
-          - dataid: redis.yml
+          - dataId: redis.properties
             refresh: true
-          - dataid: rabbitmq.properties
+          - dataId: rabbitmq.properties
             refresh: true
-          - dataid: file.properties
+          - dataId: file.properties
             refresh: true
 
       discovery:
@@ -65,7 +65,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       naming:
         # 采用@Column注解字段命名，否则会用砣峰命名规则生产数据库字段名
