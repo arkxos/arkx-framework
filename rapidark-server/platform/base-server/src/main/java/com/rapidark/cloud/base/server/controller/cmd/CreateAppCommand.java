@@ -50,4 +50,6 @@ public class CreateAppCommand {
     private String encryptType;
     //    @RequestParam(value = "publicKey", required = false, defaultValue = "")
     private String publicKey;
+    private String groupCode;
+    private String ip;
 }

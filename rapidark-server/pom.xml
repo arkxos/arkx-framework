@@ -18,13 +18,13 @@
        <!-- <module>rapidark-starter-dependencies</module>-->
         <module>rapidark-framework</module>
         <module>components</module>
-        <module>rapidark-gateway-parent</module>
-        <module>rapidark-gateway-parent2</module>
+
         <module>platform</module>
         <module>services</module>
         <module>migration</module>
         <module>rapidark-os</module>
-
+        <module>rapidark-gateway-parent</module>
+        <module>rapidark-gateway-parent2</module>
     </modules>
     <properties>
         <java.version>11</java.version>

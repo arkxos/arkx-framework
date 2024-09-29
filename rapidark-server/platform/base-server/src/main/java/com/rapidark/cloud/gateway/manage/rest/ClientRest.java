@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -43,19 +44,19 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public ApiResult add(@RequestBody Client client) {
+    public ApiResult add(@RequestBody OpenApp client) {
         Assert.notNull(client, "未获取到对象");
-        client.setId(UUIDUtils.getUUIDString());
-        client.setCreateTime(new Date());
+        client.setAppId(UUIDUtils.getUUIDString());
+//        client.setCreateTime(new Date());
         this.validate(client);
         //验证名称是否重复
-        Client qClinet = new Client();
-        qClinet.setName(client.getName());
+        OpenApp qClinet = new OpenApp();
+        qClinet.setAppName(client.getAppName());
         long count = clientService.count(qClinet);
         Assert.isTrue(count <= 0, "客户端名称已存在，不能重复");
         //保存
         clientService.save(client);
-        customNacosConfigService.publishClientNacosConfig(client.getId());
+        customNacosConfigService.publishClientNacosConfig(client.getAppId());
         return new ApiResult();
     }
 
@@ -67,7 +68,7 @@ public class ClientRest extends BaseRest {
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult delete(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        Client dbClient = clientService.findById(id);
+        OpenApp dbClient = clientService.findById(id);
         Assert.notNull(dbClient, "未获取到对象");
         clientService.delete(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
@@ -80,13 +81,13 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ApiResult update(@RequestBody Client client) {
+    public ApiResult update(@RequestBody OpenApp client) {
         Assert.notNull(client, "未获取到对象");
-        Assert.isTrue(StringUtils.isNotBlank(client.getId()), "未获取到对象ID");
-        client.setUpdateTime(new Date());
+        Assert.isTrue(StringUtils.isNotBlank(client.getAppId()), "未获取到对象ID");
+//        client.setUpdateTime(new Date());
         this.validate(client);
         clientService.update(client);
-        customNacosConfigService.publishClientNacosConfig(client.getId());
+        customNacosConfigService.publishClientNacosConfig(client.getAppId());
         return new ApiResult();
     }
 
@@ -108,15 +109,15 @@ public class ClientRest extends BaseRest {
      */
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult pageList(@RequestBody ClientReq clientReq) {
-        Client client = new Client();
+        OpenApp client = new OpenApp();
         Integer reqCurrentPage = null;
         Integer reqPageSize = null;
         if (clientReq != null) {
             reqCurrentPage = clientReq.getCurrentPage();
             reqPageSize = clientReq.getPageSize();
             BeanUtils.copyProperties(clientReq, client);
-            if (StringUtils.isBlank(client.getName())) {
-                client.setName(null);
+            if (StringUtils.isBlank(client.getAppName())) {
+                client.setAppName(null);
             }
             if (StringUtils.isBlank(client.getIp())) {
                 client.setIp(null);
@@ -124,9 +125,9 @@ public class ClientRest extends BaseRest {
             if (StringUtils.isBlank(client.getGroupCode())) {
                 client.setGroupCode(null);
             }
-            if (StringUtils.isBlank(client.getStatus())) {
-                client.setStatus(null);
-            }
+//            if (StringUtils.isBlank(client.getStatus())) {
+//                client.setStatus(null);
+//            }
         }
         int currentPage = getCurrentPage(reqCurrentPage);
         int pageSize = getPageSize(reqPageSize);
@@ -141,8 +142,8 @@ public class ClientRest extends BaseRest {
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult start(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        Client dbClient = clientService.findById(id);
-        dbClient.setStatus(Constants.YES);
+        OpenApp dbClient = clientService.findById(id);
+        dbClient.setStatus(Integer.valueOf(Constants.YES));
         clientService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
         return new ApiResult();
@@ -156,8 +157,8 @@ public class ClientRest extends BaseRest {
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult stop(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        Client dbClient = clientService.findById(id);
-        dbClient.setStatus(Constants.NO);
+        OpenApp dbClient = clientService.findById(id);
+        dbClient.setStatus(Integer.valueOf(Constants.NO));
         clientService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
         return new ApiResult();

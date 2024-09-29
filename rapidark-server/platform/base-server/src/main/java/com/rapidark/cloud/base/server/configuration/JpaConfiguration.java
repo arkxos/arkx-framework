@@ -33,7 +33,8 @@ import java.util.Map;
         repositoryFactoryBeanClass = SqlToyJpaRepositoryFactoryBean.class)
 @EntityScan({
         "com.rapidark.cloud.base.client.model",
-        "com.rapidark.cloud.base.server.modules"
+        "com.rapidark.cloud.base.server.modules",
+        "com.rapidark.cloud.gateway.formwork.entity"
 })
 public class JpaConfiguration {
 

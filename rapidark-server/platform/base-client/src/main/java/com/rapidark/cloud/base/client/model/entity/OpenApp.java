@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 系统应用-基础信息
@@ -39,6 +40,10 @@ public class OpenApp extends BaseEntity {
     @ApiModelProperty(value = "客户端ID")
     private String appId;
 
+    @NotNull(message = "客户端分组不能为空")
+    @Column(name = "group_code")
+    private String groupCode;
+
     /**
      * API访问key
      */
@@ -57,17 +62,22 @@ public class OpenApp extends BaseEntity {
      * app名称
      */
     @Column(name = "APP_NAME",nullable = false)
-    @NotBlank
-    @ApiModelProperty(value = "app名称")
+    @NotBlank(message = "客户端名称不能为空")
+    @Size(min = 2, max = 40, message = "客户端系统名称长度必需在2到40个字符内")
+    @ApiModelProperty(value = "客户端系统名称")
     private String appName;
 
     /**
      * app英文名称
      */
     @Column(name = "APP_NAME_EN",nullable = false)
-    @NotBlank
-    @ApiModelProperty(value = "app英文名称")
+    @NotBlank(message = "客户端系统代号不能为空")
+    @Size(min = 2, max = 40, message = "客户端系统代号长度必需在2到40个字符内")
+    @ApiModelProperty(value = "客户端系统代号")
     private String appNameEn;
+
+    @Column(name = "ip")
+    private String ip;
 
     /**
      * app类型：server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用
@@ -118,7 +128,7 @@ public class OpenApp extends BaseEntity {
      */
     @Column(name = "STATUS",nullable = false)
     @NotNull
-    @ApiModelProperty(value = "状态:0-无效 1-有效")
+    @ApiModelProperty(value = "状态:0-禁用 1-启用")
     private Integer status;
 
     /**

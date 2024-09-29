@@ -138,6 +138,11 @@
             <el-form-item label="英文名称" prop="appNameEn">
               <el-input v-model="formItem.appNameEn" placeholder="请输入内容"/>
             </el-form-item>
+            <el-form-item label="分组" prop="groupCode">
+              <el-select filterable v-model="formItem.groupCode" placeholder="请选择分组" style="width: 300px;">
+                <el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" />
+              </el-select>
+            </el-form-item>
             <el-form-item label="应用类型" prop="appType">
               <el-select v-model="formItem.appType" @on-change="handleOnAppTypeChange">
                 <el-option value="server">服务器应用</el-option>
@@ -157,6 +162,9 @@
                   <span>安卓Android</span>
                 </el-radio-button>
               </el-radio-group>
+            </el-form-item>
+            <el-form-item label="IP" prop="ip">
+              <el-input v-model="formItem.ip" style="width: 300px;"></el-input>
             </el-form-item>
             <el-form-item label="应用官网" prop="website">
               <el-input v-model="formItem.website" placeholder="请输入内容"/>
@@ -369,6 +377,8 @@ export default {
         appNameEn: [
           { required: true, validator: validateEn, trigger: 'blur' }
         ],
+        groupCode: [{ required: true, message: '分组不能为空', trigger: 'blur' }],
+        ip: [{ required: true, message: 'IP不能为空', trigger: 'blur' }],
         grantTypes: [
           { required: true, type: 'array', min: 1, message: '授权类型不能为空', trigger: 'blur' }
         ],
@@ -390,6 +400,8 @@ export default {
         appName: '',
         appNameEn: '',
         appType: 'server',
+        groupCode: '',
+        ip: '',
         appIcon: '',
         appOs: '',
         path: '',
@@ -412,7 +424,7 @@ export default {
         isExpired: false,
         tokenValidity: '1'
       },
-
+      groupOptions: this.GLOBAL_VAR.groups,
       data: []
     }
   },

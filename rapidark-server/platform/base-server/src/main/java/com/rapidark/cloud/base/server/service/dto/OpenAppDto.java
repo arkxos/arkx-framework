@@ -23,17 +23,23 @@ public class OpenAppDto implements Serializable {
     /** 客户端ID */
     private String appId;
 
+    private String groupCode;
+
+    /** app英文名称 */
+    private String appNameEn;
+
+    /** app名称 */
+    private String appName;
+
+    private String ip;
+
     /** API访问key */
     private String apiKey;
 
     /** API访问密钥 */
     private String secretKey;
 
-    /** app名称 */
-    private String appName;
 
-    /** app英文名称 */
-    private String appNameEn;
 
     /** 应用图标 */
     private String appIcon;

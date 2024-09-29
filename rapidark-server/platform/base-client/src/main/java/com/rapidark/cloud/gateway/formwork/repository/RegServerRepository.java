@@ -45,21 +45,21 @@ public interface RegServerRepository extends JpaRepository<RegServer, Long> {
      * 查询指定网关服务下的注册的,并且是状态为0允许通行的
      * @return
      */
-    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey FROM Client c, RegServer s, Route r WHERE c.id = s.clientId AND r.id = s.routeId AND c.status='0' AND s.status='0' AND r.status='0'")
+    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey FROM OpenApp c, RegServer s, Route r WHERE c.id = s.clientId AND r.id = s.routeId AND c.status='0' AND s.status='0' AND r.status='0'")
     List allRegClientList();
 
     /**
      * 查询指定客户端注册的所有网关路由服务
      * @return
      */
-    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey,s.status FROM Client c, RegServer s WHERE c.id = s.clientId AND s.clientId=?1")
+    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey,s.status FROM OpenApp c, RegServer s WHERE c.id = s.clientId AND s.clientId=?1")
     List getRegClientList(String clientId);
 
     /**
      * 查询指定网关服务下的注册的所有客户端
      * @return
      */
-    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey,s.status FROM Client c, RegServer s WHERE c.id = s.clientId AND s.routeId=?1")
+    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey,s.status FROM OpenApp c, RegServer s WHERE c.id = s.clientId AND s.routeId=?1")
     List getByRouteRegClientList(String routeId);
 
 }

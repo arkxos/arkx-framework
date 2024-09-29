@@ -33,11 +33,16 @@ export const getApps = ({ page, limit, appId, appName, appNameEn }) => {
  * @param encryptType
  * @param publicKey
  */
-export const addApp = ({ appName, appNameEn, appType, appIcon, appOs, appDesc, status, website, developerId, isSign, isEncrypt, encryptType, publicKey }) => {
+export const addApp = ({
+                         appName, appNameEn, appType, appIcon, appOs,
+                         appDesc, status, website, developerId, isSign,
+                         isEncrypt, encryptType, publicKey, groupCode, ip }) => {
   const data = {
     appName: appName,
     appNameEn: appNameEn,
     appType: appType,
+    groupCode: groupCode,
+    ip: ip,
     appIcon: appIcon,
     appOs: appOs,
     appDesc: appDesc,
@@ -73,13 +78,19 @@ export const addApp = ({ appName, appNameEn, appType, appIcon, appOs, appDesc, s
  * @param encryptType
  * @param publicKey
  */
-export const updateApp = ({ appId, appName, appNameEn, appType, appIcon, appOs, appDesc, status, website, developerId, isSign, isEncrypt, encryptType, publicKey }) => {
+export const updateApp = ({
+                            appId, appName, appNameEn, appType, appIcon,
+                            groupCode, ip,
+                            appOs, appDesc, status, website, developerId,
+                            isSign, isEncrypt, encryptType, publicKey }) => {
   const data = {
     appId: appId,
     appName: appName,
     appNameEn: appNameEn,
     appType: appType,
     appIcon: appIcon,
+    groupCode: groupCode,
+    ip: ip,
     appOs: appOs,
     appDesc: appDesc,
     status: status,

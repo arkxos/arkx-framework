@@ -6,6 +6,7 @@ import com.flying.fish.gateway.cache.RegServerCache;
 import com.flying.fish.gateway.cache.RouteCache;
 import com.flying.fish.gateway.event.ApplicationEventPublisherFactory;
 import com.flying.fish.gateway.vo.GatewayRegServer;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayNacosConfigBean;
 import com.rapidark.cloud.gateway.formwork.entity.*;
 import com.rapidark.cloud.gateway.formwork.service.*;
@@ -247,7 +248,7 @@ public class ConfigRefreshService {
         }
         RegServer regServer = regServerService.findById(regServerId);
         Assert.notNull(regServer, getExceptionMessage("未获取注册网关路由客户端服务ID数据库配置！regServerId=", String.valueOf(regServerId)));
-        Client client = clientService.findById(regServer.getClientId());
+        OpenApp client = clientService.findById(regServer.getClientId());
         Assert.notNull(client, getExceptionMessage("未获取注册客户端ID数据库配置！clientId=", regServer.getClientId()));
         //封装配置数据
         List regClientList = new ArrayList<>(1);
@@ -269,7 +270,7 @@ public class ConfigRefreshService {
         if (StringUtils.isBlank(clientId)){
             return ;
         }
-        Client client = clientService.findById(clientId);
+        OpenApp client = clientService.findById(clientId);
         //null表示已删除
         if (client == null){
             deleteRegRouteClient(clientId);
