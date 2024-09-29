@@ -3,7 +3,6 @@ package com.rapidark.cloud.base.server.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
-import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
 import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
 import com.rapidark.cloud.base.server.controller.cmd.DeleteMenuCommand;
@@ -12,6 +11,8 @@ import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.BaseMenuQuery;
 import com.rapidark.cloud.base.server.service.BaseMenuService;
+import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
+import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.http.OpenRestTemplate;
@@ -56,9 +57,9 @@ public class BaseMenuController {
     @ApiOperation(value = "所有服务列表", notes = "所有服务列表")
     @GetMapping("/menu/services")
     public ResultBody<List<JSONObject>> getServiceList() {
-        List<OpenApp> apps = openAppService.list();
+        List<OpenAppDto> apps = openAppService.queryAll(new OpenClientQueryCriteria());
         List<JSONObject> jsonList = new ArrayList<>();
-        for (OpenApp app : apps) {
+        for (OpenAppDto app : apps) {
             JSONObject json = new JSONObject();
             json.put("serviceId", app.getAppNameEn());
             String serviceNameDisplay = app.getAppName() + "(" + app.getAppNameEn() + ")";

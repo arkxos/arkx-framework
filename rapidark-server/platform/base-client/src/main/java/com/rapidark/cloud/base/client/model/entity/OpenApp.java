@@ -6,55 +6,57 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.common.annotation.TableAlias;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
  * 系统应用-基础信息
- *
- * @author liuyadu
+ * @author darkness
+ * @version 1.0
+ * @date 2022/5/25 11:10
  */
-@TableName("base_app")
+@Entity
+@Getter
+@Setter
+@Table(name="base_app")
 @TableAlias("app")
-public class OpenApp extends AbstractEntity {
+public class OpenApp extends BaseEntity {
 
     private static final long serialVersionUID = -4606067795040222681L;
 
-    @TableId(type = IdType.INPUT)
+    @Id
+    @Column(name = "APP_ID")
     @ApiModelProperty(value = "客户端ID")
     private String appId;
 
     /**
      * API访问key
      */
+    @Column(name = "API_KEY")
     @ApiModelProperty(value = "API访问key")
     private String apiKey;
     /**
      * API访问密钥
      */
+    @Column(name = "SECRET_KEY",nullable = false)
     @NotBlank
     @ApiModelProperty(value = "API访问密钥")
     private String secretKey;
 
     /**
-     * app类型：server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     */
-    @NotBlank
-    @ApiModelProperty(value = "app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用")
-    private String appType;
-
-    /**
-     * 应用图标
-     */
-    @ApiModelProperty(value = "应用图标")
-    private String appIcon;
-
-    /**
      * app名称
      */
+    @Column(name = "APP_NAME",nullable = false)
     @NotBlank
     @ApiModelProperty(value = "app名称")
     private String appName;
@@ -62,19 +64,37 @@ public class OpenApp extends AbstractEntity {
     /**
      * app英文名称
      */
+    @Column(name = "APP_NAME_EN",nullable = false)
     @NotBlank
     @ApiModelProperty(value = "app英文名称")
     private String appNameEn;
+
+    /**
+     * app类型：server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用
+     */
+    @Column(name = "APP_TYPE",nullable = false)
+    @NotBlank
+    @ApiModelProperty(value = "app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用")
+    private String appType;
+
+    /**
+     * 应用图标
+     */
+    @Column(name = "APP_ICON")
+    @ApiModelProperty(value = "应用图标")
+    private String appIcon;
+
     /**
      * 移动应用操作系统：ios-苹果 android-安卓
      */
+    @Column(name = "APP_OS")
     @ApiModelProperty(value = "移动应用操作系统:ios-苹果 android-安卓")
     private String appOs;
-
 
     /**
      * 用户ID:默认为0
      */
+    @Column(name = "DEVELOPER_ID",nullable = false)
     @NotNull
     @ApiModelProperty(value = "开发者ID:默认为0")
     private Long developerId;
@@ -82,18 +102,21 @@ public class OpenApp extends AbstractEntity {
     /**
      * app描述
      */
+    @Column(name = "APP_DESC")
     @ApiModelProperty(value = "app描述")
     private String appDesc;
 
     /**
      * 官方网址
      */
+    @Column(name = "WEBSITE")
     @ApiModelProperty(value = "官网地址")
     private String website;
 
     /**
      * 状态:0-无效 1-有效
      */
+    @Column(name = "STATUS",nullable = false)
     @NotNull
     @ApiModelProperty(value = "状态:0-无效 1-有效")
     private Integer status;
@@ -101,6 +124,7 @@ public class OpenApp extends AbstractEntity {
     /**
      * 保留数据0-否 1-是 不允许删除
      */
+    @Column(name = "IS_PERSIST",nullable = false)
     @NotNull
     @ApiModelProperty(value = "保留数据0-否 1-是 不允许删除")
     private Integer isPersist;
@@ -108,6 +132,7 @@ public class OpenApp extends AbstractEntity {
     /**
      * 是否验签:0-否 1-是
      */
+    @Column(name = "IS_SIGN",nullable = false)
     @NotNull
     @ApiModelProperty(value = "是否验签:0-否 1-是 不允许删除")
     private Integer isSign;
@@ -115,6 +140,7 @@ public class OpenApp extends AbstractEntity {
     /**
      * 是否加密:0-否 1-是
      */
+    @Column(name = "IS_ENCRYPT",nullable = false)
     @NotNull
     @ApiModelProperty(value = "是否加密:0-否 1-是 不允许删除")
     private Integer isEncrypt;
@@ -122,6 +148,7 @@ public class OpenApp extends AbstractEntity {
     /**
      * 加密类型:DES TripleDES AES RSA
      */
+    @Column(name = "ENCRYPT_TYPE",nullable = false)
     @NotBlank
     @ApiModelProperty(value = "加密类型:DES TripleDES AES RSA")
     private String encryptType;
@@ -129,6 +156,7 @@ public class OpenApp extends AbstractEntity {
     /**
      * RSA加解密公钥
      */
+    @Column(name = "PUBLIC_KEY")
     @ApiModelProperty(value = "RSA加解密公钥")
     private String publicKey;
 

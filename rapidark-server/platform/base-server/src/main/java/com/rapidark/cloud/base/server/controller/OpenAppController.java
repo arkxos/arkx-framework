@@ -6,17 +6,20 @@ import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.CreateAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.common.model.PageParams;
+import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
+import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.OpenClientDetails;
 import com.rapidark.common.security.http.OpenRestTemplate;
 import com.rapidark.common.utils.BeanConvertUtils;
+import com.rapidark.common.utils.PageData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,20 +37,20 @@ import java.util.Map;
  * @date 2022-05-25
  **/
 @Api(tags = "系统应用管理")
+@RequiredArgsConstructor
 @RestController
 public class OpenAppController implements IOpenAppServiceClient {
-    @Autowired
-    private OpenAppService openAppService;
-    @Autowired
-    private OpenRestTemplate openRestTemplate;
 
-//    @Log("导出数据")
-//    @ApiOperation("导出数据")
-//    @GetMapping(value = "/download")
-//    @PreAuthorize("@el.check('openClient:list')")
-//    public void download(HttpServletResponse response, OpenClientQueryCriteria criteria) throws IOException {
-//        openAppService.download(openAppService.queryAll(criteria), response);
-//    }
+    private final OpenAppService openAppService;
+    private final OpenRestTemplate openRestTemplate;
+
+    @Log("导出数据")
+    @ApiOperation("导出数据")
+    @GetMapping(value = "/download")
+    @PreAuthorize("@el.check('openClient:list')")
+    public void download(HttpServletResponse response, OpenClientQueryCriteria criteria) throws IOException {
+        openAppService.download(openAppService.queryAll(criteria), response);
+    }
 
     /**
      * 获取分页应用列表
@@ -56,9 +59,9 @@ public class OpenAppController implements IOpenAppServiceClient {
      */
     @ApiOperation(value = "获取分页应用列表", notes = "获取分页应用列表")
     @GetMapping("/app")
-    public ResultBody<IPage<OpenApp>> getAppListPage(@RequestParam(required = false) Map map) {
-        IPage<OpenApp> IPage = openAppService.findListPage(new PageParams(map));
-        return ResultBody.ok().data(IPage);
+    public ResultBody<IPage<OpenApp>> getAppListPage(@RequestParam(required = false) OpenClientQueryCriteria criteria, Pageable pageable) {
+        PageData<OpenAppDto> data = openAppService.queryAll(criteria, pageable);
+        return ResultBody.ok().data(data);
     }
 
     /**
@@ -76,7 +79,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     public ResultBody<OpenApp> getApp(
             @PathVariable("appId") String appId
     ) {
-        OpenApp appInfo = openAppService.getAppInfo(appId);
+        OpenAppDto appInfo = openAppService.findById(appId);
         if(appInfo == null) {
             return ResultBody.failed().msg("该客户端不存在");
         }
@@ -125,9 +128,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     })
     @Log("添加应用信息")
     @PostMapping("/app/add")
-    public ResultBody<String> addApp(@Validated
-                                         @RequestBody CreateAppCommand command
-    ) {
+    public ResultBody<String> addApp(@Validated @RequestBody CreateAppCommand command) {
         OpenApp app = new OpenApp();
         app.setAppName(command.getAppName());
         app.setAppNameEn(command.getAppNameEn());
@@ -142,7 +143,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         app.setIsEncrypt(command.getIsEncrypt());
         app.setEncryptType(command.getEncryptType());
         app.setPublicKey(command.getPublicKey());
-        OpenApp result = openAppService.addAppInfo(app);
+        OpenAppDto result = openAppService.create(app);
         String appId = null;
         if (result != null) {
             appId = result.getAppId();
@@ -216,7 +217,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         app.setIsEncrypt(isEncrypt);
         app.setEncryptType(encryptType);
         app.setPublicKey(publicKey);
-        openAppService.updateInfo(app);
+        openAppService.update(app);
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
@@ -229,7 +230,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     @ApiOperation(value = "完善应用开发信息", notes = "完善应用开发信息")
     @PostMapping("/app/client/update")
     public ResultBody<String> updateAppClientInfo(@Valid @RequestBody UpdateAppClientInfoCommand command) {
-        OpenApp app = openAppService.getAppInfo(command.getAppId());
+        OpenAppDto app = openAppService.findById(command.getAppId());
         OpenClientDetails client = new OpenClientDetails(app.getApiKey(), "",
                 command.getScopes(), command.getGrantTypes(), "", command.getRedirectUrls());
         client.setAccessTokenValiditySeconds(command.getAccessTokenValidity());

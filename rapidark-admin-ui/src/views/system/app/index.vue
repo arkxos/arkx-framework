@@ -2,9 +2,9 @@
   <div>
     <el-card shadow>
       <el-form ref="searchForm"
-            :model="pageInfo"
-            inline
-            label-width="80">
+               :model="pageInfo"
+               inline
+               label-width="80">
         <el-form-item label="AppId" prop="appId">
           <el-input type="text" v-model="pageInfo.appId" placeholder="请输入关键字"/>
         </el-form-item>
@@ -22,7 +22,7 @@
       <div class="search-con search-con-top">
         <el-button-group>
           <el-button :disabled="hasAuthority('systemAppEdit')?false:true" class="search-btn" type="primary"
-                  @click="handleModal()">
+                     @click="handleModal()">
             <span>添加</span>
           </el-button>
         </el-button-group>
@@ -84,9 +84,9 @@
     </el-card>
 
     <el-dialog :visible.sync="modalVisible"
-           :title="modalTitle"
-           width="50"
-           @close="handleReset">
+               :title="modalTitle"
+               width="50"
+               @close="handleReset">
       <el-tabs :value="current" @tab-click="handleTabClick">
         <el-tab-pane label="应用信息" name="form1">
           <el-form ref="form1" v-show="current=='form1'" :model="formItem" :rules="formItemRules" label-width="135" label-position="right">
@@ -127,7 +127,7 @@
             <el-form-item label="开发者">
               <el-select v-model="formItem.developerId" filterable clearable>
                 <el-option :title="item.userName" v-for="(item,index) in selectUsers" @click.native="handleOnSelectUser(item)"
-                        :value="item.userId" :label="item.userName" :key="index">
+                           :value="item.userId" :label="item.userName" :key="index">
                   <span>{{ item.userName }}</span>
                 </el-option>
               </el-select>
@@ -256,7 +256,7 @@
             <el-form-item prop="expireTime" label="过期时间">
               <el-badge v-if="formItem.isExpired" text="授权已过期">
                 <el-date-picker v-model="formItem.expireTime" class="ivu-form-item-error" type="datetime"
-                            placeholder="授权有效期"/>
+                                placeholder="授权有效期"/>
               </el-badge>
               <el-date-picker v-else v-model="formItem.expireTime" type="datetime" placeholder="设置有效期"/>
             </el-form-item>
@@ -334,7 +334,7 @@ export default {
       pageInfo: {
         total: 0,
         page: 1,
-        limit: 10,
+        size: 10,
         appId: '',
         appName: '',
         appNameEn: ''
@@ -584,8 +584,8 @@ export default {
       }
       queryParams.page = queryParams.page -1;
       getApps(queryParams).then(res => {
-        this.data = res.data.records
-        this.pageInfo.total = parseInt(res.data.total)
+        this.data = res.data.content
+        this.pageInfo.total = parseInt(res.data.totalElements)
       }).finally(() => {
         this.loading = false
       })
@@ -656,7 +656,7 @@ export default {
     },
 
     handlePageSize (size) {
-      this.pageInfo.limit = size
+      this.pageInfo.size = size
       this.handleSearch()
     },
     handleLoadAppGranted (appId) {
@@ -766,63 +766,63 @@ export default {
 }
 </script>
 <style scoped>
-  .upload-list {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    margin-right: 4px;
-    overflow: hidden;
-    line-height: 60px;
-    text-align: center;
-    background: #fff;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-  }
+.upload-list {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin-right: 4px;
+  overflow: hidden;
+  line-height: 60px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
 
-  .upload-list img {
-    width: 100%;
-    height: 100%;
-  }
+.upload-list img {
+  width: 100%;
+  height: 100%;
+}
 
-  .upload-list-cover {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: none;
-    background: rgba(0, 0, 0, .6);
-  }
+.upload-list-cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  background: rgba(0, 0, 0, .6);
+}
 
-  .upload-list:hover .upload-list-cover {
-    display: block;
-  }
+.upload-list:hover .upload-list-cover {
+  display: block;
+}
 
-  .upload-list-cover i {
-    margin: 0 2px;
-    font-size: 20px;
-    color: #fff;
-    cursor: pointer;
-  }
+.upload-list-cover i {
+  margin: 0 2px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
 
-  ::v-deep .el-form-item {
-    margin-right: 0 !important;
-  }
-  ::v-deep .el-form-item__label {
-    position: absolute;
-    width: 135px;
-  }
-  ::v-deep .el-form-item__content {
-    width: 100%;
-    padding-left: 135px;
-  }
-  ::v-deep .el-select, .el-input_inner {
-    width: 100%;
-  }
-  ::v-deep .el-dialog__body {
-    padding-top: 10px;
-  }
+::v-deep .el-form-item {
+  margin-right: 0 !important;
+}
+::v-deep .el-form-item__label {
+  position: absolute;
+  width: 135px;
+}
+::v-deep .el-form-item__content {
+  width: 100%;
+  padding-left: 135px;
+}
+::v-deep .el-select, .el-input_inner {
+  width: 100%;
+}
+::v-deep .el-dialog__body {
+  padding-top: 10px;
+}
 
 </style>

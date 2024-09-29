@@ -9,6 +9,7 @@ import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.base.client.model.entity.*;
 import com.rapidark.cloud.base.server.mapper.*;
+import com.rapidark.cloud.base.server.repository.OpenAppRepository;
 import com.rapidark.cloud.base.server.service.*;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
@@ -57,10 +58,12 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
     private BaseRoleService baseRoleService;
     @Autowired
     private BaseUserService baseUserService;
-    @Autowired
-    private OpenAppService openAppService;
+//    @Autowired
+//    private OpenAppService openAppService;
     @Autowired
     private RedisTokenStore redisTokenStore;
+    @Autowired
+    private OpenAppRepository openAppRepository;
 
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
@@ -370,10 +373,11 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
         if (appId == null) {
             return;
         }
-        OpenApp openApp = openAppService.getAppInfo(appId);
-        if (openApp == null) {
+        Optional<OpenApp> openClientOptional = openAppRepository.findById(appId);
+        if (openClientOptional.isEmpty()) {
             return;
         }
+        OpenApp openApp = openClientOptional.get();
         // 清空应用已有授权
         QueryWrapper<BaseAuthorityApp> appQueryWrapper = new QueryWrapper();
         appQueryWrapper.lambda().eq(BaseAuthorityApp::getAppId, appId);

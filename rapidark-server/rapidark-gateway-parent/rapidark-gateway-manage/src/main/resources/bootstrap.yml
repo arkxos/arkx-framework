@@ -70,6 +70,20 @@ spring:
       naming:
         # 采用@Column注解字段命名，否则会用砣峰命名规则生产数据库字段名
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  sqltoy:
+    # 指定缓存翻译配置文件
+    #translateConfig: classpath:/dataset/ltc/sqltoy-translate.xml
+    # 这里要注意，指定sql文件的目录(是目录不是具体文件或文件匹配表达式),多个可以用逗号分隔，会自动向下寻找
+    sqlResourcesDir: classpath:/dataset/gateway-manage
+    # defaultDataSource: masterDataSource
+    # 缓存翻译的配置
+    #translateConfig: classpath:sqltoy-translate.xml
+    # debug模式会打印执行sql
+    debug: false
+    # 提供统一字段:createBy createTime updateBy updateTime 等字段补漏性(为空时)赋值(可选配置)
+    #unifyFieldsHandler: com.sqltoy.plugins.SqlToyUnifyFieldsHandler
+    # sql执行超过多长时间则进行日志输出,用于监控哪些慢sql(可选配置:默认30秒)
+    printSqlTimeoutMillis: 3000000
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
