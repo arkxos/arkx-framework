@@ -12,7 +12,7 @@ import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -21,47 +21,47 @@ import java.util.*;
  * @Date 2020/05/16
  * @Version V1.0
  */
-public class BaseService<T,ID,DAO extends JpaRepository> {
+public class BaseService<T,ID,R extends JpaRepository> {
 
     private static final String DEFAULT_SORT_FIELD = "createTime";
     @Autowired
     private EntityManager entityManager;
 
     @Autowired
-    public DAO dao;
+    public R entityRepository;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void save(T t){
-        dao.save(t);
+        entityRepository.save(t);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public List<T> saveAll(Iterable<T> ts){
-        return dao.saveAll(ts);
+        return entityRepository.saveAll(ts);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void update(T t){
-        dao.save(t);
+        entityRepository.save(t);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void deleteById(ID id){
-        dao.deleteById(id);
+        entityRepository.deleteById(id);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void delete(T t){
-        dao.delete(t);
+        entityRepository.delete(t);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void deleteInBatch(Iterable<T> ts){
-        dao.deleteInBatch(ts);
+        entityRepository.deleteInBatch(ts);
     }
 
     public T findById(ID id){
-        Optional<T> optional = dao.findById(id);
+        Optional<T> optional = entityRepository.findById(id);
         if (optional.isPresent()){
             return optional.get();
         }
@@ -69,19 +69,19 @@ public class BaseService<T,ID,DAO extends JpaRepository> {
     }
 
     public List<T> findAll(){
-        return dao.findAll();
+        return entityRepository.findAll();
     }
 
     public List<T> findAll(T t){
-        return dao.findAll(Example.of(t));
+        return entityRepository.findAll(Example.of(t));
     }
 
     public long count(){
-        return dao.count();
+        return entityRepository.count();
     }
 
     public long count(T t){
-        return dao.count(Example.of(t));
+        return entityRepository.count(Example.of(t));
     }
 
     public List<T> list(T t){
@@ -89,7 +89,7 @@ public class BaseService<T,ID,DAO extends JpaRepository> {
     }
 
     public List list(T t, String ... properties){
-        return dao.findAll(Example.of(t,ExampleMatcher.matching()),Sort.by(Sort.Direction.ASC, properties));
+        return entityRepository.findAll(Example.of(t,ExampleMatcher.matching()),Sort.by(Sort.Direction.ASC, properties));
     }
 
     public PageResult<T> pageList(T t, int currentPage, int pageSize){
@@ -98,13 +98,13 @@ public class BaseService<T,ID,DAO extends JpaRepository> {
 
     public PageResult<T> pageList(T t, int currentPage, int pageSize, String ... properties){
         Pageable pageable = PageRequest.of(currentPage-1,pageSize, Sort.by(Sort.Direction.DESC, properties));
-        Page<T> pageData  =  dao.findAll(Example.of(t), pageable);
+        Page<T> pageData  =  entityRepository.findAll(Example.of(t), pageable);
         return this.setPageResult(pageData.getContent(), currentPage, pageSize, pageData.getTotalElements());
     }
 
     public PageResult<T> pageList(T t, ExampleMatcher matcher, int currentPage, int pageSize){
         Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by(Sort.Direction.DESC, DEFAULT_SORT_FIELD));
-        Page<T> pageData  =  dao.findAll(Example.of(t, matcher), pageable);
+        Page<T> pageData  =  entityRepository.findAll(Example.of(t, matcher), pageable);
         return this.setPageResult(pageData.getContent(), currentPage, pageSize, pageData.getTotalElements());
     }
 
@@ -126,7 +126,7 @@ public class BaseService<T,ID,DAO extends JpaRepository> {
                 queryCount.setParameter(i + 1, params.get(i));
             }
         }
-        long totalNum = ((BigInteger) queryCount.getSingleResult()).longValue();
+        long totalNum = ((BigDecimal) queryCount.getSingleResult()).longValue();
         query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);//转换成map
         query.setFirstResult((currentPage -1) * pageSize).setMaxResults(pageSize);
         List<Map<String,Object>> list = query.getResultList();
