@@ -3,23 +3,31 @@ package com.rapidark.cloud.uaa.admin.server.configuration;
 import com.rapidark.common.annotation.ArkResourceServer;
 import com.rapidark.common.exception.OpenAccessDeniedHandler;
 import com.rapidark.common.exception.OpenAuthenticationEntryPoint;
+import com.rapidark.common.security.OpenHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.authentication.BearerTokenExtractor;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
@@ -39,6 +47,30 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     private TokenStore tokenStore;
 
     private BearerTokenExtractor tokenExtractor = new BearerTokenExtractor();
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Bean
+    public RedisTokenStore redisTokenStore() {
+        return new RedisTokenStore(redisConnectionFactory);
+    }
+
+    @Bean
+    public JdbcClientDetailsService clientDetailsService() {
+        JdbcClientDetailsService jdbcClientDetailsService = new JdbcClientDetailsService(dataSource);
+        jdbcClientDetailsService.setPasswordEncoder(passwordEncoder);
+        return jdbcClientDetailsService;
+    }
+
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        // 构建redis获取token服务类
+        resources.tokenServices(OpenHelper.buildRedisTokenServices(redisConnectionFactory));
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
