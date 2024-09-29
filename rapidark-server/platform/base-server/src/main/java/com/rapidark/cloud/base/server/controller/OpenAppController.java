@@ -8,6 +8,8 @@ import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
+import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
+import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.OpenClientDetails;
 import com.rapidark.common.security.http.OpenRestTemplate;
@@ -20,8 +22,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.utils.FileUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +47,7 @@ public class OpenAppController implements IOpenAppServiceClient {
 
     private final OpenAppService openAppService;
     private final OpenRestTemplate openRestTemplate;
+    private final CustomNacosConfigService customNacosConfigService;
 
     @Log("导出数据")
     @ApiOperation("导出数据")
@@ -179,6 +184,8 @@ public class OpenAppController implements IOpenAppServiceClient {
         if (result != null) {
             appId = result.getAppId();
         }
+        customNacosConfigService.publishClientNacosConfig(app.getAppId());
+
         return ResultBody.ok().data(appId);
     }
 
@@ -254,6 +261,8 @@ public class OpenAppController implements IOpenAppServiceClient {
         app.setPublicKey(publicKey);
         openAppService.update(app);
         openRestTemplate.refreshGateway();
+        customNacosConfigService.publishClientNacosConfig(app.getAppId());
+
         return ResultBody.ok();
     }
 
@@ -265,7 +274,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     @ApiOperation(value = "完善应用开发信息", notes = "完善应用开发信息")
     @PostMapping("/app/client/update")
     public ResultBody<String> updateAppClientInfo(@Valid @RequestBody UpdateAppClientInfoCommand command) {
-        OpenAppDto app = openAppService.findById(command.getAppId());
+        OpenApp app = openAppService.findById(command.getAppId());
         OpenClientDetails client = new OpenClientDetails(app.getApiKey(), "",
                 command.getScopes(), command.getGrantTypes(), "", command.getRedirectUrls());
         client.setAccessTokenValiditySeconds(command.getAccessTokenValidity());
@@ -310,8 +319,40 @@ public class OpenAppController implements IOpenAppServiceClient {
     public ResultBody removeApp(
             @RequestParam("appId") String appId
     ) {
-        openAppService.removeApp(appId);
+        openAppService.deleteById(appId);
         openRestTemplate.refreshGateway();
+        customNacosConfigService.publishClientNacosConfig(appId);
         return ResultBody.ok();
     }
+
+    /**
+     * 设置客户端状态为启用
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/start", method = {RequestMethod.POST})
+    public ResultBody start(@RequestParam String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+        OpenApp dbClient = openAppService.findById(id);
+        dbClient.setStatus(Integer.valueOf(Constants.YES));
+        openAppService.update(dbClient);
+        customNacosConfigService.publishClientNacosConfig(id);
+        return ResultBody.ok();
+    }
+
+    /**
+     * 设置客户端状态为禁用
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/stop", method = {RequestMethod.POST})
+    public ResultBody stop(@RequestParam String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+        OpenApp dbClient = openAppService.findById(id);
+        dbClient.setStatus(Integer.valueOf(Constants.NO));
+        openAppService.update(dbClient);
+        customNacosConfigService.publishClientNacosConfig(id);
+        return ResultBody.ok();
+    }
+
 }

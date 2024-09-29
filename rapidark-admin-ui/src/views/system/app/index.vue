@@ -1,34 +1,37 @@
 <template>
   <div>
     <el-card shadow>
-      <el-form ref="searchForm"
-               :model="pageInfo"
-               inline
-               label-width="80">
-        <el-form-item label="AppId" prop="appId">
-          <el-input type="text" v-model="pageInfo.appId" placeholder="请输入关键字"/>
-        </el-form-item>
-        <el-form-item label="中文名称" prop="appName">
-          <el-input type="text" v-model="pageInfo.appName" placeholder="请输入关键字"/>
-        </el-form-item>
-        <el-form-item label="英文名称" prop="appName">
-          <el-input type="text" v-model="pageInfo.appNameEn" placeholder="请输入关键字"/>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="handleSearch(1)">查询</el-button>&nbsp;
-          <el-button @click="handleResetForm('searchForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-      <div class="search-con search-con-top">
-        <el-button-group>
-          <el-button :disabled="hasAuthority('systemAppEdit')?false:true" class="search-btn" type="primary"
-                     @click="handleModal()">
-            <span>添加</span>
-          </el-button>
-        </el-button-group>
-      </div>
-      <el-alert type="info" show-icon>客户端模式,请授权相关接口资源。否则请求网关服务器将提示<code>"权限不足,拒绝访问!"</code></el-alert>
-      <el-table border :data="data" :loading="loading">
+      <el-row style="margin-bottom: 10px;">
+        <el-col :span="10">
+          <div style="margin-bottom: 9px;">
+            <span style="font-size: 18pt;font-weight: bold; "></span>
+          </div>
+        </el-col>
+        <el-col :span="14">
+          <div style="float: right; margin-left: 10px;">
+            <el-button icon="el-icon-folder-add" type="primary"
+                       :disabled="hasAuthority('systemAppEdit')?false:true"
+                       @click="handleModal()"></el-button>
+          </div>
+          <div style="float: right;">
+            <el-input placeholder="请输入客户端id、编号或名称" v-model="pageInfo.appName" class="input-with-select" style="width: 620px;" clearable>
+              <el-select v-model="pageInfo.groupCode" slot="prepend" placeholder="请选择分组" style="width: 140px; margin-right: 10px;">
+                <el-option label="所有" value=""/>
+                <el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value"/>
+              </el-select>
+              <el-popover placement="bottom" slot="prepend" trigger="click">
+                <el-radio v-model="pageInfo.status" v-for="item in statusOptions" :key="item.value" :label="item.value">{{item.label}}</el-radio>
+                <el-button slot="reference">
+                  服务状态:{{pageInfo.status === '0' ? '启用': pageInfo.status === '1' ? '禁用' : '所有'}}<i class="el-icon-caret-bottom el-icon--right"></i>
+                </el-button>
+              </el-popover>
+              <el-button slot="append" icon="el-icon-search" @click="handleSearch(1)"></el-button>
+            </el-input>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-table  :data="data" :loading="loading">
         <el-table-column align="center" show-overflow-tooltip type="selection" width="55" />
         <el-table-column align="center" label="序号" show-overflow-tooltip width="55">
           <template #default="{ $index }">
@@ -211,6 +214,7 @@
               <el-input disabled v-model="formItem.secretKey" placeholder="请输入内容"/>
             </el-form-item>
             <el-form-item label="授权类型" prop="grantTypes">
+              <el-alert type="info" show-icon :closable="false">客户端模式,请授权相关接口资源。否则请求网关服务器将提示<code>"权限不足,拒绝访问!"</code></el-alert>
               <el-checkbox-group v-model="formItem.grantTypes">
                 <el-tooltip :content="item.desc" v-for="(item,index) in selectGrantTypes" :key="index">
                   <el-checkbox :label="item.label"><span>{{ item.title }}</span></el-checkbox>
@@ -322,6 +326,11 @@ export default {
         'form2',
         'form3'
       ],
+      statusOptions: [
+        {value: null, label: '所有'},
+        {value: '0',label: '启用'},
+        {value: '1',label: '禁用'},
+      ],
       selectApis: [],
       selectUsers: [{
         userId: 0,
@@ -343,6 +352,7 @@ export default {
         total: 0,
         page: 1,
         size: 10,
+        status: '',
         appId: '',
         appName: '',
         appNameEn: ''
@@ -515,6 +525,7 @@ export default {
         this.formItemRules.publicKey = { required: false, message: 'RSA公钥不能为空', trigger: 'blur' }
       }
       if (this.current === this.forms[0]) {
+        console.log('formItem', this.formItem)
         this.$refs[this.current].validate((valid) => {
           if (valid) {
             this.saving = true
@@ -779,62 +790,62 @@ export default {
 </script>
 <style scoped>
 .upload-list {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  margin-right: 4px;
-  overflow: hidden;
-  line-height: 60px;
-  text-align: center;
-  background: #fff;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    margin-right: 4px;
+    overflow: hidden;
+    line-height: 60px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 }
 
 .upload-list img {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .upload-list-cover {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: none;
-  background: rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    background: rgba(0, 0, 0, .6);
 }
 
 .upload-list:hover .upload-list-cover {
-  display: block;
+    display: block;
 }
 
 .upload-list-cover i {
-  margin: 0 2px;
-  font-size: 20px;
-  color: #fff;
-  cursor: pointer;
+    margin: 0 2px;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
 }
 
 ::v-deep .el-form-item {
-  margin-right: 0 !important;
+    margin-right: 0 !important;
 }
 ::v-deep .el-form-item__label {
-  position: absolute;
-  width: 135px;
+    position: absolute;
+    width: 135px;
 }
 ::v-deep .el-form-item__content {
-  width: 100%;
-  padding-left: 135px;
+    width: 100%;
+    padding-left: 135px;
 }
 ::v-deep .el-select, .el-input_inner {
-  width: 100%;
+    width: 100%;
 }
 ::v-deep .el-dialog__body {
-  padding-top: 10px;
+    padding-top: 10px;
 }
 
 </style>
