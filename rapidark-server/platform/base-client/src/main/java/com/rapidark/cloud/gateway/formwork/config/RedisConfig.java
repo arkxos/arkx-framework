@@ -1,9 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * @Description 配置redis

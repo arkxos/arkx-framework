@@ -12,7 +12,6 @@ import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.formwork.service.GroovyScriptService;
 import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
-import com.rapidark.cloud.gateway.formwork.util.GroovyScriptUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
