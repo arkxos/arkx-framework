@@ -1,7 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.bean;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
-import com.rapidark.cloud.gateway.formwork.entity.Client;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
