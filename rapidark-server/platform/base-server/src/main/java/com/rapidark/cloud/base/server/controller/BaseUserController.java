@@ -12,13 +12,16 @@ import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.utils.StringUtils;
+import com.rapidark.common.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +53,12 @@ public class BaseUserController implements IBaseUserServiceClient {
     @PostMapping("/user/login")
     @Override
     public ResultBody<UserAccount> userLogin(@RequestParam(value = "username") String username) {
-        UserAccount account = baseUserService.login(username);
+        Map<String, String> parameterMap = WebUtils.getParameterMap(WebUtils.getHttpServletRequest());
+
+        HttpServletRequest request = WebUtils.getHttpServletRequest();
+        String ip = WebUtils.getRemoteAddress(request);
+        String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+        UserAccount account = baseUserService.login(username, parameterMap , ip, userAgent);
         return ResultBody.ok().data(account);
     }
 

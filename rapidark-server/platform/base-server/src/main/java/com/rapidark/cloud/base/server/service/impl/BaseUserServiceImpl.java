@@ -245,11 +245,10 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @return
      */
     @Override
-    public UserAccount login(String account) {
+    public UserAccount login(String account, Map<String, String> parameterMap, String ip, String userAgent) {
         if (StringUtils.isBlank(account)) {
             return null;
         }
-        Map<String, String> parameterMap = WebUtils.getParameterMap(WebUtils.getHttpServletRequest());
         // 第三方登录标识
         String loginType = parameterMap.get("login_type");
         BaseAccount baseAccount;
@@ -275,16 +274,15 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
         if (baseAccount != null) {
             //添加登录日志
             try {
-                HttpServletRequest request = WebUtils.getHttpServletRequest();
-                if (request != null) {
+                if (!StringUtils.isEmpty(ip)) {
                     BaseAccountLogs log = new BaseAccountLogs();
                     log.setDomain(ACCOUNT_DOMAIN);
                     log.setUserId(baseAccount.getUserId());
                     log.setAccount(baseAccount.getAccount());
                     log.setAccountId(String.valueOf(baseAccount.getAccountId()));
                     log.setAccountType(baseAccount.getAccountType());
-                    log.setLoginIp(WebUtils.getRemoteAddress(request));
-                    log.setLoginAgent(request.getHeader(HttpHeaders.USER_AGENT));
+                    log.setLoginIp(ip);
+                    log.setLoginAgent(userAgent);
                     baseAccountService.addLoginLog(log);
                 }
             } catch (Exception e) {

@@ -179,36 +179,6 @@ public class OpenAppServiceImpl implements OpenAppService {
         jdbcClientDetailsService.removeClientDetails(appInfo.getApiKey());
     }
 
-    @Override
-    public void download(List<OpenAppDto> all, HttpServletResponse response) throws IOException {
-        List<Map<String, Object>> list = new ArrayList<>();
-        for (OpenAppDto openClient : all) {
-            Map<String,Object> map = new LinkedHashMap<>();
-            map.put("更新人", openClient.getUpdateBy());
-            map.put("创建人", openClient.getCreateBy());
-            map.put("API访问key", openClient.getApiKey());
-            map.put("API访问密钥", openClient.getSecretKey());
-            map.put("app名称", openClient.getAppName());
-            map.put("app英文名称", openClient.getAppNameEn());
-            map.put("应用图标", openClient.getAppIcon());
-            map.put("app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用", openClient.getAppType());
-            map.put("app描述", openClient.getAppDesc());
-            map.put("移动应用操作系统:ios-苹果 android-安卓", openClient.getAppOs());
-            map.put("官网地址", openClient.getWebsite());
-            map.put("开发者ID:默认为0", openClient.getDeveloperId());
-            map.put("创建时间", openClient.getCreateTime());
-            map.put("更新时间", openClient.getUpdateTime());
-            map.put("状态:0-无效 1-有效", openClient.getStatus());
-            map.put("保留数据0-否 1-是 不允许删除", openClient.getIsPersist());
-            map.put("是否验签:0-否 1-是 不允许删除", openClient.getIsSign());
-            map.put("是否加密:0-否 1-是 不允许删除", openClient.getIsEncrypt());
-            map.put("加密类型:DES TripleDES AES RSA", openClient.getEncryptType());
-            map.put("RSA加解密公钥", openClient.getPublicKey());
-            list.add(map);
-        }
-        FileUtil.downloadExcel(list, response);
-    }
-
     /**
      * 获取app和应用信息
      *

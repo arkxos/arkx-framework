@@ -8,16 +8,19 @@ import com.rapidark.cloud.base.client.service.IBaseDeveloperServiceClient;
 import com.rapidark.cloud.base.server.service.BaseDeveloperService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +49,11 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
     @PostMapping("/developer/login")
     @Override
     public ResultBody<UserAccount> developerLogin(@RequestParam(value = "username") String username) {
-        UserAccount account = baseDeveloperService.login(username);
+        Map<String, String> parameterMap = WebUtils.getParameterMap(WebUtils.getHttpServletRequest());
+        HttpServletRequest request = WebUtils.getHttpServletRequest();
+        String ip = WebUtils.getRemoteAddress(request);
+        String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+        UserAccount account = baseDeveloperService.login(username, parameterMap, ip, userAgent);
         return ResultBody.ok().data(account);
     }
 

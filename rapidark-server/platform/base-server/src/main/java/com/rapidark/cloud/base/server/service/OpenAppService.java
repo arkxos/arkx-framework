@@ -67,7 +67,7 @@ public interface OpenAppService {//} extends IBaseService<OpenApp> {
      * @param response /
      * @throws IOException /
      */
-    void download(List<OpenAppDto> all, HttpServletResponse response) throws IOException;
+//    void download(List<OpenAppDto> all, HttpServletResponse response) throws IOException;
 
 
     /**

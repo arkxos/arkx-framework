@@ -7,6 +7,7 @@ import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.IBaseService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统用户资料管理
@@ -98,5 +99,5 @@ public interface BaseUserService extends IBaseService<BaseUser> {
      * @param account 登陆账号
      * @return
      */
-    UserAccount login(String account);
+    UserAccount login(String account, Map<String, String> parameterMap, String ip, String userAgent);
 }
