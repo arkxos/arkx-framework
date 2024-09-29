@@ -5,6 +5,7 @@ import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.CreateAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
+import com.rapidark.cloud.base.server.controller.cmd.UpdateOpenClientCommand;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
@@ -113,7 +114,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     public ResultBody<OpenApp> getApp(
             @PathVariable("appId") String appId
     ) {
-        OpenAppDto appInfo = openAppService.findById(appId);
+        OpenApp appInfo = openAppService.findById(appId);
         if(appInfo == null) {
             return ResultBody.failed().msg("该客户端不存在");
         }
@@ -224,41 +225,24 @@ public class OpenAppController implements IOpenAppServiceClient {
     })
     @Log("编辑应用信息")
     @PostMapping("/app/update")
-    public ResultBody updateApp(
-            @RequestParam("appId") String appId,
-            @RequestParam(value = "appName") String appName,
-            @RequestParam(value = "appNameEn") String appNameEn,
-            @RequestParam(value = "appType") String appType,
-            @RequestParam(value = "groupCode") String groupCode,
-            @RequestParam(value = "ip") String ip,
-            @RequestParam(value = "appIcon", required = false) String appIcon,
-            @RequestParam(value = "appOs", required = false) String appOs,
-            @RequestParam(value = "appDesc", required = false) String appDesc,
-            @RequestParam(value = "status", defaultValue = "1") Integer status,
-            @RequestParam(value = "website", required = false) String website,
-            @RequestParam(value = "developerId", required = false) Long developerId,
-            @RequestParam(value = "isSign", required = false, defaultValue = "0") Integer isSign,
-            @RequestParam(value = "isEncrypt", required = false, defaultValue = "0") Integer isEncrypt,
-            @RequestParam(value = "encryptType", required = false, defaultValue = "") String encryptType,
-            @RequestParam(value = "publicKey", required = false, defaultValue = "") String publicKey
-    ) {
+    public ResultBody updateApp(@Validated @RequestBody UpdateOpenClientCommand command) {
         OpenApp app = new OpenApp();
-        app.setAppId(appId);
-        app.setAppName(appName);
-        app.setAppNameEn(appNameEn);
-        app.setAppType(appType);
-        app.setGroupCode(groupCode);
-        app.setIp(ip);
-        app.setAppOs(appOs);
-        app.setAppIcon(appIcon);
-        app.setAppDesc(appDesc);
-        app.setStatus(status);
-        app.setWebsite(website);
-        app.setDeveloperId(developerId);
-        app.setIsSign(isSign);
-        app.setIsEncrypt(isEncrypt);
-        app.setEncryptType(encryptType);
-        app.setPublicKey(publicKey);
+        app.setAppId(command.getAppId());
+        app.setAppName(command.getAppName());
+        app.setAppNameEn(command.getAppNameEn());
+        app.setAppType(command.getAppType());
+        app.setGroupCode(command.getGroupCode());
+        app.setIp(command.getIp());
+        app.setAppOs(command.getAppOs());
+        app.setAppIcon(command.getAppIcon());
+        app.setAppDesc(command.getAppDesc());
+        app.setStatus(command.getStatus());
+        app.setWebsite(command.getWebsite());
+        app.setDeveloperId(command.getDeveloperId());
+        app.setIsSign(command.getIsSign());
+        app.setIsEncrypt(command.getIsEncrypt());
+        app.setEncryptType(command.getEncryptType());
+        app.setPublicKey(command.getPublicKey());
         openAppService.update(app);
         openRestTemplate.refreshGateway();
         customNacosConfigService.publishClientNacosConfig(app.getAppId());
