@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export const addBalanced = data => {
     return request({
-        url: '/gatewayManage/balanced/add',
+        url: '/base/balanced/add',
         method: 'post',
         data
     })
@@ -17,7 +17,7 @@ export const addBalanced = data => {
  */
 export const deleteBalanced = data => {
     return request({
-        url: '/gatewayManage/balanced/delete',
+        url: '/base/balanced/delete',
         method: 'get',
         data
     })
@@ -28,7 +28,7 @@ export const deleteBalanced = data => {
  */
 export const updateBalanced = data => {
     return request({
-        url: '/gatewayManage/balanced/update',
+        url: '/base/balanced/update',
         method: 'post',
         data
     })
@@ -39,7 +39,7 @@ export const updateBalanced = data => {
  */
 export const findByBalanced = data => {
     return request({
-        url: '/gatewayManage/balanced/findById',
+        url: '/base/balanced/findById',
         method: 'get',
         data
     })
@@ -51,7 +51,7 @@ export const findByBalanced = data => {
  */
 export const balancedPageList = data => {
     return request({
-        url: '/gatewayManage/balanced/pageList',
+        url: '/base/balanced/pageList',
         method: 'post',
         data
     })
@@ -62,7 +62,7 @@ export const balancedPageList = data => {
  */
 export const startBalanced = data => {
     return request({
-        url: '/gatewayManage/balanced/start',
+        url: '/base/balanced/start',
         method: 'get',
         data
     })
@@ -73,7 +73,7 @@ export const startBalanced = data => {
  */
 export const stopBalanced = data => {
     return request({
-        url: '/gatewayManage/balanced/stop',
+        url: '/base/balanced/stop',
         method: 'get',
         data
     })
@@ -84,7 +84,7 @@ export const stopBalanced = data => {
  */
 export const loadServerRegList = data => {
     return request({
-        url: '/gatewayManage/loadServer/regList',
+        url: '/base/loadServer/regList',
         method: 'post',
         data
     })
@@ -95,7 +95,7 @@ export const loadServerRegList = data => {
  */
 export const loadServerNotRegList = data => {
     return request({
-        url: '/gatewayManage/loadServer/notRegPageList',
+        url: '/base/loadServer/notRegPageList',
         method: 'post',
         data
     })

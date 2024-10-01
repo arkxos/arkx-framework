@@ -23,14 +23,11 @@ import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import com.rapidark.common.security.OpenAuthority;
 import com.rapidark.common.security.OpenSecurityConstants;
 import com.rapidark.common.utils.StringUtils;
-import com.rapidark.common.utils.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

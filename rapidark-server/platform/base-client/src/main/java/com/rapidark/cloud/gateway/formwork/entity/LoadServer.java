@@ -22,10 +22,10 @@ public class LoadServer implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "路由主键ID值不能为空")
-    @Column(name = "routeId")
+    @Column(name = "route_Id")
     private String routeId;
     @NotNull(message = "负载ID值不能为空")
-    @Column(name = "balancedId")
+    @Column(name = "balanced_Id")
     private String balancedId;
     @NotNull(message = "网关路由权重值不能为空")
     @Column(name = "weight")
@@ -35,9 +35,9 @@ public class LoadServer implements java.io.Serializable {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @NotNull(message = "创建时间不能为空")
-    @Column(name = "createTime")
+    @Column(name = "create_Time")
     private Date createTime;
-    @Column(name = "updateTime")
+    @Column(name = "update_Time")
     private Date updateTime;
     /**
      * 备注

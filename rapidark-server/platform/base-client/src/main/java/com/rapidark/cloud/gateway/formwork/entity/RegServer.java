@@ -24,11 +24,11 @@ public class RegServer {
     private Long id;
     @NotNull(message = "客户端ID不能为空")
     @Size(min = 2, max = 40, message = "客户端ID长度必需在2到40个字符内")
-    @Column(name = "clientId" )
+    @Column(name = "client_Id" )
     private String clientId;
     @NotNull(message = "网关路由ID不能为空")
     @Size(min = 2, max = 40, message = "网关路由ID长度必需在2到40个字符内")
-    @Column(name = "routeId")
+    @Column(name = "route_Id")
     private String routeId;
     /**
      * token加密内容
@@ -38,14 +38,14 @@ public class RegServer {
     /**
      * token加密密钥
      */
-    @Column(name = "secretKey")
+    @Column(name = "secret_Key")
     private String secretKey;
     /**
      * token有效期截止时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "tokenEffectiveTime")
+    @Column(name = "token_Effective_Time")
     private Date tokenEffectiveTime;
     /**
      * 状态，0是启用，1是禁用
@@ -58,9 +58,9 @@ public class RegServer {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "创建时间不能为空")
-    @Column(name = "createTime")
+    @Column(name = "create_Time")
     private Date createTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "updateTime")
+    @Column(name = "update_Time")
     private Date updateTime;
 }

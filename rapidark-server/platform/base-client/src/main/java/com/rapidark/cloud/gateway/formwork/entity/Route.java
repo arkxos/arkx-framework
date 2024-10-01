@@ -31,10 +31,10 @@ public class Route implements java.io.Serializable {
     private String name;
     @NotNull(message = "网关路由系统代号不能为空")
     @Size(min = 2, max = 40, message = "网关路由系统代号长度必需在2到40个字符内")
-    @Column(name = "systemCode" )
+    @Column(name = "system_Code" )
     private String systemCode;
     @NotNull(message = "网关路由客户端分组不能为空")
-    @Column(name = "groupCode")
+    @Column(name = "group_Code")
     private String groupCode;
     @NotNull(message = "网关路由服务uri不能为空")
     @Size(min = 2, max = 40, message = "网关路由服务uri长度必需在2到200个字符内")
@@ -57,7 +57,7 @@ public class Route implements java.io.Serializable {
     /**
      * 断言RemoteAddrs
      */
-    @Column(name = "remoteAddr")
+    @Column(name = "remote_Addr")
     private String remoteAddr;
     /**
      * 断言Headers
@@ -67,42 +67,42 @@ public class Route implements java.io.Serializable {
     /**
      * 鉴权过滤器类型：ip,token,id
      */
-    @Column(name = "filterGatewaName")
+    @Column(name = "filter_Gatewa_Name")
     private String filterGatewaName;
     /**
      * 熔断器名称：hystrix,custom
      */
-    @Column(name = "filterHystrixName")
+    @Column(name = "filter_Hystrix_Name")
     private String filterHystrixName;
     /**
      * 限流器类型：ip,uri,requestId
      */
-    @Column(name = "filterRateLimiterName")
+    @Column(name = "filter_Rate_Limiter_Name")
     private String filterRateLimiterName;
     /**
      * 过滤器类型：header,ip,param,time,cookie
      */
-    @Column(name = "filterAuthorizeName")
+    @Column(name = "filter_Authorize_Name")
     private String filterAuthorizeName;
     /**
      * 回滚消息
      */
-    @Column(name = "fallbackMsg")
+    @Column(name = "fallback_Msg")
     private String fallbackMsg;
     /**
      * 回滚超时时长
      */
-    @Column(name = "fallbackTimeout")
+    @Column(name = "fallback_Timeout")
     private Long fallbackTimeout;
     /**
      * 每1秒限制请求数(令牌数)
      */
-    @Column(name = "replenishRate")
+    @Column(name = "replenish_Rate")
     private Integer replenishRate;
     /**
      * 令牌桶的容量
      */
-    @Column(name = "burstCapacity")
+    @Column(name = "burst_Capacity")
     private Integer burstCapacity;
     @Transient
     private String weightName;
@@ -116,42 +116,42 @@ public class Route implements java.io.Serializable {
     /**
      * 断言前缀截取层数
      */
-    @Column(name = "stripPrefix")
+    @Column(name = "strip_Prefix")
     private Integer stripPrefix;
     /**
      * 请求参数
      */
-    @Column(name = "requestParameter")
+    @Column(name = "request_Parameter")
     private String requestParameter;
     /**
      * 重写Path路径
      */
-    @Column(name = "rewritePath")
+    @Column(name = "rewrite_Path")
     private String rewritePath ;
     /**
      * 鉴权：Header
      */
-    @Column(name = "accessHeader")
+    @Column(name = "access_Header")
     private String accessHeader;
     /**
      * 鉴权：Header
      */
-    @Column(name = "accessIp")
+    @Column(name = "access_Ip")
     private String accessIp;
     /**
      * 鉴权：Parameter
      */
-    @Column(name = "accessParameter")
+    @Column(name = "access_Parameter")
     private String accessParameter;
     /**
      * 鉴权：Time
      */
-    @Column(name = "accessTime")
+    @Column(name = "access_Time")
     private String accessTime;
     /**
      * 鉴权：Cookie
      */
-    @Column(name = "accessCookie")
+    @Column(name = "access_Cookie")
     private String accessCookie;
     /**
      * 创建时间和修改时间
@@ -159,9 +159,9 @@ public class Route implements java.io.Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "创建时间不能为空")
-    @Column(name = "createTime")
+    @Column(name = "create_Time")
     private Date createTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "updateTime")
+    @Column(name = "update_Time")
     private Date updateTime;
 }

@@ -32,7 +32,7 @@ public class GroovyScript {
      */
     @NotNull(message = "网关路由ID不能为空")
     @Size(min = 2, max = 40, message = "网关路由ID长度必需在2到40个字符内")
-    @Column(name = "routeId" )
+    @Column(name = "route_Id" )
     private String routeId;
 
     /**
@@ -56,7 +56,7 @@ public class GroovyScript {
     /**
      * 扩展内容,参数json
      */
-    @Column(name = "extendInfo" )
+    @Column(name = "extend_Info" )
     private String extendInfo;
 
     /**
@@ -69,7 +69,7 @@ public class GroovyScript {
     /**
      * 顺序
      */
-    @Column(name = "orderNum" )
+    @Column(name = "order_Num" )
     private Integer orderNum;
     /**
      * 状态
@@ -87,12 +87,12 @@ public class GroovyScript {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "创建时间不能为空")
-    @Column(name = "createTime" )
+    @Column(name = "create_Time" )
     private Date createTime;
     /**
      * 更新时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "updateTime" )
+    @Column(name = "update_Time" )
     private Date updateTime;
 }

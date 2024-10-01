@@ -31,7 +31,7 @@
 			<el-table size="small" :data="tableData" style="width: 100%">
 				<el-table-column label="客户端ID(系统生成)" width="300">
 					<template slot-scope="scope">
-						<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.id}}</el-tag>
+						<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.appId}}</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column label="分组">
@@ -41,7 +41,7 @@
 				</el-table-column>
 				<el-table-column label="系统代号>客户端名称">
 					<template slot-scope="scope">
-						<span style="font-weight: bold;" v-if="scope.row.systemCode != undefined && scope.row.systemCode != ''">{{scope.row.systemCode}} ></span> {{scope.row.name}}
+						<span style="font-weight: bold;" v-if="scope.row.appNameEn != undefined && scope.row.appNameEn != ''">{{scope.row.appNameEn}} ></span> {{scope.row.appNameEn}}
 					</template>
 				</el-table-column>
 				<el-table-column label="IP地址">
@@ -52,8 +52,8 @@
 				<el-table-column label="创建时间" prop="createTime" width="220"></el-table-column>
 				<el-table-column label="状态" prop="status" width="100">
 					<template slot-scope="scope">
-						<el-tag effect="dark" size="small" v-if="scope.row.status === '0'" type="">启用</el-tag>
-						<el-tag effect="dark" size="small" v-if="scope.row.status === '1'" type="danger">禁用</el-tag>
+						<el-tag effect="dark" size="small" v-if="scope.row.status == '1'" type="">启用</el-tag>
+						<el-tag effect="dark" size="small" v-if="scope.row.status == '0'" type="danger">禁用</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column label="备注" prop="remarks" width="350"></el-table-column>
@@ -190,8 +190,8 @@
 				let _this = this;
 				clientPageList({name:this.form.name, status: this.form.status, groupCode: this.form.groupCode, ip: this.ip, currentPage: this.currentPage, pageSize: this.pageSize}).then(function(result){
 					if (result.data){
-						_this.tableData = result.data.lists;
-						_this.totalNum = result.data.totalNum;
+						_this.tableData = result.data.content;
+						_this.totalNum = result.data.totalElements;
 					}
 				});
 			}

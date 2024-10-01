@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
 export const addRegServer = data => {
     return request({
-        url: '/gatewayManage/regServer/add',
+        url: '/base/regServer/add',
         method: 'post',
         data
     })
@@ -18,7 +18,7 @@ export const addRegServer = data => {
  */
 export const updateRegServer = data => {
     return request({
-        url: '/gatewayManage/regServer/update',
+        url: '/base/regServer/update',
         method: 'post',
         data
     })
@@ -29,7 +29,7 @@ export const updateRegServer = data => {
  */
 export const regServerPageList = data => {
     return request({
-        url: '/gatewayManage/regServer/serverPageList',
+        url: '/base/regServer/serverPageList',
         method: 'post',
         data
     })
@@ -40,7 +40,7 @@ export const regServerPageList = data => {
  */
 export const regClientPageList = data => {
     return request({
-        url: '/gatewayManage/regServer/clientPageList',
+        url: '/base/regServer/clientPageList',
         method: 'post',
         data
     })
@@ -51,7 +51,7 @@ export const regClientPageList = data => {
  */
 export const startRegServer = data => {
     return request({
-        url: '/gatewayManage/regServer/start',
+        url: '/base/regServer/start',
         method: 'get',
         data
     })
@@ -62,7 +62,7 @@ export const startRegServer = data => {
  */
 export const stopRegServer = data => {
     return request({
-        url: '/gatewayManage/regServer/stop',
+        url: '/base/regServer/stop',
         method: 'get',
         data
     })
@@ -73,7 +73,7 @@ export const stopRegServer = data => {
  */
 export const startAllRegServer = data => {
     return request({
-        url: '/gatewayManage/regServer/startClientAllRoute',
+        url: '/base/regServer/startClientAllRoute',
         method: 'get',
         data
     })
@@ -84,7 +84,7 @@ export const startAllRegServer = data => {
  */
 export const stopAllRegServer = data => {
     return request({
-        url: '/gatewayManage/regServer/stopClientAllRoute',
+        url: '/base/regServer/stopClientAllRoute',
         method: 'get',
         data
     })
@@ -95,7 +95,7 @@ export const stopAllRegServer = data => {
  */
 export const deleteRegServer = data => {
     return request({
-        url: '/gatewayManage/regServer/delete',
+        url: '/base/regServer/delete',
         method: 'get',
         data
     })
@@ -106,7 +106,7 @@ export const deleteRegServer = data => {
  */
 export const notRegServerPageList = data => {
     return request({
-        url: '/gatewayManage/regServer/notRegServerPageList',
+        url: '/base/regServer/notRegServerPageList',
         method: 'post',
         data
     })
@@ -119,7 +119,7 @@ export const notRegServerPageList = data => {
  */
 export const addRegClient = data => {
     return request({
-        url: '/gatewayManage/regServer/add',
+        url: '/base/regServer/add',
         method: 'post',
         data
     })
@@ -130,7 +130,7 @@ export const addRegClient = data => {
  */
 export const startAllRegClient = data => {
     return request({
-        url: '/gatewayManage/regServer/startRouteAllClient',
+        url: '/base/regServer/startRouteAllClient',
         method: 'get',
         data
     })
@@ -141,7 +141,7 @@ export const startAllRegClient = data => {
  */
 export const stopAllRegClient = data => {
     return request({
-        url: '/gatewayManage/regServer/stopRouteAllClient',
+        url: '/base/regServer/stopRouteAllClient',
         method: 'get',
         data
     })
@@ -152,7 +152,7 @@ export const stopAllRegClient = data => {
  */
 export const startRegClient = data => {
     return request({
-        url: '/gatewayManage/regServer/start',
+        url: '/base/regServer/start',
         method: 'get',
         data
     })
@@ -163,7 +163,7 @@ export const startRegClient = data => {
  */
 export const stopRegClient = data => {
     return request({
-        url: '/gatewayManage/regServer/stop',
+        url: '/base/regServer/stop',
         method: 'get',
         data
     })
@@ -174,7 +174,7 @@ export const stopRegClient = data => {
  */
 export const deleteRegClient = data => {
     return request({
-        url: '/gatewayManage/regServer/delete',
+        url: '/base/regServer/delete',
         method: 'get',
         data
     })
@@ -185,7 +185,7 @@ export const deleteRegClient = data => {
  */
 export const notRegClientPageList = data => {
     return request({
-        url: '/gatewayManage/regServer/notRegClientPageList',
+        url: '/base/regServer/notRegClientPageList',
         method: 'post',
         data
     })
@@ -196,7 +196,7 @@ export const notRegClientPageList = data => {
  */
 export const regClientList = data => {
     return request({
-        url: '/gatewayManage/regServer/regClientList',
+        url: '/base/regServer/regClientList',
         method: 'post',
         data
     })
@@ -207,7 +207,7 @@ export const regClientList = data => {
  */
  export const createRegClientToken = data => {
     return request({
-        url: '/gatewayManage/regServer/createToken',
+        url: '/base/regServer/createToken',
         method: 'post',
         data
     })
@@ -218,7 +218,7 @@ export const regClientList = data => {
  */
  export const removeRegClientToken = data => {
     return request({
-        url: '/gatewayManage/regServer/removeToken',
+        url: '/base/regServer/removeToken',
         method: 'post',
         data
     })

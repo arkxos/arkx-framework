@@ -28,11 +28,11 @@ public class Balanced implements java.io.Serializable {
     @Column(name = "name")
     private String name;
     @NotNull(message = "客户端分组不能为空")
-    @Column(name = "groupCode")
+    @Column(name = "group_Code")
     private String groupCode;
     @NotNull(message = "网关负载服务uri不能为空")
     @Size(min = 2, max = 200, message = "网关负载服务uri长度必需在2到200个字符内")
-    @Column(name = "loadUri")
+    @Column(name = "load_Uri")
     private String loadUri;
     /**
      * 状态，0是启用，1是禁用
@@ -44,9 +44,9 @@ public class Balanced implements java.io.Serializable {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @NotNull(message = "创建时间不能为空")
-    @Column(name = "createTime")
+    @Column(name = "create_Time")
     private Date createTime;
-    @Column(name = "updateTime")
+    @Column(name = "update_Time")
     private Date updateTime;
     /**
      * 备注

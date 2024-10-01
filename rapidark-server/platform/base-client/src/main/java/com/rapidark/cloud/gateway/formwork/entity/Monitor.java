@@ -71,7 +71,7 @@ public class Monitor {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "alarmTime" )
+    @Column(name = "alarm_Time" )
     private Date alarmTime;
 
     /**
@@ -79,7 +79,7 @@ public class Monitor {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "sendTime" )
+    @Column(name = "send_Time" )
     private Date sendTime;
 
     /**
@@ -88,7 +88,7 @@ public class Monitor {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "更新时间不能为空")
-    @Column(name = "updateTime" )
+    @Column(name = "update_Time" )
     private Date updateTime;
 
 }
