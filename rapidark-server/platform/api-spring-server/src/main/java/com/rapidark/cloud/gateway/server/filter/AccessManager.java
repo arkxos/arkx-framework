@@ -2,6 +2,7 @@ package com.rapidark.cloud.gateway.server.filter;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
+import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.constants.ErrorCode;
 import com.rapidark.common.security.OpenAuthority;
@@ -83,6 +84,8 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
         if (!apiProperties.getAccessControl()) {
             return Mono.just(new AuthorizationDecision(true));
         }
+        // 客户端ip
+        String openClientHost = NetworkIpUtils.getIpAddress(exchange.getRequest());
         // 是否直接放行
         if (permitAll(requestPath)) {
             return Mono.just(new AuthorizationDecision(true));

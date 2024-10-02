@@ -7,8 +7,6 @@ import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.constants.ResourceType;
 import com.rapidark.cloud.base.client.model.entity.BaseApi;
 import com.rapidark.cloud.base.server.mapper.BaseApiMapper;
-import com.rapidark.cloud.base.server.service.BaseApiService;
-import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;

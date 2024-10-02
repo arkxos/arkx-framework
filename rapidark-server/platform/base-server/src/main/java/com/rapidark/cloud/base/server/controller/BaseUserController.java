@@ -7,8 +7,6 @@ import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.client.service.IBaseUserServiceClient;
 import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.cloud.base.server.controller.cmd.AddUserRolesCommand;
-import com.rapidark.cloud.base.server.service.BaseRoleService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.utils.StringUtils;

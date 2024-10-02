@@ -6,7 +6,6 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.server.mapper.BaseAccountLogsMapper;
 import com.rapidark.cloud.base.server.mapper.BaseAccountMapper;
-import com.rapidark.cloud.base.server.service.BaseAccountService;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

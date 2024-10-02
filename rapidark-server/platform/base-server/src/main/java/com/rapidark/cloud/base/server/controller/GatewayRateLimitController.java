@@ -2,7 +2,6 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
-import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.http.OpenRestTemplate;

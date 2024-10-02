@@ -5,7 +5,6 @@ import com.rapidark.cloud.base.client.model.UserAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
 import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.cloud.base.client.service.IBaseDeveloperServiceClient;
-import com.rapidark.cloud.base.server.service.BaseDeveloperService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.utils.WebUtils;

@@ -8,7 +8,6 @@ import com.rapidark.cloud.base.client.model.entity.GatewayIpLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.mapper.GatewayIpLimitApisMapper;
 import com.rapidark.cloud.base.server.mapper.GatewayIpLimitMapper;
-import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;

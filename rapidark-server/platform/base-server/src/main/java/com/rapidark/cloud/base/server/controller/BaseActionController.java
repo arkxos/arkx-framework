@@ -3,7 +3,6 @@ package com.rapidark.cloud.base.server.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.AuthorityAction;
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
-import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.http.OpenRestTemplate;

@@ -3,8 +3,6 @@ package com.rapidark.cloud.base.server.controller;
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.cloud.base.server.service.BaseAuthorityService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.ResultBody;

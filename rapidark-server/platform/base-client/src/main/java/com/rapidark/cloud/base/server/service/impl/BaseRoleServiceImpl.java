@@ -9,8 +9,6 @@ import com.rapidark.cloud.base.client.model.entity.BaseRoleUser;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.mapper.BaseRoleMapper;
 import com.rapidark.cloud.base.server.mapper.BaseRoleUserMapper;
-import com.rapidark.cloud.base.server.service.BaseRoleService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
