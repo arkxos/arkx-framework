@@ -1,7 +1,5 @@
 package com.rapidark.cloud.gateway.formwork.bean;
 
-import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-
 import lombok.Data;
 
 /**
@@ -14,7 +12,7 @@ import lombok.Data;
 public class RouteReq implements java.io.Serializable {
 
     //表单值
-    private RouteFormBean form;
+    private GatewayAppRouteFormBean form;
     //过滤器开关
     private RouteFilterBean filter;
     //熔断器开关

@@ -9,8 +9,8 @@ import com.flying.fish.gateway.filter.factory.AuthorizeGatewayFilterFactory;
 import com.flying.fish.gateway.service.LoadRouteService;
 import com.flying.fish.gateway.vo.GatewayRouteConfig;
 import com.rapidark.cloud.gateway.formwork.config.ApplicationContextProvider;
-import com.rapidark.cloud.gateway.formwork.repository.RouteRepository;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class RouteConfig {
     private AuthorizeGatewayFilterFactory authorizeGatewayFilterFactory;
 
     @Resource
-    private RouteRepository routeRepository;
+    private GatewayAppRouteRepository gatewayAppRouteRepository;
 
     @Resource
     private KeyResolver uriKeyResolver;
@@ -77,9 +77,9 @@ public class RouteConfig {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Deprecated
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
-        String routeId = "route-producer";
+        String routeId = "gatewayAppRoute-producer";
         return builder.routes().route(r ->
-                r.method("GET").and().path("/route/producer/**").
+                r.method("GET").and().path("/gatewayAppRoute/producer/**").
                         filters(f -> f.stripPrefix(1).
                                 addRequestParameter("version", "test").
                                 requestRateLimiter(config -> {
@@ -112,11 +112,11 @@ public class RouteConfig {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Deprecated
     public RouteLocator routeLocators(RouteLocatorBuilder builder){
-        Route query = new Route();
+        GatewayAppRoute query = new GatewayAppRoute();
         query.setStatus(Constants.YES);
-        List<Route> routeList = routeRepository.findAll(Example.of(query));
+        List<GatewayAppRoute> gatewayAppRouteList = gatewayAppRouteRepository.findAll(Example.of(query));
         RouteLocatorBuilder.Builder routeBuilder = builder.routes();
-        routeList.forEach(route->{
+        gatewayAppRouteList.forEach(route->{
             RouteCache.put(route.getId(), route);
             GatewayRouteConfig gatewayRouteConfig = loadRouteService.loadRouteConfig(route);
             routeBuilder.route(r -> {

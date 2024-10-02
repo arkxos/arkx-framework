@@ -1,8 +1,7 @@
 package com.flying.fish.gateway.filter.authorize;
 
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-
-import com.rapidark.cloud.gateway.formwork.entity.Route;
 
 /**
  * @Description 责任链设计模式，抽象业务父类
@@ -13,10 +12,10 @@ import com.rapidark.cloud.gateway.formwork.entity.Route;
 public abstract class FilterHandler {
 
     public FilterHandler handler = null;
-    protected Route route;
+    protected GatewayAppRoute gatewayAppRoute;
 
-    public void handler(ServerHttpRequest request, Route route){
-        this.route = route;
+    public void handler(ServerHttpRequest request, GatewayAppRoute gatewayAppRoute){
+        this.gatewayAppRoute = gatewayAppRoute;
         handleRequest(request);
         nextHandle(request);
     }
@@ -25,7 +24,7 @@ public abstract class FilterHandler {
 
     public void nextHandle(ServerHttpRequest request){
         if (handler != null){
-            handler.handler(request,route);
+            handler.handler(request, gatewayAppRoute);
         }
     }
 }

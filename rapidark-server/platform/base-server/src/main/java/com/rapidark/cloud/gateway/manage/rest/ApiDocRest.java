@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.ApiDocService;
-import com.rapidark.cloud.gateway.formwork.service.RouteService;
+import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
 import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 
 import javax.annotation.Resource;
@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 public class ApiDocRest extends BaseRest {
 
     @Resource
-    private RouteService routeService;
+    private GatewayAppRouteService gatewayAppRouteService;
 
     @Resource
     private ApiDocService apiDocService;
@@ -35,7 +35,7 @@ public class ApiDocRest extends BaseRest {
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult list(){
-        return new ApiResult(routeService.list(new Route()));
+        return new ApiResult(gatewayAppRouteService.list(new GatewayAppRoute()));
     }
 
     /**

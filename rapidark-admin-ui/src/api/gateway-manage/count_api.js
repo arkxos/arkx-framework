@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export const countRequest = data => {
     return request({
-        url: '/base/count/request',
+        url: '/base/gateway/monitor/count/request',
         method: 'post',
 		loading: false,
         data
@@ -18,7 +18,7 @@ export const countRequest = data => {
  */
 export const countBalancedRequest = data => {
     return request({
-        url: '/base/count/balanced/request',
+        url: '/base/gateway/monitor/count/balanced/request',
         method: 'post',
 		loading: false,
         data
@@ -30,7 +30,7 @@ export const countBalancedRequest = data => {
  */
 export const countRoutePageList = data => {
     return request({
-        url: '/base/count/route/pageList',
+        url: '/base/gateway/monitor/count/route/pageList',
         method: 'post',
 		loading: false,
         data
@@ -42,7 +42,7 @@ export const countRoutePageList = data => {
  */
 export const countRequestTotal = data => {
     return request({
-        url: '/base/count/request/total',
+        url: '/base/gateway/monitor/count/request/total',
         method: 'post',
 		loading: false,
         data
@@ -54,7 +54,7 @@ export const countRequestTotal = data => {
  */
  export const countAppRequestTotal = data => {
     return request({
-        url: '/base/count/request/app/total',
+        url: '/base/gateway/monitor/count/request/app/total',
         method: 'get',
 		loading: false,
         data

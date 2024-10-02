@@ -1,5 +1,5 @@
 /*接口公开访问*/
-UPDATE base_api SET is_open=1 WHERE service_id IN (SELECT route_name FROM gateway_route WHERE route_type='service') AND path NOT LIKE '/actuator%' AND path NOT LIKE '/swagger-resources%' AND path NOT LIKE '%/error';;
+UPDATE base_api SET is_open=1 WHERE service_id IN (SELECT name FROM gateway_app_route WHERE route_type='service') AND path NOT LIKE '/actuator%' AND path NOT LIKE '/swagger-resources%' AND path NOT LIKE '%/error';;
 
 /*菜单、操作及权限数据清理*/
 DELETE FROM base_menu WHERE parent_id IN (SELECT parent_id FROM (SELECT parent_id FROM base_menu WHERE parent_id!=0 AND parent_id NOT IN (SELECT menu_id FROM base_menu)) tmp);

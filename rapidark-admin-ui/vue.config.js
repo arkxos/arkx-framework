@@ -117,13 +117,6 @@ module.exports = {
             '^/ltc': 'ltc'
         }
       },
-      '/base': {
-        target: process.env.VUE_APP_BASE_API,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/base': 'gatewayManage'
-        }
-      },
       '/gateway': {
         target: process.env.VUE_APP_BASE_API,
         changeOrigin: true,

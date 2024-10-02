@@ -1,8 +1,14 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.common.security.http.OpenRestTemplate;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.*;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
 import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.formwork.service.MonitorService;
-import com.rapidark.cloud.gateway.formwork.service.RouteService;
+import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
 import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
@@ -29,13 +34,14 @@ import java.util.List;
  * @Date 2020/05/14
  * @Version V1.0
  */
+@Api(tags = "网关路由")
 @Slf4j
 @RestController
-@RequestMapping("/route")
-public class RouteRest extends BaseRest {
+@RequestMapping("/gatewayAppRoute")
+public class GatewayAppRouteRest extends BaseRest {
 
     @Resource
-    private RouteService routeService;
+    private GatewayAppRouteService gatewayAppRouteService;
 
     @Resource
     private RedisTemplate redisTemplate;
@@ -46,6 +52,49 @@ public class RouteRest extends BaseRest {
     @Resource
     private CustomNacosConfigService customNacosConfigService;
 
+    @Autowired
+    private OpenRestTemplate openRestTemplate;
+    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public ApiResult list(@RequestBody RouteReq routeReq){
+        Assert.notNull(routeReq, "未获取到对象");
+        return new ApiResult(gatewayAppRouteService.list(toRoute(routeReq)));
+    }
+
+    /**
+     * 获取分页路由列表
+     *
+     * @return
+     */
+    @ApiOperation(value = "获取分页路由列表", notes = "获取分页路由列表")
+    @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
+    public ApiResult pageList(@RequestBody RouteReq routeReq){
+        Assert.notNull(routeReq, "未获取到对象");
+        int currentPage = getCurrentPage(routeReq.getCurrentPage());
+        int pageSize = getPageSize(routeReq.getPageSize());
+        GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
+        if (StringUtils.isBlank(gatewayAppRoute.getName())){
+            gatewayAppRoute.setName(null);
+        }
+        if (StringUtils.isBlank(gatewayAppRoute.getStatus())){
+            gatewayAppRoute.setStatus(null);
+        }
+        return new ApiResult(gatewayAppRouteService.pageList(gatewayAppRoute, currentPage, pageSize));
+    }
+
+    /**
+     * 获取路由
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "获取路由", notes = "获取路由")
+    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
+    public ApiResult findById(@RequestParam String id){
+        Assert.notNull(id, "未获取到对象ID");
+        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+        return new ApiResult(gatewayAppRouteService.findById(id));
+    }
+
     /**
      * 添加网关路由
      * @param routeReq
@@ -54,14 +103,14 @@ public class RouteRest extends BaseRest {
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
     public ApiResult add(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
-        Route route = toRoute(routeReq);
-        route.setCreateTime(new Date());
-        this.validate(route);
-        Route dbRoute = new Route();
-        dbRoute.setId(route.getId());
-        long count = routeService.count(dbRoute);
+        GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
+        gatewayAppRoute.setCreateTime(new Date());
+        this.validate(gatewayAppRoute);
+        GatewayAppRoute dbGatewayAppRoute = new GatewayAppRoute();
+        dbGatewayAppRoute.setId(gatewayAppRoute.getId());
+        long count = gatewayAppRouteService.count(dbGatewayAppRoute);
         Assert.isTrue(count <= 0, "RouteId已存在，不能重复");
-        return this.save(route, toMonitor(routeReq), true);
+        return this.save(gatewayAppRoute, toMonitor(routeReq), true);
     }
 
     /**
@@ -69,12 +118,18 @@ public class RouteRest extends BaseRest {
      * @param id
      * @return
      */
+    @ApiOperation(value = "移除路由", notes = "移除路由")
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult delete(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        routeService.delete(id);
+        gatewayAppRouteService.delete(id);
+
         //this.setRouteCacheVersion();
         customNacosConfigService.publishRouteNacosConfig(id);
+
+        // 刷新网关
+        openRestTemplate.refreshGateway();
+
         return new ApiResult();
     }
 
@@ -83,41 +138,14 @@ public class RouteRest extends BaseRest {
      * @param routeReq
      * @return
      */
+    @ApiOperation(value = "编辑路由", notes = "编辑路由")
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
     public ApiResult update(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
-        Route route = toRoute(routeReq);
-        this.validate(route);
-        Assert.isTrue(StringUtils.isNotBlank(route.getId()), "未获取到对象ID");
-        return this.save(route, toMonitor(routeReq), false);
-    }
-
-    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult findById(@RequestParam String id){
-        Assert.notNull(id, "未获取到对象ID");
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        return new ApiResult(routeService.findById(id));
-    }
-
-    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult list(@RequestBody RouteReq routeReq){
-        Assert.notNull(routeReq, "未获取到对象");
-        return new ApiResult(routeService.list(toRoute(routeReq)));
-    }
-
-    @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult pageList(@RequestBody RouteReq routeReq){
-        Assert.notNull(routeReq, "未获取到对象");
-        int currentPage = getCurrentPage(routeReq.getCurrentPage());
-        int pageSize = getPageSize(routeReq.getPageSize());
-        Route route = toRoute(routeReq);
-        if (StringUtils.isBlank(route.getName())){
-            route.setName(null);
-        }
-        if (StringUtils.isBlank(route.getStatus())){
-            route.setStatus(null);
-        }
-        return new ApiResult(routeService.pageList(route,currentPage, pageSize));
+        GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
+        this.validate(gatewayAppRoute);
+        Assert.isTrue(StringUtils.isNotBlank(gatewayAppRoute.getId()), "未获取到对象ID");
+        return this.save(gatewayAppRoute, toMonitor(routeReq), false);
     }
 
     /**
@@ -128,10 +156,10 @@ public class RouteRest extends BaseRest {
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult start(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        Route dbRoute = routeService.findById(id);
-        if (!Constants.YES.equals(dbRoute.getStatus())) {
-            dbRoute.setStatus(Constants.YES);
-            routeService.update(dbRoute);
+        GatewayAppRoute dbGatewayAppRoute = gatewayAppRouteService.findById(id);
+        if (!Constants.YES.equals(dbGatewayAppRoute.getStatus())) {
+            dbGatewayAppRoute.setStatus(Constants.YES);
+            gatewayAppRouteService.update(dbGatewayAppRoute);
         }
         //this.setRouteCacheVersion();
         //可以通过反复启用，刷新路由，防止发布失败或配置变更未生效
@@ -147,10 +175,10 @@ public class RouteRest extends BaseRest {
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResult stop(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        Route dbRoute = routeService.findById(id);
-        if (!Constants.NO.equals(dbRoute.getStatus())) {
-            dbRoute.setStatus(Constants.NO);
-            routeService.update(dbRoute);
+        GatewayAppRoute dbGatewayAppRoute = gatewayAppRouteService.findById(id);
+        if (!Constants.NO.equals(dbGatewayAppRoute.getStatus())) {
+            dbGatewayAppRoute.setStatus(Constants.NO);
+            gatewayAppRouteService.update(dbGatewayAppRoute);
             //this.setRouteCacheVersion();
             customNacosConfigService.publishRouteNacosConfig(id);
         }
@@ -159,25 +187,38 @@ public class RouteRest extends BaseRest {
 
     /**
      * 保存网关路由服务
-     * @param route
+     * @param gatewayAppRoute
      * @param monitor
      * @param isNews
      * @return
      */
-    private ApiResult save(Route route, Monitor monitor, boolean isNews){
-        route.setUpdateTime(new Date());
-        routeService.save(route);
+    private ApiResult save(GatewayAppRoute gatewayAppRoute, Monitor monitor, boolean isNews){
+        gatewayAppRoute.setUpdateTime(new Date());
+
+        switch (gatewayAppRoute.getType()) {
+            case BaseConstants.ROUTE_TYPE_URL:
+                gatewayAppRoute.setServiceId(null);
+                gatewayAppRoute.setUri(gatewayAppRoute.getUri().trim());
+                break;
+            default:
+                gatewayAppRoute.setServiceId(gatewayAppRoute.getServiceId().trim());
+                gatewayAppRoute.setUri(null);
+        }
+
+        gatewayAppRouteService.save(gatewayAppRoute);
+
         //this.setRouteCacheVersion();
-        customNacosConfigService.publishRouteNacosConfig(route.getId());
+        customNacosConfigService.publishRouteNacosConfig(gatewayAppRoute.getId());
+
         //保存监控配置
         if (monitor != null) {
-            monitor.setId(route.getId());
+            monitor.setId(gatewayAppRoute.getId());
             monitor.setUpdateTime(new Date());
             this.validate(monitor);
             monitorService.save(monitor);
         } else {
             if (!isNews) {
-                Monitor dbMonitor = monitorService.findById(route.getId());
+                Monitor dbMonitor = monitorService.findById(gatewayAppRoute.getId());
                 //修改时，如果前端取消选中，并且数据库中又存在记录，则需要置为禁用状态
                 if (dbMonitor != null){
                     dbMonitor.setStatus(Constants.NO);
@@ -186,21 +227,25 @@ public class RouteRest extends BaseRest {
                 }
             }
         }
+
+        // 刷新网关
+        openRestTemplate.refreshGateway();
+
         return new ApiResult();
     }
 
     /**
      * 将请求对象转换为数据库实体对象
      * @param routeReq  前端对象
-     * @return Route
+     * @return GatewayAppRoute
      */
-    private Route toRoute(RouteReq routeReq){
-        Route route = new Route();
-        RouteFormBean form = routeReq.getForm();
+    private GatewayAppRoute toRoute(RouteReq routeReq){
+        GatewayAppRoute gatewayAppRoute = new GatewayAppRoute();
+        GatewayAppRouteFormBean form = routeReq.getForm();
         if (form == null){
-            return route;
+            return gatewayAppRoute;
         }
-        BeanUtils.copyProperties(form, route);
+        BeanUtils.copyProperties(form, gatewayAppRoute);
         RouteFilterBean filter = routeReq.getFilter();
         RouteHystrixBean hystrix = routeReq.getHystrix();
         RouteLimiterBean limiter = routeReq.getLimiter();
@@ -217,26 +262,26 @@ public class RouteRest extends BaseRest {
             if (filter.getTokenChecked()) {
                 routeFilterList.add(RouteConstants.TOKEN);
             }
-            route.setFilterGatewaName(StringUtils.join(routeFilterList.toArray(), Constants.SEPARATOR_SIGN));
+            gatewayAppRoute.setFilterGatewaName(StringUtils.join(routeFilterList.toArray(), Constants.SEPARATOR_SIGN));
         }
 
         //添加熔断器
         if (hystrix != null) {
             if (hystrix.getDefaultChecked()) {
-                route.setFilterHystrixName(RouteConstants.Hystrix.DEFAULT);
+                gatewayAppRoute.setFilterHystrixName(RouteConstants.Hystrix.DEFAULT);
             } else if (hystrix.getCustomChecked()) {
-                route.setFilterHystrixName(RouteConstants.Hystrix.CUSTOM);
+                gatewayAppRoute.setFilterHystrixName(RouteConstants.Hystrix.CUSTOM);
             }
         }
         //添加限流器
         if (limiter != null) {
-            route.setFilterRateLimiterName(null);
+            gatewayAppRoute.setFilterRateLimiterName(null);
             if (limiter.getIdChecked()) {
-                route.setFilterRateLimiterName(RouteConstants.REQUEST_ID);
+                gatewayAppRoute.setFilterRateLimiterName(RouteConstants.REQUEST_ID);
             }else if (limiter.getIpChecked()) {
-                route.setFilterRateLimiterName(RouteConstants.IP);
+                gatewayAppRoute.setFilterRateLimiterName(RouteConstants.IP);
             }else if (limiter.getUriChecked()) {
-                route.setFilterRateLimiterName(RouteConstants.URI);
+                gatewayAppRoute.setFilterRateLimiterName(RouteConstants.URI);
             }
         }
         //添加鉴权器
@@ -257,9 +302,9 @@ public class RouteRest extends BaseRest {
             if (access.getCookieChecked()) {
                 routeAccessList.add(RouteConstants.Access.COOKIE);
             }
-            route.setFilterAuthorizeName(StringUtils.join(routeAccessList.toArray(), Constants.SEPARATOR_SIGN));
+            gatewayAppRoute.setFilterAuthorizeName(StringUtils.join(routeAccessList.toArray(), Constants.SEPARATOR_SIGN));
         }
-        return route;
+        return gatewayAppRoute;
     }
 
     /**
@@ -272,7 +317,7 @@ public class RouteRest extends BaseRest {
         if (bean != null){
             // checked为true，则表示启用监控配置
             if (bean.getChecked()){
-                RouteFormBean form = routeReq.getForm();
+                GatewayAppRouteFormBean form = routeReq.getForm();
                 Monitor monitor = new Monitor();
                 BeanUtils.copyProperties(form.getMonitor(), monitor);
                 monitor.setStatus(Constants.YES);

@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.manage.task;
 
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,9 +10,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
 import com.rapidark.cloud.gateway.formwork.service.MonitorService;
-import com.rapidark.cloud.gateway.formwork.service.RouteService;
+import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.HttpUtils;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class MonitorTaskService {
 
     @Resource
-    private RouteService routeService;
+    private GatewayAppRouteService gatewayAppRouteService;
     @Resource
     private MonitorService monitorService;
     @Resource
@@ -81,13 +81,13 @@ public class MonitorTaskService {
      */
     @Async
     public void executeMonitorTask(){
-        List<Route> routeList;
+        List<GatewayAppRoute> gatewayAppRouteList;
         while(true){
             try{
                 //监控网关路由服务,条件：网关状态为0正常，监控状态为：0正常或(2告警+1可重试)
-                routeList = routeService.monitorRouteList();
-                if (!CollectionUtils.isEmpty(routeList)){
-                    monitorRoute(routeList.stream().collect(Collectors.toMap(Route::getId, r->r)));
+                gatewayAppRouteList = gatewayAppRouteService.monitorRouteList();
+                if (!CollectionUtils.isEmpty(gatewayAppRouteList)){
+                    monitorRoute(gatewayAppRouteList.stream().collect(Collectors.toMap(GatewayAppRoute::getId, r->r)));
                 }
                 //注意此处，需根据预估的真实队列总量计算，最大线程数按预估时间完成所有任务的总时长推算，在设定暂停时长，防止数据入队列太快，线程来不及处理，导致任务丢弃；
                 TimeUnit.MILLISECONDS.sleep(10 * 1000);
@@ -102,7 +102,7 @@ public class MonitorTaskService {
      * 对网关路由发起请求，如果未正常响应，则认为接口不可用，并置为告警状态
      * @param dataMap
      */
-    private void monitorRoute(Map<String,Route> dataMap){
+    private void monitorRoute(Map<String, GatewayAppRoute> dataMap){
         int i = 0;
         //每次最多获取TASK_SIZE次任务，防止队列出列过慢数据溢出
         while (TASK_SIZE > i){
@@ -111,8 +111,8 @@ public class MonitorTaskService {
             if (StringUtils.isBlank(routeId)){
                 return;
             }
-            Route route = dataMap.get(routeId);
-            if (route == null) {
+            GatewayAppRoute gatewayAppRoute = dataMap.get(routeId);
+            if (gatewayAppRoute == null) {
                 return;
             }
             //执行线程池任务
@@ -120,10 +120,10 @@ public class MonitorTaskService {
                 String msg = null;
                 String result = null;
                 boolean isTimeout = true;
-                String path = route.getPath();
-                String uri = route.getUri();
+                String path = gatewayAppRoute.getPath();
+                String uri = gatewayAppRoute.getUri();
                 String newUri = null;
-                String method = StringUtils.isNotBlank(route.getMethod()) ? route.getMethod(): HttpUtils.HTTP_GET;
+                String method = StringUtils.isNotBlank(gatewayAppRoute.getMethod()) ? gatewayAppRoute.getMethod(): HttpUtils.HTTP_GET;
                 //根据跳转规则拼装路径
                 String newPath = "/"+ Arrays.stream(org.springframework.util.StringUtils.tokenizeToStringArray(path, "/"))
                         .skip(1).collect(Collectors.joining("/"));
@@ -152,7 +152,7 @@ public class MonitorTaskService {
                     msg = ioe.getMessage();
                 }catch(Exception e){
                     log.error("执行监控任务服务异常，监控id :{}，监控名称 :{},请求地址：{},请求模式：{}, 错误消息：{}",
-                            routeId, route.getName(), newUri, route.getMethod(), e.getMessage());
+                            routeId, gatewayAppRoute.getName(), newUri, gatewayAppRoute.getMethod(), e.getMessage());
                     log.error("", e);
                     timoutMonitor(routeId);
                     return;
@@ -160,7 +160,7 @@ public class MonitorTaskService {
                 //设置告警状态
                 if (isTimeout){
                     log.error("执行监控任务访问异常，监控id :{}，监控名称 :{},请求地址：{},请求模式：{}, 超时时长：5000, 错误消息：{}",
-                            routeId, route.getName(), newUri, route.getMethod(), msg);
+                            routeId, gatewayAppRoute.getName(), newUri, gatewayAppRoute.getMethod(), msg);
                     timoutMonitor(routeId);
                 }
             });

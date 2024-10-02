@@ -20,7 +20,7 @@ export const getGateWayInfo = data => {
  */
 export const addRoute = data => {
     return request({
-        url: '/base/route/add',
+        url: '/base/gatewayAppRoute/add',
         method: 'post',
         data
     })
@@ -31,7 +31,7 @@ export const addRoute = data => {
  */
 export const updateRoute = data => {
     return request({
-        url: '/base/route/update',
+        url: '/base/gatewayAppRoute/update',
         method: 'post',
         data
     })
@@ -42,7 +42,7 @@ export const updateRoute = data => {
  */
 export const routePageList = data => {
     return request({
-        url: '/base/route/pageList',
+        url: '/base/gatewayAppRoute/pageList',
         method: 'post',
         data
     })
@@ -53,7 +53,7 @@ export const routePageList = data => {
  */
 export const startRoute = data => {
     return request({
-        url: '/base/route/start',
+        url: '/base/gatewayAppRoute/start',
         method: 'get',
         data
     })
@@ -64,7 +64,7 @@ export const startRoute = data => {
  */
 export const stopRoute = data => {
     return request({
-        url: '/base/route/stop',
+        url: '/base/gatewayAppRoute/stop',
         method: 'get',
         data
     })
@@ -75,7 +75,7 @@ export const stopRoute = data => {
  */
 export const deleteRoute = data => {
     return request({
-        url: '/base/route/delete',
+        url: '/base/gatewayAppRoute/delete',
         method: 'get',
         data
     })

@@ -37,7 +37,7 @@
         FROM gateway_rate_limit_api i
         INNER JOIN gateway_rate_limit p ON i.policy_id = p.policy_id
         INNER JOIN base_api a ON i.api_id = a.api_id
-        INNER JOIN gateway_route r ON a.service_id = r.route_name
+        INNER JOIN gateway_app_route r ON a.service_id = r.name
         WHERE p.policy_type = 'url'
     </select>
 </mapper>

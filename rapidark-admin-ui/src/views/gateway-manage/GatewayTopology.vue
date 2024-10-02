@@ -83,7 +83,7 @@ export default {
 			}
 		},
 		goBack() {
-			this.$router.push({path:'/gatewayList',query:{}});
+			this.$router.push({path:'/gatewayAppRoute',query:{}});
 		},
 		drawLine() {
 			let _this = this;

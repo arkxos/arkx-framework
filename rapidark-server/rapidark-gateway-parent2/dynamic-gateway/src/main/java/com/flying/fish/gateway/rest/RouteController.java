@@ -4,8 +4,8 @@ import com.flying.fish.gateway.event.DataRouteApplicationEventListen;
 import com.flying.fish.gateway.service.DynamicRouteService;
 import com.flying.fish.gateway.service.LoadRouteService;
 import com.flying.fish.gateway.vo.GatewayRouteDefinition;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
-import com.rapidark.cloud.gateway.formwork.service.RouteService;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
 import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -29,7 +29,7 @@ public class RouteController {
     @Resource
     private LoadRouteService loadRouteService;
     @Resource
-    private RouteService routeService;
+    private GatewayAppRouteService gatewayAppRouteService;
     @Resource
     private DataRouteApplicationEventListen redisRouteDefinitionRepository;
 
@@ -109,14 +109,14 @@ public class RouteController {
     @GetMapping(value = "/load")
     public ApiResult load(@RequestParam String id) {
         Assert.notNull(id, "路由ID不能为空");
-        Route route = routeService.findById(id);
-        RouteDefinition routeDefinition = loadRouteService.loadRouteDefinition(route);
+        GatewayAppRoute gatewayAppRoute = gatewayAppRouteService.findById(id);
+        RouteDefinition routeDefinition = loadRouteService.loadRouteDefinition(gatewayAppRoute);
         this.dynamicRouteService.add(routeDefinition);
         return new ApiResult();
     }
 
     /**
-     * 刷新路由(可刷新：ip,client,route)
+     * 刷新路由(可刷新：ip,client,gatewayAppRoute)
      * @return
      */
     @GetMapping(value = "/fresh")

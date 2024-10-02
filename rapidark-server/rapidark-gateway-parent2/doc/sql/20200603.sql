@@ -1,4 +1,4 @@
-CREATE TABLE `route` (
+CREATE TABLE `gatewayAppRoute` (
   `id` bigint(8) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL COMMENT '名称',
   `routeId` varchar(40) NOT NULL COMMENT '路由ID',

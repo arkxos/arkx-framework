@@ -1,12 +1,16 @@
 package com.rapidark.cloud.base.client.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * 资源权限
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/27 11:25
+ * @version 1.0
  */
+@Data
 public class AuthorityResource implements Serializable {
     private static final long serialVersionUID = -320031660125425711L;
 
@@ -50,67 +54,4 @@ public class AuthorityResource implements Serializable {
      */
     private Integer status;
 
-    public Long getAuthorityId() {
-        return authorityId;
-    }
-
-    public void setAuthorityId(Long authorityId) {
-        this.authorityId = authorityId;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-
-    public Integer getIsAuth() {
-        return isAuth;
-    }
-
-    public void setIsAuth(Integer isAuth) {
-        this.isAuth = isAuth;
-    }
-
-    public String getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getIsOpen() {
-        return isOpen;
-    }
-
-    public void setIsOpen(Integer isOpen) {
-        this.isOpen = isOpen;
-    }
 }

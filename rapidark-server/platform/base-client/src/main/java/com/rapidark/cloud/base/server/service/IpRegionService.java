@@ -53,6 +53,10 @@ public class IpRegionService {
      */
     public String getRegion(String ip) {
         try {
+            if("localhost".equals(ip)
+            || "127.0.0.1".equals(ip)) {
+                return "127.0.0.1";
+            }
             //db
             if (searcher == null) {
                 log.error("DbSearcher is null");

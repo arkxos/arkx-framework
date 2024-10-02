@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 public class ConfigRefreshService {
 
     @Resource
-    private RouteService routeService;
+    private GatewayAppRouteService gatewayAppRouteService;
     @Resource
     private LoadRouteService loadRouteService;
     @Resource
@@ -74,7 +74,7 @@ public class ConfigRefreshService {
     }
 
     /**
-     * 重新设置网关路由配置：balanced,route,client,ip
+     * 重新设置网关路由配置：balanced,gatewayAppRoute,client,ip
      * @param gatewayNacosConfig
      */
     public void refreshGatewayConfig(GatewayNacosConfigBean gatewayNacosConfig){
@@ -110,7 +110,7 @@ public class ConfigRefreshService {
         List<LoadServer> loadServerList = loadServerService.queryByBalancedId(balancedId);
         Assert.notEmpty(loadServerList, getExceptionMessage("未获取网关负载均衡数据库配置路由列表！balancedId=" , balancedId));
         boolean isClose = Constants.NO.equals(balanced.getStatus());
-        Route route;
+        GatewayAppRoute gatewayAppRoute;
         String balancedRouteId;
         //不管任何操作先发布清除事件，清除分组权重配置
         publisherWeightRemoveEvent(balancedId);
@@ -128,13 +128,13 @@ public class ConfigRefreshService {
                 dynamicRouteService.delete(balancedRouteId);
                 continue;
             }
-            route = routeService.findById(loadServer.getRouteId());
+            gatewayAppRoute = gatewayAppRouteService.findById(loadServer.getRouteId());
             // 状态，0是启用，1是禁用
-            if (route == null || Constants.NO.equals(route.getStatus())) {
+            if (gatewayAppRoute == null || Constants.NO.equals(gatewayAppRoute.getStatus())) {
                 continue;
             }
-            loadServerService.setBalancedRoute(balanced, loadServer, route);
-            dynamicRouteService.update(loadRouteService.loadRouteDefinition(route));
+            loadServerService.setBalancedRoute(balanced, loadServer, gatewayAppRoute);
+            dynamicRouteService.update(loadRouteService.loadRouteDefinition(gatewayAppRoute));
         }
         if (isClose){
             log.info("成功移除网关负载均衡配置缓存路由！balancedId={}", balancedId);
@@ -151,14 +151,14 @@ public class ConfigRefreshService {
         if (StringUtils.isBlank(routeId)) {
             return ;
         }
-        Route route = routeService.findById(routeId);
+        GatewayAppRoute gatewayAppRoute = gatewayAppRouteService.findById(routeId);
         // null表示已删除，状态，0是启用，1是禁用
         boolean isClose = false;
-        if (route == null) {
-            route = new Route();
-            route.setId(routeId);
+        if (gatewayAppRoute == null) {
+            gatewayAppRoute = new GatewayAppRoute();
+            gatewayAppRoute.setId(routeId);
             isClose = true;
-        } else if (Constants.NO.equals(route.getStatus())){
+        } else if (Constants.NO.equals(gatewayAppRoute.getStatus())){
             isClose = true;
         }
         if (isClose) {
@@ -168,9 +168,9 @@ public class ConfigRefreshService {
             RegServerCache.remove(routeId);
             log.info("成功移除网关路由缓存配置！routeId={}", routeId);
         }else {
-            dynamicRouteService.update(loadRouteService.loadRouteDefinition(route));
+            dynamicRouteService.update(loadRouteService.loadRouteDefinition(gatewayAppRoute));
             //记录到本地缓存中
-            RouteCache.put(routeId, route);
+            RouteCache.put(routeId, gatewayAppRoute);
             List<Map<String, Object>> regClientList = regServerService.getByRouteRegClientList(routeId);
             if (CollectionUtils.isEmpty(regClientList)){
                 log.error("未获取注册到网关路由客户端数据库配置！routeId={}", routeId);
@@ -180,16 +180,16 @@ public class ConfigRefreshService {
             log.info("成功加载网关路由缓存配置！routeId={}", routeId);
         }
         // 更新负载均衡中关联的网关路由配置；
-        refreshBalancedRoute(route, isClose);
+        refreshBalancedRoute(gatewayAppRoute, isClose);
     }
 
     /**
      * 刷新负载均衡下的网关路由
-     * @param route
+     * @param gatewayAppRoute
      * @param isClose
      */
-    public void refreshBalancedRoute(Route route, boolean isClose){
-        String routeId = route.getId();
+    public void refreshBalancedRoute(GatewayAppRoute gatewayAppRoute, boolean isClose){
+        String routeId = gatewayAppRoute.getId();
         //删除
         if (isClose){
             Flux<RouteDefinition> routeDefinitionFlux = dynamicRouteService.getRouteDefinitions();
@@ -234,8 +234,8 @@ public class ConfigRefreshService {
                 continue;
             }
             //向负载列表中增加网关路由
-            loadServerService.setBalancedRoute(balanced, loadServer, route);
-            dynamicRouteService.add(loadRouteService.loadRouteDefinition(route));
+            loadServerService.setBalancedRoute(balanced, loadServer, gatewayAppRoute);
+            dynamicRouteService.add(loadRouteService.loadRouteDefinition(gatewayAppRoute));
         }
     }
 

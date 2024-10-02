@@ -7,12 +7,12 @@ import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.HystrixObservableCommand;
 import com.netflix.hystrix.HystrixObservableCommand.Setter;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -99,7 +99,7 @@ public class CustomHystrixGatewayFilterFactory extends AbstractGatewayFilterFact
                 if (config.name.startsWith(RouteConstants.Hystrix.CUSTOM_HYSTRIX_NAME)){
                     Route route = exchange.getRequiredAttribute(GATEWAY_ROUTE_ATTR);
                     //添加自定义熔断器
-                    com.rapidark.cloud.gateway.formwork.entity.Route cacheRoute = (com.rapidark.cloud.gateway.formwork.entity.Route)RouteCache.get(route.getId());
+                    GatewayAppRoute cacheGatewayAppRoute = (GatewayAppRoute)RouteCache.get(route.getId());
                     //HystrixCommandGroupKey groupKey = HystrixCommandGroupKey.Factory.asKey(config.name);
                     //HystrixCommandKey commandKey = HystrixCommandKey.Factory.asKey(config.name);
                     //启用回调
@@ -107,7 +107,7 @@ public class CustomHystrixGatewayFilterFactory extends AbstractGatewayFilterFact
                     //启用超时检测
                     propertiesSetter.withExecutionTimeoutEnabled(true);
                     //设置超时时长
-                    propertiesSetter.withExecutionTimeoutInMilliseconds(cacheRoute.getFallbackTimeout().intValue());
+                    propertiesSetter.withExecutionTimeoutInMilliseconds(cacheGatewayAppRoute.getFallbackTimeout().intValue());
                     //config.setter = Setter.withGroupKey(groupKey).andCommandKey(commandKey).andCommandPropertiesDefaults(propertiesSetter);
                 }
                 //默认全局熔断器

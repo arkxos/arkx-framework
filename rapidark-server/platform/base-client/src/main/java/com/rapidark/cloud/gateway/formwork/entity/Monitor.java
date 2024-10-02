@@ -19,7 +19,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="monitor")
+@Table(name="GATEWAY_MONITOR")
 @Data
 public class Monitor {
 

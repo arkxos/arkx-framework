@@ -2,7 +2,7 @@ package com.rapidark.cloud.base.client.service;
 
 import com.rapidark.cloud.base.client.model.IpLimitApi;
 import com.rapidark.cloud.base.client.model.RateLimitApi;
-import com.rapidark.cloud.base.client.model.entity.GatewayRoute;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.common.model.ResultBody;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -42,5 +42,5 @@ public interface IGatewayServiceClient {
      * @return
      */
     @GetMapping("/gateway/api/route")
-    ResultBody<List<GatewayRoute>> getApiRouteList();
+    ResultBody<List<GatewayAppRoute>> getApiRouteList();
 }

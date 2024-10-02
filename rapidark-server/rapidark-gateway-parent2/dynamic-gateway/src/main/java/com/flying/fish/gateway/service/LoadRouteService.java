@@ -11,7 +11,7 @@ import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.HystrixObservableCommand;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
@@ -88,7 +88,7 @@ public class LoadRouteService {
      * @param r
      * @return
      */
-    public RouteDefinition loadRouteDefinition(Route r){
+    public RouteDefinition loadRouteDefinition(GatewayAppRoute r){
         RouteDefinition definition = new RouteDefinition();
         definition.setId(r.getId());
         definition.setOrder(0);
@@ -252,7 +252,7 @@ public class LoadRouteService {
      * @param r     自定义服务路由对象
      * @return
      */
-    public GatewayRouteConfig loadRouteConfig(Route r){
+    public GatewayRouteConfig loadRouteConfig(GatewayAppRoute r){
         GatewayRouteConfig config = new GatewayRouteConfig();
         config.setId(r.getId());
         config.setOrder(0);

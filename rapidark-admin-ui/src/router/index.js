@@ -54,10 +54,10 @@ export const constantRoutes = [
         },
       },
       {
-        path: '/gatewayList',
-        name: '网关服务管理',
+        path: '/gatewayAppRoute',
+        name: '网关路由管理',
         hidden: true,
-        component: () => import('@/views/gateway-manage/GatewayList'),
+        component: () => import('@/views/gateway-manage/gateway-app-route/index.vue'),
       },
       {
         path: '/clientList',

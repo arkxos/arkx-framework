@@ -1,5 +1,7 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
+import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteCountRsp;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -12,8 +14,6 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.bean.CountReq;
 import com.rapidark.cloud.gateway.formwork.bean.CountRsp;
 import com.rapidark.cloud.gateway.formwork.bean.CountTotalRsp;
-import com.rapidark.cloud.gateway.formwork.bean.RouteCountRsp;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
 import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
@@ -37,31 +37,31 @@ public class CountService {
     private RedisTemplate redisTemplate;
 
     @Resource
-    private RouteService routeService;
+    private GatewayAppRouteService gatewayAppRouteService;
 
     /**
      * 查询路由集合统计结果
-     * @param route
+     * @param gatewayAppRoute
      * @param currentPage
      * @param pageSize
      * @return
      */
-    public ApiResult countRouteList(Route route, int currentPage, int pageSize){
-        PageResult<Route> pageResult = routeService.pageList(route,currentPage, pageSize);
+    public ApiResult countRouteList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
+        PageResult<GatewayAppRoute> pageResult = gatewayAppRouteService.pageList(gatewayAppRoute,currentPage, pageSize);
         if (pageResult.getPageSize() > 0){
             //只取当天的
             String key = RouteConstants.COUNT_DAY_KEY + DateFormatUtils.format(new Date(), Constants.DATE_FORMAT_DAY);
             Map<String,String> countMap = redisTemplate.opsForHash().entries(key);
-            List<Route> routeList = pageResult.getLists();
-            List<RouteCountRsp> routeCountRspList = routeList.stream().map(r -> {
-                RouteCountRsp rsp = new RouteCountRsp();
+            List<GatewayAppRoute> gatewayAppRouteList = pageResult.getLists();
+            List<GatewayAppRouteCountRsp> routeCountRspList = gatewayAppRouteList.stream().map(r -> {
+                GatewayAppRouteCountRsp rsp = new GatewayAppRouteCountRsp();
                 BeanUtils.copyProperties(r, rsp);
                 //将routeId缓存的统计值取出
                 String count = countMap.get(rsp.getId());
                 rsp.setCount(StringUtils.isNotBlank(count) ? Integer.parseInt(count) : 0);
                 return rsp;
             }).collect(Collectors.toList());
-            PageResult<RouteCountRsp> pageResult1 = new PageResult<>();
+            PageResult<GatewayAppRouteCountRsp> pageResult1 = new PageResult<>();
             pageResult1.setCurrentPage(currentPage);
             pageResult1.setPageSize(pageSize);
             pageResult1.setTotalNum(pageResult.getTotalNum());

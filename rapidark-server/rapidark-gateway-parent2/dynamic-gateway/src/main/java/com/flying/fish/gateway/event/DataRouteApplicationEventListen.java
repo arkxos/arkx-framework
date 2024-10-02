@@ -2,10 +2,10 @@ package com.flying.fish.gateway.event;
 
 import com.flying.fish.gateway.cache.RouteCache;
 import com.flying.fish.gateway.service.LoadRouteService;
-import com.rapidark.cloud.gateway.formwork.repository.RouteRepository;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
 import com.rapidark.cloud.gateway.formwork.service.BalancedService;
 import com.rapidark.cloud.gateway.formwork.service.LoadServerService;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 @Deprecated
 public class DataRouteApplicationEventListen implements RouteDefinitionLocator,ApplicationEventPublisherAware {
     @Resource
-    private RouteRepository routeRepository;
+    private GatewayAppRouteRepository gatewayAppRouteRepository;
     @Resource
     private LoadRouteService loadRouteService;
     @Resource
@@ -81,7 +81,7 @@ public class DataRouteApplicationEventListen implements RouteDefinitionLocator,A
 
 //    @Deprecated
 //    @Override
-//    public Mono<Void> save(Mono<RouteDefinition> route) {
+//    public Mono<Void> save(Mono<RouteDefinition> gatewayAppRoute) {
 //        return Mono.defer(() -> Mono.error(new NotFoundException("此save方法不提供功能实现，请勿调用")));
 //    }
 
@@ -103,12 +103,12 @@ public class DataRouteApplicationEventListen implements RouteDefinitionLocator,A
      * 初始化完毕后，加载路由
      */
     public void initLoadRoute(){
-        Route query = new Route();
+        GatewayAppRoute query = new GatewayAppRoute();
         query.setStatus(Constants.YES);
         //一定要清空routeDefinitions否则每次刷新会往集合中添加重复数据
         routeDefinitions.clear();
         try {
-            List<Route> list = routeRepository.findAll(Example.of(query));
+            List<GatewayAppRoute> list = gatewayAppRouteRepository.findAll(Example.of(query));
             if (!CollectionUtils.isEmpty(list)) {
                 list.forEach(r -> {
                     RouteCache.put(r.getId(), r);
@@ -125,11 +125,11 @@ public class DataRouteApplicationEventListen implements RouteDefinitionLocator,A
      * 初始化完毕后，加载负载路由
      */
     public void initLoadBalanced(){
-        Route query = new Route();
+        GatewayAppRoute query = new GatewayAppRoute();
         query.setStatus(Constants.YES);
-        List<Route> balancedRouteList = new ArrayList<>();
+        List<GatewayAppRoute> balancedGatewayAppRouteList = new ArrayList<>();
         try {
-            List<Route> list = routeRepository.findAll(Example.of(query));
+            List<GatewayAppRoute> list = gatewayAppRouteRepository.findAll(Example.of(query));
             List<Balanced> balancedList = balancedService.findAll(new Balanced());
             //先将所有负载路由清空
             routeDefinitions.removeIf(route -> route.getId().startsWith(RouteConstants.BALANCED));
@@ -142,19 +142,19 @@ public class DataRouteApplicationEventListen implements RouteDefinitionLocator,A
                         if (!CollectionUtils.isEmpty(serverList)) {
                             serverList.forEach(s -> {
                                 //查找服务对应的路由服务
-                                Optional<Route> optionalRoute = list.stream().filter(r -> r.getId().equals(s.getRouteId())).findFirst();
+                                Optional<GatewayAppRoute> optionalRoute = list.stream().filter(r -> r.getId().equals(s.getRouteId())).findFirst();
                                 if (optionalRoute.isPresent()) {
                                     String weightName = RouteConstants.BALANCED + "-" + b.getId();
-                                    Route route = optionalRoute.get();
+                                    GatewayAppRoute gatewayAppRoute = optionalRoute.get();
                                     //获取route，改变参数，构造一个新route对象
-                                    route.setId(weightName + "-" + route.getId());
-                                    route.setPath(RouteConstants.PARENT_PATH + b.getLoadUri());
+                                    gatewayAppRoute.setId(weightName + "-" + gatewayAppRoute.getId());
+                                    gatewayAppRoute.setPath(RouteConstants.PARENT_PATH + b.getLoadUri());
                                     //设置负载参数
-                                    route.setWeightName(weightName);
-                                    route.setWeight(s.getWeight());
-                                    route.setStripPrefix(1);
+                                    gatewayAppRoute.setWeightName(weightName);
+                                    gatewayAppRoute.setWeight(s.getWeight());
+                                    gatewayAppRoute.setStripPrefix(1);
                                     //添加新路由集合中
-                                    balancedRouteList.add(route);
+                                    balancedGatewayAppRouteList.add(gatewayAppRoute);
                                 }
                             });
                         }
@@ -162,12 +162,12 @@ public class DataRouteApplicationEventListen implements RouteDefinitionLocator,A
                 });
             }
             //将新的路由加载网关路由集合中
-            balancedRouteList.forEach(r->{
+            balancedGatewayAppRouteList.forEach(r->{
                 RouteCache.put(r.getId(), r);
                 //添加新的路由对象
                 routeDefinitions.add(loadRouteService.loadRouteDefinition(r));
             });
-            log.info("监听到网关负载路由配置发生变更，重新加载网关负载路由配置共{}条", balancedRouteList.size());
+            log.info("监听到网关负载路由配置发生变更，重新加载网关负载路由配置共{}条", balancedGatewayAppRouteList.size());
         }catch(Exception e){
             log.error("加载数据库中网关负载路由配置异常：",e);
         }

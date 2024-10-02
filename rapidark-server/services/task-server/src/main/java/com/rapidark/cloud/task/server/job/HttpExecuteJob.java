@@ -3,7 +3,7 @@ package com.rapidark.cloud.task.server.job;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.base.client.model.entity.GatewayRoute;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.task.server.service.feign.GatewayServiceClient;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.http.OpenRestTemplate;
@@ -80,15 +80,15 @@ public class HttpExecuteJob implements Job {
     }
 
     private String getUrlByRoute(String name, String path) {
-        List<GatewayRoute> routes = getApiRouteList();
-        for (GatewayRoute route : routes) {
-            if (route.getRouteName().equals(name)) {
-                if (BaseConstants.ROUTE_TYPE_URL.equalsIgnoreCase(route.getRouteType())) {
-                    if (route.getUrl().endsWith("/")) {
-                        return route.getUrl() + path.replaceFirst("/", "");
+        List<GatewayAppRoute> routes = getApiRouteList();
+        for (GatewayAppRoute route : routes) {
+            if (route.getSystemCode().equals(name)) {
+                if (BaseConstants.ROUTE_TYPE_URL.equalsIgnoreCase(route.getType())) {
+                    if (route.getUri().endsWith("/")) {
+                        return route.getUri() + path.replaceFirst("/", "");
                     }
-                    return route.getUrl() + path;
-                } else if (BaseConstants.ROUTE_TYPE_SERVICE.equalsIgnoreCase(route.getRouteType())) {
+                    return route.getUri() + path;
+                } else if (BaseConstants.ROUTE_TYPE_SERVICE.equalsIgnoreCase(route.getType())) {
                     ServiceInstance serviceInstance = loadBalancerClient.choose(name);
                     // 获取服务实例
                     if (serviceInstance == null) {
@@ -101,33 +101,33 @@ public class HttpExecuteJob implements Job {
         throw new RuntimeException(String.format("%s服务暂不可用", name));
     }
 
-    public List<GatewayRoute> getApiRouteList() {
+    public List<GatewayAppRoute> getApiRouteList() {
         List<String> routeJsonList = redisUtils.getList(BaseConstants.ROUTE_LIST_CACHE_KEY);
         if (routeJsonList.isEmpty()) {
-            ResultBody<List<GatewayRoute>> resultBody = gatewayServiceClient.getApiRouteList();
-            List<GatewayRoute> routes = resultBody.getData();
+            ResultBody<List<GatewayAppRoute>> resultBody = gatewayServiceClient.getApiRouteList();
+            List<GatewayAppRoute> routes = resultBody.getData();
             if (!routes.isEmpty()) {
                 List<String> jsonList = convertToJson(routes);
                 routeJsonList = jsonList;
                 redisUtils.setList(BaseConstants.ROUTE_LIST_CACHE_KEY, jsonList, BaseConstants.ROUTE_LIST_CACHE_TIME);
             }
         }
-        List<GatewayRoute> routes = convertFromJson(routeJsonList);
+        List<GatewayAppRoute> routes = convertFromJson(routeJsonList);
         return routes;
     }
 
-    private List<String> convertToJson(List<GatewayRoute> routes) {
+    private List<String> convertToJson(List<GatewayAppRoute> routes) {
         List<String> result = new ArrayList<>();
-        for (GatewayRoute route : routes) {
+        for (GatewayAppRoute route : routes) {
             result.add(JSON.toJSONString(route));
         }
         return result;
     }
 
-    private List<GatewayRoute> convertFromJson(List<String> routes) {
-        List<GatewayRoute> result = new ArrayList<>();
+    private List<GatewayAppRoute> convertFromJson(List<String> routes) {
+        List<GatewayAppRoute> result = new ArrayList<>();
         for (String route : routes) {
-            result.add(JSON.parseObject(route, GatewayRoute.class));
+            result.add(JSON.parseObject(route, GatewayAppRoute.class));
         }
         return result;
     }

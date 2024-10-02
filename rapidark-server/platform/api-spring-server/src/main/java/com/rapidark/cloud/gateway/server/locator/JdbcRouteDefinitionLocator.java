@@ -2,7 +2,7 @@ package com.rapidark.cloud.gateway.server.locator;
 
 import com.google.common.collect.Lists;
 import com.rapidark.cloud.base.client.model.RateLimitApi;
-import com.rapidark.cloud.base.client.model.entity.GatewayRoute;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.common.event.RemoteRefreshRouteEvent;
 import com.rapidark.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,8 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
     private ApplicationEventPublisher publisher;
     private InMemoryRouteDefinitionRepository repository;
 
-    private final static String SELECT_ROUTES = "SELECT * FROM gateway_route WHERE status = 1";
+    private final static String SELECT_ROUTES =
+            "SELECT * FROM gateway_app_route WHERE STATUS = 1";
 
     private final static String SELECT_LIMIT_PATH = "SELECT\n" +
             "        i.policy_id,\n" +
@@ -51,11 +52,11 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
             "        a.api_category,\n" +
             "        a.service_id,\n" +
             "        a.path,\n" +
-            "        r.url\n" +
+            "        r.uri\n" +
             "    FROM gateway_rate_limit_api i\n" +
             "    INNER JOIN gateway_rate_limit p ON i.policy_id = p.policy_id\n" +
             "    INNER JOIN base_api a ON i.api_id = a.api_id\n" +
-            "    INNER JOIN gateway_route r ON a.service_id = r.route_name\n" +
+            "    INNER JOIN gateway_app_route r ON a.service_id = r.name\n" +
             "    WHERE p.policy_type = 'url'";
 
 
@@ -86,12 +87,12 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
         refresh();
     }
 
-    protected String getFullPath(List<GatewayRoute> routeList, String serviceId, String path) {
+    protected String getFullPath(List<GatewayAppRoute> routeList, String serviceId, String path) {
         final String s = path.startsWith("/") ? path : "/" + path;
         final String[] fullPath = {s};
         if (routeList != null) {
             routeList.forEach(route -> {
-                if (StringUtils.isNotBlank(route.getRouteName()) && route.getRouteName().equals(serviceId)) {
+                if (StringUtils.isNotBlank(route.getSystemCode()) && route.getSystemCode().equals(serviceId)) {
                     fullPath[0] = route.getPath().replace("/**", s);
                 }
             });
@@ -116,7 +117,7 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
     private Mono<Void> loadRoutes() {
         //从数据库拿到路由配置
         try {
-            List<GatewayRoute> routeList = queryRouteListFromDb();
+            List<GatewayAppRoute> routeList = queryRouteListFromDb();
             List<RateLimitApi> limitApiList = queryRateLimitApiListFromDb();
             if (!limitApiList.isEmpty()) {
                 // 加载限流
@@ -144,7 +145,8 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
                     predicates.add(predicatePath);
 
                     // 服务地址
-                    URI uri = UriComponentsBuilder.fromUriString(StringUtils.isNotBlank(item.getUrl()) ? item.getUrl() : "lb://" + item.getServiceId()).build().toUri();
+                    URI uri = UriComponentsBuilder.fromUriString(StringUtils.isNotBlank(item.getUrl())
+                            ? item.getUrl() : "lb://" + item.getServiceId()).build().toUri();
 
                     // 路径去前缀
                     FilterDefinition stripPrefixDefinition = new FilterDefinition();
@@ -172,24 +174,25 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
                     this.repository.save(Mono.just(definition)).subscribe();
                 });
             }
-            if (routeList.size() > 0) {
+            if (!routeList.isEmpty()) {
                 // 最后加载路由
                 routeList.forEach(gatewayRoute -> {
                     RouteDefinition definition = new RouteDefinition();
                     List<PredicateDefinition> predicates = Lists.newArrayList();
                     List<FilterDefinition> filters = Lists.newArrayList();
-                    definition.setId(gatewayRoute.getRouteName());
+                    definition.setId(gatewayRoute.getSystemCode());
                     // 路由地址
                     PredicateDefinition predicatePath = new PredicateDefinition();
                     Map<String, String> predicatePathParams = new HashMap<>(8);
                     predicatePath.setName("Path");
-                    predicatePathParams.put("name", StringUtils.isBlank(gatewayRoute.getRouteName()) ? gatewayRoute.getRouteId().toString() : gatewayRoute.getRouteName());
+                    predicatePathParams.put("name", StringUtils.isBlank(gatewayRoute.getSystemCode()) ? gatewayRoute.getId() : gatewayRoute.getSystemCode());
                     predicatePathParams.put("pattern", gatewayRoute.getPath());
                     predicatePathParams.put("pathPattern", gatewayRoute.getPath());
                     predicatePath.setArgs(predicatePathParams);
                     predicates.add(predicatePath);
                     // 服务地址
-                    URI uri = UriComponentsBuilder.fromUriString(StringUtils.isNotBlank(gatewayRoute.getUrl()) ? gatewayRoute.getUrl() : "lb://" + gatewayRoute.getServiceId()).build().toUri();
+                    URI uri = UriComponentsBuilder.fromUriString(StringUtils.isNotBlank(gatewayRoute.getUri())
+                            ? gatewayRoute.getUri() : "lb://" + gatewayRoute.getSystemCode()).build().toUri();
 
                     FilterDefinition stripPrefixDefinition = new FilterDefinition();
                     Map<String, String> stripPrefixParams = new HashMap<>(8);
@@ -230,19 +233,20 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
         });
     }
 
-    private List<GatewayRoute> queryRouteListFromDb() {
+    private List<GatewayAppRoute> queryRouteListFromDb() {
         return jdbcTemplate.query(SELECT_ROUTES, (rs, i) -> {
-            GatewayRoute result = new GatewayRoute();
-            result.setRouteId(rs.getLong("route_id"));
+            GatewayAppRoute result = new GatewayAppRoute();
+            result.setId(rs.getString("id"));
+            result.setSystemCode(rs.getString("system_code"));
             result.setPath(rs.getString("path"));
             result.setServiceId(rs.getString("service_id"));
-            result.setUrl(rs.getString("url"));
-            result.setStatus(rs.getInt("status"));
+            result.setUri(rs.getString("uri"));
+            result.setStatus(rs.getString("status"));
             result.setRetryable(rs.getInt("retryable"));
             result.setStripPrefix(rs.getInt("strip_prefix"));
             result.setIsPersist(rs.getInt("is_persist"));
-            result.setRouteName(rs.getString("route_name"));
-            result.setRouteType(rs.getString("route_type"));
+            result.setName(rs.getString("name"));
+            result.setType(rs.getString("type"));
             return result;
         });
     }

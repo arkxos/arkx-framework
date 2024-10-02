@@ -102,13 +102,13 @@ CREATE TABLE `gateway_rate_limit_api` (
 
 /*Data for the table `gateway_rate_limit_api` */
 
-/*Table structure for table `gateway_route` */
+/*Table structure for table `gateway_app_route` */
 
-DROP TABLE IF EXISTS `gateway_route`;
+DROP TABLE IF EXISTS `gateway_app_route`;
 
-CREATE TABLE `gateway_route` (
+CREATE TABLE `gateway_app_route` (
   `route_id` bigint(20) NOT NULL COMMENT '路由ID',
-  `route_name` varchar(255) NOT NULL COMMENT '路由名称',
+  `name` varchar(255) NOT NULL COMMENT '路由名称',
   `route_type` varchar(20) NOT NULL DEFAULT '' COMMENT '路由类型:service-负载均衡 url-反向代理',
   `path` varchar(255) DEFAULT NULL COMMENT '路径',
   `service_id` varchar(255) DEFAULT NULL COMMENT '服务ID',
@@ -123,9 +123,9 @@ CREATE TABLE `gateway_route` (
   PRIMARY KEY (`route_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='开放网关-路由';
 
-/*Data for the table `gateway_route` */
+/*Data for the table `gateway_app_route` */
 
-insert  into `gateway_route`(`route_id`,`route_name`,`route_type`,`path`,`service_id`,`url`,`strip_prefix`,`retryable`,`status`,`is_persist`,`route_desc`,`create_time`,`update_time`) values 
+insert  into `gateway_app_route`(`route_id`,`name`,`route_type`,`path`,`service_id`,`url`,`strip_prefix`,`retryable`,`status`,`is_persist`,`route_desc`,`create_time`,`update_time`) values
 (556587504019439616,'base-server','service','/base/**','base-server','',0,0,1,1,'平台基础服务器','2019-07-30 15:33:29','2019-07-30 15:33:29'),
 (556595619813130240,'uaa-admin-server','service','/admin/**','uaa-admin-server','',0,0,1,1,'平台用户认证服务器','2019-07-30 15:33:29','2019-07-30 15:33:29'),
 (556595619813130241,'uaa-portal-server','service','/portal/**','uaa-portal-server','',0,0,1,1,'门户开发者认证服务器','2019-07-30 15:33:29','2019-07-30 15:33:29'),

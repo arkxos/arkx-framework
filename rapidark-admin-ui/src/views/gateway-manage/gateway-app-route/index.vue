@@ -50,11 +50,6 @@
             <el-tag effect="dark" size="small" v-if="scope.row.status === '1'" type="danger">禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="服务地址" :show-overflow-tooltip="true" width="200">
-          <template slot-scope="scope">
-            <el-tag size="small" type="success" style="font-weight: bold;">{{scope.row.uri}}</el-tag>
-          </template>
-        </el-table-column>
         <el-table-column label="断言路径" width="250">
           <template slot-scope="scope">
             {{scope.row.path}}
@@ -65,13 +60,29 @@
                   <span class="route-title">网关代理地址</span>
                 </div>
                 <span>
-									<el-tag size="small" type="success" style="font-weight: bold;">{{scope.row.path}}</el-tag>
-									<el-button slot="reference" icon="el-icon-document-copy" type="text" @click="handleCopy(scope.row.path)" title="复制"></el-button>
-								</span>
+                 <el-tag size="small" type="success" style="font-weight: bold;">{{scope.row.path}}</el-tag>
+                 <el-button slot="reference" icon="el-icon-document-copy" type="text" @click="handleCopy(scope.row.path)" title="复制"></el-button>
+                </span>
                 <br/>
               </div>
               <el-button slot="reference" icon="iconfont icon-IP" type="text" title="网关代理地址"></el-button>
             </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column label="路由方式" :show-overflow-tooltip="true" width="200">
+          <template #default="{ row }">
+            <span v-if="row.type==='service'">
+              <el-tag size="small" type="success" style="font-weight: bold;">负载均衡</el-tag>
+            </span>
+            <span v-if="row.type==='url'">
+              <el-tag size="small" type="warning" style="font-weight: bold;">反向代理</el-tag>
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="路由目标" :show-overflow-tooltip="true" width="200">
+          <template #default="{ row }">
+            <span v-if="row.type==='service'"><el-tag size="small" type="success" style="font-weight: bold;">{{ row.serviceId }}</el-tag></span>
+            <span v-else-if="row.type==='url'"><el-tag size="small" type="warning" style="font-weight: bold;">{{ row.uri }}</el-tag></span>
           </template>
         </el-table-column>
         <el-table-column label="请求模式" prop="method" width="70"></el-table-column>
@@ -126,7 +137,7 @@
 
 <script>
 import routeInfoComponent from '@/component/RouteInfo.vue'
-import {routePageList,startRoute,stopRoute,deleteRoute} from '@/api/gateway-manage/gateway_api.js'
+import {routePageList,startRoute,stopRoute,deleteRoute} from '@/api/gateway-manage/gatewayAppRoute.js'
 
 export default {
   data() {

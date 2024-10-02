@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.bean;
 
-import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class RouteCountRsp extends Route implements java.io.Serializable {
+public class GatewayAppRouteCountRsp extends GatewayAppRoute implements java.io.Serializable {
     /**
      * 统计量
      */

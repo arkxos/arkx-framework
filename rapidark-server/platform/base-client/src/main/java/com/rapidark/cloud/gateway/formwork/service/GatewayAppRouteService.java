@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
-import com.rapidark.cloud.gateway.formwork.repository.RouteRepository;
+import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteRsp;
+import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
@@ -10,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.bean.RouteRsp;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 import com.rapidark.cloud.gateway.formwork.entity.RegServer;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
 import javax.annotation.Resource;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @Version V1.0
  */
 @Service
-public class RouteService extends BaseService<Route,String, RouteRepository> {
+public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, GatewayAppRouteRepository> {
 
     @Resource
     private RegServerService regServerService;
@@ -38,7 +38,7 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
     private MonitorService monitorService;
 
     @Resource
-    private RouteRepository routeRepository;
+    private GatewayAppRouteRepository gatewayAppRouteRepository;
 
     /**
      * 删除网关路由以及已注册的客户端（关联表）
@@ -46,8 +46,8 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void delete(String id){
-        Route route = this.findById(id);
-        if (route != null) {
+        GatewayAppRoute gatewayAppRoute = this.findById(id);
+        if (gatewayAppRoute != null) {
             RegServer regServer = new RegServer();
             regServer.setRouteId(id);
             List<RegServer> regServerList = regServerService.findAll(regServer);
@@ -61,7 +61,7 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
                 monitorService.deleteById(id);
             }
             //删除路由对象
-            this.delete(route);
+            this.delete(gatewayAppRoute);
         }
     }
 
@@ -69,28 +69,28 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
      * 获取需要监控的网关路由服务
      * @return
      */
-    public List<Route> monitorRouteList(){
-        return routeRepository.monitorRouteList();
+    public List<GatewayAppRoute> monitorRouteList(){
+        return gatewayAppRouteRepository.monitorRouteList();
     }
 
     /**
      * 分页查询
-     * @param route
+     * @param gatewayAppRoute
      * @param currentPage
      * @param pageSize
      * @return
      */
     @Override
-    public PageResult<Route> pageList(Route route, int currentPage, int pageSize){
+    public PageResult<GatewayAppRoute> pageList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
         //构造条件查询方式
         ExampleMatcher matcher = ExampleMatcher.matching();
-        if (StringUtils.isNotBlank(route.getName())) {
+        if (StringUtils.isNotBlank(gatewayAppRoute.getName())) {
             //支持模糊条件查询
             matcher = matcher.withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
         }
-        PageResult<Route> result = this.pageList(route, matcher, currentPage, pageSize);
-        List<Route> routeList = result.getLists();
-        if (CollectionUtils.isEmpty(routeList)){
+        PageResult<GatewayAppRoute> result = this.pageList(gatewayAppRoute, matcher, currentPage, pageSize);
+        List<GatewayAppRoute> gatewayAppRouteList = result.getLists();
+        if (CollectionUtils.isEmpty(gatewayAppRouteList)){
             return result;
         }
         //获取所有监控配置
@@ -100,17 +100,17 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
         }
         //将监控配置重新封装到数据集合中
         Map<String,Monitor> monitorMap = monitorList.stream().collect(Collectors.toMap(Monitor::getId, m -> m));
-        List<Route> routeRspList = new ArrayList<>(routeList.size());
-        for (Route route1 : routeList){
-            RouteRsp routeRsp = new RouteRsp();
-            BeanUtils.copyProperties(route1, routeRsp);
-            Monitor monitor = monitorMap.get(route1.getId());
+        List<GatewayAppRoute> gatewayAppRouteRspList = new ArrayList<>(gatewayAppRouteList.size());
+        for (GatewayAppRoute gatewayAppRoute1 : gatewayAppRouteList){
+            GatewayAppRouteRsp routeRsp = new GatewayAppRouteRsp();
+            BeanUtils.copyProperties(gatewayAppRoute1, routeRsp);
+            Monitor monitor = monitorMap.get(gatewayAppRoute1.getId());
             if (monitor != null){
                 routeRsp.setMonitor(monitor);
             }
-            routeRspList.add(routeRsp);
+            gatewayAppRouteRspList.add(routeRsp);
         }
-        result.setLists(routeRspList);
+        result.setLists(gatewayAppRouteRspList);
         return result;
     }
 }

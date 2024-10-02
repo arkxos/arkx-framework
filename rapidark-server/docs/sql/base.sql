@@ -431,7 +431,7 @@ insert  into `base_menu`(`menu_id`,`parent_id`,`menu_code`,`menu_name`,`menu_des
 (1,0,'system','系统管理','系统管理','/','','md-folder','_self',0,1,'2018-07-29 21:20:10','2018-07-29 21:20:10',1,'uaa-admin-server'),
 (2,13,'gatewayIpLimit','访问控制','来源IP/域名访问控制,白名单、黑名单','/','gateway/ip-limit/index','md-document','_self',0,1,'2018-07-29 21:20:13','2018-07-29 21:20:13',1,'uaa-admin-server'),
 (3,1,'systemMenu','功能菜单','功能菜单资源','/','system/menus/index','md-list','_self',0,1,'2018-07-29 21:20:13','2018-07-29 21:20:13',1,'uaa-admin-server'),
-(5,13,'gatewayRoute','网关路由','网关路由','/','gateway/route/index','md-document','_self',0,1,'2018-07-29 21:20:13','2018-07-29 21:20:13',1,'uaa-admin-server'),
+(5,13,'gatewayRoute','网关路由','网关路由','/','gateway/gatewayAppRoute/index','md-document','_self',0,1,'2018-07-29 21:20:13','2018-07-29 21:20:13',1,'uaa-admin-server'),
 (6,13,'systemApi','API列表','API接口资源','/','system/api/index','md-document','_self',0,1,'2018-07-29 21:20:13','2018-07-29 21:20:13',1,'uaa-admin-server'),
 (8,1,'systemRole','角色管理','角色信息管理','/','system/role/index','md-people','_self',0,1,'2018-12-27 15:26:54','2018-12-27 15:26:54',1,'uaa-admin-server'),
 (9,1,'systemApp','应用管理','应用信息管理','/','system/app/index','md-apps','_self',0,1,'2018-12-27 15:41:52','2018-12-27 15:41:52',1,'uaa-admin-server'),

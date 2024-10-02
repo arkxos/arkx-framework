@@ -92,9 +92,9 @@ CREATE TABLE `regserver` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*Table structure for table `route` */
+/*Table structure for table `gatewayAppRoute` */
 
-CREATE TABLE `route` (
+CREATE TABLE `gatewayAppRoute` (
   `id` varchar(40) NOT NULL COMMENT '主键',
   `name` varchar(40) NOT NULL COMMENT '名称',
   `groupCode` varchar(40) NOT NULL COMMENT '分组',

@@ -21,7 +21,7 @@ import com.bsd.user.server.utils.RegexUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.base.client.model.entity.GatewayRoute;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
@@ -771,15 +771,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     private String getUrlByRoute(String name, String path) {
-        List<GatewayRoute> routes = getApiRouteList();
-        for (GatewayRoute route : routes) {
-            if (route.getRouteName().equals(name)) {
-                if (BaseConstants.ROUTE_TYPE_URL.equalsIgnoreCase(route.getRouteType())) {
-                    if (route.getUrl().endsWith("/")) {
-                        return route.getUrl() + path.replaceFirst("/", "");
+        List<GatewayAppRoute> routes = getApiRouteList();
+        for (GatewayAppRoute route : routes) {
+            if (route.getSystemCode().equals(name)) {
+                if (BaseConstants.ROUTE_TYPE_URL.equalsIgnoreCase(route.getType())) {
+                    if (route.getUri().endsWith("/")) {
+                        return route.getUri() + path.replaceFirst("/", "");
                     }
-                    return route.getUrl() + path;
-                } else if (BaseConstants.ROUTE_TYPE_SERVICE.equalsIgnoreCase(route.getRouteType())) {
+                    return route.getUri() + path;
+                } else if (BaseConstants.ROUTE_TYPE_SERVICE.equalsIgnoreCase(route.getType())) {
                     ServiceInstance serviceInstance = loadBalancerClient.choose(name);
                     // 获取服务实例
                     if (serviceInstance == null) {
@@ -792,10 +792,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         throw new RuntimeException(String.format("%s服务暂不可用", name));
     }
 
-    public List<GatewayRoute> getApiRouteList() {
-        List<GatewayRoute> routes = redisUtils.getList(BaseConstants.ROUTE_LIST_CACHE_KEY);
+    public List<GatewayAppRoute> getApiRouteList() {
+        List<GatewayAppRoute> routes = redisUtils.getList(BaseConstants.ROUTE_LIST_CACHE_KEY);
         if (routes.isEmpty()) {
-            ResultBody<List<GatewayRoute>> resultBody = gatewayServiceClient.getApiRouteList();
+            ResultBody<List<GatewayAppRoute>> resultBody = gatewayServiceClient.getApiRouteList();
             routes = resultBody.getData();
             if (!routes.isEmpty()) {
                 redisUtils.setList(BaseConstants.ROUTE_LIST_CACHE_KEY, routes, BaseConstants.ROUTE_LIST_CACHE_TIME);

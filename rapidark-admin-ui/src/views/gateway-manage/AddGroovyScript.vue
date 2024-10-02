@@ -176,7 +176,7 @@
 			},
 			goBack() {
 			    console.log('go back');
-				this.$router.push({path:'/gatewayList',query:{}});
+				this.$router.push({path:'/gatewayAppRoute',query:{}});
 			},
 			handleCommandRegServer(obj){
 				console.log("command" , obj);

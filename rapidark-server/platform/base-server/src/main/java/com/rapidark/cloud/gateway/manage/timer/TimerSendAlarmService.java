@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.manage.timer;
 
+import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -11,9 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.MonitorService;
-import com.rapidark.cloud.gateway.formwork.service.RouteService;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 
 import javax.annotation.Resource;
@@ -35,7 +35,7 @@ public class TimerSendAlarmService {
     @Resource
     private JavaMailSenderImpl javaMailSender;
     @Resource
-    private RouteService routeService;
+    private GatewayAppRouteService gatewayAppRouteService;
 
     @Value("${spring.mail.username:}")
     private String form;
@@ -70,10 +70,10 @@ public class TimerSendAlarmService {
             }
             //存在邮箱，则发送告警邮件
             if (StringUtils.isNotBlank(monitor.getEmails())){
-                Route route = routeService.findById(monitor.getId());
-                if (route != null){
-                    String subject = String.format("网关告警邮件-【%s】-%s", route.getId(), sendDate);
-                    String body = this.emailBody(route.getId(), route.getName(), route.getUri(),DateFormatUtils.format(monitor.getAlarmTime(), Constants.YYYY_MM_DD_HH_MM_SS), monitor.getTopic());
+                GatewayAppRoute gatewayAppRoute = gatewayAppRouteService.findById(monitor.getId());
+                if (gatewayAppRoute != null){
+                    String subject = String.format("网关告警邮件-【%s】-%s", gatewayAppRoute.getId(), sendDate);
+                    String body = this.emailBody(gatewayAppRoute.getId(), gatewayAppRoute.getName(), gatewayAppRoute.getUri(),DateFormatUtils.format(monitor.getAlarmTime(), Constants.YYYY_MM_DD_HH_MM_SS), monitor.getTopic());
                     String [] emails = StringUtils.split(monitor.getEmails(), ",");
                     mailSend(subject, body, form, emails);
                 }

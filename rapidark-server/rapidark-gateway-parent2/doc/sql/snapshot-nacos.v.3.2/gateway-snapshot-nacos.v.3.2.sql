@@ -123,11 +123,11 @@ CREATE TABLE `regserver` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
-/*Table structure for table `route` */
+/*Table structure for table `gatewayAppRoute` */
 
-DROP TABLE IF EXISTS `route`;
+DROP TABLE IF EXISTS `gatewayAppRoute`;
 
-CREATE TABLE `route` (
+CREATE TABLE `gatewayAppRoute` (
   `id` varchar(40) NOT NULL COMMENT '主键',
   `systemCode` varchar(40) NOT NULL COMMENT '系统代号',
   `name` varchar(40) NOT NULL COMMENT '名称',

@@ -7,8 +7,9 @@ import com.rapidark.common.mybatis.base.entity.AbstractEntity;
 
 /**
  * 系统用户-登录账号
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/5/27 11:46
+ * @version 1.0
  */
 @TableName("base_account")
 public class BaseAccount extends AbstractEntity {

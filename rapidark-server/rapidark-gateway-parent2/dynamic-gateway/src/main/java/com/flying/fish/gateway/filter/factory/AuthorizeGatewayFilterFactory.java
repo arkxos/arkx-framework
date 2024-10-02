@@ -2,6 +2,7 @@ package com.flying.fish.gateway.filter.factory;
 
 import com.flying.fish.gateway.cache.RouteCache;
 import com.flying.fish.gateway.filter.authorize.*;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 
@@ -71,7 +72,7 @@ public class AuthorizeGatewayFilterFactory extends AbstractGatewayFilterFactory<
                 }
                 try {
                     //执行header,ip,parameter,time,cookie验证
-                    headerFilter.handler(request, (com.rapidark.cloud.gateway.formwork.entity.Route) obj);
+                    headerFilter.handler(request, (GatewayAppRoute) obj);
                 }catch(Exception e){
                     log.error("网关转发客户端【{}】路由请求【{}】，执行验证异常：", clientIp, route.getId(), e);
                     return HttpResponseUtils.writeUnauth(exchange.getResponse(), "网关转发客户端【"+clientIp+"】路由请求【"+route.getId()+"】，执行验证异常：" + e.getMessage());

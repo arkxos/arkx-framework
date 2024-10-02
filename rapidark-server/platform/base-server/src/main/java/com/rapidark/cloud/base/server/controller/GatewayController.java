@@ -4,11 +4,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rapidark.cloud.base.client.model.IpLimitApi;
 import com.rapidark.cloud.base.client.model.RateLimitApi;
-import com.rapidark.cloud.base.client.model.entity.GatewayRoute;
 import com.rapidark.cloud.base.client.service.IGatewayServiceClient;
 import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
-import com.rapidark.cloud.base.server.service.GatewayRouteService;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
 import com.rapidark.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,18 +34,18 @@ public class GatewayController implements IGatewayServiceClient {
     @Autowired
     private GatewayRateLimitService gatewayRateLimitService;
     @Autowired
-    private GatewayRouteService gatewayRouteService;
+    private GatewayAppRouteService gatewayAppRouteService;
 
     @ApiOperation(value = "获取服务列表", notes = "获取服务列表")
     @GetMapping("/gateway/service/list")
     public ResultBody getServiceList() {
         List<Map> services = Lists.newArrayList();
-        List<GatewayRoute> routes = gatewayRouteService.findRouteList();
+        List<GatewayAppRoute> routes = gatewayAppRouteService.findAll();
         if (routes != null && routes.size() > 0) {
             routes.forEach(route -> {
                 Map service = Maps.newHashMap();
-                service.put("serviceId", route.getRouteName());
-                service.put("serviceName", route.getRouteDesc());
+                service.put("serviceId", route.getSystemCode());
+                service.put("serviceName", route.getName());
                 services.add(service);
             });
         }
@@ -96,7 +96,7 @@ public class GatewayController implements IGatewayServiceClient {
     @ApiOperation(value = "获取路由列表", notes = "仅限内部调用")
     @GetMapping("/gateway/api/route")
     @Override
-    public ResultBody<List<GatewayRoute>> getApiRouteList() {
-        return ResultBody.ok().data(gatewayRouteService.findRouteList());
+    public ResultBody<List<GatewayAppRoute>> getApiRouteList() {
+        return ResultBody.ok().data(gatewayAppRouteService.findAll());
     }
 }

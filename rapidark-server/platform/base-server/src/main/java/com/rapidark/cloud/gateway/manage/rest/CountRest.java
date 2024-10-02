@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.CountReq;
-import com.rapidark.cloud.gateway.formwork.entity.Route;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.CountService;
 import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 
@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  * @Version V1.0
  */
 @RestController
-@RequestMapping("/count")
+@RequestMapping("/gateway/monitor/count")
 public class CountRest extends BaseRest {
 
     @Resource
@@ -55,14 +55,14 @@ public class CountRest extends BaseRest {
         Assert.notNull(countReq, "未获取到对象");
         int currentPage = getCurrentPage(countReq.getCurrentPage());
         int pageSize = getPageSize(countReq.getPageSize());
-        Route route = new Route();
+        GatewayAppRoute gatewayAppRoute = new GatewayAppRoute();
         if (StringUtils.isNotBlank(countReq.getName())) {
-            route.setName(countReq.getName());
+            gatewayAppRoute.setName(countReq.getName());
         }
         if (StringUtils.isNotBlank(countReq.getGroupCode())){
-            route.setGroupCode(countReq.getGroupCode());
+            gatewayAppRoute.setGroupCode(countReq.getGroupCode());
         }
-        return countService.countRouteList(route, currentPage, pageSize);
+        return countService.countRouteList(gatewayAppRoute, currentPage, pageSize);
     }
 
     /**

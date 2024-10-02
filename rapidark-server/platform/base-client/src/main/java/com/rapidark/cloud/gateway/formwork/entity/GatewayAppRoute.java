@@ -5,45 +5,65 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
- * 网关路由实体类
+ * 网关应用路由
  * @author darkness
  * @date 2022/5/24 14:21
  * @version 1.0
  */
 @Entity
-@Table(name="route")
+@Table(name="gateway_app_route")
 @Data
-public class Route implements java.io.Serializable {
+public class GatewayAppRoute implements java.io.Serializable {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(message = "网关路由ID不能为空")
     @Size(min = 2, max = 40, message = "网关路由ID长度必需在2到40个字符内")
     private String id;
-    @NotNull(message = "网关路由名称不能为空")
-    @Size(min = 2, max = 40, message = "网关路由名称长度必需在2到40个字符内")
-    @Column(name = "name" )
-    private String name;
+
     @NotNull(message = "网关路由系统代号不能为空")
     @Size(min = 2, max = 40, message = "网关路由系统代号长度必需在2到40个字符内")
     @Column(name = "system_Code" )
     private String systemCode;
+
+    @NotNull(message = "网关路由名称不能为空")
+    @Size(min = 2, max = 40, message = "网关路由名称长度必需在2到40个字符内")
+    @Column(name = "name" )
+    private String name;
+
+    /**
+     * 路由类型:service-负载均衡 url-反向代理
+     */
+    @NotBlank(message = "路由类型不能为空")
+    @Size(min = 1, max = 40, message = "路由类型长度必需在2到40个字符内")
+    @Column(name = "type")
+    private String type;
+
     @NotNull(message = "网关路由客户端分组不能为空")
     @Column(name = "group_Code")
     private String groupCode;
-    @NotNull(message = "网关路由服务uri不能为空")
-    @Size(min = 2, max = 40, message = "网关路由服务uri长度必需在2到200个字符内")
-    @Column(name = "uri")
-    private String uri;
+
+    /**
+     * 服务ID
+     */
+    private String serviceId;
+
     @NotNull(message = "网关路由断言Path不能为空")
     @Size(min = 2, max = 40, message = "网关路由断言Path长度必需在2到100个字符内")
     @Column(name = "path")
     private String path;
+
+    @NotNull(message = "网关路由服务uri不能为空")
+    @Size(min = 2, max = 40, message = "网关路由服务uri长度必需在2到200个字符内")
+    @Column(name = "uri")
+    private String uri;
+
     /**
      * 请求类型：POST，GET，DELETE，PUT
      */
@@ -109,7 +129,7 @@ public class Route implements java.io.Serializable {
     @Transient
     private Integer weight;
     /**
-     * 状态，0是启用，1是禁用
+     * 状态，1是启用，0是禁用
      */
     @Column(name = "status")
     private String status;
@@ -164,4 +184,22 @@ public class Route implements java.io.Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "update_Time")
     private Date updateTime;
+
+
+    /**
+     * 0-不重试 1-重试
+     */
+    private Integer retryable;
+
+    /**
+     * 保留数据0-否 1-是 不允许删除
+     */
+    @Column(name = "is_Persist")
+    private Integer isPersist;
+
+    /**
+     * 路由说明
+     */
+    private String remark;
+
 }

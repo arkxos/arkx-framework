@@ -20,6 +20,11 @@ const groups = [
 		{ value: 'other_api', label: '其它API' }
 	]
 
+// 分组类型，暂不放到数据字典，直接由前端添加
+const routeTypes = [
+  { value: 'service', label: '负责均衡' },
+  { value: 'url', label: '反向代理' }
+]
 
 //导出全局变量
 export default{
@@ -30,5 +35,6 @@ export default{
 	systemVersion,
 	errMsg,
 	successMsg,
-	groups
+	groups,
+  routeTypes
 }
