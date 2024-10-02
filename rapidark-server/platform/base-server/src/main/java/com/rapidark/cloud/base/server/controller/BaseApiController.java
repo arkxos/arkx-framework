@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.BaseApi;
 import com.rapidark.cloud.base.server.controller.cmd.AddApiCommand;
+import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.http.OpenRestTemplate;

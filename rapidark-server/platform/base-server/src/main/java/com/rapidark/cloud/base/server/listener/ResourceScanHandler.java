@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.rapidark.cloud.base.client.model.entity.BaseApi;
+import com.rapidark.cloud.base.server.service.BaseApiService;
+import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.common.constants.QueueConstants;
 import com.rapidark.common.security.http.OpenRestTemplate;
 import com.rapidark.common.utils.BeanConvertUtils;
