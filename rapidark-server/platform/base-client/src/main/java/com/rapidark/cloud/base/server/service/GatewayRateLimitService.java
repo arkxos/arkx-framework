@@ -52,7 +52,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @return
      */
-    @Override
     public List<RateLimitApi> findRateLimitApiList() {
         List<RateLimitApi> list = gatewayRateLimitApisMapper.selectRateLimitApi();
         return list;
@@ -64,7 +63,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policyId
      * @return
      */
-    @Override
     public List<GatewayRateLimitApi> findRateLimitApiList(Long policyId) {
         QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -79,7 +77,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policyId
      * @return
      */
-    @Override
     public GatewayRateLimit getRateLimitPolicy(Long policyId) {
         return gatewayRateLimitMapper.selectById(policyId);
     }
@@ -89,7 +86,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param policy
      */
-    @Override
     public GatewayRateLimit addRateLimitPolicy(GatewayRateLimit policy) {
         policy.setCreateTime(new Date());
         policy.setUpdateTime(policy.getCreateTime());
@@ -102,7 +98,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param policy
      */
-    @Override
     public GatewayRateLimit updateRateLimitPolicy(GatewayRateLimit policy) {
         policy.setUpdateTime(new Date());
         gatewayRateLimitMapper.updateById(policy);
@@ -114,7 +109,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param policyId
      */
-    @Override
     public void removeRateLimitPolicy(Long policyId) {
         clearRateLimitApisByPolicyId(policyId);
         gatewayRateLimitMapper.deleteById(policyId);
@@ -126,7 +120,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policyId
      * @param apis
      */
-    @Override
     public void addRateLimitApis(Long policyId, String... apis) {
         // 先清空策略已有绑定
         clearRateLimitApisByPolicyId(policyId);
@@ -149,7 +142,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param policyId
      */
-    @Override
     public void clearRateLimitApisByPolicyId(Long policyId) {
         QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -162,7 +154,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param apiId
      */
-    @Override
     public void clearRateLimitApisByApiId(Long apiId) {
         QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()

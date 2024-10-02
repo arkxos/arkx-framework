@@ -52,7 +52,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @return
      */
-    @Override
     public List<IpLimitApi> findBlackList() {
         List<IpLimitApi> list = gatewayIpLimitApisMapper.selectIpLimitApi(0);
         return list;
@@ -63,7 +62,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @return
      */
-    @Override
     public List<IpLimitApi> findWhiteList() {
         List<IpLimitApi> list = gatewayIpLimitApisMapper.selectIpLimitApi(1);
         return list;
@@ -74,7 +72,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @return
      */
-    @Override
     public List<GatewayIpLimitApi> findIpLimitApiList(Long policyId) {
         QueryWrapper<GatewayIpLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -89,7 +86,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      * @param policyId
      * @return
      */
-    @Override
     public GatewayIpLimit getIpLimitPolicy(Long policyId) {
         return gatewayIpLimitMapper.selectById(policyId);
     }
@@ -99,7 +95,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param policy
      */
-    @Override
     public GatewayIpLimit addIpLimitPolicy(GatewayIpLimit policy) {
         policy.setCreateTime(new Date());
         policy.setUpdateTime(policy.getCreateTime());
@@ -112,7 +107,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param policy
      */
-    @Override
     public GatewayIpLimit updateIpLimitPolicy(GatewayIpLimit policy) {
         policy.setUpdateTime(new Date());
         gatewayIpLimitMapper.updateById(policy);
@@ -124,7 +118,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param policyId
      */
-    @Override
     public void removeIpLimitPolicy(Long policyId) {
         clearIpLimitApisByPolicyId(policyId);
         gatewayIpLimitMapper.deleteById(policyId);
@@ -136,7 +129,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      * @param policyId
      * @param apis
      */
-    @Override
     public void addIpLimitApis(Long policyId, String... apis) {
         // 先清空策略已有绑定
         clearIpLimitApisByPolicyId(policyId);
@@ -159,7 +151,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param policyId
      */
-    @Override
     public void clearIpLimitApisByPolicyId(Long policyId) {
         QueryWrapper<GatewayIpLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -172,7 +163,6 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param apiId
      */
-    @Override
     public void clearIpLimitApisByApiId(Long apiId) {
         QueryWrapper<GatewayIpLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()

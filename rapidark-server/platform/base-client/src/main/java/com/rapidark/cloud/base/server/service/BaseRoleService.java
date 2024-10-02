@@ -55,7 +55,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      *
      * @return
      */
-    @Override
     public List<BaseRole> findAllList() {
         List<BaseRole> list = baseRoleMapper.selectList(new QueryWrapper<>());
         return list;
@@ -67,7 +66,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    @Override
     public BaseRole getRole(Long roleId) {
         return baseRoleMapper.selectById(roleId);
     }
@@ -78,7 +76,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param role 角色
      * @return
      */
-    @Override
     public BaseRole addRole(BaseRole role) {
         if (isExist(role.getRoleCode())) {
             throw new OpenAlertException(String.format("%s编码已存在!", role.getRoleCode()));
@@ -101,7 +98,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param role 角色
      * @return
      */
-    @Override
     public BaseRole updateRole(BaseRole role) {
         BaseRole saved = getRole(role.getRoleId());
         if (role == null) {
@@ -124,7 +120,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId 角色ID
      * @return
      */
-    @Override
     public void removeRole(Long roleId) {
         if (roleId == null) {
             return;
@@ -146,7 +141,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleCode
      * @return
      */
-    @Override
     public Boolean isExist(String roleCode) {
         if (StringUtils.isBlank(roleCode)) {
             throw new OpenAlertException("roleCode不能为空!");
@@ -163,7 +157,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roles
      * @return
      */
-    @Override
     public void saveUserRoles(Long userId, String... roles) {
         if (userId == null || roles == null) {
             return;
@@ -194,7 +187,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @param userIds
      */
-    @Override
     public void saveRoleUsers(Long roleId, String... userIds) {
         if (roleId == null || userIds == null) {
             return;
@@ -217,7 +209,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      *
      * @return
      */
-    @Override
     public List<BaseRoleUser> findRoleUsers(Long roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
@@ -231,7 +222,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleCode
      * @return
      */
-    @Override
     public List<BaseRoleUser> findRoleUsersByRoleIdOrRoleCode(Long roleId, String roleCode) {
         //设置查询条件
         QueryWrapper<BaseRole> queryWrapper = new QueryWrapper();
@@ -254,7 +244,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    @Override
     public int getCountByRole(Long roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
@@ -268,7 +257,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    @Override
     public int getCountByUser(Long userId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
@@ -282,7 +270,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    @Override
     public void removeRoleUsers(Long roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
@@ -295,7 +282,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    @Override
     public void removeUserRoles(Long userId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
@@ -309,7 +295,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    @Override
     public Boolean isExist(Long userId, Long roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
@@ -326,7 +311,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    @Override
     public List<BaseRole> getUserRoles(Long userId) {
         List<BaseRole> roles = baseRoleUserMapper.selectRoleUserList(userId);
         return roles;
@@ -338,7 +322,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    @Override
     public List<Long> getUserRoleIds(Long userId) {
         return baseRoleUserMapper.selectRoleUserIdList(userId);
     }

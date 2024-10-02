@@ -69,7 +69,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param baseDeveloper
      * @return
      */
-    @Override
     public void updateUser(BaseDeveloper baseDeveloper) {
         if (baseDeveloper == null || baseDeveloper.getUserId() == null) {
             return;
@@ -86,7 +85,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param baseDeveloper
      * @param accountType
      */
-    @Override
     public void addUserThirdParty(BaseDeveloper baseDeveloper, String accountType) {
         if (!baseAccountService.isExist(baseDeveloper.getUserName(), accountType, ACCOUNT_DOMAIN)) {
             baseDeveloper.setUserType(BaseConstants.USER_TYPE_ADMIN);
@@ -105,7 +103,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param userId
      * @param password
      */
-    @Override
     public boolean updatePassword(Long userId, String password) {
         return baseAccountService.updatePasswordByUserId(userId, ACCOUNT_DOMAIN, password) > 0;
     }
@@ -116,7 +113,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param pageParams
      * @return
      */
-    @Override
     public IPage<BaseDeveloper> findListPage(PageParams pageParams) {
         BaseDeveloper query = pageParams.mapToObject(BaseDeveloper.class);
         QueryWrapper<BaseDeveloper> queryWrapper = new QueryWrapper();
@@ -134,7 +130,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      *
      * @return
      */
-    @Override
     public List<BaseDeveloper> findAllList() {
         List<BaseDeveloper> list = baseDeveloperMapper.selectList(new QueryWrapper<>());
         return list;
@@ -146,7 +141,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param userId
      * @return
      */
-    @Override
     public BaseDeveloper getUserById(Long userId) {
         return baseDeveloperMapper.selectById(userId);
     }
@@ -158,7 +152,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param username
      * @return
      */
-    @Override
     public BaseDeveloper getUserByUsername(String username) {
         QueryWrapper<BaseDeveloper> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -174,7 +167,6 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param account
      * @return
      */
-    @Override
     public UserAccount login(String account, Map<String, String> parameterMap, String ip, String userAgent) {
         if (StringUtils.isBlank(account)) {
             return null;

@@ -87,7 +87,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      *
      * @return
      */
-    @Override
     public List<AuthorityMenu> findAuthorityMenu(Integer status, String serviceId) {
         Map map = Maps.newHashMap();
         if (serviceId != null && !"".equals(serviceId)) {
@@ -99,7 +98,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
         return authorities;
     }
 
-    @Override
     public List<AuthorityApi> findAuthorityApi(String serviceId) {
         Map map = Maps.newHashMap();
         map.put("serviceId", serviceId);
@@ -114,14 +112,12 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param actionId
      * @return
      */
-    @Override
     public List<BaseAuthorityAction> findAuthorityAction(Long actionId) {
         QueryWrapper<BaseAuthorityAction> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(BaseAuthorityAction::getActionId, actionId);
         return baseAuthorityActionMapper.selectList(queryWrapper);
     }
-
 
     /**
      * 保存或修改权限
@@ -130,7 +126,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param resourceType
      * @return 权限Id
      */
-    @Override
     public BaseAuthority saveOrUpdateAuthority(Long resourceId, ResourceType resourceType) {
         BaseAuthority baseAuthority = getAuthority(resourceId, resourceType);
         String authority = null;
@@ -180,7 +175,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param resourceType
      * @return
      */
-    @Override
     public void removeAuthority(Long resourceId, ResourceType resourceType) {
         if (isGranted(resourceId, resourceType)) {
             throw new OpenAlertException(String.format("资源已被授权,不允许删除!取消授权后,再次尝试!"));
@@ -196,7 +190,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param resourceType
      * @return
      */
-    @Override
     public BaseAuthority getAuthority(Long resourceId, ResourceType resourceType) {
         if (resourceId == null || resourceType == null) {
             return null;
@@ -212,7 +205,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param resourceType
      * @return
      */
-    @Override
     public Boolean isGranted(Long resourceId, ResourceType resourceType) {
         BaseAuthority authority = getAuthority(resourceId, resourceType);
         if (authority == null || authority.getAuthorityId() == null) {
@@ -257,7 +249,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      *
      * @param appId
      */
-    @Override
     public void removeAuthorityApp(String appId) {
         QueryWrapper<BaseAuthorityApp> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseAuthorityApp::getAppId, appId);
@@ -269,7 +260,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      *
      * @param actionId
      */
-    @Override
     public void removeAuthorityAction(Long actionId) {
         QueryWrapper<BaseAuthorityAction> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -286,7 +276,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param authorityIds 权限集合
      * @return
      */
-    @Override
     public void addAuthorityRole(Long roleId, Date expireTime, String... authorityIds) {
         if (roleId == null) {
             return;
@@ -318,7 +307,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param authorityIds 权限集合
      * @return
      */
-    @Override
     public void addAuthorityUser(Long userId, Date expireTime, String... authorityIds) {
         if (userId == null) {
             return;
@@ -366,7 +354,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @return
      */
     @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
-    @Override
     public void addAuthorityApp(String appId, Date expireTime, String... authorityIds) {
         if (appId == null) {
             return;
@@ -406,7 +393,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param authorityId
      */
     @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
-    @Override
     public void addAuthorityApp(String appId, Date expireTime, String authorityId) {
         BaseAuthorityApp authority = new BaseAuthorityApp();
         authority.setAppId(appId);
@@ -433,7 +419,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param authorityIds
      * @return
      */
-    @Override
     public void addAuthorityAction(Long actionId, String... authorityIds) {
         if (actionId == null) {
             return;
@@ -459,7 +444,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param appId
      * @return
      */
-    @Override
     public List<OpenAuthority> findAuthorityByApp(String appId) {
         List<OpenAuthority> authorities = Lists.newArrayList();
         List<OpenAuthority> list = baseAuthorityAppMapper.selectAuthorityByApp(appId);
@@ -475,7 +459,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param roleId
      * @return
      */
-    @Override
     public List<OpenAuthority> findAuthorityByRole(Long roleId) {
         return baseAuthorityRoleMapper.selectAuthorityByRole(roleId);
     }
@@ -486,7 +469,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param type = null 查询全部  type = 1 获取菜单和操作 type = 2 获取API
      * @return
      */
-    @Override
     public List<OpenAuthority> findAuthorityByType(String type) {
         Map map = Maps.newHashMap();
         map.put("type", type);
@@ -501,7 +483,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param root   超级管理员
      * @return
      */
-    @Override
     public List<OpenAuthority> findAuthorityByUser(Long userId, Boolean root) {
         if (root) {
             // 超级管理员返回所有
@@ -537,12 +518,10 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param root   超级管理员
      * @return
      */
-    @Override
     public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root) {
         return findAuthorityMenuByUser(userId, root, null);
     }
 
-    @Override
     public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root, String serviceId) {
         if (root) {
             // 超级管理员返回所有
@@ -581,7 +560,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param roleIds
      * @return
      */
-    @Override
     public Boolean isGrantedByRoleIds(String authorityId, Long... roleIds) {
         if (roleIds == null || roleIds.length == 0) {
             throw new OpenException("roleIds is empty");
@@ -600,7 +578,6 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param serviceId
      * @param codes
      */
-    @Override
     public void clearInvalidApi(String serviceId, Collection<String> codes) {
         if (StringUtils.isBlank(serviceId)) {
             return;

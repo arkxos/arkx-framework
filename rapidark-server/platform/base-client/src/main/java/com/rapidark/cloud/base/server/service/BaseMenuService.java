@@ -58,7 +58,6 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      *
      * @return
      */
-    @Override
     public List<BaseMenu> findAllList() {
         List<BaseMenu> list = baseMenuMapper.selectList(new QueryWrapper<>());
         //根据优先级从小到大排序
@@ -74,7 +73,6 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @param menuCode
      * @return
      */
-    @Override
     public Boolean isExist(String menuCode) {
         QueryWrapper<BaseMenu> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -89,7 +87,6 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @param menu
      * @return
      */
-    @Override
     public BaseMenu addMenu(BaseMenu menu) {
         if (isExist(menu.getMenuCode())) {
             throw new OpenAlertException(String.format("%s编码已存在!", menu.getMenuCode()));
@@ -124,7 +121,6 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @param menu
      * @return
      */
-    @Override
     public BaseMenu updateMenu(BaseMenu menu) {
         BaseMenu saved = baseMenuMapper.selectById(menu.getMenuId());
         if (saved == null) {
@@ -156,7 +152,6 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @param menuId
      * @return
      */
-    @Override
     public void removeMenu(Long menuId) {
         BaseMenu menu = baseMenuMapper.selectById(menuId);
         if (menu != null && menu.getIsPersist().equals(BaseConstants.ENABLED)) {
