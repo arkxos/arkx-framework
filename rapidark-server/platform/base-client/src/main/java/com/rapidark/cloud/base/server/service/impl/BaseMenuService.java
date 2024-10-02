@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseMenuServiceImpl extends BaseServiceImpl<BaseMenuMapper, BaseMenu> implements BaseMenuService {
+public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
     @Autowired
     private BaseMenuMapper baseMenuMapper;
     @Autowired
@@ -44,7 +44,6 @@ public class BaseMenuServiceImpl extends BaseServiceImpl<BaseMenuMapper, BaseMen
      * @param pageParams
      * @return
      */
-    @Override
     public IPage<BaseMenu> findListPage(PageParams pageParams) {
         BaseMenu query = pageParams.mapToObject(BaseMenu.class);
         QueryWrapper<BaseMenu> queryWrapper = new QueryWrapper();

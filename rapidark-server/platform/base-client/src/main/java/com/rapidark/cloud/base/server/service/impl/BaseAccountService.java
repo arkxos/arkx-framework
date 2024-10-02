@@ -23,7 +23,7 @@ import java.util.Date;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, BaseAccount> implements BaseAccountService {
+public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseAccount> {
     @Autowired
     private BaseAccountMapper baseAccountMapper;
     @Autowired
@@ -39,7 +39,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param accountId
      * @return
      */
-    @Override
     public BaseAccount getAccountById(Long accountId) {
         return baseAccountMapper.selectById(accountId);
     }
@@ -52,7 +51,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param domain
      * @return
      */
-    @Override
     public BaseAccount getAccount(String account, String accountType, String domain) {
         QueryWrapper<BaseAccount> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -74,7 +72,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param registerIp
      * @return
      */
-    @Override
     public BaseAccount register(Long userId, String account, String password, String accountType, Integer status, String domain, String registerIp) {
         if (isExist(account, accountType, domain)) {
             // 账号已被注册
@@ -99,7 +96,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param domain
      * @return
      */
-    @Override
     public Boolean isExist(String account, String accountType, String domain) {
         QueryWrapper<BaseAccount> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -116,7 +112,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param accountId
      * @return
      */
-    @Override
     public int removeAccount(Long accountId) {
         return baseAccountMapper.deleteById(accountId);
     }
@@ -128,7 +123,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param accountId
      * @param status
      */
-    @Override
     public int updateStatus(Long accountId, Integer status) {
         BaseAccount baseAccount = new BaseAccount();
         baseAccount.setAccountId(accountId);
@@ -144,7 +138,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param domain
      * @param status
      */
-    @Override
     public int updateStatusByUserId(Long userId, String domain, Integer status) {
         if (status == null) {
             return 0;
@@ -166,7 +159,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param domain
      * @param password
      */
-    @Override
     public int updatePasswordByUserId(Long userId, String domain, String password) {
         BaseAccount baseAccount = new BaseAccount();
         baseAccount.setUpdateTime(new Date());
@@ -186,7 +178,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      * @param domain
      * @return
      */
-    @Override
     public int removeAccountByUserId(Long userId, String domain) {
         QueryWrapper<BaseAccount> wrapper = new QueryWrapper();
         wrapper.lambda()
@@ -201,7 +192,6 @@ public class BaseAccountServiceImpl extends BaseServiceImpl<BaseAccountMapper, B
      *
      * @param log
      */
-    @Override
     public void addLoginLog(BaseAccountLogs log) {
         QueryWrapper<BaseAccountLogs> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()

@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMapper, BaseAuthority> implements BaseAuthorityService {
+public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, BaseAuthority> {
     @Autowired
     private BaseAuthorityMapper baseAuthorityMapper;
     @Autowired
@@ -73,7 +73,6 @@ public class BaseAuthorityServiceImpl extends BaseServiceImpl<BaseAuthorityMappe
      *
      * @return
      */
-    @Override
     public List<AuthorityResource> findAuthorityResource() {
         List<AuthorityResource> list = Lists.newArrayList();
         // 已授权资源权限

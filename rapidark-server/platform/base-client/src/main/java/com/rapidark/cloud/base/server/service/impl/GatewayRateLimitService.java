@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GatewayRateLimitServiceImpl extends BaseServiceImpl<GatewayRateLimitMapper, GatewayRateLimit> implements GatewayRateLimitService {
+public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMapper, GatewayRateLimit> {
     @Autowired
     private GatewayRateLimitMapper gatewayRateLimitMapper;
 
@@ -37,7 +37,6 @@ public class GatewayRateLimitServiceImpl extends BaseServiceImpl<GatewayRateLimi
      * @param pageParams
      * @return
      */
-    @Override
     public IPage<GatewayRateLimit> findListPage(PageParams pageParams) {
         GatewayRateLimit query = pageParams.mapToObject(GatewayRateLimit.class);
         QueryWrapper<GatewayRateLimit> queryWrapper = new QueryWrapper();

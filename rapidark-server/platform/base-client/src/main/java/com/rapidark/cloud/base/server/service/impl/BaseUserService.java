@@ -35,7 +35,7 @@ import java.util.Map;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUser> implements BaseUserService {
+public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser> {
     @Autowired
     private BaseUserMapper baseUserMapper;
     @Autowired
@@ -53,7 +53,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param baseUser
      * @return
      */
-    @Override
     public void addUser(BaseUser baseUser) {
         if (getUserByUsername(baseUser.getUserName()) != null) {
             throw new OpenAlertException("用户名:" + baseUser.getUserName() + "已存在!");
@@ -80,7 +79,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param baseUser
      * @return
      */
-    @Override
     public void updateUser(BaseUser baseUser) {
         if (baseUser == null || baseUser.getUserId() == null) {
             return;
@@ -97,7 +95,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param baseUser
      * @param accountType
      */
-    @Override
     public void addUserThirdParty(BaseUser baseUser, String accountType) {
         if (!baseAccountService.isExist(baseUser.getUserName(), accountType, ACCOUNT_DOMAIN)) {
             baseUser.setUserType(BaseConstants.USER_TYPE_ADMIN);
@@ -116,7 +113,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param userId
      * @param password
      */
-    @Override
     public boolean updatePassword(Long userId, String password) {
         return baseAccountService.updatePasswordByUserId(userId, ACCOUNT_DOMAIN, password) > 0;
     }
@@ -127,7 +123,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param pageParams
      * @return
      */
-    @Override
     public IPage<BaseUser> findListPage(PageParams pageParams) {
         BaseUser query = pageParams.mapToObject(BaseUser.class);
         QueryWrapper<BaseUser> queryWrapper = new QueryWrapper();
@@ -145,7 +140,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      *
      * @return
      */
-    @Override
     public List<BaseUser> findAllList() {
         List<BaseUser> list = baseUserMapper.selectList(new QueryWrapper<>());
         return list;
@@ -157,7 +151,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param userId
      * @return
      */
-    @Override
     public BaseUser getUserById(Long userId) {
         return baseUserMapper.selectById(userId);
     }
@@ -168,7 +161,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param userId
      * @return
      */
-    @Override
     public UserAccount getUserAccount(Long userId) {
         // 用户权限列表
         List<OpenAuthority> authorities = Lists.newArrayList();
@@ -221,7 +213,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param username
      * @return
      */
-    @Override
     public BaseUser getUserByUsername(String username) {
         QueryWrapper<BaseUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -237,7 +228,6 @@ public class BaseUserServiceImpl extends BaseServiceImpl<BaseUserMapper, BaseUse
      * @param account
      * @return
      */
-    @Override
     public UserAccount login(String account, Map<String, String> parameterMap, String ip, String userAgent) {
         if (StringUtils.isBlank(account)) {
             return null;

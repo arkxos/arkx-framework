@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 
-public class BaseAuthorityServiceImplTest extends BaseTest {
+public class BaseAuthorityServiceTest extends BaseTest {
     @Autowired
     private BaseAuthorityService baseAuthorityService;
 

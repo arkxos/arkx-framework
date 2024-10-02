@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseRoleServiceImpl extends BaseServiceImpl<BaseRoleMapper, BaseRole> implements BaseRoleService {
+public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
     @Autowired
     private BaseRoleMapper baseRoleMapper;
     @Autowired
@@ -40,7 +40,6 @@ public class BaseRoleServiceImpl extends BaseServiceImpl<BaseRoleMapper, BaseRol
      * @param pageParams
      * @return
      */
-    @Override
     public IPage<BaseRole> findListPage(PageParams pageParams) {
         BaseRole query = pageParams.mapToObject(BaseRole.class);
         QueryWrapper<BaseRole> queryWrapper = new QueryWrapper();

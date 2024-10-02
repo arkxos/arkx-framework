@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseDeveloperServiceImpl extends BaseServiceImpl<BaseDeveloperMapper, BaseDeveloper> implements BaseDeveloperService {
+public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, BaseDeveloper> {
     @Autowired
     private BaseDeveloperMapper baseDeveloperMapper;
     @Autowired
@@ -43,7 +43,6 @@ public class BaseDeveloperServiceImpl extends BaseServiceImpl<BaseDeveloperMappe
      * @param baseDeveloper
      * @return
      */
-    @Override
     public void addUser(BaseDeveloper baseDeveloper) {
         if (getUserByUsername(baseDeveloper.getUserName()) != null) {
             throw new OpenAlertException("用户名:" + baseDeveloper.getUserName() + "已存在!");

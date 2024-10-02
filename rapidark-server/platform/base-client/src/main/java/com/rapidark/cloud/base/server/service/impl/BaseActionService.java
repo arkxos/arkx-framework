@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, BaseAction> implements BaseActionService {
+public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAction> {
     @Autowired
     private BaseActionMapper baseActionMapper;
 
@@ -41,7 +41,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      * @param pageParams
      * @return
      */
-    @Override
     public IPage<BaseAction> findListPage(PageParams pageParams) {
         BaseAction query = pageParams.mapToObject(BaseAction.class);
         QueryWrapper<BaseAction> queryWrapper = new QueryWrapper();
@@ -58,7 +57,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      * @param menuId
      * @return
      */
-    @Override
     public List<BaseAction> findListByMenuId(Long menuId) {
         QueryWrapper<BaseAction> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseAction::getMenuId, menuId);
@@ -74,7 +72,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      * @param actionId
      * @return
      */
-    @Override
     public BaseAction getAction(Long actionId) {
         return baseActionMapper.selectById(actionId);
     }
@@ -86,7 +83,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      * @param acitonCode
      * @return
      */
-    @Override
     public Boolean isExist(String acitonCode) {
         QueryWrapper<BaseAction> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
@@ -101,7 +97,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      * @param aciton
      * @return
      */
-    @Override
     public BaseAction addAction(BaseAction aciton) {
         if (isExist(aciton.getActionCode())) {
             throw new OpenAlertException(String.format("%s编码已存在!", aciton.getActionCode()));
@@ -133,7 +128,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      * @param aciton
      * @return
      */
-    @Override
     public BaseAction updateAction(BaseAction aciton) {
         BaseAction saved = getAction(aciton.getActionId());
         if (saved == null) {
@@ -164,7 +158,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      * @param actionId
      * @return
      */
-    @Override
     public void removeAction(Long actionId) {
         BaseAction aciton = getAction(actionId);
         if (aciton != null && aciton.getIsPersist().equals(BaseConstants.ENABLED)) {
@@ -180,7 +173,6 @@ public class BaseActionServiceImpl extends BaseServiceImpl<BaseActionMapper, Bas
      *
      * @param menuId
      */
-    @Override
     public void removeByMenuId(Long menuId) {
         List<BaseAction> actionList = findListByMenuId(menuId);
         if (actionList != null && actionList.size() > 0) {

@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> implements BaseApiService {
+public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
     @Autowired
     private BaseApiMapper baseApiMapper;
     @Autowired
@@ -36,7 +36,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param pageParams
      * @return
      */
-    @Override
     public IPage<BaseApi> findListPage(PageParams pageParams) {
         BaseApi query = pageParams.mapToObject(BaseApi.class);
         QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
@@ -56,7 +55,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      *
      * @return
      */
-    @Override
     public List<BaseApi> findAllList(String serviceId) {
         QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(ObjectUtils.isNotEmpty(serviceId), BaseApi::getServiceId, serviceId);
@@ -70,7 +68,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param apiId
      * @return
      */
-    @Override
     public BaseApi getApi(Long apiId) {
         return baseApiMapper.selectById(apiId);
     }
@@ -82,7 +79,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param apiCode
      * @return
      */
-    @Override
     public Boolean isExist(String apiCode) {
         QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseApi::getApiCode, apiCode);
@@ -96,7 +92,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param api
      * @return
      */
-    @Override
     public void addApi(BaseApi api) {
         if (isExist(api.getApiCode())) {
             throw new OpenAlertException(String.format("%s编码已存在!", api.getApiCode()));
@@ -129,7 +124,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param api
      * @return
      */
-    @Override
     public void updateApi(BaseApi api) {
         BaseApi saved = getApi(api.getApiId());
         if (saved == null) {
@@ -159,7 +153,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param apiCode
      * @return
      */
-    @Override
     public BaseApi getApi(String apiCode) {
         QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseApi::getApiCode, apiCode);
@@ -173,7 +166,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param apiId
      * @return
      */
-    @Override
     public void removeApi(Long apiId) {
         BaseApi api = getApi(apiId);
         if (api != null && api.getIsPersist().equals(BaseConstants.ENABLED)) {
@@ -190,7 +182,6 @@ public class BaseApiServiceImpl extends BaseServiceImpl<BaseApiMapper, BaseApi> 
      * @param queryWrapper
      * @return
      */
-    @Override
     public int getCount(QueryWrapper<BaseApi> queryWrapper) {
         return baseApiMapper.selectCount(queryWrapper);
     }
