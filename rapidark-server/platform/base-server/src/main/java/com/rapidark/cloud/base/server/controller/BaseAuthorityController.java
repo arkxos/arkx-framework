@@ -7,6 +7,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseAuthorityAction;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.client.service.IBaseAuthorityServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.GrantAuthorityActionCommand;
+import com.rapidark.cloud.base.server.controller.cmd.GrantOpenClientAppApiAuthorityCommand;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.constants.CommonConstants;
@@ -150,9 +151,10 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @GetMapping("/authority/app")
     public ResultBody<List<OpenAuthority>> findAuthorityApp(
-            @RequestParam(value = "appId") String appId
+            @RequestParam(value = "appId") String appId,
+            @RequestParam(value = "appSystemCode") String appSystemCode
     ) {
-        List<OpenAuthority> result = baseAuthorityService.findAuthorityByApp(appId);
+        List<OpenAuthority> result = baseAuthorityService.findAuthorityByApp(appId, appSystemCode);
         return ResultBody.ok().data(result);
     }
 
@@ -224,11 +226,11 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @PostMapping("/authority/app/grant")
     public ResultBody grantAuthorityApp(
-            @RequestParam(value = "appId") String appId,
-            @RequestParam(value = "expireTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date expireTime,
-            @RequestParam(value = "authorityIds", required = false) String authorityIds
+            @Valid @RequestBody GrantOpenClientAppApiAuthorityCommand command
     ) {
-        baseAuthorityService.addAuthorityApp(appId, expireTime, StringUtils.isNotBlank(authorityIds) ? authorityIds.split(",") : new String[]{});
+        baseAuthorityService
+                .addAuthorityApp(command.getOpenClientId(), command.getAppSystemCode(),
+                        command.getExpireTime(), command.getAuthorityIds().split(","));
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }

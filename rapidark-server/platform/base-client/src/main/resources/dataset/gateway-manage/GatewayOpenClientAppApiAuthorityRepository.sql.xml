@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="GatewayOpenClientAppApiAuthorityRepository_queryAuthoritysByOpenClientIdAAndAppSystemCode">
+        <value>
+            <![CDATA[
+                SELECT
+                    a.authority_id,
+                    a.authority,
+                    ap.expire_time,
+                    'app' AS owner
+                    FROM Gateway_Open_Client_App_Api_Authority ap
+                    INNER JOIN base_authority a ON ap.authority_id = a.authority_id
+                    INNER JOIN base_api api ON a.api_id = api.api_id
+                    WHERE ap.open_client_id = :openClientId
+                      AND a.status = 1
+                      #[AND api.service_id = :appSystemCode]
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="GatewayOpenClientAppApiAuthorityRepository_deleteByAuthorityIds">
+        <value>
+            <![CDATA[
+                DELETE FROM Gateway_Open_Client_App_Api_Authority t
+                    WHERE ap.authority_Id in (:authorityIds)
+            ]]>
+        </value>
+    </sql>
+
+</sqltoy>
