@@ -1,7 +1,6 @@
 package com.rapidark.cloud.base.server.controller.cmd;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 添加应用信息参数
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2021/5/16 22:06
  */
 @Data
-public class CreateAppCommand {
+public class CreateOpenAppCommand {
     /**
      *
      *      * @param appName     应用名称

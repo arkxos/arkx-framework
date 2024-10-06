@@ -3,7 +3,7 @@ package com.rapidark.cloud.base.server.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
-import com.rapidark.cloud.base.server.controller.cmd.CreateAppCommand;
+import com.rapidark.cloud.base.server.controller.cmd.CreateOpenAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateOpenClientCommand;
 import com.rapidark.cloud.base.server.service.OpenAppService;
@@ -163,7 +163,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     })
     @Log("添加应用信息")
     @PostMapping("/app/add")
-    public ResultBody<String> addApp(@Validated @RequestBody CreateAppCommand command) {
+    public ResultBody<String> addApp(@Validated @RequestBody CreateOpenAppCommand command) {
         OpenApp app = new OpenApp();
         app.setAppName(command.getAppName());
         app.setAppNameEn(command.getAppNameEn());
