@@ -7,9 +7,12 @@ import com.rapidark.cloud.base.client.constants.ResourceType;
 import com.rapidark.cloud.base.client.model.AuthorityApi;
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
+import com.rapidark.cloud.base.client.model.GatewayOpenClientAppApiAuthority;
 import com.rapidark.cloud.base.client.model.entity.*;
 import com.rapidark.cloud.base.server.mapper.*;
 import com.rapidark.cloud.base.server.repository.OpenAppRepository;
+import com.rapidark.cloud.gateway.manage.service.GatewayOpenClientAppApiAuthorityService;
+import com.rapidark.cloud.gateway.repository.GatewayOpenClientAppApiAuthorityRepository;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.exception.OpenException;
@@ -18,6 +21,7 @@ import com.rapidark.common.security.OpenAuthority;
 import com.rapidark.common.security.OpenHelper;
 import com.rapidark.common.security.OpenSecurityConstants;
 import com.rapidark.common.utils.StringUtils;
+import com.rapidark.common.utils.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
@@ -25,6 +29,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -44,7 +49,9 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
     @Autowired
     private BaseAuthorityUserMapper baseAuthorityUserMapper;
     @Autowired
-    private BaseAuthorityAppMapper baseAuthorityAppMapper;
+    private GatewayOpenClientAppApiAuthorityRepository openClientAppApiAuthorityRepository;
+    @Autowired
+    private GatewayOpenClientAppApiAuthorityService openClientAppApiAuthorityService;
     @Autowired
     private BaseAuthorityActionMapper baseAuthorityActionMapper;
     @Autowired
@@ -216,9 +223,10 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
         QueryWrapper<BaseAuthorityUser> userQueryWrapper = new QueryWrapper();
         userQueryWrapper.lambda().eq(BaseAuthorityUser::getAuthorityId, authority.getAuthorityId());
         int userGrantedCount = baseAuthorityUserMapper.selectCount(userQueryWrapper);
-        QueryWrapper<BaseAuthorityApp> appQueryWrapper = new QueryWrapper();
-        appQueryWrapper.lambda().eq(BaseAuthorityApp::getAuthorityId, authority.getAuthorityId());
-        int appGrantedCount = baseAuthorityAppMapper.selectCount(appQueryWrapper);
+        GatewayOpenClientAppApiAuthority openClientAppApiAuthority = new GatewayOpenClientAppApiAuthority();
+        openClientAppApiAuthority.setAuthorityId(authority.getAuthorityId()+"");
+        long appGrantedCount = openClientAppApiAuthorityService.count(openClientAppApiAuthority);
+
         return roleGrantedCount > 0 || userGrantedCount > 0 || appGrantedCount > 0;
     }
 
@@ -250,9 +258,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param appId
      */
     public void removeAuthorityApp(String appId) {
-        QueryWrapper<BaseAuthorityApp> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseAuthorityApp::getAppId, appId);
-        baseAuthorityAppMapper.delete(queryWrapper);
+        openClientAppApiAuthorityService.deleteByOpenClientId(appId);
     }
 
     /**
@@ -348,39 +354,39 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
     /**
      * 应用授权
      *
-     * @param appId        应用ID
+     * @param openClientId  客户端ID
+     * @param appSystemCode 应用系统代码
      * @param expireTime   过期时间,null表示长期,不限制
      * @param authorityIds 权限集合
      * @return
      */
-    @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
-    public void addAuthorityApp(String appId, Date expireTime, String... authorityIds) {
-        if (appId == null) {
+    @CacheEvict(value = {"apps"}, key = "'client:'+#openClientId")
+    public void addAuthorityApp(String openClientId, String appSystemCode, LocalDateTime expireTime, String... authorityIds) {
+        if (openClientId == null) {
             return;
         }
-        Optional<OpenApp> openClientOptional = openAppRepository.findById(appId);
+        Optional<OpenApp> openClientOptional = openAppRepository.findById(openClientId);
         if (openClientOptional.isEmpty()) {
             return;
         }
         OpenApp openApp = openClientOptional.get();
         // 清空应用已有授权
-        QueryWrapper<BaseAuthorityApp> appQueryWrapper = new QueryWrapper();
-        appQueryWrapper.lambda().eq(BaseAuthorityApp::getAppId, appId);
-        baseAuthorityAppMapper.delete(appQueryWrapper);
-        BaseAuthorityApp authority = null;
+        openClientAppApiAuthorityService.deleteByOpenClientIdAndAppSystemCode(openClientId, appSystemCode);
+
         if (authorityIds != null && authorityIds.length > 0) {
-            for (String id : authorityIds) {
-                authority = new BaseAuthorityApp();
-                authority.setAuthorityId(Long.parseLong(id));
-                authority.setAppId(appId);
+            for (String authorityId : authorityIds) {
+                GatewayOpenClientAppApiAuthority authority = new GatewayOpenClientAppApiAuthority();
+                authority.setId(UuidUtil.base58Uuid());
+                authority.setAppId(openClientId);
+                authority.setAppSystemCode(appSystemCode);
+                authority.setAuthorityId(authorityId);
                 authority.setExpireTime(expireTime);
-                authority.setCreateTime(new Date());
-                authority.setUpdateTime(authority.getCreateTime());
-                baseAuthorityAppMapper.insert(authority);
+                openClientAppApiAuthorityService.save(authority);
             }
         }
+
         // 获取应用最新的权限列表
-        List<OpenAuthority> authorities = findAuthorityByApp(appId);
+        List<OpenAuthority> authorities = findAuthorityByApp(openClientId, "");
         // 动态更新tokenStore客户端
         OpenHelper.updateOpenClientAuthorities(redisTokenStore, openApp.getApiKey(), authorities);
     }
@@ -388,28 +394,20 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
     /**
      * 应用授权-添加单个权限
      *
-     * @param appId
+     * @param openClientId
+     * @param appSystemCode
      * @param expireTime
      * @param authorityId
      */
-    @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
-    public void addAuthorityApp(String appId, Date expireTime, String authorityId) {
-        BaseAuthorityApp authority = new BaseAuthorityApp();
-        authority.setAppId(appId);
-        authority.setAuthorityId(Long.parseLong(authorityId));
+//    @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
+    public void addAuthorityApp(String openClientId, String appSystemCode, LocalDateTime expireTime, String authorityId) {
+        GatewayOpenClientAppApiAuthority authority = new GatewayOpenClientAppApiAuthority();
+        authority.setId(UuidUtil.base58Uuid());
+        authority.setAppId(openClientId);
+        authority.setAppSystemCode(appSystemCode);
+        authority.setAuthorityId(authorityId);
         authority.setExpireTime(expireTime);
-        authority.setCreateTime(new Date());
-        authority.setUpdateTime(authority.getCreateTime());
-        QueryWrapper<BaseAuthorityApp> appQueryWrapper = new QueryWrapper();
-        appQueryWrapper.lambda()
-                .eq(BaseAuthorityApp::getAppId, appId)
-                .eq(BaseAuthorityApp::getAuthorityId, authorityId);
-        int count = baseAuthorityAppMapper.selectCount(appQueryWrapper);
-        if (count > 0) {
-            return;
-        }
-        authority.setCreateTime(new Date());
-        baseAuthorityAppMapper.insert(authority);
+        openClientAppApiAuthorityService.save(authority);
     }
 
     /**
@@ -441,12 +439,12 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
     /**
      * 获取应用已授权权限
      *
-     * @param appId
+     * @param openClientId
      * @return
      */
-    public List<OpenAuthority> findAuthorityByApp(String appId) {
+    public List<OpenAuthority> findAuthorityByApp(String openClientId, String appSystemCode) {
         List<OpenAuthority> authorities = Lists.newArrayList();
-        List<OpenAuthority> list = baseAuthorityAppMapper.selectAuthorityByApp(appId);
+        List<OpenAuthority> list = openClientAppApiAuthorityRepository.queryAuthoritysByOpenClientIdAAndAppSystemCode(openClientId, appSystemCode);
         if (list != null) {
             authorities.addAll(list);
         }
@@ -595,7 +593,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
             List<String> invalidAuthorityIds = listObjs(new QueryWrapper<BaseAuthority>().select("authority_id").in("api_id", invalidApiIds), e -> e.toString());
             if (invalidAuthorityIds != null && !invalidAuthorityIds.isEmpty()) {
                 // 移除关联数据
-                baseAuthorityAppMapper.delete(new QueryWrapper<BaseAuthorityApp>().in("authority_id", invalidAuthorityIds));
+                openClientAppApiAuthorityRepository.deleteByAuthorityIds(invalidAuthorityIds);
                 baseAuthorityActionMapper.delete(new QueryWrapper<BaseAuthorityAction>().in("authority_id", invalidAuthorityIds));
                 baseAuthorityRoleMapper.delete(new QueryWrapper<BaseAuthorityRole>().in("authority_id", invalidAuthorityIds));
                 baseAuthorityUserMapper.delete(new QueryWrapper<BaseAuthorityUser>().in("authority_id", invalidAuthorityIds));
