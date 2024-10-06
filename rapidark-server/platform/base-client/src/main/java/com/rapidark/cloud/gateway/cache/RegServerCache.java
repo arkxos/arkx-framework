@@ -1,16 +1,16 @@
-package com.flying.fish.gateway.cache;
+package com.rapidark.cloud.gateway.cache;
 
-import com.flying.fish.gateway.vo.GatewayRegServer;
+import com.rapidark.cloud.gateway.manage.vo.GatewayRegServer;
 import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description 缓存客户端Token信息
- * @Author JL
- * @Date 2021/09/28
- * @Version V1.0
+ * 缓存客户端Token信息
+ * @author darkness
+ * @date 2022/5/30 17:15
+ * @version 1.0
  */
 public class RegServerCache {
     private static ConcurrentHashMap<String,List<GatewayRegServer>> cacheMap = new ConcurrentHashMap<>();

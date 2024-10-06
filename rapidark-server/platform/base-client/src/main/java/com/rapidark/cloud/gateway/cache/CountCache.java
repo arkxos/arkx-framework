@@ -1,26 +1,26 @@
-package com.flying.fish.gateway.cache;
+package com.rapidark.cloud.gateway.cache;
 
 import org.springframework.util.Assert;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description 缓存请求服务路由信息
- * @Author jianglong
- * @Date 2020/05/26
- * @Version V1.0
+ * 缓存接口请求统计缓存
+ * @author darkness
+ * @date 2022/5/30 17:17
+ * @version 1.0
  */
-public class RouteCache {
+public class CountCache {
 
-    private static ConcurrentHashMap<String,Object> cacheMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String,Integer> cacheMap = new ConcurrentHashMap<>();
 
-    public static void put(final String key,final Object value){
+    public static void put(final String key,final Integer value){
         Assert.notNull(key, "hash map key cannot is null");
         Assert.notNull(value, "hash map value cannot is null");
         cacheMap.put(key, value);
     }
 
-    public static Object get(final String key){
+    public static Integer get(final String key){
         return cacheMap.get(key);
     }
 
@@ -34,4 +34,7 @@ public class RouteCache {
         cacheMap.clear();
     }
 
+    public static ConcurrentHashMap<String,Integer> getCacheMap(){
+        return cacheMap;
+    }
 }

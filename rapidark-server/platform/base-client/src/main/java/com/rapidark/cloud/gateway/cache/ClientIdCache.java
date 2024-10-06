@@ -1,16 +1,18 @@
-package com.flying.fish.gateway.cache;
+package com.rapidark.cloud.gateway.cache;
 
 import org.springframework.util.Assert;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description 缓存IP信息
- * @Author jianglong
- * @Date 2020/05/28
- * @Version V1.0
+ * 缓存客户端信息
+ * @author darkness
+ * @date 2022/5/30 17:17
+ * @version 1.0
  */
-public class IpListCache {
+@Deprecated
+public class ClientIdCache {
+
     private static ConcurrentHashMap<String,Object> cacheMap = new ConcurrentHashMap<>();
 
     public static void put(final String key,final Object value){
@@ -31,5 +33,9 @@ public class IpListCache {
 
     public static synchronized void clear(){
         cacheMap.clear();
+    }
+
+    public static ConcurrentHashMap<String,Object> getCacheMap(){
+        return cacheMap;
     }
 }
