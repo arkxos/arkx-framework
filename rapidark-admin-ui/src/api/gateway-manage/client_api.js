@@ -40,7 +40,7 @@ export const clientPageList = data => {
 export const startClient = data => {
     return request({
         url: '/base/app/start',
-        method: 'get',
+        method: 'post',
         data
     })
 };
@@ -51,7 +51,7 @@ export const startClient = data => {
 export const stopClient = data => {
     return request({
         url: '/base/app/stop',
-        method: 'get',
+        method: 'post',
         data
     })
 };
@@ -62,7 +62,7 @@ export const stopClient = data => {
 export const deleteClient = data => {
     return request({
         url: '/base/app/delete',
-        method: 'get',
+        method: 'post',
         data
     })
 };

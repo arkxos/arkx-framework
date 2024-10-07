@@ -2,7 +2,6 @@ package com.rapidark.cloud.gateway.manage.service;
 
 import com.rapidark.cloud.base.client.model.GatewayOpenClientAppApiAuthority;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
 //import com.rapidark.cloud.gateway.manage.repository.ClientServerRegisterRepository;
 import com.rapidark.cloud.gateway.repository.GatewayOpenClientAppApiAuthorityRepository;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class GatewayOpenClientAppApiAuthorityService extends BaseService<GatewayOpenClientAppApiAuthority, String, GatewayOpenClientAppApiAuthorityRepository> {
 
-    public void deleteByOpenClientId(String openClientId) {
-        this.entityRepository.deleteByOpenClientId(openClientId);
+    public void deleteByAppId(String appId) {
+        this.entityRepository.deleteByAppId(appId);
     }
 
-    public void deleteByOpenClientIdAndAppSystemCode(String openClientId, String appSystemCode) {
-        this.entityRepository.deleteByOpenClientIdAndAppSystemCode(openClientId, appSystemCode);
+    public void deleteByAppIdAndAppSystemCode(String appId, String appSystemCode) {
+        this.entityRepository.deleteByAppIdAndAppSystemCode(appId, appSystemCode);
     }
 }

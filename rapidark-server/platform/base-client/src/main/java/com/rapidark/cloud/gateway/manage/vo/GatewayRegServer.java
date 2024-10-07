@@ -1,12 +1,12 @@
-package com.flying.fish.gateway.vo;
+package com.rapidark.cloud.gateway.manage.vo;
 
 import lombok.Data;
 
 /**
- * @Description
- * @Author JL
- * @Date 2021/09/30
- * @Version V1.0
+ *
+ * @author darkness
+ * @date 2022/5/30 17:20
+ * @version 1.0
  */
 @Data
 public class GatewayRegServer implements java.io.Serializable {

@@ -296,9 +296,9 @@ public class LoadRouteService {
             if (names.contains(RouteConstants.IP)) {
                 filters.add(new IpGatewayFilter(r.getId()));
             }
-            if (names.contains(RouteConstants.ID)) {
-                filters.add(new ClientIdGatewayFilter(r.getId()));
-            }
+//            if (names.contains(RouteConstants.ID)) {
+//                filters.add(new ClientIdGatewayFilter(r.getId()));
+//            }
             if (names.contains(RouteConstants.TOKEN)) {
                 filters.add(new TokenGatewayFilter(r.getId()));
             }

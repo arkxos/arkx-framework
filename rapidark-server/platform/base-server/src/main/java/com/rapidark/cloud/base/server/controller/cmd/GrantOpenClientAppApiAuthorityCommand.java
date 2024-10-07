@@ -17,9 +17,9 @@ import java.time.LocalDateTime;
 @ApiModel(value = "应接口授权")
 public class GrantOpenClientAppApiAuthorityCommand {
 
-    @ApiModelProperty(name = "openClientId", value = "客户端Id", example = "", required = true)
+    @ApiModelProperty(name = "appId", value = "客户端Id", example = "", required = true)
     @NotEmpty(message = "客户端Id不能为空")
-    private String openClientId;
+    private String appId;
 
     @ApiModelProperty(name = "appSystemCode", value = "应用系统代码", example = "", required = true)
     @NotEmpty(message = "应用系统代码不能为空")

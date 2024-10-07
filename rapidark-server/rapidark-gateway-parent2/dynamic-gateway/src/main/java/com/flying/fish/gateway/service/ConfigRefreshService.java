@@ -1,11 +1,11 @@
 package com.flying.fish.gateway.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.flying.fish.gateway.cache.IpListCache;
-import com.flying.fish.gateway.cache.RegServerCache;
-import com.flying.fish.gateway.cache.RouteCache;
+import com.rapidark.cloud.gateway.cache.IpListCache;
+import com.rapidark.cloud.gateway.cache.RegServerCache;
+import com.rapidark.cloud.gateway.cache.RouteCache;
 import com.flying.fish.gateway.event.ApplicationEventPublisherFactory;
-import com.flying.fish.gateway.vo.GatewayRegServer;
+import com.rapidark.cloud.gateway.manage.vo.GatewayRegServer;
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayNacosConfigBean;
@@ -47,7 +47,7 @@ public class ConfigRefreshService {
     @Resource
     private SecureIpService secureIpService;
     @Resource
-    private RegServerService regServerService;
+    private ClientServerRegisterService clientServerRegisterService;
     @Resource
     private BalancedService balancedService;
     @Resource
@@ -171,7 +171,7 @@ public class ConfigRefreshService {
             dynamicRouteService.update(loadRouteService.loadRouteDefinition(gatewayAppRoute));
             //记录到本地缓存中
             RouteCache.put(routeId, gatewayAppRoute);
-            List<Map<String, Object>> regClientList = regServerService.getByRouteRegClientList(routeId);
+            List<Map<String, Object>> regClientList = clientServerRegisterService.getByRouteRegClientList(routeId);
             if (CollectionUtils.isEmpty(regClientList)){
                 log.error("未获取注册到网关路由客户端数据库配置！routeId={}", routeId);
             }else {
@@ -247,13 +247,13 @@ public class ConfigRefreshService {
         if (regServerId == null || regServerId <= 0){
             return ;
         }
-        RegServer regServer = regServerService.findById(regServerId);
-        Assert.notNull(regServer, getExceptionMessage("未获取注册网关路由客户端服务ID数据库配置！regServerId=", String.valueOf(regServerId)));
-        OpenApp client = openAppService.findById(regServer.getClientId());
-        Assert.notNull(client, getExceptionMessage("未获取注册客户端ID数据库配置！clientId=", regServer.getClientId()));
+        ClientServerRegister clientServerRegister = clientServerRegisterService.findById(regServerId);
+        Assert.notNull(clientServerRegister, getExceptionMessage("未获取注册网关路由客户端服务ID数据库配置！regServerId=", String.valueOf(regServerId)));
+        OpenApp client = openAppService.findById(clientServerRegister.getClientId());
+        Assert.notNull(client, getExceptionMessage("未获取注册客户端ID数据库配置！clientId=", clientServerRegister.getClientId()));
         //封装配置数据
         List regClientList = new ArrayList<>(1);
-        regClientList.add(new Object[]{regServer.getRouteId(), regServer.getClientId(), client.getIp(), regServer.getToken(), regServer.getSecretKey(), regServer.getStatus()});
+        regClientList.add(new Object[]{clientServerRegister.getRouteId(), clientServerRegister.getClientId(), client.getIp(), clientServerRegister.getToken(), clientServerRegister.getSecretKey(), clientServerRegister.getStatus()});
         // 状态，0是启用，1是禁用
         boolean clientClose = Constants.NO.equals(client.getStatus());
         if (setRegRouteClient(regClientList, clientClose)){
@@ -278,7 +278,7 @@ public class ConfigRefreshService {
             log.info("成功移除网关路由客户端ID缓存配置！clientId={}", clientId);
             return ;
         }
-        List<Map<String, Object>> regClientList = regServerService.getRegClientList(clientId);
+        List<Map<String, Object>> regClientList = clientServerRegisterService.getRegClientList(clientId);
         if (CollectionUtils.isEmpty(regClientList)){
             log.error("未获取注册到网关路由客户端ID数据库配置！clientId={}", clientId);
             return ;

@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.bean;
 
-import com.rapidark.cloud.gateway.formwork.entity.RegServer;
+import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class RegServerReq extends RegServer implements java.io.Serializable {
+public class ClientServerRegisterRegisterReq extends ClientServerRegister implements java.io.Serializable {
     private Integer currentPage;
     private Integer pageSize;
 }

@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.rest;
 
-import com.flying.fish.gateway.cache.RouteCache;
+import com.rapidark.cloud.gateway.cache.RouteCache;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.Constants;

@@ -2,8 +2,8 @@ package com.flying.fish.gateway.filter;
 
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.flying.fish.gateway.cache.RegServerCache;
-import com.flying.fish.gateway.vo.GatewayRegServer;
+import com.rapidark.cloud.gateway.cache.RegServerCache;
+import com.rapidark.cloud.gateway.manage.vo.GatewayRegServer;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 import com.rapidark.cloud.gateway.formwork.util.JwtTokenUtils;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;

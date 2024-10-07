@@ -258,7 +258,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param appId
      */
     public void removeAuthorityApp(String appId) {
-        openClientAppApiAuthorityService.deleteByOpenClientId(appId);
+        openClientAppApiAuthorityService.deleteByAppId(appId);
     }
 
     /**
@@ -354,30 +354,30 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
     /**
      * 应用授权
      *
-     * @param openClientId  客户端ID
+     * @param appId  客户端ID
      * @param appSystemCode 应用系统代码
      * @param expireTime   过期时间,null表示长期,不限制
      * @param authorityIds 权限集合
      * @return
      */
-    @CacheEvict(value = {"apps"}, key = "'client:'+#openClientId")
-    public void addAuthorityApp(String openClientId, String appSystemCode, LocalDateTime expireTime, String... authorityIds) {
-        if (openClientId == null) {
+    @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
+    public void addAuthorityApp(String appId, String appSystemCode, LocalDateTime expireTime, String... authorityIds) {
+        if (appId == null) {
             return;
         }
-        Optional<OpenApp> openClientOptional = openAppRepository.findById(openClientId);
+        Optional<OpenApp> openClientOptional = openAppRepository.findById(appId);
         if (openClientOptional.isEmpty()) {
             return;
         }
         OpenApp openApp = openClientOptional.get();
         // 清空应用已有授权
-        openClientAppApiAuthorityService.deleteByOpenClientIdAndAppSystemCode(openClientId, appSystemCode);
+        openClientAppApiAuthorityService.deleteByAppIdAndAppSystemCode(appId, appSystemCode);
 
         if (authorityIds != null && authorityIds.length > 0) {
             for (String authorityId : authorityIds) {
                 GatewayOpenClientAppApiAuthority authority = new GatewayOpenClientAppApiAuthority();
                 authority.setId(UuidUtil.base58Uuid());
-                authority.setAppId(openClientId);
+                authority.setAppId(appId);
                 authority.setAppSystemCode(appSystemCode);
                 authority.setAuthorityId(authorityId);
                 authority.setExpireTime(expireTime);
@@ -386,7 +386,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
         }
 
         // 获取应用最新的权限列表
-        List<OpenAuthority> authorities = findAuthorityByApp(openClientId, "");
+        List<OpenAuthority> authorities = findAuthorityByApp(appId, "");
         // 动态更新tokenStore客户端
         OpenHelper.updateOpenClientAuthorities(redisTokenStore, openApp.getApiKey(), authorities);
     }
@@ -394,16 +394,16 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
     /**
      * 应用授权-添加单个权限
      *
-     * @param openClientId
+     * @param appId
      * @param appSystemCode
      * @param expireTime
      * @param authorityId
      */
 //    @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
-    public void addAuthorityApp(String openClientId, String appSystemCode, LocalDateTime expireTime, String authorityId) {
+    public void addAuthorityApp(String appId, String appSystemCode, LocalDateTime expireTime, String authorityId) {
         GatewayOpenClientAppApiAuthority authority = new GatewayOpenClientAppApiAuthority();
         authority.setId(UuidUtil.base58Uuid());
-        authority.setAppId(openClientId);
+        authority.setAppId(appId);
         authority.setAppSystemCode(appSystemCode);
         authority.setAuthorityId(authorityId);
         authority.setExpireTime(expireTime);
@@ -439,12 +439,12 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
     /**
      * 获取应用已授权权限
      *
-     * @param openClientId
+     * @param appId
      * @return
      */
-    public List<OpenAuthority> findAuthorityByApp(String openClientId, String appSystemCode) {
+    public List<OpenAuthority> findAuthorityByApp(String appId, String appSystemCode) {
         List<OpenAuthority> authorities = Lists.newArrayList();
-        List<OpenAuthority> list = openClientAppApiAuthorityRepository.queryAuthoritysByOpenClientIdAAndAppSystemCode(openClientId, appSystemCode);
+        List<OpenAuthority> list = openClientAppApiAuthorityRepository.queryAuthoritysByAppIdAndAppSystemCode(appId, appSystemCode);
         if (list != null) {
             authorities.addAll(list);
         }

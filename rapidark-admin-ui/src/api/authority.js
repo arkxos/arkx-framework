@@ -37,9 +37,10 @@ export const getAuthorityRole = (roleId) => {
  * 获取应用已分配权限
  * @param roleId
  */
-export const getAuthorityApp = (appId) => {
+export const getAuthorityApp = (appId, appSystemCode) => {
   const params = {
-    appId: appId
+    appId: appId,
+    appSystemCode: appSystemCode
   }
   return request({
     url: 'base/authority/app',
@@ -125,18 +126,19 @@ export const grantAuthorityRole = ({ roleId, expireTime, authorityIds }) => {
  * 应用授权
  * @param userId
  */
-export const grantAuthorityApp = ({ appId, expireTime, authorityIds }) => {
+export const grantAuthorityApp = ({ appId, appSystemCode, expireTime, authorityIds }) => {
   const data = {
     appId: appId,
+    appSystemCode: appSystemCode,
     expireTime: expireTime,
     authorityIds: authorityIds.join(',')
   }
   return request({
     url: 'base/authority/app/grant',
     data,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
+    // headers: {
+    //   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    // },
     method: 'post'
   })
 }

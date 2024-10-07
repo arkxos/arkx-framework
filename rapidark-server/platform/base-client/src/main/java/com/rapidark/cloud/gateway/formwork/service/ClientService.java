@@ -8,7 +8,7 @@
 //import org.springframework.util.CollectionUtils;
 //
 //import com.rapidark.cloud.gateway.formwork.base.BaseService;
-//import com.rapidark.cloud.gateway.formwork.entity.RegServer;
+//import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
 //import com.rapidark.cloud.gateway.formwork.util.PageResult;
 //
 //import javax.annotation.Resource;
@@ -24,7 +24,7 @@
 //public class ClientService extends BaseService<OpenApp, String, OpenAppRepository> {
 //
 //    @Resource
-//    private RegServerService regServerService;
+//    private ClientServerRegisterService regServerService;
 //
 //    /**
 //     * 删除客户端
@@ -32,10 +32,10 @@
 //     */
 //    @Override
 //    public void delete(OpenApp client){
-//        RegServer regServer = new RegServer();
+//        ClientServerRegister regServer = new ClientServerRegister();
 //        regServer.setClientId(client.getAppId());
 //        //查找是否有注册到其它网关服务上，如有一并删除
-//        List<RegServer> regServerList = regServerService.findAll(regServer);
+//        List<ClientServerRegister> regServerList = regServerService.findAll(regServer);
 //        if (!CollectionUtils.isEmpty(regServerList)){
 //            regServerService.delete(regServer);
 //        }

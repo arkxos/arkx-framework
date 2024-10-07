@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.event;
 
-import com.flying.fish.gateway.cache.RouteCache;
+import com.rapidark.cloud.gateway.cache.RouteCache;
 import com.flying.fish.gateway.service.LoadRouteService;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;

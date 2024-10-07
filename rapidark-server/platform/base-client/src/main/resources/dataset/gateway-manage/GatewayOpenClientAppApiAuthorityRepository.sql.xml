@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
 
     <!-- 查询当前网关路由服务下已注册的客户端 -->
-    <sql id="GatewayOpenClientAppApiAuthorityRepository_queryAuthoritysByOpenClientIdAAndAppSystemCode">
+    <sql id="GatewayOpenClientAppApiAuthorityRepository_queryAuthoritysByAppIdAndAppSystemCode">
         <value>
             <![CDATA[
                 SELECT
@@ -15,7 +15,7 @@
                     FROM Gateway_Open_Client_App_Api_Authority ap
                     INNER JOIN base_authority a ON ap.authority_id = a.authority_id
                     INNER JOIN base_api api ON a.api_id = api.api_id
-                    WHERE ap.open_client_id = :openClientId
+                    WHERE ap.app_id = :appId
                       AND a.status = 1
                       #[AND api.service_id = :appSystemCode]
             ]]>

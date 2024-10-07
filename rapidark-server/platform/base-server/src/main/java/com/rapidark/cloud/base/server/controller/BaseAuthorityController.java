@@ -229,7 +229,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @Valid @RequestBody GrantOpenClientAppApiAuthorityCommand command
     ) {
         baseAuthorityService
-                .addAuthorityApp(command.getOpenClientId(), command.getAppSystemCode(),
+                .addAuthorityApp(command.getAppId(), command.getAppSystemCode(),
                         command.getExpireTime(), command.getAuthorityIds().split(","));
         openRestTemplate.refreshGateway();
         return ResultBody.ok();

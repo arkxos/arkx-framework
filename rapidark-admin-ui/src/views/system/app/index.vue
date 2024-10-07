@@ -38,6 +38,11 @@
             {{ $index + 1 }}
           </template>
         </el-table-column>
+        <el-table-column align="left" label="应用代码" prop="appNameEn" width="150" show-overflow-tooltip>
+          <template #default="{ row }">
+            <span style="font-weight: bold;">{{ row.appNameEn }}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="应用名称" prop="appName" width="200" show-overflow-tooltip />
         <el-table-column align="center" label="状态" prop="status" width="80" show-overflow-tooltip>
           <template #default="{ row }">
@@ -55,7 +60,11 @@
             </div>
           </template>
         </el-table-column>
-
+        <el-table-column label="IP地址" width="90">
+          <template slot-scope="scope">
+            <el-tag size="small">{{scope.row.ip}}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="开发者" prop="userName" width="100" show-overflow-tooltip />
         <el-table-column align="center" label="应用类型" prop="appType" width="100" show-overflow-tooltip
                          :filters="[{ text: '服务器应用', value: 0 }, { text: '手机应用', value: 1 },{ text: 'PC网页应用', value: 2 }, { text: '手机网页应用', value: 3 }]"
@@ -72,14 +81,31 @@
         <el-table-column align="left" label="AppId" prop="appId" width="150" show-overflow-tooltip />
         <el-table-column align="left" label="ApiKey" prop="apiKey" width="200" show-overflow-tooltip />
         <el-table-column align="left" label="SecretKey" prop="secretKey" width="300" show-overflow-tooltip />
-
-        <el-table-column align="center" label="操作" show-overflow-tooltip width="150" fixed="right">
-          <template #default="{ row }">
-            <el-button type="text" @click="handleModal(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">编辑</el-button>
-            <el-button type="text" @click="handleRemove(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">删除</el-button>
-            <el-button type="text" @click="handleResetSecret(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">重置密钥</el-button>
+        <el-table-column align="left" label="备注" prop="appDesc" width="300" show-overflow-tooltip />
+        <el-table-column label="操作" width="120" fixed="right">
+          <template slot-scope="scope">
+            <el-dropdown trigger="click" @command="handleCommandClient">
+              <el-button size="mini" type="warning">
+                管理<i class="el-icon-arrow-down el-icon--right"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item icon="el-icon-connection" :command="{command:'addGateway', row: scope.row}">注册应用服务</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-tickets" :command="{command:'info', row: scope.row}">详情</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-edit" :command="{command:'edit', row: scope.row}">编辑</el-dropdown-item>
+                <el-dropdown-item :command="{command:'start', row: scope.row}" divided><i class="el-icon-success" style="color: #409EFF;"></i>启用</el-dropdown-item>
+                <el-dropdown-item :command="{command:'stop', row: scope.row}"><i class="el-icon-error" style="color: red;"></i>禁用</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-delete" :command="{command:'delete', row: scope.row}" divided>删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </template>
         </el-table-column>
+        <!--        <el-table-column align="center" label="操作" show-overflow-tooltip width="150" fixed="right">-->
+        <!--          <template #default="{ row }">-->
+        <!--            <el-button type="text" @click="handleModal(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">编辑</el-button>-->
+        <!--            <el-button type="text" @click="handleRemove(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">删除</el-button>-->
+        <!--            <el-button type="text" @click="handleResetSecret(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">重置密钥</el-button>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
       </el-table>
       <el-pagination :total="pageInfo.total" :current-page="pageInfo.page" :page-size="pageInfo.size" align="left"
                      layout="total, sizes, prev, pager, next, jumper"
@@ -135,12 +161,13 @@
                 </el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="应用代码" prop="appNameEn">
+              <el-input v-model="formItem.appNameEn" placeholder="请输入内容"/>
+            </el-form-item>
             <el-form-item label="应用名称" prop="appName">
               <el-input v-model="formItem.appName" placeholder="请输入内容"/>
             </el-form-item>
-            <el-form-item label="英文名称" prop="appNameEn">
-              <el-input v-model="formItem.appNameEn" placeholder="请输入内容"/>
-            </el-form-item>
+
             <el-form-item label="分组" prop="groupCode">
               <el-select filterable v-model="formItem.groupCode" placeholder="请选择分组" style="width: 300px;">
                 <el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" />
@@ -303,6 +330,7 @@ import {
   getAuthorityApp,
   grantAuthorityApp
 } from '@/api/authority'
+import {deleteClient, startClient, stopClient} from "@/api/gateway-manage/client_api";
 
 export default {
   name: 'SystemApp',
@@ -781,7 +809,37 @@ export default {
         this.$Message.warning('只能上传一张.')
       }
       return check
-    }
+    },
+    handleCommandClient(obj){
+      console.log("command" , obj);
+      let _this = this;
+      if (obj.command === 'addGateway'){
+        this.$router.push({path:'/gateway-manage/addClientGateway',query:{client:obj.row}});
+      } else if (obj.command === 'info'){
+        this.drawer = true;
+        this.infoForm = obj.row;
+      }  else if (obj.command === 'edit'){
+        this.infoForm = obj.row;
+        this.$router.push({path:'/gateway-manage/create-open-client',query:{handleType:'edit',client:obj.row}});
+      } else if (obj.command === 'start'){
+        startClient({id:obj.row.id}).then(function(result){
+          _this.GLOBAL_FUN.successMsg();
+          _this.search();
+        });
+      } else if (obj.command === 'stop'){
+        stopClient({id:obj.row.id}).then(function(result){
+          _this.GLOBAL_FUN.successMsg();
+          _this.search();
+        });
+      } else if (obj.command === 'delete'){
+        this.$confirm('确认删除"'+obj.row.name+'"客户端？').then(_ => {
+          deleteClient({id:obj.row.id}).then(function(result){
+            _this.GLOBAL_FUN.successMsg();
+            _this.search();
+          })
+        }).catch(_ => {});
+      }
+    },
   },
   mounted: function () {
     this.handleSearch()

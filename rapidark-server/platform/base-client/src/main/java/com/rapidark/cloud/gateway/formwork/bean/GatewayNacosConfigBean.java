@@ -25,7 +25,7 @@ public class GatewayNacosConfigBean implements java.io.Serializable {
     /**
      * 客户端注册网关路由的关联表ID
      */
-    private Long regServerId;
+    private String regServerId;
     /**
      * 客户端ID
      */

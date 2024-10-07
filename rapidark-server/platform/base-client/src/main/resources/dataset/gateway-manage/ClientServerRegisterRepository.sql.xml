@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="ClientServerRegisterRepository_queryRegClientList">
+        <value>
+            <![CDATA[
+                SELECT s.id AS reg_Server_Id, s.status AS reg_Server_Status, s.create_Time as reg_Server_Time,
+                    s.token, s.secret_Key, s.token_Effective_Time,
+                    c.*
+                FROM base_app c, gateway_client_server_register s
+                WHERE c.id = s.client_Id AND s.route_Id=:routeId
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="ClientServerRegisterRepository_queryRegClients">
+        <value>
+            <![CDATA[
+                SELECT s.id AS reg_Server_Id, s.status AS reg_Server_Status, s.create_Time as reg_Server_Time,
+                    s.token, s.secret_Key, s.token_Effective_Time,
+                    c.*
+                FROM base_app c, gateway_client_server_register s
+                WHERE c.id = s.client_Id AND s.route_Id=:routeId
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下没有注册的客户端 -->
+    <sql id="ClientServerRegisterRepository_queryNotRegClients">
+        <value>
+            <![CDATA[
+                SELECT c.app_id,c.app_name,c.group_Code,c.ip FROM gateway_open_client c
+                    WHERE c.status=1
+                        AND c.app_id NOT IN (
+                            SELECT s.client_Id FROM gateway_client_server_register s
+                            WHERE s.route_Id=:routeId
+                        )
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前客户端没有注册的网关路由服务 -->
+    <sql id="ClientServerRegisterRepository_queryRegServers">
+        <value>
+            <![CDATA[
+                SELECT s.id AS reg_Server_Id, s.status as reg_Server_Status, to_char(s.create_Time,'yyyy-MM-dd hh24:mi:ss') as reg_Server_Time,
+                r.*
+                FROM Gateway_App_Route r, gateway_client_server_register s
+                WHERE r.id = s.route_Id and s.client_Id=:clientId
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前客户端没有注册的网关路由服务 -->
+    <sql id="ClientServerRegisterRepository_queryNotRegServers">
+        <value>
+            <![CDATA[
+                SELECT r.id,r.name,r.uri,r.path,r.status FROM Gateway_App_Route r
+                WHERE r.status=1
+                    AND r.id NOT IN (
+                        SELECT s.route_Id FROM gateway_client_server_register s
+                        WHERE s.client_Id=:clientId
+                    )
+            ]]>
+        </value>
+    </sql>
+
+</sqltoy>

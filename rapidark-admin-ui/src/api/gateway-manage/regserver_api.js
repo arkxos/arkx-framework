@@ -30,8 +30,8 @@ export const updateRegServer = data => {
 export const regServerPageList = data => {
     return request({
         url: '/base/regServer/serverPageList',
-        method: 'post',
-        data
+        method: 'get',
+      params: data
     })
 };
 
@@ -40,9 +40,9 @@ export const regServerPageList = data => {
  */
 export const regClientPageList = data => {
     return request({
-        url: '/base/regServer/clientPageList',
-        method: 'post',
-        data
+        url: '/base/regServer/regClientList',
+        method: 'get',
+        params: data
     })
 };
 
@@ -53,7 +53,7 @@ export const startRegServer = data => {
     return request({
         url: '/base/regServer/start',
         method: 'get',
-        data
+      params: data
     })
 };
 
@@ -64,7 +64,7 @@ export const stopRegServer = data => {
     return request({
         url: '/base/regServer/stop',
         method: 'get',
-        data
+      params: data
     })
 };
 

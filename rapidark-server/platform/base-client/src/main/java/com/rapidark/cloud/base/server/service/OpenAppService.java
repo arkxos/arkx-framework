@@ -7,8 +7,8 @@ import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.cloud.base.server.service.mapstruct.OpenAppMapper;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.entity.RegServer;
-import com.rapidark.cloud.gateway.formwork.service.RegServerService;
+import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
+import com.rapidark.cloud.gateway.formwork.service.ClientServerRegisterService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.security.OpenClientDetails;
 import com.rapidark.common.utils.*;
@@ -60,7 +60,7 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
     private final BaseAuthorityService baseAuthorityService;
     private final JdbcClientDetailsService jdbcClientDetailsService;
 
-    private final RegServerService regServerService;
+    private final ClientServerRegisterService clientServerRegisterService;
 
     /**
      * 查询数据分页
@@ -197,12 +197,12 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
             throw new OpenAlertException(String.format("保留数据,不允许删除"));
         }
 
-        RegServer regServer = new RegServer();
-        regServer.setClientId(appId);
+        ClientServerRegister clientServerRegister = new ClientServerRegister();
+        clientServerRegister.setClientId(appId);
         //查找是否有注册到其它网关服务上，如有一并删除
-        List<RegServer> regServerList = regServerService.findAll(regServer);
-        if (!CollectionUtils.isEmpty(regServerList)){
-            regServerService.delete(regServer);
+        List<ClientServerRegister> clientServerRegisterList = clientServerRegisterService.findAll(clientServerRegister);
+        if (!CollectionUtils.isEmpty(clientServerRegisterList)){
+            clientServerRegisterService.delete(clientServerRegister);
         }
 
         // 移除应用权限
@@ -228,7 +228,7 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
         String appId = baseClientDetails.getAdditionalInformation().get("appId").toString();
         OpenClientDetails openClient = new OpenClientDetails();
         BeanUtils.copyProperties(baseClientDetails, openClient);
-        openClient.setAuthorities(baseAuthorityService.findAuthorityByApp(appId));
+        openClient.setAuthorities(baseAuthorityService.findAuthorityByApp(appId, ""));
         return openClient;
     }
 

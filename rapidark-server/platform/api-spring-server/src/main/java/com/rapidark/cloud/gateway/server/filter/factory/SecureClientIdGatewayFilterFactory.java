@@ -1,6 +1,6 @@
-package com.flying.fish.gateway.filter.factory;
+package com.rapidark.cloud.gateway.server.filter.factory;
 
-import com.flying.fish.gateway.filter.ClientIdGatewayFilter;
+import com.rapidark.cloud.gateway.server.filter.ClientIdGatewayFilter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -14,10 +14,10 @@ import java.util.List;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
 /**
- * @Description 自定义clientId安全验证过滤器工厂
- * @Author jianglong
- * @Date 2020/05/27
- * @Version V1.0
+ * 自定义clientId安全验证过滤器工厂
+ * @author darkness
+ * @date 2022/5/30 17:40
+ * @version 1.0
  */
 @Slf4j
 @Component

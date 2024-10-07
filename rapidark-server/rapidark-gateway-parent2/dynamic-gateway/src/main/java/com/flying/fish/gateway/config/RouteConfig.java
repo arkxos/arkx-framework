@@ -1,7 +1,7 @@
 package com.flying.fish.gateway.config;
 
 
-import com.flying.fish.gateway.cache.RouteCache;
+import com.rapidark.cloud.gateway.cache.RouteCache;
 import com.flying.fish.gateway.filter.ClientIdGatewayFilter;
 import com.flying.fish.gateway.filter.IpGatewayFilter;
 import com.flying.fish.gateway.filter.TokenGatewayFilter;
@@ -98,7 +98,11 @@ public class RouteConfig {
                         //生产者服务注册名,格式：“lb://server-name”
                         uri("lb://EXAMPLES").
                         //配置多个自定义网关过滤器
-                        filters(new IpGatewayFilter(routeId), new TokenGatewayFilter(routeId), new ClientIdGatewayFilter(routeId)).
+                        filters(
+                                new IpGatewayFilter(routeId),
+                                new TokenGatewayFilter(routeId)
+//                                new ClientIdGatewayFilter(routeId)
+                        ).
                         //配置路由ID
                         id(routeId)
                 ).build();

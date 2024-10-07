@@ -19,15 +19,15 @@ public interface GatewayOpenClientAppApiAuthorityRepository extends JpaRepositor
     /**
      * 获取应用已授权权限
      *
-     * @param openClientId
+     * @param appId
      * @return
      */
     @SqlToyQuery
-    List<OpenAuthority> queryAuthoritysByOpenClientIdAAndAppSystemCode(@Param("openClientId") String openClientId, @Param("appSystemCode") String appSystemCode);
+    List<OpenAuthority> queryAuthoritysByAppIdAndAppSystemCode(@Param("appId") String appId, @Param("appSystemCode") String appSystemCode);
 
-    void deleteByOpenClientId(String openClientId);
+    void deleteByAppId(String appId);
 
-    void deleteByOpenClientIdAndAppSystemCode(String openClientId, String appSystemCode);
+    void deleteByAppIdAndAppSystemCode(String appId, String appSystemCode);
 
     @SqlToyQuery
     void deleteByAuthorityIds(List<String> invalidAuthorityIds);

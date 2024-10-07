@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteRsp;
+import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
 import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -12,7 +13,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.entity.RegServer;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, GatewayAppRouteRepository> {
 
     @Resource
-    private RegServerService regServerService;
+    private ClientServerRegisterService clientServerRegisterService;
 
     @Resource
     private MonitorService monitorService;
@@ -48,12 +48,12 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
     public void delete(String id){
         GatewayAppRoute gatewayAppRoute = this.findById(id);
         if (gatewayAppRoute != null) {
-            RegServer regServer = new RegServer();
-            regServer.setRouteId(id);
-            List<RegServer> regServerList = regServerService.findAll(regServer);
+            ClientServerRegister clientServerRegister = new ClientServerRegister();
+            clientServerRegister.setRouteId(id);
+            List<ClientServerRegister> clientServerRegisterList = clientServerRegisterService.findAll(clientServerRegister);
             //删除服务列表
-            if (regServerList != null && regServerList.size()>0) {
-                regServerService.deleteInBatch(regServerList);
+            if (clientServerRegisterList != null && clientServerRegisterList.size()>0) {
+                clientServerRegisterService.deleteInBatch(clientServerRegisterList);
             }
             //删除监控配置
             Monitor monitor = monitorService.findById(id);

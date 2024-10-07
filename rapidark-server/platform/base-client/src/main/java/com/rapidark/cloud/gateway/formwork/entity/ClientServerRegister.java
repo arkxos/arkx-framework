@@ -10,18 +10,18 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
- * @Description 客户端注册网关路由服务实体类
- * @Author jianglong
- * @Date 2020/05/16
- * @Version V1.0
+ * 客户端注册网关路由服务实体类
+ * @author darkness
+ * @date 2022/5/30 14:34
+ * @version 1.0
  */
 @Entity
-@Table(name="regserver")
+@Table(name="gateway_client_server_register")
 @Data
-public class RegServer {
+public class ClientServerRegister {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     @NotNull(message = "客户端ID不能为空")
     @Size(min = 2, max = 40, message = "客户端ID长度必需在2到40个字符内")
     @Column(name = "client_Id" )

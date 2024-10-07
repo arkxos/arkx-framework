@@ -1,11 +1,11 @@
-package com.flying.fish.gateway.filter;
+package com.rapidark.cloud.gateway.server.filter;
 
-import com.flying.fish.gateway.cache.RegServerCache;
-import com.flying.fish.gateway.vo.GatewayRegServer;
+import com.rapidark.cloud.gateway.cache.RegServerCache;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
+import com.rapidark.cloud.gateway.manage.vo.GatewayRegServer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @Description 客户端ID过滤
- * @Author JL
- * @Date 2020/05/19
- * @Version V1.0
+ * 客户端ID过滤
+ * @author darkness
+ * @date 2022/5/30 17:22
+ * @version 1.0
  */
 @Slf4j
 public class ClientIdGatewayFilter implements GatewayFilter, Ordered {
