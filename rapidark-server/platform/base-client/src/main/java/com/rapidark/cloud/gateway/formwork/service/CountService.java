@@ -2,12 +2,12 @@ package com.rapidark.cloud.gateway.formwork.service;
 
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteCountRsp;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.utils.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -15,7 +15,6 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.bean.CountReq;
 import com.rapidark.cloud.gateway.formwork.bean.CountRsp;
 import com.rapidark.cloud.gateway.formwork.bean.CountTotalRsp;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
@@ -47,7 +46,7 @@ public class CountService {
      * @param pageSize
      * @return
      */
-    public ApiResult countRouteList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
+    public ResultBody countRouteList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
         PageResult<GatewayAppRoute> pageResult = gatewayAppRouteService.pageList(gatewayAppRoute,currentPage, pageSize);
         if (pageResult.getPageSize() > 0){
             //只取当天的
@@ -68,9 +67,9 @@ public class CountService {
             pageResult1.setPageSize(pageSize);
             pageResult1.setTotalNum(pageResult.getTotalNum());
             pageResult1.setLists(routeCountRspList);
-            return new ApiResult(pageResult1);
+            return ResultBody.ok().data(pageResult1);
         }
-        return new ApiResult(pageResult);
+        return ResultBody.ok().data(pageResult);
     }
 
     /**
@@ -188,7 +187,7 @@ public class CountService {
      * @param isBalanced    是否负载
      * @return
      */
-    public ApiResult count(CountReq countReq, boolean isBalanced){
+    public ResultBody count(CountReq countReq, boolean isBalanced){
         Assert.notNull(countReq, "未获取到对象");
         List<String> routeIds = countReq.getRouteIds();
         Assert.isTrue(routeIds != null, "未获取到路由ID");
@@ -224,7 +223,7 @@ public class CountService {
             data.setCounts(v.toArray(new Integer [v.size()]));
             datas.add(data);
         });
-        return new ApiResult(rsp);
+        return ResultBody.ok().data(rsp);
     }
 
     /**

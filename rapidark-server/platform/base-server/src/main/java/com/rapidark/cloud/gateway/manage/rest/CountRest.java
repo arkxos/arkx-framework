@@ -8,7 +8,7 @@ import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.CountReq;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.CountService;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
+import com.rapidark.common.model.ResultBody;
 
 import javax.annotation.Resource;
 
@@ -31,7 +31,7 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/balanced/request", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult balancedRequest(@RequestBody CountReq countReq) {
+    public ResultBody balancedRequest(@RequestBody CountReq countReq) {
         return countService.count(countReq, true);
     }
 
@@ -41,7 +41,7 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/request", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult request(@RequestBody CountReq countReq) {
+    public ResultBody request(@RequestBody CountReq countReq) {
         return countService.count(countReq, false);
     }
 
@@ -51,7 +51,7 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/route/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult routePageList(@RequestBody CountReq countReq) {
+    public ResultBody routePageList(@RequestBody CountReq countReq) {
         Assert.notNull(countReq, "未获取到对象");
         int currentPage = getCurrentPage(countReq.getCurrentPage());
         int pageSize = getPageSize(countReq.getPageSize());
@@ -70,8 +70,8 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/request/total", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult routeTotal() {
-        return new ApiResult(countService.countRequestTotal());
+    public ResultBody routeTotal() {
+        return ResultBody.ok().data(countService.countRequestTotal());
     }
 
     /**
@@ -79,8 +79,8 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/request/app/total", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult routeAppTotal(@RequestParam(required=false) String id) {
-        return new ApiResult(countService.countRequestTotal(id));
+    public ResultBody routeAppTotal(@RequestParam(required=false) String id) {
+        return ResultBody.ok().data(countService.countRequestTotal(id));
     }
 
     /**
@@ -89,9 +89,9 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/flux", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult flux(@RequestParam String [] routeIds ) {
+    public ResultBody flux(@RequestParam String [] routeIds ) {
         Assert.isTrue(routeIds != null, "未获取到对象ID");
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
 }

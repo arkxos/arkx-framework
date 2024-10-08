@@ -6,7 +6,7 @@ import com.flying.fish.gateway.service.LoadRouteService;
 import com.flying.fish.gateway.vo.GatewayRouteDefinition;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
+import com.rapidark.common.model.ResultBody;
 
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.util.Assert;
@@ -64,10 +64,10 @@ public class RouteController {
      * @return
      */
     @PostMapping("/add")
-    public ApiResult add(@RequestBody GatewayRouteDefinition gwdefinition) {
+    public ResultBody add(@RequestBody GatewayRouteDefinition gwdefinition) {
         RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
         this.dynamicRouteService.add(definition);
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -76,9 +76,9 @@ public class RouteController {
      * @return
      */
     @DeleteMapping("/routes/{id}")
-    public ApiResult delete(@PathVariable String id) {
+    public ResultBody delete(@PathVariable String id) {
         this.dynamicRouteService.delete(id);
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -87,10 +87,10 @@ public class RouteController {
      * @return
      */
     @PostMapping("/update")
-    public ApiResult update(@RequestBody GatewayRouteDefinition gwdefinition) {
+    public ResultBody update(@RequestBody GatewayRouteDefinition gwdefinition) {
         RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
         this.dynamicRouteService.update(definition);
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -107,12 +107,12 @@ public class RouteController {
      * @return
      */
     @GetMapping(value = "/load")
-    public ApiResult load(@RequestParam String id) {
+    public ResultBody load(@RequestParam String id) {
         Assert.notNull(id, "路由ID不能为空");
         GatewayAppRoute gatewayAppRoute = gatewayAppRouteService.findById(id);
         RouteDefinition routeDefinition = loadRouteService.loadRouteDefinition(gatewayAppRoute);
         this.dynamicRouteService.add(routeDefinition);
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -120,9 +120,9 @@ public class RouteController {
      * @return
      */
     @GetMapping(value = "/fresh")
-    public ApiResult fresh(@RequestParam(required = false) String type) {
+    public ResultBody fresh(@RequestParam(required = false) String type) {
         this.dynamicRouteService.fresh(type);
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
 }

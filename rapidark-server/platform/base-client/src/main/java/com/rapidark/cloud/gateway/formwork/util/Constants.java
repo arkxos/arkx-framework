@@ -1,10 +1,10 @@
 package com.rapidark.cloud.gateway.formwork.util;
 
 /**
- * @Description 常量类
- * @Author jianglong
- * @Date 2019/07/01
- * @Version V1.0
+ * 常量类
+ * @author darkness
+ * @date 2022/6/20 11:53
+ * @version 1.0
  */
 public class Constants {
 

@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.common.model.ResultBody;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,6 @@ import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.ApiDocService;
 import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 
 import javax.annotation.Resource;
 
@@ -34,8 +34,8 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult list(){
-        return new ApiResult(gatewayAppRouteService.list(new GatewayAppRoute()));
+    public ResultBody list(){
+        return ResultBody.ok().data(gatewayAppRouteService.list(new GatewayAppRoute()));
     }
 
     /**
@@ -44,11 +44,11 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
-    public ApiResult save(@RequestBody ApiDoc apiDoc){
+    public ResultBody save(@RequestBody ApiDoc apiDoc){
         Assert.notNull(apiDoc, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(apiDoc.getId()), "未获取到对象ID");
         apiDocService.save(apiDoc);
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -57,9 +57,9 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult findById(@RequestParam String id) {
+    public ResultBody findById(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到请求ID");
-        return new ApiResult(apiDocService.findById(id));
+        return ResultBody.ok().data(apiDocService.findById(id));
     }
 
 }

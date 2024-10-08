@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.formwork.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.rapidark.common.model.ResultBody;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -22,7 +23,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeOk(ServerHttpResponse response, String msg) {
-        String jsonMsg = JSONObject.toJSONString(new ApiResult(Constants.SUCCESS, msg, null));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.ok().msg(msg));
         return write(response, HttpStatus.OK, jsonMsg);
     }
 
@@ -32,7 +33,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeUnauth(ServerHttpResponse response, String msg) {
-        String jsonMsg = JSONObject.toJSONString(new ApiResult(Constants.FAILED, msg, null));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg(msg));
         return write(response, HttpStatus.UNAUTHORIZED, jsonMsg);
     }
 
@@ -42,7 +43,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeError(ServerHttpResponse response, String msg) {
-        String jsonMsg = JSONObject.toJSONString(new ApiResult(Constants.FAILED, msg, null));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg(msg));
         return write(response, HttpStatus.INTERNAL_SERVER_ERROR, jsonMsg);
     }
 

@@ -1,8 +1,8 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.codehaus.groovy.control.CompilationFailedException;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,6 @@ import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
 import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.formwork.service.GroovyScriptService;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 
 import javax.annotation.Resource;
@@ -39,7 +38,7 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public ApiResult add(@RequestBody GroovyScript groovyScript) throws Exception {
+    public ResultBody add(@RequestBody GroovyScript groovyScript) throws Exception {
         Assert.notNull(groovyScript, "未获取到对象");
         groovyScript.setOrderNum(1);
         groovyScript.setStatus(Constants.NO);
@@ -53,7 +52,7 @@ public class GroovyScriptRest extends BaseRest {
         groovyScriptService.save(groovyScript);
         //将ID推送到nacos注册发现与配置中心
         customNacosConfigService.publishGroovyScriptNacosConfig(groovyScript.getId());
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -62,11 +61,11 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult list(@RequestParam String routeId) {
+    public ResultBody list(@RequestParam String routeId) {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象网关路由ID");
         GroovyScript groovyScript = new GroovyScript();
         groovyScript.setRouteId(routeId);
-        return new ApiResult(groovyScriptService.list(groovyScript));
+        return ResultBody.ok().data(groovyScriptService.list(groovyScript));
     }
 
     /**
@@ -75,13 +74,13 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult delete(@RequestParam Long id) {
+    public ResultBody delete(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         groovyScriptService.delete(groovyScript);
         if (Constants.YES.equals(groovyScript.getStatus())) {
             customNacosConfigService.publishGroovyScriptNacosConfig(id);
         }
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -90,7 +89,7 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ApiResult update(@RequestBody GroovyScript groovyScript) throws Exception {
+    public ResultBody update(@RequestBody GroovyScript groovyScript) throws Exception {
         Assert.notNull(groovyScript, "未获取到对象");
         Long id = groovyScript.getId();
         Assert.notNull(id, "未获取到对象ID");
@@ -103,7 +102,7 @@ public class GroovyScriptRest extends BaseRest {
         if (Constants.YES.equals(groovyScript.getStatus())) {
             customNacosConfigService.publishGroovyScriptNacosConfig(id);
         }
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -112,7 +111,7 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult start(@RequestParam Long id) {
+    public ResultBody start(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (Constants.NO.equals(groovyScript.getStatus())) {
             groovyScript.setStatus(Constants.YES);
@@ -120,7 +119,7 @@ public class GroovyScriptRest extends BaseRest {
             groovyScriptService.update(groovyScript);
             customNacosConfigService.publishGroovyScriptNacosConfig(id);
         }
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -129,7 +128,7 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult stop(@RequestParam Long id) {
+    public ResultBody stop(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (Constants.YES.equals(groovyScript.getStatus())) {
             groovyScript.setStatus(Constants.NO);
@@ -137,7 +136,7 @@ public class GroovyScriptRest extends BaseRest {
             groovyScriptService.update(groovyScript);
             customNacosConfigService.publishGroovyScriptNacosConfig(id);
         }
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -146,12 +145,12 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/up", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult up(@RequestParam Long id) {
+    public ResultBody up(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (groovyScriptService.upOrderNum(groovyScript)){
             customNacosConfigService.publishGroovyScriptNacosConfig(id);
         }
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -160,12 +159,12 @@ public class GroovyScriptRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/down", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult down(@RequestParam Long id) {
+    public ResultBody down(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (groovyScriptService.downOrderNum(groovyScript)){
             customNacosConfigService.publishGroovyScriptNacosConfig(id);
         }
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**

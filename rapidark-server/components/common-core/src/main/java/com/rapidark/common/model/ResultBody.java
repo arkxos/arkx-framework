@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * @author admin
+ * 所有接口调用返回的统一包装结果类
  */
 @Getter
 @Setter

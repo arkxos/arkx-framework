@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.common.model.ResultBody;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.LoadServerReq;
 import com.rapidark.cloud.gateway.formwork.service.LoadServerService;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 
 import javax.annotation.Resource;
 
@@ -33,7 +33,7 @@ public class LoadServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/regList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult regList(@RequestBody LoadServerReq loadServerReq) {
+    public ResultBody regList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, true);
     }
 
@@ -43,7 +43,7 @@ public class LoadServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/notRegPageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult notRegPageList(@RequestBody LoadServerReq loadServerReq) {
+    public ResultBody notRegPageList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, false);
     }
 
@@ -53,15 +53,15 @@ public class LoadServerRest extends BaseRest {
      * @param isReg
      * @return
      */
-    private ApiResult list(LoadServerReq loadServerReq, boolean isReg){
+    private ResultBody list(LoadServerReq loadServerReq, boolean isReg){
         Assert.notNull(loadServerReq, "未获取到对象");
         if (isReg) {
             Assert.isTrue(StringUtils.isNotBlank(loadServerReq.getBalancedId()), "未获取到对象ID");
-            return new ApiResult(loadServerService.loadServerList(loadServerReq.getBalancedId()));
+            return ResultBody.ok().data(loadServerService.loadServerList(loadServerReq.getBalancedId()));
         }else {
             int currentPage = getCurrentPage(loadServerReq.getCurrentPage());
             int pageSize = getPageSize(loadServerReq.getPageSize());
-            return new ApiResult(loadServerService.notLoadServerPageList(currentPage, pageSize));
+            return ResultBody.ok().data(loadServerService.notLoadServerPageList(currentPage, pageSize));
         }
     }
 

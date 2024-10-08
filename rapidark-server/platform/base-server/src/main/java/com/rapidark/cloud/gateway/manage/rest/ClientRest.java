@@ -12,7 +12,7 @@
 //import com.rapidark.cloud.gateway.formwork.entity.Client;
 //import com.rapidark.cloud.gateway.formwork.service.ClientService;
 //import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
-//import com.rapidark.cloud.gateway.formwork.util.ApiResult;
+//import com.rapidark.common.model.ResultBody;
 //import com.rapidark.cloud.gateway.formwork.util.Constants;
 //import com.rapidark.cloud.gateway.formwork.util.UUIDUtils;
 //
@@ -44,7 +44,7 @@
 //     * @return
 //     */
 //    @RequestMapping(value = "/add", method = {RequestMethod.POST})
-//    public ApiResult add(@RequestBody OpenApp client) {
+//    public ResultBody add(@RequestBody OpenApp client) {
 //        Assert.notNull(client, "未获取到对象");
 //        client.setAppId(UUIDUtils.getUUIDString());
 ////        client.setCreateTime(new Date());
@@ -57,7 +57,7 @@
 //        //保存
 //        clientService.save(client);
 //        customNacosConfigService.publishClientNacosConfig(client.getAppId());
-//        return new ApiResult();
+//        return ResultBody.ok();
 //    }
 //
 //    /**
@@ -66,13 +66,13 @@
 //     * @return
 //     */
 //    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-//    public ApiResult delete(@RequestParam String id) {
+//    public ResultBody delete(@RequestParam String id) {
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
 //        OpenApp dbClient = clientService.findById(id);
 //        Assert.notNull(dbClient, "未获取到对象");
 //        clientService.delete(dbClient);
 //        customNacosConfigService.publishClientNacosConfig(id);
-//        return new ApiResult();
+//        return ResultBody.ok();
 //    }
 //
 //    /**
@@ -81,14 +81,14 @@
 //     * @return
 //     */
 //    @RequestMapping(value = "/update", method = {RequestMethod.POST})
-//    public ApiResult update(@RequestBody OpenApp client) {
+//    public ResultBody update(@RequestBody OpenApp client) {
 //        Assert.notNull(client, "未获取到对象");
 //        Assert.isTrue(StringUtils.isNotBlank(client.getAppId()), "未获取到对象ID");
 ////        client.setUpdateTime(new Date());
 //        this.validate(client);
 //        clientService.update(client);
 //        customNacosConfigService.publishClientNacosConfig(client.getAppId());
-//        return new ApiResult();
+//        return ResultBody.ok();
 //    }
 //
 //    /**
@@ -97,9 +97,9 @@
 //     * @return
 //     */
 //    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-//    public ApiResult findById(@RequestParam String id) {
+//    public ResultBody findById(@RequestParam String id) {
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-//        return new ApiResult(clientService.findById(id));
+//        return new ResultBody(clientService.findById(id));
 //    }
 //
 //    /**
@@ -108,7 +108,7 @@
 //     * @return
 //     */
 //    @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-//    public ApiResult pageList(@RequestBody ClientReq clientReq) {
+//    public ResultBody pageList(@RequestBody ClientReq clientReq) {
 //        OpenApp client = new OpenApp();
 //        Integer reqCurrentPage = null;
 //        Integer reqPageSize = null;
@@ -131,7 +131,7 @@
 //        }
 //        int currentPage = getCurrentPage(reqCurrentPage);
 //        int pageSize = getPageSize(reqPageSize);
-//        return new ApiResult(clientService.pageList(client, currentPage, pageSize));
+//        return new ResultBody(clientService.pageList(client, currentPage, pageSize));
 //    }
 //
 //    /**
@@ -140,13 +140,13 @@
 //     * @return
 //     */
 //    @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-//    public ApiResult start(@RequestParam String id) {
+//    public ResultBody start(@RequestParam String id) {
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
 //        OpenApp dbClient = clientService.findById(id);
 //        dbClient.setStatus(Integer.valueOf(Constants.YES));
 //        clientService.update(dbClient);
 //        customNacosConfigService.publishClientNacosConfig(id);
-//        return new ApiResult();
+//        return ResultBody.ok();
 //    }
 //
 //    /**
@@ -155,13 +155,13 @@
 //     * @return
 //     */
 //    @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-//    public ApiResult stop(@RequestParam String id) {
+//    public ResultBody stop(@RequestParam String id) {
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
 //        OpenApp dbClient = clientService.findById(id);
 //        dbClient.setStatus(Integer.valueOf(Constants.NO));
 //        clientService.update(dbClient);
 //        customNacosConfigService.publishClientNacosConfig(id);
-//        return new ApiResult();
+//        return ResultBody.ok();
 //    }
 //
 //}

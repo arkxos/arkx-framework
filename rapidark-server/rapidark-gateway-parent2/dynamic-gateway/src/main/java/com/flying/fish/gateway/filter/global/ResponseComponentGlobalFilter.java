@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.gateway.cache.RotueGroovyCache;
 import com.flying.fish.gateway.service.DynamicGroovyService;
 import com.flying.fish.gateway.vo.GroovyHandleData;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
+import com.rapidark.common.model.ResultBody;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 
@@ -132,7 +132,7 @@ public class ResponseComponentGlobalFilter implements GlobalFilter, Ordered {
      */
     private String getErrMsg(String clientIp, String routeId, String errMsg){
         String message= String.format("网关转发客户端【%s】路由请求【%s】，执行组件异常：%s", clientIp, routeId, errMsg);
-        return JSONObject.toJSONString(new ApiResult(Constants.FAILED, message, null));
+        return JSONObject.toJSONString(ResultBody.failed().msg( message));
     }
 
     @Override

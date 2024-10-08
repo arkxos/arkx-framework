@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.common.model.ResultBody;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
@@ -10,7 +11,6 @@ import com.rapidark.cloud.gateway.formwork.bean.SecureIpReq;
 import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
 import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.formwork.service.SecureIpService;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;
@@ -41,7 +41,7 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public ApiResult add(@RequestBody SecureIp secureIp) {
+    public ResultBody add(@RequestBody SecureIp secureIp) {
         Assert.notNull(secureIp, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(secureIp.getIp()), "IP值不能为空");
         secureIp.setCreateTime(new Date());
@@ -54,7 +54,7 @@ public class SecureIpRest extends BaseRest {
         secureIpService.save(secureIp);
         //this.setIpCacheVersion();
         customNacosConfigService.publishIpNacosConfig(secureIp.getIp());
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -63,12 +63,12 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult delete(@RequestParam String ip) {
+    public ResultBody delete(@RequestParam String ip) {
         Assert.isTrue(StringUtils.isNotBlank(ip), "IP值不能为空");
         secureIpService.deleteById(ip);
         //this.setIpCacheVersion();
         customNacosConfigService.publishIpNacosConfig(ip);
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -77,7 +77,7 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ApiResult update(@RequestBody SecureIp secureIp) {
+    public ResultBody update(@RequestBody SecureIp secureIp) {
         Assert.notNull(secureIp, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(secureIp.getIp()), "IP值不能为空");
         secureIp.setUpdateTime(new Date());
@@ -85,7 +85,7 @@ public class SecureIpRest extends BaseRest {
         secureIpService.update(secureIp);
         //this.setIpCacheVersion();
         customNacosConfigService.publishIpNacosConfig(secureIp.getIp());
-        return new ApiResult();
+        return ResultBody.ok();
     }
 
     /**
@@ -94,9 +94,9 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult findById(@RequestParam String ip) {
+    public ResultBody findById(@RequestParam String ip) {
         Assert.isTrue(StringUtils.isNotBlank(ip), "IP值不能为空");
-        return new ApiResult(secureIpService.findById(ip));
+        return ResultBody.ok().data(secureIpService.findById(ip));
     }
 
     /**
@@ -105,7 +105,7 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult pageList(@RequestBody SecureIpReq secureIpReq){
+    public ResultBody pageList(@RequestBody SecureIpReq secureIpReq){
         Assert.notNull(secureIpReq, "未获取到对象");
         int currentPage = getCurrentPage(secureIpReq.getCurrentPage());
         int pageSize = getPageSize(secureIpReq.getPageSize());
@@ -116,7 +116,7 @@ public class SecureIpRest extends BaseRest {
         if (StringUtils.isNotBlank(secureIpReq.getStatus())){
             secureIp.setStatus(secureIpReq.getStatus());
         }
-        return new ApiResult(secureIpService.pageList(secureIp,currentPage, pageSize));
+        return ResultBody.ok().data(secureIpService.pageList(secureIp,currentPage, pageSize));
     }
 
     /**

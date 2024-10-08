@@ -1,7 +1,7 @@
 package com.flying.fish.gateway.handle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
+import com.rapidark.common.model.ResultBody;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 
@@ -77,7 +77,7 @@ public class CustomWebExceptionHandler implements WebExceptionHandler {
             message = "路由服务异常！";
         }
         message += " path：" + path;
-        String jsonMsg = JSONObject.toJSONString(new ApiResult(Constants.FAILED, message, null));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg( message));
         return HttpResponseUtils.write(exchange.getResponse(), status, jsonMsg);
     }
 

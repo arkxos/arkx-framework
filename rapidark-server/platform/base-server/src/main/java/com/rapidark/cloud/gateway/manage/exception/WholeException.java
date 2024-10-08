@@ -1,19 +1,19 @@
 package com.rapidark.cloud.gateway.manage.exception;
 
+import com.rapidark.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.util.ApiResult;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 
 /**
- * @Description 捕获全局异常
- * @Author jianglong
- * @Date 2019/07/01
- * @Version V1.0
+ * 捕获全局异常
+ * @author darkness
+ * @date 2022/6/20 11:53
+ * @version 1.0
  */
 @Slf4j
 @Order(1)
@@ -34,7 +34,7 @@ public class WholeException {
     @ExceptionHandler(value = {Exception.class})
     public Object exceptionHandler(Exception e){
         log.error("error:",e);
-        ApiResult result = new ApiResult(Constants.FAILED);
+        ResultBody result = ResultBody.failed();
         result.setMessage(e.getMessage());
         return result;
     }
