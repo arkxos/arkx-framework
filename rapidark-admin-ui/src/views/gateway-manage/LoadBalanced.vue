@@ -119,14 +119,14 @@
 					  <el-collapse-item v-for="(item, index) in routeTable" :key="index" :name='(index + 1)'>
 					    <template slot="title" style="width: 100%;">
 							<div style="width: 100%;">
-								<el-tag size="" type="success" style="font-weight: bold; background-color: #FFFFFF; color: #303133;">{{item.name}}
-									<i class="el-icon-circle-check" v-if="item.status === '0'" style="font-size: 12pt; font-weight: bold; color: #409EFF;" title="服务已启用"></i>
-									<i class="el-icon-circle-close" v-if="item.status === '1'" style="font-size: 12pt; font-weight: bold; color: #F56C6C;" title="服务已禁用"></i>
+								<el-tag size="" type="success" style="font-weight: bold; color: #303133;background-color: #FFFFFF; ">{{item.NAME}}
+									<i class="el-icon-circle-check" v-if="item.STATUS == 0" style="font-size: 12pt; font-weight: bold; color: #409EFF;" title="服务已启用"></i>
+									<i class="el-icon-circle-close" v-if="item.STATUS == 1" style="font-size: 12pt; font-weight: bold; color: #F56C6C;" title="服务已禁用"></i>
 								</el-tag>
 							</div>
 					    </template>
-					    <div style="line-height: 28px;color: #727CF5; font-weight: bold;"><i class="el-icon-s-promotion" style="font-size: 12pt; font-weight: bold;"></i>&nbsp;&nbsp;{{item.routeId}}</div>
-					    <div style="line-height: 28px;color: #1890FF; font-weight: bold;"><i class="el-icon-connection" style="font-size: 12pt; font-weight: bold;"></i>&nbsp;&nbsp;{{item.uri}}</div>
+					    <div style="font-weight: bold;line-height: 28px;color: #727CF5; "><i class="el-icon-s-promotion" style="font-size: 12pt; font-weight: bold;"></i>&nbsp;&nbsp;{{item.ROUTEID}}</div>
+					    <div style="font-weight: bold;line-height: 28px;color: #1890FF; "><i class="el-icon-connection" style="font-size: 12pt; font-weight: bold;"></i>&nbsp;&nbsp;{{item.URI}}</div>
 					  </el-collapse-item>
 					</el-collapse>
 				</el-card>
@@ -207,7 +207,7 @@
 				loadServerRegList({balancedId: row.id}).then(function(result){
 					if (result && result.data){
 						_this.routeTable = result.data;
-						console.log(_this.$refs.boxCard);
+						console.log('_this.routeTable', _this.routeTable);
 						_this.$refs.boxCard.loadCard(_this.selectedId, result.data);
 					}
 				});
@@ -252,7 +252,7 @@
 				balancedPageList({name: this.form.name, groupCode: this.form.groupCode, status: this.form.status, currentPage: this.currentPage, pageSize: this.pageSize}).then(function(result){
 					if (result.data && result.data.lists){
 						_this.tableData = result.data.lists;
-						_this.totalNum = result.data.totalNum;
+						_this.totalNum = result.data.totalNum - 0;
 						if (_this.tableData.length > 0){
 							_this.handleClickBalanced(_this.tableData[0]);
 						}

@@ -91,24 +91,24 @@
 				<el-col :span="16">
 					<el-card class="box-card">
 						<el-table size="small" :data="tableData" style="width: 100%">
-						  <el-table-column prop="routeId" label="路由ID"></el-table-column>
-						  <el-table-column prop="name" label="路由名称"></el-table-column>
-						  <el-table-column prop="uri" label="路由地址"></el-table-column>
+						  <el-table-column prop="ROUTEID" label="路由ID"></el-table-column>
+						  <el-table-column prop="NAME" label="路由名称"></el-table-column>
+						  <el-table-column prop="URI" label="路由地址"></el-table-column>
 						  <el-table-column label="路由权重" width="80">
 							  <template slot-scope="scope">
-								  <el-tag size="small" type="" style="font-weight: bold;">{{scope.row.weight}}</el-tag>
+								  <el-tag size="small" type="" style="font-weight: bold;">{{scope.row.WEIGHT}}</el-tag>
 							  </template>
 						  </el-table-column>
 						  <el-table-column label="配置比例">
 							  <template slot-scope="scope">
 							    <div class="block">
-							      <el-slider v-model="scope.row.weight"></el-slider>
+							      <el-slider v-model="scope.row.WEIGHT"></el-slider>
 							    </div>
 							  </template>
 						  </el-table-column>
 						  <el-table-column label="操作" width="60">
 						  	<template slot-scope="scope">
-						  		<el-button size="mini" circle icon="el-icon-delete" title="删除" style="border: 0px; font-size: 12pt;" @click="handleDeleteServer(scope.row)"></el-button>
+						  		<el-button size="mini" circle icon="el-icon-delete" title="删除" style="font-size: 12pt;border: 0px; " @click="handleDeleteServer(scope.row)"></el-button>
 						  	</template>
 						  </el-table-column>
 						</el-table>

@@ -5,11 +5,11 @@
 				<el-col :span="12">&nbsp;
 				<div style="margin-left: 20px;">
 					<i class="iconfont icon-guizeyinqing" style="font-size: 16pt; color: #90A0A5;"></i>
-					<span style="font-size: 14pt; color: #90A0A5; font-weight: bold; margin-left: 6px;">访问量统计</span>
+					<span style="margin-left: 6px;font-size: 14pt;font-weight: bold; color: #90A0A5;  ">访问量统计</span>
 				</div>
 				</el-col>
 				<el-col :span="12">
-					<el-radio-group v-model="dateType" size="mini" style="margin-top: 18px; margin-right: 18px; float: right;" @change="loadAccessCard">
+					<el-radio-group v-model="dateType" size="mini" style="float: right;margin-top: 18px; margin-right: 18px; " @change="loadAccessCard">
 					  <el-radio-button label="min">60分</el-radio-button>
 					  <el-radio-button label="hour">24小时</el-radio-button>
 					  <el-radio-button label="day">7天</el-radio-button>
@@ -20,14 +20,14 @@
 			<!-- <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png"> -->
 			<RouteAccessChart ref="routeAccessChart"></RouteAccessChart>
 		</div>
-		
+
 		<div style="position:relative;">
 			<!-- <pan-thumb :image="avatar" class="panThumb" /> -->
 			<mallki class-name="mallki-text" :text="balancedName + '-权重占比'" />
 			<div style="padding-top: 35px;">
 				<div v-for="(item, index) in routeTable" :key="index" class="progress-item">
-					<span>{{item.name}}</span>
-					<el-progress :percentage="item.weight" :color="colors[index]" />
+					<span>{{item.NAME}}</span>
+					<el-progress :percentage="item.WEIGHT" :color="colors[index]" />
 				</div>
 			</div>
 		</div>
@@ -49,7 +49,7 @@ export default {
 			};
 			return statusMap[status];
 		}
-	}, 
+	},
 	props:['routeTable','balancedName'],//父组件传参
 	data() {
 		return {
@@ -63,7 +63,7 @@ export default {
 				article_count: 1024,
 				pageviews_count: 1024
 			},
-			colors: ['#00ADD0', '#FFA12F', '#B62AFF', '#727CF5', '#1890FF', '#00f6ff', '#20C0F4', '#95F300', '#04FDB8', '#AF5AFF'],			
+			colors: ['#00ADD0', '#FFA12F', '#B62AFF', '#727CF5', '#1890FF', '#00f6ff', '#20C0F4', '#95F300', '#04FDB8', '#AF5AFF'],
 			// customColors: [
 			// 	{ color: '#00ADD0', percentage: 20 },
 			// 	{ color: '#FFA12F', percentage: 40 },
@@ -92,7 +92,7 @@ export default {
 			this.balancedId = balancedId;
 			if (data != null && data != undefined){
 				this.routeIds = [];
-				data.forEach((row,index)=>{					
+				data.forEach((row,index)=>{
 					this.routeIds.push(row.routeId);
 				});
 				this.loadAccessCard();

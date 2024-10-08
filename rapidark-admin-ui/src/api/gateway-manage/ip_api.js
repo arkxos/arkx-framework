@@ -42,6 +42,6 @@ export const deleteIp = data => {
     return request({
         url: '/base/ip/delete',
         method: 'get',
-        data
+        params: data
     })
 };

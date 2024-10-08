@@ -19,7 +19,7 @@ export const deleteBalanced = data => {
     return request({
         url: '/base/balanced/delete',
         method: 'get',
-        data
+        params: data
     })
 };
 
@@ -41,7 +41,7 @@ export const findByBalanced = data => {
     return request({
         url: '/base/balanced/findById',
         method: 'get',
-        data
+        params: data
     })
 };
 
@@ -64,7 +64,7 @@ export const startBalanced = data => {
     return request({
         url: '/base/balanced/start',
         method: 'get',
-        data
+        params: data
     })
 };
 
@@ -75,7 +75,7 @@ export const stopBalanced = data => {
     return request({
         url: '/base/balanced/stop',
         method: 'get',
-        data
+        params: data
     })
 };
 

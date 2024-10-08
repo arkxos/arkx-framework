@@ -8,7 +8,7 @@ export const apiDocList = data => {
     return request({
         url: '/base/apiDoc/list',
         method: 'get',
-        data
+        params: data
     })
 };
 
@@ -30,6 +30,6 @@ export const findByApiDoc = data => {
     return request({
         url: '/base/apiDoc/findById',
         method: 'get',
-        data
+        params: data
     })
 };
