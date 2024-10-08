@@ -6,12 +6,17 @@ import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.CreateOpenAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateOpenClientCommand;
+import com.rapidark.cloud.base.server.repository.OpenAppRepository;
+import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
+import com.rapidark.cloud.gateway.formwork.service.ClientServerRegisterService;
 import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
 import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.security.OpenAuthority;
 import com.rapidark.common.security.OpenClientDetails;
 import com.rapidark.common.security.http.OpenRestTemplate;
 import com.rapidark.common.utils.BeanConvertUtils;
@@ -49,6 +54,9 @@ public class OpenAppController implements IOpenAppServiceClient {
     private final OpenAppService openAppService;
     private final OpenRestTemplate openRestTemplate;
     private final CustomNacosConfigService customNacosConfigService;
+    private final ClientServerRegisterService clientServerRegisterService;
+    private final BaseAuthorityService baseAuthorityService;
+    private final OpenAppRepository openAppRepository;
 
     @Log("导出数据")
     @ApiOperation("导出数据")
@@ -119,6 +127,27 @@ public class OpenAppController implements IOpenAppServiceClient {
             return ResultBody.failed().msg("该客户端不存在");
         }
         return ResultBody.ok().data(appInfo);
+    }
+
+    /**
+     * 获取应用详情
+     *
+     * @param ip
+     * @return
+     */
+    @ApiOperation(value = "获取应用详情", notes = "获取应用详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ip", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
+    })
+    @GetMapping("/openClient/queryOpenClientByIp")
+    @Override
+    public ResultBody<OpenApp> queryAppByIp(@RequestParam("ip") String ip) {
+        Optional<OpenApp> openClientOptional = openAppRepository.findByIp(ip);
+        if(openClientOptional.isEmpty()) {
+            return ResultBody.failed().msg("该客户端不存在");
+        }
+        OpenApp openClient = openClientOptional.get();
+        return ResultBody.ok().data(openClient);
     }
 
     /**
@@ -337,6 +366,22 @@ public class OpenAppController implements IOpenAppServiceClient {
         openAppService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
         return ResultBody.ok();
+    }
+
+    /**
+     * 获取网关路由服务列表
+     */
+    @Override
+    @GetMapping(value = "/openClient/queryClientRegisterAppsByAppId")
+    public ResultBody<List<GatewayAppRouteRegServer>> queryClientRegisterAppsByAppId(@RequestParam("clientId") String clientId) {
+        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象查询ID");
+        List<GatewayAppRouteRegServer> data = clientServerRegisterService.queryClientRegisterAppsByAppId(clientId);
+        for(GatewayAppRouteRegServer regServer : data) {
+            String systemCode = regServer.getSystemCode();
+            List<OpenAuthority> authrities = baseAuthorityService.findAuthorityByApp(clientId, systemCode);
+            regServer.setAuthorities(authrities);
+        }
+        return ResultBody.ok().data(data);
     }
 
 }

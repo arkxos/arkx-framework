@@ -11,7 +11,9 @@
                     a.authority_id,
                     a.authority,
                     ap.expire_time,
-                    'app' AS owner
+                    'app' AS owner,
+                    api.service_id,
+                    api.path
                     FROM Gateway_Open_Client_App_Api_Authority ap
                     INNER JOIN base_authority a ON ap.authority_id = a.authority_id
                     INNER JOIN base_api api ON a.api_id = api.api_id
@@ -27,7 +29,7 @@
         <value>
             <![CDATA[
                 DELETE FROM Gateway_Open_Client_App_Api_Authority t
-                    WHERE ap.authority_Id in (:authorityIds)
+                    WHERE t.authority_Id in (:authorityIds)
             ]]>
         </value>
     </sql>

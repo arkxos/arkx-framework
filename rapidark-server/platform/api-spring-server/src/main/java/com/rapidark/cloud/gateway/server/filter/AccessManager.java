@@ -2,9 +2,14 @@ package com.rapidark.cloud.gateway.server.filter;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
+import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
+import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
+import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.constants.ErrorCode;
+import com.rapidark.common.exception.OpenException;
+import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.OpenAuthority;
 import com.rapidark.common.utils.StringUtils;
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
@@ -26,7 +31,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -40,7 +47,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AccessManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
     private ResourceLocator resourceLocator;
-
+    private OpenAppServiceClient openAppServiceClient;
     private ApiProperties apiProperties;
 
     private static final AntPathMatcher pathMatch = new AntPathMatcher();
@@ -48,10 +55,12 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
     private Set<String> permitAll = new ConcurrentHashSet<>();
 
     private Set<String> authorityIgnores = new ConcurrentHashSet<>();
+    private ExecutorService executorService = Executors.newFixedThreadPool(1);
 
 
-    public AccessManager(ResourceLocator resourceLocator, ApiProperties apiProperties) {
+    public AccessManager(ResourceLocator resourceLocator, OpenAppServiceClient openAppServiceClient, ApiProperties apiProperties) {
         this.resourceLocator = resourceLocator;
+        this.openAppServiceClient = openAppServiceClient;
         this.apiProperties = apiProperties;
         // 默认放行
         permitAll.add("/");
@@ -86,6 +95,48 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
         }
         // 客户端ip
         String openClientHost = NetworkIpUtils.getIpAddress(exchange.getRequest());
+
+        // WebFlux异步调用，同步会报错
+        Future future = executorService.submit((Callable<ResultBody<OpenApp>>) () -> openAppServiceClient.queryAppByIp(openClientHost));
+
+        ResultBody<OpenApp> queryOpenClientByIpResponse = null;
+        try {
+            queryOpenClientByIpResponse = (ResultBody<OpenApp>)future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            throw new OpenException(e.getMessage());
+        }
+        if(queryOpenClientByIpResponse.isOk()) {
+            OpenApp openClient = queryOpenClientByIpResponse.getData();
+            String clientId = openClient.getAppId();
+
+            Future future2 = executorService.submit(() -> openAppServiceClient.queryClientRegisterAppsByAppId(clientId));
+
+            ResultBody<List<GatewayAppRouteRegServer>> registerAppsResponse = null;
+            try {
+                registerAppsResponse = (ResultBody<List<GatewayAppRouteRegServer>>)future2.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                throw new OpenException(e.getMessage());
+            }
+
+            if(registerAppsResponse.isOk()) {
+                List<GatewayAppRouteRegServer> registerApps = registerAppsResponse.getData();
+                if(!registerApps.isEmpty()) {
+                    for(GatewayAppRouteRegServer regServer : registerApps) {
+                        if(requestPath.startsWith("/" + regServer.getSystemCode())) {
+                            for (OpenAuthority authority : regServer.getAuthorities()) {
+                                String authPath = "/" + regServer.getSystemCode() + authority.getPath();
+                                if(requestPath.equals(authPath)) {
+                                    return Mono.just(new AuthorizationDecision(true));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // 是否直接放行
         if (permitAll(requestPath)) {
             return Mono.just(new AuthorizationDecision(true));

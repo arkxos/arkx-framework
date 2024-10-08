@@ -43,7 +43,19 @@
         </value>
     </sql>
 
-    <!-- 查询当前客户端没有注册的网关路由服务 -->
+    <!-- 查询当前客户端所有注册的网关路由服务（不分页） -->
+    <sql id="ClientServerRegisterRepository_queryClientRegisterAppsByAppId">
+        <value>
+            <![CDATA[
+                SELECT s.id AS reg_Server_Id, s.status as reg_Server_Status, to_char(s.create_Time,'yyyy-MM-dd hh24:mi:ss') as reg_Server_Time,
+                r.*
+                FROM Gateway_App_Route r, gateway_client_server_register s
+                WHERE r.id = s.route_Id and s.client_Id=:clientId
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前客户端所有注册的网关路由服务（分页） -->
     <sql id="ClientServerRegisterRepository_queryRegServers">
         <value>
             <![CDATA[

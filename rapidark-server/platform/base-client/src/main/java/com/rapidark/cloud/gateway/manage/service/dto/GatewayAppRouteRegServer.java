@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.manage.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rapidark.common.security.OpenAuthority;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,7 +11,9 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author darkness
@@ -228,5 +231,14 @@ public class GatewayAppRouteRegServer {
     private Integer regServerStatus;
 
     private String regServerTime;
+
+    private List<OpenAuthority> authorities;
+
+    public List<OpenAuthority> getAuthorities() {
+        if(authorities == null) {
+            return new ArrayList<>();
+        }
+        return authorities;
+    }
 
 }

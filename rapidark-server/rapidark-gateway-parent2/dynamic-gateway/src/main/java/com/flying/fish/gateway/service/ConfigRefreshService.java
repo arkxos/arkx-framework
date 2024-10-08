@@ -80,7 +80,7 @@ public class ConfigRefreshService {
     public void refreshGatewayConfig(GatewayNacosConfigBean gatewayNacosConfig){
         String balancedId = gatewayNacosConfig.getBalancedId();
         String routeId = gatewayNacosConfig.getRouteId();
-        Long regServerId = gatewayNacosConfig.getRegServerId();
+        String regServerId = gatewayNacosConfig.getRegServerId();
         String clientId = gatewayNacosConfig.getClientId();
         String ip = gatewayNacosConfig.getIp();
         Long groovyScriptId = gatewayNacosConfig.getGroovyScriptId();
@@ -243,8 +243,8 @@ public class ConfigRefreshService {
      * 重新设置注册到route网关缓存客户端ID，有些网关路由开启了注册客户端过滤（鉴权）
      * @param regServerId
      */
-    public void refreshRegServer(Long regServerId){
-        if (regServerId == null || regServerId <= 0){
+    public void refreshRegServer(String regServerId){
+        if (StringUtils.isEmpty(regServerId)){
             return ;
         }
         ClientServerRegister clientServerRegister = clientServerRegisterService.findById(regServerId);

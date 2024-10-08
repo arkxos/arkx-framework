@@ -92,7 +92,7 @@ public class ResourceServerConfiguration {
         // 自定义oauth2 认证, 使用redis读取token,而非jwt方式
         JsonAuthenticationEntryPoint entryPoint = new JsonAuthenticationEntryPoint(accessLogService);
         JsonAccessDeniedHandler accessDeniedHandler = new JsonAccessDeniedHandler(accessLogService);
-        AccessManager accessManager = new AccessManager(resourceLocator, apiProperties);
+        AccessManager accessManager = new AccessManager(resourceLocator, openAppServiceClient, apiProperties);
         AuthenticationWebFilter oauth2 = new AuthenticationWebFilter(new RedisAuthenticationManager(new RedisTokenStore(redisConnectionFactory)));
         oauth2.setServerAuthenticationConverter(new ServerBearerTokenAuthenticationConverter());
         oauth2.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(entryPoint));

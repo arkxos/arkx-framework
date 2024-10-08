@@ -162,4 +162,16 @@ public class ClientServerRegisterService extends BaseService<ClientServerRegiste
         return clientServerRegisterRepository.queryNotRegServers(clientId, pageable);
     }
 
+    /**
+     * 查询客户端注册的所有应用
+     * @author darkness
+     * @date 2022/6/6 13:40
+     * @version 1.0
+     * @param clientId
+     * @return java.util.List<com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer>
+     */
+    public List<GatewayAppRouteRegServer> queryClientRegisterAppsByAppId(String clientId) {
+        return clientServerRegisterRepository.queryClientRegisterAppsByAppId(clientId);
+    }
+
 }

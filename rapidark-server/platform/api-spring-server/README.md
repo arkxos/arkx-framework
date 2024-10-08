@@ -4,6 +4,9 @@
 + 参数签名验证 check-sign: true
 + 在线调试文档 api-debug: true
 
+指标采集、流量监控、组合流控
+https://github.com/moutainhigh/spring-cloud-gateway-extends
+
 #### 修改网关启动参数
 ```
 opencloud:

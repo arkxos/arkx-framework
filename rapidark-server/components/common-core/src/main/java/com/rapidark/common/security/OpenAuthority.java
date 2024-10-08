@@ -2,6 +2,7 @@ package com.rapidark.common.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
 
@@ -9,9 +10,11 @@ import java.util.Date;
 
 /**
  * 自定义已授权权限标识
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/6/6 15:46
+ * @version 1.0
  */
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class OpenAuthority implements GrantedAuthority {
 
@@ -34,6 +37,10 @@ public final class OpenAuthority implements GrantedAuthority {
      * 权限所有者
      */
     private String owner;
+
+    private String serviceId;
+
+    private String path;
 
     @JsonProperty("isExpired")
     public Boolean getIsExpired() {

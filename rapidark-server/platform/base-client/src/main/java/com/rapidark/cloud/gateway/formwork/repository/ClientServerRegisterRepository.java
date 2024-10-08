@@ -84,7 +84,11 @@ public interface ClientServerRegisterRepository extends JpaRepository<ClientServ
     @Transactional(readOnly = true)
     Page<OpenApp> queryNotRegClients(@Param("routeId") String routeId, Pageable pageable);
 
-    // 查询当前客户端没有注册的网关路由服务
+    // 查询指定客户端注册的所有应用
+    @SqlToyQuery
+    List<GatewayAppRouteRegServer> queryClientRegisterAppsByAppId(@Param("clientId") String clientId);
+
+    // 查询当前客户端所有注册的网关路由服务
     @SqlToyQuery
     @Transactional(readOnly = true)
     Page<GatewayAppRouteRegServer> queryRegServers(@Param("clientId") String clientId, Pageable pageable);

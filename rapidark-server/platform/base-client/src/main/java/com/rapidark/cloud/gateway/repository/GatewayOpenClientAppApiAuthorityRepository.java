@@ -30,6 +30,6 @@ public interface GatewayOpenClientAppApiAuthorityRepository extends JpaRepositor
     void deleteByAppIdAndAppSystemCode(String appId, String appSystemCode);
 
     @SqlToyQuery
-    void deleteByAuthorityIds(List<String> invalidAuthorityIds);
+    void deleteByAuthorityIds(@Param("authorityIds") List<String> authorityIds);
 }
 

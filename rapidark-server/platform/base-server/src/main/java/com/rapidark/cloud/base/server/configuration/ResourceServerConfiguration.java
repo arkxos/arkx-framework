@@ -72,6 +72,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/authority/app",
                         "/app/*/info",
                         "/app/client/*/info",
+                        "/openClient/queryOpenClientByIp",
+                        "/openClient/queryClientRegisterAppsByAppId",
                         "/gateway/api/**",
                         "/user/add/thirdParty",
                         "/user/info",

@@ -33,7 +33,7 @@
             a.api_category,
             a.service_id,
             a.path,
-            r.url
+            r.uri
         FROM gateway_rate_limit_api i
         INNER JOIN gateway_rate_limit p ON i.policy_id = p.policy_id
         INNER JOIN base_api a ON i.api_id = a.api_id

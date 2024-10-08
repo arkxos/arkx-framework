@@ -2,7 +2,9 @@
 <configuration debug="false" scan="false">
     <springProperty scope="context" name="spring.application.name" source="spring.application.name"
                     defaultValue="logs"/>
-    <property name="log.path" value="logs/${spring.application.name}"/>
+
+    <property name="log.home" value="D:/temp/logs/rapidark-v12"/>
+    <property name="log.path" value="${log.home}/logs/${spring.application.name}"/>
 
     <!-- Console log output -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
