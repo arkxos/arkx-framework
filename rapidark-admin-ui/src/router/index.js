@@ -103,7 +103,7 @@ export const constantRoutes = [
         path: '/createClient',
         name: '创建客户端',
         hidden: true,
-        component: () => import('@/views/gateway-manage/CreateClient'),
+        component: () => import('@/views/gateway-manage/open-client/CreateClient.vue'),
         meta: {
           title: '创建客户端',
           icon: 'home-2-line',
