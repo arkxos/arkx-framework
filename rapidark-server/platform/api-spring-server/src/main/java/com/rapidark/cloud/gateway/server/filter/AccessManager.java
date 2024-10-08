@@ -11,11 +11,15 @@ import com.rapidark.common.constants.ErrorCode;
 import com.rapidark.common.exception.OpenException;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.OpenAuthority;
+import com.rapidark.common.utils.RedisUtils;
 import com.rapidark.common.utils.StringUtils;
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
 import com.rapidark.cloud.gateway.server.locator.ResourceLocator;
 import com.rapidark.cloud.gateway.server.util.matcher.ReactiveIpAddressMatcher;
 import lombok.extern.slf4j.Slf4j;
+import net.oschina.j2cache.CacheChannel;
+import net.oschina.j2cache.CacheObject;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -52,13 +56,21 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
 
     private static final AntPathMatcher pathMatch = new AntPathMatcher();
 
+    private StringRedisTemplate stringRedisTemplate;
+    private RedisUtils redisUtils;
+    private CacheChannel cacheChannel;
+
     private Set<String> permitAll = new ConcurrentHashSet<>();
 
     private Set<String> authorityIgnores = new ConcurrentHashSet<>();
     private ExecutorService executorService = Executors.newFixedThreadPool(1);
 
 
-    public AccessManager(ResourceLocator resourceLocator, OpenAppServiceClient openAppServiceClient, ApiProperties apiProperties) {
+    public AccessManager(RedisUtils redisUtils,
+                         CacheChannel cacheChannel,
+                         ResourceLocator resourceLocator, OpenAppServiceClient openAppServiceClient, ApiProperties apiProperties) {
+        this.redisUtils = redisUtils;
+        this.cacheChannel = cacheChannel;
         this.resourceLocator = resourceLocator;
         this.openAppServiceClient = openAppServiceClient;
         this.apiProperties = apiProperties;
@@ -96,41 +108,51 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
         // 客户端ip
         String openClientHost = NetworkIpUtils.getIpAddress(exchange.getRequest());
 
-        // WebFlux异步调用，同步会报错
-        Future future = executorService.submit((Callable<ResultBody<OpenApp>>) () -> openAppServiceClient.queryAppByIp(openClientHost));
+        CacheObject cacheObject = cacheChannel.get("Gateway:GatewayAppRouteRegServer", openClientHost, false);
+        List<GatewayAppRouteRegServer> registerApps = (List<GatewayAppRouteRegServer>)cacheObject.getValue();
 
-        ResultBody<OpenApp> queryOpenClientByIpResponse = null;
-        try {
-            queryOpenClientByIpResponse = (ResultBody<OpenApp>)future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            throw new OpenException(e.getMessage());
-        }
-        if(queryOpenClientByIpResponse.isOk()) {
-            OpenApp openClient = queryOpenClientByIpResponse.getData();
-            String clientId = openClient.getAppId();
+        if(registerApps == null || registerApps.isEmpty()) {
+// WebFlux异步调用，同步会报错
+            Future future = executorService.submit((Callable<ResultBody<OpenApp>>) () -> openAppServiceClient.queryAppByIp(openClientHost));
 
-            Future future2 = executorService.submit(() -> openAppServiceClient.queryClientRegisterAppsByAppId(clientId));
-
-            ResultBody<List<GatewayAppRouteRegServer>> registerAppsResponse = null;
+            ResultBody<OpenApp> queryOpenClientByIpResponse = null;
             try {
-                registerAppsResponse = (ResultBody<List<GatewayAppRouteRegServer>>)future2.get();
+                queryOpenClientByIpResponse = (ResultBody<OpenApp>)future.get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 throw new OpenException(e.getMessage());
             }
+            if(queryOpenClientByIpResponse.isOk()) {
+                OpenApp openClient = queryOpenClientByIpResponse.getData();
+                String clientId = openClient.getAppId();
 
-            if(registerAppsResponse.isOk()) {
-                List<GatewayAppRouteRegServer> registerApps = registerAppsResponse.getData();
-                if(!registerApps.isEmpty()) {
-                    for(GatewayAppRouteRegServer regServer : registerApps) {
-                        if(requestPath.startsWith("/" + regServer.getSystemCode())) {
-                            for (OpenAuthority authority : regServer.getAuthorities()) {
-                                String authPath = "/" + regServer.getSystemCode() + authority.getPath();
-                                if(requestPath.equals(authPath)) {
-                                    return Mono.just(new AuthorizationDecision(true));
-                                }
-                            }
+                Future future2 = executorService.submit(() -> openAppServiceClient.queryClientRegisterAppsByAppId(clientId));
+
+                ResultBody<List<GatewayAppRouteRegServer>> registerAppsResponse = null;
+                try {
+                    registerAppsResponse = (ResultBody<List<GatewayAppRouteRegServer>>)future2.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                    throw new OpenException(e.getMessage());
+                }
+
+                if(registerAppsResponse.isOk()) {
+                    List<GatewayAppRouteRegServer> _registerApps = registerAppsResponse.getData();
+//                    redisUtils.hset("Gateway:GatewayAppRouteRegServer", openClientHost, JSON.toJSONString(_registerApps));
+
+                    cacheChannel.set("·", openClientHost, _registerApps);
+                    registerApps = _registerApps;
+                }
+            }
+        }
+
+        if(registerApps !=null && !registerApps.isEmpty()) {
+            for(GatewayAppRouteRegServer regServer : registerApps) {
+                if(requestPath.startsWith("/" + regServer.getSystemCode())) {
+                    for (OpenAuthority authority : regServer.getAuthorities()) {
+                        String authPath = "/" + regServer.getSystemCode() + authority.getPath();
+                        if(requestPath.equals(authPath)) {
+                            return Mono.just(new AuthorizationDecision(true));
                         }
                     }
                 }

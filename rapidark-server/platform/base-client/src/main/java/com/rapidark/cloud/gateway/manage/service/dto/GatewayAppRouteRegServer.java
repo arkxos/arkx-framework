@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  * @date 2022/5/30 15:40
  */
 @Data
-public class GatewayAppRouteRegServer {
+public class GatewayAppRouteRegServer implements Serializable {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -240,5 +241,4 @@ public class GatewayAppRouteRegServer {
         }
         return authorities;
     }
-
 }

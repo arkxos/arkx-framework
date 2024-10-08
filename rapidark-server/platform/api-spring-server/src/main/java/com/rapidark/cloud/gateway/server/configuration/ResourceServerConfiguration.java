@@ -8,10 +8,13 @@ import com.rapidark.cloud.gateway.server.locator.ResourceLocator;
 import com.rapidark.cloud.gateway.server.oauth2.RedisAuthenticationManager;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;
 import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
+import com.rapidark.common.utils.RedisUtils;
+import net.oschina.j2cache.CacheChannel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -49,6 +52,10 @@ public class ResourceServerConfiguration {
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
     @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisUtils redisUtils;
+    @Autowired
     private ResourceLocator resourceLocator;
     @Autowired
     private ApiProperties apiProperties;
@@ -56,6 +63,8 @@ public class ResourceServerConfiguration {
     private AccessLogService accessLogService;
     @Autowired
     private OpenAppServiceClient openAppServiceClient;
+    @Autowired
+    private CacheChannel cacheChannel;
 
     /**
      * 跨域配置
@@ -92,7 +101,7 @@ public class ResourceServerConfiguration {
         // 自定义oauth2 认证, 使用redis读取token,而非jwt方式
         JsonAuthenticationEntryPoint entryPoint = new JsonAuthenticationEntryPoint(accessLogService);
         JsonAccessDeniedHandler accessDeniedHandler = new JsonAccessDeniedHandler(accessLogService);
-        AccessManager accessManager = new AccessManager(resourceLocator, openAppServiceClient, apiProperties);
+        AccessManager accessManager = new AccessManager(redisUtils, cacheChannel, resourceLocator, openAppServiceClient, apiProperties);
         AuthenticationWebFilter oauth2 = new AuthenticationWebFilter(new RedisAuthenticationManager(new RedisTokenStore(redisConnectionFactory)));
         oauth2.setServerAuthenticationConverter(new ServerBearerTokenAuthenticationConverter());
         oauth2.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(entryPoint));

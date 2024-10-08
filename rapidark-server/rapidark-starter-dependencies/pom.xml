@@ -82,6 +82,31 @@
                 <artifactId>redisson</artifactId>
                 <version>3.16.0</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/net.oschina.j2cache/j2cache-core -->
+            <dependency>
+                <groupId>net.oschina.j2cache</groupId>
+                <artifactId>j2cache-core</artifactId>
+                <version>2.8.5-release</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>slf4j-simple</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/net.oschina.j2cache/j2cache-springcache -->
+            <dependency>
+                <groupId>net.oschina.j2cache</groupId>
+                <artifactId>j2cache-springcache</artifactId>
+                <version>2.8.0-release</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/net.oschina.j2cache/j2cache-spring-boot2-starter -->
+            <dependency>
+                <groupId>net.oschina.j2cache</groupId>
+                <artifactId>j2cache-spring-boot2-starter</artifactId>
+                <version>2.8.0-release</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
             <dependency>
                 <groupId>org.redisson</groupId>

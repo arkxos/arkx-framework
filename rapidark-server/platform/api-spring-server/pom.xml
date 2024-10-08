@@ -18,6 +18,24 @@
             <version>12.1.0.2.0</version>
         </dependency>
         <dependency>
+            <groupId>net.oschina.j2cache</groupId>
+            <artifactId>j2cache-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.oschina.j2cache</groupId>
+            <artifactId>j2cache-springcache</artifactId>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>redis.clients</groupId>-->
+        <!--            <artifactId>jedis</artifactId>-->
+        <!--            <version>2.9.0</version>-->
+        <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/net.oschina.j2cache/j2cache-spring-boot2-starter -->
+        <dependency>
+            <groupId>net.oschina.j2cache</groupId>
+            <artifactId>j2cache-spring-boot2-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>

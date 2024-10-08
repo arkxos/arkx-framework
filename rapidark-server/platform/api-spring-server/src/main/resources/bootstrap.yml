@@ -79,6 +79,12 @@ spring:
         mode: HTML
         prefix: classpath:/templates/
         suffix: .html
+    cache:
+        type: GENERIC
+j2cache:
+    open-spring-cache: true
+    cache-clean-mode: active
+    config-location: classpath:j2cache-${profile.name}.properties
 
 filters:
     # 熔断降级配置

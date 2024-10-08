@@ -2,6 +2,7 @@ package com.rapidark.cloud.gateway.server.configuration;
 
 import com.rapidark.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 public class RedisConfig {
 
     @Bean(name = {"redisTemplate", "stringRedisTemplate"})
-    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
+    public StringRedisTemplate stringRedisTemplate(@Qualifier("j2CahceRedisConnectionFactory") RedisConnectionFactory factory) {
         StringRedisTemplate redisTemplate = new StringRedisTemplate();
         redisTemplate.setConnectionFactory(factory);
         return redisTemplate;
