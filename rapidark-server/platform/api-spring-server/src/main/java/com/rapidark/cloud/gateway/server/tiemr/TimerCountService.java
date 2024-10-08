@@ -1,9 +1,10 @@
-package com.flying.fish.gateway.tiemr;
+package com.rapidark.cloud.gateway.server.tiemr;
 
 import com.rapidark.cloud.gateway.cache.CountCache;
 import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
+import com.rapidark.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -29,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class TimerCountService {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
 
     private static final String FRESH = ":FRESH";
 
@@ -51,8 +52,17 @@ public class TimerCountService {
         String freshKey = RouteConstants.COUNT_MIN_KEY + FRESH;
         String minKey = RouteConstants.COUNT_MIN_KEY + DateFormatUtils.format(new Date(), Constants.YYYYMMDDHHMM);
         String min =  DateFormatUtils.format(new Date(), Constants.YYYYMMDDHHMM);
-        String minFresh = (String) redisTemplate.opsForValue().get(freshKey);
-        if (minFresh == null || Long.parseLong(min) > Long.parseLong(minFresh)){
+        String minFresh = redisUtils.getString(freshKey);
+        long minLong = 0;
+        if(!StringUtils.isEmpty(min)) {
+            minLong = Long.parseLong(min);
+        }
+        long minFreshLong = 0;
+        if(!StringUtils.isEmpty(minFresh)) {
+            minFreshLong = Long.parseLong(minFresh);
+        }
+
+        if (StringUtils.isEmpty(minFresh) || minLong > minFreshLong){
             this.recordCountCache(freshKey, min, minKey, minMap, 1, TimeUnit.HOURS);
         }else {
             this.syncCountCache(minKey, minMap);
@@ -60,10 +70,11 @@ public class TimerCountService {
 
         //保存按小时统计的数据,数据缓存24小时
         freshKey = RouteConstants.COUNT_HOUR_KEY + FRESH;
+        // FISH_GATEWAY_COUNT:HOUR:2022060713
         String hourKey = RouteConstants.COUNT_HOUR_KEY + DateFormatUtils.format(new Date(), Constants.YYYYMMDDHH);
         String hour =  DateFormatUtils.format(new Date(), Constants.YYYYMMDDHH);
-        String hourFresh = (String) redisTemplate.opsForValue().get(freshKey);
-        if (hourFresh == null || Long.parseLong(hour) > Long.parseLong(hourFresh)){
+        String hourFresh = redisUtils.getString(freshKey);
+        if (StringUtils.isEmpty(hourFresh) || Long.parseLong(hour) > Long.parseLong(hourFresh)){
             this.recordCountCache(freshKey, hour, hourKey, minMap, 24, TimeUnit.HOURS);
         }else {
             this.syncCountCache(hourKey, minMap);
@@ -73,8 +84,8 @@ public class TimerCountService {
         freshKey = RouteConstants.COUNT_DAY_KEY + FRESH;
         String dayKey = RouteConstants.COUNT_DAY_KEY + DateFormatUtils.format(new Date(), Constants.YYYYMMDD);
         String day =  DateFormatUtils.format(new Date(), Constants.YYYYMMDD);
-        String dayFresh = (String) redisTemplate.opsForValue().get(freshKey);
-        if (dayFresh == null || Long.parseLong(day) > Long.parseLong(dayFresh)){
+        String dayFresh = redisUtils.getString(freshKey);
+        if (StringUtils.isEmpty(dayFresh) || Long.parseLong(day) > Long.parseLong(dayFresh)){
             this.recordCountCache(freshKey, day, dayKey, minMap, 7, TimeUnit.DAYS);
         }else {
             this.syncCountCache(dayKey, minMap);
@@ -91,15 +102,15 @@ public class TimerCountService {
      * @param timeUnit
      */
     private void recordCountCache(String freshKey, String freshValue, String key, ConcurrentHashMap<String,Integer> value, int timeout, TimeUnit timeUnit){
-        redisTemplate.opsForValue().set(freshKey, freshValue);
-        boolean exist = redisTemplate.hasKey(key);
+        redisUtils.set(freshKey, freshValue);
+        boolean exist = redisUtils.hasKey(key);
         Map<String,String> cacheMap = new HashMap<>(value.size());
         value.forEach((k,v)->cacheMap.put(k,String.valueOf(v)));
-        redisTemplate.opsForHash().putAll(key, cacheMap);
+        redisUtils.setMap(key, cacheMap);
         //新增key设置过期时间
         if (!exist){
             //redis过期清除指定KEY缓存数据
-            redisTemplate.expire(key, timeout, timeUnit);
+            redisUtils.expire(key, timeout, timeUnit);
         }
     }
 
@@ -110,7 +121,7 @@ public class TimerCountService {
      */
     public void syncCountCache(String key, Map<String,Integer> map){
         map.forEach((k,v)->{
-            String value = (String) redisTemplate.opsForHash().get(key, k);
+            String value = (String) redisUtils.hget(key, k);
             if (StringUtils.isNotBlank(value)){
                 int count = 0;
                 try{
@@ -120,7 +131,7 @@ public class TimerCountService {
                 }
                 v += count;
             }
-            redisTemplate.opsForHash().put(key, k, String.valueOf(v));
+            redisUtils.hset(key, k, String.valueOf(v));
         });
     }
 

@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import * as echarts from 'echarts'
 	import routeRequestCountComponent from '@/component/RouteRequestCount.vue'
 	import {countRoutePageList, countRequestTotal} from '@/api/gateway-manage/count_api.js'
 
@@ -159,7 +160,7 @@
 				countRoutePageList({name:this.form.name, groupCode: this.form.groupCode, currentPage: this.currentPage, pageSize: this.pageSize}).then(function(result){
 					if (result.data){
 						_this.tableData = result.data.lists;
-						_this.totalNum = result.data.totalNum;
+						_this.totalNum = result.data.totalNum - 0;
 					}
 				});
 			},
@@ -173,7 +174,7 @@
 				console.log("chart data", seriesData);
 				let _this = this;
 				// 基于准备好的dom，初始化echarts实例
-				let accessChart = this.$echarts.init(document.getElementById(id));
+				let accessChart = echarts.init(document.getElementById(id));
 				var option = {
 					color:'#1890FF',
 					tooltip: {

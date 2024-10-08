@@ -75,7 +75,7 @@
             <appender-ref ref="Console"/>
             <appender-ref ref="CatalinaFile" level="info"/>
         </root>
-        <AsyncLogger name="com.flying.fish.gateway.filter.global.LogGlobalFilter" level="trace" additivity="true" includeLocation="true">
+        <AsyncLogger name="com.rapidark.cloud.gateway.server.filter.global.LogGlobalFilter" level="trace" additivity="true" includeLocation="true">
             <AppenderRef ref="AccessFile" />
         </AsyncLogger>
         <!-- 第三方日志系统 -->

@@ -2,6 +2,7 @@ package com.rapidark.cloud.gateway.formwork.service;
 
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteCountRsp;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.common.utils.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 public class CountService {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
 
     @Resource
     private GatewayAppRouteService gatewayAppRouteService;
@@ -51,11 +52,12 @@ public class CountService {
         if (pageResult.getPageSize() > 0){
             //只取当天的
             String key = RouteConstants.COUNT_DAY_KEY + DateFormatUtils.format(new Date(), Constants.DATE_FORMAT_DAY);
-            Map<String,String> countMap = redisTemplate.opsForHash().entries(key);
+            Map<String,String> countMap = redisUtils.getMap(key);
             List<GatewayAppRoute> gatewayAppRouteList = pageResult.getLists();
             List<GatewayAppRouteCountRsp> routeCountRspList = gatewayAppRouteList.stream().map(r -> {
                 GatewayAppRouteCountRsp rsp = new GatewayAppRouteCountRsp();
                 BeanUtils.copyProperties(r, rsp);
+                rsp.setId(r.getSystemCode());
                 //将routeId缓存的统计值取出
                 String count = countMap.get(rsp.getId());
                 rsp.setCount(StringUtils.isNotBlank(count) ? Integer.parseInt(count) : 0);
@@ -142,7 +144,9 @@ public class CountService {
         List<Integer> counts = new ArrayList<>(dateList.size());
         List<String> dates = new ArrayList<>(dateList.size());
         for (String date : dateList){
-            Map<String,String> countMap = redisTemplate.opsForHash().entries(countTag + date);
+            // FISH_GATEWAY_COUNT:HOUR:2022060713
+            String dateKey = countTag + date;
+            Map<String,String> countMap = redisUtils.getMap(dateKey);
             AtomicReference<Integer> count = new AtomicReference<>(0);
             if (!CollectionUtils.isEmpty(countMap)){
                 for (Map.Entry<String,String> entry : countMap.entrySet()){
@@ -199,7 +203,7 @@ public class CountService {
             for (String routeId : routeIds){
                 String key = countTag + date;
                 String field = (isBalanced ? RouteConstants.BALANCED + "-" + balancedId  + "-" : "") + routeId;
-                String count = (String) redisTemplate.opsForHash().get(key, field);
+                String count = (String) redisUtils.hget(key, field);
                 List<Integer> counts = countMap.get(routeId);
                 if (counts == null){
                     counts = new ArrayList<>();

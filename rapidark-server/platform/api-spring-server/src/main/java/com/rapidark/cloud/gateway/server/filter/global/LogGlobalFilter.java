@@ -1,4 +1,4 @@
-package com.flying.fish.gateway.filter.global;
+package com.rapidark.cloud.gateway.server.filter.global;
 
 import com.rapidark.cloud.gateway.cache.CountCache;
 import com.rapidark.cloud.gateway.cache.RouteReqCache;
@@ -25,10 +25,10 @@ import java.util.List;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
 /**
- * @Description 日志全局过滤器
- * @Author jianglong
- * @Date 2020/06/01
- * @Version V1.0
+ * 日志全局过滤器
+ * @author darkness
+ * @date 2022/6/7 13:04
+ * @version 1.0
  */
 @Slf4j
 @Component

@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import * as echarts from 'echarts'
 	import {regClientList,stopRegClient,startRegClient} from '@/api/gateway-manage/regserver_api.js'
 
 export default {
@@ -88,7 +89,7 @@ export default {
 		drawLine() {
 			let _this = this;
 			// 基于准备好的dom，初始化echarts实例
-			let topologyChart = this.$echarts.init(document.getElementById('topologyChart'));
+			let topologyChart = echarts.init(document.getElementById('topologyChart'));
 			var colors = ['#00ADD0', '#FFA12F', '#B62AFF', '#727CF5', '#1890FF', '#00f6ff', '#20C0F4', '#95F300', '#04FDB8', '#AF5AFF'];
 			var getdata = function getData() {
 				let data = {

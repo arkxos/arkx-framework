@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import * as echarts from 'echarts'
 	import {countBalancedRequest} from '@/api/gateway-manage/count_api.js'
 
 export default {
@@ -37,7 +38,7 @@ export default {
 			console.log("chart data", seriesData);
 			let _this = this;
 			// 基于准备好的dom，初始化echarts实例
-			let routeAccessChart = this.$echarts.init(document.getElementById('routeAccessChart'));
+			let routeAccessChart = echarts.init(document.getElementById('routeAccessChart'));
 			var colors = ['#00ADD0', '#FFA12F', '#B62AFF', '#727CF5', '#1890FF', '#00f6ff', '#20C0F4', '#95F300', '#04FDB8', '#AF5AFF'];
 			var option = {
 				color: colors,

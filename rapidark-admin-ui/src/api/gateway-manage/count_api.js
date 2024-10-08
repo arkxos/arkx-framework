@@ -56,7 +56,7 @@ export const countRequestTotal = data => {
     return request({
         url: '/base/gateway/monitor/count/request/app/total',
         method: 'get',
-		loading: false,
-        data
+		    loading: false,
+        params:data
     })
 };

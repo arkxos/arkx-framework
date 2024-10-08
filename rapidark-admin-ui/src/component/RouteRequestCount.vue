@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import * as echarts from 'echarts'
 import {countAppRequestTotal} from '@/api/gateway-manage/count_api.js'
 export default {
   data() {
@@ -57,7 +58,7 @@ export default {
         //console.log("chart data", seriesData);
         let _this = this;
         // 基于准备好的dom，初始化echarts实例
-        let accessChart = this.$echarts.init(document.getElementById(id));
+        let accessChart = echarts.init(document.getElementById(id));
         //渐变色效果
         var option = {
             // color: ['#80FFA5', '#00DDFF', '#37A2FF', '#00DDFF', '#FFBF00'],
@@ -95,7 +96,7 @@ export default {
                     showSymbol: true,
                     areaStyle: {
                         opacity: 0.8,
-                        color: this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        color: echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0,
                             color: color0
                         }, {

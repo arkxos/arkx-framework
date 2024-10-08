@@ -37,6 +37,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 网关服务
@@ -47,6 +48,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @version 1.0
  */
 @EnableAsync
+@EnableScheduling
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication

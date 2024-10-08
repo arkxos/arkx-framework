@@ -1,12 +1,13 @@
 package com.rapidark.cloud.gateway.formwork.util;
 
 /**
- * @Description 网关路由常量类
- * @Author jianglong
- * @Date 2020/05/29
- * @Version V1.0
+ * 网关路由常量类
+ * @author darkness
+ * @date 2022/6/7 14:06
+ * @version 1.0
  */
 public class RouteConstants {
+
     public static final String BALANCED = "balanced";
     public static final String ROUTE = "route";
     public static final String AUTHORIZE = "Authorize";
@@ -37,21 +38,21 @@ public class RouteConstants {
     /**
      * redis统计缓存key前缀
      */
-    public final static String COUNT_DAY_KEY = "FISH_GATEWAY_COUNT:DAY:";
-    public final static String COUNT_HOUR_KEY = "FISH_GATEWAY_COUNT:HOUR:";
-    public final static String COUNT_MIN_KEY = "FISH_GATEWAY_COUNT:MIN:";
+    public final static String COUNT_DAY_KEY = "RAPIDARK_GATEWAY_COUNT:DAY:";
+    public final static String COUNT_HOUR_KEY = "RAPIDARK_GATEWAY_COUNT:HOUR:";
+    public final static String COUNT_MIN_KEY = "RAPIDARK_GATEWAY_COUNT:MIN:";
     /**
      * redis同步版本缓存key
      */
-    public final static String SYNC_VERSION_KEY = "fish_gateway_sync_version";
+    public final static String SYNC_VERSION_KEY = "rapidark_gateway_sync_version";
     /**
      * redis同步请求时间缓存key
      */
-    public final static String SYNC_REQUEST_TIME_KEY = "fish_gateway_request_time";
+    public final static String SYNC_REQUEST_TIME_KEY = "rapidark_gateway_request_time";
     /**
      * redis控制队列缓存key
      */
-    public final static String MONITOR_QUEUE_KEY = "fish_gateway_monitor_queue";
+    public final static String MONITOR_QUEUE_KEY = "rapidark_gateway_monitor_queue";
 
     /**
      * 熔断器

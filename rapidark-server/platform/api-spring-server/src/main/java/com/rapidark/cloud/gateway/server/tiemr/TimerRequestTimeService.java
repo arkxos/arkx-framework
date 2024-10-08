@@ -1,8 +1,9 @@
-package com.flying.fish.gateway.tiemr;
+package com.rapidark.cloud.gateway.server.tiemr;
 
 import com.rapidark.cloud.gateway.cache.RouteReqCache;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
+import com.rapidark.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TimerRequestTimeService {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
 
     /**
      * 每30秒钟执行一次缓存同步
@@ -42,14 +43,14 @@ public class TimerRequestTimeService {
         dataMap.putAll(cacheMap);
         String value ;
         for (Map.Entry<String, Long> entry : dataMap.entrySet()){
-            value = (String) redisTemplate.opsForHash().get(RouteConstants.SYNC_REQUEST_TIME_KEY, entry.getKey());
+            value = (String) redisUtils.hget(RouteConstants.SYNC_REQUEST_TIME_KEY, entry.getKey());
             if (StringUtils.isNotBlank(value)){
                 //比缓存的值要大，更新它
                 if (entry.getValue() < Long.parseLong(value)){
                     continue;
                 }
             }
-            redisTemplate.opsForHash().put(RouteConstants.SYNC_REQUEST_TIME_KEY, entry.getKey(), String.valueOf(entry.getValue()));
+            redisUtils.hset(RouteConstants.SYNC_REQUEST_TIME_KEY, entry.getKey(), String.valueOf(entry.getValue()));
         }
     }
 }

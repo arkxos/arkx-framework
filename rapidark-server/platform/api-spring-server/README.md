@@ -6,6 +6,7 @@
 
 指标采集、流量监控、组合流控
 https://github.com/moutainhigh/spring-cloud-gateway-extends
+https://gitee.com/plumeorg/plumelog
 
 #### 修改网关启动参数
 ```
