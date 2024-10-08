@@ -45,7 +45,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerR
      */
     @Transactional(readOnly = true)
     public PageResult notLoadServerPageList(int currentPage, int pageSize){
-        String sql ="SELECT r.id,r.name,r.groupCode,r.uri,r.path,r.method FROM route r WHERE r.status='0' ";
+        String sql ="SELECT r.id,r.name,r.group_Code,r.uri,r.path,r.method FROM route r WHERE r.status='0' ";
         return pageNativeQuery(sql, null, currentPage, pageSize);
     }
 

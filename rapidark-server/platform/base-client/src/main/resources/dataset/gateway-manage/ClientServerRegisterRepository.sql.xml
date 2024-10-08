@@ -11,7 +11,7 @@
                     s.token, s.secret_Key, s.token_Effective_Time,
                     c.*
                 FROM base_app c, gateway_client_server_register s
-                WHERE c.id = s.client_Id AND s.route_Id=:routeId
+                WHERE c.app_id = s.client_Id AND s.route_Id=:routeId
             ]]>
         </value>
     </sql>
@@ -24,7 +24,7 @@
                     s.token, s.secret_Key, s.token_Effective_Time,
                     c.*
                 FROM base_app c, gateway_client_server_register s
-                WHERE c.id = s.client_Id AND s.route_Id=:routeId
+                WHERE c.app_id = s.client_Id AND s.route_Id=:routeId
             ]]>
         </value>
     </sql>

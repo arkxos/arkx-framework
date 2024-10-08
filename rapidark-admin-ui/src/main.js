@@ -21,7 +21,10 @@ import GLOBAL_FUN from './api/gateway-manage/global_function.js'
 import 'xe-utils'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/style.css'
-
+// 引入axios, 'cnpm install axios -S'
+import axios from 'axios'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 /**
  * @description 正式环境默认使用mock，正式项目记得注释后再打包
  */
@@ -33,6 +36,7 @@ import { decodeUnicode } from '@/utils/util'
 //   mockXHR()
 // }
 
+Vue.use(mavonEditor)
 Vue.use(iView, {
   // i18n: (key, value) => i18n.t(key, value)
 })
@@ -44,7 +48,7 @@ Vue.use(VXETable)
 // Vue.prototype.$XReadFile = VXETable.readFile
 // 注册组件
 Vue.use(permission)
-
+// Vue.use(Component)
 Vue.component(TreeTable.name, TreeTable)
 Vue.component('treeselect', Treeselect)
 Vue.component('ArkIcon', ArkIcon)
@@ -53,7 +57,8 @@ Vue.use(dict)
 // 将 api, utils 挂载在 Vue 的 prototype 下
 Vue.prototype.GLOBAL_VAR = GLOBAL_VAR
 Vue.prototype.GLOBAL_FUN = GLOBAL_FUN
-
+// Vue.prototype.$api = api
+Vue.prototype.$ajax = axios
 Vue.prototype.decodeUnicode = decodeUnicode
 Vue.prototype.$utils = utils
 

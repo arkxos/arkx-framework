@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card class="box-card">
-      <el-row>
+      <el-row style="margin-bottom: 10px;">
         <el-col :span="10">
           <div style="margin-bottom: 9px;">
 <!--            <span style="font-size: 18pt;font-weight: bold; ">服务管理</span>-->
@@ -20,7 +20,7 @@
               <el-popover placement="bottom" slot="prepend" trigger="click">
                 <el-radio v-model="form.status" v-for="item in statusOptions" :key="item.value" :label="item.value">{{item.label}}</el-radio>
                 <el-button slot="reference">
-                  服务状态:{{form.status === '0' ? '启用': form.status === '1' ? '禁用' : '所有'}}<i class="el-icon-caret-bottom el-icon--right"></i>
+                  服务状态:{{form.status === '1' ? '启用': form.status === '0' ? '禁用' : '所有'}}<i class="el-icon-caret-bottom el-icon--right"></i>
                 </el-button>
               </el-popover>
               <el-button slot="append" icon="el-icon-search" @click="search" title="查询网关服务"></el-button>
@@ -29,28 +29,35 @@
         </el-col>
       </el-row>
       <el-table size="small" :data="tableData" style="width: 100%">
-        <el-table-column label="服务ID" width="150">
-          <template slot-scope="scope">
-            <el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.id}}</el-tag>
-          </template>
-        </el-table-column>
+
         <el-table-column label="分组" width="100">
           <template slot-scope="scope">
             <el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="系统代号>服务名称" width="250">
-          <template slot-scope="scope">
-            <span style="font-weight: bold;" v-if="scope.row.systemCode != undefined && scope.row.systemCode != ''">{{scope.row.systemCode}} ></span> {{scope.row.name}}
-          </template>
-        </el-table-column>
         <el-table-column label="状态" width="80" prop="status" :formatter="formatterStatus">
           <template slot-scope="scope">
-            <el-tag effect="dark" size="small" v-if="scope.row.status === '0'" type="">启用</el-tag>
-            <el-tag effect="dark" size="small" v-if="scope.row.status === '1'" type="danger">禁用</el-tag>
+            <el-tag size="small" v-if="scope.row.status === '1'" type="">启用</el-tag>
+            <el-tag size="small" v-if="scope.row.status === '0'" type="gray">禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="断言路径" width="250">
+        <el-table-column label="应用名称" width="200">
+          <template slot-scope="scope">
+            {{scope.row.name}}
+          </template>
+        </el-table-column>
+        <el-table-column label="应用代码" width="200">
+          <template slot-scope="scope">
+            {{scope.row.systemCode}}
+          </template>
+        </el-table-column>
+<!--        <el-table-column label="服务ID" width="150">-->
+<!--          <template slot-scope="scope">-->
+<!--            <el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.id}}</el-tag>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+
+        <el-table-column label="路由前缀" width="250">
           <template slot-scope="scope">
             {{scope.row.path}}
             <el-popover trigger="click" placement="bottom">
@@ -60,29 +67,25 @@
                   <span class="route-title">网关代理地址</span>
                 </div>
                 <span>
-                 <el-tag size="small" type="success" style="font-weight: bold;">{{scope.row.path}}</el-tag>
-                 <el-button slot="reference" icon="el-icon-document-copy" type="text" @click="handleCopy(scope.row.path)" title="复制"></el-button>
-                </span>
+									<el-tag size="small" type="success" style="font-weight: bold;">{{scope.row.path}}</el-tag>
+									<el-button slot="reference" icon="el-icon-document-copy" type="text" @click="handleCopy(scope.row.path)" title="复制"></el-button>
+								</span>
                 <br/>
               </div>
               <el-button slot="reference" icon="iconfont icon-IP" type="text" title="网关代理地址"></el-button>
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="路由方式" :show-overflow-tooltip="true" width="200">
-          <template #default="{ row }">
-            <span v-if="row.type==='service'">
-              <el-tag size="small" type="success" style="font-weight: bold;">负载均衡</el-tag>
-            </span>
-            <span v-if="row.type==='url'">
-              <el-tag size="small" type="warning" style="font-weight: bold;">反向代理</el-tag>
-            </span>
+        <el-table-column label="路由方式" width="90" prop="status" :formatter="formatterStatus">
+          <template slot-scope="scope">
+            <el-tag size="small" v-if="scope.row.type === 'service'" type="success">负载均衡</el-tag>
+            <el-tag size="small" v-if="scope.row.type === 'url'">反向代理</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="路由目标" :show-overflow-tooltip="true" width="200">
-          <template #default="{ row }">
-            <span v-if="row.type==='service'"><el-tag size="small" type="success" style="font-weight: bold;">{{ row.serviceId }}</el-tag></span>
-            <span v-else-if="row.type==='url'"><el-tag size="small" type="warning" style="font-weight: bold;">{{ row.uri }}</el-tag></span>
+          <template slot-scope="scope">
+            <el-tag size="small" v-if="scope.row.type === 'service'" type="info" style="font-weight: bold;">{{scope.row.uri}}</el-tag>
+            <el-tag size="small" v-if="scope.row.type === 'url'" type="info" style="font-weight: bold;">{{scope.row.uri}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="请求模式" prop="method" width="70"></el-table-column>
@@ -208,21 +211,21 @@ export default {
       return row.status === '0'?'启用':'禁用';
     },
     handleCreateGateway(){
-      this.$router.push({path:'/createGateway',query:{handleType:'add'}});
+      this.$router.push({path:'/gateway-manage/createGateway',query:{handleType:'add'}});
     },
     handleCommandGateway(obj){
       console.log("command" , obj);
       let _this = this;
       if (obj.command === 'addClient'){
-        this.$router.push({path:'/addGatewayClient',query:{route:this.newRoute(obj.row)}});
+        this.$router.push({path:'/gateway-manage/addGatewayClient',query:{route:this.newRoute(obj.row)}});
       } else if (obj.command === 'info'){
         this.drawer = true;
         this.infoForm = obj.row;
       } else if (obj.command === 'edit'){
         this.infoForm = obj.row;
-        this.$router.push({path:'/createGateway',query:{handleType:'edit',route:this.newRoute(obj.row)}});
+        this.$router.push({path:'/gateway-manage/createGateway',query:{handleType:'edit',route:this.newRoute(obj.row)}});
       } else if (obj.command === 'rule'){
-        this.$router.push({path:'/addGroovyScript',query:{route:this.newRoute(obj.row)}});
+        this.$router.push({path:'/gateway-manage/addGroovyScript',query:{route:this.newRoute(obj.row)}});
       } else if (obj.command === 'start'){
         startRoute({id:obj.row.id}).then(function(result){
           _this.GLOBAL_FUN.successMsg();
@@ -241,7 +244,7 @@ export default {
           })
         }).catch(_ => {});
       } else if (obj.command === 'topology'){
-        this.$router.push({path:'/gatewayTopology',query:{route:this.newRoute(obj.row)}});
+        this.$router.push({path:'/gateway-manage/gatewayTopology',query:{route:this.newRoute(obj.row)}});
       }
     },
     handleClose(done) {
@@ -259,7 +262,7 @@ export default {
         console.log('result:', result);
         if (result.data && result.data.lists){
           _this.tableData = result.data.lists;
-          _this.totalNum = result.data.totalNum;
+          _this.totalNum = result.data.totalNum - 0;
         }
       });
     },

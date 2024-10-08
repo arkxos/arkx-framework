@@ -27,10 +27,10 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * @Description 客户端注册服务控制器类
- * @Author JL
- * @Date 2020/05/16
- * @Version V1.0
+ * 客户端注册服务
+ * @author darkness
+ * @date 2022/6/13 16:07
+ * @version 1.0
  */
 @RestController
 public class ClientServerRegisterRest extends BaseRest {

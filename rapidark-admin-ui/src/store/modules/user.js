@@ -52,7 +52,7 @@ const actions = {
    */
   setVirtualRoles({ commit, dispatch }) {
     dispatch('acl/setFull', true, { root: true })
-    commit('setAvatar', 'https://i.gtimg.cn/club/item/face/img/2/15922_100.gif')
+    commit('setAvatar', avatar)
     commit('setUsername', 'admin(未开启登录拦截)')
   },
   /**
@@ -161,7 +161,7 @@ const actions = {
    */
   async resetAll({ commit, dispatch }) {
     commit('setUsername', '游客')
-    commit('setAvatar', 'https://i.gtimg.cn/club/item/face/img/2/15922_100.gif')
+    commit('setAvatar', avatar)
     commit('routes/setRoutes', [], { root: true })
     await dispatch('setToken', '')
     await dispatch('acl/setFull', false, { root: true })

@@ -31,7 +31,7 @@ export const regServerPageList = data => {
     return request({
         url: '/base/regServer/serverPageList',
         method: 'get',
-      params: data
+        params: data
     })
 };
 
@@ -40,7 +40,7 @@ export const regServerPageList = data => {
  */
 export const regClientPageList = data => {
     return request({
-        url: '/base/regServer/regClientList',
+        url: '/base/regServer/clientPageList',
         method: 'get',
         params: data
     })
@@ -52,8 +52,8 @@ export const regClientPageList = data => {
 export const startRegServer = data => {
     return request({
         url: '/base/regServer/start',
-        method: 'get',
-      params: data
+        method: 'post',
+        params: data
     })
 };
 
@@ -63,8 +63,8 @@ export const startRegServer = data => {
 export const stopRegServer = data => {
     return request({
         url: '/base/regServer/stop',
-        method: 'get',
-      params: data
+        method: 'post',
+        params: data
     })
 };
 
@@ -74,8 +74,8 @@ export const stopRegServer = data => {
 export const startAllRegServer = data => {
     return request({
         url: '/base/regServer/startClientAllRoute',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -85,8 +85,8 @@ export const startAllRegServer = data => {
 export const stopAllRegServer = data => {
     return request({
         url: '/base/regServer/stopClientAllRoute',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -96,8 +96,8 @@ export const stopAllRegServer = data => {
 export const deleteRegServer = data => {
     return request({
         url: '/base/regServer/delete',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -107,8 +107,8 @@ export const deleteRegServer = data => {
 export const notRegServerPageList = data => {
     return request({
         url: '/base/regServer/notRegServerPageList',
-        method: 'post',
-        data
+        method: 'get',
+        params: data
     })
 };
 
@@ -131,8 +131,8 @@ export const addRegClient = data => {
 export const startAllRegClient = data => {
     return request({
         url: '/base/regServer/startRouteAllClient',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -142,8 +142,8 @@ export const startAllRegClient = data => {
 export const stopAllRegClient = data => {
     return request({
         url: '/base/regServer/stopRouteAllClient',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -153,8 +153,8 @@ export const stopAllRegClient = data => {
 export const startRegClient = data => {
     return request({
         url: '/base/regServer/start',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -164,8 +164,8 @@ export const startRegClient = data => {
 export const stopRegClient = data => {
     return request({
         url: '/base/regServer/stop',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -175,8 +175,8 @@ export const stopRegClient = data => {
 export const deleteRegClient = data => {
     return request({
         url: '/base/regServer/delete',
-        method: 'get',
-        data
+        method: 'post',
+        params: data
     })
 };
 
@@ -186,8 +186,8 @@ export const deleteRegClient = data => {
 export const notRegClientPageList = data => {
     return request({
         url: '/base/regServer/notRegClientPageList',
-        method: 'post',
-        data
+        method: 'get',
+        params: data
     })
 };
 
@@ -197,8 +197,8 @@ export const notRegClientPageList = data => {
 export const regClientList = data => {
     return request({
         url: '/base/regServer/regClientList',
-        method: 'post',
-        data
+        method: 'get',
+        params: data
     })
 };
 

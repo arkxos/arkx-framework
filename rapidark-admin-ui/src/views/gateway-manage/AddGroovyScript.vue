@@ -111,7 +111,16 @@
 <script>
 
 	import groovyScriptTableComponent from '@/component/GroovyScriptTable.vue'
-	import {deleteGroovyScript,stopGroovyScript,startGroovyScript,upGroovyScript,downGroovyScript,groovyScriptList,groovyScriptCode} from '@/api/gateway-manage/groovyscript_api'
+  import {
+    deleteGroovyScript,
+    stopGroovyScript,
+    startGroovyScript,
+    upGroovyScript,
+    downGroovyScript,
+    groovyScriptList,
+    groovyScriptCode,
+    addGroovyScript, updateGroovyScript
+  } from '@/api/gateway-manage/groovyscript_api'
 
 	export default {
 		data() {
@@ -171,12 +180,13 @@
 			init(route) {
 				if (route){
 					this.routeForm = route.form;
+          console.log("this.routeForm ", this.routeForm )
 					this.groovyScriptList();
 				}
 			},
 			goBack() {
 			    console.log('go back');
-				this.$router.push({path:'/gatewayAppRoute',query:{}});
+				this.$router.push({path:'/gatewayList',query:{}});
 			},
 			handleCommandRegServer(obj){
 				console.log("command" , obj);
@@ -256,8 +266,10 @@
 						this.successVisible = false;
 						this.groovyForm.routeId = this.routeForm.id;
 						let path = this.handleType == 'add' ? '/groovyScript/add' : '/groovyScript/update' ;
-						this.$ajax
-						.post(this.GLOBAL_VAR.baseURL + path, this.groovyForm)
+						let setScript = this.handleType == 'add' ? addGroovyScript : updateGroovyScript
+            // this.$ajax
+						// .post(this.GLOBAL_VAR.baseURL + path, this.groovyForm)
+            setScript(this.groovyForm)
 						.then((result) => {
 							if (result && result.data) {
 								if (result.data.code == '1') {

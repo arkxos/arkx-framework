@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
  export const addGroovyScript = data => {
     return request({
-        url: '/groovyScript/add',
+        url: '/base/groovyScript/add',
         method: 'post',
         data
     })
@@ -17,7 +17,7 @@ import request from '@/utils/request'
  */
 export const updateGroovyScript = data => {
     return request({
-        url: '/groovyScript/update',
+        url: '/base/groovyScript/update',
         method: 'post',
         data
     })
@@ -28,9 +28,9 @@ export const updateGroovyScript = data => {
  */
 export const groovyScriptList = data => {
     return request({
-        url: '/groovyScript/list',
+        url: '/base/groovyScript/list',
         method: 'get',
-        data
+        params: data
     })
 };
 
@@ -39,7 +39,7 @@ export const groovyScriptList = data => {
  */
 export const deleteGroovyScript = data => {
     return request({
-        url: '/groovyScript/delete',
+        url: '/base/groovyScript/delete',
         method: 'get',
         data
     })
@@ -50,7 +50,7 @@ export const deleteGroovyScript = data => {
  */
  export const startGroovyScript = data => {
     return request({
-        url: '/groovyScript/start',
+        url: '/base/groovyScript/start',
         method: 'get',
         data
     })
@@ -61,7 +61,7 @@ export const deleteGroovyScript = data => {
  */
 export const stopGroovyScript = data => {
     return request({
-        url: '/groovyScript/stop',
+        url: '/base/groovyScript/stop',
         method: 'get',
         data
     })
@@ -72,7 +72,7 @@ export const stopGroovyScript = data => {
  */
  export const upGroovyScript = data => {
     return request({
-        url: '/groovyScript/up',
+        url: '/base/groovyScript/up',
         method: 'get',
         data
     })
@@ -83,7 +83,7 @@ export const stopGroovyScript = data => {
  */
  export const downGroovyScript = data => {
     return request({
-        url: '/groovyScript/down',
+        url: '/base/groovyScript/down',
         method: 'get',
         data
     })
