@@ -323,7 +323,7 @@
 </template>
 
 <script>
-import { getApps, updateApp, addApp, removeApp, getAppClientInfo, updateAppClientInfo, restApp } from '@/api/app'
+import { getApps, updateApp, addApp, removeApp, getAppClientInfo, updateAppClientInfo, restApp } from '@/api/gateway-manage/open_client'
 import { getAllDevelopers } from '@/api/developer'
 import {
   getAuthorityApi,

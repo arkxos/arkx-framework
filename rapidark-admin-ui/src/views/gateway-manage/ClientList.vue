@@ -125,7 +125,7 @@
 <script>
 import {clientPageList, deleteClient, startClient, stopClient} from '@/api/gateway-manage/client_api.js'
 import clientInfoComponent from '@/component/ClientInfo.vue'
-import {restApp} from "@/api/app";
+import {restApp} from "@/api/gateway-manage/open_client";
 
 export default {
   data() {
