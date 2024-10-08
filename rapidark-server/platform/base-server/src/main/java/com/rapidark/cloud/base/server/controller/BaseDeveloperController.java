@@ -25,13 +25,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 系统用户-开发者信息
+ * 系统用户-开发商信息
  *
  * @author liuyadu
  */
 @Api(tags = "系统用户-开发者管理")
 @RestController
 public class BaseDeveloperController implements IBaseDeveloperServiceClient {
+
     @Autowired
     private BaseDeveloperService baseDeveloperService;
 
@@ -86,7 +87,7 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
      * @param password
      * @param nickName
      * @param status
-     * @param userType
+     * @param type
      * @param email
      * @param mobile
      * @param userDesc
@@ -96,21 +97,25 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
     @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
     @PostMapping("/developer/add")
     public ResultBody<Long> addUser(
+            @RequestParam(value = "companyName") String companyName,
+            @RequestParam(value = "personName") String personName,
+            @RequestParam(value = "type") Integer type,
             @RequestParam(value = "userName") String userName,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
-            @RequestParam(value = "userType") String userType,
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "mobile", required = false) String mobile,
             @RequestParam(value = "userDesc", required = false) String userDesc,
             @RequestParam(value = "avatar", required = false) String avatar
     ) {
         BaseDeveloper developer = new BaseDeveloper();
+        developer.setCompanyName(companyName);
+        developer.setPersonName(personName);
+        developer.setType(type);
         developer.setUserName(userName);
         developer.setPassword(password);
         developer.setNickName(nickName);
-        developer.setUserType(userType);
         developer.setEmail(email);
         developer.setMobile(mobile);
         developer.setUserDesc(userDesc);
@@ -126,7 +131,7 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
      * @param userId
      * @param nickName
      * @param status
-     * @param userType
+     * @param type
      * @param email
      * @param mobile
      * @param userDesc
@@ -137,9 +142,11 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
     @PostMapping("/developer/update")
     public ResultBody updateUser(
             @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "companyName") String companyName,
+            @RequestParam(value = "personName") String personName,
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
-            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "type") Integer type,
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "mobile", required = false) String mobile,
             @RequestParam(value = "userDesc", required = false) String userDesc,
@@ -147,8 +154,10 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
     ) {
         BaseDeveloper developer = new BaseDeveloper();
         developer.setUserId(userId);
+        developer.setCompanyName(companyName);
+        developer.setPersonName(personName);
         developer.setNickName(nickName);
-        developer.setUserType(userType);
+        developer.setType(type);
         developer.setEmail(email);
         developer.setMobile(mobile);
         developer.setUserDesc(userDesc);

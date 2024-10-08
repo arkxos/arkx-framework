@@ -35,6 +35,10 @@
           <Badge v-else-if="row.status===2" status="warning" text="锁定"/>
           <Badge v-else status="error" text="禁用"/>
         </template>
+        <template slot="type" slot-scope="{ row }">
+          <Badge v-if="(row.type & 1) === 1" status="success" text="提供方"/>
+          <Badge v-if="(row.type & 2) === 2" status="warning" text="调用方"/>
+        </template>
         <template slot="action" slot-scope="{ row }">
           <a :disabled="hasAuthority('developerEdit')?false:true" @click="handleModal(row)">编辑</a>&nbsp;
           <Dropdown v-show="hasAuthority('developerEdit')" transfer ref="dropdown" @on-click="handleClick($event,row)">
@@ -53,70 +57,78 @@
             show-total
             @on-change="handlePage" @on-page-size-change='handlePageSize'/>
     </Card>
-    <Modal v-model="modalVisible"
-           :title="modalTitle"
-           width="50"
-           @on-cancel="handleReset">
-      <div>
-        <Tabs @on-click="handleTabClick" :value="current">
-          <TabPane label="开发者信息" name="form1">
-            <Form v-show="current == 'form1'" ref="form1" :model="formItem" :rules="formItemRules" :label-width="100">
-              <FormItem label="开发者类型" prop="userType">
-                <RadioGroup v-model="formItem.userType">
-                  <Radio label="isp">服务提供商</Radio>
-                  <Radio label="normal">自研开发者</Radio>
-                </RadioGroup>
-              </FormItem>
-              <FormItem label="昵称" prop="nickName">
-                <Input v-model="formItem.nickName" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem label="登录名" prop="userName">
-                <Input :disabled="formItem.userId?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem v-if="formItem.userId?false:true" label="登录密码" prop="password">
-                <Input type="password" v-model="formItem.password" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem v-if="formItem.userId?false:true" label="再次确认密码" prop="passwordConfirm">
-                <Input type="password" v-model="formItem.passwordConfirm" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem label="邮箱" prop="email">
-                <Input v-model="formItem.email" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem label="手机号" prop="mobile">
-                <Input v-model="formItem.mobile" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem label="状态">
-                <RadioGroup v-model="formItem.status" type="button">
-                  <Radio label="0">禁用</Radio>
-                  <Radio label="1">正常</Radio>
-                  <Radio label="2">锁定</Radio>
-                </RadioGroup>
-              </FormItem>
-              <FormItem label="描述">
-                <Input v-model="formItem.userDesc" type="textarea" placeholder="请输入内容"/>
-              </FormItem>
-            </Form>
-          </TabPane>
-          <TabPane :disabled="!formItem.userId" label="修改密码" name="form2">
-            <Form v-show="current == 'form2'" ref="form2" :model="formItem" :rules="formItemRules" :label-width="100">
-              <FormItem label="登录名" prop="userName">
-                <Input :disabled="formItem.userId?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem label="登录密码" prop="password">
-                <Input type="password" v-model="formItem.password" placeholder="请输入内容"/>
-              </FormItem>
-              <FormItem label="再次确认密码" prop="passwordConfirm">
-                <Input type="password" v-model="formItem.passwordConfirm" placeholder="请输入内容"/>
-              </FormItem>
-            </Form>
-          </TabPane>
-        </Tabs>
-        <div class="drawer-footer">
-          <Button type="default" @click="handleReset">取消</Button>&nbsp;
-          <Button type="primary" @click="handleSubmit" :loading="saving">保存</Button>
-        </div>
+
+    <el-dialog
+      :close-on-click-modal="false"
+      :visible="modalVisible"
+      :title="modalTitle"
+      :before-close="handleReset">
+
+      <el-tabs @on-click="handleTabClick" :value="current">
+        <el-tab-pane label="开发者信息" name="form1">
+          <el-form v-show="current == 'form1'" ref="form1" :model="formItem" :rules="formItemRules" label-width="120px">
+            <el-form-item label="公司类型" prop="companyType">
+              <el-checkbox-group v-model="formItem.companyType">
+                <el-checkbox :label="1">服务提供方</el-checkbox>
+                <el-checkbox :label="2">服务调用方</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+            <el-form-item label="公司名称" prop="companyName">
+              <el-input v-model="formItem.companyName" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="联系人" prop="personName">
+              <el-input v-model="formItem.personName" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="手机号" prop="mobile">
+              <el-input v-model="formItem.mobile" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="昵称" prop="nickName">
+              <el-input v-model="formItem.nickName" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="登录名" prop="userName">
+              <el-input :disabled="formItem.userId?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item v-if="formItem.userId?false:true" label="登录密码" prop="password">
+              <el-input type="password" v-model="formItem.password" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item v-if="formItem.userId?false:true" label="再次确认密码" prop="passwordConfirm">
+              <el-input type="password" v-model="formItem.passwordConfirm" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="formItem.email" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="状态">
+              <RadioGroup v-model="formItem.status" type="button">
+                <Radio label="0">禁用</Radio>
+                <Radio label="1">正常</Radio>
+                <Radio label="2">锁定</Radio>
+              </RadioGroup>
+            </el-form-item>
+            <el-form-item label="描述">
+              <el-input v-model="formItem.userDesc" type="textarea" placeholder="请输入内容"/>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane :disabled="!formItem.userId" label="修改密码" name="form2">
+          <el-form v-show="current == 'form2'" ref="form2" :model="formItem" :rules="formItemRules" label-width="100">
+            <el-form-item label="登录名" prop="userName">
+              <el-input :disabled="formItem.userId?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="登录密码" prop="password">
+              <el-input type="password" v-model="formItem.password" placeholder="请输入内容"/>
+            </el-form-item>
+            <el-form-item label="再次确认密码" prop="passwordConfirm">
+              <el-input type="password" v-model="formItem.passwordConfirm" placeholder="请输入内容"/>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="default" @click="handleReset">取消</el-button>&nbsp;
+        <el-button type="primary" @click="handleSubmit" :loading="saving">保存</el-button>
       </div>
-    </Modal>
+    </el-dialog>
   </div>
 </template>
 
@@ -189,8 +201,18 @@ export default {
         order: 'desc'
       },
       formItemRules: {
-        userType: [
-          { required: true, message: '开发者类型不能为空', trigger: 'blur' }
+        companyName: [
+          { required: true, message: '公司名称不能为空', trigger: 'blur' }
+        ],
+        personName: [
+          { required: true, message: '联系人不能为空', trigger: 'blur' }
+        ],
+        mobile: [
+          { required: true, message: '联系方式不能为空', trigger: 'blur' },
+          { validator: validateMobile, trigger: 'blur' }
+        ],
+        companyType: [
+          { required: true, message: '公司类型不能为空', trigger: 'blur' }
         ],
         userName: [
           { required: true, message: '开发者名不能为空', trigger: 'blur' },
@@ -207,13 +229,11 @@ export default {
         ],
         email: [
           { required: false, type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
-        ],
-
-        mobile: [
-          { validator: validateMobile, trigger: 'blur' }
         ]
       },
       formItem: {
+        companyName: '',
+        personName: '',
         userId: '',
         userName: '',
         nickName: '',
@@ -223,7 +243,7 @@ export default {
         companyId: '',
         email: '',
         mobile: '',
-        userType: 'isp',
+        companyType: [1],
         userDesc: '',
         avatar: '',
         grantRoles: [],
@@ -236,6 +256,27 @@ export default {
         {
           type: 'selection',
           width: 60
+        },
+        {
+          title: '公司名称',
+          key: 'companyName',
+          width: 200
+        },
+        {
+          title: '联系人',
+          key: 'personName',
+          width: 200
+        },
+        {
+          title: '手机号',
+          key: 'mobile',
+          width: 200
+        },
+        {
+          title: '公司类型',
+          key: 'type',
+          slot: 'type',
+          width: 150
         },
         {
           title: '登录名',
@@ -253,20 +294,10 @@ export default {
           width: 200
         },
         {
-          title: '手机号',
-          key: 'mobile',
-          width: 200
-        },
-        {
           title: '状态',
           slot: 'status',
           key: 'status',
           width: 100
-        },
-        {
-          title: '开发者类型',
-          key: 'userType',
-          width: 150
         },
         {
           title: '注册时间',
@@ -290,7 +321,15 @@ export default {
   methods: {
     handleModal (data) {
       if (data) {
+        console.log('data', data)
         this.formItem = Object.assign({}, this.formItem, data)
+        this.formItem.companyType = [];
+        if((this.formItem.type & 1) === 1) {
+          this.formItem.companyType.push(1)
+        }
+        if((this.formItem.type & 2) === 2) {
+          this.formItem.companyType.push(2)
+        }
       }
       if (this.current === this.forms[0]) {
         this.modalTitle = data ? '编辑开发者 - ' + data.userName : '添加开发者'
@@ -316,7 +355,7 @@ export default {
         companyId: '',
         email: '',
         mobile: '',
-        userType: 'isp',
+        companyType: [1],
         userDesc: '',
         avatar: '',
         grantRoles: [],
@@ -341,6 +380,11 @@ export default {
         this.$refs[this.current].validate((valid) => {
           if (valid) {
             this.saving = true
+            let me = this;
+            this.formItem.type = 0
+            this.formItem.companyType.forEach(item=>{
+              me.formItem.type += item
+            })
             if (this.formItem.userId) {
               updateDeveloper(this.formItem).then(res => {
                 if (res.code === 0) {

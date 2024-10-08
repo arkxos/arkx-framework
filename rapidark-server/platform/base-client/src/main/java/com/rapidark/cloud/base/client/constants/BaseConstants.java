@@ -26,7 +26,9 @@ public class BaseConstants {
     /**
      * 系统用户类型:超级管理员-super 普通管理员-admin
      */
-    public final static String USER_TYPE_SUPER = "super";
+    public final static Integer USER_TYPE_SUPER = 128;//"super";
+    public final static Integer COMPANY_TYPE_ADMIN = 64;//"admin";
+
     public final static String USER_TYPE_ADMIN = "admin";
 
     /**

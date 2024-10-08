@@ -9,6 +9,8 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
 import com.rapidark.cloud.base.server.mapper.BaseDeveloperMapper;
+import com.rapidark.cloud.base.server.service.BaseAccountService;
+import com.rapidark.cloud.base.server.service.BaseDeveloperService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
@@ -23,8 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 系统用户资料管理
+ *
  * @author: liuyadu
- * @date: 2018/10/24 16:33
+ * @date: 2018/10/24 16:38
  * @description:
  */
 @Service
@@ -87,7 +91,7 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      */
     public void addUserThirdParty(BaseDeveloper baseDeveloper, String accountType) {
         if (!baseAccountService.isExist(baseDeveloper.getUserName(), accountType, ACCOUNT_DOMAIN)) {
-            baseDeveloper.setUserType(BaseConstants.USER_TYPE_ADMIN);
+            baseDeveloper.setType(BaseConstants.COMPANY_TYPE_ADMIN);
             baseDeveloper.setCreateTime(new Date());
             baseDeveloper.setUpdateTime(baseDeveloper.getCreateTime());
             //保存系统用户信息
@@ -118,7 +122,7 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
         QueryWrapper<BaseDeveloper> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(ObjectUtils.isNotEmpty(query.getUserId()), BaseDeveloper::getUserId, query.getUserId())
-                .eq(ObjectUtils.isNotEmpty(query.getUserType()), BaseDeveloper::getUserType, query.getUserType())
+                .eq(ObjectUtils.isNotEmpty(query.getType()), BaseDeveloper::getType, query.getType())
                 .eq(ObjectUtils.isNotEmpty(query.getUserName()), BaseDeveloper::getUserName, query.getUserName())
                 .eq(ObjectUtils.isNotEmpty(query.getMobile()), BaseDeveloper::getMobile, query.getMobile());
         queryWrapper.orderByDesc("create_time");

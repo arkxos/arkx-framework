@@ -7,15 +7,18 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rapidark.common.annotation.TableAlias;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import lombok.Data;
 
 /**
  * 系统用户-管理员信息
  *
  * @author liuyadu
  */
+@Data
 @TableAlias("developer")
 @TableName("base_developer")
 public class BaseDeveloper extends AbstractEntity {
+
     private static final long serialVersionUID = -735161640894047414L;
 
     /**
@@ -23,6 +26,10 @@ public class BaseDeveloper extends AbstractEntity {
      */
     @TableId(type = IdType.ASSIGN_ID)
     private Long userId;
+
+    private String companyName;
+
+    private String personName;
 
     /**
      * 登陆名
@@ -32,7 +39,7 @@ public class BaseDeveloper extends AbstractEntity {
     /**
      * 开发者类型:isp-服务提供商 dev-自研开发者
      */
-    private String userType;
+    private Integer type;
 
     /**
      * 企业ID
@@ -76,91 +83,4 @@ public class BaseDeveloper extends AbstractEntity {
      */
     private Integer status;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public Long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getUserDesc() {
-        return userDesc;
-    }
-
-    public void setUserDesc(String userDesc) {
-        this.userDesc = userDesc;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }

@@ -6,13 +6,15 @@
           WARNING - @mbg.generated
         -->
         <id column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="company_name" jdbcType="VARCHAR" property="companyName"/>
+        <result column="person_name" jdbcType="VARCHAR" property="personName"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="company_id" jdbcType="BIGINT" property="companyId"/>
-        <result column="user_type" jdbcType="VARCHAR" property="userType"/>
         <result column="user_desc" jdbcType="VARCHAR" property="userDesc"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>

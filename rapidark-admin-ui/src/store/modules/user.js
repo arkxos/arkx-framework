@@ -7,11 +7,11 @@ import { getToken, removeToken, setToken } from '@/utils/token'
 import { resetRouter } from '@/router'
 import { isArray, isString } from '@/utils/validate'
 import { title, tokenName } from '@/config'
-
+import avatar from '@/assets/avatar-20211121075742320.png'
 const state = () => ({
   token: getToken(),
   username: '游客',
-  avatar: 'https://i.gtimg.cn/club/item/face/img/2/15922_100.gif',
+  avatar: avatar,
 })
 const getters = {
   token: (state) => state.token,

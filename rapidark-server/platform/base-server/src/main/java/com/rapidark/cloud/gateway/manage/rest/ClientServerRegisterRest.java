@@ -33,7 +33,6 @@ import java.util.Map;
  * @Version V1.0
  */
 @RestController
-@RequestMapping("/regServer")
 public class ClientServerRegisterRest extends BaseRest {
 
     @Resource
@@ -50,7 +49,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param clientServerRegister
      * @return
      */
-    @PostMapping(value = "/add")
+    @PostMapping("/regServer/add")
     public ApiResult add(@RequestBody ClientServerRegister clientServerRegister) {
         Assert.notNull(clientServerRegister, "未获取到对象");
         //默认禁止通行
@@ -76,7 +75,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param id
      * @return
      */
-    @PostMapping(value = "/delete")
+    @PostMapping(value = "/regServer/delete")
     public ApiResult delete(@RequestParam String id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
@@ -91,7 +90,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param clientServerRegister
      * @return
      */
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/regServer/update")
     public ApiResult update(@RequestBody ClientServerRegister clientServerRegister) {
         Assert.notNull(clientServerRegister, "未获取到对象");
         clientServerRegister.setUpdateTime(new Date());
@@ -107,7 +106,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param id
      * @return
      */
-    @GetMapping(value = "/findById")
+    @GetMapping(value = "/regServer/findById")
     public ApiResult findById(@RequestParam String id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
@@ -118,7 +117,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * 获取网关路由服务列表（分页）
      * @return
      */
-    @GetMapping(value = "/serverPageList")
+    @GetMapping(value = "/regServer/serverPageList")
     public ApiResult serverPageList(String clientId, Pageable pageable) {
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象查询ID");
         Page<GatewayAppRouteRegServer> data = clientServerRegisterService.serverPageList(clientId, pageable);
@@ -129,7 +128,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * 获取客户端列表（分页）
      * @return
      */
-    @GetMapping(value = "/clientPageList")
+    @GetMapping(value = "/regServer/clientPageList")
     public ApiResult clientPageList(String routeId, Pageable pageable) {
 //        Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象查询ID");
@@ -145,7 +144,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * 获取已注册网关路由列表
      * @return
      */
-    @GetMapping(value = "/regClientList")
+    @GetMapping(value = "/regServer/regClientList")
     public ApiResult regClientList(String routeId) {
 //        Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象查询ID");
@@ -159,7 +158,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param id
      * @return
      */
-    @PostMapping(value = "/start")
+    @PostMapping(value = "/regServer/start")
     public ApiResult start(@RequestParam String id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
@@ -177,7 +176,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param id
      * @return
      */
-    @PostMapping(value = "/stop")
+    @PostMapping(value = "/regServer/stop")
     public ApiResult stop(@RequestParam String id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
@@ -195,7 +194,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param clientId
      * @return
      */
-    @PostMapping(value = "/stopClientAllRoute")
+    @PostMapping(value = "/regServer/stopClientAllRoute")
     public ApiResult stopClientAllRoute(@RequestParam String clientId) {
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         clientServerRegisterService.stopClientAllRoute(clientId);
@@ -208,7 +207,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param clientId
      * @return
      */
-    @PostMapping(value = "/startClientAllRoute")
+    @PostMapping(value = "/regServer/startClientAllRoute")
     public ApiResult startClientAllRoute(@RequestParam String clientId) {
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         clientServerRegisterService.startClientAllRoute(clientId);
@@ -221,7 +220,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param routeId
      * @return
      */
-    @PostMapping(value = "/stopRouteAllClient")
+    @PostMapping(value = "/regServer/stopRouteAllClient")
     public ApiResult stopRouteAllClient(@RequestParam String routeId) {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象ID");
         clientServerRegisterService.stopRouteAllClient(routeId);
@@ -234,7 +233,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param routeId
      * @return
      */
-    @PostMapping(value = "/startRouteAllClient")
+    @PostMapping(value = "/regServer/startRouteAllClient")
     public ApiResult startRouteAllClient(@RequestParam String routeId) {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象ID");
         clientServerRegisterService.startRouteAllClient(routeId);
@@ -247,7 +246,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param clientId
      * @return
      */
-    @GetMapping(value = "/notRegServerPageList")
+    @GetMapping(value = "/regServer/notRegServerPageList")
     public ApiResult notRegServerPageList(String clientId, Pageable pageable) {
 //        Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到客户端ID");
@@ -259,7 +258,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * 获取未注册的客户端列表（分页）
      * @return
      */
-    @GetMapping(value = "/notRegClientPageList")
+    @GetMapping(value = "/regServer/notRegClientPageList")
     public ApiResult notRegClientPageList(String routeId, Pageable pageable) {
 //        Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取路由服务ID");
@@ -274,7 +273,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param tokenReq
      * @return
      */
-    @PostMapping(value = "/createToken")
+    @PostMapping(value = "/regServer/createToken")
     public ApiResult createToken(@RequestBody TokenReq tokenReq){
         Assert.notNull(tokenReq, "未获取到对象");
         Assert.notNull(tokenReq.getRegServerId(), "未获取到对象ID");
@@ -304,7 +303,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @param tokenReq
      * @return
      */
-    @PostMapping(value = "/removeToken")
+    @PostMapping(value = "/regServer/removeToken")
     public ApiResult removeToken(@RequestBody TokenReq tokenReq){
         Assert.notNull(tokenReq, "未获取到对象");
         Assert.notNull(tokenReq.getRegServerId(), "未获取到对象ID");

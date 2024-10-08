@@ -34,13 +34,18 @@ export const getAllDevelopers = () => {
  * @param userDesc
  * @param avatar
  */
-export const addDeveloper = ({ userName, password, nickName, status, userType, email, mobile, userDesc, avatar }) => {
+export const addDeveloper = ({
+     companyName, personName, type,
+     userName, password, nickName, status, userType, email,
+     mobile, userDesc, avatar }) => {
   const data = {
+    companyName: companyName,
+    personName: personName,
     userName: userName,
     nickName: nickName,
     password: password,
     status: status,
-    userType: userType,
+    type: type,
     email: email,
     mobile: mobile,
     userDesc: userDesc,
@@ -48,8 +53,8 @@ export const addDeveloper = ({ userName, password, nickName, status, userType, e
   }
   return request({
     url: 'base/developer/add',
-    data,
-    method: 'post'
+    method: 'post',
+    params: data
   })
 }
 
@@ -62,8 +67,14 @@ export const addDeveloper = ({ userName, password, nickName, status, userType, e
  * @param mobile
  * @param avatar
  */
-export const updateDeveloper = ({ userId, nickName, status, userType, email, mobile, userDesc, avatar }) => {
+export const updateDeveloper = ({
+        companyName, personName, type,
+        userId, nickName, status, userType, email,
+        mobile, userDesc, avatar }) => {
   const data = {
+    companyName: companyName,
+    personName: personName,
+    type: type,
     userId: userId,
     nickName: nickName,
     status: status,
@@ -75,8 +86,8 @@ export const updateDeveloper = ({ userId, nickName, status, userType, email, mob
   }
   return request({
     url: 'base/developer/update',
-    data,
-    method: 'post'
+    method: 'post',
+    params: data
   })
 }
 
