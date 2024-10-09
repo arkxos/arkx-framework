@@ -119,10 +119,10 @@ public class Company extends AbstractEntity {
     /**
      * 创建人
      */
-    private Long createBy;
+    private String createBy;
 
     /**
      * 最后修改人
      */
-    private Long updateBy;
+    private String updateBy;
 }

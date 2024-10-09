@@ -68,8 +68,8 @@ public class Comment extends AbstractEntity {
     private Integer replyNum;
 
     @ApiModelProperty(value = "创建者")
-    private Long createBy;
+    private String createBy;
 
     @ApiModelProperty(value = "更新者")
-    private Long updateBy;
+    private String updateBy;
 }

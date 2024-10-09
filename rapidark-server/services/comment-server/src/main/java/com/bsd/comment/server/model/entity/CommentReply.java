@@ -35,7 +35,7 @@ public class CommentReply extends AbstractEntity {
     private Long parentId;
 
     @ApiModelProperty(value = "回复者ID")
-    private Long fromUserId;
+    private String fromUserId;
 
     @ApiModelProperty(value = "回复者的名字")
     private String fromUserName;
@@ -53,8 +53,8 @@ public class CommentReply extends AbstractEntity {
     private Integer isAuthor;
 
     @ApiModelProperty(value = "创建者")
-    private Long createBy;
+    private String createBy;
 
     @ApiModelProperty(value = "更新者")
-    private Long updateBy;
+    private String updateBy;
 }
