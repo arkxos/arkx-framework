@@ -27,7 +27,7 @@ import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseQueryCrite
 import com.rapidark.cloud.base.server.modules.mnt.util.SqlUtils;
 import me.zhengjie.utils.FileUtil;
 import com.rapidark.common.utils.PageUtil;
-import me.zhengjie.utils.QueryHelp;
+import com.rapidark.common.utils.QueryHelp;
 import me.zhengjie.utils.ValidationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

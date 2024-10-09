@@ -3,6 +3,7 @@ package com.rapidark.common.security;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,13 +16,15 @@ import java.util.Map;
  *
  * @author liuyadu
  */
+@Data
 public class OpenUserDetails implements UserDetails {
+
     private static final long serialVersionUID = -123308657146774881L;
 
     /**
      * 用户ID
      */
-    private Long userId;
+    private String userId;
     /**
      * 登录名
      */
@@ -29,6 +32,8 @@ public class OpenUserDetails implements UserDetails {
     /**
      * 密码
      */
+    @JsonIgnore
+    @JSONField(serialize = false)
     private String password;
 
     /**
@@ -73,7 +78,7 @@ public class OpenUserDetails implements UserDetails {
     /**
      * 账户Id
      */
-    private Long accountId;
+    private String accountId;
 
     /***
      * 账户类型
@@ -83,7 +88,7 @@ public class OpenUserDetails implements UserDetails {
     /**
      * 用户附加属性
      */
-    private Map<String, Object> attrs;
+    private Map<String, Object> attrs = Maps.newHashMap();
 
 
     /**
@@ -104,131 +109,4 @@ public class OpenUserDetails implements UserDetails {
         return this.authorities;
     }
 
-    @JsonIgnore
-    @JSONField(serialize = false)
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return this.accountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return this.accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return this.credentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
-    public Map<String, Object> getAttrs() {
-        if (attrs == null) {
-            return Maps.newHashMap();
-        }
-        return attrs;
-    }
-
-    public void setAttrs(Map<String, Object> attrs) {
-        this.attrs = attrs;
-    }
 }

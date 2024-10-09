@@ -20,7 +20,7 @@ import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.formwork.service.MonitorService;
 import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;

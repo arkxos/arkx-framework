@@ -3,7 +3,7 @@ package com.flying.fish.gateway.service.load;
 import com.rapidark.cloud.gateway.cache.IpListCache;
 import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
 import com.rapidark.cloud.gateway.formwork.service.SecureIpService;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

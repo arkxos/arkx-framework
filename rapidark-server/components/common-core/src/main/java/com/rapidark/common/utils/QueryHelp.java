@@ -13,14 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.utils;
+package com.rapidark.common.utils;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.annotation.DataPermission;
-import me.zhengjie.annotation.Query;
+import com.rapidark.common.annotation.DataPermission;
+import com.rapidark.common.annotation.Query;
+import me.zhengjie.utils.SecurityUtils;
+import me.zhengjie.utils.StringUtils;
+
 import javax.persistence.criteria.*;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -44,10 +47,10 @@ public class QueryHelp {
             // 获取数据权限
             List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
             if(CollectionUtil.isNotEmpty(dataScopes)){
-                if(StringUtils.isNotBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                if(me.zhengjie.utils.StringUtils.isNotBlank(permission.joinName()) && me.zhengjie.utils.StringUtils.isNotBlank(permission.fieldName())) {
                     Join join = root.join(permission.joinName(), JoinType.LEFT);
                     list.add(getExpression(permission.fieldName(),join, root).in(dataScopes));
-                } else if (StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                } else if (me.zhengjie.utils.StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
                     list.add(getExpression(permission.fieldName(),null, root).in(dataScopes));
                 }
             }

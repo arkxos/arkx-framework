@@ -18,6 +18,7 @@ package me.zhengjie.modules.mnt.service.impl;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.rapidark.common.utils.PageUtil;
+import com.rapidark.common.utils.QueryHelp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.exception.BadRequestException;
@@ -70,7 +71,7 @@ public class DeployServiceImpl implements DeployService {
 
 	@Override
 	public Object queryAll(DeployQueryCriteria criteria, Pageable pageable) {
-		Page<Deploy> page = deployRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+		Page<Deploy> page = deployRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
 		return PageUtil.toPage(page.map(deployMapper::toDto));
 	}
 

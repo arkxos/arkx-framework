@@ -14,7 +14,7 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.MonitorService;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;

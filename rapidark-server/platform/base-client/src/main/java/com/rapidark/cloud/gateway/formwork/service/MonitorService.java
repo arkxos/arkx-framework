@@ -11,7 +11,7 @@ import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.formwork.bean.MonitorReq;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteRsp;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

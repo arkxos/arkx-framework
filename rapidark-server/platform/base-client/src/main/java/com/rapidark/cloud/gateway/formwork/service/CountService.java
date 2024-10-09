@@ -15,7 +15,7 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.bean.CountReq;
 import com.rapidark.cloud.gateway.formwork.bean.CountRsp;
 import com.rapidark.cloud.gateway.formwork.bean.CountTotalRsp;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.PageResult;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 

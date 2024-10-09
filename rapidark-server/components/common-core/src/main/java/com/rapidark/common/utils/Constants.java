@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.util;
+package com.rapidark.common.utils;
 
 /**
  * 常量类

@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import me.zhengjie.utils.QueryHelp;
+import com.rapidark.common.utils.QueryHelp;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 

@@ -15,7 +15,7 @@
 */
 package ${package}.rest;
 
-import me.zhengjie.annotation.Log;
+import com.rapidark.common.annotation.Log;
 import ${package}.entity.${className};
 import ${package}.service.${className}Service;
 import ${package}.service.dto.${className}QueryCriteria;

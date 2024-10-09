@@ -3,7 +3,7 @@ package com.flying.fish.gateway.service.load;
 import com.flying.fish.gateway.service.DynamicGroovyService;
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
 import com.rapidark.cloud.gateway.formwork.service.GroovyScriptService;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.Md5Utils;
 
 import lombok.extern.slf4j.Slf4j;

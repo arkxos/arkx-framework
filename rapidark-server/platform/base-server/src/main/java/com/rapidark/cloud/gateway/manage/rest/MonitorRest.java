@@ -9,7 +9,7 @@ import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.MonitorReq;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 import com.rapidark.cloud.gateway.formwork.service.MonitorService;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 
 import javax.annotation.Resource;
 

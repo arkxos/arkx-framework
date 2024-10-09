@@ -14,7 +14,7 @@
 //import lombok.AllArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import me.zhengjie.utils.FileUtil;
-//import me.zhengjie.utils.QueryHelp;
+//import com.rapidark.common.utils.QueryHelp;
 //import me.zhengjie.utils.ValidationUtil;
 //import org.springframework.beans.BeanUtils;
 //import org.springframework.cache.annotation.CacheEvict;

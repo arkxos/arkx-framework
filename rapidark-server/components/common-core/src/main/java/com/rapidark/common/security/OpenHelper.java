@@ -128,7 +128,7 @@ public class OpenHelper {
      *
      * @return
      */
-    public static Long getUserId() {
+    public static String getUserId() {
         return getUser().getUserId();
     }
 

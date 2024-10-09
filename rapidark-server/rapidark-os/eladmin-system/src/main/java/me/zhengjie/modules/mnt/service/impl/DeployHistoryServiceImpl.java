@@ -25,7 +25,7 @@ import me.zhengjie.modules.mnt.service.dto.DeployHistoryQueryCriteria;
 import me.zhengjie.modules.mnt.service.mapstruct.DeployHistoryMapper;
 import me.zhengjie.utils.FileUtil;
 import com.rapidark.common.utils.PageUtil;
-import me.zhengjie.utils.QueryHelp;
+import com.rapidark.common.utils.QueryHelp;
 import me.zhengjie.utils.ValidationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

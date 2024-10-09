@@ -2,7 +2,7 @@ package com.rapidark.cloud.gateway.formwork.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ValidationException;

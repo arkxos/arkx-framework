@@ -2,7 +2,6 @@ package com.flying.fish.gateway.handle;
 
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.common.model.ResultBody;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 
 import lombok.extern.slf4j.Slf4j;

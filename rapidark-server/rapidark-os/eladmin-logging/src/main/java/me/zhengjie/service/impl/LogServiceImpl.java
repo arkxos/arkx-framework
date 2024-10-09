@@ -58,7 +58,7 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public Object queryAll(LogQueryCriteria criteria, Pageable pageable) {
-        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> QueryHelp.getPredicate(root, criteria, cb)), pageable);
+        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, cb)), pageable);
         String status = "ERROR";
         if (status.equals(criteria.getLogType())) {
             return PageUtil.toPage(page.map(logErrorMapper::toDto));
@@ -68,12 +68,12 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public List<Log> queryAll(LogQueryCriteria criteria) {
-        return logRepository.findAll(((root, criteriaQuery, cb) -> QueryHelp.getPredicate(root, criteria, cb)));
+        return logRepository.findAll(((root, criteriaQuery, cb) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, cb)));
     }
 
     @Override
     public Object queryAllByUser(LogQueryCriteria criteria, Pageable pageable) {
-        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> QueryHelp.getPredicate(root, criteria, cb)), pageable);
+        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, cb)), pageable);
         return PageUtil.toPage(page.map(logSmallMapper::toDto));
     }
 
@@ -83,7 +83,7 @@ public class LogServiceImpl implements LogService {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        me.zhengjie.annotation.Log aopLog = method.getAnnotation(me.zhengjie.annotation.Log.class);
+        com.rapidark.common.annotation.Log aopLog = method.getAnnotation(com.rapidark.common.annotation.Log.class);
 
         // 方法路径
         String methodName = joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()";

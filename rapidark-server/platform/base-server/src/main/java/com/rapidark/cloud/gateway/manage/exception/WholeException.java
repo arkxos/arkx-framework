@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.util.Constants;
-
 /**
  * 捕获全局异常
  * @author darkness

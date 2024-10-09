@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.TokenReq;
 import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.JwtTokenUtils;
 
 import javax.annotation.Resource;

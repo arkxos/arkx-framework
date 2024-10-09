@@ -15,6 +15,10 @@ import java.util.List;
 @ApiModel(value = "分页数据")
 public class PageData<T> {
 
+    private int currentPage = Constants.CURRENT_PAGE;
+    //分页数量
+    private int pageSize = Constants.PAGE_SIZE;
+
     @ApiModelProperty(required = true, value = "总记录数", example = "0", position=1)
     private Long totalElements;
 

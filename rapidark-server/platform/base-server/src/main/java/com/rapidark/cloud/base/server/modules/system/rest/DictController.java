@@ -22,7 +22,7 @@ import com.rapidark.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-//import me.zhengjie.annotation.Log;
+//import com.rapidark.common.annotation.Log;
 import com.rapidark.common.model.IdsParam;
 import me.zhengjie.exception.BadRequestException;
 import org.springframework.data.domain.Pageable;

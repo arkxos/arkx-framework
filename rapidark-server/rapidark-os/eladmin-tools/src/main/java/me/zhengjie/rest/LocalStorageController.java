@@ -16,7 +16,7 @@
 package me.zhengjie.rest;
 
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.annotation.Log;
+import com.rapidark.common.annotation.Log;
 import me.zhengjie.domain.LocalStorage;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.service.LocalStorageService;

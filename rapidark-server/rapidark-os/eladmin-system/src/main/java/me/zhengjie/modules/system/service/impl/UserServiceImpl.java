@@ -64,13 +64,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object queryAll(UserQueryCriteria criteria, Pageable pageable) {
-        Page<User> page = userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+        Page<User> page = userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
         return PageUtil.toPage(page.map(userMapper::toDto));
     }
 
     @Override
     public List<UserDto> queryAll(UserQueryCriteria criteria) {
-        List<User> users = userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder));
+        List<User> users = userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder));
         return userMapper.toDto(users);
     }
 

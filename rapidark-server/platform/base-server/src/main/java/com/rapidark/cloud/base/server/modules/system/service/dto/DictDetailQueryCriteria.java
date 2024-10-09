@@ -16,7 +16,7 @@
 package com.rapidark.cloud.base.server.modules.system.service.dto;
 
 import lombok.Data;
-import me.zhengjie.annotation.Query;
+import com.rapidark.common.annotation.Query;
 
 /**
 * @author Zheng Jie

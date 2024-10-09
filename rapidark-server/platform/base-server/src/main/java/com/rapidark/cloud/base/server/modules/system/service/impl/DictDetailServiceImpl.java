@@ -24,6 +24,7 @@ import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictDetailMapper;
 import com.rapidark.common.utils.PageUtil;
+import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.utils.*;

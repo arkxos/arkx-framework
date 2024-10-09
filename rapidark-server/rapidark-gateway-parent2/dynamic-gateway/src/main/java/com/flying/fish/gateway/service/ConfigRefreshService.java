@@ -11,7 +11,7 @@ import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayNacosConfigBean;
 import com.rapidark.cloud.gateway.formwork.entity.*;
 import com.rapidark.cloud.gateway.formwork.service.*;
-import com.rapidark.cloud.gateway.formwork.util.Constants;
+import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import lombok.extern.slf4j.Slf4j;

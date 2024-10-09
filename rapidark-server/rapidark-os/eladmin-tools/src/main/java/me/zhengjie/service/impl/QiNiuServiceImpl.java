@@ -35,7 +35,7 @@ import me.zhengjie.repository.QiNiuConfigRepository;
 import me.zhengjie.service.QiNiuService;
 import me.zhengjie.utils.FileUtil;
 import com.rapidark.common.utils.PageUtil;
-import me.zhengjie.utils.QueryHelp;
+import com.rapidark.common.utils.QueryHelp;
 import me.zhengjie.utils.ValidationUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;

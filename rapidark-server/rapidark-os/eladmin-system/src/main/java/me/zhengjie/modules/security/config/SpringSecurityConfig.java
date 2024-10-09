@@ -16,7 +16,7 @@
 package me.zhengjie.modules.security.config;
 
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.annotation.AnonymousAccess;
+import com.rapidark.common.annotation.AnonymousAccess;
 import me.zhengjie.modules.security.config.bean.SecurityProperties;
 import me.zhengjie.modules.security.security.*;
 import me.zhengjie.modules.security.service.OnlineUserService;
