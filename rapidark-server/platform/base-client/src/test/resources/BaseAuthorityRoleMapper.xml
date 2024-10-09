@@ -18,10 +18,30 @@
     </resultMap>
 
     <select id="selectAuthorityByRole" resultMap="com.rapidark.cloud.base.server.mapper.BaseAuthorityMapper.Authority">
-
+        SELECT
+        a.authority_id,
+        a.authority,
+        rp.expire_time,
+        'role' AS owner
+        FROM base_authority_role rp
+        INNER JOIN base_authority a ON rp.authority_id = a.authority_id
+        WHERE rp.role_id = #{roleId} AND a.status = 1
     </select>
 
     <select id="selectAuthorityMenuByRole" resultMap="RoleAuthorityMenu">
-
+        SELECT
+        a.authority_id,
+        a.authority,
+        a.status,
+        m.*,
+        rp.role_id,
+        rp.expire_time
+        FROM base_authority_role rp
+        INNER JOIN base_authority a ON rp.authority_id = a.authority_id
+        INNER JOIN base_menu m ON a.menu_id = m.menu_id
+        WHERE rp.role_id = #{roleId} AND a.status = 1
+        <if test="serviceId != null and serviceId != ''">
+            AND m.service_id = #{serviceId}
+        </if>
     </select>
 </mapper>

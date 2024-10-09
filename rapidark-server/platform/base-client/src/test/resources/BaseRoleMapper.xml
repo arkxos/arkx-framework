@@ -16,6 +16,6 @@
     </resultMap>
 
     <select id="selectRoleList" resultMap="BaseResultMap">
-
+        SELECT * FROM base_role
     </select>
 </mapper>

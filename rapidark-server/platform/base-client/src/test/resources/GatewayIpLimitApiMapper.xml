@@ -39,6 +39,24 @@
     </resultMap>
 
     <select id="selectIpLimitApi" resultMap="IpLimitApi">
-
+        SELECT
+        i.policy_id,
+        i.api_id,
+        p.policy_name,
+        p.policy_type,
+        a.api_code,
+        a.api_name,
+        a.api_category,
+        a.service_id,
+        a.path,
+        p.ip_address
+        FROM gateway_ip_limit_api i
+        INNER JOIN gateway_ip_limit p ON i.policy_id = p.policy_id
+        INNER JOIN base_api a ON i.api_id = a.api_id
+        <where>
+            <if test="policyType!=null">
+                p.policy_type = #{policyType}
+            </if>
+        </where>
     </select>
 </mapper>
