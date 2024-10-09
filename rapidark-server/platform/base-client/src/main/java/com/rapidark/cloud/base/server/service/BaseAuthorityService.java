@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, BaseAuthority> {
+
     @Autowired
     private BaseAuthorityMapper baseAuthorityMapper;
     @Autowired
@@ -105,6 +107,12 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
         return authorities;
     }
 
+    /**
+     * 获取API权限列表
+     *
+     * @param serviceId
+     * @return
+     */
     public List<AuthorityApi> findAuthorityApi(String serviceId) {
         Map map = Maps.newHashMap();
         map.put("serviceId", serviceId);
@@ -125,6 +133,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
                 .eq(BaseAuthorityAction::getActionId, actionId);
         return baseAuthorityActionMapper.selectList(queryWrapper);
     }
+
 
     /**
      * 保存或修改权限
@@ -217,11 +226,14 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
         if (authority == null || authority.getAuthorityId() == null) {
             return false;
         }
+
         QueryWrapper<BaseAuthorityRole> roleQueryWrapper = new QueryWrapper();
         roleQueryWrapper.lambda().eq(BaseAuthorityRole::getAuthorityId, authority.getAuthorityId());
         int roleGrantedCount = baseAuthorityRoleMapper.selectCount(roleQueryWrapper);
+
         QueryWrapper<BaseAuthorityUser> userQueryWrapper = new QueryWrapper();
         userQueryWrapper.lambda().eq(BaseAuthorityUser::getAuthorityId, authority.getAuthorityId());
+
         int userGrantedCount = baseAuthorityUserMapper.selectCount(userQueryWrapper);
         GatewayOpenClientAppApiAuthority openClientAppApiAuthority = new GatewayOpenClientAppApiAuthority();
         openClientAppApiAuthority.setAuthorityId(authority.getAuthorityId()+"");
@@ -313,7 +325,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param authorityIds 权限集合
      * @return
      */
-    public void addAuthorityUser(Long userId, Date expireTime, String... authorityIds) {
+    public void addAuthorityUser(String userId, Date expireTime, String... authorityIds) {
         if (userId == null) {
             return;
         }
@@ -325,7 +337,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
             throw new OpenAlertException("默认用户无需授权!");
         }
         // 获取用户角色列表
-        List<Long> roleIds = baseRoleService.getUserRoleIds(userId);
+        List<String> roleIds = baseRoleService.getUserRoleIds(userId);
         // 清空用户已有授权
         // 清空角色已有授权
         QueryWrapper<BaseAuthorityUser> userQueryWrapper = new QueryWrapper();
@@ -457,7 +469,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param roleId
      * @return
      */
-    public List<OpenAuthority> findAuthorityByRole(Long roleId) {
+    public List<OpenAuthority> findAuthorityByRole(String roleId) {
         return baseAuthorityRoleMapper.selectAuthorityByRole(roleId);
     }
 
@@ -481,7 +493,7 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param root   超级管理员
      * @return
      */
-    public List<OpenAuthority> findAuthorityByUser(Long userId, Boolean root) {
+    public List<OpenAuthority> findAuthorityByUser(String userId, Boolean root) {
         if (root) {
             // 超级管理员返回所有
             return findAuthorityByType("1");
@@ -516,11 +528,12 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
      * @param root   超级管理员
      * @return
      */
-    public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root) {
+    public List<AuthorityMenu> findAuthorityMenuByUser(String userId, Boolean root) {
         return findAuthorityMenuByUser(userId, root, null);
     }
 
-    public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root, String serviceId) {
+
+    public List<AuthorityMenu> findAuthorityMenuByUser(String userId, Boolean root, String serviceId) {
         if (root) {
             // 超级管理员返回所有
             return findAuthorityMenu(1, serviceId);
@@ -581,7 +594,12 @@ public class BaseAuthorityService extends BaseServiceImpl<BaseAuthorityMapper, B
             return;
         }
         List<String> invalidApiIds = baseApiMapper
-            .selectObjs(new QueryWrapper<BaseApi>().select("api_id").eq("service_id", serviceId).notIn(codes != null && !codes.isEmpty(), "api_code", codes)).stream().filter(Objects::nonNull).map(e -> e.toString()).collect(Collectors.toList());
+            .selectObjs(new QueryWrapper<BaseApi>()
+                    .select("api_id").eq("service_id", serviceId)
+                    .notIn(codes != null && !codes.isEmpty(), "api_code", codes))
+                .stream().filter(Objects::nonNull)
+                .map(e -> e.toString())
+                .collect(Collectors.toList());
         if (invalidApiIds != null) {
             // 防止删除默认api
             invalidApiIds.remove("1");

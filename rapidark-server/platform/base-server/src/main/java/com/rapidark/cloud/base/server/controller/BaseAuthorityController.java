@@ -35,6 +35,7 @@ import java.util.List;
 @Api(tags = "系统权限管理")
 @RestController
 public class BaseAuthorityController implements IBaseAuthorityServiceClient {
+
     @Autowired
     private BaseAuthorityService baseAuthorityService;
     @Autowired
@@ -113,7 +114,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
     })
     @GetMapping("/authority/role")
-    public ResultBody<List<OpenAuthority>> findAuthorityRole(Long roleId) {
+    public ResultBody<List<OpenAuthority>> findAuthorityRole(String roleId) {
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByRole(roleId);
         return ResultBody.ok().data(result);
     }
@@ -131,7 +132,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @GetMapping("/authority/user")
     public ResultBody<List<OpenAuthority>> findAuthorityUser(
-            @RequestParam(value = "userId") Long userId
+            @RequestParam(value = "userId") String userId
     ) {
         BaseUser user = baseUserService.getUserById(userId);
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByUser(userId, CommonConstants.ROOT.equals(user.getUserName()));
@@ -200,7 +201,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @PostMapping("/authority/user/grant")
     public ResultBody grantAuthorityUser(
-            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "userId") String userId,
             @RequestParam(value = "expireTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date expireTime,
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {
@@ -213,21 +214,11 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     /**
      * 分配应用权限
      *
-     * @param appId        应用Id
-     * @param expireTime   授权过期时间
-     * @param authorityIds 权限ID.多个以,隔开
      * @return
      */
     @ApiOperation(value = "分配应用权限", notes = "分配应用权限")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "expireTime", value = "过期时间.选填", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "authorityIds", value = "权限ID.多个以,隔开.选填", defaultValue = "", required = false, paramType = "form")
-    })
     @PostMapping("/authority/app/grant")
-    public ResultBody grantAuthorityApp(
-            @Valid @RequestBody GrantOpenClientAppApiAuthorityCommand command
-    ) {
+    public ResultBody grantAuthorityApp(@Valid @RequestBody GrantOpenClientAppApiAuthorityCommand command) {
         baseAuthorityService
                 .addAuthorityApp(command.getAppId(), command.getAppSystemCode(),
                         command.getExpireTime(), command.getAuthorityIds().split(","));

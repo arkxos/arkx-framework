@@ -17,6 +17,7 @@ package me.zhengjie.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.exception.BadRequestException;
@@ -65,7 +66,7 @@ public class MenuServiceImpl implements MenuService {
         Sort sort = Sort.by(Sort.Direction.ASC, "menuSort");
         if(isQuery){
             criteria.setPidIsNull(true);
-            List<Field> fields = com.rapidark.common.utils.QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
+            List<Field> fields = QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
             for (Field field : fields) {
                 //设置对象的访问权限，保证对private的属性的访问
                 field.setAccessible(true);
@@ -79,7 +80,7 @@ public class MenuServiceImpl implements MenuService {
                 }
             }
         }
-        return menuMapper.toDto(menuRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
+        return menuMapper.toDto(menuRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
     }
 
     @Override

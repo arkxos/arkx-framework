@@ -62,7 +62,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<JobDto> queryAll(JobQueryCriteria criteria) {
-        List<Job> list = jobRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder));
+        List<Job> list = jobRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder));
         return jobMapper.toDto(list);
     }
 

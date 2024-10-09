@@ -1,13 +1,13 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
+import com.rapidark.cloud.gateway.formwork.repository.SecureIpRepository;
+import com.rapidark.common.utils.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.repository.SecureIpRepository;
 import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
-import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
 /**
  * @Description IP管理业务操作类
@@ -26,7 +26,7 @@ public class SecureIpService extends BaseService<SecureIp, String, SecureIpRepos
      * @return
      */
     @Override
-    public PageResult<SecureIp> pageList(SecureIp secureIp, int currentPage, int pageSize){
+    public PageData<SecureIp> pageList(SecureIp secureIp, int currentPage, int pageSize){
         //构造条件查询方式
         ExampleMatcher matcher = ExampleMatcher.matching();
         if (StringUtils.isNotBlank(secureIp.getIp())) {

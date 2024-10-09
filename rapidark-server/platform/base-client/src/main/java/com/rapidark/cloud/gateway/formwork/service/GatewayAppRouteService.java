@@ -2,7 +2,10 @@ package com.rapidark.cloud.gateway.formwork.service;
 
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteRsp;
 import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
+import com.rapidark.cloud.gateway.manage.service.ClientServerRegisterService;
+import com.rapidark.common.utils.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
@@ -13,8 +16,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -81,15 +82,15 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
      * @return
      */
     @Override
-    public PageResult<GatewayAppRoute> pageList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
+    public PageData<GatewayAppRoute> pageList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
         //构造条件查询方式
         ExampleMatcher matcher = ExampleMatcher.matching();
         if (StringUtils.isNotBlank(gatewayAppRoute.getName())) {
             //支持模糊条件查询
             matcher = matcher.withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
         }
-        PageResult<GatewayAppRoute> result = this.pageList(gatewayAppRoute, matcher, currentPage, pageSize);
-        List<GatewayAppRoute> gatewayAppRouteList = result.getLists();
+        PageData<GatewayAppRoute> result = this.pageList(gatewayAppRoute, matcher, currentPage, pageSize);
+        List<GatewayAppRoute> gatewayAppRouteList = result.getContent();
         if (CollectionUtils.isEmpty(gatewayAppRouteList)){
             return result;
         }
@@ -110,7 +111,7 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
             }
             gatewayAppRouteRspList.add(routeRsp);
         }
-        result.setLists(gatewayAppRouteRspList);
+        result.setContent(gatewayAppRouteRspList);
         return result;
     }
 }

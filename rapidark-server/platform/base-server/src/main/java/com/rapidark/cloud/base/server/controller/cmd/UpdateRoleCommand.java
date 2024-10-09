@@ -17,7 +17,7 @@ public class UpdateRoleCommand {
 
     @ApiModelProperty(name = "roleId", value = "角色ID", example = "", required = true)
     @NotNull
-    private Long roleId;
+    private String roleId;
 
     @ApiModelProperty(name = "roleCode", value = "角色编码", example = "", required = true)
     @NotNull

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 获取开发者列表
+ * 获取开发商列表
  * @param params
  */
 export const getDevelopers = (params) => {
@@ -13,7 +13,7 @@ export const getDevelopers = (params) => {
 }
 
 /**
- * 获取所有开发者列表
+ * 获取所有开发商列表
  */
 export const getAllDevelopers = () => {
   return request({
@@ -23,7 +23,7 @@ export const getAllDevelopers = () => {
 }
 
 /**
- * 添加开发者信息
+ * 添加开发商信息
  * @param userName
  * @param password
  * @param nickName
@@ -54,12 +54,12 @@ export const addDeveloper = ({
   return request({
     url: 'base/developer/add',
     method: 'post',
-    params: data
+    data
   })
 }
 
 /**
- * 更新开发者信息
+ * 更新开发商信息
  * @param developerId
  * @param nickName
  * @param status
@@ -69,13 +69,13 @@ export const addDeveloper = ({
  */
 export const updateDeveloper = ({
         companyName, personName, type,
-        userId, nickName, status, userType, email,
+        id, nickName, status, userType, email,
         mobile, userDesc, avatar }) => {
   const data = {
+    id: id,
     companyName: companyName,
     personName: personName,
     type: type,
-    userId: userId,
     nickName: nickName,
     status: status,
     userType: userType,
@@ -87,7 +87,7 @@ export const updateDeveloper = ({
   return request({
     url: 'base/developer/update',
     method: 'post',
-    params: data
+    data
   })
 }
 

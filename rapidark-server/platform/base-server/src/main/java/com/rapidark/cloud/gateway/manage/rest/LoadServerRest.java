@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
 import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.utils.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,6 @@ import javax.annotation.Resource;
  * @Version V1.0
  */
 @RestController
-@RequestMapping("/loadServer")
 public class LoadServerRest extends BaseRest {
 
     @Resource
@@ -32,7 +32,7 @@ public class LoadServerRest extends BaseRest {
      * @param loadServerReq
      * @return
      */
-    @RequestMapping(value = "/regList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/loadServer/regList", method = { RequestMethod.POST })
     public ResultBody regList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, true);
     }
@@ -42,7 +42,7 @@ public class LoadServerRest extends BaseRest {
      * @param loadServerReq
      * @return
      */
-    @RequestMapping(value = "/notRegPageList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/loadServer/notRegPageList", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody notRegPageList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, false);
     }
@@ -61,7 +61,8 @@ public class LoadServerRest extends BaseRest {
         }else {
             int currentPage = getCurrentPage(loadServerReq.getCurrentPage());
             int pageSize = getPageSize(loadServerReq.getPageSize());
-            return ResultBody.ok().data(loadServerService.notLoadServerPageList(currentPage, pageSize));
+            PageData data = loadServerService.notLoadServerPageList(currentPage, pageSize);
+            return ResultBody.ok().data(data);
         }
     }
 

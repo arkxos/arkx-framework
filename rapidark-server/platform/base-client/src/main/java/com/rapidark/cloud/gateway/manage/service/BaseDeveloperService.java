@@ -1,41 +1,46 @@
-package com.rapidark.cloud.base.server.service;
+package com.rapidark.cloud.gateway.manage.service;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.model.UserAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
-import com.rapidark.cloud.base.server.mapper.BaseDeveloperMapper;
 import com.rapidark.cloud.base.server.service.BaseAccountService;
-import com.rapidark.cloud.base.server.service.BaseDeveloperService;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
+import com.rapidark.cloud.gateway.manage.repository.BaseDeveloperRepository;
+import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPasswordCommand;
+import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
-import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.PageData;
 import com.rapidark.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
- * 系统用户资料管理
- *
- * @author: liuyadu
- * @date: 2018/10/24 16:38
- * @description:
+ * 开发商管理
+ * @author darkness
+ * @date 2022/6/24 14:28
+ * @version 1.0
  */
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, BaseDeveloper> {
-    @Autowired
-    private BaseDeveloperMapper baseDeveloperMapper;
+public class BaseDeveloperService extends BaseService<BaseDeveloper, String, BaseDeveloperRepository> {
+
     @Autowired
     private BaseAccountService baseAccountService;
 
@@ -48,39 +53,41 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @return
      */
     public void addUser(BaseDeveloper baseDeveloper) {
-        if (getUserByUsername(baseDeveloper.getUserName()) != null) {
+        if (getDeveloperByUsername(baseDeveloper.getUserName()).isPresent()) {
             throw new OpenAlertException("用户名:" + baseDeveloper.getUserName() + "已存在!");
         }
-        baseDeveloper.setCreateTime(new Date());
+        baseDeveloper.setCreateTime(LocalDateTime.now());
         baseDeveloper.setUpdateTime(baseDeveloper.getCreateTime());
+
         //保存系统用户信息
-        baseDeveloperMapper.insert(baseDeveloper);
+        entityRepository.save(baseDeveloper);
+
         //默认注册用户名账户
-        baseAccountService.register(baseDeveloper.getUserId(), baseDeveloper.getUserName(), baseDeveloper.getPassword(), BaseConstants.ACCOUNT_TYPE_USERNAME, baseDeveloper.getStatus(), ACCOUNT_DOMAIN, null);
+        baseAccountService.register(baseDeveloper.getId(), baseDeveloper.getUserName(), baseDeveloper.getPassword(), BaseConstants.ACCOUNT_TYPE_USERNAME, baseDeveloper.getStatus(), ACCOUNT_DOMAIN, null);
+
         if (StringUtils.matchEmail(baseDeveloper.getEmail())) {
             //注册email账号登陆
-            baseAccountService.register(baseDeveloper.getUserId(), baseDeveloper.getEmail(), baseDeveloper.getPassword(), BaseConstants.ACCOUNT_TYPE_EMAIL, baseDeveloper.getStatus(), ACCOUNT_DOMAIN, null);
+            baseAccountService.register(baseDeveloper.getId(), baseDeveloper.getEmail(), baseDeveloper.getPassword(), BaseConstants.ACCOUNT_TYPE_EMAIL, baseDeveloper.getStatus(), ACCOUNT_DOMAIN, null);
         }
         if (StringUtils.matchMobile(baseDeveloper.getMobile())) {
             //注册手机号账号登陆
-            baseAccountService.register(baseDeveloper.getUserId(), baseDeveloper.getMobile(), baseDeveloper.getPassword(), BaseConstants.ACCOUNT_TYPE_MOBILE, baseDeveloper.getStatus(), ACCOUNT_DOMAIN, null);
+            baseAccountService.register(baseDeveloper.getId(), baseDeveloper.getMobile(), baseDeveloper.getPassword(), BaseConstants.ACCOUNT_TYPE_MOBILE, baseDeveloper.getStatus(), ACCOUNT_DOMAIN, null);
         }
     }
 
     /**
      * 更新系统用户
      *
-     * @param baseDeveloper
+     * @param command
      * @return
      */
-    public void updateUser(BaseDeveloper baseDeveloper) {
-        if (baseDeveloper == null || baseDeveloper.getUserId() == null) {
-            return;
+    public void updateUser(UpdateDeveloperCommand command) {
+        if (command.getStatus() != null) {
+            baseAccountService.updateStatusByUserId(command.getId(), ACCOUNT_DOMAIN, command.getStatus());
         }
-        if (baseDeveloper.getStatus() != null) {
-            baseAccountService.updateStatusByUserId(baseDeveloper.getUserId(), ACCOUNT_DOMAIN, baseDeveloper.getStatus());
-        }
-        baseDeveloperMapper.updateById(baseDeveloper);
+        BaseDeveloper developer = findById(command.getId());
+        BeanUtil.copyProperties(command, developer, CopyOptions.create().setIgnoreNullValue(true));
+        entityRepository.save(developer);
     }
 
     /**
@@ -92,23 +99,20 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
     public void addUserThirdParty(BaseDeveloper baseDeveloper, String accountType) {
         if (!baseAccountService.isExist(baseDeveloper.getUserName(), accountType, ACCOUNT_DOMAIN)) {
             baseDeveloper.setType(BaseConstants.COMPANY_TYPE_ADMIN);
-            baseDeveloper.setCreateTime(new Date());
+//            baseDeveloper.setCreateTime(new Date());
             baseDeveloper.setUpdateTime(baseDeveloper.getCreateTime());
             //保存系统用户信息
-            baseDeveloperMapper.insert(baseDeveloper);
+            entityRepository.save(baseDeveloper);
             // 注册账号信息
-            baseAccountService.register(baseDeveloper.getUserId(), baseDeveloper.getUserName(), baseDeveloper.getPassword(), accountType, BaseConstants.ACCOUNT_STATUS_NORMAL, ACCOUNT_DOMAIN, null);
+            baseAccountService.register(baseDeveloper.getId(), baseDeveloper.getUserName(), baseDeveloper.getPassword(), accountType, BaseConstants.ACCOUNT_STATUS_NORMAL, ACCOUNT_DOMAIN, null);
         }
     }
 
     /**
      * 更新密码
-     *
-     * @param userId
-     * @param password
      */
-    public boolean updatePassword(Long userId, String password) {
-        return baseAccountService.updatePasswordByUserId(userId, ACCOUNT_DOMAIN, password) > 0;
+    public boolean updatePassword(ChangeDeveloperPasswordCommand command) {
+        return baseAccountService.updatePasswordByUserId(command.getUserId(), ACCOUNT_DOMAIN, command.getPassword()) > 0;
     }
 
     /**
@@ -117,16 +121,16 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param pageParams
      * @return
      */
-    public IPage<BaseDeveloper> findListPage(PageParams pageParams) {
+    public PageData<BaseDeveloper> findListPage(PageParams pageParams) {
         BaseDeveloper query = pageParams.mapToObject(BaseDeveloper.class);
         QueryWrapper<BaseDeveloper> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
-                .eq(ObjectUtils.isNotEmpty(query.getUserId()), BaseDeveloper::getUserId, query.getUserId())
+                .eq(ObjectUtils.isNotEmpty(query.getId()), BaseDeveloper::getId, query.getId())
                 .eq(ObjectUtils.isNotEmpty(query.getType()), BaseDeveloper::getType, query.getType())
                 .eq(ObjectUtils.isNotEmpty(query.getUserName()), BaseDeveloper::getUserName, query.getUserName())
                 .eq(ObjectUtils.isNotEmpty(query.getMobile()), BaseDeveloper::getMobile, query.getMobile());
         queryWrapper.orderByDesc("create_time");
-        return baseDeveloperMapper.selectPage((IPage<BaseDeveloper>)pageParams, queryWrapper);
+        return this.pageList(query, pageParams.getPage(), pageParams.getLimit());
     }
 
     /**
@@ -135,7 +139,7 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @return
      */
     public List<BaseDeveloper> findAllList() {
-        List<BaseDeveloper> list = baseDeveloperMapper.selectList(new QueryWrapper<>());
+        List<BaseDeveloper> list = this.findAll();
         return list;
     }
 
@@ -145,10 +149,9 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param userId
      * @return
      */
-    public BaseDeveloper getUserById(Long userId) {
-        return baseDeveloperMapper.selectById(userId);
+    public BaseDeveloper getUserById(String userId) {
+        return entityRepository.findById(userId).get();
     }
-
 
     /**
      * 依据登录名查询系统用户信息
@@ -156,12 +159,9 @@ public class BaseDeveloperService extends BaseServiceImpl<BaseDeveloperMapper, B
      * @param username
      * @return
      */
-    public BaseDeveloper getUserByUsername(String username) {
-        QueryWrapper<BaseDeveloper> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(BaseDeveloper::getUserName, username);
-        BaseDeveloper saved = baseDeveloperMapper.selectOne(queryWrapper);
-        return saved;
+    public Optional<BaseDeveloper> getDeveloperByUsername(String username) {
+        Optional<BaseDeveloper> developerOptional = entityRepository.findByUserName(username);
+        return developerOptional;
     }
 
 

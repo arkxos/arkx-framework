@@ -24,4 +24,5 @@ public class PageData<T> {
 
     @ApiModelProperty(required = true, value = "数据", position=2)
     private List<T> content;
+
 }

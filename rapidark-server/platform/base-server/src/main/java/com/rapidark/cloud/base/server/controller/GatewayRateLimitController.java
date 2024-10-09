@@ -73,7 +73,7 @@ public class GatewayRateLimitController {
     })
     @PostMapping("/gateway/limit/rate/api/add")
     public ResultBody addRateLimitApis(
-            @RequestParam("policyId") Long policyId,
+            @RequestParam("policyId") String policyId,
             @RequestParam(value = "apiIds", required = false) String apiIds
     ) {
         gatewayRateLimitService.addRateLimitApis(policyId, StringUtils.isNotBlank(apiIds) ? apiIds.split(",") : new String[]{});
@@ -92,7 +92,7 @@ public class GatewayRateLimitController {
             @ApiImplicitParam(name = "policyId", required = true, value = "策略ID", paramType = "path"),
     })
     @GetMapping("/gateway/limit/rate/{policyId}/info")
-    public ResultBody<GatewayRateLimit> getRateLimit(@PathVariable("policyId") Long policyId) {
+    public ResultBody<GatewayRateLimit> getRateLimit(@PathVariable("policyId") String policyId) {
         return ResultBody.ok().data(gatewayRateLimitService.getRateLimitPolicy(policyId));
     }
 
@@ -125,7 +125,7 @@ public class GatewayRateLimitController {
         rateLimit.setLimitQuota(limitQuota);
         rateLimit.setIntervalUnit(intervalUnit);
         rateLimit.setPolicyType(policyType);
-        Long policyId = null;
+        String policyId = null;
         GatewayRateLimit result = gatewayRateLimitService.addRateLimitPolicy(rateLimit);
         if (result != null) {
             policyId = result.getPolicyId();
@@ -153,7 +153,7 @@ public class GatewayRateLimitController {
     })
     @PostMapping("/gateway/limit/rate/update")
     public ResultBody updateRateLimit(
-            @RequestParam("policyId") Long policyId,
+            @RequestParam("policyId") String policyId,
             @RequestParam(value = "policyName") String policyName,
             @RequestParam(value = "policyType") String policyType,
             @RequestParam(value = "limitQuota") Long limitQuota,
@@ -183,7 +183,7 @@ public class GatewayRateLimitController {
     })
     @PostMapping("/gateway/limit/rate/remove")
     public ResultBody removeRateLimit(
-            @RequestParam("policyId") Long policyId
+            @RequestParam("policyId") String policyId
     ) {
         gatewayRateLimitService.removeRateLimitPolicy(policyId);
         // 刷新网关

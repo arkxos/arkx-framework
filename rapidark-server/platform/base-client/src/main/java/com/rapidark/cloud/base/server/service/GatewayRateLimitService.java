@@ -8,6 +8,7 @@ import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
 import com.rapidark.cloud.base.server.mapper.GatewayRateLimitApisMapper;
 import com.rapidark.cloud.base.server.mapper.GatewayRateLimitMapper;
+import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMapper, GatewayRateLimit> {
+public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMapper, GatewayRateLimit>  {
     @Autowired
     private GatewayRateLimitMapper gatewayRateLimitMapper;
 
@@ -77,7 +78,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policyId
      * @return
      */
-    public GatewayRateLimit getRateLimitPolicy(Long policyId) {
+    public GatewayRateLimit getRateLimitPolicy(String policyId) {
         return gatewayRateLimitMapper.selectById(policyId);
     }
 
@@ -109,7 +110,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param policyId
      */
-    public void removeRateLimitPolicy(Long policyId) {
+    public void removeRateLimitPolicy(String policyId) {
         clearRateLimitApisByPolicyId(policyId);
         gatewayRateLimitMapper.deleteById(policyId);
     }
@@ -120,12 +121,11 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policyId
      * @param apis
      */
-    public void addRateLimitApis(Long policyId, String... apis) {
+    public void addRateLimitApis(String policyId, String... apis) {
         // 先清空策略已有绑定
         clearRateLimitApisByPolicyId(policyId);
         if (apis != null && apis.length > 0) {
-            for (String api : apis) {
-                Long apiId = Long.parseLong(api);
+            for (String apiId : apis) {
                 // 先api解除所有绑定, 一个API只能绑定一个策略
                 clearRateLimitApisByApiId(apiId);
                 GatewayRateLimitApi item = new GatewayRateLimitApi();
@@ -142,7 +142,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param policyId
      */
-    public void clearRateLimitApisByPolicyId(Long policyId) {
+    public void clearRateLimitApisByPolicyId(String policyId) {
         QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(GatewayRateLimitApi::getPolicyId, policyId);
@@ -154,7 +154,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      *
      * @param apiId
      */
-    public void clearRateLimitApisByApiId(Long apiId) {
+    public void clearRateLimitApisByApiId(String apiId) {
         QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(GatewayRateLimitApi::getApiId, apiId);

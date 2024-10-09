@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.base;
 
+import com.rapidark.common.utils.PageData;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,6 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.rapidark.cloud.gateway.formwork.util.PageResult;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -92,17 +91,17 @@ public class BaseService<T,ID,R extends JpaRepository> {
         return entityRepository.findAll(Example.of(t,ExampleMatcher.matching()),Sort.by(Sort.Direction.ASC, properties));
     }
 
-    public PageResult<T> pageList(T t, int currentPage, int pageSize){
+    public PageData<T> pageList(T t, int currentPage, int pageSize){
         return pageList(t, currentPage, pageSize, DEFAULT_SORT_FIELD);
     }
 
-    public PageResult<T> pageList(T t, int currentPage, int pageSize, String ... properties){
+    public PageData<T> pageList(T t, int currentPage, int pageSize, String ... properties){
         Pageable pageable = PageRequest.of(currentPage-1,pageSize, Sort.by(Sort.Direction.DESC, properties));
         Page<T> pageData  =  entityRepository.findAll(Example.of(t), pageable);
         return this.setPageResult(pageData.getContent(), currentPage, pageSize, pageData.getTotalElements());
     }
 
-    public PageResult<T> pageList(T t, ExampleMatcher matcher, int currentPage, int pageSize){
+    public PageData<T> pageList(T t, ExampleMatcher matcher, int currentPage, int pageSize){
         Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by(Sort.Direction.DESC, DEFAULT_SORT_FIELD));
         Page<T> pageData  =  entityRepository.findAll(Example.of(t, matcher), pageable);
         return this.setPageResult(pageData.getContent(), currentPage, pageSize, pageData.getTotalElements());
@@ -116,7 +115,7 @@ public class BaseService<T,ID,R extends JpaRepository> {
      * @param pageSize
      * @return
      */
-    public  PageResult pageNativeQuery(String sql, List<Object> params, int currentPage, int pageSize){
+    public PageData pageNativeQuery(String sql, List<Object> params, int currentPage, int pageSize){
         String sqlCount = "SELECT count(1) FROM (" +sql+") t ";
         Query queryCount = entityManager.createNativeQuery(sqlCount);
         Query query = entityManager.createNativeQuery(sql);
@@ -158,14 +157,14 @@ public class BaseService<T,ID,R extends JpaRepository> {
      * @param totalNum
      * @return
      */
-    public PageResult setPageResult(List<?> list, int currentPage, int pageSize, long totalNum){
+    public PageData setPageResult(List<?> list, int currentPage, int pageSize, long totalNum){
         //分页结果
-        PageResult pageResult = new PageResult();
-        pageResult.setCurrentPage(currentPage);
-        pageResult.setPageSize(pageSize);
-        pageResult.setTotalNum(totalNum);
-        pageResult.setLists(list);
-        return pageResult;
+        PageData pageData = new PageData();
+        pageData.setCurrentPage(currentPage);
+        pageData.setPageSize(pageSize);
+        pageData.setTotalElements(totalNum);
+        pageData.setContent(list);
+        return pageData;
     }
 
 }

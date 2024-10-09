@@ -64,9 +64,9 @@
       :title="modalTitle"
       :before-close="handleReset">
 
-      <el-tabs @on-click="handleTabClick" :value="current">
-        <el-tab-pane label="开发者信息" name="form1">
-          <el-form v-show="current == 'form1'" ref="form1" :model="formItem" :rules="formItemRules" label-width="120px">
+      <el-tabs v-model='currentTabName' @tab-click="handleTabClick">
+        <el-tab-pane label="开发商信息" name="form1">
+          <el-form ref="form1" :model="formItem" :rules="formItemRules" label-width="120px">
             <el-form-item label="公司类型" prop="companyType">
               <el-checkbox-group v-model="formItem.companyType">
                 <el-checkbox :label="1">服务提供方</el-checkbox>
@@ -86,12 +86,12 @@
               <el-input v-model="formItem.nickName" placeholder="请输入内容"/>
             </el-form-item>
             <el-form-item label="登录名" prop="userName">
-              <el-input :disabled="formItem.userId?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
+              <el-input :disabled="formItem.id?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
             </el-form-item>
-            <el-form-item v-if="formItem.userId?false:true" label="登录密码" prop="password">
+            <el-form-item v-if="formItem.id?false:true" label="登录密码" prop="password">
               <el-input type="password" v-model="formItem.password" placeholder="请输入内容"/>
             </el-form-item>
-            <el-form-item v-if="formItem.userId?false:true" label="再次确认密码" prop="passwordConfirm">
+            <el-form-item v-if="formItem.id?false:true" label="再次确认密码" prop="passwordConfirm">
               <el-input type="password" v-model="formItem.passwordConfirm" placeholder="请输入内容"/>
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
@@ -109,10 +109,10 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane :disabled="!formItem.userId" label="修改密码" name="form2">
-          <el-form v-show="current == 'form2'" ref="form2" :model="formItem" :rules="formItemRules" label-width="100">
+        <el-tab-pane :disabled="!formItem.id" label="修改密码" name="form2">
+          <el-form ref="form2" :model="formItem" :rules="formItemRules" label-width="120px">
             <el-form-item label="登录名" prop="userName">
-              <el-input :disabled="formItem.userId?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
+              <el-input :disabled="formItem.id?true:false" v-model="formItem.userName" placeholder="请输入内容"/>
             </el-form-item>
             <el-form-item label="登录密码" prop="password">
               <el-input type="password" v-model="formItem.password" placeholder="请输入内容"/>
@@ -187,7 +187,7 @@ export default {
       saving: false,
       modalVisible: false,
       modalTitle: '',
-      current: 'form1',
+      currentTabName: 'form1',
       forms: [
         'form1',
         'form2'
@@ -215,7 +215,7 @@ export default {
           { required: true, message: '公司类型不能为空', trigger: 'blur' }
         ],
         userName: [
-          { required: true, message: '开发者名不能为空', trigger: 'blur' },
+          { required: true, message: '开发商名不能为空', trigger: 'blur' },
           { required: true, validator: validateEn, trigger: 'blur' }
         ],
         password: [
@@ -234,7 +234,7 @@ export default {
       formItem: {
         companyName: '',
         personName: '',
-        userId: '',
+        id: '',
         userName: '',
         nickName: '',
         password: '',
@@ -331,11 +331,11 @@ export default {
           this.formItem.companyType.push(2)
         }
       }
-      if (this.current === this.forms[0]) {
-        this.modalTitle = data ? '编辑开发者 - ' + data.userName : '添加开发者'
+      if (this.currentTabName === this.forms[0]) {
+        this.modalTitle = data ? '编辑开发商 - ' + data.userName : '添加开发商'
         this.modalVisible = true
       }
-      if (this.current === this.forms[1]) {
+      if (this.currentTabName === this.forms[1]) {
         this.modalTitle = data ? '修改密码 - ' + data.userName : '修改密码'
         this.modalVisible = true
       }
@@ -346,7 +346,7 @@ export default {
     },
     handleReset () {
       const newData = {
-        userId: '',
+        id: '',
         userName: '',
         nickName: '',
         password: '',
@@ -369,15 +369,16 @@ export default {
       this.forms.map(form => {
         this.handleResetForm(form)
       })
-      this.current = this.forms[0]
+      this.currentTabName = this.forms[0]
       this.formItem.grantMenus = []
       this.formItem.grantActions = []
       this.modalVisible = false
       this.saving = false
     },
     handleSubmit () {
-      if (this.current === this.forms[0]) {
-        this.$refs[this.current].validate((valid) => {
+      console.log(this.currentTabName)
+      if (this.currentTabName === this.forms[0]) {
+        this.$refs[this.currentTabName].validate((valid) => {
           if (valid) {
             this.saving = true
             let me = this;
@@ -385,7 +386,7 @@ export default {
             this.formItem.companyType.forEach(item=>{
               me.formItem.type += item
             })
-            if (this.formItem.userId) {
+            if (this.formItem.id) {
               updateDeveloper(this.formItem).then(res => {
                 if (res.code === 0) {
                   this.$Message.success('保存成功')
@@ -410,12 +411,12 @@ export default {
         })
       }
 
-      if (this.current === this.forms[1] && this.formItem.userId) {
-        this.$refs[this.current].validate((valid) => {
+      if (this.currentTabName === this.forms[1] && this.formItem.id) {
+        this.$refs[this.currentTabName].validate((valid) => {
           if (valid) {
             this.saving = true
             updatePassword({
-              userId: this.formItem.userId,
+              userId: this.formItem.id,
               password: this.formItem.password
             }).then(res => {
               if (res.code === 0) {
@@ -436,8 +437,8 @@ export default {
       }
       this.loading = true
       getDevelopers(this.pageInfo).then(res => {
-        this.data = res.data.records
-        this.pageInfo.total = parseInt(res.data.total)
+        this.data = res.data.content
+        this.pageInfo.total = res.data.totalElements - 0
       }).finally(() => {
         this.loading = false
       })
@@ -457,8 +458,10 @@ export default {
           break
       }
     },
-    handleTabClick (name) {
-      this.current = name
+    handleTabClick (target, action) {
+      console.log('this.currentTabName: ', this.currentTabName)
+      this.currentTabName = target.name
+      console.log('this.currentTabName: ', this.currentTabName)
       this.handleModal()
     }
   },
@@ -467,3 +470,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+::v-deep .el-dialog__body {
+  padding: 10px 20px 10px 20px;
+}
+</style>

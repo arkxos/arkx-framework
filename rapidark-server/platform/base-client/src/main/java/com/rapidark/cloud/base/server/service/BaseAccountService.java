@@ -6,6 +6,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.server.mapper.BaseAccountLogsMapper;
 import com.rapidark.cloud.base.server.mapper.BaseAccountMapper;
+import com.rapidark.cloud.base.server.service.BaseAccountService;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 /**
- * 通用账号
- *
- * @author liuyadu
+ * 系统用户登录账号管理
+ * 支持多账号登陆
+ * @author darkness
+ * @date 2022/5/27 11:52
+ * @version 1.0
  */
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseAccount> {
+public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseAccount>  {
+
     @Autowired
     private BaseAccountMapper baseAccountMapper;
     @Autowired
@@ -72,7 +76,7 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param registerIp
      * @return
      */
-    public BaseAccount register(Long userId, String account, String password, String accountType, Integer status, String domain, String registerIp) {
+    public BaseAccount register(String userId, String account, String password, String accountType, Integer status, String domain, String registerIp) {
         if (isExist(account, accountType, domain)) {
             // 账号已被注册
             throw new RuntimeException(String.format("account=[%s],domain=[%s]", account, domain));
@@ -123,7 +127,7 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param accountId
      * @param status
      */
-    public int updateStatus(Long accountId, Integer status) {
+    public int updateStatus(String accountId, Integer status) {
         BaseAccount baseAccount = new BaseAccount();
         baseAccount.setAccountId(accountId);
         baseAccount.setUpdateTime(new Date());
@@ -138,7 +142,7 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param domain
      * @param status
      */
-    public int updateStatusByUserId(Long userId, String domain, Integer status) {
+    public int updateStatusByUserId(String userId, String domain, Integer status) {
         if (status == null) {
             return 0;
         }
@@ -159,7 +163,7 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param domain
      * @param password
      */
-    public int updatePasswordByUserId(Long userId, String domain, String password) {
+    public int updatePasswordByUserId(String userId, String domain, String password) {
         BaseAccount baseAccount = new BaseAccount();
         baseAccount.setUpdateTime(new Date());
         baseAccount.setPassword(passwordEncoder.encode(password));

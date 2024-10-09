@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.formwork.service;
 
-import com.rapidark.cloud.gateway.formwork.repository.LoadServerRepository;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.common.utils.PageData;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -8,8 +9,6 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.util.PageResult;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;
@@ -44,8 +43,8 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerR
      * @return
      */
     @Transactional(readOnly = true)
-    public PageResult notLoadServerPageList(int currentPage, int pageSize){
-        String sql ="SELECT r.id,r.name,r.group_Code,r.uri,r.path,r.method FROM route r WHERE r.status='0' ";
+    public PageData notLoadServerPageList(int currentPage, int pageSize){
+        String sql ="SELECT r.id,r.name,r.group_Code,r.uri,r.path,r.method FROM gateway_app_route r WHERE r.status=1 ";
         return pageNativeQuery(sql, null, currentPage, pageSize);
     }
 

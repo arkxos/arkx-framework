@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.manage.timer;
 
-import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
+import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.formwork.service.MonitorService;
+import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
 import com.rapidark.common.utils.Constants;
 
 import javax.annotation.Resource;

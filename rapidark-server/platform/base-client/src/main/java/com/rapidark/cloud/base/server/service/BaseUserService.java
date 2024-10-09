@@ -12,6 +12,10 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.mapper.BaseUserMapper;
+import com.rapidark.cloud.base.server.service.BaseAccountService;
+import com.rapidark.cloud.base.server.service.BaseAuthorityService;
+import com.rapidark.cloud.base.server.service.BaseRoleService;
+import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
@@ -29,13 +33,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: liuyadu
- * @date: 2018/10/24 16:33
- * @description:
+ * 系统用户资料管理
+ * @author darkness
+ * @date 2022/5/27 12:11
+ * @version 1.0
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser> {
+public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  {
     @Autowired
     private BaseUserMapper baseUserMapper;
     @Autowired
@@ -113,7 +118,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser> {
      * @param userId
      * @param password
      */
-    public boolean updatePassword(Long userId, String password) {
+    public boolean updatePassword(String userId, String password) {
         return baseAccountService.updatePasswordByUserId(userId, ACCOUNT_DOMAIN, password) > 0;
     }
 
@@ -151,7 +156,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser> {
      * @param userId
      * @return
      */
-    public BaseUser getUserById(Long userId) {
+    public BaseUser getUserById(String userId) {
         return baseUserMapper.selectById(userId);
     }
 
@@ -161,7 +166,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser> {
      * @param userId
      * @return
      */
-    public UserAccount getUserAccount(Long userId) {
+    public UserAccount getUserAccount(String userId) {
         // 用户权限列表
         List<OpenAuthority> authorities = Lists.newArrayList();
         // 用户角色列表
@@ -257,6 +262,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser> {
         if (baseAccount != null) {
             //添加登录日志
             try {
+
                 if (!StringUtils.isEmpty(ip)) {
                     BaseAccountLogs log = new BaseAccountLogs();
                     log.setDomain(ACCOUNT_DOMAIN);

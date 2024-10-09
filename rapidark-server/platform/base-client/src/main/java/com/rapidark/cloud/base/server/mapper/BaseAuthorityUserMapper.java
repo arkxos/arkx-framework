@@ -20,7 +20,7 @@ public interface BaseAuthorityUserMapper extends SuperMapper<BaseAuthorityUser> 
      * @param userId
      * @return
      */
-    List<OpenAuthority> selectAuthorityByUser(@Param("userId") Long userId);
+    List<OpenAuthority> selectAuthorityByUser(@Param("userId") String userId);
 
     /**
      * 获取用户已授权权限完整信息
@@ -29,5 +29,5 @@ public interface BaseAuthorityUserMapper extends SuperMapper<BaseAuthorityUser> 
      * @param serviceId
      * @return
      */
-    List<AuthorityMenu> selectAuthorityMenuByUser(@Param("userId") Long userId, @Param("serviceId") String serviceId);
+    List<AuthorityMenu> selectAuthorityMenuByUser(@Param("userId") String userId, @Param("serviceId") String serviceId);
 }

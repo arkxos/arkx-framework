@@ -1,6 +1,9 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.gateway.formwork.util.*;
 import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.utils.Constants;
+import com.rapidark.common.utils.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,9 +19,6 @@ import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
 import com.rapidark.cloud.gateway.formwork.service.BalancedService;
 import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.formwork.service.LoadServerService;
-import com.rapidark.common.utils.Constants;
-import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
-import com.rapidark.cloud.gateway.formwork.util.UUIDUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -32,7 +32,6 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/balanced")
 public class BalancedRest extends BaseRest {
 
     @Resource
@@ -52,7 +51,7 @@ public class BalancedRest extends BaseRest {
      * @param balancedReq
      * @return
      */
-    @RequestMapping(value = "/add", method = {RequestMethod.POST})
+    @RequestMapping(value = "/balanced/add", method = {RequestMethod.POST})
     public ResultBody add(@RequestBody BalancedReq balancedReq) {
         Assert.notNull(balancedReq, "未获取到对象");
         Balanced balanced = new Balanced();
@@ -91,7 +90,7 @@ public class BalancedRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/balanced/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody delete(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         balancedService.deleteAndServer(id);
@@ -105,7 +104,7 @@ public class BalancedRest extends BaseRest {
      * @param balancedReq
      * @return
      */
-    @RequestMapping(value = "/update", method = {RequestMethod.POST})
+    @RequestMapping(value = "/balanced/update", method = {RequestMethod.POST})
     public ResultBody update(@RequestBody BalancedReq balancedReq) {
         Assert.notNull(balancedReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(balancedReq.getId()), "未获取到对象ID");
@@ -131,7 +130,7 @@ public class BalancedRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/balanced/findById", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody findById(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced balanced = balancedService.findById(id);
@@ -142,7 +141,7 @@ public class BalancedRest extends BaseRest {
             balancedRsp.setServerList(serverList);
             return ResultBody.ok().data(balancedRsp);
         }
-        return ResultBody.failed().msg( "未获取到对象");
+        return ResultBody.failed().msg("未获取到对象");
     }
 
     /**
@@ -150,7 +149,7 @@ public class BalancedRest extends BaseRest {
      * @param balancedReq
      * @return
      */
-    @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/balanced/pageList", method = { RequestMethod.POST })
     public ResultBody pageList(@RequestBody BalancedReq balancedReq) {
         Balanced balanced = new Balanced();
         if (balancedReq != null){
@@ -166,7 +165,8 @@ public class BalancedRest extends BaseRest {
         }
         int currentPage = getCurrentPage(balancedReq.getCurrentPage());
         int pageSize = getPageSize(balancedReq.getPageSize());
-        return ResultBody.ok().data(balancedService.pageList(balanced, currentPage, pageSize));
+        PageData<Balanced> data = balancedService.pageList(balanced, currentPage, pageSize);
+        return ResultBody.ok().data(data);
     }
 
     /**
@@ -174,7 +174,7 @@ public class BalancedRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/balanced/start", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody start(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced dbBalanced = balancedService.findById(id);
@@ -190,7 +190,7 @@ public class BalancedRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/balanced/stop", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody stop(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced dbBalanced = balancedService.findById(id);

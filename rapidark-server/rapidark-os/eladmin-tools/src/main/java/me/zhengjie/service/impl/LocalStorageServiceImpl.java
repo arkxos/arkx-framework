@@ -17,6 +17,7 @@ package me.zhengjie.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.rapidark.common.utils.PageUtil;
+import com.rapidark.common.utils.QueryHelp;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.config.FileProperties;
 import me.zhengjie.domain.LocalStorage;
@@ -54,13 +55,13 @@ public class LocalStorageServiceImpl implements LocalStorageService {
 
     @Override
     public Object queryAll(LocalStorageQueryCriteria criteria, Pageable pageable){
-        Page<LocalStorage> page = localStorageRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable);
+        Page<LocalStorage> page = localStorageRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable);
         return PageUtil.toPage(page.map(localStorageMapper::toDto));
     }
 
     @Override
     public List<LocalStorageDto> queryAll(LocalStorageQueryCriteria criteria){
-        return localStorageMapper.toDto(localStorageRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder)));
+        return localStorageMapper.toDto(localStorageRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder)));
     }
 
     @Override

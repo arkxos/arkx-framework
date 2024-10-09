@@ -1,9 +1,9 @@
 package com.flying.fish.gateway.handle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.common.model.ResultBody;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 
+import com.rapidark.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.core.annotation.Order;
@@ -76,7 +76,7 @@ public class CustomWebExceptionHandler implements WebExceptionHandler {
             message = "路由服务异常！";
         }
         message += " path：" + path;
-        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg( message));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg(message));
         return HttpResponseUtils.write(exchange.getResponse(), status, jsonMsg);
     }
 

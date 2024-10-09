@@ -40,9 +40,6 @@ public class ClientServerRegisterRest extends BaseRest {
     @Resource
     private CustomNacosConfigService customNacosConfigService;
 
-    @Resource
-    private RedisTemplate redisTemplate;
-
     /**
      * 添加注册到网关路由的客户端服务
      * @param clientServerRegister

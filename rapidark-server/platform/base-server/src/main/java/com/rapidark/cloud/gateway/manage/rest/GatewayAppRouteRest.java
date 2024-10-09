@@ -4,6 +4,7 @@ import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.http.OpenRestTemplate;
+import com.rapidark.common.utils.PageData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -51,49 +52,8 @@ public class GatewayAppRouteRest extends BaseRest {
 
     @Resource
     private CustomNacosConfigService customNacosConfigService;
-
     @Autowired
     private OpenRestTemplate openRestTemplate;
-    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody list(@RequestBody RouteReq routeReq){
-        Assert.notNull(routeReq, "未获取到对象");
-        return ResultBody.ok().data(gatewayAppRouteService.list(toRoute(routeReq)));
-    }
-
-    /**
-     * 获取分页路由列表
-     *
-     * @return
-     */
-    @ApiOperation(value = "获取分页路由列表", notes = "获取分页路由列表")
-    @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody pageList(@RequestBody RouteReq routeReq){
-        Assert.notNull(routeReq, "未获取到对象");
-        int currentPage = getCurrentPage(routeReq.getCurrentPage());
-        int pageSize = getPageSize(routeReq.getPageSize());
-        GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
-        if (StringUtils.isBlank(gatewayAppRoute.getName())){
-            gatewayAppRoute.setName(null);
-        }
-        if (StringUtils.isBlank(gatewayAppRoute.getStatus())){
-            gatewayAppRoute.setStatus(null);
-        }
-        return ResultBody.ok().data(gatewayAppRouteService.pageList(gatewayAppRoute, currentPage, pageSize));
-    }
-
-    /**
-     * 获取路由
-     *
-     * @param id
-     * @return
-     */
-    @ApiOperation(value = "获取路由", notes = "获取路由")
-    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody findById(@RequestParam String id){
-        Assert.notNull(id, "未获取到对象ID");
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        return ResultBody.ok().data(gatewayAppRouteService.findById(id));
-    }
 
     /**
      * 添加网关路由
@@ -146,6 +106,35 @@ public class GatewayAppRouteRest extends BaseRest {
         this.validate(gatewayAppRoute);
         Assert.isTrue(StringUtils.isNotBlank(gatewayAppRoute.getId()), "未获取到对象ID");
         return this.save(gatewayAppRoute, toMonitor(routeReq), false);
+    }
+
+    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResultBody findById(@RequestParam String id){
+        Assert.notNull(id, "未获取到对象ID");
+        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+        return ResultBody.ok().data(gatewayAppRouteService.findById(id));
+    }
+
+    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResultBody list(@RequestBody RouteReq routeReq){
+        Assert.notNull(routeReq, "未获取到对象");
+        return ResultBody.ok().data(gatewayAppRouteService.list(toRoute(routeReq)));
+    }
+
+    @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResultBody pageList(@RequestBody RouteReq routeReq){
+        Assert.notNull(routeReq, "未获取到对象");
+        int currentPage = getCurrentPage(routeReq.getCurrentPage());
+        int pageSize = getPageSize(routeReq.getPageSize());
+        GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
+        if (StringUtils.isBlank(gatewayAppRoute.getName())){
+            gatewayAppRoute.setName(null);
+        }
+        if (StringUtils.isBlank(gatewayAppRoute.getStatus())){
+            gatewayAppRoute.setStatus(null);
+        }
+        PageData<GatewayAppRoute> data = gatewayAppRouteService.pageList(gatewayAppRoute, currentPage, pageSize);
+        return ResultBody.ok().data(data);
     }
 
     /**

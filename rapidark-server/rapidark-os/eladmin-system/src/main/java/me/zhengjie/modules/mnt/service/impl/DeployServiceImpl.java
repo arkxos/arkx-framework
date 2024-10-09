@@ -71,7 +71,7 @@ public class DeployServiceImpl implements DeployService {
 
 	@Override
 	public Object queryAll(DeployQueryCriteria criteria, Pageable pageable) {
-		Page<Deploy> page = deployRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+		Page<Deploy> page = deployRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
 		return PageUtil.toPage(page.map(deployMapper::toDto));
 	}
 

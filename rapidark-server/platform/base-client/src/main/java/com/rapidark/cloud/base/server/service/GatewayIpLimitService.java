@@ -8,6 +8,7 @@ import com.rapidark.cloud.base.client.model.entity.GatewayIpLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.mapper.GatewayIpLimitApisMapper;
 import com.rapidark.cloud.base.server.mapper.GatewayIpLimitMapper;
+import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author liuyadu
+ *网关IP访问控制
  */
 @Slf4j
 @Service
@@ -86,7 +87,7 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      * @param policyId
      * @return
      */
-    public GatewayIpLimit getIpLimitPolicy(Long policyId) {
+    public GatewayIpLimit getIpLimitPolicy(String policyId) {
         return gatewayIpLimitMapper.selectById(policyId);
     }
 
@@ -118,7 +119,7 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param policyId
      */
-    public void removeIpLimitPolicy(Long policyId) {
+    public void removeIpLimitPolicy(String policyId) {
         clearIpLimitApisByPolicyId(policyId);
         gatewayIpLimitMapper.deleteById(policyId);
     }
@@ -129,13 +130,12 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      * @param policyId
      * @param apis
      */
-    public void addIpLimitApis(Long policyId, String... apis) {
+    public void addIpLimitApis(String policyId, String... apis) {
         // 先清空策略已有绑定
         clearIpLimitApisByPolicyId(policyId);
         if (apis != null && apis.length > 0) {
-            for (String api : apis) {
+            for (String apiId : apis) {
                 // 先api解除所有绑定, 一个API只能绑定一个策略
-                Long apiId = Long.parseLong(api);
                 clearIpLimitApisByApiId(apiId);
                 GatewayIpLimitApi item = new GatewayIpLimitApi();
                 item.setApiId(apiId);
@@ -151,7 +151,7 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param policyId
      */
-    public void clearIpLimitApisByPolicyId(Long policyId) {
+    public void clearIpLimitApisByPolicyId(String policyId) {
         QueryWrapper<GatewayIpLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(GatewayIpLimitApi::getPolicyId, policyId);
@@ -163,7 +163,7 @@ public class GatewayIpLimitService extends BaseServiceImpl<GatewayIpLimitMapper,
      *
      * @param apiId
      */
-    public void clearIpLimitApisByApiId(Long apiId) {
+    public void clearIpLimitApisByApiId(String apiId) {
         QueryWrapper<GatewayIpLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(GatewayIpLimitApi::getApiId, apiId);

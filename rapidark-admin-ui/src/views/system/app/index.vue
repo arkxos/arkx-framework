@@ -65,7 +65,7 @@
             <el-tag size="small">{{scope.row.ip}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="left" label="开发者" prop="userName" width="100" show-overflow-tooltip />
+        <el-table-column align="left" label="开发商" prop="userName" width="100" show-overflow-tooltip />
         <el-table-column align="center" label="应用类型" prop="appType" width="100" show-overflow-tooltip
                          :filters="[{ text: '服务器应用', value: 0 }, { text: '手机应用', value: 1 },{ text: 'PC网页应用', value: 2 }, { text: '手机网页应用', value: 3 }]"
                          :filter-multiple="false"
@@ -99,13 +99,13 @@
             </el-dropdown>
           </template>
         </el-table-column>
-        <!--        <el-table-column align="center" label="操作" show-overflow-tooltip width="150" fixed="right">-->
-        <!--          <template #default="{ row }">-->
-        <!--            <el-button type="text" @click="handleModal(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">编辑</el-button>-->
-        <!--            <el-button type="text" @click="handleRemove(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">删除</el-button>-->
-        <!--            <el-button type="text" @click="handleResetSecret(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">重置密钥</el-button>-->
-        <!--          </template>-->
-        <!--        </el-table-column>-->
+<!--        <el-table-column align="center" label="操作" show-overflow-tooltip width="150" fixed="right">-->
+<!--          <template #default="{ row }">-->
+<!--            <el-button type="text" @click="handleModal(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">编辑</el-button>-->
+<!--            <el-button type="text" @click="handleRemove(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">删除</el-button>-->
+<!--            <el-button type="text" @click="handleResetSecret(row)" :disabled="row.appId != 'gateway' && hasAuthority('systemAppEdit') ?false:true">重置密钥</el-button>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
       </el-table>
       <el-pagination :total="pageInfo.total" :current-page="pageInfo.page" :page-size="pageInfo.size" align="left"
                      layout="total, sizes, prev, pager, next, jumper"
@@ -113,9 +113,9 @@
     </el-card>
 
     <el-dialog :visible.sync="modalVisible"
-               :title="modalTitle"
-               width="50"
-               @close="handleReset">
+           :title="modalTitle"
+           width="50"
+           @close="handleReset">
       <el-tabs :value="current" @tab-click="handleTabClick">
         <el-tab-pane label="应用信息" name="form1">
           <el-form ref="form1" v-show="current=='form1'" :model="formItem" :rules="formItemRules" label-width="135" label-position="right">
@@ -153,10 +153,10 @@
             <el-form-item label="AppId" prop="appId">
               <el-input readonly v-model="formItem.appId" placeholder="请输入内容"/>
             </el-form-item>
-            <el-form-item label="开发者">
+            <el-form-item label="开发商">
               <el-select v-model="formItem.developerId" filterable clearable>
                 <el-option :title="item.userName" v-for="(item,index) in selectUsers" @click.native="handleOnSelectUser(item)"
-                           :value="item.userId" :label="item.userName" :key="index">
+                        :value="item.userId" :label="item.userName" :key="index">
                   <span>{{ item.userName }}</span>
                 </el-option>
               </el-select>
@@ -295,7 +295,7 @@
             <el-form-item prop="expireTime" label="过期时间">
               <el-badge v-if="formItem.isExpired" text="授权已过期">
                 <el-date-picker v-model="formItem.expireTime" class="ivu-form-item-error" type="datetime"
-                                placeholder="授权有效期"/>
+                            placeholder="授权有效期"/>
               </el-badge>
               <el-date-picker v-else v-model="formItem.expireTime" type="datetime" placeholder="设置有效期"/>
             </el-form-item>
@@ -847,7 +847,7 @@ export default {
 }
 </script>
 <style scoped>
-.upload-list {
+  .upload-list {
     position: relative;
     display: inline-block;
     width: 60px;
@@ -860,14 +860,14 @@ export default {
     border: 1px solid transparent;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-}
+  }
 
-.upload-list img {
+  .upload-list img {
     width: 100%;
     height: 100%;
-}
+  }
 
-.upload-list-cover {
+  .upload-list-cover {
     position: absolute;
     top: 0;
     right: 0;
@@ -875,35 +875,35 @@ export default {
     left: 0;
     display: none;
     background: rgba(0, 0, 0, .6);
-}
+  }
 
-.upload-list:hover .upload-list-cover {
+  .upload-list:hover .upload-list-cover {
     display: block;
-}
+  }
 
-.upload-list-cover i {
+  .upload-list-cover i {
     margin: 0 2px;
     font-size: 20px;
     color: #fff;
     cursor: pointer;
-}
+  }
 
-::v-deep .el-form-item {
+  ::v-deep .el-form-item {
     margin-right: 0 !important;
-}
-::v-deep .el-form-item__label {
+  }
+  ::v-deep .el-form-item__label {
     position: absolute;
     width: 135px;
-}
-::v-deep .el-form-item__content {
+  }
+  ::v-deep .el-form-item__content {
     width: 100%;
     padding-left: 135px;
-}
-::v-deep .el-select, .el-input_inner {
+  }
+  ::v-deep .el-select, .el-input_inner {
     width: 100%;
-}
-::v-deep .el-dialog__body {
+  }
+  ::v-deep .el-dialog__body {
     padding-top: 10px;
-}
+  }
 
 </style>

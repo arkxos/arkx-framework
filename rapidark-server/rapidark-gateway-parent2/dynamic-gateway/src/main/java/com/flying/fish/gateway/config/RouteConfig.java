@@ -97,10 +97,9 @@ public class RouteConfig {
                         //生产者服务注册名,格式：“lb://server-name”
                         uri("lb://EXAMPLES").
                         //配置多个自定义网关过滤器
-                        filters(
-                                new IpGatewayFilter(routeId),
+                        filters(new IpGatewayFilter(routeId),
                                 new TokenGatewayFilter(routeId)
-//                                new ClientIdGatewayFilter(routeId)
+//                                ,new ClientIdGatewayFilter(routeId)
                         ).
                         //配置路由ID
                         id(routeId)

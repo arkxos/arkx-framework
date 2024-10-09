@@ -3,6 +3,7 @@ package com.rapidark.cloud.gateway.formwork.service;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteCountRsp;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.common.model.ResultBody;
+import com.rapidark.common.utils.PageData;
 import com.rapidark.common.utils.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -16,7 +17,6 @@ import com.rapidark.cloud.gateway.formwork.bean.CountReq;
 import com.rapidark.cloud.gateway.formwork.bean.CountRsp;
 import com.rapidark.cloud.gateway.formwork.bean.CountTotalRsp;
 import com.rapidark.common.utils.Constants;
-import com.rapidark.cloud.gateway.formwork.util.PageResult;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;
@@ -47,12 +47,12 @@ public class CountService {
      * @return
      */
     public ResultBody countRouteList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
-        PageResult<GatewayAppRoute> pageResult = gatewayAppRouteService.pageList(gatewayAppRoute,currentPage, pageSize);
-        if (pageResult.getPageSize() > 0){
+        PageData<GatewayAppRoute> pageData = gatewayAppRouteService.pageList(gatewayAppRoute,currentPage, pageSize);
+        if (pageData.getPageSize() > 0){
             //只取当天的
             String key = RouteConstants.COUNT_DAY_KEY + DateFormatUtils.format(new Date(), Constants.DATE_FORMAT_DAY);
             Map<String,String> countMap = redisUtils.getMap(key);
-            List<GatewayAppRoute> gatewayAppRouteList = pageResult.getLists();
+            List<GatewayAppRoute> gatewayAppRouteList = pageData.getContent();
             List<GatewayAppRouteCountRsp> routeCountRspList = gatewayAppRouteList.stream().map(r -> {
                 GatewayAppRouteCountRsp rsp = new GatewayAppRouteCountRsp();
                 BeanUtils.copyProperties(r, rsp);
@@ -62,14 +62,14 @@ public class CountService {
                 rsp.setCount(StringUtils.isNotBlank(count) ? Integer.parseInt(count) : 0);
                 return rsp;
             }).collect(Collectors.toList());
-            PageResult<GatewayAppRouteCountRsp> pageResult1 = new PageResult<>();
-            pageResult1.setCurrentPage(currentPage);
-            pageResult1.setPageSize(pageSize);
-            pageResult1.setTotalNum(pageResult.getTotalNum());
-            pageResult1.setLists(routeCountRspList);
-            return ResultBody.ok().data(pageResult1);
+            PageData<GatewayAppRouteCountRsp> pageData1 = new PageData<>();
+            pageData1.setCurrentPage(currentPage);
+            pageData1.setPageSize(pageSize);
+            pageData1.setTotalElements(pageData.getTotalElements());
+            pageData1.setContent(routeCountRspList);
+            return ResultBody.ok().data(pageData1);
         }
-        return ResultBody.ok().data(pageResult);
+        return ResultBody.ok().data(pageData);
     }
 
     /**
@@ -137,7 +137,7 @@ public class CountService {
      * @return
      */
     private CountRsp getCount(String routeId, String dateType){
-        Object [] infos = getCountInfo(dateType);
+        Object[] infos = getCountInfo(dateType);
         List<String> dateList = (List<String>)infos[0];
         String countTag = (String)infos[1];
         List<Integer> counts = new ArrayList<>(dateList.size());
@@ -192,7 +192,7 @@ public class CountService {
         List<String> routeIds = countReq.getRouteIds();
         Assert.isTrue(routeIds != null, "未获取到路由ID");
         String dateType = StringUtils.isNotBlank(countReq.getDateType()) ? countReq.getDateType() : Constants.MIN;
-        Object [] infos = getCountInfo(dateType);
+        Object[] infos = getCountInfo(dateType);
         List<String> dateList = (List<String>)infos[0];
         List<String> dates = new ArrayList<>(dateList.size());
         String countTag = (String)infos[1];
@@ -220,7 +220,7 @@ public class CountService {
         countMap.forEach((k,v)->{
             CountRsp.CountData data = new CountRsp.CountData();
             data.setRouteId(k);
-            data.setCounts(v.toArray(new Integer [v.size()]));
+            data.setCounts(v.toArray(new Integer[v.size()]));
             datas.add(data);
         });
         return ResultBody.ok().data(rsp);

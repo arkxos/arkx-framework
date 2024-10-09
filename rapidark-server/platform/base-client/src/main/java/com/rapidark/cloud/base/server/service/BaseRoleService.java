@@ -9,6 +9,8 @@ import com.rapidark.cloud.base.client.model.entity.BaseRoleUser;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.mapper.BaseRoleMapper;
 import com.rapidark.cloud.base.server.mapper.BaseRoleUserMapper;
+import com.rapidark.cloud.base.server.service.BaseRoleService;
+import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
@@ -22,11 +24,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author liuyadu
+ * 角色管理
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
+public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  {
+
     @Autowired
     private BaseRoleMapper baseRoleMapper;
     @Autowired
@@ -66,7 +69,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    public BaseRole getRole(Long roleId) {
+    public BaseRole getRole(String roleId) {
         return baseRoleMapper.selectById(roleId);
     }
 
@@ -120,7 +123,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId 角色ID
      * @return
      */
-    public void removeRole(Long roleId) {
+    public void removeRole(String roleId) {
         if (roleId == null) {
             return;
         }
@@ -157,7 +160,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roles
      * @return
      */
-    public void saveUserRoles(Long userId, String... roles) {
+    public void saveUserRoles(String userId, String... roles) {
         if (userId == null || roles == null) {
             return;
         }
@@ -174,7 +177,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
             for (String roleId : roles) {
                 BaseRoleUser roleUser = new BaseRoleUser();
                 roleUser.setUserId(userId);
-                roleUser.setRoleId(Long.parseLong(roleId));
+                roleUser.setRoleId(roleId);
                 baseRoleUserMapper.insert(roleUser);
             }
             // 批量保存
@@ -187,7 +190,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @param userIds
      */
-    public void saveRoleUsers(Long roleId, String... userIds) {
+    public void saveRoleUsers(String roleId, String... userIds) {
         if (roleId == null || userIds == null) {
             return;
         }
@@ -196,7 +199,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
         if (userIds.length > 0) {
             for (String userId : userIds) {
                 BaseRoleUser roleUser = new BaseRoleUser();
-                roleUser.setUserId(Long.parseLong(userId));
+                roleUser.setUserId(userId);
                 roleUser.setRoleId(roleId);
                 baseRoleUserMapper.insert(roleUser);
             }
@@ -209,7 +212,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      *
      * @return
      */
-    public List<BaseRoleUser> findRoleUsers(Long roleId) {
+    public List<BaseRoleUser> findRoleUsers(String roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
         return baseRoleUserMapper.selectList(queryWrapper);
@@ -222,7 +225,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleCode
      * @return
      */
-    public List<BaseRoleUser> findRoleUsersByRoleIdOrRoleCode(Long roleId, String roleCode) {
+    public List<BaseRoleUser> findRoleUsersByRoleIdOrRoleCode(String roleId, String roleCode) {
         //设置查询条件
         QueryWrapper<BaseRole> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(StringUtils.isNotEmpty(roleCode), BaseRole::getRoleCode, roleCode);
@@ -244,7 +247,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    public int getCountByRole(Long roleId) {
+    public int getCountByRole(String roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
         int result = baseRoleUserMapper.selectCount(queryWrapper);
@@ -257,7 +260,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    public int getCountByUser(Long userId) {
+    public int getCountByUser(String userId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
         int result = baseRoleUserMapper.selectCount(queryWrapper);
@@ -270,7 +273,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    public void removeRoleUsers(Long roleId) {
+    public void removeRoleUsers(String roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
         baseRoleUserMapper.delete(queryWrapper);
@@ -282,7 +285,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    public void removeUserRoles(Long userId) {
+    public void removeUserRoles(String userId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
         baseRoleUserMapper.delete(queryWrapper);
@@ -295,7 +298,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param roleId
      * @return
      */
-    public Boolean isExist(Long userId, Long roleId) {
+    public Boolean isExist(String userId, String roleId) {
         QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
         queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
@@ -311,7 +314,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    public List<BaseRole> getUserRoles(Long userId) {
+    public List<BaseRole> getUserRoles(String userId) {
         List<BaseRole> roles = baseRoleUserMapper.selectRoleUserList(userId);
         return roles;
     }
@@ -322,7 +325,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole> {
      * @param userId
      * @return
      */
-    public List<Long> getUserRoleIds(Long userId) {
+    public List<String> getUserRoleIds(String userId) {
         return baseRoleUserMapper.selectRoleUserIdList(userId);
     }
 }

@@ -333,7 +333,7 @@ export const getAllStaff = () => {
  * @params position 职位信息
  * @params remark 备注
  * @params tel 分机号（仅限企业内部开发调用）
- * @params unionid 员工在当前开发者企业账号范围内的唯一标识
+ * @params unionid 员工在当前开发商企业账号范围内的唯一标识
  * @params workPlace 办公地点
  */
 export const updateStaff = (data) => {

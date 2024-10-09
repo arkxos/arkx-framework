@@ -1,9 +1,9 @@
 package com.flying.fish.gateway.filter.factory;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.common.model.ResultBody;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 
+import com.rapidark.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -64,7 +64,7 @@ public class CustomRequestRateLimiterGatewayFilterFactory extends AbstractGatewa
                         }
 
                         log.error("网关转发客户端ID:[{}],请求地址：[{}]，执行验证异常：访问已限流，请稍候再请求", new Object[]{route.getId(), route.getUri().toString()});
-                        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg( "网关转发客户端，执行验证异常：访问已限流，请稍候再请求"));
+                        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg("网关转发客户端，执行验证异常：访问已限流，请稍候再请求"));
                         return HttpResponseUtils.write(exchange.getResponse(), config.getStatusCode(), jsonMsg);
                         //return httpResponse.setComplete();
                     }));

@@ -19,6 +19,7 @@ import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.rapidark.common.utils.PageUtil;
+import com.rapidark.common.utils.QueryHelp;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.Log;
 import me.zhengjie.repository.LogRepository;
@@ -58,7 +59,7 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public Object queryAll(LogQueryCriteria criteria, Pageable pageable) {
-        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, cb)), pageable);
+        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> QueryHelp.getPredicate(root, criteria, cb)), pageable);
         String status = "ERROR";
         if (status.equals(criteria.getLogType())) {
             return PageUtil.toPage(page.map(logErrorMapper::toDto));
@@ -68,12 +69,12 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public List<Log> queryAll(LogQueryCriteria criteria) {
-        return logRepository.findAll(((root, criteriaQuery, cb) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, cb)));
+        return logRepository.findAll(((root, criteriaQuery, cb) -> QueryHelp.getPredicate(root, criteria, cb)));
     }
 
     @Override
     public Object queryAllByUser(LogQueryCriteria criteria, Pageable pageable) {
-        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, cb)), pageable);
+        Page<Log> page = logRepository.findAll(((root, criteriaQuery, cb) -> QueryHelp.getPredicate(root, criteria, cb)), pageable);
         return PageUtil.toPage(page.map(logSmallMapper::toDto));
     }
 

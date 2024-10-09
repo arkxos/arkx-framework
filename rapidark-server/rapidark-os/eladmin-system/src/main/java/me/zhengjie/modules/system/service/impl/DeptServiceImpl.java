@@ -17,6 +17,7 @@ package me.zhengjie.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.exception.BadRequestException;
@@ -65,7 +66,7 @@ public class DeptServiceImpl implements DeptService {
             if(dataScopeType.equals(DataScopeEnum.ALL.getValue())){
                 criteria.setPidIsNull(true);
             }
-            List<Field> fields = com.rapidark.common.utils.QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
+            List<Field> fields = QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
             List<String> fieldNames = new ArrayList<String>(){{ add("pidIsNull");add("enabled");}};
             for (Field field : fields) {
                 //设置对象的访问权限，保证对private的属性的访问
@@ -80,7 +81,7 @@ public class DeptServiceImpl implements DeptService {
                 }
             }
         }
-        List<DeptDto> list = deptMapper.toDto(deptRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
+        List<DeptDto> list = deptMapper.toDto(deptRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
         // 如果为空，就代表为自定义权限或者本级权限，就需要去重，不理解可以注释掉，看查询结果
         if(StringUtils.isBlank(dataScopeType)){
             return deduplication(list);

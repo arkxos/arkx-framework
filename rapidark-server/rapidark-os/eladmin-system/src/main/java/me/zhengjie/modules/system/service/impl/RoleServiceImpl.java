@@ -17,6 +17,7 @@ package me.zhengjie.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.rapidark.common.utils.PageUtil;
+import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.exception.BadRequestException;
@@ -74,12 +75,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDto> queryAll(RoleQueryCriteria criteria) {
-        return roleMapper.toDto(roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder)));
+        return roleMapper.toDto(roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder)));
     }
 
     @Override
     public Object queryAll(RoleQueryCriteria criteria, Pageable pageable) {
-        Page<Role> page = roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> com.rapidark.common.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+        Page<Role> page = roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
         return PageUtil.toPage(page.map(roleMapper::toDto));
     }
 

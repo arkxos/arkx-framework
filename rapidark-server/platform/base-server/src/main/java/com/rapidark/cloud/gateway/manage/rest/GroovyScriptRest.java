@@ -23,7 +23,6 @@ import java.util.Date;
  */
 @Slf4j
 @RestController
-@RequestMapping("/groovyScript")
 public class GroovyScriptRest extends BaseRest {
 
     @Resource
@@ -37,7 +36,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param groovyScript
      * @return
      */
-    @RequestMapping(value = "/add", method = {RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/add", method = {RequestMethod.POST})
     public ResultBody add(@RequestBody GroovyScript groovyScript) throws Exception {
         Assert.notNull(groovyScript, "未获取到对象");
         groovyScript.setOrderNum(1);
@@ -60,7 +59,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param routeId
      * @return
      */
-    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/list", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody list(@RequestParam String routeId) {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象网关路由ID");
         GroovyScript groovyScript = new GroovyScript();
@@ -73,7 +72,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody delete(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         groovyScriptService.delete(groovyScript);
@@ -88,7 +87,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param groovyScript
      * @return
      */
-    @RequestMapping(value = "/update", method = {RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/update", method = {RequestMethod.POST})
     public ResultBody update(@RequestBody GroovyScript groovyScript) throws Exception {
         Assert.notNull(groovyScript, "未获取到对象");
         Long id = groovyScript.getId();
@@ -110,7 +109,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/start", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody start(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (Constants.NO.equals(groovyScript.getStatus())) {
@@ -127,7 +126,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/stop", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody stop(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (Constants.YES.equals(groovyScript.getStatus())) {
@@ -144,7 +143,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/up", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/up", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody up(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (groovyScriptService.upOrderNum(groovyScript)){
@@ -158,7 +157,7 @@ public class GroovyScriptRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/down", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/groovyScript/down", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody down(@RequestParam Long id) {
         GroovyScript groovyScript = getGroovyScript(id);
         if (groovyScriptService.downOrderNum(groovyScript)){
