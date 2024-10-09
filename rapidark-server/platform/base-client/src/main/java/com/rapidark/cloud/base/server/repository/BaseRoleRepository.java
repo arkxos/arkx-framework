@@ -1,6 +1,5 @@
 package com.rapidark.cloud.base.server.repository;
 
-import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import org.springframework.data.repository.query.Param;

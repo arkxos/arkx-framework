@@ -3,7 +3,7 @@ package com.rapidark.cloud.gateway.formwork.service;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteRsp;
 import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.manage.repository.GatewayAppRouteRepository;
+import com.rapidark.cloud.gateway.repository.MonitorRepository;
 import com.rapidark.common.utils.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -14,12 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
+import com.rapidark.cloud.gateway.manage.repository.GatewayAppRouteRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +37,7 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
     private ClientServerRegisterService clientServerRegisterService;
 
     @Resource
-    private MonitorService monitorService;
+    private MonitorRepository monitorRepository;
 
     @Resource
     private GatewayAppRouteRepository gatewayAppRouteRepository;
@@ -56,9 +58,9 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
                 clientServerRegisterService.deleteInBatch(clientServerRegisterList);
             }
             //删除监控配置
-            Monitor monitor = monitorService.findById(id);
-            if (monitor != null){
-                monitorService.deleteById(id);
+            Optional<Monitor> monitorOptional = monitorRepository.findById(id);
+            if (monitorOptional.isPresent()){
+                monitorRepository.deleteById(id);
             }
             //删除路由对象
             this.delete(gatewayAppRoute);
@@ -94,7 +96,7 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
             return result;
         }
         //获取所有监控配置
-        List<Monitor> monitorList = monitorService.findAll();
+        List<Monitor> monitorList = monitorRepository.findAll();
         if (CollectionUtils.isEmpty(monitorList)){
             return result;
         }

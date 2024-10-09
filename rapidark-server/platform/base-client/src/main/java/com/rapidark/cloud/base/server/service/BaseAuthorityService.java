@@ -60,9 +60,8 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
     @Autowired
     private BaseRoleService baseRoleService;
     @Autowired
-    private BaseUserService baseUserService;
-//    @Autowired
-//    private OpenAppService openAppService;
+    private BaseUserRepository baseUserRepository;
+
     @Autowired
     private RedisTokenStore redisTokenStore;
     @Autowired
@@ -325,10 +324,12 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
         if (userId == null) {
             return;
         }
-        BaseUser user = baseUserService.getUserById(userId);
-        if (user == null) {
+        Optional<BaseUser> userOptional = baseUserRepository.findById(userId);
+
+        if (userOptional.isEmpty()) {
             return;
         }
+        BaseUser user = userOptional.get();
         if (CommonConstants.ROOT.equals(user.getUserName())) {
             throw new OpenAlertException("默认用户无需授权!");
         }

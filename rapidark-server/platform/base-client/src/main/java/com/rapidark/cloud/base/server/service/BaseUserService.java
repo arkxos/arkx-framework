@@ -14,8 +14,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.repository.BaseUserRepository;
 import com.rapidark.cloud.base.server.service.BaseAccountService;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
-import com.rapidark.cloud.base.server.service.BaseRoleService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.cloud.base.server.repository.BaseRoleUserRepository;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
@@ -53,13 +52,24 @@ import java.util.Map;
 public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepository> {
 
     @Autowired
-    private BaseRoleService roleService;
+    private BaseRoleUserRepository baseRoleUserRepository;
     @Autowired
     private BaseAuthorityService baseAuthorityService;
     @Autowired
     private BaseAccountService baseAccountService;
 
     private final String ACCOUNT_DOMAIN = BaseConstants.ACCOUNT_DOMAIN_ADMIN;
+
+    /**
+     * 获取组员角色
+     *
+     * @param userId
+     * @return
+     */
+    public List<BaseRole> getUserRoles(String userId) {
+        List<BaseRole> roles = baseRoleUserRepository.selectRoleUserList(userId);
+        return roles;
+    }
 
     /**
      * 添加系统用户
@@ -182,7 +192,7 @@ public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepos
         List<OpenAuthority> authorities = Lists.newArrayList();
         // 用户角色列表
         List<Map> roles = Lists.newArrayList();
-        List<BaseRole> rolesList = roleService.getUserRoles(userId);
+        List<BaseRole> rolesList = getUserRoles(userId);
         if (rolesList != null) {
             for (BaseRole role : rolesList) {
                 Map roleMap = Maps.newHashMap();

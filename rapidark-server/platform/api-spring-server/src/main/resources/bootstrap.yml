@@ -29,6 +29,12 @@ spring:
             discovery:
                 namespace: ${discovery.namespace}
                 server-addr: ${discovery.server-addr}
+
+
+        mvc:
+            token-relay:
+                enabled: false
+
         # sentinel动态配置规则
         sentinel:
             scg:

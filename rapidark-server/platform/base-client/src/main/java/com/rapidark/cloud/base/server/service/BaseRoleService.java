@@ -10,7 +10,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.repository.BaseRoleRepository;
 import com.rapidark.cloud.base.server.repository.BaseRoleUserRepository;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.cloud.base.server.repository.BaseUserRepository;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 角色管理
@@ -37,7 +38,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
     @Autowired
     private BaseRoleUserRepository baseRoleUserRepository;
     @Autowired
-    private BaseUserService baseUserService;
+    private BaseUserRepository baseUserRepository;
     @Autowired
     private BaseRoleUserService baseRoleUserService;
 
@@ -170,10 +171,12 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
         if (userId == null || roles == null) {
             return;
         }
-        BaseUser user = baseUserService.getUserById(userId);
-        if (user == null) {
+        Optional<BaseUser> userOptional = baseUserRepository.findById(userId);
+
+        if (userOptional.isEmpty()) {
             return;
         }
+        BaseUser user = userOptional.get();
         if (CommonConstants.ROOT.equals(user.getUserName())) {
             throw new OpenAlertException("默认用户无需分配!");
         }
