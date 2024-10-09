@@ -6,40 +6,56 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rapidark.common.annotation.TableAlias;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 系统用户-管理员信息
- *
- * @author liuyadu
+ * @author darkness
+ * @date 2022/6/24 14:24
+ * @version 1.0
  */
-@Data
-@TableAlias("developer")
-@TableName("base_developer")
-public class BaseDeveloper extends AbstractEntity {
+@Entity
+@Getter
+@Setter
+@Table(name="base_developer")
+public class BaseDeveloper extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -735161640894047414L;
 
     /**
      * 系统用户ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long userId;
-
-    private String companyName;
-
-    private String personName;
-
-    /**
-     * 登陆名
-     */
-    private String userName;
+    @Id
+    @Column(name = "ID")
+    @ApiModelProperty(value = "ID")
+    private String id;
 
     /**
      * 开发者类型:isp-服务提供商 dev-自研开发者
      */
     private Integer type;
+
+    private String companyName; // 公司名称
+
+    private String personName; // 联系人
+
+    /**
+     * 手机号
+     */
+    private String mobile;
+
+    /**
+     * 登陆名
+     */
+    private String userName;
 
     /**
      * 企业ID
@@ -62,11 +78,6 @@ public class BaseDeveloper extends AbstractEntity {
     private String email;
 
     /**
-     * 手机号
-     */
-    private String mobile;
-
-    /**
      * 描述
      */
     private String userDesc;
@@ -75,7 +86,7 @@ public class BaseDeveloper extends AbstractEntity {
      * 密码
      */
     @JsonIgnore
-    @TableField(exist = false)
+    @Transient
     private String password;
 
     /**

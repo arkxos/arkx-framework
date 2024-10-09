@@ -2,6 +2,7 @@ package com.rapidark.cloud.base.client.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import lombok.Data;
 
 /**
  * 系统权限-功能操作关联表
@@ -10,8 +11,10 @@ import com.rapidark.common.mybatis.base.entity.AbstractEntity;
  * @date: 2018/10/24 16:21
  * @description:
  */
+@Data
 @TableName("base_authority_action")
 public class BaseAuthorityAction extends AbstractEntity {
+
     private static final long serialVersionUID = 1471599074044557390L;
 
     /**
@@ -24,19 +27,4 @@ public class BaseAuthorityAction extends AbstractEntity {
      */
     private Long authorityId;
 
-    public Long getActionId() {
-        return actionId;
-    }
-
-    public void setActionId(Long actionId) {
-        this.actionId = actionId;
-    }
-
-    public Long getAuthorityId() {
-        return authorityId;
-    }
-
-    public void setAuthorityId(Long authorityId) {
-        this.authorityId = authorityId;
-    }
 }

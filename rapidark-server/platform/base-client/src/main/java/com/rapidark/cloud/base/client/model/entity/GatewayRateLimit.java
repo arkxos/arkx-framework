@@ -4,16 +4,20 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author liuyadu
  */
+@Getter
+@Setter
 @TableName("gateway_rate_limit")
 public class GatewayRateLimit extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ASSIGN_ID)
-    private Long policyId;
+    private String policyId;
 
     /**
      * 策略名称
@@ -35,53 +39,4 @@ public class GatewayRateLimit extends AbstractEntity {
      */
     private String intervalUnit;
 
-    public Long getLimitQuota() {
-        return limitQuota;
-    }
-
-    public void setLimitQuota(Long limitQuota) {
-        this.limitQuota = limitQuota;
-    }
-
-    /**
-     * 获取时间单位:seconds-秒,minutes-分钟,hours-小时,days-天
-     *
-     * @return interval_unit - 时间单位:seconds-秒,minutes-分钟,hours-小时,days-天
-     */
-    public String getIntervalUnit() {
-        return intervalUnit;
-    }
-
-    /**
-     * 设置时间单位:second-秒,minute-分钟,hour-小时,day-天
-     *
-     * @param intervalUnit 时间单位:second-秒,minute-分钟,hour-小时,day-天
-     */
-    public void setIntervalUnit(String intervalUnit) {
-        this.intervalUnit = intervalUnit == null ? null : intervalUnit.trim();
-    }
-
-    public Long getPolicyId() {
-        return policyId;
-    }
-
-    public void setPolicyId(Long policyId) {
-        this.policyId = policyId;
-    }
-
-    public String getPolicyName() {
-        return policyName;
-    }
-
-    public void setPolicyName(String policyName) {
-        this.policyName = policyName;
-    }
-
-    public String getPolicyType() {
-        return policyType;
-    }
-
-    public void setPolicyType(String policyType) {
-        this.policyType = policyType;
-    }
 }

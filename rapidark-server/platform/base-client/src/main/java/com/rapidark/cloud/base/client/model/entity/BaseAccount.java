@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import lombok.Data;
 
 /**
  * 系统用户-登录账号
@@ -11,17 +12,19 @@ import com.rapidark.common.mybatis.base.entity.AbstractEntity;
  * @date 2022/5/27 11:46
  * @version 1.0
  */
+@Data
 @TableName("base_account")
 public class BaseAccount extends AbstractEntity {
+
     private static final long serialVersionUID = -4484479600033295192L;
 
     @TableId(type = IdType.ASSIGN_ID)
-    private Long accountId;
+    private String accountId;
 
     /**
      * 系统用户Id
      */
-    private Long userId;
+    private String userId;
 
     /**
      * 标识：手机号、邮箱、 系统用户名、或第三方应用的唯一标识
@@ -57,7 +60,7 @@ public class BaseAccount extends AbstractEntity {
 
     }
 
-    public BaseAccount(Long userId, String account, String password, String accountType, String domain, String registerIp) {
+    public BaseAccount(String userId, String account, String password, String accountType, String domain, String registerIp) {
         this.userId = userId;
         this.account = account;
         this.password = password;
@@ -66,74 +69,4 @@ public class BaseAccount extends AbstractEntity {
         this.registerIp = registerIp;
     }
 
-
-    /**
-     * @return account_id
-     */
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    /**
-     * @param accountId
-     */
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public String getRegisterIp() {
-        return registerIp;
-    }
-
-    public void setRegisterIp(String registerIp) {
-        this.registerIp = registerIp;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }
