@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.server.tiemr;
 
-import com.rapidark.cloud.gateway.cache.CountCache;
+import com.rapidark.cloud.gateway.formwork.cache.CountCache;
 import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 

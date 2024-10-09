@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.repository;
+package com.rapidark.cloud.gateway.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.filter.global;
 
-import com.rapidark.cloud.gateway.cache.CountCache;
-import com.rapidark.cloud.gateway.cache.RouteReqCache;
+import com.rapidark.cloud.gateway.formwork.cache.CountCache;
+import com.rapidark.cloud.gateway.formwork.cache.RouteReqCache;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 
 import lombok.extern.slf4j.Slf4j;

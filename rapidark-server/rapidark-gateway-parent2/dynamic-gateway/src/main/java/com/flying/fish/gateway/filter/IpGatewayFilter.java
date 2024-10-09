@@ -1,8 +1,8 @@
 package com.flying.fish.gateway.filter;
 
-import com.rapidark.cloud.gateway.cache.IpListCache;
-import com.rapidark.cloud.gateway.cache.RegServerCache;
-import com.rapidark.cloud.gateway.manage.vo.GatewayRegServer;
+import com.rapidark.cloud.gateway.formwork.cache.IpListCache;
+import com.rapidark.cloud.gateway.formwork.cache.RegServerCache;
+import com.rapidark.cloud.gateway.formwork.vo.GatewayRegServer;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;

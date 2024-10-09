@@ -1,18 +1,17 @@
-package com.rapidark.cloud.gateway.cache;
+package com.rapidark.cloud.gateway.formwork.cache;
 
 import org.springframework.util.Assert;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 缓存客户端信息
+ * 缓存客户端注册IP信息
  * @author darkness
- * @date 2022/5/30 17:17
+ * @date 2022/5/30 17:18
  * @version 1.0
  */
 @Deprecated
-public class ClientIdCache {
-
+public class RegIpListCache {
     private static ConcurrentHashMap<String,Object> cacheMap = new ConcurrentHashMap<>();
 
     public static void put(final String key,final Object value){

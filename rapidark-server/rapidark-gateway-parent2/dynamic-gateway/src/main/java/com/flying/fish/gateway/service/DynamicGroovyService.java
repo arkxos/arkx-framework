@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.service;
 
-import com.rapidark.cloud.gateway.cache.RotueGroovyCache;
+import com.rapidark.cloud.gateway.formwork.cache.RotueGroovyCache;
 import com.flying.fish.gateway.component.GroovyCache;
 import com.flying.fish.gateway.vo.GroovyHandleData;
 import com.rapidark.cloud.gateway.formwork.base.BaseGroovyService;

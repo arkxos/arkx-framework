@@ -3,7 +3,7 @@ package com.rapidark.cloud.gateway.formwork.service;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteRsp;
 import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
+import com.rapidark.cloud.gateway.manage.repository.GatewayAppRouteRepository;
 import com.rapidark.common.utils.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

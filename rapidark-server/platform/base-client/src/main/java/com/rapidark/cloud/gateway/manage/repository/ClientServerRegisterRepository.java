@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.repository;
+package com.rapidark.cloud.gateway.manage.repository;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;

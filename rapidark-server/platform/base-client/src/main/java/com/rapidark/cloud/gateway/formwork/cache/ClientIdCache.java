@@ -1,26 +1,27 @@
-package com.rapidark.cloud.gateway.cache;
+package com.rapidark.cloud.gateway.formwork.cache;
 
 import org.springframework.util.Assert;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 缓存接口请求统计缓存
+ * 缓存客户端信息
  * @author darkness
  * @date 2022/5/30 17:17
  * @version 1.0
  */
-public class CountCache {
+@Deprecated
+public class ClientIdCache {
 
-    private static ConcurrentHashMap<String,Integer> cacheMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String,Object> cacheMap = new ConcurrentHashMap<>();
 
-    public static void put(final String key,final Integer value){
+    public static void put(final String key,final Object value){
         Assert.notNull(key, "hash map key cannot is null");
         Assert.notNull(value, "hash map value cannot is null");
         cacheMap.put(key, value);
     }
 
-    public static Integer get(final String key){
+    public static Object get(final String key){
         return cacheMap.get(key);
     }
 
@@ -34,7 +35,7 @@ public class CountCache {
         cacheMap.clear();
     }
 
-    public static ConcurrentHashMap<String,Integer> getCacheMap(){
+    public static ConcurrentHashMap<String,Object> getCacheMap(){
         return cacheMap;
     }
 }

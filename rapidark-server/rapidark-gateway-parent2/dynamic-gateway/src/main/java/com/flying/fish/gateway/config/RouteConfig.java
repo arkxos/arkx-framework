@@ -1,7 +1,7 @@
 package com.flying.fish.gateway.config;
 
 
-import com.rapidark.cloud.gateway.cache.RouteCache;
+import com.rapidark.cloud.gateway.formwork.cache.RouteCache;
 import com.flying.fish.gateway.filter.IpGatewayFilter;
 import com.flying.fish.gateway.filter.TokenGatewayFilter;
 import com.flying.fish.gateway.filter.factory.AuthorizeGatewayFilterFactory;
@@ -9,7 +9,7 @@ import com.flying.fish.gateway.service.LoadRouteService;
 import com.flying.fish.gateway.vo.GatewayRouteConfig;
 import com.rapidark.cloud.gateway.formwork.config.ApplicationContextProvider;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
+import com.rapidark.cloud.gateway.manage.repository.GatewayAppRouteRepository;
 import com.rapidark.common.utils.Constants;
 
 import lombok.extern.slf4j.Slf4j;

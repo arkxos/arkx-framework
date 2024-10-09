@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.formwork.repository.GroovyScriptRepository;
+import com.rapidark.cloud.gateway.repository.GroovyScriptRepository;
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
 import com.rapidark.cloud.gateway.formwork.util.GroovyScriptUtils;
 

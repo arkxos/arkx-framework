@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.manage.vo;
+package com.rapidark.cloud.gateway.formwork.vo;
 
 import lombok.Data;
 

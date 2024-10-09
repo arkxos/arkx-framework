@@ -1,6 +1,6 @@
-package com.rapidark.cloud.gateway.cache;
+package com.rapidark.cloud.gateway.formwork.cache;
 
-import com.rapidark.cloud.gateway.manage.vo.GatewayRegServer;
+import com.rapidark.cloud.gateway.formwork.vo.GatewayRegServer;
 import org.springframework.util.Assert;
 
 import java.util.List;

@@ -1,10 +1,10 @@
 package com.flying.fish.gateway.service.load;
 
-import com.rapidark.cloud.gateway.cache.RouteCache;
+import com.rapidark.cloud.gateway.formwork.cache.RouteCache;
 import com.flying.fish.gateway.service.DynamicRouteService;
 import com.flying.fish.gateway.service.LoadRouteService;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.repository.GatewayAppRouteRepository;
+import com.rapidark.cloud.gateway.manage.repository.GatewayAppRouteRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
 import com.rapidark.cloud.gateway.formwork.service.BalancedService;

@@ -2,7 +2,7 @@ package com.rapidark.cloud.gateway.formwork.service;
 
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteRsp;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.repository.MonitorRepository;
+import com.rapidark.cloud.gateway.repository.MonitorRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
