@@ -61,7 +61,7 @@ public class ResourceScanHandler {
                 try {
                     BaseApi api = BeanConvertUtils.mapToObject(map, BaseApi.class);
                     codes.add(api.getApiCode());
-                    BaseApi save = baseApiService.getApi(api.getApiCode());
+                    BaseApi save = baseApiService.getApiByCode(api.getApiCode());
                     if (save == null) {
                         api.setIsOpen(1);
                         // api.setIsPersist(1);

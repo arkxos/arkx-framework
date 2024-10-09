@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseAuthorityRoleRepository_selectAuthorityByRole">
+        <value>
+            <![CDATA[
+                SELECT
+                    a.authority_id,
+                    a.authority,
+                    rp.expire_time,
+                    'role' AS owner
+                FROM base_authority_role rp
+                INNER JOIN base_authority a ON rp.authority_id = a.authority_id
+                WHERE rp.role_id = :roleId AND a.status = 1
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseAuthorityRoleRepository_selectAuthorityMenuByRole">
+        <value>
+            <![CDATA[
+                SELECT
+                    a.authority_id,
+                    a.authority,
+                    a.status,
+                    m.*,
+                    rp.role_id,
+                    rp.expire_time
+                FROM base_authority_role rp
+                INNER JOIN base_authority a ON rp.authority_id = a.authority_id
+                INNER JOIN base_menu m ON a.menu_id = m.menu_id
+                WHERE rp.role_id = :roleId AND a.status = 1
+                    #[AND m.service_id = :serviceId]
+            ]]>
+        </value>
+    </sql>
+
+</sqltoy>

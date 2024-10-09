@@ -96,7 +96,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @GetMapping("/authority/action")
     public ResultBody<List<BaseAuthorityAction>> findAuthorityAction(
-            @RequestParam(value = "actionId") Long actionId
+            @RequestParam(value = "actionId") String actionId
     ) {
         List<BaseAuthorityAction> list = baseAuthorityService.findAuthorityAction(actionId);
         return ResultBody.ok().data(list);
@@ -175,7 +175,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @PostMapping("/authority/role/grant")
     public ResultBody grantAuthorityRole(
-            @RequestParam(value = "roleId") Long roleId,
+            @RequestParam(value = "roleId") String roleId,
             @RequestParam(value = "expireTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date expireTime,
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {

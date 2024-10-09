@@ -6,16 +6,23 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.model.RateLimitApi;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
-import com.rapidark.cloud.base.server.mapper.GatewayRateLimitApisMapper;
-import com.rapidark.cloud.base.server.mapper.GatewayRateLimitMapper;
+import com.rapidark.cloud.base.server.repository.GatewayRateLimitApiRepository;
+import com.rapidark.cloud.base.server.repository.GatewayRateLimitRepository;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,12 +32,10 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMapper, GatewayRateLimit>  {
-    @Autowired
-    private GatewayRateLimitMapper gatewayRateLimitMapper;
+public class GatewayRateLimitService extends BaseService<GatewayRateLimit, String, GatewayRateLimitRepository> {
 
     @Autowired
-    private GatewayRateLimitApisMapper gatewayRateLimitApisMapper;
+    private GatewayRateLimitApiRepository gatewayRateLimitApiRepository;
 
     /**
      * 分页查询
@@ -38,14 +43,16 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param pageParams
      * @return
      */
-    public IPage<GatewayRateLimit> findListPage(PageParams pageParams) {
+    public Page<GatewayRateLimit> findListPage(PageParams pageParams) {
         GatewayRateLimit query = pageParams.mapToObject(GatewayRateLimit.class);
-        QueryWrapper<GatewayRateLimit> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
+        CriteriaQueryWrapper<GatewayRateLimit> queryWrapper = new CriteriaQueryWrapper();
+        queryWrapper
                 .likeRight(ObjectUtils.isNotEmpty(query.getPolicyName()), GatewayRateLimit::getPolicyName, query.getPolicyName())
                 .eq(ObjectUtils.isNotEmpty(query.getPolicyType()), GatewayRateLimit::getPolicyType, query.getPolicyType());
-        queryWrapper.orderByDesc("create_time");
-        return gatewayRateLimitMapper.selectPage((IPage<GatewayRateLimit>)pageParams, queryWrapper);
+//        queryWrapper.orderByDesc("create_time");
+        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(),
+                Sort.by(Sort.Direction.DESC, "createTime"));
+        return findAllByCriteria(queryWrapper, pageable);
     }
 
     /**
@@ -54,7 +61,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @return
      */
     public List<RateLimitApi> findRateLimitApiList() {
-        List<RateLimitApi> list = gatewayRateLimitApisMapper.selectRateLimitApi();
+        List<RateLimitApi> list = gatewayRateLimitApiRepository.selectRateLimitApi();
         return list;
     }
 
@@ -64,11 +71,11 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policyId
      * @return
      */
-    public List<GatewayRateLimitApi> findRateLimitApiList(Long policyId) {
+    public List<GatewayRateLimitApi> findRateLimitApiList(String policyId) {
         QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(GatewayRateLimitApi::getPolicyId, policyId);
-        List<GatewayRateLimitApi> list = gatewayRateLimitApisMapper.selectList(queryWrapper);
+        List<GatewayRateLimitApi> list = gatewayRateLimitApiRepository.queryByPolicyId(policyId);
         return list;
     }
 
@@ -79,7 +86,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @return
      */
     public GatewayRateLimit getRateLimitPolicy(String policyId) {
-        return gatewayRateLimitMapper.selectById(policyId);
+        return findById(policyId);
     }
 
     /**
@@ -88,9 +95,9 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policy
      */
     public GatewayRateLimit addRateLimitPolicy(GatewayRateLimit policy) {
-        policy.setCreateTime(new Date());
+        policy.setCreateTime(LocalDateTime.now());
         policy.setUpdateTime(policy.getCreateTime());
-        gatewayRateLimitMapper.insert(policy);
+        save(policy);
         return policy;
     }
 
@@ -100,8 +107,8 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policy
      */
     public GatewayRateLimit updateRateLimitPolicy(GatewayRateLimit policy) {
-        policy.setUpdateTime(new Date());
-        gatewayRateLimitMapper.updateById(policy);
+        policy.setUpdateTime(LocalDateTime.now());
+        save(policy);
         return policy;
     }
 
@@ -112,7 +119,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      */
     public void removeRateLimitPolicy(String policyId) {
         clearRateLimitApisByPolicyId(policyId);
-        gatewayRateLimitMapper.deleteById(policyId);
+        deleteById(policyId);
     }
 
     /**
@@ -132,7 +139,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
                 item.setApiId(apiId);
                 item.setPolicyId(policyId);
                 // 重新绑定策略
-                gatewayRateLimitApisMapper.insert(item);
+                gatewayRateLimitApiRepository.save(item);
             }
         }
     }
@@ -143,10 +150,7 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param policyId
      */
     public void clearRateLimitApisByPolicyId(String policyId) {
-        QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(GatewayRateLimitApi::getPolicyId, policyId);
-        gatewayRateLimitApisMapper.delete(queryWrapper);
+        gatewayRateLimitApiRepository.deleteByPolicyId(policyId);
     }
 
     /**
@@ -155,9 +159,6 @@ public class GatewayRateLimitService extends BaseServiceImpl<GatewayRateLimitMap
      * @param apiId
      */
     public void clearRateLimitApisByApiId(String apiId) {
-        QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(GatewayRateLimitApi::getApiId, apiId);
-        gatewayRateLimitApisMapper.delete(queryWrapper);
+        gatewayRateLimitApiRepository.deleteByApiId(apiId);
     }
 }

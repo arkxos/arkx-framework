@@ -3,8 +3,15 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 系统角色-基础信息
@@ -14,15 +21,18 @@ import lombok.Data;
  * @description:
  */
 @Data
-@TableName("base_role")
-public class BaseRole extends AbstractEntity {
+@Entity
+@Table(name="base_role")
+public class BaseRole extends BaseEntity {
 
     private static final long serialVersionUID = 5197785628543375591L;
 
     /**
      * 角色ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @Id
+    @Column(name = "role_Id")
+    @ApiModelProperty(value = "roleId")
     private String roleId;
 
     /**

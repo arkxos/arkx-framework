@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class UpdateActionDTO {
-    private Long actionId;
+    private String actionId;
     private String actionCode;
     private String actionName;
     private Long menuId;

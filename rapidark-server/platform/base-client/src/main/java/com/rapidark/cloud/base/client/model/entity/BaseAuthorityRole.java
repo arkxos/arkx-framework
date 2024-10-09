@@ -1,9 +1,15 @@
 package com.rapidark.cloud.base.client.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -12,20 +18,26 @@ import java.util.Date;
  * @author liuyadu
  */
 @Data
-@TableName("base_authority_role")
-public class BaseAuthorityRole extends AbstractEntity {
+@Entity
+@Table(name="base_authority_role")
+public class BaseAuthorityRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @Column(name = "ID")
+    @ApiModelProperty(value = "ID")
+    private String id;
 
     /**
      * 权限ID
      */
-    private Long authorityId;
+    private String authorityId;
 
     /**
      * 角色ID
      */
-    private Long roleId;
+    private String roleId;
 
     /**
      * 过期时间:null表示长期

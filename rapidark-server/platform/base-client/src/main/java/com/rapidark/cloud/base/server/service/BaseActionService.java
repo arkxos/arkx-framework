@@ -3,32 +3,41 @@ package com.rapidark.cloud.base.server.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.constants.ResourceType;
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
-import com.rapidark.cloud.base.server.mapper.BaseActionMapper;
+import com.rapidark.cloud.base.server.repository.BaseActionRepository;
+import com.rapidark.cloud.base.server.service.BaseActionService;
+import com.rapidark.cloud.base.server.service.BaseAuthorityService;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 /**
- * @author liuyadu
+ * 操作资源管理
+ * @author darkness
+ * @date 2022/5/27 11:55
+ * @version 1.0
  */
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAction> {
-    @Autowired
-    private BaseActionMapper baseActionMapper;
+public class BaseActionService extends BaseService<BaseAction, String, BaseActionRepository> {
 
     @Autowired
     private BaseAuthorityService baseAuthorityService;
@@ -41,14 +50,17 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
      * @param pageParams
      * @return
      */
-    public IPage<BaseAction> findListPage(PageParams pageParams) {
+    public Page<BaseAction> findListPage(PageParams pageParams) {
         BaseAction query = pageParams.mapToObject(BaseAction.class);
-        QueryWrapper<BaseAction> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
+        CriteriaQueryWrapper<BaseAction> queryWrapper = new CriteriaQueryWrapper<>();
+        queryWrapper
                 .likeRight(ObjectUtils.isNotEmpty(query.getActionCode()), BaseAction::getActionCode, query.getActionCode())
                 .likeRight(ObjectUtils.isNotEmpty(query.getActionName()), BaseAction::getActionName, query.getActionName());
-        queryWrapper.orderByDesc("create_time");
-        return baseActionMapper.selectPage(new Page(pageParams.getPage(), pageParams.getLimit()), queryWrapper);
+//        queryWrapper.orderByDesc("create_time");
+        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(),
+                Sort.by(Sort.Direction.DESC, "createTime"));
+        return findAllByCriteria(queryWrapper, pageable);
+//        return baseActionMapper.selectPage(new Page(pageParams.getPage(), pageParams.getLimit()), queryWrapper);
     }
 
     /**
@@ -57,10 +69,10 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
      * @param menuId
      * @return
      */
-    public List<BaseAction> findListByMenuId(Long menuId) {
-        QueryWrapper<BaseAction> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseAction::getMenuId, menuId);
-        List<BaseAction> list = baseActionMapper.selectList(queryWrapper);
+    public List<BaseAction> findListByMenuId(String menuId) {
+        CriteriaQueryWrapper<BaseAction> queryWrapper = new CriteriaQueryWrapper();
+        queryWrapper.eq(BaseAction::getMenuId, menuId);
+        List<BaseAction> list = findAllByCriteria(queryWrapper);
         //根据优先级从小到大排序
         list.sort((BaseAction h1, BaseAction h2) -> h1.getPriority().compareTo(h2.getPriority()));
         return list;
@@ -72,8 +84,8 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
      * @param actionId
      * @return
      */
-    public BaseAction getAction(Long actionId) {
-        return baseActionMapper.selectById(actionId);
+    public BaseAction getAction(String actionId) {
+        return findById(actionId);
     }
 
 
@@ -84,10 +96,9 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
      * @return
      */
     public Boolean isExist(String acitonCode) {
-        QueryWrapper<BaseAction> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(BaseAction::getActionCode, acitonCode);
-        int count = baseActionMapper.selectCount(queryWrapper);
+        BaseAction example = new BaseAction();
+        example.setActionCode(acitonCode);
+        long count = count(example);
         return count > 0 ? true : false;
     }
 
@@ -101,9 +112,6 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
         if (isExist(aciton.getActionCode())) {
             throw new OpenAlertException(String.format("%s编码已存在!", aciton.getActionCode()));
         }
-        if (aciton.getMenuId() == null) {
-            aciton.setMenuId(0L);
-        }
         if (aciton.getPriority() == null) {
             aciton.setPriority(0);
         }
@@ -113,10 +121,10 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
         if (aciton.getIsPersist() == null) {
             aciton.setIsPersist(BaseConstants.DISABLED);
         }
-        aciton.setCreateTime(new Date());
+        aciton.setCreateTime(LocalDateTime.now());
         aciton.setServiceId(DEFAULT_SERVICE_ID);
         aciton.setUpdateTime(aciton.getCreateTime());
-        baseActionMapper.insert(aciton);
+        save(aciton);
         // 同步权限表里的信息
         baseAuthorityService.saveOrUpdateAuthority(aciton.getActionId(), ResourceType.action);
         return aciton;
@@ -139,14 +147,14 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
                 throw new OpenAlertException(String.format("%s编码已存在!", aciton.getActionCode()));
             }
         }
-        if (aciton.getMenuId() == null) {
-            aciton.setMenuId(0L);
-        }
+
         if (aciton.getPriority() == null) {
             aciton.setPriority(0);
         }
-        aciton.setUpdateTime(new Date());
-        baseActionMapper.updateById(aciton);
+        aciton.setUpdateTime(LocalDateTime.now());
+
+        save(aciton);
+
         // 同步权限表里的信息
         baseAuthorityService.saveOrUpdateAuthority(aciton.getActionId(), ResourceType.action);
         return aciton;
@@ -158,14 +166,14 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
      * @param actionId
      * @return
      */
-    public void removeAction(Long actionId) {
+    public void removeAction(String actionId) {
         BaseAction aciton = getAction(actionId);
         if (aciton != null && aciton.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除"));
         }
         baseAuthorityService.removeAuthorityAction(actionId);
         baseAuthorityService.removeAuthority(actionId, ResourceType.action);
-        baseActionMapper.deleteById(actionId);
+        deleteById(actionId);
     }
 
     /**
@@ -173,7 +181,7 @@ public class BaseActionService extends BaseServiceImpl<BaseActionMapper, BaseAct
      *
      * @param menuId
      */
-    public void removeByMenuId(Long menuId) {
+    public void removeByMenuId(String menuId) {
         List<BaseAction> actionList = findListByMenuId(menuId);
         if (actionList != null && actionList.size() > 0) {
             for (BaseAction action : actionList) {

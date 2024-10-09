@@ -3,8 +3,15 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 系统用户-登录账号
@@ -13,12 +20,15 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-@TableName("base_account")
-public class BaseAccount extends AbstractEntity {
+@Entity
+@Table(name="base_account")
+public class BaseAccount extends BaseEntity {
 
     private static final long serialVersionUID = -4484479600033295192L;
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @Id
+    @Column(name = "account_id")
+    @ApiModelProperty(value = "accountId")
     private String accountId;
 
     /**

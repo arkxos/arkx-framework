@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseAuthorityRepository_selectAllAuthorityResource">
+        <value>
+            <![CDATA[
+                SELECT
+	a.authority_id,
+	a.authority,
+	menu.path,
+	menu.service_id,
+	1 AS is_auth,
+	1 AS is_open,
+	menu.status,
+	gatewayAppRoute.path AS prefix
+FROM
+	base_authority a
+	INNER JOIN base_menu menu ON a.menu_id = menu.menu_id
+	LEFT JOIN gateway_app_route gatewayAppRoute ON gatewayAppRoute.system_code = menu.service_id
+WHERE
+	menu.status = 1
+
+	UNION ALL
+
+SELECT
+	a.authority_id,
+	a.authority,
+	api.path,
+	api.service_id,
+	api.is_auth,
+	api.is_open,
+	api.status,
+	gatewayAppRoute.path AS prefix
+FROM
+	base_authority a
+	INNER JOIN base_api api ON a.api_id = api.api_id
+	LEFT JOIN gateway_app_route gatewayAppRoute ON gatewayAppRoute.system_code = api.service_id
+
+	UNION ALL
+
+SELECT
+	a.authority_id,
+	a.authority,
+	api.path,
+	api.service_id,
+	api.is_auth,
+	api.is_open,
+	api.status,
+	gatewayAppRoute.path AS prefix
+FROM
+	base_authority_action ac
+	INNER JOIN base_authority a ON a.action_id = ac.action_id
+	INNER JOIN base_authority a2 ON ac.authority_id = a2.authority_id
+	INNER JOIN base_api api ON a2.api_id = api.api_id
+	INNER JOIN base_action action ON ac.action_id = action.action_id
+	LEFT JOIN gateway_app_route gatewayAppRoute ON gatewayAppRoute.system_code = api.service_id
+WHERE
+	action.status = 1
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseAuthorityRepository_selectAuthorityAll">
+        <value>
+            <![CDATA[
+                SELECT
+                    authority_id,
+                    authority,
+                    'user' AS owner
+                FROM base_authority
+                where 1=1
+                    #[AND status = :status]
+                    #[@if(:type == 1) AND api_id IS NULL]
+                    #[@if(:type == 2) AND api_id IS NOT NULL]
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseAuthorityRepository_selectAuthorityMenu">
+        <value>
+            <![CDATA[
+                SELECT
+                    a.authority_id,
+                    a.authority,
+                    m.*
+                FROM base_authority a
+                INNER JOIN base_menu m ON a.menu_id = m.menu_id
+                where 1=1
+                    #[AND m.service_id = :serviceId]
+                    #[AND m.status = :status]
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseAuthorityRepository_selectAuthorityAction">
+        <value>
+            <![CDATA[
+                SELECT
+                    a.authority_id,
+                    a.authority,
+                    o.*
+                FROM base_authority a
+                INNER JOIN base_action o ON a.action_id = o.action_id
+                #[@blank(:roleId)
+                    INNER JOIN base_authority_role ra ON ra.authority_id = a.authority_id
+                ]
+                #[@blank(:userId)
+                    INNER JOIN base_authority_user ua ON ua.authority_id = a.authority_id
+                ]
+                where 1=1
+                    #[AND o.status = :status]
+                    #[AND o.menu_id = :menuId]
+                    #[AND ra.role_id = :roleId]
+                    #[AND ua.user_id = :userId]
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseAuthorityRepository_selectAuthorityApi">
+        <value>
+            <![CDATA[
+                SELECT
+                    a.authority_id,
+                    a.authority,
+                    api.*,
+                    gatewayAppRoute.path as prefix
+                FROM base_authority a
+                INNER JOIN base_api api ON a.api_id = api.api_id
+                INNER JOIN gateway_app_route gatewayAppRoute ON gatewayAppRoute.system_code = api.service_id
+                where 1=1
+                    #[AND api.status = :status]
+                    #[AND api.service_id = :serviceId]
+                ORDER BY api.create_time DESC
+            ]]>
+        </value>
+    </sql>
+
+</sqltoy>

@@ -14,7 +14,7 @@ public class BaseApi {
     /**
      * 资源ID
      */
-    private Long apiId;
+    private String apiId;
 
     /**
      * 资源编码

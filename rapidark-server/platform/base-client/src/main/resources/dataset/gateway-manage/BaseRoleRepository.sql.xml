@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseRoleRepository_selectRoleList">
+        <value>
+            <![CDATA[
+              SELECT * FROM base_role
+            ]]>
+        </value>
+    </sql>
+
+
+</sqltoy>

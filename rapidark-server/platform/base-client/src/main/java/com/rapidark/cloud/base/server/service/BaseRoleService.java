@@ -7,19 +7,23 @@ import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.cloud.base.client.model.entity.BaseRoleUser;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
-import com.rapidark.cloud.base.server.mapper.BaseRoleMapper;
-import com.rapidark.cloud.base.server.mapper.BaseRoleUserMapper;
+import com.rapidark.cloud.base.server.repository.BaseRoleRepository;
+import com.rapidark.cloud.base.server.repository.BaseRoleUserRepository;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import com.rapidark.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,14 +32,14 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  {
+public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepository> {
 
     @Autowired
-    private BaseRoleMapper baseRoleMapper;
-    @Autowired
-    private BaseRoleUserMapper baseRoleUserMapper;
+    private BaseRoleUserRepository baseRoleUserRepository;
     @Autowired
     private BaseUserService baseUserService;
+    @Autowired
+    private BaseRoleUserService baseRoleUserService;
 
     /**
      * 分页查询
@@ -43,14 +47,16 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @param pageParams
      * @return
      */
-    public IPage<BaseRole> findListPage(PageParams pageParams) {
+    public Page<BaseRole> findListPage(PageParams pageParams) {
         BaseRole query = pageParams.mapToObject(BaseRole.class);
-        QueryWrapper<BaseRole> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
+        CriteriaQueryWrapper<BaseRole> queryWrapper = new CriteriaQueryWrapper();
+        queryWrapper
                 .likeRight(ObjectUtils.isNotEmpty(query.getRoleCode()), BaseRole::getRoleCode, query.getRoleCode())
                 .likeRight(ObjectUtils.isNotEmpty(query.getRoleName()), BaseRole::getRoleName, query.getRoleName());
-        queryWrapper.orderByDesc("create_time");
-        return baseRoleMapper.selectPage((IPage<BaseRole>)pageParams, queryWrapper);
+//        queryWrapper.orderByDesc("create_time");
+        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(),
+                Sort.by(Sort.Direction.DESC, "createTime"));
+        return findAllByCriteria(queryWrapper, pageable);
     }
 
     /**
@@ -59,7 +65,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public List<BaseRole> findAllList() {
-        List<BaseRole> list = baseRoleMapper.selectList(new QueryWrapper<>());
+        List<BaseRole> list = findAll();
         return list;
     }
 
@@ -70,7 +76,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public BaseRole getRole(String roleId) {
-        return baseRoleMapper.selectById(roleId);
+        return findById(roleId);
     }
 
     /**
@@ -89,9 +95,9 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
         if (role.getIsPersist() == null) {
             role.setIsPersist(BaseConstants.DISABLED);
         }
-        role.setCreateTime(new Date());
+        role.setCreateTime(LocalDateTime.now());
         role.setUpdateTime(role.getCreateTime());
-        baseRoleMapper.insert(role);
+        save(role);
         return role;
     }
 
@@ -112,8 +118,8 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
                 throw new OpenAlertException(String.format("%s编码已存在!", role.getRoleCode()));
             }
         }
-        role.setUpdateTime(new Date());
-        baseRoleMapper.updateById(role);
+        role.setUpdateTime(LocalDateTime.now());
+        save(role);
         return role;
     }
 
@@ -131,11 +137,11 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
         if (role != null && role.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除"));
         }
-        int count = getCountByRole(roleId);
+        long count = getCountByRole(roleId);
         if (count > 0) {
             throw new OpenAlertException("该角色下存在授权人员,不允许删除!");
         }
-        baseRoleMapper.deleteById(roleId);
+        deleteById(roleId);
     }
 
     /**
@@ -148,9 +154,9 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
         if (StringUtils.isBlank(roleCode)) {
             throw new OpenAlertException("roleCode不能为空!");
         }
-        QueryWrapper<BaseRole> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseRole::getRoleCode, roleCode);
-        return baseRoleMapper.selectCount(queryWrapper) > 0;
+        BaseRole queryWrapper = new BaseRole();
+        queryWrapper.setRoleCode(roleCode);
+        return count(queryWrapper) > 0;
     }
 
     /**
@@ -178,7 +184,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
                 BaseRoleUser roleUser = new BaseRoleUser();
                 roleUser.setUserId(userId);
                 roleUser.setRoleId(roleId);
-                baseRoleUserMapper.insert(roleUser);
+                baseRoleUserRepository.save(roleUser);
             }
             // 批量保存
         }
@@ -201,7 +207,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
                 BaseRoleUser roleUser = new BaseRoleUser();
                 roleUser.setUserId(userId);
                 roleUser.setRoleId(roleId);
-                baseRoleUserMapper.insert(roleUser);
+                baseRoleUserRepository.save(roleUser);
             }
             // 批量保存
         }
@@ -213,9 +219,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public List<BaseRoleUser> findRoleUsers(String roleId) {
-        QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
-        return baseRoleUserMapper.selectList(queryWrapper);
+        return baseRoleUserRepository.queryByRoleId(roleId);
     }
 
     /**
@@ -226,12 +230,8 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public List<BaseRoleUser> findRoleUsersByRoleIdOrRoleCode(String roleId, String roleCode) {
-        //设置查询条件
-        QueryWrapper<BaseRole> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(StringUtils.isNotEmpty(roleCode), BaseRole::getRoleCode, roleCode);
-        queryWrapper.lambda().eq(roleId != null, BaseRole::getRoleId, roleId);
         //查询角色信息
-        BaseRole baseRole = baseRoleMapper.selectOne(queryWrapper);
+        BaseRole baseRole = entityRepository.findByRoleIdOrRoleCode(roleId, roleCode);
         if (baseRole == null) {
             //角色不存在,直接返回
             return null;
@@ -247,10 +247,10 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @param roleId
      * @return
      */
-    public int getCountByRole(String roleId) {
-        QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
-        int result = baseRoleUserMapper.selectCount(queryWrapper);
+    public long getCountByRole(String roleId) {
+        BaseRoleUser queryWrapper = new BaseRoleUser();
+        queryWrapper.setRoleId(roleId);
+        long result = baseRoleUserService.count(queryWrapper);
         return result;
     }
 
@@ -260,10 +260,10 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @param userId
      * @return
      */
-    public int getCountByUser(String userId) {
-        QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
-        int result = baseRoleUserMapper.selectCount(queryWrapper);
+    public long getCountByUser(String userId) {
+        BaseRoleUser queryWrapper = new BaseRoleUser();
+        queryWrapper.setUserId(userId);
+        long result = baseRoleUserService.count(queryWrapper);
         return result;
     }
 
@@ -274,9 +274,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public void removeRoleUsers(String roleId) {
-        QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
-        baseRoleUserMapper.delete(queryWrapper);
+        baseRoleUserRepository.deleteByRoleId(roleId);
     }
 
     /**
@@ -286,9 +284,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public void removeUserRoles(String userId) {
-        QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
-        baseRoleUserMapper.delete(queryWrapper);
+        baseRoleUserRepository.deleteByUserId(userId);
     }
 
     /**
@@ -299,11 +295,11 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public Boolean isExist(String userId, String roleId) {
-        QueryWrapper<BaseRoleUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseRoleUser::getRoleId, roleId);
-        queryWrapper.lambda().eq(BaseRoleUser::getUserId, userId);
-        baseRoleUserMapper.delete(queryWrapper);
-        int result = baseRoleUserMapper.selectCount(queryWrapper);
+        BaseRoleUser queryWrapper = new BaseRoleUser();
+        queryWrapper.setRoleId(roleId);
+        queryWrapper.setUserId(userId);
+//        baseRoleUserMapper.delete(queryWrapper);
+        long result = baseRoleUserRepository.count(Example.of(queryWrapper));
         return result > 0;
     }
 
@@ -315,7 +311,7 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public List<BaseRole> getUserRoles(String userId) {
-        List<BaseRole> roles = baseRoleUserMapper.selectRoleUserList(userId);
+        List<BaseRole> roles = baseRoleUserRepository.selectRoleUserList(userId);
         return roles;
     }
 
@@ -326,6 +322,6 @@ public class BaseRoleService extends BaseServiceImpl<BaseRoleMapper, BaseRole>  
      * @return
      */
     public List<String> getUserRoleIds(String userId) {
-        return baseRoleUserMapper.selectRoleUserIdList(userId);
+        return baseRoleUserRepository.selectRoleUserIdList(userId);
     }
 }

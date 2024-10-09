@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="GatewayIpLimitApiRepository_selectIpLimitApi">
+        <value>
+            <![CDATA[
+              SELECT
+                    i.policy_id,
+                    i.api_id,
+                    p.policy_name,
+                    p.policy_type,
+                    a.api_code,
+                    a.api_name,
+                    a.api_category,
+                    a.service_id,
+                    a.path,
+                    p.ip_address
+                FROM gateway_ip_limit_api i
+                INNER JOIN gateway_ip_limit p ON i.policy_id = p.policy_id
+                INNER JOIN base_api a ON i.api_id = a.api_id
+                where
+                    #[p.policy_type = :policyType]
+            ]]>
+        </value>
+    </sql>
+
+
+</sqltoy>

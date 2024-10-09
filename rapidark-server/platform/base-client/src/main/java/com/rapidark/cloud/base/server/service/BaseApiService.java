@@ -1,32 +1,46 @@
 package com.rapidark.cloud.base.server.service;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.constants.ResourceType;
 import com.rapidark.cloud.base.client.model.entity.BaseApi;
-import com.rapidark.cloud.base.server.mapper.BaseApiMapper;
+import com.rapidark.cloud.base.server.repository.BaseApiRepository;
+import com.rapidark.cloud.base.server.service.BaseApiService;
+import com.rapidark.cloud.base.server.service.BaseAuthorityService;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 /**
- * @author liuyadu
+ * 接口资源管理
+ * @author darkness
+ * @date 2022/5/27 11:59
+ * @version 1.0
  */
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
-    @Autowired
-    private BaseApiMapper baseApiMapper;
+public class BaseApiService extends BaseService<BaseApi, String, BaseApiRepository> {
+
     @Autowired
     private BaseAuthorityService baseAuthorityService;
 
@@ -36,18 +50,19 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
      * @param pageParams
      * @return
      */
-    public IPage<BaseApi> findListPage(PageParams pageParams) {
+    public Page<BaseApi> findListPage(PageParams pageParams) {
         BaseApi query = pageParams.mapToObject(BaseApi.class);
-        QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
+        CriteriaQueryWrapper<BaseApi> queryWrapper = new CriteriaQueryWrapper();
+        queryWrapper
                 .likeRight(ObjectUtils.isNotEmpty(query.getPath()), BaseApi::getPath, query.getPath())
                 .likeRight(ObjectUtils.isNotEmpty(query.getApiName()), BaseApi::getApiName, query.getApiName())
                 .likeRight(ObjectUtils.isNotEmpty(query.getApiCode()), BaseApi::getApiCode, query.getApiCode())
                 .eq(ObjectUtils.isNotEmpty(query.getServiceId()), BaseApi::getServiceId, query.getServiceId())
-                .eq(ObjectUtils.isNotEmpty(query.getStatus()), BaseApi::getStatus, query.getStatus())
-                .eq(ObjectUtils.isNotEmpty(query.getIsAuth()), BaseApi::getIsAuth, query.getIsAuth());
-        queryWrapper.orderByDesc("create_time");
-        return baseApiMapper.selectPage((IPage<BaseApi>)pageParams, queryWrapper);
+                .eq(ObjectUtils.isNotEmpty(query.getStatus()), BaseApi::getStatus, query.getStatus()+"")
+                .eq(ObjectUtils.isNotEmpty(query.getIsAuth()), BaseApi::getIsAuth, query.getIsAuth()+"");
+//        queryWrapper.orderByDesc("create_time");
+        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(), Sort.by(Sort.Direction.DESC, "createTime"));
+        return findAllByCriteria(queryWrapper, pageable);
     }
 
     /**
@@ -56,9 +71,7 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
      * @return
      */
     public List<BaseApi> findAllList(String serviceId) {
-        QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(ObjectUtils.isNotEmpty(serviceId), BaseApi::getServiceId, serviceId);
-        List<BaseApi> list = baseApiMapper.selectList(queryWrapper);
+        List<BaseApi> list = entityRepository.queryByServiceId(serviceId);
         return list;
     }
 
@@ -68,8 +81,8 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
      * @param apiId
      * @return
      */
-    public BaseApi getApi(Long apiId) {
-        return baseApiMapper.selectById(apiId);
+    public BaseApi getApi(String apiId) {
+        return findById(apiId);
     }
 
 
@@ -80,8 +93,8 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
      * @return
      */
     public Boolean isExist(String apiCode) {
-        QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseApi::getApiCode, apiCode);
+        CriteriaQueryWrapper<BaseApi> queryWrapper = new CriteriaQueryWrapper();
+        queryWrapper.eq(BaseApi::getApiCode, apiCode);
         int count = getCount(queryWrapper);
         return count > 0 ? true : false;
     }
@@ -111,9 +124,9 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
         if (api.getIsAuth() == null) {
             api.setIsAuth(0);
         }
-        api.setCreateTime(new Date());
+        api.setCreateTime(LocalDateTime.now());
         api.setUpdateTime(api.getCreateTime());
-        baseApiMapper.insert(api);
+        save(api);
         // 同步权限表里的信息
         baseAuthorityService.saveOrUpdateAuthority(api.getApiId(), ResourceType.api);
     }
@@ -141,8 +154,11 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
         if (api.getApiCategory() == null) {
             api.setApiCategory(BaseConstants.DEFAULT_API_CATEGORY);
         }
-        api.setUpdateTime(new Date());
-        baseApiMapper.updateById(api);
+        api.setUpdateTime(LocalDateTime.now());
+
+        BeanUtil.copyProperties(api, saved, CopyOptions.create().ignoreNullValue());
+
+        save(saved);
         // 同步权限表里的信息
         baseAuthorityService.saveOrUpdateAuthority(api.getApiId(), ResourceType.api);
     }
@@ -153,10 +169,8 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
      * @param apiCode
      * @return
      */
-    public BaseApi getApi(String apiCode) {
-        QueryWrapper<BaseApi> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda().eq(BaseApi::getApiCode, apiCode);
-        return baseApiMapper.selectOne(queryWrapper);
+    public BaseApi getApiByCode(String apiCode) {
+        return entityRepository.findByApiCode(apiCode);
     }
 
 
@@ -166,13 +180,13 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
      * @param apiId
      * @return
      */
-    public void removeApi(Long apiId) {
+    public void removeApi(String apiId) {
         BaseApi api = getApi(apiId);
         if (api != null && api.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除"));
         }
         baseAuthorityService.removeAuthority(apiId, ResourceType.api);
-        baseApiMapper.deleteById(apiId);
+        deleteById(apiId);
     }
 
 
@@ -182,7 +196,7 @@ public class BaseApiService extends BaseServiceImpl<BaseApiMapper, BaseApi> {
      * @param queryWrapper
      * @return
      */
-    public int getCount(QueryWrapper<BaseApi> queryWrapper) {
-        return baseApiMapper.selectCount(queryWrapper);
+    public int getCount(CriteriaQueryWrapper<BaseApi> queryWrapper) {
+        return findAllByCriteria(queryWrapper).size();
     }
 }

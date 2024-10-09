@@ -10,19 +10,21 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author darkness
  * @version 1.0
  * @date 2022/6/1 16:03
  */
-@Entity
 @Getter
 @Setter
+@Entity
 @Table(name="Gateway_Open_Client_App_Api_Authority")
-public class GatewayOpenClientAppApiAuthority extends BaseEntity implements Serializable {
+public class GatewayOpenClientAppApiAuthority extends BaseEntity {
 
     @Id
     @Column(name = "ID")

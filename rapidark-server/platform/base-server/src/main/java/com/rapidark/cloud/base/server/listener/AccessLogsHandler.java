@@ -1,10 +1,11 @@
 package com.rapidark.cloud.base.server.listener;
 
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
-import com.rapidark.cloud.base.server.mapper.GatewayLogsMapper;
+import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.cloud.base.server.service.IpRegionService;
 import com.rapidark.common.constants.QueueConstants;
 import com.rapidark.common.utils.BeanConvertUtils;
+import com.rapidark.common.utils.UuidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import java.util.Map;
 public class AccessLogsHandler {
 
     @Autowired
-    private GatewayLogsMapper gatewayLogsMapper;
+    private GatewayAccessLogsRepository gatewayAccessLogsRepository;
 
     /**
      * 临时存放减少io
@@ -45,8 +46,9 @@ public class AccessLogsHandler {
                     if (logs.getIp() != null) {
                         logs.setRegion(ipRegionService.getRegion(logs.getIp()));
                     }
+                    logs.setAccessId(UuidUtil.base58Uuid());
                     logs.setUseTime(logs.getResponseTime().getTime() - logs.getRequestTime().getTime());
-                    gatewayLogsMapper.insert(logs);
+                    gatewayAccessLogsRepository.save(logs);
                 }
             }
         } catch (Exception e) {

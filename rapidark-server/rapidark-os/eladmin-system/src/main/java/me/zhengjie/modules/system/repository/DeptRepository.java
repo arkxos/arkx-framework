@@ -49,7 +49,7 @@ public interface DeptRepository extends JpaRepository<Dept, Long>, JpaSpecificat
      */
     @Query(value = "select d.* from sys_dept d, sys_roles_depts r where " +
             "d.dept_id = r.dept_id and r.role_id = ?1", nativeQuery = true)
-    Set<Dept> findByRoleId(Long roleId);
+    Set<Dept> findByRoleId(long roleId);
 
     /**
      * 判断是否存在子节点

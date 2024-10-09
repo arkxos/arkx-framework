@@ -26,7 +26,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table(name="base_developer")
-public class BaseDeveloper extends BaseEntity implements Serializable {
+public class BaseDeveloper extends BaseEntity {
 
     private static final long serialVersionUID = -735161640894047414L;
 

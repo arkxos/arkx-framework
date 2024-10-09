@@ -6,8 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rapidark.common.annotation.TableAlias;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.persistence.*;
 
 /**
  * 系统用户-基础信息
@@ -15,16 +19,18 @@ import lombok.Data;
  * @author liuyadu
  */
 @Data
-@TableAlias("user")
-@TableName("base_user")
-public class BaseUser extends AbstractEntity {
+@Entity
+@Table(name="base_user")
+public class BaseUser extends BaseEntity {
 
     private static final long serialVersionUID = -735161640894047414L;
 
     /**
      * 系统用户ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @Id
+    @Column(name = "user_Id")
+    @ApiModelProperty(value = "userId")
     private String userId;
 
     /**
@@ -72,6 +78,7 @@ public class BaseUser extends AbstractEntity {
      */
     @JsonIgnore
     @TableField(exist = false)
+    @Transient
     private String password;
 
     /**

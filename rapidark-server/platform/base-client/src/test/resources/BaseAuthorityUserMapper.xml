@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rapidark.cloud.base.server.mapper.BaseAuthorityUserMapper">
+    <resultMap id="BaseResultMap" type="com.rapidark.cloud.base.client.model.entity.BaseAuthorityUser">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="authority_id" jdbcType="BIGINT" property="authorityId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime"/>
+    </resultMap>
+    <resultMap id="UserAuthorityMenu" type="com.rapidark.cloud.base.client.model.AuthorityMenu"
+               extends="com.rapidark.cloud.base.server.mapper.BaseMenuMapper.BaseResultMap">
+        <result column="authority_id" jdbcType="BIGINT" property="authorityId"/>
+        <result column="authority" jdbcType="VARCHAR" property="authority"/>
+        <collection property="actionList" column="{menuId=menu_id,userId=user_id}"
+                    select="com.rapidark.cloud.base.server.mapper.BaseAuthorityMapper.selectAuthorityAction"/>
+    </resultMap>
+
+    <select id="selectAuthorityByUser" resultMap="com.rapidark.cloud.base.server.mapper.BaseAuthorityMapper.Authority">
+
+    </select>
+
+    <select id="selectAuthorityMenuByUser" resultMap="UserAuthorityMenu">
+
+    </select>
+</mapper>

@@ -3,8 +3,15 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 系统资源-API接口
@@ -13,16 +20,19 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-@TableName("base_api")
-public class BaseApi extends AbstractEntity {
+@Entity
+@Table(name="base_api")
+public class BaseApi extends BaseEntity {
 
     private static final long serialVersionUID = -9099562653030770650L;
 
     /**
      * 资源ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long apiId;
+    @Id
+    @Column(name = "api_id")
+    @ApiModelProperty(value = "api_id")
+    private String apiId;
 
     /**
      * 资源编码

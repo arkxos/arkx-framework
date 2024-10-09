@@ -3,8 +3,15 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 系统资源-功能操作
@@ -14,16 +21,19 @@ import lombok.Data;
  * @description:
  */
 @Data
-@TableName("base_action")
-public class BaseAction extends AbstractEntity {
+@Entity
+@Table(name="base_action")
+public class BaseAction extends BaseEntity {
 
     private static final long serialVersionUID = 1471599074044557390L;
 
     /**
      * 资源ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long actionId;
+    @Id
+    @Column(name = "action_Id")
+    @ApiModelProperty(value = "actionId")
+    private String actionId;
 
     /**
      * 资源编码
@@ -38,7 +48,7 @@ public class BaseAction extends AbstractEntity {
     /**
      * 资源父节点
      */
-    private Long menuId;
+    private String menuId;
 
     /**
      * 优先级 越小越靠前

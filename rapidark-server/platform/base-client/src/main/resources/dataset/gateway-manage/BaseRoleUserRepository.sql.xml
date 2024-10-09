@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseRoleUserRepository_selectRoleUserList">
+        <value>
+            <![CDATA[
+              SELECT
+                    base_role_user.user_id,
+                    base_role.role_id,
+                    base_role.role_code,
+                    base_role.role_name,
+                    base_role.role_desc,
+                    base_role.status,
+                    base_role.create_time,
+                    base_role.update_time
+                    FROM base_role_user
+              INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
+              WHERE user_id = :userId AND status = 1
+            ]]>
+        </value>
+    </sql>
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="BaseRoleUserRepository_selectRoleUserIdList">
+        <value>
+            <![CDATA[
+            SELECT
+                base_role.role_id
+            FROM base_role_user
+            INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
+            WHERE user_id = :userId AND status = 1
+            ]]>
+        </value>
+    </sql>
+
+</sqltoy>

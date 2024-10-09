@@ -31,10 +31,32 @@ public class CriteriaQueryWrapper<T> {
         return this;
     }
 
+    public CriteriaQueryWrapper<T> eq(boolean notEmpty, SFunction<T> function, String value) {
+        if(!notEmpty) {
+            return this;
+        }
+        return eq(function, value);
+    }
+
     public CriteriaQueryWrapper<T> eq(SFunction<T> function, String value) {
         CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
         String attributeName = BeanUtils.convertToFieldName(function);
         criteriaQueryInfo.setType(Query.Type.EQUAL);
+        criteriaQueryInfo.setAttributeName(attributeName);
+        criteriaQueryInfo.setFieldType(String.class);
+        criteriaQueryInfo.setVal(value);
+        criteriaQueryInfos.add(criteriaQueryInfo);
+
+        return this;
+    }
+
+    public CriteriaQueryWrapper<T> likeRight(boolean notEmpty, SFunction<T> function, String value) {
+        if(!notEmpty) {
+            return this;
+        }
+        CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
+        String attributeName = BeanUtils.convertToFieldName(function);
+        criteriaQueryInfo.setType(Query.Type.RIGHT_LIKE);
         criteriaQueryInfo.setAttributeName(attributeName);
         criteriaQueryInfo.setFieldType(String.class);
         criteriaQueryInfo.setVal(value);

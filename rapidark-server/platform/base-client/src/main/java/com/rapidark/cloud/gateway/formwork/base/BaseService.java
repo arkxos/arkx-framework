@@ -70,7 +70,7 @@ public class BaseService<T,ID,R extends BaseRepository> {
         return null;
     }
 
-    public T findOneByCriteria(Object criteria) {
+    public T findOneByCriteria(CriteriaQueryWrapper<T> criteria) {
         List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder));
         if(data.isEmpty()) {
             return null;
@@ -80,6 +80,11 @@ public class BaseService<T,ID,R extends BaseRepository> {
 
     public List<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria) {
         List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
+        return data;
+    }
+
+    public Page<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria, Pageable pageable) {
+        Page<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder), pageable);
         return data;
     }
 

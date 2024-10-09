@@ -8,6 +8,7 @@ import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.http.OpenRestTemplate;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -65,7 +66,7 @@ public class BaseApiController {
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
     @GetMapping("/api/{apiId}/info")
-    public ResultBody<BaseApi> getApi(@PathVariable("apiId") Long apiId) {
+    public ResultBody<BaseApi> getApi(@PathVariable("apiId") String apiId) {
         return ResultBody.ok().data(apiService.getApi(apiId));
     }
 
@@ -109,7 +110,7 @@ public class BaseApiController {
         api.setApiDesc(command.getApiDesc());
         api.setIsAuth(command.getIsAuth());
         api.setIsOpen(command.getIsOpen());
-        Long apiId = null;
+        String apiId = null;
         apiService.addApi(api);
         openRestTemplate.refreshGateway();
         return ResultBody.ok().data(apiId);
@@ -144,7 +145,7 @@ public class BaseApiController {
     })
     @PostMapping("/api/update")
     public ResultBody updateApi(
-            @RequestParam("apiId") Long apiId,
+            @RequestParam("apiId") String apiId,
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "apiCategory") String apiCategory,
@@ -187,7 +188,7 @@ public class BaseApiController {
     })
     @PostMapping("/api/remove")
     public ResultBody removeApi(
-            @RequestParam("apiId") Long apiId
+            @RequestParam("apiId") String apiId
     ) {
         apiService.removeApi(apiId);
         // 刷新网关
@@ -209,9 +210,15 @@ public class BaseApiController {
     public ResultBody batchRemove(
             @RequestParam(value = "ids") String ids
     ) {
-        QueryWrapper<BaseApi> wrapper = new QueryWrapper();
-        wrapper.lambda().in(BaseApi::getApiId, Arrays.asList(ids.split(","))).eq(BaseApi::getIsPersist, 0);
-        apiService.remove(wrapper);
+        CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
+        wrapper
+                .in(BaseApi::getApiId, Arrays.asList(ids.split(",")))
+                .eq(BaseApi::getIsPersist, 0+"");
+        List<BaseApi> data = apiService.findAllByCriteria(wrapper);
+        for (BaseApi datum : data) {
+            apiService.delete(datum);
+        }
+
         // 刷新网关
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
@@ -234,11 +241,15 @@ public class BaseApiController {
             @RequestParam(value = "open") Integer open
     ) {
         Assert.isTrue((open != 1 && open != 0), "isOpen只支持0,1");
-        QueryWrapper<BaseApi> wrapper = new QueryWrapper();
-        wrapper.lambda().in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
-        BaseApi entity = new BaseApi();
-        entity.setIsOpen(open);
-        apiService.update(entity, wrapper);
+        CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
+        wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
+
+        List<BaseApi> data = apiService.findAllByCriteria(wrapper);
+        for (BaseApi entity : data) {
+            entity.setIsOpen(open);
+            apiService.save(entity);
+        }
+
         // 刷新网关
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
@@ -260,11 +271,13 @@ public class BaseApiController {
             @RequestParam(value = "status") Integer status
     ) {
         Assert.isTrue((status != 0 && status != 1 && status != 2), "status只支持0,1,2");
-        QueryWrapper<BaseApi> wrapper = new QueryWrapper();
-        wrapper.lambda().in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
-        BaseApi entity = new BaseApi();
-        entity.setStatus(status);
-        apiService.update(entity, wrapper);
+        CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
+        wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
+        List<BaseApi> data = apiService.findAllByCriteria(wrapper);
+        for (BaseApi entity : data) {
+            entity.setStatus(status);
+            apiService.save(entity);
+        }
         // 刷新网关
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
@@ -286,11 +299,13 @@ public class BaseApiController {
             @RequestParam(value = "auth") Integer auth
     ) {
         Assert.isTrue((auth != 0 && auth != 1), "auth只支持0,1");
-        QueryWrapper<BaseApi> wrapper = new QueryWrapper();
-        wrapper.lambda().in(BaseApi::getApiId, Arrays.asList(ids.split(","))).eq(BaseApi::getIsPersist, 0);
-        BaseApi entity = new BaseApi();
-        entity.setStatus(auth);
-        apiService.update(entity, wrapper);
+        CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
+        wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(","))).eq(BaseApi::getIsPersist, 0+"");
+        List<BaseApi> data = apiService.findAllByCriteria(wrapper);
+        for (BaseApi entity : data) {
+            entity.setIsAuth(auth);
+            apiService.save(entity);
+        }
         // 刷新网关
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
@@ -312,11 +327,13 @@ public class BaseApiController {
             @RequestParam(value = "persist") Integer persist
     ) {
         Assert.isTrue((persist != 0 && persist != 1), "persist只支持0,1");
-        QueryWrapper<BaseApi> wrapper = new QueryWrapper();
-        wrapper.lambda().in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
-        BaseApi entity = new BaseApi();
-        entity.setIsPersist(persist);
-        apiService.update(entity, wrapper);
+        CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
+        wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
+        List<BaseApi> data = apiService.findAllByCriteria(wrapper);
+        for (BaseApi entity : data) {
+            entity.setIsPersist(persist);
+            apiService.save(entity);
+        }
         // 刷新网关
         openRestTemplate.refreshGateway();
         return ResultBody.ok();

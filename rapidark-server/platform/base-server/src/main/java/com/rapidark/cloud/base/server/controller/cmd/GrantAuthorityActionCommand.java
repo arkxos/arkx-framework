@@ -18,7 +18,7 @@ public class GrantAuthorityActionCommand {
 
     @ApiModelProperty(name = "actionId", value = "功能按钮ID", example = "", required = true)
     @NotNull(message = "功能按钮ID不能为空")
-    private Long actionId;
+    private String actionId;
 
     @ApiModelProperty(name = "authorityIds", value = "接口ID:多个用,号隔开", example = "", required = true)
     @NotEmpty(message = "接口ID不能为空")

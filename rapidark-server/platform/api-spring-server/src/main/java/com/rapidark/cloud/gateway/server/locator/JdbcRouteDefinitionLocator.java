@@ -56,7 +56,7 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
             "    FROM gateway_rate_limit_api i\n" +
             "    INNER JOIN gateway_rate_limit p ON i.policy_id = p.policy_id\n" +
             "    INNER JOIN base_api a ON i.api_id = a.api_id\n" +
-            "    INNER JOIN gateway_app_route r ON a.service_id = r.name\n" +
+            "    INNER JOIN gateway_app_route r ON a.service_id = r.system_code\n" +
             "    WHERE p.policy_type = 'url'";
 
 
@@ -174,7 +174,7 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
                     this.repository.save(Mono.just(definition)).subscribe();
                 });
             }
-            if (!routeList.isEmpty()) {
+            if (routeList.size() > 0) {
                 // 最后加载路由
                 routeList.forEach(gatewayRoute -> {
                     RouteDefinition definition = new RouteDefinition();
@@ -222,7 +222,7 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
             result.setPolicyName(rs.getString("policy_name"));
             result.setServiceId(rs.getString("service_id"));
             result.setPath(rs.getString("path"));
-            result.setApiId(rs.getLong("api_id"));
+            result.setApiId(rs.getString("api_id"));
             result.setApiCode(rs.getString("api_code"));
             result.setApiName(rs.getString("api_name"));
             result.setApiCategory(rs.getString("api_category"));

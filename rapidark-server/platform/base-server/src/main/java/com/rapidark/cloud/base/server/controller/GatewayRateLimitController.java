@@ -54,7 +54,7 @@ public class GatewayRateLimitController {
     })
     @GetMapping("/gateway/limit/rate/api/list")
     public ResultBody<IPage<GatewayRateLimit>> getRateLimitApiList(
-            @RequestParam("policyId") Long policyId
+            @RequestParam("policyId") String policyId
     ) {
         return ResultBody.ok().data(gatewayRateLimitService.findRateLimitApiList(policyId));
     }

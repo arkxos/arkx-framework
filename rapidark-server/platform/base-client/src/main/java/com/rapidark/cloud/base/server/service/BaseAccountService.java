@@ -4,18 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
-import com.rapidark.cloud.base.server.mapper.BaseAccountLogsMapper;
+import com.rapidark.cloud.base.server.repository.BaseAccountLogsRepository;
 import com.rapidark.cloud.base.server.repository.BaseAccountRepository;
 import com.rapidark.common.utils.CriteriaQueryWrapper;
 import com.rapidark.cloud.base.server.service.query.AccountQueryCriteria;
-import com.rapidark.cloud.base.server.service.query.AccountTypeInQueryCriteria;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -33,10 +34,9 @@ import java.util.List;
 public class BaseAccountService extends BaseService<BaseAccount, String, BaseAccountRepository> {
 
     @Autowired
-    private BaseAccountLogsMapper baseAccountLogsMapper;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private BaseAccountLogsRepository baseAccountLogsRepository;
 
 
     /**
@@ -58,11 +58,11 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @return
      */
     public BaseAccount getAccount(String account, String accountType, String domain) {
-        AccountQueryCriteria criteria = new AccountQueryCriteria();
+        BaseAccount criteria = new BaseAccount();
         criteria.setAccount(account);
         criteria.setAccountType(accountType);
         criteria.setDomain(domain);
-        return findOneByCriteria(criteria);
+        return findOneByExample(criteria);
     }
 
     /**
@@ -85,7 +85,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
         //加密
         String encodePassword = passwordEncoder.encode(password);
         BaseAccount baseAccount = new BaseAccount(userId, account, encodePassword, accountType, domain, registerIp);
-        baseAccount.setCreateTime(new Date());
+        baseAccount.setCreateTime(LocalDateTime.now());
         baseAccount.setUpdateTime(baseAccount.getCreateTime());
         baseAccount.setStatus(status);
         entityRepository.save(baseAccount);
@@ -134,7 +134,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      */
     public void updateStatus(String accountId, Integer status) {
         BaseAccount baseAccount = findById(accountId);
-        baseAccount.setUpdateTime(new Date());
+        baseAccount.setUpdateTime(LocalDateTime.now());
         baseAccount.setStatus(status);
         entityRepository.save(baseAccount);
     }
@@ -154,7 +154,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
         example.setUserId(userId);
         example.setDomain(domain);
         BaseAccount baseAccount = findOneByExample(example);
-        baseAccount.setUpdateTime(new Date());
+        baseAccount.setUpdateTime(LocalDateTime.now());
         baseAccount.setStatus(status);
 
         entityRepository.save(baseAccount);
@@ -176,7 +176,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
         List<BaseAccount> data = findAllByCriteria(criteria);
         for (BaseAccount entity : data) {
             entity.setPassword(passwordEncoder.encode(password));
-            entity.setUpdateTime(new Date());
+            entity.setUpdateTime(LocalDateTime.now());
             save(entity);
         }
     }
@@ -203,13 +203,13 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param log
      */
     public void addLoginLog(BaseAccountLogs log) {
-        QueryWrapper<BaseAccountLogs> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(BaseAccountLogs::getAccountId, log.getAccountId())
-                .eq(BaseAccountLogs::getUserId, log.getUserId());
-        int count = baseAccountLogsMapper.selectCount(queryWrapper);
+        BaseAccountLogs accountLogs = new BaseAccountLogs();
+        accountLogs.setAccountId(log.getAccountId());
+        accountLogs.setUserId(log.getUserId());
+
+        long count = baseAccountLogsRepository.count(Example.of(accountLogs));
         log.setLoginTime(new Date());
         log.setLoginNums(count + 1);
-        baseAccountLogsMapper.insert(log);
+        baseAccountLogsRepository.save(log);
     }
 }

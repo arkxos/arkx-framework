@@ -3,20 +3,31 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author liuyadu
  */
 @Getter
 @Setter
-@TableName("gateway_rate_limit")
-public class GatewayRateLimit extends AbstractEntity {
+@Entity
+@Table(name="gateway_rate_limit")
+public class GatewayRateLimit extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @Id
+    @Column(name = "policy_Id")
+    @ApiModelProperty(value = "policyId")
     private String policyId;
 
     /**

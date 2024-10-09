@@ -3,32 +3,40 @@ package com.rapidark.cloud.base.server.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.constants.ResourceType;
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
-import com.rapidark.cloud.base.server.mapper.BaseMenuMapper;
+import com.rapidark.cloud.base.server.repository.BaseMenuRepository;
+import com.rapidark.cloud.base.server.service.BaseActionService;
+import com.rapidark.cloud.base.server.service.BaseAuthorityService;
+import com.rapidark.cloud.base.server.service.BaseMenuService;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 /**
- * @author liuyadu
+ * 菜单资源管理
  */
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
-    @Autowired
-    private BaseMenuMapper baseMenuMapper;
+public class BaseMenuService extends BaseService<BaseMenu, String, BaseMenuRepository> {
+
     @Autowired
     private BaseAuthorityService baseAuthorityService;
 
@@ -44,13 +52,14 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @param pageParams
      * @return
      */
-    public IPage<BaseMenu> findListPage(PageParams pageParams) {
+    public Page<BaseMenu> findListPage(PageParams pageParams) {
         BaseMenu query = pageParams.mapToObject(BaseMenu.class);
-        QueryWrapper<BaseMenu> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
+        CriteriaQueryWrapper<BaseMenu> queryWrapper = new CriteriaQueryWrapper();
+        queryWrapper
                 .likeRight(ObjectUtils.isNotEmpty(query.getMenuCode()), BaseMenu::getMenuCode, query.getMenuCode())
                 .likeRight(ObjectUtils.isNotEmpty(query.getMenuName()), BaseMenu::getMenuName, query.getMenuName());
-        return baseMenuMapper.selectPage(new Page(pageParams.getPage(), pageParams.getLimit()), queryWrapper);
+        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit());
+        return findAllByCriteria(queryWrapper, pageable);
     }
 
     /**
@@ -59,9 +68,8 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @return
      */
     public List<BaseMenu> findAllList() {
-        List<BaseMenu> list = baseMenuMapper.selectList(new QueryWrapper<>());
         //根据优先级从小到大排序
-        list.sort((BaseMenu h1, BaseMenu h2) -> h1.getPriority().compareTo(h2.getPriority()));
+        List<BaseMenu> list = entityRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
         return list;
     }
 
@@ -74,10 +82,9 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @return
      */
     public Boolean isExist(String menuCode) {
-        QueryWrapper<BaseMenu> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(BaseMenu::getMenuCode, menuCode);
-        int count = baseMenuMapper.selectCount(queryWrapper);
+        BaseMenu queryWrapper = new BaseMenu();
+        queryWrapper.setMenuCode(menuCode);
+        long count = count(queryWrapper);
         return count > 0 ? true : false;
     }
 
@@ -107,9 +114,9 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
         if (menu.getServiceId() == null || "".equals(menu.getServiceId())) {
             menu.setServiceId(DEFAULT_SERVICE_ID);
         }
-        menu.setCreateTime(new Date());
+        menu.setCreateTime(LocalDateTime.now());
         menu.setUpdateTime(menu.getCreateTime());
-        baseMenuMapper.insert(menu);
+        save(menu);
         // 同步权限表里的信息
         baseAuthorityService.saveOrUpdateAuthority(menu.getMenuId(), ResourceType.menu);
         return menu;
@@ -122,7 +129,7 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @return
      */
     public BaseMenu updateMenu(BaseMenu menu) {
-        BaseMenu saved = baseMenuMapper.selectById(menu.getMenuId());
+        BaseMenu saved = findById(menu.getMenuId());
         if (saved == null) {
             throw new OpenAlertException(String.format("%s信息不存在!", menu.getMenuId()));
         }
@@ -138,8 +145,8 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
         if (menu.getPriority() == null) {
             menu.setPriority(0);
         }
-        menu.setUpdateTime(new Date());
-        baseMenuMapper.updateById(menu);
+        menu.setUpdateTime(LocalDateTime.now());
+        save(menu);
         // 同步权限表里的信息
         baseAuthorityService.saveOrUpdateAuthority(menu.getMenuId(), ResourceType.menu);
         return menu;
@@ -152,8 +159,8 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
      * @param menuId
      * @return
      */
-    public void removeMenu(Long menuId) {
-        BaseMenu menu = baseMenuMapper.selectById(menuId);
+    public void removeMenu(String menuId) {
+        BaseMenu menu = findById(menuId);
         if (menu != null && menu.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除!"));
         }
@@ -162,6 +169,6 @@ public class BaseMenuService extends BaseServiceImpl<BaseMenuMapper, BaseMenu> {
         // 移除功能按钮和相关权限
         baseActionService.removeByMenuId(menuId);
         // 移除菜单信息
-        baseMenuMapper.deleteById(menuId);
+        deleteById(menuId);
     }
 }

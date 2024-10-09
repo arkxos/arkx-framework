@@ -164,7 +164,7 @@ public class ContactHelper {
     }
 
     //获取企业角色下的员工列表
-    public static List<OapiRoleSimplelistResponse.OpenEmpSimple> getRoleSimpleList(String accessToken, long roleId) {
+    public static List<OapiRoleSimplelistResponse.OpenEmpSimple> getRoleSimpleList(String accessToken, String roleId) {
         try {
             DingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_GET_ROLE_SIMPLE_LIST);
             OapiRoleSimplelistRequest request = new OapiRoleSimplelistRequest();

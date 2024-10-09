@@ -1,7 +1,8 @@
 package com.rapidark.cloud.base.server.service;
 
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
-import com.rapidark.cloud.base.server.mapper.BaseMenuMapper;
+import com.rapidark.cloud.base.server.repository.BaseMenuRepository;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/5/13 21:42
  */
 @Service
-public class BaseMenuQuery {
-
-    @Autowired
-    private BaseMenuMapper baseMenuMapper;
+public class BaseMenuQuery extends BaseService<BaseMenu, String, BaseMenuRepository> {
 
     /**
      * 根据主键获取菜单
@@ -22,8 +20,8 @@ public class BaseMenuQuery {
      * @param menuId
      * @return
      */
-    public BaseMenu getMenu(Long menuId) {
-        return baseMenuMapper.selectById(menuId);
+    public BaseMenu getMenu(String menuId) {
+        return findById(menuId);
     }
 
 }

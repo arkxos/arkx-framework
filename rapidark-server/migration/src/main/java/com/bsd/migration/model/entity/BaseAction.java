@@ -15,7 +15,7 @@ public class BaseAction {
     /**
      * 资源ID
      */
-    private Long actionId;
+    private String actionId;
 
     /**
      * 资源编码

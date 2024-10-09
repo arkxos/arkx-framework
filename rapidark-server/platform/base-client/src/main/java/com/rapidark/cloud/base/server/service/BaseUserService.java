@@ -11,23 +11,32 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
-import com.rapidark.cloud.base.server.mapper.BaseUserMapper;
+import com.rapidark.cloud.base.server.repository.BaseUserRepository;
 import com.rapidark.cloud.base.server.service.BaseAccountService;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import com.rapidark.common.security.OpenAuthority;
 import com.rapidark.common.security.OpenSecurityConstants;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import com.rapidark.common.utils.StringUtils;
+import com.rapidark.common.utils.UuidUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +47,11 @@ import java.util.Map;
  * @date 2022/5/27 12:11
  * @version 1.0
  */
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  {
-    @Autowired
-    private BaseUserMapper baseUserMapper;
+public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepository> {
+
     @Autowired
     private BaseRoleService roleService;
     @Autowired
@@ -62,10 +71,10 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
         if (getUserByUsername(baseUser.getUserName()) != null) {
             throw new OpenAlertException("用户名:" + baseUser.getUserName() + "已存在!");
         }
-        baseUser.setCreateTime(new Date());
+        baseUser.setCreateTime(LocalDateTime.now());
         baseUser.setUpdateTime(baseUser.getCreateTime());
         //保存系统用户信息
-        baseUserMapper.insert(baseUser);
+        save(baseUser);
         //默认注册用户名账户
         baseAccountService.register(baseUser.getUserId(), baseUser.getUserName(), baseUser.getPassword(), BaseConstants.ACCOUNT_TYPE_USERNAME, baseUser.getStatus(), ACCOUNT_DOMAIN, null);
         if (StringUtils.matchEmail(baseUser.getEmail())) {
@@ -91,7 +100,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
         if (baseUser.getStatus() != null) {
             baseAccountService.updateStatusByUserId(baseUser.getUserId(), ACCOUNT_DOMAIN, baseUser.getStatus());
         }
-        baseUserMapper.updateById(baseUser);
+        save(baseUser);
     }
 
     /**
@@ -103,10 +112,10 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
     public void addUserThirdParty(BaseUser baseUser, String accountType) {
         if (!baseAccountService.isExist(baseUser.getUserName(), accountType, ACCOUNT_DOMAIN)) {
             baseUser.setUserType(BaseConstants.USER_TYPE_ADMIN);
-            baseUser.setCreateTime(new Date());
+            baseUser.setCreateTime(LocalDateTime.now());
             baseUser.setUpdateTime(baseUser.getCreateTime());
             //保存系统用户信息
-            baseUserMapper.insert(baseUser);
+            save(baseUser);
             // 注册账号信息
             baseAccountService.register(baseUser.getUserId(), baseUser.getUserName(), baseUser.getPassword(), accountType, BaseConstants.ACCOUNT_STATUS_NORMAL, ACCOUNT_DOMAIN, null);
         }
@@ -128,16 +137,18 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
      * @param pageParams
      * @return
      */
-    public IPage<BaseUser> findListPage(PageParams pageParams) {
+    public Page<BaseUser> findListPage(PageParams pageParams) {
         BaseUser query = pageParams.mapToObject(BaseUser.class);
-        QueryWrapper<BaseUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
+        CriteriaQueryWrapper<BaseUser> queryWrapper = new CriteriaQueryWrapper();
+        queryWrapper
                 .eq(ObjectUtils.isNotEmpty(query.getUserId()), BaseUser::getUserId, query.getUserId())
                 .eq(ObjectUtils.isNotEmpty(query.getUserType()), BaseUser::getUserType, query.getUserType())
                 .eq(ObjectUtils.isNotEmpty(query.getUserName()), BaseUser::getUserName, query.getUserName())
                 .eq(ObjectUtils.isNotEmpty(query.getMobile()), BaseUser::getMobile, query.getMobile());
-        queryWrapper.orderByDesc("create_time");
-        return baseUserMapper.selectPage((IPage<BaseUser>)pageParams, queryWrapper);
+//        queryWrapper.orderByDesc("create_time");
+        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(),
+                Sort.by(Sort.Direction.DESC, "createTime"));
+        return findAllByCriteria(queryWrapper, pageable);
     }
 
     /**
@@ -146,7 +157,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
      * @return
      */
     public List<BaseUser> findAllList() {
-        List<BaseUser> list = baseUserMapper.selectList(new QueryWrapper<>());
+        List<BaseUser> list = findAll();
         return list;
     }
 
@@ -157,7 +168,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
      * @return
      */
     public BaseUser getUserById(String userId) {
-        return baseUserMapper.selectById(userId);
+        return findById(userId);
     }
 
     /**
@@ -219,10 +230,7 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
      * @return
      */
     public BaseUser getUserByUsername(String username) {
-        QueryWrapper<BaseUser> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(BaseUser::getUserName, username);
-        BaseUser saved = baseUserMapper.selectOne(queryWrapper);
+        BaseUser saved = entityRepository.findByUserName(username);
         return saved;
     }
 
@@ -262,9 +270,9 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
         if (baseAccount != null) {
             //添加登录日志
             try {
-
                 if (!StringUtils.isEmpty(ip)) {
                     BaseAccountLogs log = new BaseAccountLogs();
+                    log.setId(UuidUtil.base58Uuid());
                     log.setDomain(ACCOUNT_DOMAIN);
                     log.setUserId(baseAccount.getUserId());
                     log.setAccount(baseAccount.getAccount());

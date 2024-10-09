@@ -3,8 +3,14 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,12 +20,15 @@ import java.util.Date;
  * @author liuyadu
  */
 @Data
-@TableName("base_account_logs")
-public class BaseAccountLogs implements Serializable {
+@Entity
+@Table(name="base_account_logs")
+public class BaseAccountLogs extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @Id
+    @Column(name = "ID")
+    @ApiModelProperty(value = "ID")
     private String id;
 
     private Date loginTime;
@@ -37,7 +46,7 @@ public class BaseAccountLogs implements Serializable {
     /**
      * 登录次数
      */
-    private Integer loginNums;
+    private Long loginNums;
 
     private String userId;
 

@@ -3,8 +3,15 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rapidark.common.model.BaseEntity;
 import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 系统资源-菜单信息
@@ -14,16 +21,19 @@ import lombok.Data;
  * @description:
  */
 @Data
-@TableName("base_menu")
-public class BaseMenu extends AbstractEntity {
+@Entity
+@Table(name="base_menu")
+public class BaseMenu extends BaseEntity {
 
     private static final long serialVersionUID = -4414780909980518788L;
 
     /**
      * 菜单Id
      */
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long menuId;
+    @Id
+    @Column(name = "menu_Id")
+    @ApiModelProperty(value = "menuId")
+    private String menuId;
 
     /**
      * 菜单编码

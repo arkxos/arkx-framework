@@ -2,15 +2,16 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
+
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
 import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
-import com.rapidark.cloud.base.server.controller.cmd.DeleteMenuCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.rapidark.cloud.base.server.service.BaseActionService;
+import com.rapidark.cloud.base.server.service.BaseMenuQuery;
 import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.cloud.base.server.service.BaseMenuQuery;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.common.model.PageParams;
@@ -106,7 +107,7 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "menuId", value = "menuId", paramType = "form"),
     })
     @GetMapping("/menu/action")
-    public ResultBody<List<BaseAction>> getMenuAction(Long menuId) {
+    public ResultBody<List<BaseAction>> getMenuAction(String menuId) {
         return ResultBody.ok().data(baseResourceOperationService.findListByMenuId(menuId));
     }
 
@@ -121,7 +122,7 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
     })
     @GetMapping("/menu/{menuId}/info")
-    public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
+    public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") String menuId) {
         return ResultBody.ok().data(baseMenuQuery.getMenu(menuId));
     }
 
@@ -147,7 +148,7 @@ public class BaseMenuController {
         menu.setPriority(command.getPriority());
         menu.setMenuDesc(command.getMenuDesc());
         menu.setServiceId(command.getServiceId());
-        Long menuId = null;
+        String menuId = null;
         BaseMenu result = baseResourceMenuService.addMenu(menu);
         if (result != null) {
             menuId = result.getMenuId();
@@ -194,8 +195,8 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })
     @PostMapping("/menu/remove")
-    public ResultBody<Boolean> removeMenu(@Valid @RequestBody DeleteMenuCommand command) {
-        baseResourceMenuService.removeMenu(command.getMenuId());
+    public ResultBody<Boolean> removeMenu(@RequestParam("menuId") String menuId) {
+        baseResourceMenuService.removeMenu(menuId);
         openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }

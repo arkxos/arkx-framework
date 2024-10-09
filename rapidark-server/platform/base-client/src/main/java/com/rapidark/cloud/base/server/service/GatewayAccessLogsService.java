@@ -4,10 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
-import com.rapidark.cloud.base.server.mapper.GatewayLogsMapper;
+import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.model.PageParams;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GatewayAccessLogsService {
-
-    @Autowired
-    private GatewayLogsMapper gatewayLogsMapper;
+public class GatewayAccessLogsService extends BaseService<GatewayAccessLogs, String, GatewayAccessLogsRepository> {
 
     /**
      * 分页查询
@@ -30,17 +33,19 @@ public class GatewayAccessLogsService {
      * @param pageParams
      * @return
      */
-    public IPage<GatewayAccessLogs> findListPage(PageParams pageParams) {
+    public Page<GatewayAccessLogs> findListPage(PageParams pageParams) {
         GatewayAccessLogs query = pageParams.mapToObject(GatewayAccessLogs.class);
-        QueryWrapper<GatewayAccessLogs> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda()
+        CriteriaQueryWrapper<GatewayAccessLogs> queryWrapper = new CriteriaQueryWrapper<>();
+        queryWrapper
                 .eq(ObjectUtils.isNotEmpty(query.getBizId()), GatewayAccessLogs::getBizId, query.getBizId())
-                .eq(ObjectUtils.isNotEmpty(query.getBizStatus()), GatewayAccessLogs::getBizStatus, query.getBizStatus())
-                .like(ObjectUtils.isNotEmpty(query.getPath()), GatewayAccessLogs::getPath, query.getPath())
+                .eq(ObjectUtils.isNotEmpty(query.getBizStatus()), GatewayAccessLogs::getBizStatus, query.getBizStatus()+"")
+//                .like(ObjectUtils.isNotEmpty(query.getPath()), GatewayAccessLogs::getPath, query.getPath())
                 .eq(ObjectUtils.isNotEmpty(query.getIp()), GatewayAccessLogs::getIp, query.getIp())
                 .eq(ObjectUtils.isNotEmpty(query.getServiceId()), GatewayAccessLogs::getServiceId, query.getServiceId());
-        queryWrapper.orderByDesc("request_time");
-        return gatewayLogsMapper.selectPage((IPage<GatewayAccessLogs>)pageParams, queryWrapper);
+//        queryWrapper.orderByDesc("request_time");
+        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(),
+                Sort.by(Sort.Direction.DESC, "requestTime"));
+        return findAllByCriteria(queryWrapper, pageable);
     }
 
 }
