@@ -111,8 +111,8 @@ public class BaseDeveloperService extends BaseService<BaseDeveloper, String, Bas
     /**
      * 更新密码
      */
-    public boolean updatePassword(ChangeDeveloperPasswordCommand command) {
-        return baseAccountService.updatePasswordByUserId(command.getUserId(), ACCOUNT_DOMAIN, command.getPassword()) > 0;
+    public void updatePassword(ChangeDeveloperPasswordCommand command) {
+        baseAccountService.updatePasswordByUserId(command.getUserId(), ACCOUNT_DOMAIN, command.getPassword());
     }
 
     /**

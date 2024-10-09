@@ -5,16 +5,20 @@ import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.server.mapper.BaseAccountLogsMapper;
-import com.rapidark.cloud.base.server.mapper.BaseAccountMapper;
-import com.rapidark.cloud.base.server.service.BaseAccountService;
-import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.cloud.base.server.repository.BaseAccountRepository;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
+import com.rapidark.cloud.base.server.service.query.AccountQueryCriteria;
+import com.rapidark.cloud.base.server.service.query.AccountTypeInQueryCriteria;
+import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户登录账号管理
@@ -26,10 +30,8 @@ import java.util.Date;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseAccount>  {
+public class BaseAccountService extends BaseService<BaseAccount, String, BaseAccountRepository> {
 
-    @Autowired
-    private BaseAccountMapper baseAccountMapper;
     @Autowired
     private BaseAccountLogsMapper baseAccountLogsMapper;
 
@@ -43,8 +45,8 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param accountId
      * @return
      */
-    public BaseAccount getAccountById(Long accountId) {
-        return baseAccountMapper.selectById(accountId);
+    public BaseAccount getAccountById(String accountId) {
+        return findById(accountId);
     }
 
     /**
@@ -56,12 +58,11 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @return
      */
     public BaseAccount getAccount(String account, String accountType, String domain) {
-        QueryWrapper<BaseAccount> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(BaseAccount::getAccount, account)
-                .eq(BaseAccount::getAccountType, accountType)
-                .eq(BaseAccount::getDomain, domain);
-        return baseAccountMapper.selectOne(queryWrapper);
+        AccountQueryCriteria criteria = new AccountQueryCriteria();
+        criteria.setAccount(account);
+        criteria.setAccountType(accountType);
+        criteria.setDomain(domain);
+        return findOneByCriteria(criteria);
     }
 
     /**
@@ -87,7 +88,7 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
         baseAccount.setCreateTime(new Date());
         baseAccount.setUpdateTime(baseAccount.getCreateTime());
         baseAccount.setStatus(status);
-        baseAccountMapper.insert(baseAccount);
+        entityRepository.save(baseAccount);
         return baseAccount;
     }
 
@@ -106,7 +107,11 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
                 .eq(BaseAccount::getAccount, account)
                 .eq(BaseAccount::getAccountType, accountType)
                 .eq(BaseAccount::getDomain, domain);
-        int count = baseAccountMapper.selectCount(queryWrapper);
+        BaseAccount example = new BaseAccount();
+        example.setAccount(account);
+        example.setAccountType(accountType);
+        example.setDomain(domain);
+        long count = count(example);
         return count > 0 ? true : false;
     }
 
@@ -116,8 +121,8 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param accountId
      * @return
      */
-    public int removeAccount(Long accountId) {
-        return baseAccountMapper.deleteById(accountId);
+    public void removeAccount(String accountId) {
+        deleteById(accountId);
     }
 
 
@@ -127,12 +132,11 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param accountId
      * @param status
      */
-    public int updateStatus(String accountId, Integer status) {
-        BaseAccount baseAccount = new BaseAccount();
-        baseAccount.setAccountId(accountId);
+    public void updateStatus(String accountId, Integer status) {
+        BaseAccount baseAccount = findById(accountId);
         baseAccount.setUpdateTime(new Date());
         baseAccount.setStatus(status);
-        return baseAccountMapper.updateById(baseAccount);
+        entityRepository.save(baseAccount);
     }
 
     /**
@@ -142,18 +146,18 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param domain
      * @param status
      */
-    public int updateStatusByUserId(String userId, String domain, Integer status) {
+    public void updateStatusByUserId(String userId, String domain, Integer status) {
         if (status == null) {
-            return 0;
+            return;
         }
-        BaseAccount baseAccount = new BaseAccount();
+        BaseAccount example = new BaseAccount();
+        example.setUserId(userId);
+        example.setDomain(domain);
+        BaseAccount baseAccount = findOneByExample(example);
         baseAccount.setUpdateTime(new Date());
         baseAccount.setStatus(status);
-        QueryWrapper<BaseAccount> wrapper = new QueryWrapper();
-        wrapper.lambda()
-                .eq(BaseAccount::getDomain, domain)
-                .eq(BaseAccount::getUserId, userId);
-        return baseAccountMapper.update(baseAccount, wrapper);
+
+        entityRepository.save(baseAccount);
     }
 
     /**
@@ -163,16 +167,18 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param domain
      * @param password
      */
-    public int updatePasswordByUserId(String userId, String domain, String password) {
-        BaseAccount baseAccount = new BaseAccount();
-        baseAccount.setUpdateTime(new Date());
-        baseAccount.setPassword(passwordEncoder.encode(password));
-        QueryWrapper<BaseAccount> wrapper = new QueryWrapper();
-        wrapper.lambda()
-                .in(BaseAccount::getAccountType, BaseConstants.ACCOUNT_TYPE_USERNAME, BaseConstants.ACCOUNT_TYPE_EMAIL, BaseConstants.ACCOUNT_TYPE_MOBILE)
+    public void updatePasswordByUserId(String userId, String domain, String password) {
+
+        CriteriaQueryWrapper<BaseAccount> criteria = new CriteriaQueryWrapper<>();
+        criteria.in(BaseAccount::getAccountType, BaseConstants.ACCOUNT_TYPE_USERNAME, BaseConstants.ACCOUNT_TYPE_EMAIL, BaseConstants.ACCOUNT_TYPE_MOBILE)
                 .eq(BaseAccount::getUserId, userId)
                 .eq(BaseAccount::getDomain, domain);
-        return baseAccountMapper.update(baseAccount, wrapper);
+        List<BaseAccount> data = findAllByCriteria(criteria);
+        for (BaseAccount entity : data) {
+            entity.setPassword(passwordEncoder.encode(password));
+            entity.setUpdateTime(new Date());
+            save(entity);
+        }
     }
 
     /**
@@ -182,12 +188,12 @@ public class BaseAccountService extends BaseServiceImpl<BaseAccountMapper, BaseA
      * @param domain
      * @return
      */
-    public int removeAccountByUserId(Long userId, String domain) {
-        QueryWrapper<BaseAccount> wrapper = new QueryWrapper();
-        wrapper.lambda()
-                .eq(BaseAccount::getUserId, userId)
-                .eq(BaseAccount::getDomain, domain);
-        return baseAccountMapper.delete(wrapper);
+    public void removeAccountByUserId(String userId, String domain) {
+        CriteriaQueryWrapper<BaseAccount> wrapper = new CriteriaQueryWrapper();
+        wrapper.eq(BaseAccount::getUserId, userId)
+               .eq(BaseAccount::getDomain, domain);
+
+        deleteByCriteria(wrapper);
     }
 
 

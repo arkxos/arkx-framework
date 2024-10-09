@@ -160,7 +160,8 @@ public class BaseUserController implements IBaseUserServiceClient {
             @RequestParam(value = "userId") String userId,
             @RequestParam(value = "password") String password
     ) {
-        return baseUserService.updatePassword(userId, password) ? ResultBody.ok().msg("修改密码成功") : ResultBody.failed().msg("修改密码失败");
+        baseUserService.updatePassword(userId, password);
+        return  ResultBody.ok().msg("修改密码成功");
     }
 
     /**

@@ -118,8 +118,8 @@ public class BaseUserService extends BaseServiceImpl<BaseUserMapper, BaseUser>  
      * @param userId
      * @param password
      */
-    public boolean updatePassword(String userId, String password) {
-        return baseAccountService.updatePasswordByUserId(userId, ACCOUNT_DOMAIN, password) > 0;
+    public void updatePassword(String userId, String password) {
+        baseAccountService.updatePasswordByUserId(userId, ACCOUNT_DOMAIN, password);
     }
 
     /**

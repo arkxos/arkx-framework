@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.repository;
 
 import com.rapidark.cloud.base.client.model.GatewayOpenClientAppApiAuthority;
+import com.rapidark.cloud.base.server.repository.BaseRepository;
 import com.rapidark.common.security.OpenAuthority;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/1 16:10
  */
-public interface GatewayOpenClientAppApiAuthorityRepository extends JpaRepository<GatewayOpenClientAppApiAuthority, String>, JpaSpecificationExecutor<GatewayOpenClientAppApiAuthority> {
+public interface GatewayOpenClientAppApiAuthorityRepository extends BaseRepository<GatewayOpenClientAppApiAuthority, String> {
 
     /**
      * 获取应用已授权权限

@@ -1,6 +1,9 @@
 package com.rapidark.cloud.gateway.formwork.base;
 
+import com.rapidark.cloud.base.server.repository.BaseRepository;
+import com.rapidark.common.utils.CriteriaQueryWrapper;
 import com.rapidark.common.utils.PageData;
+import com.rapidark.common.utils.QueryHelp;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,7 @@ import java.util.*;
  * @Date 2020/05/16
  * @Version V1.0
  */
-public class BaseService<T,ID,R extends JpaRepository> {
+public class BaseService<T,ID,R extends BaseRepository> {
 
     private static final String DEFAULT_SORT_FIELD = "createTime";
     @Autowired
@@ -65,6 +68,34 @@ public class BaseService<T,ID,R extends JpaRepository> {
             return optional.get();
         }
         return null;
+    }
+
+    public T findOneByCriteria(Object criteria) {
+        List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder));
+        if(data.isEmpty()) {
+            return null;
+        }
+        return data.get(0);
+    }
+
+    public List<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria) {
+        List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
+        return data;
+    }
+
+    public void deleteByCriteria(CriteriaQueryWrapper<T> criteria) {
+        List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
+        for (T entity : data) {
+            delete(entity);
+        }
+    }
+
+    public T findOneByExample(T example) {
+        List<T> data = entityRepository.findAll(Example.of(example));
+        if(data.isEmpty()) {
+            return null;
+        }
+        return data.get(0);
     }
 
     public List<T> findAll(){

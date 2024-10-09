@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.repository;
 
+import com.rapidark.cloud.base.server.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @Date 2021/04/14
  * @Version V1.0
  */
-public interface MonitorRepository extends JpaRepository<Monitor, String> {
+public interface MonitorRepository extends BaseRepository<Monitor, String> {
     /**
      * 获取监控配置，告警状态：0启用，1禁用，2告警
      * @return

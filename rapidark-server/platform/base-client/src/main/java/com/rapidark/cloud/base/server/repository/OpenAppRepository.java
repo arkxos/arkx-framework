@@ -12,7 +12,7 @@ import java.util.Optional;
  * @version 1.0
  * @date 2022/5/25 11:18
  */
-public interface OpenAppRepository extends JpaRepository<OpenApp, String>, JpaSpecificationExecutor<OpenApp> {
+public interface OpenAppRepository extends BaseRepository<OpenApp, String> {
 
     Optional<OpenApp> findByIp(@Param("ip") String ip);
 

@@ -67,7 +67,8 @@ public class CurrentUserController {
         if (passwordEncoder.matches(password, user.getPassword())) {
             throw new OpenAlertException("新密码与旧密码不能相同");
         }
-        return baseUserService.updatePassword(user.getUserId(), password) ? ResultBody.ok().msg("修改密码成功") : ResultBody.failed().msg("修改密码失败");
+        baseUserService.updatePassword(user.getUserId(), password);
+        return  ResultBody.ok().msg("修改密码成功");
     }
 
     /**

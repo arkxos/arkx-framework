@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.manage.repository;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
-import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
+import com.rapidark.cloud.base.server.repository.BaseRepository;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
@@ -11,8 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
 
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,7 @@ import java.util.Map;
  * @date 2022/5/30 14:35
  * @version 1.0
  */
-@Repository
-public interface ClientServerRegisterRepository extends JpaRepository<ClientServerRegister, Long> {
+public interface ClientServerRegisterRepository extends BaseRepository<ClientServerRegister, Long> {
 
     /**
      * 修改客户端下所有已注册网关服务的状态
@@ -59,7 +59,7 @@ public interface ClientServerRegisterRepository extends JpaRepository<ClientServ
      * 查询指定客户端注册的所有网关路由服务
      * @return
      */
-    @Query(value ="SELECT s.routeId,c.appId,c.ip,s.token,s.secretKey,s.status FROM OpenApp c, ClientServerRegister s WHERE c.appId = s.clientId AND s.clientId=?1")
+    @Query(value ="SELECT c.appId,c.ip,s.routeId,s.token,s.secretKey,s.status FROM OpenApp c, ClientServerRegister s WHERE c.appId = s.clientId AND s.clientId=?1")
     List getRegClientList(String clientId);
 
     /**

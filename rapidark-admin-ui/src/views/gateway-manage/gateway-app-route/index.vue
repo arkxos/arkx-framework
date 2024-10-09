@@ -260,9 +260,9 @@ export default {
       let _this = this;
       routePageList({form : this.form, currentPage: this.currentPage, pageSize: this.pageSize}).then(function(result){
         console.log('result:', result);
-        if (result.data && result.data.lists){
-          _this.tableData = result.data.lists;
-          _this.totalNum = result.data.totalNum - 0;
+        if (result.data && result.data.content){
+          _this.tableData = result.data.content;
+          _this.totalNum = result.data.totalElements - 0;
         }
       });
     },

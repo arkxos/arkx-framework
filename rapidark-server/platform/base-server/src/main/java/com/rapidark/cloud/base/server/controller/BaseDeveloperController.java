@@ -98,7 +98,8 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
     @ApiOperation(value = "修改用户密码", notes = "修改用户密码")
     @PostMapping("/developer/update/password")
     public ResultBody updatePassword(@Valid @RequestBody ChangeDeveloperPasswordCommand command) {
-        return baseDeveloperService.updatePassword(command) ? ResultBody.ok().msg("修改密码成功") : ResultBody.failed().msg("修改密码失败");
+        baseDeveloperService.updatePassword(command);
+        return ResultBody.ok().msg("修改密码成功");
     }
 
     @ApiOperation(value = "注册第三方系统登录账号", notes = "仅限系统内部调用")

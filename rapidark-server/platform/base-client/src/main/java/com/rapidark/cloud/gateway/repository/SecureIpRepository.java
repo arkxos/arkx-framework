@@ -1,5 +1,6 @@
 package com.rapidark.cloud.gateway.repository;
 
+import com.rapidark.cloud.base.server.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
@@ -10,5 +11,5 @@ import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
  * @Date 2020/05/28
  * @Version V1.0
  */
-public interface SecureIpRepository extends JpaRepository<SecureIp, String> {
+public interface SecureIpRepository extends BaseRepository<SecureIp, String> {
 }
