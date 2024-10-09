@@ -168,7 +168,7 @@ public class ContactHelper {
         try {
             DingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_GET_ROLE_SIMPLE_LIST);
             OapiRoleSimplelistRequest request = new OapiRoleSimplelistRequest();
-            request.setRoleId(roleId);
+            request.setRoleId(Long.parseLong(roleId));
             request.setOffset(0L);
             request.setSize(10L);
             OapiRoleSimplelistResponse response = client.execute(request, accessToken);
