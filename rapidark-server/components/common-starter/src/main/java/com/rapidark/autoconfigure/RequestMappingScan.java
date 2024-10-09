@@ -1,8 +1,9 @@
-package com.rapidark.common.annotation;
+package com.rapidark.autoconfigure;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.rapidark.common.annotation.ArkResourceServer;
 import com.rapidark.common.constants.QueueConstants;
 import com.rapidark.common.utils.EncryptUtils;
 import com.rapidark.common.utils.ReflectionUtils;

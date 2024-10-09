@@ -20,9 +20,8 @@
             添加
           </el-button>
         </el-button-group>
-        <!--      v-if="tableSelection.length>0"  && hasAuthority('systemApiEdit')-->
-        <el-dropdown  @click="handleBatchClick"
-                      style="margin-left: 20px">
+        <el-dropdown v-if="tableSelection.length>0 && hasAuthority('systemApiEdit')" @click="handleBatchClick"
+                     style="margin-left: 20px">
           <el-button>
             <span>批量操作</span>
             <i class="el-icon-arrow-down"></i>
@@ -77,9 +76,9 @@
           </template>
         </el-dropdown>
       </div>
-      <!--      <el-alert show-icon :closable="false">-->
-      <!--        <span>自动扫描<code>@EnableResourceServer</code>资源服务器接口信息,注:自动添加的接口,都是未公开的. <code>只有公开的接口,才可以通过网关访问。否则将提示:"请求地址,拒绝访问!"</code></span>-->
-      <!--      </el-alert>-->
+<!--      <el-alert show-icon :closable="false">-->
+<!--        <span>自动扫描<code>@EnableResourceServer</code>资源服务器接口信息,注:自动添加的接口,都是未公开的. <code>只有公开的接口,才可以通过网关访问。否则将提示:"请求地址,拒绝访问!"</code></span>-->
+<!--      </el-alert>-->
 
       <el-form ref="searchForm"
                :model="pageInfo"
@@ -105,14 +104,14 @@
       <Alert show-icon>
         <span>自动扫描<code>@EnableResourceServer</code>资源服务器接口信息,注:自动添加的接口,都是未公开的. <code>只有公开的接口,才可以通过网关访问。否则将提示:"请求地址,拒绝访问!"</code></span>
       </Alert>
-      <el-table @on-selection-change="handleTableSelectChange" border :data="data" :loading="loading">
+      <el-table @on-selection-change="handleTableSelectChange" border :data="tableData" :loading="loading">
         <el-table-column align="center" show-overflow-tooltip type="selection" width="55" />
         <el-table-column align="center" label="序号" show-overflow-tooltip width="55">
           <template #default="{ $index }">
             {{ $index + 1 }}
           </template>
         </el-table-column>
-        <!--        <el-table-column align="center" label="md5编码" prop="apiCode" width="300" show-overflow-tooltip />-->
+<!--        <el-table-column align="center" label="md5编码" prop="apiCode" width="300" show-overflow-tooltip />-->
         <el-table-column align="left" label="名称" prop="apiName" width="200" show-overflow-tooltip
                          :filters="[{ text: '启用', value: 1 }, { text: '禁用', value: 0 }]"
                          :filter-multiple="false"
@@ -153,9 +152,9 @@
     </my-panel>
 
     <el-dialog :visible.sync="modalVisible"
-               :title="modalTitle"
-               width="50"
-               @close="handleReset">
+           :title="modalTitle"
+           width="50"
+           @close="handleReset">
       <div>
         <el-alert show-icon v-if="formItem.apiId?true:false" :closable="false">
           <span>自动扫描接口swagger注解。</span>
@@ -180,7 +179,7 @@
         <el-form ref="form1" :model="formItem" :rules="formItemRules" label-width="100px">
           <el-form-item label="服务名称" prop="serviceId">
             <el-select :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.serviceId"
-                       filterable clearable>
+                    filterable clearable>
               <el-option v-for="(item,index) in selectServiceList" :value="item.serviceId" :key="index">{{ item.serviceName }}</el-option>
             </el-select>
           </el-form-item>
@@ -189,15 +188,15 @@
           </el-form-item>
           <el-form-item label="接口编码" prop="apiCode">
             <el-input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.apiCode"
-                      placeholder="请输入内容"/>
+                   placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="接口名称" prop="apiName">
             <el-input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.apiName"
-                      placeholder="请输入内容"/>
+                   placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="请求地址" prop="path">
             <el-input :disabled="formItem.apiId && formItem.isPersist === 1?true:false" v-model="formItem.path"
-                      placeholder="请输入内容"/>
+                   placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="优先级">
             <el-input-number v-model="formItem.priority"/>
@@ -316,7 +315,7 @@ export default {
         apiDesc: '',
         isOpen: 1
       },
-      data: [],
+      tableData: [],
       treeSetting: {
         check: {
           enable: false,
@@ -468,8 +467,8 @@ export default {
       }
       this.loading = true
       getApis(this.pageInfo).then(res => {
-        this.data = res.data.records
-        this.pageInfo.total = parseInt(res.data.total)
+        this.tableData = res.data.content
+        this.pageInfo.total = res.data.totalElements - 0
       }).finally(() => {
         this.loading = false
       })

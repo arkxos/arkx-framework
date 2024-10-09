@@ -1,7 +1,6 @@
 package com.rapidark.autoconfigure;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.rapidark.common.annotation.RequestMappingScan;
 import com.rapidark.common.configuration.OpenCommonProperties;
 import com.rapidark.common.configuration.OpenIdGenProperties;
 import com.rapidark.common.exception.OpenGlobalExceptionHandler;
