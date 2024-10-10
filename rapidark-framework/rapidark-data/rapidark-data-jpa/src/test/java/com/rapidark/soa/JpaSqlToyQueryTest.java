@@ -33,7 +33,7 @@ public class JpaSqlToyQueryTest {
 	@Test
 	public void test() {
 		StaffEntity u = repository.findById("s01").get();
-		assertEquals("张三", u.getName(), "成功的测试用例");
+		assertEquals("成功的测试用例", "张三", u.getName());
 	}
 	
 	@Test

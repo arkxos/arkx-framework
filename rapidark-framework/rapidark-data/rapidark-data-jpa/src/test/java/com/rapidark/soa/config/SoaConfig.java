@@ -13,7 +13,7 @@ import com.rapidark.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
  */
 @Configuration
 @EnableJpaRepositories(
-		basePackages = { "com.rapidark" },
+		basePackages = { "com.xdreamaker","com.rapidark" }, 
 		repositoryFactoryBeanClass = SqlToyJpaRepositoryFactoryBean.class)
 @EntityScan({
 	"com.rapidark.soa.entity"
