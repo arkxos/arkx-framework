@@ -11,7 +11,20 @@
     <artifactId>common-core</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <cosid.version>1.20.0</cosid.version>
+    </properties>
     <dependencies>
+        <dependency>
+            <groupId>me.ahoo.cosid</groupId>
+            <artifactId>cosid-spring-boot-starter</artifactId>
+            <version>${cosid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.ahoo.cosid</groupId>
+            <artifactId>cosid-spring-redis</artifactId>
+            <version>${cosid.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
             <artifactId>rapidark-framework</artifactId>
