@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>services</artifactId>
-        <groupId>com.rapidark.cloud</groupId>
-        <version>12.2.0-SNAPSHOT</version>
+        <groupId>com.rapidark</groupId>
+        <version>10.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,7 +16,7 @@
         <!-- 引入公共包,需发布到本地仓库或私服 -->
         <dependency>
             <artifactId>common-starter</artifactId>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark</groupId>
             <version>${project.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-pay -->

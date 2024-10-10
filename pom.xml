@@ -4,14 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.rapidark.cloud</groupId>
+        <groupId>com.rapidark</groupId>
         <artifactId>rapidark-starter-dependencies</artifactId>
-        <version>12.2.0-SNAPSHOT</version>
+        <version>10.0.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.rapidark.cloud</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>rapidark-parent</artifactId>
     <packaging>pom</packaging>
 
     <modules>
@@ -215,7 +214,7 @@
 <!--    <dependencyManagement>-->
 <!--        <dependencies>-->
 <!--            <dependency>-->
-<!--                <groupId>com.rapidark.cloud</groupId>-->
+<!--                <groupId>com.rapidark</groupId>-->
 <!--                <artifactId>rapidark-starter-dependencies</artifactId>-->
 <!--                <version>${project.version}</version>-->
 <!--                <type>pom</type>-->
