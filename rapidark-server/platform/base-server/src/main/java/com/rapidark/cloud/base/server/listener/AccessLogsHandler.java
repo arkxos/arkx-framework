@@ -1,5 +1,6 @@
 package com.rapidark.cloud.base.server.listener;
 
+import cn.hutool.core.util.IdUtil;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.cloud.base.server.service.IpRegionService;
@@ -46,7 +47,7 @@ public class AccessLogsHandler {
                     if (logs.getIp() != null) {
                         logs.setRegion(ipRegionService.getRegion(logs.getIp()));
                     }
-                    logs.setAccessId(UuidUtil.base58Uuid());
+                    logs.setAccessId(IdUtil.getSnowflakeNextId()+"");
                     logs.setUseTime(logs.getResponseTime().getTime() - logs.getRequestTime().getTime());
                     gatewayAccessLogsRepository.save(logs);
                 }

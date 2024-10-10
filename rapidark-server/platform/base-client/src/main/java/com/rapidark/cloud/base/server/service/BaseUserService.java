@@ -1,5 +1,6 @@
 package com.rapidark.cloud.base.server.service;
 
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
@@ -282,7 +283,7 @@ public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepos
             try {
                 if (!StringUtils.isEmpty(ip)) {
                     BaseAccountLogs log = new BaseAccountLogs();
-                    log.setId(UuidUtil.base58Uuid());
+                    log.setId(IdUtil.getSnowflakeNextId()+"");
                     log.setDomain(ACCOUNT_DOMAIN);
                     log.setUserId(baseAccount.getUserId());
                     log.setAccount(baseAccount.getAccount());

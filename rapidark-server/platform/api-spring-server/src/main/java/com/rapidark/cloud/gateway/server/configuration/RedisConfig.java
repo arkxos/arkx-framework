@@ -20,7 +20,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 public class RedisConfig {
 
     @Bean(name = {"redisTemplate", "stringRedisTemplate"})
-    public StringRedisTemplate stringRedisTemplate(@Qualifier("j2CahceRedisConnectionFactory") RedisConnectionFactory factory) {
+    public StringRedisTemplate stringRedisTemplate(
+            @Qualifier("j2CahceRedisConnectionFactory")
+            RedisConnectionFactory factory) {
         StringRedisTemplate redisTemplate = new StringRedisTemplate();
         redisTemplate.setConnectionFactory(factory);
         return redisTemplate;

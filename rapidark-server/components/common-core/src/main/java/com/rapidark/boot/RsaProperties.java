@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "opencloud.rsa")
+@ConfigurationProperties(prefix = "rapidark.rsa")
 public class RsaProperties {
 
     private String privateKey;
