@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
-import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
-import com.rapidark.cloud.gateway.formwork.service.GroovyScriptService;
+import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
+import com.rapidark.cloud.gateway.manage.service.GroovyScriptService;
 import com.rapidark.common.utils.Constants;
 
 import javax.annotation.Resource;

@@ -5,7 +5,7 @@ import com.flying.fish.gateway.service.DynamicRouteService;
 import com.flying.fish.gateway.service.LoadRouteService;
 import com.flying.fish.gateway.vo.GatewayRouteDefinition;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
+import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
 import com.rapidark.common.model.ResultBody;
 
 import org.springframework.cloud.gateway.route.RouteDefinition;

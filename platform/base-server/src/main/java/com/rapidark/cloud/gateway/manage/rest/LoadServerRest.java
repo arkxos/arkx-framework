@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.LoadServerReq;
-import com.rapidark.cloud.gateway.formwork.service.LoadServerService;
+import com.rapidark.cloud.gateway.manage.service.LoadServerService;
 
 import javax.annotation.Resource;
 

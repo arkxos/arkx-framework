@@ -1,6 +1,6 @@
-package com.rapidark.cloud.gateway.formwork.service;
+package com.rapidark.cloud.gateway.manage.service;
 
-import com.rapidark.cloud.gateway.repository.BalancedRepository;
+import com.rapidark.cloud.gateway.manage.repository.BalancedRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

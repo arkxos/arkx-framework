@@ -6,7 +6,7 @@ import com.flying.fish.gateway.vo.GroovyHandleData;
 import com.rapidark.cloud.gateway.formwork.base.BaseGroovyService;
 import com.rapidark.cloud.gateway.formwork.config.ApplicationContextProvider;
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
-import com.rapidark.cloud.gateway.formwork.service.GroovyScriptService;
+import com.rapidark.cloud.gateway.manage.service.GroovyScriptService;
 import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.HttpEnum;
 import com.rapidark.cloud.gateway.formwork.util.Md5Utils;

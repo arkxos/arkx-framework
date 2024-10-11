@@ -1,9 +1,9 @@
-package com.rapidark.cloud.gateway.formwork.service;
+package com.rapidark.cloud.gateway.manage.service;
 
 import org.springframework.stereotype.Service;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.repository.ApiDocRepository;
+import com.rapidark.cloud.gateway.manage.repository.ApiDocRepository;
 import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
 
 import javax.persistence.EntityManager;

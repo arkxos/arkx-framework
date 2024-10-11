@@ -7,8 +7,8 @@ import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.manage.repository.GatewayAppRouteRepository;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
-import com.rapidark.cloud.gateway.formwork.service.BalancedService;
-import com.rapidark.cloud.gateway.formwork.service.LoadServerService;
+import com.rapidark.cloud.gateway.manage.service.BalancedService;
+import com.rapidark.cloud.gateway.manage.service.LoadServerService;
 import com.rapidark.common.utils.Constants;
 
 import lombok.extern.slf4j.Slf4j;

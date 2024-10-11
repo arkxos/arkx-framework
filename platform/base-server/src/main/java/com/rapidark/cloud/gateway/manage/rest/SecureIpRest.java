@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.SecureIpReq;
 import com.rapidark.cloud.gateway.formwork.entity.SecureIp;
-import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
-import com.rapidark.cloud.gateway.formwork.service.SecureIpService;
+import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
+import com.rapidark.cloud.gateway.manage.service.SecureIpService;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;

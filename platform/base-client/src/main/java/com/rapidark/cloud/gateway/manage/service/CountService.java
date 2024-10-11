@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.service;
+package com.rapidark.cloud.gateway.manage.service;
 
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteCountRsp;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;

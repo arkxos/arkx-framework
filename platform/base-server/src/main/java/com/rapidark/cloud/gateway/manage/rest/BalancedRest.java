@@ -16,9 +16,9 @@ import com.rapidark.cloud.gateway.formwork.bean.BalancedReq;
 import com.rapidark.cloud.gateway.formwork.bean.BalancedRsp;
 import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
-import com.rapidark.cloud.gateway.formwork.service.BalancedService;
-import com.rapidark.cloud.gateway.formwork.service.CustomNacosConfigService;
-import com.rapidark.cloud.gateway.formwork.service.LoadServerService;
+import com.rapidark.cloud.gateway.manage.service.BalancedService;
+import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
+import com.rapidark.cloud.gateway.manage.service.LoadServerService;
 
 import javax.annotation.Resource;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.formwork.service;
+package com.rapidark.cloud.gateway.manage.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.groovy.control.CompilationFailedException;
@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.cloud.gateway.repository.GroovyScriptRepository;
+import com.rapidark.cloud.gateway.manage.repository.GroovyScriptRepository;
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
 import com.rapidark.cloud.gateway.formwork.util.GroovyScriptUtils;
 

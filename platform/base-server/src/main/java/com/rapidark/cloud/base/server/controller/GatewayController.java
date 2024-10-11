@@ -8,7 +8,7 @@ import com.rapidark.cloud.base.client.service.IGatewayServiceClient;
 import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
+import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
 import com.rapidark.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

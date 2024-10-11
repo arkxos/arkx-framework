@@ -8,7 +8,7 @@ import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.cloud.base.server.service.mapstruct.OpenAppMapper;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
-import com.rapidark.cloud.gateway.formwork.service.ClientServerRegisterService;
+import com.rapidark.cloud.gateway.manage.service.ClientServerRegisterService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.security.OpenClientDetails;
 import com.rapidark.common.utils.*;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.bean.CountReq;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.service.CountService;
+import com.rapidark.cloud.gateway.manage.service.CountService;
 import com.rapidark.common.model.ResultBody;
 
 import javax.annotation.Resource;

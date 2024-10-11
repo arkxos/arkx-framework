@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.event;
 
-import com.rapidark.cloud.gateway.formwork.service.ClientServerRegisterService;
+import com.rapidark.cloud.gateway.manage.service.ClientServerRegisterService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

@@ -9,7 +9,7 @@ import com.rapidark.cloud.base.client.model.entity.*;
 import com.rapidark.cloud.base.server.repository.*;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.manage.service.GatewayOpenClientAppApiAuthorityService;
-import com.rapidark.cloud.gateway.repository.GatewayOpenClientAppApiAuthorityRepository;
+import com.rapidark.cloud.gateway.manage.repository.GatewayOpenClientAppApiAuthorityRepository;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.exception.OpenException;
@@ -27,9 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 系统权限管理

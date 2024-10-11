@@ -1,11 +1,9 @@
-package com.rapidark.cloud.gateway.repository;
+package com.rapidark.cloud.gateway.manage.repository;
 
 import com.rapidark.cloud.base.client.model.GatewayOpenClientAppApiAuthority;
 import com.rapidark.cloud.base.server.repository.BaseRepository;
 import com.rapidark.common.security.OpenAuthority;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

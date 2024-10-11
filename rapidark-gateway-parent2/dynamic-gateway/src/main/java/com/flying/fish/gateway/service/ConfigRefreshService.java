@@ -10,7 +10,7 @@ import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.gateway.formwork.bean.GatewayNacosConfigBean;
 import com.rapidark.cloud.gateway.formwork.entity.*;
-import com.rapidark.cloud.gateway.formwork.service.*;
+import com.rapidark.cloud.gateway.manage.service.*;
 import com.rapidark.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 

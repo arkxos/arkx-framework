@@ -1,6 +1,6 @@
-package com.rapidark.cloud.gateway.formwork.service;
+package com.rapidark.cloud.gateway.manage.service;
 
-import com.rapidark.cloud.gateway.repository.SecureIpRepository;
+import com.rapidark.cloud.gateway.manage.repository.SecureIpRepository;
 import com.rapidark.common.utils.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.ExampleMatcher;

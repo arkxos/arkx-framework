@@ -1,7 +1,6 @@
-package com.rapidark.cloud.gateway.repository;
+package com.rapidark.cloud.gateway.manage.repository;
 
 import com.rapidark.cloud.base.server.repository.BaseRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;

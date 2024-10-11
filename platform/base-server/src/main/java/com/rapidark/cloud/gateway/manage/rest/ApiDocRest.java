@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.rapidark.cloud.gateway.formwork.base.BaseRest;
 import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.formwork.service.ApiDocService;
-import com.rapidark.cloud.gateway.formwork.service.GatewayAppRouteService;
+import com.rapidark.cloud.gateway.manage.service.ApiDocService;
+import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
 
 import javax.annotation.Resource;
 
