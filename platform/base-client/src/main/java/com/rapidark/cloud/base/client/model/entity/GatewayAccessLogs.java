@@ -34,7 +34,7 @@ public class GatewayAccessLogs extends BaseEntity {
     @Id
     @Column(name = "access_Id")
     @ApiModelProperty(value = "accessId")
-    private String accessId;
+    private Long accessId;
 
     /**
      * 访问路径

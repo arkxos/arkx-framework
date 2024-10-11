@@ -20,7 +20,7 @@ public class UpdateRouteCommand {
 //     * @param status      是否启用
 //     * @param routeName   描述
 //    @RequestParam("routeId")
-    private Long routeId;
+    private String routeId;
     //    @RequestParam(value = "routeName", defaultValue = "")
     private String routeName = "";
     //    @RequestParam(value = "routeType", required = false, defaultValue = BaseConstants.ROUTE_TYPE_SERVICE)

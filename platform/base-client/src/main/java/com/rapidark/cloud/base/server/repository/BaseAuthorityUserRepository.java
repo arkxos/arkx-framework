@@ -13,7 +13,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseAuthorityUserRepository extends BaseRepository<BaseAuthorityUser, String> {
+public interface BaseAuthorityUserRepository extends BaseRepository<BaseAuthorityUser, Long> {
 
     /**
      * 获取用户已授权权限
@@ -22,7 +22,7 @@ public interface BaseAuthorityUserRepository extends BaseRepository<BaseAuthorit
      * @return
      */
     @SqlToyQuery
-    List<OpenAuthority> selectAuthorityByUser(@Param("userId") String userId);
+    List<OpenAuthority> selectAuthorityByUser(@Param("userId") Long userId);
 
     /**
      * 获取用户已授权权限完整信息
@@ -32,7 +32,7 @@ public interface BaseAuthorityUserRepository extends BaseRepository<BaseAuthorit
      * @return
      */
     @SqlToyQuery
-    List<AuthorityMenu> selectAuthorityMenuByUser(@Param("userId") String userId, @Param("serviceId") String serviceId);
+    List<AuthorityMenu> selectAuthorityMenuByUser(@Param("userId") Long userId, @Param("serviceId") String serviceId);
 
-    void deleteByUserId(@Param("userId") String userId);
+    void deleteByUserId(@Param("userId") Long userId);
 }

@@ -56,7 +56,7 @@
 //            @ApiImplicitParam(name = "routeId", required = true, value = "路由ID", paramType = "path"),
 //    })
 //    @GetMapping("/gateway/route/{routeId}/info")
-//    public ResultBody<GatewayAppRoute> getRoute(@PathVariable("routeId") Long routeId) {
+//    public ResultBody<GatewayAppRoute> getRoute(@PathVariable("routeId") String routeId) {
 //        return ResultBody.ok().data(gatewayRouteService.getRoute(routeId));
 //    }
 //
@@ -163,7 +163,7 @@
 //    })
 //    @PostMapping("/gateway/route/remove")
 //    public ResultBody removeRoute(
-//            @RequestParam("routeId") Long routeId
+//            @RequestParam("routeId") String routeId
 //    ) {
 //        gatewayRouteService.removeRoute(routeId);
 //        // 刷新网关

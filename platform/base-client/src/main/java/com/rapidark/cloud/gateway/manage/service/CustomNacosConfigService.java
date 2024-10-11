@@ -45,7 +45,7 @@ public class CustomNacosConfigService {
      * 将注册到网关路由的客户端服务配置推送到nacos中
      * @param regServerId
      */
-    public void publishRegServerNacosConfig(final String regServerId){
+    public void publishRegServerNacosConfig(final Long regServerId){
         GatewayNacosConfigBean gatewayNacosConfig = new GatewayNacosConfigBean();
         gatewayNacosConfig.setRegServerId(regServerId);
         publishConfigToNacos(gatewayNacosConfig);

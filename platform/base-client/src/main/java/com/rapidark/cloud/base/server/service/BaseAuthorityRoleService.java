@@ -13,5 +13,5 @@ import org.springframework.stereotype.Service;
  * @date 2022/6/30 15:33
  */
 @Service
-public class BaseAuthorityRoleService extends BaseService<BaseAuthorityRole, String, BaseAuthorityRoleRepository> {
+public class BaseAuthorityRoleService extends BaseService<BaseAuthorityRole, Long, BaseAuthorityRoleRepository> {
 }

@@ -31,7 +31,7 @@ public class GatewayIpLimit extends BaseEntity {
     @Id
     @Column(name = "policy_Id")
     @ApiModelProperty(value = "policyId")
-    private String policyId;
+    private Long policyId;
 
     /**
      * 策略名称

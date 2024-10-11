@@ -301,7 +301,7 @@ public class UserController {
         user.setAvatar(avatar);
         user.setHiredDate(hiredDate);
         user.setJobnumber(jobnumber);
-        user.setUpdateBy(openUserDetails.getUserId());
+        user.setUpdateBy(openUserDetails.getUserId()+"");
         userService.updateUser(user);
         return ResultBody.ok();
     }

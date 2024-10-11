@@ -32,7 +32,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GatewayRateLimitService extends BaseService<GatewayRateLimit, String, GatewayRateLimitRepository> {
+public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Long, GatewayRateLimitRepository> {
 
     @Autowired
     private GatewayRateLimitApiRepository gatewayRateLimitApiRepository;
@@ -71,7 +71,7 @@ public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Strin
      * @param policyId
      * @return
      */
-    public List<GatewayRateLimitApi> findRateLimitApiList(String policyId) {
+    public List<GatewayRateLimitApi> findRateLimitApiList(Long policyId) {
         QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
                 .eq(GatewayRateLimitApi::getPolicyId, policyId);
@@ -85,7 +85,7 @@ public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Strin
      * @param policyId
      * @return
      */
-    public GatewayRateLimit getRateLimitPolicy(String policyId) {
+    public GatewayRateLimit getRateLimitPolicy(Long policyId) {
         return findById(policyId);
     }
 
@@ -117,7 +117,7 @@ public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Strin
      *
      * @param policyId
      */
-    public void removeRateLimitPolicy(String policyId) {
+    public void removeRateLimitPolicy(Long policyId) {
         clearRateLimitApisByPolicyId(policyId);
         deleteById(policyId);
     }
@@ -128,15 +128,15 @@ public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Strin
      * @param policyId
      * @param apis
      */
-    public void addRateLimitApis(String policyId, String... apis) {
+    public void addRateLimitApis(Long policyId, String... apis) {
         // 先清空策略已有绑定
         clearRateLimitApisByPolicyId(policyId);
         if (apis != null && apis.length > 0) {
             for (String apiId : apis) {
                 // 先api解除所有绑定, 一个API只能绑定一个策略
-                clearRateLimitApisByApiId(apiId);
+                clearRateLimitApisByApiId(Long.valueOf(apiId));
                 GatewayRateLimitApi item = new GatewayRateLimitApi();
-                item.setApiId(apiId);
+                item.setApiId(Long.valueOf(apiId));
                 item.setPolicyId(policyId);
                 // 重新绑定策略
                 gatewayRateLimitApiRepository.save(item);
@@ -149,7 +149,7 @@ public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Strin
      *
      * @param policyId
      */
-    public void clearRateLimitApisByPolicyId(String policyId) {
+    public void clearRateLimitApisByPolicyId(Long policyId) {
         gatewayRateLimitApiRepository.deleteByPolicyId(policyId);
     }
 
@@ -158,7 +158,7 @@ public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Strin
      *
      * @param apiId
      */
-    public void clearRateLimitApisByApiId(String apiId) {
+    public void clearRateLimitApisByApiId(Long apiId) {
         gatewayRateLimitApiRepository.deleteByApiId(apiId);
     }
 }

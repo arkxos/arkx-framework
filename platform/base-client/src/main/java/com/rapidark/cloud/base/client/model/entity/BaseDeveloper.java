@@ -36,7 +36,7 @@ public class BaseDeveloper extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     /**
      * 开发者类型:isp-服务提供商 dev-自研开发者

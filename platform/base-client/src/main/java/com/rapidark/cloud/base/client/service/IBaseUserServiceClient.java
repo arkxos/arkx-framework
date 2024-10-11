@@ -52,7 +52,7 @@ public interface IBaseUserServiceClient {
      */
     @GetMapping("/user/roles")
     ResultBody<List<BaseRole>> getUserRoles(
-            @RequestParam(value = "userId") String userId
+            @RequestParam(value = "userId") Long userId
     );
 
     /**

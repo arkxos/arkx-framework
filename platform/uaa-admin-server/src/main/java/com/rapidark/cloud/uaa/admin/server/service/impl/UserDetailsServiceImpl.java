@@ -35,8 +35,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("系统用户 " + username + " 不存在!");
         }
         String domain = account.getDomain();
-        String accountId = account.getAccountId();
-        String userId = account.getUserId();
+        Long accountId = account.getAccountId();
+        Long userId = account.getUserId();
         String password = account.getPassword();
         String nickName = account.getNickName();
         String avatar = account.getAvatar();

@@ -28,16 +28,16 @@ public class BaseAuthorityAction extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     /**
      * 操作资源ID
      */
-    private String actionId;
+    private Long actionId;
 
     /**
      * 权限ID
      */
-    private String authorityId;
+    private Long authorityId;
 
 }

@@ -10,6 +10,6 @@ import com.rapidark.cloud.gateway.formwork.entity.Balanced;
  * @Date 2020/06/28
  * @Version V1.0
  */
-public interface BalancedRepository extends BaseRepository<Balanced, Long> {
+public interface BalancedRepository extends BaseRepository<Balanced, String> {
 
 }

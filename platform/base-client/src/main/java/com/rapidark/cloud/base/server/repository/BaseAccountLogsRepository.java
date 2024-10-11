@@ -8,5 +8,5 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseAccountLogsRepository extends BaseRepository<BaseAccountLogs, String> {
+public interface BaseAccountLogsRepository extends BaseRepository<BaseAccountLogs, Long> {
 }

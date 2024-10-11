@@ -24,7 +24,7 @@ public class OpenUserDetails implements UserDetails {
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
     /**
      * 登录名
      */
@@ -78,7 +78,7 @@ public class OpenUserDetails implements UserDetails {
     /**
      * 账户Id
      */
-    private String accountId;
+    private Long accountId;
 
     /***
      * 账户类型
@@ -89,7 +89,6 @@ public class OpenUserDetails implements UserDetails {
      * 用户附加属性
      */
     private Map<String, Object> attrs = Maps.newHashMap();
-
 
     /**
      * 只是客户端模式.不包含用户信息

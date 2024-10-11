@@ -29,12 +29,12 @@ public class BaseAccount extends BaseEntity {
     @Id
     @Column(name = "account_id")
     @ApiModelProperty(value = "accountId")
-    private String accountId;
+    private Long accountId;
 
     /**
      * 系统用户Id
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 标识：手机号、邮箱、 系统用户名、或第三方应用的唯一标识
@@ -70,7 +70,7 @@ public class BaseAccount extends BaseEntity {
 
     }
 
-    public BaseAccount(String userId, String account, String password, String accountType, String domain, String registerIp) {
+    public BaseAccount(Long userId, String account, String password, String accountType, String domain, String registerIp) {
         this.userId = userId;
         this.account = account;
         this.password = password;

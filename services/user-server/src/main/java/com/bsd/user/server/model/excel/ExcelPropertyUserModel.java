@@ -20,7 +20,7 @@ public class ExcelPropertyUserModel extends BaseRowModel {
      * 用户ID
      */
     @ExcelProperty(value = "用户ID", index = 0)
-    private String userIdStr;
+    private Long userIdStr;
 
     /**
      * 手机号

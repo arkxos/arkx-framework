@@ -206,7 +206,7 @@ public class DepartmentController {
         department.setSeq(seq);
         department.setStatus(status);
         department.setCompanyId(companyId);
-        department.setCreateBy(openUserDetails.getUserId());
+        department.setCreateBy(openUserDetails.getUserId()+"");
         departmentService.saveDepartment(department);
         //删除菜单缓存信息
         companyService.removeMeunCache();
@@ -252,7 +252,7 @@ public class DepartmentController {
         department.setSeq(seq);
         department.setStatus(status);
         department.setCompanyId(companyId);
-        department.setCreateBy(openUserDetails.getUserId());
+        department.setCreateBy(openUserDetails.getUserId()+"");
         departmentService.updateDepartment(department);
         //删除菜单缓存信息
         companyService.removeMeunCache();

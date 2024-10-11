@@ -29,7 +29,7 @@ public class BaseAccountLogs extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     private Date loginTime;
 
@@ -48,7 +48,7 @@ public class BaseAccountLogs extends BaseEntity {
      */
     private Long loginNums;
 
-    private String userId;
+    private Long userId;
 
     private String account;
 

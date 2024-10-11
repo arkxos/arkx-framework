@@ -29,7 +29,7 @@ public interface ContractCommandGateway {
     // method that attaches meta data and will wait for a result for 10 seconds
     @Timeout(value = 6, unit = TimeUnit.SECONDS)
     ContractAggregate sendCommandAndWaitForAResult(AbstractCommand command,
-                                                   @MetaDataValue("userId") String userId);
+                                                   @MetaDataValue("userId") Long userId);
 
     // this method will also wait, caller decides how long
     void sendCommandAndWait(AbstractCommand command, long timeout, TimeUnit unit) throws TimeoutException, InterruptedException;

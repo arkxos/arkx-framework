@@ -73,7 +73,7 @@ public class GatewayIpLimitController {
     })
     @PostMapping("/gateway/limit/ip/api/add")
     public ResultBody addIpLimitApis(
-            @RequestParam("policyId") String policyId,
+            @RequestParam("policyId") Long policyId,
             @RequestParam(value = "apiIds", required = false) String apiIds
     ) {
         gatewayIpLimitService.addIpLimitApis(policyId, StringUtils.isNotBlank(apiIds) ? apiIds.split(",") : new String[]{});
@@ -92,7 +92,7 @@ public class GatewayIpLimitController {
             @ApiImplicitParam(name = "policyId", required = true, value = "策略ID", paramType = "path"),
     })
     @GetMapping("/gateway/limit/ip/{policyId}/info")
-    public ResultBody<GatewayIpLimit> getIpLimit(@PathVariable("policyId") String policyId) {
+    public ResultBody<GatewayIpLimit> getIpLimit(@PathVariable("policyId") Long policyId) {
         return ResultBody.ok().data(gatewayIpLimitService.getIpLimitPolicy(policyId));
     }
 
@@ -120,7 +120,7 @@ public class GatewayIpLimitController {
         ipLimit.setPolicyName(policyName);
         ipLimit.setPolicyType(policyType);
         ipLimit.setIpAddress(ipAddress);
-        String policyId = null;
+        Long policyId = null;
         GatewayIpLimit result = gatewayIpLimitService.addIpLimitPolicy(ipLimit);
         if (result != null) {
             policyId = result.getPolicyId();
@@ -146,7 +146,7 @@ public class GatewayIpLimitController {
     })
     @PostMapping("/gateway/limit/ip/update")
     public ResultBody updateIpLimit(
-            @RequestParam("policyId") String policyId,
+            @RequestParam("policyId") Long policyId,
             @RequestParam(value = "policyName") String policyName,
             @RequestParam(value = "policyType") Integer policyType,
             @RequestParam(value = "ipAddress") String ipAddress
@@ -174,7 +174,7 @@ public class GatewayIpLimitController {
     })
     @PostMapping("/gateway/limit/ip/remove")
     public ResultBody removeIpLimit(
-            @RequestParam("policyId") String policyId
+            @RequestParam("policyId") Long policyId
     ) {
         gatewayIpLimitService.removeIpLimitPolicy(policyId);
         // 刷新网关

@@ -11,10 +11,10 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseAuthorityActionRepository extends BaseRepository<BaseAuthorityAction, String> {
+public interface BaseAuthorityActionRepository extends BaseRepository<BaseAuthorityAction, Long> {
 
     @SqlToyQuery
-    List<BaseAuthorityAction> queryByActionId(@Param("actionId") String actionId);
+    List<BaseAuthorityAction> queryByActionId(@Param("actionId") Long actionId);
 
-    void deleteByActionId(@Param("actionId") String actionId);
+    void deleteByActionId(@Param("actionId") Long actionId);
 }

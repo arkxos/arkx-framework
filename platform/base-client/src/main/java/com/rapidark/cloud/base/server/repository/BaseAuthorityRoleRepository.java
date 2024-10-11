@@ -13,7 +13,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseAuthorityRoleRepository extends BaseRepository<BaseAuthorityRole, String> {
+public interface BaseAuthorityRoleRepository extends BaseRepository<BaseAuthorityRole, Long> {
 
     /**
      * 获取角色已授权权限
@@ -22,7 +22,7 @@ public interface BaseAuthorityRoleRepository extends BaseRepository<BaseAuthorit
      * @return
      */
     @SqlToyQuery
-    List<OpenAuthority> selectAuthorityByRole(@Param("roleId") String roleId);
+    List<OpenAuthority> selectAuthorityByRole(@Param("roleId") Long roleId);
 
     /**
      * 获取角色菜单权限
@@ -31,7 +31,7 @@ public interface BaseAuthorityRoleRepository extends BaseRepository<BaseAuthorit
      * @return
      */
     @SqlToyQuery
-    List<AuthorityMenu> selectAuthorityMenuByRole(@Param("roleId") String roleId, @Param("serviceId") String serviceId);
+    List<AuthorityMenu> selectAuthorityMenuByRole(@Param("roleId") Long roleId, @Param("serviceId") String serviceId);
 
-    void deleteByRoleId(@Param("roleId") String roleId);
+    void deleteByRoleId(@Param("roleId") Long roleId);
 }

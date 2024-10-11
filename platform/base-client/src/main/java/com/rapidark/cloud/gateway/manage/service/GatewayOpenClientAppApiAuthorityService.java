@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/6/1 16:25
  */
 @Service
-public class GatewayOpenClientAppApiAuthorityService extends BaseService<GatewayOpenClientAppApiAuthority, String, GatewayOpenClientAppApiAuthorityRepository> {
+public class GatewayOpenClientAppApiAuthorityService extends BaseService<GatewayOpenClientAppApiAuthority, Long, GatewayOpenClientAppApiAuthorityRepository> {
 
     public void deleteByAppId(String appId) {
         this.entityRepository.deleteByAppId(appId);

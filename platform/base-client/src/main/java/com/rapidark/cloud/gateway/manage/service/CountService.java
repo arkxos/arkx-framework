@@ -51,12 +51,12 @@ public class CountService {
         if (pageData.getPageSize() > 0){
             //只取当天的
             String key = RouteConstants.COUNT_DAY_KEY + DateFormatUtils.format(new Date(), Constants.DATE_FORMAT_DAY);
-            Map<String,String> countMap = redisUtils.getMap(key);
+            Map<Long,String> countMap = redisUtils.getMap(key);
             List<GatewayAppRoute> gatewayAppRouteList = pageData.getContent();
             List<GatewayAppRouteCountRsp> routeCountRspList = gatewayAppRouteList.stream().map(r -> {
                 GatewayAppRouteCountRsp rsp = new GatewayAppRouteCountRsp();
                 BeanUtils.copyProperties(r, rsp);
-                rsp.setId(r.getSystemCode());
+                rsp.setId(r.getId());//.getSystemCode());
                 //将routeId缓存的统计值取出
                 String count = countMap.get(rsp.getId());
                 rsp.setCount(StringUtils.isNotBlank(count) ? Integer.parseInt(count) : 0);

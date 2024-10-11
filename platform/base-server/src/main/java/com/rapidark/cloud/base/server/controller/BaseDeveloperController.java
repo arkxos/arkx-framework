@@ -12,6 +12,7 @@ import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.utils.PageData;
+import com.rapidark.common.utils.SystemIdGenerator;
 import com.rapidark.common.utils.UuidUtil;
 import com.rapidark.common.utils.WebUtils;
 import io.swagger.annotations.Api;
@@ -39,6 +40,9 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
 
     @Autowired
     private BaseDeveloperService baseDeveloperService;
+
+    @Autowired
+    private SystemIdGenerator systemIdGenerator;
 
     @ApiOperation(value = "获取账号登录信息", notes = "仅限系统内部调用")
     @ApiImplicitParams({
@@ -72,7 +76,7 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
     @PostMapping("/developer/add")
     public ResultBody<Long> addUser(@Valid @RequestBody CreateDeveloperCommand command) {
         BaseDeveloper developer = new BaseDeveloper();
-        developer.setId(UuidUtil.base58Uuid());
+        developer.setId(systemIdGenerator.generate());//UuidUtil.base58Uuid());
         developer.setCompanyName(command.getCompanyName());
         developer.setPersonName(command.getPersonName());
         developer.setType(command.getType());

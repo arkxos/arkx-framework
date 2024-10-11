@@ -27,7 +27,7 @@ import java.util.Map;
  * @Version V1.0
  */
 @Service
-public class ClientServerRegisterService extends BaseService<ClientServerRegister, String, ClientServerRegisterRepository> {
+public class ClientServerRegisterService extends BaseService<ClientServerRegister, Long, ClientServerRegisterRepository> {
 
     @Autowired
     private ClientServerRegisterRepository clientServerRegisterRepository;

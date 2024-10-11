@@ -8,5 +8,5 @@ import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface GatewayAccessLogsRepository extends BaseRepository<GatewayAccessLogs, String> {
+public interface GatewayAccessLogsRepository extends BaseRepository<GatewayAccessLogs, Long> {
 }

@@ -12,15 +12,15 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface GatewayRateLimitApiRepository extends BaseRepository<GatewayRateLimitApi, String> {
+public interface GatewayRateLimitApiRepository extends BaseRepository<GatewayRateLimitApi, Long> {
 
     @SqlToyQuery
     List<RateLimitApi> selectRateLimitApi();
 
     @SqlToyQuery
-    List<GatewayRateLimitApi> queryByPolicyId(@Param("policyId") String policyId);
+    List<GatewayRateLimitApi> queryByPolicyId(@Param("policyId") Long policyId);
 
-    void deleteByPolicyId(String policyId);
+    void deleteByPolicyId(Long policyId);
 
-    void deleteByApiId(String apiId);
+    void deleteByApiId(Long apiId);
 }

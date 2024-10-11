@@ -15,7 +15,7 @@ public class GatewayRoute {
     /**
      * 路由ID
      */
-    private Long routeId;
+    private String routeId;
 
     /**
      * 路由名称

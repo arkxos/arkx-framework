@@ -33,7 +33,7 @@ public class BaseRole extends BaseEntity {
     @Id
     @Column(name = "role_Id")
     @ApiModelProperty(value = "roleId")
-    private String roleId;
+    private Long roleId;
 
     /**
      * 角色编码

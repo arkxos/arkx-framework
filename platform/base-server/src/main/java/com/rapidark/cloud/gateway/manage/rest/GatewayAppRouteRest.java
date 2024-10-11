@@ -81,7 +81,7 @@ public class GatewayAppRouteRest extends BaseRest {
     @ApiOperation(value = "移除路由", notes = "移除路由")
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody delete(@RequestParam String id){
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         gatewayAppRouteService.delete(id);
 
         //this.setRouteCacheVersion();
@@ -104,14 +104,14 @@ public class GatewayAppRouteRest extends BaseRest {
         Assert.notNull(routeReq, "未获取到对象");
         GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
         this.validate(gatewayAppRoute);
-        Assert.isTrue(StringUtils.isNotBlank(gatewayAppRoute.getId()), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(gatewayAppRoute.getId()), "未获取到对象ID");
         return this.save(gatewayAppRoute, toMonitor(routeReq), false);
     }
 
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody findById(@RequestParam String id){
         Assert.notNull(id, "未获取到对象ID");
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         return ResultBody.ok().data(gatewayAppRouteService.findById(id));
     }
 
@@ -144,7 +144,7 @@ public class GatewayAppRouteRest extends BaseRest {
      */
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody start(@RequestParam String id){
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         GatewayAppRoute dbGatewayAppRoute = gatewayAppRouteService.findById(id);
         if (!Constants.YES.equals(dbGatewayAppRoute.getStatus())) {
             dbGatewayAppRoute.setStatus(Constants.YES);
@@ -163,7 +163,7 @@ public class GatewayAppRouteRest extends BaseRest {
      */
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody stop(@RequestParam String id){
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         GatewayAppRoute dbGatewayAppRoute = gatewayAppRouteService.findById(id);
         if (!Constants.NO.equals(dbGatewayAppRoute.getStatus())) {
             dbGatewayAppRoute.setStatus(Constants.NO);
@@ -190,7 +190,7 @@ public class GatewayAppRouteRest extends BaseRest {
                 gatewayAppRoute.setUri(gatewayAppRoute.getUri().trim());
                 break;
             default:
-                gatewayAppRoute.setServiceId(gatewayAppRoute.getServiceId().trim());
+                gatewayAppRoute.setServiceId(gatewayAppRoute.getServiceId());
                 gatewayAppRoute.setUri(null);
         }
 

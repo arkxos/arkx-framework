@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class GrantOpenClientAppApiAuthorityCommand {
 
     @ApiModelProperty(name = "appId", value = "客户端Id", example = "", required = true)
-    @NotEmpty(message = "客户端Id不能为空")
+    @NotNull(message = "客户端Id不能为空")
     private String appId;
 
     @ApiModelProperty(name = "appSystemCode", value = "应用系统代码", example = "", required = true)

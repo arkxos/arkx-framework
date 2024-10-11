@@ -16,7 +16,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseAuthorityRepository extends BaseRepository<BaseAuthority, String> {
+public interface BaseAuthorityRepository extends BaseRepository<BaseAuthority, Long> {
 
     /**
      * 查询所有资源授权列表

@@ -99,7 +99,7 @@ public class CommentReplyServiceImpl extends BaseServiceImpl<CommentReplyMapper,
             commentReply.setParentId(0L);
         }
         commentReply.setIsShield(false);
-        commentReply.setCreateBy(OpenHelper.getUser().getUserId());
+        commentReply.setCreateBy(OpenHelper.getUser().getUserId()+"");
         commentReply.setCreateTime(new Date());
 
         //保存回复
@@ -107,7 +107,7 @@ public class CommentReplyServiceImpl extends BaseServiceImpl<CommentReplyMapper,
         //更新评论次数与状态[后续使用异步定时更新]
         int oldReplyCount = comment.getReplyNum();
         comment.setReplyNum(oldReplyCount + 1);
-        comment.setUpdateBy(OpenHelper.getUser().getUserId());
+        comment.setUpdateBy(OpenHelper.getUser().getUserId()+"");
         comment.setUpdateTime(new Date());
         if (CommentStatusEnum.NO_RESPONSE.getCommentStatusCode().equals(comment.getStatus())) {
             comment.setStatus(CommentStatusEnum.RESPONSED.getCommentStatusCode());
@@ -131,7 +131,7 @@ public class CommentReplyServiceImpl extends BaseServiceImpl<CommentReplyMapper,
         //修改成屏蔽状态
         commentReplies.forEach(x -> {
             x.setIsShield(true);
-            x.setUpdateBy(OpenHelper.getUser().getUserId());
+            x.setUpdateBy(OpenHelper.getUser().getUserId()+"");
             x.setUpdateTime(new Date());
         });
         //更新

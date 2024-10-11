@@ -18,7 +18,7 @@ public class ChangeDeveloperPasswordCommand {
 
     @ApiModelProperty(name = "userId", value = "用户Id", example = "", required = true)
     @NotNull(message = "用户Id不能为空")
-    private String userId;
+    private Long userId;
 
     @ApiModelProperty(name = "password", value = "密码", example = "", required = true)
     @NotEmpty(message = "密码不能为空")

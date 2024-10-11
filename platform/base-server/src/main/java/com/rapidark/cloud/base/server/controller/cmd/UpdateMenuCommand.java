@@ -17,6 +17,6 @@ public class UpdateMenuCommand extends CreateMenuCommand {
 
     @ApiModelProperty(required = true, value = "菜单ID")
     @NotNull(message = "菜单id不能为空")
-    private String menuId;
+    private Long menuId;
 
 }

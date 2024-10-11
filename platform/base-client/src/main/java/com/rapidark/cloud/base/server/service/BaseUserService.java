@@ -50,7 +50,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepository> {
+public class BaseUserService extends BaseService<BaseUser, Long, BaseUserRepository> {
 
     @Autowired
     private BaseRoleUserRepository baseRoleUserRepository;
@@ -67,7 +67,7 @@ public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepos
      * @param userId
      * @return
      */
-    public List<BaseRole> getUserRoles(String userId) {
+    public List<BaseRole> getUserRoles(Long userId) {
         List<BaseRole> roles = baseRoleUserRepository.selectRoleUserList(userId);
         return roles;
     }
@@ -138,7 +138,7 @@ public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepos
      * @param userId
      * @param password
      */
-    public void updatePassword(String userId, String password) {
+    public void updatePassword(Long userId, String password) {
         baseAccountService.updatePasswordByUserId(userId, ACCOUNT_DOMAIN, password);
     }
 
@@ -178,7 +178,7 @@ public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepos
      * @param userId
      * @return
      */
-    public BaseUser getUserById(String userId) {
+    public BaseUser getUserById(Long userId) {
         return findById(userId);
     }
 
@@ -188,7 +188,7 @@ public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepos
      * @param userId
      * @return
      */
-    public UserAccount getUserAccount(String userId) {
+    public UserAccount getUserAccount(Long userId) {
         // 用户权限列表
         List<OpenAuthority> authorities = Lists.newArrayList();
         // 用户角色列表
@@ -283,7 +283,7 @@ public class BaseUserService extends BaseService<BaseUser, String, BaseUserRepos
             try {
                 if (!StringUtils.isEmpty(ip)) {
                     BaseAccountLogs log = new BaseAccountLogs();
-                    log.setId(IdUtil.getSnowflakeNextId()+"");
+                    log.setId(IdUtil.getSnowflakeNextId());
                     log.setDomain(ACCOUNT_DOMAIN);
                     log.setUserId(baseAccount.getUserId());
                     log.setAccount(baseAccount.getAccount());

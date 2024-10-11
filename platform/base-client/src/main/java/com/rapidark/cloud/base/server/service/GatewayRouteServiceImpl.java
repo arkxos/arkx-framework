@@ -55,7 +55,7 @@
 //     * @return
 //     */
 //    @Override
-//    public GatewayRoute getRoute(Long routeId) {
+//    public GatewayRoute getRoute(String routeId) {
 //        return getById(routeId);
 //    }
 //
@@ -108,7 +108,7 @@
 //     * @param routeId
 //     */
 //    @Override
-//    public void removeRoute(Long routeId) {
+//    public void removeRoute(String routeId) {
 //        GatewayRoute saved = getRoute(routeId);
 //        if (saved != null && saved.getIsPersist().equals(BaseConstants.ENABLED)) {
 //            throw new OpenAlertException(String.format("保留数据,不允许删除"));

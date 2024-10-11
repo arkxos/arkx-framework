@@ -117,7 +117,7 @@ public class DingtalkController {
         dingtalk.setAppSecret(appSecret);
         dingtalk.setEncodingAesKey(encodingAesKey);
         dingtalk.setToken(token);
-        dingtalk.setCreateBy(OpenHelper.getUser().getUserId());
+        dingtalk.setCreateBy(OpenHelper.getUser().getUserId()+"");
         dingtalkService.saveDingtalk(dingtalk);
         return ResultBody.ok();
     }
@@ -155,7 +155,7 @@ public class DingtalkController {
         dingtalk.setAppSecret(appSecret);
         dingtalk.setEncodingAesKey(encodingAesKey);
         dingtalk.setToken(token);
-        dingtalk.setCreateBy(OpenHelper.getUser().getUserId());
+        dingtalk.setCreateBy(OpenHelper.getUser().getUserId()+"");
         dingtalkService.updateDingtalk(dingtalk);
         return ResultBody.ok();
     }

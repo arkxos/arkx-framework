@@ -31,14 +31,14 @@ public class CriteriaQueryWrapper<T> {
         return this;
     }
 
-    public CriteriaQueryWrapper<T> eq(boolean notEmpty, SFunction<T> function, String value) {
+    public CriteriaQueryWrapper<T> eq(boolean notEmpty, SFunction<T> function, Object value) {
         if(!notEmpty) {
             return this;
         }
         return eq(function, value);
     }
 
-    public CriteriaQueryWrapper<T> eq(SFunction<T> function, String value) {
+    public CriteriaQueryWrapper<T> eq(SFunction<T> function, Object value) {
         CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
         String attributeName = BeanUtils.convertToFieldName(function);
         criteriaQueryInfo.setType(Query.Type.EQUAL);

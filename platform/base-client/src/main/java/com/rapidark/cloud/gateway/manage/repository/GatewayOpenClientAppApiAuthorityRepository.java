@@ -13,7 +13,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/1 16:10
  */
-public interface GatewayOpenClientAppApiAuthorityRepository extends BaseRepository<GatewayOpenClientAppApiAuthority, String> {
+public interface GatewayOpenClientAppApiAuthorityRepository extends BaseRepository<GatewayOpenClientAppApiAuthority, Long> {
 
     /**
      * 获取应用已授权权限
@@ -29,6 +29,6 @@ public interface GatewayOpenClientAppApiAuthorityRepository extends BaseReposito
     void deleteByAppIdAndAppSystemCode(String appId, String appSystemCode);
 
     @SqlToyQuery
-    void deleteByAuthorityIds(@Param("authorityIds") List<String> authorityIds);
+    void deleteByAuthorityIds(@Param("authorityIds") List<Long> authorityIds);
 }
 

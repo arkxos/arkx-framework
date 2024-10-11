@@ -66,7 +66,7 @@ public class BaseApiController {
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
     @GetMapping("/api/{apiId}/info")
-    public ResultBody<BaseApi> getApi(@PathVariable("apiId") String apiId) {
+    public ResultBody<BaseApi> getApi(@PathVariable("apiId") Long apiId) {
         return ResultBody.ok().data(apiService.getApi(apiId));
     }
 
@@ -145,7 +145,7 @@ public class BaseApiController {
     })
     @PostMapping("/api/update")
     public ResultBody updateApi(
-            @RequestParam("apiId") String apiId,
+            @RequestParam("apiId") Long apiId,
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "apiCategory") String apiCategory,
@@ -188,7 +188,7 @@ public class BaseApiController {
     })
     @PostMapping("/api/remove")
     public ResultBody removeApi(
-            @RequestParam("apiId") String apiId
+            @RequestParam("apiId") Long apiId
     ) {
         apiService.removeApi(apiId);
         // 刷新网关

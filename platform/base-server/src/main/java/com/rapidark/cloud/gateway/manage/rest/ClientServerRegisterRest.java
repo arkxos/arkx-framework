@@ -7,6 +7,7 @@ import com.rapidark.cloud.gateway.manage.service.ClientServerRegisterService;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
 import com.rapidark.common.utils.PageUtil;
+import com.rapidark.common.utils.SystemIdGenerator;
 import com.rapidark.common.utils.UuidUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,9 @@ public class ClientServerRegisterRest extends BaseRest {
     @Resource
     private CustomNacosConfigService customNacosConfigService;
 
+    @Resource
+    private SystemIdGenerator systemIdGenerator;
+
     /**
      * 添加注册到网关路由的客户端服务
      * @param clientServerRegister
@@ -53,7 +57,7 @@ public class ClientServerRegisterRest extends BaseRest {
         this.validate(clientServerRegister);
         //验证注册服务是否重复
         ClientServerRegister qServer = new ClientServerRegister();
-        clientServerRegister.setId(UuidUtil.base58Uuid());
+        clientServerRegister.setId(systemIdGenerator.generate());//UuidUtil.base58Uuid());
         qServer.setClientId(clientServerRegister.getClientId());
         qServer.setRouteId(clientServerRegister.getRouteId());
         long count = clientServerRegisterService.count(qServer);
@@ -71,7 +75,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @return
      */
     @PostMapping(value = "/regServer/delete")
-    public ResultBody delete(@RequestParam String id) {
+    public ResultBody delete(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
         clientServerRegisterService.deleteById(id);
@@ -102,7 +106,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @return
      */
     @GetMapping(value = "/regServer/findById")
-    public ResultBody findById(@RequestParam String id) {
+    public ResultBody findById(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
         return ResultBody.ok().data(clientServerRegisterService.findById(id));
@@ -114,7 +118,7 @@ public class ClientServerRegisterRest extends BaseRest {
      */
     @GetMapping(value = "/regServer/serverPageList")
     public ResultBody serverPageList(String clientId, Pageable pageable) {
-        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象查询ID");
+//        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象查询ID");
         Page<GatewayAppRouteRegServer> data = clientServerRegisterService.serverPageList(clientId, pageable);
         return ResultBody.ok().data(PageUtil.toPageData(data));
     }
@@ -154,7 +158,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @return
      */
     @PostMapping(value = "/regServer/start")
-    public ResultBody start(@RequestParam String id) {
+    public ResultBody start(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
         ClientServerRegister dbClientServerRegister = clientServerRegisterService.findById(id);
@@ -172,7 +176,7 @@ public class ClientServerRegisterRest extends BaseRest {
      * @return
      */
     @PostMapping(value = "/regServer/stop")
-    public ResultBody stop(@RequestParam String id) {
+    public ResultBody stop(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
         ClientServerRegister dbClientServerRegister = clientServerRegisterService.findById(id);
@@ -191,7 +195,7 @@ public class ClientServerRegisterRest extends BaseRest {
      */
     @PostMapping(value = "/regServer/stopClientAllRoute")
     public ResultBody stopClientAllRoute(@RequestParam String clientId) {
-        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         clientServerRegisterService.stopClientAllRoute(clientId);
         customNacosConfigService.publishClientNacosConfig(clientId);
         return ResultBody.ok();
@@ -204,7 +208,7 @@ public class ClientServerRegisterRest extends BaseRest {
      */
     @PostMapping(value = "/regServer/startClientAllRoute")
     public ResultBody startClientAllRoute(@RequestParam String clientId) {
-        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         clientServerRegisterService.startClientAllRoute(clientId);
         customNacosConfigService.publishClientNacosConfig(clientId);
         return ResultBody.ok();
@@ -244,7 +248,7 @@ public class ClientServerRegisterRest extends BaseRest {
     @GetMapping(value = "/regServer/notRegServerPageList")
     public ResultBody notRegServerPageList(String clientId, Pageable pageable) {
 //        Assert.notNull(regServerReq, "未获取到对象");
-        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到客户端ID");
+//        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到客户端ID");
         Page<GatewayAppRoute> data = clientServerRegisterService.notRegServerPageList(clientId, pageable);
         return ResultBody.ok().data(data);
     }
@@ -256,7 +260,7 @@ public class ClientServerRegisterRest extends BaseRest {
     @GetMapping(value = "/regServer/notRegClientPageList")
     public ResultBody notRegClientPageList(String routeId, Pageable pageable) {
 //        Assert.notNull(regServerReq, "未获取到对象");
-        Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取路由服务ID");
+//        Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取路由服务ID");
 //        int currentPage = getCurrentPage(regServerReq.getCurrentPage());
 //        int pageSize = getPageSize(regServerReq.getPageSize());
         Page<OpenApp> data = clientServerRegisterService.notRegClientPageList(routeId, pageable);
@@ -280,7 +284,7 @@ public class ClientServerRegisterRest extends BaseRest {
         Assert.notNull(tokenEffectiveTime, "未获取Token有效过期时间");
         String secretKey = tokenReq.getSecretKey();
         if (StringUtils.isBlank(secretKey)){
-            secretKey = clientServerRegister.getClientId();
+            secretKey = clientServerRegister.getClientId()+"";
         }
         //创建Token
         String jwtToken = JwtTokenUtils.createToken(sub, tokenEffectiveTime, secretKey);

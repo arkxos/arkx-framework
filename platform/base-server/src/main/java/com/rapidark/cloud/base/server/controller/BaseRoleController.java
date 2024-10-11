@@ -62,7 +62,7 @@ public class BaseRoleController {
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "path")
     })
     @GetMapping("/role/{roleId}/info")
-    public ResultBody<BaseRole> getRole(@PathVariable(value = "roleId") String roleId) {
+    public ResultBody<BaseRole> getRole(@PathVariable(value = "roleId") Long roleId) {
         BaseRole result = baseRoleService.getRole(roleId);
         return ResultBody.ok().data(result);
     }
@@ -80,7 +80,7 @@ public class BaseRoleController {
         role.setRoleName(command.getRoleName());
         role.setStatus(command.getStatus());
         role.setRoleDesc(command.getRoleDesc());
-        String roleId = null;
+        Long roleId = null;
         BaseRole result = baseRoleService.addRole(role);
         if (result != null) {
             roleId = result.getRoleId();
@@ -118,7 +118,7 @@ public class BaseRoleController {
     })
     @PostMapping("/role/remove")
     public ResultBody removeRole(
-            @RequestParam(value = "roleId") String roleId
+            @RequestParam(value = "roleId") Long roleId
     ) {
         baseRoleService.removeRole(roleId);
         return ResultBody.ok();
@@ -134,7 +134,7 @@ public class BaseRoleController {
     @ApiOperation(value = "角色添加成员", notes = "角色添加成员")
     @PostMapping("/role/users/add")
     public ResultBody addUserRoles(
-            @RequestParam(value = "roleId") String roleId,
+            @RequestParam(value = "roleId") Long roleId,
             @RequestParam(value = "userIds", required = false) String userIds
     ) {
         baseRoleService.saveRoleUsers(roleId, StringUtils.isNotBlank(userIds) ? userIds.split(",") : new String[]{});

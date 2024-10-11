@@ -37,7 +37,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseActionService extends BaseService<BaseAction, String, BaseActionRepository> {
+public class BaseActionService extends BaseService<BaseAction, Long, BaseActionRepository> {
 
     @Autowired
     private BaseAuthorityService baseAuthorityService;
@@ -69,7 +69,7 @@ public class BaseActionService extends BaseService<BaseAction, String, BaseActio
      * @param menuId
      * @return
      */
-    public List<BaseAction> findListByMenuId(String menuId) {
+    public List<BaseAction> findListByMenuId(Long menuId) {
         CriteriaQueryWrapper<BaseAction> queryWrapper = new CriteriaQueryWrapper();
         queryWrapper.eq(BaseAction::getMenuId, menuId);
         List<BaseAction> list = findAllByCriteria(queryWrapper);
@@ -84,7 +84,7 @@ public class BaseActionService extends BaseService<BaseAction, String, BaseActio
      * @param actionId
      * @return
      */
-    public BaseAction getAction(String actionId) {
+    public BaseAction getAction(Long actionId) {
         return findById(actionId);
     }
 
@@ -166,7 +166,7 @@ public class BaseActionService extends BaseService<BaseAction, String, BaseActio
      * @param actionId
      * @return
      */
-    public void removeAction(String actionId) {
+    public void removeAction(Long actionId) {
         BaseAction aciton = getAction(actionId);
         if (aciton != null && aciton.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除"));
@@ -181,7 +181,7 @@ public class BaseActionService extends BaseService<BaseAction, String, BaseActio
      *
      * @param menuId
      */
-    public void removeByMenuId(String menuId) {
+    public void removeByMenuId(Long menuId) {
         List<BaseAction> actionList = findListByMenuId(menuId);
         if (actionList != null && actionList.size() > 0) {
             for (BaseAction action : actionList) {

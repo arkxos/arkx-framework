@@ -175,20 +175,6 @@ public class OpenApp extends BaseEntity {
     }
 
     /**
-     * @return app_id
-     */
-    public String getAppId() {
-        return appId;
-    }
-
-    /**
-     * @param appId
-     */
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    /**
      * 获取app名称
      *
      * @return app_name - app名称

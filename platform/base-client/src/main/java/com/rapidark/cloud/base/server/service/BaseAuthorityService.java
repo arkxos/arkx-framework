@@ -18,7 +18,9 @@ import com.rapidark.common.security.OpenHelper;
 import com.rapidark.common.security.OpenSecurityConstants;
 import com.rapidark.common.utils.CriteriaQueryWrapper;
 import com.rapidark.common.utils.StringUtils;
+import com.rapidark.common.utils.SystemIdGenerator;
 import com.rapidark.common.utils.UuidUtil;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
@@ -37,7 +39,7 @@ import java.util.*;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAuthorityService extends BaseService<BaseAuthority, String, BaseAuthorityRepository> {
+public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseAuthorityRepository> {
 
     @Autowired
     private BaseAuthorityRoleRepository baseAuthorityRoleRepository;
@@ -69,6 +71,9 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
     @Autowired
     private BaseAuthorityUserService baseAuthorityUserService;
 
+    @Autowired
+    private SystemIdGenerator systemIdGenerator;
+
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
 
@@ -93,9 +98,9 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @return
      */
     public List<AuthorityMenu> findAuthorityMenu(Integer status, String serviceId) {
-        Map map = Maps.newHashMap();
-        if (serviceId != null && !"".equals(serviceId)) {
-            map.put("serviceId", serviceId.trim());
+        Map<String, Object> map = Maps.newHashMap();
+        if (!StringUtils.isEmpty(serviceId)) {
+            map.put("serviceId", serviceId);
         }
         map.put("status", status);
         List<AuthorityMenu> authorities = entityRepository.selectAuthorityMenu(map);
@@ -123,7 +128,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param actionId
      * @return
      */
-    public List<BaseAuthorityAction> findAuthorityAction(String actionId) {
+    public List<BaseAuthorityAction> findAuthorityAction(Long actionId) {
         return baseAuthorityActionRepository.queryByActionId(actionId);
     }
 
@@ -135,7 +140,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param resourceType
      * @return 权限Id
      */
-    public BaseAuthority saveOrUpdateAuthority(String resourceId, ResourceType resourceType) {
+    public BaseAuthority saveOrUpdateAuthority(Long resourceId, ResourceType resourceType) {
         BaseAuthority baseAuthority = getAuthority(resourceId, resourceType);
         String authority = null;
         if (baseAuthority == null) {
@@ -184,7 +189,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param resourceType
      * @return
      */
-    public void removeAuthority(String resourceId, ResourceType resourceType) {
+    public void removeAuthority(Long resourceId, ResourceType resourceType) {
         if (isGranted(resourceId, resourceType)) {
             throw new OpenAlertException(String.format("资源已被授权,不允许删除!取消授权后,再次尝试!"));
         }
@@ -202,7 +207,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param resourceType
      * @return
      */
-    public BaseAuthority getAuthority(String resourceId, ResourceType resourceType) {
+    public BaseAuthority getAuthority(Long resourceId, ResourceType resourceType) {
         if (resourceId == null || resourceType == null) {
             return null;
         }
@@ -217,7 +222,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param resourceType
      * @return
      */
-    public Boolean isGranted(String resourceId, ResourceType resourceType) {
+    public Boolean isGranted(Long resourceId, ResourceType resourceType) {
         BaseAuthority authority = getAuthority(resourceId, resourceType);
         if (authority == null || authority.getAuthorityId() == null) {
             return false;
@@ -232,7 +237,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
         long userGrantedCount = baseAuthorityUserService.count(userQueryWrapper);
 
         GatewayOpenClientAppApiAuthority openClientAppApiAuthority = new GatewayOpenClientAppApiAuthority();
-        openClientAppApiAuthority.setAuthorityId(authority.getAuthorityId()+"");
+        openClientAppApiAuthority.setAuthorityId(authority.getAuthorityId());
         long appGrantedCount = openClientAppApiAuthorityService.count(openClientAppApiAuthority);
 
         return roleGrantedCount > 0 || userGrantedCount > 0 || appGrantedCount > 0;
@@ -245,7 +250,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param resourceType
      * @return
      */
-    private CriteriaQueryWrapper<BaseAuthority> buildQueryWrapper(String resourceId, ResourceType resourceType) {
+    private CriteriaQueryWrapper<BaseAuthority> buildQueryWrapper(Long resourceId, ResourceType resourceType) {
         CriteriaQueryWrapper<BaseAuthority> queryWrapper = new CriteriaQueryWrapper<>();
         if (ResourceType.menu.equals(resourceType)) {
             queryWrapper.eq(BaseAuthority::getMenuId, resourceId);
@@ -274,7 +279,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      *
      * @param actionId
      */
-    public void removeAuthorityAction(String actionId) {
+    public void removeAuthorityAction(Long actionId) {
         baseAuthorityActionRepository.deleteByActionId(actionId);
     }
 
@@ -287,7 +292,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param authorityIds 权限集合
      * @return
      */
-    public void addAuthorityRole(String roleId, Date expireTime, String... authorityIds) {
+    public void addAuthorityRole(Long roleId, Date expireTime, String... authorityIds) {
         if (roleId == null) {
             return;
         }
@@ -299,7 +304,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
         if (authorityIds != null && authorityIds.length > 0) {
             for (String id : authorityIds) {
                 authority = new BaseAuthorityRole();
-                authority.setAuthorityId(id);
+                authority.setAuthorityId(Long.valueOf(id));
                 authority.setRoleId(roleId);
                 authority.setExpireTime(expireTime);
                 authority.setCreateTime(LocalDateTime.now());
@@ -318,7 +323,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param authorityIds 权限集合
      * @return
      */
-    public void addAuthorityUser(String userId, Date expireTime, String... authorityIds) {
+    public void addAuthorityUser(Long userId, Date expireTime, String... authorityIds) {
         if (userId == null) {
             return;
         }
@@ -343,12 +348,12 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
             for (String id : authorityIds) {
                 if (roleIds != null && roleIds.size() > 0) {
                     // 防止重复授权
-                    if (isGrantedByRoleIds(id, roleIds.toArray(new Long[roleIds.size()]))) {
+                    if (isGrantedByRoleIds(Long.valueOf(id), roleIds.toArray(new String[roleIds.size()]))) {
                         continue;
                     }
                 }
                 authority = new BaseAuthorityUser();
-                authority.setAuthorityId(id);
+                authority.setAuthorityId(Long.valueOf(id));
                 authority.setUserId(userId);
                 authority.setExpireTime(expireTime);
                 authority.setCreateTime(LocalDateTime.now());
@@ -383,10 +388,10 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
         if (authorityIds != null && authorityIds.length > 0) {
             for (String authorityId : authorityIds) {
                 GatewayOpenClientAppApiAuthority authority = new GatewayOpenClientAppApiAuthority();
-                authority.setId(UuidUtil.base58Uuid());
+                authority.setId(systemIdGenerator.generate());
                 authority.setAppId(appId);
                 authority.setAppSystemCode(appSystemCode);
-                authority.setAuthorityId(authorityId);
+                authority.setAuthorityId(Long.valueOf(authorityId));
                 authority.setExpireTime(expireTime);
                 openClientAppApiAuthorityService.save(authority);
             }
@@ -408,10 +413,10 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
 //    @CacheEvict(value = {"apps"}, key = "'client:'+#appId")
     public void addAuthorityApp(String appId, String appSystemCode, LocalDateTime expireTime, String authorityId) {
         GatewayOpenClientAppApiAuthority authority = new GatewayOpenClientAppApiAuthority();
-        authority.setId(UuidUtil.base58Uuid());
+        authority.setId(systemIdGenerator.generate());
         authority.setAppId(appId);
         authority.setAppSystemCode(appSystemCode);
-        authority.setAuthorityId(authorityId);
+        authority.setAuthorityId(Long.valueOf(authorityId));
         authority.setExpireTime(expireTime);
         openClientAppApiAuthorityService.save(authority);
     }
@@ -423,15 +428,15 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param authorityIds
      * @return
      */
-    public void addAuthorityAction(String actionId, String... authorityIds) {
-        if (StringUtils.isEmpty(actionId)) {
+    public void addAuthorityAction(Long actionId, String... authorityIds) {
+        if (ObjectUtils.isEmpty(actionId)) {
             return;
         }
         // 移除操作已绑定接口
         removeAuthorityAction(actionId);
         if (authorityIds != null && authorityIds.length > 0) {
             for (String id : authorityIds) {
-                String authorityId = id;
+                Long authorityId = Long.valueOf(id);
                 BaseAuthorityAction authority = new BaseAuthorityAction();
                 authority.setActionId(actionId);
                 authority.setAuthorityId(authorityId);
@@ -463,7 +468,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param roleId
      * @return
      */
-    public List<OpenAuthority> findAuthorityByRole(String roleId) {
+    public List<OpenAuthority> findAuthorityByRole(Long roleId) {
         return baseAuthorityRoleRepository.selectAuthorityByRole(roleId);
     }
 
@@ -487,7 +492,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param root   超级管理员
      * @return
      */
-    public List<OpenAuthority> findAuthorityByUser(String userId, Boolean root) {
+    public List<OpenAuthority> findAuthorityByUser(Long userId, Boolean root) {
         if (root) {
             // 超级管理员返回所有
             return findAuthorityByType("1");
@@ -522,12 +527,12 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param root   超级管理员
      * @return
      */
-    public List<AuthorityMenu> findAuthorityMenuByUser(String userId, Boolean root) {
+    public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root) {
         return findAuthorityMenuByUser(userId, root, null);
     }
 
 
-    public List<AuthorityMenu> findAuthorityMenuByUser(String userId, Boolean root, String serviceId) {
+    public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root, String serviceId) {
         if (root) {
             // 超级管理员返回所有
             return findAuthorityMenu(1, serviceId);
@@ -565,7 +570,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, String, Bas
      * @param roleIds
      * @return
      */
-    public Boolean isGrantedByRoleIds(String authorityId, Long... roleIds) {
+    public Boolean isGrantedByRoleIds(Long authorityId, String... roleIds) {
         if (roleIds == null || roleIds.length == 0) {
             throw new OpenException("roleIds is empty");
         }

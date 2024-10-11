@@ -11,7 +11,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseApiRepository extends BaseRepository<BaseApi, String> {
+public interface BaseApiRepository extends BaseRepository<BaseApi, Long> {
 
     @SqlToyQuery
     List<BaseApi> queryByServiceId(@Param("serviceId") String serviceId);

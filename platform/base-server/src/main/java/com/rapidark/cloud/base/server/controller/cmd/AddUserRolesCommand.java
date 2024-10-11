@@ -18,7 +18,7 @@ public class AddUserRolesCommand {
 
     @ApiModelProperty(name = "userId", value = "用户Id", example = "", required = true)
     @NotNull(message = "用户Id不能为空")
-    private String userId;
+    private Long userId;
 
     @ApiModelProperty(name = "roleIds", value = "角色id列表", example = "", required = true)
     @NotEmpty(message = "角色id列表不能为空")

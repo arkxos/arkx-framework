@@ -31,7 +31,7 @@ public class BaseUser extends BaseEntity {
     @Id
     @Column(name = "user_Id")
     @ApiModelProperty(value = "userId")
-    private String userId;
+    private Long userId;
 
     /**
      * 登陆名

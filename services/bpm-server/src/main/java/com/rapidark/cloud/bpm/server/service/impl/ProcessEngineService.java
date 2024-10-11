@@ -182,7 +182,7 @@ public class ProcessEngineService {
      */
     public void completeTask(String taskId, Map<String, Object> variables) {
         if (variables == null) {
-            variables = new HashMap<String, Object>();
+            variables = new HashMap<>();
         }
         taskService.complete(taskId, variables);
     }
@@ -217,7 +217,7 @@ public class ProcessEngineService {
      */
     public void delegateTask(String taskId, Map<String, Object> variables) {
         if (variables == null) {
-            variables = new HashMap<String, Object>();
+            variables = new HashMap<>();
         }
         taskService.resolveTask(taskId, variables);
     }
@@ -228,12 +228,12 @@ public class ProcessEngineService {
      * @param userId
      * @return
      */
-    public IPage<Task> findTodoTask(String userId, int firstResult, int maxResults) {
+    public IPage<Task> findTodoTask(Long userId, int firstResult, int maxResults) {
         //得到用户待办
         TaskQuery query = taskService.createTaskQuery();
         query.includeTaskLocalVariables();
-        if (StringUtils.isNotBlank(userId)) {
-            query.taskAssignee(userId);
+        if (userId != null) {
+            query.taskAssignee(userId+"");
         }
         List<Task> list = query.listPage(firstResult, maxResults);
         IPage page = new Page();

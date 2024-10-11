@@ -15,6 +15,6 @@ import javax.persistence.EntityManager;
  * @Version V1.0
  */
 @Service
-public class ApiDocService extends BaseService<ApiDoc, String, ApiDocRepository> {
+public class ApiDocService extends BaseService<ApiDoc, Long, ApiDocRepository> {
     private EntityManager entityManager;
 }

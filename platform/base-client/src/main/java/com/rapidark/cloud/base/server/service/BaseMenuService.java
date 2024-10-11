@@ -35,7 +35,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseMenuService extends BaseService<BaseMenu, String, BaseMenuRepository> {
+public class BaseMenuService extends BaseService<BaseMenu, Long, BaseMenuRepository> {
 
     @Autowired
     private BaseAuthorityService baseAuthorityService;
@@ -159,7 +159,7 @@ public class BaseMenuService extends BaseService<BaseMenu, String, BaseMenuRepos
      * @param menuId
      * @return
      */
-    public void removeMenu(String menuId) {
+    public void removeMenu(Long menuId) {
         BaseMenu menu = findById(menuId);
         if (menu != null && menu.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除!"));

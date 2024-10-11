@@ -10,6 +10,6 @@ import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
  * @Date 2020/11/25
  * @Version V1.0
  */
-public interface ApiDocRepository extends BaseRepository<ApiDoc, String> {
+public interface ApiDocRepository extends BaseRepository<ApiDoc, Long> {
 
 }

@@ -39,7 +39,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseApiService extends BaseService<BaseApi, String, BaseApiRepository> {
+public class BaseApiService extends BaseService<BaseApi, Long, BaseApiRepository> {
 
     @Autowired
     private BaseAuthorityService baseAuthorityService;
@@ -81,7 +81,7 @@ public class BaseApiService extends BaseService<BaseApi, String, BaseApiReposito
      * @param apiId
      * @return
      */
-    public BaseApi getApi(String apiId) {
+    public BaseApi getApi(Long apiId) {
         return findById(apiId);
     }
 
@@ -180,7 +180,7 @@ public class BaseApiService extends BaseService<BaseApi, String, BaseApiReposito
      * @param apiId
      * @return
      */
-    public void removeApi(String apiId) {
+    public void removeApi(Long apiId) {
         BaseApi api = getApi(apiId);
         if (api != null && api.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenAlertException(String.format("保留数据,不允许删除"));

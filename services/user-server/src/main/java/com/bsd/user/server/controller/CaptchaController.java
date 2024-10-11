@@ -58,13 +58,13 @@ public class CaptchaController {
             @ApiImplicitParam(name = "clientType", required = true, value = "客户端类型web(pc浏览器),h5(手机浏览器,包括webview),native(原生app),unknown(未知)", paramType = "form"),
     })
     @PostMapping("/init")
-    public ResultBody init(@RequestParam(value = "userId") String userId,
+    public ResultBody init(@RequestParam(value = "userId") Long userId,
                            @RequestParam(value = "clientType") String clientType,
                            HttpServletRequest request) {
         //业务参数
         CaptchaInitDTO captchaInitDTO = new CaptchaInitDTO();
         captchaInitDTO.setIp(WebUtils.getRemoteAddress(request));
-        captchaInitDTO.setUserId(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId, "UTF-8"));//用户ID MD5加密一下,避免泄露
+        captchaInitDTO.setUserId(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId+"", "UTF-8"));//用户ID MD5加密一下,避免泄露
         captchaInitDTO.setClientType(clientType);
         log.info("init:{}", captchaInitDTO);
         //调用初始化接口
@@ -74,7 +74,6 @@ public class CaptchaController {
         redisUtils.set(captchaInitDTO.getUserId(), JSON.toJSONString(captchaInitDTO), 60 * 60);
         return ResultBody.ok().data(captchaInitResultDTO);
     }
-
 
     /**
      * 行为验证二次验证
@@ -93,13 +92,13 @@ public class CaptchaController {
             @ApiImplicitParam(name = "seccode", required = true, value = "极验验证二次验证表单数据 seccode", paramType = "form"),
     })
     @PostMapping("/validate")
-    public ResultBody validate(@RequestParam(value = "userId") String userId,
+    public ResultBody validate(@RequestParam(value = "userId") Long userId,
                                @RequestParam(value = "chllenge") String chllenge,
                                @RequestParam(value = "validate") String validate,
                                @RequestParam(value = "seccode") String seccode,
                                HttpServletRequest request) {
         //获取session中的数据
-        String initStr = (String) redisUtils.get(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId, "UTF-8"));
+        String initStr = (String) redisUtils.get(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId+"", "UTF-8"));
         if (StringUtils.isEmpty(initStr)) {
             return ResultBody.failed().msg("二次验证之前未调用初始化接口");
         }
@@ -121,4 +120,5 @@ public class CaptchaController {
         }
         return ResultBody.failed().data(captchaValidateResultDTO);
     }
+
 }

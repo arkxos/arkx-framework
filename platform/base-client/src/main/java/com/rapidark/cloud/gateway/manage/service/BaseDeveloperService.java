@@ -39,7 +39,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseDeveloperService extends BaseService<BaseDeveloper, String, BaseDeveloperRepository> {
+public class BaseDeveloperService extends BaseService<BaseDeveloper, Long, BaseDeveloperRepository> {
 
     @Autowired
     private BaseAccountService baseAccountService;
@@ -149,7 +149,7 @@ public class BaseDeveloperService extends BaseService<BaseDeveloper, String, Bas
      * @param userId
      * @return
      */
-    public BaseDeveloper getUserById(String userId) {
+    public BaseDeveloper getUserById(Long userId) {
         return entityRepository.findById(userId).get();
     }
 

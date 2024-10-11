@@ -26,7 +26,7 @@ public class GatewayOpenClientAppApiAuthority extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     @Column(name = "app_Id",nullable = false)
     @NotBlank(message = "客户端系统Id不能为空")
@@ -41,7 +41,7 @@ public class GatewayOpenClientAppApiAuthority extends BaseEntity {
     @Column(name = "authority_Id",nullable = false)
     @NotBlank(message = "权限ID不能为空")
     @ApiModelProperty(value = "权限ID")
-    private String authorityId;
+    private Long authorityId;
 
     /**
      * 过期时间:null表示长期

@@ -32,7 +32,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GatewayIpLimitService extends BaseService<GatewayIpLimit, String, GatewayIpLimitRepository> {
+public class GatewayIpLimitService extends BaseService<GatewayIpLimit, Long, GatewayIpLimitRepository> {
 
     @Autowired
     private GatewayIpLimitApiRepository gatewayIpLimitApiRepository;
@@ -92,7 +92,7 @@ public class GatewayIpLimitService extends BaseService<GatewayIpLimit, String, G
      * @param policyId
      * @return
      */
-    public GatewayIpLimit getIpLimitPolicy(String policyId) {
+    public GatewayIpLimit getIpLimitPolicy(Long policyId) {
         return findById(policyId);
     }
 
@@ -124,7 +124,7 @@ public class GatewayIpLimitService extends BaseService<GatewayIpLimit, String, G
      *
      * @param policyId
      */
-    public void removeIpLimitPolicy(String policyId) {
+    public void removeIpLimitPolicy(Long policyId) {
         clearIpLimitApisByPolicyId(policyId);
         deleteById(policyId);
     }
@@ -135,15 +135,15 @@ public class GatewayIpLimitService extends BaseService<GatewayIpLimit, String, G
      * @param policyId
      * @param apis
      */
-    public void addIpLimitApis(String policyId, String... apis) {
+    public void addIpLimitApis(Long policyId, String... apis) {
         // 先清空策略已有绑定
         clearIpLimitApisByPolicyId(policyId);
         if (apis != null && apis.length > 0) {
             for (String apiId : apis) {
                 // 先api解除所有绑定, 一个API只能绑定一个策略
-                clearIpLimitApisByApiId(apiId);
+                clearIpLimitApisByApiId(Long.valueOf(apiId));
                 GatewayIpLimitApi item = new GatewayIpLimitApi();
-                item.setApiId(apiId);
+                item.setApiId(Long.valueOf(apiId));
                 item.setPolicyId(policyId);
                 // 重新绑定策略
                 gatewayIpLimitApiRepository.save(item);
@@ -156,7 +156,7 @@ public class GatewayIpLimitService extends BaseService<GatewayIpLimit, String, G
      *
      * @param policyId
      */
-    public void clearIpLimitApisByPolicyId(String policyId) {
+    public void clearIpLimitApisByPolicyId(Long policyId) {
         gatewayIpLimitApiRepository.deleteByPolicyId(policyId);
     }
 
@@ -165,7 +165,7 @@ public class GatewayIpLimitService extends BaseService<GatewayIpLimit, String, G
      *
      * @param apiId
      */
-    public void clearIpLimitApisByApiId(String apiId) {
+    public void clearIpLimitApisByApiId(Long apiId) {
         gatewayIpLimitApiRepository.deleteByApiId(apiId);
     }
 }

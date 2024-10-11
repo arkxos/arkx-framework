@@ -21,7 +21,7 @@ import java.util.Date;
 public class ClientServerRegister {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     @NotNull(message = "客户端ID不能为空")
     @Size(min = 2, max = 40, message = "客户端ID长度必需在2到40个字符内")
     @Column(name = "client_Id" )

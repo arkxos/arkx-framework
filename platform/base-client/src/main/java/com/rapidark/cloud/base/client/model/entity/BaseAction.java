@@ -33,7 +33,7 @@ public class BaseAction extends BaseEntity {
     @Id
     @Column(name = "action_Id")
     @ApiModelProperty(value = "actionId")
-    private String actionId;
+    private Long actionId;
 
     /**
      * 资源编码
@@ -48,7 +48,7 @@ public class BaseAction extends BaseEntity {
     /**
      * 资源父节点
      */
-    private String menuId;
+    private Long menuId;
 
     /**
      * 优先级 越小越靠前

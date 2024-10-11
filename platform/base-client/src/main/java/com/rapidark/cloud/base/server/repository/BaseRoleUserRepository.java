@@ -12,7 +12,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseRoleUserRepository extends BaseRepository<BaseRoleUser, String> {
+public interface BaseRoleUserRepository extends BaseRepository<BaseRoleUser, Long> {
 
     /**
      * 查询系统用户角色
@@ -21,7 +21,7 @@ public interface BaseRoleUserRepository extends BaseRepository<BaseRoleUser, Str
      * @return
      */
     @SqlToyQuery
-    List<BaseRole> selectRoleUserList(@Param("userId") String userId);
+    List<BaseRole> selectRoleUserList(@Param("userId") Long userId);
 
     /**
      * 查询用户角色ID列表
@@ -30,12 +30,12 @@ public interface BaseRoleUserRepository extends BaseRepository<BaseRoleUser, Str
      * @return
      */
     @SqlToyQuery
-    List<String> selectRoleUserIdList(@Param("userId") String userId);
+    List<String> selectRoleUserIdList(@Param("userId") Long userId);
 
     @SqlToyQuery
-    List<BaseRoleUser> queryByRoleId(@Param("roleId") String roleId);
+    List<BaseRoleUser> queryByRoleId(@Param("roleId") Long roleId);
 
-    void deleteByRoleId(@Param("roleId") String roleId);
+    void deleteByRoleId(@Param("roleId") Long roleId);
 
-    void deleteByUserId(@Param("roleId") String userId);
+    void deleteByUserId(@Param("roleId") Long userId);
 }

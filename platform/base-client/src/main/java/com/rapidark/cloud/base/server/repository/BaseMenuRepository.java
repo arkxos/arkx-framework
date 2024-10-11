@@ -8,5 +8,5 @@ import com.rapidark.cloud.base.client.model.entity.BaseMenu;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseMenuRepository extends BaseRepository<BaseMenu, String> {
+public interface BaseMenuRepository extends BaseRepository<BaseMenu, Long> {
 }

@@ -26,16 +26,16 @@ public class GatewayIpLimitApi extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     /**
      * 策略ID
      */
-    private String policyId;
+    private Long policyId;
 
     /**
      * 接口资源ID
      */
-    private String apiId;
+    private Long apiId;
 
 }

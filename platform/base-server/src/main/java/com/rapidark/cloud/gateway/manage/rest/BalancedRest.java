@@ -4,6 +4,7 @@ import com.rapidark.cloud.gateway.formwork.util.*;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.utils.Constants;
 import com.rapidark.common.utils.PageData;
+import com.rapidark.common.utils.SystemIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -46,6 +47,9 @@ public class BalancedRest extends BaseRest {
     @Resource
     private CustomNacosConfigService customNacosConfigService;
 
+    @Resource
+    private SystemIdGenerator systemIdGenerator;
+
     /**
      * 添加负载配置
      * @param balancedReq
@@ -55,7 +59,7 @@ public class BalancedRest extends BaseRest {
     public ResultBody add(@RequestBody BalancedReq balancedReq) {
         Assert.notNull(balancedReq, "未获取到对象");
         Balanced balanced = new Balanced();
-        balanced.setId(UUIDUtils.getUUIDString());
+        balanced.setId(systemIdGenerator.generate()+"");//UUIDUtils.getUUIDString());
         balanced.setName(balancedReq.getName());
         balanced.setGroupCode(balancedReq.getGroupCode());
         balanced.setLoadUri(balancedReq.getLoadUri());
@@ -92,7 +96,7 @@ public class BalancedRest extends BaseRest {
      */
     @RequestMapping(value = "/balanced/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody delete(@RequestParam String id) {
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         balancedService.deleteAndServer(id);
         //this.setRouteCacheVersion();
         customNacosConfigService.publishBalancedNacosConfig(id);
@@ -107,7 +111,7 @@ public class BalancedRest extends BaseRest {
     @RequestMapping(value = "/balanced/update", method = {RequestMethod.POST})
     public ResultBody update(@RequestBody BalancedReq balancedReq) {
         Assert.notNull(balancedReq, "未获取到对象");
-        Assert.isTrue(StringUtils.isNotBlank(balancedReq.getId()), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(balancedReq.getId()), "未获取到对象ID");
         this.validate(balancedReq);
         Balanced balanced = balancedService.findById(balancedReq.getId());
         if (balanced != null) {
@@ -132,7 +136,7 @@ public class BalancedRest extends BaseRest {
      */
     @RequestMapping(value = "/balanced/findById", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody findById(@RequestParam String id) {
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced balanced = balancedService.findById(id);
         if (balanced != null) {
             List<LoadServer> serverList = loadServerService.queryByBalancedId(id);
@@ -176,7 +180,7 @@ public class BalancedRest extends BaseRest {
      */
     @RequestMapping(value = "/balanced/start", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody start(@RequestParam String id) {
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced dbBalanced = balancedService.findById(id);
         dbBalanced.setStatus(Constants.YES);
         balancedService.update(dbBalanced);
@@ -192,7 +196,7 @@ public class BalancedRest extends BaseRest {
      */
     @RequestMapping(value = "/balanced/stop", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody stop(@RequestParam String id) {
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced dbBalanced = balancedService.findById(id);
         dbBalanced.setStatus(Constants.NO);
         balancedService.update(dbBalanced);

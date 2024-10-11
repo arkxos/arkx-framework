@@ -6,6 +6,7 @@ import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.cloud.base.server.service.IpRegionService;
 import com.rapidark.common.constants.QueueConstants;
 import com.rapidark.common.utils.BeanConvertUtils;
+import com.rapidark.common.utils.SystemIdGenerator;
 import com.rapidark.common.utils.UuidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -33,6 +34,9 @@ public class AccessLogsHandler {
     @Autowired
     private IpRegionService ipRegionService;
 
+    @Autowired
+    private SystemIdGenerator systemIdGenerator;
+
     /**
      * 接收访问日志
      *
@@ -47,7 +51,7 @@ public class AccessLogsHandler {
                     if (logs.getIp() != null) {
                         logs.setRegion(ipRegionService.getRegion(logs.getIp()));
                     }
-                    logs.setAccessId(IdUtil.getSnowflakeNextId()+"");
+                    logs.setAccessId(systemIdGenerator.generate());
                     logs.setUseTime(logs.getResponseTime().getTime() - logs.getRequestTime().getTime());
                     gatewayAccessLogsRepository.save(logs);
                 }

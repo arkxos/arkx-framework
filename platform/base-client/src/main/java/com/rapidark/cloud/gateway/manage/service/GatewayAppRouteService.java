@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @Version V1.0
  */
 @Service
-public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, GatewayAppRouteRepository> {
+public class GatewayAppRouteService extends BaseService<GatewayAppRoute, String, GatewayAppRouteRepository> {
 
     @Resource
     private ClientServerRegisterService clientServerRegisterService;

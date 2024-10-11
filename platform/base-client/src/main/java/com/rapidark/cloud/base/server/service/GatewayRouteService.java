@@ -34,7 +34,7 @@
 //     * @param routeId
 //     * @return
 //     */
-//    GatewayRoute getRoute(Long routeId);
+//    GatewayRoute getRoute(String routeId);
 //
 //    /**
 //     * 添加路由
@@ -55,7 +55,7 @@
 //     *
 //     * @param routeId
 //     */
-//    void removeRoute(Long routeId);
+//    void removeRoute(String routeId);
 //
 //    /**
 //     * 是否存在

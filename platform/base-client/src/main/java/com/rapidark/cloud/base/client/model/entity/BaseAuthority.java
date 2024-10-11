@@ -28,7 +28,7 @@ public class BaseAuthority extends BaseEntity {
     @Id
     @Column(name = "authority_Id")
     @ApiModelProperty(value = "authority_Id")
-    private String authorityId;
+    private Long authorityId;
 
     /**
      * 权限标识
@@ -38,17 +38,17 @@ public class BaseAuthority extends BaseEntity {
     /**
      * 菜单资源ID
      */
-    private String menuId;
+    private Long menuId;
 
     /**
      * API资源ID
      */
-    private String apiId;
+    private Long apiId;
 
     /**
      * 操作资源ID
      */
-    private String actionId;
+    private Long actionId;
 
     /**
      * 状态

@@ -32,7 +32,7 @@ public class BaseApi extends BaseEntity {
     @Id
     @Column(name = "api_id")
     @ApiModelProperty(value = "api_id")
-    private String apiId;
+    private Long apiId;
 
     /**
      * 资源编码

@@ -111,17 +111,17 @@ public class DeployServiceImpl implements DeployService {
 	}
 
 	@Override
-	public void deploy(String fileSavePath, Long id) {
-		deployApp(fileSavePath, id);
+	public void deploy(String fileSavePath, Long appId) {
+		deployApp(fileSavePath, appId);
 	}
 
 	/**
 	 * @param fileSavePath 本机路径
-	 * @param id ID
+	 * @param appId ID
 	 */
-	private void deployApp(String fileSavePath, Long id) {
+	private void deployApp(String fileSavePath, Long appId) {
 
-		DeployDto deploy = findById(id);
+		DeployDto deploy = findById(appId);
 		if (deploy == null) {
 			sendMsg("部署信息不存在", MsgType.ERROR);
 			throw new BadRequestException("部署信息不存在");
@@ -160,7 +160,7 @@ public class DeployServiceImpl implements DeployService {
 				stopApp(port, executeShellUtil);
 				sendMsg("备份原来应用", MsgType.INFO);
 				//备份应用
-				backupApp(executeShellUtil, ip, app.getDeployPath()+FILE_SEPARATOR, app.getName(), app.getBackupPath()+FILE_SEPARATOR, id);
+				backupApp(executeShellUtil, ip, app.getDeployPath()+FILE_SEPARATOR, app.getName(), app.getBackupPath()+FILE_SEPARATOR, appId);
 			}
 			sendMsg("部署应用", MsgType.INFO);
 			//部署文件,并启动应用

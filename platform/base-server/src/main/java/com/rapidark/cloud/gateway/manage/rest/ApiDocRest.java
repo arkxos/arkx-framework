@@ -46,7 +46,7 @@ public class ApiDocRest extends BaseRest {
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ResultBody save(@RequestBody ApiDoc apiDoc){
         Assert.notNull(apiDoc, "未获取到对象");
-        Assert.isTrue(StringUtils.isNotBlank(apiDoc.getId()), "未获取到对象ID");
+//        Assert.isTrue(StringUtils.isNotBlank(apiDoc.getId()), "未获取到对象ID");
         apiDocService.save(apiDoc);
         return ResultBody.ok();
     }
@@ -57,8 +57,8 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody findById(@RequestParam String id) {
-        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到请求ID");
+    public ResultBody findById(@RequestParam Long id) {
+//        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到请求ID");
         return ResultBody.ok().data(apiDocService.findById(id));
     }
 

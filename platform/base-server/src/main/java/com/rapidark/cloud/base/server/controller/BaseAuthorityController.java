@@ -96,7 +96,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @GetMapping("/authority/action")
     public ResultBody<List<BaseAuthorityAction>> findAuthorityAction(
-            @RequestParam(value = "actionId") String actionId
+            @RequestParam(value = "actionId") Long actionId
     ) {
         List<BaseAuthorityAction> list = baseAuthorityService.findAuthorityAction(actionId);
         return ResultBody.ok().data(list);
@@ -114,7 +114,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
     })
     @GetMapping("/authority/role")
-    public ResultBody<List<OpenAuthority>> findAuthorityRole(String roleId) {
+    public ResultBody<List<OpenAuthority>> findAuthorityRole(Long roleId) {
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByRole(roleId);
         return ResultBody.ok().data(result);
     }
@@ -132,7 +132,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @GetMapping("/authority/user")
     public ResultBody<List<OpenAuthority>> findAuthorityUser(
-            @RequestParam(value = "userId") String userId
+            @RequestParam(value = "userId") Long userId
     ) {
         BaseUser user = baseUserService.getUserById(userId);
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByUser(userId, CommonConstants.ROOT.equals(user.getUserName()));
@@ -175,7 +175,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @PostMapping("/authority/role/grant")
     public ResultBody grantAuthorityRole(
-            @RequestParam(value = "roleId") String roleId,
+            @RequestParam(value = "roleId") Long roleId,
             @RequestParam(value = "expireTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date expireTime,
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {
@@ -201,7 +201,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     })
     @PostMapping("/authority/user/grant")
     public ResultBody grantAuthorityUser(
-            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "expireTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date expireTime,
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {

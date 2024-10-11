@@ -26,16 +26,16 @@ public class GatewayRateLimitApi extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     /**
      * 限制数量
      */
-    private String policyId;
+    private Long policyId;
 
     /**
      * 时间间隔(秒)
      */
-    private String apiId;
+    private Long apiId;
 
 }

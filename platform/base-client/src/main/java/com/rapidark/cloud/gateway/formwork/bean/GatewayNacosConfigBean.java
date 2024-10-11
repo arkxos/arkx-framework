@@ -25,7 +25,7 @@ public class GatewayNacosConfigBean implements java.io.Serializable {
     /**
      * 客户端注册网关路由的关联表ID
      */
-    private String regServerId;
+    private Long regServerId;
     /**
      * 客户端ID
      */
@@ -53,16 +53,16 @@ public class GatewayNacosConfigBean implements java.io.Serializable {
      */
     public String getGatewayConfig(){
         String str = "\"createTime\":" + System.currentTimeMillis()/1000;
-        if (StringUtils.isNotBlank(balancedId)){
+        if (balancedId != null){
             str += ",\"balancedId\":\"" + balancedId + "\"";
         }
-        if (StringUtils.isNotBlank(routeId)){
+        if (routeId != null){
             str += ",\"routeId\":\"" + routeId + "\"";
         }
         if (regServerId != null){
             str += ",\"regServerId\":" + regServerId ;
         }
-        if (StringUtils.isNotBlank(clientId)){
+        if (clientId != null){
             str += ",\"clientId\":\"" + clientId + "\"";
         }
 //        if (StringUtils.isNotBlank(clientIp)){

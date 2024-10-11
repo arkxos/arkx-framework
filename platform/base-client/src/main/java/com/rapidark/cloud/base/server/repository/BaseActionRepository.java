@@ -8,5 +8,5 @@ import com.rapidark.cloud.base.client.model.entity.BaseAction;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseActionRepository extends BaseRepository<BaseAction, String> {
+public interface BaseActionRepository extends BaseRepository<BaseAction, Long> {
 }

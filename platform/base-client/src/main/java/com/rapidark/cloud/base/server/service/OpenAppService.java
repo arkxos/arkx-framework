@@ -61,6 +61,7 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
     private final JdbcClientDetailsService jdbcClientDetailsService;
 
     private final ClientServerRegisterService clientServerRegisterService;
+    private final SystemIdGenerator systemIdGenerator;
 
     /**
      * 查询数据分页
@@ -117,7 +118,7 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
         long count1 = this.count(qClinet1);
         Assert.isTrue(count1 <= 0, "客户端编码已存在，不能重复");
 
-        String appId = UuidUtil.base58Uuid();
+        String appId = systemIdGenerator.generate()+"";//UuidUtil.base58Uuid();
         String apiKey = RandomValueUtils.randomAlphanumeric(24);
         String secretKey = RandomValueUtils.randomAlphanumeric(32);
         resources.setAppId(appId);
@@ -225,7 +226,7 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
         } catch (Exception e) {
             return null;
         }
-        String appId = baseClientDetails.getAdditionalInformation().get("appId").toString();
+        String appId = baseClientDetails.getAdditionalInformation().get("appId") + "";
         OpenClientDetails openClient = new OpenClientDetails();
         BeanUtils.copyProperties(baseClientDetails, openClient);
         openClient.setAuthorities(baseAuthorityService.findAuthorityByApp(appId, ""));

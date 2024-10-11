@@ -8,5 +8,5 @@ import com.rapidark.cloud.base.client.model.entity.GatewayIpLimit;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface GatewayIpLimitRepository extends BaseRepository<GatewayIpLimit, String> {
+public interface GatewayIpLimitRepository extends BaseRepository<GatewayIpLimit, Long> {
 }

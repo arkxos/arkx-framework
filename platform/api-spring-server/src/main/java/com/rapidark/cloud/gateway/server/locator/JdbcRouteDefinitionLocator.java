@@ -185,7 +185,7 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
                     PredicateDefinition predicatePath = new PredicateDefinition();
                     Map<String, String> predicatePathParams = new HashMap<>(8);
                     predicatePath.setName("Path");
-                    predicatePathParams.put("name", StringUtils.isBlank(gatewayRoute.getSystemCode()) ? gatewayRoute.getId() : gatewayRoute.getSystemCode());
+                    predicatePathParams.put("name", StringUtils.isBlank(gatewayRoute.getSystemCode()) ? gatewayRoute.getId()+"" : gatewayRoute.getSystemCode());
                     predicatePathParams.put("pattern", gatewayRoute.getPath());
                     predicatePathParams.put("pathPattern", gatewayRoute.getPath());
                     predicatePath.setArgs(predicatePathParams);
@@ -222,7 +222,7 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
             result.setPolicyName(rs.getString("policy_name"));
             result.setServiceId(rs.getString("service_id"));
             result.setPath(rs.getString("path"));
-            result.setApiId(rs.getString("api_id"));
+            result.setApiId(rs.getLong("api_id"));
             result.setApiCode(rs.getString("api_code"));
             result.setApiName(rs.getString("api_name"));
             result.setApiCategory(rs.getString("api_category"));

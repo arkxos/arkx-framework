@@ -27,17 +27,17 @@ public class BaseAuthorityUser extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     /**
      * 权限ID
      */
-    private String authorityId;
+    private Long authorityId;
 
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 过期时间

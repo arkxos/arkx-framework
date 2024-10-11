@@ -69,7 +69,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
      */
     private void initComment(Comment comment) {
         //创建者ID
-        comment.setCreateBy(OpenHelper.getUser().getUserId());
+        comment.setCreateBy(OpenHelper.getUser().getUserId()+"");
         //创建时间
         comment.setCreateTime(new Date());
         //初始状态(默认为审核通过,未回复状态)
@@ -136,7 +136,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
         comments.forEach(x -> {
             //回复次数加1
             x.setReplyNum(x.getReplyNum() + 1);
-            x.setUpdateBy(OpenHelper.getUser().getUserId());
+            x.setUpdateBy(OpenHelper.getUser().getUserId()+"");
             x.setUpdateTime(new Date());
             if (CommentStatusEnum.NO_RESPONSE.getCommentStatusCode().equals(x.getStatus())) {
                 x.setStatus(CommentStatusEnum.RESPONSED.getCommentStatusCode());
@@ -168,7 +168,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
         }
         comment.setIsTop(true);
         comment.setUpdateTime(new Date());
-        comment.setUpdateBy(OpenHelper.getUser().getUserId());
+        comment.setUpdateBy(OpenHelper.getUser().getUserId()+"");
         //置顶评论列表
         List<Comment> topComments = getCommentTopList(comment.getTopicType());
         if (topComments == null || topComments.size() < CommentConst.TOP_COMMENT_MAX_SIZE) {
@@ -209,7 +209,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
         }
         lambdaUpdateWrapper.eq(Comment::getCommentId, comment.getCommentId());
         //更新评论点赞,点踩数
-        comment.setUpdateBy(OpenHelper.getUser().getUserId());
+        comment.setUpdateBy(OpenHelper.getUser().getUserId()+"");
         comment.setUpdateTime(new Date());
         int effectCount = commentMapper.update(comment, lambdaUpdateWrapper);
         return effectCount > 0;
@@ -239,7 +239,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
         removeComments.forEach(x -> {
             x.setIsTop(false);
             x.setUpdateTime(new Date());
-            x.setUpdateBy(OpenHelper.getUser().getUserId());
+            x.setUpdateBy(OpenHelper.getUser().getUserId()+"");
         });
         return removeComments;
     }
@@ -267,13 +267,13 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
             CommentReply commentReply = new CommentReply();
             commentReply.setCommentId(x.getCommentId());
             commentReply.setParentId(0L);//回复评论,ParentId设置为0
-            commentReply.setFromUserId(OpenHelper.getUser().getUserId());
+            commentReply.setFromUserId(OpenHelper.getUser().getUserId()+"");
             commentReply.setFromUserName(OpenHelper.getUser().getUsername());
             commentReply.setContent(replyContent);
             commentReply.setToUserId(x.getUserId());
             commentReply.setIsAuthor(CommentConst.ADMIN_REPLY);
             commentReply.setIsShield(false);
-            commentReply.setCreateBy(OpenHelper.getUser().getUserId());
+            commentReply.setCreateBy(OpenHelper.getUser().getUserId()+"");
             commentReply.setCreateTime(new Date());
             commentReplies.add(commentReply);
         });

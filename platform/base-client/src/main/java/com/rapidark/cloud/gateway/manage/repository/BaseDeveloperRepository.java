@@ -13,7 +13,7 @@ import java.util.Optional;
  * @version 1.0
  * @date 2022/6/24 14:26
  */
-public interface BaseDeveloperRepository extends BaseRepository<BaseDeveloper, String> {
+public interface BaseDeveloperRepository extends BaseRepository<BaseDeveloper, Long> {
 
     Optional<BaseDeveloper> findByUserName(@Param("userName") String userName);
 

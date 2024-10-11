@@ -39,7 +39,7 @@ public class RouteServiceImpl implements RouteService {
         //源路由
         List<GatewayRoute> sourceRoutes = getRoutesByIp(sourceConfig);
 
-        if (sourceRoutes == null || sourceRoutes.size() == 0) {
+        if (sourceRoutes == null || sourceRoutes.isEmpty()) {
             log.info("源主机上没有路由信息");
             return;
         }
@@ -142,7 +142,7 @@ public class RouteServiceImpl implements RouteService {
             GatewayRoute addRouteDTO = new GatewayRoute();
             BeanUtils.copyProperties(baseRoute, addRouteDTO);
             ObjectMapper objectMapper = new ObjectMapper();
-            ResultBody<Long> resultBody = OAuth2RequestUtils.postReq(targetConfig, CommonConstants.ADD_GATEWAY_ROUTE_URL_SUFFIX, objectMapper.writeValueAsString(addRouteDTO), new ParameterizedTypeReference<ResultBody<Long>>() {
+            ResultBody<String> resultBody = OAuth2RequestUtils.postReq(targetConfig, CommonConstants.ADD_GATEWAY_ROUTE_URL_SUFFIX, objectMapper.writeValueAsString(addRouteDTO), new ParameterizedTypeReference<>() {
             });
             baseRoute.setRouteId(resultBody.getData());
             targetRoutes.add(baseRoute);

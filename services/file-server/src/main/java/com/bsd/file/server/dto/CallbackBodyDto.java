@@ -54,7 +54,7 @@ public class CallbackBodyDto implements Serializable {
     /**
      * 用户id
      */
-    private String userId;
+    private Long userId;
 
 
     public CallbackBodyDto() {
@@ -65,7 +65,7 @@ public class CallbackBodyDto implements Serializable {
     /**
      * {\"etag\":\"$(etag)\",\"ext\":\"$(ext)\",\"filename\":\"$(fname)\",\"mimeType\":\"$(mimeType)\",\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":\"$(fsize)\", \"userId\" : \"" + userId +"\"}";
      */
-    public CallbackBodyDto(String userId) {
+    public CallbackBodyDto(Long userId) {
         this.etag = "$(etag)";
         this.ext = "$(ext)";
         this.filename = "$(fname)";

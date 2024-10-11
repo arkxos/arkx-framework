@@ -51,7 +51,7 @@ public class BaseActionController {
             @ApiImplicitParam(name = "actionId", required = true, value = "功能按钮Id", paramType = "path"),
     })
     @GetMapping("/action/{actionId}/info")
-    public ResultBody<AuthorityAction> getAction(@PathVariable("actionId") String actionId) {
+    public ResultBody<AuthorityAction> getAction(@PathVariable("actionId") Long actionId) {
         return ResultBody.ok().data(baseActionService.getAction(actionId));
     }
 
@@ -79,7 +79,7 @@ public class BaseActionController {
     public ResultBody<Long> addAction(
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
-            @RequestParam(value = "menuId") String menuId,
+            @RequestParam(value = "menuId") Long menuId,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
@@ -91,7 +91,7 @@ public class BaseActionController {
         action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
-        String actionId = null;
+        Long actionId = null;
         BaseAction result = baseActionService.addAction(action);
         if (result != null) {
             actionId = result.getActionId();
@@ -124,10 +124,10 @@ public class BaseActionController {
     })
     @PostMapping("/action/update")
     public ResultBody updateAction(
-            @RequestParam("actionId") String actionId,
+            @RequestParam("actionId") Long actionId,
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
-            @RequestParam(value = "menuId") String menuId,
+            @RequestParam(value = "menuId") Long menuId,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
@@ -159,7 +159,7 @@ public class BaseActionController {
     })
     @PostMapping("/action/remove")
     public ResultBody removeAction(
-            @RequestParam("actionId") String actionId
+            @RequestParam("actionId") Long actionId
     ) {
         baseActionService.removeAction(actionId);
         // 刷新网关

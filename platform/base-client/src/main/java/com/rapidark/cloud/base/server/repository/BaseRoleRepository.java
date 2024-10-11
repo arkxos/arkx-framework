@@ -12,7 +12,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseRoleRepository extends BaseRepository<BaseRole, String> {
+public interface BaseRoleRepository extends BaseRepository<BaseRole, Long> {
 
     @SqlToyQuery
     List<BaseRole> selectRoleList(Map params);

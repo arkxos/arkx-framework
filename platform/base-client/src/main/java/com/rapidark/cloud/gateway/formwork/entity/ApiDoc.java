@@ -26,7 +26,7 @@ public class ApiDoc {
     @Id
     @NotNull(message = "网关路由ID不能为空")
     @Size(min = 1, max = 40, message = "网关路由ID长度必需在1到40个字符内")
-    private String id;
+    private Long id;
     /**
      * 内容
      */

@@ -20,7 +20,7 @@ public class UpdateDeveloperCommand {
 
     @ApiModelProperty(name = "id", value = "Id", example = "", required = true)
     @NotNull(message = "Id不能为空")
-    private String id;
+    private Long id;
 
     /**
      * 开发者类型:isp-服务提供商 dev-自研开发者

@@ -107,7 +107,7 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "menuId", value = "menuId", paramType = "form"),
     })
     @GetMapping("/menu/action")
-    public ResultBody<List<BaseAction>> getMenuAction(String menuId) {
+    public ResultBody<List<BaseAction>> getMenuAction(Long menuId) {
         return ResultBody.ok().data(baseResourceOperationService.findListByMenuId(menuId));
     }
 
@@ -122,7 +122,7 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
     })
     @GetMapping("/menu/{menuId}/info")
-    public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") String menuId) {
+    public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
         return ResultBody.ok().data(baseMenuQuery.getMenu(menuId));
     }
 
@@ -148,7 +148,7 @@ public class BaseMenuController {
         menu.setPriority(command.getPriority());
         menu.setMenuDesc(command.getMenuDesc());
         menu.setServiceId(command.getServiceId());
-        String menuId = null;
+        Long menuId = null;
         BaseMenu result = baseResourceMenuService.addMenu(menu);
         if (result != null) {
             menuId = result.getMenuId();
@@ -195,7 +195,7 @@ public class BaseMenuController {
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })
     @PostMapping("/menu/remove")
-    public ResultBody<Boolean> removeMenu(@RequestParam("menuId") String menuId) {
+    public ResultBody<Boolean> removeMenu(@RequestParam("menuId") Long menuId) {
         baseResourceMenuService.removeMenu(menuId);
         openRestTemplate.refreshGateway();
         return ResultBody.ok();

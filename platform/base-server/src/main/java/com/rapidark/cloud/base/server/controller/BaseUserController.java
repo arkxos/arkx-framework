@@ -124,7 +124,7 @@ public class BaseUserController implements IBaseUserServiceClient {
     @ApiOperation(value = "更新系统用户", notes = "更新系统用户")
     @PostMapping("/user/update")
     public ResultBody updateUser(
-            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
             @RequestParam(value = "userType") String userType,
@@ -157,7 +157,7 @@ public class BaseUserController implements IBaseUserServiceClient {
     @ApiOperation(value = "修改用户密码", notes = "修改用户密码")
     @PostMapping("/user/update/password")
     public ResultBody updatePassword(
-            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "password") String password
     ) {
         baseUserService.updatePassword(userId, password);
@@ -186,7 +186,7 @@ public class BaseUserController implements IBaseUserServiceClient {
     @ApiOperation(value = "获取用户已分配角色", notes = "获取用户已分配角色")
     @GetMapping("/user/roles")
     public ResultBody<List<BaseRole>> getUserRoles(
-            @RequestParam(value = "userId") String userId
+            @RequestParam(value = "userId") Long userId
     ) {
         return ResultBody.ok().data(baseRoleService.getUserRoles(userId));
     }

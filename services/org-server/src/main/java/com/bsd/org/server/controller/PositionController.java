@@ -177,7 +177,7 @@ public class PositionController {
         position.setStatus(status);
         position.setSeq(seq);
         position.setDepartmentId(departmentId);
-        position.setCreateBy(openUserDetails.getUserId());
+        position.setCreateBy(openUserDetails.getUserId()+"");
         positionService.savePosition(position);
         return ResultBody.ok();
     }
@@ -225,7 +225,7 @@ public class PositionController {
         position.setStatus(status);
         position.setSeq(seq);
         position.setDepartmentId(departmentId);
-        position.setCreateBy(openUserDetails.getUserId());
+        position.setCreateBy(openUserDetails.getUserId()+"");
         positionService.updatePosition(position);
         return ResultBody.ok();
     }

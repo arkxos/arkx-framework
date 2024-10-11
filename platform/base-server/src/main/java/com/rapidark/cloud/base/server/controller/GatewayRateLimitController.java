@@ -54,7 +54,7 @@ public class GatewayRateLimitController {
     })
     @GetMapping("/gateway/limit/rate/api/list")
     public ResultBody<IPage<GatewayRateLimit>> getRateLimitApiList(
-            @RequestParam("policyId") String policyId
+            @RequestParam("policyId") Long policyId
     ) {
         return ResultBody.ok().data(gatewayRateLimitService.findRateLimitApiList(policyId));
     }
@@ -73,7 +73,7 @@ public class GatewayRateLimitController {
     })
     @PostMapping("/gateway/limit/rate/api/add")
     public ResultBody addRateLimitApis(
-            @RequestParam("policyId") String policyId,
+            @RequestParam("policyId") Long policyId,
             @RequestParam(value = "apiIds", required = false) String apiIds
     ) {
         gatewayRateLimitService.addRateLimitApis(policyId, StringUtils.isNotBlank(apiIds) ? apiIds.split(",") : new String[]{});
@@ -92,7 +92,7 @@ public class GatewayRateLimitController {
             @ApiImplicitParam(name = "policyId", required = true, value = "策略ID", paramType = "path"),
     })
     @GetMapping("/gateway/limit/rate/{policyId}/info")
-    public ResultBody<GatewayRateLimit> getRateLimit(@PathVariable("policyId") String policyId) {
+    public ResultBody<GatewayRateLimit> getRateLimit(@PathVariable("policyId") Long policyId) {
         return ResultBody.ok().data(gatewayRateLimitService.getRateLimitPolicy(policyId));
     }
 
@@ -125,7 +125,7 @@ public class GatewayRateLimitController {
         rateLimit.setLimitQuota(limitQuota);
         rateLimit.setIntervalUnit(intervalUnit);
         rateLimit.setPolicyType(policyType);
-        String policyId = null;
+        Long policyId = null;
         GatewayRateLimit result = gatewayRateLimitService.addRateLimitPolicy(rateLimit);
         if (result != null) {
             policyId = result.getPolicyId();
@@ -153,7 +153,7 @@ public class GatewayRateLimitController {
     })
     @PostMapping("/gateway/limit/rate/update")
     public ResultBody updateRateLimit(
-            @RequestParam("policyId") String policyId,
+            @RequestParam("policyId") Long policyId,
             @RequestParam(value = "policyName") String policyName,
             @RequestParam(value = "policyType") String policyType,
             @RequestParam(value = "limitQuota") Long limitQuota,
@@ -183,7 +183,7 @@ public class GatewayRateLimitController {
     })
     @PostMapping("/gateway/limit/rate/remove")
     public ResultBody removeRateLimit(
-            @RequestParam("policyId") String policyId
+            @RequestParam("policyId") Long policyId
     ) {
         gatewayRateLimitService.removeRateLimitPolicy(policyId);
         // 刷新网关

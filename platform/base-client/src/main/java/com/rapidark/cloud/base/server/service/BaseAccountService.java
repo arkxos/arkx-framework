@@ -31,7 +31,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAccountService extends BaseService<BaseAccount, String, BaseAccountRepository> {
+public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccountRepository> {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,7 +45,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param accountId
      * @return
      */
-    public BaseAccount getAccountById(String accountId) {
+    public BaseAccount getAccountById(Long accountId) {
         return findById(accountId);
     }
 
@@ -77,7 +77,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param registerIp
      * @return
      */
-    public BaseAccount register(String userId, String account, String password, String accountType, Integer status, String domain, String registerIp) {
+    public BaseAccount register(Long userId, String account, String password, String accountType, Integer status, String domain, String registerIp) {
         if (isExist(account, accountType, domain)) {
             // 账号已被注册
             throw new RuntimeException(String.format("account=[%s],domain=[%s]", account, domain));
@@ -121,7 +121,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param accountId
      * @return
      */
-    public void removeAccount(String accountId) {
+    public void removeAccount(Long accountId) {
         deleteById(accountId);
     }
 
@@ -132,7 +132,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param accountId
      * @param status
      */
-    public void updateStatus(String accountId, Integer status) {
+    public void updateStatus(Long accountId, Integer status) {
         BaseAccount baseAccount = findById(accountId);
         baseAccount.setUpdateTime(LocalDateTime.now());
         baseAccount.setStatus(status);
@@ -146,7 +146,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param domain
      * @param status
      */
-    public void updateStatusByUserId(String userId, String domain, Integer status) {
+    public void updateStatusByUserId(Long userId, String domain, Integer status) {
         if (status == null) {
             return;
         }
@@ -167,7 +167,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param domain
      * @param password
      */
-    public void updatePasswordByUserId(String userId, String domain, String password) {
+    public void updatePasswordByUserId(Long userId, String domain, String password) {
 
         CriteriaQueryWrapper<BaseAccount> criteria = new CriteriaQueryWrapper<>();
         criteria.in(BaseAccount::getAccountType, BaseConstants.ACCOUNT_TYPE_USERNAME, BaseConstants.ACCOUNT_TYPE_EMAIL, BaseConstants.ACCOUNT_TYPE_MOBILE)
@@ -188,7 +188,7 @@ public class BaseAccountService extends BaseService<BaseAccount, String, BaseAcc
      * @param domain
      * @return
      */
-    public void removeAccountByUserId(String userId, String domain) {
+    public void removeAccountByUserId(Long userId, String domain) {
         CriteriaQueryWrapper<BaseAccount> wrapper = new CriteriaQueryWrapper();
         wrapper.eq(BaseAccount::getUserId, userId)
                .eq(BaseAccount::getDomain, domain);

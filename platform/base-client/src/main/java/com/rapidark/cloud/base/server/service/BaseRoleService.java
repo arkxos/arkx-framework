@@ -33,7 +33,7 @@ import java.util.Optional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepository> {
+public class BaseRoleService extends BaseService<BaseRole, Long, BaseRoleRepository> {
 
     @Autowired
     private BaseRoleUserRepository baseRoleUserRepository;
@@ -76,7 +76,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param roleId
      * @return
      */
-    public BaseRole getRole(String roleId) {
+    public BaseRole getRole(Long roleId) {
         return findById(roleId);
     }
 
@@ -130,7 +130,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param roleId 角色ID
      * @return
      */
-    public void removeRole(String roleId) {
+    public void removeRole(Long roleId) {
         if (roleId == null) {
             return;
         }
@@ -167,7 +167,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param roles
      * @return
      */
-    public void saveUserRoles(String userId, String... roles) {
+    public void saveUserRoles(Long userId, String... roles) {
         if (userId == null || roles == null) {
             return;
         }
@@ -186,7 +186,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
             for (String roleId : roles) {
                 BaseRoleUser roleUser = new BaseRoleUser();
                 roleUser.setUserId(userId);
-                roleUser.setRoleId(roleId);
+                roleUser.setRoleId(Long.valueOf(roleId));
                 baseRoleUserRepository.save(roleUser);
             }
             // 批量保存
@@ -199,7 +199,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param roleId
      * @param userIds
      */
-    public void saveRoleUsers(String roleId, String... userIds) {
+    public void saveRoleUsers(Long roleId, String... userIds) {
         if (roleId == null || userIds == null) {
             return;
         }
@@ -208,7 +208,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
         if (userIds.length > 0) {
             for (String userId : userIds) {
                 BaseRoleUser roleUser = new BaseRoleUser();
-                roleUser.setUserId(userId);
+                roleUser.setUserId(Long.valueOf(userId));
                 roleUser.setRoleId(roleId);
                 baseRoleUserRepository.save(roleUser);
             }
@@ -221,7 +221,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      *
      * @return
      */
-    public List<BaseRoleUser> findRoleUsers(String roleId) {
+    public List<BaseRoleUser> findRoleUsers(Long roleId) {
         return baseRoleUserRepository.queryByRoleId(roleId);
     }
 
@@ -250,7 +250,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param roleId
      * @return
      */
-    public long getCountByRole(String roleId) {
+    public long getCountByRole(Long roleId) {
         BaseRoleUser queryWrapper = new BaseRoleUser();
         queryWrapper.setRoleId(roleId);
         long result = baseRoleUserService.count(queryWrapper);
@@ -263,7 +263,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param userId
      * @return
      */
-    public long getCountByUser(String userId) {
+    public long getCountByUser(Long userId) {
         BaseRoleUser queryWrapper = new BaseRoleUser();
         queryWrapper.setUserId(userId);
         long result = baseRoleUserService.count(queryWrapper);
@@ -276,7 +276,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param roleId
      * @return
      */
-    public void removeRoleUsers(String roleId) {
+    public void removeRoleUsers(Long roleId) {
         baseRoleUserRepository.deleteByRoleId(roleId);
     }
 
@@ -286,7 +286,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param userId
      * @return
      */
-    public void removeUserRoles(String userId) {
+    public void removeUserRoles(Long userId) {
         baseRoleUserRepository.deleteByUserId(userId);
     }
 
@@ -297,7 +297,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param roleId
      * @return
      */
-    public Boolean isExist(String userId, String roleId) {
+    public Boolean isExist(Long userId, Long roleId) {
         BaseRoleUser queryWrapper = new BaseRoleUser();
         queryWrapper.setRoleId(roleId);
         queryWrapper.setUserId(userId);
@@ -313,7 +313,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param userId
      * @return
      */
-    public List<BaseRole> getUserRoles(String userId) {
+    public List<BaseRole> getUserRoles(Long userId) {
         List<BaseRole> roles = baseRoleUserRepository.selectRoleUserList(userId);
         return roles;
     }
@@ -324,7 +324,7 @@ public class BaseRoleService extends BaseService<BaseRole, String, BaseRoleRepos
      * @param userId
      * @return
      */
-    public List<String> getUserRoleIds(String userId) {
+    public List<String> getUserRoleIds(Long userId) {
         return baseRoleUserRepository.selectRoleUserIdList(userId);
     }
 }

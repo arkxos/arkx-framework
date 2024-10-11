@@ -33,7 +33,7 @@ public class BaseMenu extends BaseEntity {
     @Id
     @Column(name = "menu_Id")
     @ApiModelProperty(value = "menuId")
-    private String menuId;
+    private Long menuId;
 
     /**
      * 菜单编码

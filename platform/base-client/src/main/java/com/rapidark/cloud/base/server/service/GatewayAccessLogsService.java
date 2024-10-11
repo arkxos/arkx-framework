@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GatewayAccessLogsService extends BaseService<GatewayAccessLogs, String, GatewayAccessLogsRepository> {
+public class GatewayAccessLogsService extends BaseService<GatewayAccessLogs, Long, GatewayAccessLogsRepository> {
 
     /**
      * 分页查询

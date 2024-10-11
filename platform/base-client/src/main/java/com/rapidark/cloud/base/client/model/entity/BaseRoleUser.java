@@ -28,16 +28,16 @@ public class BaseRoleUser extends BaseEntity {
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value = "ID")
-    private String id;
+    private Long id;
 
     /**
      * 系统用户ID
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 角色ID
      */
-    private String roleId;
+    private Long roleId;
 
 }

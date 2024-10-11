@@ -174,7 +174,7 @@ public class CompanyController {
         company.setPostCode(postCode);
         company.setLogo(logo);
         OpenUserDetails openUserDetails = OpenHelper.getUser();
-        company.setCreateBy(openUserDetails.getUserId());
+        company.setCreateBy(openUserDetails.getUserId()+"");
         boolean isSuc = companyService.save(company);
         if (!isSuc) {
             return ResultBody.failed().msg("添加企业信息失败");
@@ -260,7 +260,7 @@ public class CompanyController {
         company.setLogo(logo);
         //设置更新人
         OpenUserDetails openUserDetails = OpenHelper.getUser();
-        company.setUpdateBy(openUserDetails.getUserId());
+        company.setUpdateBy(openUserDetails.getUserId()+"");
         boolean isSuc = companyService.updateById(company);
         if (!isSuc) {
             return ResultBody.failed().msg("更新数据失败");
