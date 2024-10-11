@@ -15,6 +15,7 @@
         <module>api-spring-server</module>
         <module>uaa-admin-server</module>
         <module>base-client</module>
+        <module>rapidark-npm-parent</module>
         <module>base-server</module>
         <module>generator-server</module>
 

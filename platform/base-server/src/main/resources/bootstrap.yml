@@ -17,7 +17,7 @@ spring:
                 group: DEFAULT_GROUP
                 refreshable-dataids: common.properties
                 server-addr: ${config.server-addr}
-                shared-dataids: common.properties,db.properties,redis.properties,rabbitmq.properties
+                shared-dataids: base-server.yaml,common.properties,db.properties,redis.properties,rabbitmq.properties
             discovery:
                 namespace: ${discovery.namespace}
                 server-addr: ${discovery.server-addr}

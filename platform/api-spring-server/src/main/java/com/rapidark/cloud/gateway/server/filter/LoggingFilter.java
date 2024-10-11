@@ -27,9 +27,10 @@ public class LoggingFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String info = String.format("Method:{%s} Host:{%s} Path:{%s} Query:{%s}",
+        String info = String.format("Method:{%s} Host:{%s} Port:{%s} Path:{%s} Query:{%s}",
                 exchange.getRequest().getMethod().name(),
                 exchange.getRequest().getURI().getHost(),
+                exchange.getRequest().getURI().getPort(),
                 exchange.getRequest().getURI().getPath(),
                 exchange.getRequest().getQueryParams());
 

@@ -29,6 +29,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 //授予对所有静态资产和登录页面的公共访问权限。
                 .antMatchers(adminContextPath + "/assets/**").permitAll()
+                .antMatchers(adminContextPath + "/cdn/**").permitAll()
                 .antMatchers(adminContextPath + "/login").permitAll()
                 //必须对每个其他请求进行身份验证
                 .anyRequest().authenticated()

@@ -146,18 +146,22 @@ opencloud:
             - /*/login/**
             - /*/logout/**
             - /*/oauth/**
+            - /base/cdn/**
         # 忽略权限鉴定
         authority-ignores:
             - /*/authority/granted/me
             - /*/authority/granted/me/menu
             - /*/current/user/**
+            - /base/cdn/**
         # 签名忽略
         sign-ignores:
             - /**/login/**
             - /**/logout/**
+            - /base/cdn/**
         # 加解密忽略
         encrypt-ignores:
             - /**/logout/**
+            - /base/cdn/**
 
 #mybatis plus 设置
 mybatis-plus:

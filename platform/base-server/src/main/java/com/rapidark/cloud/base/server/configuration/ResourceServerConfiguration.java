@@ -68,6 +68,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 // feign访问或无需身份认证
                 .antMatchers(
+                        "/cdn/**",
                         "/authority/access",
                         "/authority/app",
                         "/app/*/info",
