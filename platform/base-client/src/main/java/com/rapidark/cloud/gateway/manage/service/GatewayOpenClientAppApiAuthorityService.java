@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.manage.service;
 
-import com.rapidark.cloud.base.client.model.GatewayOpenClientAppApiAuthority;
+import com.rapidark.cloud.base.client.model.entity.GatewayOpenClientAppApiAuthority;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 //import com.rapidark.cloud.gateway.manage.repository.ClientServerRegisterRepository;
 import com.rapidark.cloud.gateway.manage.repository.GatewayOpenClientAppApiAuthorityRepository;

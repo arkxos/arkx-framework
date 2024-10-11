@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.model;
+package com.rapidark.cloud.base.client.model.entity;
 
 import com.rapidark.common.model.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,10 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author darkness
