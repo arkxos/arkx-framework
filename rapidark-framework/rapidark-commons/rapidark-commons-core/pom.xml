@@ -6,21 +6,17 @@
 
     <parent>
         <groupId>com.rapidark.framework</groupId>
-        <artifactId>rapidark-framework</artifactId>
+        <artifactId>rapidark-commons</artifactId>
         <version>10.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rapidark-commons</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>rapidark-commons-core</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-
-    <modules>
-        <module>rapidark-commons-core</module>
-    </modules>
 
     <dependencies>
         <dependency>
