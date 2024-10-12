@@ -20,6 +20,7 @@
 
     <modules>
         <module>rapidark-commons-core</module>
+        <module>rapidark-common-encrypt</module>
     </modules>
 
     <dependencies>

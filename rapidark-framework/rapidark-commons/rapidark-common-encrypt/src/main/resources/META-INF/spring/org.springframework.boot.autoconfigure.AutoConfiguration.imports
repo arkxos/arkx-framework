@@ -1,0 +1,2 @@
+com.rapidark.cloud.common.encrypt.config.EncryptorAutoConfiguration
+com.rapidark.cloud.common.encrypt.config.ApiDecryptAutoConfiguration
