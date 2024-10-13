@@ -11,9 +11,9 @@ spring:
         nacos:
             config:
                 namespace: ${config.namespace}
-                refreshable-dataids: common.properties
+                refreshable-dataids: common.yaml
                 server-addr: ${config.server-addr}
-                shared-dataids: common.properties,user.db.properties,redis.properties,rabbitmq.properties,oauth2.properties,captcha.properties
+                shared-dataids: common.yaml,user.db.properties,redis.properties,rabbitmq.properties,oauth2.properties,captcha.properties
             discovery:
                 namespace: ${discovery.namespace}
                 server-addr: ${discovery.server-addr}

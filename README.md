@@ -106,7 +106,7 @@ open-platform
         + docs/config/db.properties >  db.properties
         + docs/config/rabbitmq.properties > rabbitmq.properties
         + docs/config/redis.properties > redis.properties
-        + docs/config/common.properties  > common.properties
+        + docs/config/common.yaml  > common.yaml
 
     如图:
     ![nacos](https://gitee.com/uploads/images/2019/0425/231436_fce24434_791541.png "nacos.png")
