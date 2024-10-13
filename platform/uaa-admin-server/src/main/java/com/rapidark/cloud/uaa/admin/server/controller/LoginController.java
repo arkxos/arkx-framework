@@ -1,10 +1,8 @@
 package com.rapidark.cloud.uaa.admin.server.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.rapidark.cloud.uaa.admin.server.controller.cmd.LoginCommand;
-import com.rapidark.cloud.uaa.admin.server.controller.cmd.LoginInfo;
-import com.rapidark.cloud.uaa.admin.server.controller.cmd.LogoutCommand;
-import com.rapidark.cloud.uaa.admin.server.controller.cmd.ThirdpartSystemLoginCommand;
+import com.rapidark.cloud.common.encrypt.annotation.ApiEncrypt;
+import com.rapidark.cloud.uaa.admin.server.controller.cmd.*;
 import com.rapidark.common.model.ResultBody;
 import com.rapidark.common.security.OpenHelper;
 import com.rapidark.common.security.OpenUserDetails;
@@ -94,11 +92,12 @@ public class LoginController {
      *
      * @return access_token
      */
+    @ApiEncrypt
     @ApiOperation(value = "登录获取用户访问令牌", notes = "基于oauth2密码模式登录,无需签名,返回access_token")
     @PostMapping("/login/token")
-    public ResultBody<OAuth2AccessToken> getLoginToken(@Valid @RequestBody LoginCommand command) throws Exception {
-        String loginInfoString = RSAUtils.decryptByPrivateKey(command.getLoginInfo(), rsaProperties.getPrivateKey());
-        LoginInfo loginInfo = JSON.parseObject(loginInfoString, LoginInfo.class);
+    public ResultBody<OAuth2AccessToken> getLoginToken(@Valid @RequestBody LoginInfo loginInfo) throws Exception {
+//        String loginInfoString = RSAUtils.decryptByPrivateKey(command.getLoginInfo(), rsaProperties.getPrivateKey());
+//        LoginInfo loginInfo = JSON.parseObject(loginInfoString, LoginInfo.class);
         OAuth2AccessToken result = getFrontToken(loginInfo.getUsername(), loginInfo.getPassword(), null);
         return ResultBody.ok().data(result);
     }

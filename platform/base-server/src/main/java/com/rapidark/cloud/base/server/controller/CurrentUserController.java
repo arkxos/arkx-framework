@@ -111,10 +111,10 @@ public class CurrentUserController {
      */
     @ApiOperation(value = "获取当前登录用户已分配菜单权限", notes = "获取当前登录用户已分配菜单权限")
     @GetMapping("/current/user/menu")
-    public ResultBody<List<AuthorityMenu>> findAuthorityMenu(@RequestParam(value = "serviceId") String serviceId) {
+    public ResultBody<List<AuthorityMenu>> findAuthorityMenu(@RequestParam(value = "serviceId", required = false) String serviceId) {
         OpenUserDetails user = OpenHelper.getUser();
         Assert.notNull(user, "登录过期，请重新登录");
-        if (serviceId == null || "".equals(serviceId)) {
+        if (StringUtils.isEmpty(serviceId)) {
             // modify, add search menu with serviceId(appNameEn)
             serviceId = openAppService.getAppClientInfo(user.getClientId()).getAdditionalInformation().get("appNameEn").toString();
         }
