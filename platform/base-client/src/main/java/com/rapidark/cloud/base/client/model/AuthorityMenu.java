@@ -2,6 +2,8 @@ package com.rapidark.cloud.base.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.Objects;
  *
  * @author liuyadu
  */
+@Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthorityMenu extends BaseMenu implements Serializable {
 
@@ -26,33 +30,7 @@ public class AuthorityMenu extends BaseMenu implements Serializable {
      */
     private String authority;
 
-
     private List<AuthorityAction> actionList;
-
-    public Long getAuthorityId() {
-        return authorityId;
-    }
-
-    public void setAuthorityId(Long authorityId) {
-        this.authorityId = authorityId;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-
-
-    public List<AuthorityAction> getActionList() {
-        return actionList;
-    }
-
-    public void setActionList(List<AuthorityAction> actionList) {
-        this.actionList = actionList;
-    }
 
     @Override
     public boolean equals(Object obj) {

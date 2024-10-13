@@ -1,17 +1,16 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.rapidark.cloud.base.client.constants.UserConstants;
 import com.rapidark.common.model.BaseEntity;
-import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.framework.commons.core.constant.Constants;
+import com.rapidark.framework.commons.util.StringUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 系统资源-菜单信息
@@ -36,6 +35,21 @@ public class BaseMenu extends BaseEntity {
     private Long menuId;
 
     /**
+     * 父级菜单
+     */
+    private Long parentId;
+
+    /**
+     * 服务ID
+     */
+    private String appCode;
+
+    /**
+     * 服务ID
+     */
+    private String serviceId;
+
+    /**
      * 菜单编码
      */
     private String menuCode;
@@ -51,9 +65,9 @@ public class BaseMenu extends BaseEntity {
     private String icon;
 
     /**
-     * 父级菜单
+     * 类型（M目录 C菜单 F按钮）
      */
-    private Long parentId;
+    private String menuType;
 
     /**
      * 请求协议:/,http://,https://
@@ -71,7 +85,10 @@ public class BaseMenu extends BaseEntity {
     /**
      * 打开方式:_self窗口内,_blank新窗口
      */
-    private String target;
+    /**
+     * 集成模式：0：正常；1：iframe，2：link，3：micro
+     */
+    private String integrateMode;
 
     /**
      * 优先级 越小越靠前
@@ -97,8 +114,97 @@ public class BaseMenu extends BaseEntity {
     private Integer isPersist;
 
     /**
-     * 服务ID
+     * 路由参数
      */
-    private String serviceId;
+    private String queryParam;
+
+    /**
+     * 是否缓存（0缓存 1不缓存）
+     */
+    private int isCache;
+
+    /**
+     * 子菜单
+     */
+    @TableField(exist = false)
+    @Transient
+    private List<BaseMenu> children = new ArrayList<>();
+
+    /**
+     * 获取路由名称
+     */
+    public String getRouteName() {
+        String routerName = StringUtils.capitalize(path);
+        // 非外链并且是一级目录（类型为目录）
+        if (isMenuFrame()) {
+            routerName = StringUtils.EMPTY;
+        }
+        return routerName;
+    }
+
+    /**
+     * 获取路由地址
+     */
+    public String getRouterPath() {
+        String routerPath = this.path;
+        // 内链打开外网方式
+        if (getParentId() != 0L && isInnerLink()) {
+            routerPath = innerLinkReplaceEach(routerPath);
+        }
+        // 非外链并且是一级目录（类型为目录）
+        if (0L == getParentId() && UserConstants.TYPE_DIR.equals(getMenuType())
+                && UserConstants.INTEGRATE_MODE_NORMAL.equals(getIntegrateMode())) {
+            routerPath = "/" + this.path;
+        }
+        // 非外链并且是一级目录（类型为菜单）
+        else if (isMenuFrame()) {
+            routerPath = "/";
+        }
+        return routerPath;
+    }
+
+    /**
+     * 获取组件信息
+     */
+    public String getComponentInfo() {
+        String component = UserConstants.LAYOUT;
+        if (StringUtils.isNotEmpty(this.component) && !isMenuFrame()) {
+            component = this.component;
+        } else if (StringUtils.isEmpty(this.component) && getParentId() != 0L && isInnerLink()) {
+            component = UserConstants.INNER_LINK;
+        } else if (StringUtils.isEmpty(this.component) && isParentView()) {
+            component = UserConstants.PARENT_VIEW;
+        }
+        return component;
+    }
+
+    /**
+     * 是否为菜单内部跳转
+     */
+    public boolean isMenuFrame() {
+        return getParentId() == 0L && UserConstants.TYPE_MENU.equals(menuType) && integrateMode.equals(UserConstants.INTEGRATE_MODE_NORMAL);
+    }
+
+    /**
+     * 是否为内链组件
+     */
+    public boolean isInnerLink() {
+        return integrateMode.equals(UserConstants.INTEGRATE_MODE_NORMAL) && StringUtils.ishttp(path);
+    }
+
+    /**
+     * 是否为parent_view组件
+     */
+    public boolean isParentView() {
+        return getParentId() != 0L && UserConstants.TYPE_DIR.equals(menuType);
+    }
+
+    /**
+     * 内链域名特殊字符替换
+     */
+    public static String innerLinkReplaceEach(String path) {
+        return StringUtils.replaceEach(path, new String[]{Constants.HTTP, Constants.HTTPS, Constants.WWW, ".", ":"},
+                new String[]{"", "", "", "/", "/"});
+    }
 
 }

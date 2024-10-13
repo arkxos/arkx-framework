@@ -104,7 +104,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
         }
         map.put("status", status);
         List<AuthorityMenu> authorities = entityRepository.selectAuthorityMenu(map);
-        authorities.sort((AuthorityMenu h1, AuthorityMenu h2) -> h1.getPriority().compareTo(h2.getPriority()));
+        authorities.sort(Comparator.comparing(BaseMenu::getPriority));
         return authorities;
     }
 
@@ -530,7 +530,6 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
     public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root) {
         return findAuthorityMenuByUser(userId, root, null);
     }
-
 
     public List<AuthorityMenu> findAuthorityMenuByUser(Long userId, Boolean root, String serviceId) {
         if (root) {

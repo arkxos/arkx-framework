@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +71,7 @@ public class BaseMenuController {
             json.put("serviceName", serviceNameDisplay);
             jsonList.add(json);
         }
-        return ResultBody.ok().data(jsonList);
+        return ResultBody.ok(jsonList);
     }
 
     /**
@@ -80,8 +81,8 @@ public class BaseMenuController {
      */
     @ApiOperation(value = "获取分页菜单资源列表", notes = "获取分页菜单资源列表")
     @GetMapping("/menu")
-    public ResultBody<IPage<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(baseResourceMenuService.findListPage(new PageParams(map)));
+    public ResultBody<Page<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
+        return ResultBody.ok(baseResourceMenuService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -92,7 +93,7 @@ public class BaseMenuController {
     @ApiOperation(value = "菜单所有资源列表", notes = "菜单所有资源列表")
     @GetMapping("/menu/all")
     public ResultBody<List<BaseMenu>> getMenuAllList() {
-        return ResultBody.ok().data(baseResourceMenuService.findAllList());
+        return ResultBody.ok(baseResourceMenuService.findAllList());
     }
 
 
@@ -108,7 +109,7 @@ public class BaseMenuController {
     })
     @GetMapping("/menu/action")
     public ResultBody<List<BaseAction>> getMenuAction(Long menuId) {
-        return ResultBody.ok().data(baseResourceOperationService.findListByMenuId(menuId));
+        return ResultBody.ok(baseResourceOperationService.findListByMenuId(menuId));
     }
 
     /**
@@ -123,7 +124,7 @@ public class BaseMenuController {
     })
     @GetMapping("/menu/{menuId}/info")
     public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
-        return ResultBody.ok().data(baseMenuQuery.getMenu(menuId));
+        return ResultBody.ok(baseMenuQuery.getMenu(menuId));
     }
 
     /**
@@ -141,7 +142,7 @@ public class BaseMenuController {
         menu.setPath(command.getPath());
         menu.setComponent(command.getComponent());
         menu.setScheme(command.getScheme());
-        menu.setTarget(command.getTarget());
+        menu.setIntegrateMode(command.getTarget());
         menu.setStatus(command.getStatus());
         menu.setVisible(command.getVisible());
         menu.setParentId(command.getParentId());
@@ -153,7 +154,7 @@ public class BaseMenuController {
         if (result != null) {
             menuId = result.getMenuId();
         }
-        return ResultBody.ok().data(menuId);
+        return ResultBody.ok(menuId);
     }
 
     /**
@@ -172,7 +173,7 @@ public class BaseMenuController {
         menu.setPath(command.getPath());
         menu.setComponent(command.getComponent());
         menu.setScheme(command.getScheme());
-        menu.setTarget(command.getTarget());
+        menu.setIntegrateMode(command.getTarget());
         menu.setStatus(command.getStatus());
         menu.setVisible(command.getVisible());
         menu.setParentId(command.getParentId());

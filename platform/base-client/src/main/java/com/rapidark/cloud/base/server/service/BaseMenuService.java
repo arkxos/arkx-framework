@@ -1,20 +1,27 @@
 package com.rapidark.cloud.base.server.service;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.constants.ResourceType;
+import com.rapidark.cloud.base.client.constants.UserConstants;
+import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
 import com.rapidark.cloud.base.server.repository.BaseMenuRepository;
 import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.BaseMenuService;
+import com.rapidark.cloud.base.server.service.dto.MetaVo;
+import com.rapidark.cloud.base.server.service.dto.RouterVo;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
 import com.rapidark.common.utils.CriteriaQueryWrapper;
+import com.rapidark.framework.commons.util.StreamUtils;
+import com.rapidark.framework.commons.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +33,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -171,4 +180,109 @@ public class BaseMenuService extends BaseService<BaseMenu, Long, BaseMenuReposit
         // 移除菜单信息
         deleteById(menuId);
     }
+
+    public List<RouterVo> buildRouters(List<BaseMenu> menus) {
+        List<BaseMenu> treeMenus = getChildPerms(menus, 0);
+        return buildMenus(treeMenus);
+    }
+
+    /**
+     * 构建前端路由所需要的菜单
+     * 路由name命名规则 path首字母转大写 + id
+     *
+     * @param menus 菜单列表
+     * @return 路由列表
+     */
+    public List<RouterVo> buildMenus(List<BaseMenu> menus) {
+        List<RouterVo> routers = new LinkedList<>();
+        for (BaseMenu menu : menus) {
+            String name = menu.getRouteName() + menu.getMenuId();
+            RouterVo router = new RouterVo();
+            router.setAppCode(menu.getAppCode());
+            router.setHidden(menu.getVisible() == 0);
+            router.setName(name);
+            router.setPath(menu.getRouterPath());
+            router.setComponent(menu.getComponentInfo());
+            router.setQuery(menu.getQueryParam());
+
+            MetaVo metaVo = new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache() == 0, menu.getPath());
+            if(UserConstants.INTEGRATE_MODE_FRAME.equals(menu.getIntegrateMode())) {
+                metaVo.setType("iframe");
+                router.setName("iframe" + menu.getMenuId());
+            }
+            router.setMeta(metaVo);
+            List<BaseMenu> cMenus = menu.getChildren();
+            if (!cMenus.isEmpty() && UserConstants.TYPE_APP.equals(menu.getMenuType())) {
+                router.setAlwaysShow(true);
+                router.setRedirect("noRedirect");
+                router.setChildren(buildMenus(cMenus));
+            } else if (CollUtil.isNotEmpty(cMenus) && UserConstants.TYPE_DIR.equals(menu.getMenuType())) {
+                router.setAlwaysShow(true);
+                router.setRedirect("noRedirect");
+                router.setChildren(buildMenus(cMenus));
+            } else if (menu.isMenuFrame()) {
+                String frameName = StringUtils.capitalize(menu.getPath()) + menu.getMenuId();
+                router.setMeta(null);
+                List<RouterVo> childrenList = new ArrayList<>();
+                RouterVo children = new RouterVo();
+                children.setPath(menu.getPath());
+                children.setComponent(menu.getComponent());
+                children.setName(frameName);
+                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache() == 0, menu.getPath()));
+                children.setQuery(menu.getQueryParam());
+                childrenList.add(children);
+                router.setChildren(childrenList);
+            } else if (menu.getParentId().intValue() == 0 && menu.isInnerLink()) {
+                router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
+                router.setPath("/");
+                List<RouterVo> childrenList = new ArrayList<>();
+                RouterVo children = new RouterVo();
+                String routerPath = BaseMenu.innerLinkReplaceEach(menu.getPath());
+                String innerLinkName = StringUtils.capitalize(routerPath) + menu.getMenuId();
+                children.setPath(routerPath);
+                children.setComponent(UserConstants.INNER_LINK);
+                children.setName(innerLinkName);
+                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getPath()));
+                childrenList.add(children);
+                router.setChildren(childrenList);
+            }
+            routers.add(router);
+        }
+        return routers;
+    }
+
+    /**
+     * 根据父节点的ID获取所有子节点
+     *
+     * @param list     分类表
+     * @param parentId 传入的父节点ID
+     * @return String
+     */
+    private List<BaseMenu> getChildPerms(List<BaseMenu> list, int parentId) {
+        List<BaseMenu> returnList = new ArrayList<>();
+        for (BaseMenu t : list) {
+            // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
+            if (t.getParentId() == parentId) {
+                recursionFn(list, t);
+                returnList.add(t);
+            }
+        }
+        return returnList;
+    }
+
+    /**
+     * 递归列表
+     */
+    private void recursionFn(List<BaseMenu> list, BaseMenu t) {
+        // 得到子节点列表
+        List<BaseMenu> childList = StreamUtils.filter(list, n -> n.getParentId().equals(t.getMenuId()));
+        t.setChildren(childList);
+        for (BaseMenu tChild : childList) {
+            // 判断是否有子节点
+            if (list.stream().anyMatch(n -> n.getParentId().equals(tChild.getMenuId()))) {
+                recursionFn(list, tChild);
+            }
+        }
+    }
+
 }

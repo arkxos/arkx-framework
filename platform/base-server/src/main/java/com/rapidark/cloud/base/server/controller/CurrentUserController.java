@@ -1,10 +1,13 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
+import com.rapidark.cloud.base.client.model.entity.BaseMenu;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
+import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
+import com.rapidark.cloud.base.server.service.dto.RouterVo;
 import com.rapidark.common.constants.CommonConstants;
 import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.model.ResultBody;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +44,8 @@ public class CurrentUserController {
     private OpenAppService openAppService;
     @Autowired
     private RedisTokenStore redisTokenStore;
+    @Autowired
+    private BaseMenuService menuService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -119,7 +125,27 @@ public class CurrentUserController {
             serviceId = openAppService.getAppClientInfo(user.getClientId()).getAdditionalInformation().get("appNameEn").toString();
         }
         serviceId = serviceId.trim();
-        List<AuthorityMenu> result = baseAuthorityService.findAuthorityMenuByUser(user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), serviceId);
-        return ResultBody.ok().data(result);
+        List<AuthorityMenu> result = baseAuthorityService.findAuthorityMenuByUser(
+                user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), serviceId);
+        return ResultBody.ok(result);
+    }
+
+    /**
+     * 获取路由信息
+     *
+     * @return 路由信息
+     */
+    @GetMapping("/current/user/routers")
+    public ResultBody<List<RouterVo>> getRouters() {
+        OpenUserDetails user = OpenHelper.getUser();
+        List<AuthorityMenu> menus = baseAuthorityService.findAuthorityMenuByUser(
+                user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), "");
+
+        List<BaseMenu> baseMenus = new ArrayList<>();
+        for (AuthorityMenu menu : menus) {
+            baseMenus.add(menu);
+        }
+        List<RouterVo> routers = menuService.buildRouters(baseMenus);
+        return ResultBody.ok(routers);
     }
 }
