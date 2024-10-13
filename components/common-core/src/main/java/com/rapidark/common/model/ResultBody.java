@@ -71,30 +71,6 @@ public class ResultBody<T> implements Serializable {
         super();
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public Map<String, Object> getExtra() {
-        return extra;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
     @JSONField(serialize = false, deserialize = false)
     @JsonIgnore
     public int getHttpStatus() {
@@ -108,25 +84,31 @@ public class ResultBody<T> implements Serializable {
     }
 
 
-    public static ResultBody ok() {
-        return new ResultBody().code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage());
+    public static ResultBody<Object> ok() {
+        return new ResultBody<>().code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage());
     }
 
-    public static ResultBody failed() {
-        return new ResultBody().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage());
+    public static <T> ResultBody<T> ok(T data) {
+        ResultBody<T> result = new ResultBody<>();
+
+        return result.code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage()).data(data);
     }
 
-    public ResultBody bizId(String bizId) {
+    public static ResultBody<Object> failed() {
+        return new ResultBody<>().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage());
+    }
+
+    public ResultBody<T> bizId(String bizId) {
         this.bizId = bizId;
         return this;
     }
 
-    public ResultBody code(int code) {
+    public ResultBody<T> code(int code) {
         this.code = code;
         return this;
     }
 
-    public ResultBody msg(String message) {
+    public ResultBody<T> msg(String message) {
         if (ErrorCode.BAD_REQUEST.getCode() == this.code || ErrorCode.ERROR.getCode() == this.code) {
             this.message = i18n(ErrorCode.getResultEnum(this.code).getMessage(), message) + "("+message+")";
         } else {
@@ -138,22 +120,22 @@ public class ResultBody<T> implements Serializable {
         return this;
     }
 
-    public ResultBody data(T data) {
+    public ResultBody<T> data(T data) {
         this.data = data;
         return this;
     }
 
-    public ResultBody path(String path) {
+    public ResultBody<T> path(String path) {
         this.path = path;
         return this;
     }
 
-    public ResultBody httpStatus(int httpStatus) {
+    public ResultBody<T> httpStatus(int httpStatus) {
         this.httpStatus = httpStatus;
         return this;
     }
 
-    public ResultBody put(String key, Object value) {
+    public ResultBody<T> put(String key, Object value) {
         if (this.extra == null) {
             this.extra = Maps.newHashMap();
         }
@@ -183,10 +165,6 @@ public class ResultBody<T> implements Serializable {
 
     /**
      * 提示信息国际化
-     *
-     * @param message
-     * @param defaultMessage
-     * @return
      */
     @JSONField(serialize = false, deserialize = false)
     @JsonIgnore
