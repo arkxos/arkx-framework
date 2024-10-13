@@ -80,7 +80,7 @@ public class PayOrderController {
             @ApiImplicitParam(name = "productId", value = "商品Id,微信NATIVE扫码支付必传字段", paramType = "form")
     })
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public ResultBody<PayOrder> pay(@RequestParam(value = "mchId") String mchId,
+    public ResultBody pay(@RequestParam(value = "mchId") String mchId,
                                     @RequestParam(value = "channelCode") String channelCode,
                                     @RequestParam(value = "mchOrderNo") String mchOrderNo,
                                     @RequestParam(value = "amount") Long amount,
@@ -152,10 +152,10 @@ public class PayOrderController {
             if (retMap.containsKey("payUrl") && PayConstant.CHANNEL_NAME_ALIPAY.equalsIgnoreCase(payChannel.getString("channelName"))) {
                 retMap.put("payUrl", Base64.encode(retMap.get("payUrl").toString(), "UTF-8"));
             }
-            return ResultBody.ok().data(retMap);
+            return ResultBody.ok(retMap);
         }
 
-        return ResultBody.failed().msg(retMap.get("retMsg").toString()).data(retMap);
+        return ResultBody.failed(retMap.get("retMsg").toString()).data(retMap);
     }
 
     /**
@@ -465,7 +465,7 @@ public class PayOrderController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok().data(payOrderService.findListPage(new PageParams(map)));
+        return ResultBody.ok(payOrderService.findListPage(new PageParams(map)));
     }
 
 
@@ -474,9 +474,9 @@ public class PayOrderController {
     public ResultBody<PayOrder> detail(@RequestParam String payOrderId) {
         PayOrder payOrder = payOrderService.findPayOrder(payOrderId);
         if (payOrder == null) {
-            return ResultBody.failed().msg("未查找到ID为" + payOrderId + "的订单信息");
+            return ResultBody.failed("未查找到ID为" + payOrderId + "的订单信息");
         }
-        return ResultBody.ok().data(payOrder);
+        return ResultBody.ok(payOrder);
     }
 
     @ApiOperation(value = "支付订单查询", notes = "查询支付订单接口:\n" +
@@ -510,19 +510,19 @@ public class PayOrderController {
             String errorMessage = validateQueryParams(payOrderMap, payContext);
             if (!"success".equalsIgnoreCase(errorMessage)) {
                 _log.warn(errorMessage);
-                return ResultBody.failed().msg(errorMessage);
+                return ResultBody.failed(errorMessage);
             }
             _log.debug("请求参数及签名校验通过");
             JSONObject payOrder = payOrderService.queryPayOrder(mchId, payOrderId, mchOrderNo, executeNotify);
             _log.info("{}查询支付订单,结果:{}", logPrefix, payOrder);
             if (payOrder == null) {
-                return ResultBody.failed().msg("支付订单不存在");
+                return ResultBody.failed("支付订单不存在");
             }
             _log.info("###### 商户查询订单处理完成 ######");
-            return ResultBody.ok().data(payOrder);
+            return ResultBody.ok(payOrder);
         } catch (Exception e) {
             _log.error(e, "");
-            return ResultBody.failed().msg("支付中心系统异常");
+            return ResultBody.failed("支付中心系统异常");
         }
     }
 
@@ -587,18 +587,18 @@ public class PayOrderController {
 
     @ApiOperation(value = "支付订单过期处理", notes = "查出订单创建时间是否超过24h，若超过则置为过期,前台不需要传参数")
     @RequestMapping(value = "/expire", method = RequestMethod.GET)
-    public ResultBody<PayOrder> expire() {
+    public ResultBody<String> expire() {
         int count = payOrderService.updateStatus4Expired(1800);
 
-        return ResultBody.ok().data("本次有" + count + "条支付订单未支付已置为过期!");
+        return ResultBody.ok("本次有" + count + "条支付订单未支付已置为过期!");
     }
 
     @ApiOperation(value = "掉单支付结果同步", notes = "查出订单创建时间是否超过30分钟，若超过则主动查询结果,前台不需要传参数")
     @RequestMapping(value = "/synPayResult", method = RequestMethod.GET)
-    public ResultBody<PayOrder> synPayResult() {
+    public ResultBody<String> synPayResult() {
         int count = payOrderService.synPayResult(1800);
 
-        return ResultBody.ok().data("本次有" + count + "条支付订单状态已更新!");
+        return ResultBody.ok("本次有" + count + "条支付订单状态已更新!");
     }
 
     /**
@@ -712,7 +712,7 @@ public class PayOrderController {
             _log.info("跳转URL={}", url);
             map.put("redirectUrl", url);
         }
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     @InitBinder

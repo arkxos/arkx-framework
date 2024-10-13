@@ -28,7 +28,7 @@ public class MonitorRest extends BaseRest {
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody list(@RequestBody MonitorReq monitorReq){
-        return ResultBody.ok().data(monitorService.list(monitorReq));
+        return ResultBody.ok(monitorService.list(monitorReq));
     }
 
     /**

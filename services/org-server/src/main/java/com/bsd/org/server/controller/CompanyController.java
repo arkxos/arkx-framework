@@ -72,7 +72,7 @@ public class CompanyController {
         queryCompany.setAreaId(areaId);
         //查询分页数据
         IPage<Company> pageData = companyService.page(new Page<Company>(pageIndex, pageSize), Wrappers.<Company>query(queryCompany));
-        return ResultBody.ok().data(pageData);
+        return ResultBody.ok(pageData);
     }
 
 
@@ -89,7 +89,7 @@ public class CompanyController {
     @ApiImplicitParams(value = {})
     public ResultBody findAll() {
         List<Company> companys = companyService.list();
-        return ResultBody.ok().data(companys);
+        return ResultBody.ok(companys);
     }
 
 
@@ -101,9 +101,9 @@ public class CompanyController {
     public ResultBody get(@RequestParam(value = "companyId") Long companyId) {
         Company company = companyService.getById(companyId);
         if (company == null) {
-            return ResultBody.failed().msg("未查找到ID为" + companyId + "的企业信息");
+            return ResultBody.failed("未查找到ID为" + companyId + "的企业信息");
         }
-        return ResultBody.ok().data(company);
+        return ResultBody.ok(company);
     }
 
 
@@ -165,7 +165,7 @@ public class CompanyController {
         company.setProfile(profile);
         company.setContact(contact);
         if (!StringUtils.matchMobile(phone)) {
-            return ResultBody.failed().msg("号码格式错误");
+            return ResultBody.failed("号码格式错误");
         }
         company.setPhone(phone);
         company.setFax(fax);
@@ -177,7 +177,7 @@ public class CompanyController {
         company.setCreateBy(openUserDetails.getUserId()+"");
         boolean isSuc = companyService.save(company);
         if (!isSuc) {
-            return ResultBody.failed().msg("添加企业信息失败");
+            return ResultBody.failed("添加企业信息失败");
         }
         //删除菜单缓存信息
         companyService.removeMeunCache();
@@ -234,7 +234,7 @@ public class CompanyController {
     ) {
         Company dbCompany = companyService.getById(companyId);
         if (dbCompany == null) {
-            return ResultBody.failed().msg("企业信息不存在");
+            return ResultBody.failed("企业信息不存在");
         }
         Company company = new Company();
         company.setCompanyId(companyId);
@@ -250,7 +250,7 @@ public class CompanyController {
         company.setProfile(profile);
         company.setContact(contact);
         if (!StringUtils.matchMobile(phone)) {
-            return ResultBody.failed().msg("号码格式错误");
+            return ResultBody.failed("号码格式错误");
         }
         company.setPhone(phone);
         company.setFax(fax);
@@ -263,7 +263,7 @@ public class CompanyController {
         company.setUpdateBy(openUserDetails.getUserId()+"");
         boolean isSuc = companyService.updateById(company);
         if (!isSuc) {
-            return ResultBody.failed().msg("更新数据失败");
+            return ResultBody.failed("更新数据失败");
         }
         //删除菜单缓存信息
         companyService.removeMeunCache();
@@ -275,7 +275,7 @@ public class CompanyController {
     @GetMapping("/get/menu")
     public ResultBody<List<CompanyMenuVO>> getMenu() {
         List<CompanyMenuVO> menus = companyService.getAllCompanyMenu();
-        return ResultBody.ok().data(menus);
+        return ResultBody.ok(menus);
     }
 
 

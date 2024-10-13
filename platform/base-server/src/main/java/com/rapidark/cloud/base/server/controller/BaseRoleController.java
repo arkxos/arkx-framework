@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,8 +37,8 @@ public class BaseRoleController {
      */
     @ApiOperation(value = "获取分页角色列表", notes = "获取分页角色列表")
     @GetMapping("/role")
-    public ResultBody<IPage<BaseRole>> getRoleListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(baseRoleService.findListPage(new PageParams(map)));
+    public ResultBody<Page<BaseRole>> getRoleListPage(@RequestParam(required = false) Map map) {
+        return ResultBody.ok(baseRoleService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -48,7 +49,7 @@ public class BaseRoleController {
     @ApiOperation(value = "获取所有角色列表", notes = "获取所有角色列表")
     @GetMapping("/role/all")
     public ResultBody<List<BaseRole>> getRoleAllList() {
-        return ResultBody.ok().data(baseRoleService.findAllList());
+        return ResultBody.ok(baseRoleService.findAllList());
     }
 
     /**
@@ -64,7 +65,7 @@ public class BaseRoleController {
     @GetMapping("/role/{roleId}/info")
     public ResultBody<BaseRole> getRole(@PathVariable(value = "roleId") Long roleId) {
         BaseRole result = baseRoleService.getRole(roleId);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -85,7 +86,7 @@ public class BaseRoleController {
         if (result != null) {
             roleId = result.getRoleId();
         }
-        return ResultBody.ok().data(roleId);
+        return ResultBody.ok(roleId);
     }
 
     /**
@@ -152,8 +153,8 @@ public class BaseRoleController {
     public ResultBody<List<BaseRoleUser>> getRoleUsers(@RequestParam(value = "roleId", required = false) String roleId,
                                                        @RequestParam(value = "roleCode", required = false) String roleCode) {
         if (roleId == null && StringUtils.isEmpty(roleCode)) {
-            return ResultBody.failed().msg("查询参数角色ID与角色编码不能同时为空");
+            return ResultBody.failed("查询参数角色ID与角色编码不能同时为空");
         }
-        return ResultBody.ok().data(baseRoleService.findRoleUsersByRoleIdOrRoleCode(roleId, roleCode));
+        return ResultBody.ok(baseRoleService.findRoleUsersByRoleIdOrRoleCode(roleId, roleCode));
     }
 }

@@ -100,7 +100,7 @@ public class DatabaseController {
 	@PreAuthorize("@el.check('database:testConnect')")
 	public ResultBody<Object> testConnect(@Validated @RequestBody Database resources){
 		boolean success = databaseService.testConnection(resources);
-		return ResultBody.ok().data(success);
+		return ResultBody.ok(success);
 	}
 
 	@Log("执行SQL脚本")

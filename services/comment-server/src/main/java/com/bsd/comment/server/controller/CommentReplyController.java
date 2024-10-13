@@ -45,7 +45,7 @@ public class CommentReplyController {
         //PO转DTO
         List<CommentReplyRespDTO> result = BeanConvertUtils.copyList(commentReplies, CommentReplyRespDTO.class);
         //返回结果
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -62,7 +62,7 @@ public class CommentReplyController {
         //PO转DTO
         List<CommentReplyRespDTO> result = BeanConvertUtils.copyList(commentReplies, CommentReplyRespDTO.class);
         //返回结果
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
 
@@ -76,7 +76,7 @@ public class CommentReplyController {
         //转换成JSON Tree形式
         List<CommentReplyTreeDTO> resultTree = CommentReplyTreeUtils.getNodeJson(result);
         //返回结果
-        return ResultBody.ok().data(resultTree);
+        return ResultBody.ok(resultTree);
     }
 
     @ApiOperation(value = "获取评论下的回复JSON树(后台)", notes = "根获取评论下的回复JSON树")
@@ -89,7 +89,7 @@ public class CommentReplyController {
         //转换成JSON Tree形式
         List<CommentReplyTreeDTO> resultTree = CommentReplyTreeUtils.getNodeJson(result);
         //返回结果
-        return ResultBody.ok().data(resultTree);
+        return ResultBody.ok(resultTree);
     }
 
 
@@ -105,7 +105,7 @@ public class CommentReplyController {
         //添加回复
         boolean isSuc = commentReplyService.saveCommentReply(commentReply);
         if (!isSuc) {
-            return ResultBody.failed().msg("添加回复数据失败");
+            return ResultBody.failed("添加回复数据失败");
         }
         return ResultBody.ok();
     }
@@ -124,7 +124,7 @@ public class CommentReplyController {
     public ResultBody batchShield(@RequestParam(value = "replyIds") String replyIds) {
         boolean isSuc = commentReplyService.shieldCommentReply(Arrays.asList(replyIds.split(",")));
         if (!isSuc) {
-            return ResultBody.failed().msg("批量屏蔽回复失败");
+            return ResultBody.failed("批量屏蔽回复失败");
         }
         return ResultBody.ok();
     }

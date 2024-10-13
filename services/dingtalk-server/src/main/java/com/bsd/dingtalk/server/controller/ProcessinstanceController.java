@@ -72,7 +72,7 @@ public class ProcessinstanceController {
 
             Map<String, String> map = Maps.newHashMap();
             map.put("mediaId", mediaId);
-            return ResultBody.ok().data(map);
+            return ResultBody.ok(map);
         } catch (Exception e) {
             return ResultBody.ok().msg(e.getMessage());
         }
@@ -106,7 +106,7 @@ public class ProcessinstanceController {
             }
             Map<String, String> map = Maps.newHashMap();
             map.put("instanceId", response.getProcessInstanceId());
-            return ResultBody.ok().data(map);
+            return ResultBody.ok(map);
         } catch (Exception e) {
             String errLog = LogFormatter.getKVLogData(LogFormatter.LogEvent.END, LogFormatter.KeyValue.getNew("processInstance", JSON.toJSONString(processInstance)));
             log.info(errLog, e);
@@ -136,7 +136,7 @@ public class ProcessinstanceController {
             if (errorCode != 0) {
                 return ResultBody.failed().code(errorCode).msg(response.getErrmsg());
             }
-            return ResultBody.ok().data(response.getProcessInstance());
+            return ResultBody.ok(response.getProcessInstance());
         } catch (Exception e) {
             String errLog = LogFormatter.getKVLogData(LogFormatter.LogEvent.END, LogFormatter.KeyValue.getNew("instanceId", instanceId));
             log.info(errLog, e);

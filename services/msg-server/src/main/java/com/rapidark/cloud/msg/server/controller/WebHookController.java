@@ -44,6 +44,6 @@ public class WebHookController implements IWebHookClient {
     @ApiOperation(value = "获取分页异步通知列表", notes = "获取分页异步通知列表")
     @GetMapping("/webhook/logs")
     public ResultBody<IPage<WebHookLogs>> getLogsListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(webHookLogsService.findListPage(new PageParams(map)));
+        return ResultBody.ok(webHookLogsService.findListPage(new PageParams(map)));
     }
 }

@@ -38,13 +38,13 @@ public class WxController {
     public ResultBody<JsSdkSignDTO> init(@RequestParam(value = "url") String url) {
         //简单校验URL地址
         if (StringUtils.isEmpty(url)) {
-            return ResultBody.failed().msg("URL地址不能为空!");
+            return ResultBody.failed("URL地址不能为空!");
         }
         if (!url.startsWith(DeveloperConstants.HTTP_PREFIX) && !url.startsWith(DeveloperConstants.HTTPS_PREFIX)) {
-            return ResultBody.failed().msg("URL地址有误,请确认地址正确性!");
+            return ResultBody.failed("URL地址有误,请确认地址正确性!");
         }
         //获取签名授权
         JsSdkSignDTO jsSdkSignDTO = developerService.makeWxJsSdkSign(url);
-        return ResultBody.ok().data(jsSdkSignDTO);
+        return ResultBody.ok(jsSdkSignDTO);
     }
 }

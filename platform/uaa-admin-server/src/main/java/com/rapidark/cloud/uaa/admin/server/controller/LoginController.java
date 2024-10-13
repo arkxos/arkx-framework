@@ -58,7 +58,7 @@ public class LoginController {
         OpenUserDetails user = OpenHelper.getUser();
         Map map = BeanConvertUtils.objectToMap(user);
         map.put("roles", baseUserServiceClient.getUserRoles(user.getUserId()).getData());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -83,7 +83,7 @@ public class LoginController {
     @GetMapping("/publicKey")
     public ResultBody<String> getPublicKey() {
         String result = rsaProperties.getPublicKey();
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -99,7 +99,7 @@ public class LoginController {
 //        String loginInfoString = RSAUtils.decryptByPrivateKey(command.getLoginInfo(), rsaProperties.getPrivateKey());
 //        LoginInfo loginInfo = JSON.parseObject(loginInfoString, LoginInfo.class);
         OAuth2AccessToken result = getFrontToken(loginInfo.getUsername(), loginInfo.getPassword(), null);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -117,7 +117,7 @@ public class LoginController {
         postParameters.put("client_secret", command.getClientSecret());
         postParameters.put("grant_type", "client_credentials");
         OAuth2AccessToken result = OpenHelper.createAccessToken(endpoints, postParameters);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**

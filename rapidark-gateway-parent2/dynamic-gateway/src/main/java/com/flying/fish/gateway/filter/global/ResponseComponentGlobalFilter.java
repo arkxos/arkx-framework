@@ -131,7 +131,7 @@ public class ResponseComponentGlobalFilter implements GlobalFilter, Ordered {
      */
     private String getErrMsg(String clientIp, String routeId, String errMsg){
         String message= String.format("网关转发客户端【%s】路由请求【%s】，执行组件异常：%s", clientIp, routeId, errMsg);
-        return JSONObject.toJSONString(ResultBody.failed().msg(message));
+        return JSONObject.toJSONString(ResultBody.failed(message));
     }
 
     @Override

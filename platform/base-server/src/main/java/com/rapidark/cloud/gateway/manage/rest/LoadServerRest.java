@@ -57,12 +57,12 @@ public class LoadServerRest extends BaseRest {
         Assert.notNull(loadServerReq, "未获取到对象");
         if (isReg) {
 //            Assert.isTrue(StringUtils.isNotBlank(loadServerReq.getBalancedId()), "未获取到对象ID");
-            return ResultBody.ok().data(loadServerService.loadServerList(loadServerReq.getBalancedId()));
+            return ResultBody.ok(loadServerService.loadServerList(loadServerReq.getBalancedId()));
         }else {
             int currentPage = getCurrentPage(loadServerReq.getCurrentPage());
             int pageSize = getPageSize(loadServerReq.getPageSize());
             PageData data = loadServerService.notLoadServerPageList(currentPage, pageSize);
-            return ResultBody.ok().data(data);
+            return ResultBody.ok(data);
         }
     }
 

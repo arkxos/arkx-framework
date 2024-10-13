@@ -72,7 +72,7 @@ public class CaptchaController {
         //初始化数据存到redis中
         captchaInitDTO.setGtServerStatus(captchaInitResultDTO.getGtServerStatus());
         redisUtils.set(captchaInitDTO.getUserId(), JSON.toJSONString(captchaInitDTO), 60 * 60);
-        return ResultBody.ok().data(captchaInitResultDTO);
+        return ResultBody.ok(captchaInitResultDTO);
     }
 
     /**
@@ -100,7 +100,7 @@ public class CaptchaController {
         //获取session中的数据
         String initStr = (String) redisUtils.get(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId+"", "UTF-8"));
         if (StringUtils.isEmpty(initStr)) {
-            return ResultBody.failed().msg("二次验证之前未调用初始化接口");
+            return ResultBody.failed("二次验证之前未调用初始化接口");
         }
         CaptchaInitDTO captchaInitDTO = JSON.parseObject(initStr, CaptchaInitDTO.class);
         //业务数据
@@ -116,9 +116,9 @@ public class CaptchaController {
         //二次验证请求
         CaptchaValidateResultDTO captchaValidateResultDTO = captchaService.validate(captchaValidateDTO);
         if ("success".equals(captchaValidateResultDTO.getStatus())) {
-            return ResultBody.ok().data(captchaValidateResultDTO);
+            return ResultBody.ok(captchaValidateResultDTO);
         }
-        return ResultBody.failed().data(captchaValidateResultDTO);
+        return ResultBody.failed(captchaValidateResultDTO);
     }
 
 }

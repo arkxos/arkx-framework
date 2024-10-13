@@ -59,9 +59,9 @@ public class AliOssController {
             Map<String, String> map = Maps.newHashMap();
             map.put("fileName", fileName);
             map.put("fileUrl", url);
-            return ResultBody.ok().data(map);
+            return ResultBody.ok(map);
         } catch (Exception e) {
-            return ResultBody.failed().msg(e.getMessage());
+            return ResultBody.failed(e.getMessage());
         }
     }
 
@@ -97,11 +97,11 @@ public class AliOssController {
         if (url != null) {
             Map<String, String> map = Maps.newHashMap();
             map.put("url", url);
-            return ResultBody.ok().data(map);
+            return ResultBody.ok(map);
         }
 
         //返回结果
-        return ResultBody.failed().msg("获取失败");
+        return ResultBody.failed("获取失败");
     }
 }
 

@@ -102,9 +102,9 @@ public class OpenAppController implements IOpenAppServiceClient {
      */
     @ApiOperation(value = "获取分页应用列表", notes = "获取分页应用列表")
     @GetMapping("/app")
-    public ResultBody<IPage<OpenApp>> getAppListPage(@RequestParam(required = false) OpenClientQueryCriteria criteria, Pageable pageable) {
+    public ResultBody<PageData<OpenAppDto>> getAppListPage(@RequestParam(required = false) OpenClientQueryCriteria criteria, Pageable pageable) {
         PageData<OpenAppDto> data = openAppService.queryAll(criteria, pageable);
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     /**
@@ -124,9 +124,9 @@ public class OpenAppController implements IOpenAppServiceClient {
     ) {
         OpenApp appInfo = openAppService.findById(appId);
         if(appInfo == null) {
-            return ResultBody.failed().msg("该客户端不存在");
+            return ResultBody.failed("该客户端不存在");
         }
-        return ResultBody.ok().data(appInfo);
+        return ResultBody.ok(appInfo);
     }
 
     /**
@@ -144,10 +144,10 @@ public class OpenAppController implements IOpenAppServiceClient {
     public ResultBody<OpenApp> queryAppByIp(@RequestParam("ip") String ip) {
         Optional<OpenApp> openClientOptional = openAppRepository.findByIp(ip);
         if(openClientOptional.isEmpty()) {
-            return ResultBody.failed().msg("该客户端不存在");
+            return ResultBody.failed("该客户端不存在");
         }
         OpenApp openClient = openClientOptional.get();
-        return ResultBody.ok().data(openClient);
+        return ResultBody.ok(openClient);
     }
 
     /**
@@ -166,7 +166,7 @@ public class OpenAppController implements IOpenAppServiceClient {
             @PathVariable("clientId") String clientId
     ) {
         OpenClientDetails clientInfo = openAppService.getAppClientInfo(clientId);
-        return ResultBody.ok().data(clientInfo);
+        return ResultBody.ok(clientInfo);
     }
 
     /**
@@ -216,7 +216,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         }
         customNacosConfigService.publishClientNacosConfig(app.getAppId());
 
-        return ResultBody.ok().data(appId);
+        return ResultBody.ok(appId);
     }
 
     /**
@@ -314,7 +314,7 @@ public class OpenAppController implements IOpenAppServiceClient {
             @RequestParam("appId") String appId
     ) {
         String result = openAppService.restSecret(appId);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -381,7 +381,7 @@ public class OpenAppController implements IOpenAppServiceClient {
             List<OpenAuthority> authrities = baseAuthorityService.findAuthorityByApp(clientId, systemCode);
             regServer.setAuthorities(authrities);
         }
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
 }

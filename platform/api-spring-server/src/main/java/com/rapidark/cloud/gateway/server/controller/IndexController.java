@@ -39,7 +39,7 @@ public class IndexController {
     public ResultBody testGet() {
         Map<String, String> data = new HashMap<>();
         data.put("code", "0001");
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     @ResponseBody
@@ -47,7 +47,7 @@ public class IndexController {
     public ResultBody testPost(@Valid @RequestBody TestCommand command) {
         Map<String, String> data = new HashMap<>();
         data.put("code", "0001");
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     @PostMapping("/testFile")
@@ -55,7 +55,7 @@ public class IndexController {
 //        WebUtils.getParameterMap(request);
         Map<String, String> data = new HashMap<>();
         data.put("code", "0001");
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
 }

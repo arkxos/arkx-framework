@@ -50,7 +50,7 @@ public class SchedulerController {
     @GetMapping(value = "/job/logs")
     public ResultBody<IPage<SchedulerJobLogs>> getJobLogList(@RequestParam(required = false) Map map) {
         IPage<SchedulerJobLogs> result = schedulerJobLogsService.findListPage(new PageParams(map));
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -65,7 +65,7 @@ public class SchedulerController {
         IPage page = new Page();
         page.setRecords(list);
         page.setTotal(list.size());
-        return ResultBody.ok().data(page);
+        return ResultBody.ok(page);
     }
 
     /**

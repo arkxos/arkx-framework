@@ -8,6 +8,7 @@ import com.rapidark.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +36,8 @@ public class GatewayAccessLogsController {
      */
     @ApiOperation(value = "获取分页访问日志列表", notes = "获取分页访问日志列表")
     @GetMapping("/gateway/access/logs")
-    public ResultBody<IPage<GatewayAccessLogs>> getAccessLogListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(gatewayAccessLogsService.findListPage(new PageParams(map)));
+    public ResultBody<Page<GatewayAccessLogs>> getAccessLogListPage(@RequestParam(required = false) Map map) {
+        return ResultBody.ok(gatewayAccessLogsService.findListPage(new PageParams(map)));
     }
 
 }

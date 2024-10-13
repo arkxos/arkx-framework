@@ -41,7 +41,7 @@
 ////    @ApiOperation(value = "获取分页路由列表", notes = "获取分页路由列表")
 ////    @GetMapping("/gateway/route")
 ////    public ResultBody<IPage<GatewayAppRoute>> getRouteListPage(@RequestParam(required = false) Map map) {
-////        return ResultBody.ok().data(gatewayRouteService.findListPage(new PageParams(map)));
+////        return ResultBody.ok(gatewayRouteService.findListPage(new PageParams(map)));
 ////    }
 //
 //
@@ -57,7 +57,7 @@
 //    })
 //    @GetMapping("/gateway/route/{routeId}/info")
 //    public ResultBody<GatewayAppRoute> getRoute(@PathVariable("routeId") String routeId) {
-//        return ResultBody.ok().data(gatewayRouteService.getRoute(routeId));
+//        return ResultBody.ok(gatewayRouteService.getRoute(routeId));
 //    }
 //
 //    /**

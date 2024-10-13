@@ -98,7 +98,7 @@ public class UserController {
         userDetailVO.setPositionId(positionId);
         IPage<UserDetailVO> page = new Page<UserDetailVO>(pageIndex, pageSize);
         IPage<UserDetailVO> users = userService.userDetailListPage(page, userDetailVO);
-        return ResultBody.ok().data(users);
+        return ResultBody.ok(users);
     }
 
     /**
@@ -124,7 +124,7 @@ public class UserController {
         userDetailVO.setDepartmentId(departmentId);
         userDetailVO.setCompanyId(companyId);
         List<String> list = userService.userIdList(userDetailVO);
-        return ResultBody.ok().data(list);
+        return ResultBody.ok(list);
     }
 
     /**
@@ -136,16 +136,15 @@ public class UserController {
     @GetMapping("/list")
     public ResultBody list() {
         List<UserDetailVO> users = userService.userDetailList(null);
-        return ResultBody.ok().data(users);
+        return ResultBody.ok(users);
     }
-
 
     /**
      * 查找人员信息(钉钉)
      */
     @ApiOperation(value = "查找人员信息(钉钉)", notes = "根据用户ID查找人员信息(钉钉)数据")
     @GetMapping("/get")
-    public ResultBody<User> get(@RequestParam("userId") Long userId) {
+    public ResultBody<UserDetailVO> get(@RequestParam("userId") Long userId) {
         //设置条件
         UserDetailVO userDetailVO = new UserDetailVO();
         userDetailVO.setUserId(userId);
@@ -157,7 +156,7 @@ public class UserController {
         if (users.size() != 1) {
             throw new OpenAlertException("存在重复的用户信息");
         }
-        return ResultBody.ok().data(users.get(0));
+        return ResultBody.ok(users.get(0));
     }
 
 
@@ -178,7 +177,7 @@ public class UserController {
         userDetailVO.setParentId(userId);
         //查询下级用户
         List<UserDetailVO> users = userService.userDetailList(userDetailVO);
-        return ResultBody.ok().data(users);
+        return ResultBody.ok(users);
     }
 
 
@@ -190,7 +189,7 @@ public class UserController {
     public ResultBody<List<UserDetailVO>> cascadeChildren(@RequestParam("userId") Long userId) {
         //递归获取所有下级用户信息
         List<UserDetailVO> users = userService.getCascadeChildren(userId);
-        return ResultBody.ok().data(users);
+        return ResultBody.ok(users);
     }
 
     /**
@@ -203,33 +202,33 @@ public class UserController {
     public ResultBody add(@Valid @RequestBody AddDingDingUserCommand command) {
         User user = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getDdUserid, command.getDdUserid()));
         if (user == null) {
-            return ResultBody.failed().msg("查询不到该钉钉唯一标识ID的用户信息");
+            return ResultBody.failed("查询不到该钉钉唯一标识ID的用户信息");
         }
         if (user.getUserId() != null && user.getUserId().longValue() != 0) {
-            return ResultBody.failed().msg("该用户已经添加过系统用户信息");
+            return ResultBody.failed("该用户已经添加过系统用户信息");
         }
         //校验参数
         if (command.getStatus() != BaseUserConst.USER_STATUS_FORBIDDEN
                 && command.getStatus() != BaseUserConst.USER_STATUS_NORMAL
                 && command.getStatus() != BaseUserConst.USER_STATUS_LOCK) {
-            return ResultBody.failed().msg("用户状态参数有误,请填写指定范围");
+            return ResultBody.failed("用户状态参数有误,请填写指定范围");
         }
         if (!BaseUserConst.USER_TYPE_NORMAL.equals(command.getUserType()) && !BaseUserConst.USER_TYPE_SUPER.equals(command.getUserType())) {
-            return ResultBody.failed().msg("用户类型参数有误,请填写指定范围");
+            return ResultBody.failed("用户类型参数有误,请填写指定范围");
         }
 
         ResultBody resultBody = baseUserServiceClient.addUser(command);
         if (!resultBody.isOk()) {
-            return ResultBody.failed().msg(resultBody.getMessage());
+            return ResultBody.failed(resultBody.getMessage());
         }
         Long userId = Long.valueOf(String.valueOf(resultBody.getData()));
         if (userId == null) {
-            return ResultBody.failed().msg("添加系统用户失败");
+            return ResultBody.failed("添加系统用户失败");
         }
         user.setUserId(userId);
         boolean isSuc = userService.update(user, Wrappers.<User>lambdaQuery().eq(User::getDdUserid, command.getDdUserid()));
         if (!isSuc) {
-            return ResultBody.failed().msg("绑定系统用户ID失败");
+            return ResultBody.failed("绑定系统用户ID失败");
         }
         return ResultBody.ok();
     }
@@ -336,13 +335,13 @@ public class UserController {
         //判断用户是否存在
         User user = userService.getByUserId(userId);
         if (user == null) {
-            return ResultBody.failed().msg("人员信息(钉钉)不存在");
+            return ResultBody.failed("人员信息(钉钉)不存在");
         }
 
         //删除用户
         boolean isSuc = userService.delByUserId(userId);
         if (!isSuc) {
-            return ResultBody.failed().msg("删除人员信息(钉钉)失败");
+            return ResultBody.failed("删除人员信息(钉钉)失败");
         }
 
         return ResultBody.ok();

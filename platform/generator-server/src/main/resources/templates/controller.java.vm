@@ -50,7 +50,7 @@ public class ${table.controllerName} {
         PageParams pageParams = new PageParams(map);
         ${entity} query = pageParams.mapToObject(${entity}.class);
         QueryWrapper<${entity}> queryWrapper = new QueryWrapper();
-        return ResultBody.ok().data(targetService.page(pageParams, queryWrapper));
+        return ResultBody.ok(targetService.page(pageParams, queryWrapper));
     }
 
     /**
@@ -61,7 +61,7 @@ public class ${table.controllerName} {
     @RequestMapping("/get")
     public ResultBody<${entity}> get(@RequestParam("id") Long id) {
         ${entity} entity = targetService.getById(id);
-        return ResultBody.ok().data(entity);
+        return ResultBody.ok(entity);
     }
 
     /**

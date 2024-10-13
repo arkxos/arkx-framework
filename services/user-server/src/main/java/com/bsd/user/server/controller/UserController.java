@@ -155,7 +155,7 @@ public class UserController {
         user.setInputCode(code);
         user.setLoginIp(WebUtils.getRemoteAddress(request));
         Map<String, Object> map = userService.loginByMobileCode(user);
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -179,7 +179,7 @@ public class UserController {
         user.setPassword(password);
         user.setLoginIp(WebUtils.getRemoteAddress(request));
         Map<String, Object> map = userService.loginByMobilePassword(user);
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -198,7 +198,7 @@ public class UserController {
         UserPo user = new UserPo();
         user.setLoginMobile(LoginMoblie);
         Map<String, Object> map = userService.authenticatingToken(user);
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -385,7 +385,7 @@ public class UserController {
         List<UserVO> users = BeanConvertUtils.copyList(resultPage.getRecords(), UserVO.class);
         resultPage.setRecords(users);
 
-        return ResultBody.ok().data(resultPage);
+        return ResultBody.ok(resultPage);
     }
 
 
@@ -430,7 +430,7 @@ public class UserController {
         }
         Map<String, Object> result = Maps.newHashMap();
         result.put("user_id", userPo.getUserId());
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -504,7 +504,7 @@ public class UserController {
         });
         JSONObject userSources = new JSONObject();
         userSources.put("user_source", sourceArray);
-        return ResultBody.ok().data(userSources);
+        return ResultBody.ok(userSources);
     }
 
 
@@ -523,7 +523,7 @@ public class UserController {
         //查询用户信息
         User user = userService.getById(userId);
         if (user == null) {
-            return ResultBody.failed().msg("用户详情不存在");
+            return ResultBody.failed("用户详情不存在");
         }
         //查询用户地址信息
         List<ConsigneeAddress> addressList = consigneeAddressService.queryUserConsigneeAddressByUserId(userId);
@@ -553,7 +553,7 @@ public class UserController {
             log.error("PO转VO异常:{}", ex.getMessage());
             throw new OpenAlertException("获取详情失败");
         }
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
 
@@ -572,7 +572,7 @@ public class UserController {
         String authorization = request.getHeader("Authorization");
         boolean isSuc = userService.batchPush(Arrays.asList(ids.split(",")), authorization);
         if (!isSuc) {
-            return ResultBody.failed().msg("批量推送用户信息到客户系统失败");
+            return ResultBody.failed("批量推送用户信息到客户系统失败");
         }
         return ResultBody.ok();
     }
@@ -592,7 +592,7 @@ public class UserController {
                                    @RequestParam(value = "status", required = true) Integer status) {
         boolean isSuc = userService.batchChangeStatus(Arrays.asList(ids.split(",")), status);
         if (!isSuc) {
-            return ResultBody.failed().msg("批量修改用户状态失败");
+            return ResultBody.failed("批量修改用户状态失败");
         }
         return ResultBody.ok();
     }

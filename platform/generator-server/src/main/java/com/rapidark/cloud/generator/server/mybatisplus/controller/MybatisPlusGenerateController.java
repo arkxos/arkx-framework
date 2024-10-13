@@ -49,12 +49,12 @@ public class MybatisPlusGenerateController {
         TemplateConfig templateConfig = new TemplateConfig();
         ConfigBuilder config = new ConfigBuilder(new PackageConfig(), dsc, strategy, templateConfig, gc);
         List<TableInfo> list = config.getTableInfoList();
-        return ResultBody.ok().data(list);
+        return ResultBody.ok(list);
     }
 
     @ApiOperation(value = "代码生成并下载", notes = "代码生成并下载")
     @PostMapping("/execute")
-    public ResultBody<List<TableInfo>> execute(@RequestBody GenerateCodeCommand command) throws Exception {
+    public ResultBody<Map<String, Object>> execute(@RequestBody GenerateCodeCommand command) throws Exception {
         String outputDir = System.getProperty("user.dir") + File.separator + "temp" + File.separator + "generator" + File.separator + DateUtils.getCurrentTimestampStr();
         GenerateConfig config = new GenerateConfig();
         config.setDbType(DbType.getDbType(command.getType()));
@@ -74,9 +74,9 @@ public class MybatisPlusGenerateController {
         // 压缩目录
         String[] srcDir = {outputDir + File.separator + (command.getParentPackage().substring(0, command.getParentPackage().indexOf("."))), outputDir + File.separator + "src"};
         ZipUtil.toZip(srcDir, filePath, true);
-        Map data = Maps.newHashMap();
+        Map<String, Object> data = Maps.newHashMap();
         data.put("filePath", filePath);
         data.put("fileName", fileName);
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 }

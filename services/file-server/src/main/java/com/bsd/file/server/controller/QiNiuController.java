@@ -48,7 +48,7 @@ public class QiNiuController {
     public ResultBody token() {
         Map<String, String> map = Maps.newHashMap();
         map.put("token", qiniuService.getToken());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -76,7 +76,7 @@ public class QiNiuController {
         Map<String, String> map = Maps.newHashMap();
         map.put("fileName", fileName);
         map.put("fileUrl", qiniuService.getFileUrl(fileName));
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -106,7 +106,7 @@ public class QiNiuController {
                 list.add(map);
             }
         }
-        return ResultBody.ok().data(list);
+        return ResultBody.ok(list);
     }
 
     /**

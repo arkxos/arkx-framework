@@ -143,9 +143,9 @@ public class BalancedRest extends BaseRest {
             BalancedRsp balancedRsp = new BalancedRsp();
             balancedRsp.setBalanced(balanced);
             balancedRsp.setServerList(serverList);
-            return ResultBody.ok().data(balancedRsp);
+            return ResultBody.ok(balancedRsp);
         }
-        return ResultBody.failed().msg("未获取到对象");
+        return ResultBody.failed("未获取到对象");
     }
 
     /**
@@ -170,7 +170,7 @@ public class BalancedRest extends BaseRest {
         int currentPage = getCurrentPage(balancedReq.getCurrentPage());
         int pageSize = getPageSize(balancedReq.getPageSize());
         PageData<Balanced> data = balancedService.pageList(balanced, currentPage, pageSize);
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     /**

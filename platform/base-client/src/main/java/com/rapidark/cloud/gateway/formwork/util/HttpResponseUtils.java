@@ -34,7 +34,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeUnauth(ServerHttpResponse response, String msg) {
-        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg(msg));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.failed(msg));
         return write(response, HttpStatus.UNAUTHORIZED, jsonMsg);
     }
 
@@ -44,7 +44,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeError(ServerHttpResponse response, String msg) {
-        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg(msg));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.failed(msg));
         return write(response, HttpStatus.INTERNAL_SERVER_ERROR, jsonMsg);
     }
 

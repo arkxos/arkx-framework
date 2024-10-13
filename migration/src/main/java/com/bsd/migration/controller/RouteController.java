@@ -20,10 +20,10 @@ public class RouteController {
     @RequestMapping("/sync")
     public Object sync(Config sourceConfig, Config targetConfig) {
         if (sourceConfig == null) {
-            return ResultBody.failed().msg("源配置错误");
+            return ResultBody.failed("源配置错误");
         }
         if (targetConfig == null) {
-            return ResultBody.failed().msg("目标配置错误");
+            return ResultBody.failed("目标配置错误");
         }
         routeService.sync(sourceConfig, targetConfig);
         return ResultBody.ok().msg("路由资源同步中");

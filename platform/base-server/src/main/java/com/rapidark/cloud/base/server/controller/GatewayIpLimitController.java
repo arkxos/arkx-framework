@@ -2,6 +2,7 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimit;
+import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
@@ -12,8 +13,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,8 +41,8 @@ public class GatewayIpLimitController {
      */
     @ApiOperation(value = "获取分页接口列表", notes = "获取分页接口列表")
     @GetMapping("/gateway/limit/ip")
-    public ResultBody<IPage<GatewayIpLimit>> getIpLimitListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(gatewayIpLimitService.findListPage(new PageParams(map)));
+    public ResultBody<Page<GatewayIpLimit>> getIpLimitListPage(@RequestParam(required = false) Map map) {
+        return ResultBody.ok(gatewayIpLimitService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -53,10 +56,10 @@ public class GatewayIpLimitController {
             @ApiImplicitParam(name = "policyId", value = "策略ID", paramType = "form"),
     })
     @GetMapping("/gateway/limit/ip/api/list")
-    public ResultBody<IPage<GatewayIpLimit>> getIpLimitApiList(
+    public ResultBody<List<GatewayIpLimitApi>> getIpLimitApiList(
             @RequestParam("policyId") Long policyId
     ) {
-        return ResultBody.ok().data(gatewayIpLimitService.findIpLimitApiList(policyId));
+        return ResultBody.ok(gatewayIpLimitService.findIpLimitApiList(policyId));
     }
 
     /**
@@ -93,7 +96,7 @@ public class GatewayIpLimitController {
     })
     @GetMapping("/gateway/limit/ip/{policyId}/info")
     public ResultBody<GatewayIpLimit> getIpLimit(@PathVariable("policyId") Long policyId) {
-        return ResultBody.ok().data(gatewayIpLimitService.getIpLimitPolicy(policyId));
+        return ResultBody.ok(gatewayIpLimitService.getIpLimitPolicy(policyId));
     }
 
     /**
@@ -125,7 +128,7 @@ public class GatewayIpLimitController {
         if (result != null) {
             policyId = result.getPolicyId();
         }
-        return ResultBody.ok().data(policyId);
+        return ResultBody.ok(policyId);
     }
 
     /**

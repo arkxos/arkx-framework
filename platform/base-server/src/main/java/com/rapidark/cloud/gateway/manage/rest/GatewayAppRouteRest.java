@@ -112,13 +112,13 @@ public class GatewayAppRouteRest extends BaseRest {
     public ResultBody findById(@RequestParam String id){
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        return ResultBody.ok().data(gatewayAppRouteService.findById(id));
+        return ResultBody.ok(gatewayAppRouteService.findById(id));
     }
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody list(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
-        return ResultBody.ok().data(gatewayAppRouteService.list(toRoute(routeReq)));
+        return ResultBody.ok(gatewayAppRouteService.list(toRoute(routeReq)));
     }
 
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
@@ -134,7 +134,7 @@ public class GatewayAppRouteRest extends BaseRest {
             gatewayAppRoute.setStatus(null);
         }
         PageData<GatewayAppRoute> data = gatewayAppRouteService.pageList(gatewayAppRoute, currentPage, pageSize);
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     /**

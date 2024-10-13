@@ -2,6 +2,7 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
+import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.common.model.PageParams;
 import com.rapidark.common.model.ResultBody;
@@ -12,8 +13,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,8 +41,8 @@ public class GatewayRateLimitController {
      */
     @ApiOperation(value = "获取分页接口列表", notes = "获取分页接口列表")
     @GetMapping("/gateway/limit/rate")
-    public ResultBody<IPage<GatewayRateLimit>> getRateLimitListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(gatewayRateLimitService.findListPage(new PageParams(map)));
+    public ResultBody<Page<GatewayRateLimit>> getRateLimitListPage(@RequestParam(required = false) Map map) {
+        return ResultBody.ok(gatewayRateLimitService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -53,10 +56,10 @@ public class GatewayRateLimitController {
             @ApiImplicitParam(name = "policyId", value = "策略ID", paramType = "form"),
     })
     @GetMapping("/gateway/limit/rate/api/list")
-    public ResultBody<IPage<GatewayRateLimit>> getRateLimitApiList(
+    public ResultBody<List<GatewayRateLimitApi>> getRateLimitApiList(
             @RequestParam("policyId") Long policyId
     ) {
-        return ResultBody.ok().data(gatewayRateLimitService.findRateLimitApiList(policyId));
+        return ResultBody.ok(gatewayRateLimitService.findRateLimitApiList(policyId));
     }
 
     /**
@@ -93,7 +96,7 @@ public class GatewayRateLimitController {
     })
     @GetMapping("/gateway/limit/rate/{policyId}/info")
     public ResultBody<GatewayRateLimit> getRateLimit(@PathVariable("policyId") Long policyId) {
-        return ResultBody.ok().data(gatewayRateLimitService.getRateLimitPolicy(policyId));
+        return ResultBody.ok(gatewayRateLimitService.getRateLimitPolicy(policyId));
     }
 
     /**
@@ -130,7 +133,7 @@ public class GatewayRateLimitController {
         if (result != null) {
             policyId = result.getPolicyId();
         }
-        return ResultBody.ok().data(policyId);
+        return ResultBody.ok(policyId);
     }
 
     /**

@@ -91,7 +91,7 @@ public class MchInfoController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok().data(mchInfoService.findListPage(new PageParams(map)));
+        return ResultBody.ok(mchInfoService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -122,9 +122,9 @@ public class MchInfoController {
         ObjectValidUtil.checkStrLength("name", mchInfo.getName(), 30);
         int result = mchInfoService.addMchInfo(mchInfo);
         if (result > 0) {
-            return ResultBody.ok().msg("保存成功");
+            return ResultBody.ok(mchInfo).msg("保存成功");
         } else {
-            return ResultBody.failed().msg("保存失败");
+            return ResultBody.failed("保存失败");
         }
     }
 
@@ -151,7 +151,7 @@ public class MchInfoController {
                                       @RequestParam(value = "state") Byte state) {
         MchInfo info = mchInfoService.findMchInfo(mchId);
         if (info == null) {
-            return ResultBody.failed().msg("商户信息不存在");
+            return ResultBody.failed("商户信息不存在");
         }
         MchInfo mchInfo = new MchInfo();
         mchInfo.setMchId(info.getMchId());
@@ -162,9 +162,9 @@ public class MchInfoController {
         ObjectValidUtil.checkStrLength("name", mchInfo.getName(), 30);
         int result = mchInfoService.updateMchInfo(mchInfo);
         if (result > 0) {
-            return ResultBody.ok().msg("修改成功");
+            return ResultBody.ok(mchInfo).msg("修改成功");
         } else {
-            return ResultBody.failed().msg("修改失败");
+            return ResultBody.failed("修改失败");
         }
     }
 
@@ -182,9 +182,9 @@ public class MchInfoController {
     public ResultBody<MchInfo> detail(@RequestParam(value = "mchId") String mchId) {
         MchInfo mchinfo = mchInfoService.findMchInfo(mchId);
         if (mchinfo == null) {
-            return ResultBody.failed().msg("未查找到ID为" + mchId + "的商户信息");
+            return ResultBody.failed("未查找到ID为" + mchId + "的商户信息");
         }
-        return ResultBody.ok().data(mchinfo);
+        return ResultBody.ok(mchinfo);
     }
 
     @InitBinder

@@ -46,7 +46,7 @@ public class CaptchaController {
         Map<String, String> map = Maps.newHashMap();
         map.put("verKey", key);
         map.put("image", captcha.toBase64());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -66,7 +66,7 @@ public class CaptchaController {
         Map<String, String> map = Maps.newHashMap();
         map.put("verKey", key);
         map.put("image", captcha.toBase64());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -86,7 +86,7 @@ public class CaptchaController {
         Map<String, String> map = Maps.newHashMap();
         map.put("verKey", key);
         map.put("image", captcha.toBase64());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -106,7 +106,7 @@ public class CaptchaController {
         Map<String, String> map = Maps.newHashMap();
         map.put("verKey", key);
         map.put("image", captcha.toBase64());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -126,7 +126,7 @@ public class CaptchaController {
         Map<String, String> map = Maps.newHashMap();
         map.put("verKey", key);
         map.put("image", captcha.toBase64());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -147,7 +147,7 @@ public class CaptchaController {
         Map<String, String> map = Maps.newHashMap();
         map.put("verKey", key);
         map.put("image", captcha.toBase64());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -166,12 +166,12 @@ public class CaptchaController {
         // 获取redis中的验证码
         String redisCode = redisUtil.get(verKey);
         if (StringUtils.isEmpty(redisCode)) {
-            return ResultBody.failed().msg("验证码已失效");
+            return ResultBody.failed("验证码已失效");
         }
         // 判断验证码
         if (StringUtils.isBlank(verCode) || !redisCode.equals(verCode.trim().toLowerCase())) {
             redisUtil.del(verKey);
-            return ResultBody.failed().msg("验证码输入有误");
+            return ResultBody.failed("验证码输入有误");
         }
         redisUtil.del(verKey);
         return ResultBody.ok();

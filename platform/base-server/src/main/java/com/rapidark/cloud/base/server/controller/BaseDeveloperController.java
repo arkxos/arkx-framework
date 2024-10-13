@@ -56,20 +56,20 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
         String ip = WebUtils.getRemoteAddress(request);
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
         UserAccount account = baseDeveloperService.login(username, parameterMap, ip, userAgent);
-        return ResultBody.ok().data(account);
+        return ResultBody.ok(account);
     }
 
     @ApiOperation(value = "系统分页用户列表", notes = "系统分页用户列表")
     @GetMapping("/developer")
     public ResultBody<PageData<BaseDeveloper>> getUserList(@RequestParam(required = false) Map map) {
         PageData<BaseDeveloper> data = baseDeveloperService.findListPage(new PageParams(map));
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     @ApiOperation(value = "获取所有用户列表", notes = "获取所有用户列表")
     @GetMapping("/developer/all")
-    public ResultBody<List<BaseRole>> getUserAllList() {
-        return ResultBody.ok().data(baseDeveloperService.findAllList());
+    public ResultBody<List<BaseDeveloper>> getUserAllList() {
+        return ResultBody.ok(baseDeveloperService.findAllList());
     }
 
     @ApiOperation(value = "添加系统用户", notes = "添加系统用户")

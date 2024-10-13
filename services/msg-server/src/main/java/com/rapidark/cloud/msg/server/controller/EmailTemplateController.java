@@ -40,7 +40,7 @@ public class EmailTemplateController {
         PageParams pageParams = new PageParams(map);
         EmailTemplate query = pageParams.mapToObject(EmailTemplate.class);
         QueryWrapper<EmailTemplate> queryWrapper = new QueryWrapper();
-        return ResultBody.ok().data(targetService.page(new PageParams(map), queryWrapper));
+        return ResultBody.ok(targetService.page(new PageParams(map), queryWrapper));
     }
 
     /**
@@ -51,7 +51,7 @@ public class EmailTemplateController {
     @GetMapping("/get")
     public ResultBody<EmailTemplate> get(@RequestParam("id") Long id) {
         EmailTemplate entity = targetService.getById(id);
-        return ResultBody.ok().data(entity);
+        return ResultBody.ok(entity);
     }
 
     /**

@@ -37,7 +37,7 @@ public class EmailLogsController {
         PageParams pageParams = new PageParams(map);
         EmailLogs query = pageParams.mapToObject(EmailLogs.class);
         QueryWrapper<EmailLogs> queryWrapper = new QueryWrapper();
-        return ResultBody.ok().data(targetService.page(new PageParams(map), queryWrapper));
+        return ResultBody.ok(targetService.page(new PageParams(map), queryWrapper));
     }
 
     /**
@@ -48,6 +48,6 @@ public class EmailLogsController {
     @GetMapping("/get")
     public ResultBody<EmailLogs> get(@RequestParam("id") Long id) {
         EmailLogs entity = targetService.getById(id);
-        return ResultBody.ok().data(entity);
+        return ResultBody.ok(entity);
     }
 }

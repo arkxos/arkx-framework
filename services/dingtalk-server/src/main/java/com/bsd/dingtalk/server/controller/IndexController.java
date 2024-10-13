@@ -46,7 +46,7 @@ public class IndexController {
     public ResultBody getLoginOtherConfig() {
         Map<String, String> map = Maps.newHashMap();
         map.put("dingtalk", AccessTokenUtil.getAuthorizationUrl(dingtalkProperties.getAppkey(), "http://bsd.vaiwan.com/dingtalk/login"));
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -75,7 +75,7 @@ public class IndexController {
             Map resultMap = Maps.newHashMap();
             resultMap.put("userId", userId);
             resultMap.put("userName", userName);
-            return ResultBody.ok().data(resultMap);
+            return ResultBody.ok(resultMap);
         } catch (RuntimeException e) {
             e.printStackTrace();
             return null;

@@ -96,7 +96,7 @@ public class SecureIpRest extends BaseRest {
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody findById(@RequestParam String ip) {
         Assert.isTrue(StringUtils.isNotBlank(ip), "IP值不能为空");
-        return ResultBody.ok().data(secureIpService.findById(ip));
+        return ResultBody.ok(secureIpService.findById(ip));
     }
 
     /**
@@ -116,7 +116,7 @@ public class SecureIpRest extends BaseRest {
         if (StringUtils.isNotBlank(secureIpReq.getStatus())){
             secureIp.setStatus(secureIpReq.getStatus());
         }
-        return ResultBody.ok().data(secureIpService.pageList(secureIp,currentPage, pageSize));
+        return ResultBody.ok(secureIpService.pageList(secureIp,currentPage, pageSize));
     }
 
     /**

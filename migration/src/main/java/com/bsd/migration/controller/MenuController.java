@@ -18,14 +18,15 @@ public class MenuController {
     private MenuService menuService;
 
     @RequestMapping("/sync")
-    public Object sync(Config sourceConfig, Config targetConfig) {
+    public ResultBody<String> sync(Config sourceConfig, Config targetConfig) {
         if (sourceConfig == null) {
-            return ResultBody.failed().msg("源配置错误");
+            return ResultBody.failed("源配置错误");
         }
         if (targetConfig == null) {
-            return ResultBody.failed().msg("目标配置错误");
+            return ResultBody.failed("目标配置错误");
         }
         menuService.sync(sourceConfig, targetConfig);
-        return ResultBody.ok().msg("菜单资源同步中");
+        ResultBody<String> result = ResultBody.ok();
+        return result.msg("菜单资源同步中");
     }
 }

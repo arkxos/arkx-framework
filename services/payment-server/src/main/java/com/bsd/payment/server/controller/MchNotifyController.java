@@ -94,7 +94,7 @@ public class MchNotifyController {
         map.put("limit", pageSize);
 
         IPage<MchNotify> page = mchNotifyService.findListPage(new PageParams(map));
-        return ResultBody.ok().data(page);
+        return ResultBody.ok(page);
     }
 
     /*@ApiOperation(value = "新增商户通知", notes = "新增商户通知")
@@ -134,7 +134,7 @@ public class MchNotifyController {
         if (isCcreate) {
             return ResultBody.ok().msg("新增成功");
         } else {
-            return ResultBody.failed().msg("新增失败");
+            return ResultBody.failed("新增失败");
         }
     }*/
 
@@ -147,8 +147,8 @@ public class MchNotifyController {
     public ResultBody<MchNotify> detail(@RequestParam(value = "orderId") String orderId) {
         MchNotify item = mchNotifyService.findMchNotify(orderId);
         if (item == null) {
-            return ResultBody.failed().msg("获取详情失败");
+            return ResultBody.failed("获取详情失败");
         }
-        return ResultBody.ok().data(item);
+        return ResultBody.ok(item);
     }
 }

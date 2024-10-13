@@ -84,7 +84,7 @@ public class ConsigneeAddressController {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         ConsigneeAddressPo po = new ConsigneeAddressPo();
         po.setLoginMobile(LoginMoblie);
-        return ResultBody.ok().data(consigneeAddressService.queryUserConsigneeAddress(po));
+        return ResultBody.ok(consigneeAddressService.queryUserConsigneeAddress(po));
     }
 
 
@@ -94,7 +94,7 @@ public class ConsigneeAddressController {
     })
     @PostMapping("/list/byUserId")
     public ResultBody addressList(@RequestParam(value = "userId", required = true) Long userId) {
-        return ResultBody.ok().data(consigneeAddressService.queryUserConsigneeAddressByUserId(userId));
+        return ResultBody.ok(consigneeAddressService.queryUserConsigneeAddressByUserId(userId));
     }
 
 

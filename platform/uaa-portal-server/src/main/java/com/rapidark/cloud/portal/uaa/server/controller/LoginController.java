@@ -44,7 +44,7 @@ public class LoginController {
     @ApiOperation(value = "获取用户基础信息")
     @GetMapping("/current/user")
     public ResultBody getUserProfile() {
-        return ResultBody.ok().data(OpenHelper.getUser());
+        return ResultBody.ok(OpenHelper.getUser());
     }
 
     /**
@@ -75,7 +75,7 @@ public class LoginController {
     @PostMapping("/login/token")
     public ResultBody<OAuth2AccessToken> getLoginToken(@RequestParam String username, @RequestParam String password) throws Exception {
         OAuth2AccessToken result = getToken(username, password, null);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**

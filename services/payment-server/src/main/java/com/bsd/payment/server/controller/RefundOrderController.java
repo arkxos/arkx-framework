@@ -150,7 +150,7 @@ public class RefundOrderController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok().data(refundOrderService.findListPage(new PageParams(map)));
+        return ResultBody.ok(refundOrderService.findListPage(new PageParams(map)));
     }
 
     @ApiOperation(value = "退款订单详情", notes = "点击查看详情进入详情页面")
@@ -158,9 +158,9 @@ public class RefundOrderController {
     public ResultBody<RefundOrder> detail(@RequestParam String refundOrderId) {
         RefundOrder refundOrder = refundOrderService.findRefundOrder(refundOrderId);
         if (refundOrder == null) {
-            return ResultBody.failed().msg("未查找到ID为" + refundOrderId + "的退款订单信息");
+            return ResultBody.failed("未查找到ID为" + refundOrderId + "的退款订单信息");
         }
-        return ResultBody.ok().data(refundOrder);
+        return ResultBody.ok(refundOrder);
     }
 
     @InitBinder
@@ -186,7 +186,7 @@ public class RefundOrderController {
             @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form")
     })
     @RequestMapping(value = "/refund", method = RequestMethod.POST)
-    public ResultBody<RefundOrder> pay(@RequestParam(value = "mchId") String mchId,
+    public ResultBody<JSONObject> pay(@RequestParam(value = "mchId") String mchId,
                                        @RequestParam(value = "channelCode") String channelCode,
                                        @RequestParam(value = "mchOrderNo") String mchOrderNo,
                                        @RequestParam(value = "amount") Long amount,
@@ -245,9 +245,9 @@ public class RefundOrderController {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("refundOrderId", (retMap.get("refundOrderId").toString()));
             jsonObject.put("channelName", (retMap.get("channelName").toString()));
-            return ResultBody.ok().msg("退款处理中").data(jsonObject);
+            return ResultBody.ok(jsonObject).msg("退款处理中");
         }
-        return ResultBody.failed().msg(retMap.get("retMsg").toString());
+        return ResultBody.failed(retMap.get("retMsg").toString());
     }
 
     @ApiOperation(value = "查询退款", notes = "查询退款是否已经成功")
@@ -259,7 +259,7 @@ public class RefundOrderController {
             @ApiImplicitParam(name = "channelPayOrderNo", value = "渠道支付单号", paramType = "form")
     })
     @RequestMapping(value = "/getRefund", method = RequestMethod.GET)
-    public ResultBody<RefundOrder> getRefund(@RequestParam(value = "mchId") String mchId,
+    public ResultBody getRefund(@RequestParam(value = "mchId") String mchId,
                                              @RequestParam(value = "refundOrderId") String refundOrderId,
                                              @RequestParam(value = "channelCode") String channelCode,
                                              @RequestParam(value = "payOrderId") String payOrderId,
@@ -281,7 +281,7 @@ public class RefundOrderController {
             String errorMessage = refundOrderService.validateQueryParams(paramMap, payContext);
             if (!"success".equalsIgnoreCase(errorMessage)) {
                 _log.warn(errorMessage);
-                return ResultBody.failed().msg(errorMessage);
+                return ResultBody.failed(errorMessage);
             }
             String jsonParam = RpcUtil.createBaseParam(jsonObject);
             //封装返回结果
@@ -293,17 +293,17 @@ public class RefundOrderController {
                 resultMap = payChannel4AliService.getAliRefundReq(jsonParam);
             } else {
                 _log.warn("不支持的退款渠道,停止退款处理.refundOrderId={},channelName={}", refundOrderId, channelName);
-                return ResultBody.failed().msg("不支持的退款渠道,停止退款处理!");
+                return ResultBody.failed("不支持的退款渠道,停止退款处理!");
             }
             if (resultMap == null) {
-                return ResultBody.failed().msg("支付订单不存在！");
+                return ResultBody.failed("支付订单不存在！");
             }
             Map<String, Object> map = XXPayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
             map.put("result", resultMap);
             return ResultBody.ok().data(map);
         } catch (Exception e) {
             _log.error(e, "");
-            return ResultBody.failed().msg("支付中心系统异常");
+            return ResultBody.failed("支付中心系统异常");
         }
     }
 }

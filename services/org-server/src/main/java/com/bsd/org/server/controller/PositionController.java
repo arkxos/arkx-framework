@@ -65,7 +65,7 @@ public class PositionController {
         positionVO.setCompanyId(companyId);
         //设置分页
         Page<PositionVO> page = new Page<PositionVO>(pageIndex, pageSize);
-        return ResultBody.ok().data(positionService.page(page, positionVO));
+        return ResultBody.ok(positionService.page(page, positionVO));
     }
 
     /**
@@ -79,9 +79,9 @@ public class PositionController {
     public ResultBody<Position> get(@RequestParam("positionId") Long positionId) {
         Position position = positionService.getById(positionId);
         if (position == null) {
-            return ResultBody.failed().msg("未找到职位信息");
+            return ResultBody.failed("未找到职位信息");
         }
-        return ResultBody.ok().data(position);
+        return ResultBody.ok(position);
     }
 
 
@@ -93,7 +93,7 @@ public class PositionController {
     @ApiOperation(value = "获取所有职位", notes = "获取所有职位")
     @GetMapping("/list")
     public ResultBody list() {
-        return ResultBody.ok().data(positionService.listByParam(null));
+        return ResultBody.ok(positionService.listByParam(null));
     }
 
 
@@ -109,7 +109,7 @@ public class PositionController {
     })
     @GetMapping("/findByDepartmentId/all")
     public ResultBody allPositions(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok().data(positionService.findByDepartmentIdAndStatus(departmentId, null));
+        return ResultBody.ok(positionService.findByDepartmentIdAndStatus(departmentId, null));
     }
 
     @ApiOperation(value = "根据部门ID列表获取所有职位", notes = "根据部门ID列表获取所有职位")
@@ -118,7 +118,7 @@ public class PositionController {
     })
     @GetMapping("/findByDepartmentIds/all")
     public ResultBody allPositions(@RequestParam(value = "departmentIds", required = true) String departmentIds) {
-        return ResultBody.ok().data(positionService.findByDepartmentIds(Arrays.asList(departmentIds.split(","))));
+        return ResultBody.ok(positionService.findByDepartmentIds(Arrays.asList(departmentIds.split(","))));
     }
 
 
@@ -134,7 +134,7 @@ public class PositionController {
     })
     @GetMapping("/findByDepartmentId/available")
     public ResultBody availablePositions(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok().data(positionService.findByDepartmentIdAndStatus(departmentId, true));
+        return ResultBody.ok(positionService.findByDepartmentIdAndStatus(departmentId, true));
     }
 
     /**
@@ -260,11 +260,11 @@ public class PositionController {
     public ResultBody remove(@RequestParam(value = "positionId", required = true) Long positionId) {
         Position position = positionService.getById(positionId);
         if (position == null) {
-            return ResultBody.failed().msg("岗位信息不存在");
+            return ResultBody.failed("岗位信息不存在");
         }
         boolean isSuc = positionService.removeById(position.getPositionId());
         if (!isSuc) {
-            return ResultBody.failed().msg("删除岗位失败");
+            return ResultBody.failed("删除岗位失败");
         }
         return ResultBody.ok();
     }*/

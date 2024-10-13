@@ -63,7 +63,7 @@ public class AliPayChannelServiceImpl implements IPayService {
                 transResultDTO.setChannelOrderNo(response.getOrderId());
                 transResultDTO.setTransSuccTime(DateUtil.getTextDate(response.getPayDate(), "yyyy-MM-dd HH:mm:ss"));
                 transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_SUCCESS);
-                return ResultBody.ok().data(transResultDTO);
+                return ResultBody.ok(transResultDTO);
             } else {
                 transResultDTO.setChannelErrCode(response.getSubCode());
                 transResultDTO.setChannelErrMsg(response.getSubMsg());
@@ -76,7 +76,7 @@ public class AliPayChannelServiceImpl implements IPayService {
             transResultDTO.setChannelErrMsg(StrUtil.substr("支付宝转账请求异常:" + e.getMessage(), PayConstant.TRANS_ERROR_INFO_MAX_SIZE));
             transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_FAIL);
         }
-        return ResultBody.failed().data(transResultDTO);
+        return ResultBody.failed(transResultDTO);
     }
 
 
@@ -124,7 +124,7 @@ public class AliPayChannelServiceImpl implements IPayService {
                     transResultDTO.setChannelOrderNo(response.getOrderId());
                     transResultDTO.setTransSuccTime(DateUtil.getTextDate(response.getPayDate(), "yyyy-MM-dd HH:mm:ss"));
                     transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_SUCCESS);
-                    return ResultBody.ok().data(transResultDTO);
+                    return ResultBody.ok(transResultDTO);
                 } else if ("INIT".equals(status) || "DEALING".equals(status) || "UNKNOWN".equals(status)) {
                     transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_TRANING);
                 } else {
@@ -144,6 +144,6 @@ public class AliPayChannelServiceImpl implements IPayService {
             transResultDTO.setChannelErrMsg(StrUtil.substr("支付宝转账查询请求异常:" + e.getMessage(), PayConstant.TRANS_ERROR_INFO_MAX_SIZE));
             transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_FAIL);
         }
-        return ResultBody.failed().data(transResultDTO);
+        return ResultBody.failed(transResultDTO);
     }
 }

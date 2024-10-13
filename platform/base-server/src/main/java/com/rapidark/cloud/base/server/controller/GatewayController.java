@@ -49,7 +49,7 @@ public class GatewayController implements IGatewayServiceClient {
                 services.add(service);
             });
         }
-        return ResultBody.ok().data(services);
+        return ResultBody.ok(services);
     }
 
     /**
@@ -61,7 +61,7 @@ public class GatewayController implements IGatewayServiceClient {
     @GetMapping("/gateway/api/blackList")
     @Override
     public ResultBody<List<IpLimitApi>> getApiBlackList() {
-        return ResultBody.ok().data(gatewayIpLimitService.findBlackList());
+        return ResultBody.ok(gatewayIpLimitService.findBlackList());
     }
 
     /**
@@ -73,7 +73,7 @@ public class GatewayController implements IGatewayServiceClient {
     @GetMapping("/gateway/api/whiteList")
     @Override
     public ResultBody<List<IpLimitApi>> getApiWhiteList() {
-        return ResultBody.ok().data(gatewayIpLimitService.findWhiteList());
+        return ResultBody.ok(gatewayIpLimitService.findWhiteList());
     }
 
     /**
@@ -85,7 +85,7 @@ public class GatewayController implements IGatewayServiceClient {
     @GetMapping("/gateway/api/rateLimit")
     @Override
     public ResultBody<List<RateLimitApi>> getApiRateLimitList() {
-        return ResultBody.ok().data(gatewayRateLimitService.findRateLimitApiList());
+        return ResultBody.ok(gatewayRateLimitService.findRateLimitApiList());
     }
 
     /**
@@ -97,6 +97,6 @@ public class GatewayController implements IGatewayServiceClient {
     @GetMapping("/gateway/api/route")
     @Override
     public ResultBody<List<GatewayAppRoute>> getApiRouteList() {
-        return ResultBody.ok().data(gatewayAppRouteService.findAll());
+        return ResultBody.ok(gatewayAppRouteService.findAll());
     }
 }

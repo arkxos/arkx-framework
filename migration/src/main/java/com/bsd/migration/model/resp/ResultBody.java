@@ -46,20 +46,24 @@ public class ResultBody<T> implements Serializable {
      */
     private long timestamp = System.currentTimeMillis();
 
-    public static ResultBody ok() {
-        return new ResultBody().code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage());
+    public static <T> ResultBody<T> ok() {
+        return new ResultBody<T>().code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage());
     }
 
-    public static ResultBody failed() {
-        return new ResultBody().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage());
+    public static <T> ResultBody<T> failed() {
+        return new ResultBody<T>().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage());
     }
 
-    public ResultBody code(int code) {
+    public static <T> ResultBody<T> failed(String msg) {
+        return new ResultBody<T>().code(ErrorCode.FAIL.getCode()).msg(msg);
+    }
+
+    public ResultBody<T> code(int code) {
         this.code = code;
         return this;
     }
 
-    public ResultBody msg(String message) {
+    public ResultBody<T> msg(String message) {
         this.message = message;
         return this;
     }

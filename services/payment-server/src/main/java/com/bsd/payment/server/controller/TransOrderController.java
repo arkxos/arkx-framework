@@ -125,7 +125,7 @@ public class TransOrderController {
         map.put("limit", pageSize);
 
 
-        return ResultBody.ok().data(transOrderService.findListPage(new PageParams(map)));
+        return ResultBody.ok(transOrderService.findListPage(new PageParams(map)));
     }
 
     @ApiOperation(value = "转账订单详情", notes = "点击查看详情进入详情页面")
@@ -133,9 +133,9 @@ public class TransOrderController {
     public ResultBody<TransOrder> detail(@RequestParam String transOrderId) {
         TransOrder transOrder = transOrderService.findTransOrder(transOrderId);
         if (transOrder == null) {
-            return ResultBody.failed().msg("未查找到ID为" + transOrderId + "的转账订单信息");
+            return ResultBody.failed("未查找到ID为" + transOrderId + "的转账订单信息");
         }
-        return ResultBody.ok().data(transOrder);
+        return ResultBody.ok(transOrder);
     }
 
     @ApiOperation(value = "发起转账", notes = "发起转账")
@@ -175,7 +175,7 @@ public class TransOrderController {
                              HttpServletRequest request) {
         JSONObject payChannel = payChannelService.getByMchIdAndChannelCode(mchId, channelCode);
         if (payChannel == null) {
-            return ResultBody.failed().msg("找不到支付渠道");
+            return ResultBody.failed("找不到支付渠道");
         }
 
         //创建转账订单
@@ -204,9 +204,9 @@ public class TransOrderController {
             simpleTransDTO.setTransOrderId(transOrder.getTransOrderId());
             //发送异步转账消息
             rabbitMq4TransServiceImpl.send(JSON.toJSONString(simpleTransDTO));
-            return ResultBody.ok().data(transOrder);
+            return ResultBody.ok(transOrder);
         } else {
-            return ResultBody.failed().msg("发起转账失败");
+            return ResultBody.failed("发起转账失败");
         }
     }
 
@@ -219,6 +219,6 @@ public class TransOrderController {
         //查询转账订单结果
         QueryTransResultDTO queryTransResultDTO = transOrderService.queryTransOrderResult(transOrderId);
         //返回转账订单结果
-        return ResultBody.ok().data(queryTransResultDTO);
+        return ResultBody.ok(queryTransResultDTO);
     }
 }

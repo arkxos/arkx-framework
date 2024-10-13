@@ -40,7 +40,7 @@ public class EmailConfigController {
         PageParams pageParams = new PageParams(map);
         EmailConfig query = pageParams.mapToObject(EmailConfig.class);
         QueryWrapper<EmailConfig> queryWrapper = new QueryWrapper();
-        return ResultBody.ok().data(targetService.page(new PageParams(map), queryWrapper));
+        return ResultBody.ok(targetService.page(new PageParams(map), queryWrapper));
     }
 
     /**
@@ -51,7 +51,7 @@ public class EmailConfigController {
     @GetMapping("/get")
     public ResultBody<EmailConfig> get(@RequestParam("id") Long id) {
         EmailConfig entity = targetService.getById(id);
-        return ResultBody.ok().data(entity);
+        return ResultBody.ok(entity);
     }
 
     /**

@@ -74,7 +74,7 @@ public class DepartmentController {
         Page pageConf = new Page<DepartmentVO>(pageIndex, pageSize);
         //查询
         IPage<DepartmentVO> page = departmentService.pageByParam(pageConf, departmentVO);
-        return ResultBody.ok().data(page);
+        return ResultBody.ok(page);
     }
 
 
@@ -90,7 +90,7 @@ public class DepartmentController {
         departmentVO.setCompanyId(companyId);
         departmentVO.setDepartmentId(departmentId);
         List<DepartmentVO> departments = departmentService.listSelectDepartments(departmentVO);
-        return ResultBody.ok().data(departments);
+        return ResultBody.ok(departments);
     }
 
 
@@ -105,9 +105,9 @@ public class DepartmentController {
     public ResultBody get(@RequestParam("departmentId") Long departmentId) {
         Department department = departmentService.getById(departmentId);
         if (department == null) {
-            return ResultBody.failed().msg("未查找到部门信息");
+            return ResultBody.failed("未查找到部门信息");
         }
-        return ResultBody.ok().data(department);
+        return ResultBody.ok(department);
     }
 
 
@@ -124,7 +124,7 @@ public class DepartmentController {
     public ResultBody list(@RequestParam(value = "companyId", required = true) Long companyId) {
         DepartmentVO departmentVO = new DepartmentVO();
         departmentVO.setCompanyId(companyId);
-        return ResultBody.ok().data(departmentService.listByParam(departmentVO));
+        return ResultBody.ok(departmentService.listByParam(departmentVO));
     }
 
     /**
@@ -135,7 +135,7 @@ public class DepartmentController {
     @ApiOperation(value = "获取所有启用的部门信息", notes = "获取所有启用的部门信息")
     @GetMapping("/availableList")
     public ResultBody availableList() {
-        return ResultBody.ok().data(departmentService.availableList());
+        return ResultBody.ok(departmentService.availableList());
     }
 
 
@@ -151,7 +151,7 @@ public class DepartmentController {
     })
     @GetMapping("/children")
     public ResultBody children(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok().data(departmentService.getChildrenDepartments(departmentId, null));
+        return ResultBody.ok(departmentService.getChildrenDepartments(departmentId, null));
     }
 
     /**
@@ -166,7 +166,7 @@ public class DepartmentController {
     })
     @GetMapping("/availableChildrens")
     public ResultBody availableChildrens(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok().data(departmentService.getChildrenDepartments(departmentId, true));
+        return ResultBody.ok(departmentService.getChildrenDepartments(departmentId, true));
     }
 
 
@@ -291,7 +291,7 @@ public class DepartmentController {
         });
         JSONObject levels = new JSONObject();
         levels.put("levels", levelArray);
-        return ResultBody.ok().data(levels);
+        return ResultBody.ok(levels);
     }
 
 
@@ -308,11 +308,11 @@ public class DepartmentController {
     public ResultBody remove(@RequestParam(value = "departmentId", required = true) Long departmentId) {
         Department department = departmentService.getById(departmentId);
         if (department == null) {
-            return ResultBody.failed().msg("部门信息不存在");
+            return ResultBody.failed("部门信息不存在");
         }
         boolean isSuc = departmentService.removeById(departmentId);
         if (!isSuc) {
-            return ResultBody.failed().msg("删除部门信息失败");
+            return ResultBody.failed("删除部门信息失败");
         }
         return ResultBody.ok();
     }*/

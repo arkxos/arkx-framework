@@ -76,7 +76,7 @@ public class CustomWebExceptionHandler implements WebExceptionHandler {
             message = "路由服务异常！";
         }
         message += " path：" + path;
-        String jsonMsg = JSONObject.toJSONString(ResultBody.failed().msg(message));
+        String jsonMsg = JSONObject.toJSONString(ResultBody.failed(message));
         return HttpResponseUtils.write(exchange.getResponse(), status, jsonMsg);
     }
 

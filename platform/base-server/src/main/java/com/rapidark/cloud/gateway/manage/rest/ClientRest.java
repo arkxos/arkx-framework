@@ -98,7 +98,7 @@
 ////    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
 ////    public ResultBody findById(@RequestParam String id) {
 ////        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-////        return ResultBody.ok().data(clientService.findById(id));
+////        return ResultBody.ok(clientService.findById(id));
 ////    }
 //
 //    /**
@@ -130,7 +130,7 @@
 ////        }
 ////        int currentPage = getCurrentPage(reqCurrentPage);
 ////        int pageSize = getPageSize(reqPageSize);
-////        return ResultBody.ok().data(clientService.pageList(client, currentPage, pageSize));
+////        return ResultBody.ok(clientService.pageList(client, currentPage, pageSize));
 ////    }
 //
 //

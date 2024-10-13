@@ -65,7 +65,7 @@ public class ${className}Controller {
     @ApiOperation("新增${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:add')")
     public ResultBody<Object> create(@Validated @RequestBody ${className} resources){
-        return ResultBody.ok().data(${changeClassName}Service.create(resources));
+        return ResultBody.ok(${changeClassName}Service.create(resources));
     }
 
     @PutMapping

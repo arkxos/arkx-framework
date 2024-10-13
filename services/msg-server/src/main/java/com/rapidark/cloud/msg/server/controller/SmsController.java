@@ -61,7 +61,7 @@ public class SmsController implements ISmsClient {
     public ResultBody sendBatchSms(BatchSmsMessage batchSmsMessage) {
         boolean isCheck = checkBatchSmsMessage(batchSmsMessage);
         if (!isCheck) {
-            ResultBody.failed().msg("参数校验存在错误");
+            ResultBody.failed("参数校验存在错误");
         }
         //转发批量发送短信请求到线程池中
         this.dispatcher.dispatch(batchSmsMessage);

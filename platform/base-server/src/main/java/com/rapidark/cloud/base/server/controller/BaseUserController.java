@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +61,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         String ip = WebUtils.getRemoteAddress(request);
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
         UserAccount account = baseUserService.login(username, parameterMap , ip, userAgent);
-        return ResultBody.ok().data(account);
+        return ResultBody.ok(account);
     }
 
     /**
@@ -70,8 +71,8 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @ApiOperation(value = "系统分页用户列表", notes = "系统分页用户列表")
     @GetMapping("/user")
-    public ResultBody<IPage<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(baseUserService.findListPage(new PageParams(map)));
+    public ResultBody<Page<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
+        return ResultBody.ok(baseUserService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -81,8 +82,8 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @ApiOperation(value = "获取所有用户列表", notes = "获取所有用户列表")
     @GetMapping("/user/all")
-    public ResultBody<List<BaseRole>> getUserAllList() {
-        return ResultBody.ok().data(baseUserService.findAllList());
+    public ResultBody<List<BaseUser>> getUserAllList() {
+        return ResultBody.ok(baseUserService.findAllList());
     }
 
     /**
@@ -105,7 +106,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setAvatar(command.getAvatar());
         user.setStatus(command.getStatus());
         baseUserService.addUser(user);
-        return ResultBody.ok().data(user.getUserId());
+        return ResultBody.ok(user.getUserId());
     }
 
     /**
@@ -188,7 +189,7 @@ public class BaseUserController implements IBaseUserServiceClient {
     public ResultBody<List<BaseRole>> getUserRoles(
             @RequestParam(value = "userId") Long userId
     ) {
-        return ResultBody.ok().data(baseRoleService.getUserRoles(userId));
+        return ResultBody.ok(baseRoleService.getUserRoles(userId));
     }
 
 

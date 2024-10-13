@@ -67,9 +67,9 @@ public class CountService {
             pageData1.setPageSize(pageSize);
             pageData1.setTotalElements(pageData.getTotalElements());
             pageData1.setContent(routeCountRspList);
-            return ResultBody.ok().data(pageData1);
+            return ResultBody.ok(pageData1);
         }
-        return ResultBody.ok().data(pageData);
+        return ResultBody.ok(pageData);
     }
 
     /**
@@ -223,7 +223,7 @@ public class CountService {
             data.setCounts(v.toArray(new Integer[v.size()]));
             datas.add(data);
         });
-        return ResultBody.ok().data(rsp);
+        return ResultBody.ok(rsp);
     }
 
     /**

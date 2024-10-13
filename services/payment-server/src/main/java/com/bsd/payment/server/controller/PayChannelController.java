@@ -92,7 +92,7 @@ public class PayChannelController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok().data(payChannelService.findListPage(new PageParams(map)));
+        return ResultBody.ok(payChannelService.findListPage(new PageParams(map)));
     }
 
     @ApiOperation(value = "新增渠道信息", notes = "点击新增按钮保存渠道信息")
@@ -124,9 +124,9 @@ public class PayChannelController {
         ObjectValidUtil.checkStrLength("channelCode", payChannel.getChannelCode(), 24);
         int result = payChannelService.addPayChannel(payChannel);
         if (result > 0) {
-            return ResultBody.ok().msg("保存成功！");
+            return ResultBody.ok(payChannel).msg("保存成功！");
         } else {
-            return ResultBody.failed().msg("保存失败！");
+            return ResultBody.failed("保存失败！");
         }
     }
 
@@ -151,7 +151,7 @@ public class PayChannelController {
     ) {
         PayChannel channel = payChannelService.selectByPayChannelId(channelId);
         if (channel == null) {
-            return ResultBody.failed().msg("渠道信息不存在");
+            return ResultBody.failed("渠道信息不存在");
         }
         PayChannel payChannel = new PayChannel();
         payChannel.setChannelId(channelId.longValue());
@@ -166,9 +166,9 @@ public class PayChannelController {
         ObjectValidUtil.checkStrLength("channelCode", payChannel.getChannelCode(), 24);
         int result = payChannelService.updatePayChannel(payChannel);
         if (result > 0) {
-            return ResultBody.ok().msg("修改成功！");
+            return ResultBody.ok(payChannel).msg("修改成功！");
         } else {
-            return ResultBody.failed().msg("修改失败！");
+            return ResultBody.failed("修改失败！");
         }
     }
 
@@ -177,9 +177,9 @@ public class PayChannelController {
     public ResultBody<PayChannel> detail(@RequestParam String channelId) {
         PayChannel payChannel = payChannelService.findPayChannel(channelId);
         if (payChannel == null) {
-            return ResultBody.failed().msg("未查找到ID为" + channelId + "的渠道信息");
+            return ResultBody.failed("未查找到ID为" + channelId + "的渠道信息");
         }
-        return ResultBody.ok().data(payChannel);
+        return ResultBody.ok(payChannel);
     }
 
     @InitBinder
@@ -192,7 +192,7 @@ public class PayChannelController {
 
     @ApiOperation(value = "查询所有渠道", notes = "后台把code转为name发给前端,前台不需要传参数")
     @RequestMapping(value = "/codeToName", method = RequestMethod.GET)
-    public ResultBody<PayChannel> codeToName() {
+    public ResultBody<List<PayChannelDto>> codeToName() {
         List<PayChannelDto> channelNameList = new ArrayList<>();
         for (ChannelEnum channelEnum : ChannelEnum.values()) {
             PayChannelDto dto = new PayChannelDto();
@@ -200,6 +200,6 @@ public class PayChannelController {
             dto.setChannelName(channelEnum.getValue());
             channelNameList.add(dto);
         }
-        return ResultBody.ok().data(channelNameList);
+        return ResultBody.ok(channelNameList);
     }
 }

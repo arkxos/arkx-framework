@@ -184,6 +184,6 @@ public class IndexController {
         map.put("qq", qqAuthService.getAuthorizationUrl());
         map.put("wechat", wechatAuthService.getAuthorizationUrl());
         map.put("gitee", giteeAuthService.getAuthorizationUrl());
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 }

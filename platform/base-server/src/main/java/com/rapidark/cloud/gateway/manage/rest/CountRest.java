@@ -71,7 +71,7 @@ public class CountRest extends BaseRest {
      */
     @RequestMapping(value = "/request/total", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody routeTotal() {
-        return ResultBody.ok().data(countService.countRequestTotal());
+        return ResultBody.ok(countService.countRequestTotal());
     }
 
     /**
@@ -80,7 +80,7 @@ public class CountRest extends BaseRest {
      */
     @RequestMapping(value = "/request/app/total", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody routeAppTotal(@RequestParam(required=false) String id) {
-        return ResultBody.ok().data(countService.countRequestTotal(id));
+        return ResultBody.ok(countService.countRequestTotal(id));
     }
 
     /**

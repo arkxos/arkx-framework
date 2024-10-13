@@ -43,7 +43,7 @@ public class CommentController {
     @PostMapping(value = "/admin/list")
     public ResultBody adminComments(CommentQuery commentQuery) {
         IPage<Comment> page = commentService.commentPage(commentQuery, true);
-        return ResultBody.ok().data(page);
+        return ResultBody.ok(page);
     }
 
     /**
@@ -55,7 +55,7 @@ public class CommentController {
     @PostMapping(value = "/client/list")
     public ResultBody clientComments(CommentQuery commentQuery) {
         IPage<Comment> page = commentService.commentPage(commentQuery, false);
-        return ResultBody.ok().data(page);
+        return ResultBody.ok(page);
     }
 
 
@@ -73,7 +73,7 @@ public class CommentController {
         //保存评论
         boolean isSuc = commentService.saveComment(comment);
         if (!isSuc) {
-            return ResultBody.failed().msg("添加评论失败");
+            return ResultBody.failed("添加评论失败");
         }
         return ResultBody.ok();
     }
@@ -91,7 +91,7 @@ public class CommentController {
     public ResultBody batchAudited(@RequestParam(value = "commentIds") String commentIds) {
         boolean isSuc = commentService.changeStatus(CommentStatusEnum.NO_RESPONSE, Arrays.asList(commentIds.split(",")));
         if (!isSuc) {
-            return ResultBody.failed().msg("批量审核评论失败");
+            return ResultBody.failed("批量审核评论失败");
         }
         return ResultBody.ok();
     }
@@ -113,7 +113,7 @@ public class CommentController {
                                  @RequestParam(value = "replyContent") String replyContent) {
         boolean isSuc = commentService.batchReply(Arrays.asList(commentIds.split(",")), replyContent);
         if (!isSuc) {
-            return ResultBody.failed().msg("批量回复评论失败");
+            return ResultBody.failed("批量回复评论失败");
         }
         return ResultBody.ok();
     }
@@ -133,7 +133,7 @@ public class CommentController {
     public ResultBody batchShield(@RequestParam(value = "commentIds") String commentIds) {
         boolean isSuc = commentService.changeStatus(CommentStatusEnum.SHIELD, Arrays.asList(commentIds.split(",")));
         if (!isSuc) {
-            return ResultBody.failed().msg("批量屏蔽评论失败");
+            return ResultBody.failed("批量屏蔽评论失败");
         }
         return ResultBody.ok();
     }
@@ -153,7 +153,7 @@ public class CommentController {
     public ResultBody setTop(@RequestParam(value = "commentId") String commentId) {
         boolean isSuc = commentService.setCommentToTop(commentId);
         if (!isSuc) {
-            return ResultBody.failed().msg("置顶评论失败");
+            return ResultBody.failed("置顶评论失败");
         }
         return ResultBody.ok();
     }
@@ -176,7 +176,7 @@ public class CommentController {
                              @RequestParam(value = "action") Integer action) {
         boolean isSuc = commentService.doCommentAction(commentId, action);
         if (!isSuc) {
-            return ResultBody.failed().msg("评论操作失败");
+            return ResultBody.failed("评论操作失败");
         }
         return ResultBody.ok();
     }

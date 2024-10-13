@@ -84,8 +84,8 @@ public class ResultBody<T> implements Serializable {
     }
 
 
-    public static ResultBody<Object> ok() {
-        return new ResultBody<>().code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage());
+    public static <T> ResultBody<T> ok() {
+        return new ResultBody<T>().code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage());
     }
 
     public static <T> ResultBody<T> ok(T data) {
@@ -94,8 +94,16 @@ public class ResultBody<T> implements Serializable {
         return result.code(ErrorCode.OK.getCode()).msg(ErrorCode.OK.getMessage()).data(data);
     }
 
-    public static ResultBody<Object> failed() {
-        return new ResultBody<>().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage());
+    public static ResultBody<String> failed() {
+        return new ResultBody<String>().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage());
+    }
+
+    public static <T> ResultBody<T> failed(String message) {
+        return new ResultBody<T>().code(ErrorCode.FAIL.getCode()).msg(message);
+    }
+
+    public static <T> ResultBody<T> failed(T data) {
+        return new ResultBody<T>().code(ErrorCode.FAIL.getCode()).msg(ErrorCode.FAIL.getMessage()).data(data);
     }
 
     public ResultBody<T> bizId(String bizId) {

@@ -53,7 +53,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     @Override
     public ResultBody<List<AuthorityResource>> findAuthorityResource() {
         List<AuthorityResource> result = baseAuthorityService.findAuthorityResource();
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -67,7 +67,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @RequestParam(value = "serviceId", required = false) String serviceId
     ) {
         List<AuthorityApi> result = baseAuthorityService.findAuthorityApi(serviceId);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
 
@@ -81,7 +81,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     @Override
     public ResultBody<List<AuthorityMenu>> findAuthorityMenu() {
         List<AuthorityMenu> result = baseAuthorityService.findAuthorityMenu(1, null);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**
@@ -99,7 +99,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @RequestParam(value = "actionId") Long actionId
     ) {
         List<BaseAuthorityAction> list = baseAuthorityService.findAuthorityAction(actionId);
-        return ResultBody.ok().data(list);
+        return ResultBody.ok(list);
     }
 
 
@@ -116,7 +116,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     @GetMapping("/authority/role")
     public ResultBody<List<OpenAuthority>> findAuthorityRole(Long roleId) {
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByRole(roleId);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
 
@@ -136,7 +136,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     ) {
         BaseUser user = baseUserService.getUserById(userId);
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByUser(userId, CommonConstants.ROOT.equals(user.getUserName()));
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
 
@@ -156,7 +156,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @RequestParam(value = "appSystemCode") String appSystemCode
     ) {
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByApp(appId, appSystemCode);
-        return ResultBody.ok().data(result);
+        return ResultBody.ok(result);
     }
 
     /**

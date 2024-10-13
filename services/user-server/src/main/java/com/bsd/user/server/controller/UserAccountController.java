@@ -57,7 +57,7 @@ public class UserAccountController {
     })
     @PostMapping("/qq/callback")
     public ResultBody callbackByQQ(@RequestParam(value = "code", required = true) String code) {
-        return ResultBody.ok().data(userAccountService.isBindingsByQq(code));
+        return ResultBody.ok(userAccountService.isBindingsByQq(code));
     }
 
     /**
@@ -80,12 +80,12 @@ public class UserAccountController {
         }
         //校验platform
         if (!Arrays.asList(UserConstants.PLATFORM_ALL).contains(platform)) {
-            return ResultBody.failed().msg("第三方平台参数错误");
+            return ResultBody.failed("第三方平台参数错误");
         }
         if (userAccountService.isBindingsByWechat(code, platform)) {
             return ResultBody.ok();
         }
-        return ResultBody.failed().msg("您暂未绑定用户中心账号，请前往绑定");
+        return ResultBody.failed("您暂未绑定用户中心账号，请前往绑定");
     }
 
 
@@ -108,7 +108,7 @@ public class UserAccountController {
         accoutPo.setCode(code);
         accoutPo.setPlatform(platform);
         accoutPo.setLoginIp(WebUtils.getRemoteAddress(request));
-        return ResultBody.ok().data(userAccountService.loginByThirdPlatform(accoutPo));
+        return ResultBody.ok(userAccountService.loginByThirdPlatform(accoutPo));
     }
 
     /**
@@ -170,10 +170,10 @@ public class UserAccountController {
     public ResultBody getUserAccountByUserId(@RequestParam(value = "uids", required = true) String uids) {
         List<String> idList = Arrays.asList(uids.split(","));
         if (idList == null || idList.size() == 0) {
-            return ResultBody.failed().msg("用户ID列表不能为空");
+            return ResultBody.failed("用户ID列表不能为空");
         }
         List<UserAccountDTO> users = BeanConvertUtils.copyList(userAccountService.selectBatchUserIds(idList), UserAccountDTO.class);
-        return ResultBody.ok().data(users);
+        return ResultBody.ok(users);
     }
 
 
@@ -192,7 +192,7 @@ public class UserAccountController {
         wechatAuthServiceMap.forEach((k, v) -> {
             map.put(v.getConfigTag(), v.getAuthorizationUrl());
         });
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 
     /**
@@ -219,6 +219,6 @@ public class UserAccountController {
             vMap.put("scope", vObj.getScope());
             map.put(v.getConfigTag(), vMap);
         });
-        return ResultBody.ok().data(map);
+        return ResultBody.ok(map);
     }
 }

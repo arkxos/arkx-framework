@@ -64,7 +64,7 @@ public class GroovyScriptRest extends BaseRest {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象网关路由ID");
         GroovyScript groovyScript = new GroovyScript();
         groovyScript.setRouteId(routeId);
-        return ResultBody.ok().data(groovyScriptService.list(groovyScript));
+        return ResultBody.ok(groovyScriptService.list(groovyScript));
     }
 
     /**

@@ -61,9 +61,9 @@ public class FastDFSController {
             Map<String, String> map = Maps.newHashMap();
             map.put("fileName", fileAbsolutePath[1]);
             map.put("fileUrl", path);
-            return ResultBody.ok().data(map);
+            return ResultBody.ok(map);
         } catch (Exception e) {
-            return ResultBody.failed().msg(e.getMessage());
+            return ResultBody.failed(e.getMessage());
         }
     }
 }

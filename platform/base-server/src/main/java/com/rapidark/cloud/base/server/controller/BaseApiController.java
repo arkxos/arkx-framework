@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +40,8 @@ public class BaseApiController {
      */
     @ApiOperation(value = "获取分页接口列表", notes = "获取分页接口列表")
     @GetMapping(value = "/api")
-    public ResultBody<IPage<BaseApi>> getApiList(@RequestParam(required = false) Map map) {
-        return ResultBody.ok().data(apiService.findListPage(new PageParams(map)));
+    public ResultBody<Page<BaseApi>> getApiList(@RequestParam(required = false) Map map) {
+        return ResultBody.ok(apiService.findListPage(new PageParams(map)));
     }
 
 
@@ -52,7 +53,7 @@ public class BaseApiController {
     @ApiOperation(value = "获取所有接口列表", notes = "获取所有接口列表")
     @GetMapping("/api/all")
     public ResultBody<List<BaseApi>> getApiAllList(String serviceId) {
-        return ResultBody.ok().data(apiService.findAllList(serviceId));
+        return ResultBody.ok(apiService.findAllList(serviceId));
     }
 
     /**
@@ -67,7 +68,7 @@ public class BaseApiController {
     })
     @GetMapping("/api/{apiId}/info")
     public ResultBody<BaseApi> getApi(@PathVariable("apiId") Long apiId) {
-        return ResultBody.ok().data(apiService.getApi(apiId));
+        return ResultBody.ok(apiService.getApi(apiId));
     }
 
     /**
@@ -110,10 +111,10 @@ public class BaseApiController {
         api.setApiDesc(command.getApiDesc());
         api.setIsAuth(command.getIsAuth());
         api.setIsOpen(command.getIsOpen());
-        String apiId = null;
+
         apiService.addApi(api);
         openRestTemplate.refreshGateway();
-        return ResultBody.ok().data(apiId);
+        return ResultBody.ok(api.getApiId());
     }
 
     /**

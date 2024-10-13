@@ -109,7 +109,7 @@ public class ClientServerRegisterRest extends BaseRest {
     public ResultBody findById(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
 //        Assert.isTrue(id>0, "ID值错误");
-        return ResultBody.ok().data(clientServerRegisterService.findById(id));
+        return ResultBody.ok(clientServerRegisterService.findById(id));
     }
 
     /**
@@ -120,7 +120,7 @@ public class ClientServerRegisterRest extends BaseRest {
     public ResultBody serverPageList(String clientId, Pageable pageable) {
 //        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象查询ID");
         Page<GatewayAppRouteRegServer> data = clientServerRegisterService.serverPageList(clientId, pageable);
-        return ResultBody.ok().data(PageUtil.toPageData(data));
+        return ResultBody.ok(PageUtil.toPageData(data));
     }
 
     /**
@@ -136,7 +136,7 @@ public class ClientServerRegisterRest extends BaseRest {
 //        int currentPage = getCurrentPage(regServerReq.getCurrentPage());
 //        int pageSize = getPageSize(regServerReq.getPageSize());
         Page<Map<String, Object>> data = clientServerRegisterService.clientPageList(routeId, pageable);
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     /**
@@ -149,7 +149,7 @@ public class ClientServerRegisterRest extends BaseRest {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象查询ID");
 //        ClientServerRegister regServer = new ClientServerRegister();
 //        regServer.setRouteId(regServerReq.getRouteId());
-        return ResultBody.ok().data(clientServerRegisterService.regClientList(routeId));
+        return ResultBody.ok(clientServerRegisterService.regClientList(routeId));
     }
 
     /**
@@ -250,7 +250,7 @@ public class ClientServerRegisterRest extends BaseRest {
 //        Assert.notNull(regServerReq, "未获取到对象");
 //        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到客户端ID");
         Page<GatewayAppRoute> data = clientServerRegisterService.notRegServerPageList(clientId, pageable);
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     /**
@@ -264,7 +264,7 @@ public class ClientServerRegisterRest extends BaseRest {
 //        int currentPage = getCurrentPage(regServerReq.getCurrentPage());
 //        int pageSize = getPageSize(regServerReq.getPageSize());
         Page<OpenApp> data = clientServerRegisterService.notRegClientPageList(routeId, pageable);
-        return ResultBody.ok().data(data);
+        return ResultBody.ok(data);
     }
 
     /**
@@ -294,7 +294,7 @@ public class ClientServerRegisterRest extends BaseRest {
         clientServerRegister.setTokenEffectiveTime(tokenEffectiveTime);
         clientServerRegisterService.update(clientServerRegister);
         //返回最新Token
-        return ResultBody.ok().data(jwtToken);
+        return ResultBody.ok(jwtToken);
     }
 
     /**

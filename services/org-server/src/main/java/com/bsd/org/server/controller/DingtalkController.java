@@ -44,7 +44,7 @@ public class DingtalkController {
             @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
     })
     @GetMapping(value = "/page")
-    public ResultBody<DingtalkVO> page(@RequestParam(value = "companyId", required = false) Long companyId,
+    public ResultBody page(@RequestParam(value = "companyId", required = false) Long companyId,
                                        @RequestParam(value = "corpId", required = false) String corpId,
                                        @RequestParam(value = "agentdId", required = false) String agentdId,
                                        @RequestParam(value = "appKey", required = false) String appKey,
@@ -64,7 +64,7 @@ public class DingtalkController {
         dingtalkVO.setToken(token);
         //设置分页
         Page page = new Page<Dingtalk>(pageIndex, pageSize);
-        return ResultBody.ok().data(dingtalkService.pageByParam(dingtalkVO, page));
+        return ResultBody.ok(dingtalkService.pageByParam(dingtalkVO, page));
     }
 
 
@@ -79,9 +79,9 @@ public class DingtalkController {
     public ResultBody<Dingtalk> get(@RequestParam("companyId") Long companyId) {
         Dingtalk dingtalk = dingtalkService.getById(companyId);
         if (dingtalk == null) {
-            return ResultBody.failed().msg("未找到钉钉配置信息");
+            return ResultBody.failed("未找到钉钉配置信息");
         }
-        return ResultBody.ok().data(dingtalk);
+        return ResultBody.ok(dingtalk);
     }
 
     /**
@@ -173,12 +173,12 @@ public class DingtalkController {
     public ResultBody remove(@RequestParam(value = "companyId") Long companyId) {
         Dingtalk dingtalk = dingtalkService.getById(companyId);
         if (dingtalk == null) {
-            return ResultBody.failed().msg("钉钉配置信息不存在");
+            return ResultBody.failed("钉钉配置信息不存在");
         }
 
         boolean isSuc = dingtalkService.removeById(companyId);
         if (!isSuc) {
-            return ResultBody.failed().msg("删除钉钉配置信息失败");
+            return ResultBody.failed("删除钉钉配置信息失败");
         }
 
         return ResultBody.ok();

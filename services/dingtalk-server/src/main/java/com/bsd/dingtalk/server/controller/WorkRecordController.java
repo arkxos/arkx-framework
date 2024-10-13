@@ -78,7 +78,7 @@ public class WorkRecordController {
                 return ResultBody.failed().code(errorCode).msg(rsp.getErrmsg());
             }
             localCache.put(id, rsp.getRecordId());
-            return ResultBody.ok().data(rsp.getRecordId());
+            return ResultBody.ok(rsp.getRecordId());
         } catch (Exception e) {
             String errLog = LogFormatter.getKVLogData(LogFormatter.LogEvent.END, "startWorkRecord fail");
             log.info(errLog, e);
@@ -136,7 +136,7 @@ public class WorkRecordController {
             OapiWorkrecordGetbyuseridResponse rsp = client.execute(req, AccessTokenUtil.getToken(dingtalkProperties.getAppkey(), dingtalkProperties.getAppsecret()));
             System.out.println(rsp.getBody());
 
-            return ResultBody.ok().data(rsp.getRecords());
+            return ResultBody.ok(rsp.getRecords());
         } catch (Exception e) {
             return ResultBody.failed().code(-1).msg("系统繁忙");
         }

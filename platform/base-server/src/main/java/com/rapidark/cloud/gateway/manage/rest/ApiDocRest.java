@@ -35,7 +35,7 @@ public class ApiDocRest extends BaseRest {
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody list(){
-        return ResultBody.ok().data(gatewayAppRouteService.list(new GatewayAppRoute()));
+        return ResultBody.ok(gatewayAppRouteService.list(new GatewayAppRoute()));
     }
 
     /**
@@ -59,7 +59,7 @@ public class ApiDocRest extends BaseRest {
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody findById(@RequestParam Long id) {
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到请求ID");
-        return ResultBody.ok().data(apiDocService.findById(id));
+        return ResultBody.ok(apiDocService.findById(id));
     }
 
 }
