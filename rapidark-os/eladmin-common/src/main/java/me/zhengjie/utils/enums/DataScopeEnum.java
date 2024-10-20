@@ -41,8 +41,8 @@ public enum DataScopeEnum {
     private final String value;
     private final String description;
 
-    public static DataScopeEnum find(String val) {
-        for (DataScopeEnum dataScopeEnum : DataScopeEnum.values()) {
+    public static com.rapidark.common.utils.enums.DataScopeEnum find(String val) {
+        for (com.rapidark.common.utils.enums.DataScopeEnum dataScopeEnum : com.rapidark.common.utils.enums.DataScopeEnum.values()) {
             if (val.equals(dataScopeEnum.getValue())) {
                 return dataScopeEnum;
             }

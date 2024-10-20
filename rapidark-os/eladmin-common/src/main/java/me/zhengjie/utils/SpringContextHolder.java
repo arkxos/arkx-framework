@@ -15,6 +15,7 @@
  */
 package me.zhengjie.utils;
 
+import com.rapidark.common.utils.CallBack;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -32,7 +33,7 @@ import java.util.List;
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
 
     private static ApplicationContext applicationContext = null;
-    private static final List<CallBack> CALL_BACKS = new ArrayList<>();
+    private static final List<com.rapidark.common.utils.CallBack> CALL_BACKS = new ArrayList<>();
     private static boolean addCallback = true;
 
     /**
@@ -41,7 +42,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
      *
      * @param callBack 回调函数
      */
-    public synchronized static void addCallBacks(CallBack callBack) {
+    public synchronized static void addCallBacks(com.rapidark.common.utils.CallBack callBack) {
         if (addCallback) {
             SpringContextHolder.CALL_BACKS.add(callBack);
         } else {

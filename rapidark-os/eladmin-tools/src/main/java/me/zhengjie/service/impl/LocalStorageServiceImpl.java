@@ -21,7 +21,7 @@ import com.rapidark.common.utils.QueryHelp;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.config.FileProperties;
 import me.zhengjie.domain.LocalStorage;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.service.dto.LocalStorageDto;
 import me.zhengjie.service.dto.LocalStorageQueryCriteria;
 import me.zhengjie.service.mapstruct.LocalStorageMapper;
@@ -67,33 +67,33 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     @Override
     public LocalStorageDto findById(Long id){
         LocalStorage localStorage = localStorageRepository.findById(id).orElseGet(LocalStorage::new);
-        ValidationUtil.isNull(localStorage.getId(),"LocalStorage","id",id);
+        com.rapidark.common.utils.ValidationUtil.isNull(localStorage.getId(),"LocalStorage","id",id);
         return localStorageMapper.toDto(localStorage);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public LocalStorage create(String name, MultipartFile multipartFile) {
-        FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
-        String suffix = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
-        String type = FileUtil.getFileType(suffix);
-        File file = FileUtil.upload(multipartFile, properties.getPath().getPath() + type +  File.separator);
+        com.rapidark.common.utils.FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
+        String suffix = com.rapidark.common.utils.FileUtil.getExtensionName(multipartFile.getOriginalFilename());
+        String type = com.rapidark.common.utils.FileUtil.getFileType(suffix);
+        File file = com.rapidark.common.utils.FileUtil.upload(multipartFile, properties.getPath().getPath() + type +  File.separator);
         if(ObjectUtil.isNull(file)){
             throw new BadRequestException("上传失败");
         }
         try {
-            name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
+            name = StringUtils.isBlank(name) ? com.rapidark.common.utils.FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
             LocalStorage localStorage = new LocalStorage(
                     file.getName(),
                     name,
                     suffix,
                     file.getPath(),
                     type,
-                    FileUtil.getSize(multipartFile.getSize())
+                    com.rapidark.common.utils.FileUtil.getSize(multipartFile.getSize())
             );
             return localStorageRepository.save(localStorage);
         }catch (Exception e){
-            FileUtil.del(file);
+            com.rapidark.common.utils.FileUtil.del(file);
             throw e;
         }
     }
@@ -102,7 +102,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     @Transactional(rollbackFor = Exception.class)
     public void update(LocalStorage resources) {
         LocalStorage localStorage = localStorageRepository.findById(resources.getId()).orElseGet(LocalStorage::new);
-        ValidationUtil.isNull( localStorage.getId(),"LocalStorage","id",resources.getId());
+        com.rapidark.common.utils.ValidationUtil.isNull( localStorage.getId(),"LocalStorage","id",resources.getId());
         localStorage.copy(resources);
         localStorageRepository.save(localStorage);
     }
@@ -112,7 +112,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     public void deleteAll(Long[] ids) {
         for (Long id : ids) {
             LocalStorage storage = localStorageRepository.findById(id).orElseGet(LocalStorage::new);
-            FileUtil.del(storage.getPath());
+            com.rapidark.common.utils.FileUtil.del(storage.getPath());
             localStorageRepository.delete(storage);
         }
     }
@@ -130,6 +130,6 @@ public class LocalStorageServiceImpl implements LocalStorageService {
             map.put("创建日期", localStorageDTO.getCreateTime());
             list.add(map);
         }
-        FileUtil.downloadExcel(list, response);
+        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
     }
 }

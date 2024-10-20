@@ -19,7 +19,8 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
+import com.rapidark.common.utils.CloseUtil;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ import java.util.Map;
  */
 public class FileUtil extends cn.hutool.core.io.FileUtil {
 
-    private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(com.rapidark.common.utils.FileUtil.class);
 
     /**
      * 系统临时目录
@@ -170,8 +171,8 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            CloseUtil.close(os);
-            CloseUtil.close(ins);
+            com.rapidark.common.utils.CloseUtil.close(os);
+            com.rapidark.common.utils.CloseUtil.close(ins);
         }
         return file;
     }

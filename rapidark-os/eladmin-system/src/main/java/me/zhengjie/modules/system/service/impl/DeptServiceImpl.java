@@ -20,7 +20,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.modules.system.repository.RoleRepository;
@@ -31,7 +31,7 @@ import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.repository.DeptRepository;
 import me.zhengjie.modules.system.service.DeptService;
 import me.zhengjie.modules.system.service.mapstruct.DeptMapper;
-import me.zhengjie.utils.enums.DataScopeEnum;
+import com.rapidark.common.utils.enums.DataScopeEnum;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
@@ -61,7 +61,7 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public List<DeptDto> queryAll(DeptQueryCriteria criteria, Boolean isQuery) throws Exception {
         Sort sort = Sort.by(Sort.Direction.ASC, "deptSort");
-        String dataScopeType = SecurityUtils.getDataScopeType();
+        String dataScopeType = com.rapidark.common.utils.SecurityUtils.getDataScopeType();
         if (isQuery) {
             if(dataScopeType.equals(DataScopeEnum.ALL.getValue())){
                 criteria.setPidIsNull(true);
@@ -93,7 +93,7 @@ public class DeptServiceImpl implements DeptService {
     @Cacheable(key = "'id:' + #p0")
     public DeptDto findById(Long id) {
         Dept dept = deptRepository.findById(id).orElseGet(Dept::new);
-        ValidationUtil.isNull(dept.getId(),"Dept","id",id);
+        com.rapidark.common.utils.ValidationUtil.isNull(dept.getId(),"Dept","id",id);
         return deptMapper.toDto(dept);
     }
 
@@ -129,7 +129,7 @@ public class DeptServiceImpl implements DeptService {
             throw new BadRequestException("上级不能为自己");
         }
         Dept dept = deptRepository.findById(resources.getId()).orElseGet(Dept::new);
-        ValidationUtil.isNull( dept.getId(),"Dept","id",resources.getId());
+        com.rapidark.common.utils.ValidationUtil.isNull( dept.getId(),"Dept","id",resources.getId());
         resources.setId(dept.getId());
         deptRepository.save(resources);
         // 更新父节点中子节点数目
@@ -160,7 +160,7 @@ public class DeptServiceImpl implements DeptService {
             map.put("创建日期", deptDTO.getCreateTime());
             list.add(map);
         }
-        FileUtil.downloadExcel(list, response);
+        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     @Override
@@ -279,7 +279,7 @@ public class DeptServiceImpl implements DeptService {
     public void delCaches(Long id){
         List<User> users = userRepository.findByRoleDeptId(id);
         // 删除数据权限
-        redisUtils.delByKeys(CacheKey.DATA_USER, users.stream().map(User::getId).collect(Collectors.toSet()));
-        redisUtils.del(CacheKey.DEPT_ID + id);
+        redisUtils.delByKeys(com.rapidark.common.utils.CacheKey.DATA_USER, users.stream().map(User::getId).collect(Collectors.toSet()));
+        redisUtils.del(com.rapidark.common.utils.CacheKey.DEPT_ID + id);
     }
 }

@@ -20,10 +20,10 @@ import cn.hutool.extra.mail.MailAccount;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.EmailConfig;
 import me.zhengjie.domain.vo.EmailVo;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.repository.EmailRepository;
 import me.zhengjie.service.EmailService;
-import me.zhengjie.utils.EncryptUtils;
+import com.rapidark.common.utils.MyEncryptUtils;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
         emailConfig.setId(1L);
         if(!emailConfig.getPass().equals(old.getPass())){
             // 对称加密
-            emailConfig.setPass(EncryptUtils.desEncrypt(emailConfig.getPass()));
+            emailConfig.setPass(MyEncryptUtils.desEncrypt(emailConfig.getPass()));
         }
         return emailRepository.save(emailConfig);
     }
@@ -77,7 +77,7 @@ public class EmailServiceImpl implements EmailService {
         account.setAuth(true);
         try {
             // 对称解密
-            account.setPass(EncryptUtils.desDecrypt(emailConfig.getPass()));
+            account.setPass(MyEncryptUtils.desDecrypt(emailConfig.getPass()));
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

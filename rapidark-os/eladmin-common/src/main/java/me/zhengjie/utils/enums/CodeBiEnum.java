@@ -38,8 +38,8 @@ public enum CodeBiEnum {
     private final Integer code;
     private final String description;
 
-    public static CodeBiEnum find(Integer code) {
-        for (CodeBiEnum value : CodeBiEnum.values()) {
+    public static com.rapidark.common.utils.enums.CodeBiEnum find(Integer code) {
+        for (com.rapidark.common.utils.enums.CodeBiEnum value : com.rapidark.common.utils.enums.CodeBiEnum.values()) {
             if (code.equals(value.getCode())) {
                 return value;
             }

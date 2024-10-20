@@ -137,7 +137,7 @@ public class LogServiceImpl implements LogService {
     @Override
     public Object findByErrDetail(Long id) {
         Log log = logRepository.findById(id).orElseGet(Log::new);
-        ValidationUtil.isNull(log.getId(), "Log", "id", id);
+        com.rapidark.common.utils.ValidationUtil.isNull(log.getId(), "Log", "id", id);
         byte[] details = log.getExceptionDetail();
         return Dict.create().set("exception", new String(ObjectUtil.isNotNull(details) ? details : "".getBytes()));
     }
@@ -157,7 +157,7 @@ public class LogServiceImpl implements LogService {
             map.put("创建日期", log.getCreateTime());
             list.add(map);
         }
-        FileUtil.downloadExcel(list, response);
+        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     @Override

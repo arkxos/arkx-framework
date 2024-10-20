@@ -20,7 +20,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Menu;
 import me.zhengjie.modules.system.domain.Role;
 import me.zhengjie.modules.system.domain.User;
@@ -87,7 +87,7 @@ public class MenuServiceImpl implements MenuService {
     @Cacheable(key = "'id:' + #p0")
     public MenuDto findById(long id) {
         Menu menu = menuRepository.findById(id).orElseGet(Menu::new);
-        ValidationUtil.isNull(menu.getId(),"Menu","id",id);
+        com.rapidark.common.utils.ValidationUtil.isNull(menu.getId(),"Menu","id",id);
         return menuMapper.toDto(menu);
     }
 
@@ -139,7 +139,7 @@ public class MenuServiceImpl implements MenuService {
             throw new BadRequestException("上级不能为自己");
         }
         Menu menu = menuRepository.findById(resources.getId()).orElseGet(Menu::new);
-        ValidationUtil.isNull(menu.getId(),"Permission","id",resources.getId());
+        com.rapidark.common.utils.ValidationUtil.isNull(menu.getId(),"Permission","id",resources.getId());
 
         if(resources.getIFrame()){
             String http = "http://", https = "https://";
@@ -312,7 +312,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Menu findOne(Long id) {
         Menu menu = menuRepository.findById(id).orElseGet(Menu::new);
-        ValidationUtil.isNull(menu.getId(),"Menu","id",id);
+        com.rapidark.common.utils.ValidationUtil.isNull(menu.getId(),"Menu","id",id);
         return menu;
     }
 
@@ -330,7 +330,7 @@ public class MenuServiceImpl implements MenuService {
             map.put("创建日期", menuDTO.getCreateTime());
             list.add(map);
         }
-        FileUtil.downloadExcel(list, response);
+        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     private void updateSubCnt(Long menuId){
@@ -346,12 +346,12 @@ public class MenuServiceImpl implements MenuService {
      */
     public void delCaches(Long id){
         List<User> users = userRepository.findByMenuId(id);
-        redisUtils.del(CacheKey.MENU_ID + id);
-        redisUtils.delByKeys(CacheKey.MENU_USER, users.stream().map(User::getId).collect(Collectors.toSet()));
+        redisUtils.del(com.rapidark.common.utils.CacheKey.MENU_ID + id);
+        redisUtils.delByKeys(com.rapidark.common.utils.CacheKey.MENU_USER, users.stream().map(User::getId).collect(Collectors.toSet()));
         // 清除 Role 缓存
         List<Role> roles = roleService.findInMenuId(new ArrayList<Long>(){{
             add(id);
         }});
-        redisUtils.delByKeys(CacheKey.ROLE_ID, roles.stream().map(Role::getId).collect(Collectors.toSet()));
+        redisUtils.delByKeys(com.rapidark.common.utils.CacheKey.ROLE_ID, roles.stream().map(Role::getId).collect(Collectors.toSet()));
     }
 }

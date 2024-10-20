@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.security.service;
 
+import com.rapidark.common.utils.MyEncryptUtils;
 import com.rapidark.common.utils.PageUtil;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +60,7 @@ public class OnlineUserService {
         String address = StringUtils.getCityInfo(ip);
         OnlineUserDto onlineUserDto = null;
         try {
-            onlineUserDto = new OnlineUserDto(jwtUserDto.getUsername(), jwtUserDto.getUser().getNickName(), dept, browser , ip, address, EncryptUtils.desEncrypt(token), new Date());
+            onlineUserDto = new OnlineUserDto(jwtUserDto.getUsername(), jwtUserDto.getUser().getNickName(), dept, browser , ip, address, MyEncryptUtils.desEncrypt(token), new Date());
         } catch (Exception e) {
             log.error(e.getMessage(),e);
         }
@@ -139,7 +140,7 @@ public class OnlineUserService {
             map.put("登录日期", user.getLoginTime());
             list.add(map);
         }
-        FileUtil.downloadExcel(list, response);
+        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     /**
@@ -163,7 +164,7 @@ public class OnlineUserService {
         for(OnlineUserDto onlineUserDto : onlineUserDtos){
             if(onlineUserDto.getUserName().equals(userName)){
                 try {
-                    String token =EncryptUtils.desDecrypt(onlineUserDto.getKey());
+                    String token = MyEncryptUtils.desDecrypt(onlineUserDto.getKey());
                     if(StringUtils.isNotBlank(igoreToken)&&!igoreToken.equals(token)){
                         this.kickOut(token);
                     }else if(StringUtils.isBlank(igoreToken)){
@@ -185,7 +186,7 @@ public class OnlineUserService {
         List<OnlineUserDto> onlineUsers = getAll(username);
         for (OnlineUserDto onlineUser : onlineUsers) {
             if (onlineUser.getUserName().equals(username)) {
-                String token =EncryptUtils.desDecrypt(onlineUser.getKey());
+                String token = MyEncryptUtils.desDecrypt(onlineUser.getKey());
                 kickOut(token);
             }
         }

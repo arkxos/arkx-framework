@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.modules.security.service.OnlineUserService;
-import me.zhengjie.utils.EncryptUtils;
+import com.rapidark.common.utils.MyEncryptUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +60,7 @@ public class OnlineController {
     public ResponseEntity<Object> delete(@RequestBody Set<String> keys) throws Exception {
         for (String key : keys) {
             // 解密Key
-            key = EncryptUtils.desDecrypt(key);
+            key = MyEncryptUtils.desDecrypt(key);
             onlineUserService.kickOut(key);
         }
         return new ResponseEntity<>(HttpStatus.OK);

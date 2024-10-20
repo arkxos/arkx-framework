@@ -15,16 +15,18 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
+import com.rapidark.common.utils.CacheKey;
+import com.rapidark.common.utils.FileUtil;
 import com.rapidark.common.utils.PageUtil;
 import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
+import com.rapidark.common.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.exception.EntityExistException;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.repository.UserRepository;
 import me.zhengjie.modules.system.service.dto.JobQueryCriteria;
-import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.repository.JobRepository;
 import me.zhengjie.modules.system.service.JobService;
 import me.zhengjie.modules.system.service.dto.JobDto;
@@ -70,7 +72,7 @@ public class JobServiceImpl implements JobService {
     @Cacheable(key = "'id:' + #p0")
     public JobDto findById(Long id) {
         Job job = jobRepository.findById(id).orElseGet(Job::new);
-        ValidationUtil.isNull(job.getId(),"Job","id",id);
+        com.rapidark.common.utils.ValidationUtil.isNull(job.getId(),"Job","id",id);
         return jobMapper.toDto(job);
     }
 

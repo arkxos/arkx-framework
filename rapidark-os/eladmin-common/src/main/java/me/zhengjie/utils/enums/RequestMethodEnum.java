@@ -63,8 +63,8 @@ public enum RequestMethodEnum {
      */
     private final String type;
 
-    public static RequestMethodEnum find(String type) {
-        for (RequestMethodEnum value : RequestMethodEnum.values()) {
+    public static com.rapidark.common.utils.enums.RequestMethodEnum find(String type) {
+        for (com.rapidark.common.utils.enums.RequestMethodEnum value : com.rapidark.common.utils.enums.RequestMethodEnum.values()) {
             if (type.equals(value.getType())) {
                 return value;
             }

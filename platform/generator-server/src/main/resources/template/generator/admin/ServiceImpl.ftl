@@ -25,8 +25,8 @@ import me.zhengjie.exception.EntityExistException;
         </#if>
     </#list>
 </#if>
-import me.zhengjie.utils.ValidationUtil;
-import me.zhengjie.utils.FileUtil;
+import com.rapidark.common.utils.ValidationUtil;
+import com.rapidark.common.utils.FileUtil;
 import com.rapidark.common.utils.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import ${package}.repository.${className}Repository;

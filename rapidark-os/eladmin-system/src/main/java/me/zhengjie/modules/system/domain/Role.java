@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import com.rapidark.common.model.BaseEntity;
-import me.zhengjie.utils.enums.DataScopeEnum;
+import com.rapidark.common.utils.enums.DataScopeEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -16,10 +16,10 @@
 package me.zhengjie.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.exception.EntityExistException;
 import me.zhengjie.exception.EntityNotFoundException;
-import me.zhengjie.utils.ThrowableUtil;
+import com.rapidark.common.utils.ThrowableUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

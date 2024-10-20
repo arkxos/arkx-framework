@@ -16,7 +16,7 @@
 
 package me.zhengjie.modules.security.service;
 
-import me.zhengjie.utils.StringUtils;
+import com.rapidark.common.utils.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**

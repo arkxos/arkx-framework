@@ -13,7 +13,7 @@ import com.rapidark.common.exception.OpenAlertException;
 import com.rapidark.common.security.OpenClientDetails;
 import com.rapidark.common.utils.*;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.utils.ValidationUtil;
+import com.rapidark.common.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;

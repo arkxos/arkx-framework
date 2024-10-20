@@ -19,7 +19,7 @@ import com.wf.captcha.*;
 import com.wf.captcha.base.Captcha;
 import lombok.Data;
 import me.zhengjie.exception.BadConfigurationException;
-import me.zhengjie.utils.StringUtils;
+import com.rapidark.common.utils.StringUtils;
 
 import java.awt.*;
 import java.util.Objects;

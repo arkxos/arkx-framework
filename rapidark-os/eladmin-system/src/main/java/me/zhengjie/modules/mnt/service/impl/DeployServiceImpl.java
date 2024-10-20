@@ -17,11 +17,14 @@ package me.zhengjie.modules.mnt.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import com.rapidark.common.utils.FileUtil;
 import com.rapidark.common.utils.PageUtil;
 import com.rapidark.common.utils.QueryHelp;
+import com.rapidark.common.utils.SecurityUtils;
+import com.rapidark.common.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.modules.mnt.domain.App;
 import me.zhengjie.modules.mnt.domain.Deploy;
 import me.zhengjie.modules.mnt.domain.DeployHistory;
@@ -40,7 +43,6 @@ import me.zhengjie.modules.mnt.util.ScpClientUtil;
 import me.zhengjie.modules.mnt.websocket.MsgType;
 import me.zhengjie.modules.mnt.websocket.SocketMsg;
 import me.zhengjie.modules.mnt.websocket.WebSocketServer;
-import me.zhengjie.utils.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -97,7 +99,7 @@ public class DeployServiceImpl implements DeployService {
 	@Transactional(rollbackFor = Exception.class)
 	public void update(Deploy resources) {
 		Deploy deploy = deployRepository.findById(resources.getId()).orElseGet(Deploy::new);
-		ValidationUtil.isNull(deploy.getId(), "Deploy", "id", resources.getId());
+		com.rapidark.common.utils.ValidationUtil.isNull(deploy.getId(), "Deploy", "id", resources.getId());
 		deploy.copy(resources);
 		deployRepository.save(deploy);
 	}

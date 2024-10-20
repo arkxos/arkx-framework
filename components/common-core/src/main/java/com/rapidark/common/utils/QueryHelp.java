@@ -21,8 +21,6 @@ import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import com.rapidark.common.annotation.DataPermission;
 import com.rapidark.common.annotation.Query;
-import me.zhengjie.utils.SecurityUtils;
-import me.zhengjie.utils.StringUtils;
 
 import javax.persistence.criteria.*;
 import java.lang.reflect.Field;
@@ -47,10 +45,10 @@ public class QueryHelp {
             // 获取数据权限
             List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
             if(CollectionUtil.isNotEmpty(dataScopes)){
-                if(me.zhengjie.utils.StringUtils.isNotBlank(permission.joinName()) && me.zhengjie.utils.StringUtils.isNotBlank(permission.fieldName())) {
+                if(StringUtils.isNotBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
                     Join join = root.join(permission.joinName(), JoinType.LEFT);
                     list.add(getExpression(permission.fieldName(),join, root).in(dataScopes));
-                } else if (me.zhengjie.utils.StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                } else if (StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
                     list.add(getExpression(permission.fieldName(),null, root).in(dataScopes));
                 }
             }
@@ -139,10 +137,10 @@ public class QueryHelp {
             // 获取数据权限
             List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
             if(CollectionUtil.isNotEmpty(dataScopes)){
-                if(me.zhengjie.utils.StringUtils.isNotBlank(permission.joinName()) && me.zhengjie.utils.StringUtils.isNotBlank(permission.fieldName())) {
+                if(StringUtils.isNotBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
                     Join join = root.join(permission.joinName(), JoinType.LEFT);
                     list.add(getExpression(permission.fieldName(),join, root).in(dataScopes));
-                } else if (me.zhengjie.utils.StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                } else if (StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
                     list.add(getExpression(permission.fieldName(),null, root).in(dataScopes));
                 }
             }

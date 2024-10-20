@@ -18,6 +18,7 @@ package me.zhengjie.utils;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.rapidark.common.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import com.rapidark.common.annotation.DataPermission;
 import com.rapidark.common.annotation.Query;

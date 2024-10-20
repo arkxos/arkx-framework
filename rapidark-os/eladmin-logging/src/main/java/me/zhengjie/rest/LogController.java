@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import com.rapidark.common.annotation.Log;
 import me.zhengjie.service.LogService;
 import me.zhengjie.service.dto.LogQueryCriteria;
-import me.zhengjie.utils.SecurityUtils;
+import com.rapidark.common.utils.SecurityUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.CreateOpenAppCommand;
@@ -27,7 +26,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.common.annotation.Log;
-import me.zhengjie.utils.FileUtil;
+import com.rapidark.common.utils.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;

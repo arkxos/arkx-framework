@@ -24,7 +24,7 @@ import cn.hutool.extra.template.TemplateUtil;
 import com.rapidark.common.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.vo.EmailVo;
-import me.zhengjie.exception.BadRequestException;
+import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.modules.system.service.VerifyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

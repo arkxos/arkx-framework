@@ -6,7 +6,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static me.zhengjie.utils.StringUtils.*;
+import static com.rapidark.common.utils.StringUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
