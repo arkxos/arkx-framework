@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.rapidark.common.annotation.AnonymousAccess;
 import com.rapidark.common.annotation.Log;
-import me.zhengjie.annotation.rest.AnonymousGetMapping;
+import com.rapidark.common.annotation.rest.AnonymousGetMapping;
 import me.zhengjie.domain.vo.TradeVo;
 import me.zhengjie.domain.AlipayConfig;
 import me.zhengjie.utils.AliPayStatusEnum;

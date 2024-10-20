@@ -18,7 +18,7 @@ package me.zhengjie.modules.system.rest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import com.rapidark.boot.annotation.Limit;
-import me.zhengjie.annotation.rest.AnonymousGetMapping;
+import com.rapidark.common.annotation.rest.AnonymousGetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

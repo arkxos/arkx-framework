@@ -3,10 +3,10 @@ package com.rapidark.common.base;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * @author Zheng Jie
@@ -20,9 +20,9 @@ public class BaseDTO  implements Serializable {
 
     private String updateBy;
 
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 
     @Override
     public String toString() {

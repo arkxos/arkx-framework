@@ -19,6 +19,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.rapidark.common.utils.QueryHelp;
 import com.rapidark.common.utils.RedisUtils;
+import com.rapidark.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.common.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Dept;

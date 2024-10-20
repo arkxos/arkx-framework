@@ -13,9 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.annotation;
+package com.rapidark.common.annotation;
 
-import me.zhengjie.aspect.LimitType;
+import com.rapidark.common.aspect.LimitType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

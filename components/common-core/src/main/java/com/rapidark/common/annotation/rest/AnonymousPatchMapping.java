@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.zhengjie.annotation.rest;
+package com.rapidark.common.annotation.rest;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

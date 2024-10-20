@@ -13,25 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.utils;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
+package com.rapidark.common.aspect;
 
 /**
- * 异常工具 2019-01-06
- * @author Zheng Jie
+ * 限流枚举
+ * @author /
  */
-public class ThrowableUtil {
-
-    /**
-     * 获取堆栈信息
-     */
-    public static String getStackTrace(Throwable throwable){
-        StringWriter sw = new StringWriter();
-        try (PrintWriter pw = new PrintWriter(sw)) {
-            throwable.printStackTrace(pw);
-            return sw.toString();
-        }
-    }
+public enum LimitType {
+    // 默认
+    CUSTOMER,
+    //  by ip addr
+    IP
 }

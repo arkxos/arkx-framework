@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.utils;
+package com.rapidark.common.utils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
  * @date 2018-11-23
  */
 
-public class EncryptUtils {
+public class Encrypt2Utils {
 
     private static final String STR_PARAM = "Passw0rd";
 

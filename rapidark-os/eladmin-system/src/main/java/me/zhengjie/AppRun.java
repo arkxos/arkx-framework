@@ -17,9 +17,8 @@ package me.zhengjie;
 
 import com.rapidark.boot.RapidArkApplication;
 import io.swagger.annotations.Api;
-import me.zhengjie.annotation.rest.AnonymousGetMapping;
+import com.rapidark.common.annotation.rest.AnonymousGetMapping;
 import com.rapidark.common.utils.SpringContextHolder;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;

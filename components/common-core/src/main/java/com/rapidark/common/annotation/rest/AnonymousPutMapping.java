@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.zhengjie.annotation.rest;
+package com.rapidark.common.annotation.rest;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -28,23 +28,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Annotation for mapping HTTP {@code DELETE} requests onto specific handler
+ * Annotation for mapping HTTP {@code PUT} requests onto specific handler
  * methods.
- * 支持匿名访问  DeleteMapping
+ * * 支持匿名访问  PutMapping
  *
  * @author liaojinlong
  * @see AnonymousGetMapping
  * @see AnonymousPostMapping
  * @see AnonymousPutMapping
- * @see AnonymousPatchMapping
+ * @see AnonymousDeleteMapping
  * @see RequestMapping
  */
 @AnonymousAccess
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@RequestMapping(method = RequestMethod.DELETE)
-public @interface AnonymousDeleteMapping {
+@RequestMapping(method = RequestMethod.PUT)
+public @interface AnonymousPutMapping {
 
     /**
      * Alias for {@link RequestMapping#name}.
