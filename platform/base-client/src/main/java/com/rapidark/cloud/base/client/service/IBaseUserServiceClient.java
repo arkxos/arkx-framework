@@ -51,9 +51,7 @@ public interface IBaseUserServiceClient {
      * @return
      */
     @GetMapping("/user/roles")
-    ResultBody<List<BaseRole>> getUserRoles(
-            @RequestParam(value = "userId") Long userId
-    );
+    ResultBody<List<BaseRole>> getUserRoles(@RequestParam(value = "userId") Long userId);
 
     /**
      * 添加系统用户

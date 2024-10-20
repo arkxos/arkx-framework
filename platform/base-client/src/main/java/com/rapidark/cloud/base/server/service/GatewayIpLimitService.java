@@ -46,12 +46,12 @@ public class GatewayIpLimitService extends BaseService<GatewayIpLimit, Long, Gat
      */
     public Page<GatewayIpLimit> findListPage(PageParams pageParams) {
         GatewayIpLimit query = pageParams.mapToObject(GatewayIpLimit.class);
-        CriteriaQueryWrapper<GatewayIpLimit> queryWrapper = new CriteriaQueryWrapper();
+        CriteriaQueryWrapper<GatewayIpLimit> queryWrapper = new CriteriaQueryWrapper<>();
         queryWrapper
                 .likeRight(ObjectUtils.isNotEmpty(query.getPolicyName()), GatewayIpLimit::getPolicyName, query.getPolicyName())
                 .eq(ObjectUtils.isNotEmpty(query.getPolicyType()), GatewayIpLimit::getPolicyType, query.getPolicyType()+"");
 //        queryWrapper.orderByDesc("create_time");
-        Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(),
+        Pageable pageable = PageRequest.of(pageParams.getPage() - 1, pageParams.getLimit(),
                 Sort.by(Sort.Direction.DESC, "createTime"));
         return findAllByCriteria(queryWrapper, pageable);
     }

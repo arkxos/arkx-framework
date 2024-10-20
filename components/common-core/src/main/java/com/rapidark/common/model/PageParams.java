@@ -42,7 +42,7 @@ public class PageParams extends Page implements Serializable {
         this.limit = Integer.parseInt(map.getOrDefault(CommonConstants.PAGE_LIMIT_KEY, CommonConstants.DEFAULT_LIMIT).toString());
         this.sort = (String) map.getOrDefault(CommonConstants.PAGE_SORT_KEY, "");
         this.order = (String) map.getOrDefault(CommonConstants.PAGE_ORDER_KEY, "");
-        super.setCurrent(page);
+        super.setCurrent(page - 1);
         super.setSize(limit);
         map.remove(CommonConstants.PAGE_KEY);
         map.remove(CommonConstants.PAGE_LIMIT_KEY);

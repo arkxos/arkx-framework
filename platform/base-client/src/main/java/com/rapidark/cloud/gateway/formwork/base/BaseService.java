@@ -23,7 +23,7 @@ import java.util.*;
  * @Date 2020/05/16
  * @Version V1.0
  */
-public class BaseService<T,ID,R extends BaseRepository> {
+public class BaseService<T,ID,R extends BaseRepository<T, ID>> {
 
     private static final String DEFAULT_SORT_FIELD = "createTime";
     @Autowired
