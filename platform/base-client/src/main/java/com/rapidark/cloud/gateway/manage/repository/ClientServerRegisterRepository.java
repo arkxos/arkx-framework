@@ -1,13 +1,12 @@
 package com.rapidark.cloud.gateway.manage.repository;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
-import com.rapidark.cloud.base.server.repository.BaseRepository;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

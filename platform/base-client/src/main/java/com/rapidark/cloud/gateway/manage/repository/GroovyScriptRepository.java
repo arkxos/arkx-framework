@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.manage.repository;
 
-import com.rapidark.cloud.base.server.repository.BaseRepository;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;

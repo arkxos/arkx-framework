@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.repository;
 
-import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
+import com.rapidark.framework.data.jpa.BaseRepository;
 
 /**
  * @author darkness

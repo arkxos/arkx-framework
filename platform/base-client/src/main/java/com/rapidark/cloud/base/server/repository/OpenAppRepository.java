@@ -1,8 +1,7 @@
 package com.rapidark.cloud.base.server.repository;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;

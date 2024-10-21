@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.formwork.base;
 
-import com.rapidark.cloud.base.server.repository.BaseRepository;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.commons.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.commons.utils.PageData;
 import com.rapidark.framework.commons.utils.QueryHelp;

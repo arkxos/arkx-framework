@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.repository;
+package com.rapidark.framework.data.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

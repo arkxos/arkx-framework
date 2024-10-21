@@ -6,6 +6,7 @@ import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.base.client.model.entity.BaseAuthority;
 import com.rapidark.framework.commons.security.OpenAuthority;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 
 import java.util.List;
