@@ -1,8 +1,8 @@
 package com.bsd.comment.server.exception;
 
-import com.rapidark.common.constants.ErrorCode;
-import com.rapidark.common.exception.OpenGlobalExceptionHandler;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.constants.ErrorCode;
+import com.rapidark.framework.commons.exception.OpenGlobalExceptionHandler;
+import com.rapidark.framework.commons.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;

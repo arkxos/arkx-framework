@@ -1,7 +1,7 @@
 package com.bsd.payment.server.mapper;
 
 import com.bsd.payment.server.model.entity.PayOrder;
-import com.rapidark.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.commons.mybatis.base.mapper.SuperMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

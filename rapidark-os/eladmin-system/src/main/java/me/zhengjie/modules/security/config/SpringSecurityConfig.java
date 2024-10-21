@@ -16,12 +16,12 @@
 package me.zhengjie.modules.security.config;
 
 import lombok.RequiredArgsConstructor;
-import com.rapidark.common.annotation.AnonymousAccess;
+import com.rapidark.framework.commons.annotation.AnonymousAccess;
 import me.zhengjie.modules.security.config.bean.SecurityProperties;
 import me.zhengjie.modules.security.security.*;
 import me.zhengjie.modules.security.service.OnlineUserService;
 import me.zhengjie.modules.security.service.UserCacheClean;
-import com.rapidark.common.utils.enums.RequestMethodEnum;
+import com.rapidark.framework.commons.utils.enums.RequestMethodEnum;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

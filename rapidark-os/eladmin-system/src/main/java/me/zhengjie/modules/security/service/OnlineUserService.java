@@ -15,10 +15,10 @@
  */
 package me.zhengjie.modules.security.service;
 
-import com.rapidark.common.utils.MyEncryptUtils;
-import com.rapidark.common.utils.PageUtil;
-import com.rapidark.common.utils.RedisUtils;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.utils.MyEncryptUtils;
+import com.rapidark.framework.commons.utils.PageUtil;
+import com.rapidark.framework.commons.utils.RedisUtils;
+import com.rapidark.framework.commons.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.modules.security.config.bean.SecurityProperties;
 import me.zhengjie.modules.security.service.dto.JwtUserDto;
@@ -141,7 +141,7 @@ public class OnlineUserService {
             map.put("登录日期", user.getLoginTime());
             list.add(map);
         }
-        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
     }
 
     /**

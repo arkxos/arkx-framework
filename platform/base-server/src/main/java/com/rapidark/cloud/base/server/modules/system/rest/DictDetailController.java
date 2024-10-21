@@ -23,7 +23,7 @@ import com.rapidark.framework.commons.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-//import com.rapidark.common.annotation.Log;
+//import com.rapidark.framework.commons.annotation.Log;
 import com.rapidark.framework.commons.exception.BadRequestException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

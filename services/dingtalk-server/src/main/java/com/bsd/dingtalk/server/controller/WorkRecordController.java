@@ -13,7 +13,7 @@ import com.dingtalk.api.request.OapiWorkrecordUpdateRequest;
 import com.dingtalk.api.response.OapiWorkrecordAddResponse;
 import com.dingtalk.api.response.OapiWorkrecordGetbyuseridResponse;
 import com.dingtalk.api.response.OapiWorkrecordUpdateResponse;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

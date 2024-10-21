@@ -1,7 +1,7 @@
 package com.rapidark.cloud.msg.server.listener;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.commons.security.http.OpenRestTemplate;
 import com.rapidark.cloud.msg.client.model.WebHookMessage;
 import com.rapidark.cloud.msg.client.model.entity.WebHookLogs;
 import com.rapidark.cloud.msg.server.configuration.RabbitConfiguration;

@@ -1,7 +1,7 @@
 //package com.rapidark.cloud.base.client.model.entity;
 //
 //import com.baomidou.mybatisplus.annotation.TableName;
-//import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+//import com.rapidark.framework.commons.mybatis.base.entity.AbstractEntity;
 //
 //import java.util.Date;
 //

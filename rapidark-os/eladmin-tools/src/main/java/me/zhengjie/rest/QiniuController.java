@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import com.rapidark.common.annotation.Log;
+import com.rapidark.framework.commons.annotation.Log;
 import me.zhengjie.domain.QiniuConfig;
 import me.zhengjie.domain.QiniuContent;
 import me.zhengjie.service.dto.QiniuQueryCriteria;

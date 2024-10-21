@@ -6,10 +6,10 @@
 //import com.rapidark.cloud.base.client.model.entity.GatewayAppRoute;
 //import com.rapidark.cloud.base.server.mapper.GatewayRouteMapper;
 //import com.rapidark.cloud.base.server.service.GatewayAppRouteService;
-//import com.rapidark.common.exception.OpenAlertException;
-//import com.rapidark.common.model.PageParams;
-//import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
-//import com.rapidark.common.utils.StringUtils;
+//import com.rapidark.framework.commons.exception.OpenAlertException;
+//import com.rapidark.framework.commons.model.PageParams;
+//import com.rapidark.framework.commons.mybatis.base.service.impl.BaseServiceImpl;
+//import com.rapidark.framework.commons.utils.StringUtils;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;

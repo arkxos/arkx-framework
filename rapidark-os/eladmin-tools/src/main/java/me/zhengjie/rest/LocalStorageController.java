@@ -16,12 +16,12 @@
 package me.zhengjie.rest;
 
 import lombok.RequiredArgsConstructor;
-import com.rapidark.common.annotation.Log;
+import com.rapidark.framework.commons.annotation.Log;
 import me.zhengjie.domain.LocalStorage;
-import com.rapidark.common.exception.BadRequestException;
+import com.rapidark.framework.commons.exception.BadRequestException;
 import me.zhengjie.service.LocalStorageService;
 import me.zhengjie.service.dto.LocalStorageQueryCriteria;
-import com.rapidark.common.utils.FileUtil;
+import com.rapidark.framework.commons.utils.FileUtil;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

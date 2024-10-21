@@ -2,7 +2,7 @@ package com.rapidark.cloud.msg.server.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import com.rapidark.common.gen.SnowflakeIdGenerator;
+import com.rapidark.framework.commons.gen.SnowflakeIdGenerator;
 import com.rapidark.cloud.msg.client.exchange.DelayExchangeBuilder;
 import com.rapidark.cloud.msg.client.model.WebHookMessage;
 import com.rapidark.cloud.msg.client.model.entity.WebHookLogs;

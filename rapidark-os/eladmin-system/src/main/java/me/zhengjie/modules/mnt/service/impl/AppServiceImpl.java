@@ -16,17 +16,17 @@
 package me.zhengjie.modules.mnt.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import com.rapidark.common.exception.BadRequestException;
+import com.rapidark.framework.commons.exception.BadRequestException;
 import me.zhengjie.modules.mnt.domain.App;
 import me.zhengjie.modules.mnt.repository.AppRepository;
 import me.zhengjie.modules.mnt.service.AppService;
 import me.zhengjie.modules.mnt.service.dto.AppDto;
 import me.zhengjie.modules.mnt.service.dto.AppQueryCriteria;
 import me.zhengjie.modules.mnt.service.mapstruct.AppMapper;
-import com.rapidark.common.utils.FileUtil;
-import com.rapidark.common.utils.PageUtil;
-import com.rapidark.common.utils.QueryHelp;
-import com.rapidark.common.utils.ValidationUtil;
+import com.rapidark.framework.commons.utils.FileUtil;
+import com.rapidark.framework.commons.utils.PageUtil;
+import com.rapidark.framework.commons.utils.QueryHelp;
+import com.rapidark.framework.commons.utils.ValidationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

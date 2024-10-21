@@ -3,7 +3,7 @@ package com.bsd.dingtalk.server.service.impl;
 import com.bsd.dingtalk.server.mapper.PositionMapper;
 import com.bsd.dingtalk.server.model.entity.Position;
 import com.bsd.dingtalk.server.service.PositionService;
-import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.commons.mybatis.base.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

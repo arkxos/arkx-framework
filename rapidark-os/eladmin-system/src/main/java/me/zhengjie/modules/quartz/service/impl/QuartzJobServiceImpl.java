@@ -16,12 +16,12 @@
 package me.zhengjie.modules.quartz.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.rapidark.common.utils.PageUtil;
-import com.rapidark.common.utils.QueryHelp;
-import com.rapidark.common.utils.RedisUtils;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.utils.PageUtil;
+import com.rapidark.framework.commons.utils.QueryHelp;
+import com.rapidark.framework.commons.utils.RedisUtils;
+import com.rapidark.framework.commons.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.common.exception.BadRequestException;
+import com.rapidark.framework.commons.exception.BadRequestException;
 import me.zhengjie.modules.quartz.domain.QuartzJob;
 import me.zhengjie.modules.quartz.domain.QuartzLog;
 import me.zhengjie.modules.quartz.repository.QuartzJobRepository;
@@ -75,7 +75,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     @Override
     public QuartzJob findById(Long id) {
         QuartzJob quartzJob = quartzJobRepository.findById(id).orElseGet(QuartzJob::new);
-        com.rapidark.common.utils.ValidationUtil.isNull(quartzJob.getId(),"QuartzJob","id",id);
+        com.rapidark.framework.commons.utils.ValidationUtil.isNull(quartzJob.getId(),"QuartzJob","id",id);
         return quartzJob;
     }
 
@@ -172,7 +172,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
             map.put("创建日期", quartzJob.getCreateTime());
             list.add(map);
         }
-        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
     }
 
     @Override
@@ -191,6 +191,6 @@ public class QuartzJobServiceImpl implements QuartzJobService {
             map.put("创建日期", quartzLog.getCreateTime());
             list.add(map);
         }
-        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
     }
 }

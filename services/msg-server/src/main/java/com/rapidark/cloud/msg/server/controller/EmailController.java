@@ -3,7 +3,7 @@ package com.rapidark.cloud.msg.server.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.msg.server.dispatcher.MessageDispatcher;
 import com.rapidark.cloud.msg.server.utils.MultipartUtil;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import com.rapidark.cloud.msg.client.model.EmailMessage;
 import com.rapidark.cloud.msg.client.model.EmailTplMessage;
 import com.rapidark.cloud.msg.client.service.IEmailClient;

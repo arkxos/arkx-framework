@@ -2,8 +2,8 @@ package com.bsd.payment.server.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bsd.payment.server.model.entity.MchNotify;
-import com.rapidark.common.model.PageParams;
-import com.rapidark.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.commons.mybatis.base.service.IBaseService;
 
 /**
  * @author: wangyankai

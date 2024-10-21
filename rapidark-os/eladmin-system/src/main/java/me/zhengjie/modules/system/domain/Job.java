@@ -18,7 +18,7 @@ package me.zhengjie.modules.system.domain;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.common.model.BaseEntity;
+import com.rapidark.framework.commons.model.BaseEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

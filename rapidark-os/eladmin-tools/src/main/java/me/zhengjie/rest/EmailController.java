@@ -18,7 +18,7 @@ package me.zhengjie.rest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.common.annotation.Log;
+import com.rapidark.framework.commons.annotation.Log;
 import me.zhengjie.domain.vo.EmailVo;
 import me.zhengjie.domain.EmailConfig;
 import me.zhengjie.service.EmailService;

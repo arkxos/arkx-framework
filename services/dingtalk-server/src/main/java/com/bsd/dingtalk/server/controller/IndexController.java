@@ -5,7 +5,7 @@ import com.bsd.dingtalk.server.service.UserService;
 import com.bsd.dingtalk.server.util.AccessTokenUtil;
 import com.bsd.dingtalk.server.util.ContactHelper;
 import com.google.common.collect.Maps;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

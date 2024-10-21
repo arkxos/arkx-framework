@@ -18,9 +18,9 @@ package me.zhengjie.service.impl;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
-import com.rapidark.common.utils.PageUtil;
-import com.rapidark.common.utils.QueryHelp;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.utils.PageUtil;
+import com.rapidark.framework.commons.utils.QueryHelp;
+import com.rapidark.framework.commons.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.Log;
 import me.zhengjie.repository.LogRepository;
@@ -84,7 +84,7 @@ public class LogServiceImpl implements LogService {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        com.rapidark.common.annotation.Log aopLog = method.getAnnotation(com.rapidark.common.annotation.Log.class);
+        com.rapidark.framework.commons.annotation.Log aopLog = method.getAnnotation(com.rapidark.framework.commons.annotation.Log.class);
 
         // 方法路径
         String methodName = joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()";
@@ -137,7 +137,7 @@ public class LogServiceImpl implements LogService {
     @Override
     public Object findByErrDetail(Long id) {
         Log log = logRepository.findById(id).orElseGet(Log::new);
-        com.rapidark.common.utils.ValidationUtil.isNull(log.getId(), "Log", "id", id);
+        com.rapidark.framework.commons.utils.ValidationUtil.isNull(log.getId(), "Log", "id", id);
         byte[] details = log.getExceptionDetail();
         return Dict.create().set("exception", new String(ObjectUtil.isNotNull(details) ? details : "".getBytes()));
     }
@@ -157,7 +157,7 @@ public class LogServiceImpl implements LogService {
             map.put("创建日期", log.getCreateTime());
             list.add(map);
         }
-        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
     }
 
     @Override

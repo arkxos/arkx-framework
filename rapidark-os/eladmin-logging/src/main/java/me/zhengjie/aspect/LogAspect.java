@@ -18,10 +18,10 @@ package me.zhengjie.aspect;
 import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.domain.Log;
 import me.zhengjie.service.LogService;
-import com.rapidark.common.utils.RequestHolder;
-import com.rapidark.common.utils.SecurityUtils;
-import com.rapidark.common.utils.StringUtils;
-import com.rapidark.common.utils.ThrowableUtil;
+import com.rapidark.framework.commons.utils.RequestHolder;
+import com.rapidark.framework.commons.utils.SecurityUtils;
+import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.commons.utils.ThrowableUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -51,7 +51,7 @@ public class LogAspect {
     /**
      * 配置切入点
      */
-    @Pointcut("@annotation(com.rapidark.common.annotation.Log)")
+    @Pointcut("@annotation(com.rapidark.framework.commons.annotation.Log)")
     public void logPointcut() {
         // 该方法无方法体,主要为了让同类中其他方法使用此切入点
     }

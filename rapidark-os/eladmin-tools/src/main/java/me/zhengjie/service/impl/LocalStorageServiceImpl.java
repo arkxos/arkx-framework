@@ -16,13 +16,13 @@
 package me.zhengjie.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.rapidark.common.utils.PageUtil;
-import com.rapidark.common.utils.QueryHelp;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.utils.PageUtil;
+import com.rapidark.framework.commons.utils.QueryHelp;
+import com.rapidark.framework.commons.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.config.FileProperties;
 import me.zhengjie.domain.LocalStorage;
-import com.rapidark.common.exception.BadRequestException;
+import com.rapidark.framework.commons.exception.BadRequestException;
 import me.zhengjie.service.dto.LocalStorageDto;
 import me.zhengjie.service.dto.LocalStorageQueryCriteria;
 import me.zhengjie.service.mapstruct.LocalStorageMapper;
@@ -68,33 +68,33 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     @Override
     public LocalStorageDto findById(Long id){
         LocalStorage localStorage = localStorageRepository.findById(id).orElseGet(LocalStorage::new);
-        com.rapidark.common.utils.ValidationUtil.isNull(localStorage.getId(),"LocalStorage","id",id);
+        com.rapidark.framework.commons.utils.ValidationUtil.isNull(localStorage.getId(),"LocalStorage","id",id);
         return localStorageMapper.toDto(localStorage);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public LocalStorage create(String name, MultipartFile multipartFile) {
-        com.rapidark.common.utils.FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
-        String suffix = com.rapidark.common.utils.FileUtil.getExtensionName(multipartFile.getOriginalFilename());
-        String type = com.rapidark.common.utils.FileUtil.getFileType(suffix);
-        File file = com.rapidark.common.utils.FileUtil.upload(multipartFile, properties.getPath().getPath() + type +  File.separator);
+        com.rapidark.framework.commons.utils.FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
+        String suffix = com.rapidark.framework.commons.utils.FileUtil.getExtensionName(multipartFile.getOriginalFilename());
+        String type = com.rapidark.framework.commons.utils.FileUtil.getFileType(suffix);
+        File file = com.rapidark.framework.commons.utils.FileUtil.upload(multipartFile, properties.getPath().getPath() + type +  File.separator);
         if(ObjectUtil.isNull(file)){
             throw new BadRequestException("上传失败");
         }
         try {
-            name = StringUtils.isBlank(name) ? com.rapidark.common.utils.FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
+            name = StringUtils.isBlank(name) ? com.rapidark.framework.commons.utils.FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
             LocalStorage localStorage = new LocalStorage(
                     file.getName(),
                     name,
                     suffix,
                     file.getPath(),
                     type,
-                    com.rapidark.common.utils.FileUtil.getSize(multipartFile.getSize())
+                    com.rapidark.framework.commons.utils.FileUtil.getSize(multipartFile.getSize())
             );
             return localStorageRepository.save(localStorage);
         }catch (Exception e){
-            com.rapidark.common.utils.FileUtil.del(file);
+            com.rapidark.framework.commons.utils.FileUtil.del(file);
             throw e;
         }
     }
@@ -103,7 +103,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     @Transactional(rollbackFor = Exception.class)
     public void update(LocalStorage resources) {
         LocalStorage localStorage = localStorageRepository.findById(resources.getId()).orElseGet(LocalStorage::new);
-        com.rapidark.common.utils.ValidationUtil.isNull( localStorage.getId(),"LocalStorage","id",resources.getId());
+        com.rapidark.framework.commons.utils.ValidationUtil.isNull( localStorage.getId(),"LocalStorage","id",resources.getId());
         localStorage.copy(resources);
         localStorageRepository.save(localStorage);
     }
@@ -113,7 +113,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     public void deleteAll(Long[] ids) {
         for (Long id : ids) {
             LocalStorage storage = localStorageRepository.findById(id).orElseGet(LocalStorage::new);
-            com.rapidark.common.utils.FileUtil.del(storage.getPath());
+            com.rapidark.framework.commons.utils.FileUtil.del(storage.getPath());
             localStorageRepository.delete(storage);
         }
     }
@@ -131,6 +131,6 @@ public class LocalStorageServiceImpl implements LocalStorageService {
             map.put("创建日期", localStorageDTO.getCreateTime());
             list.add(map);
         }
-        com.rapidark.common.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
     }
 }

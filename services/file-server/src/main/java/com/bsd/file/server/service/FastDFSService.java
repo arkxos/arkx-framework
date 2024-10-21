@@ -1,7 +1,7 @@
 package com.bsd.file.server.service;
 
 import com.bsd.file.server.configuration.FastDFSProperties;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.csource.common.MyException;

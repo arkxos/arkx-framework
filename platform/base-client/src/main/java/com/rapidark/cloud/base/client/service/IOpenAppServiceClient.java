@@ -33,7 +33,7 @@ public interface IOpenAppServiceClient {
      * @date 2022/6/6 16:42
      * @version 1.0
      * @param ip
-     * @return com.rapidark.common.model.ResultBody<com.rapidark.cloud.base.client.model.OpenClient>
+     * @return com.rapidark.framework.commons.model.ResultBody<com.rapidark.cloud.base.client.model.OpenClient>
      */
     @GetMapping("/openClient/queryOpenClientByIp")
     ResultBody<OpenApp> queryAppByIp(@RequestParam("ip") String ip);
@@ -53,7 +53,7 @@ public interface IOpenAppServiceClient {
      * @date 2022/6/6 13:43
      * @version 1.0
      * @param appId
-     * @return com.rapidark.common.model.ResultBody<java.util.List < com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer>>
+     * @return com.rapidark.framework.commons.model.ResultBody<java.util.List < com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer>>
      */
     @GetMapping(value = "/openClient/queryClientRegisterAppsByAppId")
     ResultBody<List<GatewayAppRouteRegServer>> queryClientRegisterAppsByAppId(@RequestParam("appId") String appId);

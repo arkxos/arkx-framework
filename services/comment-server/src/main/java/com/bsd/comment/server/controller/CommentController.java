@@ -6,7 +6,7 @@ import com.bsd.comment.server.model.dto.CommentDTO;
 import com.bsd.comment.server.model.entity.Comment;
 import com.bsd.comment.server.model.query.CommentQuery;
 import com.bsd.comment.server.service.CommentService;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

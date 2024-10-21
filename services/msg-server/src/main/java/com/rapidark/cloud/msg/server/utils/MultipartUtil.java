@@ -2,7 +2,7 @@ package com.rapidark.cloud.msg.server.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.rapidark.common.utils.DateUtils;
+import com.rapidark.framework.commons.utils.DateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;

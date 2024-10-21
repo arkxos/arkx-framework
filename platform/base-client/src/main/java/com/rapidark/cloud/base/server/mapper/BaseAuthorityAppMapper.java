@@ -2,7 +2,7 @@
 //
 //import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 //import com.rapidark.cloud.base.client.model.entity.BaseAuthorityApp;
-//import com.rapidark.common.security.OpenAuthority;
+//import com.rapidark.framework.commons.security.OpenAuthority;
 //import org.apache.ibatis.annotations.Param;
 //import org.springframework.stereotype.Repository;
 //

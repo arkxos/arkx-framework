@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.rapidark.cloud.bpm.client.constants.BpmConstants;
 import com.rapidark.cloud.bpm.client.model.TaskOperate;
 import com.rapidark.cloud.bpm.server.service.ProcessService;
-import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.framework.commons.exception.OpenAlertException;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;

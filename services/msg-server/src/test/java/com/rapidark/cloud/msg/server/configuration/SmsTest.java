@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.server.configuration;
 
-import com.rapidark.common.test.BaseTest;
+import com.rapidark.framework.commons.test.BaseTest;
 import com.rapidark.cloud.msg.client.model.SmsMessage;
 import com.rapidark.cloud.msg.server.dispatcher.MessageDispatcher;
 import org.junit.jupiter.api.Test;

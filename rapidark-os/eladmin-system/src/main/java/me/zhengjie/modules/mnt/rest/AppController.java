@@ -18,7 +18,7 @@ package me.zhengjie.modules.mnt.rest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.common.annotation.Log;
+import com.rapidark.framework.commons.annotation.Log;
 import me.zhengjie.modules.mnt.domain.App;
 import me.zhengjie.modules.mnt.service.AppService;
 import me.zhengjie.modules.mnt.service.dto.AppQueryCriteria;

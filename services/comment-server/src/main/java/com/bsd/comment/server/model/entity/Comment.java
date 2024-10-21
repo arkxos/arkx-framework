@@ -3,7 +3,7 @@ package com.bsd.comment.server.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.framework.commons.mybatis.base.entity.AbstractEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
