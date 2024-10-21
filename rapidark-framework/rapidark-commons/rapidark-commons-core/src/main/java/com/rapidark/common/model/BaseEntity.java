@@ -29,7 +29,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**

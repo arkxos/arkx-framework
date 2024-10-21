@@ -13,8 +13,8 @@
     <description>消息服务接口</description>
     <dependencies>
         <dependency>
-            <artifactId>common-core</artifactId>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark.framework</groupId>
+            <artifactId>rapidark-commons-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

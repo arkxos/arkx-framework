@@ -13,8 +13,8 @@
     <description>任务调度服务接口</description>
     <dependencies>
         <dependency>
-            <groupId>com.rapidark</groupId>
-            <artifactId>common-core</artifactId>
+            <groupId>com.rapidark.framework</groupId>
+            <artifactId>rapidark-commons-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

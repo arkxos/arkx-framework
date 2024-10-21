@@ -20,7 +20,6 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import com.rapidark.common.exception.BadRequestException;
-import com.rapidark.common.utils.SpringContextHolder;
 import com.rapidark.common.utils.enums.DataScopeEnum;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

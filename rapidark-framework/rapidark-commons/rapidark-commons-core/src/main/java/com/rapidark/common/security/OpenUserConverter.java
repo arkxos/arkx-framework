@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
+import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
@@ -35,7 +36,7 @@ public class OpenUserConverter extends DefaultUserAuthenticationConverter {
     private Object converter(Map<String, ?> map) {
         Map<String, Object> params = new HashMap<String, Object>();
         for (String key : map.keySet()) {
-            if (USERNAME.equals(key)) {
+            if (UserAuthenticationConverter.USERNAME.equals(key)) {
                 if (map.get(key) instanceof Map) {
                     params.putAll((Map) map.get(key));
                 } else if (map.get(key) instanceof OpenUserDetails) {
@@ -48,8 +49,8 @@ public class OpenUserConverter extends DefaultUserAuthenticationConverter {
             }
         }
         OpenUserDetails auth = BeanConvertUtils.mapToObject(params, OpenUserDetails.class);
-        if (params.get(USERNAME) != null) {
-            auth.setUsername(params.get(USERNAME).toString());
+        if (params.get(UserAuthenticationConverter.USERNAME) != null) {
+            auth.setUsername(params.get(UserAuthenticationConverter.USERNAME).toString());
         }
         if (params.get(OpenSecurityConstants.OPEN_ID) != null) {
             auth.setUserId(Long.valueOf(params.get(OpenSecurityConstants.OPEN_ID).toString()));
@@ -71,9 +72,9 @@ public class OpenUserConverter extends DefaultUserAuthenticationConverter {
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> response = new LinkedHashMap();
-        response.put(USERNAME, authentication.getPrincipal());
+        response.put(UserAuthenticationConverter.USERNAME, authentication.getPrincipal());
         if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
-            response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
+            response.put(UserAuthenticationConverter.AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
         }
         return response;
     }
@@ -86,7 +87,7 @@ public class OpenUserConverter extends DefaultUserAuthenticationConverter {
      */
     @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
-        if (map.containsKey(USERNAME)) {
+        if (map.containsKey(UserAuthenticationConverter.USERNAME)) {
             Object principal = converter(map);
             Collection<? extends GrantedAuthority> authorities = getAuthorities(map);
             if (principal != null) {
@@ -106,10 +107,10 @@ public class OpenUserConverter extends DefaultUserAuthenticationConverter {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
-        if (!map.containsKey(AUTHORITIES)) {
+        if (!map.containsKey(UserAuthenticationConverter.AUTHORITIES)) {
             return AuthorityUtils.NO_AUTHORITIES;
         }
-        Object authorities = map.get(AUTHORITIES);
+        Object authorities = map.get(UserAuthenticationConverter.AUTHORITIES);
         if (authorities instanceof String) {
             return AuthorityUtils.commaSeparatedStringToAuthorityList((String) authorities);
         }

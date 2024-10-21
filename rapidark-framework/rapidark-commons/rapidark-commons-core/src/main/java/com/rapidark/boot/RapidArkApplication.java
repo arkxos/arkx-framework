@@ -3,8 +3,6 @@ package com.rapidark.boot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.net.ProxySelector;
-
 /**
  * @author darkness
  * @version 1.0

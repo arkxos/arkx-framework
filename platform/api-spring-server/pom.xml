@@ -43,8 +43,8 @@
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark</groupId>
-            <artifactId>common-core</artifactId>
+            <groupId>com.rapidark.framework</groupId>
+            <artifactId>rapidark-commons-core</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>
