@@ -1,0 +1,6 @@
+msg：
+主要定义了具体的消息类型对应的结构模型，
+比如消费者订阅消息SubscribeMessage、
+消费者取消订阅消息UnSubscribeMessage，
+消息服务器应答给生产者的应答消息ProducerAckMessage、
+消息服务器应答给消费者的应答消息ConsumerAckMessage。

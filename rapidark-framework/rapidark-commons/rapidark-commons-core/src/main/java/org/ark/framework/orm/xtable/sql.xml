@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<sql description="获取系统表所有列的信息，将备注更新到xclomn表">
+	<![CDATA[
+		--2005實現字段屬性統計(2000里的系統表sysproperties描述表、字段不存在，2005里用sys.extended_properties視圖替代)
+		
+		select t.tableName, t.colName, t.remark into #temp from (
+		select 
+		    tableName=c.Name,
+		    [表说明]=isnull(f.[value],''),
+		    colName=a.Name,
+		    [列序號]=a.Column_id,
+		    [標識]=case when is_identity=1 then '√' else '' end,
+		    [主鍵]=case when exists(select 1 from sys.objects where parent_object_id=a.object_id and type=N'PK' and name in
+		                    (select Name from sys.indexes where index_id in
+		                    (select indid from sysindexkeys where ID=a.object_id and colid=a.column_id)))
+		                    then '√' else '' end,
+		    [類型]=b.Name,
+		    [字節數]=case when a.[max_length]=-1 and b.Name!='xml' then 'max/2G' 
+		            when b.Name='xml' then ' 2^31-1字節/2G'
+		            else rtrim(a.[max_length]) end,
+		    [長度]=ColumnProperty(a.object_id,a.Name,'Precision'),
+		    [小數]=isnull(ColumnProperty(a.object_id,a.Name,'Scale'),0),
+		    [是否為空]=case when a.is_nullable=1 then '√' else '' end,
+		    remark=isnull(e.[value],''),
+		    [默認值]=isnull(d.text,'')    
+		from 
+		    sys.columns a
+		left join
+		    sys.types b on a.user_type_id=b.user_type_id
+		inner join
+		    sys.objects c on a.object_id=c.object_id and c.Type='U'
+		left join
+		    syscomments d on a.default_object_id=d.ID
+		left join
+		    sys.extended_properties e on e.major_id=c.object_id and e.minor_id=a.Column_id and e.class=1 
+		left join
+		    sys.extended_properties f on f.major_id=c.object_id and f.minor_id=0 and f.class=1
+		) t 
+		UPDATE c set c.alias = convert(varchar(100),t.remark) from colsremark c, #temp t where c.tablename=t.tableName and c.colname=t.colName
+		drop table #temp
+	]]>
+	</sql>
+</sqls>

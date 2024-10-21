@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>rapidark-preloader</module>
         <module>rapidark-commons</module>
         <module>rapidark-data</module>
         <module>rapidark-boot</module>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<framework>
+	<databases>
+		<database name="Default">
+			<config name="Type">MSSQL</config>
+			<config name="ServerAddress">192.168.132.13</config>
+			<config name="Port">1433</config>
+			<config name="Name">njsys_ThreeInOne</config>
+			<config name="UserName">zbsa</config>
+			<config name="Password">sysjg321#@!</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">sysorg</config>
+		</database>
+		<!-- 
+		<database name="Default">
+			<config name="Type">MYSQL</config>
+			<config name="ServerAddress">127.0.0.1</config>
+			<config name="Port">3306</config>
+			<config name="Name">yiliaozerogo</config>
+			<config name="UserName">root</config>
+			<config name="Password">root</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">PT_COMP__MAXNO</config>
+		</database> -->
+ 		<database name="Default_oracle">
+			<config name="Type">ORACLE</config>
+			<config name="ConnectionURL">jdbc:oracle:thin:@49.234.238.177:1521/orclpdb1</config>
+			<config name="UserName">mi2001</config>
+			<config name="Password">mi2001</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">PT_COMP__MAXNO</config>
+		</database> 
+		<!-- 
+		<database name="Default_oracle">
+			<config name="Type">ORACLE</config>
+			<config name="ServerAddress">39.102.74.1</config>
+			<config name="Name">xe</config>
+			<config name="Port">1521</config>
+			<config name="UserName">mi2001</config>
+			<config name="Password">mi2001</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">sys_user</config>
+		</database> 
+ -->
+		<!-- 
+		<database name="Default_oracle">
+			<config name="Type">ORACLE</config>
+			<config name="ServerAddress">58.217.53.61</config>
+			<config name="Name">xe</config>
+			<config name="Port">1521</config>
+			<config name="UserName">lshsa</config>
+			<config name="Password">lshsa741121</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">PT_COMP__MAXNO</config>
+		</database>
+		 -->
+	</databases>
+</framework>

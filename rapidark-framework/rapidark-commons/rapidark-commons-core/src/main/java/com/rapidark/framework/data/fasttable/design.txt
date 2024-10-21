@@ -1,0 +1,9 @@
+
+Ark Fast Table
+
+[headerLength]
+header
+[AFT][version][自定义数据区域，128 byte][rowSize][tableNameLength][tableName][columnSize]([columnNameLength][columnName][columnType][columnLength][columnIndexType]...)
+
+records
+no	data

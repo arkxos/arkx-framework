@@ -1,0 +1,2 @@
+model：
+主要定义了AvatarMQ中的数据模型对象，比如MessageType消息类型、MessageSource消息源头等等模型对象的定义。

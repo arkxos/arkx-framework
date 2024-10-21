@@ -1,0 +1,57 @@
+fastdb design
+
+table head
+record unit
+
+quoteunit
+	day quote
+
+Database start
+	优化：将同一日期的数据放到同一个block下，按日期查询的时候，将会匹配到唯一的block，查询速度更快
+	table block dateRange
+	SymbolQuoteTable block1 date range: 1990-01-01 ~ 1999-12-30
+	
+	索引的数据按hash排序
+	
+Symbol Quote Table
+	index date symbol preClose open high low close volume
+	
+	block1
+		1990-01-01 ~ 1999-12-30
+	block2
+		2000-01-01 ~ 2009-12-30
+	block3
+		2010-01-01 ~ 2019-12-30
+	
+	                                         index meta
+	date.index                             date      index range
+		indexColumnValue [length] 
+		date1	block1 index100             date1       1-100      
+		     	block1 index101            
+		
+		date2	block2 index100             data2       101-200 
+				block2 index101	
+		                                    index block
+		                                    block1
+		                                    		
+	symbol.index	
+		[1m]                            symbol    index range
+		symbol1	block1 index100             symbol1     1-100
+				block1 index500                1m,3m
+		
+		
+		[2m]
+		symbol2	block1 index200             symbol2     101-200
+				block1 index600
+				
+		
+	row index group
+	 length index...
+	 长度为-length,为待清理数据,优化时使用
+	 
+	 
+	 data.index
+	 value 			group position
+	 2016-06-01			1008
+	 	
+				

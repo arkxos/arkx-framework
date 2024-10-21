@@ -15,6 +15,7 @@
 
     <modules>
        <!-- <module>rapidark-starter-dependencies</module>-->
+
         <module>rapidark-framework</module>
         <module>components</module>
 

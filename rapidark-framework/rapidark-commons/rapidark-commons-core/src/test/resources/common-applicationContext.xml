@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<context:annotation-config />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<context:component-scan base-package="com.rapidark.framework.*" />
+
+	<!-- PerformanceMonitorInterceptor -->
+	<bean id="performanceInterceptor"
+		class="com.rapidark.framework.common.monitor.PerformanceInterceptor" />
+
+	<aop:config>
+
+		<!-- <aop:pointcut id="allServiceMethods" expression="execution(* com.rapidark..*Service.*(..))"/> 
+			<aop:pointcut id="allServiceMethods" expression="execution(* com.rapidark.icequeen..*(..))"/> -->
+		<aop:pointcut id="allMethods"
+			expression="execution(* com.rapidark.icequeen..*(..))" />
+		<aop:advisor pointcut-ref="allMethods" advice-ref="performanceInterceptor"
+			order="2" />
+	</aop:config>
+	<!-- <aop:config> <aop:pointcut id="allQueryMethods" expression="execution(* 
+		com.rapidark.icequeen..*Query.*(..))"/> <aop:advisor pointcut-ref="allQueryMethods" 
+		advice-ref="performanceInterceptor" order="2"/> </aop:config> -->
+	<!-- 启用event自动注册 -->
+
+</beans>

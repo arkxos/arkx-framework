@@ -1,9 +1,9 @@
 package com.rapidark.cloud.task.server.service;
 
+import com.google.common.collect.Lists;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.cloud.task.client.model.TaskInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.util.Lists;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;

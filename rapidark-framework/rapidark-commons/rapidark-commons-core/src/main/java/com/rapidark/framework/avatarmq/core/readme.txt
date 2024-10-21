@@ -1,0 +1,7 @@
+core：
+AvatarMQ中消息处理的核心模块，负责消息的内存存储、应答控制、对消息进行多线程任务分派处理。
+基于Netty对producer、consumer、broker的网络事件处理器（Handler）进行封装处理，
+核心模块在：com.newlandframework.avatarmq.netty包之下。
+其中broker的Netty网络事件处理器为ShareMessageEventWrapper、
+producer的Netty网络事件处理器为MessageProducerHandler、
+consumer的Netty网络事件处理器为MessageConsumerHandler。其对应的类图为：

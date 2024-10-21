@@ -1,0 +1,427 @@
+#0{Start}
+<script>
+var Explorer = {
+
+onRowClick : function(ele){
+	if(Explorer.lastRowClickEle){
+		Explorer.lastRowClickEle.style.backgroundColor = Explorer.lastRowClickEle.OldBgColor;
+	}
+	ele.OldBgColor = ele.style.backgroundColor;
+	ele.style.backgroundColor = "#e8eeff";
+	Explorer.lastRowClickEle = ele;
+	
+	if(typeof(afterClick)=="function"){
+	  afterClick(ele);
+	}
+},
+
+onRowDblClick : function(ele){
+	if(ele.getAttribute("filetype")=="D"){
+		var url = window.location+"";
+	    if(url.indexOf("?")<0){
+	      url = url+"?";
+	    }
+		if(url.indexOf("ExplorerPath=")<0){
+			var path = ele.getAttribute("filename");
+			url = url+"&ExplorerPath="+path;	
+		}else{
+			var re = /ExplorerPath=([^\&]*)/g;
+			re.exec(url);
+			var path = RegExp.$1;
+			if(path==""){
+				path = ele.getAttribute("filename");		
+			}else{
+				path = path+"/"+ele.getAttribute("filename");
+			}
+			url = url.replace(re,"ExplorerPath="+path);
+		}
+		if(url.indexOf("copyFile=")<0){
+			url = url+"&copyFile="+Explorer.copyFile;
+		}else{
+			var re = /copyFile=([^\&]*)/g;
+			url = url.replace(re,"copyFile="+Explorer.copyFile);
+		}
+		if(url.indexOf("cutFile=")<0){
+			url = url+"&cutFile="+Explorer.cutFile;
+		}else{
+			var re = /cutFile=([^\&]*)/g;
+			url = url.replace(re,"cutFile="+Explorer.cutFile);
+		}
+		window.location = url;
+	}
+	if(typeof(afterDbClick)=="function"){
+	  afterDbClick(ele);
+	}
+},
+
+goParent : function(){
+	var re = /ExplorerPath=([^\&]*)/g;
+	re.exec(url);
+
+	var path = RegExp.$1;	
+	if(path){
+		path = path.substring(0,path.lastIndexOf('/'));
+	}
+	var url = window.location+"";
+	
+	if(url.indexOf("?")<0){
+	  url = url+"?";
+	}
+	if(url.indexOf("ExplorerPath=")<0){
+		url = url+"&ExplorerPath="+path;
+	}else{
+		url = url.replace(re,"ExplorerPath="+path);
+	}
+	if(url.indexOf("copyFile=")<0){
+			url = url+"&copyFile="+Explorer.copyFile;
+	}else{
+		re = /copyFile=([^\&]*)/g;
+		url = url.replace(re,"copyFile="+Explorer.copyFile);
+	}
+	if(url.indexOf("cutFile=")<0){
+			url = url+"&cutFile="+Explorer.cutFile;
+	}else{
+		re = /copyFile=([^\&]*)/g;
+		url = url.replace(re,"cutFile="+Explorer.cutFile);
+	}
+	window.location = url;
+},
+
+goPath : function(path){
+	var re = /ExplorerPath=([^\&]*)/g;
+	var url = window.location+"";
+	if(url.indexOf("?")<0){
+	  url = url+"?";
+	}
+	url = url.replace(re,"ExplorerPath="+path);
+	if(url.indexOf("copyFile=")<0){
+			url = url+"&copyFile="+Explorer.copyFile;
+	}else{
+		re = /copyFile=([^\&]*)/g;
+		url = url.replace(re,"copyFile="+Explorer.copyFile);
+	}
+	if(url.indexOf("cutFile=")<0){
+			url = url+"&cutFile="+Explorer.cutFile;
+	}else{
+		re = /cutFile=([^\&]*)/g;
+		url = url.replace(re,"cutFile="+Explorer.cutFile);
+	}
+	window.location = url;
+},
+
+showMenu : function(event,name){
+	var evt = getEvent(event);
+	var menu = new Menu();
+	menu.setEvent(evt);
+	var param = [];
+	param.push(name);
+	menu.setParam(param);
+	menu.addItem("闂備礁鎼崐鐟邦熆濡偐纾介柟鎹愵嚙濡﹢鏌涢妷顖炴妞ゆ劧鎷�",addFile,"Icons/icon018a2.gif");
+	menu.addItem("闂備礁鎼崐鐟邦熆濡偐纾介柟鍓х帛閸庡孩銇勯弮鍥т汗缂佸鎷�",addDirectory,"Icons/icon029a2.gif");
+	menu.addItem("-");
+	menu.addItem("缂傚倸鍊搁崐褰掓偋閻愬灚顐介柨鐕傛嫹",edit,"Icons/icon018a11.gif");
+	menu.addItem("濠电姰鍨煎▔娑氱矓閹绢喖鏄ラ柨鐕傛嫹",copy,"Icons/icon018a11.gif");
+	menu.addItem("闂備礁鎲￠幖鈺傜濠婂牆鍨傞柨鐕傛嫹",cut,"Icons/icon018a7.gif");
+	menu.addItem("缂傚倷绶￠崰妤呮晪缂備焦顨ч幏锟�",paste,"Icons/icon018a6.gif");
+	menu.addItem("闂備礁鎲＄敮鐐寸箾閿熻姤绻涢崪鍐╁",del,"Icons/icon018a3.gif");
+	menu.addItem("-");
+	menu.addItem("闂傚倷鐒﹁ぐ鍐矓閹绢喖绠犻柨鐔哄Т鐟欙箓鏌ㄩ悤鍌涘",rename,"Icons/icon018a4.gif");
+	menu.addItem("闂備礁鎲＄敮鎺懳涘Δ鍕╀汗闁跨噦鎷�",deploy,"Icons/icon029a7.gif");
+    menu.addItem("闂佽娴烽弫鎼佸储瑜斿畷鐢告晸閿燂拷",exportFile,"Icons/icon018a4.gif");
+	menu.show();
+}
+};
+
+Page.onLoad(function(){
+	Explorer.baseDir=$("e1").getAttribute("baseDir");
+	var url = window.location+"";
+	if(url.indexOf("ExplorerPath=")<0){
+		Explorer.currentPath = "";
+	}else{
+		var re = /ExplorerPath=([^\&]*)/g;
+		re.exec(url);
+		var path = RegExp.$1;
+		Explorer.currentPath =path;
+	}
+	if(url.indexOf("copyFile=")<0){
+		Explorer.copyFile = "";
+	}else{
+		var re = /copyFile=([^\&]*)/g;
+		re.exec(url);
+		var path = RegExp.$1;
+		Explorer.copyFile =path;
+	}
+	if(url.indexOf("cutFile=")<0){
+		Explorer.cutFile = "";
+	}else{
+		var re = /cutFile=([^\&]*)/g;
+		re.exec(url);
+		var path = RegExp.$1;
+		Explorer.cutFile =path;
+	}
+});
+
+function addFile(param){
+	var diag = new Dialog("Diag1");
+	diag.Title= "闂備礁鎼崐鐟邦熆濡偐纾介柟鎹愵嚙濡﹢鏌涢妷顖炴妞ゆ劧鎷�";
+	diag.Width = 400;
+	diag.Height= 100;
+	diag.URL = "Site/FileListDialog.jsp";
+	diag.onLoad = function(){
+		$DW.$("fileName").setAttribute("verify","闂備礁鎼崐绋棵洪敐鍛瀻闁靛繈鍊曠憴锔撅拷鐟板鐎规tNull");
+		$DW.$("tr_directory").style.display="none";
+		$DW.$("tr_file_old").style.display="none";
+		$DW.$("tr_file_new").style.display="none";
+	};
+	diag.OKEvent = addFileSave;
+	diag.show();
+};
+
+function addFileSave(){
+	var dc = Form.getData($DW.$F("form2"));
+	dc.add("baseDir",Explorer.baseDir);
+	dc.add("currentPath",Explorer.currentPath);
+	if($DW.Verify.hasError()){
+		return;
+	}
+	Server.sendRequest("com.ark.cms.site.FileList.add",dc,function(){
+		var response = Server.getResponse();
+		Dialog.alert(response.Message,function(){
+			if(response.Status==1){
+				$D.close();
+				window.location=window.location;
+			}
+		});
+	});
+};
+
+function addDirectory(param){
+	var diag = new Dialog("Diag1");
+	diag.Title= "闂備礁鎼崐鐟邦熆濡偐纾介柟鎹愵嚙濡﹢鏌涢妷顖炴妞ゆ劒绮欓弻锝夊煛婵犲倹鐏堢紓鍌氱▌閹凤拷";
+	diag.Width=400;
+	diag.Height=100;
+	diag.URL = "Site/FileListDialog.jsp";
+	diag.onLoad = function(){
+		$DW.$("directoryName").setAttribute("verify","闂備礁鎼崐绋棵洪敐鍛瀻闁靛繈鍊栭崕搴亜閺冨洤浜圭紒澶婃健閺屾稑顬楅锟介惃绛僶tNull");
+		$DW.$("tr_file").style.display="none";
+		$DW.$("tr_file_old").style.display="none";
+		$DW.$("tr_file_new").style.display="none";
+	};
+	diag.OKEvent = addDirectorySave;
+	diag.show();
+};
+
+function addDirectorySave(){
+	var dc = Form.getData($DW.$F("form2"));
+	dc.add("baseDir",Explorer.baseDir);
+	dc.add("currentPath",Explorer.currentPath);
+	if($DW.Verify.hasError()){
+		return;
+	}
+	Server.sendRequest("com.ark.cms.site.FileList.add",dc,function(){
+		var response = Server.getResponse();
+		Dialog.alert(response.Message,function(){
+			if(response.Status==1){
+				$D.close();
+				window.location=window.location;
+		    }
+		});
+	});
+};
+
+
+function edit(param){
+   if(!explorerType){
+     explorerType="";
+   }
+   var fileName = param[0];
+   var ext = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+   if(ext!="html" && ext!="htm" && ext!="shtml" && ext!="txt" && ext!="js"&& ext!="xml"&&ext!="css"){
+       Dialog.alert("濠电偞鍨堕幐鍝ョ矓閻戣棄绀傛俊顖濆亹绾句粙鏌″搴″閻㈩垰妫欓幈銊モ攽閸曨偓鎷烽弽顓炲嚑闁告劏鏅濋—鏍煠閹间焦娑ч柣蹇旑殹閺岋繝宕掑顓犵厬濠电偛妫庨崹鍝勵嚗閸曨垱鍎岄柛婵勫劤閿涳拷");
+       return;
+    }
+	
+	var url = Server.ContextPath+"Framework/Controls/FileEditDialog.jsp?fileName=" + "/"+explorerType+"/"+Explorer.currentPath+"/"+param;
+	var width  = (screen.availWidth-10)+"px";
+    var height = (screen.availHeight-50)+"px";
+    var leftm  = 0;
+    var topm   = 0;
+ 	var args = "toolbar=0,location=0,maximize=1,directories=0,status=0,menubar=0,scrollbars=0, resizable=1,left=" + leftm+ ",top=" + topm + ", width="+width+", height="+height;
+    var w = window.open(url,"",args);
+    if ( !w ){
+		Dialog.alert( "闂備礁鎲￠悷锕傚垂瑜版帞宓侀柛銉戝苯娈ㄩ梺鑽ゅ枑濠㈡ê袙婢跺瞼纾奸柟閭﹀弾濞堟壆鎲搁悧鍫�掗柟顕呭櫍椤㈡洟鏁傜憴锝嗙�绘繝娈垮枟缁诲秹寮告惔锝嗩瀼婵犻潧鐗婄�氭岸姊洪崹顕呭剱缂佺虎鍨堕弻锟犳晸閻ｅ本鍠嗛柛鏇ㄥ幑閸嬶箓鏌ｉ悢鍝ユ噧闁绘妫楅埢宥夊箳閺冿拷婵ジ鏌涢幘妤�鎳忛悗顓㈡⒑閹稿海鈽夊┑鍌涙⒐缁傚秹骞掗幘鍓佹嚌闂佸湱顭堢�垫帡宕濋敓浠嬫煟閵忊晛鐏﹂柡鍛级缁绘盯宕堕浣镐缓闂侀潧顭梽鍕箯闁秵鐓曢柡鍐ㄥ�搁弸娆撴煕韫囥儲瀚�!" ) ;
+		return ;
+	}
+};
+
+function editSave(){
+	var dc = Form.getData($DW.$F("form2"));
+
+	Server.sendRequest("com.ark.cms.site.FileList.edit",dc,function(){
+		var response = Server.getResponse();
+		Dialog.alert(response.Message,function(){
+			if(response.Status==1){
+				$D.close();
+				window.location=window.location;
+			}
+		});
+	});
+};
+
+function copy(param){
+	Explorer.copyFile = Explorer.currentPath+"/"+param;
+	Explorer.cutFile = "";
+}
+function cut(param){
+	Explorer.cutFile = Explorer.currentPath+"/"+param;
+	Explorer.copyFile = "";
+};
+
+function paste(){
+	if((Explorer.copyFile!=null&&Explorer.copyFile!="")||(Explorer.cutFile!=null&&Explorer.cutFile!="")){
+		var dc = new DataCollection();
+		dc.add("baseDir",Explorer.baseDir);
+		dc.add("currentPath",Explorer.currentPath);
+		dc.add("copyFile",Explorer.copyFile);
+		dc.add("cutFile",Explorer.cutFile);
+		Server.sendRequest("com.ark.cms.site.FileList.paste",dc,function(){
+			var response = Server.getResponse();
+			Dialog.alert(response.Message,function(){
+				if(response.Status==1){
+					var re = /copyFile=([^\&]*)/g;
+					var url = window.location+"";
+					window.location = url.replace(re,"copyFile="+Explorer.copyFile);
+				}
+			});
+		});
+	}else{
+		Dialog.alert("闂佽崵濮村ú銈夊床閺屻儱鍌ㄦ繛鎴炵懃缁剁偟锟藉箍鍎遍幊搴ㄦ偂閹达附鐓涢柛灞剧閻绻涢崱顓熷");
+	}
+};
+
+function del(param){
+	Dialog.confirm("闂備浇顕栭崰鎾诲礉鎼淬劌鐏虫俊顖溿�嬮幏椋庢喆閸曨亙瀛╁銈庝簻閹虫ê鐣峰鑸靛亹缂備焦顭囪ぐ鎴︽⒑閸涘﹦顣叉い銊戝懏顬忛柣銏犵仛婵即鏌ㄩ弴顏呭闂佺顕滅换婵嬪极瀹ュ拋鐏勬い鎺炴嫹闁诲繆鏅犲濠氬礋閳轰緤鎷烽弴銏犵畺婵°倕鍟╅悞濠囨煕閳╁啯绀堥柣鐔哥箞閺屻倗锟藉湱濮磋婵炲濯崰妤�顕ラ崟顐悑闊洦娲滈敍锟�",function(){
+		var dc = new DataCollection();
+		dc.add("baseDir",Explorer.baseDir);
+		dc.add("currentPath",Explorer.currentPath);
+		dc.add("delFile",param);
+		Server.sendRequest("com.ark.cms.site.FileList.del",dc,function(){
+			var response = Server.getResponse();
+			Dialog.alert(response.Message,function(){
+			    if(response.Status==1){
+				window.location = window.location;
+			    }
+			});
+		});
+	});
+
+};
+
+function rename(param){
+	var diag = new Dialog("Diag1");
+	diag.Title= "闂傚倷鐒﹁ぐ鍐矓閹绢喖绠犻柨鐔哄Т鐟欙箓鏌ㄩ悤鍌涘";
+	diag.Width=400;
+	diag.Height=100;
+	diag.URL = "Site/FileListDialog.jsp";
+	diag.onLoad = function(){
+		$DW.$S("oldFileName",param);
+		//$DW.$("oldFileName").setAttribute("verify","闂備礁鎲￠…鍥窗閹版澘鍑犻柛鎰ㄦ櫇椤牠鎮归搹鐟板妺闁稿﹦顢漀otNull");
+		$DW.$("newFileName").setAttribute("verify","闂備礁鎼崐缁樻櫠濡ゅ懎鍑犻柛鎰ㄦ櫇椤牠鎮归搹鐟板妺闁稿﹦顢漀otNull");
+		$DW.$("tr_file_old").style.display="none";
+		$DW.$("tr_file").style.display="none";
+		$DW.$("tr_directory").style.display="none";
+	};
+	diag.OKEvent = renameSave;
+	diag.show();
+};
+
+function renameSave(){
+	var dc = Form.getData($DW.$F("form2"));
+	dc.add("baseDir",Explorer.baseDir);
+	dc.add("currentPath",Explorer.currentPath);
+	if($DW.Verify.hasError()){
+		return;
+	}
+	Server.sendRequest("com.ark.cms.site.FileList.rename",dc,function(){
+		var response = Server.getResponse();
+		Dialog.alert(response.Message,function(){
+			if(response.Status==1){
+				$D.close();
+				window.location=window.location;
+			}
+		});
+
+	});
+};
+
+function exportFile(param){
+    Dialog.confirm("缂備胶铏庨崣搴ㄥ窗閺嶎厽鍋╅柛鎾楀嫬鏆繛杈剧到婢瑰﹪宕甸妶澶嬬厱闁瑰濮撮崝瀣亜閹烘挾绠炵�殿噮鍓熷畷鍫曟晜缁涘浠洪梻浣瑰閸愬骞忛敓锟�",function(){
+        Dialog.wait("婵犳鍠楃换鎰緤閽樺鑰挎い蹇撶墕閸屻劑鎮楅敐搴″缂佹唻鎷�...");
+		var dc = new DataCollection();
+		dc.add("baseDir",Explorer.baseDir);
+		dc.add("currentPath",Explorer.currentPath);
+		dc.add("filename",param);
+		Server.sendRequest("com.ark.cms.site.FileList.export",dc,function(){
+		    Dialog.closeEx();
+			var response = Server.getResponse();
+			if(response.Status==1){
+			   var diag = new Dialog("Diag1");
+	           var path = response.get("path");
+	           diag.Width = 280;
+				diag.Height = 100;
+				diag.Title = "濠电偞鍨堕幐鎼侇敄閸緷褰掑炊椤掞拷閹瑰爼鏌℃径瀣嚋缂佽鎷�";
+				diag.URL =  "Site/TemplateDownload.jsp?path="+path;
+				diag.ShowButtonRow = false;
+				diag.show(); 
+		  }
+		});
+	});
+};
+
+function deploy(param){
+    Dialog.confirm("缂備胶铏庨崣搴ㄥ窗閺嶎厽鍋╅柛鎾楀嫬鏆繛杈剧悼椤牆顕ｉ崸妤佲拺妞ゆ柨鎼俊濂告煕閵娿儵鍙勭�规洩缍侀獮瀣攽閸パ傜綍闂備焦瀵х粙鎾诲窗鎼淬劉锟芥棃宕卞☉妯哄殤濠电姴锕ら崯浼村箺瀹ュ鐓熼柍鍝勶工閺嬫稓绱撳鍛ｆ繛鐓庣箻瀹曟﹢鈥﹂幋鐑嗭拷鏃堟⒑閹稿海鈽夐柤娲诲灦閹啴濮�閻橆偅顬囬梺鍓插亾缂嶅洭骞忓畡鎷旀棃宕熼鐘靛春濠电姰鍨奸崺鏍ь灄閵娾晜鐒鹃悗闈涙憸绾惧ジ鏌ｉ弮鍥у惞闁靛牜鍋呯换婵婎樋闁告梹鍨块弫鎾诲棘閵堝棗顏�",function(){
+		var dc = new DataCollection();
+		dc.add("baseDir",Explorer.baseDir);
+		dc.add("currentPath",Explorer.currentPath);
+		dc.add("filename",param);
+		Server.sendRequest("com.ark.cms.site.FileList.deploy",dc,function(response){
+			if(response.Status==1){
+			   Dialog.alert("闁诲氦顬冮悺鏇犱焊濞嗘垵鍨濋柨娑樺閻掑﹪鏌涢埄鍐╃鐎规洘鐓￠弻娑㈠棘閸濆嫬鈷夐梺绉嗗喛韬�规洘绻堥幃鈺呭箵閹烘柨甯撻梻鍌氬�搁崯浼村窗鎼淬劌鍨傛い蹇撴噽閳绘梹銇勯幘鍗炲缂侊拷婢舵劖鍋ｉ柛銉墯閺侀亶鏌ｉ幙鍕瘈闁诡垰娲ㄩ敓鏂ょ秵閸嬪嫰鍩涢弮鍫熷仩婵炴垶蓱濠�鐗堜繆椤愮喐娅堢紒鐘崇☉椤垻娑甸柨瀣伓闂佽法鍣﹂幏锟�");
+		    }else{
+			   Dialog.alert(response.Message);
+		    }
+		});
+	});
+};
+
+</script>
+#0{End}
+#1{Start}
+<table width="100%" style="border-bottom:1px solid #DFE3EE; line-height:34px; background:url(../Platform/Images/tab1_butbg.jpg) repeat-x 0px 0px;">
+	<tr>
+		<td>
+			${PathSelector}
+		</td>
+	</tr>
+</table>
+#1{End}
+ 
+#2{Start}
+<table width="100%" cellpadding="2" cellspacing="0" class="dataTable">
+  <tr class="dataTableHead">
+    <td height="30" width="5">&nbsp;</td>
+    <td ztype="tree" width='45%'><b>闂備礁鎲￠懝鍓х矓閹壋鍙�</b></td>
+    <td ztype="checkbox" width='27%'><b>闂備礁鎼粔鏉懨洪顤岋拷鍌炴晸閿燂拷</b></td>
+    <td width='8%'><strong>濠电姰鍨归悥銏ゅ礃椤忓懐妲�</strong></td>
+    <td width='20%'><strong>濠电儑绲藉ù鍌炲窗濡ゅ懎鏋佸┑鍌滎焾缁秹鏌涢锝嗙闁挎冻鎷�</strong></td>
+  </tr>
+  <tr filetype="${Type}" filename="${Name}" onclick="Explorer.onRowClick(this);" oncontextmenu="Explorer.onRowClick(this);Explorer.showMenu(event,'${Name}');return false;" ondblclick="Explorer.onRowDblClick(this);">
+    <td height="23">&nbsp;</td>
+    <td><img src="${Icon}" align="absmiddle"/>&nbsp;${Name}</td>
+    <td>${Title}&nbsp;</td>
+    <td>${Size}</td>
+    <td>${ModifyTime}</td>
+  </tr>
+</table>
+#2{End}
+

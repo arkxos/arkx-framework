@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -22,7 +23,7 @@ import java.util.*;
  * @Date 2020/05/16
  * @Version V1.0
  */
-public class BaseService<T,ID,R extends BaseRepository<T, ID>> {
+public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, ID>> {
 
     private static final String DEFAULT_SORT_FIELD = "createTime";
     @Autowired

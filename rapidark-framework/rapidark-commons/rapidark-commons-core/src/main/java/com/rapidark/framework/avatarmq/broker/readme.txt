@@ -1,0 +1,19 @@
+broker：
+消息中间件的服务器模块，主要负责消息的路由、负载均衡，对于生产者、消费者进行消息的应答回复处理（ACK），AvatarMQ中的中心节点，是连接生产者、消费者的桥梁纽带。
+
+ACK Queue Dispatch：
+主要是broker分别向对应的消息生产者、消费者发送ACK消息应答，
+其主要核心模块是在：com.newlandframework.avatarmq.broker包下面的AckPullMessageController和AckPushMessageController模块，
+主要职责是在broker中收集生产者的消息，确认成功收到之后，把其放到消息队列容器中，然后专门安排一个工作线程池把ACK应答发送给生产者。
+
+Message Queue Dispatch：
+生产者消息的分派，主要是由com.newlandframework.avatarmq.broker包下面的SendMessageController派发模块进行任务的分派，
+其中消息分派支持两种策略，
+一种是内存缓冲消息区里面只要一有消息就通知消费者；
+还有一种是对消息进行缓冲处理，累计到一定的数量之后进行派发，
+这个是根据：MessageSystemConfig类中的核心参数：
+SystemPropertySendMessageControllerTaskCommitValue（com.newlandframework.avatarmq.system.send.taskcommit）决定的，
+默认是1。即一有消息就派发，如果改成大于1的数值，表示消息缓冲的数量。
+
+消息分派采用多线程并行派发，其内部通过栅栏机制，为消息派发设置一个屏障点，后续可以暴露给JMX接口，进行对整个消息系统，消息派发情况的动态监控。
+比如发现消息积压太多，可以加大线程并行度。消息无堆积的话，降低线程并行度，减轻系统负荷。现在给出消息派发任务模块SendMessageTask的核心代码：

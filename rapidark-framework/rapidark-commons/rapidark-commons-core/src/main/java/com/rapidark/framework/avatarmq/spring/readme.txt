@@ -1,0 +1,1 @@
+Spring的容器管理类，负责把AvatarMQ中的消息服务器模块：Broker，进行容器化管理。这个包里面的AvatarMQServerStartup是整个AvatarMQ消息服务器的启动入口。

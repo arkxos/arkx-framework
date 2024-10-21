@@ -1,0 +1,22 @@
+package org.ark.framework.jaf.controls;
+
+import javax.servlet.jsp.PageContext;
+
+import org.ark.framework.jaf.tag.CheckboxTag;
+
+
+/**
+ * @class org.ark.framework.jaf.controls.RadioTag
+ * 
+ * @author Darkness
+ * @date 2013-1-31 下午12:43:52 
+ * @version V1.0
+ */
+public class RadioTag extends CheckboxTag {
+	private static final long serialVersionUID = 1L;
+
+	public void setPageContext(PageContext pc) {
+		super.setPageContext(pc);
+		this.type = "radio";
+	}
+}

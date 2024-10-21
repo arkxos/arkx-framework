@@ -1,0 +1,27 @@
+消息中间件的服务器模块，主要负责消息的路由、负载均衡，对于生产者、消费者进行消息的应答回复处理（ACK），AvatarMQ中的中心节点，是连接生产者、消费者的桥梁纽带。
+
+　Producer Manage：消息的生产者，其主要代码在（com.newlandframework.avatarmq.producer）包之下，其主要代码模块关键部分简要说明如下：
+
+　　Consumer Clusters Manage / Message Routing：消息的消费者集群管理以及消息路由模块，其主要模块在包（com.newlandframework.avatarmq.consumer）之中。其中消息消费者对象，对应的核心代码主要功能描述如下：
+
+消息的集群管理模块，主要代码是ConsumerContext.java、ConsumerClusters.java。先简单说一下消费者集群模块ConsumerClusters，主要负责定义消费者集群的行为，以及负责消息的路由。主要的功能描述如下所示：
+ConsumerContext主要的负责管理消费者集群的
+
+ACK Queue Dispatch：
+	主要是broker分别向对应的消息生产者、消费者发送ACK消息应答，其主要核心模块是在：com.newlandframework.avatarmq.broker包下面的
+	AckPullMessageController和AckPushMessageController模块，主要职责是在broker中收集生产者的消息，确认成功收到之后，把其放到消息队列容器中，
+	然后专门安排一个工作线程池把ACK应答发送给生产者。
+	
+Message Queue Dispatch：
+	生产者消息的分派，主要是由com.newlandframework.avatarmq.broker包下面的SendMessageController派发模块进行任务的分派，
+	其中消息分派支持两种策略，一种是内存缓冲消息区里面只要一有消息就通知消费者；
+	还有一种是对消息进行缓冲处理，累计到一定的数量之后进行派发，这个是根据：
+	MessageSystemConfig类中的核心参数：
+	SystemPropertySendMessageControllerTaskCommitValue（com.newlandframework.avatarmq.system.send.taskcommit）决定的，默认是1。
+	即一有消息就派发，如果改成大于1的数值，表示消息缓冲的数量。现在给出SendMessageController的核心实现
+	
+消息分派采用多线程并行派发，其内部通过栅栏机制，为消息派发设置一个屏障点，后续可以暴露给JMX接口，进行对整个消息系统，消息派发情况的动态监控。比如发现消息积压太多，可以加大线程并行度。消息无堆积的话，降低线程并行度，减轻系统负荷。现在给出消息派发任务模块SendMessageTask的核心代码：
+	
+Message Serialize：消息的序列化模块，主要基于Kryo。其主要的核心代码为：com.newlandframework.avatarmq.serialize包下面的KryoCodecUtil、KryoSerialize完成消息的序列化和反序列化工作。其对应的主要核心代码模块是：
+	
+Netty Core：基于Netty对producer、consumer、broker的网络事件处理器（Handler）进行封装处理，核心模块在：com.newlandframework.avatarmq.netty包之下。其中broker的Netty网络事件处理器为ShareMessageEventWrapper、producer的Netty网络事件处理器为MessageProducerHandler、consumer的Netty网络事件处理器为MessageConsumerHandler。其对应的类图为：
