@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.zhengjie.exception;
+package com.rapidark.framework.commons.exception;
 
 /**
  * 统一关于错误配置信息 异常

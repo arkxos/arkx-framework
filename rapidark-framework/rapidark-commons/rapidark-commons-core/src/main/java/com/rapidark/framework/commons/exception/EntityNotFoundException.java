@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.exception;
+package com.rapidark.framework.commons.exception;
 
 import org.springframework.util.StringUtils;
 
@@ -21,14 +21,14 @@ import org.springframework.util.StringUtils;
  * @author Zheng Jie
  * @date 2018-11-23
  */
-public class EntityExistException extends RuntimeException {
+public class EntityNotFoundException extends RuntimeException {
 
-    public EntityExistException(Class clazz, String field, String val) {
-        super(EntityExistException.generateMessage(clazz.getSimpleName(), field, val));
+    public EntityNotFoundException(Class clazz, String field, String val) {
+        super(EntityNotFoundException.generateMessage(clazz.getSimpleName(), field, val));
     }
 
     private static String generateMessage(String entity, String field, String val) {
         return StringUtils.capitalize(entity)
-                + " with " + field + " "+ val + " existed";
+                + " with " + field + " "+ val + " does not exist";
     }
 }

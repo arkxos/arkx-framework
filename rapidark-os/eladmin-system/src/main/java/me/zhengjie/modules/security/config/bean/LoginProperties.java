@@ -18,7 +18,7 @@ package me.zhengjie.modules.security.config.bean;
 import com.wf.captcha.*;
 import com.wf.captcha.base.Captcha;
 import lombok.Data;
-import me.zhengjie.exception.BadConfigurationException;
+import com.rapidark.framework.commons.exception.BadConfigurationException;
 import com.rapidark.framework.commons.utils.StringUtils;
 
 import java.awt.*;

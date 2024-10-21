@@ -48,6 +48,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rapidark.framework</groupId>
+            <artifactId>rapidark-commons-core</artifactId>
+            <version>10.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

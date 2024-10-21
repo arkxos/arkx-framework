@@ -20,7 +20,7 @@ import ${package}.entity.${className};
     <#list columns as column>
         <#if column.columnKey = 'UNI'>
             <#if column_index = 1>
-import me.zhengjie.exception.EntityExistException;
+import com.rapidark.framework.commons.exception.EntityExistException;
             </#if>
         </#if>
     </#list>

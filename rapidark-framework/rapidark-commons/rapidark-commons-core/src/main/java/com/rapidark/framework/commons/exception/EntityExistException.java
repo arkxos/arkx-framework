@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2020 Zheng Jie
+ *  Copyright 2019-2021 RapidArk
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,28 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.exception;
+package com.rapidark.framework.commons.exception;
 
-import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import org.springframework.util.StringUtils;
 
 /**
  * @author Zheng Jie
  * @date 2018-11-23
- * 统一异常处理
  */
-@Getter
-public class BadRequestException extends RuntimeException{
+public class EntityExistException extends RuntimeException {
 
-    private Integer status = BAD_REQUEST.value();
-
-    public BadRequestException(String msg){
-        super(msg);
+    public EntityExistException(Class clazz, String field, String val) {
+        super(EntityExistException.generateMessage(clazz.getSimpleName(), field, val));
     }
 
-    public BadRequestException(HttpStatus status,String msg){
-        super(msg);
-        this.status = status.value();
+    private static String generateMessage(String entity, String field, String val) {
+        return StringUtils.capitalize(entity)
+                + " with " + field + " "+ val + " existed";
     }
 }

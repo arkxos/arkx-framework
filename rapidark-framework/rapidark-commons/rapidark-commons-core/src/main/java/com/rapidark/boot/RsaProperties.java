@@ -16,6 +16,7 @@
 package com.rapidark.boot;
 
 import lombok.Data;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -24,23 +25,16 @@ import org.springframework.stereotype.Component;
  * @date 2021/6/23 17:18
  * @version 1.0
  */
+@Setter
 @Data
 @Component
 @ConfigurationProperties(prefix = "rapidark.rsa")
 public class RsaProperties {
 
+    //    @Value("${opencloud.rsa.private-key}")
     private String privateKey;
 
+    //    @Value("${opencloud.rsa.public-key}")
     private String publicKey;
-
-//    @Value("${opencloud.rsa.private-key}")
-    public void setPrivateKey(String privateKey) {
-        this.privateKey = privateKey;
-    }
-
-//    @Value("${opencloud.rsa.public-key}")
-    public void setPublicKey(String publicKey) {
-        this.publicKey = publicKey;
-    }
 
 }

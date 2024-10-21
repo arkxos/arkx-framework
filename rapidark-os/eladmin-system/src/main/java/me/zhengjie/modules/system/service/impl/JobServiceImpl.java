@@ -23,7 +23,7 @@ import com.rapidark.framework.commons.utils.RedisUtils;
 import com.rapidark.framework.commons.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.commons.exception.BadRequestException;
-import me.zhengjie.exception.EntityExistException;
+import com.rapidark.framework.commons.exception.EntityExistException;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.repository.UserRepository;
 import me.zhengjie.modules.system.service.dto.JobQueryCriteria;
