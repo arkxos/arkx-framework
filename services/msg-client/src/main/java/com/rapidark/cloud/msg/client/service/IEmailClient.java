@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.client.service;
 
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

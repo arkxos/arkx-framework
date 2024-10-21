@@ -1,15 +1,12 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.common.model.PageParams;
-import com.rapidark.common.utils.CriteriaQueryWrapper;
+import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.commons.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

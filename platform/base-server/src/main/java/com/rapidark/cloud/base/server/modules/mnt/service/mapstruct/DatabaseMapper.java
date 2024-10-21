@@ -17,7 +17,7 @@ package com.rapidark.cloud.base.server.modules.mnt.service.mapstruct;
 
 import com.rapidark.cloud.base.server.modules.mnt.domain.Database;
 import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseDto;
-import com.rapidark.common.model.BaseMapper;
+import com.rapidark.framework.commons.model.BaseMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

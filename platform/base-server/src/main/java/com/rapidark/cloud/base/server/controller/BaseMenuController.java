@@ -1,7 +1,6 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
 
@@ -14,9 +13,9 @@ import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
-import com.rapidark.common.model.PageParams;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.security.http.OpenRestTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

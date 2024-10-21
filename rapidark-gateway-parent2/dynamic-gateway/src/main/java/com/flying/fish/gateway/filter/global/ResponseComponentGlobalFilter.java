@@ -6,7 +6,7 @@ import com.flying.fish.gateway.vo.GroovyHandleData;
 import com.rapidark.cloud.gateway.formwork.cache.RotueGroovyCache;
 import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
 
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.reactivestreams.Publisher;

@@ -2,7 +2,7 @@ package com.bsd.user.server.service.impl;
 
 import com.bsd.user.server.constants.UserConstants;
 import com.bsd.user.server.service.WechatAuthService;
-import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientDetails;
+import com.rapidark.framework.commons.security.oauth2.client.OpenOAuth2ClientDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

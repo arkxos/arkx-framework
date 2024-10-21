@@ -1,8 +1,8 @@
 package com.rapidark.cloud.gateway.server.filter;
 
-import com.rapidark.common.interceptor.FeignRequestInterceptor;
+import com.rapidark.framework.commons.interceptor.FeignRequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
-import com.rapidark.common.utils.UuidUtil;
+import com.rapidark.framework.commons.utils.UuidUtil;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;

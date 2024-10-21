@@ -1,7 +1,7 @@
 package com.rapidark.cloud.task.server.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.rapidark.common.model.PageParams;
+import com.rapidark.framework.commons.model.PageParams;
 import com.rapidark.cloud.task.client.model.entity.SchedulerJobLogs;
 
 /**

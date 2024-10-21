@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.server.exception;
 
-import com.rapidark.common.exception.OpenCryptoException;
+import com.rapidark.framework.commons.exception.OpenCryptoException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 

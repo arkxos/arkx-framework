@@ -1,13 +1,8 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rapidark.common.annotation.TableAlias;
-import com.rapidark.common.model.BaseEntity;
-import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.framework.commons.model.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

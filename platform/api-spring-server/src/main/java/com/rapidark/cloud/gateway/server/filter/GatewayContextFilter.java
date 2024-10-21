@@ -9,11 +9,11 @@ import com.rapidark.cloud.gateway.server.exception.RequestDecryptionExceptionHan
 import com.rapidark.cloud.gateway.server.filter.context.GatewayContext;
 import com.rapidark.cloud.gateway.server.filter.support.CachedBodyOutputMessage;
 import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
-import com.rapidark.common.constants.CommonConstants;
-import com.rapidark.common.exception.OpenCryptoException;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.utils.CryptoUtils;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.constants.CommonConstants;
+import com.rapidark.framework.commons.exception.OpenCryptoException;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.utils.CryptoUtils;
+import com.rapidark.framework.commons.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.support.BodyInserterContext;

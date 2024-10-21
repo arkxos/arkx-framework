@@ -8,7 +8,7 @@ import com.rapidark.cloud.gateway.server.locator.ResourceLocator;
 import com.rapidark.cloud.gateway.server.oauth2.RedisAuthenticationManager;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;
 import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
-import com.rapidark.common.utils.RedisUtils;
+import com.rapidark.framework.commons.utils.RedisUtils;
 import net.oschina.j2cache.CacheChannel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

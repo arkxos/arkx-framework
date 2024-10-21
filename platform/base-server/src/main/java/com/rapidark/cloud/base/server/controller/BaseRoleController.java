@@ -1,14 +1,13 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.cloud.base.client.model.entity.BaseRoleUser;
 import com.rapidark.cloud.base.server.controller.cmd.AddRoleCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateRoleCommand;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
-import com.rapidark.common.model.PageParams;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

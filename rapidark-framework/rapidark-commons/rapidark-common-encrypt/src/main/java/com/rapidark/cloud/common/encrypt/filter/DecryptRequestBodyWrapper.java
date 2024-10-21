@@ -2,7 +2,7 @@ package com.rapidark.cloud.common.encrypt.filter;
 
 import cn.hutool.core.io.IoUtil;
 
-import com.rapidark.common.core.constant.Constants;
+import com.rapidark.framework.commons.core.constant.Constants;
 import org.springframework.http.MediaType;
 
 import com.rapidark.cloud.common.encrypt.utils.EncryptUtils;

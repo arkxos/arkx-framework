@@ -1,6 +1,6 @@
 package com.rapidark.boot.aspect;
 
-import com.rapidark.common.utils.Base58;
+import com.rapidark.framework.commons.utils.Base58;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

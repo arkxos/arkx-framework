@@ -6,7 +6,7 @@ import com.flying.fish.gateway.service.LoadRouteService;
 import com.flying.fish.gateway.vo.GatewayRouteDefinition;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.util.Assert;

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.actuator;
 
-import com.rapidark.common.event.RemoteRefreshRouteEvent;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.event.RemoteRefreshRouteEvent;
+import com.rapidark.framework.commons.model.ResultBody;
 import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEndpoint;
 import org.springframework.cloud.bus.endpoint.AbstractBusEndpoint;
 import org.springframework.cloud.bus.event.Destination;

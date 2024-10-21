@@ -1,8 +1,7 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.utils.PageData;
-import org.apache.commons.lang3.StringUtils;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.utils.PageData;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

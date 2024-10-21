@@ -15,7 +15,7 @@
  */
 package me.zhengjie.config;
 
-import com.rapidark.common.utils.SecurityUtils;
+import com.rapidark.framework.commons.utils.SecurityUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;

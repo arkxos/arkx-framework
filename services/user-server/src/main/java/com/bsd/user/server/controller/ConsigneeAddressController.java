@@ -3,7 +3,7 @@ package com.bsd.user.server.controller;
 import com.bsd.user.server.constants.UserConstants;
 import com.bsd.user.server.model.ConsigneeAddressPo;
 import com.bsd.user.server.service.ConsigneeAddressService;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

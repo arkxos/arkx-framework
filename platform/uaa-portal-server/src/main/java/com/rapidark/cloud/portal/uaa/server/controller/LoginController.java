@@ -1,9 +1,9 @@
 package com.rapidark.cloud.portal.uaa.server.controller;
 
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.security.OpenHelper;
-import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientDetails;
-import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientProperties;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.security.OpenHelper;
+import com.rapidark.framework.commons.security.oauth2.client.OpenOAuth2ClientDetails;
+import com.rapidark.framework.commons.security.oauth2.client.OpenOAuth2ClientProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

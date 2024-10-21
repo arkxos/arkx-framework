@@ -3,7 +3,7 @@ package com.flying.fish.gateway.handle;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.core.annotation.Order;

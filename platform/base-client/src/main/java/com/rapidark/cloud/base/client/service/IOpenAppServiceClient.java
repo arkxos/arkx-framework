@@ -2,8 +2,8 @@ package com.rapidark.cloud.base.client.service;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.security.OpenClientDetails;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.security.OpenClientDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;

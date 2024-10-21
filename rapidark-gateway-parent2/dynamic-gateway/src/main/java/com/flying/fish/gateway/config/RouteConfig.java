@@ -10,7 +10,7 @@ import com.flying.fish.gateway.vo.GatewayRouteConfig;
 import com.rapidark.cloud.gateway.formwork.config.ApplicationContextProvider;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.manage.repository.GatewayAppRouteRepository;
-import com.rapidark.common.utils.Constants;
+import com.rapidark.framework.commons.utils.Constants;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

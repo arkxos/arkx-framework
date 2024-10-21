@@ -2,8 +2,8 @@ package com.rapidark.cloud.gateway.manage.service;
 
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.manage.repository.LoadServerRepository;
-import com.rapidark.common.utils.PageData;
-import com.rapidark.common.utils.SystemIdGenerator;
+import com.rapidark.framework.commons.utils.PageData;
+import com.rapidark.framework.commons.utils.SystemIdGenerator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;

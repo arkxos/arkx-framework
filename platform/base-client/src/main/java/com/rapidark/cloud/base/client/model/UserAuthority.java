@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.client.model;
 
 import com.google.common.collect.Lists;
-import com.rapidark.common.security.OpenAuthority;
+import com.rapidark.framework.commons.security.OpenAuthority;
 
 import java.io.Serializable;
 import java.util.Collection;

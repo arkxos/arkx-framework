@@ -2,9 +2,9 @@ package com.rapidark.cloud.gateway.server.filter;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.common.utils.CryptoUtils;
-import com.rapidark.common.utils.StringHelper;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.utils.CryptoUtils;
+import com.rapidark.framework.commons.utils.StringHelper;
+import com.rapidark.framework.commons.utils.StringUtils;
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
 import com.rapidark.cloud.gateway.server.filter.context.GatewayContext;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;

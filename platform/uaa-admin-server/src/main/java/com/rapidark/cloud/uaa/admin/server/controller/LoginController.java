@@ -1,17 +1,15 @@
 package com.rapidark.cloud.uaa.admin.server.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.rapidark.cloud.common.encrypt.annotation.ApiEncrypt;
 import com.rapidark.cloud.uaa.admin.server.controller.cmd.*;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.security.OpenHelper;
-import com.rapidark.common.security.OpenUserDetails;
-import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientDetails;
-import com.rapidark.common.security.oauth2.client.OpenOAuth2ClientProperties;
-import com.rapidark.common.utils.BeanConvertUtils;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.security.OpenHelper;
+import com.rapidark.framework.commons.security.OpenUserDetails;
+import com.rapidark.framework.commons.security.oauth2.client.OpenOAuth2ClientDetails;
+import com.rapidark.framework.commons.security.oauth2.client.OpenOAuth2ClientProperties;
+import com.rapidark.framework.commons.utils.BeanConvertUtils;
 import com.rapidark.cloud.uaa.admin.server.service.feign.BaseUserServiceClient;
 import com.rapidark.boot.RsaProperties;
-import com.rapidark.common.utils.RSAUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

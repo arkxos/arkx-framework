@@ -2,9 +2,9 @@ package com.rapidark.cloud.gateway.manage.rest;
 
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.security.http.OpenRestTemplate;
-import com.rapidark.common.utils.PageData;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.security.http.OpenRestTemplate;
+import com.rapidark.framework.commons.utils.PageData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import com.rapidark.cloud.gateway.formwork.entity.Monitor;
 import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
 import com.rapidark.cloud.gateway.manage.service.MonitorService;
 import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
-import com.rapidark.common.utils.Constants;
+import com.rapidark.framework.commons.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;

@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.server.configuration;
 
-import com.rapidark.common.utils.RedisUtils;
+import com.rapidark.framework.commons.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

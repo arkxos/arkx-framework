@@ -2,12 +2,8 @@ package com.rapidark.cloud.base.client.model.entity;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.rapidark.common.annotation.TableAlias;
-import com.rapidark.common.model.BaseEntity;
-import com.rapidark.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.framework.commons.annotation.TableAlias;
+import com.rapidark.framework.commons.model.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;

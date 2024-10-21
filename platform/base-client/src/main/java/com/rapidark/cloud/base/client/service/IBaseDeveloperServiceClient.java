@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.client.service;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

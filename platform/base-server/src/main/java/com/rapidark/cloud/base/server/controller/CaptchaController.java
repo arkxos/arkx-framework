@@ -1,9 +1,9 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.google.common.collect.Maps;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.utils.RedisUtils;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.utils.RedisUtils;
+import com.rapidark.framework.commons.utils.StringUtils;
 import com.wf.captcha.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

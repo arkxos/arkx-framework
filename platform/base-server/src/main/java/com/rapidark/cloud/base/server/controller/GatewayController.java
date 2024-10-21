@@ -9,7 +9,7 @@ import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

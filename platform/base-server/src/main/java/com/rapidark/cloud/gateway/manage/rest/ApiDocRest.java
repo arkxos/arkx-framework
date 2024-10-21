@@ -1,7 +1,6 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
-import com.rapidark.common.model.ResultBody;
-import org.apache.commons.lang3.StringUtils;
+import com.rapidark.framework.commons.model.ResultBody;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 

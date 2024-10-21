@@ -2,19 +2,17 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
-import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.cloud.base.client.service.IBaseDeveloperServiceClient;
 
 import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPasswordCommand;
 import com.rapidark.cloud.gateway.manage.service.BaseDeveloperService;
 import com.rapidark.cloud.gateway.manage.service.command.CreateDeveloperCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
-import com.rapidark.common.model.PageParams;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.utils.PageData;
-import com.rapidark.common.utils.SystemIdGenerator;
-import com.rapidark.common.utils.UuidUtil;
-import com.rapidark.common.utils.WebUtils;
+import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.utils.PageData;
+import com.rapidark.framework.commons.utils.SystemIdGenerator;
+import com.rapidark.framework.commons.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

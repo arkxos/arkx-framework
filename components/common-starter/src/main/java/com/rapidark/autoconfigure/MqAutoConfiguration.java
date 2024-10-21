@@ -1,6 +1,6 @@
 package com.rapidark.autoconfigure;
 
-import com.rapidark.common.constants.QueueConstants;
+import com.rapidark.framework.commons.constants.QueueConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;

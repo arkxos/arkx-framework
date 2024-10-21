@@ -1,8 +1,8 @@
 package com.rapidark.cloud.gateway.server.exception;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.common.exception.OpenGlobalExceptionHandler;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.exception.OpenGlobalExceptionHandler;
+import com.rapidark.framework.commons.model.ResultBody;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;

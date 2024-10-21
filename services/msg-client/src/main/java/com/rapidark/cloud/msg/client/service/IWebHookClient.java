@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.client.service;
 
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import com.rapidark.cloud.msg.client.model.WebHookMessage;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

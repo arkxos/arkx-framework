@@ -2,7 +2,7 @@ package com.bsd.user.server.service;
 
 import com.bsd.user.server.model.ConsigneeAddressPo;
 import com.bsd.user.server.model.entity.ConsigneeAddress;
-import com.rapidark.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.commons.mybatis.base.service.IBaseService;
 
 import java.util.List;
 

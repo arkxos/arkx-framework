@@ -11,7 +11,7 @@ import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.HystrixObservableCommand;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.common.utils.Constants;
+import com.rapidark.framework.commons.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import org.apache.commons.lang3.StringUtils;

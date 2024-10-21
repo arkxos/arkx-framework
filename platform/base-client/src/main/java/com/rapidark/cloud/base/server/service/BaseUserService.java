@@ -1,8 +1,6 @@
 package com.rapidark.cloud.base.server.service;
 
 import cn.hutool.core.util.IdUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -13,19 +11,15 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.client.model.entity.BaseRole;
 import com.rapidark.cloud.base.client.model.entity.BaseUser;
 import com.rapidark.cloud.base.server.repository.BaseUserRepository;
-import com.rapidark.cloud.base.server.service.BaseAccountService;
-import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.repository.BaseRoleUserRepository;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
-import com.rapidark.common.constants.CommonConstants;
-import com.rapidark.common.exception.OpenAlertException;
-import com.rapidark.common.model.PageParams;
-import com.rapidark.common.mybatis.base.service.impl.BaseServiceImpl;
-import com.rapidark.common.security.OpenAuthority;
-import com.rapidark.common.security.OpenSecurityConstants;
-import com.rapidark.common.utils.CriteriaQueryWrapper;
-import com.rapidark.common.utils.StringUtils;
-import com.rapidark.common.utils.UuidUtil;
+import com.rapidark.framework.commons.constants.CommonConstants;
+import com.rapidark.framework.commons.exception.OpenAlertException;
+import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.commons.security.OpenAuthority;
+import com.rapidark.framework.commons.security.OpenSecurityConstants;
+import com.rapidark.framework.commons.utils.CriteriaQueryWrapper;
+import com.rapidark.framework.commons.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +31,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

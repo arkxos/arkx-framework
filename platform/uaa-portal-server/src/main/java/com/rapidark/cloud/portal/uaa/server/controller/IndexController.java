@@ -2,7 +2,7 @@ package com.rapidark.cloud.portal.uaa.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.ResultBody;
 import com.rapidark.cloud.portal.uaa.server.service.feign.OpenAppServiceClient;
 import com.rapidark.cloud.portal.uaa.server.service.feign.BaseDeveloperServiceClient;
 import com.rapidark.cloud.portal.uaa.server.service.impl.GiteeAuthServiceImpl;

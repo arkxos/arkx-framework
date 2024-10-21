@@ -6,8 +6,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.server.repository.BaseAccountLogsRepository;
 import com.rapidark.cloud.base.server.repository.BaseAccountRepository;
-import com.rapidark.common.utils.CriteriaQueryWrapper;
-import com.rapidark.cloud.base.server.service.query.AccountQueryCriteria;
+import com.rapidark.framework.commons.utils.CriteriaQueryWrapper;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

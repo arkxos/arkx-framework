@@ -1,6 +1,6 @@
 package com.rapidark.autoconfigure;
 
-import com.rapidark.common.interceptor.FeignRequestInterceptor;
+import com.rapidark.framework.commons.interceptor.FeignRequestInterceptor;
 import feign.Request;
 import feign.RequestInterceptor;
 import feign.Retryer;

@@ -1,13 +1,11 @@
 package com.rapidark.cloud.base.server.listener;
 
-import cn.hutool.core.util.IdUtil;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.cloud.base.server.service.IpRegionService;
-import com.rapidark.common.constants.QueueConstants;
-import com.rapidark.common.utils.BeanConvertUtils;
-import com.rapidark.common.utils.SystemIdGenerator;
-import com.rapidark.common.utils.UuidUtil;
+import com.rapidark.framework.commons.constants.QueueConstants;
+import com.rapidark.framework.commons.utils.BeanConvertUtils;
+import com.rapidark.framework.commons.utils.SystemIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;

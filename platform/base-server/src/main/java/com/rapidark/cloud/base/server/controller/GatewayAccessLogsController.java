@@ -1,10 +1,9 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.service.GatewayAccessLogsService;
-import com.rapidark.common.model.PageParams;
-import com.rapidark.common.model.ResultBody;
+import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.commons.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

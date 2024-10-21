@@ -3,7 +3,7 @@ package com.bsd.user.server.model.excel;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
 import com.bsd.user.server.enums.UserSourceEnum;
-import com.rapidark.common.exception.OpenAlertException;
+import com.rapidark.framework.commons.exception.OpenAlertException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

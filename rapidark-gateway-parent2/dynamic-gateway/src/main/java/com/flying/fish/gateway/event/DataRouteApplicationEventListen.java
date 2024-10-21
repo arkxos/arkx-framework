@@ -8,7 +8,7 @@ import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
 import com.rapidark.cloud.gateway.manage.service.BalancedService;
 import com.rapidark.cloud.gateway.manage.service.LoadServerService;
-import com.rapidark.common.utils.Constants;
+import com.rapidark.framework.commons.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import lombok.extern.slf4j.Slf4j;

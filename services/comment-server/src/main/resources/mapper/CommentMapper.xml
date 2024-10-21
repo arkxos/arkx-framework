@@ -39,7 +39,7 @@
     <sql id="join"></sql>
 
     <!-- 自定义查询单个实体 -->
-    <select id="getEntityMap" resultType="com.rapidark.common.mybatis.EntityMap">
+    <select id="getEntityMap" resultType="mybatis.com.rapidark.framework.commons.EntityMap">
         SELECT * FROM
         <include refid="t_alias"/>
         <include refid="join"/>
@@ -47,7 +47,7 @@
     </select>
 
     <!-- 自定义关联查询分页 -->
-    <select id="pageList" resultType="com.rapidark.common.mybatis.EntityMap">
+    <select id="pageList" resultType="mybatis.com.rapidark.framework.commons.EntityMap">
         SELECT ${ew.select} FROM
         <include refid="t_alias"/>
         <include refid="join"/>

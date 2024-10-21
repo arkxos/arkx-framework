@@ -1,9 +1,9 @@
 package com.bsd.user.server.utils;
 
-import com.rapidark.common.exception.OpenAlertException;
-import com.rapidark.common.utils.EncryptUtils;
-import com.rapidark.common.utils.RandomValueUtils;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.exception.OpenAlertException;
+import com.rapidark.framework.commons.utils.EncryptUtils;
+import com.rapidark.framework.commons.utils.RandomValueUtils;
+import com.rapidark.framework.commons.utils.StringUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.Jwts;

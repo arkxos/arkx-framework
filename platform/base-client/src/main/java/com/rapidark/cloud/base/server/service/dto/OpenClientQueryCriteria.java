@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.service.dto;
 
 import lombok.Data;
-import com.rapidark.common.annotation.Query;
+import com.rapidark.framework.commons.annotation.Query;
 
 /**
  * @website http://rapidark.com

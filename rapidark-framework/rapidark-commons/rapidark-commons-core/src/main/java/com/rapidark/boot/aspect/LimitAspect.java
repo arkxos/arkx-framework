@@ -17,11 +17,11 @@ package com.rapidark.boot.aspect;
 
 import com.google.common.collect.ImmutableList;
 
-import com.rapidark.common.annotation.Limit;
-import com.rapidark.common.aspect.LimitType;
-import com.rapidark.common.exception.BadRequestException;
-import com.rapidark.common.utils.RequestHolder;
-import com.rapidark.common.utils.StringUtils;
+import com.rapidark.framework.commons.annotation.Limit;
+import com.rapidark.framework.commons.aspect.LimitType;
+import com.rapidark.framework.commons.exception.BadRequestException;
+import com.rapidark.framework.commons.utils.RequestHolder;
+import com.rapidark.framework.commons.utils.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -52,7 +52,7 @@ public class LimitAspect {
         this.redisTemplate = redisTemplate;
     }
 
-    @Pointcut("@annotation(com.rapidark.common.annotation.Limit)")
+    @Pointcut("@annotation(com.rapidark.framework.commons.annotation.Limit)")
     public void pointcut() {
     }
 

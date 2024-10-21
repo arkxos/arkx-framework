@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.common.model.BaseEntity;
+import com.rapidark.framework.commons.model.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;

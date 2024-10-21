@@ -1,10 +1,10 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
 import com.rapidark.cloud.gateway.formwork.util.*;
-import com.rapidark.common.model.ResultBody;
-import com.rapidark.common.utils.Constants;
-import com.rapidark.common.utils.PageData;
-import com.rapidark.common.utils.SystemIdGenerator;
+import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.commons.utils.Constants;
+import com.rapidark.framework.commons.utils.PageData;
+import com.rapidark.framework.commons.utils.SystemIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;

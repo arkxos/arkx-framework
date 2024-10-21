@@ -15,7 +15,7 @@
 */
 package ${package}.rest;
 
-import com.rapidark.common.annotation.Log;
+import annotation.com.rapidark.framework.commons.Log;
 import ${package}.entity.${className};
 import ${package}.service.${className}Service;
 import ${package}.service.dto.${className}QueryCriteria;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import com.rapidark.common.model.ResultBody;
+import model.com.rapidark.framework.commons.ResultBody;
 
 /**
 * @website http://rapidark.com
