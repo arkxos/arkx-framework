@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.service.dto;
 
-import com.rapidark.framework.commons.util.StringUtils;
+import com.rapidark.common.utils.StringUtils;
 import lombok.Builder;
 import lombok.Data;
 
