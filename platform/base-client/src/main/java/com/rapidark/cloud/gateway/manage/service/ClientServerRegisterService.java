@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.manage.repository.ClientServerRegisterRepository;
-import com.rapidark.framework.commons.utils.Constants;
+import com.rapidark.framework.common.utils.Constants;
 
 import java.sql.Date;
 import java.sql.Timestamp;

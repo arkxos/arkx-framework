@@ -2,9 +2,9 @@ package com.rapidark.cloud.gateway.manage.service;
 
 import com.rapidark.cloud.gateway.formwork.bean.GatewayAppRouteCountRsp;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.framework.commons.model.ResultBody;
-import com.rapidark.framework.commons.utils.PageData;
-import com.rapidark.framework.commons.utils.RedisUtils;
+import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.common.utils.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -16,7 +16,7 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.bean.CountReq;
 import com.rapidark.cloud.gateway.formwork.bean.CountRsp;
 import com.rapidark.cloud.gateway.formwork.bean.CountTotalRsp;
-import com.rapidark.framework.commons.utils.Constants;
+import com.rapidark.framework.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;

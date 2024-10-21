@@ -3,7 +3,7 @@ package com.bsd.org.server.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bsd.org.server.model.entity.Position;
 import com.bsd.org.server.model.vo.PositionVO;
-import com.rapidark.framework.commons.mybatis.base.service.IBaseService;
+import com.rapidark.framework.common.mybatis.base.service.IBaseService;
 
 import java.util.List;
 

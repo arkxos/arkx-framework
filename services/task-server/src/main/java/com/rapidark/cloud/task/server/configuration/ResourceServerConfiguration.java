@@ -1,9 +1,9 @@
 package com.rapidark.cloud.task.server.configuration;
 
-import com.rapidark.framework.commons.annotation.ArkResourceServer;
-import com.rapidark.framework.commons.exception.OpenAccessDeniedHandler;
-import com.rapidark.framework.commons.exception.OpenAuthenticationEntryPoint;
-import com.rapidark.framework.commons.security.OpenHelper;
+import com.rapidark.framework.common.annotation.ArkResourceServer;
+import com.rapidark.framework.common.exception.OpenAccessDeniedHandler;
+import com.rapidark.framework.common.exception.OpenAuthenticationEntryPoint;
+import com.rapidark.framework.common.security.OpenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;

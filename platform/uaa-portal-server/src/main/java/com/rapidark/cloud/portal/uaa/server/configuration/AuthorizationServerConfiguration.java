@@ -1,8 +1,8 @@
 package com.rapidark.cloud.portal.uaa.server.configuration;
 
-import com.rapidark.framework.commons.exception.OpenOAuth2WebResponseExceptionTranslator;
-import com.rapidark.framework.commons.security.OpenHelper;
-import com.rapidark.framework.commons.security.OpenTokenEnhancer;
+import com.rapidark.framework.common.exception.OpenOAuth2WebResponseExceptionTranslator;
+import com.rapidark.framework.common.security.OpenHelper;
+import com.rapidark.framework.common.security.OpenTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

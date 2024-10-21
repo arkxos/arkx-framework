@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.cloud.msg.client.model.entity.WebHookLogs;
 import com.rapidark.cloud.msg.server.mapper.WebHookLogsMapper;
 import com.rapidark.cloud.msg.server.service.WebHookLogsService;

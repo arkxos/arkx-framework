@@ -1,13 +1,12 @@
 package me.zhengjie.utils;
 
-import com.rapidark.framework.commons.utils.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.rapidark.framework.commons.utils.StringUtils.*;
+import static com.rapidark.framework.common.utils.StringUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 

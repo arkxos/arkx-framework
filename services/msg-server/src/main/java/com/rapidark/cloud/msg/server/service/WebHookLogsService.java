@@ -1,7 +1,7 @@
 package com.rapidark.cloud.msg.server.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.rapidark.framework.commons.model.PageParams;
+import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.cloud.msg.client.model.entity.WebHookLogs;
 
 /**

@@ -2,7 +2,7 @@ package com.rapidark.cloud.base.server.repository;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.entity.BaseAuthorityRole;
-import com.rapidark.framework.commons.security.OpenAuthority;
+import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import org.springframework.data.repository.query.Param;

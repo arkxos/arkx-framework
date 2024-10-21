@@ -2,7 +2,7 @@ package com.rapidark.cloud.gateway.server.filter;
 
 import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.gateway.server.util.ReactiveWebUtils;
-import com.rapidark.framework.commons.constants.ErrorCode;
+import com.rapidark.framework.common.constants.ErrorCode;
 import com.rapidark.cloud.gateway.server.exception.JsonAccessDeniedHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;

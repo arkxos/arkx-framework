@@ -20,7 +20,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.commons.model.BaseEntity;
+import com.rapidark.framework.common.model.BaseEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;

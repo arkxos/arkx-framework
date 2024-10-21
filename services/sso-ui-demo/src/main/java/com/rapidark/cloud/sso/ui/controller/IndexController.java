@@ -1,7 +1,7 @@
 package com.rapidark.cloud.sso.ui.controller;
 
-import com.rapidark.framework.commons.security.OpenHelper;
-import com.rapidark.framework.commons.security.OpenUserDetails;
+import com.rapidark.framework.common.security.OpenHelper;
+import com.rapidark.framework.common.security.OpenUserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -5,8 +5,8 @@ import com.rapidark.cloud.base.client.model.AuthorityApi;
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.base.client.model.entity.BaseAuthority;
-import com.rapidark.framework.commons.mybatis.base.mapper.SuperMapper;
-import com.rapidark.framework.commons.security.OpenAuthority;
+import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.common.security.OpenAuthority;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

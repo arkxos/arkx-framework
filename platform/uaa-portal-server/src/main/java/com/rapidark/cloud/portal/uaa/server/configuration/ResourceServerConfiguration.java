@@ -1,8 +1,8 @@
 package com.rapidark.cloud.portal.uaa.server.configuration;
 
-import com.rapidark.framework.commons.annotation.ArkResourceServer;
-import com.rapidark.framework.commons.exception.OpenAccessDeniedHandler;
-import com.rapidark.framework.commons.exception.OpenAuthenticationEntryPoint;
+import com.rapidark.framework.common.annotation.ArkResourceServer;
+import com.rapidark.framework.common.exception.OpenAccessDeniedHandler;
+import com.rapidark.framework.common.exception.OpenAuthenticationEntryPoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;

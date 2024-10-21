@@ -2,9 +2,9 @@ package com.rapidark.autoconfigure;
 
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import com.google.common.collect.Lists;
-import com.rapidark.framework.commons.swagger.OpenSwaggerProperties;
-import com.rapidark.framework.commons.utils.DateUtils;
-import com.rapidark.framework.commons.utils.RandomValueUtils;
+import com.rapidark.framework.common.swagger.OpenSwaggerProperties;
+import com.rapidark.framework.common.utils.DateUtils;
+import com.rapidark.framework.common.utils.RandomValueUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;

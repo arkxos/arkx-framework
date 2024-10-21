@@ -20,14 +20,14 @@ import ${package}.entity.${className};
     <#list columns as column>
         <#if column.columnKey = 'UNI'>
             <#if column_index = 1>
-import com.rapidark.framework.commons.exception.EntityExistException;
+import com.rapidark.framework.common.exception.EntityExistException;
             </#if>
         </#if>
     </#list>
 </#if>
-import utils.com.rapidark.framework.commons.ValidationUtil;
-import utils.com.rapidark.framework.commons.FileUtil;
-import utils.com.rapidark.framework.commons.UuidUtil;
+import utils.com.rapidark.framework.common.ValidationUtil;
+import utils.com.rapidark.framework.common.FileUtil;
+import utils.com.rapidark.framework.common.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import ${package}.repository.${className}Repository;
 import ${package}.service.${className}Service;
@@ -45,8 +45,8 @@ import cn.hutool.core.util.IdUtil;
 </#if>
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import utils.com.rapidark.framework.commons.PageUtil;
-import utils.com.rapidark.framework.commons.QueryHelp;
+import utils.com.rapidark.framework.common.PageUtil;
+import utils.com.rapidark.framework.common.QueryHelp;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;

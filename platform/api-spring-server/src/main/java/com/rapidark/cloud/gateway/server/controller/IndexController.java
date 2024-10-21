@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.controller;
 
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
-import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.common.model.ResultBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

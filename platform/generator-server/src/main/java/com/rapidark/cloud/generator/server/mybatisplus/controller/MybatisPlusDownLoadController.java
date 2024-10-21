@@ -1,6 +1,6 @@
 package com.rapidark.cloud.generator.server.mybatisplus.controller;
 
-import com.rapidark.framework.commons.utils.WebUtils;
+import com.rapidark.framework.common.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;

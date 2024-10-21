@@ -15,7 +15,7 @@
  */
 package me.zhengjie.config;
 
-import com.rapidark.framework.commons.utils.SecurityUtils;
+import com.rapidark.framework.common.utils.SecurityUtils;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 import java.util.Optional;

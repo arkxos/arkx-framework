@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.manage.service;
 
 import com.rapidark.cloud.gateway.manage.repository.SecureIpRepository;
-import com.rapidark.framework.commons.utils.PageData;
+import com.rapidark.framework.common.utils.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;

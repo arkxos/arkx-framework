@@ -2,8 +2,8 @@ package me.zhengjie.utils;
 
 import org.junit.jupiter.api.Test;
 
-import static com.rapidark.framework.commons.utils.MyEncryptUtils.desDecrypt;
-import static com.rapidark.framework.commons.utils.MyEncryptUtils.desEncrypt;
+import static com.rapidark.framework.common.utils.MyEncryptUtils.desDecrypt;
+import static com.rapidark.framework.common.utils.MyEncryptUtils.desEncrypt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MyEncryptUtilsTest {

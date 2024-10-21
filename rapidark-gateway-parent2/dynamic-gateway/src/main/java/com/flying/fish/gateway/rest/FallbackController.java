@@ -2,7 +2,7 @@ package com.flying.fish.gateway.rest;
 
 import com.rapidark.cloud.gateway.formwork.cache.RouteCache;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.common.model.ResultBody;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

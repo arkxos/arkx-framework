@@ -17,22 +17,21 @@ package me.zhengjie.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.rapidark.framework.commons.utils.QueryHelp;
-import com.rapidark.framework.commons.utils.RedisUtils;
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.utils.QueryHelp;
+import com.rapidark.framework.common.utils.RedisUtils;
+import com.rapidark.framework.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.framework.commons.exception.BadRequestException;
+import com.rapidark.framework.common.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.modules.system.repository.RoleRepository;
 import me.zhengjie.modules.system.repository.UserRepository;
 import me.zhengjie.modules.system.service.dto.DeptDto;
 import me.zhengjie.modules.system.service.dto.DeptQueryCriteria;
-import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.repository.DeptRepository;
 import me.zhengjie.modules.system.service.DeptService;
 import me.zhengjie.modules.system.service.mapstruct.DeptMapper;
-import com.rapidark.framework.commons.utils.enums.DataScopeEnum;
+import com.rapidark.framework.common.utils.enums.DataScopeEnum;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
@@ -62,7 +61,7 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public List<DeptDto> queryAll(DeptQueryCriteria criteria, Boolean isQuery) throws Exception {
         Sort sort = Sort.by(Sort.Direction.ASC, "deptSort");
-        String dataScopeType = com.rapidark.framework.commons.utils.SecurityUtils.getDataScopeType();
+        String dataScopeType = com.rapidark.framework.common.utils.SecurityUtils.getDataScopeType();
         if (isQuery) {
             if(dataScopeType.equals(DataScopeEnum.ALL.getValue())){
                 criteria.setPidIsNull(true);
@@ -94,7 +93,7 @@ public class DeptServiceImpl implements DeptService {
     @Cacheable(key = "'id:' + #p0")
     public DeptDto findById(Long id) {
         Dept dept = deptRepository.findById(id).orElseGet(Dept::new);
-        com.rapidark.framework.commons.utils.ValidationUtil.isNull(dept.getId(),"Dept","id",id);
+        com.rapidark.framework.common.utils.ValidationUtil.isNull(dept.getId(),"Dept","id",id);
         return deptMapper.toDto(dept);
     }
 
@@ -130,7 +129,7 @@ public class DeptServiceImpl implements DeptService {
             throw new BadRequestException("上级不能为自己");
         }
         Dept dept = deptRepository.findById(resources.getId()).orElseGet(Dept::new);
-        com.rapidark.framework.commons.utils.ValidationUtil.isNull( dept.getId(),"Dept","id",resources.getId());
+        com.rapidark.framework.common.utils.ValidationUtil.isNull( dept.getId(),"Dept","id",resources.getId());
         resources.setId(dept.getId());
         deptRepository.save(resources);
         // 更新父节点中子节点数目
@@ -161,7 +160,7 @@ public class DeptServiceImpl implements DeptService {
             map.put("创建日期", deptDTO.getCreateTime());
             list.add(map);
         }
-        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     @Override
@@ -280,7 +279,7 @@ public class DeptServiceImpl implements DeptService {
     public void delCaches(Long id){
         List<User> users = userRepository.findByRoleDeptId(id);
         // 删除数据权限
-        redisUtils.delByKeys(com.rapidark.framework.commons.utils.CacheKey.DATA_USER, users.stream().map(User::getId).collect(Collectors.toSet()));
-        redisUtils.del(com.rapidark.framework.commons.utils.CacheKey.DEPT_ID + id);
+        redisUtils.delByKeys(com.rapidark.framework.common.utils.CacheKey.DATA_USER, users.stream().map(User::getId).collect(Collectors.toSet()));
+        redisUtils.del(com.rapidark.framework.common.utils.CacheKey.DEPT_ID + id);
     }
 }

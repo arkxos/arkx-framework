@@ -16,15 +16,15 @@
 package me.zhengjie.modules.system.rest;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.rapidark.framework.commons.utils.PageUtil;
-import com.rapidark.framework.commons.utils.RSAUtils;
+import com.rapidark.framework.common.utils.PageUtil;
+import com.rapidark.framework.common.utils.RSAUtils;
 import com.rapidark.boot.RsaProperties;
-import com.rapidark.framework.commons.utils.SecurityUtils;
+import com.rapidark.framework.common.utils.SecurityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.framework.commons.annotation.Log;
-import com.rapidark.framework.commons.exception.BadRequestException;
+import com.rapidark.framework.common.annotation.Log;
+import com.rapidark.framework.common.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.service.DataService;
 import me.zhengjie.modules.system.domain.User;
@@ -36,7 +36,7 @@ import me.zhengjie.modules.system.service.dto.UserDto;
 import me.zhengjie.modules.system.service.dto.UserQueryCriteria;
 import me.zhengjie.modules.system.service.VerifyService;
 import me.zhengjie.modules.system.service.UserService;
-import com.rapidark.framework.commons.utils.enums.CodeEnum;
+import com.rapidark.framework.common.utils.enums.CodeEnum;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,7 +92,7 @@ public class UserController {
             criteria.getDeptIds().addAll(deptService.getDeptChildren(data));
         }
         // 数据权限
-        List<Long> dataScopes = dataService.getDeptIds(userService.findByName(com.rapidark.framework.commons.utils.SecurityUtils.getCurrentUsername()));
+        List<Long> dataScopes = dataService.getDeptIds(userService.findByName(com.rapidark.framework.common.utils.SecurityUtils.getCurrentUsername()));
         // criteria.getDeptIds() 不为空并且数据权限不为空则取交集
         if (!CollectionUtils.isEmpty(criteria.getDeptIds()) && !CollectionUtils.isEmpty(dataScopes)){
             // 取交集
@@ -134,7 +134,7 @@ public class UserController {
     @ApiOperation("修改用户：个人中心")
     @PutMapping(value = "center")
     public ResponseEntity<Object> center(@Validated(User.Update.class) @RequestBody User resources){
-        if(!resources.getId().equals(com.rapidark.framework.commons.utils.SecurityUtils.getCurrentUserId())){
+        if(!resources.getId().equals(com.rapidark.framework.common.utils.SecurityUtils.getCurrentUserId())){
             throw new BadRequestException("不能修改他人资料");
         }
         userService.updateCenter(resources);
@@ -147,7 +147,7 @@ public class UserController {
     @PreAuthorize("@el.check('user:del')")
     public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){
         for (Long id : ids) {
-            Integer currentLevel =  Collections.min(roleService.findByUsersId(com.rapidark.framework.commons.utils.SecurityUtils.getCurrentUserId()).stream().map(RoleSmallDto::getLevel).collect(Collectors.toList()));
+            Integer currentLevel =  Collections.min(roleService.findByUsersId(com.rapidark.framework.common.utils.SecurityUtils.getCurrentUserId()).stream().map(RoleSmallDto::getLevel).collect(Collectors.toList()));
             Integer optLevel =  Collections.min(roleService.findByUsersId(id).stream().map(RoleSmallDto::getLevel).collect(Collectors.toList()));
             if (currentLevel > optLevel) {
                 throw new BadRequestException("角色权限不足，不能删除：" + userService.findById(id).getUsername());
@@ -162,7 +162,7 @@ public class UserController {
     public ResponseEntity<Object> updatePass(@RequestBody UserPassVo passVo) throws Exception {
         String oldPass = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),passVo.getOldPass());
         String newPass = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),passVo.getNewPass());
-        UserDto user = userService.findByName(com.rapidark.framework.commons.utils.SecurityUtils.getCurrentUsername());
+        UserDto user = userService.findByName(com.rapidark.framework.common.utils.SecurityUtils.getCurrentUsername());
         if(!passwordEncoder.matches(oldPass, user.getPassword())){
             throw new BadRequestException("修改失败，旧密码错误");
         }
@@ -184,7 +184,7 @@ public class UserController {
     @PostMapping(value = "/updateEmail/{code}")
     public ResponseEntity<Object> updateEmail(@PathVariable String code,@RequestBody User user) throws Exception {
         String password = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),user.getPassword());
-        UserDto userDto = userService.findByName(com.rapidark.framework.commons.utils.SecurityUtils.getCurrentUsername());
+        UserDto userDto = userService.findByName(com.rapidark.framework.common.utils.SecurityUtils.getCurrentUsername());
         if(!passwordEncoder.matches(password, userDto.getPassword())){
             throw new BadRequestException("密码错误");
         }

@@ -11,7 +11,7 @@ import org.springframework.util.CollectionUtils;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.formwork.bean.MonitorReq;
 import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.framework.commons.utils.Constants;
+import com.rapidark.framework.common.utils.Constants;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

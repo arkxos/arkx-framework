@@ -1,10 +1,10 @@
 package com.rapidark.cloud.gateway.server.tiemr;
 
 import com.rapidark.cloud.gateway.formwork.cache.CountCache;
-import com.rapidark.framework.commons.utils.Constants;
+import com.rapidark.framework.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
-import com.rapidark.framework.commons.utils.RedisUtils;
+import com.rapidark.framework.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;

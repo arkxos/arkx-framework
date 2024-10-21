@@ -9,9 +9,9 @@ import com.bsd.comment.server.mapper.CommentReplyMapper;
 import com.bsd.comment.server.model.entity.Comment;
 import com.bsd.comment.server.model.entity.CommentReply;
 import com.bsd.comment.server.service.CommentReplyService;
-import com.rapidark.framework.commons.exception.OpenAlertException;
-import com.rapidark.framework.commons.mybatis.base.service.impl.BaseServiceImpl;
-import com.rapidark.framework.commons.security.OpenHelper;
+import com.rapidark.framework.common.exception.OpenAlertException;
+import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.common.security.OpenHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

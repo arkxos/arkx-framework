@@ -18,7 +18,7 @@ package me.zhengjie.modules.mnt.service.dto;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.commons.model.BaseDTO;
+import com.rapidark.framework.common.model.BaseDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;

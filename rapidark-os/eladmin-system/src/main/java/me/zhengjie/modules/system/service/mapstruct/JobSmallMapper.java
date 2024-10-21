@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.system.service.mapstruct;
 
-import com.rapidark.framework.commons.model.BaseMapper;
+import com.rapidark.framework.common.model.BaseMapper;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.service.dto.JobSmallDto;
 import org.mapstruct.Mapper;

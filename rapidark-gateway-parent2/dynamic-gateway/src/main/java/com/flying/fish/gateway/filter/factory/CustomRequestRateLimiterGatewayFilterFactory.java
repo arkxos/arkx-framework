@@ -3,7 +3,7 @@ package com.flying.fish.gateway.filter.factory;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
 
-import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gateway.filter.GatewayFilter;

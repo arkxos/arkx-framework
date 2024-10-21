@@ -4,7 +4,7 @@ import com.bsd.dingtalk.server.mapper.DepartmentMapper;
 import com.bsd.dingtalk.server.model.entity.Department;
 import com.bsd.dingtalk.server.service.DepartmentService;
 import com.bsd.dingtalk.server.util.ContactHelper;
-import com.rapidark.framework.commons.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

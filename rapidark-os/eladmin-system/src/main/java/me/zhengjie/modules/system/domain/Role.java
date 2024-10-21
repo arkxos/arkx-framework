@@ -19,8 +19,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.commons.model.BaseEntity;
-import com.rapidark.framework.commons.utils.enums.DataScopeEnum;
+import com.rapidark.framework.common.model.BaseEntity;
+import com.rapidark.framework.common.utils.enums.DataScopeEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

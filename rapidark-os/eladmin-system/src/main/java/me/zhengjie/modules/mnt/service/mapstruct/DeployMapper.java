@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.mnt.service.mapstruct;
 
-import com.rapidark.framework.commons.model.BaseMapper;
+import com.rapidark.framework.common.model.BaseMapper;
 import me.zhengjie.modules.mnt.domain.Deploy;
 import me.zhengjie.modules.mnt.service.dto.DeployDto;
 import org.mapstruct.Mapper;

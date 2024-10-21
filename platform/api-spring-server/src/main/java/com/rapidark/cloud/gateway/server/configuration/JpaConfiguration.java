@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.configuration;
 
 
-import com.rapidark.framework.commons.annotation.JpaDto;
+import com.rapidark.framework.common.annotation.JpaDto;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

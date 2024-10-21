@@ -16,7 +16,7 @@
 package me.zhengjie.utils;
 
 import com.qiniu.storage.Region;
-import com.rapidark.framework.commons.utils.FileUtil;
+import com.rapidark.framework.common.utils.FileUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,6 +68,6 @@ public class QiNiuUtil {
         return FileUtil.getFileNameNoEx(file) + "-" +
                 sdf.format(date) +
                 "." +
-                com.rapidark.framework.commons.utils.FileUtil.getExtensionName(file);
+                com.rapidark.framework.common.utils.FileUtil.getExtensionName(file);
     }
 }

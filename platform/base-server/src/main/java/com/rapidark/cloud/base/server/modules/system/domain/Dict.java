@@ -18,7 +18,7 @@ package com.rapidark.cloud.base.server.modules.system.domain;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.commons.model.BaseEntity;
+import com.rapidark.framework.common.model.BaseEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

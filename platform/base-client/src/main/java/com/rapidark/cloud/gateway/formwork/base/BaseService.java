@@ -1,9 +1,9 @@
 package com.rapidark.cloud.gateway.formwork.base;
 
 import com.rapidark.framework.data.jpa.BaseRepository;
-import com.rapidark.framework.commons.utils.CriteriaQueryWrapper;
-import com.rapidark.framework.commons.utils.PageData;
-import com.rapidark.framework.commons.utils.QueryHelp;
+import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.common.utils.QueryHelp;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;

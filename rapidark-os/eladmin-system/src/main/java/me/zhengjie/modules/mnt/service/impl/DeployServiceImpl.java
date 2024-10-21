@@ -17,14 +17,14 @@ package me.zhengjie.modules.mnt.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import com.rapidark.framework.commons.utils.FileUtil;
-import com.rapidark.framework.commons.utils.PageUtil;
-import com.rapidark.framework.commons.utils.QueryHelp;
-import com.rapidark.framework.commons.utils.SecurityUtils;
-import com.rapidark.framework.commons.utils.ValidationUtil;
+import com.rapidark.framework.common.utils.FileUtil;
+import com.rapidark.framework.common.utils.PageUtil;
+import com.rapidark.framework.common.utils.QueryHelp;
+import com.rapidark.framework.common.utils.SecurityUtils;
+import com.rapidark.framework.common.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import com.rapidark.framework.commons.exception.BadRequestException;
+import com.rapidark.framework.common.exception.BadRequestException;
 import me.zhengjie.modules.mnt.domain.App;
 import me.zhengjie.modules.mnt.domain.Deploy;
 import me.zhengjie.modules.mnt.domain.DeployHistory;
@@ -99,7 +99,7 @@ public class DeployServiceImpl implements DeployService {
 	@Transactional(rollbackFor = Exception.class)
 	public void update(Deploy resources) {
 		Deploy deploy = deployRepository.findById(resources.getId()).orElseGet(Deploy::new);
-		com.rapidark.framework.commons.utils.ValidationUtil.isNull(deploy.getId(), "Deploy", "id", resources.getId());
+		com.rapidark.framework.common.utils.ValidationUtil.isNull(deploy.getId(), "Deploy", "id", resources.getId());
 		deploy.copy(resources);
 		deployRepository.save(deploy);
 	}

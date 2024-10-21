@@ -23,7 +23,7 @@ import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictMapper;
-import com.rapidark.framework.commons.utils.*;
+import com.rapidark.framework.common.utils.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;

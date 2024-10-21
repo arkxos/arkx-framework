@@ -2,9 +2,9 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
 import com.rapidark.cloud.base.server.service.BaseActionService;
-import com.rapidark.framework.commons.model.PageParams;
-import com.rapidark.framework.commons.model.ResultBody;
-import com.rapidark.framework.commons.security.http.OpenRestTemplate;
+import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

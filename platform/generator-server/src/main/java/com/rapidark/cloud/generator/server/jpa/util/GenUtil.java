@@ -20,8 +20,8 @@ import cn.hutool.extra.template.*;
 import com.rapidark.cloud.generator.server.jpa.entity.ColumnInfo;
 import com.rapidark.cloud.generator.server.jpa.entity.GenConfig;
 import lombok.extern.slf4j.Slf4j;
-import com.rapidark.framework.commons.utils.FileUtil;
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.utils.FileUtil;
+import com.rapidark.framework.common.utils.StringUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.io.File;
@@ -31,7 +31,7 @@ import java.io.Writer;
 import java.time.LocalDate;
 import java.util.*;
 
-import static com.rapidark.framework.commons.utils.FileUtil.SYS_TEM_DIR;
+import static com.rapidark.framework.common.utils.FileUtil.SYS_TEM_DIR;
 
 /**
  * 代码生成

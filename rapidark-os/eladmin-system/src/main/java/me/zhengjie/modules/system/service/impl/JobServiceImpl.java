@@ -15,15 +15,15 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
-import com.rapidark.framework.commons.utils.CacheKey;
-import com.rapidark.framework.commons.utils.FileUtil;
-import com.rapidark.framework.commons.utils.PageUtil;
-import com.rapidark.framework.commons.utils.QueryHelp;
-import com.rapidark.framework.commons.utils.RedisUtils;
-import com.rapidark.framework.commons.utils.ValidationUtil;
+import com.rapidark.framework.common.utils.CacheKey;
+import com.rapidark.framework.common.utils.FileUtil;
+import com.rapidark.framework.common.utils.PageUtil;
+import com.rapidark.framework.common.utils.QueryHelp;
+import com.rapidark.framework.common.utils.RedisUtils;
+import com.rapidark.framework.common.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.framework.commons.exception.BadRequestException;
-import com.rapidark.framework.commons.exception.EntityExistException;
+import com.rapidark.framework.common.exception.BadRequestException;
+import com.rapidark.framework.common.exception.EntityExistException;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.repository.UserRepository;
 import me.zhengjie.modules.system.service.dto.JobQueryCriteria;
@@ -72,7 +72,7 @@ public class JobServiceImpl implements JobService {
     @Cacheable(key = "'id:' + #p0")
     public JobDto findById(Long id) {
         Job job = jobRepository.findById(id).orElseGet(Job::new);
-        com.rapidark.framework.commons.utils.ValidationUtil.isNull(job.getId(),"Job","id",id);
+        com.rapidark.framework.common.utils.ValidationUtil.isNull(job.getId(),"Job","id",id);
         return jobMapper.toDto(job);
     }
 

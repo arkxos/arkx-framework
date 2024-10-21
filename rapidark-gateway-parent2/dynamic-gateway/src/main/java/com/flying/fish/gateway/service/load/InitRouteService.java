@@ -9,7 +9,7 @@ import com.rapidark.cloud.gateway.formwork.entity.Balanced;
 import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
 import com.rapidark.cloud.gateway.manage.service.BalancedService;
 import com.rapidark.cloud.gateway.manage.service.LoadServerService;
-import com.rapidark.framework.commons.utils.Constants;
+import com.rapidark.framework.common.utils.Constants;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

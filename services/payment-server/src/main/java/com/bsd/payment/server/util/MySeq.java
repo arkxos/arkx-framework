@@ -1,6 +1,6 @@
 package com.bsd.payment.server.util;
 
-import com.rapidark.framework.commons.utils.RandomHelper;
+import com.rapidark.framework.common.utils.RandomHelper;
 
 import java.util.concurrent.atomic.AtomicLong;
 

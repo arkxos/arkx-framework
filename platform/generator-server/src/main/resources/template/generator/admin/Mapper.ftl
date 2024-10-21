@@ -15,7 +15,7 @@
 */
 package ${package}.service.mapstruct;
 
-import model.com.rapidark.framework.commons.BaseMapper;
+import model.com.rapidark.framework.common.BaseMapper;
 import ${package}.entity.${className};
 import ${package}.service.dto.${className}Dto;
 import org.mapstruct.Mapper;

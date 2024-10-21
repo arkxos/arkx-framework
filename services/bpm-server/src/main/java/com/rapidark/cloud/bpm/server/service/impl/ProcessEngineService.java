@@ -3,7 +3,7 @@ package com.rapidark.cloud.bpm.server.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Maps;
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.utils.StringUtils;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;

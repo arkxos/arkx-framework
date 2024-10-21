@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.server.oauth2;
 
-import com.rapidark.framework.commons.constants.ErrorCode;
+import com.rapidark.framework.common.constants.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.core.Authentication;

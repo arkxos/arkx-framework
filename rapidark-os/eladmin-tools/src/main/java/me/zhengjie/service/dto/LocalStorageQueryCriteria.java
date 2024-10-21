@@ -19,7 +19,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.rapidark.framework.commons.annotation.Query;
+import com.rapidark.framework.common.annotation.Query;
 
 /**
 * @author Zheng Jie

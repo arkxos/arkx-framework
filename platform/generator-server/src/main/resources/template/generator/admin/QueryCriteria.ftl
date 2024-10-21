@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.util.List;
 </#if>
 <#if queryColumns??>
-import annotation.com.rapidark.framework.commons.Query;
+import annotation.com.rapidark.framework.common.Query;
 </#if>
 import java.time.LocalDateTime;
 

@@ -1,6 +1,6 @@
 package com.bsd.payment.server.util;
 
-import com.rapidark.framework.commons.exception.OpenAlertException;
+import com.rapidark.framework.common.exception.OpenAlertException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 

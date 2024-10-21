@@ -1,6 +1,6 @@
 package me.zhengjie.utils;
 
-import com.rapidark.framework.commons.utils.DateUtil;
+import com.rapidark.framework.common.utils.DateUtil;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

@@ -16,7 +16,7 @@
 package me.zhengjie.modules.system.service.dto;
 
 import lombok.Data;
-import com.rapidark.framework.commons.annotation.Query;
+import com.rapidark.framework.common.annotation.Query;
 
 import java.sql.Timestamp;
 import java.util.List;

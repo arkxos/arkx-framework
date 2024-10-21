@@ -16,16 +16,16 @@
 package me.zhengjie.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.rapidark.framework.commons.utils.PageUtil;
-import com.rapidark.framework.commons.utils.QueryHelp;
-import com.rapidark.framework.commons.utils.RedisUtils;
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.utils.PageUtil;
+import com.rapidark.framework.common.utils.QueryHelp;
+import com.rapidark.framework.common.utils.RedisUtils;
+import com.rapidark.framework.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.framework.commons.exception.BadRequestException;
+import com.rapidark.framework.common.exception.BadRequestException;
 import me.zhengjie.modules.security.service.UserCacheClean;
 import me.zhengjie.modules.system.domain.Menu;
 import me.zhengjie.modules.system.domain.Role;
-import com.rapidark.framework.commons.exception.EntityExistException;
+import com.rapidark.framework.common.exception.EntityExistException;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.modules.system.repository.RoleRepository;
 import me.zhengjie.modules.system.repository.UserRepository;
@@ -89,7 +89,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(rollbackFor = Exception.class)
     public RoleDto findById(long id) {
         Role role = roleRepository.findById(id).orElseGet(Role::new);
-        com.rapidark.framework.commons.utils.ValidationUtil.isNull(role.getId(), "Role", "id", id);
+        com.rapidark.framework.common.utils.ValidationUtil.isNull(role.getId(), "Role", "id", id);
         return roleMapper.toDto(role);
     }
 
@@ -106,7 +106,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(rollbackFor = Exception.class)
     public void update(Role resources) {
         Role role = roleRepository.findById(resources.getId()).orElseGet(Role::new);
-        com.rapidark.framework.commons.utils.ValidationUtil.isNull(role.getId(), "Role", "id", resources.getId());
+        com.rapidark.framework.common.utils.ValidationUtil.isNull(role.getId(), "Role", "id", resources.getId());
 
         Role role1 = roleRepository.findByName(resources.getName());
 
@@ -196,7 +196,7 @@ public class RoleServiceImpl implements RoleService {
             map.put("创建日期", role.getCreateTime());
             list.add(map);
         }
-        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     @Override
@@ -220,10 +220,10 @@ public class RoleServiceImpl implements RoleService {
         if (CollectionUtil.isNotEmpty(users)) {
             users.forEach(item -> userCacheClean.cleanUserCache(item.getUsername()));
             Set<Long> userIds = users.stream().map(User::getId).collect(Collectors.toSet());
-            redisUtils.delByKeys(com.rapidark.framework.commons.utils.CacheKey.DATA_USER, userIds);
-            redisUtils.delByKeys(com.rapidark.framework.commons.utils.CacheKey.MENU_USER, userIds);
-            redisUtils.delByKeys(com.rapidark.framework.commons.utils.CacheKey.ROLE_AUTH, userIds);
+            redisUtils.delByKeys(com.rapidark.framework.common.utils.CacheKey.DATA_USER, userIds);
+            redisUtils.delByKeys(com.rapidark.framework.common.utils.CacheKey.MENU_USER, userIds);
+            redisUtils.delByKeys(com.rapidark.framework.common.utils.CacheKey.ROLE_AUTH, userIds);
         }
-        redisUtils.del(com.rapidark.framework.commons.utils.CacheKey.ROLE_ID + id);
+        redisUtils.del(com.rapidark.framework.common.utils.CacheKey.ROLE_ID + id);
     }
 }

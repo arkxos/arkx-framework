@@ -2,8 +2,8 @@ package com.rapidark.cloud.base.client.model.entity;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import com.rapidark.framework.commons.annotation.TableAlias;
-import com.rapidark.framework.commons.model.BaseEntity;
+import com.rapidark.framework.common.annotation.TableAlias;
+import com.rapidark.framework.common.model.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;

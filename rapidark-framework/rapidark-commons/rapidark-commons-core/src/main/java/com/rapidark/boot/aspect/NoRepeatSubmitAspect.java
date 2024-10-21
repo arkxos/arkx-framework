@@ -3,7 +3,7 @@ package com.rapidark.boot.aspect;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.rapidark.boot.annotation.NoRepeatSubmit;
-import com.rapidark.framework.commons.exception.OpenException;
+import com.rapidark.framework.common.exception.OpenException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

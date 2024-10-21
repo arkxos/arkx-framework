@@ -2,8 +2,8 @@ package com.rapidark.cloud.base.server.mapper;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.entity.BaseAuthorityRole;
-import com.rapidark.framework.commons.mybatis.base.mapper.SuperMapper;
-import com.rapidark.framework.commons.security.OpenAuthority;
+import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.common.security.OpenAuthority;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

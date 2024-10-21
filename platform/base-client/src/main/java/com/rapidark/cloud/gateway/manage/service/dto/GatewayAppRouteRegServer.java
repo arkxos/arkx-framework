@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.manage.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.rapidark.framework.commons.security.OpenAuthority;
+import com.rapidark.framework.common.security.OpenAuthority;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

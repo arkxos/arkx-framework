@@ -3,7 +3,7 @@ package com.rapidark.cloud.gateway.server.locator;
 import com.google.common.collect.Lists;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.base.client.model.IpLimitApi;
-import com.rapidark.framework.commons.event.RemoteRefreshRouteEvent;
+import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
 import com.rapidark.cloud.gateway.server.service.feign.BaseAuthorityServiceClient;
 import com.rapidark.cloud.gateway.server.service.feign.GatewayServiceClient;
 import lombok.extern.slf4j.Slf4j;

@@ -15,15 +15,14 @@
  */
 package me.zhengjie.modules.security.service;
 
-import com.rapidark.framework.commons.utils.MyEncryptUtils;
-import com.rapidark.framework.commons.utils.PageUtil;
-import com.rapidark.framework.commons.utils.RedisUtils;
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.utils.MyEncryptUtils;
+import com.rapidark.framework.common.utils.PageUtil;
+import com.rapidark.framework.common.utils.RedisUtils;
+import com.rapidark.framework.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.modules.security.config.bean.SecurityProperties;
 import me.zhengjie.modules.security.service.dto.JwtUserDto;
 import me.zhengjie.modules.security.service.dto.OnlineUserDto;
-import me.zhengjie.utils.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 
@@ -141,7 +140,7 @@ public class OnlineUserService {
             map.put("登录日期", user.getLoginTime());
             list.add(map);
         }
-        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     /**

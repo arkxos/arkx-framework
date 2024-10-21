@@ -2,9 +2,9 @@ package com.rapidark.cloud.base.client.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.rapidark.cloud.base.client.constants.UserConstants;
-import com.rapidark.framework.commons.model.BaseEntity;
-import com.rapidark.framework.commons.utils.StringUtils;
-import com.rapidark.framework.commons.core.constant.Constants;
+import com.rapidark.framework.common.model.BaseEntity;
+import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.framework.common.core.constant.Constants;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

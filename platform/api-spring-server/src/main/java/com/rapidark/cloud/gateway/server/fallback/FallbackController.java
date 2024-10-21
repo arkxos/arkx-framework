@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.fallback;
 
-import com.rapidark.framework.commons.constants.ErrorCode;
-import com.rapidark.framework.commons.model.ResultBody;
+import com.rapidark.framework.common.constants.ErrorCode;
+import com.rapidark.framework.common.model.ResultBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;

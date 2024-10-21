@@ -1,6 +1,6 @@
 package com.rapidark.cloud.gateway.server.exception;
 
-import com.rapidark.framework.commons.exception.OpenSignatureException;
+import com.rapidark.framework.common.exception.OpenSignatureException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 

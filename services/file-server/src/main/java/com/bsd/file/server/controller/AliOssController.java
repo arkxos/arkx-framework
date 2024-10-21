@@ -2,9 +2,9 @@ package com.bsd.file.server.controller;
 
 import com.bsd.file.server.service.OssFileService;
 import com.google.common.collect.Maps;
-import com.rapidark.framework.commons.exception.OpenAlertException;
-import com.rapidark.framework.commons.model.ResultBody;
-import com.rapidark.framework.commons.utils.FileHelper;
+import com.rapidark.framework.common.exception.OpenAlertException;
+import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.utils.FileHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

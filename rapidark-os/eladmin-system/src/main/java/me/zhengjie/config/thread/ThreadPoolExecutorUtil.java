@@ -15,7 +15,7 @@
  */
 package me.zhengjie.config.thread;
 
-import com.rapidark.framework.commons.utils.SpringContextHolder;
+import com.rapidark.framework.common.utils.SpringContextHolder;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

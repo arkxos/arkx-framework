@@ -15,12 +15,12 @@
  */
 package me.zhengjie.exception.handler;
 
-import com.rapidark.framework.commons.exception.handler.ApiError;
+import com.rapidark.framework.common.exception.handler.ApiError;
 import lombok.extern.slf4j.Slf4j;
-import com.rapidark.framework.commons.exception.BadRequestException;
-import com.rapidark.framework.commons.exception.EntityExistException;
-import com.rapidark.framework.commons.exception.EntityNotFoundException;
-import com.rapidark.framework.commons.utils.ThrowableUtil;
+import com.rapidark.framework.common.exception.BadRequestException;
+import com.rapidark.framework.common.exception.EntityExistException;
+import com.rapidark.framework.common.exception.EntityNotFoundException;
+import com.rapidark.framework.common.utils.ThrowableUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

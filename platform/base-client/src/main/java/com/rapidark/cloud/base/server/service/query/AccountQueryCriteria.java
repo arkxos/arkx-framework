@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.service.query;
 
-import com.rapidark.framework.commons.annotation.Query;
+import com.rapidark.framework.common.annotation.Query;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

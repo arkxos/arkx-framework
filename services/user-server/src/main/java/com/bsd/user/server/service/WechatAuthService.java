@@ -1,7 +1,7 @@
 package com.bsd.user.server.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.framework.commons.security.oauth2.client.OpenOAuth2Service;
+import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2Service;
 
 /**
  * 微信授权服务接口

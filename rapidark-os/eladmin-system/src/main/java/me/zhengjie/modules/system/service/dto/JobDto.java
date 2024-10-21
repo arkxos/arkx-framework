@@ -18,7 +18,7 @@ package me.zhengjie.modules.system.service.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.rapidark.framework.commons.model.BaseDTO;
+import com.rapidark.framework.common.model.BaseDTO;
 
 import java.io.Serializable;
 

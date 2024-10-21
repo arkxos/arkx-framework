@@ -8,11 +8,11 @@ import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPassword
 import com.rapidark.cloud.gateway.manage.service.BaseDeveloperService;
 import com.rapidark.cloud.gateway.manage.service.command.CreateDeveloperCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
-import com.rapidark.framework.commons.model.PageParams;
-import com.rapidark.framework.commons.model.ResultBody;
-import com.rapidark.framework.commons.utils.PageData;
-import com.rapidark.framework.commons.utils.SystemIdGenerator;
-import com.rapidark.framework.commons.utils.WebUtils;
+import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.common.utils.SystemIdGenerator;
+import com.rapidark.framework.common.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

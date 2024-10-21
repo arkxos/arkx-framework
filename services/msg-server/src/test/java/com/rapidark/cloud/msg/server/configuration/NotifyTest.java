@@ -1,7 +1,7 @@
 package com.rapidark.cloud.msg.server.configuration;
 
 import com.rapidark.cloud.msg.server.service.DelayMessageService;
-import com.rapidark.framework.commons.test.BaseTest;
+import com.rapidark.framework.common.test.BaseTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

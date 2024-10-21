@@ -1,7 +1,7 @@
 package com.bsd.dingtalk.server.mapper;
 
 import com.bsd.dingtalk.server.model.entity.Company;
-import com.rapidark.framework.commons.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

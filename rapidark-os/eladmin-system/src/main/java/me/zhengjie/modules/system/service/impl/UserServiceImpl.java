@@ -15,17 +15,17 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
-import com.rapidark.framework.commons.utils.PageUtil;
-import com.rapidark.framework.commons.utils.QueryHelp;
-import com.rapidark.framework.commons.utils.RedisUtils;
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.utils.PageUtil;
+import com.rapidark.framework.common.utils.QueryHelp;
+import com.rapidark.framework.common.utils.RedisUtils;
+import com.rapidark.framework.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.config.FileProperties;
 import me.zhengjie.modules.security.service.OnlineUserService;
 import me.zhengjie.modules.security.service.UserCacheClean;
 import me.zhengjie.modules.system.domain.User;
-import com.rapidark.framework.commons.exception.EntityExistException;
-import com.rapidark.framework.commons.exception.EntityNotFoundException;
+import com.rapidark.framework.common.exception.EntityExistException;
+import com.rapidark.framework.common.exception.EntityNotFoundException;
 import me.zhengjie.modules.system.repository.UserRepository;
 import me.zhengjie.modules.system.service.UserService;
 import me.zhengjie.modules.system.service.dto.JobSmallDto;
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public UserDto findById(long id) {
         User user = userRepository.findById(id).orElseGet(User::new);
-        com.rapidark.framework.commons.utils.ValidationUtil.isNull(user.getId(), "User", "id", id);
+        com.rapidark.framework.common.utils.ValidationUtil.isNull(user.getId(), "User", "id", id);
         return userMapper.toDto(user);
     }
 
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public void update(User resources) throws Exception {
         User user = userRepository.findById(resources.getId()).orElseGet(User::new);
-        com.rapidark.framework.commons.utils.ValidationUtil.isNull(user.getId(), "User", "id", resources.getId());
+        com.rapidark.framework.common.utils.ValidationUtil.isNull(user.getId(), "User", "id", resources.getId());
         User user1 = userRepository.findByUsername(resources.getUsername());
         User user2 = userRepository.findByEmail(resources.getEmail());
         User user3 = userRepository.findByPhone(resources.getPhone());
@@ -118,9 +118,9 @@ public class UserServiceImpl implements UserService {
         }
         // 如果用户的角色改变
         if (!resources.getRoles().equals(user.getRoles())) {
-            redisUtils.del(com.rapidark.framework.commons.utils.CacheKey.DATA_USER + resources.getId());
-            redisUtils.del(com.rapidark.framework.commons.utils.CacheKey.MENU_USER + resources.getId());
-            redisUtils.del(com.rapidark.framework.commons.utils.CacheKey.ROLE_AUTH + resources.getId());
+            redisUtils.del(com.rapidark.framework.common.utils.CacheKey.DATA_USER + resources.getId());
+            redisUtils.del(com.rapidark.framework.common.utils.CacheKey.MENU_USER + resources.getId());
+            redisUtils.del(com.rapidark.framework.common.utils.CacheKey.ROLE_AUTH + resources.getId());
         }
         // 如果用户被禁用，则清除用户登录信息
         if(!resources.getEnabled()){
@@ -187,14 +187,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Map<String, String> updateAvatar(MultipartFile multipartFile) {
-        User user = userRepository.findByUsername(com.rapidark.framework.commons.utils.SecurityUtils.getCurrentUsername());
+        User user = userRepository.findByUsername(com.rapidark.framework.common.utils.SecurityUtils.getCurrentUsername());
         String oldPath = user.getAvatarPath();
-        File file = com.rapidark.framework.commons.utils.FileUtil.upload(multipartFile, properties.getPath().getAvatar());
+        File file = com.rapidark.framework.common.utils.FileUtil.upload(multipartFile, properties.getPath().getAvatar());
         user.setAvatarPath(Objects.requireNonNull(file).getPath());
         user.setAvatarName(file.getName());
         userRepository.save(user);
         if (StringUtils.isNotBlank(oldPath)) {
-            com.rapidark.framework.commons.utils.FileUtil.del(oldPath);
+            com.rapidark.framework.common.utils.FileUtil.del(oldPath);
         }
         @NotBlank String username = user.getUsername();
         flushCache(username);
@@ -227,7 +227,7 @@ public class UserServiceImpl implements UserService {
             map.put("创建日期", userDTO.getCreateTime());
             list.add(map);
         }
-        com.rapidark.framework.commons.utils.FileUtil.downloadExcel(list, response);
+        com.rapidark.framework.common.utils.FileUtil.downloadExcel(list, response);
     }
 
     /**
@@ -236,7 +236,7 @@ public class UserServiceImpl implements UserService {
      * @param id /
      */
     public void delCaches(Long id, String username) {
-        redisUtils.del(com.rapidark.framework.commons.utils.CacheKey.USER_ID + id);
+        redisUtils.del(com.rapidark.framework.common.utils.CacheKey.USER_ID + id);
         flushCache(username);
     }
 

@@ -1,6 +1,6 @@
 package com.bsd.user.server.configuration;
 
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.utils.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;

@@ -10,11 +10,11 @@ import com.rapidark.cloud.base.server.controller.cmd.GrantAuthorityActionCommand
 import com.rapidark.cloud.base.server.controller.cmd.GrantOpenClientAppApiAuthorityCommand;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
-import com.rapidark.framework.commons.constants.CommonConstants;
-import com.rapidark.framework.commons.model.ResultBody;
-import com.rapidark.framework.commons.security.OpenAuthority;
-import com.rapidark.framework.commons.security.http.OpenRestTemplate;
-import com.rapidark.framework.commons.utils.StringUtils;
+import com.rapidark.framework.common.constants.CommonConstants;
+import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.security.OpenAuthority;
+import com.rapidark.framework.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.common.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
