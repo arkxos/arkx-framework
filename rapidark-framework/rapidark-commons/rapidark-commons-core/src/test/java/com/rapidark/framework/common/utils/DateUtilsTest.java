@@ -1,7 +1,7 @@
 package com.rapidark.framework.common.utils;
 
 import com.rapidark.last.utils.DateUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.Date;

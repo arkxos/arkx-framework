@@ -18,8 +18,6 @@ package com.rapidark.last.utils;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.UserAgent;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
@@ -120,7 +118,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * toCapitalizeCamelCase("hello_world") == "HelloWorld"
      * toUnderScoreCase("helloWorld") = "hello_world"
      */
-    static String toUnderScoreCase(String s) {
+    public static String toUnderScoreCase(String s) {
         if (s == null) {
             return null;
         }
@@ -219,12 +217,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             log.error(e.getMessage(), e);
         }
         return "";
-    }
-
-    public static String getBrowser(HttpServletRequest request) {
-        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-        Browser browser = userAgent.getBrowser();
-        return browser.getName();
     }
 
     /**

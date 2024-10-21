@@ -16,7 +16,7 @@
 package com.rapidark.last.utils;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.rapidark.last.exception.BadRequestException;
+import com.rapidark.framework.common.exception.BadRequestException;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 
 /**

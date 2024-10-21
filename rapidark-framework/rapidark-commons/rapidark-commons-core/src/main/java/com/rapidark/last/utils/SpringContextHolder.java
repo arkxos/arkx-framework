@@ -15,6 +15,7 @@
  */
 package com.rapidark.last.utils;
 
+import com.rapidark.framework.common.utils.CallBack;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
