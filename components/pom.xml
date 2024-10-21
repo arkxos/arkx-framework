@@ -12,7 +12,6 @@
     <packaging>pom</packaging>
     <description>通用组件</description>
     <modules>
-        <module>common-core</module>
         <module>common-starter</module>
         <module>tenant-starter</module>
         <module>java-sdk</module>
