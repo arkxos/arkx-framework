@@ -44,8 +44,9 @@ public class ResourceScanHandler {
      * 接收API资源扫描消息
      */
     @RabbitListener(queues = QueueConstants.QUEUE_SCAN_API_RESOURCE)
-    public void scanApiResourceQueue(@Payload JSONObject resource) {
+    public void scanApiResourceQueue(@Payload String message) {
         try {
+            JSONObject resource = JSONObject.parseObject(message);
             String serviceId = resource.getString("application");
             String key = SCAN_API_RESOURCE_KEY_PREFIX + serviceId;
             Object object = redisTemplate.opsForValue().get(key);

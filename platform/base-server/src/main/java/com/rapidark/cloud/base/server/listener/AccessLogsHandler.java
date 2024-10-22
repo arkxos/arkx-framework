@@ -1,11 +1,13 @@
 package com.rapidark.cloud.base.server.listener;
 
+import com.alibaba.fastjson.JSON;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.cloud.base.server.service.IpRegionService;
 import com.rapidark.framework.common.constants.QueueConstants;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
+import com.rapidark.framework.commons.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +40,13 @@ public class AccessLogsHandler {
     /**
      * 接收访问日志
      *
-     * @param access
+     * @param message
      */
     @RabbitListener(queues = QueueConstants.QUEUE_ACCESS_LOGS)
-    public void accessLogsQueue(@Payload Map access) {
+    public void accessLogsQueue(@Payload String message) {
         try {
-            if (access != null) {
-                GatewayAccessLogs logs = BeanConvertUtils.mapToObject(access, GatewayAccessLogs.class);
+            if (!StringUtil.isEmpty(message)) {
+                GatewayAccessLogs logs = JSON.parseObject(message, GatewayAccessLogs.class);
                 if (logs != null) {
                     if (logs.getIp() != null) {
                         logs.setRegion(ipRegionService.getRegion(logs.getIp()));

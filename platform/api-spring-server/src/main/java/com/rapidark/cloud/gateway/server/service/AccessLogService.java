@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
+import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.gateway.server.util.ReactiveWebUtils;
 import com.rapidark.framework.common.constants.QueueConstants;
 import com.rapidark.framework.common.security.OpenUserDetails;
@@ -125,7 +126,7 @@ public class AccessLogService {
             }
             String ip = ReactiveWebUtils.getRemoteAddress(exchange);
             String userAgent = headers.get(HttpHeaders.USER_AGENT);
-            Object requestTime = exchange.getAttribute("requestTime");
+            Date requestTime = exchange.getAttribute("requestTime");
 
             if (ex != null) {
                 error = ex.getMessage();
@@ -133,22 +134,22 @@ public class AccessLogService {
             if (ignore(requestPath)) {
                 return;
             }
-            Map<String, Object> map = Maps.newHashMap();
-            map.put("requestTime", requestTime);
-            map.put("serviceId", serviceId == null ? defaultServiceId : serviceId);
-            map.put("httpStatus", httpStatus);
-            map.put("headers", JSONObject.toJSON(headers));
-            map.put("bizId", bizId);
-            map.put("bizStatus", bizStatus);
-            map.put("path", requestPath);
-            map.put("params", JSONObject.toJSON(data));
-            map.put("ip", ip);
-            map.put("method", method);
-            map.put("userAgent", userAgent);
-            map.put("responseTime", new Date());
-            map.put("error", error);
+            GatewayAccessLogs gatewayAccessLogs = new GatewayAccessLogs();
+            gatewayAccessLogs.setRequestTime(requestTime);
+            gatewayAccessLogs.setServiceId(serviceId == null ? defaultServiceId : serviceId);
+            gatewayAccessLogs.setHttpStatus(httpStatus+"");
+            gatewayAccessLogs.setHeaders(JSONObject.toJSONString(headers));
+            gatewayAccessLogs.setBizId(bizId);
+            gatewayAccessLogs.setBizStatus(bizStatus);
+            gatewayAccessLogs.setPath(requestPath);
+            gatewayAccessLogs.setParams(JSONObject.toJSONString(data));
+            gatewayAccessLogs.setIp(ip);
+            gatewayAccessLogs.setMethod(method);
+            gatewayAccessLogs.setUserAgent(userAgent);
+            gatewayAccessLogs.setResponseTime(new Date());
+            gatewayAccessLogs.setError(error);
             if (bizStatus != null && bizStatus != 0) {
-                map.put("responseBody", responseBody);
+                gatewayAccessLogs.setResponseBody(responseBody);
             }
 
             Mono<Authentication> authenticationMono = exchange.getPrincipal();
@@ -160,15 +161,15 @@ public class AccessLogService {
             authentication.subscribe(principal -> {
                 if (principal != null) {
                     if (principal instanceof OpenUserDetails) {
-                        map.put("authentication", JSONObject.toJSONString(principal));
+                        gatewayAccessLogs.setAuthentication(JSONObject.toJSONString(principal));
                     } else if (principal instanceof String) {
-                        map.put("authentication", principal);
+                        gatewayAccessLogs.setAuthentication(principal+"");
                     } else {
-                        map.put("authentication", principal.toString());
+                        gatewayAccessLogs.setAuthentication(principal+"");
                     }
                 }
             });
-            amqpTemplate.convertAndSend(QueueConstants.QUEUE_ACCESS_LOGS, map);
+            amqpTemplate.convertAndSend(QueueConstants.QUEUE_ACCESS_LOGS, JSONObject.toJSONString(gatewayAccessLogs));
         } catch (Exception e) {
             e.printStackTrace();
             log.error("access logs save error:{}", e.getMessage());

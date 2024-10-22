@@ -1,5 +1,6 @@
 package com.rapidark.autoconfigure;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -191,14 +192,14 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
             api.put("isAuth", isAuth);
             list.add(api);
         }
-        Map resource = Maps.newHashMap();
+        Map<String, Object> resource = Maps.newHashMap();
         resource.put("application", serviceId);
         resource.put("mapping", list);
         log.info("ApplicationReadyEvent:[{}]", serviceId);
         executorService.submit(() -> {
             try {
                 // 发送mq扫描消息
-                amqpTemplate.convertAndSend(QueueConstants.QUEUE_SCAN_API_RESOURCE, resource);
+                amqpTemplate.convertAndSend(QueueConstants.QUEUE_SCAN_API_RESOURCE, JSON.toJSONString(resource));
             } catch (Exception e) {
                 log.error("发送失败:{}", e.getMessage());
             }
