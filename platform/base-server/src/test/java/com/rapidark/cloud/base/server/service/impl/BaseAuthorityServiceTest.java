@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.service.impl;
 
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
-import com.rapidark.framework.common.test.BaseTest;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

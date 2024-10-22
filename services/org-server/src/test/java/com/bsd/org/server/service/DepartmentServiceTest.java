@@ -1,7 +1,7 @@
 package com.bsd.org.server.service;
 
 import com.bsd.org.server.model.vo.DepartmentVO;
-import com.rapidark.framework.common.test.BaseTest;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

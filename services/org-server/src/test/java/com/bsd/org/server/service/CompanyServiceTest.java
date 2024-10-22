@@ -5,7 +5,7 @@ import com.bsd.org.server.model.entity.Company;
 import com.bsd.org.server.model.entity.Department;
 import com.bsd.org.server.model.vo.CompanyMenuVO;
 import com.bsd.org.server.model.vo.DepartmentMenuVO;
-import com.rapidark.framework.common.test.BaseTest;
+
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
