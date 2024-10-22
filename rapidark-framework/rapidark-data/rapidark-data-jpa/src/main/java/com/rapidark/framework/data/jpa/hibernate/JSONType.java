@@ -34,7 +34,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 public class JSONType implements UserType, DynamicParameterizedType, Serializable {
     private static final long serialVersionUID = 352044032843534075L;
     private static final CoreMessageLogger LOG = Logger.getMessageLogger(CoreMessageLogger.class, JSONType.class.getName());
-    public static final String TYPE = "com.rapidark.spring.jpa.hibernate.JSONType";
+    public static final String TYPE = "com.rapidark.framework.data.jpa.hibernate.JSONType";
     public static final String CLASS_NAME = "class";
     private int sqlType = Types.VARCHAR;
     private Type type = Object.class;

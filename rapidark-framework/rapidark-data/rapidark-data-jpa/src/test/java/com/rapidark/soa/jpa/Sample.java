@@ -1,4 +1,4 @@
-package com.rapidark.framework.jpa;
+package com.rapidark.soa.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -89,12 +89,16 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>${commons-beanutils.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-commons-core</artifactId>
+			<version>${revision}</version>
 		</dependency>
 	</dependencies>
 

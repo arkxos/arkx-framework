@@ -20,10 +20,13 @@ import com.rapidark.framework.commons.collection.DataTable;
  * <p>泛型 ： M 表示实体类型；ID表示主键类型
  *
  * @author <a href="mailto:stormning@163.com">stormning</a>
- * @version V1.0, 2015/8/7
+ * @author darkness
+ * @version 1.0
+ * @date 2022/6/29 11:39
  */
 @NoRepositoryBean
-public interface BaseRepository<T, ID extends Serializable> extends JpaRepository<T, ID> , JpaSpecificationExecutor<T>{
+public interface BaseRepository<T, ID extends Serializable>
+        extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
 
 	boolean support(String modelType);
 	

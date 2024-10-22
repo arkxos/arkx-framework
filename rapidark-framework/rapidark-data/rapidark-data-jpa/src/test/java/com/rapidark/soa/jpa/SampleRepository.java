@@ -1,4 +1,4 @@
-package com.rapidark.framework.jpa;
+package com.rapidark.soa.jpa;
 
 import java.util.List;
 import java.util.Map;
