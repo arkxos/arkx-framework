@@ -3,7 +3,7 @@ package com.rapidark.cloud.task.server.service;
 import com.google.common.collect.Maps;
 import com.rapidark.cloud.task.server.job.HttpExecuteJob;
 import com.rapidark.cloud.task.server.service.feign.EmailServiceClient;
-import com.rapidark.framework.common.test.BaseTest;
+
 import com.rapidark.cloud.task.client.model.TaskInfo;
 import org.junit.jupiter.api.Test;
 import org.quartz.Scheduler;
