@@ -83,7 +83,7 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
         // 服务名称
         String serviceId = env.getProperty("spring.application.name", "application");
         // 所有接口映射
-        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping mapping = (RequestMappingHandlerMapping)applicationContext.getBean("requestMappingHandlerMapping");
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
         List<RequestMatcher> permitAll = Lists.newArrayList();

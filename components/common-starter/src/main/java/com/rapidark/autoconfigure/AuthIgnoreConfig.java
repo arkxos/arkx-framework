@@ -42,7 +42,7 @@ public class AuthIgnoreConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping mapping = (RequestMappingHandlerMapping)applicationContext.getBean("requestMappingHandlerMapping");
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
         map.keySet().forEach(mappingInfo -> {
