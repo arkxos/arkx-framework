@@ -25,7 +25,6 @@ package com.rapidark.framework.common.utils;
  * 可提交一个 提交回调任务。<br>
  * 在SpringContextHolder 初始化后，进行回调使用
  */
-
 public interface CallBack {
     /**
      * 回调执行方法
@@ -37,7 +36,7 @@ public interface CallBack {
      * @return /
      */
     default String getCallBackName() {
-        return Thread.currentThread().getId() + ":" + this.getClass().getName();
+        return "Thread" + Thread.currentThread().getId() + "_" + this.getClass().getName();
     }
 }
 
