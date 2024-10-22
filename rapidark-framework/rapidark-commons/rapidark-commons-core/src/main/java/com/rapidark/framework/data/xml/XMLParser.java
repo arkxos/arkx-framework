@@ -86,6 +86,9 @@ public class XMLParser {
 	 */
 	public XMLParser(InputStream is) {
 		byte[] bs = FileUtil.readByte(is);
+		if (bs == null) {
+			return;
+		}
 		try {
 			xml = new String(bs, "UTF-8");
 			cs = xml.toCharArray();
@@ -125,6 +128,9 @@ public class XMLParser {
 	 */
 	public XMLDocument parse() {
 		doc = new XMLDocument();
+		if(xml == null) {
+			return doc;
+		}
 		cs = xml.toCharArray();// this code can improve performance
 		lineNumList.clear();
 		int end = expect(cs, 0, "<?xml");

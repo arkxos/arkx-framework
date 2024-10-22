@@ -220,6 +220,9 @@ public class FileUtil {
 	 * 读取指定流，并转换为二进制数组
 	 */
 	public static byte[] readByte(InputStream is) {
+		if(is == null) {
+			return null;
+		}
 		byte[] buffer = new byte[8192];
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		while (true) {

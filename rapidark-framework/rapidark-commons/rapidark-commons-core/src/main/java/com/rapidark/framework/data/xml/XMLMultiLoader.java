@@ -68,10 +68,15 @@ public class XMLMultiLoader {
 	 * 载入输入流
 	 */
 	private void loadOneFile(InputStream is) {
+		if(is == null) {
+			return;
+		}
 		XMLParser parser = new XMLParser(is);
 		parser.parse();
 		XMLElement singleRoot = parser.getDocument().getRoot();
-		singleRoot.setParent(root);
+		if(singleRoot != null) {
+			singleRoot.setParent(root);
+		}
 	}
 
 	/**

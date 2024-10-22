@@ -1,6 +1,7 @@
 package com.rapidark.framework.core.scanner;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -211,10 +212,15 @@ public class BuiltResourceScanner {
 			if (cn == null) {
 				if (br.isClass()) {
 					InputStream is = br.getInputStream();
+					if(is == null) {
+						return;
+					}
 					try {
 						ClassReader cr = new ClassReader(is);
 						cn = new ClassNode();
 						cr.accept(cn, 0);
+					} catch (Exception e) {
+						e.printStackTrace();
 					} finally {
 						is.close();
 					}
