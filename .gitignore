@@ -159,3 +159,4 @@ docker/monitor/data
 /resources/vendor.min.js
 /resources/xr-styles.css
 /resources/images/xrebel.svg
+.flattened-pom.xml
