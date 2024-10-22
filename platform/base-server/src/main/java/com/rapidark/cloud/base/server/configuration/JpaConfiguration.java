@@ -2,6 +2,7 @@ package com.rapidark.cloud.base.server.configuration;
 
 
 import com.rapidark.framework.common.annotation.JpaDto;
+import com.rapidark.framework.data.jpa.BaseRepositoryFactoryBean;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ import java.util.Map;
 @Configuration
 @EnableJpaRepositories(
         basePackages = { "com.rapidark" },
-        repositoryFactoryBeanClass = SqlToyJpaRepositoryFactoryBean.class)
+        repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 @EntityScan({
         "com.rapidark.cloud.base.client.model",
         "com.rapidark.cloud.base.server.modules",
