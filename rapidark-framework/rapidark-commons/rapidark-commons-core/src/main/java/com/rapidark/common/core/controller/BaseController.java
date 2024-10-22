@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+//import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageInfo;
 import com.rapidark.common.constant.HttpStatus;
 import com.rapidark.common.core.domain.AjaxResult;
 import com.rapidark.common.core.page.PageDomain;
@@ -57,7 +57,7 @@ public class BaseController
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize))
         {
             String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
-            PageHelper.startPage(pageNum, pageSize, orderBy);
+//            PageHelper.startPage(pageNum, pageSize, orderBy);
         }
     }
 
@@ -71,7 +71,7 @@ public class BaseController
         rspData.setCode(HttpStatus.SUCCESS);
         rspData.setMsg("查询成功");
         rspData.setRows(list);
-        rspData.setTotal(new PageInfo(list).getTotal());
+//        rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }
 
