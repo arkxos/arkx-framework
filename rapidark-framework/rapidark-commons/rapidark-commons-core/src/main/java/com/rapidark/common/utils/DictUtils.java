@@ -6,7 +6,7 @@ import java.util.List;
 import com.rapidark.common.constant.Constants;
 import com.rapidark.common.core.domain.entity.SysDictData;
 import com.rapidark.common.core.redis.RedisCache;
-import com.rapidark.common.utils.spring.SpringUtils;
+import com.rapidark.framework.common.utils.SpringUtils;
 
 /**
  * 字典工具类

@@ -1,9 +1,8 @@
 package com.rapidark.common.utils;
 
+import com.rapidark.framework.common.utils.SpringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-
-import com.rapidark.common.utils.spring.SpringUtils;
 
 /**
  * 获取i18n资源文件
