@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.rapidark.framework</groupId>
         <artifactId>rapidark-commons</artifactId>
-        <version>10.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>rapidark-commons-core</artifactId>
@@ -46,11 +46,15 @@
         <log4jdbc.version>1.16</log4jdbc.version>
         <swagger.version>3.0.0</swagger.version>
         <commons-pool2.version>2.5.0</commons-pool2.version>
-        <mapstruct.version>1.3.1.Final</mapstruct.version>
+<!--        <mapstruct.version>1.3.1.Final</mapstruct.version>-->
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.github.linpeilie</groupId>
+            <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -93,7 +97,7 @@
         <!--        <dependency>-->
         <!--            <groupId>com.rapidark.framework</groupId>-->
         <!--            <artifactId>rapidark-framework</artifactId>-->
-        <!--            <version>${project.version}</version>-->
+        <!--            <version>${revision}</version>-->
         <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
@@ -231,11 +235,6 @@
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
         </dependency>
-        <!--swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
         <!--Spring boot 核心-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -280,15 +279,15 @@
         </dependency>
 
         <!--mapStruct依赖-->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct-processor</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
@@ -428,6 +427,10 @@
                     <groupId>io.swagger</groupId>
                     <artifactId>swagger-models</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>mapstruct</artifactId>
+                    <groupId>org.mapstruct</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -497,17 +500,17 @@
         </dependency>
 
         <!--mapStruct依赖-->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct</artifactId>-->
+<!--            <version>${mapstruct.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct-processor</artifactId>-->
+<!--            <version>${mapstruct.version}</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
@@ -570,26 +573,6 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-        <!-- swagger2-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-annotations</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml</groupId>
-                    <artifactId>classmate</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
         <!-- swagger2-UI-->
         <dependency>
@@ -877,7 +860,7 @@
 
 
         <!-- <dependency> <groupId>com.rapidark</groupId> <artifactId>rapidark-preloader</artifactId>
-            <version>${project.version}</version> </dependency> -->
+            <version>${revision}</version> </dependency> -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

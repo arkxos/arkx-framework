@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.rapidark</groupId>
         <artifactId>services</artifactId>
-        <version>10.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bpm-server</artifactId>
@@ -15,12 +15,12 @@
         <dependency>
             <groupId>com.rapidark</groupId>
             <artifactId>bpm-client</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.rapidark</groupId>
             <artifactId>common-starter</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.mybatis.spring.boot</groupId>
@@ -86,7 +86,7 @@
                 <configuration>
                     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                     <repository>${docker.repostory}/${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${project.version}-${profile.name}</tag>
+                    <tag>${revision}-${profile.name}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

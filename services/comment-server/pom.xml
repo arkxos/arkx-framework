@@ -5,7 +5,7 @@
     <parent>
         <artifactId>services</artifactId>
         <groupId>com.rapidark</groupId>
-        <version>10.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,7 +17,7 @@
         <dependency>
             <artifactId>common-starter</artifactId>
             <groupId>com.rapidark</groupId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
@@ -44,7 +44,7 @@
                 <configuration>
                     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                     <repository>${docker.repostory}/${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${project.version}-${profile.name}</tag>
+                    <tag>${revision}-${profile.name}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

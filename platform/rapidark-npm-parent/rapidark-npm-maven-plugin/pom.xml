@@ -17,7 +17,7 @@
   	<dependency>
       <groupId>com.rapidark.cloud</groupId>
       <artifactId>rapidark-npm</artifactId>
-      <version>${project.version}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>

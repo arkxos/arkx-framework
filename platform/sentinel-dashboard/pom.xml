@@ -5,7 +5,7 @@
     <parent>
         <artifactId>platform</artifactId>
         <groupId>com.rapidark</groupId>
-        <version>10.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -104,6 +104,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -132,7 +133,7 @@
                 <configuration>
                     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                     <repository>${docker.repostory}/${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${project.version}-${profile.name}</tag>
+                    <tag>${revision}-${profile.name}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.rapidark</groupId>
         <artifactId>components</artifactId>
-        <version>10.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>common-starter</artifactId>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -11,7 +11,7 @@
     <parent>
         <artifactId>services</artifactId>
         <groupId>com.rapidark</groupId>
-        <version>10.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -42,27 +42,27 @@
         <dependency>
             <artifactId>common-starter</artifactId>
             <groupId>com.rapidark</groupId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <artifactId>base-client</artifactId>
             <groupId>com.rapidark</groupId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <!--mapStruct依赖-->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-jdk8</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct-jdk8</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct-processor</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc10</artifactId>

@@ -1,2 +1,9 @@
 前端整合到arkos
 整合eladmin
+
+实现BaseJap
+升级spring boot2.7
+升级spring oauth2
+
+升级jdk17
+升级spring boot3

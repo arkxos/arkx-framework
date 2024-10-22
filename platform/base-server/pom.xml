@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.rapidark</groupId>
         <artifactId>platform</artifactId>
-        <version>10.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -19,12 +19,12 @@
         <dependency>
             <groupId>com.rapidark</groupId>
             <artifactId>common-starter</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.rapidark</groupId>
             <artifactId>base-client</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.rapidark</groupId>
             <artifactId>rapidark-npm</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.lionsoul</groupId>
@@ -46,15 +46,15 @@
             <version>1.6.2</version>
         </dependency>
         <!--mapStruct依赖-->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct-processor</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
@@ -101,6 +101,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -126,7 +127,7 @@
                 <configuration>
                     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                     <repository>${docker.repostory}/${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${project.version}-${profile.name}</tag>
+                    <tag>${revision}-${profile.name}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

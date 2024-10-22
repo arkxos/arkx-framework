@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.rapidark</groupId>
 		<artifactId>rapidark-npm-parent</artifactId>
-		<version>10.0.0-SNAPSHOT</version>
+		<version>${revision}</version>
 	</parent>
 
 	<artifactId>rapidark-npm</artifactId>
