@@ -21,7 +21,7 @@ import java.util.Map;
  * @date: 2019/3/29 14:59
  * @description:
  */
-public class SchedulerServiceTest extends BaseTest {
+public class SchedulerServiceTest  {
     @Autowired
     private SchedulerService schedulerService;
     @Autowired

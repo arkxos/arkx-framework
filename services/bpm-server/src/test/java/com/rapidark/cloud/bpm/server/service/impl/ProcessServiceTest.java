@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date: 2019/4/4 11:05
  * @description:
  */
-public class ProcessServiceTest extends BaseTest {
+public class ProcessServiceTest  {
     @Autowired
     private ProcessEngineService processEngineService;
 

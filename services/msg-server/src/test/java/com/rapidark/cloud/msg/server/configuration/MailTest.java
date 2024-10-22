@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date: 2018/11/27 14:45
  * @description:
  */
-public class MailTest extends BaseTest {
+public class MailTest  {
     @Autowired
     private MessageDispatcher dispatcher;
 

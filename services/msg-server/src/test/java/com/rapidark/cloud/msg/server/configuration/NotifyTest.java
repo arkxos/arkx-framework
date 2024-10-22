@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @date: 2019/2/19 15:23
  * @description:
  */
-public class NotifyTest extends BaseTest {
+public class NotifyTest  {
     @Autowired
     private DelayMessageService messageSender;
 

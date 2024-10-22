@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyServiceTest extends BaseTest {
+public class CompanyServiceTest  {
     @Autowired
     private CompanyService companyService;
     @Autowired

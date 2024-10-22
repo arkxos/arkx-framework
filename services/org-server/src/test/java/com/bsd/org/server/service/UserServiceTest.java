@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class UserServiceTest extends BaseTest {
+public class UserServiceTest  {
     @Autowired
     private UserService userService;
 
