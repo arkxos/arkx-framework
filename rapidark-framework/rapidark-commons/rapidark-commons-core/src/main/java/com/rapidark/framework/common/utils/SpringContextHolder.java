@@ -72,7 +72,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
         if (addCallback) {
             SpringContextHolder.CALL_BACKS.add(callBack);
         } else {
-            log.warn("CallBack：{} 已无法添加！立即执行", callBack.getCallBackName());
+            log.info("Spring上下文已启动完毕，延迟调用任务：{} 立即执行", callBack.getCallBackName());
             callBack.executor();
         }
     }
