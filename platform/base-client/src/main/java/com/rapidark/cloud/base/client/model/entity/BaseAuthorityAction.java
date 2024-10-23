@@ -1,6 +1,8 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
+import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,14 +21,9 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name="base_authority_action")
-public class BaseAuthorityAction extends BaseEntity {
+public class BaseAuthorityAction extends IdLongEntity {
 
     private static final long serialVersionUID = 1471599074044557390L;
-
-    @Id
-    @Column(name = "ID")
-    @ApiModelProperty(value = "ID")
-    private Long id;
 
     /**
      * 操作资源ID

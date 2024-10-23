@@ -6,6 +6,7 @@ import com.rapidark.cloud.portal.uaa.server.service.feign.BaseDeveloperServiceCl
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2ClientProperties;
+import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,9 +41,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String nickName = account.getNickName();
         String avatar = account.getAvatar();
         String accountType = account.getAccountType();
-        boolean accountNonLocked = account.getStatus().intValue() != BaseConstants.ACCOUNT_STATUS_LOCKED;
+        boolean accountNonLocked = account.getStatus() != Status.LOCKED;
         boolean credentialsNonExpired = true;
-        boolean enabled = account.getStatus().intValue() == BaseConstants.ACCOUNT_STATUS_NORMAL ? true : false;
+        boolean enabled = account.getStatus() == Status.ENABLED;
         boolean accountNonExpired = true;
         OpenUserDetails userDetails = new OpenUserDetails();
         userDetails.setDomain(domain);

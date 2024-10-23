@@ -14,6 +14,7 @@ import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.framework.data.jpa.entity.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -85,12 +86,12 @@ public class BaseRoleService extends BaseService<BaseRole, Long, BaseRoleReposit
         if (isExist(role.getRoleCode())) {
             throw new OpenAlertException(String.format("%s编码已存在!", role.getRoleCode()));
         }
-        if (role.getStatus() == null) {
-            role.setStatus(BaseConstants.ENABLED);
-        }
-        if (role.getIsPersist() == null) {
-            role.setIsPersist(BaseConstants.DISABLED);
-        }
+//        if (role.getStatus() == null) {
+//            role.setStatus(BaseConstants.ENABLED);
+//        }
+//        if (role.getIsPersist() == null) {
+//            role.setIsPersist(BaseConstants.DISABLED);
+//        }
         role.setCreateTime(LocalDateTime.now());
         role.setUpdateTime(role.getCreateTime());
         save(role);
@@ -130,9 +131,9 @@ public class BaseRoleService extends BaseService<BaseRole, Long, BaseRoleReposit
             return;
         }
         BaseRole role = getRole(roleId);
-        if (role != null && role.getIsPersist().equals(BaseConstants.ENABLED)) {
-            throw new OpenAlertException(String.format("保留数据,不允许删除"));
-        }
+//        if (role != null && role.getStatus() == Status.LOCKED) {//.equals(BaseConstants.ENABLED)) {
+//            throw new OpenAlertException(String.format("保留数据,不允许删除"));
+//        }
         long count = getCountByRole(roleId);
         if (count > 0) {
             throw new OpenAlertException("该角色下存在授权人员,不允许删除!");

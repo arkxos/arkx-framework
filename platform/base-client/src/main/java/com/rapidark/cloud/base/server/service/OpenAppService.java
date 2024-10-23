@@ -122,9 +122,9 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
         resources.setAppId(appId);
         resources.setApiKey(apiKey);
         resources.setSecretKey(secretKey);
-        if (resources.getIsPersist() == null) {
-            resources.setIsPersist(0);
-        }
+//        if (resources.getIsPersist() == null) {
+//            resources.setIsPersist(0);
+//        }
 
         OpenApp saved = openAppRepository.save(resources);
 
@@ -192,9 +192,9 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
             throw new OpenAlertException(appId + "应用不存在!");
         }
         OpenApp appInfo = appInfoOptional.get();
-        if (appInfo.getIsPersist().equals(BaseConstants.ENABLED)) {
-            throw new OpenAlertException(String.format("保留数据,不允许删除"));
-        }
+//        if (appInfo.getStatus() == .equals(BaseConstants.ENABLED)) {
+//            throw new OpenAlertException(String.format("保留数据,不允许删除"));
+//        }
 
         ClientServerRegister clientServerRegister = new ClientServerRegister();
         clientServerRegister.setClientId(appId);
@@ -257,9 +257,9 @@ public class OpenAppService extends BaseService<OpenApp, String, OpenAppReposito
             throw new OpenAlertException(appId + "应用不存在!");
         }
         OpenApp appInfo = appInfoOptional.get();
-        if (appInfo.getIsPersist().equals(BaseConstants.ENABLED)) {
-            throw new OpenAlertException(String.format("保留数据,不允许修改"));
-        }
+//        if (appInfo.getIsPersist().equals(BaseConstants.ENABLED)) {
+//            throw new OpenAlertException(String.format("保留数据,不允许修改"));
+//        }
         // 生成新的密钥
         String secretKey = RandomValueUtils.randomAlphanumeric(32);
         appInfo.setSecretKey(secretKey);

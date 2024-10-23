@@ -17,6 +17,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import com.rapidark.framework.common.utils.SpringUtils;
+import com.rapidark.framework.common.utils.SystemIdGenerator;
+import com.rapidark.framework.data.jpa.entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.persister.entity.EntityPersister;
@@ -44,9 +47,6 @@ import com.rapidark.framework.commons.exception.ServiceException;
 import com.rapidark.framework.commons.util.StringUtil;
 import com.rapidark.framework.commons.util.UuidUtil;
 import com.rapidark.framework.data.jdbc.ResultDataTable;
-import com.rapidark.framework.data.jpa.entity.BaseEntity;
-import com.rapidark.framework.data.jpa.entity.Status;
-import com.rapidark.framework.data.jpa.entity.TreeEntity;
 
 /**
  * <p>通用Jpa仓库实现</p>
@@ -60,7 +60,7 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 	private final Class<T> domainClass;
 	private EntityManager entityManager;
 	JpaEntityInformation<T, Serializable> entityInformation;
-	
+	private SystemIdGenerator systemIdGenerator;
 	private boolean isStatusAble = false; // 实体类是否弃用状态字段
     private Method statusReadMethod;// 状态字段读方法
     private Method statusWriteMethod;// 状态字段写方法
@@ -189,6 +189,13 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 		return domainClass.getName().equals(modelType);
 	}
 
+	public SystemIdGenerator getSystemIdGenerator() {
+		if (systemIdGenerator == null) {
+			systemIdGenerator = SpringUtils.getBean(SystemIdGenerator.class);
+		}
+		return systemIdGenerator;
+	}
+
 	@Override
 	@Transactional
 	public <S extends T> S save(S entity) {
@@ -206,21 +213,30 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 				occrOn = LocalDateTime.now();
 			}
 			
-			if(StringUtil.isEmpty(baseEntity.getCreatorId())) {
-				baseEntity.setCreatorId(operatorId);
+			if(StringUtil.isEmpty(baseEntity.getCreateBy())) {
+				baseEntity.setCreateBy(operatorId);
 				baseEntity.setCreateTime(occrOn);
 			}
 			
-			if(StringUtil.isEmpty(baseEntity.getUpdatorId())) {
-				baseEntity.setUpdatorId(operatorId);
+			if(StringUtil.isEmpty(baseEntity.getUpdateBy())) {
+				baseEntity.setUpdateBy(operatorId);
 				baseEntity.setUpdateTime(occrOn);
 			}
-			
+		}
+
+		if(entity instanceof AbstractIdLongEntity) {
+			AbstractIdLongEntity baseEntity = (AbstractIdLongEntity)entity;
+			if (baseEntity.getId() == null) {
+				Long id = getSystemIdGenerator().generate();
+				baseEntity.setId(id);
+			}
+		} else if(entity instanceof AbstractIdStringEntity) {
+			AbstractIdStringEntity baseEntity = (AbstractIdStringEntity)entity;
 			if (StringUtil.isEmpty(baseEntity.getId())) {
 				baseEntity.setId(UuidUtil.base58Uuid());
 			}
 		}
-		
+
 		if (TreeEntity.class.isAssignableFrom(entity.getClass())) {
 			TreeEntity treeEntity = (TreeEntity) entity;
 

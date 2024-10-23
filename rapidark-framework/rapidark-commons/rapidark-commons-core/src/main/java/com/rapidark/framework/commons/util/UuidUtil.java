@@ -53,7 +53,16 @@ public abstract class UuidUtil {
         UUID uuid = new UUID(bb.getLong(), bb.getLong());
         return uuid.toString();
     }
- 
+
+    /**
+     * 生成uuid，不包含“-”
+     *
+     * @static
+     *
+     * @author Darkness
+     * @date 2013-3-13 下午03:14:17
+     * @version V1.0
+     */
     public static String base58Uuid() {
         UUID uuid = UUID.randomUUID();
         return base58Uuid(uuid);

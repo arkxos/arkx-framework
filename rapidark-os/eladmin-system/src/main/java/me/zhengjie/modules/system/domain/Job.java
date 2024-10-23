@@ -15,10 +15,11 @@
  */
 package me.zhengjie.modules.system.domain;
 
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,13 +34,13 @@ import java.util.Objects;
 @Getter
 @Setter
 @Table(name="sys_job")
-public class Job extends BaseEntity implements Serializable {
+public class Job extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "job_id")
     @NotNull(groups = Update.class)
     @ApiModelProperty(value = "ID", hidden = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank

@@ -1,6 +1,7 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,14 +19,9 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="base_account_logs")
-public class BaseAccountLogs extends BaseEntity {
+public class BaseAccountLogs extends IdLongEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @Column(name = "ID")
-    @ApiModelProperty(value = "ID")
-    private Long id;
 
     private Date loginTime;
 

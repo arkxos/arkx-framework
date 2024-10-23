@@ -8,6 +8,7 @@ import com.rapidark.cloud.base.server.service.BaseRoleService;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -78,7 +79,7 @@ public class BaseRoleController {
         BaseRole role = new BaseRole();
         role.setRoleCode(command.getRoleCode());
         role.setRoleName(command.getRoleName());
-        role.setStatus(command.getStatus());
+        role.setStatus(Status.codeOf(command.getStatus()));
         role.setRoleDesc(command.getRoleDesc());
         Long roleId = null;
         BaseRole result = baseRoleService.addRole(role);
@@ -100,7 +101,7 @@ public class BaseRoleController {
         role.setRoleId(command.getRoleId());
         role.setRoleCode(command.getRoleCode());
         role.setRoleName(command.getRoleName());
-        role.setStatus(command.getStatus());
+        role.setStatus(Status.codeOf(command.getStatus()));
         role.setRoleDesc(command.getRoleDesc());
         baseRoleService.updateRole(role);
         return ResultBody.ok();

@@ -8,6 +8,7 @@ import com.rapidark.cloud.base.server.repository.BaseAccountLogsRepository;
 import com.rapidark.cloud.base.server.repository.BaseAccountRepository;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.cloud.gateway.formwork.base.BaseService;
+import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -75,7 +76,7 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @param registerIp
      * @return
      */
-    public BaseAccount register(Long userId, String account, String password, String accountType, Integer status, String domain, String registerIp) {
+    public BaseAccount register(Long userId, String account, String password, String accountType, Status status, String domain, String registerIp) {
         if (isExist(account, accountType, domain)) {
             // 账号已被注册
             throw new RuntimeException(String.format("account=[%s],domain=[%s]", account, domain));
@@ -130,7 +131,7 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @param accountId
      * @param status
      */
-    public void updateStatus(Long accountId, Integer status) {
+    public void updateStatus(Long accountId, Status status) {
         BaseAccount baseAccount = findById(accountId);
         baseAccount.setUpdateTime(LocalDateTime.now());
         baseAccount.setStatus(status);
@@ -144,7 +145,7 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @param domain
      * @param status
      */
-    public void updateStatusByUserId(Long userId, String domain, Integer status) {
+    public void updateStatusByUserId(Long userId, String domain, Status status) {
         if (status == null) {
             return;
         }

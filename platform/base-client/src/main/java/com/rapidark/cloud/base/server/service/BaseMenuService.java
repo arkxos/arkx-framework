@@ -105,12 +105,12 @@ public class BaseMenuService extends BaseService<BaseMenu, Long, BaseMenuReposit
         if (menu.getPriority() == null) {
             menu.setPriority(0);
         }
-        if (menu.getStatus() == null) {
-            menu.setStatus(1);
-        }
-        if (menu.getIsPersist() == null) {
-            menu.setIsPersist(0);
-        }
+//        if (menu.getStatus() == null) {
+//            menu.setStatus(1);
+//        }
+//        if (menu.getIsPersist() == null) {
+//            menu.setIsPersist(0);
+//        }
         // check service id
         if (menu.getServiceId() == null || "".equals(menu.getServiceId())) {
             menu.setServiceId(DEFAULT_SERVICE_ID);
@@ -162,9 +162,9 @@ public class BaseMenuService extends BaseService<BaseMenu, Long, BaseMenuReposit
      */
     public void removeMenu(Long menuId) {
         BaseMenu menu = findById(menuId);
-        if (menu != null && menu.getIsPersist().equals(BaseConstants.ENABLED)) {
-            throw new OpenAlertException(String.format("保留数据,不允许删除!"));
-        }
+//        if (menu != null && menu.getIsPersist().equals(BaseConstants.ENABLED)) {
+//            throw new OpenAlertException(String.format("保留数据,不允许删除!"));
+//        }
         // 移除菜单权限
         baseAuthorityService.removeAuthority(menuId, ResourceType.menu);
         // 移除功能按钮和相关权限

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.rapidark.framework.data.jpa.entity.BaseEntity;
+import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 
 /**
  * .
@@ -15,21 +16,13 @@ import com.rapidark.framework.data.jpa.entity.BaseEntity;
  */
 @Entity
 @Table(name = "t_sample")
-public class Sample extends BaseEntity {
+public class Sample extends IdLongEntity {
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private long id;
 
 	@Column
 	private String content;
-
-//	public long getId() {
-//		return id;
-//	}
-//
-//	public void setId(long id) {
-//		this.id = id;
-//	}
 
 	public String getContent() {
 		return content;

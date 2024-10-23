@@ -15,12 +15,13 @@
  */
 package me.zhengjie.modules.mnt.domain;
 
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -33,12 +34,12 @@ import java.util.Objects;
 @Getter
 @Setter
 @Table(name="mnt_server")
-public class ServerDeploy extends BaseEntity implements Serializable {
+public class ServerDeploy extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "server_id")
     @ApiModelProperty(value = "ID", hidden = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ApiModelProperty(value = "服务器名称")

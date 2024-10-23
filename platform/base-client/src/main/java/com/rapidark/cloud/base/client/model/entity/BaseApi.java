@@ -1,6 +1,8 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name="base_api")
-public class BaseApi extends BaseEntity {
+public class BaseApi extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = -9099562653030770650L;
 
@@ -67,12 +69,7 @@ public class BaseApi extends BaseEntity {
     /**
      * 状态:0-无效 1-有效
      */
-    private Integer status;
-
-    /**
-     * 保留数据0-否 1-是 不允许删除
-     */
-    private Integer isPersist;
+    private Status status;
 
     /**
      * 安全认证:0-否 1-是 默认:1
@@ -102,4 +99,13 @@ public class BaseApi extends BaseEntity {
      */
     private String methodName;
 
+    @Override
+    public Long getId() {
+        return apiId;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.apiId = id;
+    }
 }

@@ -5,6 +5,7 @@ import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -87,7 +88,7 @@ public class BaseActionController {
         action.setActionCode(actionCode);
         action.setActionName(actionName);
         action.setMenuId(menuId);
-        action.setStatus(status);
+        action.setStatus(Status.codeOf(status));
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
         Long actionId = null;
@@ -136,7 +137,7 @@ public class BaseActionController {
         action.setActionCode(actionCode);
         action.setActionName(actionName);
         action.setMenuId(menuId);
-        action.setStatus(status);
+        action.setStatus(Status.codeOf(status));
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
         baseActionService.updateAction(action);

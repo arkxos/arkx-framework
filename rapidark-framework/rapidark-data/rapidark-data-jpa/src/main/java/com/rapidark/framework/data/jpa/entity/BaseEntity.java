@@ -1,63 +1,60 @@
 package com.rapidark.framework.data.jpa.entity;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
-import com.rapidark.framework.commons.util.UuidUtil;
-
-import lombok.Data;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * @author Darkness
  * @date 2019-08-18 13:56:12
  * @version V1.0
  */
-@Data
+@Getter
+@Setter
 @MappedSuperclass
-//@EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity<PK extends Serializable> implements Serializable {
 
-	@Id
-	@Column(length = 22)
-	// @GeneratedValue(generator  = "myIdStrategy")
-	// @GenericGenerator(name = "myIdStrategy", strategy = "assigned")
-	protected String id;
+	/* 分组校验 */
+	public @interface Create {}
 
-	// @CreatedDate
+	/* 分组校验 */
+	public @interface Update {}
+
+	@CreationTimestamp
+	@Column(name = "create_time", updatable = false)
+	@ApiModelProperty(value = "创建时间", hidden = true)
 	private LocalDateTime createTime;
 
-	//    @LastModifiedDate
+	@UpdateTimestamp
+	@Column(name = "update_time")
+	@ApiModelProperty(value = "更新时间", hidden = true)
 	private LocalDateTime updateTime;
 
 	//    @CreatedBy
 	//    @Column(name = "CREATOR_ID", updatable = false)
-	@Column(length = 50)
-	private String creatorId = null;// 创建人
+	@CreatedBy
+	@Column(name = "create_by", updatable = false)
+	@ApiModelProperty(value = "创建人", hidden = true)
+	private String createBy = null;// 创建人
 
-	//	@Column(name = "UPDATOR_ID")
-	//    @LastModifiedBy
-	@Column(length = 50)
-	private String updatorId = null;// 修改人
+	@LastModifiedBy
+	@Column(name = "update_by")
+	@ApiModelProperty(value = "更新人", hidden = true)
+	private String updateBy;
 
-	/**
-	 * 使用status字段替换
-	 */
-	@Deprecated
-	@Column(name = "USE_FLAG", length = 1)
-	private String useFlag = "Y";// 状态标志：启用/禁用
-
-	/**
-	 * 使用status字段替换
-	 */
-	@Deprecated
-	@Column(name = "DELETE_STATUS", length = 1)
-	private String deleteStatus = "N";// 删除标示
-	
 	/**
      * EnumType:  ORDINAL 枚举序数  默认选项（int）。eg:TEACHER 数据库存储的是 0
      *            STRING：枚举名称       (String)。eg:TEACHER 数据库存储的是 "TEACHER"
@@ -77,20 +74,27 @@ public abstract class BaseEntity {
 	 * @date 2013-1-31 下午04:52:33
 	 * @version V1.0
 	 */
-	public void generateNewId() {
-		this.id = generateId();
+//	public void generateNewId() {
+//		this.id = generateId();
+//	}
+
+	public abstract PK getId();
+
+	public abstract void setId(PK id);
+
+	@Override
+	public String toString() {
+		ToStringBuilder builder = new ToStringBuilder(this);
+		Field[] fields = this.getClass().getDeclaredFields();
+		try {
+			for (Field f : fields) {
+				f.setAccessible(true);
+				builder.append(f.getName(), f.get(this)).append("\n");
+			}
+		} catch (Exception e) {
+			builder.append("toString builder encounter an error");
+		}
+		return builder.toString();
 	}
 
-	/**
-	 * 生成uuid，不包含“-”
-	 * 
-	 * @static
-	 * 
-	 * @author Darkness
-	 * @date 2013-3-13 下午03:14:17
-	 * @version V1.0
-	 */
-	public static String generateId() {
-		return UuidUtil.base58Uuid();// UUID.randomUUID().toString().replaceAll("-", "");
-	}
 }

@@ -15,10 +15,12 @@
  */
 package com.rapidark.cloud.base.server.modules.system.domain;
 
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
+import com.rapidark.framework.data.jpa.entity.AbstractIdStringEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -31,7 +33,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table(name="sys_dict_detail")
-public class DictDetail extends BaseEntity implements Serializable {
+public class DictDetail extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "detail_id")

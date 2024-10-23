@@ -20,6 +20,7 @@ import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.security.OpenSecurityConstants;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +122,7 @@ public class BaseUserService extends BaseService<BaseUser, Long, BaseUserReposit
             //保存系统用户信息
             save(baseUser);
             // 注册账号信息
-            baseAccountService.register(baseUser.getUserId(), baseUser.getUserName(), baseUser.getPassword(), accountType, BaseConstants.ACCOUNT_STATUS_NORMAL, ACCOUNT_DOMAIN, null);
+            baseAccountService.register(baseUser.getUserId(), baseUser.getUserName(), baseUser.getPassword(), accountType, Status.ENABLED, ACCOUNT_DOMAIN, null);
         }
     }
 

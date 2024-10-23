@@ -1,6 +1,7 @@
 package com.rapidark.cloud.base.server.service.dto;
 
 
+import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -66,10 +67,7 @@ public class OpenAppDto implements Serializable {
     private LocalDateTime updateTime;
 
     /** 状态:0-无效 1-有效 */
-    private Integer status;
-
-    /** 保留数据0-否 1-是 不允许删除 */
-    private Integer isPersist;
+    private Status status;
 
     /** 是否验签:0-否 1-是 不允许删除 */
     private Integer isSign;

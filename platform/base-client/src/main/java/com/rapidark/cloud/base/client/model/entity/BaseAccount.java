@@ -1,6 +1,7 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name="base_account")
-public class BaseAccount extends BaseEntity {
+public class BaseAccount extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = -4484479600033295192L;
 
@@ -53,11 +54,6 @@ public class BaseAccount extends BaseEntity {
     private String registerIp;
 
     /**
-     * 状态:0-禁用 1-启用 2-锁定
-     */
-    private Integer status;
-
-    /**
      * 账号域
      */
     private String domain;
@@ -75,4 +71,13 @@ public class BaseAccount extends BaseEntity {
         this.registerIp = registerIp;
     }
 
+    @Override
+    public Long getId() {
+        return accountId;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.accountId = id;
+    }
 }

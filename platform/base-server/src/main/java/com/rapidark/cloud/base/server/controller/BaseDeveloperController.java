@@ -13,6 +13,7 @@ import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.PageData;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import com.rapidark.framework.common.utils.WebUtils;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -85,7 +86,7 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
         developer.setMobile(command.getMobile());
         developer.setUserDesc(command.getUserDesc());
         developer.setAvatar(command.getAvatar());
-        developer.setStatus(command.getStatus());
+        developer.setStatus(Status.codeOf(command.getStatus()));
         baseDeveloperService.addUser(developer);
         return ResultBody.ok();
     }

@@ -20,6 +20,7 @@ import com.rapidark.framework.common.security.OpenClientDetails;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -84,7 +85,7 @@ public class OpenAppController implements IOpenAppServiceClient {
             map.put("创建时间", openClient.getCreateTime());
             map.put("更新时间", openClient.getUpdateTime());
             map.put("状态:0-无效 1-有效", openClient.getStatus());
-            map.put("保留数据0-否 1-是 不允许删除", openClient.getIsPersist());
+//            map.put("保留数据0-否 1-是 不允许删除", openClient.getIsPersist());
             map.put("是否验签:0-否 1-是 不允许删除", openClient.getIsSign());
             map.put("是否加密:0-否 1-是 不允许删除", openClient.getIsEncrypt());
             map.put("加密类型:DES TripleDES AES RSA", openClient.getEncryptType());
@@ -201,7 +202,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         app.setAppOs(command.getAppOs());
         app.setAppIcon(command.getAppIcon());
         app.setAppDesc(command.getAppDesc());
-        app.setStatus(command.getStatus());
+        app.setStatus(Status.codeOf(command.getStatus()));
         app.setWebsite(command.getWebsite());
         app.setDeveloperId(command.getDeveloperId());
         app.setIsSign(command.getIsSign());
@@ -264,7 +265,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         app.setAppOs(command.getAppOs());
         app.setAppIcon(command.getAppIcon());
         app.setAppDesc(command.getAppDesc());
-        app.setStatus(command.getStatus());
+        app.setStatus(Status.codeOf(command.getStatus()));
         app.setWebsite(command.getWebsite());
         app.setDeveloperId(command.getDeveloperId());
         app.setIsSign(command.getIsSign());
@@ -346,7 +347,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     public ResultBody start(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         OpenApp dbClient = openAppService.findById(id);
-        dbClient.setStatus(Integer.valueOf(Constants.YES));
+        dbClient.setStatus(Status.ENABLED);
         openAppService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
         return ResultBody.ok();
@@ -361,7 +362,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     public ResultBody stop(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         OpenApp dbClient = openAppService.findById(id);
-        dbClient.setStatus(Integer.valueOf(Constants.NO));
+        dbClient.setStatus(Status.DISABLED);
         openAppService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
         return ResultBody.ok();

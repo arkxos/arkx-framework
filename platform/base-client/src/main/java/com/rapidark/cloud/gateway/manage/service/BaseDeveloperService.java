@@ -18,6 +18,7 @@ import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.utils.PageData;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +104,7 @@ public class BaseDeveloperService extends BaseService<BaseDeveloper, Long, BaseD
             //保存系统用户信息
             entityRepository.save(baseDeveloper);
             // 注册账号信息
-            baseAccountService.register(baseDeveloper.getId(), baseDeveloper.getUserName(), baseDeveloper.getPassword(), accountType, BaseConstants.ACCOUNT_STATUS_NORMAL, ACCOUNT_DOMAIN, null);
+            baseAccountService.register(baseDeveloper.getId(), baseDeveloper.getUserName(), baseDeveloper.getPassword(), accountType, Status.ENABLED, ACCOUNT_DOMAIN, null);
         }
     }
 

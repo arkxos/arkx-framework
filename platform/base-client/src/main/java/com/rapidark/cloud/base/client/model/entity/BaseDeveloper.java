@@ -1,7 +1,8 @@
 package com.rapidark.cloud.base.client.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,17 +19,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name="base_developer")
-public class BaseDeveloper extends BaseEntity {
+public class BaseDeveloper extends IdLongEntity {
 
     private static final long serialVersionUID = -735161640894047414L;
-
-    /**
-     * 系统用户ID
-     */
-    @Id
-    @Column(name = "ID")
-    @ApiModelProperty(value = "ID")
-    private Long id;
 
     /**
      * 开发者类型:isp-服务提供商 dev-自研开发者
@@ -80,10 +73,5 @@ public class BaseDeveloper extends BaseEntity {
     @JsonIgnore
     @Transient
     private String password;
-
-    /**
-     * 状态:0-禁用 1-正常 2-锁定
-     */
-    private Integer status;
 
 }

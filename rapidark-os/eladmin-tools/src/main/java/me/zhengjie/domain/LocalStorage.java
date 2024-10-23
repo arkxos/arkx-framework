@@ -15,11 +15,12 @@
  */
 package me.zhengjie.domain;
 
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -32,13 +33,13 @@ import java.io.Serializable;
 @Entity
 @Table(name="tool_local_storage")
 @NoArgsConstructor
-public class LocalStorage extends BaseEntity implements Serializable {
+public class LocalStorage extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "storage_id")
     @ApiModelProperty(value = "ID", hidden = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long storageId;
 
     @ApiModelProperty(value = "真实文件名")
     private String realName;
@@ -69,5 +70,15 @@ public class LocalStorage extends BaseEntity implements Serializable {
 
     public void copy(LocalStorage source){
         BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));
+    }
+
+    @Override
+    public Long getId() {
+        return storageId;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.storageId = id;
     }
 }

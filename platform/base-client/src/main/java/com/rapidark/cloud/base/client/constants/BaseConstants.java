@@ -35,9 +35,9 @@ public class BaseConstants {
      * 账号状态
      * 0:禁用、1:正常、2:锁定
      */
-    public final static int ACCOUNT_STATUS_DISABLE = 0;
-    public final static int ACCOUNT_STATUS_NORMAL = 1;
-    public final static int ACCOUNT_STATUS_LOCKED = 2;
+//    public final static int ACCOUNT_STATUS_DISABLE = 0;
+//    public final static int ACCOUNT_STATUS_NORMAL = 1;
+//    public final static int ACCOUNT_STATUS_LOCKED = 2;
 
     /**
      * 账号类型:

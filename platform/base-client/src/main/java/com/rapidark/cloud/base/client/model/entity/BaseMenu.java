@@ -2,9 +2,11 @@ package com.rapidark.cloud.base.client.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.rapidark.cloud.base.client.constants.UserConstants;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.core.constant.Constants;
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
+import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -22,7 +24,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="base_menu")
-public class BaseMenu extends BaseEntity {
+public class BaseMenu extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = -4414780909980518788L;
 
@@ -100,18 +102,8 @@ public class BaseMenu extends BaseEntity {
      */
     private String menuDesc;
 
-    /**
-     * 状态:0-无效 1-有效
-     */
-    private Integer status;
-
     // 菜单可见
     private Integer visible = 1;
-
-    /**
-     * 保留数据0-否 1-是 不允许删除
-     */
-    private Integer isPersist;
 
     /**
      * 路由参数
@@ -207,4 +199,13 @@ public class BaseMenu extends BaseEntity {
                 new String[]{"", "", "", "/", "/"});
     }
 
+    @Override
+    public Long getId() {
+        return menuId;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.menuId = id;
+    }
 }

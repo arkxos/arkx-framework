@@ -2,7 +2,8 @@ package com.rapidark.cloud.base.client.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name="base_user")
-public class BaseUser extends BaseEntity {
+public class BaseUser extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = -735161640894047414L;
 
@@ -76,9 +77,13 @@ public class BaseUser extends BaseEntity {
     @Transient
     private String password;
 
-    /**
-     * 状态:0-禁用 1-正常 2-锁定
-     */
-    private Integer status;
+    @Override
+    public Long getId() {
+        return userId;
+    }
 
+    @Override
+    public void setId(Long id) {
+
+    }
 }

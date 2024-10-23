@@ -1,6 +1,7 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name="base_role")
-public class BaseRole extends BaseEntity {
+public class BaseRole extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = 5197785628543375591L;
 
@@ -46,14 +47,13 @@ public class BaseRole extends BaseEntity {
      */
     private String roleDesc;
 
-    /**
-     * 状态:0-无效 1-有效
-     */
-    private Integer status;
+    @Override
+    public Long getId() {
+        return roleId;
+    }
 
-    /**
-     * 保留数据0-否 1-是 不允许删除
-     */
-    private Integer isPersist;
-
+    @Override
+    public void setId(Long id) {
+        this.roleId = id;
+    }
 }

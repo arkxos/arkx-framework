@@ -1,6 +1,7 @@
 package com.rapidark.cloud.gateway.manage.service.command;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -59,6 +60,6 @@ public class UpdateDeveloperCommand {
 
     @ApiModelProperty(name = "status", value = "状态:0-禁用 1-正常 2-锁定", example = "", required = true)
     @NotNull(message = "状态不能为空")
-    private Integer status;
+    private Status status;
 
 }

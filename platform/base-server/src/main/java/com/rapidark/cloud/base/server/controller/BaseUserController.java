@@ -12,6 +12,7 @@ import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -103,7 +104,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setMobile(command.getMobile());
         user.setUserDesc(command.getUserDesc());
         user.setAvatar(command.getAvatar());
-        user.setStatus(command.getStatus());
+        user.setStatus(Status.codeOf(command.getStatus()));
         baseUserService.addUser(user);
         return ResultBody.ok(user.getUserId());
     }
@@ -141,7 +142,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setMobile(mobile);
         user.setUserDesc(userDesc);
         user.setAvatar(avatar);
-        user.setStatus(status);
+        user.setStatus(Status.codeOf(status));
         baseUserService.updateUser(user);
         return ResultBody.ok();
     }

@@ -1,6 +1,8 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
+import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,14 +19,9 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name="gateway_ip_limit_api")
-public class GatewayIpLimitApi extends BaseEntity {
+public class GatewayIpLimitApi extends IdLongEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @Column(name = "ID")
-    @ApiModelProperty(value = "ID")
-    private Long id;
 
     /**
      * 策略ID

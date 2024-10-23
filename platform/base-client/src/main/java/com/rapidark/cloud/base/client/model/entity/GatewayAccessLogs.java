@@ -1,6 +1,7 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name="gateway_access_logs")
-public class GatewayAccessLogs extends BaseEntity {
+public class GatewayAccessLogs extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -105,4 +106,13 @@ public class GatewayAccessLogs extends BaseEntity {
      */
     private String error;
 
+    @Override
+    public Long getId() {
+        return accessId;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.accessId = id;
+    }
 }

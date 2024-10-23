@@ -105,15 +105,15 @@ public class BaseApiService extends BaseService<BaseApi, Long, BaseApiRepository
         if (api.getPriority() == null) {
             api.setPriority(0);
         }
-        if (api.getStatus() == null) {
-            api.setStatus(BaseConstants.ENABLED);
-        }
+//        if (api.getStatus() == null) {
+//            api.setStatus(BaseConstants.ENABLED);
+//        }
         if (api.getApiCategory() == null) {
             api.setApiCategory(BaseConstants.DEFAULT_API_CATEGORY);
         }
-        if (api.getIsPersist() == null) {
-            api.setIsPersist(0);
-        }
+//        if (api.getIsPersist() == null) {
+//            api.setIsPersist(0);
+//        }
         if (api.getIsAuth() == null) {
             api.setIsAuth(0);
         }
@@ -175,9 +175,9 @@ public class BaseApiService extends BaseService<BaseApi, Long, BaseApiRepository
      */
     public void removeApi(Long apiId) {
         BaseApi api = getApi(apiId);
-        if (api != null && api.getIsPersist().equals(BaseConstants.ENABLED)) {
-            throw new OpenAlertException(String.format("保留数据,不允许删除"));
-        }
+//        if (api != null && api.getIsPersist().equals(BaseConstants.ENABLED)) {
+//            throw new OpenAlertException(String.format("保留数据,不允许删除"));
+//        }
         baseAuthorityService.removeAuthority(apiId, ResourceType.api);
         deleteById(apiId);
     }

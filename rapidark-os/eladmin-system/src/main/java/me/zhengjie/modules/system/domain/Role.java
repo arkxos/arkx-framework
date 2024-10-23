@@ -16,10 +16,11 @@
 package me.zhengjie.modules.system.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import com.rapidark.framework.common.utils.enums.DataScopeEnum;
 
 import javax.persistence.*;
@@ -38,12 +39,12 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "sys_role")
-public class Role extends BaseEntity implements Serializable {
+public class Role extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "role_id")
     @NotNull(groups = {Update.class})
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "ID", hidden = true)
     private Long id;
 

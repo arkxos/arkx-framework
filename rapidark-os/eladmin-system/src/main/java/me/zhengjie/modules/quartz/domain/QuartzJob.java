@@ -15,10 +15,11 @@
  */
 package me.zhengjie.modules.quartz.domain;
 
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -32,14 +33,14 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "sys_quartz_job")
-public class QuartzJob extends BaseEntity implements Serializable {
+public class QuartzJob extends AbstractIdLongEntity implements Serializable {
 
     public static final String JOB_KEY = "JOB_KEY";
 
     @Id
     @Column(name = "job_id")
     @NotNull(groups = {Update.class})
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Transient

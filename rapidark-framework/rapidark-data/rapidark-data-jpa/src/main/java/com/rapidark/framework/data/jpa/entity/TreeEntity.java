@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class TreeEntity extends BaseEntity {
+public class TreeEntity extends IdLongEntity {
 
 	@Column(name = "INNER_CODE")
 	private String innerCode;
@@ -42,7 +42,6 @@ public class TreeEntity extends BaseEntity {
 	 * @version V1.0
 	 */
 	public boolean isTop() {
-
 		return this.getParentInnerCode().equals(this.getInnerCode());
 	}
 	
@@ -50,4 +49,5 @@ public class TreeEntity extends BaseEntity {
 	public String toString() {
 		return "innerCode: "+ getInnerCode() + ", parentInnerCode: " + getParentInnerCode() + ", "+ super.toString();
 	}
+
 }

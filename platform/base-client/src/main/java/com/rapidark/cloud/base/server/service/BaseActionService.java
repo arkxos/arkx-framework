@@ -109,12 +109,12 @@ public class BaseActionService extends BaseService<BaseAction, Long, BaseActionR
         if (aciton.getPriority() == null) {
             aciton.setPriority(0);
         }
-        if (aciton.getStatus() == null) {
-            aciton.setStatus(BaseConstants.ENABLED);
-        }
-        if (aciton.getIsPersist() == null) {
-            aciton.setIsPersist(BaseConstants.DISABLED);
-        }
+//        if (aciton.getStatus() == null) {
+//            aciton.setStatus(BaseConstants.ENABLED);
+//        }
+//        if (aciton.getIsPersist() == null) {
+//            aciton.setIsPersist(BaseConstants.DISABLED);
+//        }
         aciton.setCreateTime(LocalDateTime.now());
         aciton.setServiceId(DEFAULT_SERVICE_ID);
         aciton.setUpdateTime(aciton.getCreateTime());
@@ -162,9 +162,9 @@ public class BaseActionService extends BaseService<BaseAction, Long, BaseActionR
      */
     public void removeAction(Long actionId) {
         BaseAction aciton = getAction(actionId);
-        if (aciton != null && aciton.getIsPersist().equals(BaseConstants.ENABLED)) {
-            throw new OpenAlertException(String.format("保留数据,不允许删除"));
-        }
+//        if (aciton != null && aciton.getIsPersist().equals(BaseConstants.ENABLED)) {
+//            throw new OpenAlertException(String.format("保留数据,不允许删除"));
+//        }
         baseAuthorityService.removeAuthorityAction(actionId);
         baseAuthorityService.removeAuthority(actionId, ResourceType.action);
         deleteById(actionId);

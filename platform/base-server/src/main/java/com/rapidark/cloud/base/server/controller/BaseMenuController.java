@@ -16,6 +16,7 @@ import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -64,7 +65,7 @@ public class BaseMenuController {
             JSONObject json = new JSONObject();
             json.put("serviceId", app.getAppNameEn());
             String serviceNameDisplay = app.getAppName() + "(" + app.getAppNameEn() + ")";
-            if (app.getStatus() != 1) {
+            if (app.getStatus() != Status.ENABLED) {
                 serviceNameDisplay += "[未启用]";
             }
             json.put("serviceName", serviceNameDisplay);
@@ -142,7 +143,7 @@ public class BaseMenuController {
         menu.setComponent(command.getComponent());
         menu.setScheme(command.getScheme());
         menu.setIntegrateMode(command.getTarget());
-        menu.setStatus(command.getStatus());
+        menu.setStatus(Status.codeOf(command.getStatus()));
         menu.setVisible(command.getVisible());
         menu.setParentId(command.getParentId());
         menu.setPriority(command.getPriority());
@@ -173,7 +174,7 @@ public class BaseMenuController {
         menu.setComponent(command.getComponent());
         menu.setScheme(command.getScheme());
         menu.setIntegrateMode(command.getTarget());
-        menu.setStatus(command.getStatus());
+        menu.setStatus(Status.codeOf(command.getStatus()));
         menu.setVisible(command.getVisible());
         menu.setParentId(command.getParentId());
         menu.setPriority(command.getPriority());

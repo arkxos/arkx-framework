@@ -7,6 +7,7 @@ import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -104,7 +105,7 @@ public class BaseApiController {
         api.setApiCategory(command.getApiCategory());
         api.setServiceId(command.getServiceId());
         api.setPath(command.getPath());
-        api.setStatus(command.getStatus());
+        api.setStatus(Status.codeOf(command.getStatus()));
         api.setPriority(command.getPriority());
         api.setApiDesc(command.getApiDesc());
         api.setIsAuth(command.getIsAuth());
@@ -163,7 +164,7 @@ public class BaseApiController {
         api.setApiCategory(apiCategory);
         api.setServiceId(serviceId);
         api.setPath(path);
-        api.setStatus(status);
+        api.setStatus(Status.codeOf(status));
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
         api.setIsAuth(isAuth);
@@ -212,7 +213,8 @@ public class BaseApiController {
         CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
         wrapper
                 .in(BaseApi::getApiId, Arrays.asList(ids.split(",")))
-                .eq(BaseApi::getIsPersist, 0+"");
+//                .eq(BaseApi::getIsPersist, 0+"")
+        ;
         List<BaseApi> data = apiService.findAllByCriteria(wrapper);
         for (BaseApi datum : data) {
             apiService.delete(datum);
@@ -274,7 +276,7 @@ public class BaseApiController {
         wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
         List<BaseApi> data = apiService.findAllByCriteria(wrapper);
         for (BaseApi entity : data) {
-            entity.setStatus(status);
+            entity.setStatus(Status.codeOf(status));
             apiService.save(entity);
         }
         // 刷新网关
@@ -299,7 +301,9 @@ public class BaseApiController {
     ) {
         Assert.isTrue((auth != 0 && auth != 1), "auth只支持0,1");
         CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
-        wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(","))).eq(BaseApi::getIsPersist, 0+"");
+        wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(",")))
+//                .eq(BaseApi::getIsPersist, 0+"")
+        ;
         List<BaseApi> data = apiService.findAllByCriteria(wrapper);
         for (BaseApi entity : data) {
             entity.setIsAuth(auth);
@@ -330,7 +334,7 @@ public class BaseApiController {
         wrapper.in(BaseApi::getApiId, Arrays.asList(ids.split(",")));
         List<BaseApi> data = apiService.findAllByCriteria(wrapper);
         for (BaseApi entity : data) {
-            entity.setIsPersist(persist);
+//            entity.setIsPersist(persist);
             apiService.save(entity);
         }
         // 刷新网关

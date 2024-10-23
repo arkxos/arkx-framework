@@ -3,7 +3,9 @@ package com.rapidark.cloud.base.client.model.entity;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.rapidark.framework.common.annotation.TableAlias;
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
+import com.rapidark.framework.data.jpa.entity.AbstractIdStringEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +29,7 @@ import javax.validation.constraints.Size;
 @Setter
 @Table(name="base_app")
 @TableAlias("app")
-public class OpenApp extends BaseEntity {
+public class OpenApp extends AbstractIdStringEntity {
 
     private static final long serialVersionUID = -4606067795040222681L;
 
@@ -120,22 +122,6 @@ public class OpenApp extends BaseEntity {
     private String website;
 
     /**
-     * 状态:0-无效 1-有效
-     */
-    @Column(name = "STATUS",nullable = false)
-    @NotNull
-    @ApiModelProperty(value = "状态:0-禁用 1-启用")
-    private Integer status;
-
-    /**
-     * 保留数据0-否 1-是 不允许删除
-     */
-    @Column(name = "IS_PERSIST",nullable = false)
-    @NotNull
-    @ApiModelProperty(value = "保留数据0-否 1-是 不允许删除")
-    private Integer isPersist;
-
-    /**
      * 是否验签:0-否 1-是
      */
     @Column(name = "IS_SIGN",nullable = false)
@@ -170,160 +156,13 @@ public class OpenApp extends BaseEntity {
         BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));
     }
 
-    /**
-     * 获取app名称
-     *
-     * @return app_name - app名称
-     */
-    public String getAppName() {
-        return appName;
+    @Override
+    public String getId() {
+        return appId;
     }
 
-    /**
-     * 设置app名称
-     *
-     * @param appName app名称
-     */
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-
-    /**
-     * 获取app英文名称
-     *
-     * @return app_name_en - app英文名称
-     */
-    public String getAppNameEn() {
-        return appNameEn;
-    }
-
-    /**
-     * 设置app英文名称
-     *
-     * @param appNameEn app英文名称
-     */
-    public void setAppNameEn(String appNameEn) {
-        this.appNameEn = appNameEn;
-    }
-
-
-    /**
-     * @return app_type
-     */
-    public String getAppType() {
-        return appType;
-    }
-
-    /**
-     * @param appType
-     */
-    public void setAppType(String appType) {
-        this.appType = appType;
-    }
-
-    public String getAppOs() {
-        return appOs;
-    }
-
-    public void setAppOs(String appOs) {
-        this.appOs = appOs;
-    }
-
-    public String getAppDesc() {
-        return appDesc;
-    }
-
-    public void setAppDesc(String appDesc) {
-        this.appDesc = appDesc;
-    }
-
-
-    public String getAppIcon() {
-        return appIcon;
-    }
-
-    public void setAppIcon(String appIcon) {
-        this.appIcon = appIcon;
-    }
-
-
-    public Long getDeveloperId() {
-        return developerId;
-    }
-
-    public void setDeveloperId(Long developerId) {
-        this.developerId = developerId;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getIsPersist() {
-        return isPersist;
-    }
-
-    public void setIsPersist(Integer isPersist) {
-        this.isPersist = isPersist;
-    }
-
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public Integer getIsSign() {
-        return isSign;
-    }
-
-    public void setIsSign(Integer isSign) {
-        this.isSign = isSign;
-    }
-
-    public Integer getIsEncrypt() {
-        return isEncrypt;
-    }
-
-    public void setIsEncrypt(Integer isEncrypt) {
-        this.isEncrypt = isEncrypt;
-    }
-
-    public String getEncryptType() {
-        return encryptType;
-    }
-
-    public void setEncryptType(String encryptType) {
-        this.encryptType = encryptType;
-    }
-
-    public String getPublicKey() {
-        return publicKey;
-    }
-
-    public void setPublicKey(String publicKey) {
-        this.publicKey = publicKey;
+    @Override
+    public void setId(String id) {
+        this.appId = id;
     }
 }

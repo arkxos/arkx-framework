@@ -16,10 +16,11 @@
 package me.zhengjie.modules.system.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.rapidark.framework.common.model.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -35,13 +36,13 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name="sys_dept")
-public class Dept extends BaseEntity implements Serializable {
+public class Dept extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "dept_id")
     @NotNull(groups = Update.class)
     @ApiModelProperty(value = "ID", hidden = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JSONField(serialize = false)

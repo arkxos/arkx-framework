@@ -1,6 +1,8 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.rapidark.framework.common.model.BaseEntity;
+
+import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
+import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,12 +23,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name="Gateway_Open_Client_App_Api_Authority")
-public class GatewayOpenClientAppApiAuthority extends BaseEntity {
-
-    @Id
-    @Column(name = "ID")
-    @ApiModelProperty(value = "ID")
-    private Long id;
+public class GatewayOpenClientAppApiAuthority extends IdLongEntity {
 
     @Column(name = "app_Id",nullable = false)
     @NotBlank(message = "客户端系统Id不能为空")
