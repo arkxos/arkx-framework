@@ -32,7 +32,10 @@ public class TreeEntity extends IdLongEntity {
 	
 	@Column(name = "IS_TREE_LEAF")
 	private int isTreeLeaf = 1;
-	
+
+	@Column(name = "SORT_ORDER")
+	private long sortOrder = 0;// 排序号
+
 	/**
 	 * 是否是顶级节点
 	 * @method isTop

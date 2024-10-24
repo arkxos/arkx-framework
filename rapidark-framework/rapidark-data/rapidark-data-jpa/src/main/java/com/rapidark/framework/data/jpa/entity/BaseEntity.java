@@ -62,9 +62,6 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
     @Enumerated(EnumType.ORDINAL)  
 	private Status status = Status.ENABLED;
 
-	@Column(name = "SORT_ORDER")
-	private long sortOrder = 0;// 排序号
-
 	/**
 	 * 给当前实体对象生成一个新的id
 	 * 

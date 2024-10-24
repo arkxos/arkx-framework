@@ -140,10 +140,9 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
     /**
      * 逻辑删除
      */
-    @SafeVarargs
     @Override
     @Transactional
-    public final void fakeDelete(ID... ids) {
+    public void fakeDelete(ID... ids) {
         for (ID id : ids) {
             changeStatus(id, Status.DELETED);
         }
