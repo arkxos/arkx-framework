@@ -365,7 +365,7 @@ public class WebUtils {
         Map<String, String> returnMap = new HashMap();
         if (contentType != null && contentType.contains(MediaType.MULTIPART_FORM_DATA_VALUE)) {
             // form-data表单
-            MultipartResolver multipartResolver = SpringContextHolder.getBean(MultipartResolver.class);
+            MultipartResolver multipartResolver = ArkSpringContextHolder.getBean(MultipartResolver.class);
             MultipartHttpServletRequest multiReq = multipartResolver.resolveMultipart(request);
             returnMap = conventMap(multiReq.getParameterMap());
         } else if (contentType != null && contentType.contains(MediaType.APPLICATION_JSON_VALUE)) {

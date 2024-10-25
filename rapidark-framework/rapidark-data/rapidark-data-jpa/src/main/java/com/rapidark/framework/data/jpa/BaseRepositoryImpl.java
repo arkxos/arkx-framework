@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
-import com.rapidark.framework.common.utils.SpringUtils;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import com.rapidark.framework.data.jpa.entity.*;
 import org.hibernate.SessionFactory;
@@ -190,7 +190,7 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 
 	public SystemIdGenerator getSystemIdGenerator() {
 		if (systemIdGenerator == null) {
-			systemIdGenerator = SpringUtils.getBean(SystemIdGenerator.class);
+			systemIdGenerator = ArkSpringContextHolder.getBean(SystemIdGenerator.class);
 		}
 		return systemIdGenerator;
 	}

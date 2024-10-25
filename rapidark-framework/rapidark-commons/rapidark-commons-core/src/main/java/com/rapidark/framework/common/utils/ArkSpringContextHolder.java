@@ -2,11 +2,10 @@ package com.rapidark.framework.common.utils;
 
 import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.lang.TypeReference;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.rapidark.common.utils.StringUtils;
-import org.springframework.aop.framework.AopContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -17,19 +16,30 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.ResolvableType;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
  * spring工具类
+ * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
  *
  * @author rapidark
  */
+@Slf4j
 @Component
-public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
+public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, ApplicationContextAware, DisposableBean {
+
+    /** Spring应用上下文环境 */
+    private static ConfigurableListableBeanFactory beanFactory;
+    private static ApplicationContext applicationContext;
+    private static final List<CallBack> CALL_BACKS = new ArrayList<>();
+    private static boolean addCallback = true;
 
     /**
      * 如果BeanFactory包含一个与所给名称匹配的bean定义，则返回true
@@ -95,33 +105,91 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 //        return Threading.VIRTUAL.isActive(getBean(Environment.class));
 //    }
 
-    /** Spring应用上下文环境 */
-    private static ConfigurableListableBeanFactory beanFactory;
-    private static ApplicationContext applicationContext;
-
-    public SpringUtils() {
+    public ArkSpringContextHolder() {
     }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        SpringUtils.beanFactory = beanFactory;
+        ArkSpringContextHolder.beanFactory = beanFactory;
     }
 
+    /**
+     * 实现ApplicationContextAware接口的context注入函数, 将其存入静态变量.
+     */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        SpringUtils.applicationContext = applicationContext;
+        if (ArkSpringContextHolder.applicationContext != null) {
+            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" +
+                    ArkSpringContextHolder.applicationContext);
+        }
+        ArkSpringContextHolder.applicationContext = applicationContext;
+        if (addCallback) {
+            for (CallBack callBack : ArkSpringContextHolder.CALL_BACKS) {
+                callBack.executor();
+            }
+            CALL_BACKS.clear();
+        }
+        ArkSpringContextHolder.addCallback = false;
     }
 
+    /**
+     * 取得存储在静态变量中的ApplicationContext.
+     */
     public static ApplicationContext getApplicationContext() {
+//        assertContextInjected();
         return applicationContext;
     }
 
+    @Override
+    public void destroy() {
+        ArkSpringContextHolder.clearHolder();
+    }
+
+    /**
+     * 清除applicationContext静态变量.
+     */
+    public static void cleanApplicationContext() {
+        clearHolder();
+    }
+    /**
+     * 清除SpringContextHolder中的ApplicationContext为Null.
+     */
+    private static void clearHolder() {
+        log.debug("清除SpringContextHolder中的ApplicationContext:"
+                + applicationContext);
+        applicationContext = null;
+    }
+    /**
+     * 检查ApplicationContext不为空.
+     */
+//    private static void assertContextInjected() {
+//        if (applicationContext == null) {
+//            throw new IllegalStateException("applicaitonContext属性未注入, 请在applicationContext" +
+//                    ".xml中定义SpringContextHolder或在SpringBoot启动类中注册SpringContextHolder.");
+//        }
+//    }
+
     public static ListableBeanFactory getBeanFactory() {
-        ListableBeanFactory factory = null == beanFactory ? applicationContext : beanFactory;
-        if (null == factory) {
+        ListableBeanFactory factory = beanFactory == null ? applicationContext : beanFactory;
+        if (factory == null) {
             throw new UtilException("No ConfigurableListableBeanFactory or ApplicationContext injected, maybe not in the Spring environment?");
         } else {
-            return (ListableBeanFactory)factory;
+            return factory;
+        }
+    }
+
+    /**
+     * 针对 某些初始化方法，在SpringContextHolder 未初始化时 提交回调方法。
+     * 在SpringContextHolder 初始化后，进行回调使用
+     *
+     * @param callBack 回调函数
+     */
+    public synchronized static void addCallBacks(CallBack callBack) {
+        if (addCallback) {
+            ArkSpringContextHolder.CALL_BACKS.add(callBack);
+        } else {
+            log.info("Spring上下文已启动完毕，延迟调用任务：{} 立即执行", callBack.getCallBackName());
+            callBack.executor();
         }
     }
 
@@ -146,7 +214,6 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
      * @param name
      * @return Object 一个以所给名字注册的bean的实例
      * @throws org.springframework.beans.BeansException
-     *
      */
     public static <T> T getBean(String name) {
         return (T)getBeanFactory().getBean(name);
@@ -229,6 +296,43 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
         } else {
             throw new UtilException("Can not unregister bean, the factory is not a DefaultSingletonBeanRegistry!");
         }
+    }
+
+    /**
+     * 获取SpringBoot 配置信息
+     *
+     * @param property     属性key
+     * @param defaultValue 默认值
+     * @param requiredType 返回类型
+     * @return /
+     */
+    public static <T> T getProperties(String property, T defaultValue, Class<T> requiredType) {
+        T result = defaultValue;
+        try {
+            result = getBean(Environment.class).getProperty(property, requiredType);
+        } catch (Exception ignored) {}
+        return result;
+    }
+
+    /**
+     * 获取SpringBoot 配置信息
+     *
+     * @param property 属性key
+     * @return /
+     */
+    public static String getProperties(String property) {
+        return getProperties(property, null, String.class);
+    }
+
+    /**
+     * 获取SpringBoot 配置信息
+     *
+     * @param property     属性key
+     * @param requiredType 返回类型
+     * @return /
+     */
+    public static <T> T getProperties(String property, Class<T> requiredType) {
+        return getProperties(property, null, requiredType);
     }
 
     public static void publishEvent(ApplicationEvent event) {

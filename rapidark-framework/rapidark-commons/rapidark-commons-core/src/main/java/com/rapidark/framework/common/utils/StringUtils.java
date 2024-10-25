@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
  *
- * @author liuyadu
+ * @author Darkness
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
@@ -59,8 +59,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             .build();
 
     static {
-        SpringContextHolder.addCallBacks(() -> {
-            StringUtils.ipLocal = SpringContextHolder.getProperties("ip.local-parsing", false, Boolean.class);
+        ArkSpringContextHolder.addCallBacks(() -> {
+            StringUtils.ipLocal = ArkSpringContextHolder.getProperties("ip.local-parsing", false, Boolean.class);
             if (ipLocal) {
                 /*
                  * 此文件为独享 ，不必关闭

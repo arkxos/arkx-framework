@@ -6,7 +6,7 @@ import java.util.List;
 import com.rapidark.common.constant.Constants;
 import com.rapidark.common.core.domain.entity.SysDictData;
 import com.rapidark.common.core.redis.RedisCache;
-import com.rapidark.framework.common.utils.SpringUtils;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 
 /**
  * 字典工具类
@@ -28,7 +28,7 @@ public class DictUtils
      */
     public static void setDictCache(String key, List<SysDictData> dictDatas)
     {
-        SpringUtils.getBean(RedisCache.class).setCacheObject(getCacheKey(key), dictDatas);
+        ArkSpringContextHolder.getBean(RedisCache.class).setCacheObject(getCacheKey(key), dictDatas);
     }
 
     /**
@@ -39,7 +39,7 @@ public class DictUtils
      */
     public static List<SysDictData> getDictCache(String key)
     {
-        Object cacheObj = SpringUtils.getBean(RedisCache.class).getCacheObject(getCacheKey(key));
+        Object cacheObj = ArkSpringContextHolder.getBean(RedisCache.class).getCacheObject(getCacheKey(key));
         if (StringUtils.isNotNull(cacheObj))
         {
             List<SysDictData> dictDatas = StringUtils.cast(cacheObj);
@@ -157,8 +157,8 @@ public class DictUtils
      */
     public static void clearDictCache()
     {
-        Collection<String> keys = SpringUtils.getBean(RedisCache.class).keys(Constants.SYS_DICT_KEY + "*");
-        SpringUtils.getBean(RedisCache.class).deleteObject(keys);
+        Collection<String> keys = ArkSpringContextHolder.getBean(RedisCache.class).keys(Constants.SYS_DICT_KEY + "*");
+        ArkSpringContextHolder.getBean(RedisCache.class).deleteObject(keys);
     }
 
     /**

@@ -4,7 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 
 import com.rapidark.framework.common.exception.OpenException;
 import com.rapidark.framework.common.core.constant.HttpStatus;
-import com.rapidark.framework.common.utils.SpringUtils;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -54,7 +54,7 @@ public class CryptoFilter implements Filter {
             } else {
                 // 是否有注解，有就报错，没有放行
                 if (ObjectUtil.isNotNull(apiEncrypt)) {
-                    HandlerExceptionResolver exceptionResolver = SpringUtils.getBean("handlerExceptionResolver", HandlerExceptionResolver.class);
+                    HandlerExceptionResolver exceptionResolver = ArkSpringContextHolder.getBean("handlerExceptionResolver", HandlerExceptionResolver.class);
                     exceptionResolver.resolveException(
                         servletRequest, servletResponse, null,
                         new OpenException(HttpStatus.FORBIDDEN, "没有访问权限，请联系管理员授权"));
@@ -87,7 +87,7 @@ public class CryptoFilter implements Filter {
      * 获取 ApiEncrypt 注解
      */
     private ApiEncrypt getApiEncryptAnnotation(HttpServletRequest servletRequest) {
-        RequestMappingHandlerMapping handlerMapping = SpringUtils.getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping handlerMapping = ArkSpringContextHolder.getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
         // 获取注解
         try {
             HandlerExecutionChain mappingHandler = handlerMapping.getHandler(servletRequest);

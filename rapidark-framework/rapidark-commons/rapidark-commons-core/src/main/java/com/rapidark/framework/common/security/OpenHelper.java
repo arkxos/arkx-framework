@@ -3,7 +3,7 @@ package com.rapidark.framework.common.security;
 import com.rapidark.framework.common.configuration.OpenCommonProperties;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.ReflectionUtils;
-import com.rapidark.framework.common.utils.SpringContextHolder;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.ResponseEntity;
@@ -244,7 +244,7 @@ public class OpenHelper {
 
         clientId = clientId.trim();
         ClientDetailsService clientDetailsService = (ClientDetailsService) ReflectionUtils.getFieldValue(endpoints, "clientDetailsService");
-        PasswordEncoder passwordEncoder = SpringContextHolder.getBean(PasswordEncoder.class);
+        PasswordEncoder passwordEncoder = ArkSpringContextHolder.getBean(PasswordEncoder.class);
         // 验证客户端
         ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
         if (clientDetails == null) {

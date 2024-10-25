@@ -15,7 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.rapidark.cloud.gateway.server.filter.RemoveGatewayContextFilter;
 import com.rapidark.cloud.gateway.server.locator.ResourceLocator;
 import com.rapidark.framework.common.configuration.OpenCommonProperties;
-import com.rapidark.framework.common.utils.SpringContextHolder;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import com.rapidark.cloud.gateway.server.actuator.ApiEndpoint;
 import com.rapidark.cloud.gateway.server.exception.JsonExceptionHandler;
 import com.rapidark.cloud.gateway.server.exception.RequestDecryptionExceptionHandler;
@@ -74,13 +74,13 @@ import java.util.TimeZone;
 @EnableConfigurationProperties({ApiProperties.class, OpenCommonProperties.class})
 public class GatewayConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean(SpringContextHolder.class)
-    public SpringContextHolder springContextHolder() {
-        SpringContextHolder holder = new SpringContextHolder();
-        log.info("SpringContextHolder [{}]", holder);
-        return holder;
-    }
+//    @Bean
+//    @ConditionalOnMissingBean(ArkSpringContextHolder.class)
+//    public ArkSpringContextHolder springContextHolder() {
+//        ArkSpringContextHolder holder = new ArkSpringContextHolder();
+//        log.info("SpringContextHolder [{}]", holder);
+//        return holder;
+//    }
 
     /**
      * 自定义异常处理[@@]注册Bean时依赖的Bean，会从容器中直接获取，所以直接注入即可

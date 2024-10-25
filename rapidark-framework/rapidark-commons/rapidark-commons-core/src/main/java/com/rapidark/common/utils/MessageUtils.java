@@ -1,6 +1,6 @@
 package com.rapidark.common.utils;
 
-import com.rapidark.framework.common.utils.SpringUtils;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -20,7 +20,7 @@ public class MessageUtils
      */
     public static String message(String code, Object... args)
     {
-        MessageSource messageSource = SpringUtils.getBean(MessageSource.class);
+        MessageSource messageSource = ArkSpringContextHolder.getBean(MessageSource.class);
         return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

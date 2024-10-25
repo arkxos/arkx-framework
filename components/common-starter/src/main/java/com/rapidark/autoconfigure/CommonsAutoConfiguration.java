@@ -11,7 +11,7 @@ import com.rapidark.framework.common.health.DbHealthIndicator;
 import com.rapidark.framework.common.mybatis.ModelMetaObjectHandler;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2ClientProperties;
-import com.rapidark.framework.common.utils.SpringContextHolder;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -73,19 +73,18 @@ public class CommonsAutoConfiguration {
         return encoder;
     }
 
-
     /**
      * Spring上下文工具配置
      *
      * @return
      */
-    @Bean
-    @ConditionalOnMissingBean(SpringContextHolder.class)
-    public SpringContextHolder springContextHolder() {
-        SpringContextHolder holder = new SpringContextHolder();
-        log.info("SpringContextHolder [{}]", holder);
-        return holder;
-    }
+//    @Bean
+//    @ConditionalOnMissingBean(ArkSpringContextHolder.class)
+//    public ArkSpringContextHolder springContextHolder() {
+//        ArkSpringContextHolder holder = new ArkSpringContextHolder();
+//        log.info("SpringContextHolder [{}]", holder);
+//        return holder;
+//    }
 
     /**
      * 统一异常处理配置

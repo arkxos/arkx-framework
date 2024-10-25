@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class EntityMap extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
     public static EnumConvertInterceptor interceptors = null;
-    // private RedisUtils redisUtils = SpringContextHolder.getBean("redisUtils");
+    // private RedisUtils redisUtils = ArkSpringContextHolder.getBean("redisUtils");
     // private Map<Object, Object> dataMaps = redisUtils.getMap("DICTDATA_MAPS");
 
     public EntityMap() {

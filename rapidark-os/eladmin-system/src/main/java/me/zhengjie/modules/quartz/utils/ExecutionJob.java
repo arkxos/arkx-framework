@@ -27,7 +27,7 @@ import me.zhengjie.modules.quartz.domain.QuartzLog;
 import me.zhengjie.modules.quartz.repository.QuartzLogRepository;
 import me.zhengjie.modules.quartz.service.QuartzJobService;
 import me.zhengjie.service.EmailService;
-import com.rapidark.framework.common.utils.SpringContextHolder;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.ThrowableUtil;
 import org.quartz.JobExecutionContext;
@@ -51,9 +51,9 @@ public class ExecutionJob extends QuartzJobBean {
     public void executeInternal(JobExecutionContext context) {
         QuartzJob quartzJob = (QuartzJob) context.getMergedJobDataMap().get(QuartzJob.JOB_KEY);
         // 获取spring bean
-        QuartzLogRepository quartzLogRepository = SpringContextHolder.getBean(QuartzLogRepository.class);
-        QuartzJobService quartzJobService = SpringContextHolder.getBean(QuartzJobService.class);
-        RedisUtils redisUtils = SpringContextHolder.getBean(RedisUtils.class);
+        QuartzLogRepository quartzLogRepository = ArkSpringContextHolder.getBean(QuartzLogRepository.class);
+        QuartzJobService quartzJobService = ArkSpringContextHolder.getBean(QuartzJobService.class);
+        RedisUtils redisUtils = ArkSpringContextHolder.getBean(RedisUtils.class);
         
         String uuid = quartzJob.getUuid();
 
@@ -105,7 +105,7 @@ public class ExecutionJob extends QuartzJobBean {
                 quartzJobService.updateIsPause(quartzJob);
             }
             if(quartzJob.getEmail() != null){
-                EmailService emailService = SpringContextHolder.getBean(EmailService.class);
+                EmailService emailService = ArkSpringContextHolder.getBean(EmailService.class);
                 // 邮箱报警
                 if(StringUtils.isNoneBlank(quartzJob.getEmail())){
                     EmailVo emailVo = taskAlarm(quartzJob, ThrowableUtil.getStackTrace(e));

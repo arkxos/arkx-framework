@@ -15,7 +15,7 @@
  */
 package me.zhengjie.config.thread;
 
-import com.rapidark.framework.common.utils.SpringContextHolder;
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class ThreadPoolExecutorUtil {
 
     public static ThreadPoolExecutor getPoll(){
-        AsyncTaskProperties properties = SpringContextHolder.getBean(AsyncTaskProperties.class);
+        AsyncTaskProperties properties = ArkSpringContextHolder.getBean(AsyncTaskProperties.class);
         return new ThreadPoolExecutor(
                 properties.getCorePoolSize(),
                 properties.getMaxPoolSize(),

@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author /
  */
-@Component
+//@Component
 @SuppressWarnings({"unchecked", "all"})
 public class RedisUtils {
     private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
