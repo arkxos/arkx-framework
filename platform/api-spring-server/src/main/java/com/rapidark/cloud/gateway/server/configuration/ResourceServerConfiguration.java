@@ -97,7 +97,7 @@ public class ResourceServerConfiguration {
     }
 
     @Bean
-    SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity serverHttpSecurity) {
+    public SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity serverHttpSecurity) {
         // 自定义oauth2 认证, 使用redis读取token,而非jwt方式
         JsonAuthenticationEntryPoint entryPoint = new JsonAuthenticationEntryPoint(accessLogService);
         JsonAccessDeniedHandler accessDeniedHandler = new JsonAccessDeniedHandler(accessLogService);

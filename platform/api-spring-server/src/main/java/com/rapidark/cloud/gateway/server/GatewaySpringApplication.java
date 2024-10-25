@@ -71,14 +71,14 @@ public class GatewaySpringApplication implements CommandLineRunner {
                 .build();
     }
 
-    public static void main(String[] args) {
-        RapidArkApplication.run(GatewaySpringApplication.class, args);
-    }
-
     @Override
     public void run(String... strings) {
         jdbcRouteDefinitionLocator.refresh();
         resourceLocator.refresh();
+    }
+
+    public static void main(String[] args) {
+        RapidArkApplication.run(GatewaySpringApplication.class, args);
     }
 
 }
