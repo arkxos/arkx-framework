@@ -9,10 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <properties>
-
-    </properties>
-
     <groupId>com.bsd</groupId>
     <artifactId>sentinel-dashboard</artifactId>
     <version>1.0.0</version>

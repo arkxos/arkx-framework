@@ -657,16 +657,18 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     public static String stripXss(String value) {
-        if (StringUtils.isNotBlank(value)) {
-            Matcher matcher = null;
-            for (Pattern pattern : getPatterns()) {
-                matcher = pattern.matcher(value);
-                if (matcher.find()) {
-                    value = matcher.replaceAll("");
-                }
-            }
-            value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        if (StringUtils.isBlank(value)) {
+           return "";
         }
+
+        Matcher matcher = null;
+        for (Pattern pattern : getPatterns()) {
+            matcher = pattern.matcher(value);
+            if (matcher.find()) {
+                value = matcher.replaceAll("");
+            }
+        }
+        value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
         return value;
     }
 

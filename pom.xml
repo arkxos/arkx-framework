@@ -41,6 +41,8 @@
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-dockerfile-plugin.version>1.4.13</maven-dockerfile-plugin.version>
         <flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
+        <maven.version>3.6.0</maven.version>
 
         <!--自定义版本-->
 <!--        <opencloud.common.version>12.2.0-SNAPSHOT</opencloud.common.version>-->
@@ -57,32 +59,85 @@
         <lombok.version>1.18.34</lombok.version>
         <mapstruct-plus.version>1.4.4</mapstruct-plus.version>
         <mapstruct-plus.lombok.version>0.2.0</mapstruct-plus.lombok.version>
-<!--        <mapstruct.version>1.4.1.Final</mapstruct.version>-->
 
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-security.version>5.8.15</spring-security.version>
         <spring-boot-admin.version>2.3.1</spring-boot-admin.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <alibaba.cloud.version>2021.0.5.0</alibaba.cloud.version>
-        <alibaba.fastjson.version>1.2.70</alibaba.fastjson.version>
+        <fastjson.version>1.2.74</fastjson.version>
+
         <jaeger.version>3.1.1</jaeger.version>
         <sentinel.version>1.8.4</sentinel.version>
 
+
+
+        <!-- 数据库 -->
+        <druid.version>1.2.6</druid.version>
+        <mybatis-plus.version>3.3.1</mybatis-plus.version>
+        <mybatis.boot.version>1.3.2</mybatis.boot.version>
+        <sqltoy.version>5.0.7</sqltoy.version>
+        <!--        <pagehelper.boot.version>1.2.5</pagehelper.boot.version>-->
+
+        <!--日志-->
+        <!-- doc -->
+        <javadoc.disabled>false</javadoc.disabled>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <swagger.version>3.0.0</swagger.version>
+
+        <!-- 工具 -->
+        <commons.io.version>2.5</commons.io.version>
+        <commons.fileupload.version>1.3.3</commons.fileupload.version>
+        <commons-pool2.version>2.5.0</commons-pool2.version>
+        <commons-beanutils.version>1.9.2</commons-beanutils.version>
+        <configuration.version>1.9</configuration.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
         <apache.commons-text.version>1.8</apache.commons-text.version>
         <apache.commons-io.version>2.6</apache.commons-io.version>
         <apache.commons.beanutils>1.9.4</apache.commons.beanutils>
-
-        <druid.version>1.2.6</druid.version>
-
-        <mybatis-plus.version>3.3.1</mybatis-plus.version>
         <com.google.zxing.version>3.4.0</com.google.zxing.version>
         <hutool.version>5.8.16</hutool.version>
         <logstash-logback-encoder.version>6.3</logstash-logback-encoder.version>
-        <swagger2.version>2.9.2</swagger2.version>
-        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+
 
         <axonframework.version>4.5.2</axonframework.version>
+
+        <cosid.version>1.20.0</cosid.version>
+
+        <cobertura.version>2.7</cobertura.version>
+        <coveralls.version>4.3.0</coveralls.version>
+
+        <deploy.disabled>false</deploy.disabled>
+        <source.disabled>false</source.disabled>
+        <pf4j.version>0.13.1</pf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <slf4j.version>1.7.25</slf4j.version>
+<!--        <axon.version>3.4</axon.version>-->
+
+        <bitwalker.version>1.19</bitwalker.version>
+        <jjwt.version>0.11.1</jjwt.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+
+        <oshi.version>3.9.1</oshi.version>
+
+        <poi.version>4.1.2</poi.version>
+        <velocity.version>1.7</velocity.version>
+        <jwt.version>0.9.1</jwt.version>
+
+        <log4jdbc.version>1.16</log4jdbc.version>
+
+        <!-- oshi监控需要指定jna版本, 问题详见 https://github.com/oshi/oshi/issues/1040 -->
+        <jna.version>5.8.0</jna.version>
+
+        <mail.version>1.4.7</mail.version>
+        <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
+        <alipay.version>4.9.153.ALL</alipay.version>
+
+        <retrofit2.version>2.9.0</retrofit2.version>
+        <okhttp.version>4.9.0</okhttp.version>
+
+        <jetty.version>9.4.12.v20180830</jetty.version>
     </properties>
 
     <dependencyManagement>
@@ -293,7 +348,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>${alibaba.fastjson.version}</version>
+                <version>${fastjson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>

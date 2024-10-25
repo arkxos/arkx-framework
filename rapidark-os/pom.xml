@@ -30,14 +30,6 @@
         <version>2.2.10.RELEASE</version>
     </parent>-->
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <log4jdbc.version>1.16</log4jdbc.version>
-        <commons-pool2.version>2.5.0</commons-pool2.version>
-        
-    </properties>
-
     <dependencies>
         <!--Spring boot 核心-->
         <dependency>

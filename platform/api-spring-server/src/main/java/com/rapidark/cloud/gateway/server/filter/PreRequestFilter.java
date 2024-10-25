@@ -25,6 +25,7 @@ public class PreRequestFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         // 添加自定义请求头
         String rid = UuidUtil.base58Uuid();
+        System.out.println(exchange.getRequest().mutate().build().getHeaders().getClass());
         ServerHttpRequest request = exchange.getRequest().mutate().header(FeignRequestInterceptor.X_REQUEST_ID, rid).build();
         ServerHttpResponse response = exchange.getResponse();
         response.getHeaders().set(FeignRequestInterceptor.X_REQUEST_ID, rid);

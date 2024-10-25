@@ -14,11 +14,6 @@
     <name>rapidark-gateway-manage</name>
     <packaging>jar</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    </properties>
-
     <dependencies>
         <!-- 引入公共包,需发布到本地仓库或私服 -->
         <dependency>

@@ -13,10 +13,6 @@
     <artifactId>rapidark-commons</artifactId>
     <packaging>pom</packaging>
 
-    <properties>
-
-    </properties>
-
     <modules>
         <module>rapidark-commons-core</module>
         <module>rapidark-common-encrypt</module>

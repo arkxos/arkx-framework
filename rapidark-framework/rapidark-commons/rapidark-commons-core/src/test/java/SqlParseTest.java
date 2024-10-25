@@ -1,6 +1,7 @@
 
 import java.util.List;
 
+import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
@@ -19,7 +20,7 @@ public class SqlParseTest {
         // String sql = "select * from tablename limit 10";
 
         String sql = "select t.*, u.*, t.id, t.order_id, u.name, u.field from emp_table t left join t_user u on t.id = u.id";
-        String dbType = JdbcConstants.MYSQL;
+        DbType dbType = JdbcConstants.MYSQL;
 
         //格式化输出
         String result = SQLUtils.format(sql, dbType);

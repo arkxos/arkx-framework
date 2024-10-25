@@ -12,10 +12,6 @@
     <description>代码生成服务器</description>
     <packaging>jar</packaging>
 
-    <properties>
-        <configuration.version>1.9</configuration.version>
-    </properties>
-
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
 

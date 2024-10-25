@@ -13,41 +13,6 @@
     <artifactId>rapidark-commons-core</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <cosid.version>1.20.0</cosid.version>
-
-        <cobertura.version>2.7</cobertura.version>
-        <coveralls.version>4.3.0</coveralls.version>
-
-        <javadoc.disabled>false</javadoc.disabled>
-        <deploy.disabled>false</deploy.disabled>
-        <source.disabled>false</source.disabled>
-        <pf4j.version>0.13.1</pf4j.version>
-        <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <axon.version>3.4</axon.version>
-
-        <mybatis.boot.version>1.3.2</mybatis.boot.version>
-        <druid.version>1.1.22</druid.version>
-        <bitwalker.version>1.19</bitwalker.version>
-        <jjwt.version>0.11.1</jjwt.version>
-        <kaptcha.version>2.3.2</kaptcha.version>
-        <pagehelper.boot.version>1.2.5</pagehelper.boot.version>
-        <fastjson.version>1.2.73</fastjson.version>
-        <oshi.version>3.9.1</oshi.version>
-        <commons.io.version>2.5</commons.io.version>
-        <commons.fileupload.version>1.3.3</commons.fileupload.version>
-        <poi.version>4.1.2</poi.version>
-        <velocity.version>1.7</velocity.version>
-        <jwt.version>0.9.1</jwt.version>
-
-        <log4jdbc.version>1.16</log4jdbc.version>
-        <swagger.version>3.0.0</swagger.version>
-        <commons-pool2.version>2.5.0</commons-pool2.version>
-<!--        <mapstruct.version>1.3.1.Final</mapstruct.version>-->
-        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.github.linpeilie</groupId>

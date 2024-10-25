@@ -21,10 +21,6 @@
         <module>rapidark-boot</module>
     </modules>
 
-    <properties>
-
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
