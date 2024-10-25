@@ -16,6 +16,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.rapidark.framework.common.filter.XssStringJsonDeserializer;
 import com.rapidark.framework.common.filter.XssStringJsonSerializer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -39,6 +40,7 @@ import static com.rapidark.autoconfigure.JacksonAutoConfiguration.SerializerFeat
  * @description:
  */
 @Slf4j
+@AutoConfiguration
 public class JacksonAutoConfiguration {
     public enum SerializerFeature {
         WriteNullListAsEmpty,

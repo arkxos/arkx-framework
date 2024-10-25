@@ -7,6 +7,7 @@ import feign.Retryer;
 import feign.codec.Encoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.SpringEncoder;
@@ -19,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  * @author liuyadu
  */
 @Slf4j
-@Configuration
+@AutoConfiguration
 public class FeignAutoConfiguration {
     public static int connectTimeOutMillis = 12000;
     public static int readTimeOutMillis = 12000;

@@ -20,7 +20,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.bus.BusProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,9 +33,9 @@ import java.nio.charset.StandardCharsets;
  * @author liuyadu
  */
 @Slf4j
-@Configuration
+@org.springframework.boot.autoconfigure.AutoConfiguration
 @EnableConfigurationProperties({OpenCommonProperties.class, OpenIdGenProperties.class, OpenOAuth2ClientProperties.class})
-public class AutoConfiguration {
+public class CommonsAutoConfiguration {
     /**
      * xss过滤
      * body缓存

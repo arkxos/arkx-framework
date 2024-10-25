@@ -8,6 +8,7 @@ import com.rapidark.cloud.common.encrypt.interceptor.MybatisEncryptInterceptor;
 import com.rapidark.cloud.common.encrypt.properties.EncryptorProperties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
  * @author 老马
  * @version 4.6.0
  */
-//@Configuration(after = MybatisPlusAutoConfiguration.class)
+@AutoConfiguration(after = MybatisPlusAutoConfiguration.class)
 @EnableConfigurationProperties({EncryptorProperties.class, MybatisPlusProperties.class})
 @ConditionalOnClass(MybatisPlusAutoConfiguration.class)
 @ConditionalOnProperty(value = "mybatis-encryptor.enable", havingValue = "true")

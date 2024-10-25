@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rapidark.framework.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,7 +31,7 @@ import java.time.Duration;
  * @author liuyadu
  */
 @Slf4j
-@Configuration
+@AutoConfiguration
 @AutoConfigureAfter({RedisAutoConfiguration.class})
 public class RedisCacheAutoConfiguration {
 

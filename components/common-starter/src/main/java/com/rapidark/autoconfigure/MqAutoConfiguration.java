@@ -3,6 +3,7 @@ package com.rapidark.autoconfigure;
 import com.rapidark.framework.common.constants.QueueConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Queue;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0
  */
 @Slf4j
-@Configuration
+@AutoConfiguration
 public class MqAutoConfiguration {
 
     /**

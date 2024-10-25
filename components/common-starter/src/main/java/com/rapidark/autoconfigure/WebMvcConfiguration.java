@@ -1,5 +1,6 @@
 package com.rapidark.autoconfigure;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -10,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author liuyadu
  */
-@Configuration
+@AutoConfiguration
 public class WebMvcConfiguration implements WebMvcConfigurer {
     /**
      * 多个WebSecurityConfigurerAdapter

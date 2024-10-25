@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
@@ -43,7 +44,7 @@ import java.util.stream.Collectors;
  * @author liuyadu
  */
 @Slf4j
-@Configuration
+@AutoConfiguration
 //@EnableSwagger2
 @EnableSwaggerBootstrapUI
 @EnableConfigurationProperties({OpenSwaggerProperties.class})

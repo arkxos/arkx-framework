@@ -5,6 +5,7 @@ import com.rapidark.cloud.tenant.datasource.DynamicDataSourceContextHolder;
 import com.rapidark.cloud.tenant.datasource.DynamicRoutingDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -22,7 +23,7 @@ import java.util.Map;
  * @date: 2019/3/20 13:20
  * @description:
  */
-@Configuration
+@AutoConfiguration
 @EnableConfigurationProperties(value = {OpenTenantProperties.class})
 public class DynamicDataSourceConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataSourceConfiguration.class);

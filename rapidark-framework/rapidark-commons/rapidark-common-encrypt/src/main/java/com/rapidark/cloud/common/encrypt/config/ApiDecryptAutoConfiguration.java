@@ -1,5 +1,6 @@
 package com.rapidark.cloud.common.encrypt.config;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -16,7 +17,7 @@ import javax.servlet.DispatcherType;
  *
  * @author wdhcr
  */
-@Configuration
+@AutoConfiguration
 @EnableConfigurationProperties(ApiDecryptProperties.class)
 @ConditionalOnProperty(value = "api-decrypt.enabled", havingValue = "true")
 public class ApiDecryptAutoConfiguration {

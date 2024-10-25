@@ -66,11 +66,6 @@ public class BaseApi extends AbstractIdLongEntity {
     private String apiDesc;
 
     /**
-     * 状态:0-无效 1-有效
-     */
-    private Status status;
-
-    /**
      * 安全认证:0-否 1-是 默认:1
      */
     private Integer isAuth;

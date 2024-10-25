@@ -1,4 +1,4 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rapidark.autoconfigure.AutoConfiguration,\
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rapidark.autoconfigure.CommonsAutoConfiguration,\
   com.rapidark.autoconfigure.FeignAutoConfiguration,\
   com.rapidark.autoconfigure.MqAutoConfiguration,\
   com.rapidark.autoconfigure.SwaggerAutoConfiguration,\
