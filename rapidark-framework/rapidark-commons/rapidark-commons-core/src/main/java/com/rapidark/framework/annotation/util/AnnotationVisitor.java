@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
@@ -31,6 +32,7 @@ import com.rapidark.framework.data.xml.XMLElement;
 /**
  * 遍历所有类中ARK相关的注解
  */
+@Slf4j
 public class AnnotationVisitor implements IBuiltResourceVisitor {
 	
 	protected static long lastTime = 0;
@@ -63,6 +65,7 @@ public class AnnotationVisitor implements IBuiltResourceVisitor {
 	
 	public static void load() {
 		if (isNeedLoad()) {// 开发模式下3秒扫描一次
+			log.info("[start]load rapidark Alias Priv Class");
 			lock.lock();
 			try {
 				if (isNeedLoad()) {
@@ -85,6 +88,8 @@ public class AnnotationVisitor implements IBuiltResourceVisitor {
 				}
 			} finally {
 				lock.unlock();
+
+				log.info("[end]load rapidark Alias Priv Class");
 			}
 		}
 	}

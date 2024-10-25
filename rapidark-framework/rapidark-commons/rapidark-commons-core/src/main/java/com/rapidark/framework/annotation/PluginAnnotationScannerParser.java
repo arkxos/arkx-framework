@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PluginAnnotationScannerParser implements ApplicationContextAware, BeanFactoryPostProcessor {
 
 	private static final String EVENT_NAME = "插件注解扫描";
-	private static final String RESOURCE_PATTERN = "com";
+	private static final String RESOURCE_PATTERN = "com/rapidark";
 	private static final String PATH_DOT = ".";
 
 	private ApplicationContext applicationContext;
@@ -51,6 +51,7 @@ public class PluginAnnotationScannerParser implements ApplicationContextAware, B
 		// 设置ApplicationContext
 		scanner.setResourceLoader(this.applicationContext);
 		// 执行扫描
+		log.info("开始扫描插件");
 		int count = scanner.scan(RESOURCE_PATTERN);
 		log.info(EVENT_NAME + ", 扫描类数量:" + count);
 

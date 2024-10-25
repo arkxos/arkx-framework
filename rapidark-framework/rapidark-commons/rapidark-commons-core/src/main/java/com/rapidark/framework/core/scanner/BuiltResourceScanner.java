@@ -57,7 +57,7 @@ public class BuiltResourceScanner {
 				classes.addAll(PackageUtil.findAnnotationedClasses(page, annotationClass));
 			}
 		} else {
-			classes = PackageUtil.findAnnotationClasses("com", Alias.class);
+			classes = PackageUtil.findAnnotationClasses("com/rapidark", Alias.class);
 		}
 		{
 			String baseUiFacadeClassName = "com.rapidark.framework.boot.BaseUIFacade";
