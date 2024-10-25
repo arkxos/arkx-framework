@@ -6,10 +6,10 @@ import com.flying.fish.gateway.vo.GatewayFilterDefinition;
 import com.flying.fish.gateway.vo.GatewayPredicateDefinition;
 import com.flying.fish.gateway.vo.GatewayRouteConfig;
 import com.flying.fish.gateway.vo.GatewayRouteDefinition;
-import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.HystrixCommandKey;
-import com.netflix.hystrix.HystrixCommandProperties;
-import com.netflix.hystrix.HystrixObservableCommand;
+//import com.netflix.hystrix.HystrixCommandGroupKey;
+//import com.netflix.hystrix.HystrixCommandKey;
+//import com.netflix.hystrix.HystrixCommandProperties;
+//import com.netflix.hystrix.HystrixObservableCommand;
 import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
 import com.rapidark.framework.common.utils.Constants;
 import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
@@ -315,17 +315,17 @@ public class LoadRouteService {
                 config.setHystrixName(RouteConstants.Hystrix.CUSTOM_HYSTRIX_NAME + r.getId());
                 config.setFallbackUri(RouteConstants.Hystrix.CUSTOM_FALLBACK_URI + r.getId());
                 //添加自定义熔断器
-                HystrixObservableCommand.Setter setter = HystrixObservableCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(config.getHystrixName()));
-                setter.andCommandKey(HystrixCommandKey.Factory.asKey(config.getHystrixName()));
-                HystrixCommandProperties.Setter propertiesSetter = HystrixCommandProperties.Setter();
-                //启用回调
-                propertiesSetter.withFallbackEnabled(true);
-                //启用超时检测
-                propertiesSetter.withExecutionTimeoutEnabled(true);
-                //设置超时时长
-                propertiesSetter.withExecutionTimeoutInMilliseconds(r.getFallbackTimeout().intValue());
-                setter.andCommandPropertiesDefaults(propertiesSetter);
-                config.setSetter(setter);
+//                HystrixObservableCommand.Setter setter = HystrixObservableCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(config.getHystrixName()));
+//                setter.andCommandKey(HystrixCommandKey.Factory.asKey(config.getHystrixName()));
+//                HystrixCommandProperties.Setter propertiesSetter = HystrixCommandProperties.Setter();
+//                //启用回调
+//                propertiesSetter.withFallbackEnabled(true);
+//                //启用超时检测
+//                propertiesSetter.withExecutionTimeoutEnabled(true);
+//                //设置超时时长
+//                propertiesSetter.withExecutionTimeoutInMilliseconds(r.getFallbackTimeout().intValue());
+//                setter.andCommandPropertiesDefaults(propertiesSetter);
+//                config.setSetter(setter);
             }
         }
         //限流

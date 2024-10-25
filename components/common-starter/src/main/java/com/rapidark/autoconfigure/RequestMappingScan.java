@@ -144,14 +144,13 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
                 patterns = p2.getPatterns().stream().map(PathPattern::getPatternString).collect(Collectors.toSet());
             }
             String urls = getUrls(patterns);
-            Map<String, String> api = Maps.newHashMap();
+
             // 类名
             String className = method.getMethod().getDeclaringClass().getName();
             // 方法名
             String methodName = method.getMethod().getName();
             String fullName = className + "." + methodName;
-            // md5码
-            String md5 = EncryptUtils.md5Hex(serviceId + urls);
+
             String name = "";
             String desc = "";
             // 是否需要安全认证 默认:1-是 0-否
@@ -179,7 +178,12 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
                 desc = apiOperation.notes();
             }
             name = StringUtils.isBlank(name) ? methodName : name;
+            Map<String, String> api = Maps.newHashMap();
+
             api.put("apiName", name);
+
+            // md5码
+            String md5 = EncryptUtils.md5Hex(serviceId + urls);
             api.put("apiCode", md5);
             api.put("apiDesc", desc);
             api.put("path", urls);

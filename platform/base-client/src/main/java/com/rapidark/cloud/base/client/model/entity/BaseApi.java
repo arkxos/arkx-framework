@@ -1,6 +1,5 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.annotations.ApiModelProperty;

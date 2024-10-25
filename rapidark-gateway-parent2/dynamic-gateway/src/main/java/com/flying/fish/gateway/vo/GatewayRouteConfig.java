@@ -1,6 +1,6 @@
 package com.flying.fish.gateway.vo;
 
-import com.netflix.hystrix.HystrixObservableCommand;
+//import com.netflix.hystrix.HystrixObservableCommand;
 import lombok.Data;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
@@ -30,7 +30,7 @@ public class GatewayRouteConfig implements java.io.Serializable {
     private String rewritePathValue;
     private String hystrixName;
     private String fallbackUri;
-    private HystrixObservableCommand.Setter setter;
+//    private HystrixObservableCommand.Setter setter;
     private GatewayFilter [] gatewayFilter;
     private boolean authorize = false;
 }

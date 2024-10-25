@@ -66,7 +66,7 @@ public class CustomWeightCalculatorWebFilter
 
     private final ObjectProvider<RouteLocator> routeLocator;
 
-    private final ConfigurationService configurationService;
+    private  ConfigurationService configurationService;
 
     private Random random = new Random();
 
@@ -76,7 +76,7 @@ public class CustomWeightCalculatorWebFilter
 
     /* for testing */ CustomWeightCalculatorWebFilter() {
         this.routeLocator = null;
-        this.configurationService = new ConfigurationService();
+//        this.configurationService = new ConfigurationService();
     }
 
     @Deprecated
@@ -88,8 +88,8 @@ public class CustomWeightCalculatorWebFilter
     public CustomWeightCalculatorWebFilter(Validator validator,
                                            ObjectProvider<RouteLocator> routeLocator) {
         this.routeLocator = routeLocator;
-        this.configurationService = new ConfigurationService();
-        this.configurationService.setValidator(validator);
+//        this.configurationService = new ConfigurationService();
+//        this.configurationService.setValidator(validator);
     }
 
     public CustomWeightCalculatorWebFilter(ObjectProvider<RouteLocator> routeLocator,
