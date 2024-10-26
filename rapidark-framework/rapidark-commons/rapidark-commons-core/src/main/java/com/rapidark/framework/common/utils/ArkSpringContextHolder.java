@@ -309,7 +309,11 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     public static <T> T getProperties(String property, T defaultValue, Class<T> requiredType) {
         T result = defaultValue;
         try {
-            result = getBean(Environment.class).getProperty(property, requiredType);
+            Environment environment = getBean(Environment.class);
+            T envValue = environment.getProperty(property, requiredType);
+            if (envValue != null) {
+                result = envValue;
+            }
         } catch (Exception ignored) {}
         return result;
     }
