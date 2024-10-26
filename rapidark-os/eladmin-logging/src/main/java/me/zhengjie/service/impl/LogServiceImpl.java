@@ -18,6 +18,7 @@ package me.zhengjie.service.impl;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
+import com.rapidark.framework.boot.ip2region.IP2regionTemplate;
 import com.rapidark.framework.common.utils.PageUtil;
 import com.rapidark.framework.common.utils.QueryHelp;
 import com.rapidark.framework.common.utils.StringUtils;
@@ -56,6 +57,7 @@ public class LogServiceImpl implements LogService {
     private final LogRepository logRepository;
     private final LogErrorMapper logErrorMapper;
     private final LogSmallMapper logSmallMapper;
+    private final IP2regionTemplate ip2regionTemplate;
 
     @Override
     public Object queryAll(LogQueryCriteria criteria, Pageable pageable) {
@@ -96,7 +98,7 @@ public class LogServiceImpl implements LogService {
         assert log != null;
         log.setRequestIp(ip);
 
-        log.setAddress(StringUtils.getCityInfo(log.getRequestIp()));
+        log.setAddress(ip2regionTemplate.getCityInfo(log.getRequestIp()));
         log.setMethod(methodName);
         log.setUsername(username);
         log.setParams(getParameter(method, joinPoint.getArgs()));

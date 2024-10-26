@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.security.service;
 
+import com.rapidark.framework.boot.ip2region.IP2regionTemplate;
 import com.rapidark.framework.common.utils.MyEncryptUtils;
 import com.rapidark.framework.common.utils.PageUtil;
 import com.rapidark.framework.common.utils.RedisUtils;
@@ -41,10 +42,12 @@ public class OnlineUserService {
 
     private final SecurityProperties properties;
     private final RedisUtils redisUtils;
+    private final IP2regionTemplate ip2regionTemplate;
 
-    public OnlineUserService(SecurityProperties properties, RedisUtils redisUtils) {
+    public OnlineUserService(SecurityProperties properties, RedisUtils redisUtils, IP2regionTemplate ip2regionTemplate) {
         this.properties = properties;
         this.redisUtils = redisUtils;
+        this.ip2regionTemplate = ip2regionTemplate;
     }
 
     /**
@@ -57,7 +60,7 @@ public class OnlineUserService {
         String dept = jwtUserDto.getUser().getDept().getName();
         String ip = StringUtils.getIp(request);
         String browser = StringUtils.getBrowser(request);
-        String address = StringUtils.getCityInfo(ip);
+        String address = ip2regionTemplate.getCityInfo(ip);
         OnlineUserDto onlineUserDto = null;
         try {
             onlineUserDto = new OnlineUserDto(jwtUserDto.getUsername(), jwtUserDto.getUser().getNickName(), dept, browser , ip, address, MyEncryptUtils.desEncrypt(token), new Date());

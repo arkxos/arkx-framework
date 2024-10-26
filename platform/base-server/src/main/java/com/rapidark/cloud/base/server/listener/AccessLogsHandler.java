@@ -3,7 +3,7 @@ package com.rapidark.cloud.base.server.listener;
 import com.alibaba.fastjson.JSON;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
-import com.rapidark.cloud.base.server.service.IpRegionService;
+import com.rapidark.framework.boot.ip2region.IP2regionTemplate;
 import com.rapidark.framework.common.constants.QueueConstants;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
@@ -32,7 +32,7 @@ public class AccessLogsHandler {
      * 临时存放减少io
      */
     @Autowired
-    private IpRegionService ipRegionService;
+    private IP2regionTemplate ip2regionTemplate;
 
     @Autowired
     private SystemIdGenerator systemIdGenerator;
@@ -49,7 +49,7 @@ public class AccessLogsHandler {
                 GatewayAccessLogs logs = JSON.parseObject(message, GatewayAccessLogs.class);
                 if (logs != null) {
                     if (logs.getIp() != null) {
-                        logs.setRegion(ipRegionService.getRegion(logs.getIp()));
+                        logs.setRegion(ip2regionTemplate.getRegion(logs.getIp()));
                     }
                     logs.setAccessId(systemIdGenerator.generate());
                     logs.setUseTime(logs.getResponseTime().getTime() - logs.getRequestTime().getTime());

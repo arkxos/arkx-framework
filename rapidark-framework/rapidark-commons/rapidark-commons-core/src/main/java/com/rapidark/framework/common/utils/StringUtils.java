@@ -11,9 +11,6 @@ import nl.basjes.parse.useragent.UserAgent;
 import nl.basjes.parse.useragent.UserAgentAnalyzer;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.text.StringEscapeUtils;
-import org.lionsoul.ip2region.DataBlock;
-import org.lionsoul.ip2region.DbConfig;
-import org.lionsoul.ip2region.DbSearcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -44,9 +41,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     private static final String CHARSET = "UTF-8";
 
-    private static boolean ipLocal = false;
-    private static File file = null;
-    private static DbConfig config;
     public static final char SEPARATOR = '_';
     public static final String CommaSeparator = ",";
     private static final String UNKNOWN = "unknown";
@@ -57,25 +51,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             .withCache(10000)
             .withField(UserAgent.AGENT_NAME_VERSION)
             .build();
-
-    static {
-        ArkSpringContextHolder.addCallBacks(() -> {
-            StringUtils.ipLocal = ArkSpringContextHolder.getProperties("ip.local-parsing", false, Boolean.class);
-            if (ipLocal) {
-                /*
-                 * 此文件为独享 ，不必关闭
-                 */
-                String path = "ip2region/ip2region.db";
-                String name = "ip2region.db";
-                try {
-                    config = new DbConfig();
-                    file = FileUtil.inputStreamToFile(new ClassPathResource(path).getInputStream(), name);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
-        });
-    }
 
     /**
      * 获取参数不为空值
@@ -754,37 +729,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 根据ip获取详细地址
-     */
-    public static String getLocalCityInfo(String ip) {
-        try {
-            DataBlock dataBlock = new DbSearcher(config, file.getPath())
-                    .binarySearch(ip);
-            String region = dataBlock.getRegion();
-            String address = region.replace("0|", "");
-            char symbol = '|';
-            if (address.charAt(address.length() - 1) == symbol) {
-                address = address.substring(0, address.length() - 1);
-            }
-            return address.equals(ElAdminConstant.REGION) ? "内网IP" : address;
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-        return "";
-    }
-
-    /**
-     * 根据ip获取详细地址
-     */
-    public static String getCityInfo(String ip) {
-        if (ipLocal) {
-            return getLocalCityInfo(ip);
-        } else {
-            return getHttpCityInfo(ip);
-        }
-    }
-
-    /**
      * 获得当天是周几
      */
     public static String getWeekDay() {
@@ -839,20 +783,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
     }
 
-    /**
-     * 根据ip获取详细地址
-     */
-    public static String getHttpCityInfo(String ip) {
-        String api = String.format(ElAdminConstant.Url.IP_URL, ip);
-        JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
-        return object.get("addr", String.class);
-    }
-
     public static String getBrowser(HttpServletRequest request) {
         UserAgent.ImmutableUserAgent userAgent = userAgentAnalyzer.parse(request.getHeader("User-Agent"));
         return userAgent.get(UserAgent.AGENT_NAME_VERSION).getValue();
     }
-
 
     /**
      * 格式化文本, {} 表示占位符<br>

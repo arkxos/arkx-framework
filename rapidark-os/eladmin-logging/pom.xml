@@ -18,5 +18,11 @@
             <artifactId>eladmin-common</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.rapidark.framework</groupId>
+            <artifactId>rapidark-ip2region-starter</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
