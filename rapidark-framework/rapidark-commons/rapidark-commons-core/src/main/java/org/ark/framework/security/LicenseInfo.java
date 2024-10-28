@@ -5,8 +5,6 @@ import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
-import org.bouncycastle.jce.provider.JDKX509CertificateFactory;
-
 import com.rapidark.framework.Config;
 import com.rapidark.framework.commons.collection.Mapx;
 import com.rapidark.framework.commons.util.DateUtil;
@@ -44,21 +42,24 @@ public class LicenseInfo {
 
 	public static synchronized void update() {
 		try {
-			byte[] code = StringUtil.hexDecode(FileUtil.readText(Config.getPluginPath() + "classes/rapidark.license").replaceAll("\\s+", "").trim());
-			JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
-			X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
-			PublicKey pubKey = cer.getPublicKey();
-			ZRSACipher dc = new ZRSACipher();
-			dc.init(2, pubKey);
-			byte[] bs = new byte[code.length * 2];
-			int indexBS = 0;
-			int indexCode = 0;
-			while (code.length - indexCode > 128) {
-				indexBS += dc.doFinal(code, indexCode, 128, bs, indexBS);
-				indexCode += 128;
+			if(true) {
+				return;
 			}
-			indexBS += dc.doFinal(code, indexCode, code.length - indexCode, bs, indexBS);
-			String str = new String(bs, 0, indexBS, "UTF-8");
+			byte[] code = StringUtil.hexDecode(FileUtil.readText(Config.getPluginPath() + "classes/rapidark.license").replaceAll("\\s+", "").trim());
+//			JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
+//			X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
+			PublicKey pubKey = null;//cer.getPublicKey();
+//			ZRSACipher dc = new ZRSACipher();
+//			dc.init(2, pubKey);
+//			byte[] bs = new byte[code.length * 2];
+//			int indexBS = 0;
+//			int indexCode = 0;
+//			while (code.length - indexCode > 128) {
+//				indexBS += dc.doFinal(code, indexCode, 128, bs, indexBS);
+//				indexCode += 128;
+//			}
+//			indexBS += dc.doFinal(code, indexCode, code.length - indexCode, bs, indexBS);
+			String str = "";//new String(bs, 0, indexBS, "UTF-8");
 			Mapx<String, String> map = StringUtil.splitToMapx(str, ";", "=");
 			Name = map.getString("Name");
 			Product = map.getString("Product");
@@ -85,11 +86,14 @@ public class LicenseInfo {
 
 	public static String getLicenseRequest(String customer) {
 		try {
-			JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
-			X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
-			PublicKey pubKey = cer.getPublicKey();
-			ZRSACipher ec = new ZRSACipher();
-			ec.init(1, pubKey);
+			if(true) {
+				return "";
+			}
+//			JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
+//			X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
+			PublicKey pubKey = null;// cer.getPublicKey();
+//			ZRSACipher ec = new ZRSACipher();
+//			ec.init(1, pubKey);
 			StringFormat sf = new StringFormat("Name=?;MacAddress=?");
 			if (Config.getGlobalCharset().equals("GBK")) {
 				customer = new String(StringUtil.GBKToUTF8(customer), "UTF-8");
@@ -101,10 +105,10 @@ public class LicenseInfo {
 			int indexBS = 0;
 			int indexCode = 0;
 			while (bs.length - indexBS > 117) {
-				indexCode += ec.doFinal(bs, indexBS, 117, code, indexCode);
+//				indexCode += ec.doFinal(bs, indexBS, 117, code, indexCode);
 				indexBS += 117;
 			}
-			ec.doFinal(bs, indexBS, bs.length - indexBS, code, indexCode);
+//			ec.doFinal(bs, indexBS, bs.length - indexBS, code, indexCode);
 			return StringUtil.hexEncode(code);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,20 +118,24 @@ public class LicenseInfo {
 
 	public static boolean verifyLicense(String license) {
 		try {
+			if(true) {
+				return true;
+			}
 			byte[] code = StringUtil.hexDecode(license.trim());
-			JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
-			X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
-			PublicKey pubKey = cer.getPublicKey();
-			ZRSACipher dc = new ZRSACipher();
-			dc.init(2, pubKey);
+//			JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
+//			X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
+			PublicKey pubKey = null;//
+			// cer.getPublicKey();
+//			ZRSACipher dc = new ZRSACipher();
+//			dc.init(2, pubKey);
 			byte[] bs = new byte[code.length * 2];
 			int indexBS = 0;
 			int indexCode = 0;
 			while (code.length - indexCode > 128) {
-				indexBS += dc.doFinal(code, indexCode, 128, bs, indexBS);
+//				indexBS += dc.doFinal(code, indexCode, 128, bs, indexBS);
 				indexCode += 128;
 			}
-			indexBS += dc.doFinal(code, indexCode, code.length - indexCode, bs, indexBS);
+//			indexBS += dc.doFinal(code, indexCode, code.length - indexCode, bs, indexBS);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -7,8 +7,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.ark.framework.security.LicenseInfo;
-import org.ark.framework.security.ZRSACipher;
-import org.bouncycastle.jce.provider.JDKX509CertificateFactory;
+//import org.ark.framework.security.ZRSACipher;
 
 import com.rapidark.framework.Config;
 import com.rapidark.framework.commons.collection.DataRow;
@@ -38,20 +37,20 @@ public class ReportUtil {
 					String cert = "MIICQzCCAaygAwIBAgIGATaV7VGjMA0GCSqGSIb3DQEBBQUAMGQxCzAJBgNVBAYTAkNOMRAwDgYDVQQIDAdCRUlKSU5HMRAwDgYDVQQHDAdIQUlESUFOMQ4wDAYDVQQKDAVaVklORzENMAsGA1UECwwEU09GVDESMBAGA1UEAwwJTGljZW5zZUNBMCAXDTEyMDQwOTA3MDY1OVoYDzIxMTIwNDA5MDcwNjU5WjBkMQswCQYDVQQGEwJDTjEQMA4GA1UECAwHQkVJSklORzEQMA4GA1UEBwwHSEFJRElBTjEOMAwGA1UECgwFWlZJTkcxDTALBgNVBAsMBFNPRlQxEjAQBgNVBAMMCUxpY2Vuc2VDQTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAocWNmvoyaPlaG6oKafrNlaYM+jZyELtK1c/GRyfmSbv+HBlOo5fZ8MEpsLfMJKyUk+QjVBNNhot8jc96MC8PcBU6QZ0HZwhnyniBYkXO8VjQ4g3A6p5X6NPYn+FFvMg/jn0lP0bG/vOoLgVrsvqJInKLFsXEYhKHxChK1Vcc3nECAwEAATANBgkqhkiG9w0BAQUFAAOBgQAl8tEOIPtgGpM3Y7F24QEAcwCgyEwdaMZ+Cfmq2ud1rPtbYKmA4FfAHH1ttCpBIMwNz1RRVk98Rp9MqF3OuGCICz/amewOQW6Y3wwTiyA40geN1MYyGgp80K1u71G24gV9qY9GddLS5ZIecmVtj/J22jY2oktYfRwnhbXQ+elq/Q==";
 					try {
 						byte[] code = StringUtil.hexDecode(FileUtil.readText(Config.getPluginPath() + "classes/rapidark.license").replaceAll("\\s+", ""));
-						JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
-						X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
-						PublicKey pubKey = cer.getPublicKey();
-						ZRSACipher dc = new ZRSACipher();
-						dc.init(2, pubKey);
-						byte[] bs = new byte[code.length * 2];
-						int indexBS = 0;
-						int indexCode = 0;
-						while (code.length - indexCode > 128) {
-							indexBS += dc.doFinal(code, indexCode, 128, bs, indexBS);
-							indexCode += 128;
-						}
-						indexBS += dc.doFinal(code, indexCode, code.length - indexCode, bs, indexBS);
-						String str = new String(bs, 0, indexBS, "UTF-8");
+//						JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
+//						X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
+						PublicKey pubKey = null;//cer.getPublicKey();
+//						ZRSACipher dc = new ZRSACipher();
+//						dc.init(2, pubKey);
+//						byte[] bs = new byte[code.length * 2];
+//						int indexBS = 0;
+//						int indexCode = 0;
+//						while (code.length - indexCode > 128) {
+//							indexBS += dc.doFinal(code, indexCode, 128, bs, indexBS);
+//							indexCode += 128;
+//						}
+//						indexBS += dc.doFinal(code, indexCode, code.length - indexCode, bs, indexBS);
+						String str = "";// new String(bs, 0, indexBS, "UTF-8");
 						Mapx map = StringUtil.splitToMapx(str, ";", "=");
 						LicenseInfo.Name = map.getString("Name");
 						LicenseInfo.Product = map.getString("Product");

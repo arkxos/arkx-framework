@@ -24,16 +24,12 @@ public class EncryptUtil {
 			byte[] key = password.getBytes();
 			byte[] encodeString = str.getBytes();
 			SecretKeySpec skeySpec = new SecretKeySpec(key, "DESede");
-			Z3DESCipher cipher = new Z3DESCipher();
-			cipher.init(1, skeySpec);
-			byte[] cipherByte = cipher.doFinal(encodeString);
+//			Z3DESCipher cipher = new Z3DESCipher();
+//			cipher.init(1, skeySpec);
+			byte[] cipherByte = null;//cipher.doFinal(encodeString);
 			strResult = StringUtil.base64Encode(cipherByte);
-		} catch (NoSuchAlgorithmException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
-		} catch (NoSuchPaddingException e2) {
-			e2.printStackTrace();
-		} catch (Exception e3) {
-			e3.printStackTrace();
 		}
 		return strResult;
 	}
@@ -44,16 +40,12 @@ public class EncryptUtil {
 			byte[] key = password.getBytes();
 			byte[] src = StringUtil.base64Decode(srcStr);
 			SecretKeySpec skeySpec = new SecretKeySpec(key, "DESede");
-			Z3DESCipher cipher = new Z3DESCipher();
-			cipher.init(2, skeySpec);
-			byte[] cipherByte = cipher.doFinal(src);
+//			Z3DESCipher cipher = new Z3DESCipher();
+//			cipher.init(2, skeySpec);
+			byte[] cipherByte = null;//cipher.doFinal(src);
 			strResult = new String(cipherByte);
-		} catch (NoSuchAlgorithmException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
-		} catch (NoSuchPaddingException e2) {
-			e2.printStackTrace();
-		} catch (Exception e3) {
-			e3.printStackTrace();
 		}
 		return strResult;
 	}

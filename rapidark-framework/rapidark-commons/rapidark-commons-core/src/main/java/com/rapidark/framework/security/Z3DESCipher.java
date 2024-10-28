@@ -5,10 +5,9 @@ import java.security.Key;
 import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.engines.DESedeEngine;
-import org.bouncycastle.jce.provider.JCEBlockCipher;
+import org.bouncycastle.jce.provider.BrokenJCEBlockCipher;
 
-public class Z3DESCipher
-  extends JCEBlockCipher
+public class Z3DESCipher extends BrokenJCEBlockCipher
 {
   public Z3DESCipher()
   {
