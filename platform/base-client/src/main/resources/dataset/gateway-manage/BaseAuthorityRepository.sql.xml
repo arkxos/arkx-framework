@@ -7,7 +7,7 @@
     <sql id="BaseAuthorityRepository_selectAllAuthorityResource">
         <value>
             <![CDATA[
-                SELECT
+SELECT
 	a.authority_id,
 	a.authority,
 	menu.path,

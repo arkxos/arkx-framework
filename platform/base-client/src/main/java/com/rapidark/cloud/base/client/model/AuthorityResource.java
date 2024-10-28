@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 @Data
 public class AuthorityResource implements Serializable {
+
     private static final long serialVersionUID = -320031660125425711L;
 
     /**
