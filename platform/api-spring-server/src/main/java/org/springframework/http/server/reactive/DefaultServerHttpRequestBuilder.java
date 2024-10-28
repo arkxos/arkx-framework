@@ -38,6 +38,9 @@ import org.springframework.util.StringUtils;
  * @TODO 修复writableHttpHeaders，但headers原始是ReadOnly导致不可写的问题
  *       后期等spring官方修复版本更新后，删除此类
  *       修复代码见77行
+ *       详见：
+ *       https://github.com/spring-projects/spring-framework/issues/33795
+ *       https://github.com/spring-projects/spring-framework/commit/ef77b4064fe0cc6da3986059cbeac3f471a8fd92
  * Package-private default implementation of {@link ServerHttpRequest.Builder}.
  *
  * @author Rossen Stoyanchev
