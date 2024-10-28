@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 public enum Status {
 
-	ENABLED(1), DISABLED(2), DELETED(3), LOCKED(4);
+	DELETED(0), ENABLED(1), DISABLED(2), LOCKED(3), UPDATING(4);
 
 	private int code;
 

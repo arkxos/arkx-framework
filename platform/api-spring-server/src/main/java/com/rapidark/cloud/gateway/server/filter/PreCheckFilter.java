@@ -4,6 +4,7 @@ import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.gateway.server.util.ReactiveWebUtils;
 import com.rapidark.framework.common.constants.ErrorCode;
 import com.rapidark.cloud.gateway.server.exception.JsonAccessDeniedHandler;
+import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -47,10 +48,10 @@ public class PreCheckFilter implements WebFilter {
                 // 未公开
                 return accessDeniedHandler.handle(exchange, new AccessDeniedException(ErrorCode.ACCESS_DENIED_NOT_OPEN.getMessage()));
             }
-            if (STATUS_0.equals(resource.getStatus().toString())) {
+            if (resource.getStatus() == Status.DISABLED.getCode()) {
                 // 禁用
                 return accessDeniedHandler.handle(exchange, new AccessDeniedException(ErrorCode.ACCESS_DENIED_DISABLED.getMessage()));
-            } else if (STATUS_2.equals(resource.getStatus().toString())) {
+            } else if (resource.getStatus()== Status.UPDATING.getCode()) {
                 // 维护中
                 return accessDeniedHandler.handle(exchange, new AccessDeniedException(ErrorCode.ACCESS_DENIED_UPDATING.getMessage()));
             }

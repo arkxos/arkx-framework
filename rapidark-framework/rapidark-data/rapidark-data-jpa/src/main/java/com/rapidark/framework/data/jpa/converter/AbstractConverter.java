@@ -55,7 +55,6 @@ public abstract class AbstractConverter<S, D, ID> implements ConverterEx<S, D, I
         this.assemblers = assemblers;
     }
 
-
     @Override
     public D convert(S source) {
         if (source == null) {

@@ -9,6 +9,7 @@ import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.framework.common.constants.QueueConstants;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
+import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,7 @@ public class ResourceScanHandler {
             while (iterator.hasNext()) {
                 Map map = (Map) iterator.next();
                 try {
+                    map.put("status", Status.codeOf(Integer.parseInt(map.get("status").toString())));
                     BaseApi api = BeanConvertUtils.mapToObject(map, BaseApi.class);
                     codes.add(api.getApiCode());
                     BaseApi save = baseApiService.getApiByCode(api.getApiCode());

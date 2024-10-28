@@ -28,6 +28,7 @@ import java.util.Map;
 @Slf4j
 @Service
 public class ApiServiceImpl implements ApiService {
+
     @Override
     public void sync(Config sourceConfig, Config targetConfig, Map<String, GatewayRoute> sourceRoutesMap, Map<String, GatewayRoute> targetRoutesMap) {
         //源api

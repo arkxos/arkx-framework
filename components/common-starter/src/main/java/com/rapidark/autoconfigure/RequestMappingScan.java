@@ -194,6 +194,7 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
             api.put("serviceId", serviceId);
             api.put("contentType", mediaTypes);
             api.put("isAuth", isAuth);
+            api.put("status", "1");
             list.add(api);
         }
         Map<String, Object> resource = Maps.newHashMap();
