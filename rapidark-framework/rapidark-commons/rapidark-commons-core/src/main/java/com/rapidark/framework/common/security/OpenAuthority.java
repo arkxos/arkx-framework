@@ -23,7 +23,7 @@ public final class OpenAuthority implements GrantedAuthority {
     /**
      * 权限Id
      */
-    private String authorityId;
+    private Long authorityId;
     /**
      * 权限标识
      */
@@ -65,7 +65,7 @@ public final class OpenAuthority implements GrantedAuthority {
         this.expireTime = expireTime;
     }
 
-    public OpenAuthority(String authorityId, String authority, Date expireTime, String owner) {
+    public OpenAuthority(Long authorityId, String authority, Date expireTime, String owner) {
         this.authorityId = authorityId;
         this.authority = authority;
         this.expireTime = expireTime;
@@ -108,11 +108,11 @@ public final class OpenAuthority implements GrantedAuthority {
         return this.authority;
     }
 
-    public String getAuthorityId() {
+    public Long getAuthorityId() {
         return authorityId;
     }
 
-    public void setAuthorityId(String authorityId) {
+    public void setAuthorityId(Long authorityId) {
         this.authorityId = authorityId;
     }
 

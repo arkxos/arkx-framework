@@ -197,7 +197,7 @@ public class BaseUserService extends BaseService<BaseUser, Long, BaseUserReposit
                 // 用户角色详情
                 roles.add(roleMap);
                 // 加入角色标识
-                OpenAuthority authority = new OpenAuthority(role.getRoleId().toString(), OpenSecurityConstants.AUTHORITY_PREFIX_ROLE + role.getRoleCode(), null, "role");
+                OpenAuthority authority = new OpenAuthority(role.getRoleId(), OpenSecurityConstants.AUTHORITY_PREFIX_ROLE + role.getRoleCode(), null, "role");
                 authorities.add(authority);
 
                 // 查询角色拥有的权限
