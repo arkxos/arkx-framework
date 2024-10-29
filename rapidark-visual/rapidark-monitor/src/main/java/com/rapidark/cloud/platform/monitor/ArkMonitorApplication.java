@@ -28,10 +28,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableAdminServer
 @EnableDiscoveryClient
 @SpringBootApplication
-public class PigMonitorApplication {
+public class ArkMonitorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PigMonitorApplication.class, args);
+		SpringApplication.run(ArkMonitorApplication.class, args);
 	}
 
 }

@@ -1,6 +1,6 @@
-com.pig4cloud.pig.admin.api.feign.RemoteClientDetailsService
-com.pig4cloud.pig.admin.api.feign.RemoteDictService
-com.pig4cloud.pig.admin.api.feign.RemoteLogService
-com.pig4cloud.pig.admin.api.feign.RemoteParamService
-com.pig4cloud.pig.admin.api.feign.RemoteTokenService
-com.pig4cloud.pig.admin.api.feign.RemoteUserService
+com.rapidark.cloud.platform.admin.api.feign.RemoteClientDetailsService
+com.rapidark.cloud.platform.admin.api.feign.RemoteDictService
+com.rapidark.cloud.platform.admin.api.feign.RemoteLogService
+com.rapidark.cloud.platform.admin.api.feign.RemoteParamService
+com.rapidark.cloud.platform.admin.api.feign.RemoteTokenService
+com.rapidark.cloud.platform.admin.api.feign.RemoteUserService

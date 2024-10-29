@@ -7,9 +7,9 @@ server:
 db:
   num: 1
   user: ${MYSQL_USER:root}
-  password: ${MYSQL_PWD:root}
+  password: ${MYSQL_PWD:123456}
   url:
-    0: jdbc:mysql://${MYSQL_HOST:pig-mysql}:${MYSQL_PORT:3306}/${MYSQL_DB:pig_config}?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+    0: jdbc:mysql://${MYSQL_HOST:rapidark-mysql}:${MYSQL_PORT:3306}/${MYSQL_DB:rapidark_cloud10_config}?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
   pool:
     config:
       connectionTimeout: 30000
@@ -36,7 +36,7 @@ spring:
   boot: # 接入 spring boot admin
     admin:
       client:
-        url: http://pig-monitor:5001
+        url: http://rapidark-monitor:5001
         username: pig
         password: pig
         instance:

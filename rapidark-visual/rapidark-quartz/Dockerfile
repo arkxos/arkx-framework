@@ -1,8 +1,8 @@
 FROM registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/java:21-anolis
 
-WORKDIR /pig-quartz
+WORKDIR /rapidark-quartz
 
-ARG JAR_FILE=target/pig-quartz.jar
+ARG JAR_FILE=target/rapidark-quartz.jar
 
 COPY ${JAR_FILE} app.jar
 

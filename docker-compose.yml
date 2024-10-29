@@ -1,102 +1,102 @@
 version: '3'
 services:
-  pig-mysql:
+  rapidark-mysql:
     build:
       context: ./db
     environment:
       MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: root
     restart: always
-    container_name: pig-mysql
-    image: pig-mysql
+    container_name: rapidark-mysql
+    image: rapidark-mysql
     ports:
       - 33306:3306
     networks:
       - spring_cloud_default
 
-  pig-redis:
+  rapidark-redis:
     image: registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/redis
     ports:
       - 36379:6379
     restart: always
-    container_name: pig-redis
-    hostname: pig-redis
+    container_name: rapidark-redis
+    hostname: rapidark-redis
     networks:
       - spring_cloud_default
 
-  pig-register:
+  rapidark-register:
     build:
-      context: ./pig-register
+      context: ./rapidark-register
     restart: always
     ports:
       - 8848:8848
       - 9848:9848
-    container_name: pig-register
-    hostname: pig-register
-    image: pig-register
+    container_name: rapidark-register
+    hostname: rapidark-register
+    image: rapidark-register
     networks:
       - spring_cloud_default
 
-  pig-gateway:
+  rapidark-gateway:
     build:
-      context: ./pig-gateway
+      context: ./rapidark-gateway
     restart: always
     ports:
       - 9999:9999
-    container_name: pig-gateway
-    hostname: pig-gateway
-    image: pig-gateway
+    container_name: rapidark-gateway
+    hostname: rapidark-gateway
+    image: rapidark-gateway
     networks:
       - spring_cloud_default
 
-  pig-auth:
+  rapidark-auth:
     build:
-      context: ./pig-auth
+      context: ./rapidark-auth
     restart: always
-    container_name: pig-auth
-    hostname: pig-auth
-    image: pig-auth
+    container_name: rapidark-auth
+    hostname: rapidark-auth
+    image: rapidark-auth
     networks:
       - spring_cloud_default
 
-  pig-upms:
+  rapidark-upms:
     build:
-      context: ./pig-upms/pig-upms-biz
+      context: ./rapidark-upms/rapidark-upms-biz
     restart: always
-    container_name: pig-upms
-    hostname: pig-upms
-    image: pig-upms
+    container_name: rapidark-upms
+    hostname: rapidark-upms
+    image: rapidark-upms
     networks:
       - spring_cloud_default
 
-  pig-monitor:
+  rapidark-monitor:
     build:
-      context: ./pig-visual/pig-monitor
+      context: ./rapidark-visual/rapidark-monitor
     restart: always
     ports:
       - 5001:5001
-    container_name: pig-monitor
-    hostname: pig-monitor
-    image: pig-monitor
+    container_name: rapidark-monitor
+    hostname: rapidark-monitor
+    image: rapidark-monitor
     networks:
       - spring_cloud_default
 
-  pig-codegen:
+  rapidark-codegen:
     build:
-      context: ./pig-visual/pig-codegen
+      context: ./rapidark-visual/rapidark-codegen
     restart: always
-    container_name: pig-codegen
-    hostname: pig-codegen
-    image: pig-codegen
+    container_name: rapidark-codegen
+    hostname: rapidark-codegen
+    image: rapidark-codegen
     networks:
       - spring_cloud_default
 
-  pig-quartz:
+  rapidark-quartz:
     build:
-      context: ./pig-visual/pig-quartz
+      context: ./rapidark-visual/rapidark-quartz
     restart: always
-    image: pig-quartz
-    container_name: pig-quartz
+    image: rapidark-quartz
+    container_name: rapidark-quartz
     networks:
       - spring_cloud_default
 

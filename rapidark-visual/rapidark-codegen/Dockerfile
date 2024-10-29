@@ -1,8 +1,8 @@
 FROM registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/java:21-anolis
 
-WORKDIR /pig-codegen
+WORKDIR /rapidark-codegen
 
-ARG JAR_FILE=target/pig-codegen.jar
+ARG JAR_FILE=target/rapidark-codegen.jar
 
 COPY ${JAR_FILE} app.jar
 

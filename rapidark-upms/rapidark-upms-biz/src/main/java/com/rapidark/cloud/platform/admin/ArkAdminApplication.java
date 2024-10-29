@@ -38,10 +38,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnablePigResourceServer
 @EnableDiscoveryClient
 @SpringBootApplication
-public class PigAdminApplication {
+public class ArkAdminApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PigAdminApplication.class, args);
+		SpringApplication.run(ArkAdminApplication.class, args);
 	}
 
 }

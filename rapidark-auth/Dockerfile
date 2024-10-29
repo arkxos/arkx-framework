@@ -1,8 +1,8 @@
 FROM registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/java:21-anolis
 
-WORKDIR /pig-auth
+WORKDIR /rapidark-auth
 
-ARG JAR_FILE=target/pig-auth.jar
+ARG JAR_FILE=target/rapidark-auth.jar
 
 COPY ${JAR_FILE} app.jar
 

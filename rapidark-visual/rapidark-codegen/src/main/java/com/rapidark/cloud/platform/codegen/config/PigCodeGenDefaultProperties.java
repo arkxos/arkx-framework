@@ -33,7 +33,7 @@ public class PigCodeGenDefaultProperties implements InitializingBean {
 	/**
 	 * 生成代码的包名
 	 */
-	private String packageName = "com.pig4cloud.pig";
+	private String packageName = "com.rapidark.cloud.platform";
 
 	/**
 	 * 生成代码的版本
@@ -53,7 +53,7 @@ public class PigCodeGenDefaultProperties implements InitializingBean {
 	/**
 	 * 生成代码的前端路径
 	 */
-	private String frontendPath = "pig-ui";
+	private String frontendPath = "rapidark-ui";
 
 	/**
 	 * 生成代码的作者

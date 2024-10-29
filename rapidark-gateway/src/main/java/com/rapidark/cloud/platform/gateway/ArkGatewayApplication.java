@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-package com.rapidark.cloud.platform.auth;
+package com.rapidark.cloud.platform.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import com.rapidark.cloud.platform.common.feign.annotation.EnablePigFeignClients;
-
 /**
  * @author lengleng
- * @date 2018年06月21日 认证授权中心
+ * @date 2018年06月21日
+ * <p>
+ * 网关应用
  */
-@EnablePigFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-public class PigAuthApplication {
+public class ArkGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PigAuthApplication.class, args);
+		SpringApplication.run(ArkGatewayApplication.class, args);
 	}
 
 }

@@ -14,8 +14,8 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         with:
-          source-repo: "git@github.com:pig-mesh/pig.git"
-          destination-repo: "git@gitcode.com:pig-mesh/pig.git"
+          source-repo: "git@github.com:rapidark-mesh/pig.git"
+          destination-repo: "git@gitcode.com:rapidark-mesh/pig.git"
   gitlink:
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +23,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         with:
-          source-repo: "git@github.com:pig-mesh/pig.git"
+          source-repo: "git@github.com:rapidark-mesh/pig.git"
           destination-repo: "git@code.gitlink.org.cn:lengleng/pig.git"
   gitee:
     runs-on: ubuntu-latest
@@ -34,5 +34,5 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         with:
-          source-repo: "git@github.com:pig-mesh/pig.git"
+          source-repo: "git@github.com:rapidark-mesh/pig.git"
           destination-repo: "git@gitee.com:log4j/pig.git"

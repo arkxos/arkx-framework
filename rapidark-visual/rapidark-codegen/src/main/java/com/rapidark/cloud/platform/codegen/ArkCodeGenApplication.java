@@ -36,10 +36,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 @EnablePigResourceServer
 @SpringBootApplication
-public class PigCodeGenApplication {
+public class ArkCodeGenApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PigCodeGenApplication.class, args);
+		SpringApplication.run(ArkCodeGenApplication.class, args);
 	}
 
 }

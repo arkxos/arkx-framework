@@ -17,10 +17,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnablePigResourceServer
 @EnableDiscoveryClient
 @SpringBootApplication
-public class PigQuartzApplication {
+public class ArkQuartzApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PigQuartzApplication.class, args);
+		SpringApplication.run(ArkQuartzApplication.class, args);
 	}
 
 }

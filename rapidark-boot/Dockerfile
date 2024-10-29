@@ -1,8 +1,8 @@
 FROM registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/java:21-anolis
 
-WORKDIR /pig-boot
+WORKDIR /rapidark-boot
 
-ARG JAR_FILE=target/pig-boot.jar
+ARG JAR_FILE=target/rapidark-boot.jar
 
 COPY ${JAR_FILE} app.jar
 
