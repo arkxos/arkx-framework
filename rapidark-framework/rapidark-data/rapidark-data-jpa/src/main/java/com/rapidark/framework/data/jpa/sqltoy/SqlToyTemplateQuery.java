@@ -3,6 +3,8 @@ package com.rapidark.framework.data.jpa.sqltoy;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,11 +17,13 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
+import com.rapidark.framework.data.jpa.entity.Status;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.plugins.TypeHandler;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.domain.Page;
@@ -204,13 +208,39 @@ public class SqlToyTemplateQuery implements RepositoryQuery {
 	private boolean canBindParameter(Parameter parameter) {
         return parameter.isBindable();
     }
-	
+
+	private void bindTypeHandler() {
+		if(sqlToyLazyDao.getSqlToyContext().getTypeHandler() != null) {
+			return;
+		}
+		sqlToyLazyDao.getSqlToyContext().setTypeHandler(new TypeHandler() {
+
+			@Override
+			public boolean setValue(PreparedStatement pst, int paramIndex, int jdbcType, Object value) throws SQLException {
+				return false;
+			}
+
+			@Override
+			public Object toJavaType(String javaTypeName, Class genericType, Object jdbcValue) throws Exception {
+				if(jdbcValue == null) {
+					return null;
+				}
+				if(Status.class.getName().equals(javaTypeName)) {
+					return Status.codeOf((int)jdbcValue);
+				}
+				return jdbcValue;
+			}
+		});
+	}
+
 	private <T> List<T> queryData(String namedQueryName, Map<String, Object> paramsMap, Class<T> clazz) {
+		bindTypeHandler();
 		List<T> result = sqlToyLazyDao.findBySql(namedQueryName, paramsMap, clazz);
 		return result;
 	}
 	
 	private <T> org.sagacity.sqltoy.model.Page<T> queryPagedData(String namedQueryName, Pageable pageable, Map<String, Object> paramsMap, Class<T> clazz) {
+		bindTypeHandler();
 		org.sagacity.sqltoy.model.Page<T> pageModel = new org.sagacity.sqltoy.model.Page<>();
 		pageModel.setPageNo(pageable.getPageNumber() + 1);
 		pageModel.setPageSize(pageable.getPageSize());
