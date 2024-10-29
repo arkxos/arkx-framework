@@ -5,12 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <artifactId>rapidark-parent</artifactId>
         <version>${revision}</version>
+        <relativePath>../rapidark-cloud2</relativePath>
     </parent>
 
-    <groupId>com.rapidark</groupId>
+    <groupId>com.rapidark2</groupId>
     <artifactId>rapidark-os</artifactId>
     <packaging>pom</packaging>
 

@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <artifactId>services</artifactId>
         <version>${revision}</version>
     </parent>
@@ -13,17 +13,17 @@
     <description>任务调度服务器</description>
     <dependencies>
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>common-starter</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>task-client</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>msg-client</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
             <artifactId>base-client</artifactId>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <version>${revision}</version>
         </dependency>
         <dependency>

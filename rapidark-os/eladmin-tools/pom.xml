@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rapidark-os</artifactId>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -15,7 +15,7 @@
     <dependencies>
         <!-- 同时需要common模块和logging模块只需要引入logging模块即可 -->
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>eladmin-logging</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -41,7 +41,7 @@
             <version>${alipay.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.framework</groupId>
+            <groupId>com.rapidark2.framework</groupId>
             <artifactId>rapidark-data-jpa</artifactId>
             <version>10.0.0-SNAPSHOT</version>
             <scope>compile</scope>

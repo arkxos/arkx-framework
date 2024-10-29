@@ -4,19 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>services</artifactId>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rapidark</groupId>
+    <groupId>com.rapidark2</groupId>
     <artifactId>comment-server</artifactId>
 
     <dependencies>
         <!-- 引入公共包,需发布到本地仓库或私服 -->
         <dependency>
             <artifactId>common-starter</artifactId>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

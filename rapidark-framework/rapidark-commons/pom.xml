@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark.framework</groupId>
+        <groupId>com.rapidark2.framework</groupId>
         <artifactId>rapidark-framework</artifactId>
         <version>${revision}</version>
     </parent>
@@ -49,17 +49,17 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.framework</groupId>
+            <groupId>com.rapidark2.framework</groupId>
             <artifactId>rapidark-preloader</artifactId>
             <version>${revision}</version>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.rapidark</groupId>-->
+<!--            <groupId>com.rapidark2</groupId>-->
 <!--            <artifactId>rapidark-common</artifactId>-->
 <!--            <version>${revision}</version>-->
 <!--        </dependency>-->
 <!--        <dependency>-->
-<!--            <groupId>com.rapidark</groupId>-->
+<!--            <groupId>com.rapidark2</groupId>-->
 <!--            <artifactId>rapidark-data-jpa-sqltoy</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--        </dependency>-->

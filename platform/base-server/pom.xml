@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <artifactId>platform</artifactId>
         <version>${revision}</version>
     </parent>
@@ -17,12 +17,12 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>common-starter</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>base-client</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -31,7 +31,7 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>rapidark-npm</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -88,7 +88,7 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.framework</groupId>
+            <groupId>com.rapidark2.framework</groupId>
             <artifactId>rapidark-ip2region-starter</artifactId>
             <version>${revision}</version>
             <scope>compile</scope>

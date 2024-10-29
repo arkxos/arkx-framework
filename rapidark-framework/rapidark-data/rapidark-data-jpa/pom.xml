@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.rapidark.framework</groupId>
+		<groupId>com.rapidark2.framework</groupId>
 		<artifactId>rapidark-data</artifactId>
 		<version>${revision}</version>
 	</parent>
@@ -47,7 +47,7 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-web</artifactId>-->
 <!--		</dependency>-->
-		<!-- <dependency> <groupId>com.rapidark</groupId> <artifactId>rapidark-framework</artifactId> 
+		<!-- <dependency> <groupId>com.rapidark2</groupId> <artifactId>rapidark-framework</artifactId>
 			<version>9.2.0</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,7 +86,7 @@
 			<version>${commons-beanutils.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.rapidark.framework</groupId>
+			<groupId>com.rapidark2.framework</groupId>
 			<artifactId>rapidark-commons-core</artifactId>
 			<version>${revision}</version>
 		</dependency>

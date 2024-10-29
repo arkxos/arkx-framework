@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <artifactId>components</artifactId>
         <version>${revision}</version>
     </parent>
@@ -28,7 +28,7 @@
             <artifactId>redisson-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.framework</groupId>
+            <groupId>com.rapidark2.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>

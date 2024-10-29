@@ -4,8 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rapidark-parent</artifactId>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <version>${revision}</version>
+        <relativePath>../rapidark-cloud2</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

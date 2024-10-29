@@ -40,7 +40,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>base-client</artifactId>
             <version>${revision}</version>
         </dependency>

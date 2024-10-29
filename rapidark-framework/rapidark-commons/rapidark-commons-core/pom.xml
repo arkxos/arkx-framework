@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark.framework</groupId>
+        <groupId>com.rapidark2.framework</groupId>
         <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
@@ -50,7 +50,7 @@
             <version>${cosid.version}</version>
         </dependency>
         <!--        <dependency>-->
-        <!--            <groupId>com.rapidark.framework</groupId>-->
+        <!--            <groupId>com.rapidark2.framework</groupId>-->
         <!--            <artifactId>rapidark-framework</artifactId>-->
         <!--            <version>${revision}</version>-->
         <!--        </dependency>-->
@@ -793,7 +793,7 @@
         </dependency>
 
 
-        <!-- <dependency> <groupId>com.rapidark</groupId> <artifactId>rapidark-preloader</artifactId>
+        <!-- <dependency> <groupId>com.rapidark2</groupId> <artifactId>rapidark-preloader</artifactId>
             <version>${revision}</version> </dependency> -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -1572,7 +1572,7 @@
             <artifactId>javassist</artifactId>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.rapidark</groupId>-->
+<!--            <groupId>com.rapidark2</groupId>-->
 <!--            <artifactId>rapidark-data-jpa-sqltoy</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--        </dependency>-->

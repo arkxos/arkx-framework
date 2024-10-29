@@ -5,22 +5,22 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rapidark</groupId>
+    <groupId>com.rapidark2</groupId>
     <artifactId>rapidark-parent</artifactId>
     <version>${revision}</version>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>rapidark-framework</module>
-        <module>components</module>
+        <module>../rapidark-framework</module>
+        <module>../components</module>
 
-        <module>platform</module>
-        <module>services</module>
-        <module>migration</module>
-        <module>rapidark-os</module>
-        <module>rapidark-gateway-parent</module>
-        <module>rapidark-gateway-parent2</module>
+        <module>../platform</module>
+        <module>../services</module>
+        <module>../migration</module>
+        <module>../rapidark-os</module>
+        <module>../rapidark-gateway-parent</module>
+        <module>../rapidark-gateway-parent2</module>
     </modules>
 
     <properties>

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.rapidark</groupId>
+        <groupId>com.rapidark2</groupId>
         <artifactId>platform</artifactId>
         <version>${revision}</version>
     </parent>
@@ -51,7 +51,7 @@
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.framework</groupId>
+            <groupId>com.rapidark2.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
             <exclusions>
@@ -82,12 +82,12 @@
             <artifactId>caffeine</artifactId>
         </dependency>
        <!-- <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>common-starter</artifactId>
             <version>${revision}</version>
         </dependency>-->
         <dependency>
-            <groupId>com.rapidark</groupId>
+            <groupId>com.rapidark2</groupId>
             <artifactId>base-client</artifactId>
             <version>${revision}</version>
         </dependency>
