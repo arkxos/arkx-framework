@@ -18,7 +18,8 @@
                     base_role.update_time
                     FROM base_role_user
               INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
-              WHERE user_id = :userId AND status = 1
+              WHERE user_id = :userId AND base_role_user.status = 1
+                AND base_role.status = 1
             ]]>
         </value>
     </sql>
@@ -31,7 +32,9 @@
                 base_role.role_id
             FROM base_role_user
             INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
-            WHERE user_id = :userId AND status = 1
+            WHERE user_id = :userId
+              AND base_role_user.status = 1
+              AND base_role.status = 1
             ]]>
         </value>
     </sql>
