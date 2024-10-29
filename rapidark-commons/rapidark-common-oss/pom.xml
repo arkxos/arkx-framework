@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig-common</artifactId>
+        <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-common-oss</artifactId>
+    <artifactId>rapidark-common-oss</artifactId>
     <packaging>jar</packaging>
 
     <description>pig 文件系统依赖</description>

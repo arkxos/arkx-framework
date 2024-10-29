@@ -20,11 +20,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>rapidark-cloud</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-boot</artifactId>
+    <artifactId>rapidark-boot</artifactId>
     <packaging>jar</packaging>
 
     <description>pig 单体版本启动</description>
@@ -33,31 +33,31 @@
         <!--必备：认证中心模块-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-auth</artifactId>
+            <artifactId>rapidark-auth</artifactId>
             <version>${revision}</version>
         </dependency>
         <!--必备：用户管理模块-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-upms-biz</artifactId>
+            <artifactId>rapidark-upms-biz</artifactId>
             <version>${revision}</version>
         </dependency>
         <!--可选：代码生成模块-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-codegen</artifactId>
+            <artifactId>rapidark-codegen</artifactId>
             <version>${revision}</version>
         </dependency>
         <!--可选：定时任务模块-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-quartz</artifactId>
+            <artifactId>rapidark-quartz</artifactId>
             <version>${revision}</version>
         </dependency>
         <!--安全模块-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-security</artifactId>
+            <artifactId>rapidark-common-security</artifactId>
         </dependency>
         <!-- 接口文档UI  -->
         <dependency>
@@ -76,7 +76,7 @@
         <!--接口文档-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-swagger</artifactId>
+            <artifactId>rapidark-common-swagger</artifactId>
         </dependency>
         <!--undertow容器-->
         <dependency>

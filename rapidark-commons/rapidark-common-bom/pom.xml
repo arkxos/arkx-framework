@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.rapidark.cloud</groupId>
-    <artifactId>pig-common-bom</artifactId>
+    <artifactId>rapidark-common-bom</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>pig-common-bom</name>
+    <name>rapidark-common-bom</name>
     <url>pig cloud parent</url>
     <description>pig cloud parent</description>
 
@@ -45,57 +45,57 @@
         <dependencies>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-core</artifactId>
+                <artifactId>rapidark-common-core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-datasource</artifactId>
+                <artifactId>rapidark-common-datasource</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-log</artifactId>
+                <artifactId>rapidark-common-log</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-mybatis</artifactId>
+                <artifactId>rapidark-common-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-oss</artifactId>
+                <artifactId>rapidark-common-oss</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-security</artifactId>
+                <artifactId>rapidark-common-security</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-feign</artifactId>
+                <artifactId>rapidark-common-feign</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-swagger</artifactId>
+                <artifactId>rapidark-common-swagger</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-xss</artifactId>
+                <artifactId>rapidark-common-xss</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-excel</artifactId>
+                <artifactId>rapidark-common-excel</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-upms-api</artifactId>
+                <artifactId>rapidark-upms-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

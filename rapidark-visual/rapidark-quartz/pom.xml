@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig-visual</artifactId>
+        <artifactId>rapidark-visual</artifactId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>pig-quartz</artifactId>
+    <artifactId>rapidark-quartz</artifactId>
     <packaging>jar</packaging>
 
     <description>基于quartz后台定时任务模块</description>
@@ -28,17 +28,17 @@
         <!--日志处理-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-log</artifactId>
+            <artifactId>rapidark-common-log</artifactId>
         </dependency>
         <!--feign 处理-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-feign</artifactId>
+            <artifactId>rapidark-common-feign</artifactId>
         </dependency>
         <!--mybatis-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-mybatis</artifactId>
+            <artifactId>rapidark-common-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -52,12 +52,12 @@
         <!--swagger-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-swagger</artifactId>
+            <artifactId>rapidark-common-swagger</artifactId>
         </dependency>
         <!--spring security 、oauth、jwt依赖-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-security</artifactId>
+            <artifactId>rapidark-common-security</artifactId>
         </dependency>
         <!-- quartz 模块 -->
         <dependency>

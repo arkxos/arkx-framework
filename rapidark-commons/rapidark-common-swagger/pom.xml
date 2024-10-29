@@ -23,11 +23,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig-common</artifactId>
+        <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-common-swagger</artifactId>
+    <artifactId>rapidark-common-swagger</artifactId>
     <packaging>jar</packaging>
 
     <description>pig 接口文档</description>
@@ -68,7 +68,7 @@
         </dependency>
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-core</artifactId>
+            <artifactId>rapidark-common-core</artifactId>
         </dependency>
     </dependencies>
 </project>

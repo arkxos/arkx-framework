@@ -22,11 +22,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig-common</artifactId>
+        <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-common-seata</artifactId>
+    <artifactId>rapidark-common-seata</artifactId>
     <packaging>jar</packaging>
 
     <description>pig 分布式事务处理模块</description>
@@ -35,7 +35,7 @@
         <!--核心依赖-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-core</artifactId>
+            <artifactId>rapidark-common-core</artifactId>
         </dependency>
         <!-- seata-->
         <dependency>

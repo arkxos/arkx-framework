@@ -20,27 +20,27 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>rapidark-cloud</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-common</artifactId>
+    <artifactId>rapidark-commons</artifactId>
     <packaging>pom</packaging>
 
     <description>pig 公共聚合模块</description>
 
     <modules>
-        <module>pig-common-bom</module>
-        <module>pig-common-core</module>
-        <module>pig-common-datasource</module>
-        <module>pig-common-log</module>
-        <module>pig-common-mybatis</module>
-        <module>pig-common-oss</module>
-        <module>pig-common-seata</module>
-        <module>pig-common-security</module>
-        <module>pig-common-feign</module>
-        <module>pig-common-swagger</module>
-        <module>pig-common-xss</module>
-        <module>pig-common-excel</module>
+        <module>rapidark-common-bom</module>
+        <module>rapidark-common-core</module>
+        <module>rapidark-common-datasource</module>
+        <module>rapidark-common-log</module>
+        <module>rapidark-common-mybatis</module>
+        <module>rapidark-common-oss</module>
+        <module>rapidark-common-seata</module>
+        <module>rapidark-common-security</module>
+        <module>rapidark-common-feign</module>
+        <module>rapidark-common-swagger</module>
+        <module>rapidark-common-xss</module>
+        <module>rapidark-common-excel</module>
     </modules>
 </project>

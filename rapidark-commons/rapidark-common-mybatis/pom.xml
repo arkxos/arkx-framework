@@ -20,11 +20,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig-common</artifactId>
+        <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-common-mybatis</artifactId>
+    <artifactId>rapidark-common-mybatis</artifactId>
     <packaging>jar</packaging>
 
     <description>pig mybatis 封装</description>
@@ -69,7 +69,7 @@
         </dependency>
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-core</artifactId>
+            <artifactId>rapidark-common-core</artifactId>
         </dependency>
     </dependencies>
 </project>

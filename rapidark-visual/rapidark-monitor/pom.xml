@@ -20,11 +20,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.rapidark.cloud</groupId>
-		<artifactId>pig-visual</artifactId>
+		<artifactId>rapidark-visual</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>pig-monitor</artifactId>
+	<artifactId>rapidark-monitor</artifactId>
 	<packaging>jar</packaging>
 
 	<description>pig 监控模块，基于 spring boot admin</description>

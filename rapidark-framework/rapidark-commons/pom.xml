@@ -55,7 +55,7 @@
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.rapidark2</groupId>-->
-<!--            <artifactId>rapidark-common</artifactId>-->
+<!--            <artifactId>rapidark-commons</artifactId>-->
 <!--            <version>${revision}</version>-->
 <!--        </dependency>-->
 <!--        <dependency>-->

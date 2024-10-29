@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.rapidark.cloud</groupId>
-    <artifactId>pig</artifactId>
+    <artifactId>rapidark-cloud</artifactId>
     <name>${project.artifactId}</name>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -106,12 +106,12 @@
     </dependencies>
 
     <modules>
-        <module>pig-register</module>
-        <module>pig-gateway</module>
-        <module>pig-auth</module>
-        <module>pig-upms</module>
-        <module>pig-common</module>
-        <module>pig-visual</module>
+        <module>rapidark-register</module>
+        <module>rapidark-gateway</module>
+        <module>rapidark-auth</module>
+        <module>rapidark-upms</module>
+        <module>rapidark-commons</module>
+        <module>rapidark-visual</module>
     </modules>
 
     <dependencyManagement>
@@ -119,7 +119,7 @@
             <!--pig 公共版本定义-->
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>pig-common-bom</artifactId>
+                <artifactId>rapidark-common-bom</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -303,7 +303,7 @@
         <profile>
             <id>boot</id>
             <modules>
-                <module>pig-boot</module>
+                <module>rapidark-boot</module>
             </modules>
         </profile>
     </profiles>

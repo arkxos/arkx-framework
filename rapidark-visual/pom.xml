@@ -20,18 +20,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>rapidark-cloud</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-visual</artifactId>
+    <artifactId>rapidark-visual</artifactId>
 
     <description>pig 图形化相关功能</description>
     <packaging>pom</packaging>
 
     <modules>
-        <module>pig-codegen</module>
-        <module>pig-monitor</module>
-        <module>pig-quartz</module>
+        <module>rapidark-codegen</module>
+        <module>rapidark-monitor</module>
+        <module>rapidark-quartz</module>
     </modules>
 </project>

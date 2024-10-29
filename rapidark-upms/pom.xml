@@ -20,17 +20,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.rapidark.cloud</groupId>
-		<artifactId>pig</artifactId>
+		<artifactId>rapidark-cloud</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>pig-upms</artifactId>
+	<artifactId>rapidark-upms</artifactId>
 
 	<description>pig 通用用户权限管理聚合模块</description>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>pig-upms-api</module>
-		<module>pig-upms-biz</module>
+		<module>rapidark-upms-api</module>
+		<module>rapidark-upms-biz</module>
 	</modules>
 </project>

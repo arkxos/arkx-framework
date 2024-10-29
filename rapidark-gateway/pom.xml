@@ -20,11 +20,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>rapidark-cloud</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>pig-gateway</artifactId>
+    <artifactId>rapidark-gateway</artifactId>
     <packaging>jar</packaging>
 
     <description>pig 服务网关，基于 spring cloud gateway</description>
@@ -62,7 +62,7 @@
         <!-- 工具包依赖 -->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>pig-common-core</artifactId>
+            <artifactId>rapidark-common-core</artifactId>
         </dependency>
         <!--接口文档-->
         <dependency>

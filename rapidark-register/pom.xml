@@ -17,14 +17,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rapidark.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>rapidark-cloud</artifactId>
         <version>${revision}</version>
     </parent>
 
 
-    <artifactId>pig-register</artifactId>
+    <artifactId>rapidark-register</artifactId>
     <packaging>jar</packaging>
-    <name>pig-register</name>
+    <name>rapidark-register</name>
     <description>nacos 注册配置中心</description>
 
     <properties>
