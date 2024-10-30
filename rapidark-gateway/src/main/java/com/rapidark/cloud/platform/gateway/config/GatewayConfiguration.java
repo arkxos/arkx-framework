@@ -6,6 +6,9 @@ import com.rapidark.cloud.platform.gateway.handler.GlobalExceptionHandler;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * 网关配置
@@ -32,6 +35,19 @@ public class GatewayConfiguration {
 	@Bean
 	public GlobalExceptionHandler globalExceptionHandler(ObjectMapper objectMapper) {
 		return new GlobalExceptionHandler(objectMapper);
+	}
+
+	@Bean
+	public CorsFilter corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedHeader("*");
+		config.setMaxAge(18000L);
+		config.addAllowedMethod("*");
+		config.addAllowedOriginPattern("*");
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/npm/cdn/**", config);
+		return new CorsFilter(source);
 	}
 
 }

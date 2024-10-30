@@ -70,6 +70,7 @@ public class CDNServlet extends HttpServlet {
 					"/package/"+request.getPath(),
 					resp.getOutputStream());
 		} catch (IllegalArgumentException | FileNotFoundException e) {
+			e.printStackTrace();
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource was not found for provided path '"+req.getPathInfo()+"'");
 		}
 	}

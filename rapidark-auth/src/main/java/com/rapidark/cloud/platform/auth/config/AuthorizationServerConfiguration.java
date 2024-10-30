@@ -91,8 +91,11 @@ public class AuthorizationServerConfiguration {
 				.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)), Customizer.withDefaults());
 
 		AntPathRequestMatcher[] requestMatchers = new AntPathRequestMatcher[] {
-				AntPathRequestMatcher.antMatcher("/token/**"), AntPathRequestMatcher.antMatcher("/actuator/**"),
-				AntPathRequestMatcher.antMatcher("/code/image"), AntPathRequestMatcher.antMatcher("/css/**"),
+				AntPathRequestMatcher.antMatcher("/token/**"),
+				AntPathRequestMatcher.antMatcher("/actuator/**"),
+				AntPathRequestMatcher.antMatcher("/code/image"),
+				AntPathRequestMatcher.antMatcher("/css/**"),
+				AntPathRequestMatcher.antMatcher("/cdn/**"),
 				AntPathRequestMatcher.antMatcher("/error") };
 
 		http.authorizeHttpRequests(authorizeRequests -> {
