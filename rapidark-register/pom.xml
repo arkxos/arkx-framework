@@ -35,31 +35,31 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.rapidark-mesh.nacos</groupId>
+            <groupId>io.github.pig-mesh.nacos</groupId>
             <artifactId>nacos-config</artifactId>
             <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.github.rapidark-mesh.nacos</groupId>
+            <groupId>io.github.pig-mesh.nacos</groupId>
             <artifactId>nacos-naming</artifactId>
             <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.github.rapidark-mesh.nacos</groupId>
+            <groupId>io.github.pig-mesh.nacos</groupId>
             <artifactId>nacos-istio</artifactId>
             <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.github.rapidark-mesh.nacos</groupId>
+            <groupId>io.github.pig-mesh.nacos</groupId>
             <artifactId>nacos-default-plugin-all</artifactId>
             <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.github.rapidark-mesh.nacos</groupId>
+            <groupId>io.github.pig-mesh.nacos</groupId>
             <artifactId>nacos-prometheus</artifactId>
             <version>${nacos.version}</version>
         </dependency>
