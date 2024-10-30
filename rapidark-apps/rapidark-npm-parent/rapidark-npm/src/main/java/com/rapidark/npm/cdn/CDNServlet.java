@@ -7,17 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import com.rapidark.npm.JNPMService;
 import com.rapidark.npm.JNPMSettings;
 import com.rapidark.npm.JNPMUtils;
 import com.rapidark.npm.dm.VersionInfo;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * {@link HttpServlet} to serve resources from NPM package. Format of the request: /cdn/&lt;package&gt;/&lt;file path&gt;

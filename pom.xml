@@ -58,6 +58,9 @@
         <spring.checkstyle.plugin>0.0.43</spring.checkstyle.plugin>
         <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+		<retrofit2.version>2.9.0</retrofit2.version>
+		<okhttp.version>4.9.0</okhttp.version>
+		<jetty.version>9.4.12.v20180830</jetty.version>
     </properties>
 
     <!-- 以下依赖 全局所有的模块都会引入  -->
@@ -111,7 +114,8 @@
         <module>rapidark-auth</module>
         <module>rapidark-upms</module>
         <module>rapidark-commons</module>
-        <module>rapidark-visual</module>
+		<module>rapidark-visual</module>
+		<module>rapidark-apps</module>
     </modules>
 
     <dependencyManagement>
