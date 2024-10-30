@@ -13,6 +13,16 @@
 	<name>JNPM Core Library</name>
 
 	<dependencies>
+		<!--注册中心客户端-->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		<!--配置中心客户端-->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.squareup.retrofit2</groupId>
 			<artifactId>retrofit</artifactId>
@@ -92,88 +102,138 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
         </dependency>
-    </dependencies>
-	<build>
-		<finalName>jnpm</finalName>
-		<testResources>
-			<testResource>
-				<filtering>false</filtering>
-				<directory>src/test/resources</directory>
-			</testResource>
-			<testResource>
-				<filtering>false</filtering>
-				<directory>src/test/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</testResource>
-		</testResources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.2</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<!-- <addClasspath>true</addClasspath> -->
-							<mainClass>com.rapidark.npm.cli.JNPM</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.4</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<finalName>jnpm-uber</finalName>
-				</configuration>
-			</plugin>
-			<plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty.version}</version>
-                <configuration>
-                    <!-- <contextXml>${project.build.testOutputDirectory}/jetty-context.xml</contextXml>
-                    <jettyXml>src/main/webapp/WEB-INF/jetty.xml</jettyXml>
-                    <systemProperties>
-                        <systemProperty>
-                            <name>orienteer.loader.repository.local</name>
-                            <value>${settings.localRepository}</value>
-                        </systemProperty>
-                    </systemProperties> -->
-                    <supportedPackagings>
-                        <supportedPackaging>jar</supportedPackaging>
-                    </supportedPackagings>
-                    <useProvidedScope>true</useProvidedScope>
-                    <useTestScope>true</useTestScope>
-                    <webApp>
-                        <descriptor>src/test/resources/web.xml</descriptor>
-                        <resourceBase>src/test/resources</resourceBase>
-                        <contextPath>/</contextPath>
-                        <containerIncludeJarPattern>^$</containerIncludeJarPattern>
-                        <webInfIncludeJarPattern>^$</webInfIncludeJarPattern>
-                    </webApp>
-                    <httpConnector>
-                        <name>org.eclipse.jetty.server.nio.SelectChannelConnector</name>
-                        <port>8080</port>
-                        <idleTimeout>3600000</idleTimeout>
-                    </httpConnector>
-                </configuration>
-            </plugin>
-		</plugins>
-	</build>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-commons</artifactId>-->
+<!--		</dependency>-->
+		<!--使用Undertow 替换内置 Tomcat-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-commons</artifactId>
+		</dependency>
+	</dependencies>
+
+<!--	<build>-->
+<!--		<finalName>jnpm</finalName>-->
+<!--		<testResources>-->
+<!--			<testResource>-->
+<!--				<filtering>false</filtering>-->
+<!--				<directory>src/test/resources</directory>-->
+<!--			</testResource>-->
+<!--			<testResource>-->
+<!--				<filtering>false</filtering>-->
+<!--				<directory>src/test/java</directory>-->
+<!--				<includes>-->
+<!--					<include>**</include>-->
+<!--				</includes>-->
+<!--				<excludes>-->
+<!--					<exclude>**/*.java</exclude>-->
+<!--				</excludes>-->
+<!--			</testResource>-->
+<!--		</testResources>-->
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-jar-plugin</artifactId>-->
+<!--				<version>3.2.2</version>-->
+<!--				<configuration>-->
+<!--					<archive>-->
+<!--						<manifest>-->
+<!--							&lt;!&ndash; <addClasspath>true</addClasspath> &ndash;&gt;-->
+<!--							<mainClass>com.rapidark.npm.cli.JNPM</mainClass>-->
+<!--						</manifest>-->
+<!--					</archive>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-shade-plugin</artifactId>-->
+<!--				<version>3.2.4</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>package</phase>-->
+<!--						<goals>-->
+<!--							<goal>shade</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--				<configuration>-->
+<!--					<finalName>jnpm-uber</finalName>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>jetty-maven-plugin</artifactId>-->
+<!--                <version>${jetty.version}</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; <contextXml>${project.build.testOutputDirectory}/jetty-context.xml</contextXml>-->
+<!--                    <jettyXml>src/main/webapp/WEB-INF/jetty.xml</jettyXml>-->
+<!--                    <systemProperties>-->
+<!--                        <systemProperty>-->
+<!--                            <name>orienteer.loader.repository.local</name>-->
+<!--                            <value>${settings.localRepository}</value>-->
+<!--                        </systemProperty>-->
+<!--                    </systemProperties> &ndash;&gt;-->
+<!--                    <supportedPackagings>-->
+<!--                        <supportedPackaging>jar</supportedPackaging>-->
+<!--                    </supportedPackagings>-->
+<!--                    <useProvidedScope>true</useProvidedScope>-->
+<!--                    <useTestScope>true</useTestScope>-->
+<!--                    <webApp>-->
+<!--                        <descriptor>src/test/resources/web.xml</descriptor>-->
+<!--                        <resourceBase>src/test/resources</resourceBase>-->
+<!--                        <contextPath>/</contextPath>-->
+<!--                        <containerIncludeJarPattern>^$</containerIncludeJarPattern>-->
+<!--                        <webInfIncludeJarPattern>^$</webInfIncludeJarPattern>-->
+<!--                    </webApp>-->
+<!--                    <httpConnector>-->
+<!--                        <name>org.eclipse.jetty.server.nio.SelectChannelConnector</name>-->
+<!--                        <port>8080</port>-->
+<!--                        <idleTimeout>3600000</idleTimeout>-->
+<!--                    </httpConnector>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--		</plugins>-->
+<!--	</build>-->
+
+
+	<profiles>
+		<profile>
+			<id>boot</id>
+		</profile>
+		<profile>
+			<id>cloud</id>
+			<activation>
+				<!-- 默认环境 -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

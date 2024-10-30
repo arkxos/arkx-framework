@@ -46,7 +46,8 @@ public class ImageCodeEndpoint {
 
 		String result = captcha.text();
 		redisTemplate.opsForValue()
-			.set(CacheConstants.DEFAULT_CODE_KEY + randomStr, result, SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
+			.set(CacheConstants.DEFAULT_CODE_KEY + randomStr, result,
+					SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
 		// 转换流信息写出
 		captcha.out(response.getOutputStream());
 	}
