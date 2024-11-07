@@ -1,5 +1,6 @@
 package com.rapidark.framework.util.task;
 
+import com.rapidark.framework.util.task.execute.BaseTaskExecutor;
 import com.rapidark.framework.util.task.util.Assert;
 import com.rapidark.framework.util.task.util.Utils;
 
@@ -79,16 +80,16 @@ public final class TaskGroup {
         executor.submit(item, this);
     }
 
-    public Builder buildItem(Executor executor) {
-        Assert.notNull(executor);
+    public Builder buildItem(TaskRunner taskRunner) {
+        Assert.notNull(taskRunner);
 
-        return new Builder(executor, this);
+        return new Builder(taskRunner, this);
     }
 
-    public Item newItem(Executor executor) {
-        Assert.notNull(executor);
+    public Item newItem(TaskRunner taskRunner) {
+        Assert.notNull(taskRunner);
 
-        return new Builder(executor, this).build();
+        return new Builder(taskRunner, this).build();
     }
 
     public String getName() {
@@ -107,8 +108,8 @@ public final class TaskGroup {
 
         private TaskGroup taskGroup;
 
-        private Item(String type, String id, Executor executor, TaskGroup taskGroup) {
-            super(type, id, executor);
+        private Item(String type, String id, TaskRunner taskRunner, TaskGroup taskGroup) {
+            super(type, id, taskRunner);
             this.taskGroup = taskGroup;
         }
 
@@ -126,25 +127,25 @@ public final class TaskGroup {
 
         private final TaskGroup taskGroup;
 
-        private Builder(Executor executor, TaskGroup taskGroup) {
-            super(executor);
+        private Builder(TaskRunner taskRunner, TaskGroup taskGroup) {
+            super(taskRunner);
             this.taskGroup = taskGroup;
         }
 
         @Override
         public Item build() {
-            Item item = new Item(this.type, this.id, executor, taskGroup);
+            Item item = new Item(this.type, this.id, taskRunner, taskGroup);
             item.setProgress(this.progress);
             item.setCallback(this.callback);
             return item;
         }
     }
 
-    protected static class GroupItemExecutor extends TaskExecutor {
+    protected static class GroupItemExecutorBase extends BaseTaskExecutor {
 
         private final TaskGroup group;
 
-        protected GroupItemExecutor(BaseTask task, TaskGroup group) {
+        protected GroupItemExecutorBase(BaseTask task, TaskGroup group) {
             super(task);
             this.group = group;
         }
@@ -155,8 +156,8 @@ public final class TaskGroup {
         }
 
         @Override
-        protected Context createContext() {
-            return new Context(task, group);
+        protected TaskContext createContext() {
+            return new TaskContext(task, group);
         }
 
         @Override

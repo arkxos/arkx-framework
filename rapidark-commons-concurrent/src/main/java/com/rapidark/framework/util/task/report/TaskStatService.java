@@ -1,12 +1,15 @@
-package com.rapidark.framework.util.task;
+package com.rapidark.framework.util.task.report;
 
+import com.rapidark.framework.util.task.Json;
+import com.rapidark.framework.util.task.TaskEngine;
+import com.rapidark.framework.util.task.TaskGroup;
 import com.rapidark.framework.util.task.util.Utils;
 
 import java.util.Collection;
 
 public final class TaskStatService {
 
-    protected static final TaskStatService INSTANCE = new TaskStatService();
+    public static final TaskStatService INSTANCE = new TaskStatService();
 
     private TaskEngine taskEngine;
 
@@ -17,7 +20,7 @@ public final class TaskStatService {
         INSTANCE.taskEngine = taskEngine;
     }
 
-    protected String getBasicInfo() {
+    public String getBasicInfo() {
         Json.JsonObject object = Json.createObject();
         object.put("version", Utils.VERSION);
         object.put("java_version", Utils.getJavaVersion());
@@ -25,7 +28,7 @@ public final class TaskStatService {
         return object.end().toString();
     }
 
-    protected String getTaskInfo() {
+    public String getTaskInfo() {
         Json.JsonObject object = Json.createObject();
         object.put("count_task", taskEngine.getTotalNumberOfTask());
         object.put("count_running_task", taskEngine.getRunningNumberofTask());

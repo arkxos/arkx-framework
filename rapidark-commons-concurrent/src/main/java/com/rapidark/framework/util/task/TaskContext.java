@@ -3,7 +3,7 @@ package com.rapidark.framework.util.task;
 import com.rapidark.framework.util.task.exception.ExecutionException;
 import com.tuples.Tuple;
 
-public final class Context {
+public final class TaskContext {
 
     private final Task task;
     private final Group group;
@@ -13,7 +13,7 @@ public final class Context {
 
         private final TaskGroup group;
 
-        protected Group(TaskGroup group) {
+        public Group(TaskGroup group) {
             this.group = group;
         }
 
@@ -38,12 +38,12 @@ public final class Context {
 
     }
 
-    protected Context(Task task) {
+    public TaskContext(Task task) {
         this.task = task;
         this.group = new Group(null);
     }
 
-    protected Context(Task task, TaskGroup group) {
+    public TaskContext(Task task, TaskGroup group) {
         this.task = task;
         this.group = new Group(group);
     }

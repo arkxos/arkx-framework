@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
-abstract class AbstractTask implements Task {
+public abstract class AbstractTask implements Task {
 
     private String id;// 任务的 ID
     private String type;// 任务的类型

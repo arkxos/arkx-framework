@@ -1,5 +1,8 @@
 package com.rapidark.framework.util.task;
 
+import com.rapidark.framework.util.task.execute.BaseTaskExecutor;
+import com.rapidark.framework.util.task.execute.ResultTaskExecutor;
+
 import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -43,8 +46,8 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 
     public void submit(Task task) {
         if (task instanceof BaseTask bTask) {
-            TaskExecutor taskExecutor = new TaskExecutor(bTask);
-            RunnableFuture<Object> future = newTaskFor(bTask, taskExecutor);
+            BaseTaskExecutor baseTaskExecutor = new BaseTaskExecutor(bTask);
+            RunnableFuture<Object> future = newTaskFor(bTask, baseTaskExecutor);
             bTask.setFuture(future);
             bTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
             execute(future);
@@ -59,7 +62,7 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     public void submit(TaskGroup.Item item, TaskGroup group) {
-        TaskGroup.GroupItemExecutor executor = new TaskGroup.GroupItemExecutor(item, group);
+        TaskGroup.GroupItemExecutorBase executor = new TaskGroup.GroupItemExecutorBase(item, group);
         RunnableFuture<Object> future = newTaskFor(item, executor);
         item.setFuture(future);
         item.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);

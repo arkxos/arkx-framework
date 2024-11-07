@@ -1,12 +1,16 @@
-package com.rapidark.framework.util.task;
+package com.rapidark.framework.util.task.execute;
+
+import com.rapidark.framework.util.task.ResultBaseTask;
+import com.rapidark.framework.util.task.TaskContext;
+import com.rapidark.framework.util.task.TaskStatus;
 
 import java.util.concurrent.Callable;
 
-class ResultTaskExecutor<T> implements Callable<T> {
+public class ResultTaskExecutor<T> implements Callable<T> {
 
     private final ResultBaseTask<T> task;
 
-    protected ResultTaskExecutor(ResultBaseTask<T> task) {
+    public ResultTaskExecutor(ResultBaseTask<T> task) {
         this.task = task;
     }
 
@@ -14,10 +18,10 @@ class ResultTaskExecutor<T> implements Callable<T> {
     public T call() throws Exception {
         task.setStartTime(System.currentTimeMillis());
         if (task.setStatus(TaskStatus.QUEUED, TaskStatus.RUNNING)) {
-            Context context = createContext();
+            TaskContext taskContext = createContext();
             try {
-                T result = task.getExecutor().execute(context);
-                context.onSuccess();
+                T result = task.getExecutor().run(taskContext);
+                taskContext.onSuccess();
                 return result;
             } finally {
                 finallyExecute();
@@ -28,8 +32,8 @@ class ResultTaskExecutor<T> implements Callable<T> {
         }
     }
 
-    protected Context createContext() {
-        return new Context(task);
+    protected TaskContext createContext() {
+        return new TaskContext(task);
     }
 
     protected void finallyExecute() {

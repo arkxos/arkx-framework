@@ -34,10 +34,10 @@ public interface Task {
     TaskStatus getStatus();
 
     /**
-     * 获取当前任务设置的进度回调，使用 {@code Context.onProgress(int)} 设置进度。可能为 {@code null}。
+     * 获取当前任务设置的进度回调，使用 {@code TaskContext.onProgress(int)} 设置进度。可能为 {@code null}。
      *
      * @return {@link Progress}
-     * @see Context#onProgress(int)
+     * @see TaskContext#onProgress(int)
      * @see Progress
      */
     Progress getProgress();
@@ -67,9 +67,9 @@ public interface Task {
      * 获取当前任务设置的完成时的回调，可能为 {@code null}
      *
      * @return {@link Callback}
-     * @see Context#onSuccess(Object...)
-     * @see Context#onError(Exception)
-     * @see Context#onError(String, Object)
+     * @see TaskContext#onSuccess(Object...)
+     * @see TaskContext#onError(Exception)
+     * @see TaskContext#onError(String, Object)
      * @see Callback
      */
     Callback getCallback();
@@ -99,16 +99,16 @@ public interface Task {
 
     class Builder {
 
-        protected final Executor executor;
+        protected TaskRunner taskRunner;
         protected String type;
         protected String id;
         protected Progress progress;
         protected Callback callback;
 
-        protected Builder(Executor executor) {
-            Assert.notNull(executor);
+        protected Builder(TaskRunner taskRunner) {
+            Assert.notNull(taskRunner);
 
-            this.executor = executor;
+            this.taskRunner = taskRunner;
         }
 
         /**
@@ -123,7 +123,7 @@ public interface Task {
         }
 
         /**
-         * 设置任务的进度回调。使用 {@link Context#onProgress(int)} 会触发该回调
+         * 设置任务的进度回调。使用 {@link TaskContext#onProgress(int)} 会触发该回调
          *
          * @param progress 进度回调
          * @return {@link Builder}
@@ -134,20 +134,20 @@ public interface Task {
         }
 
         /**
-         * 设置任务完成时的回调，可以使用 {@link Context#onSuccess(Object...)}、{@link Context#onError(String, Object)} 或
-         * {@link Context#onError(Exception)} 触发该回调。
+         * 设置任务完成时的回调，可以使用 {@link TaskContext#onSuccess(Object...)}、{@link TaskContext#onError(String, Object)} 或
+         * {@link TaskContext#onError(Exception)} 触发该回调。
          * <p>
-         * 如果调用 {@link Context#onSuccess(Object...)} 触发回调，任务状态为成功 {@link TaskStatus#SUCCESS}，并且回调函数的第二个参数
+         * 如果调用 {@link TaskContext#onSuccess(Object...)} 触发回调，任务状态为成功 {@link TaskStatus#SUCCESS}，并且回调函数的第二个参数
          * {@code Exception} 将为 {@code null}
          * </p>
          * <p>
-         * 如果调用 {@link Context#onError(String, Object)} 或 {@link Context#onError(Exception)} 触发回调，认为的状态为错误 {@link TaskStatus#ERROR}，
+         * 如果调用 {@link TaskContext#onError(String, Object)} 或 {@link TaskContext#onError(Exception)} 触发回调，认为的状态为错误 {@link TaskStatus#ERROR}，
          * 并且回调函数的第二个参数不为 {@code null}
          * </p>
          *
          * @param callback 任务完成时的回调
          * @return {@link Builder}
-         * @see Callback#call(Context, Exception)
+         * @see Callback#call(TaskContext, Exception)
          */
         public Builder end(Callback callback) {
             this.callback = callback;
@@ -155,7 +155,7 @@ public interface Task {
         }
 
         public Task build() {
-            BaseTask task = new BaseTask(this.type, this.id, executor);
+            BaseTask task = new BaseTask(this.type, this.id, taskRunner);
             task.setProgress(progress);
             task.setCallback(callback);
             return task;

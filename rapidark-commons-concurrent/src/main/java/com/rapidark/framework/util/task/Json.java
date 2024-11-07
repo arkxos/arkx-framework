@@ -1,16 +1,16 @@
 package com.rapidark.framework.util.task;
 
-final class Json {
+public final class Json {
 
-    protected static JsonObject createObject() {
+    public static JsonObject createObject() {
         return new JsonObject();
     }
 
-    protected static JsonArray createArray() {
+    public static JsonArray createArray() {
         return new JsonArray();
     }
 
-    static class JsonObject {
+    public static class JsonObject {
         private final StringBuilder builder = new StringBuilder();
 
         private JsonObject() {
@@ -22,9 +22,9 @@ final class Json {
             if (value == null) {
                 builder.append("null");
             } else if (value instanceof CharSequence) {
-                builder.append("\"").append(value.toString()).append("\"");
+                builder.append("\"").append(value).append("\"");
             } else {
-                builder.append(value.toString());
+                builder.append(value);
             }
             builder.append(",");
             return this;
@@ -44,7 +44,7 @@ final class Json {
         }
     }
 
-    static class JsonArray {
+    public static class JsonArray {
         private final StringBuilder builder = new StringBuilder();
 
         private JsonArray() {
@@ -57,7 +57,7 @@ final class Json {
             } else if (value instanceof CharSequence) {
                 builder.append("\"").append(value).append("\"");
             } else {
-                builder.append(value.toString());
+                builder.append(value);
             }
             builder.append(",");
             return this;

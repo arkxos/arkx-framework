@@ -1,19 +1,19 @@
 package com.rapidark.framework.util.task;
 
-class BaseTask extends AbstractTask {
+public class BaseTask extends AbstractTask {
 
-    private final Executor executor;
+    private TaskRunner taskRunner;
 
-    protected BaseTask(Executor executor) {
-        this(null, null, executor);
+    protected BaseTask(TaskRunner taskRunner) {
+        this(null, null, taskRunner);
     }
 
-    protected BaseTask(String type, String id, Executor executor) {
+    protected BaseTask(String type, String id, TaskRunner taskRunner) {
         super(type, id);
-        this.executor = executor;
+        this.taskRunner = taskRunner;
     }
 
-    public Executor getExecutor() {
-        return executor;
+    public TaskRunner getExecutor() {
+        return taskRunner;
     }
 }

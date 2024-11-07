@@ -33,24 +33,24 @@ public final class TaskEngine {
     }
 
     /**
+     * 创建无返回结果的任务，任务的执行结果使用回调处理，使用 {@link TaskEngine#commit(Task)} 执行创建的任务
+     *
+     * @param taskRunner 要执行的具体任务
+     * @return 任务
+     */
+    public Task.Builder buildTask(TaskRunner taskRunner) {
+        return new Task.Builder(taskRunner);
+    }
+
+    /**
      * 执行指定的任务
      *
-     * @param task 要执行的任务，使用 {@link TaskEngine#buildTask(Executor)} 创建
+     * @param task 要执行的任务，使用 {@link TaskEngine#buildTask(TaskRunner)} 创建
      */
     public void commit(Task task) {
         Assert.notNull(task);
 
         executor.submit(task);
-    }
-
-    /**
-     * 创建无返回结果的任务，任务的执行结果使用回调处理，使用 {@link TaskEngine#commit(Task)} 执行创建的任务
-     *
-     * @param executor 要执行的具体任务
-     * @return 任务
-     */
-    public Task.Builder buildTask(Executor executor) {
-        return new Task.Builder(executor);
     }
 
     /**
@@ -81,7 +81,7 @@ public final class TaskEngine {
      * @param <T>      任务返回结果的具体类型
      * @return 带有返回结果的任务
      */
-    public <T> ResultTask.Builder<T> buildResultTask(ResultExecutor<T> executor) {
+    public <T> ResultTask.Builder<T> buildResultTask(ResultTaskRunner<T> executor) {
         return new ResultTask.Builder<>(executor);
     }
 
@@ -92,7 +92,7 @@ public final class TaskEngine {
      * @param <T>      任务返回结果的具体类型
      * @return 有返回结果的任务
      */
-    public <T> ResultTask<T> commit(ResultExecutor<T> executor) {
+    public <T> ResultTask<T> commit(ResultTaskRunner<T> executor) {
         return this.commit(null, null, executor);
     }
 
@@ -103,7 +103,7 @@ public final class TaskEngine {
      * @param <T>      任务返回结果的具体类型
      * @return 有返回结果的任务
      */
-    public <T> ResultTask<T> commit(String type, String id, ResultExecutor<T> executor) {
+    public <T> ResultTask<T> commit(String type, String id, ResultTaskRunner<T> executor) {
         Assert.notNull(executor);
 
         ResultTask<T> task = new ResultBaseTask<>(type, id, executor);
@@ -173,7 +173,7 @@ public final class TaskEngine {
         return this.executor.getTotalNumberOfTask();
     }
 
-    protected Collection<TaskGroup> getRunningTaskGroups() {
+    public Collection<TaskGroup> getRunningTaskGroups() {
         return this.executor.getRunningTaskGroups();
     }
 

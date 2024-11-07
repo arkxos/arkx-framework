@@ -6,20 +6,20 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-class ResultBaseTask<T> extends AbstractTask implements ResultTask<T> {
+public class ResultBaseTask<T> extends AbstractTask implements ResultTask<T> {
 
-    private final ResultExecutor<T> executor;
+    private final ResultTaskRunner<T> executor;
 
-    protected ResultBaseTask(ResultExecutor<T> executor) {
+    public ResultBaseTask(ResultTaskRunner<T> executor) {
         this(null, null, executor);
     }
 
-    protected ResultBaseTask(String type, String id, ResultExecutor<T> executor) {
+    public ResultBaseTask(String type, String id, ResultTaskRunner<T> executor) {
         super(type, id);
         this.executor = executor;
     }
 
-    public ResultExecutor<T> getExecutor() {
+    public ResultTaskRunner<T> getExecutor() {
         return executor;
     }
 

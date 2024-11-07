@@ -1,10 +1,10 @@
 package com.rapidark.framework.util.task.callback;
 
-import com.rapidark.framework.util.task.Context;
+import com.rapidark.framework.util.task.TaskContext;
 
 @FunctionalInterface
 public interface Callback {
 
-    void call(Context ctx, Exception error);
+    void call(TaskContext ctx, Exception error);
 
 }

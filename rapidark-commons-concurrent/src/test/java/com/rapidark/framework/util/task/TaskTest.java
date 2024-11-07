@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ATaskTest {
+public class TaskTest {
 
     private static TaskEngine taskEngine;
 
