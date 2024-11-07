@@ -1,4 +1,4 @@
-package com.rapidark.boot;
+package com.rapidark.cloud.platform.common.core.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;

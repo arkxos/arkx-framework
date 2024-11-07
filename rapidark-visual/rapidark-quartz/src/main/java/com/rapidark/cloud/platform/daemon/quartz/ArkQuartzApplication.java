@@ -1,5 +1,6 @@
 package com.rapidark.cloud.platform.daemon.quartz;
 
+import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
 import com.rapidark.cloud.platform.common.feign.annotation.EnablePigFeignClients;
 import com.rapidark.cloud.platform.common.security.annotation.EnablePigResourceServer;
 import com.rapidark.cloud.platform.common.swagger.annotation.EnablePigDoc;
@@ -20,7 +21,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class ArkQuartzApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ArkQuartzApplication.class, args);
+		RapidArkApplication.run(ArkQuartzApplication.class, args);
 	}
 
 }

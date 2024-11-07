@@ -17,6 +17,7 @@
 
 package com.rapidark.cloud.platform.codegen;
 
+import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
 import com.rapidark.cloud.platform.common.datasource.annotation.EnableDynamicDataSource;
 import com.rapidark.cloud.platform.common.feign.annotation.EnablePigFeignClients;
 import com.rapidark.cloud.platform.common.security.annotation.EnablePigResourceServer;
@@ -39,7 +40,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class ArkCodeGenApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ArkCodeGenApplication.class, args);
+		RapidArkApplication.run(ArkCodeGenApplication.class, args);
 	}
 
 }

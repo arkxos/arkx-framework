@@ -16,6 +16,7 @@
 
 package com.rapidark.cloud.platform.auth;
 
+import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -32,7 +33,7 @@ import com.rapidark.cloud.platform.common.feign.annotation.EnablePigFeignClients
 public class ArkAuthApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ArkAuthApplication.class, args);
+		RapidArkApplication.run(ArkAuthApplication.class, args);
 	}
 
 }

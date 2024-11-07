@@ -16,6 +16,7 @@
 
 package com.rapidark.cloud.platform.monitor;
 
+import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +32,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class ArkMonitorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ArkMonitorApplication.class, args);
+		RapidArkApplication.run(ArkMonitorApplication.class, args);
 	}
 
 }
