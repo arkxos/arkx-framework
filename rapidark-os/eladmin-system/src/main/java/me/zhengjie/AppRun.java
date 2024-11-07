@@ -15,10 +15,10 @@
  */
 package me.zhengjie;
 
-import com.rapidark.boot.RapidArkApplication;
 import io.swagger.annotations.Api;
 import com.rapidark.framework.common.annotation.rest.AnonymousGetMapping;
 import com.rapidark.framework.common.utils.ArkSpringContextHolder;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppRun {
 
     public static void main(String[] args) {
-        RapidArkApplication.run(AppRun.class, args);
+		SpringApplication.run(AppRun.class, args);
     }
 
 //    @Bean

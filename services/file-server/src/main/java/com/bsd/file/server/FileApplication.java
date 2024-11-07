@@ -1,6 +1,5 @@
 package com.bsd.file.server;
 
-import com.rapidark.boot.RapidArkApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -31,6 +30,6 @@ public class FileApplication {
     }
 
     public static void main(String[] args) {
-        RapidArkApplication.run(FileApplication.class, args);
+		SpringApplication.run(FileApplication.class, args);
     }
 }

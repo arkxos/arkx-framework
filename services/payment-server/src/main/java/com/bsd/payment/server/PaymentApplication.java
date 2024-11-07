@@ -1,6 +1,5 @@
 package com.bsd.payment.server;
 
-import com.rapidark.boot.RapidArkApplication;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +31,6 @@ public class PaymentApplication {
     }
 
     public static void main(String[] args) {
-        RapidArkApplication.run(PaymentApplication.class, args);
+		SpringApplication.run(PaymentApplication.class, args);
     }
 }

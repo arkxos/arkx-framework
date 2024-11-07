@@ -26,9 +26,9 @@ package com.rapidark.cloud.gateway.server;
 
 import com.rapidark.cloud.gateway.server.locator.JdbcRouteDefinitionLocator;
 import com.rapidark.cloud.gateway.server.locator.ResourceLocator;
-import com.rapidark.boot.RapidArkApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -78,7 +78,7 @@ public class GatewaySpringApplication implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
-        RapidArkApplication.run(GatewaySpringApplication.class, args);
+		SpringApplication.run(GatewaySpringApplication.class, args);
     }
 
 }

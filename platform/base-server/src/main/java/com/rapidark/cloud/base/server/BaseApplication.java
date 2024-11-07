@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server;
 
-import com.rapidark.boot.RapidArkApplication;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
@@ -40,7 +40,7 @@ public class BaseApplication {
             }
         });
 
-        RapidArkApplication.run(BaseApplication.class, args);
+		SpringApplication.run(BaseApplication.class, args);
 
         System.out.println("==========================================");
     }
