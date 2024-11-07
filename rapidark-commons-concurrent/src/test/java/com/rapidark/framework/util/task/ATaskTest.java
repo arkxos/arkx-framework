@@ -36,8 +36,9 @@ public class ATaskTest {
             })
             .progress(System.out::println)
             .end((ctx, error) -> {
+                System.out.println("execute task finished");
                 assertEquals("success", ctx.getResult().getString(0));
-                assertEquals(TaskStatus.SUCCESS, ctx.getState());
+                assertEquals(TaskStatus.SUCCESS, ctx.getStatus());
             })
             .build();
 

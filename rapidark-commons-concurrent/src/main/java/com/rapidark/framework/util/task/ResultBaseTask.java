@@ -1,6 +1,6 @@
 package com.rapidark.framework.util.task;
 
-import com.rapidark.framework.util.task.exception.ATaskException;
+import com.rapidark.framework.util.task.exception.TaskException;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +30,7 @@ class ResultBaseTask<T> extends AbstractTask implements ResultTask<T> {
             try {
                 return (T) future.get();
             } catch (InterruptedException | ExecutionException e) {
-                throw new ATaskException(e);
+                throw new TaskException(e);
             }
         }
         return null;
@@ -43,7 +43,7 @@ class ResultBaseTask<T> extends AbstractTask implements ResultTask<T> {
             try {
                 return (T) future.get(timeout, unit);
             } catch (InterruptedException | ExecutionException e) {
-                throw new ATaskException(e);
+                throw new TaskException(e);
             }
         }
         return null;

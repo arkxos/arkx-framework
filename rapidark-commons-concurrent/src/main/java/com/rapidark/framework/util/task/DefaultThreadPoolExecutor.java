@@ -44,13 +44,13 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
     public void submit(Task task) {
         if (task instanceof BaseTask bTask) {
             TaskExecutor taskExecutor = new TaskExecutor(bTask);
-            RunnableFuture<Object> future = newTaskFor(task, taskExecutor);
+            RunnableFuture<Object> future = newTaskFor(bTask, taskExecutor);
             bTask.setFuture(future);
             bTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
             execute(future);
         } else if (task instanceof ResultBaseTask<?> bTask) {
             ResultTaskExecutor<?> executor = new ResultTaskExecutor<>(bTask);
-            RunnableFuture<?> future = newTaskFor(task, executor);
+            RunnableFuture<?> future = newTaskFor(bTask, executor);
             bTask.setFuture(future);
             bTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
             execute(future);
@@ -82,8 +82,7 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
-        if (r instanceof CustomFutureTask) {
-            CustomFutureTask<?> futureTask = (CustomFutureTask<?>) r;
+        if (r instanceof CustomFutureTask<?> futureTask) {
             Task task = futureTask.getTask();
             runningQueue.remove(task);
 //            completedQueue.offer(task);

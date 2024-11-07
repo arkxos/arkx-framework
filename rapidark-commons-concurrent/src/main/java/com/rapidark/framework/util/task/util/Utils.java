@@ -1,6 +1,6 @@
 package com.rapidark.framework.util.task.util;
 
-import com.rapidark.framework.util.task.exception.ATaskException;
+import com.rapidark.framework.util.task.exception.TaskException;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -63,7 +63,7 @@ public final class Utils {
             cipher.init(Cipher.ENCRYPT_MODE, key);
             return cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            throw new ATaskException(e);
+            throw new TaskException(e);
         }
     }
 

@@ -17,20 +17,20 @@ public final class Context {
             this.group = group;
         }
 
-        public final int incrementCounter() {
+        public int incrementCounter() {
             if (group != null) {
                 return group.counter.incrementAndGet();
             }
             return -1;
         }
 
-        public final void addData(String key, Object value) {
+        public void addData(String key, Object value) {
             if (group != null) {
                 group.data.add(key, value);
             }
         }
 
-        public final void addData(Object value) {
+        public void addData(Object value) {
             if (group != null) {
                 group.data.add(value);
             }
@@ -48,13 +48,13 @@ public final class Context {
         this.group = new Group(group);
     }
 
-    public final void onProgress(int progress) {
+    public void onProgress(int progress) {
         if (task.getProgress() != null) {
             task.getProgress().call(progress);
         }
     }
 
-    public final void onSuccess(Object... objs) {
+    public void onSuccess(Object... objs) {
         if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.SUCCESS)
             && task.getCallback() != null) {
             this.toResult(objs);
@@ -62,30 +62,30 @@ public final class Context {
         }
     }
 
-    public final void onError(String message, Object obj) {
+    public void onError(String message, Object obj) {
         onError(new ExecutionException(message, obj));
     }
 
-    public final void onError(Exception error) {
+    public void onError(Exception error) {
         if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.ERROR)
             && task.getCallback() != null) {
             task.getCallback().call(null, error);
         }
     }
 
-    public final String getId() {
+    public String getId() {
         return task.getId();
     }
 
-    public final TaskStatus getState() {
+    public TaskStatus getStatus() {
         return task.getStatus();
     }
 
-    public final String getType() {
+    public String getType() {
         return task.getType();
     }
 
-    public final void toResult(Object... objs) {
+    public void toResult(Object... objs) {
         if (objs != null && objs.length > 0) {
             for (Object obj : objs) {
                 result.add(obj);
@@ -93,12 +93,12 @@ public final class Context {
         }
     }
 
-    public final Tuple getResult() {
+    public Tuple getResult() {
         return this.result;
     }
 
 
-    public final Group group() {
+    public Group group() {
         return this.group;
     }
 

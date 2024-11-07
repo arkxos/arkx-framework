@@ -1,6 +1,6 @@
 package com.rapidark.framework.util.task;
 
-import com.rapidark.framework.util.task.exception.ATaskException;
+import com.rapidark.framework.util.task.exception.TaskException;
 import com.rapidark.framework.util.task.callback.Callback;
 import com.rapidark.framework.util.task.callback.Progress;
 import com.rapidark.framework.util.task.util.Assert;
@@ -136,7 +136,7 @@ abstract class AbstractTask implements Task {
             try {
                 future.get();
             } catch (InterruptedException | ExecutionException e) {
-                throw new ATaskException(e);
+                throw new TaskException(e);
             }
         }
     }
@@ -147,7 +147,7 @@ abstract class AbstractTask implements Task {
             try {
                 future.get(timeout, unit);
             } catch (InterruptedException | ExecutionException e) {
-                throw new ATaskException(e);
+                throw new TaskException(e);
             }
         }
     }
