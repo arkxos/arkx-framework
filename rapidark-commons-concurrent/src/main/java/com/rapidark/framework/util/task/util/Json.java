@@ -1,4 +1,4 @@
-package com.rapidark.framework.util.task;
+package com.rapidark.framework.util.task.util;
 
 public final class Json {
 

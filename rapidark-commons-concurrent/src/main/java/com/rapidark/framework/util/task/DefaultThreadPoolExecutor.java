@@ -51,6 +51,12 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
             bTask.setFuture(future);
             bTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
             execute(future);
+        } else if (task instanceof TreeTask treeTask) {
+            BaseTaskExecutor baseTaskExecutor = new BaseTaskExecutor(treeTask);
+            RunnableFuture<Object> future = newTaskFor(treeTask, baseTaskExecutor);
+            treeTask.setFuture(future);
+            treeTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
+            execute(future);
         } else if (task instanceof ResultBaseTask<?> bTask) {
             ResultTaskExecutor<?> executor = new ResultTaskExecutor<>(bTask);
             RunnableFuture<?> future = newTaskFor(bTask, executor);

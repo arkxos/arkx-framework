@@ -13,7 +13,8 @@ public class BaseTask extends AbstractTask {
         this.taskRunner = taskRunner;
     }
 
-    public TaskRunner getExecutor() {
+    public TaskRunner getRunner() {
         return taskRunner;
     }
+
 }

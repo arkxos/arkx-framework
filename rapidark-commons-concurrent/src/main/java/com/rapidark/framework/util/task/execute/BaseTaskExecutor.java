@@ -18,7 +18,7 @@ public class BaseTaskExecutor implements Runnable {
             task.setStartTime(System.currentTimeMillis());
             TaskContext taskContext = createContext();
             try {
-                task.getExecutor().run(taskContext);
+                task.getRunner().run(taskContext);
                 taskContext.onSuccess();
             } catch (Exception e) {
                 taskContext.onError(e);

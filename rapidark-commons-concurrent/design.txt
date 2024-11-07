@@ -1,0 +1,165 @@
+
+多线程读取Excel文件
+设置线程数8
+
+读取ExcelSheet的任务
+读取完毕，执行分析任务（同读取任务线程）
+分析完毕，存库（存库任务，8个线程）
+
+任务引擎
+任务编号，串联所有子任务，收集子任务状态
+
+读取ExcelSheet，分析数据，保存数据
+更新数据状态
+
+
+开始 Job StartTask ---------> Split N 并发执行，并发度8  ------------>                  读取Excel文件         --------->           解析
+           ExcelFilesEvent List     ExcelFileReader           PreExcelFileReadEvent                               N SheetReadedEvent
+		                                                   ------------>                  读取Excel文件Sheet    --------->           解析 ----->            存库
+														    PreExcelFileSheetReadEvent                          SheetReadedEvent          AnalyResultEvent       DataSavedEvent
+文件导入Job
+JobStart
+提交10个文件导入任务【可以不要？并发度8，waitChildFinish=true】
+	文件导入任务commitTask【不需要事件类】
+		读取文件任务【IO，并发度8，waitChildFinish=true，等待子任务完成】防止内存过大，等待解析解析、入库完成
+		  ReadFileTask
+		  commitTask：readFile/readFileSheet【大量数据多Sheet】
+		  ReadFileEvent/ReadFileSheetEvent
+		  提交Sheet读取完毕事件
+			解析Sheet任务【CPU】
+				提交保存数据任务（异步）【IO】
+
+ReadFileTaskProducer {
+
+   boolean hasNext();
+
+   ReadFileTask get();
+
+}
+TaskEngine.registerProducer(ReadFileTaskProducer);
+
+RootTask(Job)
+	ReadFileTask1
+		ReadFileSheetTask1
+			HandleSheetDataTask
+				SaveSheetDataTask
+		ReadFileSheetTask2
+	ReadFileTask1
+		ReadFileTask2
+			HandleSheetDataTask1
+				SaveSheetDataTask1
+			HandleSheetDataTask2
+				SaveSheetDataTask2
+		...
+	ReadFileTask1
+		ReadFileTask8
+
+
+taskEngine.commit(AnalyzeExcelTask1);
+...
+taskEngine.commit(AnalyzeExcelTask8);
+
+run()
+	wait task.execute()
+
+	for(task in tasks) {
+		if(!task.finished()) {
+			step = task.getStep()
+			TaskExecutor.commit(step)
+		}
+	}
+
+ReadFileTask {
+	ReadFileTask(CreateReadFileTaskCommand) {
+		publishEvent(PreReadFileEvent)
+	}
+
+	onEvent(PreReadFileEvent) {
+		if(fileSize < 5M) {
+			List<SheetData> sheetDataList = readFile();
+			sheetDataList.for {
+				publishEvent(HandleSheetDataEvent)
+			}
+		} else {
+			fori(sheetSize) {
+				SheetData sheetData = readFileSheet(i);
+				publishEvent(HandleSheetDataEvent)
+			}
+		}
+	}
+}
+
+HandleSheetDataTask {
+	onEvent(HandleSheetDataEvent) {
+		processSheetData()
+		publishEvent(SheetDataHandleFinishEvent)
+	}
+}
+
+SaveSheetDataTask {
+	onEvent(SheetDataHandleFinishEvent) {
+		saveIntoDb()
+	}
+}
+
+
+
+编程：多个任务步骤的执行
+同步一个任务一个任务的执行，执行上一个任务后在执行下一个任务
+多个任务并发执行
+
+同步
+上一步执行完成再执行下一步，遇到执行缓慢的步骤，非常耗时
+同步执行
+多步骤执行
+可扩展性：回调执行
+发布订阅模式
+
+异步（线程）
+接收返回结果：异步执行回调
+不接受返回结果：发布订阅模式，异步执行订阅
+
+
+响应式编程
+执行步骤异步，可回调
+回调地狱
+logger.info("分配工作...");
+CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> worker.work(someDetail));
+logger.info("分配完工作。");
+logger.info("老板下班回家了。。。");
+logger.info("boss got the feedback from worker: {}", future.get());
+
+发布事件，异步执行订阅
+替代异步回调，执行完毕发布FinishedEvent，监听FinishedEvent执行某个逻辑
+回调可为FinishedEvent监听的默认实现
+
+Disruptor
+高并发事件发布监听框架
+缺点：无法任务动态编排
+
+一旦一步，涉及到事务的，得分布式事务
+
+任务框架
+一个Job（根Task，上下文JobId[RootTaskId]，树状Task，DAG图）包含多个任务，所有任务执行完毕，Job完成
+编程式
+task.addEventListener
+
+任务编排
+事件有序，同AggratesId事件有序，事件同步执行
+默认任务编排：注解式，扫描注解，动态添加监听
+@EventListener
+
+Netty common
+addListener 添加多个Listener，使用同一个线程依次执行
+
+Disruptor多个consumer分线程执行？
+
+在线设置，动态addEventListener
+DDD领域驱动与EventSrourcing事件溯源
+AxonFramework
+
+分布式任务调度与动态编排
+https://gitee.com/dromara/liteFlow
+
+
+
