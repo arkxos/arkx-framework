@@ -34,6 +34,8 @@ public interface Task {
      */
     TaskStatus getStatus();
 
+    boolean isFinished();
+
     /**
      * 获取当前任务设置的进度回调，使用 {@code TaskContext.onProgress(int)} 设置进度。可能为 {@code null}。
      *

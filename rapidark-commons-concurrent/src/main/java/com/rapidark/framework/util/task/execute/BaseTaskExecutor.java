@@ -3,7 +3,9 @@ package com.rapidark.framework.util.task.execute;
 import com.rapidark.framework.util.task.BaseTask;
 import com.rapidark.framework.util.task.TaskContext;
 import com.rapidark.framework.util.task.TaskStatus;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class BaseTaskExecutor implements Runnable {
 
     protected final BaseTask task;
@@ -18,8 +20,10 @@ public class BaseTaskExecutor implements Runnable {
             task.setStartTime(System.currentTimeMillis());
             TaskContext taskContext = createContext();
             try {
+                log.debug("start task " + task.getClass().getSimpleName());
                 task.getRunner().run(taskContext);
                 taskContext.onSuccess();
+                log.debug("end task " + task.getClass().getSimpleName());
             } catch (Exception e) {
                 taskContext.onError(e);
                 throw e;

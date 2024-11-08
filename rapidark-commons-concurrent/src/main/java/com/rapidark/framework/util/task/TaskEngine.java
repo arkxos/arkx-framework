@@ -1,6 +1,7 @@
 package com.rapidark.framework.util.task;
 
 import com.rapidark.framework.util.task.schedule.DefaultTaskScheduler;
+import com.rapidark.framework.util.task.schedule.WindowTaskScheduler;
 import com.rapidark.framework.util.task.util.Assert;
 
 import java.util.Collection;
@@ -182,6 +183,10 @@ public final class TaskEngine {
         return this.taskScheduler.getRunningTaskGroups();
     }
 
+    public void start() {
+        this.taskScheduler.start();
+    }
+
     public static class Builder {
 
         private int coreSize = DEFAULT_CORE_SIZE;
@@ -190,6 +195,7 @@ public final class TaskEngine {
         private int keepAliveSeconds = DEFAULT_KEEP_ALIVE_SECONDS;
         private RejectedExecutionHandler rejectedExecutionHandler;
         private CompletedTaskHandler completedTaskHandler;
+        private boolean windowsScheduledExecutor;
 
         public Builder corePoolSize(int corePoolSize) {
             if (corePoolSize > 0) {
@@ -229,11 +235,19 @@ public final class TaskEngine {
 //            return this;
 //        }
 
+        public Builder windowsScheduledExecutor() {
+            this.windowsScheduledExecutor = true;
+            return this;
+        }
+
         public TaskEngine build() {
             BlockingQueue<Runnable> queue = createQueue(this.queueCapacity);
             DefaultThreadPoolExecutor executor = new DefaultThreadPoolExecutor(this.coreSize, this.maxPoolSize,
                 this.keepAliveSeconds, TimeUnit.SECONDS, queue, Executors.defaultThreadFactory(),
                 getRejectedExecutionHandler(this.rejectedExecutionHandler), this.completedTaskHandler);
+            if(windowsScheduledExecutor) {
+                return new TaskEngine(new WindowTaskScheduler(executor));
+            }
             return new TaskEngine(executor);
         }
 

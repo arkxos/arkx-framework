@@ -102,4 +102,11 @@ public abstract class AbstractTask implements Task {
         taskListeners.add(listener);
     }
 
+    @Override
+    public boolean isFinished() {
+        TaskStatus status = getStatus();
+        return status != TaskStatus.INIT
+            && status != TaskStatus.QUEUED
+            && status != TaskStatus.RUNNING;
+    }
 }

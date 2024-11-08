@@ -28,4 +28,6 @@ public interface TaskScheduler {
     long getTotalNumberOfTask();
 
     Collection<TaskGroup> getRunningTaskGroups();
+
+    void start();
 }

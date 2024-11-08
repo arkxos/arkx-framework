@@ -1,9 +1,11 @@
 package com.rapidark.framework.util.task;
 
 import com.rapidark.framework.util.task.util.RandomUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 public class AnalyzeFilesTask extends TreeTask {
 
     private List<String> files;
@@ -13,9 +15,9 @@ public class AnalyzeFilesTask extends TreeTask {
         this.files = files;
     }
 
-
     @Override
     public void run(TaskContext ctx) {
+        int i = 1;
         for (String file : this.files) {
             this.addChild(new ReadExcelTask(file));
         }
@@ -28,14 +30,14 @@ class ReadExcelTask extends TreeTask {
     private String file;
 
     public ReadExcelTask(String file) {
-        super("ReadExcelTask", "");
+        super("ReadExcelTask", file);
         this.file = file;
     }
 
     @Override
     public void run(TaskContext ctx) {
-        boolean isBig = RandomUtil.randomInt(2) == 1;
-        int sheetCount = RandomUtil.randomInt(6);
+        boolean isBig = RandomUtil.randomInt(1) == 1;
+        int sheetCount = RandomUtil.randomInt(1, 5);
 
         if(isBig) {
             for (int i = 0; i < sheetCount; i++) {
@@ -44,7 +46,7 @@ class ReadExcelTask extends TreeTask {
         } else {
             for (int i = 0; i < sheetCount; i++) {
                 String data = "data from 【"+i+"】" + file;
-                this.addChild(new HandleSheetDataTask(data));
+                this.addChild(new HandleSheetDataTask(file, i+1, data));
             }
         }
     }
@@ -57,13 +59,15 @@ class ReadExcelSheetTask extends TreeTask {
     private int sheetNo;
 
     protected ReadExcelSheetTask(String filePath, int sheetNo) {
-        super("ReadExcelSheetTask", "");
+        super("ReadExcelSheetTask", filePath + "["+sheetNo+"]");
         this.filePath = filePath;
         this.sheetNo = sheetNo;
     }
 
     @Override
     public void run(TaskContext ctx) {
+        String data = "data from 【"+sheetNo+"】" + filePath;
+        this.addChild(new HandleSheetDataTask(filePath, sheetNo, data));
         System.out.println("ReadExcelSheet: [" + sheetNo + "]" + filePath);
     }
 
@@ -73,8 +77,8 @@ class HandleSheetDataTask extends TreeTask {
 
     private String data;
 
-    public HandleSheetDataTask(String data) {
-        super("", "");
+    public HandleSheetDataTask(String filePath, int sheetNo, String data) {
+        super("", filePath + "["+sheetNo+"]");
     }
 
     @Override

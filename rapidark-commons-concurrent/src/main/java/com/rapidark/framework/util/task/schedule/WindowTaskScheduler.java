@@ -1,27 +1,60 @@
 package com.rapidark.framework.util.task.schedule;
 
-import com.rapidark.framework.util.task.DefaultThreadPoolExecutor;
-import com.rapidark.framework.util.task.Task;
-import com.rapidark.framework.util.task.TaskGroup;
-import com.rapidark.framework.util.task.TaskScheduler;
+import com.rapidark.framework.util.task.*;
 import lombok.Getter;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class WindowTaskScheduler implements TaskScheduler {
 
     @Getter
     private final DefaultThreadPoolExecutor executor;
+    private List<Task> waitingTasks = new CopyOnWriteArrayList<>();
+    private Thread loopThread;
+    private boolean isNeedRun = true;
 
     public WindowTaskScheduler(DefaultThreadPoolExecutor executor) {
         this.executor = executor;
     }
 
     @Override
+    public void start() {
+        int poolSize = this.executor.getCorePoolSize();
+        int activeCount = this.executor.getActiveCount();
+        int availableCount = poolSize - activeCount;
+        loopThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isNeedRun) {
+                    if(availableCount <= 0 || waitingTasks.isEmpty()) {
+                        continue;
+                    }
+                    Task task = waitingTasks.get(0);
+                    Task needExecute = null;
+                    if(task instanceof TreeTask treeTask) {
+                        needExecute = treeTask.findNeedExecuteTask();
+                        if(needExecute == null && treeTask.isFinished()) {
+                            waitingTasks.remove(0);
+                        } else if(needExecute != null) {
+                            executor.submit(needExecute);
+                        }
+                    } else {
+                        waitingTasks.remove(0);
+                        needExecute = task;
+                        executor.submit(needExecute);
+                    }
+                }
+            }
+        });
+        loopThread.start();
+    }
+
+    @Override
     public void submit(Task task) {
-        this.executor.submit(task);
+        this.waitingTasks.add(task);
     }
 
     @Override
@@ -41,6 +74,7 @@ public class WindowTaskScheduler implements TaskScheduler {
 
     @Override
     public void shutdown() {
+        this.isNeedRun = false;
         this.executor.shutdown();
     }
 

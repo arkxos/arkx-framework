@@ -79,4 +79,9 @@ public class DefaultTaskScheduler implements TaskScheduler {
         return this.executor.getRunningTaskGroups();
     }
 
+    @Override
+    public void start() {
+
+    }
+
 }
