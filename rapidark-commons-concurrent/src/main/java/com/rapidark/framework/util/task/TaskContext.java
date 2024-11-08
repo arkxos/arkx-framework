@@ -60,7 +60,7 @@ public final class TaskContext {
             && task.getTaskListeners() != null) {
             this.toResult(objs);
             for (TaskListener listener : task.getTaskListeners()) {
-                listener.onFinish(this, null);
+                listener.onExecuteFinish(this, null);
             }
         }
     }
@@ -73,7 +73,7 @@ public final class TaskContext {
         if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.ERROR)
             && task.getTaskListeners() != null) {
             for (TaskListener listener : task.getTaskListeners()) {
-                listener.onFinish(null, error);
+                listener.onExecuteFinish(null, error);
             }
         }
     }

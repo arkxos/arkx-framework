@@ -1,5 +1,6 @@
 package com.rapidark.framework.util.task;
 
+import com.rapidark.framework.util.task.callback.TaskCompletedListener;
 import com.rapidark.framework.util.task.exception.TaskException;
 import com.rapidark.framework.util.task.callback.TaskListener;
 import com.rapidark.framework.util.task.callback.Progress;
@@ -26,6 +27,9 @@ public abstract class AbstractTask implements Task {
     private Progress progress;// 进度回调函数
     @Getter
     private List<TaskListener> taskListeners = new ArrayList<>();
+
+    private List<TaskCompletedListener> taskCompletedListeners = new ArrayList<>();
+
     private final AtomicReference<TaskStatus> statusReference = new AtomicReference<>(TaskStatus.INIT);// 任务的状态
     protected Future<?> future;
 
@@ -102,6 +106,10 @@ public abstract class AbstractTask implements Task {
         taskListeners.add(listener);
     }
 
+    public void addCompletedListener(TaskCompletedListener taskCompletedListener) {
+        this.taskCompletedListeners.add(taskCompletedListener);
+    }
+
     @Override
     public boolean isFinished() {
         TaskStatus status = getStatus();
@@ -109,4 +117,12 @@ public abstract class AbstractTask implements Task {
             && status != TaskStatus.QUEUED
             && status != TaskStatus.RUNNING;
     }
+
+    @Override
+    public void triggerCompleted() {
+        for (TaskCompletedListener completedListener : taskCompletedListeners) {
+            completedListener.onCompleteFinish();
+        }
+    }
+
 }

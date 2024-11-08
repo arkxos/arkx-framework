@@ -100,6 +100,8 @@ public interface Task {
      */
     void await(long timeout, TimeUnit unit) throws TimeoutException;
 
+    void triggerCompleted();
+
     class Builder {
 
         protected TaskRunner taskRunner;
@@ -150,7 +152,7 @@ public interface Task {
          *
          * @param taskListener 任务完成时的回调
          * @return {@link Builder}
-         * @see TaskListener#onFinish(TaskContext, Exception)
+         * @see TaskListener#onExecuteFinish(TaskContext, Exception)
          */
         public Builder end(TaskListener taskListener) {
             this.taskListener = taskListener;

@@ -36,10 +36,14 @@ public class WindowTaskScheduler implements TaskScheduler {
                     Task needExecute = null;
                     if(task instanceof TreeTask treeTask) {
                         needExecute = treeTask.findNeedExecuteTask();
-                        if(needExecute == null && treeTask.isFinished()) {
+                        boolean taskCompleted = treeTask.isFinished();
+                        if(needExecute == null && taskCompleted) {
                             waitingTasks.remove(0);
                         } else if(needExecute != null) {
                             executor.submit(needExecute);
+                        }
+                        if(taskCompleted) {
+                            task.triggerCompleted();
                         }
                     } else {
                         waitingTasks.remove(0);
