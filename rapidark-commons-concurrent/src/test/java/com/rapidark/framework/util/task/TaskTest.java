@@ -37,7 +37,9 @@ public class TaskTest {
                 ctx.onSuccess("success");
                 ctx.onError("error", null);
             })
-            .progress(System.out::println)
+            .progress((task1, progress) -> {
+                System.out.println("progress: " + progress + ", " + task1);
+            })
             .end((ctx, error) -> {
                 System.out.println("execute task finished");
                 assertEquals("success", ctx.getResult().getString(0));

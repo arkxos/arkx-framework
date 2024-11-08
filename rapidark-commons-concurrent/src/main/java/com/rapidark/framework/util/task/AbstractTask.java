@@ -25,6 +25,7 @@ public abstract class AbstractTask implements Task {
     @Setter
     private String type;// 任务的类型
     private Progress progress;// 进度回调函数
+    private double progressPercent;
     @Getter
     private List<TaskListener> taskListeners = new ArrayList<>();
 

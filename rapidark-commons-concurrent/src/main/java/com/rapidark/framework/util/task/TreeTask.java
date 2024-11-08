@@ -1,12 +1,17 @@
 package com.rapidark.framework.util.task;
 
+import ch.qos.logback.core.util.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.PrintStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -18,6 +23,16 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
 
     protected TreeTask(String type, String id) {
         super(type, id);
+    }
+
+    // 默认耗时在子任务上，父任务只是负责拆分子任务
+    // 如果任务自身耗时较大，可调整此参数
+    public int getSelfTaskPercent() {
+        return 1;
+    }
+
+    public int getChildrenTaskPercent() {
+        return 100 - getSelfTaskPercent();
     }
 
     public void addChild(TreeTask child) {
@@ -117,4 +132,105 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
     public String toString() {
         return this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
     }
+
+    public double caculateProgressPercent() {
+        if(this.children.isEmpty()) {
+            return getProgressPercent();
+        }
+        for (TreeTask child : this.children) {
+            child.caculateProgressPercent();
+        }
+
+        int childrenSize = children.size();
+        List<TreeTask> notFinishedChildrens = this.children.stream().filter(item->!item.isFinished()).toList();
+        long notFinishCount = notFinishedChildrens.size();
+        if(notFinishCount == 0) {
+            this.setProgressPercent(100D);
+            return getProgressPercent();
+        }
+
+        // 默认自身执行占比为 1%，子任务占比为 99%
+        BigDecimal preChildPercent = div(getChildrenTaskPercent(), childrenSize);
+
+        BigDecimal totalPercent = new BigDecimal("0");
+        for (TreeTask notFinishedTask : notFinishedChildrens) {
+            double myProcessPercent = notFinishedTask.getProgressPercent();
+
+            BigDecimal currentSheetPercent = new BigDecimal("" + myProcessPercent).multiply(preChildPercent);
+            totalPercent = totalPercent.add(currentSheetPercent);
+        }
+        long finishdCount = childrenSize - notFinishCount;
+        totalPercent = totalPercent.add(preChildPercent.multiply(new BigDecimal(finishdCount))).setScale(2, RoundingMode.HALF_DOWN);
+        // 加上自身耗时占比
+        totalPercent = totalPercent.add(new BigDecimal(getSelfTaskPercent()));
+        double caculatedPercent = totalPercent.doubleValue();
+        // 理论上存在未完成子任务，总进度不会达到 100%，不排除子任务过多的精度问题
+        if(caculatedPercent > 100D) {
+            caculatedPercent = 99D;
+        }
+        this.setProgressPercent(caculatedPercent);
+        return getProgressPercent();
+    }
+
+    /**
+     * 求商运算(a/b)
+     * <p>
+     * 默认采用10位浮点精度计算 (用来解决浮点运算时精度丢失,不理想的情况)
+     * </p>
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static BigDecimal div(Number a, Number b) {
+        return getBigDecimal(a).divide(getBigDecimal(b), 4, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * 将数字或数字字符串封装成BigDecimal
+     *
+     * @param number
+     * @return
+     */
+    public static BigDecimal getBigDecimal(Object number) {
+        if (number == null) {
+            return new BigDecimal("0");
+        }
+        if (number instanceof String && StringUtil.isNullOrEmpty(number + "")) {
+            return new BigDecimal("0");
+        }
+        try {
+            if (number instanceof BigDecimal decimal) {
+                return decimal;
+            } else if (number instanceof Double || number instanceof Float) {
+                return new BigDecimal(number.toString());
+            } else if (number instanceof Integer integer) {
+                return new BigDecimal(integer);
+            } else if (number instanceof Long long1) {
+                return new BigDecimal(long1);
+            } else {
+                String val = number.toString();
+                if(isNumber(val)) {
+                    return new BigDecimal(val);
+                }
+                return new BigDecimal("0");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new BigDecimal("0");
+        }
+    }
+
+    private static Pattern numberPatter = Pattern.compile("^[\\d\\.E\\,\\+\\-]*$");
+
+    /**
+     * 是否是数字
+     */
+    public static boolean isNumber(String str) {
+        if (StringUtil.isNullOrEmpty(str)) {
+            return false;
+        }
+        return numberPatter.matcher(str).find();
+    }
+
 }

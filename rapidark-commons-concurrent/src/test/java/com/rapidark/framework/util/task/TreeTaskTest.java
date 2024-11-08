@@ -1,5 +1,6 @@
 package com.rapidark.framework.util.task;
 
+import com.rapidark.framework.util.task.callback.Progress;
 import com.rapidark.framework.util.task.callback.TaskCompletedListener;
 import com.rapidark.framework.util.task.callback.TaskListener;
 import org.junit.jupiter.api.AfterAll;
@@ -46,13 +47,26 @@ public class TreeTaskTest {
         analyzeFilesTask.await();
 
         analyzeFilesTask.addListener(new TaskListener() {
-
             @Override
             public void onExecuteFinish(TaskContext ctx, Exception error) {
                 System.out.println("内部执行完成");
                 analyzeFilesTask.print();
-            }
 
+                for (TreeTask child : analyzeFilesTask.getChildren()) {
+                    child.setProgress(new Progress() {
+                        @Override
+                        public void call(Task task, double progress) {
+                            System.out.println("====[" + progress + "]" + task.toString());
+                        }
+                    });
+                }
+            }
+        });
+        analyzeFilesTask.setProgress(new Progress() {
+            @Override
+            public void call(Task task, double progress) {
+                System.out.println("total[" + progress + "]" + task.toString());
+            }
         });
         analyzeFilesTask.addCompletedListener(new TaskCompletedListener() {
 

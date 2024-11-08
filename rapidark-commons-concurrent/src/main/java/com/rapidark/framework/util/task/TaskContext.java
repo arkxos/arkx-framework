@@ -51,7 +51,7 @@ public final class TaskContext {
 
     public void onProgress(int progress) {
         if (task.getProgress() != null) {
-            task.getProgress().call(progress);
+            task.getProgress().call(task, progress);
         }
     }
 

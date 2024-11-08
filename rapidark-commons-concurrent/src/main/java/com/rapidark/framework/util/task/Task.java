@@ -45,6 +45,8 @@ public interface Task {
      */
     Progress getProgress();
 
+    double getProgressPercent();
+
     /**
      * 获取任务创建时间
      *

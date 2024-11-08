@@ -5,6 +5,8 @@ import lombok.Getter;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -33,10 +35,18 @@ public class WindowTaskScheduler implements TaskScheduler {
                         continue;
                     }
                     Task task = waitingTasks.get(0);
-                    Task needExecute = null;
+                    Task needExecute;
                     if(task instanceof TreeTask treeTask) {
                         needExecute = treeTask.findNeedExecuteTask();
+
                         boolean taskCompleted = treeTask.isFinished();
+
+                        if(taskCompleted) {
+                            System.out.println("------------");
+                        }
+                        // 此线程任务很轻，在此计算任务进度并触发进度监控
+                        caculateTaskPercentAndNotifice(treeTask);
+
                         if(needExecute == null && taskCompleted) {
                             waitingTasks.remove(0);
                         } else if(needExecute != null) {
@@ -54,6 +64,35 @@ public class WindowTaskScheduler implements TaskScheduler {
             }
         });
         loopThread.start();
+    }
+
+    private Map<String, Double> taskProgressPercentMap = new ConcurrentHashMap<>();
+    private void caculateTaskPercentAndNotifice(TreeTask treeTask) {
+        treeTask.caculateProgressPercent();
+        comparePercentListener(treeTask);
+    }
+
+    private void comparePercentListener(TreeTask treeTask) {
+        String taskId = treeTask.getId();
+        if(!taskProgressPercentMap.containsKey(taskId)) {
+            taskProgressPercentMap.put(taskId, treeTask.getProgressPercent());
+            triggerPercentListener(treeTask);
+        } else {
+            boolean isSame = taskProgressPercentMap.get(taskId) == treeTask.getProgressPercent();
+            if(!isSame) {
+                taskProgressPercentMap.put(taskId, treeTask.getProgressPercent());
+                triggerPercentListener(treeTask);
+            }
+        }
+        for (TreeTask child : treeTask.getChildren()) {
+            comparePercentListener(child);
+        }
+    }
+
+    private void triggerPercentListener(TreeTask treeTask) {
+        if(treeTask.getProgress() != null) {
+            treeTask.getProgress().call(treeTask, treeTask.getProgressPercent());
+        }
     }
 
     @Override
