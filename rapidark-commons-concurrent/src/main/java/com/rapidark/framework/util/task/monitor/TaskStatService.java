@@ -1,4 +1,4 @@
-package com.rapidark.framework.util.task.report;
+package com.rapidark.framework.util.task.monitor;
 
 import com.rapidark.framework.util.task.util.Json;
 import com.rapidark.framework.util.task.TaskEngine;

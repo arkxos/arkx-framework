@@ -1,4 +1,4 @@
-package com.rapidark.framework.util.task.report;
+package com.rapidark.framework.util.task.monitor;
 
 import com.rapidark.framework.util.task.util.Utils;
 import jakarta.servlet.ServletException;

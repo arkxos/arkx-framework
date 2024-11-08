@@ -2,6 +2,7 @@ package com.rapidark.framework.util.task;
 
 import com.rapidark.framework.util.task.execute.BaseTaskExecutor;
 import com.rapidark.framework.util.task.execute.ResultTaskExecutor;
+import com.rapidark.framework.util.task.execute.TreeTaskExecutor;
 
 import java.util.Collection;
 import java.util.Deque;
@@ -20,7 +21,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
+public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 
     // 统计运行的任务总数量
     private final AtomicLong taskNumber = new AtomicLong(0);
@@ -52,7 +53,7 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
             bTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
             execute(future);
         } else if (task instanceof TreeTask treeTask) {
-            BaseTaskExecutor baseTaskExecutor = new BaseTaskExecutor(treeTask);
+            TreeTaskExecutor baseTaskExecutor = new TreeTaskExecutor(treeTask);
             RunnableFuture<Object> future = newTaskFor(treeTask, baseTaskExecutor);
             treeTask.setFuture(future);
             treeTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
@@ -64,6 +65,7 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
             bTask.setStatus(TaskStatus.INIT, TaskStatus.QUEUED);
             execute(future);
         }
+
         runningQueue.offer(task);
     }
 
@@ -112,26 +114,26 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 //    }
 
     // 获取正在运行的任务，包含任务组中的任务
-    protected final List<Task> getRunningTasks() {
+    public final List<Task> getRunningTasks() {
         return new LinkedList<>(runningQueue);
     }
 
     // 获取正在运行的任务总量，包含任务组中的任务
-    protected int getRunningNumberofTask() {
+    public int getRunningNumberofTask() {
         return runningQueue.size();
     }
 
     // 获取已经完成的任务总量，包含任务组中的任务
-    protected long getCompletedNumberOfTask() {
+    public long getCompletedNumberOfTask() {
         return completedTaskNumber.get();
     }
 
     // 获取执行的任务总量
-    protected long getTotalNumberOfTask() {
+    public long getTotalNumberOfTask() {
         return taskNumber.get();
     }
 
-    protected void addTaskGroup(TaskGroup taskGroup) {
+    public void addTaskGroup(TaskGroup taskGroup) {
         this.runningTaskGrous.put(taskGroup.getId(), taskGroup);
     }
 
@@ -140,7 +142,7 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     // 获取正在运行的任务组
-    protected Collection<TaskGroup> getRunningTaskGroups() {
+    public Collection<TaskGroup> getRunningTaskGroups() {
         return new LinkedList<>(this.runningTaskGrous.values());
     }
 

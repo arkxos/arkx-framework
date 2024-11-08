@@ -1,5 +1,6 @@
 package com.rapidark.framework.util.task;
 
+import com.rapidark.framework.util.task.schedule.DefaultTaskScheduler;
 import com.rapidark.framework.util.task.util.Assert;
 
 import java.util.Collection;
@@ -26,10 +27,14 @@ public final class TaskEngine {
 
     private final AtomicLong taskGroupNumber = new AtomicLong(0);
 
-    private final DefaultThreadPoolExecutor executor;
+    private TaskScheduler taskScheduler;
 
     private TaskEngine(DefaultThreadPoolExecutor executor) {
-        this.executor = executor;
+        this(new DefaultTaskScheduler(executor));
+    }
+
+    private TaskEngine(TaskScheduler taskScheduler) {
+        this.taskScheduler = taskScheduler;
     }
 
     /**
@@ -50,7 +55,7 @@ public final class TaskEngine {
     public void commit(Task task) {
         Assert.notNull(task);
 
-        executor.submit(task);
+        taskScheduler.submit(task);
     }
 
     /**
@@ -69,8 +74,8 @@ public final class TaskEngine {
      * @return {@link TaskGroup}
      */
     public TaskGroup prepareGroup(String name) {
-        TaskGroup taskGroup = new TaskGroup(name, executor);
-        executor.addTaskGroup(taskGroup);
+        TaskGroup taskGroup = new TaskGroup(name, this.taskScheduler);
+        taskScheduler.addTaskGroup(taskGroup);
         return taskGroup;
     }
 
@@ -107,7 +112,7 @@ public final class TaskEngine {
         Assert.notNull(executor);
 
         ResultTask<T> task = new ResultBaseTask<>(type, id, executor);
-        this.executor.submit(task);
+        this.taskScheduler.submit(task);
         return task;
     }
 
@@ -118,7 +123,7 @@ public final class TaskEngine {
      * @see ThreadPoolExecutor#isShutdown()
      */
     public boolean isShutdown() {
-        return this.executor.isShutdown();
+        return this.taskScheduler.isShutdown();
     }
 
     /**
@@ -127,7 +132,7 @@ public final class TaskEngine {
      * @see ThreadPoolExecutor#shutdown()
      */
     public void shutdown() {
-        this.executor.shutdown();
+        this.taskScheduler.shutdown();
     }
 
     /**
@@ -141,8 +146,8 @@ public final class TaskEngine {
      * @since 1.2.0
      */
     public boolean shutdown(long timeout, TimeUnit unit) throws InterruptedException {
-        this.executor.shutdown();
-        return this.executor.awaitTermination(timeout, unit);
+        this.taskScheduler.shutdown();
+        return this.taskScheduler.awaitTermination(timeout, unit);
     }
 
     /**
@@ -152,29 +157,29 @@ public final class TaskEngine {
      * @since 1.2.0
      */
     public void shutdownNow() {
-        this.executor.shutdownNow();
+        this.taskScheduler.shutdownNow();
     }
 
     public List<Task> getRunningTasks() {
-        return executor.getRunningTasks();
+        return taskScheduler.getRunningTasks();
     }
 
     public int getRunningNumberofTask() {
-        return this.executor.getRunningNumberofTask();
+        return this.taskScheduler.getRunningNumberofTask();
     }
 
     // 获取已经完成的任务总量，包含任务组中的任务
     public long getCompletedNumberOfTask() {
-        return this.executor.getCompletedNumberOfTask();
+        return this.taskScheduler.getCompletedNumberOfTask();
     }
 
     // 获取执行的任务总量
     public long getTotalNumberOfTask() {
-        return this.executor.getTotalNumberOfTask();
+        return this.taskScheduler.getTotalNumberOfTask();
     }
 
     public Collection<TaskGroup> getRunningTaskGroups() {
-        return this.executor.getRunningTaskGroups();
+        return this.taskScheduler.getRunningTaskGroups();
     }
 
     public static class Builder {

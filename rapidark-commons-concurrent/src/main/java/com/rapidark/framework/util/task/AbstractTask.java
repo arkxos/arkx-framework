@@ -5,6 +5,8 @@ import com.rapidark.framework.util.task.callback.Callback;
 import com.rapidark.framework.util.task.callback.Progress;
 import com.rapidark.framework.util.task.util.Assert;
 import com.rapidark.framework.util.task.util.Utils;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -12,9 +14,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
+@Setter
+@Getter
 public abstract class AbstractTask implements Task {
 
     private String id;// 任务的 ID
+    @Setter
     private String type;// 任务的类型
     private Progress progress;// 进度回调函数
     private Callback callback;
@@ -22,6 +27,7 @@ public abstract class AbstractTask implements Task {
     protected Future<?> future;
 
     private final long createTime;
+
     private long startTime;
     private long endTime;
 
@@ -39,38 +45,6 @@ public abstract class AbstractTask implements Task {
         createTime = System.currentTimeMillis();
     }
 
-    @Override
-    public long createdAt() {
-        return createTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    @Override
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
-
-    @Override
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Override
-    public String getType() {
-        return this.type;
-    }
-
     public final boolean setStatus(TaskStatus expect, TaskStatus update) {
         Assert.notNull(statusReference);
 
@@ -84,37 +58,6 @@ public abstract class AbstractTask implements Task {
     @Override
     public TaskStatus getStatus() {
         return this.statusReference.get();
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    public void setProgress(Progress progress) {
-        this.progress = progress;
-    }
-
-    @Override
-    public Progress getProgress() {
-        return this.progress;
-    }
-
-    public void setCallback(Callback callback) {
-        this.callback = callback;
-    }
-
-    @Override
-    public Callback getCallback() {
-        return callback;
-    }
-
-    public void setFuture(Future<?> future) {
-        this.future = future;
     }
 
     @Override
