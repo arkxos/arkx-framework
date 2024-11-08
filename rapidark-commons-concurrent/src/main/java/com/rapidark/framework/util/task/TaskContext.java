@@ -1,5 +1,6 @@
 package com.rapidark.framework.util.task;
 
+import com.rapidark.framework.util.task.callback.TaskListener;
 import com.rapidark.framework.util.task.exception.ExecutionException;
 import com.tuples.Tuple;
 
@@ -56,9 +57,11 @@ public final class TaskContext {
 
     public void onSuccess(Object... objs) {
         if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.SUCCESS)
-            && task.getCallback() != null) {
+            && task.getTaskListeners() != null) {
             this.toResult(objs);
-            task.getCallback().call(this, null);
+            for (TaskListener listener : task.getTaskListeners()) {
+                listener.onFinish(this, null);
+            }
         }
     }
 
@@ -68,8 +71,10 @@ public final class TaskContext {
 
     public void onError(Exception error) {
         if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.ERROR)
-            && task.getCallback() != null) {
-            task.getCallback().call(null, error);
+            && task.getTaskListeners() != null) {
+            for (TaskListener listener : task.getTaskListeners()) {
+                listener.onFinish(null, error);
+            }
         }
     }
 

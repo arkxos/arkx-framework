@@ -1,13 +1,15 @@
 package com.rapidark.framework.util.task;
 
 import com.rapidark.framework.util.task.exception.TaskException;
-import com.rapidark.framework.util.task.callback.Callback;
+import com.rapidark.framework.util.task.callback.TaskListener;
 import com.rapidark.framework.util.task.callback.Progress;
 import com.rapidark.framework.util.task.util.Assert;
 import com.rapidark.framework.util.task.util.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +24,8 @@ public abstract class AbstractTask implements Task {
     @Setter
     private String type;// 任务的类型
     private Progress progress;// 进度回调函数
-    private Callback callback;
+    @Getter
+    private List<TaskListener> taskListeners = new ArrayList<>();
     private final AtomicReference<TaskStatus> statusReference = new AtomicReference<>(TaskStatus.INIT);// 任务的状态
     protected Future<?> future;
 
@@ -94,4 +97,9 @@ public abstract class AbstractTask implements Task {
             }
         }
     }
+
+    public void addListener(TaskListener listener) {
+        taskListeners.add(listener);
+    }
+
 }

@@ -1,9 +1,10 @@
 package com.rapidark.framework.util.task;
 
-import com.rapidark.framework.util.task.callback.Callback;
+import com.rapidark.framework.util.task.callback.TaskListener;
 import com.rapidark.framework.util.task.callback.Progress;
 import com.rapidark.framework.util.task.util.Assert;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -66,13 +67,13 @@ public interface Task {
     /**
      * 获取当前任务设置的完成时的回调，可能为 {@code null}
      *
-     * @return {@link Callback}
+     * @return {@link TaskListener}
      * @see TaskContext#onSuccess(Object...)
      * @see TaskContext#onError(Exception)
      * @see TaskContext#onError(String, Object)
-     * @see Callback
+     * @see TaskListener
      */
-    Callback getCallback();
+    List<TaskListener> getTaskListeners();
 
     /**
      * 取消当前任务
@@ -103,7 +104,7 @@ public interface Task {
         protected String type;
         protected String id;
         protected Progress progress;
-        protected Callback callback;
+        protected TaskListener taskListener;
 
         protected Builder(TaskRunner taskRunner) {
             Assert.notNull(taskRunner);
@@ -145,19 +146,19 @@ public interface Task {
          * 并且回调函数的第二个参数不为 {@code null}
          * </p>
          *
-         * @param callback 任务完成时的回调
+         * @param taskListener 任务完成时的回调
          * @return {@link Builder}
-         * @see Callback#call(TaskContext, Exception)
+         * @see TaskListener#onFinish(TaskContext, Exception)
          */
-        public Builder end(Callback callback) {
-            this.callback = callback;
+        public Builder end(TaskListener taskListener) {
+            this.taskListener = taskListener;
             return this;
         }
 
         public Task build() {
             BaseTask task = new BaseTask(this.type, this.id, taskRunner);
             task.setProgress(progress);
-            task.setCallback(callback);
+            task.addListener(taskListener);
             return task;
         }
 

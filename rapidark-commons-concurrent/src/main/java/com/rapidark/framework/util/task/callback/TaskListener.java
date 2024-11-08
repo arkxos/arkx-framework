@@ -3,8 +3,8 @@ package com.rapidark.framework.util.task.callback;
 import com.rapidark.framework.util.task.TaskContext;
 
 @FunctionalInterface
-public interface Callback {
+public interface TaskListener {
 
-    void call(TaskContext ctx, Exception error);
+    void onFinish(TaskContext ctx, Exception error);
 
 }

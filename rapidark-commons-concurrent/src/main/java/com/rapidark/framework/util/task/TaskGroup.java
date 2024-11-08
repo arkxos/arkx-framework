@@ -136,7 +136,7 @@ public final class TaskGroup {
         public Item build() {
             Item item = new Item(this.type, this.id, taskRunner, taskGroup);
             item.setProgress(this.progress);
-            item.setCallback(this.callback);
+            item.addListener(this.taskListener);
             return item;
         }
     }
