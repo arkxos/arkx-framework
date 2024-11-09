@@ -27,16 +27,25 @@ public class WindowTaskScheduler implements TaskScheduler {
         int poolSize = this.executor.getCorePoolSize();
         int activeCount = this.executor.getActiveCount();
         int availableCount = poolSize - activeCount;
+
+        System.currentTimeMillis();
+
         loopThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                long lastThreadCheckTime = System.currentTimeMillis();
                 while (isNeedRun) {
                     if(availableCount <= 0 || waitingTasks.isEmpty()) {
                         continue;
                     }
                     Task task = waitingTasks.get(0);
+
                     Task needExecute;
                     if(task instanceof TreeTask treeTask) {
+                        if (System.currentTimeMillis() - lastThreadCheckTime > 60_000) {// 3秒查一次
+                            treeTask.print();
+                        }
+
                         needExecute = treeTask.findNeedExecuteTask();
 
                         boolean taskCompleted = treeTask.isFinished();
