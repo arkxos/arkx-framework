@@ -28,6 +28,7 @@ public abstract class AbstractTask implements Task {
     private double progressPercent;
     @Getter
     private List<TaskListener> taskListeners = new ArrayList<>();
+    private boolean hasTriggerCompleted = false;
 
     private List<TaskCompletedListener> taskCompletedListeners = new ArrayList<>();
 
@@ -121,9 +122,16 @@ public abstract class AbstractTask implements Task {
 
     @Override
     public void triggerCompleted() {
-        for (TaskCompletedListener completedListener : taskCompletedListeners) {
-            completedListener.onCompleteFinish();
+        if(!isFinished()) {
+            return;
         }
+        if(!hasTriggerCompleted) {
+            hasTriggerCompleted = true;
+            for (TaskCompletedListener completedListener : taskCompletedListeners) {
+                completedListener.onCompleteFinish();
+            }
+        }
+
     }
 
 }

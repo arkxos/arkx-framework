@@ -137,6 +137,15 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
         return "[" + this.getProgressPercent() + "%]" + this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
     }
 
+    @Override
+    public void triggerCompleted() {
+        super.triggerCompleted();
+
+        for (TreeTask child : children) {
+            child.triggerCompleted();
+        }
+    }
+
     public double caculateProgressPercent() {
         if(this.children.isEmpty()) {
             return getProgressPercent();

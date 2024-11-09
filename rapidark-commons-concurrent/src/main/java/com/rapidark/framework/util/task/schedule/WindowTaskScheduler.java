@@ -50,20 +50,17 @@ public class WindowTaskScheduler implements TaskScheduler {
 
                         boolean taskCompleted = treeTask.isFinished();
 
-                        if(taskCompleted) {
-                            System.out.println("------------");
-                        }
-                        // 此线程任务很轻，在此计算任务进度并触发进度监控
-                        caculateTaskPercentAndNotifice(treeTask);
-
                         if(needExecute == null && taskCompleted) {
                             waitingTasks.remove(0);
                         } else if(needExecute != null) {
                             executor.submit(needExecute);
                         }
-                        if(taskCompleted) {
-                            task.triggerCompleted();
-                        }
+
+
+                        task.triggerCompleted();
+
+                        // 此线程任务很轻，在此计算任务进度并触发进度监控
+                        caculateTaskPercentAndNotifice(treeTask);
                     } else {
                         waitingTasks.remove(0);
                         needExecute = task;
