@@ -97,9 +97,13 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
 //    }
 
     public void print(PrintStream os) {
+        os.print(toTreeString());
+    }
+
+    public String toTreeString() {
         StringBuilder sb = new StringBuilder();
         traversePreOrder(sb, "", "", this, true);
-        os.print(sb.toString());
+        return sb.toString();
     }
 
     public void traversePreOrder(StringBuilder sb, String padding, String pointer, TreeTask node, boolean isLastNode) {
@@ -130,7 +134,7 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
+        return "[" + this.getProgressPercent() + "%]" + this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
     }
 
     public double caculateProgressPercent() {
