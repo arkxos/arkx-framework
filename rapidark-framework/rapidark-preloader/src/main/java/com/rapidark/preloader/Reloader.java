@@ -2,7 +2,7 @@ package com.rapidark.preloader;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 import com.rapidark.preloader.facade.FilterFacade;
 import com.rapidark.preloader.facade.HttpSessionListenerFacade;

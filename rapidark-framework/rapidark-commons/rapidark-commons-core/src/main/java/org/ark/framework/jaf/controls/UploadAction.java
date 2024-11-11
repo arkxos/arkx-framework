@@ -2,9 +2,8 @@ package org.ark.framework.jaf.controls;
 
 import java.util.ArrayList;
 
-import org.apache.commons.fileupload.FileItem;
-
 import com.rapidark.framework.commons.util.ObjectUtil;
+import org.apache.commons.fileupload2.core.FileItem;
 
 
 /**

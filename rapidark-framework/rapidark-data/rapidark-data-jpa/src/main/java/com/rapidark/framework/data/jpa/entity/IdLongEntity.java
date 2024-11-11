@@ -2,8 +2,8 @@ package com.rapidark.framework.data.jpa.entity;
 
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
 @Data
 @MappedSuperclass

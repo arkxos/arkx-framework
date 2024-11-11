@@ -6,7 +6,7 @@ import com.rapidark.cloud.gateway.formwork.base.BaseService;
 import com.rapidark.cloud.gateway.manage.repository.ApiDocRepository;
 import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 /**
  * @Description 网关路由API接口文档业务实现类

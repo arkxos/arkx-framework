@@ -2,7 +2,7 @@ package com.rapidark.framework.cosyui.web;
 
 import java.util.Enumeration;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.framework.commons.collection.CaseIgnoreMapx;
 import com.rapidark.framework.commons.collection.Mapx;

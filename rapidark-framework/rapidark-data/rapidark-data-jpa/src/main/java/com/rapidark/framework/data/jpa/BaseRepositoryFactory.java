@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -19,6 +19,7 @@ import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.aop.AfterAdvice;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.OrderUtils;
+import org.springframework.data.jpa.repository.query.QueryRewriterProvider;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.data.repository.core.RepositoryInformation;
@@ -56,7 +57,8 @@ public class BaseRepositoryFactory<T extends BaseEntity, I extends Serializable>
     		QueryMethodEvaluationContextProvider evaluationContextProvider) {
         return Optional.of(
         		TemplateQueryLookupStrategy.create(sqlToyLazyDao,
-        				entityManager, key, extractor, evaluationContextProvider));
+        				entityManager, key, extractor, evaluationContextProvider,
+						QueryRewriterProvider.simple()));
     }
 	
 	/**

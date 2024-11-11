@@ -3,17 +3,15 @@ package org.ark.framework.jaf.zhtml;
 import java.io.IOException;
 import java.util.Enumeration;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.el.ExpressionEvaluator;
-import javax.servlet.jsp.el.VariableResolver;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
 
 /**
  * @class org.ark.framework.jaf.zhtml.ZhtmlTesterPageContext
@@ -132,11 +130,18 @@ public class ZhtmlTesterPageContext extends PageContext {
 		return null;
 	}
 
-	public ExpressionEvaluator getExpressionEvaluator() {
+	@Override
+	public jakarta.el.ELContext getELContext() {
 		return null;
 	}
 
-	public VariableResolver getVariableResolver() {
-		return null;
-	}
+
+//
+//	public ExpressionEvaluator getExpressionEvaluator() {
+//		return null;
+//	}
+//
+//	public VariableResolver getVariableResolver() {
+//		return null;
+//	}
 }

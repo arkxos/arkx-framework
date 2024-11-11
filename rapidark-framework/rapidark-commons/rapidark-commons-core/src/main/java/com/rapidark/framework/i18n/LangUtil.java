@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.framework.Account;
 import com.rapidark.framework.Config;

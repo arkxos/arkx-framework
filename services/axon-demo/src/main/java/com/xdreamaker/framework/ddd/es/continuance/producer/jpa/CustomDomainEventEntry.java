@@ -6,8 +6,8 @@ import org.axonframework.eventhandling.AbstractSequencedDomainEventEntry;
 import org.axonframework.eventhandling.DomainEventMessage;
 import org.axonframework.serialization.Serializer;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * @author darkness

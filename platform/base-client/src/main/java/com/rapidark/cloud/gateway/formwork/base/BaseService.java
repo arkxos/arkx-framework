@@ -11,8 +11,8 @@ import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;

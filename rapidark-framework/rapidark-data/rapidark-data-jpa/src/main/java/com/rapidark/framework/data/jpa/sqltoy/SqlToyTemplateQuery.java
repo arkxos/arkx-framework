@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import com.rapidark.framework.data.jpa.entity.Status;
 import org.apache.commons.beanutils.BeanUtils;

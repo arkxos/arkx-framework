@@ -1,6 +1,6 @@
 package org.ark.framework.jaf.tag;
 
-import javax.servlet.jsp.tagext.Tag;
+import jakarta.servlet.jsp.tagext.Tag;
 
 import org.ark.framework.jaf.IPageEnableAction;
 import org.ark.framework.orm.SchemaSet;

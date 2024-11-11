@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.framework.Member.MemberData;
 import com.rapidark.framework.commons.util.LogUtil;

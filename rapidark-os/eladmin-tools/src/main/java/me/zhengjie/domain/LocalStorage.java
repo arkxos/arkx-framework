@@ -21,7 +21,7 @@ import lombok.*;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 /**

@@ -7,7 +7,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import com.rapidark.framework.Account.UserData;
 import com.rapidark.framework.commons.collection.ConcurrentMapx;

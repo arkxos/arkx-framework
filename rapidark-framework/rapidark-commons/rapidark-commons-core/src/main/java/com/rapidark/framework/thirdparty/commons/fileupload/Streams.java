@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.fileupload.InvalidFileNameException;
 import org.apache.commons.io.IOUtils;
 
 
@@ -131,7 +130,7 @@ public final class Streams {
 
     /**
      * This convenience method allows to read a
-     * {@link org.apache.commons.fileupload.FileItemStream}'s
+     * {@link org.apache.commons.fileupload2.FileItemStream}'s
      * content into a string. The platform's default character encoding
      * is used for converting bytes into characters.
      *
@@ -148,7 +147,7 @@ public final class Streams {
 
     /**
      * This convenience method allows to read a
-     * {@link org.apache.commons.fileupload.FileItemStream}'s
+     * {@link org.apache.commons.fileupload2.FileItemStream}'s
      * content into a string, using the given character encoding.
      *
      * @param inputStream The input stream to read.
@@ -188,7 +187,7 @@ public final class Streams {
                         break;
                 }
             }
-            throw new InvalidFileNameException(fileName,
+            throw new RuntimeException(fileName+
                     "Invalid file name: " + sb);
         }
         return fileName;

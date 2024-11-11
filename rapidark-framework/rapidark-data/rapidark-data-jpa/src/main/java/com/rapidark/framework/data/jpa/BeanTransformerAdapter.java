@@ -15,7 +15,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.transform.ResultTransformer;
-import org.hibernate.type.BlobType;
+//import org.hibernate.type.BlobType;
 import org.hibernate.type.descriptor.java.DataHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -26,7 +26,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.data.convert.JodaTimeConverters;
+//import org.springframework.data.convert.JodaTimeConverters;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.util.StringUtils;
@@ -44,13 +44,13 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
 
     static {
         BeanTransformerAdapter.conversionService = new DefaultConversionService();
-        Collection<Converter<?, ?>> convertersToRegister = JodaTimeConverters.getConvertersToRegister();
+//        Collection<Converter<?, ?>> convertersToRegister = JodaTimeConverters.getConvertersToRegister();
 
-        for (Converter<?, ?> converter : convertersToRegister) {
-            BeanTransformerAdapter.conversionService.addConverter(converter);
-        }
+//        for (Converter<?, ?> converter : convertersToRegister) {
+//            BeanTransformerAdapter.conversionService.addConverter(converter);
+//        }
         BeanTransformerAdapter.conversionService.addConverter(ClobToStringConverter.INSTANCE);
-        BeanTransformerAdapter.conversionService.addConverter(BlobToStringConverter.INSTANCE);
+//        BeanTransformerAdapter.conversionService.addConverter(BlobToStringConverter.INSTANCE);
     }
 
     /**
@@ -324,13 +324,13 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
         }
     }
 
-    enum BlobToStringConverter implements Converter<Blob, String> {
-
-        INSTANCE;
-
-        @Override
-        public String convert(Blob source) {
-            return BlobType.INSTANCE.toString(source);
-        }
-    }
+//    enum BlobToStringConverter implements Converter<Blob, String> {
+//
+//        INSTANCE;
+//
+//        @Override
+//        public String convert(Blob source) {
+//            return BlobType.INSTANCE.toString(source);
+//        }
+//    }
 }

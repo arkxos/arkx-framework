@@ -2,7 +2,7 @@ package com.rapidark.framework.data.jpa;
 
 import java.io.Serializable;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.beans.BeansException;

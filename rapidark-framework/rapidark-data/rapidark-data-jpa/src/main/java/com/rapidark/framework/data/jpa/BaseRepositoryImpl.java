@@ -13,18 +13,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 
 import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import com.rapidark.framework.data.jpa.entity.*;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.persister.entity.SingleTableEntityPersister;
-import org.hibernate.query.internal.NativeQueryImpl;
+import org.hibernate.query.sql.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessException;
@@ -304,7 +305,7 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 			}
 		}
 		
-        query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);  
+        query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		List rows = query.getResultList();  
 		return rows;
 	}

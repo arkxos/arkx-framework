@@ -8,9 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.rapidark.framework.Config;
 import com.rapidark.framework.Current;

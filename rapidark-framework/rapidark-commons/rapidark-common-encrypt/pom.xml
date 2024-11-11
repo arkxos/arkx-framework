@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark2.framework</groupId>
+        <groupId>com.rapidark.framework</groupId>
         <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
@@ -20,7 +20,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -43,11 +43,11 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.0.0</version>
+		</dependency>
 <!--        <dependency>-->
 <!--            <groupId>cn.hutool</groupId>-->
 <!--            <artifactId>hutool-crypto</artifactId>-->
@@ -58,7 +58,7 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>

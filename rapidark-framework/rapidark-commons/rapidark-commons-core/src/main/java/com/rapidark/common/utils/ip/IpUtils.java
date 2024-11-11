@@ -3,7 +3,7 @@ package com.rapidark.common.utils.ip;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.common.utils.StringUtils;
 import com.rapidark.common.utils.html.EscapeUtil;

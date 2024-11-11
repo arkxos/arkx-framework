@@ -10,8 +10,8 @@ package com.rapidark.framework.data.jpa.repository;
 //import java.util.Optional;
 //import java.util.concurrent.ConcurrentHashMap;
 //
-//import javax.persistence.Entity;
-//import javax.persistence.EntityManager;
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.EntityManager;
 //
 //import org.aopalliance.intercept.MethodInterceptor;
 //import org.aopalliance.intercept.MethodInvocation;

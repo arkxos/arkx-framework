@@ -14,8 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.persistence.EntityManager;
-import javax.persistence.metamodel.EntityType;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.metamodel.EntityType;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

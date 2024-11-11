@@ -11,7 +11,7 @@ package com.rapidark.framework.data.jpa.repository;
 //import java.util.Map;
 //import java.util.Optional;
 //
-//import javax.persistence.EntityManager;
+//import jakarta.persistence.EntityManager;
 //
 //import org.springframework.beans.BeanUtils;
 //import org.springframework.data.jpa.repository.support.JpaEntityInformation;

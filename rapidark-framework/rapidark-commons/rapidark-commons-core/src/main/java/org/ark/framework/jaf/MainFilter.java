@@ -2,15 +2,11 @@ package org.ark.framework.jaf;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.ark.framework.extend.actions.AfterMainFilterAction;
 import org.ark.framework.jaf.zhtml.ZhtmlCompileException;
@@ -207,7 +203,8 @@ public class MainFilter implements Filter {
 	/**
 	 * 过滤请求
 	 */
-	public void doFilter(javax.servlet.ServletRequest req, javax.servlet.ServletResponse rep, javax.servlet.FilterChain chain) throws IOException, ServletException { // Byte
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse rep, FilterChain chain) throws IOException, ServletException { // Byte
 																																										// code:
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) rep;

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark2.framework</groupId>
+        <groupId>com.rapidark.framework</groupId>
         <artifactId>rapidark-framework</artifactId>
         <version>${revision}</version>
     </parent>
@@ -50,7 +50,7 @@
             <version>${hutool.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>

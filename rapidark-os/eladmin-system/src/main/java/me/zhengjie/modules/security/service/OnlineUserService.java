@@ -27,8 +27,8 @@ import me.zhengjie.modules.security.service.dto.OnlineUserDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 

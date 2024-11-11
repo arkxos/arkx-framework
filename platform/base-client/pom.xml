@@ -13,7 +13,7 @@
     <description>平台基础服务接口</description>
     <dependencies>
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -59,7 +59,7 @@
 <!--            <scope>provided</scope>-->
 <!--        </dependency>-->
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-data-jpa</artifactId>
             <version>${revision}</version>
             <scope>compile</scope>

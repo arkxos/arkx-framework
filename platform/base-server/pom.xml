@@ -88,7 +88,7 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-ip2region-starter</artifactId>
             <version>${revision}</version>
             <scope>compile</scope>

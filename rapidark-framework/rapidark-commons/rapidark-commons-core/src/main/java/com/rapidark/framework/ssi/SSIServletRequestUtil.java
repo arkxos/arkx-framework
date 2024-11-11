@@ -1,6 +1,6 @@
 package com.rapidark.framework.ssi;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.framework.commons.util.StringUtil;
 

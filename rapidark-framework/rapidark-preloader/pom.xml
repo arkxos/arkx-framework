@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.rapidark2.framework</groupId>
+		<groupId>com.rapidark.framework</groupId>
 		<artifactId>rapidark-framework</artifactId>
 		<version>${revision}</version>
 	</parent>
@@ -22,9 +22,9 @@
 			<scope>test</scope>
 		</dependency>
 	  <dependency>
-		  <groupId>javax.servlet</groupId>
-		  <artifactId>javax.servlet-api</artifactId>
-		  <scope>provided</scope>
+		  <groupId>jakarta.servlet</groupId>
+		  <artifactId>jakarta.servlet-api</artifactId>
+		  <version>6.0.0</version>
 	  </dependency>
 	  <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-all -->
 	  <dependency>

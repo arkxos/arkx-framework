@@ -3,8 +3,8 @@ package com.rapidark.framework.cosyui.tag;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.tagext.BodyTag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.jsp.tagext.BodyTag;
 
 import com.rapidark.framework.FrameworkPlugin;
 import com.rapidark.framework.commons.util.ObjectUtil;

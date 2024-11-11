@@ -1,25 +1,22 @@
 package com.rapidark.framework.data.jpa;
 
 import java.beans.PropertyDescriptor;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
+import jakarta.persistence.Parameter;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
+
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.hibernate.transform.ResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.springframework.util.CollectionUtils;
@@ -51,9 +48,9 @@ public class QueryBuilder {
         return query.setResultTransformer(transformer);
     }
 
-    public static SQLQuery toSQLQuery(EntityManager em, String nativeQuery, Object beanOrMap) {
+    public static NativeQuery toSQLQuery(EntityManager em, String nativeQuery, Object beanOrMap) {
         Session session = em.unwrap(Session.class);
-        SQLQuery query = session.createSQLQuery(nativeQuery);
+		NativeQuery query = session.createNativeQuery(nativeQuery);
         setParams(query, beanOrMap);
         return query;
     }
@@ -90,10 +87,11 @@ public class QueryBuilder {
     }
 
     public static void setParams(Query query, Object beanOrMap) {
-        String[] nps = query.getNamedParameters();
-        if (nps != null) {
+		Set<Parameter<?>> nps = query.getParameters();//.getNamedParameters();
+		if (nps != null) {
             Map<String, Object> params = toParams(beanOrMap);
-            for (String key : nps) {
+            for (Parameter parameter : nps) {
+				String key = parameter.getName();
                 Object arg = params.get(key);
                 if (arg == null) {
                     query.setParameter(key, null);

@@ -2,8 +2,8 @@ package org.ark.framework.ssi;
 
 import java.io.ByteArrayOutputStream;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
 
 /**
  * @class org.ark.framework.ssi.ByteArrayServletOutputStream

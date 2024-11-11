@@ -1,6 +1,6 @@
 package com.rapidark.framework.extend;
 
-import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload2.core.FileItem;
 
 /**
  * @class org.ark.framework.extend.plugin.PluginInstaller

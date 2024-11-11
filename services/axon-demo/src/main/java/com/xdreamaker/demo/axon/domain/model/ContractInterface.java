@@ -1,6 +1,6 @@
 package com.xdreamaker.demo.axon.domain.model;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * @author darkness

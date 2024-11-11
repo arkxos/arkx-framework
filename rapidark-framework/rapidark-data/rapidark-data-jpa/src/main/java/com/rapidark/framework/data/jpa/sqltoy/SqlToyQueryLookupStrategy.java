@@ -2,13 +2,14 @@ package com.rapidark.framework.data.jpa.sqltoy;
 
 import java.lang.reflect.Method;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jpa.provider.QueryExtractor;
 import org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory;
 import org.springframework.data.jpa.repository.query.EscapeCharacter;
 import org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy;
+import org.springframework.data.jpa.repository.query.QueryRewriterProvider;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.repository.core.NamedQueries;
 import org.springframework.data.repository.core.RepositoryMetadata;
@@ -32,17 +33,17 @@ public class SqlToyQueryLookupStrategy implements QueryLookupStrategy {
 	protected QueryExtractor extractor;
 
     public SqlToyQueryLookupStrategy(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager, Key key, QueryExtractor extractor,
-    		QueryMethodEvaluationContextProvider evaluationContextProvider) {
+    		QueryMethodEvaluationContextProvider evaluationContextProvider, QueryRewriterProvider queryRewriterProvider) {
     	this.sqlToyLazyDao = sqlToyLazyDao;
         this.jpaQueryLookupStrategy = JpaQueryLookupStrategy.create(
-        		entityManager, new DefaultJpaQueryMethodFactory(extractor), key, evaluationContextProvider, EscapeCharacter.DEFAULT);
+        		entityManager, new DefaultJpaQueryMethodFactory(extractor), key, evaluationContextProvider, queryRewriterProvider, EscapeCharacter.DEFAULT);
         this.extractor = extractor;
         this.entityManager = entityManager;
     }
 
     public static QueryLookupStrategy create(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager, Key key, QueryExtractor extractor,
-    		QueryMethodEvaluationContextProvider evaluationContextProvider) {
-        return new SqlToyQueryLookupStrategy(sqlToyLazyDao, entityManager, key, extractor, evaluationContextProvider);
+    		QueryMethodEvaluationContextProvider evaluationContextProvider, QueryRewriterProvider queryRewriterProvider) {
+        return new SqlToyQueryLookupStrategy(sqlToyLazyDao, entityManager, key, extractor, evaluationContextProvider, queryRewriterProvider);
     }
 
     @Override

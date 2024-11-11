@@ -8,10 +8,10 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 
 import com.rapidark.framework.Config;
 import com.rapidark.framework.cache.CacheManager;

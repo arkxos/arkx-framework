@@ -17,7 +17,7 @@ package com.rapidark.framework.thirdparty.commons.fileupload.servlet;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.framework.thirdparty.commons.fileupload.FileItem;
 import com.rapidark.framework.thirdparty.commons.fileupload.FileItemFactory;

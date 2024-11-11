@@ -15,7 +15,7 @@
  */
 package com.rapidark.framework.thirdparty.commons.fileupload;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * <p>High level API for processing file uploads.</p>

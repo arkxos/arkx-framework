@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

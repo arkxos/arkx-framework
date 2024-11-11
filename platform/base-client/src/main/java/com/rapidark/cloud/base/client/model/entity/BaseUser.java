@@ -7,7 +7,7 @@ import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * 系统用户-基础信息

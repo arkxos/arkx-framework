@@ -10,7 +10,7 @@ package com.rapidark.framework.data.jpa.repository;
 //
 //import com.rapidark.framework.jpa.ContextHolder;
 //
-//import javax.persistence.EntityManager;
+//import jakarta.persistence.EntityManager;
 //import java.io.Serializable;
 //
 ///**

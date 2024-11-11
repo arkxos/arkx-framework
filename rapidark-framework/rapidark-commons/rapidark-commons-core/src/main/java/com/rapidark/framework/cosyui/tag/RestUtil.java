@@ -3,8 +3,8 @@ package com.rapidark.framework.cosyui.tag;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

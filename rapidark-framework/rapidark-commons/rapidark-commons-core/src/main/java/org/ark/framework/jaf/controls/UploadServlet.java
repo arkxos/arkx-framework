@@ -3,21 +3,23 @@ package org.ark.framework.jaf.controls;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.rapidark.framework.thirdparty.commons.fileupload.servlet.ServletFileUpload;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.core.FileItemFactory;
+import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.jaf.SessionListener;
 import org.ark.framework.security.PrivCheck;
@@ -70,9 +72,9 @@ public class UploadServlet extends HttpServlet {
 		response.setContentType("text/html; charset=" + Config.getGlobalCharset());
 		response.setHeader("Cache-Control", "no-cache");
 		PrintWriter out = response.getWriter();
-		FileItemFactory fileFactory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(fileFactory);
-		upload.setHeaderEncoding("UTF-8");
+		FileItemFactory fileFactory = DiskFileItemFactory.builder().get();
+		JakartaServletFileUpload upload = new JakartaServletFileUpload(fileFactory);
+//		upload.setHeaderEncoding("UTF-8");
 		upload.setSizeMax(2*1024*1024*1000L);
 		try {
 			List<FileItem> items = upload.parseRequest(request);
@@ -82,7 +84,7 @@ public class UploadServlet extends HttpServlet {
 			while (iter.hasNext()) {
 				FileItem item = iter.next();
 				if (item.isFormField()) {
-					fields.put(item.getFieldName(), item.getString("UTF-8"));
+					fields.put(item.getFieldName(), item.getString(Charset.forName("UTF-8")));
 				} else {
 					String OldFileName = item.getName();
 					long size = item.getSize();

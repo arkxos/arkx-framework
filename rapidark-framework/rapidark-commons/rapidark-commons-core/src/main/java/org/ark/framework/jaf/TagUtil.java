@@ -1,6 +1,6 @@
 package org.ark.framework.jaf;
 
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
 
 import com.rapidark.framework.commons.util.ObjectUtil;
 import com.rapidark.framework.commons.util.StringUtil;

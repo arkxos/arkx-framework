@@ -5,12 +5,12 @@ import com.rapidark.framework.common.security.OpenAuthority;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

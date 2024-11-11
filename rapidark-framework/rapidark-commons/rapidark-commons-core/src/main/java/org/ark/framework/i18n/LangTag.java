@@ -2,10 +2,10 @@ package org.ark.framework.i18n;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.BodyContent;
-import javax.servlet.jsp.tagext.BodyTagSupport;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.BodyContent;
+import jakarta.servlet.jsp.tagext.BodyTagSupport;
 
 import com.rapidark.framework.Account;
 import com.rapidark.framework.commons.util.ObjectUtil;

@@ -1,6 +1,6 @@
 package com.rapidark.framework.cosyui.web;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.rapidark.framework.Constant;
 import com.rapidark.framework.commons.collection.CaseIgnoreMapx;

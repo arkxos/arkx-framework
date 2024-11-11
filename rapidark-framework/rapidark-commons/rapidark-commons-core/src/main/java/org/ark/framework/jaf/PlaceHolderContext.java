@@ -3,9 +3,9 @@ package org.ark.framework.jaf;
 import java.text.DecimalFormat;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.Tag;
 
 import org.ark.framework.jaf.tag.IListTag;
 import org.ark.framework.security.PrivCheck;

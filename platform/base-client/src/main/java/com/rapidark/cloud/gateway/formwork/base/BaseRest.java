@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.rapidark.framework.common.utils.Constants;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ValidationException;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ValidationException;
+import jakarta.validation.Validator;
 import java.util.Iterator;
 import java.util.Set;
 

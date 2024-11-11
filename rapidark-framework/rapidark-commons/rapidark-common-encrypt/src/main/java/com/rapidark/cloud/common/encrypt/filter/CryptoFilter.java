@@ -15,9 +15,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import com.rapidark.cloud.common.encrypt.annotation.ApiEncrypt;
 import com.rapidark.cloud.common.encrypt.properties.ApiDecryptProperties;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 

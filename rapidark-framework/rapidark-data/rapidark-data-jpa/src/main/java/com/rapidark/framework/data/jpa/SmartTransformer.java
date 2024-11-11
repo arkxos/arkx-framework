@@ -2,7 +2,8 @@ package com.rapidark.framework.data.jpa;
 
 import java.util.List;
 
-import org.hibernate.transform.BasicTransformerAdapter;
+//import org.hibernate.transform.BasicTransformerAdapter;
+import org.hibernate.transform.ResultTransformer;
 import org.springframework.core.convert.support.DefaultConversionService;
 
 /**
@@ -12,7 +13,8 @@ import org.springframework.core.convert.support.DefaultConversionService;
  * @author <a href="mailto:stormning@163.com">stormning</a>
  * @version V1.0, 2015/9/1.
  */
-public class SmartTransformer extends BasicTransformerAdapter {
+public class SmartTransformer implements ResultTransformer {
+//		extends BasicTransformerAdapter {
 
     private static DefaultConversionService conversionService = new DefaultConversionService();
 
@@ -30,8 +32,8 @@ public class SmartTransformer extends BasicTransformerAdapter {
         return null;
     }
 
-    @Override
-    public List transformList(List list) {
-        return super.transformList(list);
-    }
+//    @Override
+//    public List transformList(List list) {
+//        return super.transformList(list);
+//    }
 }

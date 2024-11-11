@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 import com.rapidark.framework.commons.queueexecutor.Element;
 import com.rapidark.framework.commons.queueexecutor.MultiThreadedQueueExecutor;

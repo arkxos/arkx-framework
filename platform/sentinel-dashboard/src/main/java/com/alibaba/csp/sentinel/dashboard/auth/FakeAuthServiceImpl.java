@@ -17,7 +17,7 @@ package com.alibaba.csp.sentinel.dashboard.auth;
 
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * A fake AuthService implementation, which will pass all user auth checking.

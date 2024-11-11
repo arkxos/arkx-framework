@@ -36,7 +36,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-encrypt</artifactId>
             <version>${revision}</version>
         </dependency>

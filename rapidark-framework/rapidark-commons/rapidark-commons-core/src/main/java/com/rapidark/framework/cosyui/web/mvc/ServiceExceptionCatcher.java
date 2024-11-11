@@ -1,7 +1,7 @@
 package com.rapidark.framework.cosyui.web.mvc;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.rapidark.framework.Current;
 import com.rapidark.framework.commons.exception.ServiceException;

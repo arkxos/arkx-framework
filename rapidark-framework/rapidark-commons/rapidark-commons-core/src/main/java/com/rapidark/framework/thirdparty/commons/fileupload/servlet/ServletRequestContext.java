@@ -18,7 +18,7 @@ package com.rapidark.framework.thirdparty.commons.fileupload.servlet;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.framework.thirdparty.commons.fileupload.RequestContext;
 

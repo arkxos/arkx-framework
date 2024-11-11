@@ -10,7 +10,7 @@ import com.rapidark.cloud.common.encrypt.filter.CryptoFilter;
 import com.rapidark.cloud.common.encrypt.properties.ApiDecryptProperties;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.DispatcherType;
+import jakarta.servlet.DispatcherType;
 
 /**
  * api 解密自动配置

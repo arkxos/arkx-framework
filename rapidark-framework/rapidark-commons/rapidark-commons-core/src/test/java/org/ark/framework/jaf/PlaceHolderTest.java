@@ -1,6 +1,6 @@
 package org.ark.framework.jaf;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rapidark.framework.commons.collection.Mapx;
 import org.junit.jupiter.api.Test;

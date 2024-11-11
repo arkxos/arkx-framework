@@ -2,6 +2,7 @@ package com.rapidark.framework.data.mock;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.script.JavaScriptEngine;
 import cn.hutool.script.ScriptUtil;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+//import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 /**
  * 随机生成中文姓名，性别，Email，手机号，住址
@@ -443,8 +444,9 @@ public class RandomValue {
      */
     public static Integer[] range(int start, int stop) throws ScriptException {
         String format = StrFormatter.format("Random.range({},{})", start, stop);
-        ScriptObjectMirror random = (ScriptObjectMirror) mockRandom(format);
-        return Convert.toIntArray(random.values());
+//        ScriptObjectMirror random = (ScriptObjectMirror) mockRandom(format);
+//        return Convert.toIntArray(random.values());
+		return new Integer[0];
     }
 
     /**
@@ -459,8 +461,9 @@ public class RandomValue {
      */
     public static Integer[] range(int start, int stop, int step) throws ScriptException {
         String format = StrFormatter.format("Random.range({},{},{})", start, stop, step);
-        ScriptObjectMirror random = (ScriptObjectMirror) mockRandom(format);
-        return Convert.toIntArray(random.values());
+//        ScriptObjectMirror random = (ScriptObjectMirror) mockRandom(format);
+//        return Convert.toIntArray(random.values());
+		return new Integer[0];
     }
 
     /**
@@ -1300,8 +1303,9 @@ public class RandomValue {
      */
     public static Map mock(String template) throws ScriptException {
         String format = StrFormatter.format("mock({})", template);
-        ScriptObjectMirror random = (ScriptObjectMirror) mockRandom(format);
-        return Convert.convert(Map.class,random);
+//        ScriptObjectMirror random = (ScriptObjectMirror) mockRandom(format);
+//        return Convert.convert(Map.class,random);
+		return new HashMap();
     }
 
     public static void main(String[] args) throws ScriptException {

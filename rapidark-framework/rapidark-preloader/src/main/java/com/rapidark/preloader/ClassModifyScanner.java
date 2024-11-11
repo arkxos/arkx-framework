@@ -1,10 +1,11 @@
 package com.rapidark.preloader;
 
+import jakarta.servlet.ServletException;
+
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.ServletException;
 
 public class ClassModifyScanner {
 	ConcurrentHashMap<String, Long> map = new ConcurrentHashMap<>();

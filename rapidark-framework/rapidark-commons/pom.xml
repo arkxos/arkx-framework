@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark2.framework</groupId>
+        <groupId>com.rapidark.framework</groupId>
         <artifactId>rapidark-framework</artifactId>
         <version>${revision}</version>
     </parent>
@@ -49,7 +49,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-preloader</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -121,10 +121,10 @@
                 </dependency>
          -->
         <!-- 自定义验证注解 -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+		</dependency>
 
         <!--常用工具类 -->
         <dependency>
@@ -193,10 +193,17 @@
                 </dependency>
          -->
         <!-- servlet包 -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.0.0</version>
+		</dependency>
+		<!-- JAVA 17 -->
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
     </dependencies>
 
 </project>

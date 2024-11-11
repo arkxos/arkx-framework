@@ -15,7 +15,7 @@ import java.sql.Types;
 import java.util.Objects;
 import java.util.Properties;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
@@ -39,12 +39,17 @@ public class JSONType implements UserType, DynamicParameterizedType, Serializabl
     private int sqlType = Types.VARCHAR;
     private Type type = Object.class;
 
-    @Override
-    public int[] sqlTypes() {
-        return new int[]{sqlType};
-    }
+//    @Override
+//    public int[] sqlTypes() {
+//        return new int[]{sqlType};
+//    }
 
-    @Override
+	@Override
+	public int getSqlType() {
+		return sqlType;
+	}
+
+	@Override
     public Class returnedClass() {
         if (type instanceof ParameterizedType) {
             return (Class) ((ParameterizedType) type).getRawType();
@@ -63,12 +68,18 @@ public class JSONType implements UserType, DynamicParameterizedType, Serializabl
         return x.hashCode();
     }
 
-    @Override
-    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException, SQLException {
-        String value = extractString(rs.getObject(names[0]));
+	@Override
+	public Object nullSafeGet(ResultSet rs, int i, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws SQLException {
+//		return null;
+//	}
+//
+//	@Override
+//    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException, SQLException {
+//		String value = extractString(rs.getObject(names[0]));
+		String value = extractString(rs.getObject(i));
         if (rs.wasNull() || StringUtils.isEmpty(value)) {
             if (LOG.isTraceEnabled()) {
-                LOG.tracev("Returning null as column {0}", names[0]);
+                LOG.tracev("Returning null as column {0}", i);
             }
             return null;
         } else if (type == Object.class) {

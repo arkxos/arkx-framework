@@ -1,6 +1,6 @@
 package com.rapidark.framework.extend.action;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import com.rapidark.framework.extend.ExtendException;
 import com.rapidark.framework.extend.IExtendAction;

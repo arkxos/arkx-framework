@@ -2,8 +2,8 @@ package com.rapidark.framework.ssi;
 
 import java.io.ByteArrayOutputStream;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
 
 public class ByteArrayServletOutputStream extends ServletOutputStream {
 	protected ByteArrayOutputStream buf = null;

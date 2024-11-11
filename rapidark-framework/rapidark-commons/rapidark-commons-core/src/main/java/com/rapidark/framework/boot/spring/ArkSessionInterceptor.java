@@ -2,8 +2,8 @@ package com.rapidark.framework.boot.spring;
 
 import java.util.concurrent.atomic.LongAdder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Conditional;
 import org.springframework.web.servlet.HandlerInterceptor;

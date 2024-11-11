@@ -19,7 +19,7 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark2.framework</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>

@@ -3,8 +3,8 @@ package com.bsd.comment.server.validation;
 import com.bsd.comment.server.enums.TopicTypeEnum;
 import com.bsd.comment.server.validation.constraints.TopicType;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * 主题类型校验器

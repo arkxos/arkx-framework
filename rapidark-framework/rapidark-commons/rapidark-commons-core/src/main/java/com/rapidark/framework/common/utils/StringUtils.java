@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.AntPathMatcher;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;

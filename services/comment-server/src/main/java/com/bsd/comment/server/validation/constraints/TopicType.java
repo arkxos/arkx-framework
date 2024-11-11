@@ -2,8 +2,8 @@ package com.bsd.comment.server.validation.constraints;
 
 import com.bsd.comment.server.validation.TopicTypeValidator;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 /**

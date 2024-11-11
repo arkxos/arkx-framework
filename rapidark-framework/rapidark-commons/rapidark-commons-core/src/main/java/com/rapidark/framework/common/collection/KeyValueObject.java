@@ -3,9 +3,9 @@ package com.rapidark.framework.common.collection;
 
 import com.rapidark.framework.common.annotation.JpaDto;
 import lombok.Data;
-import javax.persistence.EntityResult;
-import javax.persistence.FieldResult;
-import javax.persistence.SqlResultSetMapping;
+import jakarta.persistence.EntityResult;
+import jakarta.persistence.FieldResult;
+import jakarta.persistence.SqlResultSetMapping;
 
 /**
  * @author darkness

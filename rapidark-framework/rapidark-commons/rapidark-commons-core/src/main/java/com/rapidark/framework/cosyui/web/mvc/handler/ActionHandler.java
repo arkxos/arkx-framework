@@ -1,19 +1,16 @@
 package com.rapidark.framework.cosyui.web.mvc.handler;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import com.rapidark.framework.thirdparty.commons.fileupload.servlet.ServletFileUpload;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.rapidark.framework.Config;
 import com.rapidark.framework.Current;
@@ -27,6 +24,9 @@ import com.rapidark.framework.data.jdbc.Session;
 import com.rapidark.framework.data.jdbc.SessionFactory;
 import com.rapidark.framework.security.PrivCheck;
 import com.rapidark.framework.security.VerifyCheck;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 
 /**
  * ZAction处理者
@@ -154,9 +154,9 @@ public class ActionHandler implements IURLHandler {
 	}
 	
 	private static ArrayList prepareUploadAction(HttpServletRequest request) {
-		FileItemFactory fileFactory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(fileFactory);
-		upload.setHeaderEncoding(Config.getGlobalCharset());
+		DiskFileItemFactory fileFactory = DiskFileItemFactory.builder().get();
+		JakartaServletFileUpload upload = new JakartaServletFileUpload(fileFactory);
+//		upload.setHeaderEncoding(Config.getGlobalCharset());
 		upload.setSizeMax(UploadMaxSize.getValue());
 		try {
 			List items = upload.parseRequest(request);
@@ -165,7 +165,7 @@ public class ActionHandler implements IURLHandler {
 			for (Iterator iter = items.iterator(); iter.hasNext();) {
 				FileItem item = (FileItem) iter.next();
 				if (item.isFormField()) {
-					fields.put(item.getFieldName(), item.getString(Config.getGlobalCharset()));
+					fields.put(item.getFieldName(), item.getString(Charset.forName(Config.getGlobalCharset())));
 				} else {
 					String OldFileName = item.getName();
 					long size = item.getSize();

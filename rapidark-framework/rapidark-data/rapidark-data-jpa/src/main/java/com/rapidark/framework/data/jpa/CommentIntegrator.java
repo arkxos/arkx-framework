@@ -1,9 +1,11 @@
 package com.rapidark.framework.data.jpa;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 import org.hibernate.boot.Metadata;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -79,10 +81,10 @@ public class CommentIntegrator implements Integrator {
             }
             // Process fields with Comment annotation.
             //noinspection unchecked
-            Iterator<Property> iterator = persistentClass.getPropertyIterator();
-            while (iterator.hasNext()) {
-                fieldComment(persistentClass, iterator.next().getName());
-            }
+            List<Property> properties = persistentClass.getDeclaredProperties();//.getPropertyIterator();
+			for (Property property : properties) {
+				fieldComment(persistentClass, property.getName());
+			}
         }
     }
 
@@ -104,14 +106,13 @@ public class CommentIntegrator implements Integrator {
                 }
                 String comment = field.getAnnotation(Comment.class).value();
                 //noinspection unchecked
-                Iterator<org.hibernate.mapping.Column> columnIterator = persistentClass.getTable().getColumnIterator();
-                while (columnIterator.hasNext()) {
-                    org.hibernate.mapping.Column column = columnIterator.next();
-                    if (columnName.equalsIgnoreCase(column.getName().replace("_", ""))) {
-                        column.setComment(comment);
-                        break;
-                    }
-                }
+                Collection<org.hibernate.mapping.Column> columns = persistentClass.getTable().getColumns();
+				for (org.hibernate.mapping.Column column : columns) {
+					if (columnName.equalsIgnoreCase(column.getName().replace("_", ""))) {
+						column.setComment(comment);
+						break;
+					}
+				}
             }
         } catch (NoSuchFieldException | SecurityException ignored) {
         }

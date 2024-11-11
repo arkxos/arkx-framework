@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark2.framework</groupId>
+        <groupId>com.rapidark.framework</groupId>
         <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
@@ -50,25 +50,26 @@
             <version>${cosid.version}</version>
         </dependency>
         <!--        <dependency>-->
-        <!--            <groupId>com.rapidark2.framework</groupId>-->
+        <!--            <groupId>com.rapidark.framework</groupId>-->
         <!--            <artifactId>rapidark-framework</artifactId>-->
         <!--            <version>${revision}</version>-->
         <!--        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-webmvc</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security.oauth</groupId>-->
+<!--            <artifactId>spring-security-oauth2</artifactId>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>spring-webmvc</artifactId>-->
+<!--                    <groupId>org.springframework</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework</groupId>-->
         <!--            <artifactId>spring-webmvc</artifactId>-->
         <!--        </dependency>-->
-        <dependency>
+
+		<dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
         </dependency>
@@ -112,7 +113,11 @@
                     <artifactId>bcpkix-jdk15on</artifactId>
                     <groupId>org.bouncycastle</groupId>
                 </exclusion>
-            </exclusions>
+				<exclusion>
+					<artifactId>commons-fileupload</artifactId>
+					<groupId>commons-fileupload</groupId>
+				</exclusion>
+			</exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -157,11 +162,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -243,19 +244,26 @@
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc10</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
+		<!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api -->
+		<dependency>
+			<groupId>jakarta.servlet.jsp</groupId>
+			<artifactId>jakarta.servlet.jsp-api</artifactId>
+			<version>4.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api -->
+		<dependency>
+			<groupId>jakarta.el</groupId>
+			<artifactId>jakarta.el-api</artifactId>
+			<version>6.0.1</version>
+		</dependency>
+		<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>simpleimage</artifactId>
             <version>1.2.3</version>
@@ -529,12 +537,22 @@
         </dependency>
 
         <!--文件上传工具类 -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>${commons.fileupload.version}</version>
-        </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>commons-fileupload</groupId>-->
+<!--            <artifactId>commons-fileupload</artifactId>-->
+<!--            <version>${commons.fileupload.version}</version>-->
+<!--        </dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-fileupload2-jakarta -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-fileupload2-jakarta</artifactId>
+			<version>2.0.0-M1</version>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.apache.commons</groupId>-->
+<!--			<artifactId>commons-fileupload2</artifactId>-->
+<!--			<version>2.0.0-M2</version> &lt;!&ndash; 使用最新的稳定版本 &ndash;&gt;-->
+<!--		</dependency>-->
         <!-- excel工具 -->
         <!--  <dependency>
              <groupId>org.apache.poi</groupId>
@@ -543,12 +561,16 @@
          </dependency> -->
 
         <!--velocity代码生成使用模板 -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>${velocity.version}</version>
-        </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>org.apache.velocity</groupId>-->
+<!--            <artifactId>velocity</artifactId>-->
+<!--            <version>${velocity.version}</version>-->
+<!--        </dependency>-->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-engine-core</artifactId>
+			<version>${velocity.version}</version>
+		</dependency>
         <!-- 阿里JSON解析器 -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -710,11 +732,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- Spring dependencies -->
         <dependency>
@@ -880,51 +897,51 @@
             <!--		  <version>5.1</version>-->
         </dependency>
         <!-- Hibernate4 -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml</groupId>
-                    <artifactId>classmate</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-core</artifactId>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.fasterxml</groupId>-->
+<!--                    <artifactId>classmate</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <!-- for JPA, use hibernate-entitymanager instead of hibernate-core -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
-        <!-- 以下可选 -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-envers</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-c3p0</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-proxool</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-entitymanager</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; 以下可选 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-envers</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-c3p0</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-proxool</artifactId>-->
+<!--        </dependency>-->
         <!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-infinispan</artifactId>
             <version>${hibernate.version}</version> </dependency> -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-ehcache</artifactId>-->
+<!--        </dependency>-->
         <!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-commons-annotations</artifactId>
             <version>4.0.4.Final</version> </dependency> -->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>1.0.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-java8</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate.javax.persistence</groupId>-->
+<!--            <artifactId>hibernate-jpa-2.1-api</artifactId>-->
+<!--            <version>1.0.0.Final</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-java8</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jandex</artifactId>
@@ -1101,28 +1118,17 @@
             <artifactId>ant</artifactId>
             <version>1.8.2</version>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>xml-apis</groupId>
-                    <artifactId>xml-apis</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency> -->
+
+		<!-- <dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency> -->
 
         <dependency>
             <groupId>jmagick</groupId>

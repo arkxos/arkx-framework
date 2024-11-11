@@ -2,10 +2,11 @@ package com.rapidark.framework.data.jpa.sqltoy;
 
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jpa.provider.PersistenceProvider;
+import org.springframework.data.jpa.repository.query.QueryRewriterProvider;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
@@ -35,7 +36,7 @@ public class SqlToyRepositoryFactory extends JpaRepositoryFactory {
     		QueryMethodEvaluationContextProvider evaluationContextProvider) {
         return Optional.of(
         		SqlToyQueryLookupStrategy.create(sqlToyLazyDao,
-        				entityManager, key, extractor, evaluationContextProvider));
+        				entityManager, key, extractor, evaluationContextProvider, QueryRewriterProvider.simple()));
     }
 	
 }

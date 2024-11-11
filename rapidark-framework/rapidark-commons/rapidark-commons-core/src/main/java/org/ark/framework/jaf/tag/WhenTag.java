@@ -2,10 +2,10 @@ package org.ark.framework.jaf.tag;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.BodyTagSupport;
-import javax.servlet.jsp.tagext.Tag;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.BodyTagSupport;
+import jakarta.servlet.jsp.tagext.Tag;
 
 import org.ark.framework.jaf.PlaceHolder;
 import org.ark.framework.jaf.PlaceHolderContext;

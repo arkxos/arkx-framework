@@ -28,7 +28,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import model.com.rapidark.framework.common.ResultBody;
 
 /**
