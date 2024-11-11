@@ -26,17 +26,17 @@ public class OpenOAuth2ExceptionSerializer extends StdSerializer<OpenOAuth2Excep
         gen.writeStringField("message", ex.getMessage());
         gen.writeStringField("data", "");
         gen.writeNumberField("timestamp", System.currentTimeMillis());
-        if (ex.getAdditionalInformation() != null) {
-            for (Map.Entry<String, String> entry : ex.getAdditionalInformation().entrySet()) {
-                String key = entry.getKey();
-                String add = entry.getValue();
-                if ("code".equals(key)) {
-                    gen.writeNumberField(key, new BigDecimal(add));
-                } else {
-                    gen.writeStringField(key, add);
-                }
-            }
-        }
+//        if (ex.getAdditionalInformation() != null) {
+//            for (Map.Entry<String, String> entry : ex.getAdditionalInformation().entrySet()) {
+//                String key = entry.getKey();
+//                String add = entry.getValue();
+//                if ("code".equals(key)) {
+//                    gen.writeNumberField(key, new BigDecimal(add));
+//                } else {
+//                    gen.writeStringField(key, add);
+//                }
+//            }
+//        }
         gen.writeEndObject();
     }
 }
