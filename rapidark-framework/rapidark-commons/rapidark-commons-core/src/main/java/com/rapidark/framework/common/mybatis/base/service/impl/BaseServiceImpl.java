@@ -8,7 +8,7 @@ import com.rapidark.framework.common.mybatis.EntityMap;
 import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
 import com.rapidark.framework.common.mybatis.query.CriteriaQuery;
 import org.apache.ibatis.annotations.Param;
-import org.mybatis.spring.SqlSessionTemplate;
+//import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
@@ -25,8 +25,8 @@ import java.util.List;
 public abstract class BaseServiceImpl<M extends SuperMapper<T>, T> extends ServiceImpl<M, T> {
     @Autowired
     public ApplicationContext applicationContext;
-    @Resource
-    public SqlSessionTemplate sqlSession;
+//    @Resource
+//    public SqlSessionTemplate sqlSession;
 
     public void pushEvent(ApplicationEvent applicationEvent) {
         ContextLoader.getCurrentWebApplicationContext().publishEvent(applicationEvent);
@@ -60,7 +60,8 @@ public abstract class BaseServiceImpl<M extends SuperMapper<T>, T> extends Servi
         if (ObjectUtils.isEmpty(map)) {
             return null;
         }
-        return sqlSession.selectList(getMapperName() + statement, map);
+//        return sqlSession.selectList(getMapperName() + statement, map);
+		return null;
     }
 
     /**
@@ -70,7 +71,8 @@ public abstract class BaseServiceImpl<M extends SuperMapper<T>, T> extends Servi
         if (ObjectUtils.isEmpty(map)) {
             return null;
         }
-        return sqlSession.selectList(getMapperName() + "selectListEntityMapByMap", map);
+//        return sqlSession.selectList(getMapperName() + "selectListEntityMapByMap", map);
+		return null;
     }
 
     /**
@@ -78,14 +80,16 @@ public abstract class BaseServiceImpl<M extends SuperMapper<T>, T> extends Servi
      */
     public List<EntityMap> selectListEntityMap(String statement, @Param("ew") CriteriaQuery<?> cq) {
 
-        return sqlSession.selectList(getMapperName() + statement, cq);
+//        return sqlSession.selectList(getMapperName() + statement, cq);
+		return null;
     }
 
     /**
      * 自定义sql查询List<EntityMap>
      */
     public List<EntityMap> selectListEntityMap(@Param("ew") CriteriaQuery<?> cq) {
-        return sqlSession.selectList(getMapperName() + "selectListEntityMapByCq", cq);
+//        return sqlSession.selectList(getMapperName() + "selectListEntityMapByCq", cq);
+		return null;
     }
 
     /**
