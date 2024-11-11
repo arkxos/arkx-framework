@@ -44,6 +44,8 @@ public class WindowTaskScheduler implements TaskScheduler {
                     if(task instanceof TreeTask treeTask) {
                         if (System.currentTimeMillis() - lastThreadCheckTime > 60_000) {// 3秒查一次
                             treeTask.print();
+
+                            lastThreadCheckTime = System.currentTimeMillis();
                         }
 
                         needExecute = treeTask.findNeedExecuteTask();
