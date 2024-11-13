@@ -9,16 +9,8 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.RunnableFuture;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
@@ -33,6 +25,9 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 
     private final CompletedTaskHandler completedTaskHandler;
 
+    private final AtomicInteger globalExecuteOrder = new AtomicInteger();
+    private List<Task> waitingTasks = new CopyOnWriteArrayList<>();
+
     public DefaultThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
                                      BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory,
                                      RejectedExecutionHandler handler, CompletedTaskHandler completedTaskHandler) {
@@ -46,6 +41,55 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     public void submit(Task task) {
+        this.waitingTasks.add(task);
+//        this.executeTask(task);
+        this.loopForExecute();
+    }
+
+    private void loopForExecute() {
+        while(true) {
+            long lastThreadCheckTime = System.currentTimeMillis();
+
+            int poolSize = this.getCorePoolSize();
+            int activeCount = this.getRunningNumberofTask();
+            int availableCount = poolSize - activeCount;
+
+            if (availableCount <= 0 || waitingTasks.isEmpty()) {
+                return;
+            }
+            Task task = waitingTasks.get(0);
+
+            AbstractTask needExecute;
+            if (task instanceof TreeTask treeTask) {
+                if (System.currentTimeMillis() - lastThreadCheckTime > 60_000) {// 3秒查一次
+                    treeTask.print();
+
+                    lastThreadCheckTime = System.currentTimeMillis();
+                }
+
+                boolean taskCompleted = treeTask.isFinished();
+                needExecute = treeTask.findNeedExecuteTask();
+                if(needExecute == null) {
+                    if(taskCompleted) {
+                        waitingTasks.remove(0);
+                    }
+                    return;
+                } else {
+                    needExecute.setGlobalExecuteOrder(globalExecuteOrder.incrementAndGet());
+                    executeTask(needExecute);
+                }
+
+                // 此线程任务很轻，在此计算任务进度并触发进度监控
+//                        caculateTaskPercentAndNotifice(treeTask);
+            } else {
+                waitingTasks.remove(0);
+//                        needExecute = task;
+                executeTask(task);
+            }
+        }
+    }
+
+    public void executeTask(Task task) {
         if (task instanceof BaseTask bTask) {
             BaseTaskExecutor baseTaskExecutor = new BaseTaskExecutor(bTask);
             RunnableFuture<Object> future = newTaskFor(bTask, baseTaskExecutor);
@@ -98,6 +142,8 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
             runningQueue.remove(task);
 //            completedQueue.offer(task);
             completedTaskNumber.incrementAndGet();
+
+            this.loopForExecute();
         }
     }
 

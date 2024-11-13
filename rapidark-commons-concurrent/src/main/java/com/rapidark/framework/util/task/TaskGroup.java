@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 // 只能在同一线程添加任务，以及在同一线程调用 await 方法
 public final class TaskGroup {
 
-    private final TaskScheduler taskScheduler;
+    private final DefaultThreadPoolExecutor taskScheduler;
     private final String name;
     private final String id;
 
@@ -28,7 +28,7 @@ public final class TaskGroup {
     private final Condition isEmpty = lock.newCondition();
     private final AtomicInteger taskCount = new AtomicInteger(0);
 
-    TaskGroup(String name, TaskScheduler taskScheduler) {
+    TaskGroup(String name, DefaultThreadPoolExecutor taskScheduler) {
         this.name = name;
         this.id = Utils.generateId();
         this.taskScheduler = taskScheduler;

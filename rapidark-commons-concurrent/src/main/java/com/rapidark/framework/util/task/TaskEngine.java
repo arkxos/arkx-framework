@@ -1,7 +1,5 @@
 package com.rapidark.framework.util.task;
 
-import com.rapidark.framework.util.task.schedule.DefaultTaskScheduler;
-import com.rapidark.framework.util.task.schedule.WindowTaskScheduler;
 import com.rapidark.framework.util.task.util.Assert;
 
 import java.util.Collection;
@@ -28,13 +26,9 @@ public final class TaskEngine {
 
     private final AtomicLong taskGroupNumber = new AtomicLong(0);
 
-    private TaskScheduler taskScheduler;
+    private DefaultThreadPoolExecutor taskScheduler;
 
-    private TaskEngine(DefaultThreadPoolExecutor executor) {
-        this(new DefaultTaskScheduler(executor));
-    }
-
-    private TaskEngine(TaskScheduler taskScheduler) {
+    private TaskEngine(DefaultThreadPoolExecutor taskScheduler) {
         this.taskScheduler = taskScheduler;
     }
 
@@ -184,7 +178,7 @@ public final class TaskEngine {
     }
 
     public void start() {
-        this.taskScheduler.start();
+//        this.taskScheduler.start();
     }
 
     public static class Builder {
@@ -246,7 +240,7 @@ public final class TaskEngine {
                 this.keepAliveSeconds, TimeUnit.SECONDS, queue, Executors.defaultThreadFactory(),
                 getRejectedExecutionHandler(this.rejectedExecutionHandler), this.completedTaskHandler);
             if(windowsScheduledExecutor) {
-                return new TaskEngine(new WindowTaskScheduler(executor));
+                return new TaskEngine(executor);
             }
             return new TaskEngine(executor);
         }
