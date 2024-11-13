@@ -9,7 +9,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -19,7 +22,11 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
 
     private boolean isRoot = true;
     private int level = 1;
-    private List<TreeTask> children = new CopyOnWriteArrayList<>();
+    private TreeTask parent;
+    private List<TreeTask> children = new ArrayList<>();
+    private double totalPercent;
+    private final AtomicInteger childCount = new AtomicInteger();
+    private final AtomicInteger childFinishCount = new AtomicInteger();
 
     protected TreeTask(String type, String id) {
         super(type, id);
@@ -36,8 +43,12 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
     }
 
     public void addChild(TreeTask child) {
+        childCount.incrementAndGet();
+
         child.setRoot(false);
         child.setLevel(level + 1);
+
+        child.setParent(this);
         children.add(child);
     }
 
@@ -45,13 +56,21 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
         return this;
     }
 
-    public Task findNeedExecuteTask() {
-        if(this.getStatus() == TaskStatus.INIT) {
+    public TreeTask findNeedExecuteTask() {
+        if(this.isWaittingForExecute()) {
             return this;
         }
 
+        if(this.isFinished()) {
+            return null;
+        }
+
+        if(this.getStatus() == TaskStatus.RUNNING) {
+            return null;
+        }
+
         for (TreeTask child : children) {
-            Task needExecuteTask = child.findNeedExecuteTask();
+            TreeTask needExecuteTask = child.findNeedExecuteTask();
             if (needExecuteTask != null) {
                 return needExecuteTask;
             }
@@ -59,18 +78,19 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
         return null;
     }
 
-    @Override
-    public boolean isFinished() {
-        if(!super.isFinished()) {
-            return false;
-        }
-        for (TreeTask child : this.children) {
-            if(!child.isFinished()) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    @Override
+//    public boolean isFinished() {
+////        if(!super.isFinished()) {
+////            return false;
+////        }
+////        for (TreeTask child : this.children) {
+////            if(!child.isFinished()) {
+////                return false;
+////            }
+////        }
+////        return true;
+//        return this.isFinished()
+//    }
 
     public void print() {
         print(System.out);
@@ -134,7 +154,7 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
 
     @Override
     public String toString() {
-        return "[" + this.getProgressPercent() + "%]" + this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
+        return "["+getGlobalExecuteOrder()+"][" + this.getProgressPercent() + "%]["+this.getCost()+"]" + this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
     }
 
     @Override
@@ -146,43 +166,81 @@ public abstract class TreeTask extends AbstractTask implements TaskRunner {
         }
     }
 
-    public double caculateProgressPercent() {
+    @Override
+    public void finish() {
         if(this.children.isEmpty()) {
-            return getProgressPercent();
+            this.realFinished();
         }
+    }
+
+    public void onChildFinish(TreeTask finishedChildTask) {
+        this.childFinishCount.incrementAndGet();
+        System.out.println("children finish,task id: " + getId() + ",finish child id: " + finishedChildTask.getId() + "," + this.childCount.get() + "," + this.childFinishCount.get());
         for (TreeTask child : this.children) {
-            child.caculateProgressPercent();
+            if(!child.isFinished()) {
+                return;
+            }
         }
 
+        this.realFinished();
+    }
+
+    private void realFinished() {
+        this.setEndTime(System.nanoTime());
+        this.setFinished(true);
+        this.setProgressPercent(100D);
+
+        this.triggerCompleted();
+
+        this.parent.onChildFinish(this);
+    }
+
+    private void triggerPercentListener() {
+        if(this.getProgress() != null) {
+            this.getProgress().call(this, this.totalPercent);
+        }
+    }
+
+    @Override
+    public void setProgressPercent(double progressPercent) {
+        super.setProgressPercent(progressPercent);
+
+        this.totalPercent = new BigDecimal(getSelfTaskPercent()+"").multiply(new BigDecimal(progressPercent+"")).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        triggerPercentListener();
+
+        this.parent.onChildProgressPercent();
+    }
+
+    public void onChildProgressPercent() {
         int childrenSize = children.size();
         List<TreeTask> notFinishedChildrens = this.children.stream().filter(item->!item.isFinished()).toList();
         long notFinishCount = notFinishedChildrens.size();
         if(notFinishCount == 0) {
-            this.setProgressPercent(100D);
-            return getProgressPercent();
+            this.setTotalPercent(100D);
+        } else {
+            // 默认自身执行占比为 1%，子任务占比为 99%
+            BigDecimal preChildPercent = div(getChildrenTaskPercent(), childrenSize);
+
+            BigDecimal totalPercent = new BigDecimal("0");
+            for (TreeTask notFinishedTask : notFinishedChildrens) {
+                double myProcessPercent = notFinishedTask.getTotalPercent();
+
+                BigDecimal currentSheetPercent = new BigDecimal("" + myProcessPercent).multiply(preChildPercent);
+                totalPercent = totalPercent.add(currentSheetPercent);
+            }
+            long finishdCount = childrenSize - notFinishCount;
+            totalPercent = totalPercent.add(preChildPercent.multiply(new BigDecimal(finishdCount))).setScale(2, RoundingMode.HALF_DOWN);
+            // 加上自身耗时占比
+            totalPercent = totalPercent.add(new BigDecimal(getSelfTaskPercent()));
+            double caculatedPercent = totalPercent.doubleValue();
+            // 理论上存在未完成子任务，总进度不会达到 100%，不排除子任务过多的精度问题
+            if(caculatedPercent > 100D) {
+                caculatedPercent = 99D;
+            }
+            this.setTotalPercent(caculatedPercent);
         }
 
-        // 默认自身执行占比为 1%，子任务占比为 99%
-        BigDecimal preChildPercent = div(getChildrenTaskPercent(), childrenSize);
-
-        BigDecimal totalPercent = new BigDecimal("0");
-        for (TreeTask notFinishedTask : notFinishedChildrens) {
-            double myProcessPercent = notFinishedTask.getProgressPercent();
-
-            BigDecimal currentSheetPercent = new BigDecimal("" + myProcessPercent).multiply(preChildPercent);
-            totalPercent = totalPercent.add(currentSheetPercent);
-        }
-        long finishdCount = childrenSize - notFinishCount;
-        totalPercent = totalPercent.add(preChildPercent.multiply(new BigDecimal(finishdCount))).setScale(2, RoundingMode.HALF_DOWN);
-        // 加上自身耗时占比
-        totalPercent = totalPercent.add(new BigDecimal(getSelfTaskPercent()));
-        double caculatedPercent = totalPercent.doubleValue();
-        // 理论上存在未完成子任务，总进度不会达到 100%，不排除子任务过多的精度问题
-        if(caculatedPercent > 100D) {
-            caculatedPercent = 99D;
-        }
-        this.setProgressPercent(caculatedPercent);
-        return getProgressPercent();
+        triggerPercentListener();
     }
 
     /**

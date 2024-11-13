@@ -9,6 +9,7 @@ import com.rapidark.framework.util.task.util.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -37,6 +38,9 @@ public abstract class AbstractTask implements Task {
 
     private final long createTime;
 
+    private int globalExecuteOrder;
+    private boolean waittingForExecute = true;
+    private boolean finished = false;
     private long startTime;
     private long endTime;
 
@@ -57,7 +61,13 @@ public abstract class AbstractTask implements Task {
     public final boolean setStatus(TaskStatus expect, TaskStatus update) {
         Assert.notNull(statusReference);
 
-        return this.statusReference.compareAndSet(expect, update);
+        boolean result = this.statusReference.compareAndSet(expect, update);
+
+        if(update != TaskStatus.INIT) {
+            this.waittingForExecute = false;
+        }
+
+        return result;
     }
 
     private void setStatusToCancel() {
@@ -114,10 +124,11 @@ public abstract class AbstractTask implements Task {
 
     @Override
     public boolean isFinished() {
-        TaskStatus status = getStatus();
-        return status != TaskStatus.INIT
-            && status != TaskStatus.QUEUED
-            && status != TaskStatus.RUNNING;
+//        TaskStatus status = getStatus();
+//        return status != TaskStatus.INIT
+//            && status != TaskStatus.QUEUED
+//            && status != TaskStatus.RUNNING;
+        return this.finished;
     }
 
     @Override
@@ -132,6 +143,68 @@ public abstract class AbstractTask implements Task {
             }
         }
 
+    }
+
+    public String getCost() {
+        if(endTime == 0) {
+            return "";
+        }
+        return formatTime(endTime - startTime);
+    }
+
+    /*
+     * 毫秒转化时分秒毫秒
+     */
+    public static String formatTime(long ms) {
+//		Integer namiao = 1000;
+        long weimiaoUnit = 1000;
+        long haomiaoUnit = weimiaoUnit * 1000;
+        long secondUnit = haomiaoUnit * 1000;
+        long minuteUnit = secondUnit * 60;
+        long hourUnit = minuteUnit * 60;
+        long dayUnit = hourUnit * 24;
+
+        Long day = ms / dayUnit;
+        Long hour = (ms - day * dayUnit) / hourUnit;
+        Long minute = (ms - day * dayUnit - hour * hourUnit) / minuteUnit;
+        Long second = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit) / secondUnit;
+        Long haomiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit) / haomiaoUnit;
+        Long weimiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit - haomiao * haomiaoUnit) / weimiaoUnit;
+        Long namiao = ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit - haomiao * haomiaoUnit - weimiao * weimiaoUnit;
+
+        StringBuffer sb = new StringBuffer();
+        if(day > 0) {
+            sb.append(day+"天");
+        }
+        if(hour > 0) {
+            sb.append(hour+"小时");
+        }
+        if(minute > 0) {
+            sb.append(minute+"分");
+        }
+        if(second > 0) {
+            sb.append(second+"秒");
+        }
+        if(haomiao > 0) {
+            sb.append(haomiao+"毫秒");
+        }
+        if(weimiao > 0) {
+            sb.append(weimiao+"微秒");
+        }
+        if(namiao > 0) {
+            sb.append(namiao+"纳秒");
+        }
+
+        String result = sb.toString();
+        if(result.length() == 0) {
+            result = "0纳秒";
+        }
+        return result;
+    }
+
+    public void finish() {
+        this.setEndTime(System.nanoTime());
+        this.finished = true;
     }
 
 }

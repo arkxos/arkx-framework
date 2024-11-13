@@ -82,6 +82,8 @@ public class TreeTaskTest {
 //            analyzeFilesTask.print();
         }
 
+        analyzeFilesTask.print();
+
 //        assertEquals(TaskStatus.SUCCESS, analyzeFilesTask.getStatus());
 
     }

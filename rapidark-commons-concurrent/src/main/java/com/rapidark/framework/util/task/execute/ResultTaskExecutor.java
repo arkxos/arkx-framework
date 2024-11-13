@@ -16,7 +16,7 @@ public class ResultTaskExecutor<T> implements Callable<T> {
 
     @Override
     public T call() throws Exception {
-        task.setStartTime(System.currentTimeMillis());
+        task.setStartTime(System.nanoTime());
         if (task.setStatus(TaskStatus.QUEUED, TaskStatus.RUNNING)) {
             TaskContext taskContext = createContext();
             try {
@@ -37,7 +37,7 @@ public class ResultTaskExecutor<T> implements Callable<T> {
     }
 
     protected void finallyExecute() {
-        task.setEndTime(System.currentTimeMillis());
+        task.setEndTime(System.nanoTime());
     }
 
 }

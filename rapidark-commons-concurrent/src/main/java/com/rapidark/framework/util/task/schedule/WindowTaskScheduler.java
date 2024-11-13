@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WindowTaskScheduler implements TaskScheduler {
 
@@ -18,16 +19,14 @@ public class WindowTaskScheduler implements TaskScheduler {
     private Thread loopThread;
     private boolean isNeedRun = true;
 
+    private final AtomicInteger globalExecuteOrder = new AtomicInteger();
+
     public WindowTaskScheduler(DefaultThreadPoolExecutor executor) {
         this.executor = executor;
     }
 
     @Override
     public void start() {
-        int poolSize = this.executor.getCorePoolSize();
-        int activeCount = this.executor.getActiveCount();
-        int availableCount = poolSize - activeCount;
-
         System.currentTimeMillis();
 
         loopThread = new Thread(new Runnable() {
@@ -35,12 +34,16 @@ public class WindowTaskScheduler implements TaskScheduler {
             public void run() {
                 long lastThreadCheckTime = System.currentTimeMillis();
                 while (isNeedRun) {
+                    int poolSize = executor.getCorePoolSize();
+                    int activeCount = executor.getActiveCount();
+                    int availableCount = poolSize - activeCount;
+
                     if(availableCount <= 0 || waitingTasks.isEmpty()) {
                         continue;
                     }
                     Task task = waitingTasks.get(0);
 
-                    Task needExecute;
+                    AbstractTask needExecute;
                     if(task instanceof TreeTask treeTask) {
                         if (System.currentTimeMillis() - lastThreadCheckTime > 60_000) {// 3秒查一次
                             treeTask.print();
@@ -55,18 +58,16 @@ public class WindowTaskScheduler implements TaskScheduler {
                         if(needExecute == null && taskCompleted) {
                             waitingTasks.remove(0);
                         } else if(needExecute != null) {
+                            needExecute.setGlobalExecuteOrder(globalExecuteOrder.incrementAndGet());
                             executor.submit(needExecute);
                         }
 
-
-                        task.triggerCompleted();
-
                         // 此线程任务很轻，在此计算任务进度并触发进度监控
-                        caculateTaskPercentAndNotifice(treeTask);
+//                        caculateTaskPercentAndNotifice(treeTask);
                     } else {
                         waitingTasks.remove(0);
-                        needExecute = task;
-                        executor.submit(needExecute);
+//                        needExecute = task;
+                        executor.submit(task);
                     }
                 }
             }
@@ -74,34 +75,33 @@ public class WindowTaskScheduler implements TaskScheduler {
         loopThread.start();
     }
 
-    private Map<String, Double> taskProgressPercentMap = new ConcurrentHashMap<>();
-    private void caculateTaskPercentAndNotifice(TreeTask treeTask) {
-        treeTask.caculateProgressPercent();
-        comparePercentListener(treeTask);
-    }
+//    private Map<String, ValueObject<Double>> taskProgressPercentMap = new ConcurrentHashMap<>();
+//
+//    private void caculateTaskPercentAndNotifice(TreeTask treeTask) {
+//        treeTask.caculateProgressPercent();
+//        comparePercentListener(treeTask);
+//    }
 
-    private void comparePercentListener(TreeTask treeTask) {
-        String taskId = treeTask.getId();
-        if(!taskProgressPercentMap.containsKey(taskId)) {
-            taskProgressPercentMap.put(taskId, treeTask.getProgressPercent());
-            triggerPercentListener(treeTask);
-        } else {
-            boolean isSame = taskProgressPercentMap.get(taskId) == treeTask.getProgressPercent();
-            if(!isSame) {
-                taskProgressPercentMap.put(taskId, treeTask.getProgressPercent());
-                triggerPercentListener(treeTask);
-            }
-        }
-        for (TreeTask child : treeTask.getChildren()) {
-            comparePercentListener(child);
-        }
-    }
+//    private void comparePercentListener(TreeTask treeTask) {
+//        String taskId = treeTask.getId();
+//        ValueObject<Double> percentValue = taskProgressPercentMap.get(taskId);
+//
+//        if(percentValue == null) {
+//            taskProgressPercentMap.put(taskId, ValueObject.of(treeTask.getProgressPercent()));
+//            triggerPercentListener(treeTask);
+//        } else {
+//            boolean isSame = percentValue.getValue() == treeTask.getProgressPercent();
+//            if(!isSame) {
+//                percentValue.setValue(treeTask.getProgressPercent());
+//                triggerPercentListener(treeTask);
+//            }
+//        }
+//        for (TreeTask child : treeTask.getChildren()) {
+//            comparePercentListener(child);
+//        }
+//    }
 
-    private void triggerPercentListener(TreeTask treeTask) {
-        if(treeTask.getProgress() != null) {
-            treeTask.getProgress().call(treeTask, treeTask.getProgressPercent());
-        }
-    }
+
 
     @Override
     public void submit(Task task) {

@@ -17,7 +17,7 @@ public class BaseTaskExecutor implements Runnable {
     @Override
     public void run() {
         if (task.setStatus(TaskStatus.QUEUED, TaskStatus.RUNNING)) {
-            task.setStartTime(System.currentTimeMillis());
+            task.setStartTime(System.nanoTime());
             TaskContext taskContext = createContext();
             try {
                 log.debug("start task " + task.getClass().getSimpleName());
@@ -40,7 +40,7 @@ public class BaseTaskExecutor implements Runnable {
     }
 
     protected void finallyExecute() {
-        task.setEndTime(System.currentTimeMillis());
+        task.setEndTime(System.nanoTime());
     }
 
 }
