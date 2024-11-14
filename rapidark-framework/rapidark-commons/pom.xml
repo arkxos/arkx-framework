@@ -25,7 +25,6 @@
 		<module>rapidark-common-mybatis</module>
 		<module>rapidark-common-oss</module>
 		<module>rapidark-common-seata</module>
-		<module>rapidark-common-security</module>
 		<module>rapidark-common-feign</module>
 		<module>rapidark-common-swagger</module>
 		<module>rapidark-common-xss</module>

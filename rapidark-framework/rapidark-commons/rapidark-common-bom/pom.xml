@@ -65,11 +65,6 @@
             </dependency>
             <dependency>
                 <groupId>com.rapidark.framework</groupId>
-                <artifactId>rapidark-common-security</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.rapidark.framework</groupId>
                 <artifactId>rapidark-common-feign</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -86,11 +81,6 @@
             <dependency>
                 <groupId>com.rapidark.framework</groupId>
                 <artifactId>rapidark-common-excel</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.rapidark.framework</groupId>
-                <artifactId>rapidark-upms-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

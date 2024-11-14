@@ -32,8 +32,9 @@
     <dependencies>
         <!--upms api、model 模块-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-upms-api</artifactId>
+			<version>${revision}</version>
         </dependency>
         <!--文件管理-->
         <dependency>
@@ -47,8 +48,9 @@
         </dependency>
         <!--安全模块-->
         <dependency>
-            <groupId>com.rapidark.framework</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-common-security</artifactId>
+			<version>${revision}</version>
         </dependency>
         <!--日志处理-->
         <dependency>

@@ -20,5 +20,6 @@
 
 	<modules>
 		<module>rapidark-platform-support-log</module>
+		<module>rapidark-common-security</module>
 	</modules>
 </project>
