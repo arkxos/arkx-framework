@@ -92,7 +92,7 @@ public class SysFileController {
 	 * @return R(/ admin / bucketName / filename)
 	 */
 	@PostMapping(value = "/upload")
-	public R upload(@RequestPart("file") MultipartFile file) {
+	public R upload(@RequestPart("rapidark-upms-biz/src/main/resources/file") MultipartFile file) {
 		return sysFileService.uploadFile(file);
 	}
 

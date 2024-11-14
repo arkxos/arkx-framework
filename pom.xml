@@ -219,7 +219,6 @@
         <module>rapidark-register</module>
         <module>rapidark-gateway</module>
         <module>rapidark-auth</module>
-        <module>rapidark-upms</module>
 		<module>rapidark-visual</module>
 		<module>rapidark-apps</module>
 		<module>rapidark-platform</module>

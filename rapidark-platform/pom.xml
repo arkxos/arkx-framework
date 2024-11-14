@@ -19,7 +19,9 @@
 	</properties>
 
 	<modules>
+		<module>rapidark-upms-api</module>
 		<module>rapidark-platform-support</module>
+		<module>rapidark-upms-biz</module>
 	</modules>
 
 </project>
