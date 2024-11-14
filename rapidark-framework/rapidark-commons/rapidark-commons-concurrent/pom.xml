@@ -4,9 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rapidark.cloud</groupId>
+    <parent>
+        <groupId>com.rapidark.framework</groupId>
+        <artifactId>rapidark-commons</artifactId>
+        <version>${revision}</version>
+    </parent>
+
     <artifactId>rapidark-commons-concurrent</artifactId>
-    <version>1.2.0</version>
 
     <name>ATask</name>
     <description>A simple multi-purpose asynchronous task execution framework.</description>
@@ -61,25 +65,21 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.15</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.11</version>
             <scope>compile</scope>
         </dependency>
         <!-- lombok自动get与set属性方法 -->
