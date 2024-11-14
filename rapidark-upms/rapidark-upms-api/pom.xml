@@ -34,7 +34,7 @@
         <!--core 工具类-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>rapidark-common-core</artifactId>
+            <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <!--feign 注解依赖-->
         <dependency>

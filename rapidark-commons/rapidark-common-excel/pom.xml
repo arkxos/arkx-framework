@@ -35,7 +35,7 @@
         <!--核心依赖,提供字典查询能力-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>rapidark-common-core</artifactId>
+            <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <!-- excel 导入导出工具类：https://github.com/rapidark-mesh/excel-spring-boot-starter-->
         <dependency>

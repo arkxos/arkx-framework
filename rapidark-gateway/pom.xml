@@ -62,7 +62,7 @@
         <!-- 工具包依赖 -->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>rapidark-common-core</artifactId>
+            <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <!--接口文档-->
         <dependency>

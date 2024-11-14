@@ -45,7 +45,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.rapidark.cloud</groupId>
-                <artifactId>rapidark-common-core</artifactId>
+                <artifactId>rapidark-common-biz</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

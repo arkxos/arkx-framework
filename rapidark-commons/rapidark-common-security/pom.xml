@@ -34,7 +34,7 @@
         <!--工具类核心包-->
         <dependency>
             <groupId>com.rapidark.cloud</groupId>
-            <artifactId>rapidark-common-core</artifactId>
+            <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>

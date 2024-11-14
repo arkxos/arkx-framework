@@ -31,7 +31,7 @@
 
     <modules>
         <module>rapidark-common-bom</module>
-        <module>rapidark-common-core</module>
+        <module>rapidark-common-biz</module>
         <module>rapidark-common-datasource</module>
         <module>rapidark-common-log</module>
         <module>rapidark-common-mybatis</module>
