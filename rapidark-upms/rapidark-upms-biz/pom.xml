@@ -27,7 +27,7 @@
     <artifactId>rapidark-upms-biz</artifactId>
     <packaging>jar</packaging>
 
-    <description>pig 通用用户权限管理系统业务处理模块</description>
+    <description>通用用户权限管理系统业务处理模块</description>
 
     <dependencies>
         <!--upms api、model 模块-->
@@ -37,27 +37,27 @@
         </dependency>
         <!--文件管理-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-oss</artifactId>
         </dependency>
         <!--feign 调用-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-feign</artifactId>
         </dependency>
         <!--安全模块-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-security</artifactId>
         </dependency>
         <!--日志处理-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-log</artifactId>
         </dependency>
         <!--接口文档-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-swagger</artifactId>
         </dependency>
         <!-- orm 模块-->
@@ -86,7 +86,7 @@
         </dependency>
         <!--xss 过滤-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-xss</artifactId>
         </dependency>
         <!--undertow容器-->

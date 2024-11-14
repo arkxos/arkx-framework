@@ -20,17 +20,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rapidark-commons</artifactId>
-        <groupId>com.rapidark.cloud</groupId>
+        <groupId>com.rapidark.framework</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rapidark.cloud</groupId>
+    <groupId>com.rapidark.framework</groupId>
     <artifactId>rapidark-common-datasource</artifactId>
 
     <packaging>jar</packaging>
 
-    <description>pig 动态切换数据源</description>
+    <description>动态切换数据源</description>
 
     <dependencies>
 		<!--配置文件加解密-->

@@ -33,12 +33,12 @@
         </dependency>
         <!--数据操作-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-mybatis</artifactId>
         </dependency>
         <!--动态数据源 数据操作-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-datasource</artifactId>
         </dependency>
         <!--mybatis-->
@@ -63,7 +63,7 @@
         </dependency>
         <!--common-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <dependency>
@@ -77,20 +77,20 @@
         </dependency>
         <!--swagger-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-swagger</artifactId>
         </dependency>
         <!--安全模块-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-xss</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-log</artifactId>
         </dependency>
         <!--代码生成模板引擎-->

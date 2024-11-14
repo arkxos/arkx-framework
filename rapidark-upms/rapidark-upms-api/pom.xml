@@ -27,28 +27,28 @@
     <artifactId>rapidark-upms-api</artifactId>
     <packaging>jar</packaging>
 
-    <description>pig 通用用户权限管理系统公共api模块</description>
+    <description>通用用户权限管理系统公共api模块</description>
 
 
     <dependencies>
         <!--core 工具类-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <!--feign 注解依赖-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-feign</artifactId>
         </dependency>
         <!--mybatis 依赖-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-mybatis</artifactId>
         </dependency>
         <!-- excel 导入导出 -->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-excel</artifactId>
         </dependency>
     </dependencies>

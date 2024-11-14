@@ -216,7 +216,6 @@
 
     <modules>
 		<module>rapidark-framework</module>
-		<module>rapidark-commons</module>
         <module>rapidark-register</module>
         <module>rapidark-gateway</module>
         <module>rapidark-auth</module>
@@ -229,9 +228,9 @@
         <dependencies>
 			<!--pig 公共版本定义-->
 			<dependency>
-				<groupId>com.rapidark.cloud</groupId>
+				<groupId>com.rapidark.framework</groupId>
 				<artifactId>rapidark-common-bom</artifactId>
-				<version>${project.version}</version>
+				<version>${revision}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

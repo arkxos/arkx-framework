@@ -27,7 +27,7 @@
     <artifactId>rapidark-auth</artifactId>
     <packaging>jar</packaging>
 
-    <description>pig 认证授权中心，基于 spring security oAuth2</description>
+    <description>认证授权中心，基于 spring security oAuth2</description>
 
     <dependencies>
         <!--注册中心客户端-->
@@ -42,7 +42,7 @@
         </dependency>
         <!--断路器依赖-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-feign</artifactId>
         </dependency>
         <!--upms api、model 模块-->
@@ -51,7 +51,7 @@
             <artifactId>rapidark-upms-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-security</artifactId>
         </dependency>
         <dependency>
@@ -70,7 +70,7 @@
         </dependency>
         <!-- log -->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-log</artifactId>
         </dependency>
         <!-- 调用验证码核心模块 -->

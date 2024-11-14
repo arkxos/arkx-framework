@@ -57,11 +57,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.rapidark.framework</groupId>
-            <artifactId>rapidark-commons-core</artifactId>
-            <version>${revision}</version>
-        </dependency>
 
         <!--        <dependency>-->
 <!--            <groupId>com.baomidou</groupId>-->

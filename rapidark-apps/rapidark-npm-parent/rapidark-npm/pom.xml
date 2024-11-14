@@ -134,7 +134,7 @@
 			<artifactId>spring-security-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.rapidark.cloud</groupId>
+			<groupId>com.rapidark.framework</groupId>
 			<artifactId>rapidark-common-biz</artifactId>
 		</dependency>
 	</dependencies>

@@ -27,7 +27,7 @@
 	<artifactId>rapidark-monitor</artifactId>
 	<packaging>jar</packaging>
 
-	<description>pig 监控模块，基于 spring boot admin</description>
+	<description>监控模块，基于 spring boot admin</description>
 
 	<dependencies>
 		<!--监控服务端-->
@@ -66,7 +66,7 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-biz</artifactId>
         </dependency>
     </dependencies>

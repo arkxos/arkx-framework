@@ -19,7 +19,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.rapidark.cloud</groupId>
+        <groupId>com.rapidark.framework</groupId>
         <artifactId>rapidark-commons</artifactId>
         <version>${revision}</version>
     </parent>
@@ -27,13 +27,13 @@
     <artifactId>rapidark-common-security</artifactId>
     <packaging>jar</packaging>
 
-    <description>pig 安全工具类</description>
+    <description>安全工具类</description>
 
 
     <dependencies>
         <!--工具类核心包-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <dependency>

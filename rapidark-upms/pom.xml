@@ -26,7 +26,7 @@
 
 	<artifactId>rapidark-upms</artifactId>
 
-	<description>pig 通用用户权限管理聚合模块</description>
+	<description>通用用户权限管理聚合模块</description>
 	<packaging>pom</packaging>
 
 	<modules>

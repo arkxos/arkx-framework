@@ -27,7 +27,7 @@
     <artifactId>rapidark-gateway</artifactId>
     <packaging>jar</packaging>
 
-    <description>pig 服务网关，基于 spring cloud gateway</description>
+    <description>服务网关，基于 spring cloud gateway</description>
 
     <dependencies>
         <!--gateway 网关依赖,内置webflux 依赖-->
@@ -61,7 +61,7 @@
         </dependency>
         <!-- 工具包依赖 -->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-biz</artifactId>
         </dependency>
         <!--接口文档-->
