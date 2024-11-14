@@ -49,7 +49,7 @@
         <!--安全模块-->
         <dependency>
             <groupId>com.rapidark.platform</groupId>
-            <artifactId>rapidark-common-security</artifactId>
+            <artifactId>rapidark-platform-support-security</artifactId>
 			<version>${revision}</version>
         </dependency>
         <!--日志处理-->

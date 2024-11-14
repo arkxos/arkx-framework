@@ -87,7 +87,7 @@
         </dependency>
         <dependency>
             <groupId>com.rapidark.platform</groupId>
-            <artifactId>rapidark-common-security</artifactId>
+            <artifactId>rapidark-platform-support-security</artifactId>
 			<version>${revision}</version>
         </dependency>
         <dependency>

@@ -58,7 +58,7 @@
         <!--spring security 、oauth、jwt依赖-->
         <dependency>
             <groupId>com.rapidark.platform</groupId>
-            <artifactId>rapidark-common-security</artifactId>
+            <artifactId>rapidark-platform-support-security</artifactId>
 			<version>${revision}</version>
         </dependency>
         <!-- quartz 模块 -->
