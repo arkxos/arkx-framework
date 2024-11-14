@@ -55,11 +55,6 @@
             </dependency>
             <dependency>
                 <groupId>com.rapidark.framework</groupId>
-                <artifactId>rapidark-common-log</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.rapidark.framework</groupId>
                 <artifactId>rapidark-common-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>

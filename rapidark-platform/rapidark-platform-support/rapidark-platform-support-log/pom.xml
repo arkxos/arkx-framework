@@ -24,7 +24,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>rapidark-common-log</artifactId>
+    <artifactId>rapidark-platform-support-log</artifactId>
     <packaging>jar</packaging>
 
     <description>日志服务</description>

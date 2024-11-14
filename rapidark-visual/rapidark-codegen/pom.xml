@@ -91,7 +91,7 @@
         </dependency>
         <dependency>
             <groupId>com.rapidark.framework</groupId>
-            <artifactId>rapidark-common-log</artifactId>
+            <artifactId>rapidark-platform-support-log</artifactId>
         </dependency>
         <!--代码生成模板引擎-->
         <dependency>

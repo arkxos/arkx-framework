@@ -19,6 +19,6 @@
 	</properties>
 
 	<modules>
-		<module>rapidark-common-log</module>
+		<module>rapidark-platform-support-log</module>
 	</modules>
 </project>

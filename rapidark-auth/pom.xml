@@ -71,7 +71,7 @@
         <!-- log -->
         <dependency>
             <groupId>com.rapidark.framework</groupId>
-            <artifactId>rapidark-common-log</artifactId>
+            <artifactId>rapidark-platform-support-log</artifactId>
         </dependency>
         <!-- 调用验证码核心模块 -->
         <dependency>
