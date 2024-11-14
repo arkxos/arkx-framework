@@ -27,8 +27,9 @@
         </dependency>
         <!--日志处理-->
         <dependency>
-            <groupId>com.rapidark.framework</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-platform-support-log</artifactId>
+			<version>${revision}</version>
         </dependency>
         <!--feign 处理-->
         <dependency>

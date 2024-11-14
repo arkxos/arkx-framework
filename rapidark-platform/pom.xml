@@ -6,9 +6,10 @@
 	<parent>
 		<groupId>com.rapidark.cloud</groupId>
 		<artifactId>rapidark-cloud</artifactId>
-		<version>3.8.1</version>
+		<version>${revision}</version>
 	</parent>
 
+	<groupId>com.rapidark.platform</groupId>
 	<artifactId>rapidark-platform</artifactId>
 	<packaging>pom</packaging>
 
