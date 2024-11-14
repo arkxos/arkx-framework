@@ -31,6 +31,10 @@
 
 
     <dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
         <!--工具类核心包-->
         <dependency>
             <groupId>com.rapidark.framework</groupId>

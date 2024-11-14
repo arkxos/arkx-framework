@@ -222,7 +222,8 @@
         <module>rapidark-upms</module>
 		<module>rapidark-visual</module>
 		<module>rapidark-apps</module>
-    </modules>
+		<module>rapidark-platform</module>
+	</modules>
 
     <dependencyManagement>
         <dependencies>
