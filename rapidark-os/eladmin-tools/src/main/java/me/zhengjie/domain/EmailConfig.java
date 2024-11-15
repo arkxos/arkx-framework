@@ -33,26 +33,26 @@ public class EmailConfig implements Serializable {
 
     @Id
     @Column(name = "config_id")
-    @ApiModelProperty(value = "ID", hidden = true)
+    @Schema( value = "ID", hidden = true)
     private Long id;
 
     @NotBlank
-    @ApiModelProperty(value = "邮件服务器SMTP地址")
+    @Schema( value = "邮件服务器SMTP地址")
     private String host;
 
     @NotBlank
-    @ApiModelProperty(value = "邮件服务器 SMTP 端口")
+    @Schema( value = "邮件服务器 SMTP 端口")
     private String port;
 
     @NotBlank
-    @ApiModelProperty(value = "发件者用户名")
+    @Schema( value = "发件者用户名")
     private String user;
 
     @NotBlank
-    @ApiModelProperty(value = "密码")
+    @Schema( value = "密码")
     private String pass;
 
     @NotBlank
-    @ApiModelProperty(value = "收件人")
+    @Schema( value = "收件人")
     private String fromUser;
 }

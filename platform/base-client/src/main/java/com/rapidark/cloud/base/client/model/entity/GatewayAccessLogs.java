@@ -30,7 +30,7 @@ public class GatewayAccessLogs extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "access_Id")
-    @ApiModelProperty(value = "accessId")
+    @Schema( value = "accessId")
     private Long accessId;
 
     /**

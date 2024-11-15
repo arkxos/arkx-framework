@@ -20,28 +20,28 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("msg_email_config")
-@ApiModel(value = "EmailConfig对象", description = "邮件发送配置")
+@Schema(description = "EmailConfig对象", description = "邮件发送配置")
 public class EmailConfig extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "config_id", type = IdType.ASSIGN_ID)
     private Long configId;
 
-    @ApiModelProperty(value = "配置名称")
+    @Schema( value = "配置名称")
     private String name;
 
-    @ApiModelProperty(value = "发件服务器域名")
+    @Schema( value = "发件服务器域名")
     private String smtpHost;
 
-    @ApiModelProperty(value = "发件服务器账户")
+    @Schema( value = "发件服务器账户")
     private String smtpUsername;
 
-    @ApiModelProperty(value = "发件服务器密码")
+    @Schema( value = "发件服务器密码")
     private String smtpPassword;
 
-    @ApiModelProperty(value = "保留数据0-否 1-是 不允许删除")
+    @Schema( value = "保留数据0-否 1-是 不允许删除")
     private Integer isPersist;
 
-    @ApiModelProperty(value = "是否为默认 0-否 1-是 ")
+    @Schema( value = "是否为默认 0-否 1-是 ")
     private Integer isDefault;
 }

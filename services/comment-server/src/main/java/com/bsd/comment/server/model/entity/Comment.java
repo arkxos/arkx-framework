@@ -20,56 +20,56 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @TableName("bsd_comment")
-@ApiModel(value = "评论对象", description = "评论表")
+@Schema(description = "评论对象", description = "评论表")
 public class Comment extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "评论ID")
+    @Schema( value = "评论ID")
     @TableId(value = "comment_id", type = IdType.AUTO)
     private Long commentId;
 
-    @ApiModelProperty(value = "主题ID(商品,课程,活动ID)")
+    @Schema( value = "主题ID(商品,课程,活动ID)")
     private Long topicId;
 
-    @ApiModelProperty(value = "主题名称(商品,课程,活动名称)")
+    @Schema( value = "主题名称(商品,课程,活动名称)")
     private String topicName;
 
-    @ApiModelProperty(value = "主题类型")
+    @Schema( value = "主题类型")
     private String topicType;
 
-    @ApiModelProperty(value = "主题子类型")
+    @Schema( value = "主题子类型")
     private String topicSubType;
 
-    @ApiModelProperty(value = "评论用户ID")
+    @Schema( value = "评论用户ID")
     private Long userId;
 
-    @ApiModelProperty(value = "用户名")
+    @Schema( value = "用户名")
     private String userName;
 
-    @ApiModelProperty(value = "评论内容")
+    @Schema( value = "评论内容")
     private String content;
 
-    @ApiModelProperty(value = "来源 1.客户端APP 2.PC 3.WAP 4.unknow")
+    @Schema( value = "来源 1.客户端APP 2.PC 3.WAP 4.unknow")
     private Integer source;
 
-    @ApiModelProperty(value = "状态 1.未审核 2.未回复 3.已回复 4.已屏蔽")
+    @Schema( value = "状态 1.未审核 2.未回复 3.已回复 4.已屏蔽")
     private Integer status;
 
-    @ApiModelProperty(value = "是否置顶 0.否 1.是")
+    @Schema( value = "是否置顶 0.否 1.是")
     private Boolean isTop;
 
-    @ApiModelProperty(value = "点踩数")
+    @Schema( value = "点踩数")
     private Integer unLikeNum;
 
-    @ApiModelProperty(value = "点赞数")
+    @Schema( value = "点赞数")
     private Integer likeNum;
 
-    @ApiModelProperty(value = "回复数")
+    @Schema( value = "回复数")
     private Integer replyNum;
 
-    @ApiModelProperty(value = "创建者")
+    @Schema( value = "创建者")
     private String createBy;
 
-    @ApiModelProperty(value = "更新者")
+    @Schema( value = "更新者")
     private String updateBy;
 }

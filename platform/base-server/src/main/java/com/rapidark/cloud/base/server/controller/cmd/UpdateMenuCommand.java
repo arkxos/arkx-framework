@@ -11,11 +11,11 @@ import jakarta.validation.constraints.NotNull;
  * @version 1.0
  * @date 2021/5/13 18:22
  */
-@ApiModel(value = "修改菜单命令")
+@Schema(description = "修改菜单命令")
 @Data
 public class UpdateMenuCommand extends CreateMenuCommand {
 
-    @ApiModelProperty(required = true, value = "菜单ID")
+    @Schema( required = true, value = "菜单ID")
     @NotNull(message = "菜单id不能为空")
     private Long menuId;
 

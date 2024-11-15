@@ -20,25 +20,25 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("msg_email_template")
-@ApiModel(value = "EmailTemplate对象", description = "邮件模板配置")
+@Schema(description = "EmailTemplate对象", description = "邮件模板配置")
 public class EmailTemplate extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "tpl_id", type = IdType.ASSIGN_ID)
     private Long tplId;
 
-    @ApiModelProperty(value = "模板名称")
+    @Schema( value = "模板名称")
     private String name;
 
-    @ApiModelProperty(value = "模板编码")
+    @Schema( value = "模板编码")
     private String code;
 
-    @ApiModelProperty(value = "发送服务器配置")
+    @Schema( value = "发送服务器配置")
     private Long configId;
 
-    @ApiModelProperty(value = "模板")
+    @Schema( value = "模板")
     private String template;
 
-    @ApiModelProperty(value = "模板参数")
+    @Schema( value = "模板参数")
     private String params;
 }

@@ -28,7 +28,7 @@ public class BaseApi extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "api_id")
-    @ApiModelProperty(value = "api_id")
+    @Schema( value = "api_id")
     private Long apiId;
 
     /**

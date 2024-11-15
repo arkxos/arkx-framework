@@ -37,29 +37,29 @@ public class App extends AbstractIdLongEntity implements Serializable {
 
     @Id
 	@Column(name = "app_id")
-	@ApiModelProperty(value = "ID", hidden = true)
+	@Schema( value = "ID", hidden = true)
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@ApiModelProperty(value = "名称")
+	@Schema( value = "名称")
     private String name;
 
-	@ApiModelProperty(value = "端口")
+	@Schema( value = "端口")
 	private int port;
 
-	@ApiModelProperty(value = "上传路径")
+	@Schema( value = "上传路径")
 	private String uploadPath;
 
-	@ApiModelProperty(value = "部署路径")
+	@Schema( value = "部署路径")
 	private String deployPath;
 
-	@ApiModelProperty(value = "备份路径")
+	@Schema( value = "备份路径")
 	private String backupPath;
 
-	@ApiModelProperty(value = "启动脚本")
+	@Schema( value = "启动脚本")
 	private String startScript;
 
-	@ApiModelProperty(value = "部署脚本")
+	@Schema( value = "部署脚本")
 	private String deployScript;
 
     public void copy(App source){

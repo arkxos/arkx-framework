@@ -25,7 +25,7 @@ public class BaseAccount extends AbstractIdLongEntity {
 
     @Id
     @Column(name = "account_id")
-    @ApiModelProperty(value = "accountId")
+    @Schema( value = "accountId")
     private Long accountId;
 
     /**

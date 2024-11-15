@@ -12,13 +12,13 @@ import jakarta.validation.constraints.NotNull;
  * @date 2021/5/25 14:53
  */
 @Data
-@ApiModel(value = "修改应用开发信息")
+@Schema(description = "修改应用开发信息")
 public class ThirdpartSystemLoginCommand {
 
-    @ApiModelProperty(required = true, value = "客户端id", example = "ECO6swuQ8eCtu9l6MMTdw0dA")
+    @Schema( required = true, value = "客户端id", example = "ECO6swuQ8eCtu9l6MMTdw0dA")
     @NotNull(message = "客户端id不能为空")
     private String clientId;
-    @ApiModelProperty(required = true, value = "客户端秘钥", example = "c0LZsvO1aqwU0MYAvnFODmrdNG0Au8zv")
+    @Schema( required = true, value = "客户端秘钥", example = "c0LZsvO1aqwU0MYAvnFODmrdNG0Au8zv")
     @NotNull(message = "客户端秘钥不能为空")
     private String clientSecret;
 

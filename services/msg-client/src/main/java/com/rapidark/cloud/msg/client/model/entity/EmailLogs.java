@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("msg_email_logs")
-@ApiModel(value = "EmailLogs对象", description = "邮件发送日志")
+@Schema(description = "EmailLogs对象", description = "邮件发送日志")
 public class EmailLogs extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
@@ -35,21 +35,21 @@ public class EmailLogs extends AbstractEntity {
 
     private String content;
 
-    @ApiModelProperty(value = "附件路径")
+    @Schema( value = "附件路径")
     private String attachments;
 
-    @ApiModelProperty(value = "发送次数")
+    @Schema( value = "发送次数")
     private Integer sendNums;
 
-    @ApiModelProperty(value = "错误信息")
+    @Schema( value = "错误信息")
     private String error;
 
-    @ApiModelProperty(value = "0-失败 1-成功")
+    @Schema( value = "0-失败 1-成功")
     private Integer result;
 
-    @ApiModelProperty(value = "发送配置")
+    @Schema( value = "发送配置")
     private String config;
 
-    @ApiModelProperty(value = "模板编号")
+    @Schema( value = "模板编号")
     private String tplCode;
 }

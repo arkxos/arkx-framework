@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.eventusermodel.XSSFReader;
+import org.apache.poi.xssf.model.SharedStrings;
 import org.apache.poi.xssf.model.SharedStringsTable;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.xml.sax.Attributes;
@@ -18,7 +19,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class ExcelUtil extends DefaultHandler {
 	
-	private SharedStringsTable sst;
+	private SharedStrings sst;
 	private String lastContents;
 	private boolean nextIsString;
 
@@ -35,7 +36,7 @@ public class ExcelUtil extends DefaultHandler {
 	public void readOneSheet(String path) throws Exception {
 		OPCPackage pkg = OPCPackage.open(path);		
 		XSSFReader r = new XSSFReader(pkg);
-		SharedStringsTable sst = r.getSharedStringsTable();
+		SharedStrings sst = r.getSharedStringsTable();
 		XMLReader parser = fetchSheetParser(sst);
 		InputStream sheet = r.getSheet("rId1");
 		InputSource sheetSource = new InputSource(sheet);
@@ -52,7 +53,7 @@ public class ExcelUtil extends DefaultHandler {
 	public void process(String path) throws Exception {
 		OPCPackage pkg = OPCPackage.open(path);
 		XSSFReader r = new XSSFReader(pkg);
-		SharedStringsTable sst = r.getSharedStringsTable();
+		SharedStrings sst = r.getSharedStringsTable();
 
 		XMLReader parser = fetchSheetParser(sst);
 
@@ -82,7 +83,7 @@ public class ExcelUtil extends DefaultHandler {
 	}
 	
 	
-	public XMLReader fetchSheetParser(SharedStringsTable sst) throws SAXException {
+	public XMLReader fetchSheetParser(SharedStrings sst) throws SAXException {
 		XMLReader parser = XMLReaderFactory
 				.createXMLReader("org.apache.xerces.parsers.SAXParser");
 		this.sst = sst;
@@ -114,7 +115,7 @@ public class ExcelUtil extends DefaultHandler {
 		if (nextIsString) {
 			try {
 				int idx = Integer.parseInt(lastContents);
-				lastContents = new XSSFRichTextString(sst.getEntryAt(idx))
+				lastContents = new XSSFRichTextString(sst.getItemAt(idx)+"")
 						.toString();
 			} catch (Exception e) {
 

@@ -12,10 +12,10 @@ import jakarta.validation.constraints.NotNull;
  * @date 2021/5/25 15:37
  */
 @Data
-@ApiModel(value = "退出登录参数")
+@Schema(description = "退出登录参数")
 public class LogoutCommand {
 
-    @ApiModelProperty(required = true, value = "令牌")
+    @Schema( required = true, value = "令牌")
     @NotNull(message = "令牌不能为空")
     private String token;
 

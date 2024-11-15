@@ -15,10 +15,10 @@ import jakarta.validation.constraints.NotEmpty;
  */
 @Getter
 @Setter
-@ApiModel(value = "添加钉钉用户命令")
+@Schema(description = "添加钉钉用户命令")
 public class AddDingDingUserCommand extends AddUserCommand {
 
-    @ApiModelProperty(name = "ddUserid", value = "用户钉钉ID", example = "", required = true)
+    @Schema( name = "ddUserid", value = "用户钉钉ID", example = "", required = true)
     @NotEmpty(message = "用户钉钉ID不能为空")
     private String ddUserid;
 

@@ -10,13 +10,13 @@ import io.swagger.annotations.ApiModelProperty;
 public class SmsMessage extends BaseMessage {
     private static final long serialVersionUID = -8924332753124953766L;
 
-    @ApiModelProperty("手机号码")
+    @Schema( "手机号码")
     private String phoneNum;
-    @ApiModelProperty("短信签名")
+    @Schema( "短信签名")
     private String signName;
-    @ApiModelProperty("模板编号")
+    @Schema( "模板编号")
     private String tplCode;
-    @ApiModelProperty("模板参数")
+    @Schema( "模板参数")
     private String tplParams;
 
     public String getPhoneNum() {

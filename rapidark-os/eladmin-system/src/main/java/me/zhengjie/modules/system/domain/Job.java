@@ -39,20 +39,20 @@ public class Job extends AbstractIdLongEntity implements Serializable {
     @Id
     @Column(name = "job_id")
     @NotNull(groups = Update.class)
-    @ApiModelProperty(value = "ID", hidden = true)
+    @Schema( value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @ApiModelProperty(value = "岗位名称")
+    @Schema( value = "岗位名称")
     private String name;
 
     @NotNull
-    @ApiModelProperty(value = "岗位排序")
+    @Schema( value = "岗位排序")
     private Long jobSort;
 
     @NotNull
-    @ApiModelProperty(value = "是否启用")
+    @Schema( value = "是否启用")
     private Boolean enabled;
 
     @Override

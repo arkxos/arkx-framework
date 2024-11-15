@@ -13,7 +13,6 @@ import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -319,7 +318,7 @@ public class DataTableUtil {
 			return "";
 		}
 		if (cell.getCellType() == CellType.NUMERIC) {
-			if (HSSFDateUtil.isCellDateFormatted(cell)) {
+			if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
 				value = DateUtil.toString(cell.getDateCellValue());
 			} else if ((cell.getCellStyle().getDataFormat() == 31) || (cell.getCellStyle().getDataFormat() == 181)) {
 				Date d = cell.getDateCellValue();

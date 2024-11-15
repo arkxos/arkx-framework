@@ -7,7 +7,6 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -323,7 +322,7 @@ public class DataTableUtil {
 			return "";
 		}
 		if (cell.getCellType() == CellType.NUMERIC) {
-			if (HSSFDateUtil.isCellDateFormatted(cell)) {
+			if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
 				value = DateUtil.toString(cell.getDateCellValue());
 			} else if ((cell.getCellStyle().getDataFormat() == 31) || (cell.getCellStyle().getDataFormat() == 181)) {
 				Date d = cell.getDateCellValue();
@@ -518,7 +517,7 @@ public class DataTableUtil {
 					if (w < 100.0D) {
 						w = 100.0D;
 					}
-					sheet.setColumnWidth(i, new Double(w * 35.0D).intValue());
+					sheet.setColumnWidth(i, Double.valueOf(w * 35.0D).intValue());
 				}
 			}
 			for (int i = 0; i < indexes.length; i++) {
@@ -736,7 +735,7 @@ public class DataTableUtil {
 							if (w < 100.0D) {
 								w = 100.0D;
 							}
-							sheet.setColumnWidth(j, new Double(w * 35.0D).intValue());
+							sheet.setColumnWidth(j, Double.valueOf(w * 35.0D).intValue());
 						}
 					}
 				} else {

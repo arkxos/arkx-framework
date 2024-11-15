@@ -15,21 +15,21 @@ import jakarta.validation.constraints.NotNull;
  * @date 2021/6/21 10:41
  */
 @Data
-@ApiModel(value = "创建角色命令")
+@Schema(description = "创建角色命令")
 public class AddRoleCommand {
 
-    @ApiModelProperty(name = "roleCode", value = "角色编码", example = "", required = true)
+    @Schema( name = "roleCode", value = "角色编码", example = "", required = true)
     @NotNull
     private String roleCode;
 
-    @ApiModelProperty(name = "roleName", value = "角色显示名称", example = "", required = true)
+    @Schema( name = "roleName", value = "角色显示名称", example = "", required = true)
     @NotNull
     private String roleName;
 
-    @ApiModelProperty(name = "roleDesc", value = "描述", example = "", required = false)
+    @Schema( name = "roleDesc", value = "描述", example = "", required = false)
     private String roleDesc;
 
-    @ApiModelProperty(name = "status", required = true, example = "1", allowableValues = "0,1", value = "是否启用")
+    @Schema( name = "status", required = true, example = "1", allowableValues = "0,1", value = "是否启用")
     @NotNull
     private Integer status = 1;
 

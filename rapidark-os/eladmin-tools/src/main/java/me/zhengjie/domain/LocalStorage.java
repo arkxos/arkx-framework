@@ -37,26 +37,26 @@ public class LocalStorage extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "storage_id")
-    @ApiModelProperty(value = "ID", hidden = true)
+    @Schema( value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storageId;
 
-    @ApiModelProperty(value = "真实文件名")
+    @Schema( value = "真实文件名")
     private String realName;
 
-    @ApiModelProperty(value = "文件名")
+    @Schema( value = "文件名")
     private String name;
 
-    @ApiModelProperty(value = "后缀")
+    @Schema( value = "后缀")
     private String suffix;
 
-    @ApiModelProperty(value = "路径")
+    @Schema( value = "路径")
     private String path;
 
-    @ApiModelProperty(value = "类型")
+    @Schema( value = "类型")
     private String type;
 
-    @ApiModelProperty(value = "大小")
+    @Schema( value = "大小")
     private String size;
 
     public LocalStorage(String realName,String name, String suffix, String path, String type, String size) {

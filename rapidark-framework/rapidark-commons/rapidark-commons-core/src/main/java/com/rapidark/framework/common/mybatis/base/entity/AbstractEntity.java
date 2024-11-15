@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -26,7 +26,7 @@ public abstract class AbstractEntity extends Model implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    @ApiModelProperty(value = "创建时间")
+    @Schema( description = "创建时间")
     public Date createTime;
     /**
      * 修改时间
@@ -34,7 +34,7 @@ public abstract class AbstractEntity extends Model implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value = "修改时间")
+    @Schema( description = "修改时间")
     public Date updateTime;
 
 

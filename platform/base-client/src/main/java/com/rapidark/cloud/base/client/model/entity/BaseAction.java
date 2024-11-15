@@ -29,7 +29,7 @@ public class BaseAction extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "action_Id")
-    @ApiModelProperty(value = "actionId")
+    @Schema( value = "actionId")
     private Long actionId;
 
     /**

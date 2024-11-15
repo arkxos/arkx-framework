@@ -17,17 +17,17 @@ public class WebHookMessage extends BaseMessage {
     /**
      * 通知回调路径
      */
-    @ApiModelProperty("通知回调路径")
+    @Schema( "通知回调路径")
     private String url;
     /**
      * 请求内容
      */
-    @ApiModelProperty("请求内容")
+    @Schema( "请求内容")
     private Map<String, String> data = Maps.newLinkedHashMap();
     /**
      * 通知业务类型
      */
-    @ApiModelProperty("通知业务类型")
+    @Schema( "通知业务类型")
     private String type;
 
     public WebHookMessage() {

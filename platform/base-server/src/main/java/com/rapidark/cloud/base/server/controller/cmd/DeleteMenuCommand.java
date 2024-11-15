@@ -11,11 +11,11 @@ import jakarta.validation.constraints.NotNull;
  * @version 1.0
  * @date 2021/5/21 15:21
  */
-@ApiModel(value = "删除菜单命令")
+@Schema(description = "删除菜单命令")
 @Data
 public class DeleteMenuCommand {
 
-    @ApiModelProperty(required = true, value = "菜单编号")
+    @Schema( required = true, value = "菜单编号")
     @NotNull(message = "菜单编号不能为空")
     private Long menuId;
 

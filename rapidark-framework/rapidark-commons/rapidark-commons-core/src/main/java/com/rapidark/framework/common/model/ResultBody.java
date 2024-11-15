@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.constants.ErrorCode;
 import com.rapidark.framework.common.utils.StringUtils;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,35 +19,35 @@ import java.util.ResourceBundle;
  */
 @Getter
 @Setter
-@ApiModel(value = "响应结果")
+@Schema(description = "响应结果")
 public class ResultBody<T> implements Serializable {
     private static final long serialVersionUID = -6190689122701100762L;
 
-    @ApiModelProperty(value = "业务编码")
+    @Schema(description = "业务编码")
     private String bizId;
 
     /**
      * 响应编码
      */
-    @ApiModelProperty(value = "响应编码:0-请求处理成功")
+    @Schema(description = "响应编码:0-请求处理成功")
     private int code = 0;
 
     /**
      * 提示消息
      */
-    @ApiModelProperty(value = "提示消息")
+    @Schema(description = "提示消息")
     private String message;
 
     /**
      * 请求路径
      */
-    @ApiModelProperty(value = "请求路径")
+    @Schema(description = "请求路径")
     private String path;
 
     /**
      * 响应数据
      */
-    @ApiModelProperty(value = "响应数据")
+    @Schema(description = "响应数据")
     private T data;
 
     /**
@@ -58,13 +58,13 @@ public class ResultBody<T> implements Serializable {
     /**
      * 附加数据
      */
-    @ApiModelProperty(value = "附加数据")
+    @Schema(description = "附加数据")
     private Map<String, Object> extra;
 
     /**
      * 响应时间
      */
-    @ApiModelProperty(value = "响应时间")
+    @Schema(description = "响应时间")
     private long timestamp = System.currentTimeMillis();
 
     public ResultBody() {

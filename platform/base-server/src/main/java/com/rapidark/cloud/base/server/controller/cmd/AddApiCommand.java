@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2022/5/13 17:29
  */
 @Data
-@ApiModel(value = "创建Api命令")
+@Schema(description = "创建Api命令")
 public class AddApiCommand {
 //    @RequestParam(value = "apiCode")
     private String apiCode;

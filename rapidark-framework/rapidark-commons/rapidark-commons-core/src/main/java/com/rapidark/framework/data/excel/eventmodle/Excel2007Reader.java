@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.eventusermodel.XSSFReader;
-import org.apache.poi.xssf.model.SharedStringsTable;
+import org.apache.poi.xssf.model.SharedStrings;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -23,7 +23,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  *
  */
 public class Excel2007Reader extends DefaultHandler {
-	private SharedStringsTable sst;  
+	private SharedStrings sst;
     private String lastContents;  
     private boolean nextIsString;  
   
@@ -46,8 +46,8 @@ public class Excel2007Reader extends DefaultHandler {
     //只遍历一个sheet，其中sheetId为要遍历的sheet索引，从1开始，1-3  
     public void processOneSheet(String filename,int sheetId) throws Exception {  
         OPCPackage pkg = OPCPackage.open(filename);  
-        XSSFReader r = new XSSFReader(pkg);  
-        SharedStringsTable sst = r.getSharedStringsTable();  
+        XSSFReader r = new XSSFReader(pkg);
+		SharedStrings sst = r.getSharedStringsTable();
           
         XMLReader parser = fetchSheetParser(sst);  
   
@@ -66,7 +66,7 @@ public class Excel2007Reader extends DefaultHandler {
     public void process(String filename) throws Exception {  
         OPCPackage pkg = OPCPackage.open(filename);  
         XSSFReader r = new XSSFReader(pkg);  
-        SharedStringsTable sst = r.getSharedStringsTable();  
+        SharedStrings sst = r.getSharedStringsTable();
   
         XMLReader parser = fetchSheetParser(sst);  
   
@@ -81,7 +81,7 @@ public class Excel2007Reader extends DefaultHandler {
         }  
     }  
   
-    public XMLReader fetchSheetParser(SharedStringsTable sst)  
+    public XMLReader fetchSheetParser(SharedStrings sst)
             throws SAXException {  
         XMLReader parser = XMLReaderFactory  
                 .createXMLReader("org.apache.xerces.parsers.SAXParser");  
@@ -115,7 +115,7 @@ public class Excel2007Reader extends DefaultHandler {
         if (nextIsString) {  
             try {  
                 int idx = Integer.parseInt(lastContents);  
-                lastContents = new XSSFRichTextString(sst.getEntryAt(idx))  
+                lastContents = new XSSFRichTextString(sst.getItemAt(idx)+"")
                         .toString();  
             } catch (Exception e) {  
   

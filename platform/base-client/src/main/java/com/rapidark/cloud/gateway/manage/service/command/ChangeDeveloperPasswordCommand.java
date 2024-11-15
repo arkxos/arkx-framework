@@ -13,14 +13,14 @@ import jakarta.validation.constraints.NotNull;
  * @date 2022/6/27 16:53
  */
 @Data
-@ApiModel(value = "修改开发商密码参数")
+@Schema(description = "修改开发商密码参数")
 public class ChangeDeveloperPasswordCommand {
 
-    @ApiModelProperty(name = "userId", value = "用户Id", example = "", required = true)
+    @Schema( name = "userId", value = "用户Id", example = "", required = true)
     @NotNull(message = "用户Id不能为空")
     private Long userId;
 
-    @ApiModelProperty(name = "password", value = "密码", example = "", required = true)
+    @Schema( name = "password", value = "密码", example = "", required = true)
     @NotEmpty(message = "密码不能为空")
     private String password;
 

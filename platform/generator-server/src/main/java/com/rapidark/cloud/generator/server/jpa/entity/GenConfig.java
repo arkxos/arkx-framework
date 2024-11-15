@@ -41,45 +41,45 @@ public class GenConfig implements Serializable {
 
     @Id
     @Column(name = "config_id")
-    @ApiModelProperty(value = "ID", hidden = true)
+    @Schema( value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
     @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
     @NotBlank
-    @ApiModelProperty(value = "表名")
+    @Schema( value = "表名")
     private String tableName;
 
     @NotBlank
-    @ApiModelProperty(value = "表英文名")
+    @Schema( value = "表英文名")
     private String tableEnName;
 
-    @ApiModelProperty(value = "接口名称")
+    @Schema( value = "接口名称")
     private String apiAlias;
 
     @NotBlank
-    @ApiModelProperty(value = "包路径")
+    @Schema( value = "包路径")
     private String pack;
 
     @NotBlank
-    @ApiModelProperty(value = "模块名")
+    @Schema( value = "模块名")
     private String moduleName;
 
     @NotBlank
-    @ApiModelProperty(value = "前端文件路径")
+    @Schema( value = "前端文件路径")
     private String path;
 
-    @ApiModelProperty(value = "前端文件路径")
+    @Schema( value = "前端文件路径")
     private String apiPath;
 
-    @ApiModelProperty(value = "作者")
+    @Schema( value = "作者")
     private String author;
 
-    @ApiModelProperty(value = "表前缀")
+    @Schema( value = "表前缀")
     private String prefix;
 
-    @ApiModelProperty(value = "是否覆盖")
+    @Schema( value = "是否覆盖")
     private Boolean cover = false;
 
 }

@@ -26,7 +26,7 @@ public class BaseUser extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "user_Id")
-    @ApiModelProperty(value = "userId")
+    @Schema( value = "userId")
     private Long userId;
 
     /**

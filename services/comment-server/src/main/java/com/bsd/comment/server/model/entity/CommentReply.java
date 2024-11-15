@@ -20,41 +20,41 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @TableName("bsd_comment_reply")
-@ApiModel(value = "CommentReply对象", description = "评论回复表")
+@Schema(description = "CommentReply对象", description = "评论回复表")
 public class CommentReply extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "评论回复ID")
+    @Schema( value = "评论回复ID")
     @TableId(value = "reply_id", type = IdType.ASSIGN_ID)
     private Long replyId;
 
-    @ApiModelProperty(value = "评论ID")
+    @Schema( value = "评论ID")
     private Long commentId;
 
-    @ApiModelProperty(value = "上级回复ID")
+    @Schema( value = "上级回复ID")
     private Long parentId;
 
-    @ApiModelProperty(value = "回复者ID")
+    @Schema( value = "回复者ID")
     private String fromUserId;
 
-    @ApiModelProperty(value = "回复者的名字")
+    @Schema( value = "回复者的名字")
     private String fromUserName;
 
-    @ApiModelProperty(value = "回复内容")
+    @Schema( value = "回复内容")
     private String content;
 
-    @ApiModelProperty(value = "回复目标ID")
+    @Schema( value = "回复目标ID")
     private Long toUserId;
 
-    @ApiModelProperty(value = "是否屏蔽 0.不屏蔽 1.屏蔽")
+    @Schema( value = "是否屏蔽 0.不屏蔽 1.屏蔽")
     private Boolean isShield;
 
-    @ApiModelProperty(value = "是否后台回复 1.普通回复  2.平台回复")
+    @Schema( value = "是否后台回复 1.普通回复  2.平台回复")
     private Integer isAuthor;
 
-    @ApiModelProperty(value = "创建者")
+    @Schema( value = "创建者")
     private String createBy;
 
-    @ApiModelProperty(value = "更新者")
+    @Schema( value = "更新者")
     private String updateBy;
 }

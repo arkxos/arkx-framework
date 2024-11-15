@@ -38,12 +38,12 @@ public class Deploy extends AbstractIdLongEntity implements Serializable {
 
     @Id
 	@Column(name = "deploy_id")
-	@ApiModelProperty(value = "ID", hidden = true)
+	@Schema( value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 	@ManyToMany
-	@ApiModelProperty(name = "服务器", hidden = true)
+	@Schema( name = "服务器", hidden = true)
 	@JoinTable(name = "mnt_deploy_server",
 			joinColumns = {@JoinColumn(name = "deploy_id",referencedColumnName = "deploy_id")},
 			inverseJoinColumns = {@JoinColumn(name = "server_id",referencedColumnName = "server_id")})
@@ -51,7 +51,7 @@ public class Deploy extends AbstractIdLongEntity implements Serializable {
 
 	@ManyToOne
     @JoinColumn(name = "app_id")
-	@ApiModelProperty(value = "应用编号")
+	@Schema( value = "应用编号")
     private App app;
 
     public void copy(Deploy source){

@@ -72,9 +72,9 @@ public class ${className} implements Serializable {
     </#if>
     </#if>
     <#if column.remark != ''>
-    @ApiModelProperty(value = "${column.remark}")
+    @Schema( value = "${column.remark}")
     <#else>
-    @ApiModelProperty(value = "${column.changeColumnName}")
+    @Schema( value = "${column.changeColumnName}")
     </#if>
     private ${column.columnType} ${column.changeColumnName};
     </#list>
