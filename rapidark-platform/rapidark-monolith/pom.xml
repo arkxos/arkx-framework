@@ -25,7 +25,6 @@
 	</parent>
 
 	<artifactId>rapidark-monolith</artifactId>
-	<version>17.0.0</version>
 	<packaging>jar</packaging>
 
     <description>单体版本启动</description>
