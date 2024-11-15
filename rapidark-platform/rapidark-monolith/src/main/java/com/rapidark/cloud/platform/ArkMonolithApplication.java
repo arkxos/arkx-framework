@@ -28,10 +28,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnablePigDoc(value = "admin", isMicro = false)
 @EnablePigResourceServer
 @SpringBootApplication
-public class PigBootApplication {
+public class ArkMonolithApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PigBootApplication.class, args);
+		SpringApplication.run(ArkMonolithApplication.class, args);
 	}
 
 }

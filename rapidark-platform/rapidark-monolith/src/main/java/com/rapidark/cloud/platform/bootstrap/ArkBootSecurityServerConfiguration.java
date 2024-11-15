@@ -57,7 +57,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  */
 @Configuration
 @RequiredArgsConstructor
-public class PigBootSecurityServerConfiguration {
+public class ArkBootSecurityServerConfiguration {
 
 	private final ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
 

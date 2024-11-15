@@ -867,7 +867,7 @@
         <profile>
             <id>boot</id>
             <modules>
-                <module>rapidark-boot</module>
+<!--                <module>rapidark-boot</module>-->
             </modules>
         </profile>
     </profiles>
