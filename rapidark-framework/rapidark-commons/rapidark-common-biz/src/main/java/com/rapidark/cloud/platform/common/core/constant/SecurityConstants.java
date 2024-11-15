@@ -30,12 +30,12 @@ public interface SecurityConstants {
 	/**
 	 * 前缀
 	 */
-	String PROJECT_PREFIX = "pig";
+	String PROJECT_PREFIX = "ark";
 
 	/**
 	 * 项目的license
 	 */
-	String PROJECT_LICENSE = "https://pig4cloud.com";
+	String PROJECT_LICENSE = "https://rapidark.com";
 
 	/**
 	 * 内部

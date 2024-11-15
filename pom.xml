@@ -28,7 +28,7 @@
 
     <properties>
         <!-- 项目版本号 -->
-        <revision>3.8.1</revision>
+        <revision>10.0.2</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -715,12 +715,62 @@
         </dependencies>
     </dependencyManagement>
 
+	<!--nexus 私有仓库发布地址-->
+	<!--<distributionManagement>
+		<repository>
+			<id>maven-releases</id>
+			<url>http://192.168.7.245:8081/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven-snapshots</id>
+			<url>http://192.168.7.245:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>-->
+	<!--云效私有仓库发布地址-->
+<!--	<distributionManagement>-->
+<!--		&lt;!&ndash;maven的settings.xml文件中设置<server>标签&ndash;&gt;-->
+<!--		<repository>-->
+<!--			<id>rdc-releases</id>-->
+<!--			<url>https://repo.rdc.aliyun.com/repository/126334-release-hl3JHL/</url>-->
+<!--		</repository>-->
+<!--		<snapshotRepository>-->
+<!--			<id>rdc-snapshots</id>-->
+<!--			<url>https://repo.rdc.aliyun.com/repository/126334-snapshot-k0fTE8/</url>-->
+<!--		</snapshotRepository>-->
+<!--	</distributionManagement>-->
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<id>spring-milestones</id>-->
+<!--			<name>Spring Milestones</name>-->
+<!--			<url>https://repo.spring.io/milestone</url>-->
+<!--			<snapshots>-->
+<!--				<enabled>false</enabled>-->
+<!--			</snapshots>-->
+<!--		</repository>-->
+<!--		<repository>-->
+<!--			<id>bintray-release</id>-->
+<!--			<name>oss-jfrog-artifactory-release</name>-->
+<!--			<url>-->
+<!--				https://oss.jfrog.org/artifactory/oss-release-local-->
+<!--			</url>-->
+<!--		</repository>-->
+<!--	</repositories>-->
+
     <build>
         <finalName>${project.name}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+				<!-- 引入所有 匹配文件进行过滤 -->
+<!--				<includes>-->
+<!--					<include>application*</include>-->
+<!--					<include>bootstrap*</include>-->
+<!--					<include>logback*</include>-->
+<!--				</includes>-->
+				<!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
+<!--				<filtering>true</filtering>-->
+				<!-- 关闭过滤 -->
+				<filtering>false</filtering>
             </resource>
         </resources>
         <pluginManagement>
@@ -743,6 +793,19 @@
                         </execution>
                     </executions>
                 </plugin>
+				<!-- 单元测试使用 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+						<argLine>-Dfile.encoding=UTF-8</argLine>
+						<!-- 根据打包环境执行对应的@Tag测试方法 -->
+						<!--                    <groups>${profiles.active}</groups>-->
+						<!-- 排除标签 -->
+						<excludedGroups>exclude</excludedGroups>
+					</configuration>
+				</plugin>
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
@@ -804,10 +867,40 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
+					<source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <source>${maven.compiler.source}</source>
-                    <encoding>UTF-8</encoding>
+					<encoding>${project.build.sourceEncoding}</encoding>
                     <parameters>true</parameters>
+<!--					<compilerArgs>-->
+<!--						<arg>-parameters</arg>-->
+<!--					</compilerArgs>-->
+					<annotationProcessorPaths>
+						<path>
+							<groupId>com.github.therapi</groupId>
+							<artifactId>therapi-runtime-javadoc-scribe</artifactId>
+							<version>0.15.0</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+						<path>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-configuration-processor</artifactId>
+							<version>${spring-boot.version}</version>
+						</path>
+						<path>
+							<groupId>io.github.linpeilie</groupId>
+							<artifactId>mapstruct-plus-processor</artifactId>
+							<version>${mapstruct-plus.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>${mapstruct-plus.lombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
                 </configuration>
             </plugin>
             <!--打包jar 与git commit 关联插件-->
@@ -871,4 +964,140 @@
             </modules>
         </profile>
     </profiles>
+
+	<!-- 环境 -->
+<!--	<profiles>-->
+<!--		&lt;!&ndash; 本地 &ndash;&gt;-->
+<!--		<profile>-->
+<!--			<id>local</id>-->
+<!--			<properties>-->
+<!--				&lt;!&ndash;当前环境&ndash;&gt;-->
+<!--				<profile.name>local</profile.name>-->
+<!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
+<!--				<config.server-addr>127.0.0.1:8848</config.server-addr>-->
+<!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<config.namespace>rapidark_cloud_local</config.namespace>-->
+<!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
+<!--				<discovery.server-addr>127.0.0.1:8848</discovery.server-addr>-->
+<!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<discovery.namespace>rapidark_cloud_local</discovery.namespace>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--		&lt;!&ndash; 开发 本地中间件&ndash;&gt;-->
+<!--		<profile>-->
+<!--			<id>dev-local</id>-->
+<!--			<activation>-->
+<!--				&lt;!&ndash;默认激活配置&ndash;&gt;-->
+<!--				<activeByDefault>true</activeByDefault>-->
+<!--			</activation>-->
+<!--			<properties>-->
+<!--				&lt;!&ndash;当前环境&ndash;&gt;-->
+<!--				<profile.name>dev-local</profile.name>-->
+<!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
+<!--				<config.server-addr>http://nacos.example.rapidark.com:8848</config.server-addr>-->
+<!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<config.namespace>rapidark_cloud_local</config.namespace>-->
+<!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
+<!--				<discovery.server-addr>http://nacos.example.rapidark.com:8848</discovery.server-addr>-->
+<!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<discovery.namespace>rapidark_cloud_local</discovery.namespace>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--		&lt;!&ndash; 开发-外网中间件 &ndash;&gt;-->
+<!--		<profile>-->
+<!--			<id>dev</id>-->
+<!--			<activation>-->
+<!--				&lt;!&ndash;默认激活配置&ndash;&gt;-->
+<!--				<activeByDefault>true</activeByDefault>-->
+<!--			</activation>-->
+<!--			<properties>-->
+<!--				&lt;!&ndash;当前环境&ndash;&gt;-->
+<!--				<profile.name>dev</profile.name>-->
+<!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
+<!--				<config.server-addr>http://nacos.example.rapidark.com:8848</config.server-addr>-->
+<!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<config.namespace>rapidark_cloud_local</config.namespace>-->
+<!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
+<!--				<discovery.server-addr>http://nacos.example.rapidark.com:8848</discovery.server-addr>-->
+<!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<discovery.namespace>rapidark_cloud_local</discovery.namespace>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--		&lt;!&ndash; 测试 &ndash;&gt;-->
+<!--		<profile>-->
+<!--			<id>test</id>-->
+<!--			<properties>-->
+<!--				&lt;!&ndash;当前环境&ndash;&gt;-->
+<!--				<profile.name>test</profile.name>-->
+<!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
+<!--				<config.server-addr>106.12.176.108:8848</config.server-addr>-->
+<!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<config.namespace></config.namespace>-->
+<!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
+<!--				<discovery.server-addr>106.12.176.108:8848</discovery.server-addr>-->
+<!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<discovery.namespace></discovery.namespace>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--		&lt;!&ndash; 预发布 &ndash;&gt;-->
+<!--		<profile>-->
+<!--			<id>uat</id>-->
+<!--			<properties>-->
+<!--				&lt;!&ndash;当前环境&ndash;&gt;-->
+<!--				<profile.name>uat</profile.name>-->
+<!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
+<!--				<config.server-addr>172.16.253.213:8848</config.server-addr>-->
+<!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<config.namespace>uat</config.namespace>-->
+<!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
+<!--				<discovery.server-addr>172.16.253.213:8848</discovery.server-addr>-->
+<!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<discovery.namespace>uat</discovery.namespace>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--		&lt;!&ndash; 生产 &ndash;&gt;-->
+<!--		<profile>-->
+<!--			<id>online</id>-->
+<!--			<properties>-->
+<!--				&lt;!&ndash;当前环境,生产环境为空&ndash;&gt;-->
+<!--				<profile.name>online</profile.name>-->
+<!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
+<!--				<config.server-addr>172.16.253.213:8848</config.server-addr>-->
+<!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<config.namespace>online</config.namespace>-->
+<!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
+<!--				<discovery.server-addr>172.16.253.213:8848</discovery.server-addr>-->
+<!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+<!--				<discovery.namespace>online</discovery.namespace>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--		&lt;!&ndash; 云效私有仓库 &ndash;&gt;-->
+<!--		<profile>-->
+<!--			<id>rdc-private-repo</id>-->
+<!--			<repositories>-->
+<!--				<repository>-->
+<!--					<id>rdc-releases</id>-->
+<!--					<url>https://repo.rdc.aliyun.com/repository/126334-release-hl3JHL/</url>-->
+<!--				</repository>-->
+<!--				<repository>-->
+<!--					<id>rdc-snapshots</id>-->
+<!--					<url>https://repo.rdc.aliyun.com/repository/126334-snapshot-k0fTE8/</url>-->
+<!--				</repository>-->
+<!--			</repositories>-->
+<!--		</profile>-->
+<!--		&lt;!&ndash; nexus 私有仓库 &ndash;&gt;-->
+<!--		&lt;!&ndash;<profile>-->
+<!--			<id>nexus-private-repo</id>-->
+<!--			<repositories>-->
+<!--				<repository>-->
+<!--					<id>maven-releases</id>-->
+<!--					<url>http://192.168.7.245:8081/repository/maven-releases/</url>-->
+<!--				</repository>-->
+<!--				<repository>-->
+<!--					<id>maven-snapshots</id>-->
+<!--					<url>http://192.168.7.245:8081/repository/maven-snapshots/</url>-->
+<!--				</repository>-->
+<!--			</repositories>-->
+<!--		</profile>&ndash;&gt;-->
+<!--	</profiles>-->
 </project>
