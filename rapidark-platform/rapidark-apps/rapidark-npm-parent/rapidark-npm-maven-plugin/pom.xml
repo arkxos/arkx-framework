@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rapidark.cloud</groupId>
+        <groupId>com.rapidark.platform</groupId>
         <artifactId>rapidark-npm-parent</artifactId>
         <version>${revision}</version>
     </parent>
@@ -15,7 +15,7 @@
 
   <dependencies>
   	<dependency>
-      <groupId>com.rapidark.cloud</groupId>
+      <groupId>com.rapidark.platform</groupId>
       <artifactId>rapidark-npm</artifactId>
       <version>${revision}</version>
     </dependency>

@@ -19,7 +19,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.rapidark.cloud</groupId>
+        <groupId>com.rapidark</groupId>
         <artifactId>rapidark-cloud</artifactId>
         <version>${revision}</version>
     </parent>
@@ -32,25 +32,25 @@
     <dependencies>
         <!--必备：认证中心模块-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-auth</artifactId>
             <version>${revision}</version>
         </dependency>
         <!--必备：用户管理模块-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-upms-biz</artifactId>
             <version>${revision}</version>
         </dependency>
         <!--可选：代码生成模块-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-codegen</artifactId>
             <version>${revision}</version>
         </dependency>
         <!--可选：定时任务模块-->
         <dependency>
-            <groupId>com.rapidark.cloud</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-quartz</artifactId>
             <version>${revision}</version>
         </dependency>
