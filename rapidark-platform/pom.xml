@@ -30,7 +30,8 @@
 		<module>rapidark-platform-support</module>
 		<module>rapidark-upms-biz</module>
 
-		<module>rapidark-monolith</module>
+<!--		单体测试不参与打包-->
+<!--		<module>rapidark-monolith</module>-->
 	</modules>
 
 </project>
