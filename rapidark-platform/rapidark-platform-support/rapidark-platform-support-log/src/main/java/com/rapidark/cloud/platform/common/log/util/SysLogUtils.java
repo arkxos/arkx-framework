@@ -24,7 +24,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.http.HttpUtil;
 
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
-import com.rapidark.cloud.platform.common.log.config.PigLogProperties;
+import com.rapidark.cloud.platform.common.log.config.ArkLogProperties;
 import com.rapidark.cloud.platform.common.log.event.SysLogEventSource;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,7 +65,7 @@ public class SysLogUtils {
 		sysLog.setServiceId(SpringUtil.getProperty("spring.application.name"));
 
 		// get 参数脱敏
-		PigLogProperties logProperties = SpringContextHolder.getBean(PigLogProperties.class);
+		ArkLogProperties logProperties = SpringContextHolder.getBean(ArkLogProperties.class);
 		Map<String, String[]> paramsMap = MapUtil.removeAny(request.getParameterMap(),
 				ArrayUtil.toArray(logProperties.getExcludeFields(), String.class));
 		sysLog.setParams(HttpUtil.toParams(paramsMap));

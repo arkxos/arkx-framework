@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.common.core.config;
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.rapidark.cloud.platform.common.core.jackson.PigJavaTimeModule;
+import com.rapidark.cloud.platform.common.core.jackson.ArkJavaTimeModule;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -54,7 +54,7 @@ public class JacksonConfiguration {
 			builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
 			builder.simpleDateFormat(DatePattern.NORM_DATETIME_PATTERN);
 			builder.serializerByType(Long.class, ToStringSerializer.instance);
-			builder.modules(new PigJavaTimeModule());
+			builder.modules(new ArkJavaTimeModule());
 		};
 	}
 

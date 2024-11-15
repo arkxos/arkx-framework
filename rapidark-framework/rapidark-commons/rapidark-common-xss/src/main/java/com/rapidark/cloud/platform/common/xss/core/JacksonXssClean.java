@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.Objects;
 
-import com.rapidark.cloud.platform.common.xss.config.PigXssProperties;
+import com.rapidark.cloud.platform.common.xss.config.ArkXssProperties;
 import com.rapidark.cloud.platform.common.xss.utils.XssUtil;
 
 /**
@@ -35,7 +35,7 @@ import com.rapidark.cloud.platform.common.xss.utils.XssUtil;
 @RequiredArgsConstructor
 public class JacksonXssClean extends XssCleanDeserializerBase {
 
-	private final PigXssProperties properties;
+	private final ArkXssProperties properties;
 
 	private final XssCleaner xssCleaner;
 

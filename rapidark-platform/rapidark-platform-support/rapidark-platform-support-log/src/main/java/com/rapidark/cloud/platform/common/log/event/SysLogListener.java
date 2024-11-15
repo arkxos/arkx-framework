@@ -24,8 +24,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.rapidark.cloud.platform.admin.api.entity.SysLog;
 import com.rapidark.cloud.platform.admin.api.feign.RemoteLogService;
-import com.rapidark.cloud.platform.common.core.jackson.PigJavaTimeModule;
-import com.rapidark.cloud.platform.common.log.config.PigLogProperties;
+import com.rapidark.cloud.platform.common.core.jackson.ArkJavaTimeModule;
+import com.rapidark.cloud.platform.common.log.config.ArkLogProperties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -50,7 +50,7 @@ public class SysLogListener implements InitializingBean {
 
 	private final RemoteLogService remoteLogService;
 
-	private final PigLogProperties logProperties;
+	private final ArkLogProperties logProperties;
 
 	@SneakyThrows
 	@Async
@@ -78,7 +78,7 @@ public class SysLogListener implements InitializingBean {
 		FilterProvider filters = new SimpleFilterProvider().addFilter("filter properties by name",
 				SimpleBeanPropertyFilter.serializeAllExcept(ignorableFieldNames));
 		objectMapper.setFilterProvider(filters);
-		objectMapper.registerModule(new PigJavaTimeModule());
+		objectMapper.registerModule(new ArkJavaTimeModule());
 	}
 
 	@JsonFilter("filter properties by name")

@@ -16,8 +16,8 @@
 
 package com.rapidark.cloud.platform;
 
-import com.rapidark.cloud.platform.common.security.annotation.EnablePigResourceServer;
-import com.rapidark.cloud.platform.common.swagger.annotation.EnablePigDoc;
+import com.rapidark.cloud.platform.common.security.annotation.EnableArkResourceServer;
+import com.rapidark.cloud.platform.common.swagger.annotation.EnableArkDoc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,8 +25,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author lengleng 单体版本启动器，只需要运行此模块则整个系统启动
  */
-@EnablePigDoc(value = "admin", isMicro = false)
-@EnablePigResourceServer
+@EnableArkDoc(value = "admin", isMicro = false)
+@EnableArkResourceServer
 @SpringBootApplication
 public class ArkMonolithApplication {
 

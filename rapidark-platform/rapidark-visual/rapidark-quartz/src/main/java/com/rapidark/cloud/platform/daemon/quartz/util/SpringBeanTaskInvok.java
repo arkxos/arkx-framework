@@ -20,7 +20,7 @@ package com.rapidark.cloud.platform.daemon.quartz.util;
 import cn.hutool.core.util.StrUtil;
 
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
-import com.rapidark.cloud.platform.daemon.quartz.constants.PigQuartzEnum;
+import com.rapidark.cloud.platform.daemon.quartz.constants.ArkQuartzEnum;
 import com.rapidark.cloud.platform.daemon.quartz.entity.SysJob;
 import com.rapidark.cloud.platform.daemon.quartz.exception.TaskException;
 
@@ -59,7 +59,7 @@ public class SpringBeanTaskInvok implements ITaskInvok {
 				returnValue = method.invoke(target);
 			}
 			if (StrUtil.isEmpty(returnValue.toString())
-					|| PigQuartzEnum.JOB_LOG_STATUS_FAIL.getType().equals(returnValue.toString())) {
+					|| ArkQuartzEnum.JOB_LOG_STATUS_FAIL.getType().equals(returnValue.toString())) {
 				log.error("定时任务springBeanTaskInvok异常,执行任务：{}", sysJob.getClassName());
 				throw new TaskException("定时任务springBeanTaskInvok业务执行失败,任务：" + sysJob.getClassName());
 			}

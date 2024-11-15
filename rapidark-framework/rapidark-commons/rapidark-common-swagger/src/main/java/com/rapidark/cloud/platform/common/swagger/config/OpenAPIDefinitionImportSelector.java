@@ -5,7 +5,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
 
-import com.rapidark.cloud.platform.common.swagger.annotation.EnablePigDoc;
+import com.rapidark.cloud.platform.common.swagger.annotation.EnableArkDoc;
 
 import java.util.Map;
 import java.util.Objects;
@@ -21,7 +21,7 @@ public class OpenAPIDefinitionImportSelector implements ImportBeanDefinitionRegi
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
 
-		Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(EnablePigDoc.class.getName(), true);
+		Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(EnableArkDoc.class.getName(), true);
 		Object value = annotationAttributes.get("value");
 		if (Objects.isNull(value)) {
 			return;

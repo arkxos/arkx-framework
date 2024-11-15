@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.common.security.util;
 import cn.hutool.core.util.StrUtil;
 
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
-import com.rapidark.cloud.platform.common.security.service.PigUser;
+import com.rapidark.cloud.platform.common.security.service.ArkUser;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
@@ -48,10 +48,10 @@ public class SecurityUtils {
 	/**
 	 * 获取用户
 	 */
-	public PigUser getUser(Authentication authentication) {
+	public ArkUser getUser(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
-		if (principal instanceof PigUser) {
-			return (PigUser) principal;
+		if (principal instanceof ArkUser) {
+			return (ArkUser) principal;
 		}
 		return null;
 	}
@@ -59,7 +59,7 @@ public class SecurityUtils {
 	/**
 	 * 获取用户
 	 */
-	public PigUser getUser() {
+	public ArkUser getUser() {
 		Authentication authentication = getAuthentication();
 		if (authentication == null) {
 			return null;

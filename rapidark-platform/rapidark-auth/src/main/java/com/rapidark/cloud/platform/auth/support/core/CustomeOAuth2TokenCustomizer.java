@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.auth.support.core;
 
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
-import com.rapidark.cloud.platform.common.security.service.PigUser;
+import com.rapidark.cloud.platform.common.security.service.ArkUser;
 
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenClaimsContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenClaimsSet;
@@ -30,10 +30,10 @@ public class CustomeOAuth2TokenCustomizer implements OAuth2TokenCustomizer<OAuth
 			return;
 		}
 
-		PigUser pigUser = (PigUser) context.getPrincipal().getPrincipal();
-		claims.claim(SecurityConstants.DETAILS_USER, pigUser);
-		claims.claim(SecurityConstants.DETAILS_USER_ID, pigUser.getId());
-		claims.claim(SecurityConstants.USERNAME, pigUser.getUsername());
+		ArkUser arkUser = (ArkUser) context.getPrincipal().getPrincipal();
+		claims.claim(SecurityConstants.DETAILS_USER, arkUser);
+		claims.claim(SecurityConstants.DETAILS_USER_ID, arkUser.getId());
+		claims.claim(SecurityConstants.USERNAME, arkUser.getUsername());
 	}
 
 }

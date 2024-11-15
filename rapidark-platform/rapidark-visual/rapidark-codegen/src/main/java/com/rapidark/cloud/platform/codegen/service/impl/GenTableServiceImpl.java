@@ -25,7 +25,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.codegen.config.PigCodeGenDefaultProperties;
+import com.rapidark.cloud.platform.codegen.config.ArkCodeGenDefaultProperties;
 import com.rapidark.cloud.platform.codegen.entity.GenGroupEntity;
 import com.rapidark.cloud.platform.codegen.entity.GenTable;
 import com.rapidark.cloud.platform.codegen.entity.GenTableColumnEntity;
@@ -65,7 +65,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> implements GenTableService {
 
-	private final PigCodeGenDefaultProperties configurationProperties;
+	private final ArkCodeGenDefaultProperties configurationProperties;
 
 	private final GenTableColumnService columnService;
 

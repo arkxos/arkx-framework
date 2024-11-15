@@ -17,17 +17,16 @@
 package com.rapidark.cloud.platform.auth;
 
 import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import com.rapidark.cloud.platform.common.feign.annotation.EnablePigFeignClients;
+import com.rapidark.cloud.platform.common.feign.annotation.EnableArkFeignClients;
 
 /**
  * @author lengleng
  * @date 2018年06月21日 认证授权中心
  */
-@EnablePigFeignClients
+@EnableArkFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ArkAuthApplication {

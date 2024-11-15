@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rapidark.cloud.platform.gateway.filter.PigRequestGlobalFilter;
+import com.rapidark.cloud.platform.gateway.filter.ArkRequestGlobalFilter;
 import com.rapidark.cloud.platform.gateway.handler.GlobalExceptionHandler;
 
 import org.springframework.context.annotation.Bean;
@@ -23,8 +23,8 @@ public class GatewayConfiguration {
 	 * @return PigRequest全局过滤器
 	 */
 	@Bean
-	public PigRequestGlobalFilter pigRequestGlobalFilter() {
-		return new PigRequestGlobalFilter();
+	public ArkRequestGlobalFilter pigRequestGlobalFilter() {
+		return new ArkRequestGlobalFilter();
 	}
 
 	/**

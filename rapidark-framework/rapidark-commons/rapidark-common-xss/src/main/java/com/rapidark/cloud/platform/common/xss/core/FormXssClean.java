@@ -24,17 +24,17 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.rapidark.cloud.platform.common.xss.config.PigXssProperties;
+import com.rapidark.cloud.platform.common.xss.config.ArkXssProperties;
 import com.rapidark.cloud.platform.common.xss.utils.XssUtil;
 
 import java.beans.PropertyEditorSupport;
 
 @ControllerAdvice
-@ConditionalOnProperty(prefix = PigXssProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = ArkXssProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 @RequiredArgsConstructor
 public class FormXssClean {
 
-	private final PigXssProperties properties;
+	private final ArkXssProperties properties;
 
 	private final XssCleaner xssCleaner;
 
@@ -50,7 +50,7 @@ public class FormXssClean {
 
 		private final XssCleaner xssCleaner;
 
-		private final PigXssProperties properties;
+		private final ArkXssProperties properties;
 
 		@Override
 		public String getAsText() {

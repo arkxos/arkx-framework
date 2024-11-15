@@ -20,11 +20,10 @@
 package com.rapidark.cloud.platform.admin;
 
 import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
-import com.rapidark.cloud.platform.common.feign.annotation.EnablePigFeignClients;
-import com.rapidark.cloud.platform.common.security.annotation.EnablePigResourceServer;
-import com.rapidark.cloud.platform.common.swagger.annotation.EnablePigDoc;
+import com.rapidark.cloud.platform.common.feign.annotation.EnableArkFeignClients;
+import com.rapidark.cloud.platform.common.security.annotation.EnableArkResourceServer;
+import com.rapidark.cloud.platform.common.swagger.annotation.EnableArkDoc;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -34,9 +33,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * <p>
  * 用户统一管理系统
  */
-@EnablePigDoc(value = "admin")
-@EnablePigFeignClients
-@EnablePigResourceServer
+@EnableArkDoc(value = "admin")
+@EnableArkFeignClients
+@EnableArkResourceServer
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ArkAdminApplication {

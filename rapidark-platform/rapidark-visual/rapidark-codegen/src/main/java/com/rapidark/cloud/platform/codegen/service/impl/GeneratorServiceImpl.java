@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.stereotype.Service;
 
-import com.rapidark.cloud.platform.codegen.config.PigCodeGenDefaultProperties;
+import com.rapidark.cloud.platform.codegen.config.ArkCodeGenDefaultProperties;
 import com.rapidark.cloud.platform.codegen.entity.GenTable;
 import com.rapidark.cloud.platform.codegen.entity.GenTableColumnEntity;
 import com.rapidark.cloud.platform.codegen.entity.GenTemplateEntity;
@@ -57,7 +57,7 @@ import java.util.zip.ZipOutputStream;
 @RequiredArgsConstructor
 public class GeneratorServiceImpl implements GeneratorService {
 
-	private final PigCodeGenDefaultProperties configurationProperties;
+	private final ArkCodeGenDefaultProperties configurationProperties;
 
 	private final GenTableColumnService columnService;
 

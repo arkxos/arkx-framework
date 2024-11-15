@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.common.mybatis;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.rapidark.cloud.platform.common.mybatis.config.MybatisPlusMetaObjectHandler;
-import com.rapidark.cloud.platform.common.mybatis.plugins.PigPaginationInnerInterceptor;
+import com.rapidark.cloud.platform.common.mybatis.plugins.ArkPaginationInnerInterceptor;
 import com.rapidark.cloud.platform.common.mybatis.resolver.SqlFilterArgumentResolver;
 
 import org.springframework.context.annotation.Bean;
@@ -53,7 +53,7 @@ public class MybatisAutoConfiguration implements WebMvcConfigurer {
 	@Bean
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-		interceptor.addInnerInterceptor(new PigPaginationInnerInterceptor());
+		interceptor.addInnerInterceptor(new ArkPaginationInnerInterceptor());
 		return interceptor;
 	}
 

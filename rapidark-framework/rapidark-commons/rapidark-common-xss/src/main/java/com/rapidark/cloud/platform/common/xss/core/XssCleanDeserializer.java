@@ -17,7 +17,7 @@
 package com.rapidark.cloud.platform.common.xss.core;
 
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
-import com.rapidark.cloud.platform.common.xss.config.PigXssProperties;
+import com.rapidark.cloud.platform.common.xss.config.ArkXssProperties;
 import com.rapidark.cloud.platform.common.xss.utils.XssUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class XssCleanDeserializer extends XssCleanDeserializerBase {
 	@Override
 	public String clean(String name, String text) throws IOException {
 		// 读取 xss 配置
-		PigXssProperties properties = SpringContextHolder.getBean(PigXssProperties.class);
+		ArkXssProperties properties = SpringContextHolder.getBean(ArkXssProperties.class);
 		// 读取 XssCleaner bean
 		XssCleaner xssCleaner = SpringContextHolder.getBean(XssCleaner.class);
 		if (xssCleaner != null) {

@@ -19,11 +19,10 @@ package com.rapidark.cloud.platform.codegen;
 
 import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
 import com.rapidark.cloud.platform.common.datasource.annotation.EnableDynamicDataSource;
-import com.rapidark.cloud.platform.common.feign.annotation.EnablePigFeignClients;
-import com.rapidark.cloud.platform.common.security.annotation.EnablePigResourceServer;
-import com.rapidark.cloud.platform.common.swagger.annotation.EnablePigDoc;
+import com.rapidark.cloud.platform.common.feign.annotation.EnableArkFeignClients;
+import com.rapidark.cloud.platform.common.security.annotation.EnableArkResourceServer;
+import com.rapidark.cloud.platform.common.swagger.annotation.EnableArkDoc;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -32,10 +31,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @date 2018/07/29 代码生成模块
  */
 @EnableDynamicDataSource
-@EnablePigFeignClients
-@EnablePigDoc("gen")
+@EnableArkFeignClients
+@EnableArkDoc("gen")
 @EnableDiscoveryClient
-@EnablePigResourceServer
+@EnableArkResourceServer
 @SpringBootApplication
 public class ArkCodeGenApplication {
 

@@ -1,7 +1,7 @@
-com.rapidark.cloud.platform.common.security.service.PigUserDetailsServiceImpl
-com.rapidark.cloud.platform.common.security.service.PigAppUserDetailsServiceImpl
-com.rapidark.cloud.platform.common.security.service.PigRedisOAuth2AuthorizationService
-com.rapidark.cloud.platform.common.security.service.PigRedisOAuth2AuthorizationConsentService
-com.rapidark.cloud.platform.common.security.component.PigSecurityInnerAspect
-com.rapidark.cloud.platform.common.security.component.PigSecurityMessageSourceConfiguration
-com.rapidark.cloud.platform.common.security.service.PigRemoteRegisteredClientRepository
+com.rapidark.cloud.platform.common.security.service.ArkUserDetailsServiceImpl
+com.rapidark.cloud.platform.common.security.service.ArkAppUserDetailsServiceImpl
+com.rapidark.cloud.platform.common.security.service.ArkRedisOAuth2AuthorizationService
+com.rapidark.cloud.platform.common.security.service.ArkRedisOAuth2AuthorizationConsentService
+com.rapidark.cloud.platform.common.security.component.ArkSecurityInnerAspect
+com.rapidark.cloud.platform.common.security.component.ArkSecurityMessageSourceConfiguration
+com.rapidark.cloud.platform.common.security.service.ArkRemoteRegisteredClientRepository

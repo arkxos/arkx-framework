@@ -27,7 +27,7 @@ import org.springframework.security.config.annotation.web.configurers.RequestCac
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.rapidark.cloud.platform.auth.support.core.FormIdentityLoginConfigurer;
-import com.rapidark.cloud.platform.auth.support.core.PigDaoAuthenticationProvider;
+import com.rapidark.cloud.platform.auth.support.core.ArkDaoAuthenticationProvider;
 
 /**
  * 服务安全相关配置
@@ -52,7 +52,7 @@ public class WebSecurityConfiguration {
 			.authenticated()).headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)// 避免iframe同源无法登录许iframe
 		).with(new FormIdentityLoginConfigurer(), Customizer.withDefaults()); // 表单登录个性化
 		// 处理 UsernamePasswordAuthenticationToken
-		http.authenticationProvider(new PigDaoAuthenticationProvider());
+		http.authenticationProvider(new ArkDaoAuthenticationProvider());
 		return http.build();
 	}
 

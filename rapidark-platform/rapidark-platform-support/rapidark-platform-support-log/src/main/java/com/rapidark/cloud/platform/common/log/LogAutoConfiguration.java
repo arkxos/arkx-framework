@@ -18,7 +18,7 @@ package com.rapidark.cloud.platform.common.log;
 
 import com.rapidark.cloud.platform.admin.api.feign.RemoteLogService;
 import com.rapidark.cloud.platform.common.log.aspect.SysLogAspect;
-import com.rapidark.cloud.platform.common.log.config.PigLogProperties;
+import com.rapidark.cloud.platform.common.log.config.ArkLogProperties;
 import com.rapidark.cloud.platform.common.log.event.SysLogListener;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,12 +33,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @EnableAsync
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(PigLogProperties.class)
+@EnableConfigurationProperties(ArkLogProperties.class)
 @ConditionalOnProperty(value = "security.log.enabled", matchIfMissing = true)
 public class LogAutoConfiguration {
 
 	@Bean
-	public SysLogListener sysLogListener(PigLogProperties logProperties, RemoteLogService remoteLogService) {
+	public SysLogListener sysLogListener(ArkLogProperties logProperties, RemoteLogService remoteLogService) {
 		return new SysLogListener(remoteLogService, logProperties);
 	}
 

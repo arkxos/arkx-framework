@@ -17,6 +17,7 @@
 package com.rapidark.cloud.platform.common.core.config;
 
 import cn.hutool.core.date.DatePattern;
+import com.rapidark.cloud.platform.common.core.jackson.ArkJavaTimeModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.MessageSource;
@@ -39,7 +40,7 @@ import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebA
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
 	/**
-	 * 增加GET请求参数中时间类型转换 {@link com.rapidark.cloud.platform.common.core.jackson.PigJavaTimeModule}
+	 * 增加GET请求参数中时间类型转换 {@link ArkJavaTimeModule}
 	 * <ul>
 	 * <li>HH:mm:ss -> LocalTime</li>
 	 * <li>yyyy-MM-dd -> LocalDate</li>

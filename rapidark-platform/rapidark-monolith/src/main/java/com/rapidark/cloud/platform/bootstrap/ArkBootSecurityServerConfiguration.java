@@ -19,16 +19,16 @@
 
 package com.rapidark.cloud.platform.bootstrap;
 
-import com.rapidark.cloud.platform.auth.support.core.PigDaoAuthenticationProvider;
+import com.rapidark.cloud.platform.auth.support.core.ArkDaoAuthenticationProvider;
 import com.rapidark.cloud.platform.auth.support.filter.PasswordDecoderFilter;
 import com.rapidark.cloud.platform.auth.support.filter.ValidateCodeFilter;
-import com.rapidark.cloud.platform.auth.support.handler.PigAuthenticationFailureEventHandler;
-import com.rapidark.cloud.platform.auth.support.handler.PigAuthenticationSuccessEventHandler;
+import com.rapidark.cloud.platform.auth.support.handler.ArkAuthenticationFailureEventHandler;
+import com.rapidark.cloud.platform.auth.support.handler.ArkAuthenticationSuccessEventHandler;
 import com.rapidark.cloud.platform.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
 import com.rapidark.cloud.platform.auth.support.sms.OAuth2ResourceOwnerSmsAuthenticationProvider;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
 import com.rapidark.cloud.platform.common.security.component.PermitAllUrlProperties;
-import com.rapidark.cloud.platform.common.security.component.PigBearerTokenExtractor;
+import com.rapidark.cloud.platform.common.security.component.ArkBearerTokenExtractor;
 import com.rapidark.cloud.platform.common.security.component.ResourceAuthExceptionEntryPoint;
 
 import lombok.RequiredArgsConstructor;
@@ -67,7 +67,7 @@ public class ArkBootSecurityServerConfiguration {
 
 	private final OAuth2AuthorizationService authorizationService;
 
-	private final PigBearerTokenExtractor pigBearerTokenExtractor;
+	private final ArkBearerTokenExtractor arkBearerTokenExtractor;
 
 	private final PasswordDecoderFilter passwordDecoderFilter;
 
@@ -90,10 +90,10 @@ public class ArkBootSecurityServerConfiguration {
 		// 认证服务器配置
 		http.with(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {// 个性化认证授权端点
 			tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter) // 注入自定义的授权认证Converter
-				.accessTokenResponseHandler(new PigAuthenticationSuccessEventHandler()) // 登录成功处理器
-				.errorResponseHandler(new PigAuthenticationFailureEventHandler());// 登录失败处理器
+				.accessTokenResponseHandler(new ArkAuthenticationSuccessEventHandler()) // 登录成功处理器
+				.errorResponseHandler(new ArkAuthenticationFailureEventHandler());// 登录失败处理器
 		}).clientAuthentication(oAuth2ClientAuthenticationConfigurer -> // 个性化客户端认证
-		oAuth2ClientAuthenticationConfigurer.errorResponseHandler(new PigAuthenticationFailureEventHandler()))// 处理客户端认证异常
+		oAuth2ClientAuthenticationConfigurer.errorResponseHandler(new ArkAuthenticationFailureEventHandler()))// 处理客户端认证异常
 				, Customizer.withDefaults())
 			.with(authorizationServerConfigurer.authorizationService(authorizationService)// redis存储token的实现
 				.authorizationServerSettings(
@@ -114,7 +114,7 @@ public class ArkBootSecurityServerConfiguration {
 			.oauth2ResourceServer(
 					oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
 						.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-						.bearerTokenResolver(pigBearerTokenExtractor))
+						.bearerTokenResolver(arkBearerTokenExtractor))
 			.exceptionHandling(configurer -> configurer.authenticationEntryPoint(resourceAuthExceptionEntryPoint))
 			.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 			.csrf(AbstractHttpConfigurer::disable);
@@ -149,7 +149,7 @@ public class ArkBootSecurityServerConfiguration {
 				authenticationManager, authorizationService, oAuth2TokenGenerator);
 
 		// 处理 UsernamePasswordAuthenticationToken
-		http.authenticationProvider(new PigDaoAuthenticationProvider());
+		http.authenticationProvider(new ArkDaoAuthenticationProvider());
 		// 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
 		http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);
 		// 处理 OAuth2ResourceOwnerSmsAuthenticationToken

@@ -24,7 +24,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
-import com.rapidark.cloud.platform.common.xss.config.PigXssProperties;
+import com.rapidark.cloud.platform.common.xss.config.ArkXssProperties;
 
 /**
  * xss 处理拦截器
@@ -34,7 +34,7 @@ import com.rapidark.cloud.platform.common.xss.config.PigXssProperties;
 @RequiredArgsConstructor
 public class XssCleanInterceptor implements AsyncHandlerInterceptor {
 
-	private final PigXssProperties xssProperties;
+	private final ArkXssProperties xssProperties;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

@@ -25,7 +25,7 @@ import cn.hutool.json.JSONUtil;
 import cn.smallbun.screw.core.constant.DefaultConstants;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.codegen.config.PigCodeGenDefaultProperties;
+import com.rapidark.cloud.platform.codegen.config.ArkCodeGenDefaultProperties;
 import com.rapidark.cloud.platform.codegen.entity.GenGroupEntity;
 import com.rapidark.cloud.platform.codegen.entity.GenTemplateEntity;
 import com.rapidark.cloud.platform.codegen.entity.GenTemplateGroupEntity;
@@ -63,7 +63,7 @@ public class GenTemplateServiceImpl extends ServiceImpl<GenTemplateMapper, GenTe
 
 	private final GenGroupMapper genGroupMapper;
 
-	private final PigCodeGenDefaultProperties defaultProperties;
+	private final ArkCodeGenDefaultProperties defaultProperties;
 
 	/**
 	 * 在线更新

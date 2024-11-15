@@ -21,7 +21,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import com.rapidark.cloud.platform.daemon.quartz.constants.PigQuartzEnum;
+import com.rapidark.cloud.platform.daemon.quartz.constants.ArkQuartzEnum;
 
 import java.time.LocalDateTime;
 
@@ -38,7 +38,7 @@ public class SpringBeanTaskDemo {
 	@SneakyThrows
 	public String demoMethod(String para) {
 		log.info("测试于:{}，输入参数{}", LocalDateTime.now(), para);
-		return PigQuartzEnum.JOB_LOG_STATUS_SUCCESS.getType();
+		return ArkQuartzEnum.JOB_LOG_STATUS_SUCCESS.getType();
 	}
 
 }

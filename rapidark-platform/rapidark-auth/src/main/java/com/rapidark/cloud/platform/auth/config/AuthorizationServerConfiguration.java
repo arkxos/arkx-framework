@@ -19,11 +19,11 @@ package com.rapidark.cloud.platform.auth.config;
 import com.rapidark.cloud.platform.auth.support.CustomeOAuth2AccessTokenGenerator;
 import com.rapidark.cloud.platform.auth.support.core.CustomeOAuth2TokenCustomizer;
 import com.rapidark.cloud.platform.auth.support.core.FormIdentityLoginConfigurer;
-import com.rapidark.cloud.platform.auth.support.core.PigDaoAuthenticationProvider;
+import com.rapidark.cloud.platform.auth.support.core.ArkDaoAuthenticationProvider;
 import com.rapidark.cloud.platform.auth.support.filter.PasswordDecoderFilter;
 import com.rapidark.cloud.platform.auth.support.filter.ValidateCodeFilter;
-import com.rapidark.cloud.platform.auth.support.handler.PigAuthenticationFailureEventHandler;
-import com.rapidark.cloud.platform.auth.support.handler.PigAuthenticationSuccessEventHandler;
+import com.rapidark.cloud.platform.auth.support.handler.ArkAuthenticationFailureEventHandler;
+import com.rapidark.cloud.platform.auth.support.handler.ArkAuthenticationSuccessEventHandler;
 import com.rapidark.cloud.platform.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
 import com.rapidark.cloud.platform.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
 import com.rapidark.cloud.platform.auth.support.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
@@ -83,10 +83,10 @@ public class AuthorizationServerConfiguration {
 
 		http.with(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {// 个性化认证授权端点
 			tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter()) // 注入自定义的授权认证Converter
-				.accessTokenResponseHandler(new PigAuthenticationSuccessEventHandler()) // 登录成功处理器
-				.errorResponseHandler(new PigAuthenticationFailureEventHandler());// 登录失败处理器
+				.accessTokenResponseHandler(new ArkAuthenticationSuccessEventHandler()) // 登录成功处理器
+				.errorResponseHandler(new ArkAuthenticationFailureEventHandler());// 登录失败处理器
 		}).clientAuthentication(oAuth2ClientAuthenticationConfigurer -> // 个性化客户端认证
-		oAuth2ClientAuthenticationConfigurer.errorResponseHandler(new PigAuthenticationFailureEventHandler()))// 处理客户端认证异常
+		oAuth2ClientAuthenticationConfigurer.errorResponseHandler(new ArkAuthenticationFailureEventHandler()))// 处理客户端认证异常
 			.authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint// 授权码端点个性化confirm页面
 				.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)), Customizer.withDefaults());
 
@@ -161,7 +161,7 @@ public class AuthorizationServerConfiguration {
 				authenticationManager, authorizationService, oAuth2TokenGenerator());
 
 		// 处理 UsernamePasswordAuthenticationToken
-		http.authenticationProvider(new PigDaoAuthenticationProvider());
+		http.authenticationProvider(new ArkDaoAuthenticationProvider());
 		// 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
 		http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);
 		// 处理 OAuth2ResourceOwnerSmsAuthenticationToken
