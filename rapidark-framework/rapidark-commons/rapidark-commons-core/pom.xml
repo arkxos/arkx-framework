@@ -18,14 +18,11 @@
             <groupId>io.github.linpeilie</groupId>
             <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sagframe</groupId>
-            <artifactId>sagacity-sqltoy-starter</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+		</dependency>
+
 
         <dependency>
             <groupId>commons-beanutils</groupId>
@@ -36,16 +33,16 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>me.ahoo.cosid</groupId>
-            <artifactId>cosid-spring-boot-starter</artifactId>
-            <version>${cosid.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>me.ahoo.cosid</groupId>
-            <artifactId>cosid-spring-redis</artifactId>
-            <version>${cosid.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>me.ahoo.cosid</groupId>-->
+<!--            <artifactId>cosid-spring-boot-starter</artifactId>-->
+<!--            <version>${cosid.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>me.ahoo.cosid</groupId>-->
+<!--            <artifactId>cosid-spring-redis</artifactId>-->
+<!--            <version>${cosid.version}</version>-->
+<!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>com.rapidark.framework</groupId>-->
         <!--            <artifactId>rapidark-framework</artifactId>-->
@@ -160,10 +157,7 @@
             <artifactId>commons-text</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
@@ -176,10 +170,34 @@
         </dependency>
 
         <!--工具类-->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-http</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-script</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-crypto</artifactId>
+		</dependency>
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
@@ -487,10 +505,37 @@
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
             <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot</artifactId>
             <version>1.5.9.RELEASE</version> </dependency> -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
+<!--        </dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework</groupId>-->
+<!--			<artifactId>spring-jdbc</artifactId>-->
+<!--			<exclusions>-->
+<!--				&lt;!&ndash; Exclude Commons Logging in favor of SLF4j &ndash;&gt;-->
+<!--				<exclusion>-->
+<!--					<groupId>commons-logging</groupId>-->
+<!--					<artifactId>commons-logging</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework</groupId>-->
+<!--			<artifactId>spring-orm</artifactId>-->
+<!--			<exclusions>-->
+<!--				&lt;!&ndash; Exclude Commons Logging in favor of SLF4j &ndash;&gt;-->
+<!--				<exclusion>-->
+<!--					<groupId>commons-logging</groupId>-->
+<!--					<artifactId>commons-logging</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.sagframe</groupId>-->
+<!--			<artifactId>sagacity-sqltoy-starter</artifactId>-->
+<!--		</dependency>-->
+
 
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
         <dependency>
@@ -664,31 +709,31 @@
             <artifactId>angularjs</artifactId>
             <version>1.4.8</version>
         </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-ui-bootstrap</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.webjars</groupId>-->
+<!--            <artifactId>angular-ui-bootstrap</artifactId>-->
+<!--            <version>2.2.0</version>-->
+<!--        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>org.webjars</groupId>-->
 <!--            <artifactId>bootstrap</artifactId>-->
 <!--            <version>3.3.7-1</version>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.30</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootswatch-cosmo</artifactId>
-            <version>3.3.5+4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>ng-stomp</artifactId>
-            <version>0.3.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.webjars</groupId>-->
+<!--            <artifactId>webjars-locator</artifactId>-->
+<!--            <version>0.30</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.webjars</groupId>-->
+<!--            <artifactId>bootswatch-cosmo</artifactId>-->
+<!--            <version>3.3.5+4</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.webjars.bower</groupId>-->
+<!--            <artifactId>ng-stomp</artifactId>-->
+<!--            <version>0.3.0</version>-->
+<!--        </dependency>-->
 
 
 		<dependency>
@@ -700,7 +745,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -1331,28 +1375,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <exclusions>
-                <!-- Exclude Commons Logging in favor of SLF4j -->
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <exclusions>
-                <!-- Exclude Commons Logging in favor of SLF4j -->
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
@@ -1419,11 +1442,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jms</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-        </dependency>
+
         <!-- activiti <dependency> <groupId>org.activiti</groupId> <artifactId>activiti-engine</artifactId>
             <version>5.12</version> </dependency> -->
 

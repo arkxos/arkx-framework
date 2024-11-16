@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 @Setter
 @Schema(description = "响应结果")
 public class ResultBody<T> implements Serializable {
+
     private static final long serialVersionUID = -6190689122701100762L;
 
     @Schema(description = "业务编码")

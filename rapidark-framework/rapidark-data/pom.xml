@@ -15,6 +15,7 @@
 
     <modules>
         <module>rapidark-data-jpa</module>
+		<module>rapidark-data-mybatis</module>
     </modules>
 
     <dependencies>

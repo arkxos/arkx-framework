@@ -1,8 +1,8 @@
 package com.rapidark.framework.common.utils;
 
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -218,7 +218,7 @@ public class RedisUtils<T> {
     public String getString(String key) {
         String str = "";
         Object obj = redisTemplate.opsForValue().get(key);
-        if (ObjectUtils.isNotNull(obj)) {
+        if (ObjectUtils.isNotEmpty(obj)) {
             str = obj.toString();
         }
         return key == null ? null : str;
