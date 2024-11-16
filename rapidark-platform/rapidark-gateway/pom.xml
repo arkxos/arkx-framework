@@ -79,6 +79,15 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
         </dependency>
+		<!-- 消息总线rabbitMQ -->
+		        <dependency>
+		            <groupId>org.springframework.cloud</groupId>
+		            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		        </dependency>
+		<!--		<dependency>-->
+		<!--			<groupId>com.rabbitmq</groupId>-->
+		<!--			<artifactId>amqp-client</artifactId>-->
+		<!--		</dependency>-->
     </dependencies>
 
 <!--    <build>-->
