@@ -1,6 +1,7 @@
 package com.rapidark.cloud.platform.auth.support.sms;
 
 import com.rapidark.cloud.platform.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider;
+import com.rapidark.cloud.platform.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationToken;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
 
 import org.apache.logging.log4j.LogManager;
@@ -50,7 +51,7 @@ public class OAuth2ResourceOwnerSmsAuthenticationProvider
 	}
 
 	@Override
-	public void checkClient(RegisteredClient registeredClient) {
+	public void checkClient(RegisteredClient registeredClient, OAuth2ResourceOwnerBaseAuthenticationToken authentication) {
 		assert registeredClient != null;
 		if (!registeredClient.getAuthorizationGrantTypes()
 			.contains(new AuthorizationGrantType(SecurityConstants.MOBILE))) {

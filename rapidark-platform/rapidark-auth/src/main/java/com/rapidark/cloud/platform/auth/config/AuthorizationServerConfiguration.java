@@ -155,11 +155,13 @@ public class AuthorizationServerConfiguration {
 		AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
 		OAuth2AuthorizationService authorizationService = http.getSharedObject(OAuth2AuthorizationService.class);
 
-		OAuth2ResourceOwnerPasswordAuthenticationProvider resourceOwnerPasswordAuthenticationProvider = new OAuth2ResourceOwnerPasswordAuthenticationProvider(
-				authenticationManager, authorizationService, oAuth2TokenGenerator());
+		OAuth2ResourceOwnerPasswordAuthenticationProvider resourceOwnerPasswordAuthenticationProvider =
+				new OAuth2ResourceOwnerPasswordAuthenticationProvider(
+				  authenticationManager, authorizationService, oAuth2TokenGenerator());
 
-		OAuth2ResourceOwnerSmsAuthenticationProvider resourceOwnerSmsAuthenticationProvider = new OAuth2ResourceOwnerSmsAuthenticationProvider(
-				authenticationManager, authorizationService, oAuth2TokenGenerator());
+		OAuth2ResourceOwnerSmsAuthenticationProvider resourceOwnerSmsAuthenticationProvider =
+				new OAuth2ResourceOwnerSmsAuthenticationProvider(
+				  authenticationManager, authorizationService, oAuth2TokenGenerator());
 
 		// 处理 UsernamePasswordAuthenticationToken
 		http.authenticationProvider(new ArkDaoAuthenticationProvider());

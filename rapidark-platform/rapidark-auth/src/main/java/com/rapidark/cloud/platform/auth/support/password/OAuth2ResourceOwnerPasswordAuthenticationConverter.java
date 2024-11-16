@@ -1,5 +1,6 @@
 package com.rapidark.cloud.platform.auth.support.password;
 
+import com.rapidark.cloud.platform.auth.OAuth2Constant;
 import com.rapidark.cloud.platform.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
 import com.rapidark.cloud.platform.common.security.util.OAuth2EndpointUtils;
 
@@ -29,13 +30,13 @@ public class OAuth2ResourceOwnerPasswordAuthenticationConverter
 	 */
 	@Override
 	public boolean support(String grantType) {
-		return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
+		return OAuth2Constant.GRANT_TYPE_PASSWORD.equals(grantType);
 	}
 
 	@Override
 	public OAuth2ResourceOwnerPasswordAuthenticationToken buildToken(Authentication clientPrincipal,
-			Set requestedScopes, Map additionalParameters) {
-		return new OAuth2ResourceOwnerPasswordAuthenticationToken(AuthorizationGrantType.PASSWORD, clientPrincipal,
+			Set<String> requestedScopes, Map<String, Object> additionalParameters) {
+		return new OAuth2ResourceOwnerPasswordAuthenticationToken(clientPrincipal,
 				requestedScopes, additionalParameters);
 	}
 

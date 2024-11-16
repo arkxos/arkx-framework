@@ -95,7 +95,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	 * 当前的请求客户端是否支持此模式
 	 * @param registeredClient
 	 */
-	public abstract void checkClient(RegisteredClient registeredClient);
+	public abstract void checkClient(RegisteredClient registeredClient, OAuth2ResourceOwnerBaseAuthenticationToken authentication);
 
 	/**
 	 * Performs authentication with the same contract as
@@ -117,7 +117,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 				resouceOwnerBaseAuthentication);
 
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
-		checkClient(registeredClient);
+		checkClient(registeredClient, resouceOwnerBaseAuthentication);
 
 		Set<String> authorizedScopes;
 		// Default to configured scopes
@@ -153,6 +153,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 					.authorizationGrant(resouceOwnerBaseAuthentication);
 			// @formatter:on
 
+			assert registeredClient != null;
 			OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization
 				.withRegisteredClient(registeredClient)
 				.principalName(usernamePasswordAuthentication.getName())

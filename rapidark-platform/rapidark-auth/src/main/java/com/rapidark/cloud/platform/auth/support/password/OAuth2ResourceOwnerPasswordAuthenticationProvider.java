@@ -1,9 +1,11 @@
 package com.rapidark.cloud.platform.auth.support.password;
 
+import com.rapidark.cloud.platform.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -55,9 +57,9 @@ public class OAuth2ResourceOwnerPasswordAuthenticationProvider
 	}
 
 	@Override
-	public void checkClient(RegisteredClient registeredClient) {
+	public void checkClient(RegisteredClient registeredClient, OAuth2ResourceOwnerBaseAuthenticationToken authentication) {
 		assert registeredClient != null;
-		if (!registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.PASSWORD)) {
+		if (!registeredClient.getAuthorizationGrantTypes().contains(authentication.getAuthorizationGrantType())) {
 			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
 		}
 	}
