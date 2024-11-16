@@ -16,7 +16,7 @@ public class RapidArkApplication {
 
         ConfigurableApplicationContext context =  SpringApplication.run(primarySource, args);
 
-        System.out.println("(♥◠‿◠)ﾉﾞ  RapidArk 12.0 启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
+        System.out.println("(♥◠‿◠)ﾉﾞ  RapidArk 10.0 启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
                 "  _____             _     _                 _    \r\n" +
                 " |  __ \\           (_)   | |     /\\        | |   \r\n" +
                 " | |__) |__ _ _ __  _  __| |    /  \\   _ __| | __\r\n" +
