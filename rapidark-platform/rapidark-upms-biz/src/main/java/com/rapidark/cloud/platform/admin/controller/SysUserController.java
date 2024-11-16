@@ -55,7 +55,6 @@ import java.util.List;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/user")
 @Tag(description = "user", name = "用户管理模块")
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class SysUserController {
@@ -67,7 +66,7 @@ public class SysUserController {
 	 * @return 用户信息
 	 */
 	@Inner
-	@GetMapping(value = { "/info/query" })
+	@GetMapping(value = { "/user/info/query" })
 	public R info(@RequestParam(required = false) String username, @RequestParam(required = false) String phone) {
 		SysUser user = userService.getOne(Wrappers.<SysUser>query()
 			.lambda()
@@ -83,7 +82,7 @@ public class SysUserController {
 	 * 获取当前用户全部信息
 	 * @return 用户信息
 	 */
-	@GetMapping(value = { "/info" })
+	@GetMapping(value = { "/user/info" })
 	public R info() {
 		String username = SecurityUtils.getUser().getUsername();
 		SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
@@ -98,7 +97,7 @@ public class SysUserController {
 	 * @param id ID
 	 * @return 用户信息
 	 */
-	@GetMapping("/details/{id}")
+	@GetMapping("/user/details/{id}")
 	public R user(@PathVariable Long id) {
 		return R.ok(userService.selectUserVoById(id));
 	}
@@ -109,7 +108,7 @@ public class SysUserController {
 	 * @return 不为空返回用户名
 	 */
 	@Inner(value = false)
-	@GetMapping("/details")
+	@GetMapping("/user/details")
 	public R getDetails(@ParameterObject SysUser query) {
 		SysUser sysUser = userService.getOne(Wrappers.query(query), false);
 		return R.ok(sysUser == null ? null : CommonConstants.SUCCESS);
@@ -121,7 +120,7 @@ public class SysUserController {
 	 * @return R
 	 */
 	@SysLog("删除用户信息")
-	@DeleteMapping
+	@DeleteMapping("/user")
 	@HasPermission("sys_user_del")
 	@Operation(summary = "删除用户", description = "根据ID删除用户")
 	public R userDel(@RequestBody Long[] ids) {
@@ -134,7 +133,7 @@ public class SysUserController {
 	 * @return success/false
 	 */
 	@SysLog("添加用户")
-	@PostMapping
+	@PostMapping("/user")
 	@HasPermission("sys_user_add")
 	public R user(@RequestBody UserDTO userDto) {
 		return R.ok(userService.saveUser(userDto));
@@ -146,7 +145,7 @@ public class SysUserController {
 	 * @return R
 	 */
 	@SysLog("更新用户信息")
-	@PutMapping
+	@PutMapping("/user")
 	@HasPermission("sys_user_edit")
 	public R updateUser(@Valid @RequestBody UserDTO userDto) {
 		return R.ok(userService.updateUser(userDto));
@@ -158,7 +157,7 @@ public class SysUserController {
 	 * @param userDTO 查询参数列表
 	 * @return 用户集合
 	 */
-	@GetMapping("/page")
+	@GetMapping("/user/page")
 	public R getUserPage(@ParameterObject Page page, @ParameterObject UserDTO userDTO) {
 		return R.ok(userService.getUsersWithRolePage(page, userDTO));
 	}
@@ -169,7 +168,7 @@ public class SysUserController {
 	 * @return success/false
 	 */
 	@SysLog("修改个人信息")
-	@PutMapping("/edit")
+	@PutMapping("/user/edit")
 	public R updateUserInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto);
 	}
@@ -180,7 +179,7 @@ public class SysUserController {
 	 * @return
 	 */
 	@ResponseExcel
-	@GetMapping("/export")
+	@GetMapping("/user/export")
 	@HasPermission("sys_user_export")
 	public List export(UserDTO userDTO) {
 		return userService.listUser(userDTO);
@@ -192,7 +191,7 @@ public class SysUserController {
 	 * @param bindingResult 错误信息列表
 	 * @return R
 	 */
-	@PostMapping("/import")
+	@PostMapping("/user/import")
 	@HasPermission("sys_user_export")
 	public R importUser(@RequestExcel List<UserExcelVO> excelVOList, BindingResult bindingResult) {
 		return userService.importUser(excelVOList, bindingResult);
@@ -203,19 +202,19 @@ public class SysUserController {
 	 * @param username 用户名
 	 * @return R
 	 */
-	@PutMapping("/lock/{username}")
+	@PutMapping("/user/lock/{username}")
 	public R lockUser(@PathVariable String username) {
 		return userService.lockUser(username);
 	}
 
-	@PutMapping("/password")
+	@PutMapping("/user/password")
 	public R password(@RequestBody UserDTO userDto) {
 		String username = SecurityUtils.getUser().getUsername();
 		userDto.setUsername(username);
 		return userService.changePassword(userDto);
 	}
 
-	@PostMapping("/check")
+	@PostMapping("/user/check")
 	public R check(String password) {
 		return userService.checkPassword(password);
 	}
