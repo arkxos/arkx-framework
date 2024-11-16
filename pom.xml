@@ -28,7 +28,7 @@
 
     <properties>
         <!-- 项目版本号 -->
-        <revision>10.0.2</revision>
+        <revision>10.0.3</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -163,13 +163,13 @@
 		<apache.commons-io.version>2.6</apache.commons-io.version>
 		<apache.commons.beanutils>1.9.4</apache.commons.beanutils>
 		<com.google.zxing.version>3.4.0</com.google.zxing.version>
-		<hutool.version>5.8.21</hutool.version>
+
 		<logstash-logback-encoder.version>6.3</logstash-logback-encoder.version>
 
 
 		<axonframework.version>4.5.2</axonframework.version>
 
-		<cosid.version>1.20.0</cosid.version>
+<!--		<cosid.version>1.20.0</cosid.version>-->
 
 		<cobertura.version>2.7</cobertura.version>
 		<coveralls.version>4.3.0</coveralls.version>
@@ -548,11 +548,11 @@
 			</dependency>
 
 			<!--工具类-->
-			<dependency>
-				<groupId>cn.hutool</groupId>
-				<artifactId>hutool-all</artifactId>
-				<version>${hutool.version}</version>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>cn.hutool</groupId>-->
+<!--				<artifactId>hutool-all</artifactId>-->
+<!--				<version>${hutool.version}</version>-->
+<!--			</dependency>-->
 			<dependency>
 				<groupId>net.logstash.logback</groupId>
 				<artifactId>logstash-logback-encoder</artifactId>

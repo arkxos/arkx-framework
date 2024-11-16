@@ -276,7 +276,7 @@
 		<profile>
 			<id>disable-javadoc-doclint</id>
 				<activation>
-					<jdk>[1.8,)</jdk>
+					<jdk>[17,)</jdk>
 				</activation>
 			<properties>
 				<additionalparam>-Xdoclint:none</additionalparam>
@@ -366,7 +366,15 @@
 		<!--工具类-->
 		<dependency>
 			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
+			<artifactId>hutool-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-http</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-json</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
