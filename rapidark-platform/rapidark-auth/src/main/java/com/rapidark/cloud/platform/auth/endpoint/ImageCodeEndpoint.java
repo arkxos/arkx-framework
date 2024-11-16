@@ -1,7 +1,10 @@
 package com.rapidark.cloud.platform.auth.endpoint;
 
 import cn.hutool.core.lang.Validator;
+import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
+import com.rapidark.framework.common.model.ResultBody;
 import io.springboot.captcha.ArithmeticCaptcha;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
 
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,8 +26,8 @@ import java.util.concurrent.TimeUnit;
  * @author lengleng
  * @date 2022/6/27
  */
+@Schema(description = "图形验证码")
 @RestController
-@RequestMapping("/code")
 @RequiredArgsConstructor
 public class ImageCodeEndpoint {
 
@@ -34,9 +39,11 @@ public class ImageCodeEndpoint {
 
 	/**
 	 * 创建图形验证码
+	 * @see ImageCodeEndpoint#generateCaptchaImage
 	 */
+	@Deprecated
 	@SneakyThrows
-	@GetMapping("/image")
+	@GetMapping("/code/image")
 	public void image(String randomStr, HttpServletResponse response) {
 		ArithmeticCaptcha captcha = new ArithmeticCaptcha(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
 
@@ -46,10 +53,32 @@ public class ImageCodeEndpoint {
 
 		String result = captcha.text();
 		redisTemplate.opsForValue()
-			.set(CacheConstants.DEFAULT_CODE_KEY + randomStr, result,
-					SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
+				.set(CacheConstants.DEFAULT_CODE_KEY + randomStr, result,
+						SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
 		// 转换流信息写出
 		captcha.out(response.getOutputStream());
+	}
+
+	/**
+	 * 获取png验证码
+	 */
+	@Schema(description = "获取png验证码", title = "获取png验证码")
+	@SneakyThrows
+	@GetMapping("/captcha/image")
+	public ResultBody<CaptchaImageData> generateCaptchaImage() {
+//		SpecCaptcha captcha = new SpecCaptcha(130, 48, 4);
+		ArithmeticCaptcha captcha = new ArithmeticCaptcha(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
+
+		String verCode = captcha.text();
+		String verKey = CacheConstants.DEFAULT_CODE_KEY + UUID.randomUUID();
+
+//		redisUtil.set(key, verCode, 1800);
+		// 存入redis并设置过期时间为30分钟
+		redisTemplate.opsForValue()
+				.set(verKey, verCode,
+						SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
+
+		return ResultBody.ok(new CaptchaImageData(verKey, captcha.toBase64()));
 	}
 
 }

@@ -87,7 +87,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-commons-core</artifactId>
+			<version>${revision}</version>
+		</dependency>
+	</dependencies>
 
     <profiles>
         <profile>

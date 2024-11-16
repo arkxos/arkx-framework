@@ -32,7 +32,7 @@ public interface CacheConstants {
 	/**
 	 * 验证码前缀
 	 */
-	String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY:";
+	String DEFAULT_CODE_KEY = "CAPTCHA_CODE:";
 
 	/**
 	 * 菜单信息缓存

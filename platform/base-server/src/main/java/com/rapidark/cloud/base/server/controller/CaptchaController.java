@@ -29,25 +29,6 @@ public class CaptchaController {
     @Autowired
     private RedisUtils<String> redisUtil;
 
-    /**
-     * 获取png验证码
-     *
-     * @return
-     */
-    @ApiOperation(value = "获取png验证码", notes = "获取png验证码")
-    @GetMapping("/captcha/auth")
-    public ResultBody authCaptcha() {
-        SpecCaptcha captcha = new SpecCaptcha(130, 48, 4);
-        String verCode = captcha.text();
-        String key = "captcha-" + UUID.randomUUID();
-        // 存入redis并设置过期时间为30分钟
-        redisUtil.set(key, verCode, 1800);
-        // 将key和base64返回给前端
-        Map<String, String> map = Maps.newHashMap();
-        map.put("verKey", key);
-        map.put("image", captcha.toBase64());
-        return ResultBody.ok(map);
-    }
 
     /**
      * 获取png验证码
