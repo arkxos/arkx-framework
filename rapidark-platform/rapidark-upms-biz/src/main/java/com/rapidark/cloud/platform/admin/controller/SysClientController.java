@@ -125,7 +125,7 @@ public class SysClientController {
 		return R.ok(clientDetailsService.updateClientById(clientDetails));
 	}
 
-//	@Inner
+	@Inner
 	@GetMapping("/getClientDetailsById/{clientId}")
 	public R getClientDetailsById(@PathVariable String clientId) {
 		return R.ok(clientDetailsService.getOne(

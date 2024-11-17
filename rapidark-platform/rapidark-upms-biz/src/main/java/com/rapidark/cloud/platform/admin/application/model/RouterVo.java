@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service.dto;
+package com.rapidark.cloud.platform.admin.application.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

@@ -44,16 +44,16 @@ public class ImageCodeEndpoint {
 	@Deprecated
 	@SneakyThrows
 	@GetMapping("/code/image")
-	public void image(String randomStr, HttpServletResponse response) {
+	public void image(String verKey, HttpServletResponse response) {
 		ArithmeticCaptcha captcha = new ArithmeticCaptcha(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
 
-		if (Validator.isMobile(randomStr)) {
+		if (Validator.isMobile(verKey)) {
 			return;
 		}
 
 		String result = captcha.text();
 		redisTemplate.opsForValue()
-				.set(CacheConstants.DEFAULT_CODE_KEY + randomStr, result,
+				.set(CacheConstants.DEFAULT_CODE_KEY + verKey, result,
 						SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
 		// 转换流信息写出
 		captcha.out(response.getOutputStream());
@@ -70,12 +70,12 @@ public class ImageCodeEndpoint {
 		ArithmeticCaptcha captcha = new ArithmeticCaptcha(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
 
 		String verCode = captcha.text();
-		String verKey = CacheConstants.DEFAULT_CODE_KEY + UUID.randomUUID();
+		String verKey = UUID.randomUUID() + "";
 
 //		redisUtil.set(key, verCode, 1800);
 		// 存入redis并设置过期时间为30分钟
 		redisTemplate.opsForValue()
-				.set(verKey, verCode,
+				.set(CacheConstants.DEFAULT_CODE_KEY + verKey, verCode,
 						SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
 
 		return ResultBody.ok(new CaptchaImageData(verKey, captcha.toBase64()));

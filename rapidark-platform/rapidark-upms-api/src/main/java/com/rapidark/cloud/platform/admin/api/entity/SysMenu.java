@@ -26,8 +26,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.Transient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -50,6 +53,8 @@ public class SysMenu extends Model<SysMenu> {
 	@TableId(value = "menu_id", type = IdType.ASSIGN_ID)
 	@Schema(description = "菜单id")
 	private Long menuId;
+
+	private String appCode;
 
 	/**
 	 * 菜单名称
@@ -89,6 +94,8 @@ public class SysMenu extends Model<SysMenu> {
 	@Schema(description = "前端路由标识路径")
 	private String path;
 
+	private String component;
+
 	/**
 	 * 菜单显示隐藏控制
 	 */
@@ -116,6 +123,8 @@ public class SysMenu extends Model<SysMenu> {
 
 	@Schema(description = "菜单是否内嵌")
 	private String embedded;
+
+	private String integrateMode;
 
 	/**
 	 * 创建人
@@ -153,4 +162,19 @@ public class SysMenu extends Model<SysMenu> {
 	@Schema(description = "删除标记,1:已删除,0:正常")
 	private String delFlag;
 
+	private String queryParam;
+
+	/**
+	 * 子菜单
+	 */
+	@TableField(exist = false)
+	@Transient
+	private List<SysMenu> children = new ArrayList<>();
+
+	public List<SysMenu> getChildren() {
+		if(children == null) {
+			children = new ArrayList<>();
+		}
+		return children;
+	}
 }

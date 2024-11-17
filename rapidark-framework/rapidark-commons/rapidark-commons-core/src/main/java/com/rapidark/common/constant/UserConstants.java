@@ -5,8 +5,7 @@ package com.rapidark.common.constant;
  * 
  * @author rapidark
  */
-public class UserConstants
-{
+public class UserConstants {
     /**
      * 平台内系统用户的唯一标志
      */

@@ -81,9 +81,20 @@ public class SysUserController {
 	/**
 	 * 获取当前用户全部信息
 	 * @return 用户信息
+	 * @see SysUserController#currentUserInfo
 	 */
+	@Deprecated
 	@GetMapping(value = { "/user/info" })
 	public R info() {
+		return currentUserInfo();
+	}
+
+	/**
+	 * 获取当前用户全部信息
+	 * @return 用户信息
+	 */
+	@GetMapping(value = { "/user/currentUserInfo" })
+	public R currentUserInfo() {
 		String username = SecurityUtils.getUser().getUsername();
 		SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
 		if (user == null) {

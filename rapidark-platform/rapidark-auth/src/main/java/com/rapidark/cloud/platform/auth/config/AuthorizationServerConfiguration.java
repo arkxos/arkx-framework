@@ -95,6 +95,7 @@ public class AuthorizationServerConfiguration {
 				AntPathRequestMatcher.antMatcher("/actuator/**"),
 				AntPathRequestMatcher.antMatcher("/code/image"),
 				AntPathRequestMatcher.antMatcher("/captcha/image"),
+				AntPathRequestMatcher.antMatcher("/getClientDetailsById/**"),
 				AntPathRequestMatcher.antMatcher("/css/**"),
 				AntPathRequestMatcher.antMatcher("/cdn/**"),
 				AntPathRequestMatcher.antMatcher("/error") };

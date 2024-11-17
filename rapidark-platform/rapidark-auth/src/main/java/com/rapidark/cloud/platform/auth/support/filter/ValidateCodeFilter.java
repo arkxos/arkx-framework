@@ -89,15 +89,15 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 			throw new ValidateCodeException("验证码不能为空");
 		}
 
-		String randomStr = request.get().getParameter("randomStr");
+		String verKey = request.get().getParameter("verKey");
 
 		// https://gitee.com/log4j/pig/issues/IWA0D
 		String mobile = request.get().getParameter("mobile");
 		if (StrUtil.isNotBlank(mobile)) {
-			randomStr = mobile;
+			verKey = mobile;
 		}
 
-		String key = CacheConstants.DEFAULT_CODE_KEY + randomStr;
+		String key = CacheConstants.DEFAULT_CODE_KEY + verKey;
 		RedisTemplate<String, String> redisTemplate = SpringContextHolder.getBean(RedisTemplate.class);
 		if (Boolean.FALSE.equals(redisTemplate.hasKey(key))) {
 			throw new ValidateCodeException("验证码不合法");
