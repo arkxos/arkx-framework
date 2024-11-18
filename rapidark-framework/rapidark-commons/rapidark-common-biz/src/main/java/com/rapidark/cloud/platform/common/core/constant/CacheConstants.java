@@ -27,41 +27,41 @@ public interface CacheConstants {
 	/**
 	 * oauth 缓存前缀
 	 */
-	String PROJECT_OAUTH_ACCESS = "token::access_token";
+	String PROJECT_OAUTH_ACCESS = "rapidark10:token::access_token";
 
 	/**
 	 * 验证码前缀
 	 */
-	String DEFAULT_CODE_KEY = "CAPTCHA_CODE:";
+	String DEFAULT_CODE_KEY = "rapidark10:CAPTCHA_CODE:";
 
 	/**
 	 * 菜单信息缓存
 	 */
-	String MENU_DETAILS = "menu_details";
+	String MENU_DETAILS = "rapidark10:menu_details";
 
 	/**
 	 * 用户信息缓存
 	 */
-	String USER_DETAILS = "user_details";
+	String USER_DETAILS = "rapidark10:user_details";
 
 	/**
 	 * 字典信息缓存
 	 */
-	String DICT_DETAILS = "dict_details";
+	String DICT_DETAILS = "rapidark10:dict_details";
 
 	/**
 	 * 角色信息缓存
 	 */
-	String ROLE_DETAILS = "role_details";
+	String ROLE_DETAILS = "rapidark10:role_details";
 
 	/**
 	 * oauth 客户端信息
 	 */
-	String CLIENT_DETAILS_KEY = "client:details";
+	String CLIENT_DETAILS_KEY = "rapidark10:client:details";
 
 	/**
 	 * 参数缓存
 	 */
-	String PARAMS_DETAILS = "params_details";
+	String PARAMS_DETAILS = "rapidark10:params_details";
 
 }

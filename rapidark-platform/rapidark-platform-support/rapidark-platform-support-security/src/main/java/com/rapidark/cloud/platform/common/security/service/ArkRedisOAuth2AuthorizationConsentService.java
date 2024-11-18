@@ -39,7 +39,7 @@ public class ArkRedisOAuth2AuthorizationConsentService implements OAuth2Authoriz
 	}
 
 	private static String buildKey(String registeredClientId, String principalName) {
-		return "token:consent:" + registeredClientId + ":" + principalName;
+		return "rapidark10:token:consent:" + registeredClientId + ":" + principalName;
 	}
 
 	private static String buildKey(OAuth2AuthorizationConsent authorizationConsent) {
