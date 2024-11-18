@@ -7,15 +7,13 @@ import com.rapidark.framework.common.utils.StreamUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RouterService {
 
 	public List<RouterVo> buildRouters(List<SysMenu> menus) {
-		List<SysMenu> treeMenus = getChildPerms(menus, -1);
+		List<SysMenu> treeMenus = getChildPerms(menus, 0);
 		return buildMenus(treeMenus);
 	}
 
@@ -122,6 +120,7 @@ public class RouterService {
 	private void recursionFn(List<SysMenu> list, SysMenu t) {
 		// 得到子节点列表
 		List<SysMenu> childList = StreamUtils.filter(list, n -> n.getParentId().equals(t.getMenuId()));
+		childList.sort(Comparator.comparingInt(SysMenu::getSortOrder));
 		t.setChildren(childList);
 		for (SysMenu tChild : childList) {
 			// 判断是否有子节点
