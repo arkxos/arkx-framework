@@ -21,7 +21,7 @@
 
 	<modules>
 		<module>rapidark-register</module>
-		<module>rapidark-gateway</module>
+		<module>rapidark-gateway-parent</module>
 		<module>rapidark-auth</module>
 		<module>rapidark-visual</module>
 		<module>rapidark-apps</module>
@@ -30,8 +30,8 @@
 		<module>rapidark-platform-support</module>
 		<module>rapidark-upms-biz</module>
 
-<!--		单体测试不参与打包-->
-<!--		<module>rapidark-monolith</module>-->
+		<!--		单体测试不参与打包-->
+		<!--		<module>rapidark-monolith</module>-->
 	</modules>
 
 </project>

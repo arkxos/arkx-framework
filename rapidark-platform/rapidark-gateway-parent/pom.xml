@@ -13,6 +13,6 @@
 	<packaging>pom</packaging>
 
 	<modules>
-
+		<module>rapidark-gateway</module>
 	</modules>
 </project>
