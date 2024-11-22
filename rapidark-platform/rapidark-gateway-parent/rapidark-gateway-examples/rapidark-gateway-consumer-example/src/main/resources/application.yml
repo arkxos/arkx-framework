@@ -1,0 +1,41 @@
+# 本地服务访问
+server:
+  # 服务端口
+  port: 8766
+  # 服务IP
+  address: 0.0.0.0
+
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        # 升级版本后，已包含BlockingLoadBalancerClient负载均衡客户端（spring-cloud-loadbalancer），不启用ribbon负载均衡服务
+        enabled: false
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    # 应用服务名
+    name: consumer-examples
+
+
+# 启用服务健康检测，注册中心将通过http://host:port/actuator/health 检测服务的存活，默认10s一次
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。开发用*，上生产请取消。默认打开health和info
+        - "*"
+  health:
+    # 开启后打印详细信息
+    show-details: always
+    refresh:
+      enabled: true
+
+# 是否启用springboot的debug调试模式，会打印详细日志信息
+debug: false
+
+

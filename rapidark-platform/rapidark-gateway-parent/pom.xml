@@ -13,6 +13,10 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>rapidark-gateway-framework</module>
+		<module>rapidark-gateway-manage</module>
 		<module>rapidark-gateway</module>
+		<module>rapidark-gateway-dynamic-gateway</module>
+		<module>rapidark-gateway-examples</module>
 	</modules>
 </project>
