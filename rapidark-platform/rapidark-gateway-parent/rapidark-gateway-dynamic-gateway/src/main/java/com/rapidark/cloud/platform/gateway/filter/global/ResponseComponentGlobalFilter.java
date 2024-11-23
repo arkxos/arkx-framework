@@ -1,6 +1,7 @@
 package com.rapidark.cloud.platform.gateway.filter.global;
 
 import com.alibaba.fastjson.JSONObject;
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.cache.RotueGroovyCache;
 import com.rapidark.cloud.platform.gateway.service.DynamicGroovyService;
 import com.rapidark.cloud.platform.gateway.vo.GroovyHandleData;
@@ -160,7 +161,7 @@ public class ResponseComponentGlobalFilter implements GlobalFilter, Ordered {
      */
     private String getErrMsg(String clientIp, String routeId, String errMsg){
         String message= String.format("网关转发客户端【%s】路由请求【%s】，执行组件异常：%s", clientIp, routeId, errMsg);
-        return JSONObject.toJSONString(new ApiResult(Constants.FAILED, message, null));
+        return JSONObject.toJSONString(R.failed(message));
     }
 
     @Override

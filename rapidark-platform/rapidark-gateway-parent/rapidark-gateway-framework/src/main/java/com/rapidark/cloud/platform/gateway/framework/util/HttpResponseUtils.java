@@ -1,6 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.rapidark.cloud.platform.common.core.util.R;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -23,7 +24,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeOk(ServerHttpResponse response, String msg) {
-        return write(response, HttpStatus.OK, new ApiResult(Constants.SUCCESS, msg, null));
+        return write(response, HttpStatus.OK, R.ok().setMsg(msg));
     }
 
     /**
@@ -32,7 +33,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeUnauth(ServerHttpResponse response, String msg) {
-        return write(response, HttpStatus.UNAUTHORIZED, new ApiResult(Constants.FAILED, msg, null));
+        return write(response, HttpStatus.UNAUTHORIZED, R.failed(msg));
     }
 
     /**
@@ -41,7 +42,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeError(ServerHttpResponse response, String msg) {
-        return write(response, HttpStatus.INTERNAL_SERVER_ERROR, new ApiResult(Constants.FAILED, msg, null));
+        return write(response, HttpStatus.INTERNAL_SERVER_ERROR, R.failed(msg));
     }
 
     /**
@@ -50,7 +51,7 @@ public class HttpResponseUtils {
      * @param statusCode
      * @param apiResult
      */
-    public static Mono<Void> write(ServerHttpResponse response, HttpStatusCode statusCode, ApiResult apiResult){
+    public static Mono<Void> write(ServerHttpResponse response, HttpStatusCode statusCode, R apiResult){
         String msg = JSONObject.toJSONString(apiResult);
         response.setStatusCode(statusCode);
         response.getHeaders().add(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);

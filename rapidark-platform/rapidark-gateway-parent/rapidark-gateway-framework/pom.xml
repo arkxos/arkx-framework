@@ -127,6 +127,10 @@
 			<artifactId>nacos-client</artifactId>
 			<version>2.3.2</version>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-common-biz</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>

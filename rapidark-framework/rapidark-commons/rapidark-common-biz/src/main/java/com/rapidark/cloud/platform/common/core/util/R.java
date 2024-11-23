@@ -21,11 +21,13 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 
 /**
- * 响应信息主体
+ * 所有接口调用返回的统一包装结果类
  *
  * @param <T>
  * @author lengleng
@@ -50,6 +52,8 @@ public class R<T> implements Serializable {
 	@Getter
 	@Setter
 	private T data;
+
+	private LocalDateTime timestamp;
 
 	public static <T> R<T> ok() {
 		return restResult(null, CommonConstants.SUCCESS, null);
@@ -86,5 +90,12 @@ public class R<T> implements Serializable {
 		apiResult.setMsg(msg);
 		return apiResult;
 	}
+
+	public LocalDateTime getTimestamp() {
+		if(timestamp == null) {
+			timestamp = LocalDateTime.now();
+		}
+        return timestamp;
+    }
 
 }

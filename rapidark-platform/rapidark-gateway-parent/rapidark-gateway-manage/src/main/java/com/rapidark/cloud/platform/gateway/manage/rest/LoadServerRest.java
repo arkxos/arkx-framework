@@ -2,7 +2,7 @@ package com.rapidark.cloud.platform.gateway.manage.rest;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.service.LoadServerService;
-import com.rapidark.cloud.platform.gateway.framework.util.ApiResult;
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.bean.LoadServerReq;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
@@ -32,7 +32,7 @@ public class LoadServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/regList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult regList(@RequestBody LoadServerReq loadServerReq) {
+    public R regList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, true);
     }
 
@@ -42,7 +42,7 @@ public class LoadServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/notRegPageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult notRegPageList(@RequestBody LoadServerReq loadServerReq) {
+    public R notRegPageList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, false);
     }
 
@@ -52,15 +52,15 @@ public class LoadServerRest extends BaseRest {
      * @param isReg
      * @return
      */
-    private ApiResult list(LoadServerReq loadServerReq, boolean isReg){
+    private R list(LoadServerReq loadServerReq, boolean isReg){
         Assert.notNull(loadServerReq, "未获取到对象");
         if (isReg) {
             Assert.isTrue(StringUtils.isNotBlank(loadServerReq.getBalancedId()), "未获取到对象ID");
-            return new ApiResult(loadServerService.loadServerList(loadServerReq.getBalancedId()));
+            return R.ok(loadServerService.loadServerList(loadServerReq.getBalancedId()));
         }else {
             int currentPage = getCurrentPage(loadServerReq.getCurrentPage());
             int pageSize = getPageSize(loadServerReq.getPageSize());
-            return new ApiResult(loadServerService.notLoadServerPageList(currentPage, pageSize));
+            return R.ok(loadServerService.notLoadServerPageList(currentPage, pageSize));
         }
     }
 

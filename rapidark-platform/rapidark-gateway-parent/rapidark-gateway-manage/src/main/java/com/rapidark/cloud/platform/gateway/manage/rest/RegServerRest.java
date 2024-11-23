@@ -6,7 +6,7 @@ import com.rapidark.cloud.platform.gateway.framework.bean.TokenReq;
 import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
 import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
 import com.rapidark.cloud.platform.gateway.framework.service.RegServerService;
-import com.rapidark.cloud.platform.gateway.framework.util.ApiResult;
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.JwtTokenUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +42,7 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public ApiResult add(@RequestBody RegServer regServer) {
+    public R add(@RequestBody RegServer regServer) {
         Assert.notNull(regServer, "未获取到对象");
         //默认禁止通行
         regServer.setStatus(Constants.NO);
@@ -57,7 +57,7 @@ public class RegServerRest extends BaseRest {
         //保存
         regServerService.save(regServer);
         customNacosConfigService.publishRegServerNacosConfig(regServer.getId());
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -66,12 +66,12 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult delete(@RequestParam Long id) {
+    public R delete(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
         regServerService.deleteById(id);
         customNacosConfigService.publishRegServerNacosConfig(id);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -80,13 +80,13 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ApiResult update(@RequestBody RegServer regServer) {
+    public R update(@RequestBody RegServer regServer) {
         Assert.notNull(regServer, "未获取到对象");
         regServer.setUpdateTime(new Date());
         this.validate(regServer);
         regServerService.update(regServer);
         customNacosConfigService.publishRegServerNacosConfig(regServer.getId());
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -95,10 +95,10 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult findById(@RequestParam Long id) {
+    public R findById(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
-        return new ApiResult(regServerService.findById(id));
+        return R.ok(regServerService.findById(id));
     }
 
     /**
@@ -107,14 +107,14 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/serverPageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult serverPageList(@RequestBody RegServerReq regServerReq) {
+    public R serverPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getClientId()), "未获取到对象查询ID");
         RegServer regServer = new RegServer();
         regServer.setClientId(regServerReq.getClientId());
         int currentPage = getCurrentPage(regServerReq.getCurrentPage());
         int pageSize = getPageSize(regServerReq.getPageSize());
-        return new ApiResult(regServerService.serverPageList(regServer, currentPage, pageSize));
+        return R.ok(regServerService.serverPageList(regServer, currentPage, pageSize));
     }
 
     /**
@@ -123,14 +123,14 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/clientPageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult clientPageList(@RequestBody RegServerReq regServerReq) {
+    public R clientPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getRouteId()), "未获取到对象查询ID");
         RegServer regServer = new RegServer();
         regServer.setRouteId(regServerReq.getRouteId());
         int currentPage = getCurrentPage(regServerReq.getCurrentPage());
         int pageSize = getPageSize(regServerReq.getPageSize());
-        return new ApiResult(regServerService.clientPageList(regServer, currentPage, pageSize));
+        return R.ok(regServerService.clientPageList(regServer, currentPage, pageSize));
     }
 
     /**
@@ -139,12 +139,12 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/regClientList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult regClientList(@RequestBody RegServerReq regServerReq) {
+    public R regClientList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getRouteId()), "未获取到对象查询ID");
         RegServer regServer = new RegServer();
         regServer.setRouteId(regServerReq.getRouteId());
-        return new ApiResult(regServerService.regClientList(regServer));
+        return R.ok(regServerService.regClientList(regServer));
     }
 
     /**
@@ -153,7 +153,7 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult start(@RequestParam Long id) {
+    public R start(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
         RegServer dbRegServer = regServerService.findById(id);
@@ -161,7 +161,7 @@ public class RegServerRest extends BaseRest {
         dbRegServer.setUpdateTime(new Date());
         regServerService.update(dbRegServer);
         customNacosConfigService.publishRegServerNacosConfig(id);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -170,7 +170,7 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult stop(@RequestParam Long id) {
+    public R stop(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
         RegServer dbRegServer = regServerService.findById(id);
@@ -178,7 +178,7 @@ public class RegServerRest extends BaseRest {
         dbRegServer.setUpdateTime(new Date());
         regServerService.update(dbRegServer);
         customNacosConfigService.publishRegServerNacosConfig(id);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -187,11 +187,11 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/stopClientAllRoute", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult stopClientAllRoute(@RequestParam String clientId) {
+    public R stopClientAllRoute(@RequestParam String clientId) {
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         regServerService.stopClientAllRoute(clientId);
         customNacosConfigService.publishClientNacosConfig(clientId);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -200,11 +200,11 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/startClientAllRoute", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult startClientAllRoute(@RequestParam String clientId) {
+    public R startClientAllRoute(@RequestParam String clientId) {
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         regServerService.startClientAllRoute(clientId);
         customNacosConfigService.publishClientNacosConfig(clientId);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -213,11 +213,11 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/stopRouteAllClient", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult stopRouteAllClient(@RequestParam String routeId) {
+    public R stopRouteAllClient(@RequestParam String routeId) {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象ID");
         regServerService.stopRouteAllClient(routeId);
         customNacosConfigService.publishRouteNacosConfig(routeId);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -226,11 +226,11 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/startRouteAllClient", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult startRouteAllClient(@RequestParam String routeId) {
+    public R startRouteAllClient(@RequestParam String routeId) {
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象ID");
         regServerService.startRouteAllClient(routeId);
         customNacosConfigService.publishRouteNacosConfig(routeId);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -239,12 +239,12 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/notRegServerPageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult notRegServerPageList(@RequestBody RegServerReq regServerReq) {
+    public R notRegServerPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getClientId()), "未获取到客户端ID");
         int currentPage = getCurrentPage(regServerReq.getCurrentPage());
         int pageSize = getPageSize(regServerReq.getPageSize());
-        return new ApiResult(regServerService.notRegServerPageList(regServerReq, currentPage, pageSize));
+        return R.ok(regServerService.notRegServerPageList(regServerReq, currentPage, pageSize));
     }
 
     /**
@@ -253,12 +253,12 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/notRegClientPageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult notRegClientPageList(@RequestBody RegServerReq regServerReq) {
+    public R notRegClientPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getRouteId()), "未获取路由服务ID");
         int currentPage = getCurrentPage(regServerReq.getCurrentPage());
         int pageSize = getPageSize(regServerReq.getPageSize());
-        return new ApiResult(regServerService.notRegClientPageList(regServerReq, currentPage, pageSize));
+        return R.ok(regServerService.notRegClientPageList(regServerReq, currentPage, pageSize));
     }
 
     /**
@@ -267,7 +267,7 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/createToken", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult createToken(@RequestBody TokenReq tokenReq){
+    public R createToken(@RequestBody TokenReq tokenReq){
         Assert.notNull(tokenReq, "未获取到对象");
         Assert.notNull(tokenReq.getRegServerId(), "未获取到对象ID");
         Assert.isTrue(tokenReq.getRegServerId() > 0, "ID值错误");
@@ -289,7 +289,7 @@ public class RegServerRest extends BaseRest {
         regServerService.update(regServer);
         customNacosConfigService.publishRegServerNacosConfig(regServer.getId());
         //返回最新Token
-        return new ApiResult(Constants.SUCCESS, jwtToken);
+        return R.ok(Constants.SUCCESS, jwtToken);
     }
 
     /**
@@ -298,7 +298,7 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/removeToken", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult removeToken(@RequestBody TokenReq tokenReq){
+    public R removeToken(@RequestBody TokenReq tokenReq){
         Assert.notNull(tokenReq, "未获取到对象");
         Assert.notNull(tokenReq.getRegServerId(), "未获取到对象ID");
         Assert.isTrue(tokenReq.getRegServerId() > 0, "ID值错误");
@@ -310,7 +310,7 @@ public class RegServerRest extends BaseRest {
         regServer.setSecretKey(null);
         regServerService.update(regServer);
         customNacosConfigService.publishRegServerNacosConfig(regServer.getId());
-        return new ApiResult();
+        return R.ok();
     }
 
 }

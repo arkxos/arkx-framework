@@ -1,11 +1,11 @@
 package com.rapidark.cloud.platform.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.entity.ApiDoc;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
 import com.rapidark.cloud.platform.gateway.framework.service.ApiDocService;
 import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
-import com.rapidark.cloud.platform.gateway.framework.util.ApiResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +33,8 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult list(){
-        return new ApiResult(routeService.list(new Route()));
+    public R list(){
+        return R.ok(routeService.list(new Route()));
     }
 
     /**
@@ -43,11 +43,11 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
-    public ApiResult save(@RequestBody ApiDoc apiDoc){
+    public R save(@RequestBody ApiDoc apiDoc){
         Assert.notNull(apiDoc, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(apiDoc.getId()), "未获取到对象ID");
         apiDocService.save(apiDoc);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -56,9 +56,9 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult findById(@RequestParam String id) {
+    public R findById(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到请求ID");
-        return new ApiResult(apiDocService.findById(id));
+        return R.ok(apiDocService.findById(id));
     }
 
 }

@@ -5,7 +5,7 @@ import com.rapidark.cloud.platform.gateway.framework.bean.SecureIpReq;
 import com.rapidark.cloud.platform.gateway.framework.entity.SecureIp;
 import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
 import com.rapidark.cloud.platform.gateway.framework.service.SecureIpService;
-import com.rapidark.cloud.platform.gateway.framework.util.ApiResult;
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -40,7 +40,7 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public ApiResult add(@RequestBody SecureIp secureIp) {
+    public R add(@RequestBody SecureIp secureIp) {
         Assert.notNull(secureIp, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(secureIp.getIp()), "IP值不能为空");
         secureIp.setCreateTime(new Date());
@@ -53,7 +53,7 @@ public class SecureIpRest extends BaseRest {
         secureIpService.save(secureIp);
         //this.setIpCacheVersion();
         customNacosConfigService.publishIpNacosConfig(secureIp.getIp());
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -62,12 +62,12 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult delete(@RequestParam String ip) {
+    public R delete(@RequestParam String ip) {
         Assert.isTrue(StringUtils.isNotBlank(ip), "IP值不能为空");
         secureIpService.deleteById(ip);
         //this.setIpCacheVersion();
         customNacosConfigService.publishIpNacosConfig(ip);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -76,7 +76,7 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ApiResult update(@RequestBody SecureIp secureIp) {
+    public R update(@RequestBody SecureIp secureIp) {
         Assert.notNull(secureIp, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(secureIp.getIp()), "IP值不能为空");
         secureIp.setUpdateTime(new Date());
@@ -84,7 +84,7 @@ public class SecureIpRest extends BaseRest {
         secureIpService.update(secureIp);
         //this.setIpCacheVersion();
         customNacosConfigService.publishIpNacosConfig(secureIp.getIp());
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -93,9 +93,9 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult findById(@RequestParam String ip) {
+    public R findById(@RequestParam String ip) {
         Assert.isTrue(StringUtils.isNotBlank(ip), "IP值不能为空");
-        return new ApiResult(secureIpService.findById(ip));
+        return R.ok(secureIpService.findById(ip));
     }
 
     /**
@@ -104,7 +104,7 @@ public class SecureIpRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult pageList(@RequestBody SecureIpReq secureIpReq){
+    public R pageList(@RequestBody SecureIpReq secureIpReq){
         Assert.notNull(secureIpReq, "未获取到对象");
         int currentPage = getCurrentPage(secureIpReq.getCurrentPage());
         int pageSize = getPageSize(secureIpReq.getPageSize());
@@ -115,7 +115,7 @@ public class SecureIpRest extends BaseRest {
         if (StringUtils.isNotBlank(secureIpReq.getStatus())){
             secureIp.setStatus(secureIpReq.getStatus());
         }
-        return new ApiResult(secureIpService.pageList(secureIp,currentPage, pageSize));
+        return R.ok(secureIpService.pageList(secureIp,currentPage, pageSize));
     }
 
     /**

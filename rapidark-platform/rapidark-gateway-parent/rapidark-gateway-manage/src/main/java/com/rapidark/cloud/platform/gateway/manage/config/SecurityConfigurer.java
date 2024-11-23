@@ -71,7 +71,7 @@
 ////                .authenticationSuccessHandler((exchange, authentication) -> {
 ////                    ServerHttpResponse response = exchange.getExchange().getResponse();
 ////                    if (authentication.isAuthenticated()) {
-////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(new ApiResult(Constants.SUCCESS)));
+////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(R.ok(Constants.SUCCESS)));
 ////                    }
 ////                    return response.writeWith(Mono.empty());
 ////                })
@@ -79,7 +79,7 @@
 ////                .authenticationFailureHandler((exchange, exception) -> {
 ////                    log.error("user auth failed ,there is not login! error: {}", exception.getMessage());
 ////                    ServerHttpResponse response = exchange.getExchange().getResponse();
-////                    return HttpResponseUtils.write(response, HttpStatus.UNAUTHORIZED, JSONObject.toJSONString(new ApiResult(Constants.NOT_LOGIN)));
+////                    return HttpResponseUtils.write(response, HttpStatus.UNAUTHORIZED, JSONObject.toJSONString(R.ok(Constants.NOT_LOGIN)));
 ////                })
 ////                .and()
 ////                .logout()
@@ -92,7 +92,7 @@
 ////                .logoutSuccessHandler((exchange, authentication) -> {
 ////                    ServerHttpResponse response = exchange.getExchange().getResponse();
 ////                    if (authentication.isAuthenticated()) {
-////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(new ApiResult(Constants.SUCCESS)));
+////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(R.ok(Constants.SUCCESS)));
 ////                    }
 ////                    return response.writeWith(Mono.empty());
 ////                })
@@ -102,7 +102,7 @@
 ////                .accessDeniedHandler((exchange, denied) -> {
 ////                    denied.printStackTrace();
 ////                    ServerHttpResponse response = exchange.getResponse();
-////                    ApiResult result = new ApiResult(Constants.NOT_LOGIN, "无权限访问");
+////                    ApiResult result = R.ok(Constants.NOT_LOGIN, "无权限访问");
 ////                    return HttpResponseUtils.write(response, HttpStatus.UNAUTHORIZED, JSONObject.toJSONString(result));
 ////                })
 //        ;

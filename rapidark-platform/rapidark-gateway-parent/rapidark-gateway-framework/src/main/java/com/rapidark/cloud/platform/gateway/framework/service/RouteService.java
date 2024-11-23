@@ -13,7 +13,7 @@ import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
 import com.rapidark.cloud.platform.gateway.framework.entity.SentinelRule;
-import com.rapidark.cloud.platform.gateway.framework.util.ApiResult;
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
 import org.apache.commons.lang3.StringUtils;
@@ -159,11 +159,11 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
      * @param isNews
      * @return
      */
-    public ApiResult saveForm(RouteDataBean routeDataBean, boolean isNews){
+    public R saveForm(RouteDataBean routeDataBean, boolean isNews){
         Route route = save(routeDataBean, isNews);
         //推送变更事件到nacos注册与配置中心
         customNacosConfigService.publishRouteNacosConfig(route.getId());
-        return new ApiResult();
+        return R.ok();
     }
 
     /**

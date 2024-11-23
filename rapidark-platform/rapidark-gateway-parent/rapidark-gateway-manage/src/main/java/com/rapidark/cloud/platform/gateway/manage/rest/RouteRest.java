@@ -12,7 +12,7 @@ import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigSe
 import com.rapidark.cloud.platform.gateway.framework.service.MonitorService;
 import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
 import com.rapidark.cloud.platform.gateway.framework.service.SentinelRuleService;
-import com.rapidark.cloud.platform.gateway.framework.util.ApiResult;
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +55,7 @@ public class RouteRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public ApiResult add(@RequestBody RouteReq routeReq){
+    public R add(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         RouteDataBean routeDataBean = toRoute(routeReq);
         Route route = routeDataBean.getRoute();
@@ -74,11 +74,11 @@ public class RouteRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult delete(@RequestParam String id){
+    public R delete(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         routeService.delete(id);
         customNacosConfigService.publishRouteNacosConfig(id);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -87,7 +87,7 @@ public class RouteRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ApiResult update(@RequestBody RouteReq routeReq){
+    public R update(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         RouteDataBean routeDataBean = toRoute(routeReq);
         Route route = routeDataBean.getRoute();
@@ -97,22 +97,22 @@ public class RouteRest extends BaseRest {
     }
 
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult findById(@RequestParam String id){
+    public R findById(@RequestParam String id){
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        return new ApiResult(routeService.findById(id));
+        return R.ok(routeService.findById(id));
     }
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult list(@RequestBody RouteReq routeReq){
+    public R list(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         RouteDataBean routeDataBean = toRoute(routeReq);
         Route route = routeDataBean.getRoute();
-        return new ApiResult(routeService.list(route));
+        return R.ok(routeService.list(route));
     }
 
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult pageList(@RequestBody RouteReq routeReq){
+    public R pageList(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         int currentPage = getCurrentPage(routeReq.getCurrentPage());
         int pageSize = getPageSize(routeReq.getPageSize());
@@ -124,7 +124,7 @@ public class RouteRest extends BaseRest {
         if (StringUtils.isBlank(route.getStatus())){
             route.setStatus(null);
         }
-        return new ApiResult(routeService.pageList(route,currentPage, pageSize));
+        return R.ok(routeService.pageList(route,currentPage, pageSize));
     }
 
     /**
@@ -133,7 +133,7 @@ public class RouteRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult start(@RequestParam String id){
+    public R start(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Route dbRoute = routeService.findById(id);
         if (!Constants.YES.equals(dbRoute.getStatus())) {
@@ -142,7 +142,7 @@ public class RouteRest extends BaseRest {
         }
         //可以通过反复启用，刷新路由，防止发布失败或配置变更未生效
         customNacosConfigService.publishRouteNacosConfig(id);
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -151,7 +151,7 @@ public class RouteRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResult stop(@RequestParam String id){
+    public R stop(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Route dbRoute = routeService.findById(id);
         if (!Constants.NO.equals(dbRoute.getStatus())) {
@@ -159,7 +159,7 @@ public class RouteRest extends BaseRest {
             routeService.update(dbRoute);
             customNacosConfigService.publishRouteNacosConfig(id);
         }
-        return new ApiResult();
+        return R.ok();
     }
 
     /**
@@ -170,7 +170,7 @@ public class RouteRest extends BaseRest {
      * @return
      */
     @Deprecated
-    private ApiResult saveForm(Route route, RouteReq routeReq, boolean isNews){
+    private R saveForm(Route route, RouteReq routeReq, boolean isNews){
         Monitor monitor = toMonitor(routeReq);
         route.setUpdateTime(new Date());
         routeService.save(route);
@@ -201,7 +201,7 @@ public class RouteRest extends BaseRest {
                 }
             }
         }
-        return new ApiResult();
+        return R.ok();
     }
 
 

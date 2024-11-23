@@ -7,7 +7,7 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
 import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.platform.gateway.framework.util.ApiResult;
+import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class CustomBlockRequestHandler implements BlockRequestHandler {
         log.error("handleRequest throwable. msg:" + msg , ex);
         //Throwable throwable = new Throwable(msg ,ex);
         // JSON result by default.
-        String jsonMsg = JSONObject.toJSONString(new ApiResult(Constants.FAILED, DEFAULT_BLOCK_MSG_PREFIX + msg, null));
+        String jsonMsg = JSONObject.toJSONString(R.failed(DEFAULT_BLOCK_MSG_PREFIX + msg));
         return ServerResponse.status(HttpStatus.TOO_MANY_REQUESTS)
                 .contentType(new MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8))
                 .body(fromValue(jsonMsg));
