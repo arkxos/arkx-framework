@@ -31,6 +31,11 @@
 
 
     <dependencies>
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-commons-core</artifactId>
+			<version>${revision}</version>
+		</dependency>
         <!--hutool-->
         <dependency>
             <groupId>cn.hutool</groupId>

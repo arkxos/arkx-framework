@@ -352,6 +352,9 @@ public class Config {
 	 */
 	public static String getPluginPath() {
 		File f = new File(getClassesPath());
+		if(f.getParentFile() == null) {
+			return null;
+		}
 		String path = f.getParentFile().getAbsolutePath() + "/";
 		return path;
 	}

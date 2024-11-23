@@ -17,7 +17,7 @@ import com.rapidark.framework.avatarmq.netty.MessageObjectEncoder;
 import com.rapidark.framework.avatarmq.netty.NettyClustersConfig;
 import com.rapidark.framework.avatarmq.netty.NettyUtil;
 import com.rapidark.framework.avatarmq.serialize.KryoCodecUtil;
-import com.rapidark.framework.avatarmq.serialize.KryoPoolFactory;
+//import com.rapidark.framework.avatarmq.serialize.KryoPoolFactory;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -75,7 +75,7 @@ public class AvatarMQBrokerServer extends BrokerParallelServer implements Remoti
 
             workers = new NioEventLoopGroup(parallel, threadWorkerFactory, NettyUtil.getNioSelectorProvider());
 
-            KryoCodecUtil util = new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
+            KryoCodecUtil util = null;//new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
 
             bootstrap = new ServerBootstrap();
 

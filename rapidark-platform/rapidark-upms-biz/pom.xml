@@ -100,8 +100,7 @@
 		<dependency>
 			<groupId>com.rapidark.framework</groupId>
 			<artifactId>rapidark-commons-core</artifactId>
-			<version>10.0.3</version>
-			<scope>compile</scope>
+			<version>${revision}</version>
 		</dependency>
 	</dependencies>
 

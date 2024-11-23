@@ -10,7 +10,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.rapidark.framework.avatarmq.core.CallBackInvoker;
 import com.rapidark.framework.avatarmq.core.MessageSystemConfig;
 import com.rapidark.framework.avatarmq.serialize.KryoCodecUtil;
-import com.rapidark.framework.avatarmq.serialize.KryoPoolFactory;
+//import com.rapidark.framework.avatarmq.serialize.KryoPoolFactory;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -34,7 +34,7 @@ import io.netty.util.concurrent.DefaultEventExecutorGroup;
  */
 public class MessageConnectFactory {
 
-	private static KryoCodecUtil util = new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
+	private static KryoCodecUtil util = null;//new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
 	
     private SocketAddress remoteAddr = null;
     private ChannelInboundHandlerAdapter messageHandler = null;
