@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>com.sagframe</groupId>
-            <artifactId>sagacity-sqltoy-starter</artifactId>
+            <artifactId>sagacity-sqltoy-spring-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

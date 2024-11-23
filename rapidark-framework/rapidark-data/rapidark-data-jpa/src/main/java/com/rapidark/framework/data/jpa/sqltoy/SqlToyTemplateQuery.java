@@ -33,7 +33,6 @@ import org.springframework.data.jpa.repository.query.JpaParameters;
 import org.springframework.data.jpa.repository.query.JpaQueryMethod;
 import org.springframework.data.repository.query.Parameter;
 import org.springframework.data.repository.query.RepositoryQuery;
-import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -74,7 +73,7 @@ public class SqlToyTemplateQuery implements RepositoryQuery {
 		if (objectType.isAssignableFrom(Map.class)) {
             genericType = objectType;
         } else {
-        	ClassTypeInformation<?> ctif = ClassTypeInformation.from(objectType);
+			TypeInformation<?> ctif = TypeInformation.of(objectType);
             TypeInformation<?> actualType = ctif.getActualType();
             genericType = actualType.getType();
         }
@@ -216,7 +215,7 @@ public class SqlToyTemplateQuery implements RepositoryQuery {
 		sqlToyLazyDao.getSqlToyContext().setTypeHandler(new TypeHandler() {
 
 			@Override
-			public boolean setValue(PreparedStatement pst, int paramIndex, int jdbcType, Object value) throws SQLException {
+			public boolean setValue(Integer integer, PreparedStatement preparedStatement, int i, int i1, Object o) throws SQLException {
 				return false;
 			}
 
