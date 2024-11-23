@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
-import com.rapidark.cloud.platform.gateway.framework.dao.GroovyScriptDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.GroovyScriptRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.GroovyScript;
 import com.rapidark.cloud.platform.gateway.framework.util.GroovyScriptUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +24,10 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyScriptDao> {
+public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyScriptRepository> {
 
     @Resource
-    private GroovyScriptDao groovyScriptDao;
+    private GroovyScriptRepository groovyScriptRepository;
 
     private final static String ORDER_NUM = "orderNum";
 
@@ -38,7 +38,7 @@ public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyS
      * @return
      */
     public int findMaxOrderNum(String routeId, String event) {
-        Integer orderNum = groovyScriptDao.findMaxOrderNum(routeId, event);
+        Integer orderNum = groovyScriptRepository.findMaxOrderNum(routeId, event);
         return orderNum == null ? 1 : orderNum;
     }
 
@@ -47,7 +47,7 @@ public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyS
      * @return
      */
     public List<Map> findRouteScriptNum(){
-        return groovyScriptDao.findRouteScriptNum();
+        return groovyScriptRepository.findRouteScriptNum();
     }
 
     /**
@@ -56,7 +56,7 @@ public class GroovyScriptService extends BaseService<GroovyScript, Long, GroovyS
      * @return
      */
     public List<Long> findIdList(String routeId){
-        return groovyScriptDao.findIdList(routeId);
+        return groovyScriptRepository.findIdList(routeId);
     }
 
     /**

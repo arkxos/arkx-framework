@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
-import com.rapidark.cloud.platform.gateway.framework.dao.LoadServerDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.LoadServerRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
 import com.rapidark.cloud.platform.gateway.framework.entity.LoadServer;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
@@ -21,10 +21,10 @@ import java.util.*;
  * @Version V1.0
  */
 @Service
-public class LoadServerService extends BaseService<LoadServer, Long, LoadServerDao> {
+public class LoadServerService extends BaseService<LoadServer, Long, LoadServerRepository> {
 
     @Resource
-    private LoadServerDao loadServerDao;
+    private LoadServerRepository loadServerRepository;
 
     /**
      * 查询当前负载网关已加配置路由服务
@@ -33,7 +33,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      */
     @Transactional(readOnly = true)
     public List loadServerList(String balancedId){
-        return loadServerDao.queryLoadServerList(balancedId);
+        return loadServerRepository.queryLoadServerList(balancedId);
     }
 
     /**
@@ -53,7 +53,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      * @param balancedId
      */
     public void deleteAllByBalancedId(String balancedId){
-        loadServerDao.deleteAllByBalancedId(balancedId);
+        loadServerRepository.deleteAllByBalancedId(balancedId);
     }
 
     /**
@@ -62,7 +62,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      * @return
      */
     public List<LoadServer> queryByBalancedId(String balancedId){
-        return loadServerDao.queryByBalancedId(balancedId);
+        return loadServerRepository.queryByBalancedId(balancedId);
     }
 
     /**
@@ -71,7 +71,7 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerD
      * @return
      */
     public List<LoadServer> queryByRouteId(String routeId){
-        return loadServerDao.queryByRouteId(routeId);
+        return loadServerRepository.queryByRouteId(routeId);
     }
 
     /**

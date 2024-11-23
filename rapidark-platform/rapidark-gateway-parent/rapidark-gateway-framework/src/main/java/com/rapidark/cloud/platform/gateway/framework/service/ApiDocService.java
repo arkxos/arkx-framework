@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
-import com.rapidark.cloud.platform.gateway.framework.dao.ApiDocDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.ApiDocRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.ApiDoc;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +14,6 @@ import jakarta.persistence.EntityManager;
  * @Version V1.0
  */
 @Service
-public class ApiDocService extends BaseService<ApiDoc, String, ApiDocDao> {
+public class ApiDocService extends BaseService<ApiDoc, String, ApiDocRepository> {
     private EntityManager entityManager;
 }

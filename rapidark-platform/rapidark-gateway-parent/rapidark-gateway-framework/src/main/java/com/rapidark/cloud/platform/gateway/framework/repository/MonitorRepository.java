@@ -1,4 +1,4 @@
-package com.rapidark.cloud.platform.gateway.framework.dao;
+package com.rapidark.cloud.platform.gateway.framework.repository;
 
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import java.util.List;
  * @Date 2021/04/14
  * @Version V1.0
  */
-public interface MonitorDao extends JpaRepository<Monitor, String> {
+public interface MonitorRepository extends JpaRepository<Monitor, String> {
     /**
      * 获取监控配置，告警状态：0启用，1禁用，2告警
      * @return

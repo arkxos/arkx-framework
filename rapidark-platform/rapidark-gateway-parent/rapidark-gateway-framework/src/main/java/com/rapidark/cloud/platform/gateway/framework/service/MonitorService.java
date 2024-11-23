@@ -3,7 +3,7 @@ package com.rapidark.cloud.platform.gateway.framework.service;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.bean.MonitorReq;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteRsp;
-import com.rapidark.cloud.platform.gateway.framework.dao.MonitorDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.MonitorRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
@@ -25,12 +25,12 @@ import java.util.stream.Collectors;
  * @Version V1.0
  */
 @Service
-public class MonitorService extends BaseService<Monitor, String, MonitorDao> {
+public class MonitorService extends BaseService<Monitor, String, MonitorRepository> {
 
     @Resource
     private RouteService routeService;
     @Resource
-    private MonitorDao monitorDao;
+    private MonitorRepository monitorRepository;
 
     /**
      * 获取监控的服务列表
@@ -84,7 +84,7 @@ public class MonitorService extends BaseService<Monitor, String, MonitorDao> {
      * @return
      */
     public List<Monitor> validMonitorList(){
-        return monitorDao.validMonitorList();
+        return monitorRepository.validMonitorList();
     }
 
     /**
@@ -92,7 +92,7 @@ public class MonitorService extends BaseService<Monitor, String, MonitorDao> {
      * @return
      */
     public List<Monitor> validRouteMonitorList(){
-        return monitorDao.validRouteMonitorList();
+        return monitorRepository.validRouteMonitorList();
     }
 
 }

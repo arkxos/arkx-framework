@@ -1,4 +1,4 @@
-package com.rapidark.cloud.platform.gateway.framework.dao;
+package com.rapidark.cloud.platform.gateway.framework.repository;
 
 import com.rapidark.cloud.platform.gateway.framework.entity.GroovyScript;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @Date 2022/2/21
  * @Version V1.0
  */
-public interface GroovyScriptDao extends JpaRepository<GroovyScript, Long> {
+public interface GroovyScriptRepository extends JpaRepository<GroovyScript, Long> {
 
     /**
      * 删除指定routeId下所有groovy脚本记录

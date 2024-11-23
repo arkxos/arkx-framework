@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.service.load;
 
-import com.rapidark.cloud.platform.gateway.framework.dao.RouteDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.RouteRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
 import com.rapidark.cloud.platform.gateway.framework.entity.LoadServer;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
@@ -37,7 +37,7 @@ public class InitRouteService {
     private List<RouteDefinition> routeDefinitions = new ArrayList<>();
 
     @Resource
-    private RouteDao routeDao;
+    private RouteRepository routeRepository;
     @Resource
     private BalancedService balancedService;
     @Resource
@@ -66,7 +66,7 @@ public class InitRouteService {
         Route query = new Route();
         query.setStatus(Constants.YES);
         try {
-            List<Route> routeList = routeDao.findAll(Example.of(query));
+            List<Route> routeList = routeRepository.findAll(Example.of(query));
             if (CollectionUtils.isEmpty(routeList)) {
                 log.error("初始化网关路由，无可用网关路由配置...");
                 return ;
@@ -102,7 +102,7 @@ public class InitRouteService {
             return ;
         }
         //查询所有可用的网关路由列表
-        List<Route> routeList = routeDao.findAll(Example.of(query));
+        List<Route> routeList = routeRepository.findAll(Example.of(query));
         if (CollectionUtils.isEmpty(routeList)){
             log.error("初始化网关负载均衡路由，无可用网关路由配置...");
             return ;

@@ -6,9 +6,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteDataBean;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteRsp;
-import com.rapidark.cloud.platform.gateway.framework.dao.MonitorDao;
-import com.rapidark.cloud.platform.gateway.framework.dao.RouteDao;
-import com.rapidark.cloud.platform.gateway.framework.dao.SentinelRuleDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.MonitorRepository;
+import com.rapidark.cloud.platform.gateway.framework.repository.RouteRepository;
+import com.rapidark.cloud.platform.gateway.framework.repository.SentinelRuleRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * @Version V2.0
  */
 @Service
-public class RouteService extends BaseService<Route,String,RouteDao> {
+public class RouteService extends BaseService<Route,String, RouteRepository> {
 
     @Resource
     private RegServerService regServerService;
@@ -47,13 +47,13 @@ public class RouteService extends BaseService<Route,String,RouteDao> {
     private CustomNacosConfigService customNacosConfigService;
 
     @Resource
-    private MonitorDao monitorDao;
+    private MonitorRepository monitorRepository;
 
     @Resource
-    private SentinelRuleDao sentinelRuleDao;
+    private SentinelRuleRepository sentinelRuleRepository;
 
     @Resource
-    private RouteDao routeDao;
+    private RouteRepository routeRepository;
 
     @Resource
     private GroovyScriptService groovyScriptService;
@@ -74,7 +74,7 @@ public class RouteService extends BaseService<Route,String,RouteDao> {
                 regServerService.deleteInBatch(regServerList);
             }
             //删除监控配置
-            monitorDao.findById(id).ifPresent(monitor -> monitorDao.delete(monitor));
+            monitorRepository.findById(id).ifPresent(monitor -> monitorRepository.delete(monitor));
             //删除路由对象
             this.delete(route);
         }
@@ -85,7 +85,7 @@ public class RouteService extends BaseService<Route,String,RouteDao> {
      * @return
      */
     public List<Route> monitorRouteList(){
-        return routeDao.monitorRouteList();
+        return routeRepository.monitorRouteList();
     }
 
     /**
@@ -109,14 +109,14 @@ public class RouteService extends BaseService<Route,String,RouteDao> {
             return result;
         }
         //获取所有监控配置
-        List<Monitor> monitorList = monitorDao.findAll();
+        List<Monitor> monitorList = monitorRepository.findAll();
         //将监控配置重新封装到数据集合中
         Map<String,Monitor> monitorMap =
                 CollectionUtils.isEmpty(monitorList) ?
                 new HashMap<>() :
                 monitorList.stream().collect(Collectors.toMap(Monitor::getId, m -> m));
 
-        List<SentinelRule> ruleList = sentinelRuleDao.findAll();
+        List<SentinelRule> ruleList = sentinelRuleRepository.findAll();
         Map<String, SentinelRule> ruleMap =
                 CollectionUtils.isEmpty(ruleList) ?
                 new HashMap<>() :
@@ -191,16 +191,16 @@ public class RouteService extends BaseService<Route,String,RouteDao> {
      */
     private void saveMonitor(String routeId, Monitor monitor, boolean isNews){
         if (monitor != null) {
-            monitorDao.save(monitor);
+            monitorRepository.save(monitor);
         } else {
             if (!isNews) {
-                Optional<Monitor> optional = monitorDao.findById(routeId);
+                Optional<Monitor> optional = monitorRepository.findById(routeId);
                 //修改时，如果前端取消选中，并且数据库中又存在记录，则需要置为禁用状态(用于下一次恢复无需再次输入)
                 if (optional.isPresent()){
                     Monitor dbMonitor = optional.get();
                     dbMonitor.setStatus(Constants.NO);
                     dbMonitor.setUpdateTime(new Date());
-                    monitorDao.save(dbMonitor);
+                    monitorRepository.save(dbMonitor);
                 }
             }
         }

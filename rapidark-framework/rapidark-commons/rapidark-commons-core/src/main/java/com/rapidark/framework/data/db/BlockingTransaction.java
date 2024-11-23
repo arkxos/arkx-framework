@@ -145,8 +145,8 @@ package com.rapidark.framework.data.db;
 //	 * 增加一个DAO操作,并立即将操作发送到数据库
 //	 */
 //	@Override
-//	public void add(DAO<?> dao, int type) {
-//		executeWithBlockedConnection(dao, type, true);
+//	public void add(DAO<?> repository, int type) {
+//		executeWithBlockedConnection(repository, type, true);
 //	}
 //
 //	/**
@@ -167,8 +167,8 @@ package com.rapidark.framework.data.db;
 //	/**
 //	 * 增加一个DAO操作,并立即将操作发送到数据库
 //	 */
-//	public void addWithException(DAO<?> dao, int type) throws Exception {// NO_UCD
-//		executeWithException(dao, type);
+//	public void addWithException(DAO<?> repository, int type) throws Exception {// NO_UCD
+//		executeWithException(repository, type);
 //	}
 //
 //	/**

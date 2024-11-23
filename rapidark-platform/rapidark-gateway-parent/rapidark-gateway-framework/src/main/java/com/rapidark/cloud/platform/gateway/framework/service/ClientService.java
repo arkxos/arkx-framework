@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
-import com.rapidark.cloud.platform.gateway.framework.dao.ClientDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.ClientRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Client;
 import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
@@ -20,7 +20,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Service
-public class ClientService extends BaseService<Client,String,ClientDao> {
+public class ClientService extends BaseService<Client,String, ClientRepository> {
 
     @Resource
     private RegServerService regServerService;

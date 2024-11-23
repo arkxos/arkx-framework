@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
-import com.rapidark.cloud.platform.gateway.framework.dao.SecureIpDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.SecureIpRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.SecureIp;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @Version V1.0
  */
 @Service
-public class SecureIpService extends BaseService<SecureIp, String, SecureIpDao> {
+public class SecureIpService extends BaseService<SecureIp, String, SecureIpRepository> {
 
     /**
      * 分页查询（支持模糊查询）

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
-import com.rapidark.cloud.platform.gateway.framework.dao.RegServerDao;
+import com.rapidark.cloud.platform.gateway.framework.repository.RegServerRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
@@ -23,10 +23,10 @@ import java.util.Map;
  * @Version V1.0
  */
 @Service
-public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
+public class RegServerService extends BaseService<RegServer,Long, RegServerRepository> {
 
     @Autowired
-    private RegServerDao regServerDao;
+    private RegServerRepository regServerRepository;
 
     private static final String IS_TIMEOUT = "isTimeout";
     private static final String TOKEN_EFFECTIVE_TIME = "tokenEffectiveTime";
@@ -36,7 +36,7 @@ public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
      * @param clientId
      */
     public void stopClientAllRoute(String clientId){
-        regServerDao.setClientAllRouteStatus(clientId,Constants.YES,Constants.NO);
+        regServerRepository.setClientAllRouteStatus(clientId,Constants.YES,Constants.NO);
     }
 
     /**
@@ -44,7 +44,7 @@ public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
      * @param clientId
      */
     public void startClientAllRoute(String clientId){
-        regServerDao.setClientAllRouteStatus(clientId,Constants.NO,Constants.YES);
+        regServerRepository.setClientAllRouteStatus(clientId,Constants.NO,Constants.YES);
     }
 
     /**
@@ -52,7 +52,7 @@ public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
      * @param routeId
      */
     public void stopRouteAllClient(String routeId){
-        regServerDao.setRouteAllClientStatus(routeId,Constants.YES,Constants.NO);
+        regServerRepository.setRouteAllClientStatus(routeId,Constants.YES,Constants.NO);
     }
 
     /**
@@ -60,7 +60,7 @@ public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
      * @param routeId
      */
     public void startRouteAllClient(String routeId){
-        regServerDao.setRouteAllClientStatus(routeId,Constants.NO,Constants.YES);
+        regServerRepository.setRouteAllClientStatus(routeId,Constants.NO,Constants.YES);
     }
 
     /**
@@ -68,7 +68,7 @@ public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
      * @return
      */
     public List allRegClientList(){
-        return regServerDao.allRegClientList();
+        return regServerRepository.allRegClientList();
     }
 
     /**
@@ -77,7 +77,7 @@ public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
      * @return
      */
     public List getRegClientList(String clientId){
-        return regServerDao.getRegClientList(clientId);
+        return regServerRepository.getRegClientList(clientId);
     }
 
     /**
@@ -86,7 +86,7 @@ public class RegServerService extends BaseService<RegServer,Long,RegServerDao> {
      * @return
      */
     public List getByRouteRegClientList(String routeId){
-        return regServerDao.getByRouteRegClientList(routeId);
+        return regServerRepository.getByRouteRegClientList(routeId);
     }
 
     /**

@@ -140,8 +140,8 @@ package com.rapidark.framework.data.db;
 //	/**
 //	 * 增加一个DAO插入操作
 //	 */
-//	public void insert(DAO<?> dao) {
-//		add(dao, Transaction.INSERT);
+//	public void insert(DAO<?> repository) {
+//		add(repository, Transaction.INSERT);
 //	}
 //
 //	/**
@@ -162,8 +162,8 @@ package com.rapidark.framework.data.db;
 //	/**
 //	 * 增加一个DAO更新操作
 //	 */
-//	public void update(DAO<?> dao) {
-//		add(dao, Transaction.UPDATE);
+//	public void update(DAO<?> repository) {
+//		add(repository, Transaction.UPDATE);
 //	}
 //
 //	/**
@@ -184,8 +184,8 @@ package com.rapidark.framework.data.db;
 //	/**
 //	 * 增加一个DAO删除操作
 //	 */
-//	public void delete(DAO<?> dao) {
-//		add(dao, Transaction.DELETE);
+//	public void delete(DAO<?> repository) {
+//		add(repository, Transaction.DELETE);
 //	}
 //
 //	/**
@@ -198,8 +198,8 @@ package com.rapidark.framework.data.db;
 //	/**
 //	 * 增加一个DAO删除并新建操作
 //	 */
-//	public void deleteAndInsert(DAO<?> dao) {
-//		add(dao, Transaction.DELETE_AND_INSERT);
+//	public void deleteAndInsert(DAO<?> repository) {
+//		add(repository, Transaction.DELETE_AND_INSERT);
 //	}
 //
 //	/**
@@ -408,8 +408,8 @@ package com.rapidark.framework.data.db;
 //	/**
 //	 * 增加一个DAO操作，操作类型为opType
 //	 */
-//	public void add(DAO<?> dao, int opType) {
-//		list.add(new Object[] { dao, new Integer(opType) });
+//	public void add(DAO<?> repository, int opType) {
+//		list.add(new Object[] { repository, new Integer(opType) });
 //	}
 //
 //	/**
