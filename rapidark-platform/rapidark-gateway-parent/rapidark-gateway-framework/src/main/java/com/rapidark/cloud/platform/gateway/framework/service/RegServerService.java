@@ -36,7 +36,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      * @param clientId
      */
     public void stopClientAllRoute(String clientId){
-        regServerRepository.setClientAllRouteStatus(clientId,Constants.YES,Constants.NO);
+        regServerRepository.updateClientAllRouteStatus(clientId,Constants.YES,Constants.NO);
     }
 
     /**
@@ -44,7 +44,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      * @param clientId
      */
     public void startClientAllRoute(String clientId){
-        regServerRepository.setClientAllRouteStatus(clientId,Constants.NO,Constants.YES);
+        regServerRepository.updateClientAllRouteStatus(clientId,Constants.NO,Constants.YES);
     }
 
     /**
@@ -52,7 +52,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      * @param routeId
      */
     public void stopRouteAllClient(String routeId){
-        regServerRepository.setRouteAllClientStatus(routeId,Constants.YES,Constants.NO);
+        regServerRepository.updateRouteAllClientStatus(routeId,Constants.YES,Constants.NO);
     }
 
     /**
@@ -60,7 +60,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      * @param routeId
      */
     public void startRouteAllClient(String routeId){
-        regServerRepository.setRouteAllClientStatus(routeId,Constants.NO,Constants.YES);
+        regServerRepository.updateRouteAllClientStatus(routeId,Constants.NO,Constants.YES);
     }
 
     /**
@@ -68,7 +68,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      * @return
      */
     public List allRegClientList(){
-        return regServerRepository.allRegClientList();
+        return regServerRepository.queryAllRegClientList();
     }
 
     /**
@@ -77,7 +77,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      * @return
      */
     public List getRegClientList(String clientId){
-        return regServerRepository.getRegClientList(clientId);
+        return regServerRepository.queryRegClientList(clientId);
     }
 
     /**
@@ -86,7 +86,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      * @return
      */
     public List getByRouteRegClientList(String routeId){
-        return regServerRepository.getByRouteRegClientList(routeId);
+        return regServerRepository.queryByRouteRegClientList(routeId);
     }
 
     /**

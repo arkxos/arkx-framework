@@ -27,6 +27,10 @@ public class SecureIp implements java.io.Serializable {
     @NotNull(message = "IP名称不能为空")
     @Size(min = 4, max = 16, message = "IP名称字段长度必需在2到40个字符内")
     private String ip;
+
+	@Column(name = "remarks")
+	private String remarks;
+
     /**
      * 状态，0是启用，1是禁用
      */
@@ -45,7 +49,6 @@ public class SecureIp implements java.io.Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "updateTime")
     private Date updateTime;
-    @Column(name = "remarks")
-    private String remarks;
+
 
 }

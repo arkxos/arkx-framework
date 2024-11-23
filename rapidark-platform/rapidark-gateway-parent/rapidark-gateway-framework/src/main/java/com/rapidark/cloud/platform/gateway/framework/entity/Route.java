@@ -119,11 +119,7 @@ public class Route implements java.io.Serializable {
     private String weightName;
     @Transient
     private Integer weight;
-    /**
-     * 状态，0是启用，1是禁用
-     */
-    @Column(name = "status")
-    private String status;
+
     /**
      * 断言前缀截取层数
      */
@@ -169,6 +165,13 @@ public class Route implements java.io.Serializable {
      */
     @Column(name = "cacheTtl")
     private Long cacheTtl;
+
+	/**
+	 * 状态，0是启用，1是禁用
+	 */
+	@Column(name = "status")
+	private String status;
+
     /**
      * 创建时间和修改时间
      */

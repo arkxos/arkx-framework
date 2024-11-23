@@ -22,6 +22,7 @@ import java.util.Date;
 @Table(name="client")
 @Data
 public class Client implements java.io.Serializable {
+
     @Id
     private String id;
     @NotNull(message = "客户端系统代号不能为空")
@@ -44,6 +45,7 @@ public class Client implements java.io.Serializable {
     private String status;
     @Column(name = "remarks")
     private String remarks;
+
     /**
      * 创建时间和修改时间
      */

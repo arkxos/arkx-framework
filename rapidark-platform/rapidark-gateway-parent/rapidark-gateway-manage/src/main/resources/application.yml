@@ -1,7 +1,7 @@
 # 本地服务访问
 server:
   # 服务端口
-  port: 8770
+  port: 8771
   # 服务IP
   address: 0.0.0.0
 
@@ -15,13 +15,13 @@ spring:
       - optional:classpath:application-mail.yml
   application:
     # 应用服务名
-    name: dynamic-manage
+    name: rapidark-gateway-manage
 #  profiles:
 #    active: db,mail
-  security:
-    user:
-      name: admin
-      password: admin
+#  security:
+#    user:
+#      name: admin
+#      password: admin
   cloud:
     # 注册到nacos，服务注册发现和配置管理中心
     nacos:
@@ -34,7 +34,7 @@ spring:
         # 配置内容格式
         file-extension: properties
         # dataId名称，程序注册事件监听此dataId下的配置变化
-        prefix: flying-fish-gateway
+        prefix: rapidark-gateway-manage
         # 指定命名空间（可以不指定）
         # namespace: my_namespace_id
       discovery:
@@ -68,7 +68,7 @@ logging:
 #    org.springframework.boot: info
 #    # log 级别
 #    org.springframework.cloud.gateway: debug
-  config: classpath:log4j2.xml
+  config: classpath:logback-spring.xml
 
 
 # 配置授权访问服务的IP

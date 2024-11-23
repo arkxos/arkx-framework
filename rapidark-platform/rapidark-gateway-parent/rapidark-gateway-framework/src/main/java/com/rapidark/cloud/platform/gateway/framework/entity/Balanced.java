@@ -34,11 +34,19 @@ public class Balanced implements java.io.Serializable {
     @Size(min = 2, max = 200, message = "网关负载服务uri长度必需在2到200个字符内")
     @Column(name = "loadUri")
     private String loadUri;
+
+	/**
+	 * 备注
+	 */
+	@Column(name = "remarks")
+	private String remarks;
+
     /**
      * 状态，0是启用，1是禁用
      */
     @Column(name = "status")
     private String status;
+
     /**
      * 创建时间和修改时间
      */
@@ -48,10 +56,5 @@ public class Balanced implements java.io.Serializable {
     private Date createTime;
     @Column(name = "updateTime")
     private Date updateTime;
-    /**
-     * 备注
-     */
-    @Column(name = "remarks")
-    private String remarks;
 
 }
