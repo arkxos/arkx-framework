@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.manage.rest;
 
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.bean.BalancedReq;
 import com.rapidark.cloud.platform.gateway.framework.bean.BalancedRsp;
@@ -53,7 +53,7 @@ public class BalancedRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public R add(@RequestBody BalancedReq balancedReq) {
+    public ResponseResult add(@RequestBody BalancedReq balancedReq) {
         Assert.notNull(balancedReq, "未获取到对象");
         Balanced balanced = new Balanced();
         balanced.setId(UUIDUtils.getUUIDString());
@@ -83,7 +83,7 @@ public class BalancedRest extends BaseRest {
             //this.setRouteCacheVersion();
             customNacosConfigService.publishBalancedNacosConfig(balanced.getId());
         }
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -92,12 +92,12 @@ public class BalancedRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public R delete(@RequestParam String id) {
+    public ResponseResult delete(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         balancedService.deleteAndServer(id);
         //this.setRouteCacheVersion();
         customNacosConfigService.publishBalancedNacosConfig(id);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -106,7 +106,7 @@ public class BalancedRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public R update(@RequestBody BalancedReq balancedReq) {
+    public ResponseResult update(@RequestBody BalancedReq balancedReq) {
         Assert.notNull(balancedReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(balancedReq.getId()), "未获取到对象ID");
         this.validate(balancedReq);
@@ -123,7 +123,7 @@ public class BalancedRest extends BaseRest {
             //this.setRouteCacheVersion();
             customNacosConfigService.publishBalancedNacosConfig(balanced.getId());
         }
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -132,7 +132,7 @@ public class BalancedRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public R findById(@RequestParam String id) {
+    public ResponseResult findById(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced balanced = balancedService.findById(id);
         if (balanced != null) {
@@ -140,9 +140,9 @@ public class BalancedRest extends BaseRest {
             BalancedRsp balancedRsp = new BalancedRsp();
             balancedRsp.setBalanced(balanced);
             balancedRsp.setServerList(serverList);
-            return R.ok(balancedRsp);
+            return ResponseResult.ok(balancedRsp);
         }
-        return R.failed("未获取到对象");
+        return ResponseResult.failed("未获取到对象");
     }
 
     /**
@@ -151,7 +151,7 @@ public class BalancedRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public R pageList(@RequestBody BalancedReq balancedReq) {
+    public ResponseResult pageList(@RequestBody BalancedReq balancedReq) {
         Balanced balanced = new Balanced();
         if (balancedReq != null){
             if (StringUtils.isNotBlank(balancedReq.getName())) {
@@ -166,7 +166,7 @@ public class BalancedRest extends BaseRest {
         }
         int currentPage = getCurrentPage(balancedReq.getCurrentPage());
         int pageSize = getPageSize(balancedReq.getPageSize());
-        return R.ok(balancedService.pageList(balanced, currentPage, pageSize));
+        return ResponseResult.ok(balancedService.pageList(balanced, currentPage, pageSize));
     }
 
     /**
@@ -175,14 +175,14 @@ public class BalancedRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-    public R start(@RequestParam String id) {
+    public ResponseResult start(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced dbBalanced = balancedService.findById(id);
         dbBalanced.setStatus(Constants.YES);
         balancedService.update(dbBalanced);
         //this.setRouteCacheVersion();
         customNacosConfigService.publishBalancedNacosConfig(id);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -191,14 +191,14 @@ public class BalancedRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-    public R stop(@RequestParam String id) {
+    public ResponseResult stop(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Balanced dbBalanced = balancedService.findById(id);
         dbBalanced.setStatus(Constants.NO);
         balancedService.update(dbBalanced);
         //this.setRouteCacheVersion();
         customNacosConfigService.publishBalancedNacosConfig(id);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**

@@ -26,7 +26,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rapidark.cloud.platform.admin.api.entity.SysFile;
 import com.rapidark.cloud.platform.admin.mapper.SysFileMapper;
 import com.rapidark.cloud.platform.admin.service.SysFileService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.file.core.FileProperties;
 import com.rapidark.cloud.platform.common.file.core.FileTemplate;
 
@@ -65,7 +65,7 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 	 * @return
 	 */
 	@Override
-	public R uploadFile(MultipartFile file) {
+	public ResponseResult uploadFile(MultipartFile file) {
 		String fileName = IdUtil.simpleUUID() + StrUtil.DOT + FileUtil.extName(file.getOriginalFilename());
 		Map<String, String> resultMap = new HashMap<>(4);
 		resultMap.put("bucketName", properties.getBucketName());
@@ -79,9 +79,9 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 		}
 		catch (Exception e) {
 			log.error("上传失败", e);
-			return R.failed(e.getLocalizedMessage());
+			return ResponseResult.failed(e.getLocalizedMessage());
 		}
-		return R.ok(resultMap);
+		return ResponseResult.ok(resultMap);
 	}
 
 	/**

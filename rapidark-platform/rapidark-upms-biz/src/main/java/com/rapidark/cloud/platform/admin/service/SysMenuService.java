@@ -22,7 +22,7 @@ package com.rapidark.cloud.platform.admin.service;
 import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysMenu;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import java.util.List;
 import java.util.Set;
@@ -49,7 +49,7 @@ public interface SysMenuService extends IService<SysMenu> {
 	 * @param id 菜单ID
 	 * @return 成功、失败
 	 */
-	R removeMenuById(Long id);
+	ResponseResult removeMenuById(Long id);
 
 	/**
 	 * 更新菜单信息

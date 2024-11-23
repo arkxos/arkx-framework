@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysRole;
 import com.rapidark.cloud.platform.admin.api.vo.RoleExcelVO;
 import com.rapidark.cloud.platform.admin.api.vo.RoleVO;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import org.springframework.validation.BindingResult;
 
@@ -74,7 +74,7 @@ public interface SysRoleService extends IService<SysRole> {
 	 * @param bindingResult 错误信息列表
 	 * @return ok fail
 	 */
-	R importRole(List<RoleExcelVO> excelVOList, BindingResult bindingResult);
+	ResponseResult importRole(List<RoleExcelVO> excelVOList, BindingResult bindingResult);
 
 	/**
 	 * 查询全部的角色

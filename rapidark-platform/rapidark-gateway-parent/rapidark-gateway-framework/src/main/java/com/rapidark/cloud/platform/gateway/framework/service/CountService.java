@@ -1,11 +1,11 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountReq;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountRsp;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountTotalRsp;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteCountRsp;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
-import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
@@ -45,7 +45,7 @@ public class CountService {
      * @param pageSize
      * @return
      */
-    public R countRouteList(Route route, int currentPage, int pageSize){
+    public ResponseResult countRouteList(Route route, int currentPage, int pageSize){
         PageResult<Route> pageResult = routeService.pageList(route,currentPage, pageSize);
         if (pageResult.getPageSize() > 0){
             //只取当天的
@@ -65,9 +65,9 @@ public class CountService {
             pageResult1.setPageSize(pageSize);
             pageResult1.setTotalNum(pageResult.getTotalNum());
             pageResult1.setLists(routeCountRspList);
-            return R.ok(pageResult1);
+            return ResponseResult.ok(pageResult1);
         }
-        return R.ok(pageResult);
+        return ResponseResult.ok(pageResult);
     }
 
     /**
@@ -183,7 +183,7 @@ public class CountService {
      * @param isBalanced    是否负载
      * @return
      */
-    public R count(CountReq countReq, boolean isBalanced){
+    public ResponseResult count(CountReq countReq, boolean isBalanced){
         Assert.notNull(countReq, "未获取到对象");
         List<String> routeIds = countReq.getRouteIds();
         Assert.isTrue(routeIds != null, "未获取到路由ID");
@@ -219,7 +219,7 @@ public class CountService {
             data.setCounts(v.toArray(new Integer [v.size()]));
             datas.add(data);
         });
-        return R.ok(rsp);
+        return ResponseResult.ok(rsp);
     }
 
     /**

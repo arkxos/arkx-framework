@@ -22,7 +22,7 @@ package com.rapidark.cloud.platform.admin.api.feign;
 import com.rapidark.cloud.platform.admin.api.dto.UserDTO;
 import com.rapidark.cloud.platform.admin.api.dto.UserInfo;
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -39,10 +39,10 @@ public interface RemoteUserService {
 	/**
 	 * (未登录状态调用，需要加 @NoToken) 通过用户名查询用户、角色信息
 	 * @param user 用户查询对象
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@NoToken
 	@GetMapping("/user/info/query")
-	R<UserInfo> info(@SpringQueryMap UserDTO user);
+	ResponseResult<UserInfo> info(@SpringQueryMap UserDTO user);
 
 }

@@ -18,7 +18,7 @@ package com.rapidark.cloud.platform.gateway.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 			DataBufferFactory bufferFactory = response.bufferFactory();
 			try {
 				log.debug("Error Spring Cloud Gateway : {} {}", exchange.getRequest().getPath(), ex.getMessage());
-				return bufferFactory.wrap(objectMapper.writeValueAsBytes(R.failed(ex.getMessage())));
+				return bufferFactory.wrap(objectMapper.writeValueAsBytes(ResponseResult.failed(ex.getMessage())));
 			}
 			catch (JsonProcessingException e) {
 				log.error("Error writing response", ex);

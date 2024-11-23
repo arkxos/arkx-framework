@@ -26,8 +26,8 @@ import com.rapidark.cloud.platform.admin.service.SysPublicParamService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.R;
 
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -67,13 +67,13 @@ public class SysPublicParamServiceImpl extends ServiceImpl<SysPublicParamMapper,
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.PARAMS_DETAILS, key = "#sysPublicParam.publicKey")
-	public R updateParam(SysPublicParam sysPublicParam) {
+	public ResponseResult updateParam(SysPublicParam sysPublicParam) {
 		SysPublicParam param = this.getById(sysPublicParam.getPublicId());
 		// 系统内置
 		if (DictTypeEnum.SYSTEM.getType().equals(param.getSystemFlag())) {
-			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_PARAM_DELETE_SYSTEM));
+			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_PARAM_DELETE_SYSTEM));
 		}
-		return R.ok(this.updateById(sysPublicParam));
+		return ResponseResult.ok(this.updateById(sysPublicParam));
 	}
 
 	/**
@@ -83,23 +83,23 @@ public class SysPublicParamServiceImpl extends ServiceImpl<SysPublicParamMapper,
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.PARAMS_DETAILS, allEntries = true)
-	public R removeParamByIds(Long[] publicIds) {
+	public ResponseResult removeParamByIds(Long[] publicIds) {
 		List<Long> idList = this.baseMapper.selectBatchIds(CollUtil.toList(publicIds))
 			.stream()
 			.filter(p -> !p.getSystemFlag().equals(DictTypeEnum.SYSTEM.getType()))// 系统内置的跳过不能删除
 			.map(SysPublicParam::getPublicId)
 			.collect(Collectors.toList());
-		return R.ok(this.removeBatchByIds(idList));
+		return ResponseResult.ok(this.removeBatchByIds(idList));
 	}
 
 	/**
 	 * 同步缓存
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.PARAMS_DETAILS, allEntries = true)
-	public R syncParamCache() {
-		return R.ok();
+	public ResponseResult syncParamCache() {
+		return ResponseResult.ok();
 	}
 
 }

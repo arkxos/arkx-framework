@@ -1,5 +1,6 @@
 package com.rapidark.cloud.platform.admin.controller;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.rapidark.cloud.platform.common.core.util.R;
 
 import java.util.*;
 
@@ -27,17 +26,17 @@ public class SysSystemInfoController {
 
 	/**
 	 * 缓存监控
-	 * @return R<Object>
+	 * @return ResponseResult<Object>
 	 */
 	@GetMapping("/cache")
-	public R cache() {
+	public ResponseResult cache() {
 		Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
 		Properties commandStats = (Properties) redisTemplate
 			.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
 		Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
 
 		if (commandStats == null) {
-			return R.failed("获取异常");
+			return ResponseResult.failed("获取异常");
 		}
 
 		Map<String, Object> result = new HashMap<>(3);
@@ -54,7 +53,7 @@ public class SysSystemInfoController {
 		});
 
 		result.put("commandStats", pieList);
-		return R.ok(result);
+		return ResponseResult.ok(result);
 	}
 
 }

@@ -20,7 +20,7 @@ package com.rapidark.cloud.platform.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysPost;
 import com.rapidark.cloud.platform.admin.api.vo.PostExcelVO;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import org.springframework.validation.BindingResult;
 
@@ -46,6 +46,6 @@ public interface SysPostService extends IService<SysPost> {
 	 * @param bindingResult 错误信息列表
 	 * @return ok fail
 	 */
-	R importPost(List<PostExcelVO> excelVOList, BindingResult bindingResult);
+	ResponseResult importPost(List<PostExcelVO> excelVOList, BindingResult bindingResult);
 
 }

@@ -27,7 +27,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
 import com.rapidark.cloud.platform.admin.service.SysOauthClientDetailsService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
@@ -65,10 +65,10 @@ public class SysClientController {
 	 * @return SysOauthClientDetails
 	 */
 	@GetMapping("/{clientId}")
-	public R getByClientId(@PathVariable String clientId) {
+	public ResponseResult getByClientId(@PathVariable String clientId) {
 		SysOauthClientDetails details = clientDetailsService
 			.getOne(Wrappers.<SysOauthClientDetails>lambdaQuery().eq(SysOauthClientDetails::getClientId, clientId));
-		return R.ok(details);
+		return ResponseResult.ok(details);
 	}
 
 	/**
@@ -78,14 +78,14 @@ public class SysClientController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getOauthClientDetailsPage(@ParameterObject Page page,
-			@ParameterObject SysOauthClientDetails sysOauthClientDetails) {
+	public ResponseResult getOauthClientDetailsPage(@ParameterObject Page page,
+													@ParameterObject SysOauthClientDetails sysOauthClientDetails) {
 		LambdaQueryWrapper<SysOauthClientDetails> wrapper = Wrappers.<SysOauthClientDetails>lambdaQuery()
 			.like(StrUtil.isNotBlank(sysOauthClientDetails.getClientId()), SysOauthClientDetails::getClientId,
 					sysOauthClientDetails.getClientId())
 			.like(StrUtil.isNotBlank(sysOauthClientDetails.getClientSecret()), SysOauthClientDetails::getClientSecret,
 					sysOauthClientDetails.getClientSecret());
-		return R.ok(clientDetailsService.page(page, wrapper));
+		return ResponseResult.ok(clientDetailsService.page(page, wrapper));
 	}
 
 	/**
@@ -96,8 +96,8 @@ public class SysClientController {
 	@SysLog("添加终端")
 	@PostMapping
 	@HasPermission("sys_client_add")
-	public R add(@Valid @RequestBody SysOauthClientDetails clientDetails) {
-		return R.ok(clientDetailsService.saveClient(clientDetails));
+	public ResponseResult add(@Valid @RequestBody SysOauthClientDetails clientDetails) {
+		return ResponseResult.ok(clientDetailsService.saveClient(clientDetails));
 	}
 
 	/**
@@ -108,9 +108,9 @@ public class SysClientController {
 	@SysLog("删除终端")
 	@DeleteMapping
 	@HasPermission("sys_client_del")
-	public R removeById(@RequestBody Long[] ids) {
+	public ResponseResult removeById(@RequestBody Long[] ids) {
 		clientDetailsService.removeBatchByIds(CollUtil.toList(ids));
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -121,24 +121,24 @@ public class SysClientController {
 	@SysLog("编辑终端")
 	@PutMapping
 	@HasPermission("sys_client_edit")
-	public R update(@Valid @RequestBody SysOauthClientDetails clientDetails) {
-		return R.ok(clientDetailsService.updateClientById(clientDetails));
+	public ResponseResult update(@Valid @RequestBody SysOauthClientDetails clientDetails) {
+		return ResponseResult.ok(clientDetailsService.updateClientById(clientDetails));
 	}
 
 	@Inner
 	@GetMapping("/getClientDetailsById/{clientId}")
-	public R getClientDetailsById(@PathVariable String clientId) {
-		return R.ok(clientDetailsService.getOne(
+	public ResponseResult getClientDetailsById(@PathVariable String clientId) {
+		return ResponseResult.ok(clientDetailsService.getOne(
 				Wrappers.<SysOauthClientDetails>lambdaQuery().eq(SysOauthClientDetails::getClientId, clientId), false));
 	}
 
 	/**
 	 * 同步缓存字典
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("同步终端")
 	@PutMapping("/sync")
-	public R sync() {
+	public ResponseResult sync() {
 		return clientDetailsService.syncClientCache();
 	}
 

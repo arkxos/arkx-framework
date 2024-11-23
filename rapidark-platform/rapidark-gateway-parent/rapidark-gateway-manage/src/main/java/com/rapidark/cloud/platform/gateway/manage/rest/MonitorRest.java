@@ -1,10 +1,10 @@
 package com.rapidark.cloud.platform.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.bean.MonitorReq;
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import com.rapidark.cloud.platform.gateway.framework.service.MonitorService;
-import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
@@ -26,8 +26,8 @@ public class MonitorRest extends BaseRest {
     private MonitorService monitorService;
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public R list(@RequestBody MonitorReq monitorReq){
-        return R.ok(monitorService.list(monitorReq));
+    public ResponseResult list(@RequestBody MonitorReq monitorReq){
+        return ResponseResult.ok(monitorService.list(monitorReq));
     }
 
     /**
@@ -36,13 +36,13 @@ public class MonitorRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/close", method = {RequestMethod.GET, RequestMethod.POST})
-    public R close(@RequestParam String id){
+    public ResponseResult close(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Monitor monitor = monitorService.findById(id);
         Assert.notNull(monitor, "未获取到对象");
         monitor.setStatus(Constants.YES);
         monitorService.update(monitor);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
 }

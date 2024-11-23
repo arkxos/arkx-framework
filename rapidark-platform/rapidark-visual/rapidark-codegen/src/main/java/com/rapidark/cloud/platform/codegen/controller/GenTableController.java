@@ -24,7 +24,7 @@ import com.rapidark.cloud.platform.codegen.entity.GenTable;
 import com.rapidark.cloud.platform.codegen.entity.GenTableColumnEntity;
 import com.rapidark.cloud.platform.codegen.service.GenTableColumnService;
 import com.rapidark.cloud.platform.codegen.service.GenTableService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,19 +61,19 @@ public class GenTableController {
 	 */
 	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
-	public R getTablePage(Page page, GenTable table) {
-		return R.ok(tableService.queryTablePage(page, table));
+	public ResponseResult getTablePage(Page page, GenTable table) {
+		return ResponseResult.ok(tableService.queryTablePage(page, table));
 	}
 
 	/**
 	 * 通过id查询表信息（代码生成设置 + 表 + 字段设置）
 	 * @param id id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id查询", description = "通过id查询")
 	@GetMapping("/{id}")
-	public R getTable(@PathVariable("id") Long id) {
-		return R.ok(tableService.getById(id));
+	public ResponseResult getTable(@PathVariable("id") Long id) {
+		return ResponseResult.ok(tableService.getById(id));
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class GenTableController {
 	 * @param dsName 数据源
 	 */
 	@GetMapping("/list/{dsName}")
-	public R listTable(@PathVariable("dsName") String dsName) {
-		return R.ok(tableService.queryTableList(dsName));
+	public ResponseResult listTable(@PathVariable("dsName") String dsName) {
+		return ResponseResult.ok(tableService.queryTableList(dsName));
 	}
 
 	/**
@@ -91,8 +91,8 @@ public class GenTableController {
 	 * @param tableName 表名称
 	 */
 	@GetMapping("/{dsName}/{tableName}")
-	public R<GenTable> getTable(@PathVariable("dsName") String dsName, @PathVariable String tableName) {
-		return R.ok(tableService.queryOrBuildTable(dsName, tableName));
+	public ResponseResult<GenTable> getTable(@PathVariable("dsName") String dsName, @PathVariable String tableName) {
+		return ResponseResult.ok(tableService.queryOrBuildTable(dsName, tableName));
 	}
 
 	/**
@@ -101,8 +101,8 @@ public class GenTableController {
 	 * @param tableName 表名称
 	 */
 	@GetMapping("/column/{dsName}/{tableName}")
-	public R getColumn(@PathVariable("dsName") String dsName, @PathVariable String tableName) throws Exception {
-		return R.ok(tableService.queryTableColumn(dsName, tableName));
+	public ResponseResult getColumn(@PathVariable("dsName") String dsName, @PathVariable String tableName) throws Exception {
+		return ResponseResult.ok(tableService.queryTableColumn(dsName, tableName));
 	}
 
 	/**
@@ -111,8 +111,8 @@ public class GenTableController {
 	 * @param tableName 表名称
 	 */
 	@GetMapping("/ddl/{dsName}/{tableName}")
-	public R getDdl(@PathVariable("dsName") String dsName, @PathVariable String tableName) throws Exception {
-		return R.ok(tableService.queryTableDdl(dsName, tableName));
+	public ResponseResult getDdl(@PathVariable("dsName") String dsName, @PathVariable String tableName) throws Exception {
+		return ResponseResult.ok(tableService.queryTableDdl(dsName, tableName));
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class GenTableController {
 	 * @param tableName 表名称
 	 */
 	@GetMapping("/sync/{dsName}/{tableName}")
-	public R<GenTable> syncTable(@PathVariable("dsName") String dsName, @PathVariable String tableName) {
+	public ResponseResult<GenTable> syncTable(@PathVariable("dsName") String dsName, @PathVariable String tableName) {
 		// 表配置删除
 		tableService.remove(
 				Wrappers.<GenTable>lambdaQuery().eq(GenTable::getDsName, dsName).eq(GenTable::getTableName, tableName));
@@ -129,19 +129,19 @@ public class GenTableController {
 		tableColumnService.remove(Wrappers.<GenTableColumnEntity>lambdaQuery()
 			.eq(GenTableColumnEntity::getDsName, dsName)
 			.eq(GenTableColumnEntity::getTableName, tableName));
-		return R.ok(tableService.queryOrBuildTable(dsName, tableName));
+		return ResponseResult.ok(tableService.queryOrBuildTable(dsName, tableName));
 	}
 
 	/**
 	 * 修改列属性
 	 * @param table 列属性
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "修改列属性", description = "修改列属性")
 	@SysLog("修改列属性")
 	@PutMapping
-	public R updateById(@RequestBody GenTable table) {
-		return R.ok(tableService.updateById(table));
+	public ResponseResult updateById(@RequestBody GenTable table) {
+		return ResponseResult.ok(tableService.updateById(table));
 	}
 
 	/**
@@ -151,10 +151,10 @@ public class GenTableController {
 	 * @param tableFieldList 字段列表
 	 */
 	@PutMapping("/field/{dsName}/{tableName}")
-	public R<String> updateTableField(@PathVariable("dsName") String dsName, @PathVariable String tableName,
-			@RequestBody List<GenTableColumnEntity> tableFieldList) {
+	public ResponseResult<String> updateTableField(@PathVariable("dsName") String dsName, @PathVariable String tableName,
+												   @RequestBody List<GenTableColumnEntity> tableFieldList) {
 		tableColumnService.updateTableField(dsName, tableName, tableFieldList);
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**

@@ -27,8 +27,8 @@ import com.rapidark.cloud.platform.admin.service.SysDictService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.R;
 
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -58,7 +58,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
-	public R removeDictByIds(Long[] ids) {
+	public ResponseResult removeDictByIds(Long[] ids) {
 
 		List<Long> dictIdList = baseMapper.selectBatchIds(CollUtil.toList(ids))
 			.stream()
@@ -69,7 +69,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 		baseMapper.deleteBatchIds(dictIdList);
 
 		dictItemMapper.delete(Wrappers.<SysDictItem>lambdaQuery().in(SysDictItem::getDictId, dictIdList));
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -79,24 +79,24 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, key = "#dict.dictType")
-	public R updateDict(SysDict dict) {
+	public ResponseResult updateDict(SysDict dict) {
 		SysDict sysDict = this.getById(dict.getId());
 		// 系统内置
 		if (DictTypeEnum.SYSTEM.getType().equals(sysDict.getSystemFlag())) {
-			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_DICT_UPDATE_SYSTEM));
+			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_DICT_UPDATE_SYSTEM));
 		}
 		this.updateById(dict);
-		return R.ok(dict);
+		return ResponseResult.ok(dict);
 	}
 
 	/**
 	 * 同步缓存 （清空缓存）
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
-	public R syncDictCache() {
-		return R.ok();
+	public ResponseResult syncDictCache() {
+		return ResponseResult.ok();
 	}
 
 }

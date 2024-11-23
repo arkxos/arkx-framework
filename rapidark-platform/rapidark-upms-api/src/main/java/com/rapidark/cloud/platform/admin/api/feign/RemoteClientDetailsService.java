@@ -21,7 +21,7 @@ package com.rapidark.cloud.platform.admin.api.feign;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -38,10 +38,10 @@ public interface RemoteClientDetailsService {
 	/**
 	 * 通过clientId 查询客户端信息 (未登录，需要无token 内部调用)
 	 * @param clientId 用户名
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@NoToken
 	@GetMapping("/client/getClientDetailsById/{clientId}")
-	R<SysOauthClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId);
+	ResponseResult<SysOauthClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId);
 
 }

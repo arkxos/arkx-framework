@@ -18,7 +18,7 @@
 package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.platform.admin.service.SysMobileService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -47,7 +47,7 @@ public class SysMobileController {
 
 	@Inner(value = false)
 	@GetMapping("/{mobile}")
-	public R sendSmsCode(@PathVariable String mobile) {
+	public ResponseResult sendSmsCode(@PathVariable String mobile) {
 		return mobileService.sendSmsCode(mobile);
 	}
 

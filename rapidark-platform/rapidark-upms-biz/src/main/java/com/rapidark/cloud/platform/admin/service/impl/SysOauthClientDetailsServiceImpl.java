@@ -26,7 +26,7 @@ import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
 import com.rapidark.cloud.platform.admin.mapper.SysOauthClientDetailsMapper;
 import com.rapidark.cloud.platform.admin.service.SysOauthClientDetailsService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -95,8 +95,8 @@ public class SysOauthClientDetailsServiceImpl extends ServiceImpl<SysOauthClient
 
 	@Override
 	@CacheEvict(value = CacheConstants.CLIENT_DETAILS_KEY, allEntries = true)
-	public R syncClientCache() {
-		return R.ok();
+	public ResponseResult syncClientCache() {
+		return ResponseResult.ok();
 	}
 
 }

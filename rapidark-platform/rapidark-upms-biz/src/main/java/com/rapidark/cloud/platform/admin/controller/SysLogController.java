@@ -25,7 +25,7 @@ import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.platform.admin.api.dto.SysLogDTO;
 import com.rapidark.cloud.platform.admin.api.entity.SysLog;
 import com.rapidark.cloud.platform.admin.service.SysLogService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 
@@ -63,8 +63,8 @@ public class SysLogController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getLogPage(@ParameterObject Page page, @ParameterObject SysLogDTO sysLog) {
-		return R.ok(sysLogService.getLogByPage(page, sysLog));
+	public ResponseResult getLogPage(@ParameterObject Page page, @ParameterObject SysLogDTO sysLog) {
+		return ResponseResult.ok(sysLogService.getLogByPage(page, sysLog));
 	}
 
 	/**
@@ -74,8 +74,8 @@ public class SysLogController {
 	 */
 	@DeleteMapping
 	@HasPermission("sys_log_del")
-	public R removeByIds(@RequestBody Long[] ids) {
-		return R.ok(sysLogService.removeBatchByIds(CollUtil.toList(ids)));
+	public ResponseResult removeByIds(@RequestBody Long[] ids) {
+		return ResponseResult.ok(sysLogService.removeBatchByIds(CollUtil.toList(ids)));
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class SysLogController {
 	 */
 	@Inner
 	@PostMapping("/save")
-	public R save(@Valid @RequestBody SysLog sysLog) {
-		return R.ok(sysLogService.saveLog(sysLog));
+	public ResponseResult save(@Valid @RequestBody SysLog sysLog) {
+		return ResponseResult.ok(sysLogService.saveLog(sysLog));
 	}
 
 	/**

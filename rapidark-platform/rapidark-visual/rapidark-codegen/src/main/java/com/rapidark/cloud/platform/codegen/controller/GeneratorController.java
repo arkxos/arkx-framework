@@ -21,7 +21,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 
 import com.rapidark.cloud.platform.codegen.service.GeneratorService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -83,13 +83,13 @@ public class GeneratorController {
 	 */
 	@ResponseBody
 	@GetMapping("/code")
-	public R<String> code(String tableIds) throws Exception {
+	public ResponseResult<String> code(String tableIds) throws Exception {
 		// 生成代码
 		for (String tableId : tableIds.split(StrUtil.COMMA)) {
 			generatorService.generatorCode(Long.valueOf(tableId));
 		}
 
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**

@@ -7,7 +7,7 @@ import com.rapidark.cloud.platform.admin.api.dto.UserInfo;
 import com.rapidark.cloud.platform.admin.api.entity.SysUser;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.RetOps;
 
 import org.springframework.core.Ordered;
@@ -50,7 +50,7 @@ public interface ArkUserDetailsService extends UserDetailsService, Ordered {
 	 * @param result 用户信息
 	 * @return UserDetails
 	 */
-	default UserDetails getUserDetails(R<UserInfo> result) {
+	default UserDetails getUserDetails(ResponseResult<UserInfo> result) {
 		UserInfo info = RetOps.of(result).getData().orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
 
 		Set<String> dbAuthsSet = new HashSet<>();

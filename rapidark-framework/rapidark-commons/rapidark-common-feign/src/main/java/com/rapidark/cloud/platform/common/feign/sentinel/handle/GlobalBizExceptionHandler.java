@@ -17,7 +17,7 @@
 package com.rapidark.cloud.platform.common.feign.sentinel.handle;
 
 import com.alibaba.csp.sentinel.Tracer;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -53,16 +53,16 @@ public class GlobalBizExceptionHandler {
 	/**
 	 * 全局异常.
 	 * @param e the e
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public R handleGlobalException(Exception e) {
+	public ResponseResult handleGlobalException(Exception e) {
 		log.error("全局异常信息 ex={}", e.getMessage(), e);
 
 		// 业务异常交由 sentinel 记录
 		Tracer.trace(e);
-		return R.failed(e.getLocalizedMessage());
+		return ResponseResult.failed(e.getLocalizedMessage());
 	}
 
 	/**
@@ -77,49 +77,49 @@ public class GlobalBizExceptionHandler {
 	 */
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(HttpStatus.OK)
-	public R handleIllegalArgumentException(IllegalArgumentException exception) {
+	public ResponseResult handleIllegalArgumentException(IllegalArgumentException exception) {
 		log.error("非法参数,ex = {}", exception.getMessage(), exception);
-		return R.failed(exception.getMessage());
+		return ResponseResult.failed(exception.getMessage());
 	}
 
 	/**
 	 * AccessDeniedException
 	 * @param e the e
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@ExceptionHandler(AccessDeniedException.class)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
-	public R handleAccessDeniedException(AccessDeniedException e) {
+	public ResponseResult handleAccessDeniedException(AccessDeniedException e) {
 		String msg = SpringSecurityMessageSource.getAccessor()
 			.getMessage("AbstractAccessDecisionManager.accessDenied", e.getMessage());
 		log.warn("拒绝授权异常信息 ex={}", msg);
-		return R.failed(msg);
+		return ResponseResult.failed(msg);
 	}
 
 	/**
 	 * validation Exception
 	 * @param exception
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@ExceptionHandler({ MethodArgumentNotValidException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public R handleBodyValidException(MethodArgumentNotValidException exception) {
+	public ResponseResult handleBodyValidException(MethodArgumentNotValidException exception) {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		log.warn("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
-		return R.failed(String.format("%s %s", fieldErrors.get(0).getField(), fieldErrors.get(0).getDefaultMessage()));
+		return ResponseResult.failed(String.format("%s %s", fieldErrors.get(0).getField(), fieldErrors.get(0).getDefaultMessage()));
 	}
 
 	/**
 	 * validation Exception (以form-data形式传参)
 	 * @param exception
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@ExceptionHandler({ BindException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public R bindExceptionHandler(BindException exception) {
+	public ResponseResult bindExceptionHandler(BindException exception) {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		log.warn("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
-		return R.failed(fieldErrors.get(0).getDefaultMessage());
+		return ResponseResult.failed(fieldErrors.get(0).getDefaultMessage());
 	}
 
 	/**
@@ -128,13 +128,13 @@ public class GlobalBizExceptionHandler {
 	 * <a href="https://github.com/spring-projects/spring-boot/issues/38733">[Spring Boot
 	 * 3.2.0] 404 Not Found behavior #38733</a>
 	 * @param exception
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@ExceptionHandler({ NoResourceFoundException.class })
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public R notFoundExceptionHandler(NoResourceFoundException exception) {
+	public ResponseResult notFoundExceptionHandler(NoResourceFoundException exception) {
 		log.debug("请求路径 404 {}", exception.getMessage());
-		return R.failed(exception.getMessage());
+		return ResponseResult.failed(exception.getMessage());
 	}
 
 }

@@ -17,7 +17,7 @@
 
 package com.rapidark.cloud.platform.admin.service;
 
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 /**
  * @author lengleng
@@ -30,6 +30,6 @@ public interface SysMobileService {
 	 * @param mobile mobile
 	 * @return code
 	 */
-	R<Boolean> sendSmsCode(String mobile);
+	ResponseResult<Boolean> sendSmsCode(String mobile);
 
 }

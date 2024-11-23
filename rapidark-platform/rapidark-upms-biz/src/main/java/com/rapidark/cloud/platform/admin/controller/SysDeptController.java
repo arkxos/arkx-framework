@@ -24,7 +24,7 @@ import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.platform.admin.api.entity.SysDept;
 import com.rapidark.cloud.platform.admin.api.vo.DeptExcelVo;
 import com.rapidark.cloud.platform.admin.service.SysDeptService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 
@@ -62,16 +62,16 @@ public class SysDeptController {
 	 * @return SysDept
 	 */
 	@GetMapping("/{id}")
-	public R getById(@PathVariable Long id) {
-		return R.ok(sysDeptService.getById(id));
+	public ResponseResult getById(@PathVariable Long id) {
+		return ResponseResult.ok(sysDeptService.getById(id));
 	}
 
 	/**
 	 * 查询全部部门
 	 */
 	@GetMapping("/list")
-	public R list() {
-		return R.ok(sysDeptService.list());
+	public ResponseResult list() {
+		return ResponseResult.ok(sysDeptService.list());
 	}
 
 	/**
@@ -80,8 +80,8 @@ public class SysDeptController {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public R getTree(String deptName) {
-		return R.ok(sysDeptService.selectTree(deptName));
+	public ResponseResult getTree(String deptName) {
+		return ResponseResult.ok(sysDeptService.selectTree(deptName));
 	}
 
 	/**
@@ -92,8 +92,8 @@ public class SysDeptController {
 	@SysLog("添加部门")
 	@PostMapping
 	@HasPermission("sys_dept_add")
-	public R save(@Valid @RequestBody SysDept sysDept) {
-		return R.ok(sysDeptService.save(sysDept));
+	public ResponseResult save(@Valid @RequestBody SysDept sysDept) {
+		return ResponseResult.ok(sysDeptService.save(sysDept));
 	}
 
 	/**
@@ -104,8 +104,8 @@ public class SysDeptController {
 	@SysLog("删除部门")
 	@DeleteMapping("/{id}")
 	@HasPermission("sys_dept_del")
-	public R removeById(@PathVariable Long id) {
-		return R.ok(sysDeptService.removeDeptById(id));
+	public ResponseResult removeById(@PathVariable Long id) {
+		return ResponseResult.ok(sysDeptService.removeDeptById(id));
 	}
 
 	/**
@@ -116,9 +116,9 @@ public class SysDeptController {
 	@SysLog("编辑部门")
 	@PutMapping
 	@HasPermission("sys_dept_edit")
-	public R update(@Valid @RequestBody SysDept sysDept) {
+	public ResponseResult update(@Valid @RequestBody SysDept sysDept) {
 		sysDept.setUpdateTime(LocalDateTime.now());
-		return R.ok(sysDeptService.updateById(sysDept));
+		return ResponseResult.ok(sysDeptService.updateById(sysDept));
 	}
 
 	/**
@@ -126,8 +126,8 @@ public class SysDeptController {
 	 * @return 返回子级
 	 */
 	@GetMapping(value = "/getDescendantList/{deptId}")
-	public R getDescendantList(@PathVariable Long deptId) {
-		return R.ok(sysDeptService.listDescendant(deptId));
+	public ResponseResult getDescendantList(@PathVariable Long deptId) {
+		return ResponseResult.ok(sysDeptService.listDescendant(deptId));
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class SysDeptController {
 	 * @return
 	 */
 	@PostMapping("import")
-	public R importDept(@RequestExcel List<DeptExcelVo> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importDept(@RequestExcel List<DeptExcelVo> excelVOList, BindingResult bindingResult) {
 
 		return sysDeptService.importDept(excelVOList, bindingResult);
 	}

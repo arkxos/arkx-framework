@@ -21,7 +21,7 @@ package com.rapidark.cloud.platform.admin.api.feign;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysLog;
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -42,6 +42,6 @@ public interface RemoteLogService {
 	 */
 	@NoToken
 	@PostMapping("/log/save")
-	R<Boolean> saveLog(@RequestBody SysLog sysLog);
+	ResponseResult<Boolean> saveLog(@RequestBody SysLog sysLog);
 
 }

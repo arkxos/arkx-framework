@@ -20,7 +20,7 @@ import cn.hutool.core.util.StrUtil;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysLog;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 import com.rapidark.cloud.platform.common.log.event.SysLogEvent;
 import com.rapidark.cloud.platform.common.log.util.LogTypeEnum;
@@ -97,7 +97,7 @@ public class ArkAuthenticationFailureEventHandler implements AuthenticationFailu
 			errorMessage = exception.getLocalizedMessage();
 		}
 
-		this.errorHttpResponseConverter.write(R.failed(errorMessage), MediaType.APPLICATION_JSON, httpResponse);
+		this.errorHttpResponseConverter.write(ResponseResult.failed(errorMessage), MediaType.APPLICATION_JSON, httpResponse);
 	}
 
 }

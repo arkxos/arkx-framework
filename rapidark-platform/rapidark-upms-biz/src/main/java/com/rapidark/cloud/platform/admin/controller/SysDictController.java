@@ -29,7 +29,7 @@ import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.platform.admin.service.SysDictItemService;
 import com.rapidark.cloud.platform.admin.service.SysDictService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 
@@ -71,8 +71,8 @@ public class SysDictController {
 	 * @return 字典信息
 	 */
 	@GetMapping("/details/{id}")
-	public R getById(@PathVariable Long id) {
-		return R.ok(sysDictService.getById(id));
+	public ResponseResult getById(@PathVariable Long id) {
+		return ResponseResult.ok(sysDictService.getById(id));
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class SysDictController {
 	 * @return 字典信息
 	 */
 	@GetMapping("/details")
-	public R getDetails(@ParameterObject SysDict query) {
-		return R.ok(sysDictService.getOne(Wrappers.query(query), false));
+	public ResponseResult getDetails(@ParameterObject SysDict query) {
+		return ResponseResult.ok(sysDictService.getOne(Wrappers.query(query), false));
 	}
 
 	/**
@@ -91,8 +91,8 @@ public class SysDictController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public R<IPage> getDictPage(@ParameterObject Page page, @ParameterObject SysDict sysDict) {
-		return R.ok(sysDictService.page(page,
+	public ResponseResult<IPage> getDictPage(@ParameterObject Page page, @ParameterObject SysDict sysDict) {
+		return ResponseResult.ok(sysDictService.page(page,
 				Wrappers.<SysDict>lambdaQuery()
 					.eq(StrUtil.isNotBlank(sysDict.getSystemFlag()), SysDict::getSystemFlag, sysDict.getSystemFlag())
 					.like(StrUtil.isNotBlank(sysDict.getDictType()), SysDict::getDictType, sysDict.getDictType())));
@@ -106,22 +106,22 @@ public class SysDictController {
 	@SysLog("添加字典")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
-	public R save(@Valid @RequestBody SysDict sysDict) {
+	public ResponseResult save(@Valid @RequestBody SysDict sysDict) {
 		sysDictService.save(sysDict);
-		return R.ok(sysDict);
+		return ResponseResult.ok(sysDict);
 	}
 
 	/**
 	 * 删除字典，并且清除字典缓存
 	 * @param ids ID
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("删除字典")
 	@DeleteMapping
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
-	public R removeById(@RequestBody Long[] ids) {
-		return R.ok(sysDictService.removeDictByIds(ids));
+	public ResponseResult removeById(@RequestBody Long[] ids) {
+		return ResponseResult.ok(sysDictService.removeDictByIds(ids));
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class SysDictController {
 	@PutMapping
 	@SysLog("修改字典")
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
-	public R updateById(@Valid @RequestBody SysDict sysDict) {
+	public ResponseResult updateById(@Valid @RequestBody SysDict sysDict) {
 		return sysDictService.updateDict(sysDict);
 	}
 
@@ -142,8 +142,8 @@ public class SysDictController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public R getDictList(String name) {
-		return R.ok(sysDictService.list(Wrappers.<SysDict>lambdaQuery()
+	public ResponseResult getDictList(String name) {
+		return ResponseResult.ok(sysDictService.list(Wrappers.<SysDict>lambdaQuery()
 			.like(StrUtil.isNotBlank(name), SysDict::getDictType, name)
 			.or()
 			.like(StrUtil.isNotBlank(name), SysDict::getDescription, name)));
@@ -156,71 +156,71 @@ public class SysDictController {
 	 * @return
 	 */
 	@GetMapping("/item/page")
-	public R getSysDictItemPage(Page page, SysDictItem sysDictItem) {
-		return R.ok(sysDictItemService.page(page, Wrappers.query(sysDictItem)));
+	public ResponseResult getSysDictItemPage(Page page, SysDictItem sysDictItem) {
+		return ResponseResult.ok(sysDictItemService.page(page, Wrappers.query(sysDictItem)));
 	}
 
 	/**
 	 * 通过id查询字典项
 	 * @param id id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@GetMapping("/item/details/{id}")
-	public R getDictItemById(@PathVariable("id") Long id) {
-		return R.ok(sysDictItemService.getById(id));
+	public ResponseResult getDictItemById(@PathVariable("id") Long id) {
+		return ResponseResult.ok(sysDictItemService.getById(id));
 	}
 
 	/**
 	 * 查询字典项详情
 	 * @param query 查询条件
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@GetMapping("/item/details")
-	public R getDictItemDetails(SysDictItem query) {
-		return R.ok(sysDictItemService.getOne(Wrappers.query(query), false));
+	public ResponseResult getDictItemDetails(SysDictItem query) {
+		return ResponseResult.ok(sysDictItemService.getOne(Wrappers.query(query), false));
 	}
 
 	/**
 	 * 新增字典项
 	 * @param sysDictItem 字典项
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("新增字典项")
 	@PostMapping("/item")
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
-	public R save(@RequestBody SysDictItem sysDictItem) {
-		return R.ok(sysDictItemService.save(sysDictItem));
+	public ResponseResult save(@RequestBody SysDictItem sysDictItem) {
+		return ResponseResult.ok(sysDictItemService.save(sysDictItem));
 	}
 
 	/**
 	 * 修改字典项
 	 * @param sysDictItem 字典项
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("修改字典项")
 	@PutMapping("/item")
-	public R updateById(@RequestBody SysDictItem sysDictItem) {
+	public ResponseResult updateById(@RequestBody SysDictItem sysDictItem) {
 		return sysDictItemService.updateDictItem(sysDictItem);
 	}
 
 	/**
 	 * 通过id删除字典项
 	 * @param id id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("删除字典项")
 	@DeleteMapping("/item/{id}")
-	public R removeDictItemById(@PathVariable Long id) {
+	public ResponseResult removeDictItemById(@PathVariable Long id) {
 		return sysDictItemService.removeDictItem(id);
 	}
 
 	/**
 	 * 同步缓存字典
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("同步字典")
 	@PutMapping("/sync")
-	public R sync() {
+	public ResponseResult sync() {
 		return sysDictService.syncDictCache();
 	}
 
@@ -237,8 +237,8 @@ public class SysDictController {
 	 */
 	@GetMapping("/type/{type}")
 	@Cacheable(value = CacheConstants.DICT_DETAILS, key = "#type", unless = "#result.data.isEmpty()")
-	public R<List<SysDictItem>> getDictByType(@PathVariable String type) {
-		return R.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictType, type)));
+	public ResponseResult<List<SysDictItem>> getDictByType(@PathVariable String type) {
+		return ResponseResult.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictType, type)));
 	}
 
 	/**
@@ -249,8 +249,8 @@ public class SysDictController {
 	@Inner
 	@GetMapping("/remote/type/{type}")
 	@Cacheable(value = CacheConstants.DICT_DETAILS, key = "#type", unless = "#result.data.isEmpty()")
-	public R<List<SysDictItem>> getRemoteDictByType(@PathVariable String type) {
-		return R.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictType, type)));
+	public ResponseResult<List<SysDictItem>> getRemoteDictByType(@PathVariable String type) {
+		return ResponseResult.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictType, type)));
 	}
 
 }

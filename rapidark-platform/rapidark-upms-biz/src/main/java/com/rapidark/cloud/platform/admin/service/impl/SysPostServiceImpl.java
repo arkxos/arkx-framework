@@ -27,7 +27,7 @@ import com.rapidark.cloud.platform.admin.mapper.SysPostMapper;
 import com.rapidark.cloud.platform.admin.service.SysPostService;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -53,7 +53,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPost> impl
 	 * @return ok fail
 	 */
 	@Override
-	public R importPost(List<PostExcelVO> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importPost(List<PostExcelVO> excelVOList, BindingResult bindingResult) {
 		// 通用校验获取失败的数据
 		List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
 
@@ -83,9 +83,9 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPost> impl
 			}
 		}
 		if (CollUtil.isNotEmpty(errorMessageList)) {
-			return R.failed(errorMessageList);
+			return ResponseResult.failed(errorMessageList);
 		}
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**

@@ -26,7 +26,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.platform.codegen.entity.GenDatasourceConf;
 import com.rapidark.cloud.platform.codegen.service.GenDatasourceConfService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 import com.rapidark.cloud.platform.common.xss.core.XssCleanIgnore;
@@ -61,8 +61,8 @@ public class GenDsConfController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getSysDatasourceConfPage(Page page, GenDatasourceConf datasourceConf) {
-		return R.ok(datasourceConfService.page(page,
+	public ResponseResult getSysDatasourceConfPage(Page page, GenDatasourceConf datasourceConf) {
+		return ResponseResult.ok(datasourceConfService.page(page,
 				Wrappers.<GenDatasourceConf>lambdaQuery()
 					.like(StrUtil.isNotBlank(datasourceConf.getDsName()), GenDatasourceConf::getDsName,
 							datasourceConf.getDsName())));
@@ -74,50 +74,50 @@ public class GenDsConfController {
 	 */
 	@GetMapping("/list")
 	@Inner(value = false)
-	public R list() {
-		return R.ok(datasourceConfService.list());
+	public ResponseResult list() {
+		return ResponseResult.ok(datasourceConfService.list());
 	}
 
 	/**
 	 * 通过id查询数据源表
 	 * @param id id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@GetMapping("/{id}")
-	public R getById(@PathVariable("id") Long id) {
-		return R.ok(datasourceConfService.getById(id));
+	public ResponseResult getById(@PathVariable("id") Long id) {
+		return ResponseResult.ok(datasourceConfService.getById(id));
 	}
 
 	/**
 	 * 新增数据源表
 	 * @param datasourceConf 数据源表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@PostMapping
 	@XssCleanIgnore
-	public R save(@RequestBody GenDatasourceConf datasourceConf) {
-		return R.ok(datasourceConfService.saveDsByEnc(datasourceConf));
+	public ResponseResult save(@RequestBody GenDatasourceConf datasourceConf) {
+		return ResponseResult.ok(datasourceConfService.saveDsByEnc(datasourceConf));
 	}
 
 	/**
 	 * 修改数据源表
 	 * @param conf 数据源表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@PutMapping
 	@XssCleanIgnore
-	public R updateById(@RequestBody GenDatasourceConf conf) {
-		return R.ok(datasourceConfService.updateDsByEnc(conf));
+	public ResponseResult updateById(@RequestBody GenDatasourceConf conf) {
+		return ResponseResult.ok(datasourceConfService.updateDsByEnc(conf));
 	}
 
 	/**
 	 * 通过id删除数据源表
 	 * @param ids id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@DeleteMapping
-	public R removeById(@RequestBody Long[] ids) {
-		return R.ok(datasourceConfService.removeByDsId(ids));
+	public ResponseResult removeById(@RequestBody Long[] ids) {
+		return ResponseResult.ok(datasourceConfService.removeByDsId(ids));
 	}
 
 	/**

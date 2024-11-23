@@ -22,7 +22,6 @@ import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 
@@ -37,7 +36,7 @@ import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 @AllArgsConstructor
 @Accessors(chain = true)
 @FieldNameConstants
-public class R<T> implements Serializable {
+public class ResponseResult<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,40 +54,40 @@ public class R<T> implements Serializable {
 
 	private LocalDateTime timestamp;
 
-	public static <T> R<T> ok() {
+	public static <T> ResponseResult<T> ok() {
 		return restResult(null, CommonConstants.SUCCESS, null);
 	}
 
-	public static <T> R<T> ok(T data) {
+	public static <T> ResponseResult<T> ok(T data) {
 		return restResult(data, CommonConstants.SUCCESS, null);
 	}
 
-	public static <T> R<T> ok(T data, String msg) {
+	public static <T> ResponseResult<T> ok(T data, String msg) {
 		return restResult(data, CommonConstants.SUCCESS, msg);
 	}
 
-	public static <T> R<T> failed() {
+	public static <T> ResponseResult<T> failed() {
 		return restResult(null, CommonConstants.FAIL, null);
 	}
 
-	public static <T> R<T> failed(String msg) {
+	public static <T> ResponseResult<T> failed(String msg) {
 		return restResult(null, CommonConstants.FAIL, msg);
 	}
 
-	public static <T> R<T> failed(T data) {
+	public static <T> ResponseResult<T> failed(T data) {
 		return restResult(data, CommonConstants.FAIL, null);
 	}
 
-	public static <T> R<T> failed(T data, String msg) {
+	public static <T> ResponseResult<T> failed(T data, String msg) {
 		return restResult(data, CommonConstants.FAIL, msg);
 	}
 
-	public static <T> R<T> restResult(T data, int code, String msg) {
-		R<T> apiResult = new R<>();
-		apiResult.setCode(code);
-		apiResult.setData(data);
-		apiResult.setMsg(msg);
-		return apiResult;
+	public static <T> ResponseResult<T> restResult(T data, int code, String msg) {
+		ResponseResult<T> responseResult = new ResponseResult<>();
+		responseResult.setCode(code);
+		responseResult.setData(data);
+		responseResult.setMsg(msg);
+		return responseResult;
 	}
 
 	public LocalDateTime getTimestamp() {

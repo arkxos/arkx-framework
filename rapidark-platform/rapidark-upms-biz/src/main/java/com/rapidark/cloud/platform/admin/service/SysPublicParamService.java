@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysPublicParam;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 /**
  * 公共参数配置
@@ -41,19 +41,19 @@ public interface SysPublicParamService extends IService<SysPublicParam> {
 	 * @param sysPublicParam
 	 * @return
 	 */
-	R updateParam(SysPublicParam sysPublicParam);
+	ResponseResult updateParam(SysPublicParam sysPublicParam);
 
 	/**
 	 * 删除参数
 	 * @param publicIds 参数列表
 	 * @return
 	 */
-	R removeParamByIds(Long[] publicIds);
+	ResponseResult removeParamByIds(Long[] publicIds);
 
 	/**
 	 * 同步缓存
-	 * @return R
+	 * @return ResponseResult
 	 */
-	R syncParamCache();
+	ResponseResult syncParamCache();
 
 }

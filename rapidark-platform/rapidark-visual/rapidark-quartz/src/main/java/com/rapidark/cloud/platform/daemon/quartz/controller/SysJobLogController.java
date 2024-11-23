@@ -20,7 +20,7 @@ package com.rapidark.cloud.platform.daemon.quartz.controller;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.daemon.quartz.entity.SysJobLog;
 import com.rapidark.cloud.platform.daemon.quartz.service.SysJobLogService;
 
@@ -53,14 +53,14 @@ public class SysJobLogController {
 	 */
 	@GetMapping("/page")
 	@Operation(description = "分页定时任务日志查询")
-	public R getSysJobLogPage(Page page, SysJobLog sysJobLog) {
-		return R.ok(sysJobLogService.page(page, Wrappers.query(sysJobLog)));
+	public ResponseResult getSysJobLogPage(Page page, SysJobLog sysJobLog) {
+		return ResponseResult.ok(sysJobLogService.page(page, Wrappers.query(sysJobLog)));
 	}
 
 	@DeleteMapping
 	@Operation(description = "批量删除日志")
-	public R deleteLogs(@RequestBody Long[] ids) {
-		return R.ok(sysJobLogService.removeBatchByIds(CollUtil.toList(ids)));
+	public ResponseResult deleteLogs(@RequestBody Long[] ids) {
+		return ResponseResult.ok(sysJobLogService.removeBatchByIds(CollUtil.toList(ids)));
 	}
 
 }

@@ -1,8 +1,8 @@
 package com.rapidark.cloud.platform.gateway.rest;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
 import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
-import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.service.DynamicRouteService;
 import com.rapidark.cloud.platform.gateway.service.LoadRouteService;
 import com.rapidark.cloud.platform.gateway.vo.GatewayRouteDefinition;
@@ -60,10 +60,10 @@ public class RouteController {
      * @return
      */
     @PostMapping("/add")
-    public R add(@RequestBody GatewayRouteDefinition gwdefinition) {
+    public ResponseResult add(@RequestBody GatewayRouteDefinition gwdefinition) {
         RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
         this.dynamicRouteService.add(definition);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -72,9 +72,9 @@ public class RouteController {
      * @return
      */
     @DeleteMapping("/routes/{id}")
-    public R delete(@PathVariable String id) {
+    public ResponseResult delete(@PathVariable String id) {
         this.dynamicRouteService.delete(id);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -83,10 +83,10 @@ public class RouteController {
      * @return
      */
     @PostMapping("/update")
-    public R update(@RequestBody GatewayRouteDefinition gwdefinition) {
+    public ResponseResult update(@RequestBody GatewayRouteDefinition gwdefinition) {
         RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
         this.dynamicRouteService.update(definition);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -103,12 +103,12 @@ public class RouteController {
      * @return
      */
     @GetMapping(value = "/load")
-    public R load(@RequestParam String id) {
+    public ResponseResult load(@RequestParam String id) {
         Assert.notNull(id, "路由ID不能为空");
         Route route = routeService.findById(id);
         RouteDefinition routeDefinition = loadRouteService.loadRouteDefinition(route);
         this.dynamicRouteService.add(routeDefinition);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
 }

@@ -18,7 +18,7 @@
 package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.platform.admin.api.feign.RemoteTokenService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 
@@ -52,7 +52,7 @@ public class SysTokenController {
 	 * @return token集合
 	 */
 	@RequestMapping("/page")
-	public R getTokenPage(@RequestBody Map<String, Object> params) {
+	public ResponseResult getTokenPage(@RequestBody Map<String, Object> params) {
 		return remoteTokenService.getTokenPage(params);
 	}
 
@@ -64,11 +64,11 @@ public class SysTokenController {
 	@SysLog("删除用户token")
 	@DeleteMapping("/delete")
 	@HasPermission("sys_token_del")
-	public R removeById(@RequestBody String[] tokens) {
+	public ResponseResult removeById(@RequestBody String[] tokens) {
 		for (String token : tokens) {
 			remoteTokenService.removeTokenById(token);
 		}
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 }

@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysFile;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +37,7 @@ public interface SysFileService extends IService<SysFile> {
 	 * @param file
 	 * @return
 	 */
-	R uploadFile(MultipartFile file);
+	ResponseResult uploadFile(MultipartFile file);
 
 	/**
 	 * 读取文件

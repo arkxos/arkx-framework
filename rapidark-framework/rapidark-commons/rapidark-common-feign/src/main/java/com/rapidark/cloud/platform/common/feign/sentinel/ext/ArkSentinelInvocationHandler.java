@@ -24,7 +24,7 @@ import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import feign.Feign;
 import feign.InvocationHandlerFactory;
@@ -136,9 +136,9 @@ public class ArkSentinelInvocationHandler implements InvocationHandler {
 					}
 					else {
 						// 若是R类型 执行自动降级返回R
-						if (R.class == method.getReturnType()) {
+						if (ResponseResult.class == method.getReturnType()) {
 							log.error("feign 服务间调用异常", ex);
-							return R.failed(ex.getLocalizedMessage());
+							return ResponseResult.failed(ex.getLocalizedMessage());
 						}
 						else {
 							throw ex;

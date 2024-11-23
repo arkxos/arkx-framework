@@ -35,7 +35,7 @@ import com.rapidark.cloud.platform.codegen.mapper.GenTemplateMapper;
 import com.rapidark.cloud.platform.codegen.service.GenTemplateService;
 import com.rapidark.cloud.platform.codegen.util.vo.GenTemplateFileVO;
 import com.rapidark.cloud.platform.common.core.exception.CheckedException;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,11 +67,11 @@ public class GenTemplateServiceImpl extends ServiceImpl<GenTemplateMapper, GenTe
 
 	/**
 	 * 在线更新
-	 * @return {@link R }
+	 * @return {@link ResponseResult }
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public R onlineUpdate() {
+	public ResponseResult onlineUpdate() {
 		// 获取 config.json 和 version 文件
 		Map<String, Object> configAndVersion = getConfigAndVersion();
 		JSONObject configJsonObj = (JSONObject) configAndVersion.get("configJsonObj");
@@ -86,22 +86,22 @@ public class GenTemplateServiceImpl extends ServiceImpl<GenTemplateMapper, GenTe
 			.eq(GenGroupEntity::getGroupName, cgtmConfigGroupName + versionFile));
 
 		if (exists) {
-			return R.failed("已是最新版本，无需更新！");
+			return ResponseResult.failed("已是最新版本，无需更新！");
 		}
 
 		// 插入新的模板组（名称 + VERSION）, 再解析 config.json group 里面的所有模板
 		insertTemplateFiles(versionFile, configJsonObj, cgtmConfigGroupName);
-		return R.ok("更新成功，版本号:" + versionFile);
+		return ResponseResult.ok("更新成功，版本号:" + versionFile);
 	}
 
 	/**
 	 * 检查版本
-	 * @return {@link R }
+	 * @return {@link ResponseResult }
 	 */
-	public R checkVersion() {
+	public ResponseResult checkVersion() {
 		// 关闭在线更新提示
 		if (!defaultProperties.isAutoCheckVersion()) {
-			return R.ok(true);
+			return ResponseResult.ok(true);
 		}
 
 		// 获取 config.json 和 version 文件
@@ -117,7 +117,7 @@ public class GenTemplateServiceImpl extends ServiceImpl<GenTemplateMapper, GenTe
 		boolean exists = genGroupMapper.exists(Wrappers.<GenGroupEntity>lambdaQuery()
 			.eq(GenGroupEntity::getGroupName, cgtmConfigGroupName + versionFile));
 
-		return R.ok(exists);
+		return ResponseResult.ok(exists);
 	}
 
 	/**

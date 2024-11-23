@@ -2,7 +2,7 @@ package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.platform.admin.api.dto.UserDTO;
 import com.rapidark.cloud.platform.admin.service.SysUserService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 
@@ -35,7 +35,7 @@ public class SysRegisterController {
 	@Inner(value = false)
 	@SysLog("注册用户")
 	@PostMapping("/user")
-	public R<Boolean> registerUser(@RequestBody UserDTO userDto) {
+	public ResponseResult<Boolean> registerUser(@RequestBody UserDTO userDto) {
 		return userService.registerUser(userDto);
 	}
 

@@ -5,7 +5,7 @@ import cn.hutool.core.map.MapUtil;
 
 import com.pig4cloud.plugin.excel.handler.DictDataProvider;
 import com.pig4cloud.plugin.excel.vo.DictEnum;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,8 +30,8 @@ public class RemoteDictDataProvider implements DictDataProvider {
 	 */
 	@Override
 	public DictEnum[] getDict(String type) {
-		R<List<Map<String, Object>>> dictDataListR = remoteDictApiService.getDictByType(type);
-		List<Map<String, Object>> dictDataList = dictDataListR.getData();
+		ResponseResult<List<Map<String, Object>>> dictDataListResponseResult = remoteDictApiService.getDictByType(type);
+		List<Map<String, Object>> dictDataList = dictDataListResponseResult.getData();
 		if (CollUtil.isEmpty(dictDataList)) {
 			return new DictEnum[0];
 		}

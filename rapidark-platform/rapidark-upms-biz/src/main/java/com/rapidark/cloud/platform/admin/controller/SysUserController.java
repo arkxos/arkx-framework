@@ -30,8 +30,8 @@ import com.rapidark.cloud.platform.admin.api.vo.UserExcelVO;
 import com.rapidark.cloud.platform.admin.service.SysUserService;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
@@ -67,15 +67,15 @@ public class SysUserController {
 	 */
 	@Inner
 	@GetMapping(value = { "/user/info/query" })
-	public R info(@RequestParam(required = false) String username, @RequestParam(required = false) String phone) {
+	public ResponseResult info(@RequestParam(required = false) String username, @RequestParam(required = false) String phone) {
 		SysUser user = userService.getOne(Wrappers.<SysUser>query()
 			.lambda()
 			.eq(StrUtil.isNotBlank(username), SysUser::getUsername, username)
 			.eq(StrUtil.isNotBlank(phone), SysUser::getPhone, phone));
 		if (user == null) {
-			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, username));
+			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, username));
 		}
-		return R.ok(userService.findUserInfo(user));
+		return ResponseResult.ok(userService.findUserInfo(user));
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class SysUserController {
 	 */
 	@Deprecated
 	@GetMapping(value = { "/user/info" })
-	public R info() {
+	public ResponseResult info() {
 		return currentUserInfo();
 	}
 
@@ -94,13 +94,13 @@ public class SysUserController {
 	 * @return 用户信息
 	 */
 	@GetMapping(value = { "/user/currentUserInfo" })
-	public R currentUserInfo() {
+	public ResponseResult currentUserInfo() {
 		String username = SecurityUtils.getUser().getUsername();
 		SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
 		if (user == null) {
-			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_QUERY_ERROR));
+			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_QUERY_ERROR));
 		}
-		return R.ok(userService.findUserInfo(user));
+		return ResponseResult.ok(userService.findUserInfo(user));
 	}
 
 	/**
@@ -109,8 +109,8 @@ public class SysUserController {
 	 * @return 用户信息
 	 */
 	@GetMapping("/user/details/{id}")
-	public R user(@PathVariable Long id) {
-		return R.ok(userService.selectUserVoById(id));
+	public ResponseResult user(@PathVariable Long id) {
+		return ResponseResult.ok(userService.selectUserVoById(id));
 	}
 
 	/**
@@ -120,22 +120,22 @@ public class SysUserController {
 	 */
 	@Inner(value = false)
 	@GetMapping("/user/details")
-	public R getDetails(@ParameterObject SysUser query) {
+	public ResponseResult getDetails(@ParameterObject SysUser query) {
 		SysUser sysUser = userService.getOne(Wrappers.query(query), false);
-		return R.ok(sysUser == null ? null : CommonConstants.SUCCESS);
+		return ResponseResult.ok(sysUser == null ? null : CommonConstants.SUCCESS);
 	}
 
 	/**
 	 * 删除用户信息
 	 * @param ids ID
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("删除用户信息")
 	@DeleteMapping("/user")
 	@HasPermission("sys_user_del")
 	@Operation(summary = "删除用户", description = "根据ID删除用户")
-	public R userDel(@RequestBody Long[] ids) {
-		return R.ok(userService.deleteUserByIds(ids));
+	public ResponseResult userDel(@RequestBody Long[] ids) {
+		return ResponseResult.ok(userService.deleteUserByIds(ids));
 	}
 
 	/**
@@ -146,20 +146,20 @@ public class SysUserController {
 	@SysLog("添加用户")
 	@PostMapping("/user")
 	@HasPermission("sys_user_add")
-	public R user(@RequestBody UserDTO userDto) {
-		return R.ok(userService.saveUser(userDto));
+	public ResponseResult user(@RequestBody UserDTO userDto) {
+		return ResponseResult.ok(userService.saveUser(userDto));
 	}
 
 	/**
 	 * 更新用户信息
 	 * @param userDto 用户信息
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@SysLog("更新用户信息")
 	@PutMapping("/user")
 	@HasPermission("sys_user_edit")
-	public R updateUser(@Valid @RequestBody UserDTO userDto) {
-		return R.ok(userService.updateUser(userDto));
+	public ResponseResult updateUser(@Valid @RequestBody UserDTO userDto) {
+		return ResponseResult.ok(userService.updateUser(userDto));
 	}
 
 	/**
@@ -169,8 +169,8 @@ public class SysUserController {
 	 * @return 用户集合
 	 */
 	@GetMapping("/user/page")
-	public R getUserPage(@ParameterObject Page page, @ParameterObject UserDTO userDTO) {
-		return R.ok(userService.getUsersWithRolePage(page, userDTO));
+	public ResponseResult getUserPage(@ParameterObject Page page, @ParameterObject UserDTO userDTO) {
+		return ResponseResult.ok(userService.getUsersWithRolePage(page, userDTO));
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class SysUserController {
 	 */
 	@SysLog("修改个人信息")
 	@PutMapping("/user/edit")
-	public R updateUserInfo(@Valid @RequestBody UserDTO userDto) {
+	public ResponseResult updateUserInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto);
 	}
 
@@ -200,33 +200,33 @@ public class SysUserController {
 	 * 导入用户
 	 * @param excelVOList 用户列表
 	 * @param bindingResult 错误信息列表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@PostMapping("/user/import")
 	@HasPermission("sys_user_export")
-	public R importUser(@RequestExcel List<UserExcelVO> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importUser(@RequestExcel List<UserExcelVO> excelVOList, BindingResult bindingResult) {
 		return userService.importUser(excelVOList, bindingResult);
 	}
 
 	/**
 	 * 锁定指定用户
 	 * @param username 用户名
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@PutMapping("/user/lock/{username}")
-	public R lockUser(@PathVariable String username) {
+	public ResponseResult lockUser(@PathVariable String username) {
 		return userService.lockUser(username);
 	}
 
 	@PutMapping("/user/password")
-	public R password(@RequestBody UserDTO userDto) {
+	public ResponseResult password(@RequestBody UserDTO userDto) {
 		String username = SecurityUtils.getUser().getUsername();
 		userDto.setUsername(username);
 		return userService.changePassword(userDto);
 	}
 
 	@PostMapping("/user/check")
-	public R check(String password) {
+	public ResponseResult check(String password) {
 		return userService.checkPassword(password);
 	}
 

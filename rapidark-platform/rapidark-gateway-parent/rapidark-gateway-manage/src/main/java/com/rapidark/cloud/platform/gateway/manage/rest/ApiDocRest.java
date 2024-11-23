@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.manage.rest;
 
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.entity.ApiDoc;
 import com.rapidark.cloud.platform.gateway.framework.entity.Route;
@@ -33,8 +33,8 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public R list(){
-        return R.ok(routeService.list(new Route()));
+    public ResponseResult list(){
+        return ResponseResult.ok(routeService.list(new Route()));
     }
 
     /**
@@ -43,11 +43,11 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
-    public R save(@RequestBody ApiDoc apiDoc){
+    public ResponseResult save(@RequestBody ApiDoc apiDoc){
         Assert.notNull(apiDoc, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(apiDoc.getId()), "未获取到对象ID");
         apiDocService.save(apiDoc);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -56,9 +56,9 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public R findById(@RequestParam String id) {
+    public ResponseResult findById(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到请求ID");
-        return R.ok(apiDocService.findById(id));
+        return ResponseResult.ok(apiDocService.findById(id));
     }
 
 }

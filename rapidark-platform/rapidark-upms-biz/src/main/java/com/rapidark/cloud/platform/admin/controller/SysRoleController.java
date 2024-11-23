@@ -30,7 +30,7 @@ import com.rapidark.cloud.platform.admin.api.vo.RoleExcelVO;
 import com.rapidark.cloud.platform.admin.api.vo.RoleVO;
 import com.rapidark.cloud.platform.admin.service.SysRoleService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 
@@ -65,8 +65,8 @@ public class SysRoleController {
 	 * @return 角色信息
 	 */
 	@GetMapping("/details/{id}")
-	public R getById(@PathVariable Long id) {
-		return R.ok(sysRoleService.getById(id));
+	public ResponseResult getById(@PathVariable Long id) {
+		return ResponseResult.ok(sysRoleService.getById(id));
 	}
 
 	/**
@@ -75,8 +75,8 @@ public class SysRoleController {
 	 * @return 角色信息
 	 */
 	@GetMapping("/details")
-	public R getDetails(@ParameterObject SysRole query) {
-		return R.ok(sysRoleService.getOne(Wrappers.query(query), false));
+	public ResponseResult getDetails(@ParameterObject SysRole query) {
+		return ResponseResult.ok(sysRoleService.getOne(Wrappers.query(query), false));
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class SysRoleController {
 	@PostMapping
 	@HasPermission("sys_role_add")
 	@CacheEvict(value = CacheConstants.ROLE_DETAILS, allEntries = true)
-	public R save(@Valid @RequestBody SysRole sysRole) {
-		return R.ok(sysRoleService.save(sysRole));
+	public ResponseResult save(@Valid @RequestBody SysRole sysRole) {
+		return ResponseResult.ok(sysRoleService.save(sysRole));
 	}
 
 	/**
@@ -101,8 +101,8 @@ public class SysRoleController {
 	@PutMapping
 	@HasPermission("sys_role_edit")
 	@CacheEvict(value = CacheConstants.ROLE_DETAILS, allEntries = true)
-	public R update(@Valid @RequestBody SysRole sysRole) {
-		return R.ok(sysRoleService.updateById(sysRole));
+	public ResponseResult update(@Valid @RequestBody SysRole sysRole) {
+		return ResponseResult.ok(sysRoleService.updateById(sysRole));
 	}
 
 	/**
@@ -114,8 +114,8 @@ public class SysRoleController {
 	@DeleteMapping
 	@HasPermission("sys_role_del")
 	@CacheEvict(value = CacheConstants.ROLE_DETAILS, allEntries = true)
-	public R removeById(@RequestBody Long[] ids) {
-		return R.ok(sysRoleService.removeRoleByIds(ids));
+	public ResponseResult removeById(@RequestBody Long[] ids) {
+		return ResponseResult.ok(sysRoleService.removeRoleByIds(ids));
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class SysRoleController {
 	 * @return 角色列表
 	 */
 	@GetMapping("/list")
-	public R listRoles() {
-		return R.ok(sysRoleService.list(Wrappers.emptyWrapper()));
+	public ResponseResult listRoles() {
+		return ResponseResult.ok(sysRoleService.list(Wrappers.emptyWrapper()));
 	}
 
 	/**
@@ -134,8 +134,8 @@ public class SysRoleController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public R getRolePage(Page page, SysRole role) {
-		return R.ok(sysRoleService.page(page, Wrappers.<SysRole>lambdaQuery()
+	public ResponseResult getRolePage(Page page, SysRole role) {
+		return ResponseResult.ok(sysRoleService.page(page, Wrappers.<SysRole>lambdaQuery()
 			.like(StrUtil.isNotBlank(role.getRoleName()), SysRole::getRoleName, role.getRoleName())));
 	}
 
@@ -147,8 +147,8 @@ public class SysRoleController {
 	@SysLog("更新角色菜单")
 	@PutMapping("/menu")
 	@HasPermission("sys_role_perm")
-	public R saveRoleMenus(@RequestBody RoleVO roleVo) {
-		return R.ok(sysRoleService.updateRoleMenus(roleVo));
+	public ResponseResult saveRoleMenus(@RequestBody RoleVO roleVo) {
+		return ResponseResult.ok(sysRoleService.updateRoleMenus(roleVo));
 	}
 
 	/**
@@ -157,8 +157,8 @@ public class SysRoleController {
 	 * @return
 	 */
 	@PostMapping("/getRoleList")
-	public R getRoleList(@RequestBody List<Long> roleIdList) {
-		return R.ok(sysRoleService.findRolesByRoleIds(roleIdList, CollUtil.join(roleIdList, StrUtil.UNDERLINE)));
+	public ResponseResult getRoleList(@RequestBody List<Long> roleIdList) {
+		return ResponseResult.ok(sysRoleService.findRolesByRoleIds(roleIdList, CollUtil.join(roleIdList, StrUtil.UNDERLINE)));
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class SysRoleController {
 	 */
 	@PostMapping("/import")
 	@HasPermission("sys_role_export")
-	public R importRole(@RequestExcel List<RoleExcelVO> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importRole(@RequestExcel List<RoleExcelVO> excelVOList, BindingResult bindingResult) {
 		return sysRoleService.importRole(excelVOList, bindingResult);
 	}
 

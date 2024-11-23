@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.platform.codegen.entity.GenFieldType;
 import com.rapidark.cloud.platform.codegen.service.GenFieldTypeService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,8 +59,8 @@ public class GenFieldTypeController {
 	 */
 	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
-	public R getFieldTypePage(Page page, GenFieldType fieldType) {
-		return R.ok(fieldTypeService.page(page,
+	public ResponseResult getFieldTypePage(Page page, GenFieldType fieldType) {
+		return ResponseResult.ok(fieldTypeService.page(page,
 				Wrappers.<GenFieldType>lambdaQuery()
 					.like(StrUtil.isNotBlank(fieldType.getColumnType()), GenFieldType::getColumnType,
 							fieldType.getColumnType())));
@@ -68,60 +68,60 @@ public class GenFieldTypeController {
 
 	@Operation(summary = "查询列表", description = "查询列表")
 	@GetMapping("/list")
-	public R list(GenFieldType fieldType) {
-		return R.ok(fieldTypeService.list(Wrappers.query(fieldType)));
+	public ResponseResult list(GenFieldType fieldType) {
+		return ResponseResult.ok(fieldTypeService.list(Wrappers.query(fieldType)));
 	}
 
 	/**
 	 * 通过id查询列属性
 	 * @param id id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id查询", description = "通过id查询")
 	@GetMapping("/details/{id}")
-	public R getById(@PathVariable("id") Long id) {
-		return R.ok(fieldTypeService.getById(id));
+	public ResponseResult getById(@PathVariable("id") Long id) {
+		return ResponseResult.ok(fieldTypeService.getById(id));
 	}
 
 	@GetMapping("/details")
-	public R getDetails(GenFieldType query) {
-		return R.ok(fieldTypeService.getOne(Wrappers.query(query), false));
+	public ResponseResult getDetails(GenFieldType query) {
+		return ResponseResult.ok(fieldTypeService.getOne(Wrappers.query(query), false));
 	}
 
 	/**
 	 * 新增列属性
 	 * @param fieldType 列属性
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "新增列属性", description = "新增列属性")
 	@SysLog("新增列属性")
 	@PostMapping
-	public R save(@RequestBody GenFieldType fieldType) {
-		return R.ok(fieldTypeService.save(fieldType));
+	public ResponseResult save(@RequestBody GenFieldType fieldType) {
+		return ResponseResult.ok(fieldTypeService.save(fieldType));
 	}
 
 	/**
 	 * 修改列属性
 	 * @param fieldType 列属性
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "修改列属性", description = "修改列属性")
 	@SysLog("修改列属性")
 	@PutMapping
-	public R updateById(@RequestBody GenFieldType fieldType) {
-		return R.ok(fieldTypeService.updateById(fieldType));
+	public ResponseResult updateById(@RequestBody GenFieldType fieldType) {
+		return ResponseResult.ok(fieldTypeService.updateById(fieldType));
 	}
 
 	/**
 	 * 通过id删除列属性
 	 * @param ids id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id删除列属性", description = "通过id删除列属性")
 	@SysLog("通过id删除列属性")
 	@DeleteMapping
-	public R removeById(@RequestBody Long[] ids) {
-		return R.ok(fieldTypeService.removeBatchByIds(CollUtil.toList(ids)));
+	public ResponseResult removeById(@RequestBody Long[] ids) {
+		return ResponseResult.ok(fieldTypeService.removeBatchByIds(CollUtil.toList(ids)));
 	}
 
 	/**

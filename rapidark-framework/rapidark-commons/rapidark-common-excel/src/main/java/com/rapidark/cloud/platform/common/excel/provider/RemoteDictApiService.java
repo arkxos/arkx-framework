@@ -1,9 +1,8 @@
 package com.rapidark.cloud.platform.common.excel.provider;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;
-
-import com.rapidark.cloud.platform.common.core.util.R;
 
 import java.util.List;
 import java.util.Map;
@@ -19,9 +18,9 @@ public interface RemoteDictApiService {
 	/**
 	 * 按类型获取 dict
 	 * @param type 类型
-	 * @return {@link R }<{@link List }<{@link Map }<{@link String }, {@link Object }>>>
+	 * @return {@link ResponseResult }<{@link List }<{@link Map }<{@link String }, {@link Object }>>>
 	 */
 	@GetExchange("/dict/remote/type/{type}")
-	R<List<Map<String, Object>>> getDictByType(@PathVariable String type);
+	ResponseResult<List<Map<String, Object>>> getDictByType(@PathVariable String type);
 
 }

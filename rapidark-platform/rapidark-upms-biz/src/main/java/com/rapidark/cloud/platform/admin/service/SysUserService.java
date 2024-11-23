@@ -27,7 +27,7 @@ import com.rapidark.cloud.platform.admin.api.dto.UserInfo;
 import com.rapidark.cloud.platform.admin.api.entity.SysUser;
 import com.rapidark.cloud.platform.admin.api.vo.UserExcelVO;
 import com.rapidark.cloud.platform.admin.api.vo.UserVO;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import org.springframework.validation.BindingResult;
 
@@ -66,7 +66,7 @@ public interface SysUserService extends IService<SysUser> {
 	 * @param userDto 用户信息
 	 * @return Boolean
 	 */
-	R<Boolean> updateUserInfo(UserDTO userDto);
+	ResponseResult<Boolean> updateUserInfo(UserDTO userDto);
 
 	/**
 	 * 更新指定用户信息
@@ -102,34 +102,34 @@ public interface SysUserService extends IService<SysUser> {
 	 * @param bindingResult 错误数据
 	 * @return ok fail
 	 */
-	R importUser(List<UserExcelVO> excelVOList, BindingResult bindingResult);
+	ResponseResult importUser(List<UserExcelVO> excelVOList, BindingResult bindingResult);
 
 	/**
 	 * 注册用户
 	 * @param userDto 用户信息
 	 * @return success/false
 	 */
-	R<Boolean> registerUser(UserDTO userDto);
+	ResponseResult<Boolean> registerUser(UserDTO userDto);
 
 	/**
 	 * 锁定用户
 	 * @param username
 	 * @return
 	 */
-	R<Boolean> lockUser(String username);
+	ResponseResult<Boolean> lockUser(String username);
 
 	/**
 	 * 修改密码
 	 * @param userDto 用户信息
 	 * @return
 	 */
-	R changePassword(UserDTO userDto);
+	ResponseResult changePassword(UserDTO userDto);
 
 	/**
 	 * 校验密码
 	 * @param password 密码明文
 	 * @return
 	 */
-	R checkPassword(String password);
+	ResponseResult checkPassword(String password);
 
 }

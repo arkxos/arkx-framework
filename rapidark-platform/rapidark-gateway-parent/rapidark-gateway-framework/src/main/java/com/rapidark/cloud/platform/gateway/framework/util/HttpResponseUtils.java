@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -24,7 +24,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeOk(ServerHttpResponse response, String msg) {
-        return write(response, HttpStatus.OK, R.ok().setMsg(msg));
+        return write(response, HttpStatus.OK, ResponseResult.ok().setMsg(msg));
     }
 
     /**
@@ -33,7 +33,7 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeUnauth(ServerHttpResponse response, String msg) {
-        return write(response, HttpStatus.UNAUTHORIZED, R.failed(msg));
+        return write(response, HttpStatus.UNAUTHORIZED, ResponseResult.failed(msg));
     }
 
     /**
@@ -42,17 +42,17 @@ public class HttpResponseUtils {
      * @param msg
      */
     public static Mono<Void> writeError(ServerHttpResponse response, String msg) {
-        return write(response, HttpStatus.INTERNAL_SERVER_ERROR, R.failed(msg));
+        return write(response, HttpStatus.INTERNAL_SERVER_ERROR, ResponseResult.failed(msg));
     }
 
     /**
      * 自定义输出
      * @param response
      * @param statusCode
-     * @param apiResult
+     * @param responseResult
      */
-    public static Mono<Void> write(ServerHttpResponse response, HttpStatusCode statusCode, R apiResult){
-        String msg = JSONObject.toJSONString(apiResult);
+    public static Mono<Void> write(ServerHttpResponse response, HttpStatusCode statusCode, ResponseResult responseResult){
+        String msg = JSONObject.toJSONString(responseResult);
         response.setStatusCode(statusCode);
         response.getHeaders().add(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
         DataBuffer buffer = response.bufferFactory().wrap(msg.getBytes(StandardCharsets.UTF_8));

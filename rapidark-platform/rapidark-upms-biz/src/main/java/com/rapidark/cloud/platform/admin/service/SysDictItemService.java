@@ -18,7 +18,7 @@ package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 /**
  * 字典项
@@ -33,13 +33,13 @@ public interface SysDictItemService extends IService<SysDictItem> {
 	 * @param id 字典项ID
 	 * @return
 	 */
-	R removeDictItem(Long id);
+	ResponseResult removeDictItem(Long id);
 
 	/**
 	 * 更新字典项
 	 * @param item 字典项
 	 * @return
 	 */
-	R updateDictItem(SysDictItem item);
+	ResponseResult updateDictItem(SysDictItem item);
 
 }

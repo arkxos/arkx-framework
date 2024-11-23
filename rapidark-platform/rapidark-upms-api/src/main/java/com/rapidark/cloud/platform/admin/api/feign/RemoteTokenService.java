@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.admin.api.feign;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -41,7 +41,7 @@ public interface RemoteTokenService {
 	 */
 	@NoToken
 	@PostMapping("/token/page")
-	R<Page> getTokenPage(@RequestBody Map<String, Object> params);
+	ResponseResult<Page> getTokenPage(@RequestBody Map<String, Object> params);
 
 	/**
 	 * 删除token
@@ -50,7 +50,7 @@ public interface RemoteTokenService {
 	 */
 	@NoToken
 	@DeleteMapping("/token/remove/{token}")
-	R<Boolean> removeTokenById(@PathVariable("token") String token);
+	ResponseResult<Boolean> removeTokenById(@PathVariable("token") String token);
 
 	/**
 	 * 校验令牌获取用户信息
@@ -59,6 +59,6 @@ public interface RemoteTokenService {
 	 */
 	@NoToken
 	@GetMapping("/token/query-token")
-	R<Map<String, Object>> queryToken(@RequestParam("token") String token);
+	ResponseResult<Map<String, Object>> queryToken(@RequestParam("token") String token);
 
 }

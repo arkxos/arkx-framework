@@ -25,7 +25,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.platform.codegen.entity.GenTemplateEntity;
 import com.rapidark.cloud.platform.codegen.service.GenTemplateService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.xss.core.XssCleanIgnore;
@@ -63,12 +63,12 @@ public class GenTemplateController {
 	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
 	@HasPermission("codegen_template_view")
-	public R getGenTemplatePage(Page page, GenTemplateEntity genTemplate) {
+	public ResponseResult getGenTemplatePage(Page page, GenTemplateEntity genTemplate) {
 		LambdaQueryWrapper<GenTemplateEntity> wrapper = Wrappers.<GenTemplateEntity>lambdaQuery()
 			.like(genTemplate.getId() != null, GenTemplateEntity::getId, genTemplate.getId())
 			.like(StrUtil.isNotEmpty(genTemplate.getTemplateName()), GenTemplateEntity::getTemplateName,
 					genTemplate.getTemplateName());
-		return R.ok(genTemplateService.page(page, wrapper));
+		return ResponseResult.ok(genTemplateService.page(page, wrapper));
 	}
 
 	/**
@@ -78,62 +78,62 @@ public class GenTemplateController {
 	@Operation(summary = "查询全部", description = "查询全部")
 	@GetMapping("/list")
 	@HasPermission("codegen_template_view")
-	public R list() {
-		return R.ok(genTemplateService
+	public ResponseResult list() {
+		return ResponseResult.ok(genTemplateService
 			.list(Wrappers.<GenTemplateEntity>lambdaQuery().orderByDesc(GenTemplateEntity::getCreateTime)));
 	}
 
 	/**
 	 * 通过id查询模板
 	 * @param id id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id查询", description = "通过id查询")
 	@GetMapping("/{id}")
 	@HasPermission("codegen_template_view")
-	public R getById(@PathVariable("id") Long id) {
-		return R.ok(genTemplateService.getById(id));
+	public ResponseResult getById(@PathVariable("id") Long id) {
+		return ResponseResult.ok(genTemplateService.getById(id));
 	}
 
 	/**
 	 * 新增模板
 	 * @param genTemplate 模板
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@XssCleanIgnore
 	@Operation(summary = "新增模板", description = "新增模板")
 	@SysLog("新增模板")
 	@PostMapping
 	@HasPermission("codegen_template_add")
-	public R save(@RequestBody GenTemplateEntity genTemplate) {
-		return R.ok(genTemplateService.save(genTemplate));
+	public ResponseResult save(@RequestBody GenTemplateEntity genTemplate) {
+		return ResponseResult.ok(genTemplateService.save(genTemplate));
 	}
 
 	/**
 	 * 修改模板
 	 * @param genTemplate 模板
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@XssCleanIgnore
 	@Operation(summary = "修改模板", description = "修改模板")
 	@SysLog("修改模板")
 	@PutMapping
 	@HasPermission("codegen_template_edit")
-	public R updateById(@RequestBody GenTemplateEntity genTemplate) {
-		return R.ok(genTemplateService.updateById(genTemplate));
+	public ResponseResult updateById(@RequestBody GenTemplateEntity genTemplate) {
+		return ResponseResult.ok(genTemplateService.updateById(genTemplate));
 	}
 
 	/**
 	 * 通过id删除模板
 	 * @param ids id列表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id删除模板", description = "通过id删除模板")
 	@SysLog("通过id删除模板")
 	@DeleteMapping
 	@HasPermission("codegen_template_del")
-	public R removeById(@RequestBody Long[] ids) {
-		return R.ok(genTemplateService.removeBatchByIds(CollUtil.toList(ids)));
+	public ResponseResult removeById(@RequestBody Long[] ids) {
+		return ResponseResult.ok(genTemplateService.removeBatchByIds(CollUtil.toList(ids)));
 	}
 
 	/**
@@ -150,23 +150,23 @@ public class GenTemplateController {
 
 	/**
 	 * 在线更新模板
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "在线更新模板", description = "在线更新模板")
 	@GetMapping("/online")
 	@HasPermission("codegen_template_view")
-	public R online() {
+	public ResponseResult online() {
 		return genTemplateService.onlineUpdate();
 	}
 
 	/**
 	 * 检查版本
-	 * @return {@link R }
+	 * @return {@link ResponseResult }
 	 */
 	@Operation(summary = "在线检查模板", description = "在线检查模板")
 	@GetMapping("/checkVersion")
 	@HasPermission("codegen_template_view")
-	public R checkVersion() {
+	public ResponseResult checkVersion() {
 		return genTemplateService.checkVersion();
 	}
 

@@ -27,7 +27,7 @@ import com.rapidark.cloud.platform.admin.api.vo.TokenVo;
 import com.rapidark.cloud.platform.auth.support.handler.ArkAuthenticationFailureEventHandler;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.RetOps;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
@@ -126,9 +126,9 @@ public class ArkTokenEndpoint {
 	 * @param authHeader Authorization
 	 */
 	@DeleteMapping("/logout")
-	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
+	public ResponseResult<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StrUtil.isBlank(authHeader)) {
-			return R.ok();
+			return ResponseResult.ok();
 		}
 
 		String tokenValue = authHeader.replace(OAuth2AccessToken.TokenType.BEARER.getValue(), StrUtil.EMPTY).trim();
@@ -171,15 +171,15 @@ public class ArkTokenEndpoint {
 	 */
 	@Inner
 	@DeleteMapping("/remove/{token}")
-	public R<Boolean> removeToken(@PathVariable("token") String token) {
+	public ResponseResult<Boolean> removeToken(@PathVariable("token") String token) {
 		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (authorization == null) {
-			return R.ok();
+			return ResponseResult.ok();
 		}
 
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
-			return R.ok();
+			return ResponseResult.ok();
 		}
 		// 清空用户信息（立即删除）
 		cacheManager.getCache(CacheConstants.USER_DETAILS).evictIfPresent(authorization.getPrincipalName());
@@ -188,7 +188,7 @@ public class ArkTokenEndpoint {
 		// 处理自定义退出事件，保存相关日志
 		SpringContextHolder.publishEvent(new LogoutSuccessEvent(new PreAuthenticatedAuthenticationToken(
 				authorization.getPrincipalName(), authorization.getRegisteredClientId())));
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class ArkTokenEndpoint {
 	 */
 	@Inner
 	@PostMapping("/page")
-	public R<Page> tokenList(@RequestBody Map<String, Object> params) {
+	public ResponseResult<Page> tokenList(@RequestBody Map<String, Object> params) {
 		// 根据分页参数获取对应数据
 		String key = String.format("%s::*", CacheConstants.PROJECT_OAUTH_ACCESS);
 		int current = MapUtil.getInt(params, CommonConstants.CURRENT);
@@ -227,7 +227,7 @@ public class ArkTokenEndpoint {
 		}).collect(Collectors.toList());
 		result.setRecords(tokenVoList);
 		result.setTotal(keys.size());
-		return R.ok(result);
+		return ResponseResult.ok(result);
 	}
 
 }

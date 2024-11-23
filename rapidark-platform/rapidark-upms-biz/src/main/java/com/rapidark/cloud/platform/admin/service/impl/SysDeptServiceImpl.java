@@ -31,7 +31,7 @@ import com.rapidark.cloud.platform.admin.api.entity.SysDept;
 import com.rapidark.cloud.platform.admin.api.vo.DeptExcelVo;
 import com.rapidark.cloud.platform.admin.mapper.SysDeptMapper;
 import com.rapidark.cloud.platform.admin.service.SysDeptService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -137,7 +137,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	}
 
 	@Override
-	public R importDept(List<DeptExcelVo> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importDept(List<DeptExcelVo> excelVOList, BindingResult bindingResult) {
 		List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
 
 		List<SysDept> deptList = this.list();
@@ -168,9 +168,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 			}
 		}
 		if (CollUtil.isNotEmpty(errorMessageList)) {
-			return R.failed(errorMessageList);
+			return ResponseResult.failed(errorMessageList);
 		}
-		return R.ok(null, "部门导入成功");
+		return ResponseResult.ok(null, "部门导入成功");
 	}
 
 	/**

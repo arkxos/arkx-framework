@@ -1,8 +1,8 @@
 package com.rapidark.cloud.platform.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.service.LoadServerService;
-import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.bean.LoadServerReq;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
@@ -32,7 +32,7 @@ public class LoadServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/regList", method = {RequestMethod.GET, RequestMethod.POST})
-    public R regList(@RequestBody LoadServerReq loadServerReq) {
+    public ResponseResult regList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, true);
     }
 
@@ -42,7 +42,7 @@ public class LoadServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/notRegPageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public R notRegPageList(@RequestBody LoadServerReq loadServerReq) {
+    public ResponseResult notRegPageList(@RequestBody LoadServerReq loadServerReq) {
         return list(loadServerReq, false);
     }
 
@@ -52,15 +52,15 @@ public class LoadServerRest extends BaseRest {
      * @param isReg
      * @return
      */
-    private R list(LoadServerReq loadServerReq, boolean isReg){
+    private ResponseResult list(LoadServerReq loadServerReq, boolean isReg){
         Assert.notNull(loadServerReq, "未获取到对象");
         if (isReg) {
             Assert.isTrue(StringUtils.isNotBlank(loadServerReq.getBalancedId()), "未获取到对象ID");
-            return R.ok(loadServerService.loadServerList(loadServerReq.getBalancedId()));
+            return ResponseResult.ok(loadServerService.loadServerList(loadServerReq.getBalancedId()));
         }else {
             int currentPage = getCurrentPage(loadServerReq.getCurrentPage());
             int pageSize = getPageSize(loadServerReq.getPageSize());
-            return R.ok(loadServerService.notLoadServerPageList(currentPage, pageSize));
+            return ResponseResult.ok(loadServerService.notLoadServerPageList(currentPage, pageSize));
         }
     }
 

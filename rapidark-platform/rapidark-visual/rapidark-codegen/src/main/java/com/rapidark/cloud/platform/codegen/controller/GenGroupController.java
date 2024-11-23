@@ -26,7 +26,7 @@ import com.rapidark.cloud.platform.codegen.entity.GenGroupEntity;
 import com.rapidark.cloud.platform.codegen.service.GenGroupService;
 import com.rapidark.cloud.platform.codegen.util.vo.GroupVO;
 import com.rapidark.cloud.platform.codegen.util.vo.TemplateGroupDTO;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 
@@ -63,65 +63,65 @@ public class GenGroupController {
 	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
 	@HasPermission("codegen_group_view")
-	public R getgenGroupPage(Page page, GenGroupEntity genGroup) {
+	public ResponseResult getgenGroupPage(Page page, GenGroupEntity genGroup) {
 		LambdaQueryWrapper<GenGroupEntity> wrapper = Wrappers.<GenGroupEntity>lambdaQuery()
 			.like(genGroup.getId() != null, GenGroupEntity::getId, genGroup.getId())
 			.like(StrUtil.isNotEmpty(genGroup.getGroupName()), GenGroupEntity::getGroupName, genGroup.getGroupName());
-		return R.ok(genGroupService.page(page, wrapper));
+		return ResponseResult.ok(genGroupService.page(page, wrapper));
 	}
 
 	/**
 	 * 通过id查询模板分组
 	 * @param id id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id查询", description = "通过id查询")
 	@GetMapping("/{id}")
 	@HasPermission("codegen_group_view")
-	public R getById(@PathVariable("id") Long id) {
-		return R.ok(genGroupService.getGroupVoById(id));
+	public ResponseResult getById(@PathVariable("id") Long id) {
+		return ResponseResult.ok(genGroupService.getGroupVoById(id));
 	}
 
 	/**
 	 * 新增模板分组
 	 * @param genTemplateGroup 模板分组
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "新增模板分组", description = "新增模板分组")
 	@SysLog("新增模板分组")
 	@PostMapping
 	@HasPermission("codegen_group_add")
-	public R save(@RequestBody TemplateGroupDTO genTemplateGroup) {
+	public ResponseResult save(@RequestBody TemplateGroupDTO genTemplateGroup) {
 		genGroupService.saveGenGroup(genTemplateGroup);
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
 	 * 修改模板分组
 	 * @param groupVo 模板分组
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "修改模板分组", description = "修改模板分组")
 	@SysLog("修改模板分组")
 	@PutMapping
 	@HasPermission("codegen_group_edit")
-	public R updateById(@RequestBody GroupVO groupVo) {
+	public ResponseResult updateById(@RequestBody GroupVO groupVo) {
 		genGroupService.updateGroupAndTemplateById(groupVo);
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
 	 * 通过id删除模板分组
 	 * @param ids id列表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id删除模板分组", description = "通过id删除模板分组")
 	@SysLog("通过id删除模板分组")
 	@DeleteMapping
 	@HasPermission("codegen_group_del")
-	public R removeById(@RequestBody Long[] ids) {
+	public ResponseResult removeById(@RequestBody Long[] ids) {
 		genGroupService.delGroupAndTemplate(ids);
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -141,10 +141,10 @@ public class GenGroupController {
 	 */
 	@GetMapping("/list")
 	@Operation(summary = "查询列表", description = "查询列表")
-	public R list() {
+	public ResponseResult list() {
 		List<GenGroupEntity> list = genGroupService
 			.list(Wrappers.<GenGroupEntity>lambdaQuery().orderByDesc(GenGroupEntity::getCreateTime));
-		return R.ok(list);
+		return ResponseResult.ok(list);
 	}
 
 }

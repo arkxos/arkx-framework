@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.platform.codegen.entity.GenTemplateGroupEntity;
 import com.rapidark.cloud.platform.codegen.service.GenTemplateGroupService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 
@@ -61,60 +61,60 @@ public class GenTemplateGroupController {
 	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
 	@HasPermission("codegen_templateGroup_view")
-	public R getgenTemplateGroupPage(Page page, GenTemplateGroupEntity genTemplateGroup) {
+	public ResponseResult getgenTemplateGroupPage(Page page, GenTemplateGroupEntity genTemplateGroup) {
 		LambdaQueryWrapper<GenTemplateGroupEntity> wrapper = Wrappers.lambdaQuery();
-		return R.ok(genTemplateGroupService.page(page, wrapper));
+		return ResponseResult.ok(genTemplateGroupService.page(page, wrapper));
 	}
 
 	/**
 	 * 通过id查询模板分组关联表
 	 * @param groupId id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id查询", description = "通过id查询")
 	@GetMapping("/{groupId}")
 	@HasPermission("codegen_templateGroup_view")
-	public R getById(@PathVariable("groupId") Long groupId) {
-		return R.ok(genTemplateGroupService.getById(groupId));
+	public ResponseResult getById(@PathVariable("groupId") Long groupId) {
+		return ResponseResult.ok(genTemplateGroupService.getById(groupId));
 	}
 
 	/**
 	 * 新增模板分组关联表
 	 * @param genTemplateGroup 模板分组关联表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "新增模板分组关联表", description = "新增模板分组关联表")
 	@SysLog("新增模板分组关联表")
 	@PostMapping
 	@HasPermission("codegen_templateGroup_add")
-	public R save(@RequestBody GenTemplateGroupEntity genTemplateGroup) {
-		return R.ok(genTemplateGroupService.save(genTemplateGroup));
+	public ResponseResult save(@RequestBody GenTemplateGroupEntity genTemplateGroup) {
+		return ResponseResult.ok(genTemplateGroupService.save(genTemplateGroup));
 	}
 
 	/**
 	 * 修改模板分组关联表
 	 * @param genTemplateGroup 模板分组关联表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "修改模板分组关联表", description = "修改模板分组关联表")
 	@SysLog("修改模板分组关联表")
 	@PutMapping
 	@HasPermission("codegen_templateGroup_edit")
-	public R updateById(@RequestBody GenTemplateGroupEntity genTemplateGroup) {
-		return R.ok(genTemplateGroupService.updateById(genTemplateGroup));
+	public ResponseResult updateById(@RequestBody GenTemplateGroupEntity genTemplateGroup) {
+		return ResponseResult.ok(genTemplateGroupService.updateById(genTemplateGroup));
 	}
 
 	/**
 	 * 通过id删除模板分组关联表
 	 * @param ids groupId列表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id删除模板分组关联表", description = "通过id删除模板分组关联表")
 	@SysLog("通过id删除模板分组关联表")
 	@DeleteMapping
 	@HasPermission("codegen_templateGroup_del")
-	public R removeById(@RequestBody Long[] ids) {
-		return R.ok(genTemplateGroupService.removeBatchByIds(CollUtil.toList(ids)));
+	public ResponseResult removeById(@RequestBody Long[] ids) {
+		return ResponseResult.ok(genTemplateGroupService.removeBatchByIds(CollUtil.toList(ids)));
 	}
 
 	/**

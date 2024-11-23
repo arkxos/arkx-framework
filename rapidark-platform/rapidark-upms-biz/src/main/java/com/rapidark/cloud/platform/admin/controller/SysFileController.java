@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.platform.admin.api.entity.SysFile;
 import com.rapidark.cloud.platform.admin.service.SysFileService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
@@ -64,35 +64,35 @@ public class SysFileController {
 	 */
 	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
-	public R getSysFilePage(@ParameterObject Page page, @ParameterObject SysFile sysFile) {
+	public ResponseResult getSysFilePage(@ParameterObject Page page, @ParameterObject SysFile sysFile) {
 		LambdaQueryWrapper<SysFile> wrapper = Wrappers.<SysFile>lambdaQuery()
 			.like(StrUtil.isNotBlank(sysFile.getOriginal()), SysFile::getOriginal, sysFile.getOriginal());
-		return R.ok(sysFileService.page(page, wrapper));
+		return ResponseResult.ok(sysFileService.page(page, wrapper));
 	}
 
 	/**
 	 * 通过id删除文件管理
 	 * @param ids id 列表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(summary = "通过id删除文件管理", description = "通过id删除文件管理")
 	@SysLog("删除文件管理")
 	@DeleteMapping
 	@HasPermission("sys_file_del")
-	public R removeById(@RequestBody Long[] ids) {
+	public ResponseResult removeById(@RequestBody Long[] ids) {
 		for (Long id : ids) {
 			sysFileService.deleteFile(id);
 		}
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
 	 * 上传文件 文件名采用uuid,避免原始文件名中带"-"符号导致下载的时候解析出现异常
 	 * @param file 资源
-	 * @return R(/ admin / bucketName / filename)
+	 * @return ResponseResult(/ admin / bucketName / filename)
 	 */
 	@PostMapping(value = "/upload")
-	public R upload(@RequestPart("rapidark-upms-biz/src/main/resources/file") MultipartFile file) {
+	public ResponseResult upload(@RequestPart("rapidark-upms-biz/src/main/resources/file") MultipartFile file) {
 		return sysFileService.uploadFile(file);
 	}
 

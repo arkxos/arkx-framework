@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.codegen.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.codegen.entity.GenTemplateEntity;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 /**
  * 模板
@@ -31,14 +31,14 @@ public interface GenTemplateService extends IService<GenTemplateEntity> {
 
 	/**
 	 * 检查版本
-	 * @return {@link R }
+	 * @return {@link ResponseResult }
 	 */
-	R checkVersion();
+	ResponseResult checkVersion();
 
 	/**
 	 * 在线更新
-	 * @return {@link R }
+	 * @return {@link ResponseResult }
 	 */
-	R onlineUpdate();
+	ResponseResult onlineUpdate();
 
 }

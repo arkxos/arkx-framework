@@ -1,7 +1,7 @@
 //package com.flying.fish.manage.config;
 //
 //import com.alibaba.fastjson.JSONObject;
-//import util.com.rapidark.cloud.platform.gateway.framework.ApiResult;
+//import util.com.rapidark.cloud.platform.gateway.framework.ResponseResult;
 //import util.com.rapidark.cloud.platform.gateway.framework.Constants;
 //import util.com.rapidark.cloud.platform.gateway.framework.HttpResponseUtils;
 //import lombok.extern.slf4j.Slf4j;
@@ -71,7 +71,7 @@
 ////                .authenticationSuccessHandler((exchange, authentication) -> {
 ////                    ServerHttpResponse response = exchange.getExchange().getResponse();
 ////                    if (authentication.isAuthenticated()) {
-////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(R.ok(Constants.SUCCESS)));
+////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(ResponseResult.ok(Constants.SUCCESS)));
 ////                    }
 ////                    return response.writeWith(Mono.empty());
 ////                })
@@ -79,7 +79,7 @@
 ////                .authenticationFailureHandler((exchange, exception) -> {
 ////                    log.error("user auth failed ,there is not login! error: {}", exception.getMessage());
 ////                    ServerHttpResponse response = exchange.getExchange().getResponse();
-////                    return HttpResponseUtils.write(response, HttpStatus.UNAUTHORIZED, JSONObject.toJSONString(R.ok(Constants.NOT_LOGIN)));
+////                    return HttpResponseUtils.write(response, HttpStatus.UNAUTHORIZED, JSONObject.toJSONString(ResponseResult.ok(Constants.NOT_LOGIN)));
 ////                })
 ////                .and()
 ////                .logout()
@@ -92,7 +92,7 @@
 ////                .logoutSuccessHandler((exchange, authentication) -> {
 ////                    ServerHttpResponse response = exchange.getExchange().getResponse();
 ////                    if (authentication.isAuthenticated()) {
-////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(R.ok(Constants.SUCCESS)));
+////                        return HttpResponseUtils.write(response, HttpStatus.OK, JSONObject.toJSONString(ResponseResult.ok(Constants.SUCCESS)));
 ////                    }
 ////                    return response.writeWith(Mono.empty());
 ////                })
@@ -102,7 +102,7 @@
 ////                .accessDeniedHandler((exchange, denied) -> {
 ////                    denied.printStackTrace();
 ////                    ServerHttpResponse response = exchange.getResponse();
-////                    ApiResult result = R.ok(Constants.NOT_LOGIN, "无权限访问");
+////                    ResponseResult result = ResponseResult.ok(Constants.NOT_LOGIN, "无权限访问");
 ////                    return HttpResponseUtils.write(response, HttpStatus.UNAUTHORIZED, JSONObject.toJSONString(result));
 ////                })
 //        ;

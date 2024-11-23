@@ -26,7 +26,7 @@ import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.platform.admin.api.entity.SysPost;
 import com.rapidark.cloud.platform.admin.api.vo.PostExcelVO;
 import com.rapidark.cloud.platform.admin.service.SysPostService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 
@@ -61,8 +61,8 @@ public class SysPostController {
 	 * @return 岗位列表
 	 */
 	@GetMapping("/list")
-	public R<List<SysPost>> listPosts() {
-		return R.ok(sysPostService.list(Wrappers.emptyWrapper()));
+	public ResponseResult<List<SysPost>> listPosts() {
+		return ResponseResult.ok(sysPostService.list(Wrappers.emptyWrapper()));
 	}
 
 	/**
@@ -74,72 +74,72 @@ public class SysPostController {
 	@Operation(description = "分页查询", summary = "分页查询")
 	@GetMapping("/page")
 	@HasPermission("sys_post_view")
-	public R getSysPostPage(@ParameterObject Page page, @ParameterObject SysPost sysPost) {
-		return R.ok(sysPostService.page(page, Wrappers.<SysPost>lambdaQuery()
+	public ResponseResult getSysPostPage(@ParameterObject Page page, @ParameterObject SysPost sysPost) {
+		return ResponseResult.ok(sysPostService.page(page, Wrappers.<SysPost>lambdaQuery()
 			.like(StrUtil.isNotBlank(sysPost.getPostName()), SysPost::getPostName, sysPost.getPostName())));
 	}
 
 	/**
 	 * 通过id查询岗位信息表
 	 * @param postId id
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(description = "通过id查询", summary = "通过id查询")
 	@GetMapping("/details/{postId}")
 	@HasPermission("sys_post_view")
-	public R getById(@PathVariable("postId") Long postId) {
-		return R.ok(sysPostService.getById(postId));
+	public ResponseResult getById(@PathVariable("postId") Long postId) {
+		return ResponseResult.ok(sysPostService.getById(postId));
 	}
 
 	/**
 	 * 查询岗位信息信息
 	 * @param query 查询条件
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(description = "查询角色信息", summary = "查询角色信息")
 	@GetMapping("/details")
 	@HasPermission("sys_post_view")
-	public R getDetails(SysPost query) {
-		return R.ok(sysPostService.getOne(Wrappers.query(query), false));
+	public ResponseResult getDetails(SysPost query) {
+		return ResponseResult.ok(sysPostService.getOne(Wrappers.query(query), false));
 	}
 
 	/**
 	 * 新增岗位信息表
 	 * @param sysPost 岗位信息表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(description = "新增岗位信息表", summary = "新增岗位信息表")
 	@SysLog("新增岗位信息表")
 	@PostMapping
 	@HasPermission("sys_post_add")
-	public R save(@RequestBody SysPost sysPost) {
-		return R.ok(sysPostService.save(sysPost));
+	public ResponseResult save(@RequestBody SysPost sysPost) {
+		return ResponseResult.ok(sysPostService.save(sysPost));
 	}
 
 	/**
 	 * 修改岗位信息表
 	 * @param sysPost 岗位信息表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(description = "修改岗位信息表", summary = "修改岗位信息表")
 	@SysLog("修改岗位信息表")
 	@PutMapping
 	@HasPermission("sys_post_edit")
-	public R updateById(@RequestBody SysPost sysPost) {
-		return R.ok(sysPostService.updateById(sysPost));
+	public ResponseResult updateById(@RequestBody SysPost sysPost) {
+		return ResponseResult.ok(sysPostService.updateById(sysPost));
 	}
 
 	/**
 	 * 通过id删除岗位信息表
 	 * @param ids id 列表
-	 * @return R
+	 * @return ResponseResult
 	 */
 	@Operation(description = "通过id删除岗位信息表", summary = "通过id删除岗位信息表")
 	@SysLog("通过id删除岗位信息表")
 	@DeleteMapping
 	@HasPermission("sys_post_del")
-	public R removeById(@RequestBody Long[] ids) {
-		return R.ok(sysPostService.removeBatchByIds(CollUtil.toList(ids)));
+	public ResponseResult removeById(@RequestBody Long[] ids) {
+		return ResponseResult.ok(sysPostService.removeBatchByIds(CollUtil.toList(ids)));
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class SysPostController {
 	 */
 	@PostMapping("/import")
 	@HasPermission("sys_post_export")
-	public R importRole(@RequestExcel List<PostExcelVO> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importRole(@RequestExcel List<PostExcelVO> excelVOList, BindingResult bindingResult) {
 		return sysPostService.importPost(excelVOList, bindingResult);
 	}
 

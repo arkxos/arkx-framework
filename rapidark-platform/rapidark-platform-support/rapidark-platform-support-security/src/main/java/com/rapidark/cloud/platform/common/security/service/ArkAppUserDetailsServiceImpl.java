@@ -21,7 +21,7 @@ import com.rapidark.cloud.platform.admin.api.dto.UserInfo;
 import com.rapidark.cloud.platform.admin.api.feign.RemoteUserService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -58,7 +58,7 @@ public class ArkAppUserDetailsServiceImpl implements ArkUserDetailsService {
 
 		UserDTO userDTO = new UserDTO();
 		userDTO.setPhone(phone);
-		R<UserInfo> result = remoteUserService.info(userDTO);
+		ResponseResult<UserInfo> result = remoteUserService.info(userDTO);
 
 		UserDetails userDetails = getUserDetails(result);
 		if (cache != null) {

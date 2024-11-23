@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.daemon.quartz.task;
 
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +27,9 @@ public class RestTaskDemo {
 	 */
 	@Inner(value = false)
 	@GetMapping("/{param}")
-	public R demoMethod(@PathVariable("param") String param) {
+	public ResponseResult demoMethod(@PathVariable("param") String param) {
 		log.info("测试于:{}，传入参数{}", LocalDateTime.now(), param);
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 }

@@ -18,7 +18,7 @@ package com.rapidark.cloud.platform.common.security.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,7 +53,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 			AuthenticationException authException) {
 		response.setCharacterEncoding(CommonConstants.UTF8);
 		response.setContentType(CommonConstants.CONTENT_TYPE);
-		R<String> result = new R<>();
+		ResponseResult<String> result = new ResponseResult<>();
 		result.setCode(CommonConstants.FAIL);
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		if (authException != null) {

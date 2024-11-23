@@ -40,8 +40,8 @@ import com.rapidark.cloud.platform.admin.service.*;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
 
 import lombok.AllArgsConstructor;
@@ -203,7 +203,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	@Override
 	@CacheEvict(value = CacheConstants.USER_DETAILS, key = "#userDto.username")
-	public R<Boolean> updateUserInfo(UserDTO userDto) {
+	public ResponseResult<Boolean> updateUserInfo(UserDTO userDto) {
 		SysUser sysUser = new SysUser();
 		sysUser.setPhone(userDto.getPhone());
 		sysUser.setUserId(SecurityUtils.getUser().getId());
@@ -211,7 +211,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		sysUser.setNickname(userDto.getNickname());
 		sysUser.setName(userDto.getName());
 		sysUser.setEmail(userDto.getEmail());
-		return R.ok(this.updateById(sysUser));
+		return ResponseResult.ok(this.updateById(sysUser));
 	}
 
 	@Override
@@ -288,7 +288,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return ok fail
 	 */
 	@Override
-	public R importUser(List<UserExcelVO> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importUser(List<UserExcelVO> excelVOList, BindingResult bindingResult) {
 		// 通用校验获取失败的数据
 		List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
 		List<SysDept> deptList = sysDeptService.list();
@@ -349,9 +349,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		}
 
 		if (CollUtil.isNotEmpty(errorMessageList)) {
-			return R.failed(errorMessageList);
+			return ResponseResult.failed(errorMessageList);
 		}
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -386,14 +386,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public R<Boolean> registerUser(UserDTO userDto) {
+	public ResponseResult<Boolean> registerUser(UserDTO userDto) {
 		// 判断用户名是否存在
 		SysUser sysUser = this.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, userDto.getUsername()));
 		if (sysUser != null) {
 			String message = MsgUtils.getMessage(ErrorCodes.SYS_USER_USERNAME_EXISTING, userDto.getUsername());
-			return R.failed(message);
+			return ResponseResult.failed(message);
 		}
-		return R.ok(saveUser(userDto));
+		return ResponseResult.ok(saveUser(userDto));
 	}
 
 	/**
@@ -403,54 +403,54 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.USER_DETAILS, key = "#username")
-	public R<Boolean> lockUser(String username) {
+	public ResponseResult<Boolean> lockUser(String username) {
 		SysUser sysUser = baseMapper.selectOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, username));
 
 		if (Objects.nonNull(sysUser)) {
 			sysUser.setLockFlag(CommonConstants.STATUS_LOCK);
 			baseMapper.updateById(sysUser);
 		}
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	@Override
 	@CacheEvict(value = CacheConstants.USER_DETAILS, key = "#userDto.username")
-	public R changePassword(UserDTO userDto) {
+	public ResponseResult changePassword(UserDTO userDto) {
 		SysUser sysUser = baseMapper.selectById(SecurityUtils.getUser().getId());
 		if (Objects.isNull(sysUser)) {
-			return R.failed("用户不存在");
+			return ResponseResult.failed("用户不存在");
 		}
 
 		if (StrUtil.isEmpty(userDto.getPassword())) {
-			return R.failed("原密码不能为空");
+			return ResponseResult.failed("原密码不能为空");
 		}
 
 		if (!ENCODER.matches(userDto.getPassword(), sysUser.getPassword())) {
 			log.info("原密码错误，修改个人信息失败:{}", userDto.getUsername());
-			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_UPDATE_PASSWORDERROR));
+			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_UPDATE_PASSWORDERROR));
 		}
 
 		if (StrUtil.isEmpty(userDto.getNewpassword1())) {
-			return R.failed("新密码不能为空");
+			return ResponseResult.failed("新密码不能为空");
 		}
 		String password = ENCODER.encode(userDto.getNewpassword1());
 
 		this.update(Wrappers.<SysUser>lambdaUpdate()
 			.set(SysUser::getPassword, password)
 			.eq(SysUser::getUserId, sysUser.getUserId()));
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	@Override
-	public R checkPassword(String password) {
+	public ResponseResult checkPassword(String password) {
 		SysUser sysUser = baseMapper.selectById(SecurityUtils.getUser().getId());
 
 		if (!ENCODER.matches(password, sysUser.getPassword())) {
 			log.info("原密码错误");
-			return R.failed("密码输入错误");
+			return ResponseResult.failed("密码输入错误");
 		}
 		else {
-			return R.ok();
+			return ResponseResult.ok();
 		}
 	}
 

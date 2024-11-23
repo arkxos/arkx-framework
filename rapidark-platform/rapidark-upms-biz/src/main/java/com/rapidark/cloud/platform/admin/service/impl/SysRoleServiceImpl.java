@@ -34,7 +34,7 @@ import com.rapidark.cloud.platform.admin.service.SysRoleService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -113,7 +113,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 	 * @return ok fail
 	 */
 	@Override
-	public R importRole(List<RoleExcelVO> excelVOList, BindingResult bindingResult) {
+	public ResponseResult importRole(List<RoleExcelVO> excelVOList, BindingResult bindingResult) {
 		// 通用校验获取失败的数据
 		List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
 
@@ -143,9 +143,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 			}
 		}
 		if (CollUtil.isNotEmpty(errorMessageList)) {
-			return R.failed(errorMessageList);
+			return ResponseResult.failed(errorMessageList);
 		}
-		return R.ok();
+		return ResponseResult.ok();
 	}
 
 	/**

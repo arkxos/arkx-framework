@@ -1,11 +1,11 @@
 package com.rapidark.cloud.platform.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.bean.ClientReq;
 import com.rapidark.cloud.platform.gateway.framework.entity.Client;
 import com.rapidark.cloud.platform.gateway.framework.service.ClientService;
 import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
-import com.rapidark.cloud.platform.common.core.util.R;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.UUIDUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +42,7 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public R add(@RequestBody Client client) {
+    public ResponseResult add(@RequestBody Client client) {
         Assert.notNull(client, "未获取到对象");
         client.setId(UUIDUtils.getUUIDString());
         client.setCreateTime(new Date());
@@ -55,7 +55,7 @@ public class ClientRest extends BaseRest {
         //保存
         clientService.save(client);
         customNacosConfigService.publishClientNacosConfig(client.getId());
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -64,13 +64,13 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public R delete(@RequestParam String id) {
+    public ResponseResult delete(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Client dbClient = clientService.findById(id);
         Assert.notNull(dbClient, "未获取到对象");
         clientService.delete(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -79,14 +79,14 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public R update(@RequestBody Client client) {
+    public ResponseResult update(@RequestBody Client client) {
         Assert.notNull(client, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(client.getId()), "未获取到对象ID");
         client.setUpdateTime(new Date());
         this.validate(client);
         clientService.update(client);
         customNacosConfigService.publishClientNacosConfig(client.getId());
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -95,9 +95,9 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public R findById(@RequestParam String id) {
+    public ResponseResult findById(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        return R.ok(clientService.findById(id));
+        return ResponseResult.ok(clientService.findById(id));
     }
 
     /**
@@ -106,7 +106,7 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public R pageList(@RequestBody ClientReq clientReq) {
+    public ResponseResult pageList(@RequestBody ClientReq clientReq) {
         Client client = new Client();
         Integer reqCurrentPage = null;
         Integer reqPageSize = null;
@@ -129,7 +129,7 @@ public class ClientRest extends BaseRest {
         }
         int currentPage = getCurrentPage(reqCurrentPage);
         int pageSize = getPageSize(reqPageSize);
-        return R.ok(clientService.pageList(client, currentPage, pageSize));
+        return ResponseResult.ok(clientService.pageList(client, currentPage, pageSize));
     }
 
     /**
@@ -138,13 +138,13 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-    public R start(@RequestParam String id) {
+    public ResponseResult start(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Client dbClient = clientService.findById(id);
         dbClient.setStatus(Constants.YES);
         clientService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -153,13 +153,13 @@ public class ClientRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-    public R stop(@RequestParam String id) {
+    public ResponseResult stop(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         Client dbClient = clientService.findById(id);
         dbClient.setStatus(Constants.NO);
         clientService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
-        return R.ok();
+        return ResponseResult.ok();
     }
 
 }

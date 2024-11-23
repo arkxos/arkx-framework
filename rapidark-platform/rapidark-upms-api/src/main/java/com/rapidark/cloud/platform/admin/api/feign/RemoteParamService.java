@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.admin.api.feign;
 
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -24,6 +24,6 @@ public interface RemoteParamService {
 	 */
 	@NoToken
 	@GetMapping("/param/publicValue/{key}")
-	R<String> getByKey(@PathVariable("key") String key);
+	ResponseResult<String> getByKey(@PathVariable("key") String key);
 
 }

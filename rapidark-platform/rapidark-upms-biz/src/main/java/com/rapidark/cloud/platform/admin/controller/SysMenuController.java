@@ -21,7 +21,7 @@ package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysMenu;
 import com.rapidark.cloud.platform.admin.service.SysMenuService;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
@@ -57,11 +57,11 @@ public class SysMenuController {
 	 * @return 当前用户的树形菜单
 	 */
 	@GetMapping
-	public R getUserMenu(String type, Long parentId) {
+	public ResponseResult getUserMenu(String type, Long parentId) {
 		// 获取符合条件的菜单
 		Set<SysMenu> all = new HashSet<>();
 		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
-		return R.ok(sysMenuService.filterMenu(all, type, parentId));
+		return ResponseResult.ok(sysMenuService.filterMenu(all, type, parentId));
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class SysMenuController {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public R getTree(Long parentId, String menuName, String type) {
-		return R.ok(sysMenuService.treeMenu(parentId, menuName, type));
+	public ResponseResult getTree(Long parentId, String menuName, String type) {
+		return ResponseResult.ok(sysMenuService.treeMenu(parentId, menuName, type));
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class SysMenuController {
 	 * @return 属性集合
 	 */
 	@GetMapping("/tree/{roleId}")
-	public R getRoleTree(@PathVariable Long roleId) {
-		return R
+	public ResponseResult getRoleTree(@PathVariable Long roleId) {
+		return ResponseResult
 			.ok(sysMenuService.findMenuByRoleId(roleId).stream().map(SysMenu::getMenuId).collect(Collectors.toList()));
 	}
 
@@ -92,8 +92,8 @@ public class SysMenuController {
 	 * @return 菜单详细信息
 	 */
 	@GetMapping("/{id}")
-	public R getById(@PathVariable Long id) {
-		return R.ok(sysMenuService.getById(id));
+	public ResponseResult getById(@PathVariable Long id) {
+		return ResponseResult.ok(sysMenuService.getById(id));
 	}
 
 	/**
@@ -104,9 +104,9 @@ public class SysMenuController {
 	@SysLog("新增菜单")
 	@PostMapping
 	@HasPermission("sys_menu_add")
-	public R save(@Valid @RequestBody SysMenu sysMenu) {
+	public ResponseResult save(@Valid @RequestBody SysMenu sysMenu) {
 		sysMenuService.save(sysMenu);
-		return R.ok(sysMenu);
+		return ResponseResult.ok(sysMenu);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class SysMenuController {
 	@SysLog("删除菜单")
 	@DeleteMapping("/{id}")
 	@HasPermission("sys_menu_del")
-	public R removeById(@PathVariable Long id) {
+	public ResponseResult removeById(@PathVariable Long id) {
 		return sysMenuService.removeMenuById(id);
 	}
 
@@ -129,8 +129,8 @@ public class SysMenuController {
 	@SysLog("更新菜单")
 	@PutMapping
 	@HasPermission("sys_menu_edit")
-	public R update(@Valid @RequestBody SysMenu sysMenu) {
-		return R.ok(sysMenuService.updateMenuById(sysMenu));
+	public ResponseResult update(@Valid @RequestBody SysMenu sysMenu) {
+		return ResponseResult.ok(sysMenuService.updateMenuById(sysMenu));
 	}
 
 }

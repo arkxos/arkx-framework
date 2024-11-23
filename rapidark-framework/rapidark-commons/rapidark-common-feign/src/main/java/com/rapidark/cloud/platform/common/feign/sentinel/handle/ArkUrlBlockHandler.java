@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.common.feign.sentinel.handle;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -49,7 +49,7 @@ public class ArkUrlBlockHandler implements BlockExceptionHandler {
 
 		response.setContentType(MediaType.APPLICATION_JSON.getType());
 		response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-		response.getWriter().print(objectMapper.writeValueAsString(R.failed(e.getMessage())));
+		response.getWriter().print(objectMapper.writeValueAsString(ResponseResult.failed(e.getMessage())));
 	}
 
 }

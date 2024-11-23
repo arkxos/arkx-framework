@@ -2,7 +2,7 @@ package com.rapidark.cloud.platform.admin.api.feign;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -27,6 +27,6 @@ public interface RemoteDictService {
 	 */
 	@NoToken
 	@GetMapping("/dict/remote/type/{type}")
-	R<List<SysDictItem>> getDictByType(@PathVariable("type") String type);
+	ResponseResult<List<SysDictItem>> getDictByType(@PathVariable("type") String type);
 
 }

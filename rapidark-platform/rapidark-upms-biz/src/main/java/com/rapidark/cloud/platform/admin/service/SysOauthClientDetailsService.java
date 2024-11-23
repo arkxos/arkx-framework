@@ -22,7 +22,7 @@ package com.rapidark.cloud.platform.admin.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 /**
  * <p>
@@ -58,8 +58,8 @@ public interface SysOauthClientDetailsService extends IService<SysOauthClientDet
 
 	/**
 	 * 同步缓存 （清空缓存）
-	 * @return R
+	 * @return ResponseResult
 	 */
-	R syncClientCache();
+	ResponseResult syncClientCache();
 
 }

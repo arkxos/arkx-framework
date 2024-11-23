@@ -23,7 +23,7 @@ import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysDept;
 import com.rapidark.cloud.platform.admin.api.vo.DeptExcelVo;
-import com.rapidark.cloud.platform.common.core.util.R;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import org.springframework.validation.BindingResult;
 
@@ -55,7 +55,7 @@ public interface SysDeptService extends IService<SysDept> {
 
 	List<DeptExcelVo> listExcelVo();
 
-	R importDept(List<DeptExcelVo> excelVOList, BindingResult bindingResult);
+	ResponseResult importDept(List<DeptExcelVo> excelVOList, BindingResult bindingResult);
 
 	/**
 	 * 获取部门的所有后代部门列表
