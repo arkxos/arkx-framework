@@ -1,5 +1,7 @@
 package com.rapidark.cloud.platform.gateway;
 
+import com.rapidark.cloud.platform.common.feign.annotation.EnableArkFeignClients;
+import com.rapidark.cloud.platform.common.security.annotation.EnableArkResourceServer;
 import com.rapidark.cloud.platform.gateway.manage.task.MonitorTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -19,8 +21,10 @@ import jakarta.annotation.Resource;
  */
 @Slf4j
 @EnableAsync
+@EnableArkFeignClients
+@EnableArkResourceServer
 @EnableScheduling
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.rapidark")
 @EnableDiscoveryClient
 public class ArkGatewayManageApplication {
 

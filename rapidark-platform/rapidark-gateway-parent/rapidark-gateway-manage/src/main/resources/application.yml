@@ -3,16 +3,23 @@ server:
   # 服务端口
   port: 8771
   # 服务IP
-  address: 0.0.0.0
+  # address: 0.0.0.0
 
 spring:
+  # address: 0.0.0.0
   config:
-    # 在升级到springcloud-2021.0.1.x后spring-cloud-starter-alibaba-nacos-config模块移除了spring-cloud-starter-bootstrap依赖
-    # 导致bootstarp.yml不会在进行加载，需要通过spring.config.import=optional:nacos: instead.加载nacos中心的指定dataId属性
     import:
-      - optional:nacos:${spring.cloud.nacos.config.prefix}.${spring.cloud.nacos.config.file-extension}
+      - nacos:application-@profiles.active@.yml
+      - nacos:${spring.application.name}-@profiles.active@.yml
       - optional:classpath:application-db.yml
       - optional:classpath:application-mail.yml
+#
+#  config:
+#    # 在升级到springcloud-2021.0.1.x后spring-cloud-starter-alibaba-nacos-config模块移除了spring-cloud-starter-bootstrap依赖
+#    # 导致bootstarp.yml不会在进行加载，需要通过spring.config.import=optional:nacos: instead.加载nacos中心的指定dataId属性
+#    import:
+#      - optional:nacos:${spring.cloud.nacos.config.prefix}.${spring.cloud.nacos.config.file-extension}
+#
   application:
     # 应用服务名
     name: rapidark-gateway-manage
@@ -22,27 +29,34 @@ spring:
 #    user:
 #      name: admin
 #      password: admin
+  cache:
+    type: redis # 缓存类型 Redis
+  data:
+    redis:
+      host: rapidark-redis  # Redis地址
+      password: rapidark # Redis密码，没有留空
+      port: 6379  # Redis端口
   cloud:
     # 注册到nacos，服务注册发现和配置管理中心
     nacos:
-      username: nacos
-      password: nacos
-      config:
-        server-addr: 127.0.0.1:8848
-        # 注意：管理模块和网关模块均采用统一的配置管理名称（dataId）和默认DEFAULT_GROUP组（group）
-        group: DEFAULT_GROUP
-        # 配置内容格式
-        file-extension: properties
-        # dataId名称，程序注册事件监听此dataId下的配置变化
-        prefix: rapidark-gateway-manage
-        # 指定命名空间（可以不指定）
-        # namespace: my_namespace_id
+      username: @nacos.username@
+      password: @nacos.password@
       discovery:
-        server-addr: 127.0.0.1:8848
         # 指定命名空间（可以不指定）
         # namespace: my_namespace_id
         # false只获取服务，不注册当前服务; 默认为true
         # register-enabled: false
+        server-addr: ${NACOS_HOST:rapidark-register}:${NACOS_PORT:8848}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 注意：管理模块和网关模块均采用统一的配置管理名称（dataId）和默认DEFAULT_GROUP组（group）
+        # group: DEFAULT_GROUP
+        # 配置内容格式
+        # file-extension: properties
+        # dataId名称，程序注册事件监听此dataId下的配置变化
+        # prefix: rapidark-gateway-manage
+        # 指定命名空间（可以不指定）
+        # namespace: my_namespace_id
 
 # 启用服务健康检测，注册中心将通过http://host:port/actuator/health 检测服务的存活，默认10s一次
 management:

@@ -95,15 +95,41 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!--安全模块-->
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-platform-support-security</artifactId>
+			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson-spring-boot-starter</artifactId>
+		</dependency>
     </dependencies>
 
-    <build>
-        <finalName>dynamic-manage</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+	<profiles>
+		<profile>
+			<id>boot</id>
+		</profile>
+		<profile>
+			<id>cloud</id>
+			<activation>
+				<!-- 默认环境 -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
