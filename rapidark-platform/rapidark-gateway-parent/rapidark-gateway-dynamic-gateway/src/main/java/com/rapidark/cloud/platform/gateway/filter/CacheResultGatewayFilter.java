@@ -69,6 +69,7 @@ public class CacheResultGatewayFilter implements GatewayFilter, Ordered {
             log.debug("> 100 ,not cache request routeId:{}", routeId);
             return chain.filter(exchange);
         }
+
         //databuffer管理工厂类
         DataBufferFactory dataBufferFactory = exchange.getResponse().bufferFactory();
         ServerHttpRequest request = exchange.getRequest();

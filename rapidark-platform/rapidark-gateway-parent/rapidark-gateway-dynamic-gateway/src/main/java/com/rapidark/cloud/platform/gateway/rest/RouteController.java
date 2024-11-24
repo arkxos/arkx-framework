@@ -22,6 +22,7 @@ import jakarta.annotation.Resource;
 //@RestController
 @RequestMapping("/gateway/route")
 public class RouteController {
+
     @Resource
     private DynamicRouteService dynamicRouteService;
     @Resource

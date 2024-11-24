@@ -10,8 +10,10 @@ import lombok.Data;
  */
 @Data
 public class GatewayRegServer implements java.io.Serializable {
+
     private String clientId;
     private String token;
     private String ip;
     private String secretKey;
+
 }

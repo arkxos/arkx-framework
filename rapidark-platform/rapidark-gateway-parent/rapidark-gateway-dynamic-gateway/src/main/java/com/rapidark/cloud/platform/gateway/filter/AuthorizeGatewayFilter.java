@@ -18,10 +18,10 @@ import static com.rapidark.cloud.platform.gateway.support.CustomGatewayToStringS
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
 /**
- * @Description
- * @Author JL
+ * @Author JL, Darkness
  * @Date 2023/10/12
  * @Version V1.0
+ * Since: 1.0
  */
 @Slf4j
 public class AuthorizeGatewayFilter implements GatewayFilter, Ordered {

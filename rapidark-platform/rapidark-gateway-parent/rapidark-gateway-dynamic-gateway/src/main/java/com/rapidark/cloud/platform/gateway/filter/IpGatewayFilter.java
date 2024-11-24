@@ -31,6 +31,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
 public class IpGatewayFilter implements GatewayFilter, Ordered {
 
     private boolean enabled;
+
     public IpGatewayFilter(boolean enabled){
         this.enabled = enabled;
     }
@@ -49,6 +50,7 @@ public class IpGatewayFilter implements GatewayFilter, Ordered {
             log.error(msg);
             return HttpResponseUtils.writeUnauth(exchange.getResponse(), msg);
         }
+
         GatewayRegServer regServer = getCacheRegServer(ip, routeId);
         if (regServer == null){
             String msg = "客户端IP未注册使用，无权限访问网关路由："+ routeId +"! Ip:" + ip;

@@ -58,9 +58,7 @@ public class RouteConfig {
     @Deprecated
     @Bean("uriKeyResolver")
     public KeyResolver uriKeyResolver() {
-        return (exchange) -> {
-            return Mono.just(exchange.getRequest().getURI().getPath());
-        };
+        return (exchange) -> Mono.just(exchange.getRequest().getURI().getPath());
     }
 
     /**

@@ -25,6 +25,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
  */
 @Slf4j
 public class CustomSentinelGatewayFilter extends SentinelGatewayFilter {
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 注意Setinel目前熔断只支持RT慢请求降级，对于异常比例和异常数降级暂时无支持，参见：https://github.com/alibaba/Sentinel/issues/1842

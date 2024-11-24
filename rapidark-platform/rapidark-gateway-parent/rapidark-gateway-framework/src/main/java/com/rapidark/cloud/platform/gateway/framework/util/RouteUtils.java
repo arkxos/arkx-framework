@@ -13,10 +13,11 @@ public class RouteUtils {
      * @param balancedRouteId 负载均衡网关ID
      * @return 子路由ID
      */
-    public static String getBalancedToRouteId(String balancedRouteId){
-        return balancedRouteId.contains(RouteConstants.BALANCED) ?
-                balancedRouteId.substring(balancedRouteId.indexOf("-", RouteConstants.BALANCED.length() + 1) + 1) :
-                balancedRouteId;
+    public static String getBalancedToRouteId(String balancedRouteId) {
+		if(balancedRouteId.contains(RouteConstants.BALANCED)) {
+			return balancedRouteId.substring(balancedRouteId.indexOf("-", RouteConstants.BALANCED.length() + 1) + 1);
+		}
+        return balancedRouteId;
     }
 
     public static void main(String[] args) {

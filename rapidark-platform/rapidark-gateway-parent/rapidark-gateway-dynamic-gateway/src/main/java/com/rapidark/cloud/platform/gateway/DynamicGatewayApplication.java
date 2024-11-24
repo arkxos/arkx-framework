@@ -52,7 +52,7 @@ public class DynamicGatewayApplication {
      * @param args
      */
     public static void main(String[] args) {
-        SpringApplication application =new SpringApplication(DynamicGatewayApplication.class);
+        SpringApplication application = new SpringApplication(DynamicGatewayApplication.class);
         application.run(args);
     }
 

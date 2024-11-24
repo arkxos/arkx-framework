@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Version V1.0
  */
 public class IpListCache {
+
     private static ConcurrentHashMap<String,Object> cacheMap = new ConcurrentHashMap<>();
 
     public static void put(final String key,final Object value){
