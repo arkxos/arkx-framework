@@ -16,7 +16,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="groovyscript")
+@Table(name="gw_groovyscript")
 @Data
 public class GroovyScript {
 

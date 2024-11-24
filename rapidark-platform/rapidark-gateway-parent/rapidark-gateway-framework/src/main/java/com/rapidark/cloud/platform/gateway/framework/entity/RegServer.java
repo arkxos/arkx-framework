@@ -16,7 +16,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="regserver")
+@Table(name="gw_regserver")
 @Data
 public class RegServer {
 

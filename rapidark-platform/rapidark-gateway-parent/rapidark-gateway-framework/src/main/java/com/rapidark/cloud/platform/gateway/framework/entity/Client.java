@@ -19,7 +19,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="client")
+@Table(name="gw_client")
 @Data
 public class Client implements java.io.Serializable {
 

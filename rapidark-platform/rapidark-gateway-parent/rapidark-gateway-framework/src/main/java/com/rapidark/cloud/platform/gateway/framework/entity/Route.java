@@ -17,7 +17,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="route")
+@Table(name="gw_route")
 @Data
 public class Route implements java.io.Serializable {
 

@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Size;
  * @Version V1.0
  */
 @Entity
-@Table(name="apidoc")
+@Table(name="gw_apidoc")
 @Data
 public class ApiDoc {
 

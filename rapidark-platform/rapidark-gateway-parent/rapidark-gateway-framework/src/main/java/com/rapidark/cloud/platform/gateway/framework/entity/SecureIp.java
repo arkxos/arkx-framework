@@ -19,7 +19,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="secureip")
+@Table(name="gw_secureip")
 @Data
 public class SecureIp implements java.io.Serializable {
 

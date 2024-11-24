@@ -15,7 +15,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="balanced")
+@Table(name="gw_balanced")
 @Data
 public class Balanced implements java.io.Serializable {
 

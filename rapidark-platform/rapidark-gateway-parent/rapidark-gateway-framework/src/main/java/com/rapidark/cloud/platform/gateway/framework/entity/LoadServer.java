@@ -14,7 +14,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Entity
-@Table(name="loadserver")
+@Table(name="gw_loadserver")
 @Data
 public class LoadServer implements java.io.Serializable {
 
