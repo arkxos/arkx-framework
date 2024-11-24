@@ -63,7 +63,25 @@
         <dependency>
             <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-biz</artifactId>
-        </dependency>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-boot-starter-web</artifactId>
+					<groupId>org.springframework.boot</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-webmvc</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>rapidark-commons-core</artifactId>
+					<groupId>com.rapidark.framework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
         <!--接口文档-->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -80,10 +98,16 @@
             <artifactId>hutool-crypto</artifactId>
         </dependency>
 		<!-- 消息总线rabbitMQ -->
-		        <dependency>
-		            <groupId>org.springframework.cloud</groupId>
-		            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		        </dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-bus-amqp</artifactId>-->
+<!--		</dependency>-->
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>5.0.3</version>
+			<scope>compile</scope>
+		</dependency>
 		<!--		<dependency>-->
 		<!--			<groupId>com.rabbitmq</groupId>-->
 		<!--			<artifactId>amqp-client</artifactId>-->
