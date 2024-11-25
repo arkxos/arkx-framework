@@ -5,6 +5,7 @@ import com.rapidark.cloud.platform.gateway.framework.entity.Route;
 import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
 import com.rapidark.cloud.platform.gateway.service.DynamicRouteService;
 import com.rapidark.cloud.platform.gateway.service.LoadRouteService;
+import com.rapidark.cloud.platform.gateway.service.load.RouteDefinitionConverter;
 import com.rapidark.cloud.platform.gateway.vo.GatewayRouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.util.Assert;
@@ -107,7 +108,7 @@ public class RouteController {
     public ResponseResult load(@RequestParam String id) {
         Assert.notNull(id, "路由ID不能为空");
         Route route = routeService.findById(id);
-        RouteDefinition routeDefinition = loadRouteService.loadRouteDefinition(route);
+        RouteDefinition routeDefinition = RouteDefinitionConverter.converteFrom(route);
         this.dynamicRouteService.add(routeDefinition);
         return ResponseResult.ok();
     }

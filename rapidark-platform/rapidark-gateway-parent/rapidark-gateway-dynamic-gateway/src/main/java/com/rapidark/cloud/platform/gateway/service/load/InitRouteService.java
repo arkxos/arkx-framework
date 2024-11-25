@@ -73,7 +73,7 @@ public class InitRouteService {
             }
             routeList.forEach(r -> {
                 RouteCache.put(r.getId(), r);
-                routeDefinitions.add(loadRouteService.loadRouteDefinition(r));
+                routeDefinitions.add(RouteDefinitionConverter.converteFrom(r));
             });
             log.info("初始化加载网关路由配置共{}条", routeList.size());
         }catch(Exception e){
@@ -143,7 +143,7 @@ public class InitRouteService {
                 //记录到本地缓存中
                 RouteCache.put(r.getId(), r);
                 //添加新的负载均衡路由对象
-                routeDefinitions.add(loadRouteService.loadRouteDefinition(r));
+                routeDefinitions.add(RouteDefinitionConverter.converteFrom(r));
             });
         }catch(Exception e){
             log.error("加载数据库中网关负载路由配置异常：",e);

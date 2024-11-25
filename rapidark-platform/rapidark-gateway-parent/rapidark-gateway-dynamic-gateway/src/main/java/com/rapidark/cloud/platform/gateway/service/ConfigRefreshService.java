@@ -10,6 +10,7 @@ import com.rapidark.cloud.platform.gateway.cache.IpListCache;
 import com.rapidark.cloud.platform.gateway.cache.RegServerCache;
 import com.rapidark.cloud.platform.gateway.cache.RouteCache;
 import com.rapidark.cloud.platform.gateway.event.ApplicationEventPublisherFactory;
+import com.rapidark.cloud.platform.gateway.service.load.RouteDefinitionConverter;
 import com.rapidark.cloud.platform.gateway.vo.GatewayRegServer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -131,7 +132,7 @@ public class ConfigRefreshService {
                 continue;
             }
             loadServerService.setBalancedRoute(balanced, loadServer, route);
-            dynamicRouteService.update(loadRouteService.loadRouteDefinition(route));
+            dynamicRouteService.update(RouteDefinitionConverter.converteFrom(route));
         }
         if (isClose){
             log.info("成功移除网关负载均衡配置缓存路由！balancedId={}", balancedId);
@@ -165,7 +166,7 @@ public class ConfigRefreshService {
             RegServerCache.remove(routeId);
             log.info("成功移除网关路由缓存配置！routeId={}", routeId);
         }else {
-            dynamicRouteService.update(loadRouteService.loadRouteDefinition(route));
+            dynamicRouteService.update(RouteDefinitionConverter.converteFrom(route));
             //记录到本地缓存中
             RouteCache.put(routeId, route);
             List<Map<String, Object>> regClientList = regServerService.getByRouteRegClientList(routeId);
@@ -232,7 +233,7 @@ public class ConfigRefreshService {
             }
             //向负载列表中增加网关路由
             loadServerService.setBalancedRoute(balanced, loadServer, route);
-            dynamicRouteService.add(loadRouteService.loadRouteDefinition(route));
+            dynamicRouteService.add(RouteDefinitionConverter.converteFrom(route));
         }
     }
 

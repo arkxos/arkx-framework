@@ -32,7 +32,8 @@ public class Constants {
 
     public static final String SEPARATOR_SIGN = ",";
     public static final String NULL = "null";
-    public static final String HTTP = "http";
+	public static final String HTTP = "http";
+	public static final String HTTPS = "https";
 
     public static final int CACHE_TOTAL = 100;
     public static final int MAX_SIZE = 1000;
