@@ -1,0 +1,32 @@
+server:
+  port: 8070
+spring:
+  cloud:
+    nacos:
+      username: 'nacos'
+      password: 'nacos'
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: DEFAULT_GROUP
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+    loadbalancer:
+      nacos:
+        enabled: true
+
+  application:
+    name: jdk8-service
+sidecar:
+  # 异构微服务的IP
+  ip: 127.0.0.1
+  # 异构微服务的端口
+  port: 19901
+
+  # 异构微服务的健康检查URL
+  health-check-url: http://localhost:19901/health
+management:
+  endpoint:
+    health:
+      show-details: always
