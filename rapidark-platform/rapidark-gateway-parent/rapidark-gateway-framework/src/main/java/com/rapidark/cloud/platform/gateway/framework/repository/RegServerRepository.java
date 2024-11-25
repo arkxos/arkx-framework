@@ -44,7 +44,7 @@ public interface RegServerRepository extends JpaRepository<RegServer, Long> {
      * 查询指定网关服务下的注册的,并且是状态为0允许通行的
      * @return
      */
-    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey FROM Client c, RegServer s, Route r WHERE c.id = s.clientId AND r.id = s.routeId AND c.status='0' AND s.status='0' AND r.status='0'")
+    @Query(value ="SELECT s.routeId,c.id,c.ip,s.token,s.secretKey FROM Client c, RegServer s, RouteConfig r WHERE c.id = s.clientId AND r.id = s.routeId AND c.status='0' AND s.status='0' AND r.status='0'")
     List queryAllRegClientList();
 
     /**

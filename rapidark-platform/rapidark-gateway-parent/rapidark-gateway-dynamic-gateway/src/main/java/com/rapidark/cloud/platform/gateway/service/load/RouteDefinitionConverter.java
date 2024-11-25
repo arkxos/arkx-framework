@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.service.load;
 
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +17,7 @@ public class RouteDefinitionConverter {
 	 * @param r
 	 * @return
 	 */
-	public static RouteDefinition converteFrom(Route r){
+	public static RouteDefinition converteFrom(RouteConfig r){
 		RouteDefinition definition = new RouteDefinition();
 		definition.setId(r.getId());
 		definition.setOrder(0);

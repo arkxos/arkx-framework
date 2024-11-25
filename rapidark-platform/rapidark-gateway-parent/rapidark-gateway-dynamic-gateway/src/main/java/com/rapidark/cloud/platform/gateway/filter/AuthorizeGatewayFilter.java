@@ -1,6 +1,7 @@
 package com.rapidark.cloud.platform.gateway.filter;
 
 import com.rapidark.cloud.platform.gateway.filter.authorize.*;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.util.HttpResponseUtils;
 import com.rapidark.cloud.platform.gateway.framework.util.NetworkIpUtils;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteUtils;
@@ -48,7 +49,7 @@ public class AuthorizeGatewayFilter implements GatewayFilter, Ordered {
             }
             try {
                 //执行header,ip,parameter,time,cookie验证
-                headerFilter.handler(request, (com.rapidark.cloud.platform.gateway.framework.entity.Route) obj);
+                headerFilter.handler(request, (RouteConfig) obj);
             } catch (Exception e) {
                 log.error("网关转发客户端【{}】路由请求【{}】，执行验证异常：", clientIp, route.getId(), e);
                 return HttpResponseUtils.writeUnauth(exchange.getResponse(), "网关转发客户端【" + clientIp + "】路由请求【" + route.getId() + "】，执行验证异常：" + e.getMessage());

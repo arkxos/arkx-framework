@@ -1,9 +1,9 @@
 package com.rapidark.cloud.platform.gateway.manage.timer;
 
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.service.MonitorService;
-import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
+import com.rapidark.cloud.platform.gateway.framework.service.RouteConfigService;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class TimerSendAlarmService {
     @Resource
     private JavaMailSenderImpl javaMailSender;
     @Resource
-    private RouteService routeService;
+    private RouteConfigService routeConfigService;
 
     @Value("${spring.mail.username:}")
     private String form;
@@ -68,10 +68,10 @@ public class TimerSendAlarmService {
             }
             //存在邮箱，则发送告警邮件
             if (StringUtils.isNotBlank(monitor.getEmails())){
-                Route route = routeService.findById(monitor.getId());
-                if (route != null){
-                    String subject = String.format("网关告警邮件-【%s】-%s", route.getId(), sendDate);
-                    String body = this.emailBody(route.getId(), route.getName(), route.getUri(),DateFormatUtils.format(monitor.getAlarmTime(), Constants.YYYY_MM_DD_HH_MM_SS), monitor.getTopic());
+                RouteConfig routeConfig = routeConfigService.findById(monitor.getId());
+                if (routeConfig != null){
+                    String subject = String.format("网关告警邮件-【%s】-%s", routeConfig.getId(), sendDate);
+                    String body = this.emailBody(routeConfig.getId(), routeConfig.getName(), routeConfig.getUri(),DateFormatUtils.format(monitor.getAlarmTime(), Constants.YYYY_MM_DD_HH_MM_SS), monitor.getTopic());
                     String [] tos = StringUtils.split(monitor.getEmails(), ",");
                     mailSend(subject, body, form, tos);
                 }

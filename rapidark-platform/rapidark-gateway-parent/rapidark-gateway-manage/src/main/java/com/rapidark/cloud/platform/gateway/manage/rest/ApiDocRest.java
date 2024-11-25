@@ -3,9 +3,9 @@ package com.rapidark.cloud.platform.gateway.manage.rest;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.entity.ApiDoc;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.service.ApiDocService;
-import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
+import com.rapidark.cloud.platform.gateway.framework.service.RouteConfigService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ import jakarta.annotation.Resource;
 public class ApiDocRest extends BaseRest {
 
     @Resource
-    private RouteService routeService;
+    private RouteConfigService routeConfigService;
 
     @Resource
     private ApiDocService apiDocService;
@@ -34,7 +34,7 @@ public class ApiDocRest extends BaseRest {
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseResult list(){
-        return ResponseResult.ok(routeService.list(new Route()));
+        return ResponseResult.ok(routeConfigService.list(new RouteConfig()));
     }
 
     /**

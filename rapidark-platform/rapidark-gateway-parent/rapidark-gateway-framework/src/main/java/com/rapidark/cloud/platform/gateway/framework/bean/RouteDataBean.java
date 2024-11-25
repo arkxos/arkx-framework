@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.bean;
 
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.entity.SentinelRule;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class RouteDataBean {
 
-    private Route route;
+    private RouteConfig routeConfig;
     private Monitor monitor;
     private SentinelRule sentinelRule;
 

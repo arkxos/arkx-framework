@@ -1,9 +1,9 @@
 package com.rapidark.cloud.platform.gateway.service.load;
 
-import com.rapidark.cloud.platform.gateway.framework.repository.RouteRepository;
+import com.rapidark.cloud.platform.gateway.framework.repository.RouteConfigRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
 import com.rapidark.cloud.platform.gateway.framework.entity.LoadServer;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.service.BalancedService;
 import com.rapidark.cloud.platform.gateway.framework.service.LoadServerService;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
@@ -37,7 +37,7 @@ public class InitRouteService {
     private List<RouteDefinition> routeDefinitions = new ArrayList<>();
 
     @Resource
-    private RouteRepository routeRepository;
+    private RouteConfigRepository routeConfigRepository;
     @Resource
     private BalancedService balancedService;
     @Resource
@@ -63,19 +63,19 @@ public class InitRouteService {
      * 初始化完毕后，加载路由
      */
     public void initLoadRoute(){
-        Route query = new Route();
+        RouteConfig query = new RouteConfig();
         query.setStatus(Constants.YES);
         try {
-            List<Route> routeList = routeRepository.findAll(Example.of(query));
-            if (CollectionUtils.isEmpty(routeList)) {
+            List<RouteConfig> routeConfigList = routeConfigRepository.findAll(Example.of(query));
+            if (CollectionUtils.isEmpty(routeConfigList)) {
                 log.error("初始化网关路由，无可用网关路由配置...");
                 return ;
             }
-            routeList.forEach(r -> {
+            routeConfigList.forEach(r -> {
                 RouteCache.put(r.getId(), r);
                 routeDefinitions.add(RouteDefinitionConverter.converteFrom(r));
             });
-            log.info("初始化加载网关路由配置共{}条", routeList.size());
+            log.info("初始化加载网关路由配置共{}条", routeConfigList.size());
         }catch(Exception e){
             log.error("加载数据库中网关路由配置异常：",e);
         }
@@ -85,11 +85,11 @@ public class InitRouteService {
      * 初始化完毕后，加载负载路由
      */
     public void initLoadBalanced(){
-        Route query = new Route();
+        RouteConfig query = new RouteConfig();
         query.setStatus(Constants.YES);
         Balanced balanced = new Balanced();
         balanced.setStatus(Constants.YES);
-        List<Route> balancedRouteList = new ArrayList<>();
+        List<RouteConfig> balancedRouteConfigList = new ArrayList<>();
         List<Balanced> balancedList = balancedService.findAll(balanced);
         if (CollectionUtils.isEmpty(balancedList)) {
             log.info("初始化网关负载均衡路由，无可用配置...");
@@ -102,12 +102,12 @@ public class InitRouteService {
             return ;
         }
         //查询所有可用的网关路由列表
-        List<Route> routeList = routeRepository.findAll(Example.of(query));
-        if (CollectionUtils.isEmpty(routeList)){
+        List<RouteConfig> routeConfigList = routeConfigRepository.findAll(Example.of(query));
+        if (CollectionUtils.isEmpty(routeConfigList)){
             log.error("初始化网关负载均衡路由，无可用网关路由配置...");
             return ;
         }
-        Map<String, Route> routeMap =  routeList.stream().collect(Collectors.toMap(Route::getId, r->r));
+        Map<String, RouteConfig> routeMap =  routeConfigList.stream().collect(Collectors.toMap(RouteConfig::getId, r->r));
         // 将同一个负载下的网关路由放在同一个集合中(注意：过滤掉权重值为0的网关，表示无流量流入，无需创建网关)
         Map<String, List<LoadServer>> serverRouteMap = loadServerList.stream().filter(s->s.getWeight()>0)
                 .collect(Collectors.toMap(LoadServer::getBalancedId,
@@ -128,18 +128,18 @@ public class InitRouteService {
                     continue;
                 }
                 serverList.forEach(s -> {
-                    Route route = routeMap.get(s.getRouteId());
-                    if (route != null) {
-                        Route bRoute = new Route();
-                        BeanUtils.copyProperties(route, bRoute);
-                        loadServerService.setBalancedRoute(b, s, bRoute);
+                    RouteConfig routeConfig = routeMap.get(s.getRouteId());
+                    if (routeConfig != null) {
+                        RouteConfig bRouteConfig = new RouteConfig();
+                        BeanUtils.copyProperties(routeConfig, bRouteConfig);
+                        loadServerService.setBalancedRoute(b, s, bRouteConfig);
                         //添加新路由集合中
-                        balancedRouteList.add(bRoute);
+                        balancedRouteConfigList.add(bRouteConfig);
                     }
                 });
             }
             //将新的路由加载网关路由集合中
-            balancedRouteList.forEach(r->{
+            balancedRouteConfigList.forEach(r->{
                 //记录到本地缓存中
                 RouteCache.put(r.getId(), r);
                 //添加新的负载均衡路由对象
@@ -148,7 +148,7 @@ public class InitRouteService {
         }catch(Exception e){
             log.error("加载数据库中网关负载路由配置异常：",e);
         }
-        log.info("初始化加载网关负载路由配置共{}条", balancedRouteList.size());
+        log.info("初始化加载网关负载路由配置共{}条", balancedRouteConfigList.size());
     }
 
 }

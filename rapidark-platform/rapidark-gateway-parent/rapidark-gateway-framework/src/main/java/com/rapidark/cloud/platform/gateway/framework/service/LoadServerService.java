@@ -4,7 +4,7 @@ import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.LoadServerRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
 import com.rapidark.cloud.platform.gateway.framework.entity.LoadServer;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import org.springframework.stereotype.Service;
@@ -114,21 +114,21 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerR
      * 设置负载均衡网关路由配置
      * @param balanced
      * @param loadServer
-     * @param route
+     * @param routeConfig
      */
-    public void setBalancedRoute(Balanced balanced, LoadServer loadServer, Route route){
+    public void setBalancedRoute(Balanced balanced, LoadServer loadServer, RouteConfig routeConfig){
         //获取route，改变参数，构造一个新route对象
-        String routeId = this.setBalancedRouteId(balanced.getId(), route.getId());
-        route.setId(routeId);
+        String routeId = this.setBalancedRouteId(balanced.getId(), routeConfig.getId());
+        routeConfig.setId(routeId);
         //设置断言路径
-        route.setPath(RouteConstants.PARENT_PATH + balanced.getLoadUri());
+        routeConfig.setPath(RouteConstants.PARENT_PATH + balanced.getLoadUri());
         //设置负载参数,查找服务对应的路由服务
         String weightName = this.setBalancedWeightName(balanced.getId());
-        route.setWeightName(weightName);
+        routeConfig.setWeightName(weightName);
         //设置负载权重值
-        route.setWeight(loadServer.getWeight());
+        routeConfig.setWeight(loadServer.getWeight());
         //默认负载的断言路径截取级别为1
-        route.setStripPrefix(1);
+        routeConfig.setStripPrefix(1);
     }
 
     /**

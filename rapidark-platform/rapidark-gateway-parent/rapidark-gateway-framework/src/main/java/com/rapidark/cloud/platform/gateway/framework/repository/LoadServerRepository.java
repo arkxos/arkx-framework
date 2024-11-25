@@ -35,7 +35,9 @@ public interface LoadServerRepository extends JpaRepository<LoadServer, Long> {
      */
     List<LoadServer> queryByRouteId(String routeId);
 
-    @Query(value = "SELECT r.name,r.groupCode,r.uri,r.path,r.method,r.status,l.id,l.routeId,l.weight FROM route r INNER JOIN loadserver l ON r.id=l.routeId WHERE l.balancedId=?1",
+    @Query(value = "SELECT r.name,r.groupCode,r.uri,r.path,r.method,r.status,l.id,l.routeId,l.weight FROM gw_route r " +
+			"INNER JOIN gw_loadserver l ON r.id=l.routeId " +
+			"WHERE l.balancedId=?1",
             nativeQuery = true)
     List<Map> queryLoadServerList(String balancedId);
 

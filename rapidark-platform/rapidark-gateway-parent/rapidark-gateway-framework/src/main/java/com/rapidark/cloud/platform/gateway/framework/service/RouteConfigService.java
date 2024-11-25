@@ -7,11 +7,11 @@ import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteDataBean;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteRsp;
 import com.rapidark.cloud.platform.gateway.framework.repository.MonitorRepository;
-import com.rapidark.cloud.platform.gateway.framework.repository.RouteRepository;
+import com.rapidark.cloud.platform.gateway.framework.repository.RouteConfigRepository;
 import com.rapidark.cloud.platform.gateway.framework.repository.SentinelRuleRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.entity.SentinelRule;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * @Version V2.0
  */
 @Service
-public class RouteService extends BaseService<Route,String, RouteRepository> {
+public class RouteConfigService extends BaseService<RouteConfig,String, RouteConfigRepository> {
 
     @Resource
     private RegServerService regServerService;
@@ -53,7 +53,7 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
     private SentinelRuleRepository sentinelRuleRepository;
 
     @Resource
-    private RouteRepository routeRepository;
+    private RouteConfigRepository routeConfigRepository;
 
     @Resource
     private GroovyScriptService groovyScriptService;
@@ -64,8 +64,8 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void delete(String id){
-        Route route = this.findById(id);
-        if (route != null) {
+        RouteConfig routeConfig = this.findById(id);
+        if (routeConfig != null) {
             RegServer regServer = new RegServer();
             regServer.setRouteId(id);
             List<RegServer> regServerList = regServerService.findAll(regServer);
@@ -76,7 +76,7 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
             //删除监控配置
             monitorRepository.findById(id).ifPresent(monitor -> monitorRepository.delete(monitor));
             //删除路由对象
-            this.delete(route);
+            this.delete(routeConfig);
         }
     }
 
@@ -84,28 +84,28 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
      * 获取需要监控的网关路由服务
      * @return
      */
-    public List<Route> monitorRouteList(){
-        return routeRepository.monitorRouteList();
+    public List<RouteConfig> monitorRouteList(){
+        return routeConfigRepository.monitorRouteList();
     }
 
     /**
      * 分页查询
-     * @param route
+     * @param routeConfig
      * @param currentPage
      * @param pageSize
      * @return
      */
     @Override
-    public PageResult<Route> pageList(Route route, int currentPage, int pageSize){
+    public PageResult<RouteConfig> pageList(RouteConfig routeConfig, int currentPage, int pageSize){
         //构造条件查询方式
         ExampleMatcher matcher = ExampleMatcher.matching();
-        if (StringUtils.isNotBlank(route.getName())) {
+        if (StringUtils.isNotBlank(routeConfig.getName())) {
             //支持模糊条件查询
             matcher = matcher.withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
         }
-        PageResult<Route> result = this.pageList(route, matcher, currentPage, pageSize);
-        List<Route> routeList = result.getLists();
-        if (CollectionUtils.isEmpty(routeList)){
+        PageResult<RouteConfig> result = this.pageList(routeConfig, matcher, currentPage, pageSize);
+        List<RouteConfig> routeConfigList = result.getLists();
+        if (CollectionUtils.isEmpty(routeConfigList)){
             return result;
         }
         //获取所有监控配置
@@ -132,7 +132,7 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
             return result;
         }
 
-        List<Route> routeRspList = routeList.stream().map(r ->{
+        List<RouteConfig> routeConfigRspList = routeConfigList.stream().map(r ->{
             ruleMap.get(r.getId());
             RouteRsp routeRsp = new RouteRsp();
             BeanUtils.copyProperties(r, routeRsp);
@@ -149,7 +149,7 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
             }
             return routeRsp;
         }).collect(Collectors.toList());
-        result.setLists(routeRspList);
+        result.setLists(routeConfigRspList);
         return result;
     }
 
@@ -160,9 +160,9 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
      * @return
      */
     public ResponseResult saveForm(RouteDataBean routeDataBean, boolean isNews){
-        Route route = save(routeDataBean, isNews);
+        RouteConfig routeConfig = save(routeDataBean, isNews);
         //推送变更事件到nacos注册与配置中心
-        customNacosConfigService.publishRouteNacosConfig(route.getId());
+        customNacosConfigService.publishRouteNacosConfig(routeConfig.getId());
         return ResponseResult.ok();
     }
 
@@ -173,16 +173,16 @@ public class RouteService extends BaseService<Route,String, RouteRepository> {
      * @return
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public Route save(RouteDataBean routeDataBean, boolean isNews){
-        Route route = routeDataBean.getRoute();
+    public RouteConfig save(RouteDataBean routeDataBean, boolean isNews){
+        RouteConfig routeConfig = routeDataBean.getRouteConfig();
         //清理已缓存的数据
-        route.setUpdateTime(new Date());
-        super.save(route);
+        routeConfig.setUpdateTime(new Date());
+        super.save(routeConfig);
         //保存监控配置
-        saveMonitor(route.getId(), routeDataBean.getMonitor(), isNews);
+        saveMonitor(routeConfig.getId(), routeDataBean.getMonitor(), isNews);
         //保存限流配置
-        saveSetinelRule(route.getId(), routeDataBean.getSentinelRule());
-        return route;
+        saveSetinelRule(routeConfig.getId(), routeDataBean.getSentinelRule());
+        return routeConfig;
     }
 
     /**

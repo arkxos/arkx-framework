@@ -5,7 +5,7 @@ import com.rapidark.cloud.platform.gateway.framework.bean.CountReq;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountRsp;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountTotalRsp;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteCountRsp;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
@@ -36,23 +36,23 @@ public class CountService {
     private RedisTemplate redisTemplate;
 
     @Resource
-    private RouteService routeService;
+    private RouteConfigService routeConfigService;
 
     /**
      * 查询路由集合统计结果
-     * @param route
+     * @param routeConfig
      * @param currentPage
      * @param pageSize
      * @return
      */
-    public ResponseResult countRouteList(Route route, int currentPage, int pageSize){
-        PageResult<Route> pageResult = routeService.pageList(route,currentPage, pageSize);
+    public ResponseResult countRouteList(RouteConfig routeConfig, int currentPage, int pageSize){
+        PageResult<RouteConfig> pageResult = routeConfigService.pageList(routeConfig,currentPage, pageSize);
         if (pageResult.getPageSize() > 0){
             //只取当天的
             String key = RouteConstants.COUNT_DAY_KEY + DateFormatUtils.format(new Date(), Constants.DATE_FORMAT_DAY);
             Map<String,String> countMap = redisTemplate.opsForHash().entries(key);
-            List<Route> routeList = pageResult.getLists();
-            List<RouteCountRsp> routeCountRspList = routeList.stream().map(r -> {
+            List<RouteConfig> routeConfigList = pageResult.getLists();
+            List<RouteCountRsp> routeCountRspList = routeConfigList.stream().map(r -> {
                 RouteCountRsp rsp = new RouteCountRsp();
                 BeanUtils.copyProperties(r, rsp);
                 //将routeId缓存的统计值取出

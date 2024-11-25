@@ -1,8 +1,8 @@
 package com.rapidark.cloud.platform.gateway.rest;
 
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
-import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
+import com.rapidark.cloud.platform.gateway.framework.service.RouteConfigService;
 import com.rapidark.cloud.platform.gateway.service.DynamicRouteService;
 import com.rapidark.cloud.platform.gateway.service.LoadRouteService;
 import com.rapidark.cloud.platform.gateway.service.load.RouteDefinitionConverter;
@@ -29,7 +29,7 @@ public class RouteController {
     @Resource
     private LoadRouteService loadRouteService;
     @Resource
-    private RouteService routeService;
+    private RouteConfigService routeConfigService;
 
     /**
      add-json:
@@ -107,8 +107,8 @@ public class RouteController {
     @GetMapping(value = "/load")
     public ResponseResult load(@RequestParam String id) {
         Assert.notNull(id, "路由ID不能为空");
-        Route route = routeService.findById(id);
-        RouteDefinition routeDefinition = RouteDefinitionConverter.converteFrom(route);
+        RouteConfig routeConfig = routeConfigService.findById(id);
+        RouteDefinition routeDefinition = RouteDefinitionConverter.converteFrom(routeConfig);
         this.dynamicRouteService.add(routeDefinition);
         return ResponseResult.ok();
     }

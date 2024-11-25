@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.filter.authorize;
 
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
 /**
@@ -12,10 +12,10 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 public abstract class FilterHandler {
 
     public FilterHandler handler = null;
-    protected Route route;
+    protected RouteConfig routeConfig;
 
-    public void handler(ServerHttpRequest request, Route route){
-        this.route = route;
+    public void handler(ServerHttpRequest request, RouteConfig routeConfig){
+        this.routeConfig = routeConfig;
         handleRequest(request);
         nextHandle(request);
     }
@@ -24,7 +24,7 @@ public abstract class FilterHandler {
 
     public void nextHandle(ServerHttpRequest request){
         if (handler != null){
-            handler.handler(request,route);
+            handler.handler(request, routeConfig);
         }
     }
 }

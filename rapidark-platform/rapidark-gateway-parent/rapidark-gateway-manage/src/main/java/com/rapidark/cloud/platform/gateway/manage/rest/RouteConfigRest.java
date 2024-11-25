@@ -7,11 +7,11 @@ import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.bean.*;
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
-import com.rapidark.cloud.platform.gateway.framework.entity.Route;
+import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import com.rapidark.cloud.platform.gateway.framework.entity.SentinelRule;
 import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
 import com.rapidark.cloud.platform.gateway.framework.service.MonitorService;
-import com.rapidark.cloud.platform.gateway.framework.service.RouteService;
+import com.rapidark.cloud.platform.gateway.framework.service.RouteConfigService;
 import com.rapidark.cloud.platform.gateway.framework.service.SentinelRuleService;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
@@ -35,10 +35,10 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/route")
-public class RouteRest extends BaseRest {
+public class RouteConfigRest extends BaseRest {
 
     @Resource
-    private RouteService routeService;
+    private RouteConfigService routeConfigService;
 
     @Resource
     private MonitorService monitorService;
@@ -58,14 +58,14 @@ public class RouteRest extends BaseRest {
     public ResponseResult add(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         RouteDataBean routeDataBean = toRoute(routeReq);
-        Route route = routeDataBean.getRoute();
-        route.setCreateTime(new Date());
-        this.validate(route);
-        Route dbRoute = new Route();
-        dbRoute.setId(route.getId());
-        long count = routeService.count(dbRoute);
+        RouteConfig routeConfig = routeDataBean.getRouteConfig();
+        routeConfig.setCreateTime(new Date());
+        this.validate(routeConfig);
+        RouteConfig dbRouteConfig = new RouteConfig();
+        dbRouteConfig.setId(routeConfig.getId());
+        long count = routeConfigService.count(dbRouteConfig);
         Assert.isTrue(count <= 0, "RouteId已存在，不能重复");
-        return routeService.saveForm(routeDataBean, true);
+        return routeConfigService.saveForm(routeDataBean, true);
     }
 
     /**
@@ -76,7 +76,7 @@ public class RouteRest extends BaseRest {
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseResult delete(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        routeService.delete(id);
+        routeConfigService.delete(id);
         customNacosConfigService.publishRouteNacosConfig(id);
         return ResponseResult.ok();
     }
@@ -90,25 +90,25 @@ public class RouteRest extends BaseRest {
     public ResponseResult update(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         RouteDataBean routeDataBean = toRoute(routeReq);
-        Route route = routeDataBean.getRoute();
-        this.validate(route);
-        Assert.isTrue(StringUtils.isNotBlank(route.getId()), "未获取到对象ID");
-        return routeService.saveForm(routeDataBean, false);
+        RouteConfig routeConfig = routeDataBean.getRouteConfig();
+        this.validate(routeConfig);
+        Assert.isTrue(StringUtils.isNotBlank(routeConfig.getId()), "未获取到对象ID");
+        return routeConfigService.saveForm(routeDataBean, false);
     }
 
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseResult findById(@RequestParam String id){
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        return ResponseResult.ok(routeService.findById(id));
+        return ResponseResult.ok(routeConfigService.findById(id));
     }
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseResult list(@RequestBody RouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         RouteDataBean routeDataBean = toRoute(routeReq);
-        Route route = routeDataBean.getRoute();
-        return ResponseResult.ok(routeService.list(route));
+        RouteConfig routeConfig = routeDataBean.getRouteConfig();
+        return ResponseResult.ok(routeConfigService.list(routeConfig));
     }
 
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
@@ -117,14 +117,14 @@ public class RouteRest extends BaseRest {
         int currentPage = getCurrentPage(routeReq.getCurrentPage());
         int pageSize = getPageSize(routeReq.getPageSize());
         RouteDataBean routeDataBean = toRoute(routeReq);
-        Route route = routeDataBean.getRoute();
-        if (StringUtils.isBlank(route.getName())){
-            route.setName(null);
+        RouteConfig routeConfig = routeDataBean.getRouteConfig();
+        if (StringUtils.isBlank(routeConfig.getName())){
+            routeConfig.setName(null);
         }
-        if (StringUtils.isBlank(route.getStatus())){
-            route.setStatus(null);
+        if (StringUtils.isBlank(routeConfig.getStatus())){
+            routeConfig.setStatus(null);
         }
-        return ResponseResult.ok(routeService.pageList(route,currentPage, pageSize));
+        return ResponseResult.ok(routeConfigService.pageList(routeConfig,currentPage, pageSize));
     }
 
     /**
@@ -135,10 +135,10 @@ public class RouteRest extends BaseRest {
     @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseResult start(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        Route dbRoute = routeService.findById(id);
-        if (!Constants.YES.equals(dbRoute.getStatus())) {
-            dbRoute.setStatus(Constants.YES);
-            routeService.update(dbRoute);
+        RouteConfig dbRouteConfig = routeConfigService.findById(id);
+        if (!Constants.YES.equals(dbRouteConfig.getStatus())) {
+            dbRouteConfig.setStatus(Constants.YES);
+            routeConfigService.update(dbRouteConfig);
         }
         //可以通过反复启用，刷新路由，防止发布失败或配置变更未生效
         customNacosConfigService.publishRouteNacosConfig(id);
@@ -153,10 +153,10 @@ public class RouteRest extends BaseRest {
     @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseResult stop(@RequestParam String id){
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
-        Route dbRoute = routeService.findById(id);
-        if (!Constants.NO.equals(dbRoute.getStatus())) {
-            dbRoute.setStatus(Constants.NO);
-            routeService.update(dbRoute);
+        RouteConfig dbRouteConfig = routeConfigService.findById(id);
+        if (!Constants.NO.equals(dbRouteConfig.getStatus())) {
+            dbRouteConfig.setStatus(Constants.NO);
+            routeConfigService.update(dbRouteConfig);
             customNacosConfigService.publishRouteNacosConfig(id);
         }
         return ResponseResult.ok();
@@ -164,35 +164,35 @@ public class RouteRest extends BaseRest {
 
     /**
      * 保存网关路由服务
-     * @param route
+     * @param routeConfig
      * @param routeReq
      * @param isNews
      * @return
      */
     @Deprecated
-    private ResponseResult saveForm(Route route, RouteReq routeReq, boolean isNews){
+    private ResponseResult saveForm(RouteConfig routeConfig, RouteReq routeReq, boolean isNews){
         Monitor monitor = toMonitor(routeReq);
-        route.setUpdateTime(new Date());
-        routeService.save(route);
-        customNacosConfigService.publishRouteNacosConfig(route.getId());
+        routeConfig.setUpdateTime(new Date());
+        routeConfigService.save(routeConfig);
+        customNacosConfigService.publishRouteNacosConfig(routeConfig.getId());
 
         SentinelRule sentinelRule = toSentinelRule(routeReq);
         if (sentinelRule != null){
-            sentinelRule.setId(route.getId());
+            sentinelRule.setId(routeConfig.getId());
             sentinelRuleService.save(sentinelRule);
         } else {
-            sentinelRuleService.deleteById(route.getId());
+            sentinelRuleService.deleteById(routeConfig.getId());
         }
 
         //保存监控配置
         if (monitor != null) {
-            monitor.setId(route.getId());
+            monitor.setId(routeConfig.getId());
             monitor.setUpdateTime(new Date());
             this.validate(monitor);
             monitorService.save(monitor);
         } else {
             if (!isNews) {
-                Monitor dbMonitor = monitorService.findById(route.getId());
+                Monitor dbMonitor = monitorService.findById(routeConfig.getId());
                 //修改时，如果前端取消选中，并且数据库中又存在记录，则需要置为禁用状态(用于下一次恢复无需再次输入)
                 if (dbMonitor != null){
                     dbMonitor.setStatus(Constants.NO);
@@ -218,8 +218,8 @@ public class RouteRest extends BaseRest {
             return routeData;
         }
 
-        Route route = new Route();
-        BeanUtils.copyProperties(form, route);
+        RouteConfig routeConfig = new RouteConfig();
+        BeanUtils.copyProperties(form, routeConfig);
 
         RouteFilterBean filter = routeReq.getFilter();
         RouteAccessBean access = routeReq.getAccess();
@@ -242,7 +242,7 @@ public class RouteRest extends BaseRest {
             if (filter.getTokenChecked()) {
                 routeFilterList.add(RouteConstants.TOKEN);
             }
-            route.setFilterGatewayName(StringUtils.join(routeFilterList.toArray(), Constants.SEPARATOR_SIGN));
+            routeConfig.setFilterGatewayName(StringUtils.join(routeFilterList.toArray(), Constants.SEPARATOR_SIGN));
         }
 
         //添加鉴权器
@@ -263,7 +263,7 @@ public class RouteRest extends BaseRest {
             if (access.getCookieChecked()) {
                 routeAccessList.add(RouteConstants.Access.COOKIE);
             }
-            route.setFilterAuthorizeName(StringUtils.join(routeAccessList.toArray(), Constants.SEPARATOR_SIGN));
+            routeConfig.setFilterAuthorizeName(StringUtils.join(routeAccessList.toArray(), Constants.SEPARATOR_SIGN));
         }
 
         //添加监控
@@ -271,7 +271,7 @@ public class RouteRest extends BaseRest {
             // checked为true，则表示启用监控配置
             if (routeMonitor.getChecked()){
                 monitor = form.getMonitor();
-                monitor.setId(route.getId());
+                monitor.setId(routeConfig.getId());
                 monitor.setStatus(Constants.YES);
                 monitor.setUpdateTime(new Date());
                 this.validate(monitor);
@@ -282,19 +282,19 @@ public class RouteRest extends BaseRest {
         if (flowRule != null){
             //直接拒绝（默认模式）
             if (flowRule.getDefaultChecked()){
-                route.setFlowRuleName(RouteConstants.Sentinel.DEFAULT);
+                routeConfig.setFlowRuleName(RouteConstants.Sentinel.DEFAULT);
             }
             //冷启动模式
             else if (flowRule.getWarmUpChecked()){
-                route.setFlowRuleName(RouteConstants.Sentinel.WARM_UP);
+                routeConfig.setFlowRuleName(RouteConstants.Sentinel.WARM_UP);
             }
             //均速模式
             else if (flowRule.getRateLimiterChecked()){
-                route.setFlowRuleName(RouteConstants.Sentinel.RATE_LIMITER);
+                routeConfig.setFlowRuleName(RouteConstants.Sentinel.RATE_LIMITER);
             } else {
-                route.setFlowRuleName(null);
+                routeConfig.setFlowRuleName(null);
             }
-            if (StringUtils.isNotBlank(route.getFlowRuleName()) && form.getFlowRule() != null){
+            if (StringUtils.isNotBlank(routeConfig.getFlowRuleName()) && form.getFlowRule() != null){
                 sentinelRule = new SentinelRule();
                 sentinelRule.setFlowRule(JSONObject.toJSONString(form.getFlowRule()));
             }
@@ -303,24 +303,24 @@ public class RouteRest extends BaseRest {
         // Sentinel熔断
         if (degradeRule != null){
             if (degradeRule.getChecked()){
-                route.setDegradeRuleName(RouteConstants.Sentinel.DEFAULT);
+                routeConfig.setDegradeRuleName(RouteConstants.Sentinel.DEFAULT);
             } else {
-                route.setDegradeRuleName(null);
+                routeConfig.setDegradeRuleName(null);
             }
-            if (StringUtils.isNotBlank(route.getDegradeRuleName()) && form.getDegradeRule() != null) {
+            if (StringUtils.isNotBlank(routeConfig.getDegradeRuleName()) && form.getDegradeRule() != null) {
                 sentinelRule = sentinelRule == null ? new SentinelRule() : sentinelRule;
                 sentinelRule.setDegradeRule(JSONObject.toJSONString(form.getDegradeRule()));
             }
         }
 
         if (cacheResult == null || Boolean.FALSE.equals(cacheResult.getChecked())) {
-            route.setCacheTtl(null);
+            routeConfig.setCacheTtl(null);
         }
 
-        routeData.setRoute(route);
+        routeData.setRouteConfig(routeConfig);
         routeData.setMonitor(monitor);
         if (sentinelRule != null) {
-            sentinelRule.setId(route.getId());
+            sentinelRule.setId(routeConfig.getId());
             routeData.setSentinelRule(sentinelRule);
         }
         return routeData;

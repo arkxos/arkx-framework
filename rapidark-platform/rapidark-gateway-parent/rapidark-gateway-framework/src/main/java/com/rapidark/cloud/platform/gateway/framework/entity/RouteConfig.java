@@ -1,6 +1,5 @@
 package com.rapidark.cloud.platform.gateway.framework.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +18,7 @@ import java.util.Date;
 @Entity
 @Table(name="gw_route")
 @Data
-public class Route implements java.io.Serializable {
+public class RouteConfig implements java.io.Serializable {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
