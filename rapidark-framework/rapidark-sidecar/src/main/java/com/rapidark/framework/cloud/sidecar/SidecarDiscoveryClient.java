@@ -16,6 +16,10 @@
 
 package com.rapidark.framework.cloud.sidecar;
 
+import com.alibaba.nacos.api.naming.pojo.Instance;
+
+import java.util.List;
+
 /**
  * @author www.itmuch.com
  */
@@ -37,4 +41,5 @@ public interface SidecarDiscoveryClient {
 	 */
 	void deregisterInstance(String applicationName, String ip, Integer port);
 
+	void batchRegisterInstance(String applicationName, String groupName, List<Instance> instances);
 }

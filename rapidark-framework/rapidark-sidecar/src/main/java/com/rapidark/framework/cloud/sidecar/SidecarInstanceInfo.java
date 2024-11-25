@@ -18,11 +18,13 @@ package com.rapidark.framework.cloud.sidecar;
 
 import java.util.Objects;
 
+import lombok.Data;
 import org.springframework.boot.actuate.health.Status;
 
 /**
  * @author yuhuangbin
  */
+@Data
 public class SidecarInstanceInfo {
 
 	private String ip;
@@ -30,30 +32,6 @@ public class SidecarInstanceInfo {
 	private Integer port;
 
 	private Status status;
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public Integer getPort() {
-		return port;
-	}
-
-	public void setPort(Integer port) {
-		this.port = port;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
 
 	@Override
 	public boolean equals(Object o) {

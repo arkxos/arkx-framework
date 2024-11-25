@@ -16,11 +16,17 @@
 
 package com.rapidark.framework.cloud.sidecar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+import com.alibaba.nacos.api.common.Constants;
+import com.alibaba.nacos.api.naming.pojo.Instance;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.scheduler.Schedulers;
@@ -63,41 +69,70 @@ public class SidecarHealthChecker {
 
 	public void check() {
 		Schedulers.single().schedulePeriodically(() -> {
-			String applicationName = environment.getProperty("spring.application.name");
-			String ip = sidecarProperties.getIp();
-			Integer port = sidecarProperties.getPort();
+			Multimap<String, SidecarConfig> serviceConfigMap = ArrayListMultimap.create();
+			for (SidecarConfig sidecarConfig : sidecarProperties.getProxyList()) {
 
-			Status status = healthIndicator.health().getStatus();
+//				String applicationName = environment.getProperty("spring.application.name");
+				String applicationName = sidecarConfig.getName();
+						String ip = sidecarConfig.getIp();
+				Integer port = sidecarConfig.getPort();
 
-			SidecarInstanceInfo sidecarInstanceInfo = instanceCache(applicationName, ip,
-					port, status);
-			if (status.equals(Status.UP)) {
-				if (needRegister(applicationName, sidecarInstanceInfo)) {
-					this.sidecarDiscoveryClient.registerInstance(applicationName, ip,
-							port);
-					log.info(
-							"Polyglot service changed and Health check success. register the new instance. applicationName = {}, ip = {}, port = {}, status = {}",
+				Status status = healthIndicator.health().getStatus();
+
+				SidecarInstanceInfo sidecarInstanceInfo = instanceCache(applicationName, ip,
+						port, status);
+				if (status.equals(Status.UP)) {
+					serviceConfigMap.put(applicationName, sidecarConfig);
+					// 存在同名服务
+					if(serviceConfigMap.containsKey(applicationName)) {
+						List<Instance> serviceInstance = new ArrayList<>();
+						for (SidecarConfig config : serviceConfigMap.get(applicationName)) {
+							Instance instance = new Instance();
+							instance.setIp(config.getIp());
+							instance.setPort(config.getPort());
+							instance.setWeight(1.0);
+							instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
+
+							serviceInstance.add(instance);
+						}
+
+						if (needRegister(applicationName, ip + ":" + port, sidecarInstanceInfo)) {
+							this.sidecarDiscoveryClient.batchRegisterInstance(applicationName, "DEFAULT_GROUP",
+									serviceInstance);
+							log.info(
+									"Polyglot service changed and Health check success. register the new instance. applicationName = {}, ip = {}, port = {}, status = {}",
+									applicationName, ip, port, status);
+						}
+					} else {
+						if (needRegister(applicationName, ip + ":" + port, sidecarInstanceInfo)) {
+							this.sidecarDiscoveryClient.registerInstance(applicationName, ip,
+									port);
+							log.info(
+									"Polyglot service changed and Health check success. register the new instance. applicationName = {}, ip = {}, port = {}, status = {}",
+									applicationName, ip, port, status);
+						}
+					}
+				}
+				else {
+					log.warn(
+							"Health check failed. unregister this instance. applicationName = {}, ip = {}, port = {}, status = {}",
 							applicationName, ip, port, status);
+					this.sidecarDiscoveryClient.deregisterInstance(applicationName, ip, port);
+
+					sidecarInstanceCacheMap.put(applicationName,
+							buildCache(ip, port, status));
+				}
+
+				try {
+					customHealthCheckHandlerObjectProvider
+							.ifAvailable(customHealthCheckHandler -> customHealthCheckHandler
+									.handler(applicationName, sidecarInstanceInfo));
+				}
+				catch (Exception e) {
+					// ignore
 				}
 			}
-			else {
-				log.warn(
-						"Health check failed. unregister this instance. applicationName = {}, ip = {}, port = {}, status = {}",
-						applicationName, ip, port, status);
-				this.sidecarDiscoveryClient.deregisterInstance(applicationName, ip, port);
 
-				sidecarInstanceCacheMap.put(applicationName,
-						buildCache(ip, port, status));
-			}
-
-			try {
-				customHealthCheckHandlerObjectProvider
-						.ifAvailable(customHealthCheckHandler -> customHealthCheckHandler
-								.handler(applicationName, sidecarInstanceInfo));
-			}
-			catch (Exception e) {
-				// ignore
-			}
 		}, 0, sidecarProperties.getHealthCheckInterval(), TimeUnit.MILLISECONDS);
 	}
 
@@ -108,12 +143,13 @@ public class SidecarHealthChecker {
 		return sidecarInstanceInfo;
 	}
 
-	private boolean needRegister(String applicationName,
+	private boolean needRegister(String applicationName, String ipPort,
 			SidecarInstanceInfo sidecarInstanceInfo) {
-		SidecarInstanceInfo cacheRecord = sidecarInstanceCacheMap.get(applicationName);
+		String serviceId = applicationName+"_"+ipPort;
+		SidecarInstanceInfo cacheRecord = sidecarInstanceCacheMap.get(serviceId);
 		if (!Objects.equals(sidecarInstanceInfo, cacheRecord)) {
 			// modify the cache info
-			sidecarInstanceCacheMap.put(applicationName, sidecarInstanceInfo);
+			sidecarInstanceCacheMap.put(serviceId, sidecarInstanceInfo);
 			return true;
 		}
 		return false;

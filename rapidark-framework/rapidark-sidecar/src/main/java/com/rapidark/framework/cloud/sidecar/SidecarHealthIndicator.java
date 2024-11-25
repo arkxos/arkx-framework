@@ -43,35 +43,38 @@ public class SidecarHealthIndicator extends AbstractHealthIndicator {
 
 	@Override
 	protected void doHealthCheck(Health.Builder builder) throws Exception {
-		try {
-			URI uri = this.sidecarProperties.getHealthCheckUrl();
-			if (uri == null) {
-				builder.up();
-				return;
-			}
+		for (SidecarConfig sidecarConfig : sidecarProperties.getProxyList()) {
+			try {
+				URI uri = sidecarConfig.getHealthCheckUrl();
+				if (uri == null) {
+					builder.up();
+					return;
+				}
 
-			ResponseEntity<Map<String, Object>> exchange = this.restTemplate.exchange(uri,
-					HttpMethod.GET, null,
-					new ParameterizedTypeReference<Map<String, Object>>() {
-					});
+				ResponseEntity<Map<String, Object>> exchange = this.restTemplate.exchange(uri,
+						HttpMethod.GET, null,
+						new ParameterizedTypeReference<Map<String, Object>>() {
+						});
 
-			Map<String, Object> map = exchange.getBody();
+				Map<String, Object> map = exchange.getBody();
 
-			if (map == null) {
-				this.getWarning(builder);
-				return;
+				if (map == null) {
+					this.getWarning(builder);
+					return;
+				}
+				Object status = map.get("status");
+				if (status instanceof String strStatus) {
+					builder.status(strStatus);
+				}
+				else {
+					this.getWarning(builder);
+				}
 			}
-			Object status = map.get("status");
-			if (status instanceof String strStatus) {
-				builder.status(strStatus);
-			}
-			else {
-				this.getWarning(builder);
+			catch (Exception e) {
+				builder.down().withDetail("error", e.getMessage());
 			}
 		}
-		catch (Exception e) {
-			builder.down().withDetail("error", e.getMessage());
-		}
+
 	}
 
 	private void getWarning(Health.Builder builder) {

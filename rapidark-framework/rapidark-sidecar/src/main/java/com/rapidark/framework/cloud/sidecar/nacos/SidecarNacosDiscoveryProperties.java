@@ -32,17 +32,17 @@ public class SidecarNacosDiscoveryProperties extends NacosDiscoveryProperties {
 		this.sidecarProperties = sidecarProperties;
 	}
 
-	@Override
-	public void init() throws Exception {
-		super.init();
-
-		String ip = sidecarProperties.getIp();
-		if (StringUtils.hasText(ip)) {
-			this.setIp(ip);
-		}
-
-		Integer port = sidecarProperties.getPort();
-		this.setPort(port);
-	}
+//	@Override
+//	public void init() throws Exception {
+//		super.init();
+//
+//		String ip = sidecarProperties.getIp();
+//		if (StringUtils.hasText(ip)) {
+//			this.setIp(ip);
+//		}
+//
+//		Integer port = sidecarProperties.getPort();
+//		this.setPort(port);
+//	}
 
 }

@@ -17,11 +17,15 @@
 package com.rapidark.framework.cloud.sidecar;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -30,62 +34,15 @@ import org.springframework.validation.annotation.Validated;
  */
 @ConfigurationProperties("sidecar")
 @Validated
+@Getter
+@Setter
 public class SidecarProperties {
-
-	/**
-	 * polyglot service's ip.
-	 */
-	private String ip;
-
-	/**
-	 * polyglot service's port.
-	 */
-	@NotNull
-	@Max(65535)
-	@Min(1)
-	private Integer port;
-
-	/**
-	 * polyglot service's health check url. this endpoint must return json and the format
-	 * must follow spring boot actuator's health endpoint. eg. {"status": "UP"}.
-	 */
-	private URI healthCheckUrl;
 
 	/**
 	 * interval of health check.
 	 */
 	private long healthCheckInterval = 30_000L;
 
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public Integer getPort() {
-		return port;
-	}
-
-	public void setPort(Integer port) {
-		this.port = port;
-	}
-
-	public URI getHealthCheckUrl() {
-		return healthCheckUrl;
-	}
-
-	public void setHealthCheckUrl(URI healthCheckUrl) {
-		this.healthCheckUrl = healthCheckUrl;
-	}
-
-	public long getHealthCheckInterval() {
-		return healthCheckInterval;
-	}
-
-	public void setHealthCheckInterval(long healthCheckInterval) {
-		this.healthCheckInterval = healthCheckInterval;
-	}
+	private List<SidecarConfig> proxyList = new ArrayList<>();
 
 }
