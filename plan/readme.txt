@@ -6,6 +6,16 @@ https://blog.csdn.net/qq_16063307/article/details/113972486
 https://gitee.com/felord/id-server
 https://gitee.com/shengzhao/spring-oauth-server
 
+dhorse devops layui
+https://gitee.com/i512team/dhorse
+https://gitee.com/lijiahangmax/orion-ops
+https://gitee.com/WeBank/wecube-platform
+https://gitee.com/yisin/lightos
+https://gitee.com/neat-logic/neatlogic-itom-all
+https://gitee.com/sreworks/sreworks
+jpom 运维平台 ant-design-vue
+https://gitee.com/dromara/Jpom
+
 学习：
 gateway
 https://gitee.com/omsgit/flying-fish-gateway
