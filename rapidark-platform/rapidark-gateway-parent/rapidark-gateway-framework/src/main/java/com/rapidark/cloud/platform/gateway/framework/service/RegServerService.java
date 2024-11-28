@@ -96,7 +96,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      */
     @Transactional(readOnly = true)
     public List<Map<String,Object>> regClientList(RegServer regServer){
-        String sql = "SELECT s.id AS regServerId,s.status AS regServerStatus,DATE_FORMAT(s.createTime,'%Y-%m-%d %H:%i:%s') as regServerTime,c.* FROM Client c, RegServer s WHERE c.id = s.clientId AND s.routeId=?";
+        String sql = "SELECT s.id AS regServerId,s.status AS regServerStatus,DATE_FORMAT(s.createTime,'%Y-%m-%d %H:%i:%s') as regServerTime,c.* FROM gw_Client c, gw_RegServer s WHERE c.id = s.clientId AND s.routeId=?";
         return nativeQuery(sql, Arrays.asList(regServer.getRouteId()));
     }
 
@@ -110,7 +110,8 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
     @Transactional(readOnly = true)
     public PageResult clientPageList(RegServer regServer, int currentPage, int pageSize){
         //DATE_FORMAT(s.tokenEffectiveTime,'%Y-%m-%d %H:%i:%s') as tokenEffectiveTime
-        String sql = "SELECT s.id AS regServerId,s.status AS regServerStatus,DATE_FORMAT(s.createTime,'%Y-%m-%d %H:%i:%s') as regServerTime,s.token,s.secretKey,s.tokenEffectiveTime,c.* FROM Client c, RegServer s WHERE c.id = s.clientId AND s.routeId=?";
+        String sql = "SELECT s.id AS regServerId,s.status AS regServerStatus,DATE_FORMAT(s.createTime,'%Y-%m-%d %H:%i:%s') as regServerTime,s.token,s.secretKey,s.tokenEffectiveTime,c.* " +
+				"FROM gw_Client c, gw_RegServer s WHERE c.id = s.clientId AND s.routeId=?";
         PageResult pageResult = pageNativeQuery(sql, Arrays.asList(regServer.getRouteId()), currentPage, pageSize);
         List<Map<String, Object>> list = pageResult.getLists();
         if (list != null){
@@ -153,7 +154,7 @@ public class RegServerService extends BaseService<RegServer,Long, RegServerRepos
      */
     @Transactional(readOnly = true)
     public PageResult notRegClientPageList(RegServer regServer, int currentPage, int pageSize){
-        String sql = "SELECT c.id,c.name,c.groupCode,c.ip FROM Client c WHERE c.status='0' AND id NOT IN (SELECT s.clientId FROM Regserver s WHERE s.routeId=?)";
+        String sql = "SELECT c.id,c.name,c.groupCode,c.ip FROM gw_Client c WHERE c.status='0' AND id NOT IN (SELECT s.clientId FROM gw_Regserver s WHERE s.routeId=?)";
         return pageNativeQuery(sql, Arrays.asList(regServer.getRouteId()), currentPage, pageSize);
     }
 

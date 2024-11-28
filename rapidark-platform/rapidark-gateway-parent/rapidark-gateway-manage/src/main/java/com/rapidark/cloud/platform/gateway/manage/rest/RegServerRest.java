@@ -4,6 +4,9 @@ import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.bean.RegServerReq;
 import com.rapidark.cloud.platform.gateway.framework.bean.TokenReq;
+import com.rapidark.cloud.platform.gateway.framework.command.LongIdCommand;
+import com.rapidark.cloud.platform.gateway.framework.command.ClientIdCommand;
+import com.rapidark.cloud.platform.gateway.framework.command.RouteIdCommand;
 import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
 import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
 import com.rapidark.cloud.platform.gateway.framework.service.RegServerService;
@@ -41,7 +44,7 @@ public class RegServerRest extends BaseRest {
      * @param regServer
      * @return
      */
-    @RequestMapping(value = "/add", method = {RequestMethod.POST})
+    @PostMapping(value = "/add")
     public ResponseResult add(@RequestBody RegServer regServer) {
         Assert.notNull(regServer, "未获取到对象");
         //默认禁止通行
@@ -62,11 +65,12 @@ public class RegServerRest extends BaseRest {
 
     /**
      * 删除注册到网关路由的客户端服务
-     * @param id
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult delete(@RequestParam Long id) {
+    @PostMapping(value = "/delete")
+    public ResponseResult delete(@RequestBody LongIdCommand command) {
+		Long id = command.getId();
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
         regServerService.deleteById(id);
@@ -79,7 +83,7 @@ public class RegServerRest extends BaseRest {
      * @param regServer
      * @return
      */
-    @RequestMapping(value = "/update", method = {RequestMethod.POST})
+    @PostMapping(value = "/update")
     public ResponseResult update(@RequestBody RegServer regServer) {
         Assert.notNull(regServer, "未获取到对象");
         regServer.setUpdateTime(new Date());
@@ -94,7 +98,7 @@ public class RegServerRest extends BaseRest {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/findById")
     public ResponseResult findById(@RequestParam Long id) {
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
@@ -106,7 +110,7 @@ public class RegServerRest extends BaseRest {
      * @param regServerReq
      * @return
      */
-    @RequestMapping(value = "/serverPageList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/serverPageList")
     public ResponseResult serverPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getClientId()), "未获取到对象查询ID");
@@ -122,7 +126,7 @@ public class RegServerRest extends BaseRest {
      * @param regServerReq
      * @return
      */
-    @RequestMapping(value = "/clientPageList", method = {RequestMethod.GET, RequestMethod.POST})
+    @PostMapping(value = "/clientPageList")
     public ResponseResult clientPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getRouteId()), "未获取到对象查询ID");
@@ -138,7 +142,7 @@ public class RegServerRest extends BaseRest {
      * @param regServerReq
      * @return
      */
-    @RequestMapping(value = "/regClientList", method = {RequestMethod.GET, RequestMethod.POST})
+    @PostMapping(value = "/regClientList")
     public ResponseResult regClientList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getRouteId()), "未获取到对象查询ID");
@@ -149,11 +153,12 @@ public class RegServerRest extends BaseRest {
 
     /**
      * 启用注册网关路由下的客户端
-     * @param id
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult start(@RequestParam Long id) {
+    @PostMapping(value = "/start")
+    public ResponseResult start(@RequestBody LongIdCommand command) {
+		Long id = command.getId();
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
         RegServer dbRegServer = regServerService.findById(id);
@@ -166,11 +171,12 @@ public class RegServerRest extends BaseRest {
 
     /**
      * 禁用注册网关路由下的客户端
-     * @param id
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult stop(@RequestParam Long id) {
+    @PostMapping(value = "/stop")
+    public ResponseResult stop(@RequestBody LongIdCommand command) {
+		Long id = command.getId();
         Assert.notNull(id, "未获取到对象ID");
         Assert.isTrue(id>0, "ID值错误");
         RegServer dbRegServer = regServerService.findById(id);
@@ -183,11 +189,12 @@ public class RegServerRest extends BaseRest {
 
     /**
      * 禁用当前客户端，关闭其注册的所有网关路由服务端访问状态
-     * @param clientId
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/stopClientAllRoute", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult stopClientAllRoute(@RequestParam String clientId) {
+    @PostMapping(value = "/stopClientAllRoute")
+    public ResponseResult stopClientAllRoute(@RequestBody ClientIdCommand command) {
+		String clientId = command.getClientId();
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         regServerService.stopClientAllRoute(clientId);
         customNacosConfigService.publishClientNacosConfig(clientId);
@@ -196,11 +203,12 @@ public class RegServerRest extends BaseRest {
 
     /**
      * 启用当前客户端，激活其注册的所有网关路由服务端访问状态
-     * @param clientId
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/startClientAllRoute", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult startClientAllRoute(@RequestParam String clientId) {
+    @PostMapping(value = "/startClientAllRoute")
+    public ResponseResult startClientAllRoute(@RequestBody ClientIdCommand command) {
+		String clientId = command.getClientId();
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象ID");
         regServerService.startClientAllRoute(clientId);
         customNacosConfigService.publishClientNacosConfig(clientId);
@@ -209,11 +217,12 @@ public class RegServerRest extends BaseRest {
 
     /**
      * 关闭网关路由下所有注册客户端
-     * @param routeId
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/stopRouteAllClient", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult stopRouteAllClient(@RequestParam String routeId) {
+    @PostMapping(value = "/stopRouteAllClient")
+    public ResponseResult stopRouteAllClient(@RequestBody RouteIdCommand command) {
+		String routeId = command.getRouteId();
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象ID");
         regServerService.stopRouteAllClient(routeId);
         customNacosConfigService.publishRouteNacosConfig(routeId);
@@ -222,11 +231,12 @@ public class RegServerRest extends BaseRest {
 
     /**
      * 启用网关路由下所有注册客户端
-     * @param routeId
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/startRouteAllClient", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult startRouteAllClient(@RequestParam String routeId) {
+    @PostMapping(value = "/startRouteAllClient")
+    public ResponseResult startRouteAllClient(@RequestBody RouteIdCommand command) {
+		String routeId = command.getRouteId();
         Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取到对象ID");
         regServerService.startRouteAllClient(routeId);
         customNacosConfigService.publishRouteNacosConfig(routeId);
@@ -238,7 +248,7 @@ public class RegServerRest extends BaseRest {
      * @param regServerReq
      * @return
      */
-    @RequestMapping(value = "/notRegServerPageList", method = {RequestMethod.GET, RequestMethod.POST})
+    @PostMapping(value = "/notRegServerPageList")
     public ResponseResult notRegServerPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getClientId()), "未获取到客户端ID");
@@ -252,7 +262,7 @@ public class RegServerRest extends BaseRest {
      * @param regServerReq
      * @return
      */
-    @RequestMapping(value = "/notRegClientPageList", method = {RequestMethod.GET, RequestMethod.POST})
+    @PostMapping(value = "/notRegClientPageList")
     public ResponseResult notRegClientPageList(@RequestBody RegServerReq regServerReq) {
         Assert.notNull(regServerReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(regServerReq.getRouteId()), "未获取路由服务ID");
@@ -266,7 +276,7 @@ public class RegServerRest extends BaseRest {
      * @param tokenReq
      * @return
      */
-    @RequestMapping(value = "/createToken", method = {RequestMethod.GET, RequestMethod.POST})
+    @PostMapping(value = "/createToken")
     public ResponseResult createToken(@RequestBody TokenReq tokenReq){
         Assert.notNull(tokenReq, "未获取到对象");
         Assert.notNull(tokenReq.getRegServerId(), "未获取到对象ID");
@@ -297,7 +307,7 @@ public class RegServerRest extends BaseRest {
      * @param tokenReq
      * @return
      */
-    @RequestMapping(value = "/removeToken", method = {RequestMethod.GET, RequestMethod.POST})
+    @PostMapping(value = "/removeToken")
     public ResponseResult removeToken(@RequestBody TokenReq tokenReq){
         Assert.notNull(tokenReq, "未获取到对象");
         Assert.notNull(tokenReq.getRegServerId(), "未获取到对象ID");

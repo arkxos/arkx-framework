@@ -126,7 +126,7 @@ public class BaseService<T,ID,DAO extends JpaRepository> {
                 queryCount.setParameter(i + 1, params.get(i));
             }
         }
-        long totalNum = ((BigInteger) queryCount.getSingleResult()).longValue();
+        long totalNum = (long) queryCount.getSingleResult();
         query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);//转换成map
         query.setFirstResult((currentPage -1) * pageSize).setMaxResults(pageSize);
         List<Map<String,Object>> list = query.getResultList();
