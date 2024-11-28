@@ -16,10 +16,10 @@
 
 package com.rapidark.cloud.platform.common.feign;
 
-import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
+//import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import com.rapidark.cloud.platform.common.feign.core.ArkFeignInnerRequestInterceptor;
 import com.rapidark.cloud.platform.common.feign.core.ArkFeignRequestCloseInterceptor;
-import com.rapidark.cloud.platform.common.feign.sentinel.ext.ArkSentinelFeign;
+//import com.rapidark.cloud.platform.common.feign.sentinel.ext.ArkSentinelFeign;
 
 import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -39,16 +39,16 @@ import org.springframework.context.annotation.Scope;
  */
 @Configuration(proxyBeanMethods = false)
 @Import(ArkFeignClientsRegistrar.class)
-@AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
+//@AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
 public class ArkFeignAutoConfiguration {
 
-	@Bean
-	@Scope("prototype")
-	@ConditionalOnMissingBean
-	@ConditionalOnProperty(name = "feign.sentinel.enabled")
-	public Feign.Builder feignSentinelBuilder() {
-		return ArkSentinelFeign.builder();
-	}
+//	@Bean
+//	@Scope("prototype")
+//	@ConditionalOnMissingBean
+//	@ConditionalOnProperty(name = "feign.sentinel.enabled")
+//	public Feign.Builder feignSentinelBuilder() {
+//		return ArkSentinelFeign.builder();
+//	}
 
 	/**
 	 * add http connection close header

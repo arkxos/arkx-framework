@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.manage.rest;
 
-import com.alibaba.csp.sentinel.slots.block.RuleConstant;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+//import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+//import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
@@ -15,6 +15,8 @@ import com.rapidark.cloud.platform.gateway.framework.service.RouteConfigService;
 import com.rapidark.cloud.platform.gateway.framework.service.SentinelRuleService;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
+import com.rapidark.cloud.platform.gateway.manage.rest.cmd.StartRouteCommand;
+import com.rapidark.cloud.platform.gateway.manage.rest.cmd.StringIdCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -70,11 +72,12 @@ public class RouteConfigRest extends BaseRest {
 
     /**
      * 删除网关路由
-     * @param id
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult delete(@RequestParam String id){
+    @PostMapping(value = "/delete")
+    public ResponseResult delete(@RequestBody StringIdCommand command){
+		String id = command.getId();
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         routeConfigService.delete(id);
         customNacosConfigService.publishRouteNacosConfig(id);
@@ -129,11 +132,12 @@ public class RouteConfigRest extends BaseRest {
 
     /**
      * 启用网关路由服务
-     * @param id
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult start(@RequestParam String id){
+    @PostMapping(value = "/start")
+    public ResponseResult start(@RequestBody StringIdCommand command){
+		String id = command.getId();
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         RouteConfig dbRouteConfig = routeConfigService.findById(id);
         if (!Constants.YES.equals(dbRouteConfig.getStatus())) {
@@ -147,11 +151,12 @@ public class RouteConfigRest extends BaseRest {
 
     /**
      * 停止网关路由服务
-     * @param id
+     * @param command
      * @return
      */
-    @RequestMapping(value = "/stop", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult stop(@RequestParam String id){
+    @PostMapping(value = "/stop")
+    public ResponseResult stop(@RequestBody StringIdCommand command){
+		String id = command.getId();
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         RouteConfig dbRouteConfig = routeConfigService.findById(id);
         if (!Constants.NO.equals(dbRouteConfig.getStatus())) {
@@ -176,13 +181,13 @@ public class RouteConfigRest extends BaseRest {
         routeConfigService.save(routeConfig);
         customNacosConfigService.publishRouteNacosConfig(routeConfig.getId());
 
-        SentinelRule sentinelRule = toSentinelRule(routeReq);
-        if (sentinelRule != null){
-            sentinelRule.setId(routeConfig.getId());
-            sentinelRuleService.save(sentinelRule);
-        } else {
-            sentinelRuleService.deleteById(routeConfig.getId());
-        }
+//        SentinelRule sentinelRule = toSentinelRule(routeReq);
+//        if (sentinelRule != null){
+//            sentinelRule.setId(routeConfig.getId());
+//            sentinelRuleService.save(sentinelRule);
+//        } else {
+//            sentinelRuleService.deleteById(routeConfig.getId());
+//        }
 
         //保存监控配置
         if (monitor != null) {
@@ -294,24 +299,24 @@ public class RouteConfigRest extends BaseRest {
             } else {
                 routeConfig.setFlowRuleName(null);
             }
-            if (StringUtils.isNotBlank(routeConfig.getFlowRuleName()) && form.getFlowRule() != null){
-                sentinelRule = new SentinelRule();
-                sentinelRule.setFlowRule(JSONObject.toJSONString(form.getFlowRule()));
-            }
+//            if (StringUtils.isNotBlank(routeConfig.getFlowRuleName()) && form.getFlowRule() != null){
+//                sentinelRule = new SentinelRule();
+//                sentinelRule.setFlowRule(JSONObject.toJSONString(form.getFlowRule()));
+//            }
         }
 
         // Sentinel熔断
-        if (degradeRule != null){
-            if (degradeRule.getChecked()){
-                routeConfig.setDegradeRuleName(RouteConstants.Sentinel.DEFAULT);
-            } else {
-                routeConfig.setDegradeRuleName(null);
-            }
-            if (StringUtils.isNotBlank(routeConfig.getDegradeRuleName()) && form.getDegradeRule() != null) {
-                sentinelRule = sentinelRule == null ? new SentinelRule() : sentinelRule;
-                sentinelRule.setDegradeRule(JSONObject.toJSONString(form.getDegradeRule()));
-            }
-        }
+//        if (degradeRule != null){
+//            if (degradeRule.getChecked()){
+//                routeConfig.setDegradeRuleName(RouteConstants.Sentinel.DEFAULT);
+//            } else {
+//                routeConfig.setDegradeRuleName(null);
+//            }
+//            if (StringUtils.isNotBlank(routeConfig.getDegradeRuleName()) && form.getDegradeRule() != null) {
+//                sentinelRule = sentinelRule == null ? new SentinelRule() : sentinelRule;
+//                sentinelRule.setDegradeRule(JSONObject.toJSONString(form.getDegradeRule()));
+//            }
+//        }
 
         if (cacheResult == null || Boolean.FALSE.equals(cacheResult.getChecked())) {
             routeConfig.setCacheTtl(null);
@@ -352,40 +357,40 @@ public class RouteConfigRest extends BaseRest {
      * @param routeReq
      * @return
      */
-    @Deprecated
-    private SentinelRule toSentinelRule(RouteReq routeReq){
-        SentinelRule sentinelRule = null;
-        FlowRuleBean flowRuleBean = routeReq.getFlowRule();
-        DegradeRuleBean degradeRuleBean = routeReq.getDegradeRule();
-        RouteFormBean form = routeReq.getForm();
-        // 限流
-        if (flowRuleBean != null){
-            FlowRule flowRule = null;
-            sentinelRule = new SentinelRule();
-            //直接拒绝（默认模式）
-            if (flowRuleBean.getDefaultChecked()){
-                flowRule = form.getFlowRule();
-                flowRule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_DEFAULT);
-            }
-            //冷启动模式
-            if (flowRuleBean.getWarmUpChecked()){
-                flowRule = form.getFlowRule();
-                flowRule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_WARM_UP);
-            }
-            //均速模式
-            if (flowRuleBean.getRateLimiterChecked()){
-                flowRule = form.getFlowRule();
-                flowRule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER);
-            }
-            if (flowRule != null){
-                sentinelRule.setFlowRule(JSONObject.toJSONString(flowRule));
-            }
-        }
-        // 熔断
-        if (degradeRuleBean != null && degradeRuleBean.getChecked()){
-            sentinelRule = sentinelRule == null ? new SentinelRule() : sentinelRule;
-            sentinelRule.setDegradeRule(JSONObject.toJSONString(form.getDegradeRule()));
-        }
-        return sentinelRule;
-    }
+//    @Deprecated
+//    private SentinelRule toSentinelRule(RouteReq routeReq){
+//        SentinelRule sentinelRule = null;
+//        FlowRuleBean flowRuleBean = routeReq.getFlowRule();
+//        DegradeRuleBean degradeRuleBean = routeReq.getDegradeRule();
+//        RouteFormBean form = routeReq.getForm();
+//        // 限流
+//        if (flowRuleBean != null){
+//            FlowRule flowRule = null;
+//            sentinelRule = new SentinelRule();
+//            //直接拒绝（默认模式）
+//            if (flowRuleBean.getDefaultChecked()){
+//                flowRule = form.getFlowRule();
+//                flowRule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_DEFAULT);
+//            }
+//            //冷启动模式
+//            if (flowRuleBean.getWarmUpChecked()){
+//                flowRule = form.getFlowRule();
+//                flowRule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_WARM_UP);
+//            }
+//            //均速模式
+//            if (flowRuleBean.getRateLimiterChecked()){
+//                flowRule = form.getFlowRule();
+//                flowRule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER);
+//            }
+//            if (flowRule != null){
+//                sentinelRule.setFlowRule(JSONObject.toJSONString(flowRule));
+//            }
+//        }
+//        // 熔断
+//        if (degradeRuleBean != null && degradeRuleBean.getChecked()){
+//            sentinelRule = sentinelRule == null ? new SentinelRule() : sentinelRule;
+//            sentinelRule.setDegradeRule(JSONObject.toJSONString(form.getDegradeRule()));
+//        }
+//        return sentinelRule;
+//    }
 }

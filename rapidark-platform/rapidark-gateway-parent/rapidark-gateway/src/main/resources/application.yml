@@ -15,11 +15,33 @@ spring:
         watch-delay: 1000
       config:
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 注意：管理模块和网关模块均采用统一的配置管理名称（dataId）和默认DEFAULT_GROUP组（group）
+        group: DEFAULT_GROUP
+        # 配置内容格式
+        #file-extension: properties
+        # dataId名称，程序注册事件监听此dataId下的配置变化
+        #prefix: rapidark-gateway-manage
   config:
     import:
       - optional:nacos:application-@profiles.active@.yml
-      - optional:nacos:${spring.application.name}-@profiles.active@.yml
+      - optional:nacos:rapidark-dynamic-gateway.yml
+      #- optional:nacos:${spring.application.name}-@profiles.active@.yml
 
 
+# 启用服务健康检测，注册中心将通过http://localhost:8888/actuator/health 检测服务的存活，默认10s一次
+# 查看网关的路由：http://localhost:8888/actuator/gateway/routes
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+          # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。开发用*，上生产请取消。默认打开health和info
+          #- "*"
+  endpoint:
+    health:
+      # 开启后打印详细信息
+      show-details: always
+      refresh:
+        enabled: true
 
 

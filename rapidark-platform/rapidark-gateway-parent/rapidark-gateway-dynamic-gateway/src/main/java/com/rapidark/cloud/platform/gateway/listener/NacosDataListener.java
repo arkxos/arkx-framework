@@ -40,7 +40,8 @@ public class NacosDataListener implements ApplicationRunner {
         log.info("run nacos listener server, serverAddr{}: dataId:{}, group:{}, type:{}, namespace:{}", serverAddr, dataId,
                 group, nacosConfigProperties.getFileExtension(), nacosConfigProperties.getNamespace());
         try {
-            nacosConfigManager.getConfigService().addListener(dataId, group, new PropertiesListener() {
+			String listenTempGatewayRouteChangeConfigDataId = "gateway-route-changed.yml";
+            nacosConfigManager.getConfigService().addListener(listenTempGatewayRouteChangeConfigDataId, group, new PropertiesListener() {
 
                 @Override
                 public void innerReceive(Properties properties) {

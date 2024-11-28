@@ -1,8 +1,8 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
-import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
+//import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+//import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteDataBean;
 import com.rapidark.cloud.platform.gateway.framework.bean.RouteRsp;
@@ -141,10 +141,10 @@ public class RouteConfigService extends BaseService<RouteConfig,String, RouteCon
             SentinelRule sentinelRule = ruleMap.get(r.getId());
             if (sentinelRule != null){
                 if (StringUtils.isNotBlank(sentinelRule.getFlowRule())){
-                    routeRsp.setFlowRule(JSONObject.parseObject(sentinelRule.getFlowRule(), FlowRule.class));
+//                    routeRsp.setFlowRule(JSONObject.parseObject(sentinelRule.getFlowRule(), FlowRule.class));
                 }
                 if (StringUtils.isNotBlank(sentinelRule.getDegradeRule())){
-                    routeRsp.setDegradeRule(JSONObject.parseObject(sentinelRule.getDegradeRule(), DegradeRule.class));
+//                    routeRsp.setDegradeRule(JSONObject.parseObject(sentinelRule.getDegradeRule(), DegradeRule.class));
                 }
             }
             return routeRsp;

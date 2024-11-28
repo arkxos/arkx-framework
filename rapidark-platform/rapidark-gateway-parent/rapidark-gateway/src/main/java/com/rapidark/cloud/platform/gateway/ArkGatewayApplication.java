@@ -20,6 +20,7 @@ import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author lengleng
@@ -27,6 +28,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * <p>
  * 网关应用
  */
+@EnableScheduling
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ArkGatewayApplication {

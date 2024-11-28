@@ -17,13 +17,13 @@
 
 package com.rapidark.cloud.platform.common.feign.sentinel;
 
-import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.RequestOriginParser;
+//import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
+//import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
+//import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.RequestOriginParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rapidark.cloud.platform.common.feign.sentinel.ext.ArkSentinelFeign;
-import com.rapidark.cloud.platform.common.feign.sentinel.handle.ArkUrlBlockHandler;
-import com.rapidark.cloud.platform.common.feign.sentinel.parser.ArkHeaderRequestOriginParser;
+//import com.rapidark.cloud.platform.common.feign.sentinel.ext.ArkSentinelFeign;
+//import com.rapidark.cloud.platform.common.feign.sentinel.handle.ArkUrlBlockHandler;
+//import com.rapidark.cloud.platform.common.feign.sentinel.parser.ArkHeaderRequestOriginParser;
 
 import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -40,27 +40,27 @@ import org.springframework.context.annotation.Scope;
  * sentinel 配置
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
+//@AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
 public class SentinelAutoConfiguration {
 
-	@Bean
-	@Scope("prototype")
-	@ConditionalOnMissingBean
-	@ConditionalOnProperty(name = "spring.cloud.openfeign.sentinel.enabled")
-	public Feign.Builder feignSentinelBuilder() {
-		return ArkSentinelFeign.builder();
-	}
-
-	@Bean
-	@ConditionalOnMissingBean
-	public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
-		return new ArkUrlBlockHandler(objectMapper);
-	}
-
-	@Bean
-	@ConditionalOnMissingBean
-	public RequestOriginParser requestOriginParser() {
-		return new ArkHeaderRequestOriginParser();
-	}
+//	@Bean
+//	@Scope("prototype")
+//	@ConditionalOnMissingBean
+//	@ConditionalOnProperty(name = "spring.cloud.openfeign.sentinel.enabled")
+//	public Feign.Builder feignSentinelBuilder() {
+//		return ArkSentinelFeign.builder();
+//	}
+//
+//	@Bean
+//	@ConditionalOnMissingBean
+//	public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
+//		return new ArkUrlBlockHandler(objectMapper);
+//	}
+//
+//	@Bean
+//	@ConditionalOnMissingBean
+//	public RequestOriginParser requestOriginParser() {
+//		return new ArkHeaderRequestOriginParser();
+//	}
 
 }

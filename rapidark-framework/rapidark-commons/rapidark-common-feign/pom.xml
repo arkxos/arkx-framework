@@ -34,10 +34,10 @@
             <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-biz</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>-->
+<!--        </dependency>-->
         <!--feign 依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

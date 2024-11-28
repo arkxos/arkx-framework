@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.framework.util;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
@@ -52,7 +52,7 @@ public class HttpResponseUtils {
      * @param responseResult
      */
     public static Mono<Void> write(ServerHttpResponse response, HttpStatusCode statusCode, ResponseResult responseResult){
-        String msg = JSONObject.toJSONString(responseResult);
+        String msg = JSON.toJSONString(responseResult);
         response.setStatusCode(statusCode);
         response.getHeaders().add(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
         DataBuffer buffer = response.bufferFactory().wrap(msg.getBytes(StandardCharsets.UTF_8));

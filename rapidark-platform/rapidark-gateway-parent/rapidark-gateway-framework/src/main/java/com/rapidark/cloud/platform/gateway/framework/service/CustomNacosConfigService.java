@@ -97,7 +97,8 @@ public class CustomNacosConfigService {
      * @param gatewayNacosConfig
      */
     public void publishConfigToNacos(GatewayNacosConfigBean gatewayNacosConfig) {
-        publishConfig(getDataId(), configProperties.getGroup(), gatewayNacosConfig.getGatewayConfig());
+		String listenTempGatewayRouteChangeConfigDataId = "gateway-route-changed.yml";
+        publishConfig(listenTempGatewayRouteChangeConfigDataId, configProperties.getGroup(), gatewayNacosConfig.getGatewayConfig());
     }
 
     /**

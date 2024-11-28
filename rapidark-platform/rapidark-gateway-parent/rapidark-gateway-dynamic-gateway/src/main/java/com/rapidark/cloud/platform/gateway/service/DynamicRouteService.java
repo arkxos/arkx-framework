@@ -46,6 +46,10 @@ public class DynamicRouteService {
     public void add(RouteDefinition routeDefinition) {
         try {
             inMemoryRouteDefinitionRepository.save(Mono.just(routeDefinition)).subscribe();
+
+			List<RouteDefinition> routes = inMemoryRouteDefinitionRepository.getRouteDefinitions().collectList().block();
+			assert routes != null;
+			routes.forEach(System.out::println);
         } catch (Exception e) {
             throw new IllegalArgumentException("添加网关路由失败:" + e.getMessage(), e);
         }
@@ -59,6 +63,10 @@ public class DynamicRouteService {
     public void update(RouteDefinition routeDefinition) {
         delete(routeDefinition.getId());
         add(routeDefinition);
+
+		List<RouteDefinition> routes = inMemoryRouteDefinitionRepository.getRouteDefinitions().collectList().block();
+		assert routes != null;
+		routes.forEach(System.out::println);
     }
 
     /**
@@ -68,9 +76,14 @@ public class DynamicRouteService {
      */
     public void delete(String id) {
         try {
-            inMemoryRouteDefinitionRepository.delete(Mono.just(id)).
-                    then(Mono.defer(() -> Mono.just(ResponseEntity.ok().build()))).
-                    onErrorResume((t) -> t instanceof NotFoundException, (t) -> Mono.just(ResponseEntity.notFound().build())).
+            inMemoryRouteDefinitionRepository.delete(Mono.just(id))
+					.then(Mono.defer(() -> {
+						List<RouteDefinition> routes = inMemoryRouteDefinitionRepository.getRouteDefinitions().collectList().block();
+						assert routes != null;
+						routes.forEach(System.out::println);
+						return Mono.just(ResponseEntity.ok().build());
+					}))
+					.onErrorResume((t) -> t instanceof NotFoundException, (t) -> Mono.just(ResponseEntity.notFound().build())).
                     subscribe();
         }catch(Exception e){
             throw new IllegalArgumentException("删除网关路由"+ id +"失败:" + e.getMessage(), e);

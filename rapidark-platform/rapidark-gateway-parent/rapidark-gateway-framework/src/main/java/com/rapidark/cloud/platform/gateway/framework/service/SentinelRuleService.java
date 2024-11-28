@@ -1,9 +1,9 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
-import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
+//import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+//import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.SentinelRuleRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.SentinelRule;
@@ -47,34 +47,34 @@ public class SentinelRuleService extends BaseService<SentinelRule, String, Senti
      */
     public void loadSentinelRules(){
         List<SentinelRule> rules = this.findAll();
-        List<FlowRule> flowRules = new ArrayList<>();
-        List<DegradeRule> degradeRules = new ArrayList<>();
-        for (SentinelRule sentinelRule : rules){
-            if (StringUtils.isNotBlank(sentinelRule.getFlowRule())) {
-                FlowRule flowRule = JSONObject.parseObject(sentinelRule.getFlowRule(), FlowRule.class);
-                flowRule.setResource(sentinelRule.getId());
-                flowRules.add(flowRule);
-            }
-            if (StringUtils.isNotBlank(sentinelRule.getDegradeRule())) {
-                DegradeRule degradeRule = JSONObject.parseObject(sentinelRule.getDegradeRule(), DegradeRule.class);
-                degradeRule.setResource(sentinelRule.getId());
-                degradeRules.add(degradeRule);
-            }
-        }
+//        List<FlowRule> flowRules = new ArrayList<>();
+//        List<DegradeRule> degradeRules = new ArrayList<>();
+//        for (SentinelRule sentinelRule : rules){
+//            if (StringUtils.isNotBlank(sentinelRule.getFlowRule())) {
+//                FlowRule flowRule = JSONObject.parseObject(sentinelRule.getFlowRule(), FlowRule.class);
+//                flowRule.setResource(sentinelRule.getId());
+//                flowRules.add(flowRule);
+//            }
+//            if (StringUtils.isNotBlank(sentinelRule.getDegradeRule())) {
+//                DegradeRule degradeRule = JSONObject.parseObject(sentinelRule.getDegradeRule(), DegradeRule.class);
+//                degradeRule.setResource(sentinelRule.getId());
+//                degradeRules.add(degradeRule);
+//            }
+//        }
 
         //加载到应用组件
         //FlowRuleManager.loadRules(flowRules);
         //DegradeRuleManager.loadRules(degradeRules);
 
         //直接推送到nacos，再通过register2Property方法注册naocs配置监听自动同步到应用组件中
-        customNacosConfigService.publishConfig(
-                customNacosConfigService.getPrefix() + ".sentinel.flow",
-                customNacosConfigService.getGroup(),
-                JSON.toJSONString(flowRules));
-        customNacosConfigService.publishConfig(
-                customNacosConfigService.getPrefix() + ".sentinel.degrade",
-                customNacosConfigService.getGroup(),
-                JSON.toJSONString(degradeRules));
+//        customNacosConfigService.publishConfig(
+//                customNacosConfigService.getPrefix() + ".sentinel.flow",
+//                customNacosConfigService.getGroup(),
+//                JSON.toJSONString(flowRules));
+//        customNacosConfigService.publishConfig(
+//                customNacosConfigService.getPrefix() + ".sentinel.degrade",
+//                customNacosConfigService.getGroup(),
+//                JSON.toJSONString(degradeRules));
     }
 
 }

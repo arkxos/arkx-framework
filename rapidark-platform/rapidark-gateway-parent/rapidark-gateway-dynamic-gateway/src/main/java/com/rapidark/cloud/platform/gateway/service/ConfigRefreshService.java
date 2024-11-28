@@ -39,8 +39,6 @@ public class ConfigRefreshService {
     @Resource
     private RouteConfigService routeConfigService;
     @Resource
-    private LoadRouteService loadRouteService;
-    @Resource
     private DynamicRouteService dynamicRouteService;
     @Resource
     private SecureIpService secureIpService;

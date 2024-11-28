@@ -16,7 +16,7 @@
 
 package com.rapidark.cloud.platform.common.feign.sentinel.handle;
 
-import com.alibaba.csp.sentinel.Tracer;
+//import com.alibaba.csp.sentinel.Tracer;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +61,7 @@ public class GlobalBizExceptionHandler {
 		log.error("全局异常信息 ex={}", e.getMessage(), e);
 
 		// 业务异常交由 sentinel 记录
-		Tracer.trace(e);
+//		Tracer.trace(e);
 		return ResponseResult.failed(e.getLocalizedMessage());
 	}
 

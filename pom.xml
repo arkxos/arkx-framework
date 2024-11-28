@@ -132,7 +132,7 @@
 
 
 		<jaeger.version>3.1.1</jaeger.version>
-		<sentinel.version>1.8.4</sentinel.version>
+		<sentinel.version>1.8.8</sentinel.version>
 
 		<ip2region.version>2.7.0</ip2region.version>
 

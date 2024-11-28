@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.bean;
 
-import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+//import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
+//import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class RouteRsp extends RouteConfig {
     private Monitor monitor;
-    private FlowRule flowRule;
-    private DegradeRule degradeRule;
+//    private FlowRule flowRule;
+//    private DegradeRule degradeRule;
     private Integer useScript;
 }
