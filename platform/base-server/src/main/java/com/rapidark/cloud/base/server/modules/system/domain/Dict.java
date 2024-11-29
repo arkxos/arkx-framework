@@ -40,7 +40,7 @@ public class Dict extends AbstractIdLongEntity implements Serializable {
     @Id
     @Column(name = "dict_id")
     @NotNull(groups = Update.class)
-    @Schema( value = "ID", hidden = true)
+    @Schema(value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
     @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
@@ -50,9 +50,9 @@ public class Dict extends AbstractIdLongEntity implements Serializable {
     private List<DictDetail> dictDetails;
 
     @NotBlank
-    @Schema( value = "名称")
+    @Schema(value = "名称")
     private String name;
 
-    @Schema( value = "描述")
+    @Schema(value = "描述")
     private String description;
 }

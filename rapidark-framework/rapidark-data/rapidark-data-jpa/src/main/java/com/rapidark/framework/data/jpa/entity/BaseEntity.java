@@ -35,24 +35,24 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 
 	@CreationTimestamp
 	@Column(name = "create_time", updatable = false)
-	@Schema( description = "创建时间", hidden = true)
+	@Schema(description = "创建时间", hidden = true)
 	private LocalDateTime createTime;
 
 	@UpdateTimestamp
 	@Column(name = "update_time")
-	@Schema( description = "更新时间", hidden = true)
+	@Schema(description = "更新时间", hidden = true)
 	private LocalDateTime updateTime;
 
 	//    @CreatedBy
 	//    @Column(name = "CREATOR_ID", updatable = false)
 	@CreatedBy
 	@Column(name = "create_by", updatable = false)
-	@Schema( description = "创建人", hidden = true)
+	@Schema(description = "创建人", hidden = true)
 	private String createBy = null;// 创建人
 
 	@LastModifiedBy
 	@Column(name = "update_by")
-	@Schema( description = "更新人", hidden = true)
+	@Schema(description = "更新人", hidden = true)
 	private String updateBy;
 
 	/**

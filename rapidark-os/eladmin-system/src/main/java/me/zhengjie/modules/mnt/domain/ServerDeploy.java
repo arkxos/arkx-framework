@@ -38,23 +38,23 @@ public class ServerDeploy extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "server_id")
-    @Schema( value = "ID", hidden = true)
+    @Schema(value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Schema( value = "服务器名称")
+    @Schema(value = "服务器名称")
     private String name;
 
-    @Schema( value = "IP")
+    @Schema(value = "IP")
     private String ip;
 
-    @Schema( value = "端口")
+    @Schema(value = "端口")
     private Integer port;
 
-    @Schema( value = "账号")
+    @Schema(value = "账号")
     private String account;
 
-    @Schema( value = "密码")
+    @Schema(value = "密码")
     private String password;
 
     public void copy(ServerDeploy source){

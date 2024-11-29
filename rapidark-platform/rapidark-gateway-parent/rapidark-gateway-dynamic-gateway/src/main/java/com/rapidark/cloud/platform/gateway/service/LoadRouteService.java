@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.service;
 
-import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import com.rapidark.cloud.platform.gateway.filter.CacheResultGatewayFilter;
@@ -76,7 +76,7 @@ public class LoadRouteService {
      * @return
      */
     @Deprecated
-    public GatewayRouteConfig loadRouteConfig(RouteConfig r){
+    public GatewayRouteConfig loadRouteConfig(GatewayAppRoute r){
         GatewayRouteConfig config = new GatewayRouteConfig();
         config.setId(r.getId());
         config.setOrder(0);

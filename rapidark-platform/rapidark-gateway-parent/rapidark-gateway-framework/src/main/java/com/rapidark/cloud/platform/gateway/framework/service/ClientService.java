@@ -3,7 +3,7 @@ package com.rapidark.cloud.platform.gateway.framework.service;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.ClientRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Client;
-import com.rapidark.cloud.platform.gateway.framework.entity.RegServer;
+import com.rapidark.cloud.platform.gateway.framework.entity.ClientServerRegister;
 import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.*;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ClientService extends BaseService<Client,String, ClientRepository> {
 
     @Resource
-    private RegServerService regServerService;
+    private ClientServerRegisterService clientServerRegisterService;
 
     /**
      * 删除客户端
@@ -31,12 +31,12 @@ public class ClientService extends BaseService<Client,String, ClientRepository> 
      */
     @Override
     public void delete(Client client){
-        RegServer regServer = new RegServer();
-        regServer.setClientId(client.getId());
+        ClientServerRegister clientServerRegister = new ClientServerRegister();
+        clientServerRegister.setClientId(client.getId());
         //查找是否有注册到其它网关服务上，如有一并删除
-        List<RegServer> regServerList = regServerService.findAll(regServer);
-        if (!CollectionUtils.isEmpty(regServerList)){
-            regServerService.delete(regServer);
+        List<ClientServerRegister> clientServerRegisterList = clientServerRegisterService.findAll(clientServerRegister);
+        if (!CollectionUtils.isEmpty(clientServerRegisterList)){
+            clientServerRegisterService.delete(clientServerRegister);
         }
         super.delete(client);
     }

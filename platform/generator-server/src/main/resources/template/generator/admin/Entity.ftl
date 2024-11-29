@@ -72,9 +72,9 @@ public class ${className} implements Serializable {
     </#if>
     </#if>
     <#if column.remark != ''>
-    @Schema( value = "${column.remark}")
+    @Schema(value = "${column.remark}")
     <#else>
-    @Schema( value = "${column.changeColumnName}")
+    @Schema(value = "${column.changeColumnName}")
     </#if>
     private ${column.columnType} ${column.changeColumnName};
     </#list>

@@ -29,7 +29,7 @@ public class BaseRole extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "role_Id")
-    @Schema( value = "roleId")
+    @Schema(value = "roleId")
     private Long roleId;
 
     /**

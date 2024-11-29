@@ -10,9 +10,9 @@ import lombok.Data;
 public class PayChannelDto {
     private static final long serialVersionUID = 1L;
 
-    @Schema( "渠道编码")
+    @Schema("渠道编码")
     private String channelCode;
 
-    @Schema( "渠道名称,如:alipay,wechat")
+    @Schema("渠道名称,如:alipay,wechat")
     private String channelName;
 }

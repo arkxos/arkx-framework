@@ -116,4 +116,16 @@ public class DynamicRouteService {
     public Flux<RouteDefinition> getRouteDefinitions() {
         return inMemoryRouteDefinitionRepository.getRouteDefinitions();
     }
+
+//	@Autowired
+//	private ApplicationEventPublisherFactory publisherApplicationEventFactory;
+//
+//	/**
+//	 * 刷新路由，通过spring的事件监听机制，发布事件，触发监听方法的执行
+//	 * @return
+//	 */
+//	@Deprecated
+//	public void fresh(String type){
+//		publisherApplicationEventFactory.publisherEvent(type);
+//	}
 }

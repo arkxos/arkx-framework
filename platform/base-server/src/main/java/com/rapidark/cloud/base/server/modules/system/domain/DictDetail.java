@@ -38,7 +38,7 @@ public class DictDetail extends AbstractIdLongEntity implements Serializable {
     @Id
     @Column(name = "detail_id")
     @NotNull(groups = Update.class)
-    @Schema( value = "ID", hidden = true)
+    @Schema(value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
     @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
@@ -46,15 +46,15 @@ public class DictDetail extends AbstractIdLongEntity implements Serializable {
 
     @JoinColumn(name = "dict_id")
     @ManyToOne(fetch=FetchType.LAZY)
-    @Schema( value = "字典", hidden = true)
+    @Schema(value = "字典", hidden = true)
     private Dict dict;
 
-    @Schema( value = "字典标签")
+    @Schema(value = "字典标签")
     private String label;
 
-    @Schema( value = "字典值")
+    @Schema(value = "字典值")
     private String value;
 
-    @Schema( value = "排序")
+    @Schema(value = "排序")
     private Integer dictSort = 999;
 }

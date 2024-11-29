@@ -16,11 +16,11 @@ import jakarta.validation.constraints.NotNull;
 @Schema(description = "功能接口授权")
 public class GrantAuthorityActionCommand {
 
-    @Schema( name = "actionId", value = "功能按钮ID", example = "", required = true)
+    @Schema(name = "actionId", value = "功能按钮ID", example = "", required = true)
     @NotNull(message = "功能按钮ID不能为空")
     private Long actionId;
 
-    @Schema( name = "authorityIds", value = "接口ID:多个用,号隔开", example = "", required = true)
+    @Schema(name = "authorityIds", value = "接口ID:多个用,号隔开", example = "", required = true)
     @NotEmpty(message = "接口ID不能为空")
     private String authorityIds;
 

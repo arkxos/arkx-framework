@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description 缓存路由网关对应的GroovyScript规则引擎脚本ID
- * @Author JL
- * @Date 2022/2/22
- * @Version V1.0
+ * 缓存路由网关对应的GroovyScript规则引擎脚本ID
+ * @author darkness
+ * @date 2022/5/30 17:21
+ * @version 1.0
  */
 public class RotueGroovyCache {
 

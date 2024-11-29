@@ -4,9 +4,9 @@ import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.LoadServerRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
 import com.rapidark.cloud.platform.gateway.framework.entity.LoadServer;
-import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
-import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
+import com.rapidark.framework.common.utils.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -114,21 +114,21 @@ public class LoadServerService extends BaseService<LoadServer, Long, LoadServerR
      * 设置负载均衡网关路由配置
      * @param balanced
      * @param loadServer
-     * @param routeConfig
+     * @param gatewayAppRoute
      */
-    public void setBalancedRoute(Balanced balanced, LoadServer loadServer, RouteConfig routeConfig){
+    public void setBalancedRoute(Balanced balanced, LoadServer loadServer, GatewayAppRoute gatewayAppRoute){
         //获取route，改变参数，构造一个新route对象
-        String routeId = this.setBalancedRouteId(balanced.getId(), routeConfig.getId());
-        routeConfig.setId(routeId);
+        String routeId = this.setBalancedRouteId(balanced.getId(), gatewayAppRoute.getId());
+        gatewayAppRoute.setId(routeId);
         //设置断言路径
-        routeConfig.setPath(RouteConstants.PARENT_PATH + balanced.getLoadUri());
+        gatewayAppRoute.setPath(RouteConstants.PARENT_PATH + balanced.getLoadUri());
         //设置负载参数,查找服务对应的路由服务
         String weightName = this.setBalancedWeightName(balanced.getId());
-        routeConfig.setWeightName(weightName);
+        gatewayAppRoute.setWeightName(weightName);
         //设置负载权重值
-        routeConfig.setWeight(loadServer.getWeight());
+        gatewayAppRoute.setWeight(loadServer.getWeight());
         //默认负载的断言路径截取级别为1
-        routeConfig.setStripPrefix(1);
+        gatewayAppRoute.setStripPrefix(1);
     }
 
     /**

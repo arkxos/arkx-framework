@@ -27,18 +27,18 @@ public class EmailTemplate extends AbstractEntity {
     @TableId(value = "tpl_id", type = IdType.ASSIGN_ID)
     private Long tplId;
 
-    @Schema( value = "模板名称")
+    @Schema(value = "模板名称")
     private String name;
 
-    @Schema( value = "模板编码")
+    @Schema(value = "模板编码")
     private String code;
 
-    @Schema( value = "发送服务器配置")
+    @Schema(value = "发送服务器配置")
     private Long configId;
 
-    @Schema( value = "模板")
+    @Schema(value = "模板")
     private String template;
 
-    @Schema( value = "模板参数")
+    @Schema(value = "模板参数")
     private String params;
 }

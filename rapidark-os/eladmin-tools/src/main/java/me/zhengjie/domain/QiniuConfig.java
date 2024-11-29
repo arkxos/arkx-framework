@@ -33,19 +33,19 @@ public class QiniuConfig implements Serializable {
 
     @Id
     @Column(name = "config_id")
-    @Schema( value = "ID")
+    @Schema(value = "ID")
     private Long id;
 
     @NotBlank
-    @Schema( value = "accessKey")
+    @Schema(value = "accessKey")
     private String accessKey;
 
     @NotBlank
-    @Schema( value = "secretKey")
+    @Schema(value = "secretKey")
     private String secretKey;
 
     @NotBlank
-    @Schema( value = "存储空间名称作为唯一的 Bucket 识别符")
+    @Schema(value = "存储空间名称作为唯一的 Bucket 识别符")
     private String bucket;
 
     /**
@@ -57,13 +57,13 @@ public class QiniuConfig implements Serializable {
      * 东南亚	Zone.zoneAs0()
      */
     @NotBlank
-    @Schema( value = "Zone表示与机房的对应关系")
+    @Schema(value = "Zone表示与机房的对应关系")
     private String zone;
 
     @NotBlank
-    @Schema( value = "外链域名，可自定义，需在七牛云绑定")
+    @Schema(value = "外链域名，可自定义，需在七牛云绑定")
     private String host;
 
-    @Schema( value = "空间类型：公开/私有")
+    @Schema(value = "空间类型：公开/私有")
     private String type = "公开";
 }

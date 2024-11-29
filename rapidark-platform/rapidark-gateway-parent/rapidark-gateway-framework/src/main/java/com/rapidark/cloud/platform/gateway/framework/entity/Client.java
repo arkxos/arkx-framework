@@ -13,10 +13,10 @@ import jakarta.validation.constraints.Size;
 import java.util.Date;
 
 /**
- * @Description 客户端实体类
- * @Author JL
- * @Date 2020/05/15
- * @Version V1.0
+ * 客户端
+ * @author darkness
+ * @date 2022/5/24 14:58
+ * @version 1.0
  */
 @Entity
 @Table(name="gw_client")

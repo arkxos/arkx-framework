@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * @Description 负载管理实体类
- * @Author JL
+ * @Author jianglong
  * @Date 2020/06/28
  * @Version V1.0
  */

@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.tiemr;
 
-import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteUtils;
@@ -52,8 +52,8 @@ public class TimerCacheRouteService {
         //防止数据同步过程中，写入到cacheMap，导致数据读取出错与性能影响
         dataMap.putAll(cacheMap);
         for (Map.Entry<String, Object> entry : dataMap.entrySet()){
-            RouteConfig routeConfig = (RouteConfig) entry.getValue();
-            String routeId = RouteUtils.getBalancedToRouteId(routeConfig.getId());
+            GatewayAppRoute gatewayAppRoute = (GatewayAppRoute) entry.getValue();
+            String routeId = RouteUtils.getBalancedToRouteId(gatewayAppRoute.getId());
 
             //是否已存在缓存列表
             String key = String.format(RouteConstants.CACHE_ROUTE_KEY, routeId);
@@ -62,12 +62,12 @@ public class TimerCacheRouteService {
             }
 
             //获取网关路由对象，防止为负载route
-            if (!routeId.equals(routeConfig.getId())) {
-                routeConfig = (RouteConfig) cacheMap.get(routeId);
+            if (!routeId.equals(gatewayAppRoute.getId())) {
+                gatewayAppRoute = (GatewayAppRoute) cacheMap.get(routeId);
             }
 
             //如果ttl少于0，则说明已取消掉缓存
-            if (routeConfig.getCacheTtl() == null || routeConfig.getCacheTtl() <= 0) {
+            if (gatewayAppRoute.getCacheTtl() == null || gatewayAppRoute.getCacheTtl() <= 0) {
                 redisTemplate.delete(key);
                 continue;
             }

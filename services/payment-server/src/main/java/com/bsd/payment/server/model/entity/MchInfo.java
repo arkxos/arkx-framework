@@ -17,21 +17,21 @@ import lombok.EqualsAndHashCode;
 public class MchInfo extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-    @Schema( "商户ID")
+    @Schema("商户ID")
     private String mchId;
 
-    @Schema( "名称")
+    @Schema("名称")
     private String name;
 
-    @Schema( "类型,0-平台,1-私有")
+    @Schema("类型,0-平台,1-私有")
     private String type;
 
-    @Schema( "请求私钥")
+    @Schema("请求私钥")
     private String reqKey;
 
-    @Schema( "响应私钥")
+    @Schema("响应私钥")
     private String resKey;
 
-    @Schema( value = "商户状态,0-停止使用,1-使用中", name = "state", example = "0")
+    @Schema(value = "商户状态,0-停止使用,1-使用中", name = "state", example = "0")
     private Byte state;
 }

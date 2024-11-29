@@ -5,10 +5,10 @@ import org.springframework.util.Assert;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description 缓存IP信息
- * @Author JL
- * @Date 2020/05/28
- * @Version V1.0
+ * 缓存IP信息
+ * @author darkness
+ * @date 2022/5/30 17:18
+ * @version 1.0
  */
 public class IpListCache {
 

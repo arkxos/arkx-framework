@@ -24,7 +24,7 @@ public class BaseAuthority extends AbstractIdLongEntity {
 
     @Id
     @Column(name = "authority_Id")
-    @Schema( value = "authority_Id")
+    @Schema(value = "authority_Id")
     private Long authorityId;
 
     /**

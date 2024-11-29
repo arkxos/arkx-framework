@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 @Data
 public class UpdateMenuCommand extends CreateMenuCommand {
 
-    @Schema( required = true, value = "菜单ID")
+    @Schema(required = true, value = "菜单ID")
     @NotNull(message = "菜单id不能为空")
     private Long menuId;
 

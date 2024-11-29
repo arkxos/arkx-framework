@@ -5,10 +5,10 @@ import org.springframework.util.Assert;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description 缓存接口请求统计缓存
- * @Author JL
- * @Date 2020/07/07
- * @Version V1.0
+ * 缓存接口请求统计缓存
+ * @author darkness
+ * @date 2022/5/30 17:17
+ * @version 1.0
  */
 public class CountCache {
 

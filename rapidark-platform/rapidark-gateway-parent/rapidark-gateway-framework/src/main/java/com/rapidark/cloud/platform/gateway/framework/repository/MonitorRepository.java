@@ -1,6 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.repository;
 
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @Date 2021/04/14
  * @Version V1.0
  */
-public interface MonitorRepository extends JpaRepository<Monitor, String> {
+public interface MonitorRepository extends BaseRepository<Monitor, String> {
     /**
      * 获取监控配置，告警状态：0启用，1禁用，2告警
      * @return
@@ -24,6 +25,6 @@ public interface MonitorRepository extends JpaRepository<Monitor, String> {
      * 获取0正常状态的网关路由服务监控配置，告警状态：0启用，1禁用，2告警
      * @return
      */
-    @Query(value ="SELECT m FROM Monitor m WHERE m.status IN ('0','2') AND m.id IN (SELECT r.id FROM RouteConfig r WHERE r.status='0')")
+    @Query(value ="SELECT m FROM Monitor m WHERE m.status IN ('0','2') AND m.id IN (SELECT r.id FROM GatewayAppRoute r WHERE r.status='0')")
     List<Monitor> validRouteMonitorList();
 }

@@ -1,6 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.repository;
 
 import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date 2020/06/28
  * @Version V1.0
  */
-public interface BalancedRepository extends JpaRepository<Balanced, Long> {
+public interface BalancedRepository extends BaseRepository<Balanced, Long> {
 
 }

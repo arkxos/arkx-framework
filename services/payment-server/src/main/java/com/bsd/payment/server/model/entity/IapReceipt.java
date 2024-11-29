@@ -17,21 +17,21 @@ import lombok.EqualsAndHashCode;
 public class IapReceipt extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-    @Schema( "支付订单号")
+    @Schema("支付订单号")
     private String payOrderId;
 
-    @Schema( "商户ID")
+    @Schema("商户ID")
     private String mchId;
 
-    @Schema( "IAP业务号")
+    @Schema("IAP业务号")
     private String transactionId;
 
-    @Schema( value = "处理状态:0-未处理,1-处理成功,-1-处理失败", name = "status", example = "0")
+    @Schema(value = "处理状态:0-未处理,1-处理成功,-1-处理失败", name = "status", example = "0")
     private Byte status;
 
-    @Schema( value = "处理次数", name = "handleCount", example = "0")
+    @Schema(value = "处理次数", name = "handleCount", example = "0")
     private Byte handleCount;
 
-    @Schema( "凭据内容")
+    @Schema("凭据内容")
     private String receiptData;
 }

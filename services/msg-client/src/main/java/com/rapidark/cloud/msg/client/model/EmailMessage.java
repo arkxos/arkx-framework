@@ -15,31 +15,31 @@ public class EmailMessage extends BaseMessage {
     /**
      * 收件人
      */
-    @Schema( value = "收件人")
+    @Schema(value = "收件人")
     private String[] to;
 
     /**
      * 抄送人
      */
-    @Schema( value = "抄送人")
+    @Schema(value = "抄送人")
     private String[] cc;
 
     /**
      * 邮件标题
      */
-    @Schema( value = "邮件标题")
+    @Schema(value = "邮件标题")
     private String subject;
 
     /**
      * 邮件内容
      */
-    @Schema( value = "邮件内容")
+    @Schema(value = "邮件内容")
     private String content;
 
     /**
      * 附件
      */
-    @Schema( value = "附件路径")
+    @Schema(value = "附件路径")
     private List<Map<String, String>> attachments = new ArrayList<>();
 
     public EmailMessage() {

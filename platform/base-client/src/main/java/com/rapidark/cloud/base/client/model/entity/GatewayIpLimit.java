@@ -27,7 +27,7 @@ public class GatewayIpLimit extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "policy_Id")
-    @Schema( value = "policyId")
+    @Schema(value = "policyId")
     private Long policyId;
 
     /**

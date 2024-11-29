@@ -18,7 +18,7 @@ import jakarta.validation.constraints.NotEmpty;
 @Schema(description = "添加钉钉用户命令")
 public class AddDingDingUserCommand extends AddUserCommand {
 
-    @Schema( name = "ddUserid", value = "用户钉钉ID", example = "", required = true)
+    @Schema(name = "ddUserid", value = "用户钉钉ID", example = "", required = true)
     @NotEmpty(message = "用户钉钉ID不能为空")
     private String ddUserid;
 

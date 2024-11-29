@@ -53,11 +53,11 @@ public class PageUtil extends cn.hutool.core.util.PageUtil {
     /**
      * Page 数据处理，预防redis反序列化报错
      */
-    public static <T> PageData<T> toPageData(Page page) {
-        PageData pageData = new PageData();
-        pageData.setContent(page.getContent());
-        pageData.setTotalElements(page.getTotalElements());
-        return pageData;
+    public static <T> PageResult<T> toPageData(Page page) {
+        PageResult pageResult = new PageResult();
+        pageResult.setLists(page.getContent());
+        pageResult.setTotalNum(page.getTotalElements());
+        return pageResult;
     }
 
     /**

@@ -9,10 +9,10 @@ import org.springframework.web.server.ServerWebExchange;
 import java.util.Map;
 
 /**
- * @Description Groovy规则引擎动态脚本实现父类
- * @Author JL
- * @Date 2022/2/21
- * @Version V1.0
+ * Groovy规则引擎动态脚本实现父类
+ * @author darkness
+ * @date 2022/6/13 17:53
+ * @version 1.0
  */
 @Slf4j
 @Setter

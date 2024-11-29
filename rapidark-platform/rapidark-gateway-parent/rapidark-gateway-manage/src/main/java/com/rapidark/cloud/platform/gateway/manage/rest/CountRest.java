@@ -2,7 +2,7 @@ package com.rapidark.cloud.platform.gateway.manage.rest;
 
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
-import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.service.CountService;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountReq;
 import org.apache.commons.lang3.StringUtils;
@@ -54,14 +54,14 @@ public class CountRest extends BaseRest {
         Assert.notNull(countReq, "未获取到对象");
         int currentPage = getCurrentPage(countReq.getCurrentPage());
         int pageSize = getPageSize(countReq.getPageSize());
-        RouteConfig routeConfig = new RouteConfig();
+        GatewayAppRoute gatewayAppRoute = new GatewayAppRoute();
         if (StringUtils.isNotBlank(countReq.getName())) {
-            routeConfig.setName(countReq.getName());
+            gatewayAppRoute.setName(countReq.getName());
         }
         if (StringUtils.isNotBlank(countReq.getGroupCode())){
-            routeConfig.setGroupCode(countReq.getGroupCode());
+            gatewayAppRoute.setGroupCode(countReq.getGroupCode());
         }
-        return countService.countRouteList(routeConfig, currentPage, pageSize);
+        return countService.countRouteList(gatewayAppRoute, currentPage, pageSize);
     }
 
     /**

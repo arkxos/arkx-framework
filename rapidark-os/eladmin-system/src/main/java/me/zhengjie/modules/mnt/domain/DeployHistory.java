@@ -37,23 +37,23 @@ public class DeployHistory implements Serializable {
 
     @Id
     @Column(name = "history_id")
-	@Schema( value = "ID", hidden = true)
+	@Schema(value = "ID", hidden = true)
     private String id;
 
-    @Schema( value = "应用名称")
+    @Schema(value = "应用名称")
     private String appName;
 
-	@Schema( value = "IP")
+	@Schema(value = "IP")
     private String ip;
 
 	@CreationTimestamp
-	@Schema( value = "部署时间")
+	@Schema(value = "部署时间")
     private Timestamp deployDate;
 
-	@Schema( value = "部署者")
+	@Schema(value = "部署者")
     private String deployUser;
 
-	@Schema( value = "部署ID")
+	@Schema(value = "部署ID")
 	private Long deployId;
 
     public void copy(DeployHistory source){

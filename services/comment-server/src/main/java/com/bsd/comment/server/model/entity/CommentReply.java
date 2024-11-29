@@ -24,37 +24,37 @@ import lombok.NoArgsConstructor;
 public class CommentReply extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-    @Schema( value = "评论回复ID")
+    @Schema(value = "评论回复ID")
     @TableId(value = "reply_id", type = IdType.ASSIGN_ID)
     private Long replyId;
 
-    @Schema( value = "评论ID")
+    @Schema(value = "评论ID")
     private Long commentId;
 
-    @Schema( value = "上级回复ID")
+    @Schema(value = "上级回复ID")
     private Long parentId;
 
-    @Schema( value = "回复者ID")
+    @Schema(value = "回复者ID")
     private String fromUserId;
 
-    @Schema( value = "回复者的名字")
+    @Schema(value = "回复者的名字")
     private String fromUserName;
 
-    @Schema( value = "回复内容")
+    @Schema(value = "回复内容")
     private String content;
 
-    @Schema( value = "回复目标ID")
+    @Schema(value = "回复目标ID")
     private Long toUserId;
 
-    @Schema( value = "是否屏蔽 0.不屏蔽 1.屏蔽")
+    @Schema(value = "是否屏蔽 0.不屏蔽 1.屏蔽")
     private Boolean isShield;
 
-    @Schema( value = "是否后台回复 1.普通回复  2.平台回复")
+    @Schema(value = "是否后台回复 1.普通回复  2.平台回复")
     private Integer isAuthor;
 
-    @Schema( value = "创建者")
+    @Schema(value = "创建者")
     private String createBy;
 
-    @Schema( value = "更新者")
+    @Schema(value = "更新者")
     private String updateBy;
 }

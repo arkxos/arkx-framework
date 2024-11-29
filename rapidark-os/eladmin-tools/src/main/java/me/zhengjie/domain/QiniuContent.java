@@ -34,31 +34,31 @@ public class QiniuContent implements Serializable {
 
     @Id
     @Column(name = "content_id")
-    @Schema( value = "ID", hidden = true)
+    @Schema(value = "ID", hidden = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
-    @Schema( value = "文件名")
+    @Schema(value = "文件名")
     private String key;
 
-    @Schema( value = "空间名")
+    @Schema(value = "空间名")
     private String bucket;
 
-    @Schema( value = "大小")
+    @Schema(value = "大小")
     private String size;
 
-    @Schema( value = "文件地址")
+    @Schema(value = "文件地址")
     private String url;
 
-    @Schema( value = "文件类型")
+    @Schema(value = "文件类型")
     private String suffix;
 
-    @Schema( value = "空间类型：公开/私有")
+    @Schema(value = "空间类型：公开/私有")
     private String type = "公开";
 
     @UpdateTimestamp
-    @Schema( value = "创建或更新时间")
+    @Schema(value = "创建或更新时间")
     @Column(name = "update_time")
     private Timestamp updateTime;
 }

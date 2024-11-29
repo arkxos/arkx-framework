@@ -16,24 +16,24 @@ public class CommentQuery {
      * 评论类型
      */
     @TopicType
-    @Schema( required = false, name = "commentType", value = "评论类型", example = "goods")
+    @Schema(required = false, name = "commentType", value = "评论类型", example = "goods")
     private String commentType;
 
     /**
      * 查询内容
      */
-    @Schema( required = false, name = "searchContent", value = "查询内容", example = "商品")
+    @Schema(required = false, name = "searchContent", value = "查询内容", example = "商品")
     private String searchContent;
 
     /**
      * 页数
      */
-    @Schema( required = false, name = "pageIndex", value = "页数", example = "1")
+    @Schema(required = false, name = "pageIndex", value = "页数", example = "1")
     private Integer pageIndex;
 
     /**
      * 每页大小
      */
-    @Schema( required = false, name = "pageSize", value = "每页大小", example = "20")
+    @Schema(required = false, name = "pageSize", value = "每页大小", example = "20")
     private Integer pageSize;
 }

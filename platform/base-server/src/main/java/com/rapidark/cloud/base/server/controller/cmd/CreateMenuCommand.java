@@ -15,33 +15,33 @@ import jakarta.validation.constraints.NotNull;
 @Data
 public class CreateMenuCommand {
 
-    @Schema( required = true, value = "菜单编码")
+    @Schema(required = true, value = "菜单编码")
     @NotNull(message = "菜单编码不能为空")
     private String menuCode;
-    @Schema( required = true, value = "菜单名称")
+    @Schema(required = true, value = "菜单名称")
     @NotNull(message = "菜单名称不能为空")
     private String menuName;
-    @Schema( required = false, value = "图标")
+    @Schema(required = false, value = "图标")
     private String icon;
-    @Schema( required = false, value = "请求协议", allowableValues = "/,http://,https://", example = "/")
+    @Schema(required = false, value = "请求协议", allowableValues = "/,http://,https://", example = "/")
     private String scheme = "/";
-    @Schema( required = true, value = "路由地址")
+    @Schema(required = true, value = "路由地址")
     private String path = "";
-    @Schema( required = false, value = "组件路径")
+    @Schema(required = false, value = "组件路径")
     private String component = "";
-    @Schema( required = false, value = "打开方式", allowableValues = "_self,_blank", example = "_self")
+    @Schema(required = false, value = "打开方式", allowableValues = "_self,_blank", example = "_self")
     private String target="_self";
-    @Schema( required = true, allowableValues = "0,1", example="1", value = "是否启用")
+    @Schema(required = true, allowableValues = "0,1", example="1", value = "是否启用")
     private Integer status = 1;
-    @Schema( required = true, allowableValues = "0,1", example="1", value = "菜单可见")
+    @Schema(required = true, allowableValues = "0,1", example="1", value = "菜单可见")
     private Integer visible = 1;
-    @Schema( required = false, value = "父节点ID", example = "0")
+    @Schema(required = false, value = "父节点ID", example = "0")
     private Long parentId = 0L;
-    @Schema( required = false, value = "优先级（越小越靠前）")
+    @Schema(required = false, value = "优先级（越小越靠前）")
     private Integer priority = 0;
-    @Schema( required = false, value = "描述")
+    @Schema(required = false, value = "描述")
     private String menuDesc = "";
-    @Schema( required = false, value = "前端应用")
+    @Schema(required = false, value = "前端应用")
     private String serviceId = "";
 
 }

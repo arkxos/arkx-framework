@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 @Data
 public class DeleteMenuCommand {
 
-    @Schema( required = true, value = "菜单编号")
+    @Schema(required = true, value = "菜单编号")
     @NotNull(message = "菜单编号不能为空")
     private Long menuId;
 

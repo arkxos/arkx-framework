@@ -26,7 +26,7 @@ public class BaseUser extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "user_Id")
-    @Schema( value = "userId")
+    @Schema(value = "userId")
     private Long userId;
 
     /**

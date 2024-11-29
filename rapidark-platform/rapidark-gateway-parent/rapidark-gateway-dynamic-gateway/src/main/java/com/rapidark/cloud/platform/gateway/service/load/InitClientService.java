@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.service.load;
 
-import com.rapidark.cloud.platform.gateway.framework.service.RegServerService;
+import com.rapidark.cloud.platform.gateway.framework.service.ClientServerRegisterService;
 import com.rapidark.cloud.platform.gateway.cache.RegServerCache;
 import com.rapidark.cloud.platform.gateway.vo.GatewayRegServer;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +24,14 @@ import java.util.List;
 public class InitClientService {
 
     @Resource
-    private RegServerService regServerService;
+    private ClientServerRegisterService clientServerRegisterService;
 
     /**
      * 第一次初始化加载
      */
     @PostConstruct
     public void initLoadClient(){
-        List list = regServerService.allRegClientList();
+        List list = clientServerRegisterService.allRegClientList();
         RegServerCache.clear();
         int size = 0;
         if (!CollectionUtils.isEmpty(list)){

@@ -35,21 +35,21 @@ public class EmailLogs extends AbstractEntity {
 
     private String content;
 
-    @Schema( value = "附件路径")
+    @Schema(value = "附件路径")
     private String attachments;
 
-    @Schema( value = "发送次数")
+    @Schema(value = "发送次数")
     private Integer sendNums;
 
-    @Schema( value = "错误信息")
+    @Schema(value = "错误信息")
     private String error;
 
-    @Schema( value = "0-失败 1-成功")
+    @Schema(value = "0-失败 1-成功")
     private Integer result;
 
-    @Schema( value = "发送配置")
+    @Schema(value = "发送配置")
     private String config;
 
-    @Schema( value = "模板编号")
+    @Schema(value = "模板编号")
     private String tplCode;
 }

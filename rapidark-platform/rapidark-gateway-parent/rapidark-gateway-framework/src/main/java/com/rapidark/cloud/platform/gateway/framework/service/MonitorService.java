@@ -2,10 +2,10 @@ package com.rapidark.cloud.platform.gateway.framework.service;
 
 import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.bean.MonitorReq;
-import com.rapidark.cloud.platform.gateway.framework.bean.RouteRsp;
+import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRsp;
 import com.rapidark.cloud.platform.gateway.framework.repository.MonitorRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
-import com.rapidark.cloud.platform.gateway.framework.entity.RouteConfig;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class MonitorService extends BaseService<Monitor, String, MonitorRepository> {
 
     @Resource
-    private RouteConfigService routeConfigService;
+    private GatewayAppRouteService gatewayAppRouteService;
     @Resource
     private MonitorRepository monitorRepository;
 
@@ -37,16 +37,16 @@ public class MonitorService extends BaseService<Monitor, String, MonitorReposito
      * @param monitorReq
      * @return
      */
-    public List<RouteConfig> list(MonitorReq monitorReq){
-        RouteConfig queryRouteConfig = new RouteConfig();
+    public List<GatewayAppRoute> list(MonitorReq monitorReq){
+        GatewayAppRoute queryGatewayAppRoute = new GatewayAppRoute();
         if (monitorReq != null && StringUtils.isNotBlank(monitorReq.getStatus())) {
             //如果前端搜索状态为2告警类型，则直查询路由网关状态的为0的记录
             //网关路由服务，只有0正常，1禁用，两种状态
             //网关路由服务监控，有0正常，1禁用，2告警三种状态
             if (Constants.ALARM.equals(monitorReq.getStatus())){
-                queryRouteConfig.setStatus(Constants.YES);
+                queryGatewayAppRoute.setStatus(Constants.YES);
             }else {
-                queryRouteConfig.setStatus(monitorReq.getStatus());
+                queryGatewayAppRoute.setStatus(monitorReq.getStatus());
             }
         }
         List<Monitor> monitorList = this.validMonitorList();
@@ -55,10 +55,10 @@ public class MonitorService extends BaseService<Monitor, String, MonitorReposito
             return null;
         }
         Map<String, Monitor> monitorMap = monitorList.stream().collect(Collectors.toMap(Monitor::getId, r -> r));
-        List<RouteConfig> resultList = new ArrayList<>(monitorMap.size());
-        List<RouteConfig> routeConfigList = routeConfigService.list(queryRouteConfig);
-        for (RouteConfig routeConfig : routeConfigList){
-            Monitor monitor = monitorMap.get(routeConfig.getId());
+        List<GatewayAppRoute> resultList = new ArrayList<>(monitorMap.size());
+        List<GatewayAppRoute> gatewayAppRouteList = gatewayAppRouteService.list(queryGatewayAppRoute);
+        for (GatewayAppRoute gatewayAppRoute : gatewayAppRouteList){
+            Monitor monitor = monitorMap.get(gatewayAppRoute.getId());
             if (monitor == null){
                 continue;
             }
@@ -69,12 +69,12 @@ public class MonitorService extends BaseService<Monitor, String, MonitorReposito
                 if (StringUtils.equalsAny(monitorReq.getStatus(), Constants.YES, Constants.NO)){
                     continue;
                 }
-                routeConfig.setStatus(monitor.getStatus());
+                gatewayAppRoute.setStatus(monitor.getStatus());
             }
-            RouteRsp routeRsp = new RouteRsp();
-            BeanUtils.copyProperties(routeConfig, routeRsp);
-            routeRsp.setMonitor(monitor);
-            resultList.add(routeRsp);
+            GatewayAppRouteRsp gatewayAppRouteRsp = new GatewayAppRouteRsp();
+            BeanUtils.copyProperties(gatewayAppRoute, gatewayAppRouteRsp);
+            gatewayAppRouteRsp.setMonitor(monitor);
+            resultList.add(gatewayAppRouteRsp);
         }
         return resultList;
     }

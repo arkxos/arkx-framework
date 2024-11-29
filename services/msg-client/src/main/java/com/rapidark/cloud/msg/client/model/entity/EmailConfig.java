@@ -27,21 +27,21 @@ public class EmailConfig extends AbstractEntity {
     @TableId(value = "config_id", type = IdType.ASSIGN_ID)
     private Long configId;
 
-    @Schema( value = "配置名称")
+    @Schema(value = "配置名称")
     private String name;
 
-    @Schema( value = "发件服务器域名")
+    @Schema(value = "发件服务器域名")
     private String smtpHost;
 
-    @Schema( value = "发件服务器账户")
+    @Schema(value = "发件服务器账户")
     private String smtpUsername;
 
-    @Schema( value = "发件服务器密码")
+    @Schema(value = "发件服务器密码")
     private String smtpPassword;
 
-    @Schema( value = "保留数据0-否 1-是 不允许删除")
+    @Schema(value = "保留数据0-否 1-是 不允许删除")
     private Integer isPersist;
 
-    @Schema( value = "是否为默认 0-否 1-是 ")
+    @Schema(value = "是否为默认 0-否 1-是 ")
     private Integer isDefault;
 }

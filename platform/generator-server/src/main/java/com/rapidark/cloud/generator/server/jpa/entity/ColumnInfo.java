@@ -38,52 +38,52 @@ public class ColumnInfo implements Serializable {
 
     @Id
     @Column(name = "column_id")
-    @Schema( value = "ID", hidden = true)
+    @Schema(value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
     @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
-    @Schema( value = "表名")
+    @Schema(value = "表名")
     private String tableName;
 
-    @Schema( value = "数据库字段名称")
+    @Schema(value = "数据库字段名称")
     private String columnName;
 
-    @Schema( value = "数据库字段英文名称")
+    @Schema(value = "数据库字段英文名称")
     private String columnEnName;
 
-    @Schema( value = "数据库字段类型")
+    @Schema(value = "数据库字段类型")
     private String columnType;
 
-    @Schema( value = "数据库字段键类型")
+    @Schema(value = "数据库字段键类型")
     private String keyType;
 
-    @Schema( value = "字段额外的参数")
+    @Schema(value = "字段额外的参数")
     private String extra;
 
-    @Schema( value = "数据库字段描述")
+    @Schema(value = "数据库字段描述")
     private String remark;
 
-    @Schema( value = "是否必填")
+    @Schema(value = "是否必填")
     private Boolean notNull;
 
-    @Schema( value = "是否在列表显示")
+    @Schema(value = "是否在列表显示")
     private Boolean listShow;
 
-    @Schema( value = "是否表单显示")
+    @Schema(value = "是否表单显示")
     private Boolean formShow;
 
-    @Schema( value = "表单类型")
+    @Schema(value = "表单类型")
     private String formType;
 
-    @Schema( value = "查询 1:模糊 2：精确")
+    @Schema(value = "查询 1:模糊 2：精确")
     private String queryType;
 
-    @Schema( value = "字典名称")
+    @Schema(value = "字典名称")
     private String dictName;
 
-    @Schema( value = "日期注解")
+    @Schema(value = "日期注解")
     private String dateAnnotation;
 
     public ColumnInfo(String tableName, String columnName, Boolean notNull, String columnType, String remark, String keyType, String extra) {

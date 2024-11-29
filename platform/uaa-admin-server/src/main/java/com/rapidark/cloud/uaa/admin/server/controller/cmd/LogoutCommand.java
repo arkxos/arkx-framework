@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 @Schema(description = "退出登录参数")
 public class LogoutCommand {
 
-    @Schema( required = true, value = "令牌")
+    @Schema(required = true, value = "令牌")
     @NotNull(message = "令牌不能为空")
     private String token;
 

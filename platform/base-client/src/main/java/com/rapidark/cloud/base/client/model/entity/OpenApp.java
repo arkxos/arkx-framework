@@ -35,7 +35,7 @@ public class OpenApp extends AbstractIdStringEntity {
 
     @Id
     @Column(name = "APP_ID")
-    @Schema( value = "客户端ID")
+    @Schema(value = "客户端ID")
     private String appId;
 
     @NotNull(message = "客户端分组不能为空")
@@ -46,14 +46,14 @@ public class OpenApp extends AbstractIdStringEntity {
      * API访问key
      */
     @Column(name = "API_KEY")
-    @Schema( value = "API访问key")
+    @Schema(value = "API访问key")
     private String apiKey;
     /**
      * API访问密钥
      */
     @Column(name = "SECRET_KEY",nullable = false)
     @NotBlank
-    @Schema( value = "API访问密钥")
+    @Schema(value = "API访问密钥")
     private String secretKey;
 
     /**
@@ -62,7 +62,7 @@ public class OpenApp extends AbstractIdStringEntity {
     @Column(name = "APP_NAME",nullable = false)
     @NotBlank(message = "客户端名称不能为空")
     @Size(min = 2, max = 40, message = "客户端系统名称长度必需在2到40个字符内")
-    @Schema( value = "客户端系统名称")
+    @Schema(value = "客户端系统名称")
     private String appName;
 
     /**
@@ -71,7 +71,7 @@ public class OpenApp extends AbstractIdStringEntity {
     @Column(name = "APP_NAME_EN",nullable = false)
     @NotBlank(message = "客户端系统代号不能为空")
     @Size(min = 2, max = 40, message = "客户端系统代号长度必需在2到40个字符内")
-    @Schema( value = "客户端系统代号")
+    @Schema(value = "客户端系统代号")
     private String appNameEn;
 
     @Column(name = "ip")
@@ -82,21 +82,21 @@ public class OpenApp extends AbstractIdStringEntity {
      */
     @Column(name = "APP_TYPE",nullable = false)
     @NotBlank
-    @Schema( value = "app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用")
+    @Schema(value = "app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用")
     private String appType;
 
     /**
      * 应用图标
      */
     @Column(name = "APP_ICON")
-    @Schema( value = "应用图标")
+    @Schema(value = "应用图标")
     private String appIcon;
 
     /**
      * 移动应用操作系统：ios-苹果 android-安卓
      */
     @Column(name = "APP_OS")
-    @Schema( value = "移动应用操作系统:ios-苹果 android-安卓")
+    @Schema(value = "移动应用操作系统:ios-苹果 android-安卓")
     private String appOs;
 
     /**
@@ -104,21 +104,21 @@ public class OpenApp extends AbstractIdStringEntity {
      */
     @Column(name = "DEVELOPER_ID",nullable = false)
     @NotNull
-    @Schema( value = "开发者ID:默认为0")
+    @Schema(value = "开发者ID:默认为0")
     private Long developerId;
 
     /**
      * app描述
      */
     @Column(name = "APP_DESC")
-    @Schema( value = "app描述")
+    @Schema(value = "app描述")
     private String appDesc;
 
     /**
      * 官方网址
      */
     @Column(name = "WEBSITE")
-    @Schema( value = "官网地址")
+    @Schema(value = "官网地址")
     private String website;
 
     /**
@@ -126,7 +126,7 @@ public class OpenApp extends AbstractIdStringEntity {
      */
     @Column(name = "IS_SIGN",nullable = false)
     @NotNull
-    @Schema( value = "是否验签:0-否 1-是 不允许删除")
+    @Schema(value = "是否验签:0-否 1-是 不允许删除")
     private Integer isSign;
 
     /**
@@ -134,7 +134,7 @@ public class OpenApp extends AbstractIdStringEntity {
      */
     @Column(name = "IS_ENCRYPT",nullable = false)
     @NotNull
-    @Schema( value = "是否加密:0-否 1-是 不允许删除")
+    @Schema(value = "是否加密:0-否 1-是 不允许删除")
     private Integer isEncrypt;
 
     /**
@@ -142,14 +142,14 @@ public class OpenApp extends AbstractIdStringEntity {
      */
     @Column(name = "ENCRYPT_TYPE",nullable = false)
     @NotBlank
-    @Schema( value = "加密类型:DES TripleDES AES RSA")
+    @Schema(value = "加密类型:DES TripleDES AES RSA")
     private String encryptType;
 
     /**
      * RSA加解密公钥
      */
     @Column(name = "PUBLIC_KEY")
-    @Schema( value = "RSA加解密公钥")
+    @Schema(value = "RSA加解密公钥")
     private String publicKey;
 
     public void copy(OpenApp source){

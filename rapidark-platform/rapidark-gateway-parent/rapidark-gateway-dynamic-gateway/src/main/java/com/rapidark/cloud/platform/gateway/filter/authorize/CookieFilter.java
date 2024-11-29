@@ -22,9 +22,9 @@ public class CookieFilter extends FilterHandler {
     @Override
     public void handleRequest(ServerHttpRequest request){
         //header,ip,parm,time,cookie
-        if (routeConfig.getFilterAuthorizeName().contains("cookie")){
-            log.info("处理网关路由请求{},执行cookie过滤 ", routeConfig.getId());
-            String accessCookie = routeConfig.getAccessCookie();
+        if (gatewayAppRoute.getFilterAuthorizeName().contains("cookie")){
+            log.info("处理网关路由请求{},执行cookie过滤 ", gatewayAppRoute.getId());
+            String accessCookie = gatewayAppRoute.getAccessCookie();
             Assert.isTrue(StringUtils.isNotBlank(accessCookie),"自定义cookie不能为空");
             Assert.isTrue(accessCookie.contains("="),"自定义 cookie 格式错误");
             String[] datas = accessCookie.split("=");

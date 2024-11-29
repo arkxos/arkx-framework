@@ -52,7 +52,7 @@ public class ${entity} implements Serializable {
 #end
 #if("$!field.comment" != "")
     #if(${swagger2})
-    @Schema( value = "${field.comment}")
+    @Schema(value = "${field.comment}")
     #else
     /**
      * ${field.comment}

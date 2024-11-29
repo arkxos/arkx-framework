@@ -16,11 +16,11 @@ import jakarta.validation.constraints.NotNull;
 @Schema(description = "添加用户角色命令")
 public class AddUserRolesCommand {
 
-    @Schema( name = "userId", value = "用户Id", example = "", required = true)
+    @Schema(name = "userId", value = "用户Id", example = "", required = true)
     @NotNull(message = "用户Id不能为空")
     private Long userId;
 
-    @Schema( name = "roleIds", value = "角色id列表", example = "", required = true)
+    @Schema(name = "roleIds", value = "角色id列表", example = "", required = true)
     @NotEmpty(message = "角色id列表不能为空")
     private String roleIds;
 

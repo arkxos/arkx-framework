@@ -44,43 +44,43 @@ public class QuartzJob extends AbstractIdLongEntity implements Serializable {
     private Long id;
 
     @Transient
-    @Schema( value = "用于子任务唯一标识", hidden = true)
+    @Schema(value = "用于子任务唯一标识", hidden = true)
     private String uuid;
 
-    @Schema( value = "定时器名称")
+    @Schema(value = "定时器名称")
     private String jobName;
 
     @NotBlank
-    @Schema( value = "Bean名称")
+    @Schema(value = "Bean名称")
     private String beanName;
 
     @NotBlank
-    @Schema( value = "方法名称")
+    @Schema(value = "方法名称")
     private String methodName;
 
-    @Schema( value = "参数")
+    @Schema(value = "参数")
     private String params;
 
     @NotBlank
-    @Schema( value = "cron表达式")
+    @Schema(value = "cron表达式")
     private String cronExpression;
 
-    @Schema( value = "状态，暂时或启动")
+    @Schema(value = "状态，暂时或启动")
     private Boolean isPause = false;
 
-    @Schema( value = "负责人")
+    @Schema(value = "负责人")
     private String personInCharge;
 
-    @Schema( value = "报警邮箱")
+    @Schema(value = "报警邮箱")
     private String email;
 
-    @Schema( value = "子任务")
+    @Schema(value = "子任务")
     private String subTask;
 
-    @Schema( value = "失败后暂停")
+    @Schema(value = "失败后暂停")
     private Boolean pauseAfterFailure;
 
     @NotBlank
-    @Schema( value = "备注")
+    @Schema(value = "备注")
     private String description;
 }

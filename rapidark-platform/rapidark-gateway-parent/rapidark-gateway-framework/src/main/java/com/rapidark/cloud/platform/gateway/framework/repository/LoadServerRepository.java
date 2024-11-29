@@ -1,6 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.repository;
 
 import com.rapidark.cloud.platform.gateway.framework.entity.LoadServer;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * @Date 2020/06/28
  * @Version V1.0
  */
-public interface LoadServerRepository extends JpaRepository<LoadServer, Long> {
+public interface LoadServerRepository extends BaseRepository<LoadServer, Long> {
 
     /**
      * 删除负载下所有的路由服务
@@ -35,7 +36,8 @@ public interface LoadServerRepository extends JpaRepository<LoadServer, Long> {
      */
     List<LoadServer> queryByRouteId(String routeId);
 
-    @Query(value = "SELECT r.name,r.groupCode,r.uri,r.path,r.method,r.status,l.id,l.routeId,l.weight FROM gw_route r " +
+    @Query(value = "SELECT r.name,r.groupCode,r.uri,r.path,r.method,r.status,l.id,l.routeId,l.weight " +
+			"FROM gw_route r " +
 			"INNER JOIN gw_loadserver l ON r.id=l.routeId " +
 			"WHERE l.balancedId=?1",
             nativeQuery = true)

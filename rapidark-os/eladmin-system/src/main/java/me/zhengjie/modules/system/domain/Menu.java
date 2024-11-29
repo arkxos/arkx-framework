@@ -41,55 +41,55 @@ public class Menu extends AbstractIdLongEntity implements Serializable {
     @Id
     @Column(name = "menu_id")
     @NotNull(groups = {Update.class})
-    @Schema( value = "ID", hidden = true)
+    @Schema(value = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JSONField(serialize = false)
     @ManyToMany(mappedBy = "menus")
-    @Schema( value = "菜单角色")
+    @Schema(value = "菜单角色")
     private Set<Role> roles;
 
-    @Schema( value = "菜单标题")
+    @Schema(value = "菜单标题")
     private String title;
 
     @Column(name = "name")
-    @Schema( value = "菜单组件名称")
+    @Schema(value = "菜单组件名称")
     private String componentName;
 
-    @Schema( value = "排序")
+    @Schema(value = "排序")
     private Integer menuSort = 999;
 
-    @Schema( value = "组件路径")
+    @Schema(value = "组件路径")
     private String component;
 
-    @Schema( value = "路由地址")
+    @Schema(value = "路由地址")
     private String path;
 
-    @Schema( value = "菜单类型，目录、菜单、按钮")
+    @Schema(value = "菜单类型，目录、菜单、按钮")
     private Integer type;
 
-    @Schema( value = "权限标识")
+    @Schema(value = "权限标识")
     private String permission;
 
-    @Schema( value = "菜单图标")
+    @Schema(value = "菜单图标")
     private String icon;
 
     @Column(columnDefinition = "bit(1) default 0")
-    @Schema( value = "缓存")
+    @Schema(value = "缓存")
     private Boolean cache;
 
     @Column(columnDefinition = "bit(1) default 0")
-    @Schema( value = "是否隐藏")
+    @Schema(value = "是否隐藏")
     private Boolean hidden;
 
-    @Schema( value = "上级菜单")
+    @Schema(value = "上级菜单")
     private Long pid;
 
-    @Schema( value = "子节点数目", hidden = true)
+    @Schema(value = "子节点数目", hidden = true)
     private Integer subCount = 0;
 
-    @Schema( value = "外链菜单")
+    @Schema(value = "外链菜单")
     private Boolean iFrame;
 
     @Override

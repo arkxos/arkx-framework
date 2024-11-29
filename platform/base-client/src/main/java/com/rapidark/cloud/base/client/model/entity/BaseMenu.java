@@ -33,7 +33,7 @@ public class BaseMenu extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "menu_Id")
-    @Schema( value = "menuId")
+    @Schema(value = "menuId")
     private Long menuId;
 
     /**
