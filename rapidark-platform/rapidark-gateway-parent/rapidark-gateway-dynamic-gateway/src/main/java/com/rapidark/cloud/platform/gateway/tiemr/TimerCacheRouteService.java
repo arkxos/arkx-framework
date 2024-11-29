@@ -18,6 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 定时刷新route路由配置，如：变更配置后，会在redis中记录版本号，本地版本号不相同，
+ * 则重新加载最新路由配置（已过时，启用nacos配置监听事件，参见：NacosConfigRefreshEventListener）
  * @Description 定时刷新redis中的缓存路由请求key
  * @Author JL
  * @Date 2023/10/24
@@ -35,6 +37,7 @@ public class TimerCacheRouteService {
      */
     @Scheduled(cron = "0 0/5 * * * ?")
     public void freshCache(){
+//		log.info("执行定时任务：同步刷新到路由、客户端、IP等配置...");
         log.debug("执行定时任务：刷新网关路由redis缓存的请求响应列表...");
         ConcurrentHashMap<String,Object> cacheMap = RouteCache.getCacheMap();
         if (cacheMap.size() <= 0){

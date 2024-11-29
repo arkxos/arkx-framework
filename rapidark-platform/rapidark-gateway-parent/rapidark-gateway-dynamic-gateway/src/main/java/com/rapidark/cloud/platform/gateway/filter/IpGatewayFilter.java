@@ -2,6 +2,7 @@ package com.rapidark.cloud.platform.gateway.filter;
 
 import com.rapidark.cloud.platform.gateway.framework.util.HttpResponseUtils;
 import com.rapidark.cloud.platform.gateway.framework.util.NetworkIpUtils;
+import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteUtils;
 import com.rapidark.cloud.platform.gateway.cache.IpListCache;
 import com.rapidark.cloud.platform.gateway.cache.RegServerCache;
@@ -30,71 +31,88 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
 @Slf4j
 public class IpGatewayFilter implements GatewayFilter, Ordered {
 
-    private boolean enabled;
+	private boolean enabled;
 
-    public IpGatewayFilter(boolean enabled){
-        this.enabled = enabled;
-    }
+	public IpGatewayFilter(boolean enabled){
+		this.enabled = enabled;
+	}
 
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        if (!enabled) {
-            return chain.filter(exchange);
-        }
+	@Override
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		if (!enabled) {
+			return chain.filter(exchange);
+		}
 
-        Route route = exchange.getRequiredAttribute(GATEWAY_ROUTE_ATTR);
-        String routeId = RouteUtils.getBalancedToRouteId(route.getId());
-        String ip = NetworkIpUtils.getIpAddress(exchange.getRequest());
-        if (!this.isPassIp(ip)){
-            String msg = "客户端IP已被限制，无权限访问网关!" +" ip:" + ip;
-            log.error(msg);
-            return HttpResponseUtils.writeUnauth(exchange.getResponse(), msg);
-        }
+		Route route = exchange.getRequiredAttribute(GATEWAY_ROUTE_ATTR);
+		String routeId = RouteUtils.getBalancedToRouteId(route.getId());
 
-        GatewayRegServer regServer = getCacheRegServer(ip, routeId);
-        if (regServer == null){
-            String msg = "客户端IP未注册使用，无权限访问网关路由："+ routeId +"! Ip:" + ip;
-            log.error(msg);
-            return HttpResponseUtils.writeUnauth(exchange.getResponse(), msg);
-        }
-        return chain.filter(exchange);
-    }
+		//做了负载均衡的route服务不做客户端IP验证
+//		if (routeId.startsWith(RouteConstants.BALANCED)){
+//			return chain.filter(exchange);
+//		}
+		String ip = NetworkIpUtils.getIpAddress(exchange.getRequest());
+		if (!this.isPassIp(ip)){
+			String msg = "客户端IP已被限制，无权限访问网关!" +" ip:" + ip;
+			log.error(msg);
+			return HttpResponseUtils.writeUnauth(exchange.getResponse(), msg);
+		}
+		GatewayRegServer regServer = getCacheRegServer(ip, routeId);
+		if (regServer == null){
+			String msg = "客户端IP未注册使用，无权限访问网关路由："+ routeId +"! Ip:" + ip;
+			log.error(msg);
+			return HttpResponseUtils.writeUnauth(exchange.getResponse(), msg);
+		}
+		return chain.filter(exchange);
+	}
 
-    /**
-     * 查询和对比缓存中的注册客户端
-     * @param ip
-     * @param routeId
-     * @return
-     */
-    public GatewayRegServer getCacheRegServer(String ip, String routeId){
-        List<GatewayRegServer> regServers = RegServerCache.get(routeId);
-        if (CollectionUtils.isEmpty(regServers)){
-            return null;
-        }
-        Optional<GatewayRegServer> optional = regServers.stream().filter(r -> ip.equals(r.getIp())).findFirst();
-        return optional.orElse(null);
-    }
+	/**
+	 * 查询和对比缓存中的注册客户端
+	 * @param ip
+	 * @return
+	 */
+	public GatewayRegServer getCacheRegServer(String ip, String routeId){
+		List<GatewayRegServer> regServers = RegServerCache.get(routeId);
+		if (CollectionUtils.isEmpty(regServers)){
+			return null;
+		}
+		Optional<GatewayRegServer> optional = regServers.stream().filter(r -> ip.equals(r.getIp())).findFirst();
+		return optional.orElse(null);
+	}
 
-    /**
-     * 是否允许通行IP
-     * @return
-     */
-    private boolean isPassIp(String ip){
-        Object isPass = IpListCache.get(ip);
-        //如果没有设置IP白名单，则不做限制
-        return isPass == null || (boolean) isPass;
-    }
+	/**
+	 * 是否允许通行IP
+	 * @return
+	 */
+	private boolean isPassIp(String ip){
+		Object isPass = IpListCache.get(ip);
+		//如果没有设置IP白名单，则不做限制
+		if (isPass == null){
+			return true;
+		}
+		return (boolean) isPass;
+	}
 
-    @Override
-    public String toString() {
-        return filterToStringCreator(IpGatewayFilter.this)
-                .append("enabled", true)
-                .append("order", getOrder())
-                .toString();
-    }
+	/**
+	 * 是否注册通行IP
+	 * @return
+	 */
+//    @Deprecated
+//    private boolean regPassIp(String routeId,String ip){
+//        List<String> ips = (List<String>)RegIpListCache.get(routeId);
+//        return ips != null && ips.contains(ip);
+//    }
 
-    @Override
-    public int getOrder() {
-        return 1;
-    }
+	@Override
+	public int getOrder() {
+		return 1;
+	}
+
+	@Override
+	public String toString() {
+		return filterToStringCreator(IpGatewayFilter.this)
+				.append("enabled", true)
+				.append("order", getOrder())
+				.toString();
+	}
+
 }

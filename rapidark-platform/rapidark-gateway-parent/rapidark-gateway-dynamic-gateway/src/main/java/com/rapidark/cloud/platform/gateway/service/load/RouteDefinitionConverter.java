@@ -89,11 +89,11 @@ public class RouteDefinitionConverter {
 			}
 		}
 		//缓存策略
-		if (r.getCacheTtl() != null && r.getCacheTtl() > 0) {
-			Map<String, String> args = new LinkedHashMap<>();
-			args.put(RouteConstants.TTL, String.valueOf(r.getCacheTtl()));
-			filters.add(setFilterDefinition(RouteConstants.Secure.CACHE_RESULT, args));
-		}
+//		if (r.getCacheTtl() != null && r.getCacheTtl() > 0) {
+//			Map<String, String> args = new LinkedHashMap<>();
+//			args.put(RouteConstants.TTL, String.valueOf(r.getCacheTtl()));
+//			filters.add(setFilterDefinition(RouteConstants.Secure.CACHE_RESULT, args));
+//		}
 		return definition;
 	}
 

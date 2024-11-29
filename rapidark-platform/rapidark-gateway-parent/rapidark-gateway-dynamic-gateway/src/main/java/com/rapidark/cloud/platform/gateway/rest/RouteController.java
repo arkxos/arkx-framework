@@ -16,101 +16,113 @@ import jakarta.annotation.Resource;
 
 /**
  * @Description 动态添加路由
- * @Author JL
+ * @Author jianglong
  * @Date 2020/05/11
  * @Version V1.0
  */
-//@RestController
+@RestController
 @RequestMapping("/gateway/route")
 public class RouteController {
+	@Resource
+	private DynamicRouteService dynamicRouteService;
+	@Resource
+	private LoadRouteService loadRouteService;
+	@Resource
+	private GatewayAppRouteService gatewayAppRouteService;
+//	@Resource
+//	private DataRouteApplicationEventListen redisRouteDefinitionRepository;
 
-    @Resource
-    private DynamicRouteService dynamicRouteService;
-    @Resource
-    private LoadRouteService loadRouteService;
-    @Resource
-    private GatewayAppRouteService gatewayAppRouteService;
+	/**
+	 add-json:
+	 {
+	 "filters":[
+	 {
+	 "name":"StripPrefix",
+	 "args":{
+	 "_genkey_0":"1"
+	 }
+	 }
+	 ],
+	 "id":"hi_producer",
+	 "uri":"lb://service-hi",
+	 "order":1,
+	 "predicates":[
+	 {
+	 "name":"Path",
+	 "args":{
+	 "pattern":"/hi/producer/**"
+	 }
+	 }
+	 ]
+	 }
+	 */
 
-    /**
-     add-json:
-     {
-     "filters":[
-         {
-             "name":"StripPrefix",
-             "args":{
-             "_genkey_0":"1"
-             }
-         }
-     ],
-     "id":"hi_producer",
-     "uri":"lb://service-hi",
-     "order":1,
-     "predicates":[
-         {
-             "name":"Path",
-             "args":{
-                "pattern":"/hi/producer/**"
-             }
-         }
-     ]
-     }
-     */
+	/**
+	 * 增加路由
+	 * @param gwdefinition
+	 * @return
+	 */
+	@PostMapping("/add")
+	public ResponseResult add(@RequestBody GatewayRouteDefinition gwdefinition) {
+		RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
+		this.dynamicRouteService.add(definition);
+		return ResponseResult.ok();
+	}
 
-    /**
-     * 增加路由
-     * @param gwdefinition
-     * @return
-     */
-    @PostMapping("/add")
-    public ResponseResult add(@RequestBody GatewayRouteDefinition gwdefinition) {
-        RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
-        this.dynamicRouteService.add(definition);
-        return ResponseResult.ok();
-    }
+	/**
+	 * 删除路由
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping("/routes/{id}")
+	public ResponseResult delete(@PathVariable String id) {
+		this.dynamicRouteService.delete(id);
+		return ResponseResult.ok();
+	}
 
-    /**
-     * 删除路由
-     * @param id
-     * @return
-     */
-    @DeleteMapping("/routes/{id}")
-    public ResponseResult delete(@PathVariable String id) {
-        this.dynamicRouteService.delete(id);
-        return ResponseResult.ok();
-    }
+	/**
+	 * 更新路由
+	 * @param gwdefinition
+	 * @return
+	 */
+	@PostMapping("/update")
+	public ResponseResult update(@RequestBody GatewayRouteDefinition gwdefinition) {
+		RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
+		this.dynamicRouteService.update(definition);
+		return ResponseResult.ok();
+	}
 
-    /**
-     * 更新路由
-     * @param gwdefinition
-     * @return
-     */
-    @PostMapping("/update")
-    public ResponseResult update(@RequestBody GatewayRouteDefinition gwdefinition) {
-        RouteDefinition definition = loadRouteService.assembleRouteDefinition(gwdefinition);
-        this.dynamicRouteService.update(definition);
-        return ResponseResult.ok();
-    }
+	/**
+	 * 获取所有路由信息
+	 * @return
+	 */
+	@GetMapping(value = "/list")
+	public Flux<RouteDefinition> list() {
+//		return redisRouteDefinitionRepository.getRouteDefinitions();
+		return dynamicRouteService.getRouteDefinitions();
+	}
 
-    /**
-     * 获取所有路由信息
-     * @return
-     */
-    @GetMapping(value = "/list")
-    public Flux<RouteDefinition> list() {
-        return dynamicRouteService.getRouteDefinitions();
-    }
+	/**
+	 * 从数据库加载指定路由
+	 * @return
+	 */
+	@GetMapping(value = "/load")
+	public ResponseResult load(@RequestParam String id) {
+		Assert.notNull(id, "路由ID不能为空");
+		GatewayAppRoute gatewayAppRoute = gatewayAppRouteService.findById(id);
+		RouteDefinition routeDefinition = RouteDefinitionConverter.converteFrom(gatewayAppRoute);
+		this.dynamicRouteService.add(routeDefinition);
+		return ResponseResult.ok();
+	}
 
-    /**
-     * 从数据库加载指定路由
-     * @return
-     */
-    @GetMapping(value = "/load")
-    public ResponseResult load(@RequestParam String id) {
-        Assert.notNull(id, "路由ID不能为空");
-        GatewayAppRoute gatewayAppRoute = gatewayAppRouteService.findById(id);
-        RouteDefinition routeDefinition = RouteDefinitionConverter.converteFrom(gatewayAppRoute);
-        this.dynamicRouteService.add(routeDefinition);
-        return ResponseResult.ok();
-    }
+	/**
+	 * 刷新路由(可刷新：ip,client,gatewayAppRoute)
+	 * @return
+	 */
+//	@GetMapping(value = "/fresh")
+//	public ResponseResult fresh(@RequestParam(required = false) String type) {
+//		this.dynamicRouteService.fresh(type);
+//		return ResponseResult.ok();
+//	}
 
 }

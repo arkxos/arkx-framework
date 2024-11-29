@@ -1,11 +1,11 @@
 package com.rapidark.cloud.platform.gateway.demo;
 
-import com.alibaba.csp.sentinel.command.handler.ModifyRulesCommandHandler;
-import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
-import com.alibaba.csp.sentinel.datasource.nacos.NacosDataSource;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
-import com.alibaba.csp.sentinel.transport.command.SimpleHttpCommandCenter;
+//import com.alibaba.csp.sentinel.command.handler.ModifyRulesCommandHandler;
+//import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
+//import com.alibaba.csp.sentinel.datasource.nacos.NacosDataSource;
+//import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+//import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
+//import com.alibaba.csp.sentinel.transport.command.SimpleHttpCommandCenter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.api.NacosFactory;
@@ -73,14 +73,14 @@ public class NacosToSentinelListenerTest {
     public static void pushRules(){
         // 对Sentinel控制台向客户端发起setRules流控规则的调用结果，做二次处理（用于将规则配置同步到nacos配置中心）
         // 默认setRules修改流控制规则由ModifyRulesCommandHandler类处理
-        SimpleHttpCommandCenter.registerCommand("setRules", new ModifyRulesCommandHandler());
+//        SimpleHttpCommandCenter.registerCommand("setRules", new ModifyRulesCommandHandler());
     }
 
     private static void loadRules() {
-        ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new NacosDataSource<>(serverAddr, group, dataId,
-                source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {
-                }));
-        FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
+//        ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new NacosDataSource<>(serverAddr, group, dataId,
+//                source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {
+//                }));
+//        FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
     }
 
     /**
@@ -88,7 +88,7 @@ public class NacosToSentinelListenerTest {
      * @param source
      */
     public static void setSentinelFlowConfig(String source){
-        FlowRuleManager.loadRules(JSON.parseObject(source, new TypeReference<List<FlowRule>>(){}));
+//        FlowRuleManager.loadRules(JSON.parseObject(source, new TypeReference<List<FlowRule>>(){}));
         System.out.println("------------update SentinelConfig flowRule -----------");
     }
 }

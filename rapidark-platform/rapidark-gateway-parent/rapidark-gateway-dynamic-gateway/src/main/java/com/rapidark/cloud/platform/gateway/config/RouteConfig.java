@@ -38,6 +38,113 @@ public class RouteConfig {
         return builder.routes().build();
     }
 
+//    /**
+//     * 通过Bean实例化，配置单个route规则(方法弃用,采用DataRouteDefinitionRepository事件监听机制刷新gateway内存配置)
+//     * @param builder
+//     * @return
+//     */
+//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+//    @Deprecated
+//    public RouteLocator routeLocator(RouteLocatorBuilder builder) {
+//        String routeId = "gatewayAppRoute-producer";
+//        return builder.routes().route(r ->
+//                r.method("GET").and().path("/gatewayAppRoute/producer/**").
+//                        filters(f -> f.stripPrefix(1).
+//                                addRequestParameter("version", "test").
+//                                requestRateLimiter(config -> {
+//                                    //用于限流的键的解析器的 Bean 对象的名字
+//                                    config.setKeyResolver(uriKeyResolver);
+//                                    //每1秒限制请求数(令牌数)，令牌桶的容量
+//                                    config.setRateLimiter(this.redisRateLimiter(1, 1));
+//                                }).
+////                                hystrix(config -> {
+////                                    //熔断名称
+////                                    config.setName("fallbackcmd");
+////                                    //熔断回调方法
+////                                    config.setFallbackUri("forward:/fallback");
+////                                })
+//                        ).
+//                        //生产者服务注册名,格式：“lb://server-name”
+//                        uri("lb://EXAMPLES")
+//                        //配置多个自定义网关过滤器
+////                        filters(new IpGatewayFilter(routeId),
+////                                new TokenGatewayFilter(routeId)
+//////                                ,new ClientIdGatewayFilter(routeId)
+////                        ).
+//                        //配置路由ID
+////                        id(routeId)
+//                ).build();
+//    }
+//
+
+//    /**
+//     * 项目启动时，加载数据库已存在的路由配置，实现批量配置route规则(方法弃用,采用DataRouteDefinitionRepository事件监听机制刷新gateway内存配置)
+//     * @param builder
+//     * @return
+//     */
+//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+//    @Deprecated
+//    public RouteLocator routeLocators(RouteLocatorBuilder builder){
+//        GatewayAppRoute query = new GatewayAppRoute();
+//        query.setStatus(Constants.YES);
+//        List<GatewayAppRoute> gatewayAppRouteList = gatewayAppRouteRepository.findAll(Example.of(query));
+//        RouteLocatorBuilder.Builder routeBuilder = builder.routes();
+//        gatewayAppRouteList.forEach(route->{
+//            RouteCache.put(route.getId(), route);
+//            GatewayRouteConfig gatewayRouteConfig = loadRouteService.loadRouteConfig(route);
+//            routeBuilder.route(r -> {
+//                //设置断言
+//                BooleanSpec booleanSpec = r.path(gatewayRouteConfig.getPath());
+//                //设置请求模式
+//                if (StringUtils.isNotBlank(gatewayRouteConfig.getMethod())){
+//                    booleanSpec = booleanSpec.and().method(gatewayRouteConfig.getMethod());
+//                }
+//                //设置限流、熔断、鉴权
+//                Function<GatewayFilterSpec, UriSpec> fn = f -> {
+//                    if (StringUtils.isNotBlank(gatewayRouteConfig.getRequestParameterName())){
+//                        f.addRequestParameter(gatewayRouteConfig.getRequestParameterName(), gatewayRouteConfig.getRequestParameterValue());
+//                    }
+//                    if (gatewayRouteConfig.getKeyResolver() != null){
+//                        f.requestRateLimiter(config -> {
+//                            //用于限流的键的解析器的 Bean 对象的名字
+//                            config.setKeyResolver(gatewayRouteConfig.getKeyResolver());
+//                            //每1秒限制请求数(令牌数)，令牌桶的容量
+//                            config.setRateLimiter(this.redisRateLimiter(gatewayRouteConfig.getReplenishRate(), gatewayRouteConfig.getBurstCapacity()));
+//                        });
+//                    }
+//                    if (StringUtils.isNotBlank(gatewayRouteConfig.getHystrixName())){
+//                        f.hystrix(config -> {
+//                            //熔断名称,熔断回调方法
+//                            config.setName(gatewayRouteConfig.getHystrixName());
+//                            config.setFallbackUri(gatewayRouteConfig.getFallbackUri());
+//                            if (gatewayRouteConfig.getSetter() != null) {
+//                                config.setSetter(gatewayRouteConfig.getSetter());
+//                            }
+//                        });
+//                    }
+//                    //添加自定义鉴权工厂类
+//                    if (gatewayRouteConfig.isAuthorize()){
+//                        f.filter(authorizeGatewayFilterFactory.apply((c) -> c.setEnabled(true)));
+//                    }
+//                    //设置断言截取
+//                    if (gatewayRouteConfig.getStripPrefix() > 0) {
+//                        f.stripPrefix(gatewayRouteConfig.getStripPrefix());
+//                    }
+//                    return f;
+//                };
+//                AsyncBuilder asyncBuilder = booleanSpec.filters(fn).uri(gatewayRouteConfig.getUri());
+//                //添加过滤器
+//                if (gatewayRouteConfig.getGatewayFilter() != null){
+//                    asyncBuilder.filters(gatewayRouteConfig.getGatewayFilter());
+//                }
+//                //添加ID
+//                asyncBuilder.id(gatewayRouteConfig.getId());
+//                return asyncBuilder;
+//            });
+//        });
+//        return routeBuilder.build();
+//    }
+//
     /**
      * 对请求基于ip的访问进行限流
      *

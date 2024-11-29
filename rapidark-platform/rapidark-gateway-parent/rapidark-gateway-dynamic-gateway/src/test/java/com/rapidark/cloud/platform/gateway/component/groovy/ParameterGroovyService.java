@@ -9,7 +9,6 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.util.Map;
-
 /**
  * @Description 请求参数合法性较验
  * @Author JL
@@ -18,23 +17,23 @@ import java.util.Map;
  */
 public class ParameterGroovyService extends BaseGroovyService {
 
-    private Logger log = LoggerFactory.getLogger("ParameterGroovyService");
+	private Logger log = LoggerFactory.getLogger("ParameterGroovyService");
 
-    @Override
-    public void apply(ServerWebExchange exchange) throws Exception {
-        ServerHttpRequest request = exchange.getRequest();
-        HttpHeaders headers = exchange.getRequest().getHeaders();
+	@Override
+	public void apply(ServerWebExchange exchange) throws Exception {
+		ServerHttpRequest request = exchange.getRequest();
+		HttpHeaders headers = exchange.getRequest().getHeaders();
 
-        //clientIp, routeId, ruleName, extednInfo从继承父类BaseGroovyService中获取
-        log.info("客户端IP【{}】访问网关路由【{}】执行GroovySrcipt规则引擎动态脚本组件名称【{}】,扩展参数【{}】", clientIp, routeId, ruleName, extednInfo);
+		//clientIp, routeId, ruleName, extednInfo从继承父类BaseGroovyService中获取
+		log.info("客户端IP【{}】访问网关路由【{}】执行GroovySrcipt规则引擎动态脚本组件名称【{}】,扩展参数【{}】", clientIp, routeId, ruleName, extednInfo);
 
-        Map<String,String> valueMap = request.getQueryParams().toSingleValueMap();
-        String userId = valueMap.get("userId");
-        if (StringUtils.isBlank(userId)){
-            throw new IllegalArgumentException("缺少userId参数");
-        }
-        if (!userId.startsWith("100_")){
-            throw new IllegalArgumentException("userId参数格式不对");
-        }
-    }
+		Map<String,String> valueMap = request.getQueryParams().toSingleValueMap();
+		String userId = valueMap.get("userId");
+		if (StringUtils.isBlank(userId)){
+			throw new IllegalArgumentException("缺少userId参数");
+		}
+		if (!userId.startsWith("100_")){
+			throw new IllegalArgumentException("userId参数格式不对");
+		}
+	}
 }

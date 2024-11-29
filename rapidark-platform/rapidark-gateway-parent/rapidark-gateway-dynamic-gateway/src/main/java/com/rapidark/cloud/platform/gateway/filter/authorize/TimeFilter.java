@@ -12,54 +12,54 @@ import java.util.Date;
 
 /**
  * @Description 验证请求是否在可访问时间段内
- * @Author JL
+ * @Author jianglong
  * @Date 2020/05/25
  * @Version V1.0
  */
 @Slf4j
 public class TimeFilter extends FilterHandler {
 
-    private final String PATTERNS = "YYYY-MM-DD HH:mm:ss";
+	private final String PATTERNS = "YYYY-MM-DD HH:mm:ss";
 
-    public TimeFilter(FilterHandler handler){
-        this.handler = handler;
-    }
+	public TimeFilter(FilterHandler handler){
+		this.handler = handler;
+	}
 
-    @Override
-    public void handleRequest(ServerHttpRequest request){
-        if (gatewayAppRoute.getFilterAuthorizeName().contains("time")){
-            log.info("处理网关路由请求{},执行time过滤 ", gatewayAppRoute.getId());
-            String accessTime = gatewayAppRoute.getAccessTime();
-            Assert.isTrue(StringUtils.isNotBlank(accessTime),"自定义time时间段不能为空");
-            Assert.isTrue(accessTime.contains(","),"自定义time时间段格式错误");
-            String [] times = accessTime.split(",");
-            String date = DateFormatUtils.format(new Date(), "YYYY-MM-DD");
-            long startTime = this.getDateTime(date, times[0]);
-            long endTime = this.getDateTime(date, times[1]);
-            long nowTime = System.currentTimeMillis();
-            if (nowTime >= startTime && nowTime <= endTime){
-            }else {
-                throw new IllegalStateException("执行time过滤,自定义time时间段访问验证不通过! 请求源="+ DateFormatUtils.format(new Date(nowTime), "HH:mm:ss")+",自定义目标"+times[0]+"," + times[1]);
-            }
-        }
-    }
+	@Override
+	public void handleRequest(ServerHttpRequest request){
+		if (gatewayAppRoute.getFilterAuthorizeName().contains("time")){
+			log.info("处理网关路由请求{},执行time过滤 ", gatewayAppRoute.getId());
+			String accessTime = gatewayAppRoute.getAccessTime();
+			Assert.isTrue(StringUtils.isNotBlank(accessTime),"自定义time时间段不能为空");
+			Assert.isTrue(accessTime.contains(","),"自定义time时间段格式错误");
+			String [] times = accessTime.split(",");
+			String date = DateFormatUtils.format(new Date(), "YYYY-MM-DD");
+			long startTime = this.getDateTime(date, times[0]);
+			long endTime = this.getDateTime(date, times[1]);
+			long nowTime = System.currentTimeMillis();
+			if (nowTime >= startTime && nowTime <= endTime){
+			}else {
+				throw new IllegalStateException("执行time过滤,自定义time时间段访问验证不通过! 请求源="+ DateFormatUtils.format(new Date(nowTime), "HH:mm:ss")+",自定义目标"+times[0]+"," + times[1]);
+			}
+		}
+	}
 
-    /**
-     * 获取拼装时间的long值
-     * @param date
-     * @param time
-     * @return
-     */
-    private long getDateTime(String date, String time){
-        if (time.contains(":") && time.lastIndexOf(":") == 5){
-            try {
-                return DateUtils.parseDate(date + " " + time, PATTERNS).getTime();
-            }catch(ParseException pe){
-                throw new IllegalStateException("自定义time时间转换错误：" +date + " " + time + ", " + pe.getMessage());
-            }
-        }else {
-            throw new IllegalStateException("自定义time时间段格式错误,格式必需为HH:mm:ss");
-        }
-    }
+	/**
+	 * 获取拼装时间的long值
+	 * @param date
+	 * @param time
+	 * @return
+	 */
+	private long getDateTime(String date, String time){
+		if (time.contains(":") && time.lastIndexOf(":") == 5){
+			try {
+				return DateUtils.parseDate(date + " " + time, PATTERNS).getTime();
+			}catch(ParseException pe){
+				throw new IllegalStateException("自定义time时间转换错误：" +date + " " + time + ", " + pe.getMessage());
+			}
+		}else {
+			throw new IllegalStateException("自定义time时间段格式错误,格式必需为HH:mm:ss");
+		}
+	}
 
 }

@@ -3,6 +3,7 @@ package com.rapidark.cloud.platform.gateway.component.groovy;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseGroovyService;
 import com.rapidark.cloud.platform.gateway.framework.util.Md5Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -17,22 +18,21 @@ import java.nio.charset.StandardCharsets;
  * @Date 2022/2/21
  * @Version V1.0
  */
+@Slf4j
 public class RequestSignGroovyService extends BaseGroovyService {
 
-    private Logger log = LoggerFactory.getLogger("RequestSignGroovyService");
+	@Override
+	public void apply(ServerWebExchange exchange) {
+		ServerHttpRequest request = exchange.getRequest();
+		HttpHeaders headers = exchange.getRequest().getHeaders();
+		//clientIp, routeId, ruleName, extednInfo从继承父类BaseGroovyService中获取
+		log.info("客户端IP【{}】访问网关路由【{}】执行GroovySrcipt规则引擎动态脚本组件名称【{}】,扩展参数【{}】", clientIp, routeId, ruleName, extednInfo);
 
-    @Override
-    public void apply(ServerWebExchange exchange) throws Exception {
-        ServerHttpRequest request = exchange.getRequest();
-        HttpHeaders headers = exchange.getRequest().getHeaders();
-        //clientIp, routeId, ruleName, extednInfo从继承父类BaseGroovyService中获取
-        log.info("客户端IP【{}】访问网关路由【{}】执行GroovySrcipt规则引擎动态脚本组件名称【{}】,扩展参数【{}】", clientIp, routeId, ruleName, extednInfo);
-
-        String userId = paramMap.get("userId");
-        JSONObject jsonObject = JSONObject.parseObject(extednInfo);
-        String secretKey = jsonObject.getString("secretKey");
-        String sign = Md5Utils.md5Str(userId + System.currentTimeMillis() + secretKey, StandardCharsets.UTF_8.toString());
-        paramMap.put("sign", sign);
-    }
+		long userId = Long.parseLong(paramMap.get("userId"));
+		JSONObject jsonObject = JSONObject.parseObject(extednInfo);
+		String secretKey = jsonObject.getString("secretKey");
+		String sign = Md5Utils.getMD5(userId + System.currentTimeMillis() + secretKey, StandardCharsets.UTF_8.toString());
+		paramMap.put("sign", sign);
+	}
 
 }

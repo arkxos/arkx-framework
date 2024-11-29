@@ -10,18 +10,19 @@ import org.springframework.context.ApplicationEvent;
  */
 public class WeightRemoveApplicationEvent extends ApplicationEvent {
 
-    /**
-     * 权重分组名称
-     */
-    private String group;
+	/**
+	 * 权重分组名称
+	 */
+	private String group;
 
-    public WeightRemoveApplicationEvent(Object source, String group) {
-        super(source);
-        this.group = group;
-    }
+	public WeightRemoveApplicationEvent(Object source, String group) {
+		super(source);
+		this.group = group;
+	}
 
-    public String getGroup() {
-        return group;
-    }
+	public String getGroup() {
+		return group;
+	}
 
 }
+

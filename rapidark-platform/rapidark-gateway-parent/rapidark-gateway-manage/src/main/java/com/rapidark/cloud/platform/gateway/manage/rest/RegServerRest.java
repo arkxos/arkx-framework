@@ -13,6 +13,7 @@ import com.rapidark.cloud.platform.gateway.framework.service.ClientServerRegiste
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.JwtTokenUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -111,14 +112,14 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/serverPageList")
-    public ResponseResult serverPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq) {
+    public ResponseResult serverPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq, Pageable pageable) {
         Assert.notNull(clientServerRegisterReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(clientServerRegisterReq.getClientId()), "未获取到对象查询ID");
         ClientServerRegister clientServerRegister = new ClientServerRegister();
         clientServerRegister.setClientId(clientServerRegisterReq.getClientId());
         int currentPage = getCurrentPage(clientServerRegisterReq.getCurrentPage());
         int pageSize = getPageSize(clientServerRegisterReq.getPageSize());
-        return ResponseResult.ok(clientServerRegisterService.serverPageList(clientServerRegister, currentPage, pageSize));
+        return ResponseResult.ok(clientServerRegisterService.serverPageList(clientServerRegisterReq.getClientId(), pageable));
     }
 
     /**
@@ -127,14 +128,14 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @PostMapping(value = "/clientPageList")
-    public ResponseResult clientPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq) {
+    public ResponseResult clientPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq, Pageable pageable) {
         Assert.notNull(clientServerRegisterReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(clientServerRegisterReq.getRouteId()), "未获取到对象查询ID");
         ClientServerRegister clientServerRegister = new ClientServerRegister();
         clientServerRegister.setRouteId(clientServerRegisterReq.getRouteId());
         int currentPage = getCurrentPage(clientServerRegisterReq.getCurrentPage());
         int pageSize = getPageSize(clientServerRegisterReq.getPageSize());
-        return ResponseResult.ok(clientServerRegisterService.clientPageList(clientServerRegister, currentPage, pageSize));
+        return ResponseResult.ok(clientServerRegisterService.clientPageList(clientServerRegisterReq.getRouteId(), pageable));
     }
 
     /**
@@ -148,7 +149,7 @@ public class RegServerRest extends BaseRest {
         Assert.isTrue(StringUtils.isNotBlank(clientServerRegisterReq.getRouteId()), "未获取到对象查询ID");
         ClientServerRegister clientServerRegister = new ClientServerRegister();
         clientServerRegister.setRouteId(clientServerRegisterReq.getRouteId());
-        return ResponseResult.ok(clientServerRegisterService.regClientList(clientServerRegister));
+        return ResponseResult.ok(clientServerRegisterService.regClientList(clientServerRegisterReq.getRouteId()));
     }
 
     /**
@@ -249,12 +250,12 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @PostMapping(value = "/notRegServerPageList")
-    public ResponseResult notRegServerPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq) {
+    public ResponseResult notRegServerPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq, Pageable pageable) {
         Assert.notNull(clientServerRegisterReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(clientServerRegisterReq.getClientId()), "未获取到客户端ID");
         int currentPage = getCurrentPage(clientServerRegisterReq.getCurrentPage());
         int pageSize = getPageSize(clientServerRegisterReq.getPageSize());
-        return ResponseResult.ok(clientServerRegisterService.notRegServerPageList(clientServerRegisterReq, currentPage, pageSize));
+        return ResponseResult.ok(clientServerRegisterService.notRegServerPageList(clientServerRegisterReq.getClientId(), pageable));
     }
 
     /**
@@ -263,12 +264,12 @@ public class RegServerRest extends BaseRest {
      * @return
      */
     @PostMapping(value = "/notRegClientPageList")
-    public ResponseResult notRegClientPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq) {
+    public ResponseResult notRegClientPageList(@RequestBody ClientServerRegisterReq clientServerRegisterReq, Pageable pageable) {
         Assert.notNull(clientServerRegisterReq, "未获取到对象");
         Assert.isTrue(StringUtils.isNotBlank(clientServerRegisterReq.getRouteId()), "未获取路由服务ID");
         int currentPage = getCurrentPage(clientServerRegisterReq.getCurrentPage());
         int pageSize = getPageSize(clientServerRegisterReq.getPageSize());
-        return ResponseResult.ok(clientServerRegisterService.notRegClientPageList(clientServerRegisterReq, currentPage, pageSize));
+        return ResponseResult.ok(clientServerRegisterService.notRegClientPageList(clientServerRegisterReq.getRouteId(), pageable));
     }
 
     /**

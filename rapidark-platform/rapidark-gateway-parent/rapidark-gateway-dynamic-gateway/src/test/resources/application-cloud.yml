@@ -63,3 +63,24 @@ spring:
           args:
             # ttl=10表示时长(秒/s)
             ttl: 10
+          # 添加熔断机制,当服务不可用时或超过了指定超时长，则转发到fallback
+        - name: CustomHystrix
+          args:
+            # 熔断器名称，默认为fallbackcmd
+            name: fallbackcmd
+            # 触发熔断的回调路径，需加前缀forward:
+            fallbackUri: forward:/fallback?routeId=1
+          # 添加限流机器，基于令牌桶算法，当服务超出限流约束，则直接拒决请求:RequestRateLimiter(默认),CustomRequestRateLimiter(自定义)
+        - name: CustomRequestRateLimiter
+          args:
+            # 用于限流的键的解析器的 Bean 对象的名字
+            key-resolver: '#{@uriKeyResolver}'
+            # 令牌桶每秒填充平均速率
+            redis-rate-limiter.replenishRate: 1
+            # 令牌桶总容量,若设为0，则拒绝所有请求
+            redis-rate-limiter.burstCapacity: 1
+          # 添加请求大小限制
+        - name: RequestSize
+          args:
+            # 限制请求大小为5000kb（不设置默认为5M），超过返回状态码413，参见：RequestSizeGatewayFilterFactory
+            maxSize: 5000000

@@ -22,26 +22,26 @@ import java.util.Map;
  */
 public class FormatGroovyService  extends BaseGroovyService {
 
-    private Logger log = LoggerFactory.getLogger("FormatGroovyService");
+	private Logger log = LoggerFactory.getLogger("FormatGroovyService");
 
-    @Override
-    public void apply(ServerWebExchange exchange) throws Exception {
-        ServerHttpRequest request = exchange.getRequest();
-        ServerHttpResponse response = exchange.getResponse();
-        HttpHeaders headers = exchange.getRequest().getHeaders();
-        HttpStatusCode httpStatus = response.getStatusCode();
-        MediaType mediaType = headers.getContentType();
+	@Override
+	public void apply(ServerWebExchange exchange) throws Exception {
+		ServerHttpRequest request = exchange.getRequest();
+		ServerHttpResponse response = exchange.getResponse();
+		HttpHeaders headers = exchange.getRequest().getHeaders();
+		HttpStatusCode httpStatus = response.getStatusCode();
+		MediaType mediaType = headers.getContentType();
 
-        //clientIp, routeId, ruleName, extednInfo从继承父类BaseGroovyService中获取
-        log.info("客户端IP【{}】访问网关路由【{}】执行GroovySrcipt规则引擎动态脚本组件名称【{}】,扩展参数【{}】", clientIp, routeId, ruleName, extednInfo);
+		//clientIp, routeId, ruleName, extednInfo从继承父类BaseGroovyService中获取
+		log.info("客户端IP【{}】访问网关路由【{}】执行GroovySrcipt规则引擎动态脚本组件名称【{}】,扩展参数【{}】", clientIp, routeId, ruleName, extednInfo);
 
-        if (mediaType != MediaType.APPLICATION_JSON){
-            System.out.println(body);
-            Map<String, String> dataMap = new HashMap<>();
-            dataMap.put("code", "0");
-            dataMap.put("data", body);
-            setBody(JSONObject.toJSONString(dataMap));
-        }
-    }
+		if (mediaType != MediaType.APPLICATION_JSON){
+			System.out.println(body);
+			Map<String, String> dataMap = new HashMap<>();
+			dataMap.put("code", "0");
+			dataMap.put("data", body);
+			setBody(JSONObject.toJSONString(dataMap));
+		}
+	}
 }
 

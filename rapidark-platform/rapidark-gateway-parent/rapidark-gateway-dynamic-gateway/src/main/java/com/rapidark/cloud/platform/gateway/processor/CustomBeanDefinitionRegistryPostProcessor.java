@@ -17,18 +17,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
-    private static final String BEAN_NAME = "weightCalculatorWebFilter";
+	private static final String BEAN_NAME = "weightCalculatorWebFilter";
 
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        // 查找同名的bean，如果存在则用自定义bean覆盖
-        if (registry.containsBeanDefinition(BEAN_NAME)) {
-            registry.removeBeanDefinition(BEAN_NAME);
-        }
-        registry.registerBeanDefinition(BEAN_NAME, new RootBeanDefinition(CustomWeightCalculatorWebFilter.class));
-    }
+	@Override
+	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+		// 查找同名的bean，如果存在则用自定义bean覆盖
+		if (registry.containsBeanDefinition(BEAN_NAME)) {
+			registry.removeBeanDefinition(BEAN_NAME);
+		}
+		registry.registerBeanDefinition(BEAN_NAME, new RootBeanDefinition(CustomWeightCalculatorWebFilter.class));
+	}
 
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-    }
+	@Override
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+	}
 }
+

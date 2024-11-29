@@ -4,7 +4,7 @@ import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.ClientRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Client;
 import com.rapidark.cloud.platform.gateway.framework.entity.ClientServerRegister;
-import com.rapidark.cloud.platform.gateway.framework.util.PageResult;
+import com.rapidark.framework.common.utils.PageResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
