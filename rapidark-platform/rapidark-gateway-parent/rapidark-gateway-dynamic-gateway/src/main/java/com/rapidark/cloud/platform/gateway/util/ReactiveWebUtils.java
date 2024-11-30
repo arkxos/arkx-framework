@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.server.util;
+package com.rapidark.cloud.platform.gateway.util;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;

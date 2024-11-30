@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.server.util.matcher;
+package com.rapidark.cloud.platform.gateway.util.matcher;
 
 import org.springframework.util.StringUtils;
 
