@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service;
+package com.rapidark.cloud.base.server.service.impl;
 
 import com.rapidark.cloud.base.client.model.entity.BaseAuthorityRole;
 import com.rapidark.cloud.base.server.repository.BaseAuthorityRoleRepository;

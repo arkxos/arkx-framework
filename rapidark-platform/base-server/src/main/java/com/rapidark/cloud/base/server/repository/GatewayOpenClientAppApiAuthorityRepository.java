@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.manage.repository;
+package com.rapidark.cloud.base.server.repository;
 
 import com.rapidark.cloud.base.client.model.entity.GatewayOpenClientAppApiAuthority;
 import com.rapidark.framework.data.jpa.BaseRepository;

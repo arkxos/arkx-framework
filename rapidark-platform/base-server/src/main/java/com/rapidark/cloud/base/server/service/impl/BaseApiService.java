@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service;
+package com.rapidark.cloud.base.server.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;

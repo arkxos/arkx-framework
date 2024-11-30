@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service;
+package com.rapidark.cloud.base.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
@@ -10,8 +10,7 @@ import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.base.client.model.entity.*;
 import com.rapidark.cloud.base.server.repository.*;
 import com.rapidark.framework.data.jpa.service.BaseService;
-import com.rapidark.cloud.gateway.manage.service.GatewayOpenClientAppApiAuthorityService;
-import com.rapidark.cloud.gateway.manage.repository.GatewayOpenClientAppApiAuthorityRepository;
+import com.rapidark.cloud.base.server.repository.GatewayOpenClientAppApiAuthorityRepository;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.exception.OpenException;

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service;
+package com.rapidark.cloud.base.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.manage.service;
+package com.rapidark.cloud.base.server.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -9,15 +9,13 @@ import com.rapidark.cloud.base.client.model.UserAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
-import com.rapidark.cloud.base.server.service.BaseAccountService;
+import com.rapidark.cloud.base.server.repository.BaseDeveloperRepository;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.jpa.service.BaseService;
-import com.rapidark.cloud.gateway.manage.repository.BaseDeveloperRepository;
 import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPasswordCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.PageParams;
-import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;

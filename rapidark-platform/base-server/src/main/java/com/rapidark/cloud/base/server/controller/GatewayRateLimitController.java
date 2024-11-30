@@ -2,7 +2,7 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
-import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
+import com.rapidark.cloud.base.server.service.impl.GatewayRateLimitService;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;

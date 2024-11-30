@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service;
+package com.rapidark.cloud.base.server.service.impl;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.server.repository.OpenAppRepository;
@@ -11,7 +11,6 @@ import com.rapidark.framework.common.security.OpenClientDetails;
 import com.rapidark.framework.common.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service;
+package com.rapidark.cloud.base.server.service.impl;
 
 import com.rapidark.cloud.base.client.model.entity.BaseMenu;
 import com.rapidark.cloud.base.server.repository.BaseMenuRepository;
