@@ -2,18 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>com.rapidark2</groupId>
-        <artifactId>platform</artifactId>
-        <version>${revision}</version>
-    </parent>
-    <packaging>jar</packaging>
+	<parent>
+		<groupId>com.rapidark.platform</groupId>
+		<artifactId>rapidark-platform</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>uaa-admin-server</artifactId>
     <description>平台用户认证服务器</description>
     <dependencies>
         <dependency>
-            <groupId>com.rapidark2</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>common-starter</artifactId>
             <version>${revision}</version>
             <exclusions>
@@ -53,7 +54,7 @@
             <artifactId>spring-security-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark2</groupId>
+            <groupId>com.rapidark.platform</groupId>
             <artifactId>base-client</artifactId>
             <version>${revision}</version>
         </dependency>

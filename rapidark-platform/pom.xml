@@ -43,7 +43,7 @@
 
 		<module>uaa-portal-server</module>
 		<module>sba-server</module>
-		<module>sentinel-dashboard</module>
+<!--		<module>sentinel-dashboard</module>-->
 	</modules>
 
 </project>

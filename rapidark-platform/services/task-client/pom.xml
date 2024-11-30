@@ -3,26 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>rapidark-os</artifactId>
         <groupId>com.rapidark.platform</groupId>
+        <artifactId>services</artifactId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>eladmin-logging</artifactId>
-    <name>日志模块</name>
-
+    <packaging>jar</packaging>
+    <artifactId>task-client</artifactId>
+    <description>任务调度服务接口</description>
     <dependencies>
         <dependency>
-            <groupId>com.rapidark.platform</groupId>
-            <artifactId>eladmin-common</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
             <groupId>com.rapidark.framework</groupId>
-            <artifactId>rapidark-ip2region-starter</artifactId>
+            <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
+    <build>
+
+    </build>
 </project>

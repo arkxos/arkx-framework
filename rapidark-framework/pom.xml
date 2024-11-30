@@ -10,7 +10,7 @@
 		<version>${revision}</version>
 	</parent>
 <!--    <parent>-->
-<!--        <groupId>com.rapidark2</groupId>-->
+<!--        <groupId>com.rapidark.platform</groupId>-->
 <!--        <artifactId>rapidark-parent</artifactId>-->
 <!--        <version>${revision}</version>-->
 <!--        <relativePath>../rapidark-cloud2</relativePath>-->

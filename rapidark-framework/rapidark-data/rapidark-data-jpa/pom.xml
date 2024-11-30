@@ -52,7 +52,7 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-web</artifactId>-->
 <!--		</dependency>-->
-		<!-- <dependency> <groupId>com.rapidark2</groupId> <artifactId>rapidark-framework</artifactId>
+		<!-- <dependency> <groupId>com.rapidark.platform</groupId> <artifactId>rapidark-framework</artifactId>
 			<version>9.2.0</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

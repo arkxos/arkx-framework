@@ -2,46 +2,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<groupId>com.rapidark.platform</groupId>
-		<artifactId>rapidark-platform</artifactId>
-		<version>${revision}</version>
-	</parent>
-
+    <parent>
+        <artifactId>services</artifactId>
+        <groupId>com.rapidark.platform</groupId>
+        <version>${revision}</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>generator-server</artifactId>
-    <description>代码生成服务器</description>
-    <packaging>jar</packaging>
+
+    <groupId>com.bsd</groupId>
+    <artifactId>dingtalk-server</artifactId>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
-
-
+        <!-- 引入公共包,需发布到本地仓库或私服 -->
         <dependency>
-            <groupId>com.rapidark.platform</groupId>
             <artifactId>common-starter</artifactId>
+            <groupId>com.rapidark.platform</groupId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
+            <groupId>com.taobao.top</groupId>
+            <artifactId>top-api-sdk-dev</artifactId>
+            <version>ding-open-mc-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/taobao-sdk-java-auto_1479188381469-20190628.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <!--模板引擎-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/commons-configuration/commons-configuration -->
-        <dependency>
-            <groupId>commons-configuration</groupId>
-            <artifactId>commons-configuration</artifactId>
-            <version>${configuration.version}</version>
+            <groupId>com.taobao.top</groupId>
+            <artifactId>lippi-oapi-encrpt</artifactId>
+            <version>dingtalk-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/lippi-oapi-encrpt.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -52,7 +42,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -60,15 +52,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>db</nonFilteredFileExtension>
-                    </nonFilteredFileExtensions>
-                </configuration>
             </plugin>
             <!-- docker打包插件 -->
             <plugin>

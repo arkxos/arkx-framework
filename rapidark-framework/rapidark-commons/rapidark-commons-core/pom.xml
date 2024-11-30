@@ -1482,7 +1482,7 @@
             <artifactId>javassist</artifactId>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.rapidark2</groupId>-->
+<!--            <groupId>com.rapidark.platform</groupId>-->
 <!--            <artifactId>rapidark-data-jpa-sqltoy</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--        </dependency>-->
