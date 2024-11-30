@@ -17,9 +17,12 @@
 package com.rapidark.cloud.platform.gateway;
 
 import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
+import com.rapidark.framework.data.jpa.BaseRepositoryFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -31,6 +34,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableDiscoveryClient
 @SpringBootApplication
+@EnableJpaRepositories(
+		basePackages = { "com.xdreamaker", "com.rapidark" },
+		repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
+@EntityScan({
+		"com.rapidark.cloud.platform.gateway.framework.entity"
+})
 public class ArkGatewayApplication {
 
 	public static void main(String[] args) {
