@@ -12,6 +12,7 @@
 	<groupId>com.rapidark.platform</groupId>
 	<artifactId>rapidark-platform</artifactId>
 	<packaging>pom</packaging>
+	<description>平台服务</description>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -33,6 +34,16 @@
 
         <!--		单体测试不参与打包-->
 		<!--		<module>rapidark-monolith</module>-->
+
+		<module>api-spring-server</module>
+		<module>uaa-admin-server</module>
+		<module>base-client</module>
+		<module>base-server</module>
+		<module>generator-server</module>
+
+		<module>uaa-portal-server</module>
+		<module>sba-server</module>
+		<module>sentinel-dashboard</module>
 	</modules>
 
 </project>

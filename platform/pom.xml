@@ -13,14 +13,6 @@
     <packaging>pom</packaging>
     <description>平台服务</description>
     <modules>
-        <module>api-spring-server</module>
-        <module>uaa-admin-server</module>
-        <module>base-client</module>
-        <module>base-server</module>
-        <module>generator-server</module>
 
-        <module>uaa-portal-server</module>
-        <module>sba-server</module>
-        <module>sentinel-dashboard</module>
     </modules>
 </project>
