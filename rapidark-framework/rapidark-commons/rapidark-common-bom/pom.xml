@@ -44,8 +44,8 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.rapidark.framework</groupId>
-                <artifactId>rapidark-common-biz</artifactId>
+                <groupId>com.rapidark.platform</groupId>
+                <artifactId>rapidark-platform-support-common-biz</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

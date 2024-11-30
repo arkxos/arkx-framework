@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IocBeanRegister implements ApplicationContextAware {
 
-	private static IocBeanRegister instance;
+	private static IocBeanRegister instance = new IocBeanRegister();
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String id) {
@@ -32,8 +32,7 @@ public class IocBeanRegister implements ApplicationContextAware {
 	
 	private ApplicationContext applicationContext;
 	
-	public IocBeanRegister() {
-		instance = this;
+	private IocBeanRegister() {
 	}
 	
 	@Override

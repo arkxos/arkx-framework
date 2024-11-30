@@ -4,6 +4,8 @@ import com.rapidark.cloud.platform.gateway.framework.service.ClientServerRegiste
 import com.rapidark.cloud.platform.gateway.cache.RegServerCache;
 import com.rapidark.cloud.platform.gateway.vo.GatewayRegServer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -21,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class InitClientService {
+public class InitClientService implements ApplicationListener<ApplicationReadyEvent> {
 
     @Resource
     private ClientServerRegisterService clientServerRegisterService;
@@ -29,7 +31,6 @@ public class InitClientService {
     /**
      * 第一次初始化加载
      */
-    @PostConstruct
     public void initLoadClient(){
         List list = clientServerRegisterService.allRegClientList();
         RegServerCache.clear();
@@ -68,4 +69,8 @@ public class InitClientService {
         log.info("初始化加载客户端配置共{}条", size);
     }
 
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		this.initLoadClient();
+	}
 }

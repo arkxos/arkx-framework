@@ -20,7 +20,7 @@
 		<module>rapidark-commons-core</module>
 		<module>rapidark-commons-concurrent</module>
         <module>rapidark-common-encrypt</module>
-		<module>rapidark-common-biz</module>
+
 		<module>rapidark-common-datasource</module>
 		<module>rapidark-common-mybatis</module>
 		<module>rapidark-common-oss</module>

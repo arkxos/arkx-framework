@@ -12,7 +12,10 @@ import com.rapidark.cloud.platform.gateway.service.DynamicRouteService;
 import com.rapidark.cloud.platform.gateway.service.LoadRouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -32,7 +35,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class InitRouteService {
+public class InitRouteService implements ApplicationListener<ApplicationReadyEvent> {
 
     private List<RouteDefinition> routeDefinitions = new ArrayList<>();
 
@@ -50,7 +53,6 @@ public class InitRouteService {
     /**
      * 初始化执行
      */
-    @PostConstruct
     public void init(){
         //一定要清空routeDefinitions否则每次刷新会往集合中添加重复数据
         routeDefinitions.clear();
@@ -151,4 +153,8 @@ public class InitRouteService {
         log.info("初始化加载网关负载路由配置共{}条", balancedGatewayAppRouteList.size());
     }
 
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		this.init();
+	}
 }

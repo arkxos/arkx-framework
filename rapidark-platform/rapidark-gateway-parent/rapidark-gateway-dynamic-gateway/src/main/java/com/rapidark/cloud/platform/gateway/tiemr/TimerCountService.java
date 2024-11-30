@@ -29,10 +29,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class TimerCountService {
 
+	private static final String FRESH = ":FRESH";
+
 	@Resource
 	private RedisUtils redisUtils;
-
-	private static final String FRESH = ":FRESH";
 
 	/**
 	 * 每1分钟执行一次缓存同步

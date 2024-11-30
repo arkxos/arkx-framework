@@ -1,6 +1,7 @@
 com.rapidark.cloud.platform.common.core.config.TaskExecutorConfiguration
 com.rapidark.cloud.platform.common.core.config.JacksonConfiguration
 com.rapidark.cloud.platform.common.core.config.RedisTemplateConfiguration
+com.rapidark.cloud.platform.common.core.config.RedisUtilConfiguration
 com.rapidark.cloud.platform.common.core.config.RestTemplateConfiguration
 com.rapidark.cloud.platform.common.core.util.SpringContextHolder
 com.rapidark.cloud.platform.common.core.config.WebMvcConfiguration

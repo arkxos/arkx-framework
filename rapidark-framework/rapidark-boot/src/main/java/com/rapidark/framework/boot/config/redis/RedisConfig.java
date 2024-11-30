@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.last.config;
+package com.rapidark.framework.boot.config.redis;
 
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
@@ -27,6 +27,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.Cache;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -55,7 +56,7 @@ import java.util.Map;
 @EnableCaching
 @ConditionalOnClass(RedisOperations.class)
 @EnableConfigurationProperties(RedisProperties.class)
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig implements CachingConfigurer {
 
     /**
      *  设置 redis 数据默认过期时间，默认2小时
@@ -147,70 +148,3 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 }
 
-/**
- * Value 序列化
- *
- * @author /
- * @param <T>
- */
- class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
-
-    private final Class<T> clazz;
-
-    FastJsonRedisSerializer(Class<T> clazz) {
-        super();
-        this.clazz = clazz;
-    }
-
-    @Override
-    public byte[] serialize(T t) {
-        if (t == null) {
-            return new byte[0];
-        }
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(StandardCharsets.UTF_8);
-    }
-
-    @Override
-    public T deserialize(byte[] bytes) {
-        if (bytes == null || bytes.length <= 0) {
-            return null;
-        }
-        String str = new String(bytes, StandardCharsets.UTF_8);
-        return JSON.parseObject(str, clazz);
-    }
-
-}
-
-/**
- * 重写序列化器
- *
- * @author /
- */
-class StringRedisSerializer implements RedisSerializer<Object> {
-
-    private final Charset charset;
-
-    StringRedisSerializer() {
-        this(StandardCharsets.UTF_8);
-    }
-
-    private StringRedisSerializer(Charset charset) {
-        Assert.notNull(charset, "Charset must not be null!");
-        this.charset = charset;
-    }
-
-    @Override
-    public String deserialize(byte[] bytes) {
-        return (bytes == null ? null : new String(bytes, charset));
-    }
-
-    @Override
-    public byte[] serialize(Object object) {
-        String string = JSON.toJSONString(object);
-        if (StringUtils.isBlank(string)) {
-            return null;
-        }
-        string = string.replace("\"", "");
-        return string.getBytes(charset);
-    }
-}

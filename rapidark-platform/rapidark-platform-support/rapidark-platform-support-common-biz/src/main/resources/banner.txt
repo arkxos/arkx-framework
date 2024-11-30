@@ -1,0 +1,17 @@
+${AnsiColor.BRIGHT_YELLOW}
+
+     (♥◠‿◠)ﾉﾞ  RapidArk 10.0 启动成功   ლ(´ڡ`ლ)ﾞ
+      _____             _     _                 _
+     |  __ \           (_)   | |     /\        | |
+     | |__) |__ _ _ __  _  __| |    /  \   _ __| | __
+     |  _  // _` | '_ \| |/ _` |   / /\ \ | '__| |/ /
+     | | \ \ (_| | |_) | | (_| |  / ____ \| |  |   <
+     |_|  \_\__,_| .__/|_|\__,_| /_/    \_\_|  |_|\_\
+                 | |
+                 |_|
+
+           www.rapidark.com
+
+      RapidArk Microservice Architecture
+${AnsiColor.DEFAULT}
+

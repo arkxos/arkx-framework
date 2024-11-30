@@ -19,6 +19,7 @@
 	</properties>
 
 	<modules>
+		<module>rapidark-platform-support-common-biz</module>
 		<module>rapidark-platform-support-log</module>
 		<module>rapidark-platform-support-security</module>
 	</modules>

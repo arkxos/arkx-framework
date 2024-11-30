@@ -6,6 +6,8 @@ import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.Md5Utils;
 import com.rapidark.cloud.platform.gateway.service.DynamicGroovyService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -21,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class InitGroovyService {
+public class InitGroovyService implements ApplicationListener<ApplicationReadyEvent> {
 
     @Resource
     private GroovyScriptService groovyScriptService;
@@ -31,7 +33,6 @@ public class InitGroovyService {
     /**
      *  初始化加载groovyScript规则引擎动态脚本，并缓存实例化对象
      */
-    @PostConstruct
     public void initLoadGroovyScript(){
         //查询已启用的groovyScript规则引擎动态脚本
         GroovyScript groovyScript = new GroovyScript();
@@ -48,4 +49,8 @@ public class InitGroovyService {
         }
     }
 
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		this.initLoadGroovyScript();
+	}
 }

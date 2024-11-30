@@ -5,6 +5,8 @@ import com.rapidark.cloud.platform.gateway.framework.service.SecureIpService;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.cache.IpListCache;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -20,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class InitSecureIpService {
+public class InitSecureIpService implements ApplicationListener<ApplicationReadyEvent> {
 
     @Resource
     private SecureIpService secureIpService;
@@ -28,7 +30,6 @@ public class InitSecureIpService {
     /**
      * 第一次初始化加载
      */
-    @PostConstruct
     public void initLoadSecureIp(){
         SecureIp secureIp = new SecureIp();
 //        secureIp.setStatus(Constants.YES);
@@ -42,4 +43,8 @@ public class InitSecureIpService {
         log.info("初始化加载IP配置共{}条", size);
     }
 
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		this.initLoadSecureIp();
+	}
 }
