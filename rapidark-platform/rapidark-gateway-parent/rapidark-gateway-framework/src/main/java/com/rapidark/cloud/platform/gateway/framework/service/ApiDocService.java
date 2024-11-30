@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
-import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
+import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.ApiDocRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.ApiDoc;
 import org.springframework.stereotype.Service;

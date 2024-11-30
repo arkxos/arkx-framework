@@ -1,14 +1,14 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.bean.MonitorReq;
+import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
+import com.rapidark.cloud.platform.gateway.framework.service.MonitorService;
 import com.rapidark.framework.common.model.ResultBody;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.bean.MonitorReq;
-import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.manage.service.MonitorService;
 import com.rapidark.framework.common.utils.Constants;
 
 import javax.annotation.Resource;

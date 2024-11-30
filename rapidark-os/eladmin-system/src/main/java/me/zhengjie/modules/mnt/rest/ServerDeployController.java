@@ -15,8 +15,8 @@
  */
 package me.zhengjie.modules.mnt.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import me.zhengjie.modules.mnt.domain.ServerDeploy;
@@ -37,21 +37,21 @@ import java.util.Set;
 * @date 2019-08-24
 */
 @RestController
-@Api(tags = "运维：服务器管理")
+@Schema(title = "运维：服务器管理")
 @RequiredArgsConstructor
 @RequestMapping("/api/serverDeploy")
 public class ServerDeployController {
 
     private final ServerDeployService serverDeployService;
 
-    @ApiOperation("导出服务器数据")
+    @Schema(title = "导出服务器数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('serverDeploy:list')")
     public void download(HttpServletResponse response, ServerDeployQueryCriteria criteria) throws IOException {
         serverDeployService.download(serverDeployService.queryAll(criteria), response);
     }
 
-    @ApiOperation(value = "查询服务器")
+    @Schema(title = "查询服务器")
     @GetMapping
 	@PreAuthorize("@el.check('serverDeploy:list')")
     public ResponseEntity<Object> query(ServerDeployQueryCriteria criteria, Pageable pageable){
@@ -59,7 +59,7 @@ public class ServerDeployController {
     }
 
     @Log("新增服务器")
-    @ApiOperation(value = "新增服务器")
+    @Schema(title = "新增服务器")
     @PostMapping
 	@PreAuthorize("@el.check('serverDeploy:add')")
     public ResponseEntity<Object> create(@Validated @RequestBody ServerDeploy resources){
@@ -68,7 +68,7 @@ public class ServerDeployController {
     }
 
     @Log("修改服务器")
-    @ApiOperation(value = "修改服务器")
+    @Schema(title = "修改服务器")
     @PutMapping
 	@PreAuthorize("@el.check('serverDeploy:edit')")
     public ResponseEntity<Object> update(@Validated @RequestBody ServerDeploy resources){
@@ -77,7 +77,7 @@ public class ServerDeployController {
     }
 
     @Log("删除服务器")
-    @ApiOperation(value = "删除Server")
+    @Schema(title = "删除Server")
 	@DeleteMapping
 	@PreAuthorize("@el.check('serverDeploy:del')")
     public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){
@@ -86,7 +86,7 @@ public class ServerDeployController {
     }
 
 	@Log("测试连接服务器")
-	@ApiOperation(value = "测试连接服务器")
+	@Schema(title = "测试连接服务器")
 	@PostMapping("/testConnect")
 	@PreAuthorize("@el.check('serverDeploy:add')")
 	public ResponseEntity<Object> testConnect(@Validated @RequestBody ServerDeploy resources){

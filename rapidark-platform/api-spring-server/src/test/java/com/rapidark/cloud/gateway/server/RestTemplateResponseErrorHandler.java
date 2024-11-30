@@ -20,17 +20,16 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
 
     @Override
     public boolean hasError(ClientHttpResponse httpResponse)throws IOException {
-        return (httpResponse.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR
-                || httpResponse.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR);
+        return httpResponse.getStatusCode().isError();
     }
 
     @Override
     public void handleError(ClientHttpResponse httpResponse)throws IOException {
         System.out.println("=========error==================");
         traceResponse(httpResponse);
-        if (httpResponse.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR) {
+        if (httpResponse.getStatusCode().is5xxServerError()) {
             throw new HttpClientErrorException(httpResponse.getStatusCode());
-        } else if (httpResponse.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
+        } else if (httpResponse.getStatusCode().is4xxClientError()) {
             if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
                 System.out.println("================================404==========================");
             }

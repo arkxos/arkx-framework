@@ -3,7 +3,7 @@ package com.rapidark.common.constant;
 /**
  * 用户常量信息
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class UserConstants {
     /**

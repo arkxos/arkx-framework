@@ -21,7 +21,7 @@ import com.bsd.user.server.utils.RegexUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
@@ -241,7 +241,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     public Boolean isExist(String mobile) {
         QueryWrapper<User> queryWrapper = new QueryWrapper();
         queryWrapper.lambda().eq(User::getMobile, mobile);
-        int count = userMapper.selectCount(queryWrapper);
+        long count = userMapper.selectCount(queryWrapper);
         return count > 0 ? true : false;
     }
 

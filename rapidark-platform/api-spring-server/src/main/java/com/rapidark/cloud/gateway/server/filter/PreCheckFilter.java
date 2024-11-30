@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.filter;
 
 import com.rapidark.cloud.base.client.model.AuthorityResource;
-import com.rapidark.cloud.gateway.server.util.ReactiveWebUtils;
+import com.rapidark.cloud.platform.gateway.util.ReactiveWebUtils;
 import com.rapidark.framework.common.constants.ErrorCode;
 import com.rapidark.cloud.gateway.server.exception.JsonAccessDeniedHandler;
 import com.rapidark.framework.data.jpa.entity.Status;

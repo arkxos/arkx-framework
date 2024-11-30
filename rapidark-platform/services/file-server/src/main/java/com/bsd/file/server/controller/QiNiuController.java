@@ -5,10 +5,10 @@ import com.bsd.file.server.service.QiNiuService;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 @Slf4j
 @RequestMapping("/qiniu")
-@Api(tags = "七牛云服务接口")
+@Schema(title = "七牛云服务接口")
 @RestController
 public class QiNiuController {
     @Autowired
@@ -42,7 +42,7 @@ public class QiNiuController {
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "获取token", notes = "获取token")
+    @Schema(title = "获取token", name = "获取token")
     @ResponseBody
     @GetMapping("/token")
     public ResultBody token() {
@@ -58,10 +58,10 @@ public class QiNiuController {
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "上传文件", notes = "上传文件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form")
-    })
+    @Schema(title = "上传文件", name = "上传文件")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form")
+//    })
     @ResponseBody
     @PostMapping("/upload")
     public ResultBody uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
@@ -86,10 +86,10 @@ public class QiNiuController {
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "批量上传", notes = "批量上传")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "files", value = "文件流对象,接收数组格式", required = true, dataType = "MultipartFile", allowMultiple = true, paramType = "form")
-    })
+    @Schema(title = "批量上传", name = "批量上传")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "files", value = "文件流对象,接收数组格式", required = true, dataType = "MultipartFile", allowMultiple = true, paramType = "form")
+//    })
     @ResponseBody
     @PostMapping("/batch/upload")
     public ResultBody batchUploadFile(@RequestParam("files") MultipartFile[] files) throws Exception {
@@ -115,7 +115,7 @@ public class QiNiuController {
      * @param request HttpServletRequest
      * @return JsonObject 返回值
      */
-    @ApiOperation(value = "文件上传完回调", notes = "文件上传完回调")
+    @Schema(title = "文件上传完回调", name = "文件上传完回调")
     @PostMapping("/callback")
     public Object callback(HttpServletRequest request) throws IOException {
         String line;

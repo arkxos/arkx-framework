@@ -4,15 +4,14 @@ package com.rapidark.cloud.platform.gateway.framework.service;
 //import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 //import com.alibaba.fastjson.JSON;
 //import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
+import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.SentinelRuleRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.SentinelRule;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 

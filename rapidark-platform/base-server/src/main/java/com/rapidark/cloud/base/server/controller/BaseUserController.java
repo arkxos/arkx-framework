@@ -13,10 +13,10 @@ import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +32,7 @@ import java.util.Map;
  *
  * @author liuyadu
  */
-@Api(tags = "系统用户管理")
+@Schema(title = "系统用户管理")
 @RestController
 public class BaseUserController implements IBaseUserServiceClient {
 
@@ -48,10 +48,10 @@ public class BaseUserController implements IBaseUserServiceClient {
      * @param username 登录名
      * @return
      */
-    @ApiOperation(value = "获取账号登录信息", notes = "仅限系统内部调用")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "path"),
-    })
+    @Schema(title = "获取账号登录信息", name = "仅限系统内部调用")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "path"),
+//    })
     @PostMapping("/user/login")
     @Override
     public ResultBody<UserAccount> userLogin(@RequestParam(value = "username") String username) {
@@ -69,7 +69,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      *
      * @return
      */
-    @ApiOperation(value = "系统分页用户列表", notes = "系统分页用户列表")
+    @Schema(title = "系统分页用户列表", name = "系统分页用户列表")
     @GetMapping("/user")
     public ResultBody<Page<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
         return ResultBody.ok(baseUserService.findListPage(new PageParams(map)));
@@ -80,7 +80,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      *
      * @return
      */
-    @ApiOperation(value = "获取所有用户列表", notes = "获取所有用户列表")
+    @Schema(title = "获取所有用户列表", name = "获取所有用户列表")
     @GetMapping("/user/all")
     public ResultBody<List<BaseUser>> getUserAllList() {
         return ResultBody.ok(baseUserService.findAllList());
@@ -92,7 +92,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      * @return
      */
     @Override
-    @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
+    @Schema(title = "添加系统用户", name = "添加系统用户")
     @PostMapping("/user/add")
     public ResultBody<Long> addUser(@Valid @RequestBody AddUserCommand command) {
         BaseUser user = new BaseUser();
@@ -122,7 +122,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      * @param avatar
      * @return
      */
-    @ApiOperation(value = "更新系统用户", notes = "更新系统用户")
+    @Schema(title = "更新系统用户", name = "更新系统用户")
     @PostMapping("/user/update")
     public ResultBody updateUser(
             @RequestParam(value = "userId") Long userId,
@@ -155,7 +155,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      * @param password
      * @return
      */
-    @ApiOperation(value = "修改用户密码", notes = "修改用户密码")
+    @Schema(title = "修改用户密码", name = "修改用户密码")
     @PostMapping("/user/update/password")
     public ResultBody updatePassword(
             @RequestParam(value = "userId") Long userId,
@@ -170,7 +170,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      *
      * @return
      */
-    @ApiOperation(value = "用户分配角色", notes = "用户分配角色")
+    @Schema(title = "用户分配角色", name = "用户分配角色")
     @PostMapping("/user/roles/add")
     public ResultBody addUserRoles(@Valid @RequestBody AddUserRolesCommand command) {
         baseRoleService.saveUserRoles(command.getUserId(), StringUtils.isNotBlank(command.getRoleIds()) ? command.getRoleIds().split(",") : new String[]{});
@@ -184,7 +184,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      * @return
      */
     @Override
-    @ApiOperation(value = "获取用户已分配角色", notes = "获取用户已分配角色")
+    @Schema(title = "获取用户已分配角色", name = "获取用户已分配角色")
     @GetMapping("/user/roles")
     public ResultBody<List<BaseRole>> getUserRoles(
             @RequestParam(value = "userId") Long userId
@@ -201,7 +201,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      * @param accountType
      * @return
      */
-    @ApiOperation(value = "注册第三方系统登录账号", notes = "仅限系统内部调用")
+    @Schema(title = "注册第三方系统登录账号", name = "仅限系统内部调用")
     @PostMapping("/user/add/thirdParty")
     @Override
     public ResultBody addUserThirdParty(

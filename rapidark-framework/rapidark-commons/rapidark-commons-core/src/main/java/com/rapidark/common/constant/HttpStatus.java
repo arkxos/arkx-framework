@@ -3,7 +3,7 @@ package com.rapidark.common.constant;
 /**
  * 返回状态码
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class HttpStatus
 {

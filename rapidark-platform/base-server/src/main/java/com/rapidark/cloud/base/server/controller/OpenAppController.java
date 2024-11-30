@@ -10,21 +10,20 @@ import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
-import com.rapidark.cloud.gateway.manage.service.ClientServerRegisterService;
-import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
-import com.rapidark.framework.common.utils.Constants;
-import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
+import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRegServer;
+import com.rapidark.cloud.platform.gateway.framework.service.ClientServerRegisterService;
+import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.security.OpenClientDetails;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
-import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.jpa.entity.Status;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import com.rapidark.framework.common.utils.FileUtil;
@@ -46,7 +45,7 @@ import java.util.*;
  * @author Darkness
  * @date 2022-05-25
  **/
-@Api(tags = "系统应用管理")
+@Schema(title = "系统应用管理")
 @RequiredArgsConstructor
 @RestController
 public class OpenAppController implements IOpenAppServiceClient {
@@ -59,7 +58,7 @@ public class OpenAppController implements IOpenAppServiceClient {
     private final OpenAppRepository openAppRepository;
 
     @Log("导出数据")
-    @ApiOperation("导出数据")
+    @Schema(title = "导出数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('openClient:list')")
     public void download(HttpServletResponse response, OpenClientQueryCriteria criteria) throws IOException {
@@ -100,10 +99,10 @@ public class OpenAppController implements IOpenAppServiceClient {
      *
      * @return
      */
-    @ApiOperation(value = "获取分页应用列表", notes = "获取分页应用列表")
+    @Schema(title = "获取分页应用列表", name = "获取分页应用列表")
     @GetMapping("/app")
-    public ResultBody<PageData<OpenAppDto>> getAppListPage(@RequestParam(required = false) OpenClientQueryCriteria criteria, Pageable pageable) {
-        PageData<OpenAppDto> data = openAppService.queryAll(criteria, pageable);
+    public ResultBody<PageResult<OpenAppDto>> getAppListPage(@RequestParam(required = false) OpenClientQueryCriteria criteria, Pageable pageable) {
+		PageResult<OpenAppDto> data = openAppService.queryAll(criteria, pageable);
         return ResultBody.ok(data);
     }
 
@@ -113,10 +112,10 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @param appId
      * @return
      */
-    @ApiOperation(value = "获取应用详情", notes = "获取应用详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
-    })
+    @Schema(title = "获取应用详情", name = "获取应用详情")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
+//    })
     @GetMapping("/app/{appId}/info")
     @Override
     public ResultBody<OpenApp> getApp(
@@ -135,10 +134,10 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @param ip
      * @return
      */
-    @ApiOperation(value = "获取应用详情", notes = "获取应用详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ip", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
-    })
+    @Schema(title = "获取应用详情", name = "获取应用详情")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "ip", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
+//    })
     @GetMapping("/openClient/queryOpenClientByIp")
     @Override
     public ResultBody<OpenApp> queryAppByIp(@RequestParam("ip") String ip) {
@@ -156,10 +155,10 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @param clientId
      * @return
      */
-    @ApiOperation(value = "获取应用开发配置信息", notes = "获取应用开发配置信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "clientId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
-    })
+    @Schema(title = "获取应用开发配置信息", name = "获取应用开发配置信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "clientId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
+//    })
     @GetMapping("/app/client/{clientId}/info")
     @Override
     public ResultBody<OpenClientDetails> getAppClientInfo(
@@ -174,22 +173,22 @@ public class OpenAppController implements IOpenAppServiceClient {
      *
      * @return
      */
-    @ApiOperation(value = "添加应用信息", notes = "添加应用信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appType", value = "应用类型(server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用)", allowableValues = "server,app,pc,wap", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appIcon", value = "应用图标", paramType = "form"),
-            @ApiImplicitParam(name = "appOs", value = "手机应用操作系统", allowableValues = "android,ios", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "appDesc", value = "应用说明", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
-            @ApiImplicitParam(name = "website", value = "官网地址", paramType = "form"),
-            @ApiImplicitParam(name = "developerId", value = "开发者", paramType = "form"),
-            @ApiImplicitParam(name = "isSign", value = "是否开启验签", paramType = "form"),
-            @ApiImplicitParam(name = "isEncrypt", value = "是否开启加密", paramType = "form"),
-            @ApiImplicitParam(name = "encryptType", value = "加密类型", paramType = "form"),
-            @ApiImplicitParam(name = "publicKey", value = "RSA公钥", paramType = "form")
-    })
+    @Schema(title = "添加应用信息", name = "添加应用信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "appType", value = "应用类型(server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用)", allowableValues = "server,app,pc,wap", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "appIcon", value = "应用图标", paramType = "form"),
+//            @ApiImplicitParam(name = "appOs", value = "手机应用操作系统", allowableValues = "android,ios", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "appDesc", value = "应用说明", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
+//            @ApiImplicitParam(name = "website", value = "官网地址", paramType = "form"),
+//            @ApiImplicitParam(name = "developerId", value = "开发者", paramType = "form"),
+//            @ApiImplicitParam(name = "isSign", value = "是否开启验签", paramType = "form"),
+//            @ApiImplicitParam(name = "isEncrypt", value = "是否开启加密", paramType = "form"),
+//            @ApiImplicitParam(name = "encryptType", value = "加密类型", paramType = "form"),
+//            @ApiImplicitParam(name = "publicKey", value = "RSA公钥", paramType = "form")
+//    })
     @Log("添加应用信息")
     @PostMapping("/app/add")
     public ResultBody<String> addApp(@Validated @RequestBody CreateOpenAppCommand command) {
@@ -235,23 +234,23 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @return
      * @
      */
-    @ApiOperation(value = "编辑应用信息", notes = "编辑应用信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appType", value = "应用类型(server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用)", allowableValues = "server,app,pc,wap", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appIcon", value = "应用图标", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "appOs", value = "手机应用操作系统", allowableValues = "android,ios", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "appDesc", value = "应用说明", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
-            @ApiImplicitParam(name = "website", value = "官网地址", paramType = "form"),
-            @ApiImplicitParam(name = "developerId", value = "开发者", paramType = "form"),
-            @ApiImplicitParam(name = "isSign", value = "是否开启验签", paramType = "form"),
-            @ApiImplicitParam(name = "isEncrypt", value = "是否开启加密", paramType = "form"),
-            @ApiImplicitParam(name = "encryptType", value = "加密类型", paramType = "form"),
-            @ApiImplicitParam(name = "publicKey", value = "RSA公钥", paramType = "form")
-    })
+    @Schema(title = "编辑应用信息", name = "编辑应用信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "appType", value = "应用类型(server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用)", allowableValues = "server,app,pc,wap", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "appIcon", value = "应用图标", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "appOs", value = "手机应用操作系统", allowableValues = "android,ios", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "appDesc", value = "应用说明", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
+//            @ApiImplicitParam(name = "website", value = "官网地址", paramType = "form"),
+//            @ApiImplicitParam(name = "developerId", value = "开发者", paramType = "form"),
+//            @ApiImplicitParam(name = "isSign", value = "是否开启验签", paramType = "form"),
+//            @ApiImplicitParam(name = "isEncrypt", value = "是否开启加密", paramType = "form"),
+//            @ApiImplicitParam(name = "encryptType", value = "加密类型", paramType = "form"),
+//            @ApiImplicitParam(name = "publicKey", value = "RSA公钥", paramType = "form")
+//    })
     @Log("编辑应用信息")
     @PostMapping("/app/update")
     public ResultBody updateApp(@Validated @RequestBody UpdateOpenClientCommand command) {
@@ -284,7 +283,7 @@ public class OpenAppController implements IOpenAppServiceClient {
      * 完善应用开发信息
      * @return
      */
-    @ApiOperation(value = "完善应用开发信息", notes = "完善应用开发信息")
+    @Schema(title = "完善应用开发信息", name = "完善应用开发信息")
     @PostMapping("/app/client/update")
     public ResultBody<String> updateAppClientInfo(@Valid @RequestBody UpdateAppClientInfoCommand command) {
         OpenApp app = openAppService.findById(command.getAppId());
@@ -305,10 +304,10 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @param appId 应用Id
      * @return
      */
-    @ApiOperation(value = "重置应用秘钥", notes = "重置应用秘钥")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
-    })
+    @Schema(title = "重置应用秘钥", name = "重置应用秘钥")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
+//    })
     @PostMapping("/app/reset")
     public ResultBody<String> resetAppSecret(
             @RequestParam("appId") String appId
@@ -324,10 +323,10 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @return
      */
     @Log("删除应用信息")
-    @ApiOperation(value = "删除应用信息", notes = "删除应用信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
-    })
+    @Schema(title = "删除应用信息", name = "删除应用信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
+//    })
     @PostMapping("/app/remove")
     public ResultBody removeApp(
             @RequestParam("appId") String appId

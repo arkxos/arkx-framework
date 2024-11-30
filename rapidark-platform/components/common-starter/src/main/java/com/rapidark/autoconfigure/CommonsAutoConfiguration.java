@@ -1,6 +1,6 @@
 package com.rapidark.autoconfigure;
 
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+//import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.rapidark.framework.common.configuration.OpenCommonProperties;
 import com.rapidark.framework.common.configuration.OpenIdGenProperties;
 import com.rapidark.framework.common.exception.OpenGlobalExceptionHandler;
@@ -52,13 +52,13 @@ public class CommonsAutoConfiguration {
     /**
      * 分页插件
      */
-    @ConditionalOnMissingBean(PaginationInterceptor.class)
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        log.info("PaginationInterceptor [{}]", paginationInterceptor);
-        return paginationInterceptor;
-    }
+//    @ConditionalOnMissingBean(PaginationInterceptor.class)
+//    @Bean
+//    public PaginationInterceptor paginationInterceptor() {
+//        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+//        log.info("PaginationInterceptor [{}]", paginationInterceptor);
+//        return paginationInterceptor;
+//    }
 
     /**
      * 默认加密配置
@@ -148,7 +148,7 @@ public class CommonsAutoConfiguration {
         HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
         httpRequestFactory.setConnectionRequestTimeout(5000);
         httpRequestFactory.setConnectTimeout(3000);
-        httpRequestFactory.setReadTimeout(3000);
+//        httpRequestFactory.setReadTimeout(3000);
         RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
         //设置自定义ErrorHandler
         restTemplate.setErrorHandler(new OpenRestResponseErrorHandler());

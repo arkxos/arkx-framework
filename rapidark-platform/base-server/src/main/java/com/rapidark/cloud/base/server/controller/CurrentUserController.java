@@ -7,18 +7,17 @@ import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.cloud.base.server.service.dto.RouterVo;
+import com.rapidark.cloud.platform.admin.application.model.RouterVo;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.framework.common.utils.StringUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +32,7 @@ import java.util.List;
  * @date: 2019/5/24 13:31
  * @description:
  */
-@Api(tags = "当前登陆用户")
+@Schema(title = "当前登陆用户")
 @RestController
 public class CurrentUserController {
     @Autowired
@@ -42,8 +41,8 @@ public class CurrentUserController {
     private BaseAuthorityService baseAuthorityService;
     @Autowired
     private OpenAppService openAppService;
-    @Autowired
-    private RedisTokenStore redisTokenStore;
+//    @Autowired
+//    private RedisTokenStore redisTokenStore;
     @Autowired
     private BaseMenuService menuService;
 
@@ -55,7 +54,7 @@ public class CurrentUserController {
      *
      * @return
      */
-    @ApiOperation(value = "修改当前登录用户密码", notes = "修改当前登录用户密码")
+    @Schema(title = "修改当前登录用户密码", name = "修改当前登录用户密码")
     @PostMapping("/current/user/rest/password")
     public ResultBody restPassword(
             @RequestParam(value = "oldPassword") String oldPassword,
@@ -85,7 +84,7 @@ public class CurrentUserController {
      * @param avatar
      * @return
      */
-    @ApiOperation(value = "修改当前登录用户基本信息", notes = "修改当前登录用户基本信息")
+    @Schema(title = "修改当前登录用户基本信息", name = "修改当前登录用户基本信息")
     @PostMapping("/current/user/update")
     public ResultBody updateUserInfo(
             @RequestParam(value = "nickName") String nickName,
@@ -106,7 +105,7 @@ public class CurrentUserController {
         baseUserService.updateUser(user);
         openUserDetails.setNickName(nickName);
         openUserDetails.setAvatar(avatar);
-        OpenHelper.updateOpenUser(redisTokenStore, openUserDetails);
+//        OpenHelper.updateOpenUser(redisTokenStore, openUserDetails);
         return ResultBody.ok();
     }
 
@@ -115,7 +114,7 @@ public class CurrentUserController {
      *
      * @return
      */
-    @ApiOperation(value = "获取当前登录用户已分配菜单权限", notes = "获取当前登录用户已分配菜单权限")
+    @Schema(title = "获取当前登录用户已分配菜单权限", name = "获取当前登录用户已分配菜单权限")
     @GetMapping("/current/user/menu")
     public ResultBody<List<AuthorityMenu>> findAuthorityMenu(@RequestParam(value = "serviceId", required = false) String serviceId) {
         OpenUserDetails user = OpenHelper.getUser();
@@ -145,7 +144,7 @@ public class CurrentUserController {
         for (AuthorityMenu menu : menus) {
             baseMenus.add(menu);
         }
-        List<RouterVo> routers = menuService.buildRouters(baseMenus);
+        List<RouterVo> routers = null;//menuService.buildRouters(baseMenus);
         return ResultBody.ok(routers);
     }
 }

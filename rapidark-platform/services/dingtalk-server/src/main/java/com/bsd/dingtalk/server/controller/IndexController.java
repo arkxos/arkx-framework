@@ -6,10 +6,10 @@ import com.bsd.dingtalk.server.util.AccessTokenUtil;
 import com.bsd.dingtalk.server.util.ContactHelper;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.Map;
  * @author liujianhong
  * @date 2019-07-01
  */
-@Api(tags = "钉钉服务接口")
+@Schema(title = "钉钉服务接口")
 @EnableConfigurationProperties({DingtalkProperties.class})
 @RestController
 public class IndexController {
@@ -37,10 +37,10 @@ public class IndexController {
      *
      * @return
      */
-    @ApiOperation(value = "获取钉钉登录配置", notes = "任何人都可访问")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
-    })
+    @Schema(title = "获取钉钉登录配置", name = "任何人都可访问")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
+//    })
     @GetMapping("/login/config")
     @ResponseBody
     public ResultBody getLoginOtherConfig() {
@@ -54,10 +54,10 @@ public class IndexController {
      *
      * @param authCode 免登临时code
      */
-    @ApiOperation(value = "钉钉免登", notes = "钉钉用户登录，显示当前登录用户的userId和名称")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "authCode", required = true, value = "临时code", paramType = "form")
-    })
+    @Schema(title = "钉钉免登", name = "钉钉用户登录，显示当前登录用户的userId和名称")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "authCode", required = true, value = "临时code", paramType = "form")
+//    })
     @PostMapping(value = "/login")
     @ResponseBody
     public ResultBody login(@RequestParam(value = "authCode") String authCode) {
@@ -85,7 +85,7 @@ public class IndexController {
     /**
      * 钉钉组织架构同步
      */
-    @ApiOperation(value = "钉钉组织架构同步", notes = "同步钉钉部门和用户")
+    @Schema(title = "钉钉组织架构同步", name = "同步钉钉部门和用户")
     @GetMapping(value = "/org/syn")
     public ResultBody synOrg() {
         userService.synUserInfoByDingding();

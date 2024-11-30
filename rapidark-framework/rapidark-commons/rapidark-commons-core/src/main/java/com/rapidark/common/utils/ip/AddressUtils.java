@@ -12,7 +12,7 @@ import com.rapidark.common.utils.http.HttpUtils;
 /**
  * 获取地址类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class AddressUtils
 {

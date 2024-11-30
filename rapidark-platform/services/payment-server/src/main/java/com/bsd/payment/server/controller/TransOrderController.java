@@ -13,10 +13,8 @@ import com.bsd.payment.server.service.mq.MqService;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +27,7 @@ import java.util.HashMap;
 /**
  * @author liujianhong
  */
-@Api(tags = "转账订单")
+@Schema(title = "转账订单")
 @RestController
 @RequestMapping("/trans_order")
 public class TransOrderController {
@@ -47,24 +45,24 @@ public class TransOrderController {
      *
      * @return ResultBody
      */
-    @ApiOperation(value = "转账订单列表", notes = "点击转账订单进入列表页面")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "transOrderId", value = "转账订单号", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchTransNo", value = "商户转账单号", paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
-            @ApiImplicitParam(name = "status", value = "转账状态：0-订单生成,1-转账中,2-转账成功,3-转账失败,4-业务处理完成", paramType = "form"),
-            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", paramType = "form"),
-            @ApiImplicitParam(name = "userName", value = "用户姓名", paramType = "form"),
-            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "channelOrderNo", value = "渠道订单号", paramType = "form"),
-            @ApiImplicitParam(name = "transSuccTimeStart", value = "订单转账成功时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "transSuccTimeEnd", value = "订单转账成功时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
-    })
+    @Schema(title = "转账订单列表", name ="点击转账订单进入列表页面")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "transOrderId", value = "转账订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchTransNo", value = "商户转账单号", paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
+//            @ApiImplicitParam(name = "status", value = "转账状态：0-订单生成,1-转账中,2-转账成功,3-转账失败,4-业务处理完成", paramType = "form"),
+//            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", paramType = "form"),
+//            @ApiImplicitParam(name = "userName", value = "用户姓名", paramType = "form"),
+//            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "channelOrderNo", value = "渠道订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "transSuccTimeStart", value = "订单转账成功时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "transSuccTimeEnd", value = "订单转账成功时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
+//    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultBody<IPage<TransOrder>> list(@RequestParam(value = "transOrderId", required = false) String transOrderId,
                                               @RequestParam(value = "mchId", required = false) String mchId,
@@ -128,7 +126,7 @@ public class TransOrderController {
         return ResultBody.ok(transOrderService.findListPage(new PageParams(map)));
     }
 
-    @ApiOperation(value = "转账订单详情", notes = "点击查看详情进入详情页面")
+    @Schema(title = "转账订单详情", name ="点击查看详情进入详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultBody<TransOrder> detail(@RequestParam String transOrderId) {
         TransOrder transOrder = transOrderService.findTransOrder(transOrderId);
@@ -138,24 +136,24 @@ public class TransOrderController {
         return ResultBody.ok(transOrder);
     }
 
-    @ApiOperation(value = "发起转账", notes = "发起转账")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "mchTransNo", value = "商户转账单号", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "amount", value = "转账金额(单位分)", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "currency", value = "三位货币代码,人民币:cny(默认为cny)", paramType = "form"),
-            @ApiImplicitParam(name = "clientIp", value = "客户端IP", paramType = "form"),
-            @ApiImplicitParam(name = "device", value = "设备", paramType = "form"),
-            @ApiImplicitParam(name = "extra", value = "特定渠道发起时额外参数", paramType = "form"),
-            @ApiImplicitParam(name = "param1", value = "扩展参数1", paramType = "form"),
-            @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form"),
-            @ApiImplicitParam(name = "notifyUrl", value = "转账结果回调URL(不传则结果不回调给商户)", paramType = "form"),
-            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "userName", value = "用户姓名", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "remarkInfo", value = "备注", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "sign", value = "签名", required = true, paramType = "form")
-    })
+    @Schema(title = "发起转账", name ="发起转账")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "mchTransNo", value = "商户转账单号", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "amount", value = "转账金额(单位分)", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "currency", value = "三位货币代码,人民币:cny(默认为cny)", paramType = "form"),
+//            @ApiImplicitParam(name = "clientIp", value = "客户端IP", paramType = "form"),
+//            @ApiImplicitParam(name = "device", value = "设备", paramType = "form"),
+//            @ApiImplicitParam(name = "extra", value = "特定渠道发起时额外参数", paramType = "form"),
+//            @ApiImplicitParam(name = "param1", value = "扩展参数1", paramType = "form"),
+//            @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form"),
+//            @ApiImplicitParam(name = "notifyUrl", value = "转账结果回调URL(不传则结果不回调给商户)", paramType = "form"),
+//            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "userName", value = "用户姓名", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "remarkInfo", value = "备注", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "sign", value = "签名", required = true, paramType = "form")
+//    })
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResultBody create(@RequestParam(value = "mchId") String mchId,
                              @RequestParam(value = "mchTransNo") String mchTransNo,
@@ -210,10 +208,10 @@ public class TransOrderController {
         }
     }
 
-    @ApiOperation(value = "转账订单结果查询", notes = "转账订单结果查询")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "transOrderId", value = "转账订单号", required = true, paramType = "form"),
-    })
+    @Schema(title = "转账订单结果查询", name ="转账订单结果查询")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "transOrderId", value = "转账订单号", required = true, paramType = "form"),
+//    })
     @GetMapping(value = "/query")
     public ResultBody query(@RequestParam(value = "transOrderId") String transOrderId) {
         //查询转账订单结果

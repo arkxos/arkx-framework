@@ -32,10 +32,49 @@
             <artifactId>nekohtml</artifactId>
             <version>1.9.22</version>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-upms-api</artifactId>
+			<version>17.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-upms-api</artifactId>
+			<version>17.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-upms-api</artifactId>
+			<version>17.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-upms-api</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-gateway-framework</artifactId>
+			<version>10.0.3</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
     <build>
         <!-- 打包名称 -->
         <finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>static/**</exclude>
+				</excludes>
+			</resource>
+		</resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

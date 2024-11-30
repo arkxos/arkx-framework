@@ -3,7 +3,7 @@ package com.rapidark.common.exception.file;
 /**
  * 文件名称超长限制异常类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class FileNameLengthLimitExceededException extends FileException
 {

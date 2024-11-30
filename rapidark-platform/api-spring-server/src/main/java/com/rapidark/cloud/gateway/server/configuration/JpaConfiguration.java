@@ -4,6 +4,7 @@ package com.rapidark.cloud.gateway.server.configuration;
 import com.rapidark.framework.common.annotation.JpaDto;
 import com.rapidark.framework.data.jpa.BaseRepositoryFactoryBean;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.FatalBeanException;
@@ -14,8 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

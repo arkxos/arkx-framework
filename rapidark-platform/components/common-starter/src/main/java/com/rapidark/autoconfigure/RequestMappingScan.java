@@ -9,7 +9,8 @@ import com.rapidark.framework.common.constants.QueueConstants;
 import com.rapidark.framework.common.utils.EncryptUtils;
 import com.rapidark.framework.common.utils.ReflectionUtils;
 import com.rapidark.framework.common.utils.StringUtils;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -21,7 +22,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -36,7 +36,6 @@ import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondit
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.util.pattern.PathPattern;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -88,27 +87,27 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
         List<RequestMatcher> permitAll = Lists.newArrayList();
-        try {
-            // 获取所有安全配置适配器
-            Map<String, WebSecurityConfigurerAdapter> securityConfigurerAdapterMap = applicationContext.getBeansOfType(WebSecurityConfigurerAdapter.class);
-            Iterator<Map.Entry<String, WebSecurityConfigurerAdapter>> iterable = securityConfigurerAdapterMap.entrySet().iterator();
-            while (iterable.hasNext()) {
-                WebSecurityConfigurerAdapter configurer = iterable.next().getValue();
-                HttpSecurity httpSecurity = (HttpSecurity) ReflectionUtils.getFieldValue(configurer, "http");
-                FilterSecurityInterceptor filterSecurityInterceptor = httpSecurity.getSharedObject(FilterSecurityInterceptor.class);
-                FilterInvocationSecurityMetadataSource metadataSource = filterSecurityInterceptor.getSecurityMetadataSource();
-                Map<RequestMatcher, Collection<ConfigAttribute>> requestMap = (Map) ReflectionUtils.getFieldValue(metadataSource, "requestMap");
-                Iterator<Map.Entry<RequestMatcher, Collection<ConfigAttribute>>> requestIterable = requestMap.entrySet().iterator();
-                while (requestIterable.hasNext()) {
-                    Map.Entry<RequestMatcher, Collection<ConfigAttribute>> match = requestIterable.next();
-                    if (match.getValue().toString().contains("permitAll")) {
-                        permitAll.add(match.getKey());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            log.error("error:{}", e.getMessage());
-        }
+//        try {
+//            // 获取所有安全配置适配器
+//            Map<String, WebSecurityConfigurerAdapter> securityConfigurerAdapterMap = applicationContext.getBeansOfType(WebSecurityConfigurerAdapter.class);
+//            Iterator<Map.Entry<String, WebSecurityConfigurerAdapter>> iterable = securityConfigurerAdapterMap.entrySet().iterator();
+//            while (iterable.hasNext()) {
+//                WebSecurityConfigurerAdapter configurer = iterable.next().getValue();
+//                HttpSecurity httpSecurity = (HttpSecurity) ReflectionUtils.getFieldValue(configurer, "http");
+//                FilterSecurityInterceptor filterSecurityInterceptor = httpSecurity.getSharedObject(FilterSecurityInterceptor.class);
+//                FilterInvocationSecurityMetadataSource metadataSource = filterSecurityInterceptor.getSecurityMetadataSource();
+//                Map<RequestMatcher, Collection<ConfigAttribute>> requestMap = (Map) ReflectionUtils.getFieldValue(metadataSource, "requestMap");
+//                Iterator<Map.Entry<RequestMatcher, Collection<ConfigAttribute>>> requestIterable = requestMap.entrySet().iterator();
+//                while (requestIterable.hasNext()) {
+//                    Map.Entry<RequestMatcher, Collection<ConfigAttribute>> match = requestIterable.next();
+//                    if (match.getValue().toString().contains("permitAll")) {
+//                        permitAll.add(match.getKey());
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            log.error("error:{}", e.getMessage());
+//        }
         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> m : map.entrySet()) {
             RequestMappingInfo info = m.getKey();
@@ -117,10 +116,10 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
                 // 只扫描RestController
                 continue;
             }*/
-            if (method.getMethodAnnotation(ApiIgnore.class) != null) {
-                // 忽略的接口不扫描
-                continue;
-            }
+//            if (method.getMethodAnnotation(ApiIgnore.class) != null) {
+//                // 忽略的接口不扫描
+//                continue;
+//            }
             Set<MediaType> mediaTypeSet = info.getProducesCondition().getProducibleMediaTypes();
             for (MethodParameter params : method.getMethodParameters()) {
                 if (params.hasParameterAnnotation(RequestBody.class)) {
@@ -172,10 +171,10 @@ public class RequestMappingScan implements ApplicationListener<ApplicationReadyE
                 }
             }
 
-            ApiOperation apiOperation = method.getMethodAnnotation(ApiOperation.class);
+			Schema apiOperation = method.getMethodAnnotation(Schema.class);
             if (apiOperation != null) {
-                name = apiOperation.value();
-                desc = apiOperation.notes();
+                name = apiOperation.name();
+                desc = apiOperation.title();
             }
             name = StringUtils.isBlank(name) ? methodName : name;
             Map<String, String> api = Maps.newHashMap();

@@ -22,18 +22,23 @@
 
 	<modules>
 		<module>rapidark-register</module>
+
+		<module>rapidark-upms-api</module>
+
 		<module>rapidark-gateway-parent</module>
 		<module>rapidark-auth</module>
 		<module>rapidark-visual</module>
 		<module>rapidark-apps</module>
 
-		<module>rapidark-upms-api</module>
 		<module>rapidark-platform-support</module>
 		<module>rapidark-upms-biz</module>
         <module>rapidark-sidecar-example</module>
 
         <!--		单体测试不参与打包-->
 		<!--		<module>rapidark-monolith</module>-->
+
+		<module>components</module>
+		<module>migration</module>
 
 		<module>api-spring-server</module>
 		<module>uaa-admin-server</module>
@@ -44,6 +49,8 @@
 		<module>uaa-portal-server</module>
 		<module>sba-server</module>
 <!--		<module>sentinel-dashboard</module>-->
+
+		<module>services</module>
 	</modules>
 
 </project>

@@ -2,7 +2,7 @@ package com.rapidark.cloud.gateway.server.locator;
 
 import com.google.common.collect.Lists;
 import com.rapidark.cloud.base.client.model.RateLimitApi;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
 import com.rapidark.framework.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -239,7 +239,7 @@ public class JdbcRouteDefinitionLocator implements ApplicationListener<RemoteRef
             result.setId(rs.getString("id"));
             result.setSystemCode(rs.getString("system_code"));
             result.setPath(rs.getString("path"));
-            result.setServiceId(rs.getString("service_id"));
+//            result.setServiceId(rs.getString("service_id"));
             result.setUri(rs.getString("uri"));
             result.setStatus(rs.getString("status"));
             result.setRetryable(rs.getInt("retryable"));

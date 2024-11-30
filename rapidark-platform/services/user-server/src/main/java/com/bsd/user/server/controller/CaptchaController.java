@@ -11,10 +11,10 @@ import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.RedisUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * @Date: 2019/9/4 15:02
  */
 @Slf4j
-@Api(tags = "行为验证")
+@Schema(title = "行为验证")
 @RestController
 @RequestMapping("/user/captcha")
 public class CaptchaController {
@@ -52,11 +52,11 @@ public class CaptchaController {
      * @param request    request
      * @return
      */
-    @ApiOperation(value = "初始化", notes = "行为验证初始化")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
-            @ApiImplicitParam(name = "clientType", required = true, value = "客户端类型web(pc浏览器),h5(手机浏览器,包括webview),native(原生app),unknown(未知)", paramType = "form"),
-    })
+    @Schema(title = "初始化", name = "行为验证初始化")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "clientType", required = true, value = "客户端类型web(pc浏览器),h5(手机浏览器,包括webview),native(原生app),unknown(未知)", paramType = "form"),
+//    })
     @PostMapping("/init")
     public ResultBody init(@RequestParam(value = "userId") Long userId,
                            @RequestParam(value = "clientType") String clientType,
@@ -84,13 +84,13 @@ public class CaptchaController {
      * @param request
      * @return
      */
-    @ApiOperation(value = "二次验证", notes = "行为验证二次验证")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
-            @ApiImplicitParam(name = "chllenge", required = true, value = "极验验证二次验证表单数据 chllenge", paramType = "form"),
-            @ApiImplicitParam(name = "validate", required = true, value = "极验验证二次验证表单数据 validate", paramType = "form"),
-            @ApiImplicitParam(name = "seccode", required = true, value = "极验验证二次验证表单数据 seccode", paramType = "form"),
-    })
+    @Schema(title = "二次验证", name = "行为验证二次验证")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "chllenge", required = true, value = "极验验证二次验证表单数据 chllenge", paramType = "form"),
+//            @ApiImplicitParam(name = "validate", required = true, value = "极验验证二次验证表单数据 validate", paramType = "form"),
+//            @ApiImplicitParam(name = "seccode", required = true, value = "极验验证二次验证表单数据 seccode", paramType = "form"),
+//    })
     @PostMapping("/validate")
     public ResultBody validate(@RequestParam(value = "userId") Long userId,
                                @RequestParam(value = "chllenge") String chllenge,

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Tree基类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class TreeEntity extends BaseEntity
 {

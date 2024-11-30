@@ -15,7 +15,7 @@
  */
 package me.zhengjie;
 
-import io.swagger.annotations.Api;
+
 import com.rapidark.framework.common.annotation.rest.AnonymousGetMapping;
 import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import org.springframework.boot.SpringApplication;

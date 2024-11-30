@@ -17,7 +17,7 @@ package me.zhengjie.modules.system.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,40 +45,40 @@ public class Role extends AbstractIdLongEntity implements Serializable {
     @Column(name = "role_id")
     @NotNull(groups = {Update.class})
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
     private Long id;
 
     @JSONField(serialize = false)
     @ManyToMany(mappedBy = "roles")
-    @Schema(value = "用户", hidden = true)
+    @Schema(title = "用户", hidden = true)
     private Set<User> users;
 
     @ManyToMany
     @JoinTable(name = "sys_roles_menus",
             joinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "menu_id",referencedColumnName = "menu_id")})
-    @Schema(value = "菜单", hidden = true)
+    @Schema(title = "菜单", hidden = true)
     private Set<Menu> menus;
 
     @ManyToMany
     @JoinTable(name = "sys_roles_depts",
             joinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "dept_id",referencedColumnName = "dept_id")})
-    @Schema(value = "部门", hidden = true)
+    @Schema(title = "部门", hidden = true)
     private Set<Dept> depts;
 
     @NotBlank
-    @Schema(value = "名称", hidden = true)
+    @Schema(title = "名称", hidden = true)
     private String name;
 
-    @Schema(value = "数据权限，全部 、 本级 、 自定义")
+    @Schema(title = "数据权限，全部 、 本级 、 自定义")
     private String dataScope = DataScopeEnum.THIS_LEVEL.getValue();
 
     @Column(name = "level")
-    @Schema(value = "级别，数值越小，级别越大")
+    @Schema(title = "级别，数值越小，级别越大")
     private Integer level = 3;
 
-    @Schema(value = "描述")
+    @Schema(title = "描述")
     private String description;
 
     @Override

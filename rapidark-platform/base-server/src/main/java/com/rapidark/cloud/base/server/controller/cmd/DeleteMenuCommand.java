@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.controller.cmd;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 @Data
 public class DeleteMenuCommand {
 
-    @Schema(required = true, value = "菜单编号")
+    @Schema(required = true, title = "菜单编号")
     @NotNull(message = "菜单编号不能为空")
     private Long menuId;
 

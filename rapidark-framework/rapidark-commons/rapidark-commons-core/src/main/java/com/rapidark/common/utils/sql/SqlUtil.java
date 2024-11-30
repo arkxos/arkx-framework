@@ -6,7 +6,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * sql操作工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class SqlUtil
 {

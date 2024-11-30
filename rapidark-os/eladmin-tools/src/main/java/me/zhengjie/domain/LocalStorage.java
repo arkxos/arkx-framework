@@ -16,7 +16,7 @@
 package me.zhengjie.domain;
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.*;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -37,26 +37,26 @@ public class LocalStorage extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "storage_id")
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storageId;
 
-    @Schema(value = "真实文件名")
+    @Schema(title = "真实文件名")
     private String realName;
 
-    @Schema(value = "文件名")
+    @Schema(title = "文件名")
     private String name;
 
-    @Schema(value = "后缀")
+    @Schema(title = "后缀")
     private String suffix;
 
-    @Schema(value = "路径")
+    @Schema(title = "路径")
     private String path;
 
-    @Schema(value = "类型")
+    @Schema(title = "类型")
     private String type;
 
-    @Schema(value = "大小")
+    @Schema(title = "大小")
     private String size;
 
     public LocalStorage(String realName,String name, String suffix, String path, String type, String size) {

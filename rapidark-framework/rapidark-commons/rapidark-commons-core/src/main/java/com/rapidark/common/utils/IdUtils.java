@@ -5,7 +5,7 @@ import com.rapidark.common.core.lang.UUID;
 /**
  * ID生成器工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class IdUtils
 {

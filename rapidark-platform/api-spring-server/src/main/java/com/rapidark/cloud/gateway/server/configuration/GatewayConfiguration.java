@@ -14,9 +14,10 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.rapidark.cloud.gateway.server.filter.RemoveGatewayContextFilter;
 import com.rapidark.cloud.gateway.server.locator.ResourceLocator;
+import com.rapidark.cloud.platform.gateway.actuator.ApiEndpoint;
 import com.rapidark.framework.common.configuration.OpenCommonProperties;
 import com.rapidark.framework.common.utils.ArkSpringContextHolder;
-import com.rapidark.cloud.gateway.server.actuator.ApiEndpoint;
+
 import com.rapidark.cloud.gateway.server.exception.JsonExceptionHandler;
 import com.rapidark.cloud.gateway.server.exception.RequestDecryptionExceptionHandler;
 import com.rapidark.cloud.gateway.server.filter.GatewayContextFilter;
@@ -160,11 +161,11 @@ public class GatewayConfiguration {
         return new HttpMessageConverters(jackson2HttpMessageConverter);
     }
 
-    @Bean
-    @Primary
-    public SwaggerProvider swaggerProvider(RouteDefinitionLocator routeDefinitionLocator) {
-        return new SwaggerProvider(routeDefinitionLocator);
-    }
+//    @Bean
+//    @Primary
+//    public SwaggerProvider swaggerProvider(RouteDefinitionLocator routeDefinitionLocator) {
+//        return new SwaggerProvider(routeDefinitionLocator);
+//    }
 
     /**
      * 动态路由加载

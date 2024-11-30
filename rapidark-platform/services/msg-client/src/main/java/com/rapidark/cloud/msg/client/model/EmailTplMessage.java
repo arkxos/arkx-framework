@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.client.model;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import java.util.Map;
  * @date: 2019/7/17 14:01
  * @description:
  */
-@ApiModel("邮件模板消息")
+@Schema(title = "邮件模板消息")
 public class EmailTplMessage extends EmailMessage {
     /**
      * 模板编号

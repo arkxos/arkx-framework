@@ -164,7 +164,7 @@
               <div v-highlight>
                 <pre>
                       // 接口介绍
-                      @ApiOperation(value = "接口名称", notes = "接口备注")
+                      @Schema(title = "接口名称", name = "接口备注")
                       @PostMapping("/testApi")
                       // 忽略接口,将不再添加或修改次接口
                       @ApiIgnore

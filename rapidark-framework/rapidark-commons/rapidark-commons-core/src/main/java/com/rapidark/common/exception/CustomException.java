@@ -3,7 +3,7 @@ package com.rapidark.common.exception;
 /**
  * 自定义异常
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class CustomException extends RuntimeException
 {

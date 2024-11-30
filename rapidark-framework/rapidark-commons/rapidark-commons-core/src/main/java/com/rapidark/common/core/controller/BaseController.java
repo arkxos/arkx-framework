@@ -23,7 +23,7 @@ import com.rapidark.common.utils.sql.SqlUtil;
 /**
  * web层通用数据处理
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class BaseController
 {

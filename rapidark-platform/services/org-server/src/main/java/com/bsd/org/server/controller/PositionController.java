@@ -7,10 +7,10 @@ import com.bsd.org.server.service.PositionService;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ import java.util.Arrays;
  * @author lrx
  * @date 2019-08-14
  */
-@Api(value = "职位体系", tags = "职位体系")
+@Schema(title = "职位体系", name = "职位体系")
 @RestController
 @RequestMapping("position")
 public class PositionController {
@@ -34,17 +34,17 @@ public class PositionController {
      *
      * @return
      */
-    @ApiOperation(value = "分页获取职位数据", notes = "分页获取职位数据")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "positionId", value = "职位ID", paramType = "form"),
-            @ApiImplicitParam(name = "positionCode", value = "职位代码", paramType = "form"),
-            @ApiImplicitParam(name = "positionName", value = "职位名称", paramType = "form"),
-            @ApiImplicitParam(name = "status", value = "状态:0-禁用 1-启用", paramType = "form"),
-            @ApiImplicitParam(name = "departmentId", value = "所属部门ID", paramType = "form"),
-            @ApiImplicitParam(name = "companyId", value = "公司ID", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
-    })
+    @Schema(title = "分页获取职位数据", name = "分页获取职位数据")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "positionId", value = "职位ID", paramType = "form"),
+//            @ApiImplicitParam(name = "positionCode", value = "职位代码", paramType = "form"),
+//            @ApiImplicitParam(name = "positionName", value = "职位名称", paramType = "form"),
+//            @ApiImplicitParam(name = "status", value = "状态:0-禁用 1-启用", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentId", value = "所属部门ID", paramType = "form"),
+//            @ApiImplicitParam(name = "companyId", value = "公司ID", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
+//    })
     @GetMapping(value = "/page")
     public ResultBody list(
             @RequestParam(value = "positionId", required = false) Long positionId,
@@ -71,10 +71,10 @@ public class PositionController {
     /**
      * 查找职位
      */
-    @ApiOperation(value = "查找职位", notes = "根据ID查找职位")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "positionId", value = "职位ID", paramType = "form"),
-    })
+    @Schema(title = "查找职位", name = "根据ID查找职位")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "positionId", value = "职位ID", paramType = "form"),
+//    })
     @GetMapping("/get")
     public ResultBody<Position> get(@RequestParam("positionId") Long positionId) {
         Position position = positionService.getById(positionId);
@@ -90,7 +90,7 @@ public class PositionController {
      *
      * @return
      */
-    @ApiOperation(value = "获取所有职位", notes = "获取所有职位")
+    @Schema(title = "获取所有职位", name = "获取所有职位")
     @GetMapping("/list")
     public ResultBody list() {
         return ResultBody.ok(positionService.listByParam(null));
@@ -103,19 +103,19 @@ public class PositionController {
      * @param departmentId
      * @return
      */
-    @ApiOperation(value = "根据部门ID获取所有职位", notes = "根据部门ID获取所有职位")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
-    })
+    @Schema(title = "根据部门ID获取所有职位", name = "根据部门ID获取所有职位")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
+//    })
     @GetMapping("/findByDepartmentId/all")
     public ResultBody allPositions(@RequestParam("departmentId") Long departmentId) {
         return ResultBody.ok(positionService.findByDepartmentIdAndStatus(departmentId, null));
     }
 
-    @ApiOperation(value = "根据部门ID列表获取所有职位", notes = "根据部门ID列表获取所有职位")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentIds", required = true, value = "部门ID列表,多个用,号隔开", paramType = "form")
-    })
+    @Schema(title = "根据部门ID列表获取所有职位", name = "根据部门ID列表获取所有职位")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentIds", required = true, value = "部门ID列表,多个用,号隔开", paramType = "form")
+//    })
     @GetMapping("/findByDepartmentIds/all")
     public ResultBody allPositions(@RequestParam(value = "departmentIds", required = true) String departmentIds) {
         return ResultBody.ok(positionService.findByDepartmentIds(Arrays.asList(departmentIds.split(","))));
@@ -128,10 +128,10 @@ public class PositionController {
      * @param departmentId
      * @return
      */
-    @ApiOperation(value = "根据部门ID获取启用状态职位", notes = "根据部门ID获取启用状态职位")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
-    })
+    @Schema(title = "根据部门ID获取启用状态职位", name = "根据部门ID获取启用状态职位")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
+//    })
     @GetMapping("/findByDepartmentId/available")
     public ResultBody availablePositions(@RequestParam("departmentId") Long departmentId) {
         return ResultBody.ok(positionService.findByDepartmentIdAndStatus(departmentId, true));
@@ -142,18 +142,18 @@ public class PositionController {
      *
      * @return
      */
-    @ApiOperation(value = "添加职位", notes = "添加职位")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "positionCode", required = true, value = "职位代码", example = "test", paramType = "form"),
-            @ApiImplicitParam(name = "positionName", required = true, value = "职位名称", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "workContent", required = false, value = "工作内容", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "workStandard", required = false, value = "工作标准", example = "测试BUG", paramType = "form"),
-            @ApiImplicitParam(name = "responsibilityWeight", required = false, value = "责任权重", example = "责任权重", paramType = "form"),
-            @ApiImplicitParam(name = "requiredQualifications", required = false, value = "所需资格条件", example = "所需资格条件", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "departmentId", required = true, value = "所属部门ID", example = "1162211202827141121", paramType = "form")
-    })
+    @Schema(title = "添加职位", name = "添加职位")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "positionCode", required = true, value = "职位代码", example = "test", paramType = "form"),
+//            @ApiImplicitParam(name = "positionName", required = true, value = "职位名称", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "workContent", required = false, value = "工作内容", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "workStandard", required = false, value = "工作标准", example = "测试BUG", paramType = "form"),
+//            @ApiImplicitParam(name = "responsibilityWeight", required = false, value = "责任权重", example = "责任权重", paramType = "form"),
+//            @ApiImplicitParam(name = "requiredQualifications", required = false, value = "所需资格条件", example = "所需资格条件", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "所属部门ID", example = "1162211202827141121", paramType = "form")
+//    })
     @PostMapping("/add")
     public ResultBody add(
             @RequestParam(value = "positionCode") String positionCode,
@@ -187,19 +187,19 @@ public class PositionController {
      *
      * @return
      */
-    @ApiOperation(value = "编辑职位", notes = "编辑职位")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "positionId", required = true, value = "职位ID", example = "1162303811142623234", paramType = "form"),
-            @ApiImplicitParam(name = "positionCode", required = true, value = "职位代码", example = "test", paramType = "form"),
-            @ApiImplicitParam(name = "positionName", required = true, value = "职位名称", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "workContent", required = false, value = "工作内容", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "workStandard", required = false, value = "工作标准", example = "测试BUG", paramType = "form"),
-            @ApiImplicitParam(name = "responsibilityWeight", required = false, value = "责任权重", example = "责任权重", paramType = "form"),
-            @ApiImplicitParam(name = "requiredQualifications", required = false, value = "所需资格条件", example = "所需资格条件", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "departmentId", required = true, value = "所属部门ID", example = "1162211202827141121", paramType = "form")
-    })
+    @Schema(title = "编辑职位", name = "编辑职位")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "positionId", required = true, value = "职位ID", example = "1162303811142623234", paramType = "form"),
+//            @ApiImplicitParam(name = "positionCode", required = true, value = "职位代码", example = "test", paramType = "form"),
+//            @ApiImplicitParam(name = "positionName", required = true, value = "职位名称", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "workContent", required = false, value = "工作内容", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "workStandard", required = false, value = "工作标准", example = "测试BUG", paramType = "form"),
+//            @ApiImplicitParam(name = "responsibilityWeight", required = false, value = "责任权重", example = "责任权重", paramType = "form"),
+//            @ApiImplicitParam(name = "requiredQualifications", required = false, value = "所需资格条件", example = "所需资格条件", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "所属部门ID", example = "1162211202827141121", paramType = "form")
+//    })
     @PostMapping("/update")
     public ResultBody update(
             @RequestParam(value = "positionId") Long positionId,
@@ -235,11 +235,11 @@ public class PositionController {
      *
      * @return
      */
-    @ApiOperation(value = "禁用/启用职位信息", notes = "禁用/启用职位信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "positionId", required = true, value = "职位ID", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, value = "状态:0-禁用 1-启用", paramType = "form")
-    })
+    @Schema(title = "禁用/启用职位信息", name = "禁用/启用职位信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "positionId", required = true, value = "职位ID", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = true, value = "状态:0-禁用 1-启用", paramType = "form")
+//    })
     @PostMapping("/status")
     public ResultBody status(@RequestParam(value = "positionId") Long positionId, @RequestParam(value = "status") Boolean status) {
         positionService.status(positionId, status);
@@ -252,7 +252,7 @@ public class PositionController {
      *
      * @return
      */
-    /*@ApiOperation(value = "删除岗位", notes = "根据岗位ID删除岗位")
+    /*@Schema(title = "删除岗位", name = "根据岗位ID删除岗位")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "positionId", required = true, value = "岗位ID", example = "1", paramType = "form")
     })

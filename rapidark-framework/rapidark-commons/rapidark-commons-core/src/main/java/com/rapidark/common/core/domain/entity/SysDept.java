@@ -15,7 +15,7 @@ import com.rapidark.common.core.domain.BaseEntity;
 /**
  * 部门表 sys_dept
  * 
- * @author rapidark
+ * @author Darkness
  * @see com.rapidark.platform.crud.model.BranchEntity
  */
 @Deprecated

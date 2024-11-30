@@ -11,7 +11,7 @@ import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 /**
  * 字典工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class DictUtils
 {

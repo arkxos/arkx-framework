@@ -3,7 +3,7 @@ package com.rapidark.common.utils.sign;
 /**
  * Base64工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public final class Base64
 {

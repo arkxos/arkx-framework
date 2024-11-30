@@ -18,7 +18,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 文件上传工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class FileUploadUtils
 {

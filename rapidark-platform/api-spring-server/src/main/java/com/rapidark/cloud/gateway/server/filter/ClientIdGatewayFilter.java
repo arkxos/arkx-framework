@@ -1,11 +1,10 @@
 package com.rapidark.cloud.gateway.server.filter;
 
-import com.rapidark.cloud.gateway.formwork.cache.RegServerCache;
-import com.rapidark.cloud.gateway.formwork.util.HttpResponseUtils;
-import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
-import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
-
-import com.rapidark.cloud.gateway.formwork.vo.GatewayRegServer;
+import com.rapidark.cloud.platform.gateway.cache.RegServerCache;
+import com.rapidark.cloud.platform.gateway.framework.util.HttpResponseUtils;
+import com.rapidark.cloud.platform.gateway.framework.util.NetworkIpUtils;
+import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
+import com.rapidark.cloud.platform.gateway.vo.GatewayRegServer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;

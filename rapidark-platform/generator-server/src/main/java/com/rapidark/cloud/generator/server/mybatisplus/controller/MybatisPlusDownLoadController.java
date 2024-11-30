@@ -1,8 +1,8 @@
 package com.rapidark.cloud.generator.server.mybatisplus.controller;
 
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +16,12 @@ import java.io.*;
  * @date: 2019/7/19 15:26
  * @description:
  */
-@Api(tags = "在线代码生成器")
+@Schema(title = "在线代码生成器")
 @Controller
 @RequestMapping("/generate")
 public class MybatisPlusDownLoadController {
 
-    @ApiOperation(value = "文件下载", notes = "文件下载")
+    @Schema(title = "文件下载", name = "文件下载")
     @GetMapping(value = "/download")
     public void download(
             @RequestParam("filePath") String filePath,

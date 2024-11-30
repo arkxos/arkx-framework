@@ -14,7 +14,7 @@ import com.rapidark.common.core.domain.BaseEntity;
 /**
  * 字典数据表 sys_dict_data
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class SysDictData extends BaseEntity
 {

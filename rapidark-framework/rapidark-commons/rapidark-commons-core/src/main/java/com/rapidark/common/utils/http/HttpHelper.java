@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 通用http工具封装
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class HttpHelper
 {

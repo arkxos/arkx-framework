@@ -17,10 +17,10 @@ import com.google.common.collect.Maps;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.taobao.api.internal.util.json.JSONWriter;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -38,7 +38,7 @@ import java.util.Map;
  * @date 2019-07-01
  */
 @Slf4j
-@Api(tags = "审批基础功能")
+@Schema(title = "审批基础功能")
 @EnableConfigurationProperties({DingtalkProperties.class})
 @RestController
 public class ProcessinstanceController {
@@ -48,11 +48,11 @@ public class ProcessinstanceController {
     /**
      * 上传媒体文件
      */
-    @ApiOperation(value = "上传媒体文件", notes = "上传媒体文件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", required = true, value = "媒体文件类型，分别有图片（image）、语音（voice）、普通文件(file)"),
-            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form")
-    })
+    @Schema(title = "上传媒体文件", name = "上传媒体文件")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "type", required = true, value = "媒体文件类型，分别有图片（image）、语音（voice）、普通文件(file)"),
+//            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form")
+//    })
     @PostMapping("/media/upload")
     @ResponseBody
     public ResultBody uploadFile(@RequestParam("type") String type, @RequestParam("file") MultipartFile file) {
@@ -81,7 +81,7 @@ public class ProcessinstanceController {
     /**
      * 发起审批
      */
-    @ApiOperation(value = "发起审批", notes = "发起审批")
+    @Schema(title = "发起审批", name = "发起审批")
     @RequestMapping(value = "/processinstance/start", method = RequestMethod.POST)
     @ResponseBody
     public ResultBody startProcessInstance(@RequestBody ProcessInstanceInputVO processInstance) {
@@ -120,10 +120,10 @@ public class ProcessinstanceController {
      * @param instanceId
      * @return
      */
-    @ApiOperation(value = "根据审批实例id获取审批详情", notes = "根据审批实例id获取审批详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "instanceId", required = true, value = "审批实例id")
-    })
+    @Schema(title = "根据审批实例id获取审批详情", name = "根据审批实例id获取审批详情")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "instanceId", required = true, value = "审批实例id")
+//    })
     @RequestMapping(value = "/processinstance/get", method = RequestMethod.POST)
     @ResponseBody
     public ResultBody getProcessinstanceById(@RequestParam String instanceId) {

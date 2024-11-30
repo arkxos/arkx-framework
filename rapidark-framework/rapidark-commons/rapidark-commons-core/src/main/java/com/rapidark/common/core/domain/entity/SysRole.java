@@ -13,7 +13,7 @@ import com.rapidark.common.core.domain.BaseEntity;
 /**
  * 角色表 sys_role
  * 
- * @author rapidark
+ * @author Darkness
  * @see com.rapidark.system.model.RoleEntity
  */
 @Deprecated

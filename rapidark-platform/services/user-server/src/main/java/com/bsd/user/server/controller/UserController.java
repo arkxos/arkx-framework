@@ -26,10 +26,10 @@ import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.RandomValueUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,7 +57,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Api(tags = "用户登录注册")
+@Schema(title = "用户登录注册")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -78,12 +78,12 @@ public class UserController {
      * @param type
      * @return
      */
-    @ApiOperation(value = "获取短信验证码", notes = "获取短信验证码")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
-            @ApiImplicitParam(name = "type", required = true, value = "类型,1-注册验证码 2-登录验证码 3-忘记密码 4-微信绑定 5-修改手机账号验证 6-新手机账号验证", allowableValues = "1,2,3,4,5,6", paramType = "form"),
-            @ApiImplicitParam(name = "signSource", required = false, value = "短信签名 0-跨境知道 1-卖家成长 默认为0", allowableValues = "1,2,3,4,5,6", paramType = "form"),
-    })
+    @Schema(title = "获取短信验证码", name = "获取短信验证码")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
+//            @ApiImplicitParam(name = "type", required = true, value = "类型,1-注册验证码 2-登录验证码 3-忘记密码 4-微信绑定 5-修改手机账号验证 6-新手机账号验证", allowableValues = "1,2,3,4,5,6", paramType = "form"),
+//            @ApiImplicitParam(name = "signSource", required = false, value = "短信签名 0-跨境知道 1-卖家成长 默认为0", allowableValues = "1,2,3,4,5,6", paramType = "form"),
+//    })
     @PostMapping("/get/smscode")
     public ResultBody getcode(@RequestParam(value = "mobile", required = true) String mobile,
                               @RequestParam(value = "type", required = true) Integer type,
@@ -103,14 +103,14 @@ public class UserController {
      * @param request
      * @return
      */
-    @ApiOperation(value = "手机验证码注册", notes = "手机验证码注册")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
-            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
-            @ApiImplicitParam(name = "code", required = true, value = "短信验证码", paramType = "form"),
-            @ApiImplicitParam(name = "source", required = true, value = "0-跨境知道 1-卖家成长 3-人工录入", allowableValues = "0,1,2,3", paramType = "form"),
-            @ApiImplicitParam(name = "invitedCode", required = false, value = "邀请码", paramType = "form")
-    })
+    @Schema(title = "手机验证码注册", name = "手机验证码注册")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
+//            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
+//            @ApiImplicitParam(name = "code", required = true, value = "短信验证码", paramType = "form"),
+//            @ApiImplicitParam(name = "source", required = true, value = "0-跨境知道 1-卖家成长 3-人工录入", allowableValues = "0,1,2,3", paramType = "form"),
+//            @ApiImplicitParam(name = "invitedCode", required = false, value = "邀请码", paramType = "form")
+//    })
     @PostMapping("/register")
     public ResultBody register(@RequestParam(value = "mobile", required = true) String mobile,
                                @RequestParam(value = "password", required = true) String password,
@@ -141,11 +141,11 @@ public class UserController {
      * @return
      */
 
-    @ApiOperation(value = "手机验证码登录", notes = "手机验证码登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
-            @ApiImplicitParam(name = "code", required = true, value = "短信验证码", paramType = "form"),
-    })
+    @Schema(title = "手机验证码登录", name = "手机验证码登录")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
+//            @ApiImplicitParam(name = "code", required = true, value = "短信验证码", paramType = "form"),
+//    })
     @PostMapping("/login/smscode")
     public ResultBody loginByMobileCode(@RequestParam(value = "mobile", required = true) String mobile,
                                         @RequestParam(value = "code", required = true) String code,
@@ -165,11 +165,11 @@ public class UserController {
      * @param password
      * @return
      */
-    @ApiOperation(value = "手机密码登录", notes = "手机密码登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
-            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
-    })
+    @Schema(title = "手机密码登录", name = "手机密码登录")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
+//            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
+//    })
     @PostMapping("/login/password")
     public ResultBody loginByMobilePassword(@RequestParam(value = "mobile", required = true) String mobile,
                                             @RequestParam(value = "password", required = true) String password,
@@ -187,11 +187,11 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "获取登录用户信息", notes = "获取登录用户信息,可以用于登录token验证")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "sessionId", required = true, value = "登录后返回的会话id", paramType = "header"),
-            @ApiImplicitParam(name = "token", required = true, value = "登录后返回的token", paramType = "header"),
-    })
+    @Schema(title = "获取登录用户信息", name = "获取登录用户信息,可以用于登录token验证")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "sessionId", required = true, value = "登录后返回的会话id", paramType = "header"),
+//            @ApiImplicitParam(name = "token", required = true, value = "登录后返回的token", paramType = "header"),
+//    })
     @PostMapping("/get/info")
     public ResultBody getInfo(HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
@@ -206,11 +206,11 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "登录token验证", notes = "登录token验证")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "sessionId", required = true, value = "登录后返回的会话id", paramType = "header"),
-            @ApiImplicitParam(name = "token", required = true, value = "登录后返回的token", paramType = "header"),
-    })
+    @Schema(title = "登录token验证", name = "登录token验证")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "sessionId", required = true, value = "登录后返回的会话id", paramType = "header"),
+//            @ApiImplicitParam(name = "token", required = true, value = "登录后返回的token", paramType = "header"),
+//    })
     @PostMapping("/verify/token")
     public ResultBody authenticatingToken(HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
@@ -227,13 +227,13 @@ public class UserController {
      * @param newPassword
      * @return
      */
-    @ApiOperation(value = "修改密码", notes = "修改密码")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "oldPassword", required = true, value = "原密码", paramType = "form"),
-            @ApiImplicitParam(name = "newPassword", required = true, value = "新密码", paramType = "form"),
-            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
-            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
-    })
+    @Schema(title = "修改密码", name = "修改密码")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "oldPassword", required = true, value = "原密码", paramType = "form"),
+//            @ApiImplicitParam(name = "newPassword", required = true, value = "新密码", paramType = "form"),
+//            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
+//            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
+//    })
     @PostMapping("/update/password")
     public ResultBody updatePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword,
                                      @RequestParam(value = "newPassword", required = true) String newPassword,
@@ -247,12 +247,12 @@ public class UserController {
         return ResultBody.ok();
     }
 
-    @ApiOperation(value = "重置密码", notes = "重置密码")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
-            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
-            @ApiImplicitParam(name = "newPassword", required = true, value = "新密码", paramType = "form"),
-    })
+    @Schema(title = "重置密码", name = "重置密码")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
+//            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
+//            @ApiImplicitParam(name = "newPassword", required = true, value = "新密码", paramType = "form"),
+//    })
     @PostMapping("/reset/password")
     public ResultBody resetPassword(@RequestParam(value = "mobile", required = true) String mobile,
                                     @RequestParam(value = "code", required = true) String code,
@@ -265,15 +265,15 @@ public class UserController {
         return ResultBody.ok();
     }
 
-    @ApiOperation(value = "修改用户信息", notes = "修改用户信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
-            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
-            @ApiImplicitParam(name = "nickname", required = false, value = "昵称", paramType = "form"),
-            @ApiImplicitParam(name = "avatar", required = false, value = "头像", paramType = "form"),
-            @ApiImplicitParam(name = "email", required = false, value = "邮箱", paramType = "form"),
-            @ApiImplicitParam(name = "userDesc", required = false, value = "描述", paramType = "form"),
-    })
+    @Schema(title = "修改用户信息", name = "修改用户信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
+//            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
+//            @ApiImplicitParam(name = "nickname", required = false, value = "昵称", paramType = "form"),
+//            @ApiImplicitParam(name = "avatar", required = false, value = "头像", paramType = "form"),
+//            @ApiImplicitParam(name = "email", required = false, value = "邮箱", paramType = "form"),
+//            @ApiImplicitParam(name = "userDesc", required = false, value = "描述", paramType = "form"),
+//    })
     @PostMapping("/update/info")
     public ResultBody updateUserInfo(@RequestParam(value = "nickname", required = false) String nickname,
                                      @RequestParam(value = "avatar", required = false) String avatar,
@@ -298,13 +298,13 @@ public class UserController {
      * @param code
      * @return
      */
-    @ApiOperation(value = "更换手机-验证旧手机", notes = "更换手机-验证旧手机")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
-            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
-            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
-            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
-    })
+    @Schema(title = "更换手机-验证旧手机", name = "更换手机-验证旧手机")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
+//            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
+//            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
+//            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
+//    })
     @PostMapping("/verify/OldMobile")
     public ResultBody verifyOldMobile(
             @RequestParam(value = "password", required = true) String password,
@@ -327,13 +327,13 @@ public class UserController {
      * @param code
      * @return
      */
-    @ApiOperation(value = "更换手机", notes = "更换手机")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
-            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
-            @ApiImplicitParam(name = "newMobile", required = true, value = "新手机", paramType = "form"),
-            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
-    })
+    @Schema(title = "更换手机", name = "更换手机")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
+//            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
+//            @ApiImplicitParam(name = "newMobile", required = true, value = "新手机", paramType = "form"),
+//            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
+//    })
     @PostMapping("/update/mobile")
     public ResultBody updateMobile(@RequestParam(value = "newMobile", required = true) String newMobile,
                                    @RequestParam(value = "code", required = true) String code,
@@ -360,14 +360,14 @@ public class UserController {
      * @param pageSize
      * @return
      */
-    @ApiOperation(value = "分页获取用户列表", notes = "分页获取用户列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "source", required = false, value = "用户来源(0-跨境知道 1-卖家成长 3-人工录入)", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = false, value = "账号状态(0-禁用 1-启用 2-锁定)", paramType = "form"),
-            @ApiImplicitParam(name = "searchContent", required = false, value = "用户昵称/手机号/用户ID", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", required = false, value = "页码", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", required = false, value = "每页条数", paramType = "form")
-    })
+    @Schema(title = "分页获取用户列表", name = "分页获取用户列表")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "source", required = false, value = "用户来源(0-跨境知道 1-卖家成长 3-人工录入)", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = false, value = "账号状态(0-禁用 1-启用 2-锁定)", paramType = "form"),
+//            @ApiImplicitParam(name = "searchContent", required = false, value = "用户昵称/手机号/用户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", required = false, value = "页码", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", required = false, value = "每页条数", paramType = "form")
+//    })
     @PostMapping("/list")
     public ResultBody list(@RequestParam(value = "source", required = false) Integer source,
                            @RequestParam(value = "status", required = false) Integer status,
@@ -397,12 +397,12 @@ public class UserController {
      * @param sex
      * @return
      */
-    @ApiOperation(value = "手工录入用户数据", notes = "手工录入用户数据")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号码", paramType = "form"),
-            @ApiImplicitParam(name = "username", required = false, value = "用户名称", paramType = "form"),
-            @ApiImplicitParam(name = "sex", required = true, value = "性别 (0 保密  1男 2女)", paramType = "form"),
-    })
+    @Schema(title = "手工录入用户数据", name = "手工录入用户数据")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号码", paramType = "form"),
+//            @ApiImplicitParam(name = "username", required = false, value = "用户名称", paramType = "form"),
+//            @ApiImplicitParam(name = "sex", required = true, value = "性别 (0 保密  1男 2女)", paramType = "form"),
+//    })
     @PostMapping("/manual/save")
     public ResultBody list(@RequestParam(value = "mobile", required = true) String mobile,
                            @RequestParam(value = "username", required = false) String username,
@@ -441,12 +441,12 @@ public class UserController {
      * @param searchContent
      * @return
      */
-    @ApiOperation(value = "导出用户列表", notes = "导出用户列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "source", required = false, value = "用户来源(0-跨境知道 1-卖家成长 3-人工录入)", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = false, value = "账号状态(0-禁用 1-启用 2-锁定)", paramType = "form"),
-            @ApiImplicitParam(name = "searchContent", required = false, value = "用户昵称/手机号/用户ID", paramType = "form"),
-    })
+    @Schema(title = "导出用户列表", name = "导出用户列表")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "source", required = false, value = "用户来源(0-跨境知道 1-卖家成长 3-人工录入)", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = false, value = "账号状态(0-禁用 1-启用 2-锁定)", paramType = "form"),
+//            @ApiImplicitParam(name = "searchContent", required = false, value = "用户昵称/手机号/用户ID", paramType = "form"),
+//    })
     @PostMapping(value = "/list/export")
     public void list(@RequestParam(value = "source", required = false) Integer source,
                      @RequestParam(value = "status", required = false) Integer status,
@@ -492,7 +492,7 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "获取用户来源列表", notes = "获取用户来源列表")
+    @Schema(title = "获取用户来源列表", name = "获取用户来源列表")
     @PostMapping("/source/list")
     public ResultBody list() {
         JSONArray sourceArray = new JSONArray();
@@ -514,10 +514,10 @@ public class UserController {
      * @param userId
      * @return
      */
-    @ApiOperation(value = "获取用户详情", notes = "根据ID获取用户详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
-    })
+    @Schema(title = "获取用户详情", name = "根据ID获取用户详情")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
+//    })
     @PostMapping("/detail")
     public ResultBody detail(@RequestParam(value = "userId", required = true) Long userId) {
         //查询用户信息
@@ -563,10 +563,10 @@ public class UserController {
      * @param ids
      * @return
      */
-    @ApiOperation(value = "批量推送用户到客户系统", notes = "批量推送用户到客户系统")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids", required = true, value = "用户ID,多个用,号隔开", paramType = "form"),
-    })
+    @Schema(title = "批量推送用户到客户系统", name = "批量推送用户到客户系统")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "ids", required = true, value = "用户ID,多个用,号隔开", paramType = "form"),
+//    })
     @PostMapping("/batch/push")
     public ResultBody push(@RequestParam(value = "ids", required = true) String ids, HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
@@ -582,11 +582,11 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "批量修改用户状态", notes = "批量修改用户状态")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, value = "0-禁用 1-启用", paramType = "form")
-    })
+    @Schema(title = "批量修改用户状态", name = "批量修改用户状态")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = true, value = "0-禁用 1-启用", paramType = "form")
+//    })
     @PostMapping("/batch/change")
     public ResultBody changeStatus(@RequestParam(value = "ids", required = true) String ids,
                                    @RequestParam(value = "status", required = true) Integer status) {

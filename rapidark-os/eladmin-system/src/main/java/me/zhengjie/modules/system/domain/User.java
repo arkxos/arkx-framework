@@ -16,7 +16,7 @@
 package me.zhengjie.modules.system.domain;
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,18 +43,18 @@ public class User extends AbstractIdLongEntity implements Serializable {
     @Column(name = "user_id")
     @NotNull(groups = Update.class)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
     private Long id;
 
     @ManyToMany
-    @Schema(value = "用户角色")
+    @Schema(title = "用户角色")
     @JoinTable(name = "sys_users_roles",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "role_id")})
     private Set<Role> roles;
 
     @ManyToMany
-    @Schema(value = "用户岗位")
+    @Schema(title = "用户岗位")
     @JoinTable(name = "sys_users_jobs",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "job_id",referencedColumnName = "job_id")})
@@ -62,48 +62,48 @@ public class User extends AbstractIdLongEntity implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "dept_id")
-    @Schema(value = "用户部门")
+    @Schema(title = "用户部门")
     private Dept dept;
 
     @NotBlank
     @Column(unique = true)
-    @Schema(value = "用户名称")
+    @Schema(title = "用户名称")
     private String username;
 
     @NotBlank
-    @Schema(value = "用户昵称")
+    @Schema(title = "用户昵称")
     private String nickName;
 
     @Email
     @NotBlank
-    @Schema(value = "邮箱")
+    @Schema(title = "邮箱")
     private String email;
 
     @NotBlank
-    @Schema(value = "电话号码")
+    @Schema(title = "电话号码")
     private String phone;
 
-    @Schema(value = "用户性别")
+    @Schema(title = "用户性别")
     private String gender;
 
-    @Schema(value = "头像真实名称",hidden = true)
+    @Schema(title = "头像真实名称",hidden = true)
     private String avatarName;
 
-    @Schema(value = "头像存储的路径", hidden = true)
+    @Schema(title = "头像存储的路径", hidden = true)
     private String avatarPath;
 
-    @Schema(value = "密码")
+    @Schema(title = "密码")
     private String password;
 
     @NotNull
-    @Schema(value = "是否启用")
+    @Schema(title = "是否启用")
     private Boolean enabled;
 
-    @Schema(value = "是否为admin账号", hidden = true)
+    @Schema(title = "是否为admin账号", hidden = true)
     private Boolean isAdmin = false;
 
     @Column(name = "pwd_reset_time")
-    @Schema(value = "最后修改密码的时间", hidden = true)
+    @Schema(title = "最后修改密码的时间", hidden = true)
     private Date pwdResetTime;
 
     @Override

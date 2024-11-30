@@ -1,8 +1,8 @@
 package com.rapidark.cloud.msg.client.model;
 
 import com.google.common.collect.Maps;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import java.util.Map;
 
@@ -11,23 +11,23 @@ import java.util.Map;
  *
  * @author liuyadu
  */
-@ApiModel("异步通知消息")
+@Schema(title = "异步通知消息")
 public class WebHookMessage extends BaseMessage {
     private static final long serialVersionUID = 1566807113989212480L;
     /**
      * 通知回调路径
      */
-    @Schema("通知回调路径")
+    @Schema(title = "通知回调路径")
     private String url;
     /**
      * 请求内容
      */
-    @Schema("请求内容")
+    @Schema(title = "请求内容")
     private Map<String, String> data = Maps.newLinkedHashMap();
     /**
      * 通知业务类型
      */
-    @Schema("通知业务类型")
+    @Schema(title = "通知业务类型")
     private String type;
 
     public WebHookMessage() {

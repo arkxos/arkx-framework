@@ -6,7 +6,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 基础异常
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class BaseException extends RuntimeException
 {

@@ -13,8 +13,8 @@ import com.dingtalk.api.response.OapiCallBackRegisterCallBackResponse;
 import com.dingtalk.oapi.lib.aes.DingTalkEncryptor;
 import com.dingtalk.oapi.lib.aes.Utils;
 import com.google.common.collect.Maps;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,7 +30,7 @@ import java.util.Map;
  * @date 2019-07-01
  */
 @Slf4j
-@Api(tags = "回调信息处理")
+@Schema(title = "回调信息处理")
 @EnableConfigurationProperties({DingtalkProperties.class})
 @RestController
 public class CallbackController {
@@ -57,7 +57,7 @@ public class CallbackController {
      */
     private static final String CALLBACK_RESPONSE_SUCCESS = "success";
 
-    @ApiOperation(value = "审批回调", notes = "审批回调")
+    @Schema(title = "审批回调", name = "审批回调")
     @RequestMapping(value = "/callback", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> callback(@RequestParam(value = "signature", required = false) String signature,

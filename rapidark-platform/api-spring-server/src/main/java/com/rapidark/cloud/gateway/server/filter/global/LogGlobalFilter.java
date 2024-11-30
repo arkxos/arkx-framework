@@ -1,9 +1,8 @@
 package com.rapidark.cloud.gateway.server.filter.global;
 
-import com.rapidark.cloud.gateway.formwork.cache.CountCache;
-import com.rapidark.cloud.gateway.formwork.cache.RouteReqCache;
-import com.rapidark.cloud.gateway.formwork.util.NetworkIpUtils;
-
+import com.rapidark.cloud.platform.gateway.cache.CountCache;
+import com.rapidark.cloud.platform.gateway.cache.RouteReqCache;
+import com.rapidark.cloud.platform.gateway.framework.util.NetworkIpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -11,6 +10,7 @@ import org.springframework.cloud.gateway.route.Route;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -51,7 +51,7 @@ public class LogGlobalFilter implements GlobalFilter, Ordered {
             HttpHeaders headers = exchange.getRequest().getHeaders();
             String remoteAddr = NetworkIpUtils.getIpAddress(request);
             String method = request.getMethod().name();
-            HttpStatus httpStatus = response.getStatusCode();
+			HttpStatusCode httpStatus = response.getStatusCode();
             int status = (httpStatus == null) ? 500 : httpStatus.value();
             long length = headers.getContentLength();
             URI uri = request.getURI();

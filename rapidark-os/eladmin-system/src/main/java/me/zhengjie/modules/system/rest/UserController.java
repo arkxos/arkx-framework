@@ -20,8 +20,8 @@ import com.rapidark.framework.common.utils.PageUtil;
 import com.rapidark.framework.common.utils.RSAUtils;
 import com.rapidark.boot.RsaProperties;
 import com.rapidark.framework.common.utils.SecurityUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import com.rapidark.framework.common.exception.BadRequestException;
@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
  * @author Zheng Jie
  * @date 2018-11-23
  */
-@Api(tags = "系统：用户管理")
+@Schema(title = "系统：用户管理")
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -73,14 +73,14 @@ public class UserController {
     @Resource
     private RsaProperties rsaProperties;
 
-    @ApiOperation("导出用户数据")
+    @Schema(title = "导出用户数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('user:list')")
     public void download(HttpServletResponse response, UserQueryCriteria criteria) throws IOException {
         userService.download(userService.queryAll(criteria), response);
     }
 
-    @ApiOperation("查询用户")
+    @Schema(title = "查询用户")
     @GetMapping
     @PreAuthorize("@el.check('user:list')")
     public ResponseEntity<Object> query(UserQueryCriteria criteria, Pageable pageable){
@@ -109,7 +109,7 @@ public class UserController {
     }
 
     @Log("新增用户")
-    @ApiOperation("新增用户")
+    @Schema(title = "新增用户")
     @PostMapping
     @PreAuthorize("@el.check('user:add')")
     public ResponseEntity<Object> create(@Validated @RequestBody User resources){
@@ -121,7 +121,7 @@ public class UserController {
     }
 
     @Log("修改用户")
-    @ApiOperation("修改用户")
+    @Schema(title = "修改用户")
     @PutMapping
     @PreAuthorize("@el.check('user:edit')")
     public ResponseEntity<Object> update(@Validated(User.Update.class) @RequestBody User resources) throws Exception {
@@ -131,7 +131,7 @@ public class UserController {
     }
 
     @Log("修改用户：个人中心")
-    @ApiOperation("修改用户：个人中心")
+    @Schema(title = "修改用户：个人中心")
     @PutMapping(value = "center")
     public ResponseEntity<Object> center(@Validated(User.Update.class) @RequestBody User resources){
         if(!resources.getId().equals(com.rapidark.framework.common.utils.SecurityUtils.getCurrentUserId())){
@@ -142,7 +142,7 @@ public class UserController {
     }
 
     @Log("删除用户")
-    @ApiOperation("删除用户")
+    @Schema(title = "删除用户")
     @DeleteMapping
     @PreAuthorize("@el.check('user:del')")
     public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){
@@ -157,7 +157,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ApiOperation("修改密码")
+    @Schema(title = "修改密码")
     @PostMapping(value = "/updatePass")
     public ResponseEntity<Object> updatePass(@RequestBody UserPassVo passVo) throws Exception {
         String oldPass = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),passVo.getOldPass());
@@ -173,14 +173,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ApiOperation("修改头像")
+    @Schema(title = "修改头像")
     @PostMapping(value = "/updateAvatar")
     public ResponseEntity<Object> updateAvatar(@RequestParam MultipartFile avatar){
         return new ResponseEntity<>(userService.updateAvatar(avatar), HttpStatus.OK);
     }
 
     @Log("修改邮箱")
-    @ApiOperation("修改邮箱")
+    @Schema(title = "修改邮箱")
     @PostMapping(value = "/updateEmail/{code}")
     public ResponseEntity<Object> updateEmail(@PathVariable String code,@RequestBody User user) throws Exception {
         String password = RSAUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(),user.getPassword());

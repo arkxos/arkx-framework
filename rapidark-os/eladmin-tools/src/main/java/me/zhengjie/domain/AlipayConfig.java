@@ -15,7 +15,7 @@
  */
 package me.zhengjie.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Data;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -33,44 +33,44 @@ public class AlipayConfig implements Serializable {
 
     @Id
     @Column(name = "config_id")
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
     private Long id;
 
     @NotBlank
-    @Schema(value = "应用ID")
+    @Schema(title = "应用ID")
     private String appId;
 
     @NotBlank
-    @Schema(value = "商户私钥")
+    @Schema(title = "商户私钥")
     private String privateKey;
 
     @NotBlank
-    @Schema(value = "支付宝公钥")
+    @Schema(title = "支付宝公钥")
     private String publicKey;
 
-    @Schema(value = "签名方式")
+    @Schema(title = "签名方式")
     private String signType="RSA2";
 
     @Column(name = "gateway_url")
-    @Schema(value = "支付宝开放安全地址", hidden = true)
+    @Schema(title = "支付宝开放安全地址", hidden = true)
     private String gatewayUrl = "https://openapi.alipaydev.com/gateway.do";
 
-    @Schema(value = "编码", hidden = true)
+    @Schema(title = "编码", hidden = true)
     private String charset= "utf-8";
 
     @NotBlank
-    @Schema(value = "异步通知地址")
+    @Schema(title = "异步通知地址")
     private String notifyUrl;
 
     @NotBlank
-    @Schema(value = "订单完成后返回的页面")
+    @Schema(title = "订单完成后返回的页面")
     private String returnUrl;
 
-    @Schema(value = "类型")
+    @Schema(title = "类型")
     private String format="JSON";
 
     @NotBlank
-    @Schema(value = "商户号")
+    @Schema(title = "商户号")
     private String sysServiceProviderId;
 
 }

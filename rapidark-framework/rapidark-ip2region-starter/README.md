@@ -37,7 +37,7 @@ ip2region:
 
 import java.io.IOException;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import ext.com.rapidark.framework.boot.ip2region.RegionAddress;
 import ext.com.rapidark.framework.boot.ip2region.RegionEnum;

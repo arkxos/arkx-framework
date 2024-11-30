@@ -8,7 +8,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 字符集工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class CharsetKit
 {

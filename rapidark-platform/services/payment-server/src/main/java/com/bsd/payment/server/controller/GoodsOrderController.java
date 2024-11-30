@@ -14,10 +14,8 @@ import com.bsd.payment.server.util.wx.WxApiClient;
 import com.google.common.collect.Lists;
 import com.rapidark.framework.common.utils.StringHelper;
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/goods")
-@Api(tags = "下单测试")
+@Schema(title = "下单测试")
 public class GoodsOrderController {
     private final static MyLog _log = MyLog.getLog(GoodsOrderController.class);
 
@@ -63,7 +61,7 @@ public class GoodsOrderController {
     private final static String GetOpenIdURL = "http://bsd.vaiwan.com/pay/goods/getOpenId";
     private final static String GetOpenIdURL2 = "http://bsd.vaiwan.com/pay/goods/getOpenId2";
 
-    @ApiOperation(value = "模拟下单", notes = "创建商品订单")
+    @Schema(title = "模拟下单", name = "创建商品订单")
     @RequestMapping(value = "/buy/{goodsId}", method = RequestMethod.GET)
     public String buy(@PathVariable("goodsId") String goodsId) {
         if (!"G_0001".equals(goodsId)) {
@@ -86,12 +84,12 @@ public class GoodsOrderController {
         return "fail";
     }
 
-    @ApiOperation(value = "统一下单", notes = "1分钱支付测试")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "goodsOrderId", value = "商品订单ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", paramType = "form")
-    })
+    @Schema(title = "统一下单", name = "1分钱支付测试")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "goodsOrderId", value = "商品订单ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", paramType = "form")
+//    })
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     public String pay(@RequestParam(value = "goodsOrderId") String goodsOrderId,
                       @RequestParam(value = "mchId", required = false, defaultValue = "10000002") String mchId,
@@ -220,7 +218,7 @@ public class GoodsOrderController {
         return retMap;
     }
 
-    @ApiOperation(value = "扫码支付", notes = "1分钱支付测试")
+    @Schema(title = "扫码支付", name = "1分钱支付测试")
     @RequestMapping(value = "/qrPay", method = RequestMethod.POST)
     public String qrPay(ModelMap model, HttpServletRequest request, Long amount) {
         String logPrefix = "【二维码扫码支付】";
@@ -456,12 +454,12 @@ public class GoodsOrderController {
     }
 
     @RequestMapping(value = "/toAliPay", method = RequestMethod.POST)
-    @ApiOperation(value = "支付宝测试", notes = "支付宝测试")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "amount", value = "金额", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", paramType = "form")
-    })
+    @Schema(title = "支付宝测试", name = "支付宝测试")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "amount", value = "金额", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", paramType = "form")
+//    })
     public String toAliPay(HttpServletRequest request,
                            @RequestParam(value = "amount") Long amount,
                            @RequestParam(value = "mchId", required = false, defaultValue = "10000002") String mchId,

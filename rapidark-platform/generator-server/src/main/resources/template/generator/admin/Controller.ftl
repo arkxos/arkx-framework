@@ -38,14 +38,14 @@ import model.com.rapidark.framework.common.ResultBody;
 **/
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "${apiAlias}管理")
+@Schema(title = "${apiAlias}管理")
 @RequestMapping("/api/${changeClassName}")
 public class ${className}Controller {
 
     private final ${className}Service ${changeClassName}Service;
 
     @Log("导出数据")
-    @ApiOperation("导出数据")
+    @Schema(title = "导出数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('${changeClassName}:list')")
     public void download(HttpServletResponse response, ${className}QueryCriteria criteria) throws IOException {
@@ -54,7 +54,7 @@ public class ${className}Controller {
 
     @GetMapping
     @Log("查询${apiAlias}")
-    @ApiOperation("查询${apiAlias}")
+    @Schema(title = "查询${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:list')")
     public ResponseEntity<Object> query(${className}QueryCriteria criteria, Pageable pageable){
         return new ResponseEntity<>(${changeClassName}Service.queryAll(criteria,pageable),HttpStatus.OK);
@@ -62,7 +62,7 @@ public class ${className}Controller {
 
     @PostMapping
     @Log("新增${apiAlias}")
-    @ApiOperation("新增${apiAlias}")
+    @Schema(title = "新增${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:add')")
     public ResultBody<Object> create(@Validated @RequestBody ${className} resources){
         return ResultBody.ok(${changeClassName}Service.create(resources));
@@ -70,7 +70,7 @@ public class ${className}Controller {
 
     @PutMapping
     @Log("修改${apiAlias}")
-    @ApiOperation("修改${apiAlias}")
+    @Schema(title = "修改${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:edit')")
     public ResultBody<Object> update(@Validated @RequestBody ${className} resources){
         ${changeClassName}Service.update(resources);
@@ -78,7 +78,7 @@ public class ${className}Controller {
     }
 
     @Log("删除${apiAlias}")
-    @ApiOperation("删除${apiAlias}")
+    @Schema(title = "删除${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:del')")
     @DeleteMapping
     public ResponseEntity<Object> delete(@RequestBody ${pkColumnType}[] ids) {

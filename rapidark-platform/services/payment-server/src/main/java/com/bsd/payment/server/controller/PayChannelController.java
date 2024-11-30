@@ -10,10 +10,8 @@ import com.bsd.payment.server.util.MyLog;
 import com.bsd.payment.server.util.ObjectValidUtil;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,7 +29,7 @@ import java.util.List;
 /**
  * @author liujianhong
  */
-@Api(tags = "支付渠道")
+@Schema(title = "支付渠道")
 @RestController
 @RequestMapping("/channel")
 public class PayChannelController {
@@ -45,18 +43,18 @@ public class PayChannelController {
      *
      * @return ResultBody
      */
-    @ApiOperation(value = "渠道列表", notes = "点击支付渠道进入列表页面")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
-            @ApiImplicitParam(name = "channelName", value = "渠道名称,如:alipay,wechat", paramType = "form"),
-            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "state", value = "渠道状态,0-停止使用,1-使用中", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
-    })
+    @Schema(title = "渠道列表", name = "点击支付渠道进入列表页面")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
+//            @ApiImplicitParam(name = "channelName", value = "渠道名称,如:alipay,wechat", paramType = "form"),
+//            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "state", value = "渠道状态,0-停止使用,1-使用中", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
+//    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultBody<IPage<PayChannel>> list(@RequestParam(value = "channelCode", required = false) String channelCode,
                                               @RequestParam(value = "channelName", required = false) String channelName,
@@ -95,15 +93,15 @@ public class PayChannelController {
         return ResultBody.ok(payChannelService.findListPage(new PageParams(map)));
     }
 
-    @ApiOperation(value = "新增渠道信息", notes = "点击新增按钮保存渠道信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "state", value = "渠道状态,0-停止使用,1-使用中", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "param", value = "配置参数,json字符串", paramType = "form"),
-            @ApiImplicitParam(name = "remark", value = "备注", paramType = "form")
-    })
+    @Schema(title = "新增渠道信息", name = "点击新增按钮保存渠道信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "state", value = "渠道状态,0-停止使用,1-使用中", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "param", value = "配置参数,json字符串", paramType = "form"),
+//            @ApiImplicitParam(name = "remark", value = "备注", paramType = "form")
+//    })
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResultBody<PayChannel> save(@RequestParam(value = "mchId") String mchId,
                                        @RequestParam(value = "channelMchId") String channelMchId,
@@ -130,16 +128,16 @@ public class PayChannelController {
         }
     }
 
-    @ApiOperation(value = "修改渠道信息", notes = "点击修改按钮修改渠道信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "channelId", value = "渠道ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "state", value = "渠道状态,0-停止使用,1-使用中", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "param", value = "配置参数,json字符串", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "remark", value = "备注", paramType = "form")
-    })
+    @Schema(title = "修改渠道信息", name = "点击修改按钮修改渠道信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "channelId", value = "渠道ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "state", value = "渠道状态,0-停止使用,1-使用中", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "param", value = "配置参数,json字符串", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "remark", value = "备注", paramType = "form")
+//    })
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResultBody<PayChannel> update(@RequestParam(value = "channelId") Integer channelId,
                                          @RequestParam(value = "mchId") String mchId,
@@ -172,7 +170,7 @@ public class PayChannelController {
         }
     }
 
-    @ApiOperation(value = "渠道信息详情", notes = "点击详情按钮进入渠道信息详情页面")
+    @Schema(title = "渠道信息详情", name = "点击详情按钮进入渠道信息详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultBody<PayChannel> detail(@RequestParam String channelId) {
         PayChannel payChannel = payChannelService.findPayChannel(channelId);
@@ -190,7 +188,7 @@ public class PayChannelController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @ApiOperation(value = "查询所有渠道", notes = "后台把code转为name发给前端,前台不需要传参数")
+    @Schema(title = "查询所有渠道", name = "后台把code转为name发给前端,前台不需要传参数")
     @RequestMapping(value = "/codeToName", method = RequestMethod.GET)
     public ResultBody<List<PayChannelDto>> codeToName() {
         List<PayChannelDto> channelNameList = new ArrayList<>();

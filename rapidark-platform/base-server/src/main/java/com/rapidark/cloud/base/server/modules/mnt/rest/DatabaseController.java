@@ -21,8 +21,8 @@ import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseDto;
 import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
 import com.rapidark.cloud.base.server.modules.mnt.util.SqlUtils;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import com.rapidark.framework.common.exception.BadRequestException;
@@ -44,7 +44,7 @@ import java.util.Set;
 * @author zhanghouying
 * @date 2019-08-24
 */
-@Api(tags = "运维：数据库管理")
+@Schema(title = "运维：数据库管理")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/database")
@@ -53,14 +53,14 @@ public class DatabaseController {
 	private final String fileSavePath = FileUtil.getTmpDirPath()+"/";
     private final DatabaseService databaseService;
 
-	@ApiOperation("导出数据库数据")
+	@Schema(title = "导出数据库数据")
 	@GetMapping(value = "/download")
 	@PreAuthorize("@el.check('database:list')")
 	public void download(HttpServletResponse response, DatabaseQueryCriteria criteria) throws IOException {
 		databaseService.download(databaseService.queryAll(criteria), response);
 	}
 
-    @ApiOperation(value = "查询数据库")
+    @Schema(title = "查询数据库")
     @GetMapping
 	@PreAuthorize("@el.check('database:list')")
     public ResponseEntity<Object> query(DatabaseQueryCriteria criteria, Pageable pageable){
@@ -68,7 +68,7 @@ public class DatabaseController {
     }
 
     @Log("新增数据库")
-    @ApiOperation(value = "新增数据库")
+    @Schema(title = "新增数据库")
     @PostMapping
 	@PreAuthorize("@el.check('database:add')")
     public ResultBody<Object> create(@Validated @RequestBody Database resources){
@@ -77,7 +77,7 @@ public class DatabaseController {
     }
 
     @Log("修改数据库")
-    @ApiOperation(value = "修改数据库")
+    @Schema(title = "修改数据库")
     @PutMapping
 	@PreAuthorize("@el.check('database:edit')")
     public ResultBody<Object> update(@Validated @RequestBody Database resources){
@@ -86,7 +86,7 @@ public class DatabaseController {
     }
 
     @Log("删除数据库")
-    @ApiOperation(value = "删除数据库")
+    @Schema(title = "删除数据库")
     @DeleteMapping
 	@PreAuthorize("@el.check('database:del')")
     public ResultBody<Object> delete(@RequestBody Set<String> ids){
@@ -95,7 +95,7 @@ public class DatabaseController {
     }
 
 	@Log("测试数据库链接")
-	@ApiOperation(value = "测试数据库链接")
+	@Schema(title = "测试数据库链接")
 	@PostMapping("/testConnect")
 	@PreAuthorize("@el.check('database:testConnect')")
 	public ResultBody<Object> testConnect(@Validated @RequestBody Database resources){
@@ -104,7 +104,7 @@ public class DatabaseController {
 	}
 
 	@Log("执行SQL脚本")
-	@ApiOperation(value = "执行SQL脚本")
+	@Schema(title = "执行SQL脚本")
 	@PostMapping(value = "/upload")
 	@PreAuthorize("@el.check('database:add')")
 	public ResponseEntity<Object> upload(@RequestBody MultipartFile file, HttpServletRequest request)throws Exception{

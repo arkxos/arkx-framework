@@ -17,7 +17,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * Repeatable 过滤器
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class RepeatableFilter implements Filter
 {

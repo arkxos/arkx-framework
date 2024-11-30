@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.controller.cmd;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,19 +18,19 @@ import java.time.LocalDateTime;
 @Schema(description = "应接口授权")
 public class GrantOpenClientAppApiAuthorityCommand {
 
-    @Schema(name = "appId", value = "客户端Id", example = "", required = true)
+    @Schema(name = "appId", title = "客户端Id", example = "", required = true)
     @NotNull(message = "客户端Id不能为空")
     private String appId;
 
-    @Schema(name = "appSystemCode", value = "应用系统代码", example = "", required = true)
+    @Schema(name = "appSystemCode", title = "应用系统代码", example = "", required = true)
     @NotEmpty(message = "应用系统代码不能为空")
     private String appSystemCode;
 
-    @Schema(name = "authorityIds", value = "过期时间", example = "", required = false)
+    @Schema(name = "authorityIds", title = "过期时间", example = "", required = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expireTime;
 
-    @Schema(name = "authorityIds", value = "接口ID:多个用,号隔开", example = "", required = false)
+    @Schema(name = "authorityIds", title = "接口ID:多个用,号隔开", example = "", required = false)
     private String authorityIds;
 
 }

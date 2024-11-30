@@ -16,8 +16,8 @@
 package me.zhengjie.modules.system.rest;
 
 import cn.hutool.core.collection.CollectionUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import com.rapidark.framework.common.exception.BadRequestException;
@@ -40,21 +40,21 @@ import java.util.*;
 */
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "系统：部门管理")
+@Schema(title = "系统：部门管理")
 @RequestMapping("/api/dept")
 public class DeptController {
 
     private final DeptService deptService;
     private static final String ENTITY_NAME = "dept";
 
-    @ApiOperation("导出部门数据")
+    @Schema(title = "导出部门数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('dept:list')")
     public void download(HttpServletResponse response, DeptQueryCriteria criteria) throws Exception {
         deptService.download(deptService.queryAll(criteria, false), response);
     }
 
-    @ApiOperation("查询部门")
+    @Schema(title = "查询部门")
     @GetMapping
     @PreAuthorize("@el.check('user:list','dept:list')")
     public ResponseEntity<Object> query(DeptQueryCriteria criteria) throws Exception {
@@ -62,7 +62,7 @@ public class DeptController {
         return new ResponseEntity<>(PageUtil.toPage(deptDtos, deptDtos.size()),HttpStatus.OK);
     }
 
-    @ApiOperation("查询部门:根据ID获取同级与上级数据")
+    @Schema(title = "查询部门:根据ID获取同级与上级数据")
     @PostMapping("/superior")
     @PreAuthorize("@el.check('user:list','dept:list')")
     public ResponseEntity<Object> getSuperior(@RequestBody List<Long> ids) {
@@ -76,7 +76,7 @@ public class DeptController {
     }
 
     @Log("新增部门")
-    @ApiOperation("新增部门")
+    @Schema(title = "新增部门")
     @PostMapping
     @PreAuthorize("@el.check('dept:add')")
     public ResponseEntity<Object> create(@Validated @RequestBody Dept resources){
@@ -88,7 +88,7 @@ public class DeptController {
     }
 
     @Log("修改部门")
-    @ApiOperation("修改部门")
+    @Schema(title = "修改部门")
     @PutMapping
     @PreAuthorize("@el.check('dept:edit')")
     public ResponseEntity<Object> update(@Validated(Dept.Update.class) @RequestBody Dept resources){
@@ -97,7 +97,7 @@ public class DeptController {
     }
 
     @Log("删除部门")
-    @ApiOperation("删除部门")
+    @Schema(title = "删除部门")
     @DeleteMapping
     @PreAuthorize("@el.check('dept:del')")
     public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){

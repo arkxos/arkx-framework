@@ -3,7 +3,7 @@ package com.rapidark.common.enums;
 /**
  * 数据源
  * 
- * @author rapidark
+ * @author Darkness
  */
 public enum DataSourceType
 {

@@ -12,7 +12,7 @@ import com.rapidark.common.enums.OperatorType;
 /**
  * 自定义操作日志记录注解
  * 
- * @author rapidark
+ * @author Darkness
  *
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })

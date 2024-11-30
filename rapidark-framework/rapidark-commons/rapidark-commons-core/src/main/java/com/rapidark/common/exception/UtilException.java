@@ -3,7 +3,7 @@ package com.rapidark.common.exception;
 /**
  * 工具类异常
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class UtilException extends RuntimeException
 {

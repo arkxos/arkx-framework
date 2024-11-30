@@ -3,7 +3,7 @@ package com.rapidark.common.enums;
 /**
  * 操作状态
  * 
- * @author rapidark
+ * @author Darkness
  *
  */
 public enum BusinessStatus

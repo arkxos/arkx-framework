@@ -14,8 +14,8 @@ import com.dingtalk.api.response.OapiWorkrecordAddResponse;
 import com.dingtalk.api.response.OapiWorkrecordGetbyuseridResponse;
 import com.dingtalk.api.response.OapiWorkrecordUpdateResponse;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,7 +33,7 @@ import java.util.Map;
  * @date 2019-07-01
  */
 @Slf4j
-@Api(tags = "待办基础功能")
+@Schema(title = "待办基础功能")
 @EnableConfigurationProperties({DingtalkProperties.class})
 @RestController
 public class WorkRecordController {
@@ -45,7 +45,7 @@ public class WorkRecordController {
     /**
      * 发起待办事项
      */
-    @ApiOperation(value = "发起待办事项", notes = "发起待办事项")
+    @Schema(title = "发起待办事项", name = "发起待办事项")
     @RequestMapping(value = "/workrecord/start", method = RequestMethod.POST)
     @ResponseBody
     public ResultBody startWorkRecord() {
@@ -89,7 +89,7 @@ public class WorkRecordController {
     /**
      * 修改待办事项
      */
-    @ApiOperation(value = "修改待办事项", notes = "修改待办事项")
+    @Schema(title = "修改待办事项", name = "修改待办事项")
     @RequestMapping(value = "/workrecord/{id}/update", method = RequestMethod.GET)
     @ResponseBody
     public String updateWorkRecord(@PathVariable String id) {
@@ -122,7 +122,7 @@ public class WorkRecordController {
      *
      * @return
      */
-    @ApiOperation(value = "获取待办事项", notes = "获取待办事项")
+    @Schema(title = "获取待办事项", name = "获取待办事项")
     @RequestMapping(value = "/workrecord/get/{userid}", method = RequestMethod.GET)
     @ResponseBody
     public ResultBody getWorkRecordByUserId(@PathVariable String userid) {

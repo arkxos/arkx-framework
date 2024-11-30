@@ -26,6 +26,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.http.codec.HttpMessageReader;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.util.AntPathMatcher;
@@ -112,7 +113,7 @@ public class GatewayContextFilter implements WebFilter, Ordered {
         gatewayContext.setRequestHeaders(headers);
 
         MultiValueMap<String, String> params = request.getQueryParams();
-        String method = request.getMethodValue();
+        String method = request.getMethod().name();
         if (apiProperties.getCheckEncrypt() && !notEncrypt(requestPath) && openAppServiceClient != null) {
             // 验证请求参数
             Assert.notNull(headers.getFirst(CommonConstants.APP_ID_KEY), String.format("解密失败:%s不能为空", CommonConstants.APP_ID_KEY));

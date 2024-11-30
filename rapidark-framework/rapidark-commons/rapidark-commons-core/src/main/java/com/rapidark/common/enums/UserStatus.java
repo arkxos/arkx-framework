@@ -3,7 +3,7 @@ package com.rapidark.common.enums;
 /**
  * 用户状态
  * 
- * @author rapidark
+ * @author Darkness
  */
 public enum UserStatus
 {

@@ -8,10 +8,10 @@ import com.bsd.comment.server.service.CommentReplyService;
 import com.bsd.comment.server.utils.CommentReplyTreeUtils;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ import java.util.List;
  * @author lrx
  * @date 2019-09-09
  */
-@Api(value = "评论回复服务接口", tags = "评论回复服务接口")
+@Schema(title = "评论回复服务接口", name = "评论回复服务接口")
 @RestController
 @RequestMapping("reply")
 public class CommentReplyController {
@@ -37,7 +37,7 @@ public class CommentReplyController {
      *
      * @return
      */
-    @ApiOperation(value = "获取评论下的回复(客户端)", notes = "根据commentId获取评论下的所有回复")
+    @Schema(title = "获取评论下的回复(客户端)", name = "根据commentId获取评论下的所有回复")
     @GetMapping(value = "/client/replies")
     public ResultBody clientTypeGetReplies(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
@@ -54,7 +54,7 @@ public class CommentReplyController {
      * @param commentId
      * @return
      */
-    @ApiOperation(value = "获取评论下的回复(后台)", notes = "根据commentId获取评论下的所有回复")
+    @Schema(title = "获取评论下的回复(后台)", name = "根据commentId获取评论下的所有回复")
     @GetMapping(value = "/admin/replies")
     public ResultBody adminTypeGetReplies(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
@@ -66,7 +66,7 @@ public class CommentReplyController {
     }
 
 
-    @ApiOperation(value = "获取评论下的回复JSON树(客户端)", notes = "根获取评论下的回复JSON树")
+    @Schema(title = "获取评论下的回复JSON树(客户端)", name = "根获取评论下的回复JSON树")
     @GetMapping(value = "/client/json/replies")
     public ResultBody clientTypeGetRepliesJson(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
@@ -79,7 +79,7 @@ public class CommentReplyController {
         return ResultBody.ok(resultTree);
     }
 
-    @ApiOperation(value = "获取评论下的回复JSON树(后台)", notes = "根获取评论下的回复JSON树")
+    @Schema(title = "获取评论下的回复JSON树(后台)", name = "根获取评论下的回复JSON树")
     @GetMapping(value = "/admin/json/replies")
     public ResultBody adminTypeGetRepliesJson(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
@@ -98,7 +98,7 @@ public class CommentReplyController {
      *
      * @return
      */
-    @ApiOperation(value = "添加回复", notes = "添加回复")
+    @Schema(title = "添加回复", name = "添加回复")
     @PostMapping("/add")
     public ResultBody add(@Validated CommentReplyDTO commentReplyDTO) {
         CommentReply commentReply = BeanConvertUtils.copy(commentReplyDTO, CommentReply.class);
@@ -116,10 +116,10 @@ public class CommentReplyController {
      *
      * @return
      */
-    @ApiOperation(value = "批量屏蔽回复", notes = "批量屏蔽回复")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "replyIds", required = true, value = "多个用,号隔开", paramType = "form")
-    })
+    @Schema(title = "批量屏蔽回复", name = "批量屏蔽回复")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "replyIds", required = true, value = "多个用,号隔开", paramType = "form")
+//    })
     @PostMapping("/batch/shield")
     public ResultBody batchShield(@RequestParam(value = "replyIds") String replyIds) {
         boolean isSuc = commentReplyService.shieldCommentReply(Arrays.asList(replyIds.split(",")));

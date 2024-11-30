@@ -17,10 +17,10 @@ import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.data.jpa.entity.Status;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author liuyadu
  */
-@Api(tags = "系统菜单资源管理")
+@Schema(title = "系统菜单资源管理")
 @RestController
 public class BaseMenuController {
 
@@ -56,7 +56,7 @@ public class BaseMenuController {
      *
      * @return
      */
-    @ApiOperation(value = "所有服务列表", notes = "所有服务列表")
+    @Schema(title = "所有服务列表", name = "所有服务列表")
     @GetMapping("/menu/services")
     public ResultBody<List<JSONObject>> getServiceList() {
         List<OpenAppDto> apps = openAppService.queryAll(new OpenClientQueryCriteria());
@@ -79,7 +79,7 @@ public class BaseMenuController {
      *
      * @return
      */
-    @ApiOperation(value = "获取分页菜单资源列表", notes = "获取分页菜单资源列表")
+    @Schema(title = "获取分页菜单资源列表", name = "获取分页菜单资源列表")
     @GetMapping("/menu")
     public ResultBody<Page<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
         return ResultBody.ok(baseResourceMenuService.findListPage(new PageParams(map)));
@@ -90,7 +90,7 @@ public class BaseMenuController {
      *
      * @return
      */
-    @ApiOperation(value = "菜单所有资源列表", notes = "菜单所有资源列表")
+    @Schema(title = "菜单所有资源列表", name = "菜单所有资源列表")
     @GetMapping("/menu/all")
     public ResultBody<List<BaseMenu>> getMenuAllList() {
         return ResultBody.ok(baseResourceMenuService.findAllList());
@@ -103,10 +103,10 @@ public class BaseMenuController {
      * @param menuId
      * @return
      */
-    @ApiOperation(value = "获取菜单下所有操作", notes = "获取菜单下所有操作")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "menuId", value = "menuId", paramType = "form"),
-    })
+    @Schema(title = "获取菜单下所有操作", name = "获取菜单下所有操作")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "menuId", value = "menuId", paramType = "form"),
+//    })
     @GetMapping("/menu/action")
     public ResultBody<List<BaseAction>> getMenuAction(Long menuId) {
         return ResultBody.ok(baseResourceOperationService.findListByMenuId(menuId));
@@ -118,10 +118,10 @@ public class BaseMenuController {
      * @param menuId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取菜单资源详情", notes = "获取菜单资源详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
-    })
+    @Schema(title = "获取菜单资源详情", name = "获取菜单资源详情")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
+//    })
     @GetMapping("/menu/{menuId}/info")
     public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
         return ResultBody.ok(baseMenuQuery.getMenu(menuId));
@@ -132,7 +132,7 @@ public class BaseMenuController {
      *
      * @return
      */
-    @ApiOperation(value = "添加菜单资源", notes = "添加菜单资源")
+    @Schema(title = "添加菜单资源", name = "添加菜单资源")
     @PostMapping("/menu/add")
     public ResultBody<Long> addMenu(@RequestBody CreateMenuCommand command) {
         BaseMenu menu = new BaseMenu();
@@ -162,7 +162,7 @@ public class BaseMenuController {
      * @param command
      * @return
      */
-    @ApiOperation(value = "编辑菜单资源", notes = "编辑菜单资源")
+    @Schema(title = "编辑菜单资源", name = "编辑菜单资源")
     @PostMapping("/menu/update")
     public ResultBody updateMenu(@RequestBody @Valid UpdateMenuCommand command) {
         BaseMenu menu = new BaseMenu();
@@ -191,10 +191,10 @@ public class BaseMenuController {
      * @param menuId
      * @return
      */
-    @ApiOperation(value = "移除菜单资源", notes = "移除菜单资源")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
-    })
+    @Schema(title = "移除菜单资源", name = "移除菜单资源")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
+//    })
     @PostMapping("/menu/remove")
     public ResultBody<Boolean> removeMenu(@RequestParam("menuId") Long menuId) {
         baseResourceMenuService.removeMenu(menuId);

@@ -7,10 +7,10 @@ import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.cloud.msg.client.model.EmailMessage;
 import com.rapidark.cloud.msg.client.model.EmailTplMessage;
 import com.rapidark.cloud.msg.client.service.IEmailClient;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author woodev
  */
 @RestController
-@Api(value = "邮件", tags = "邮件")
+@Schema(title = "邮件", name = "邮件")
 public class EmailController implements IEmailClient {
     @Autowired
     private MessageDispatcher dispatcher;
@@ -39,14 +39,14 @@ public class EmailController implements IEmailClient {
      * @param attachments 附件
      * @return
      */
-    @ApiOperation(value = "发送邮件", notes = "发送邮件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "to", required = true, value = "接收人 多个用;号隔开", paramType = "form"),
-            @ApiImplicitParam(name = "cc", required = false, value = "抄送人 多个用;号隔开", paramType = "form"),
-            @ApiImplicitParam(name = "subject", required = true, value = "主题", paramType = "form"),
-            @ApiImplicitParam(name = "content", required = true, value = "内容", paramType = "form"),
-            @ApiImplicitParam(name = "attachments", required = false, value = "附件:最大不超过10M", dataType = "file", paramType = "form", allowMultiple = true),
-    })
+    @Schema(title = "发送邮件", name = "发送邮件")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "to", required = true, value = "接收人 多个用;号隔开", paramType = "form"),
+//            @ApiImplicitParam(name = "cc", required = false, value = "抄送人 多个用;号隔开", paramType = "form"),
+//            @ApiImplicitParam(name = "subject", required = true, value = "主题", paramType = "form"),
+//            @ApiImplicitParam(name = "content", required = true, value = "内容", paramType = "form"),
+//            @ApiImplicitParam(name = "attachments", required = false, value = "附件:最大不超过10M", dataType = "file", paramType = "form", allowMultiple = true),
+//    })
     @PostMapping(value = "/email/send", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Override
     public ResultBody send(@RequestParam(value = "to") String to,
@@ -77,15 +77,15 @@ public class EmailController implements IEmailClient {
      * @return
      */
     @Override
-    @ApiOperation(value = "发送模板邮件", notes = "发送模板邮件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "to", required = true, value = "接收人 多个用;号隔开", paramType = "form"),
-            @ApiImplicitParam(name = "cc", required = false, value = "抄送人 多个用;号隔开", paramType = "form"),
-            @ApiImplicitParam(name = "subject", required = true, value = "主题", paramType = "form"),
-            @ApiImplicitParam(name = "tplCode", required = true, value = "模板编号", paramType = "form"),
-            @ApiImplicitParam(name = "tplParams", required = true, value = "模板参数 json字符串", paramType = "form"),
-            @ApiImplicitParam(name = "attachments", required = false, value = "附件:最大不超过10M", dataType = "file", paramType = "form", allowMultiple = true),
-    })
+    @Schema(title = "发送模板邮件", name = "发送模板邮件")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "to", required = true, value = "接收人 多个用;号隔开", paramType = "form"),
+//            @ApiImplicitParam(name = "cc", required = false, value = "抄送人 多个用;号隔开", paramType = "form"),
+//            @ApiImplicitParam(name = "subject", required = true, value = "主题", paramType = "form"),
+//            @ApiImplicitParam(name = "tplCode", required = true, value = "模板编号", paramType = "form"),
+//            @ApiImplicitParam(name = "tplParams", required = true, value = "模板参数 json字符串", paramType = "form"),
+//            @ApiImplicitParam(name = "attachments", required = false, value = "附件:最大不超过10M", dataType = "file", paramType = "form", allowMultiple = true),
+//    })
     @PostMapping(value = "/email/send/tpl", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResultBody sendByTpl(
             @RequestParam(value = "to") String to,

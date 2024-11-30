@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
-import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
+import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.repository.BalancedRepository;
 import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
 import jakarta.annotation.Resource;

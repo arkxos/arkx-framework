@@ -15,7 +15,7 @@ import com.rapidark.common.core.text.Convert;
 /**
  * 客户端工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class ServletUtils
 {

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.uaa.admin.server.controller.cmd;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 @Schema(description = "退出登录参数")
 public class LogoutCommand {
 
-    @Schema(required = true, value = "令牌")
+    @Schema(required = true, title = "令牌")
     @NotNull(message = "令牌不能为空")
     private String token;
 

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Entity基类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class BaseEntity implements Serializable
 {

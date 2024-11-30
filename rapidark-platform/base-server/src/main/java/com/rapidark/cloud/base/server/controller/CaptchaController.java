@@ -5,10 +5,10 @@ import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.RedisUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.wf.captcha.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ import java.util.UUID;
  *
  * @author liujianhong
  */
-@Api(tags = "图形验证码")
+@Schema(title = "图形验证码")
 @RestController
 public class CaptchaController {
     @Autowired
@@ -35,7 +35,7 @@ public class CaptchaController {
      *
      * @return
      */
-    @ApiOperation(value = "获取png验证码", notes = "获取png验证码")
+    @Schema(title = "获取png验证码", name = "获取png验证码")
     @GetMapping("/captcha")
     public ResultBody specCaptcha() {
         SpecCaptcha captcha = new SpecCaptcha(130, 48, 4);
@@ -55,7 +55,7 @@ public class CaptchaController {
      *
      * @return
      */
-    @ApiOperation(value = "获取gif验证码", notes = "获取gif验证码")
+    @Schema(title = "获取gif验证码", name = "获取gif验证码")
     @GetMapping("/captcha/gif")
     public ResultBody gifCaptcha() {
         GifCaptcha captcha = new GifCaptcha(130, 48, 4);
@@ -75,7 +75,7 @@ public class CaptchaController {
      *
      * @return
      */
-    @ApiOperation(value = "获取中文验证码", notes = "获取中文验证码")
+    @Schema(title = "获取中文验证码", name = "获取中文验证码")
     @GetMapping("/captcha/chinese")
     public ResultBody chineseCaptcha() {
         ChineseCaptcha captcha = new ChineseCaptcha(130, 48, 4);
@@ -95,7 +95,7 @@ public class CaptchaController {
      *
      * @return
      */
-    @ApiOperation(value = "获取中文gif验证码", notes = "获取中文gif验证码")
+    @Schema(title = "获取中文gif验证码", name = "获取中文gif验证码")
     @GetMapping("/captcha/chineseGif")
     public ResultBody chineseGifCaptcha() {
         ChineseGifCaptcha captcha = new ChineseGifCaptcha(130, 48, 4);
@@ -115,7 +115,7 @@ public class CaptchaController {
      *
      * @return
      */
-    @ApiOperation(value = "获取算术验证码", notes = "获取算术验证码")
+    @Schema(title = "获取算术验证码", name = "获取算术验证码")
     @GetMapping("/captcha/arithmetic")
     public ResultBody arithmeticCaptcha() {
         ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 48, 3);
@@ -136,11 +136,11 @@ public class CaptchaController {
      *
      * @return
      */
-    @ApiOperation(value = "校验验证码", notes = "校验验证码")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "verKey", required = true, value = "验证码键值", paramType = "form"),
-            @ApiImplicitParam(name = "verCode", required = true, value = "验证码", paramType = "form")
-    })
+    @Schema(title = "校验验证码", name = "校验验证码")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "verKey", required = true, value = "验证码键值", paramType = "form"),
+//            @ApiImplicitParam(name = "verCode", required = true, value = "验证码", paramType = "form")
+//    })
     @PostMapping("/captcha/verify")
     public ResultBody verify(@RequestParam(value = "verKey") String verKey,
                              @RequestParam(value = "verCode") String verCode) {

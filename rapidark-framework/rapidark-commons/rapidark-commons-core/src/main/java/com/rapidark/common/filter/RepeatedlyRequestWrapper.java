@@ -16,7 +16,7 @@ import com.rapidark.common.utils.http.HttpHelper;
 /**
  * 构建可重复读取inputStream的request
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper
 {

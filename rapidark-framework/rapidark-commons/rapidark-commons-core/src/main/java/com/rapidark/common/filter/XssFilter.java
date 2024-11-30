@@ -20,7 +20,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 防止XSS攻击的过滤器
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class XssFilter implements Filter
 {

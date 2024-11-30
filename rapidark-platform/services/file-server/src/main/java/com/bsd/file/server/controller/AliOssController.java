@@ -5,10 +5,10 @@ import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.FileHelper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +22,7 @@ import java.util.Objects;
  * @author liujianhong
  * @date 2019-07-01
  */
-@Api(tags = "阿里云OSS服务接口")
+@Schema(title = "阿里云OSS服务接口")
 @RequestMapping("/oss")
 @RestController
 public class AliOssController {
@@ -34,11 +34,11 @@ public class AliOssController {
      *
      * @return
      */
-    @ApiOperation(value = "文件上传", notes = "文件上传")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form"),
-            @ApiImplicitParam(name = "prefix", value = "上传文件夹", paramType = "form")
-    })
+    @Schema(title = "文件上传", name = "文件上传")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form"),
+//            @ApiImplicitParam(name = "prefix", value = "上传文件夹", paramType = "form")
+//    })
     @PostMapping("/upload")
     @ResponseBody
     public ResultBody saveFile(@RequestParam("file") MultipartFile file, @RequestParam(value = "prefix") String prefix) {
@@ -70,10 +70,10 @@ public class AliOssController {
      *
      * @param name 文件名
      */
-    @ApiOperation(value = "删除文件", notes = "删除文件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", required = true, value = "文件名", paramType = "form")
-    })
+    @Schema(title = "删除文件", name = "删除文件")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "name", required = true, value = "文件名", paramType = "form")
+//    })
     @PostMapping(value = "/delete")
     @ResponseBody
     public ResultBody deleteFile(@RequestParam(value = "name") String name) {
@@ -86,10 +86,10 @@ public class AliOssController {
     /**
      * 获取文件访问地址
      */
-    @ApiOperation(value = "获取文件访问地址", notes = "获取文件访问地址")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", required = true, value = "文件名", paramType = "form")
-    })
+    @Schema(title = "获取文件访问地址", name = "获取文件访问地址")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "name", required = true, value = "文件名", paramType = "form")
+//    })
     @GetMapping(value = "/url")
     @ResponseBody
     public ResultBody getFileUrl(@RequestParam(value = "name") String name) {

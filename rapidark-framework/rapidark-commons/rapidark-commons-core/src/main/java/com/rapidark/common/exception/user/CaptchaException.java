@@ -3,7 +3,7 @@ package com.rapidark.common.exception.user;
 /**
  * 验证码错误异常类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class CaptchaException extends UserException
 {

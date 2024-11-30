@@ -30,7 +30,13 @@
             <groupId>com.rapidark.platform</groupId>
             <version>${revision}</version>
         </dependency>
-    </dependencies>
+        <dependency>
+            <groupId>com.rapidark.platform</groupId>
+            <artifactId>rapidark-upms-api</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+	</dependencies>
     <build>
         <!-- 打包名称 -->
         <finalName>${project.artifactId}</finalName>

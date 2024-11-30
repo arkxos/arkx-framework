@@ -1,15 +1,15 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.entity.GroovyScript;
+import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
+import com.rapidark.cloud.platform.gateway.framework.service.GroovyScriptService;
 import com.rapidark.framework.common.model.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.entity.GroovyScript;
-import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
-import com.rapidark.cloud.gateway.manage.service.GroovyScriptService;
 import com.rapidark.framework.common.utils.Constants;
 
 import javax.annotation.Resource;

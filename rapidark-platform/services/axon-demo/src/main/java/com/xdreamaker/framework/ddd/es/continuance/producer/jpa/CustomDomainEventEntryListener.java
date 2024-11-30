@@ -1,6 +1,7 @@
 package com.xdreamaker.framework.ddd.es.continuance.producer.jpa;
 
 import com.xdreamaker.framework.ddd.stream.ContractPublisher;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,6 @@ import org.springframework.transaction.support.TransactionSynchronizationAdapter
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import jakarta.persistence.PostPersist;
-import javax.transaction.Transactional;
 import java.util.concurrent.CompletableFuture;
 
 /**

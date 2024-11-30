@@ -1,13 +1,13 @@
 package com.rapidark.cloud.msg.server.service;
 
 import com.rapidark.cloud.msg.client.model.EmailMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.util.Map;
 

@@ -1,13 +1,14 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.bean.CountReq;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.service.CountService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.bean.CountReq;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.manage.service.CountService;
 import com.rapidark.framework.common.model.ResultBody;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/balanced/request", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody balancedRequest(@RequestBody CountReq countReq) {
+    public ResponseResult balancedRequest(@RequestBody CountReq countReq) {
         return countService.count(countReq, true);
     }
 
@@ -41,7 +42,7 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/request", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody request(@RequestBody CountReq countReq) {
+    public ResponseResult request(@RequestBody CountReq countReq) {
         return countService.count(countReq, false);
     }
 
@@ -51,7 +52,7 @@ public class CountRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/route/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody routePageList(@RequestBody CountReq countReq) {
+    public ResponseResult routePageList(@RequestBody CountReq countReq) {
         Assert.notNull(countReq, "未获取到对象");
         int currentPage = getCurrentPage(countReq.getCurrentPage());
         int pageSize = getPageSize(countReq.getPageSize());

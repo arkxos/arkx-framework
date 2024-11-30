@@ -12,10 +12,10 @@ import com.bsd.org.server.service.DepartmentService;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * @author lrx
  * @date 2019-08-14
  */
-@Api(value = "部门信息", tags = "部门信息")
+@Schema(title = "部门信息", name = "部门信息")
 @RestController
 @RequestMapping("department")
 public class DepartmentController {
@@ -42,17 +42,17 @@ public class DepartmentController {
      *
      * @return
      */
-    @ApiOperation(value = "分页获取部门数据", notes = "分页获取部门数据")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", value = "部门ID", paramType = "form"),
-            @ApiImplicitParam(name = "parentId", value = "上级部门ID", paramType = "form"),
-            @ApiImplicitParam(name = "departmentCode", value = "部门代码", paramType = "form"),
-            @ApiImplicitParam(name = "departmentName", value = "部门名称", paramType = "form"),
-            @ApiImplicitParam(name = "status", value = "状态:0-禁用 1-启用", paramType = "form"),
-            @ApiImplicitParam(name = "companyId", value = "所属企业ID", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
-    })
+    @Schema(title = "分页获取部门数据", name = "分页获取部门数据")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", value = "部门ID", paramType = "form"),
+//            @ApiImplicitParam(name = "parentId", value = "上级部门ID", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentCode", value = "部门代码", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentName", value = "部门名称", paramType = "form"),
+//            @ApiImplicitParam(name = "status", value = "状态:0-禁用 1-启用", paramType = "form"),
+//            @ApiImplicitParam(name = "companyId", value = "所属企业ID", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
+//    })
     @GetMapping(value = "/page")
     public ResultBody page(
             @RequestParam(value = "departmentId", required = false) Long departmentId,
@@ -78,11 +78,11 @@ public class DepartmentController {
     }
 
 
-    @ApiOperation(value = "获取所有部门select数据", notes = "获取所有部门select数据")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", value = "需要移除部门ID", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "companyId", value = "所属企业ID", required = true, paramType = "form")
-    })
+    @Schema(title = "获取所有部门select数据", name = "获取所有部门select数据")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", value = "需要移除部门ID", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "companyId", value = "所属企业ID", required = true, paramType = "form")
+//    })
     @GetMapping(value = "/select/list")
     public ResultBody selectDepartmentList(@RequestParam(value = "departmentId", required = false) Long departmentId,
                                            @RequestParam(value = "companyId", required = true) Long companyId) {
@@ -97,10 +97,10 @@ public class DepartmentController {
     /**
      * 查找部门信息
      */
-    @ApiOperation(value = "查找部门信息", notes = "根据ID查找部门信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form")
-    })
+    @Schema(title = "查找部门信息", name = "根据ID查找部门信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form")
+//    })
     @GetMapping("/get")
     public ResultBody get(@RequestParam("departmentId") Long departmentId) {
         Department department = departmentService.getById(departmentId);
@@ -116,10 +116,10 @@ public class DepartmentController {
      *
      * @return
      */
-    @ApiOperation(value = "获取所有部门信息", notes = "获取所有部门信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", value = "所属企业ID", required = true, paramType = "form")
-    })
+    @Schema(title = "获取所有部门信息", name = "获取所有部门信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", value = "所属企业ID", required = true, paramType = "form")
+//    })
     @GetMapping("/list")
     public ResultBody list(@RequestParam(value = "companyId", required = true) Long companyId) {
         DepartmentVO departmentVO = new DepartmentVO();
@@ -132,7 +132,7 @@ public class DepartmentController {
      *
      * @return
      */
-    @ApiOperation(value = "获取所有启用的部门信息", notes = "获取所有启用的部门信息")
+    @Schema(title = "获取所有启用的部门信息", name = "获取所有启用的部门信息")
     @GetMapping("/availableList")
     public ResultBody availableList() {
         return ResultBody.ok(departmentService.availableList());
@@ -145,10 +145,10 @@ public class DepartmentController {
      * @param departmentId
      * @return
      */
-    @ApiOperation(value = "获取所有下级部门", notes = "根据ID获取所有下级部门")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
-    })
+    @Schema(title = "获取所有下级部门", name = "根据ID获取所有下级部门")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
+//    })
     @GetMapping("/children")
     public ResultBody children(@RequestParam("departmentId") Long departmentId) {
         return ResultBody.ok(departmentService.getChildrenDepartments(departmentId, null));
@@ -160,10 +160,10 @@ public class DepartmentController {
      * @param departmentId
      * @return
      */
-    @ApiOperation(value = "获取所有启用的下级部门", notes = "根据ID获取所有启用的下级部门")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form")
-    })
+    @Schema(title = "获取所有启用的下级部门", name = "根据ID获取所有启用的下级部门")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form")
+//    })
     @GetMapping("/availableChildrens")
     public ResultBody availableChildrens(@RequestParam("departmentId") Long departmentId) {
         return ResultBody.ok(departmentService.getChildrenDepartments(departmentId, true));
@@ -175,16 +175,16 @@ public class DepartmentController {
      *
      * @return
      */
-    @ApiOperation(value = "添加部门", notes = "添加部门")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "parentId", required = false, value = "上级部门ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "departmentCode", required = true, value = "部门代码", example = "test", paramType = "form"),
-            @ApiImplicitParam(name = "departmentName", required = true, value = "部门名称", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "level", required = true, value = "部门级别", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "companyId", required = true, value = "所属企业ID", example = "1173825172121944065", paramType = "form")
-    })
+    @Schema(title = "添加部门", name = "添加部门")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "parentId", required = false, value = "上级部门ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentCode", required = true, value = "部门代码", example = "test", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentName", required = true, value = "部门名称", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "level", required = true, value = "部门级别", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "companyId", required = true, value = "所属企业ID", example = "1173825172121944065", paramType = "form")
+//    })
     @PostMapping("/add")
     public ResultBody add(
             @RequestParam(value = "parentId", required = false) Long parentId,
@@ -218,17 +218,17 @@ public class DepartmentController {
      *
      * @return
      */
-    @ApiOperation(value = "编辑部门", notes = "编辑部门")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", example = "1162211202827141121", paramType = "form"),
-            @ApiImplicitParam(name = "parentId", required = false, value = "上级部门ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "departmentCode", required = true, value = "部门代码", example = "test", paramType = "form"),
-            @ApiImplicitParam(name = "departmentName", required = true, value = "部门名称", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "level", required = true, value = "部门级别", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "companyId", required = true, value = "所属企业ID", example = "1173825172121944065", paramType = "form")
-    })
+    @Schema(title = "编辑部门", name = "编辑部门")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", example = "1162211202827141121", paramType = "form"),
+//            @ApiImplicitParam(name = "parentId", required = false, value = "上级部门ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentCode", required = true, value = "部门代码", example = "test", paramType = "form"),
+//            @ApiImplicitParam(name = "departmentName", required = true, value = "部门名称", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "level", required = true, value = "部门级别", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "seq", required = false, value = "显示顺序", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = false, value = "状态:0-禁用 1-启用", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "companyId", required = true, value = "所属企业ID", example = "1173825172121944065", paramType = "form")
+//    })
     @PostMapping("/update")
     public ResultBody update(
             @RequestParam(value = "departmentId") Long departmentId,
@@ -265,11 +265,11 @@ public class DepartmentController {
      *
      * @return
      */
-    @ApiOperation(value = "禁用/启用部门信息", notes = "禁用/启用部门信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, value = "状态:0-禁用 1-启用", paramType = "form"),
-    })
+    @Schema(title = "禁用/启用部门信息", name = "禁用/启用部门信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = true, value = "状态:0-禁用 1-启用", paramType = "form"),
+//    })
     @PostMapping("/status")
     public ResultBody status(@RequestParam(value = "departmentId") Long departmentId, @RequestParam(value = "status") Boolean status) {
         departmentService.changeStatus(departmentId, status);
@@ -279,7 +279,7 @@ public class DepartmentController {
     }
 
 
-    @ApiOperation(value = "部门级别列表", notes = "部门级别列表")
+    @Schema(title = "部门级别列表", name = "部门级别列表")
     @PostMapping("/levels")
     public ResultBody levels() {
         JSONArray levelArray = new JSONArray();
@@ -300,7 +300,7 @@ public class DepartmentController {
      *
      * @return
      */
-    /*@ApiOperation(value = "删除部门", notes = "根据部门ID删除部门")
+    /*@Schema(title = "删除部门", name = "根据部门ID删除部门")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", example = "1", paramType = "form")
     })

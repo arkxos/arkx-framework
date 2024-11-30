@@ -93,7 +93,13 @@
             <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-gateway-framework</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 
     <build>
         <!-- 打包名称 -->

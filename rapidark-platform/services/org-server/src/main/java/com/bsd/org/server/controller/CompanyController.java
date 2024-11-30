@@ -10,10 +10,10 @@ import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.framework.common.utils.StringUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,7 +30,7 @@ import java.util.List;
  * @date 2019-08-14
  */
 @Slf4j
-@Api(value = "企业信息", tags = "企业信息")
+@Schema(title = "企业信息", name = "企业信息")
 @RestController
 @RequestMapping("company")
 public class CompanyController {
@@ -42,18 +42,18 @@ public class CompanyController {
      *
      * @return
      */
-    @ApiOperation(value = "分页获取企业信息", notes = "分页获取企业信息")
+    @Schema(title = "分页获取企业信息", name = "分页获取企业信息")
     @GetMapping(value = "/page")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "companyId", value = "企业ID", paramType = "form"),
-            @ApiImplicitParam(name = "companyName", value = "企业全称", paramType = "form"),
-            @ApiImplicitParam(name = "companyNameEn", value = "企业英文名", paramType = "form"),
-            @ApiImplicitParam(name = "natureId", value = "企业性质ID", paramType = "form"),
-            @ApiImplicitParam(name = "industryId", value = "所属行业ID", paramType = "form"),
-            @ApiImplicitParam(name = "areaId", value = "所在区域ID", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页条数", paramType = "form")
-    })
+//    @ApiImplicitParams(value = {
+//            @ApiImplicitParam(name = "companyId", value = "企业ID", paramType = "form"),
+//            @ApiImplicitParam(name = "companyName", value = "企业全称", paramType = "form"),
+//            @ApiImplicitParam(name = "companyNameEn", value = "企业英文名", paramType = "form"),
+//            @ApiImplicitParam(name = "natureId", value = "企业性质ID", paramType = "form"),
+//            @ApiImplicitParam(name = "industryId", value = "所属行业ID", paramType = "form"),
+//            @ApiImplicitParam(name = "areaId", value = "所在区域ID", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页条数", paramType = "form")
+//    })
     public ResultBody page(Long companyId,
                            @RequestParam(value = "companyName", required = false) String companyName,
                            @RequestParam(value = "companyNameEn", required = false) String companyNameEn,
@@ -84,9 +84,9 @@ public class CompanyController {
      * @author zhangzz
      * @date 2019/12/6
      */
-    @ApiOperation(value = "获取所有企业信息", notes = "获取所有企业信息数据")
+    @Schema(title = "获取所有企业信息", name = "获取所有企业信息数据")
     @GetMapping(value = "/findAll")
-    @ApiImplicitParams(value = {})
+//    @ApiImplicitParams(value = {})
     public ResultBody findAll() {
         List<Company> companys = companyService.list();
         return ResultBody.ok(companys);
@@ -96,7 +96,7 @@ public class CompanyController {
     /**
      * 查找企业信息
      */
-    @ApiOperation(value = "查找企业信息", notes = "根据ID查找企业信息")
+    @Schema(title = "查找企业信息", name = "根据ID查找企业信息")
     @GetMapping("/get")
     public ResultBody get(@RequestParam(value = "companyId") Long companyId) {
         Company company = companyService.getById(companyId);
@@ -112,26 +112,26 @@ public class CompanyController {
      *
      * @return
      */
-    @ApiOperation(value = "添加企业信息", notes = "添加企业信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyName", required = true, value = "企业全称", example = "必胜道", paramType = "form"),
-            @ApiImplicitParam(name = "companyNameEn", required = false, value = "企业英文名", example = "BSD", paramType = "form"),
-            @ApiImplicitParam(name = "natureId", required = false, value = "企业性质ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "industryId", required = false, value = "所属行业ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "areaId", required = false, value = "所在区域ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "establishedTime", required = false, value = "成立时间", example = "2019-09-17 00:00:00", paramType = "form"),
-            @ApiImplicitParam(name = "registeredCapital", required = false, value = "注册资金", example = "1000000", paramType = "form"),
-            @ApiImplicitParam(name = "staffNum", required = false, value = "员工人数", example = "200", paramType = "form"),
-            @ApiImplicitParam(name = "website", required = false, value = "公司网址", example = "http://www.bsd.com", paramType = "form"),
-            @ApiImplicitParam(name = "profile", required = false, value = "公司介绍", example = "公司介绍", paramType = "form"),
-            @ApiImplicitParam(name = "contact", required = true, value = "联系人", example = "联系人", paramType = "form"),
-            @ApiImplicitParam(name = "phone", required = true, value = "电话", example = "13189947695", paramType = "form"),
-            @ApiImplicitParam(name = "fax", required = false, value = "传真", example = "fax", paramType = "form"),
-            @ApiImplicitParam(name = "email", required = false, value = "电子邮件", example = "13189947695@163.com", paramType = "form"),
-            @ApiImplicitParam(name = "address", required = false, value = "通信地址", example = "广东省深圳市", paramType = "form"),
-            @ApiImplicitParam(name = "postCode", required = false, value = "邮政编码", example = "518000", paramType = "form"),
-            @ApiImplicitParam(name = "logo", required = false, value = "企业Logo", example = "http://www.bsd.com/logo", paramType = "form"),
-    })
+    @Schema(title = "添加企业信息", name = "添加企业信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyName", required = true, value = "企业全称", example = "必胜道", paramType = "form"),
+//            @ApiImplicitParam(name = "companyNameEn", required = false, value = "企业英文名", example = "BSD", paramType = "form"),
+//            @ApiImplicitParam(name = "natureId", required = false, value = "企业性质ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "industryId", required = false, value = "所属行业ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "areaId", required = false, value = "所在区域ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "establishedTime", required = false, value = "成立时间", example = "2019-09-17 00:00:00", paramType = "form"),
+//            @ApiImplicitParam(name = "registeredCapital", required = false, value = "注册资金", example = "1000000", paramType = "form"),
+//            @ApiImplicitParam(name = "staffNum", required = false, value = "员工人数", example = "200", paramType = "form"),
+//            @ApiImplicitParam(name = "website", required = false, value = "公司网址", example = "http://www.bsd.com", paramType = "form"),
+//            @ApiImplicitParam(name = "profile", required = false, value = "公司介绍", example = "公司介绍", paramType = "form"),
+//            @ApiImplicitParam(name = "contact", required = true, value = "联系人", example = "联系人", paramType = "form"),
+//            @ApiImplicitParam(name = "phone", required = true, value = "电话", example = "13189947695", paramType = "form"),
+//            @ApiImplicitParam(name = "fax", required = false, value = "传真", example = "fax", paramType = "form"),
+//            @ApiImplicitParam(name = "email", required = false, value = "电子邮件", example = "13189947695@163.com", paramType = "form"),
+//            @ApiImplicitParam(name = "address", required = false, value = "通信地址", example = "广东省深圳市", paramType = "form"),
+//            @ApiImplicitParam(name = "postCode", required = false, value = "邮政编码", example = "518000", paramType = "form"),
+//            @ApiImplicitParam(name = "logo", required = false, value = "企业Logo", example = "http://www.bsd.com/logo", paramType = "form"),
+//    })
     @PostMapping("/add")
     public ResultBody add(
             @RequestParam(value = "companyName") String companyName,
@@ -190,27 +190,27 @@ public class CompanyController {
      *
      * @return
      */
-    @ApiOperation(value = "编辑企业信息", notes = "编辑企业信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", required = true, value = "企业ID", example = "1", paramType = "form"),
-            @ApiImplicitParam(name = "companyName", required = true, value = "企业全称", example = "必胜道", paramType = "form"),
-            @ApiImplicitParam(name = "companyNameEn", required = false, value = "企业英文名", example = "BSD", paramType = "form"),
-            @ApiImplicitParam(name = "natureId", required = false, value = "企业性质ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "industryId", required = false, value = "所属行业ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "areaId", required = false, value = "所在区域ID", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "establishedTime", required = false, value = "成立时间", example = "2019-09-17 00:00:00", paramType = "form"),
-            @ApiImplicitParam(name = "registeredCapital", required = false, value = "注册资金", example = "1000000", paramType = "form"),
-            @ApiImplicitParam(name = "staffNum", required = false, value = "员工人数", example = "200", paramType = "form"),
-            @ApiImplicitParam(name = "website", required = false, value = "公司网址", example = "http://www.bsd.com", paramType = "form"),
-            @ApiImplicitParam(name = "profile", required = false, value = "公司介绍", example = "公司介绍", paramType = "form"),
-            @ApiImplicitParam(name = "contact", required = true, value = "联系人", example = "联系人", paramType = "form"),
-            @ApiImplicitParam(name = "phone", required = true, value = "电话", example = "13189947695", paramType = "form"),
-            @ApiImplicitParam(name = "fax", required = false, value = "传真", example = "fax", paramType = "form"),
-            @ApiImplicitParam(name = "email", required = false, value = "电子邮件", example = "13189947695@163.com", paramType = "form"),
-            @ApiImplicitParam(name = "address", required = false, value = "通信地址", example = "广东省深圳市", paramType = "form"),
-            @ApiImplicitParam(name = "postCode", required = false, value = "邮政编码", example = "518000", paramType = "form"),
-            @ApiImplicitParam(name = "logo", required = false, value = "企业Logo", example = "http://www.bsd.com/logo", paramType = "form")
-    })
+    @Schema(title = "编辑企业信息", name = "编辑企业信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", required = true, value = "企业ID", example = "1", paramType = "form"),
+//            @ApiImplicitParam(name = "companyName", required = true, value = "企业全称", example = "必胜道", paramType = "form"),
+//            @ApiImplicitParam(name = "companyNameEn", required = false, value = "企业英文名", example = "BSD", paramType = "form"),
+//            @ApiImplicitParam(name = "natureId", required = false, value = "企业性质ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "industryId", required = false, value = "所属行业ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "areaId", required = false, value = "所在区域ID", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "establishedTime", required = false, value = "成立时间", example = "2019-09-17 00:00:00", paramType = "form"),
+//            @ApiImplicitParam(name = "registeredCapital", required = false, value = "注册资金", example = "1000000", paramType = "form"),
+//            @ApiImplicitParam(name = "staffNum", required = false, value = "员工人数", example = "200", paramType = "form"),
+//            @ApiImplicitParam(name = "website", required = false, value = "公司网址", example = "http://www.bsd.com", paramType = "form"),
+//            @ApiImplicitParam(name = "profile", required = false, value = "公司介绍", example = "公司介绍", paramType = "form"),
+//            @ApiImplicitParam(name = "contact", required = true, value = "联系人", example = "联系人", paramType = "form"),
+//            @ApiImplicitParam(name = "phone", required = true, value = "电话", example = "13189947695", paramType = "form"),
+//            @ApiImplicitParam(name = "fax", required = false, value = "传真", example = "fax", paramType = "form"),
+//            @ApiImplicitParam(name = "email", required = false, value = "电子邮件", example = "13189947695@163.com", paramType = "form"),
+//            @ApiImplicitParam(name = "address", required = false, value = "通信地址", example = "广东省深圳市", paramType = "form"),
+//            @ApiImplicitParam(name = "postCode", required = false, value = "邮政编码", example = "518000", paramType = "form"),
+//            @ApiImplicitParam(name = "logo", required = false, value = "企业Logo", example = "http://www.bsd.com/logo", paramType = "form")
+//    })
     @PostMapping("/update")
     public ResultBody update(
             @RequestParam(value = "companyId") Long companyId,
@@ -271,7 +271,7 @@ public class CompanyController {
     }
 
 
-    @ApiOperation(value = "获取公司部门菜单信息", notes = "获取公司部门菜单信息")
+    @Schema(title = "获取公司部门菜单信息", name = "获取公司部门菜单信息")
     @GetMapping("/get/menu")
     public ResultBody<List<CompanyMenuVO>> getMenu() {
         List<CompanyMenuVO> menus = companyService.getAllCompanyMenu();
@@ -284,7 +284,7 @@ public class CompanyController {
      *
      * @return
      */
-    /*@ApiOperation(value = "删除企业信息", notes = "根据企业ID删除企业信息")
+    /*@Schema(title = "删除企业信息", name = "根据企业ID删除企业信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "companyId", required = true, value = "企业ID", example = "1", paramType = "form")
     })

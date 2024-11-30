@@ -1,37 +1,37 @@
-//package com.rapidark.cloud.platform.gateway.actuator;
-//
-//import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
-//import com.rapidark.framework.common.model.ResultBody;
-//import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
-//import org.springframework.cloud.bus.endpoint.AbstractBusEndpoint;
-//import org.springframework.cloud.bus.event.Destination;
-//import org.springframework.context.ApplicationEventPublisher;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//
-///**
-// * 自定义网关监控端点
-// * @author darkness
-// * @date 2022/5/14 17:23
-// * @version 1.0
-// */
-//@WebEndpoint(id = "open")
-//public class ApiEndpoint extends AbstractBusEndpoint {
-//
-//    public ApiEndpoint(ApplicationEventPublisher context, String appId, Destination.Factory destinationFactory) {
-//        super(context, appId, destinationFactory);
-//    }
-//
-//    /**
-//     * 支持灰度发布
-//     * /actuator/open/refresh?destination = customers：**
-//     *
-//     * @param destination
-//     */
-//    @PostMapping("/refresh")
-//    public ResultBody busRefreshWithDestination(@RequestParam(required = false) String destination) {
-//        this.publish(new RemoteRefreshRouteEvent(this, this.getInstanceId(), destination));
-//        return ResultBody.ok();
-//    }
-//
-//}
+package com.rapidark.cloud.platform.gateway.actuator;
+
+import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
+import com.rapidark.framework.common.model.ResultBody;
+import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
+import org.springframework.cloud.bus.endpoint.AbstractBusEndpoint;
+import org.springframework.cloud.bus.event.Destination;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+/**
+ * 自定义网关监控端点
+ * @author darkness
+ * @date 2022/5/14 17:23
+ * @version 1.0
+ */
+@WebEndpoint(id = "open")
+public class ApiEndpoint extends AbstractBusEndpoint {
+
+    public ApiEndpoint(ApplicationEventPublisher context, String appId, Destination.Factory destinationFactory) {
+        super(context, appId, destinationFactory);
+    }
+
+    /**
+     * 支持灰度发布
+     * /actuator/open/refresh?destination = customers：**
+     *
+     * @param destination
+     */
+    @PostMapping("/refresh")
+    public ResultBody busRefreshWithDestination(@RequestParam(required = false) String destination) {
+        this.publish(new RemoteRefreshRouteEvent(this, this.getInstanceId(), destination));
+        return ResultBody.ok();
+    }
+
+}

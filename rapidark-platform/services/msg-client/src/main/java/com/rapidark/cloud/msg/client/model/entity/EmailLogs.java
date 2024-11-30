@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.framework.common.mybatis.base.entity.AbstractEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("msg_email_logs")
-@Schema(description = "EmailLogs对象", description = "邮件发送日志")
+@Schema(description = "EmailLogs对象", title = "邮件发送日志")
 public class EmailLogs extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
@@ -35,21 +35,21 @@ public class EmailLogs extends AbstractEntity {
 
     private String content;
 
-    @Schema(value = "附件路径")
+    @Schema(title = "附件路径")
     private String attachments;
 
-    @Schema(value = "发送次数")
+    @Schema(title = "发送次数")
     private Integer sendNums;
 
-    @Schema(value = "错误信息")
+    @Schema(title = "错误信息")
     private String error;
 
-    @Schema(value = "0-失败 1-成功")
+    @Schema(title = "0-失败 1-成功")
     private Integer result;
 
-    @Schema(value = "发送配置")
+    @Schema(title = "发送配置")
     private String config;
 
-    @Schema(value = "模板编号")
+    @Schema(title = "模板编号")
     private String tplCode;
 }

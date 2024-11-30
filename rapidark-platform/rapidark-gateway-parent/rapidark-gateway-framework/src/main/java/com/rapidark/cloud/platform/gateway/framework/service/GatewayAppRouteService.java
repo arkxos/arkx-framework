@@ -3,7 +3,7 @@ package com.rapidark.cloud.platform.gateway.framework.service;
 //import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 //import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 //import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.platform.gateway.framework.base.BaseService;
+import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteDataBean;
 import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRsp;
 import com.rapidark.cloud.platform.gateway.framework.repository.MonitorRepository;

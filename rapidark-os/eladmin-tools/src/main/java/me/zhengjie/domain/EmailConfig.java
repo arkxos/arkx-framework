@@ -15,7 +15,7 @@
  */
 package me.zhengjie.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Data;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -33,26 +33,26 @@ public class EmailConfig implements Serializable {
 
     @Id
     @Column(name = "config_id")
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
     private Long id;
 
     @NotBlank
-    @Schema(value = "邮件服务器SMTP地址")
+    @Schema(title = "邮件服务器SMTP地址")
     private String host;
 
     @NotBlank
-    @Schema(value = "邮件服务器 SMTP 端口")
+    @Schema(title = "邮件服务器 SMTP 端口")
     private String port;
 
     @NotBlank
-    @Schema(value = "发件者用户名")
+    @Schema(title = "发件者用户名")
     private String user;
 
     @NotBlank
-    @Schema(value = "密码")
+    @Schema(title = "密码")
     private String pass;
 
     @NotBlank
-    @Schema(value = "收件人")
+    @Schema(title = "收件人")
     private String fromUser;
 }

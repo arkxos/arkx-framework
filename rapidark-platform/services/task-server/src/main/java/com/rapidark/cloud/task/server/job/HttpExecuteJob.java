@@ -3,7 +3,7 @@ package com.rapidark.cloud.task.server.job;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.task.server.service.feign.GatewayServiceClient;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
@@ -58,7 +58,7 @@ public class HttpExecuteJob implements Job {
         String body = dataMap.getString("body");
         String url = getUrlByRoute(serviceId, path);
         HttpHeaders headers = new HttpHeaders();
-        HttpMethod httpMethod = HttpMethod.resolve(method.toUpperCase());
+        HttpMethod httpMethod = HttpMethod.valueOf(method.toUpperCase());
         HttpEntity requestEntity = null;
         headers.setContentType(MediaType.parseMediaType(contentType));
         if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)) {

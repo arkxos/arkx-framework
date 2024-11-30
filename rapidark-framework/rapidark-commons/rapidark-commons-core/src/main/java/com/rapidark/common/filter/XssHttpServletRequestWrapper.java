@@ -18,7 +18,7 @@ import com.rapidark.common.utils.html.EscapeUtil;
 /**
  * XSS过滤处理
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper
 {

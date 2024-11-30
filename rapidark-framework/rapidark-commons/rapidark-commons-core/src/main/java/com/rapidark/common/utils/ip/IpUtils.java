@@ -11,7 +11,7 @@ import com.rapidark.common.utils.html.EscapeUtil;
 /**
  * 获取IP方法
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class IpUtils
 {

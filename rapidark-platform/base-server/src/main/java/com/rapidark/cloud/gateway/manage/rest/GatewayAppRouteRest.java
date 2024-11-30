@@ -1,12 +1,18 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.bean.*;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
+import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
+import com.rapidark.cloud.platform.gateway.framework.service.GatewayAppRouteService;
+import com.rapidark.cloud.platform.gateway.framework.service.MonitorService;
+import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
-import com.rapidark.framework.common.utils.PageData;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.rapidark.framework.common.utils.PageResult;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -15,14 +21,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.bean.*;
-import com.rapidark.cloud.gateway.formwork.entity.Monitor;
-import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
-import com.rapidark.cloud.gateway.manage.service.MonitorService;
-import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
 import com.rapidark.framework.common.utils.Constants;
-import com.rapidark.cloud.gateway.formwork.util.RouteConstants;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ import java.util.List;
  * @Date 2020/05/14
  * @Version V1.0
  */
-@Api(tags = "网关路由")
+@Schema(title = "网关路由")
 @Slf4j
 @RestController
 @RequestMapping("/gatewayAppRoute")
@@ -61,7 +60,7 @@ public class GatewayAppRouteRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
-    public ResultBody add(@RequestBody RouteReq routeReq){
+    public ResultBody add(@RequestBody GatewayAppRouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
         gatewayAppRoute.setCreateTime(new Date());
@@ -78,7 +77,7 @@ public class GatewayAppRouteRest extends BaseRest {
      * @param id
      * @return
      */
-    @ApiOperation(value = "移除路由", notes = "移除路由")
+    @Schema(title = "移除路由", name = "移除路由")
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultBody delete(@RequestParam String id){
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
@@ -98,9 +97,9 @@ public class GatewayAppRouteRest extends BaseRest {
      * @param routeReq
      * @return
      */
-    @ApiOperation(value = "编辑路由", notes = "编辑路由")
+    @Schema(title = "编辑路由", name = "编辑路由")
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ResultBody update(@RequestBody RouteReq routeReq){
+    public ResultBody update(@RequestBody GatewayAppRouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         GatewayAppRoute gatewayAppRoute = toRoute(routeReq);
         this.validate(gatewayAppRoute);
@@ -116,13 +115,13 @@ public class GatewayAppRouteRest extends BaseRest {
     }
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody list(@RequestBody RouteReq routeReq){
+    public ResultBody list(@RequestBody GatewayAppRouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         return ResultBody.ok(gatewayAppRouteService.list(toRoute(routeReq)));
     }
 
     @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody pageList(@RequestBody RouteReq routeReq){
+    public ResultBody pageList(@RequestBody GatewayAppRouteReq routeReq){
         Assert.notNull(routeReq, "未获取到对象");
         int currentPage = getCurrentPage(routeReq.getCurrentPage());
         int pageSize = getPageSize(routeReq.getPageSize());
@@ -133,7 +132,7 @@ public class GatewayAppRouteRest extends BaseRest {
         if (StringUtils.isBlank(gatewayAppRoute.getStatus())){
             gatewayAppRoute.setStatus(null);
         }
-        PageData<GatewayAppRoute> data = gatewayAppRouteService.pageList(gatewayAppRoute, currentPage, pageSize);
+        PageResult<GatewayAppRoute> data = gatewayAppRouteService.pageList(gatewayAppRoute, currentPage, pageSize);
         return ResultBody.ok(data);
     }
 
@@ -186,11 +185,11 @@ public class GatewayAppRouteRest extends BaseRest {
 
         switch (gatewayAppRoute.getType()) {
             case BaseConstants.ROUTE_TYPE_URL:
-                gatewayAppRoute.setServiceId(null);
+//                gatewayAppRoute.setServiceId(null);
                 gatewayAppRoute.setUri(gatewayAppRoute.getUri().trim());
                 break;
             default:
-                gatewayAppRoute.setServiceId(gatewayAppRoute.getServiceId());
+//                gatewayAppRoute.setServiceId(gatewayAppRoute.getServiceId());
                 gatewayAppRoute.setUri(null);
         }
 
@@ -228,17 +227,17 @@ public class GatewayAppRouteRest extends BaseRest {
      * @param routeReq  前端对象
      * @return GatewayAppRoute
      */
-    private GatewayAppRoute toRoute(RouteReq routeReq){
+    private GatewayAppRoute toRoute(GatewayAppRouteReq routeReq){
         GatewayAppRoute gatewayAppRoute = new GatewayAppRoute();
-        GatewayAppRouteFormBean form = routeReq.getForm();
+        RouteFormBean form = routeReq.getForm();
         if (form == null){
             return gatewayAppRoute;
         }
         BeanUtils.copyProperties(form, gatewayAppRoute);
-        RouteFilterBean filter = routeReq.getFilter();
+		GatewayAppRouteFilterBean filter = routeReq.getFilter();
         RouteHystrixBean hystrix = routeReq.getHystrix();
         RouteLimiterBean limiter = routeReq.getLimiter();
-        RouteAccessBean access = routeReq.getAccess();
+		GatewayAppRouteAccessBean access = routeReq.getAccess();
         //添加过滤器
         if (filter != null) {
             List<String> routeFilterList = new ArrayList<>();
@@ -251,7 +250,7 @@ public class GatewayAppRouteRest extends BaseRest {
             if (filter.getTokenChecked()) {
                 routeFilterList.add(RouteConstants.TOKEN);
             }
-            gatewayAppRoute.setFilterGatewaName(StringUtils.join(routeFilterList.toArray(), Constants.SEPARATOR_SIGN));
+            gatewayAppRoute.setFilterGatewayName(StringUtils.join(routeFilterList.toArray(), Constants.SEPARATOR_SIGN));
         }
 
         //添加熔断器
@@ -301,12 +300,12 @@ public class GatewayAppRouteRest extends BaseRest {
      * @param routeReq
      * @return
      */
-    private Monitor toMonitor(RouteReq routeReq){
+    private Monitor toMonitor(GatewayAppRouteReq routeReq){
         MonitorBean bean = routeReq.getMonitor();
         if (bean != null){
             // checked为true，则表示启用监控配置
             if (bean.getChecked()){
-                GatewayAppRouteFormBean form = routeReq.getForm();
+                RouteFormBean form = routeReq.getForm();
                 Monitor monitor = new Monitor();
                 BeanUtils.copyProperties(form.getMonitor(), monitor);
                 monitor.setStatus(Constants.YES);

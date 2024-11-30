@@ -3,7 +3,7 @@ package com.rapidark.common.exception;
 /**
  * 演示模式异常
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class DemoModeException extends RuntimeException
 {

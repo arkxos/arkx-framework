@@ -10,10 +10,10 @@ import com.rapidark.cloud.task.client.model.entity.SchedulerJobLogs;
 import com.rapidark.cloud.task.server.job.HttpExecuteJob;
 import com.rapidark.cloud.task.server.service.SchedulerJobLogsService;
 import com.rapidark.cloud.task.server.service.SchedulerService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,7 +32,7 @@ import java.util.Map;
  * @date: 2019/3/29 14:12
  * @description:
  */
-@Api(tags = "任务调度服务")
+@Schema(title = "任务调度服务")
 @RestController
 public class SchedulerController {
     @Autowired
@@ -46,7 +46,7 @@ public class SchedulerController {
      * @param map
      * @return
      */
-    @ApiOperation(value = "获取任务执行日志列表", notes = "获取任务执行日志列表")
+    @Schema(title = "获取任务执行日志列表", name = "获取任务执行日志列表")
     @GetMapping(value = "/job/logs")
     public ResultBody<IPage<SchedulerJobLogs>> getJobLogList(@RequestParam(required = false) Map map) {
         IPage<SchedulerJobLogs> result = schedulerJobLogsService.findListPage(new PageParams(map));
@@ -58,7 +58,7 @@ public class SchedulerController {
      *
      * @return
      */
-    @ApiOperation(value = "获取任务列表", notes = "获取任务列表")
+    @Schema(title = "获取任务列表", name = "获取任务列表")
     @GetMapping(value = "/job")
     public ResultBody<IPage<TaskInfo>> getJobList(@RequestParam(required = false) Map map) {
         List<TaskInfo> list = schedulerService.getJobList();
@@ -86,22 +86,22 @@ public class SchedulerController {
      * @param alarmMail      告警邮箱
      * @return
      */
-    @ApiOperation(value = "添加远程调度任务", notes = "添加远程调度任务")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "jobDescription", value = "任务描述", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "jobType", value = "任务类型", required = true, allowableValues = "simple,cron", paramType = "form"),
-            @ApiImplicitParam(name = "cron", value = "cron表达式", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "startTime", value = "开始时间", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "repeatInterval", value = "间隔时间", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "repeatCount", value = "重试次数", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "serviceId", value = "服务名", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "path", value = "请求路径", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "method", value = "请求类型", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "contentType", value = "响应类型", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "alarmMail", value = "告警邮箱", required = false, paramType = "form"),
-    })
+    @Schema(title = "添加远程调度任务", name = "添加远程调度任务")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "jobDescription", value = "任务描述", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "jobType", value = "任务类型", required = true, allowableValues = "simple,cron", paramType = "form"),
+//            @ApiImplicitParam(name = "cron", value = "cron表达式", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "startTime", value = "开始时间", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "repeatInterval", value = "间隔时间", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "repeatCount", value = "重试次数", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "serviceId", value = "服务名", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "path", value = "请求路径", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "method", value = "请求类型", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "contentType", value = "响应类型", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "alarmMail", value = "告警邮箱", required = false, paramType = "form"),
+//    })
     @PostMapping("/job/add/http")
     public ResultBody addHttpJob(@RequestParam(name = "jobName") String jobName,
                                  @RequestParam(name = "jobDescription") String jobDescription,
@@ -161,22 +161,22 @@ public class SchedulerController {
      * @param alarmMail      告警邮箱
      * @return
      */
-    @ApiOperation(value = "修改远程调度任务", notes = "修改远程调度任务")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "jobDescription", value = "任务描述", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "jobType", value = "任务类型", required = true, allowableValues = "simple,cron", paramType = "form"),
-            @ApiImplicitParam(name = "cron", value = "cron表达式", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "startTime", value = "开始时间", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "repeatInterval", value = "间隔时间", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "repeatCount", value = "重试次数", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "serviceId", value = "服务名", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "path", value = "请求路径", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "method", value = "请求类型", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "contentType", value = "响应类型", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "alarmMail", value = "告警邮箱", required = false, paramType = "form"),
-    })
+    @Schema(title = "修改远程调度任务", name = "修改远程调度任务")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "jobDescription", value = "任务描述", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "jobType", value = "任务类型", required = true, allowableValues = "simple,cron", paramType = "form"),
+//            @ApiImplicitParam(name = "cron", value = "cron表达式", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "startTime", value = "开始时间", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "repeatInterval", value = "间隔时间", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "repeatCount", value = "重试次数", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "serviceId", value = "服务名", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "path", value = "请求路径", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "method", value = "请求类型", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "contentType", value = "响应类型", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "alarmMail", value = "告警邮箱", required = false, paramType = "form"),
+//    })
     @PostMapping("/job/update/http")
     public ResultBody updateHttpJob(@RequestParam(name = "jobName") String jobName,
                                     @RequestParam(name = "jobDescription") String jobDescription,
@@ -225,10 +225,10 @@ public class SchedulerController {
      * @param jobName 任务名称
      * @return
      */
-    @ApiOperation(value = "删除任务", notes = "删除任务")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
-    })
+    @Schema(title = "删除任务", name = "删除任务")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
+//    })
     @PostMapping("/job/delete")
     public ResultBody deleteJob(@RequestParam(name = "jobName") String jobName) {
         schedulerService.deleteJob(jobName, Scheduler.DEFAULT_GROUP);
@@ -241,10 +241,10 @@ public class SchedulerController {
      * @param jobName 任务名称
      * @return
      */
-    @ApiOperation(value = "暂停任务", notes = "暂停任务")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
-    })
+    @Schema(title = "暂停任务", name = "暂停任务")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
+//    })
     @PostMapping("/job/pause")
     public ResultBody pauseJob(@RequestParam(name = "jobName") String jobName) {
         schedulerService.pauseJob(jobName, Scheduler.DEFAULT_GROUP);
@@ -258,10 +258,10 @@ public class SchedulerController {
      * @param jobName 任务名称
      * @return
      */
-    @ApiOperation(value = "恢复任务", notes = "恢复任务")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
-    })
+    @Schema(title = "恢复任务", name = "恢复任务")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
+//    })
     @PostMapping("/job/resume")
     public ResultBody resumeJob(@RequestParam(name = "jobName") String jobName) {
         schedulerService.resumeJob(jobName, Scheduler.DEFAULT_GROUP);

@@ -17,7 +17,7 @@ package me.zhengjie.modules.system.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,55 +41,55 @@ public class Menu extends AbstractIdLongEntity implements Serializable {
     @Id
     @Column(name = "menu_id")
     @NotNull(groups = {Update.class})
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JSONField(serialize = false)
     @ManyToMany(mappedBy = "menus")
-    @Schema(value = "菜单角色")
+    @Schema(title = "菜单角色")
     private Set<Role> roles;
 
-    @Schema(value = "菜单标题")
+    @Schema(title = "菜单标题")
     private String title;
 
     @Column(name = "name")
-    @Schema(value = "菜单组件名称")
+    @Schema(title = "菜单组件名称")
     private String componentName;
 
-    @Schema(value = "排序")
+    @Schema(title = "排序")
     private Integer menuSort = 999;
 
-    @Schema(value = "组件路径")
+    @Schema(title = "组件路径")
     private String component;
 
-    @Schema(value = "路由地址")
+    @Schema(title = "路由地址")
     private String path;
 
-    @Schema(value = "菜单类型，目录、菜单、按钮")
+    @Schema(title = "菜单类型，目录、菜单、按钮")
     private Integer type;
 
-    @Schema(value = "权限标识")
+    @Schema(title = "权限标识")
     private String permission;
 
-    @Schema(value = "菜单图标")
+    @Schema(title = "菜单图标")
     private String icon;
 
     @Column(columnDefinition = "bit(1) default 0")
-    @Schema(value = "缓存")
+    @Schema(title = "缓存")
     private Boolean cache;
 
     @Column(columnDefinition = "bit(1) default 0")
-    @Schema(value = "是否隐藏")
+    @Schema(title = "是否隐藏")
     private Boolean hidden;
 
-    @Schema(value = "上级菜单")
+    @Schema(title = "上级菜单")
     private Long pid;
 
-    @Schema(value = "子节点数目", hidden = true)
+    @Schema(title = "子节点数目", hidden = true)
     private Integer subCount = 0;
 
-    @Schema(value = "外链菜单")
+    @Schema(title = "外链菜单")
     private Boolean iFrame;
 
     @Override

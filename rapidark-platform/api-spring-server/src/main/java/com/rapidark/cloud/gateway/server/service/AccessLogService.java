@@ -5,7 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
-import com.rapidark.cloud.gateway.server.util.ReactiveWebUtils;
+
+import com.rapidark.cloud.platform.gateway.util.ReactiveWebUtils;
 import com.rapidark.framework.common.constants.QueueConstants;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.cloud.gateway.server.filter.context.GatewayContext;
@@ -79,7 +80,7 @@ public class AccessLogService {
             Route route = exchange.getAttribute(GATEWAY_ROUTE_ATTR);
             int httpStatus = response.getStatusCode().value();
             String requestPath = request.getURI().getPath();
-            String method = request.getMethodValue();
+            String method = request.getMethod().name();
             Map<String, String> headers = request.getHeaders().toSingleValueMap();
             Map<String, String> data = Maps.newHashMap();
             GatewayContext gatewayContext = exchange.getAttribute(GatewayContext.CACHE_GATEWAY_CONTEXT);

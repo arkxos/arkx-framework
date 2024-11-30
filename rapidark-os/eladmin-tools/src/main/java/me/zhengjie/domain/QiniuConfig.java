@@ -15,7 +15,7 @@
  */
 package me.zhengjie.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Data;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -33,19 +33,19 @@ public class QiniuConfig implements Serializable {
 
     @Id
     @Column(name = "config_id")
-    @Schema(value = "ID")
+    @Schema(title = "ID")
     private Long id;
 
     @NotBlank
-    @Schema(value = "accessKey")
+    @Schema(title = "accessKey")
     private String accessKey;
 
     @NotBlank
-    @Schema(value = "secretKey")
+    @Schema(title = "secretKey")
     private String secretKey;
 
     @NotBlank
-    @Schema(value = "存储空间名称作为唯一的 Bucket 识别符")
+    @Schema(title = "存储空间名称作为唯一的 Bucket 识别符")
     private String bucket;
 
     /**
@@ -57,13 +57,13 @@ public class QiniuConfig implements Serializable {
      * 东南亚	Zone.zoneAs0()
      */
     @NotBlank
-    @Schema(value = "Zone表示与机房的对应关系")
+    @Schema(title = "Zone表示与机房的对应关系")
     private String zone;
 
     @NotBlank
-    @Schema(value = "外链域名，可自定义，需在七牛云绑定")
+    @Schema(title = "外链域名，可自定义，需在七牛云绑定")
     private String host;
 
-    @Schema(value = "空间类型：公开/私有")
+    @Schema(title = "空间类型：公开/私有")
     private String type = "公开";
 }

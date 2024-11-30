@@ -1,9 +1,17 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
-import com.rapidark.cloud.gateway.formwork.util.*;
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.bean.BalancedReq;
+import com.rapidark.cloud.platform.gateway.framework.bean.BalancedRsp;
+import com.rapidark.cloud.platform.gateway.framework.entity.Balanced;
+import com.rapidark.cloud.platform.gateway.framework.entity.LoadServer;
+import com.rapidark.cloud.platform.gateway.framework.service.BalancedService;
+import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
+import com.rapidark.cloud.platform.gateway.framework.service.LoadServerService;
+import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.Constants;
-import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -12,14 +20,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.bean.BalancedReq;
-import com.rapidark.cloud.gateway.formwork.bean.BalancedRsp;
-import com.rapidark.cloud.gateway.formwork.entity.Balanced;
-import com.rapidark.cloud.gateway.formwork.entity.LoadServer;
-import com.rapidark.cloud.gateway.manage.service.BalancedService;
-import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
-import com.rapidark.cloud.gateway.manage.service.LoadServerService;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -169,7 +169,7 @@ public class BalancedRest extends BaseRest {
         }
         int currentPage = getCurrentPage(balancedReq.getCurrentPage());
         int pageSize = getPageSize(balancedReq.getPageSize());
-        PageData<Balanced> data = balancedService.pageList(balanced, currentPage, pageSize);
+        PageResult<Balanced> data = balancedService.pageList(balanced, currentPage, pageSize);
         return ResultBody.ok(data);
     }
 

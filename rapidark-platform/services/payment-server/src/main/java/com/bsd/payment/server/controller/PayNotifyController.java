@@ -3,8 +3,8 @@ package com.bsd.payment.server.controller;
 import com.bsd.payment.server.constant.PayConstant;
 import com.bsd.payment.server.service.INotifyPayService;
 import com.bsd.payment.server.util.MyLog;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ import java.util.Map;
  * @Description: 接收处理支付结果通知
  * @date 2019-07-05
  */
-@Api(tags = "支付回调")
+@Schema(title = "支付回调")
 @RestController
 @RequestMapping("/notify")
 public class PayNotifyController {
@@ -41,7 +41,7 @@ public class PayNotifyController {
      * @throws ServletException
      * @throws IOException
      */
-    @ApiOperation(value = "支付宝移动支付后台通知响应", notes = "通知")
+    @Schema(title = "支付宝移动支付后台通知响应", name = "通知")
     @RequestMapping(value = "/alipay", method = RequestMethod.POST)
     @ResponseBody
     public String aliPayNotifyRes(HttpServletRequest request) throws ServletException, IOException {
@@ -84,7 +84,7 @@ public class PayNotifyController {
      * @throws ServletException
      * @throws IOException
      */
-    @ApiOperation(value = "微信支付后台通知响应", notes = "响应")
+    @Schema(title = "微信支付后台通知响应", name = "响应")
     @RequestMapping(value = "/wxpay", method = RequestMethod.POST)
     @ResponseBody
     public String wxPayNotifyRes(HttpServletRequest request) throws ServletException, IOException {

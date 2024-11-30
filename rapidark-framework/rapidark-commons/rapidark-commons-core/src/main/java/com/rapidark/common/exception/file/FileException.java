@@ -5,7 +5,7 @@ import com.rapidark.common.exception.BaseException;
 /**
  * 文件信息异常类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class FileException extends BaseException
 {

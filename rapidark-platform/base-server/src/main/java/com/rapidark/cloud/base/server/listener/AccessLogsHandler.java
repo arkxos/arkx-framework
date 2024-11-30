@@ -5,7 +5,6 @@ import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.framework.boot.ip2region.IP2regionTemplate;
 import com.rapidark.framework.common.constants.QueueConstants;
-import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import com.rapidark.framework.commons.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +12,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.annotation.Payload;
-
-import java.util.Map;
 
 /**
  * mq消息接收者

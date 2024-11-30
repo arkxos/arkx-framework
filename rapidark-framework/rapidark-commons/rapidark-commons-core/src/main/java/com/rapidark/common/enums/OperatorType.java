@@ -3,7 +3,7 @@ package com.rapidark.common.enums;
 /**
  * 操作人类别
  * 
- * @author rapidark
+ * @author Darkness
  */
 public enum OperatorType
 {

@@ -3,7 +3,7 @@ package com.rapidark.common.core.domain.model;
 /**
  * 用户登录对象
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class LoginBody
 {

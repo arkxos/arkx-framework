@@ -1,11 +1,18 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
-import com.rapidark.cloud.gateway.formwork.entity.ClientServerRegister;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.manage.service.ClientServerRegisterService;
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRegServer;
+import com.rapidark.cloud.platform.gateway.framework.bean.TokenReq;
+import com.rapidark.cloud.platform.gateway.framework.entity.Client;
+import com.rapidark.cloud.platform.gateway.framework.entity.ClientServerRegister;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.service.ClientServerRegisterService;
+import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
+import com.rapidark.cloud.platform.gateway.framework.util.JwtTokenUtils;
 import com.rapidark.framework.common.model.ResultBody;
-import com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer;
+
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.PageUtil;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import org.apache.commons.lang3.StringUtils;
@@ -14,11 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.bean.TokenReq;
-import com.rapidark.cloud.gateway.manage.service.CustomNacosConfigService;
 import com.rapidark.framework.common.utils.Constants;
-import com.rapidark.cloud.gateway.formwork.util.JwtTokenUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -118,8 +121,8 @@ public class ClientServerRegisterRest extends BaseRest {
     @GetMapping(value = "/regServer/serverPageList")
     public ResultBody serverPageList(String clientId, Pageable pageable) {
 //        Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象查询ID");
-        Page<GatewayAppRouteRegServer> data = clientServerRegisterService.serverPageList(clientId, pageable);
-        return ResultBody.ok(PageUtil.toPageData(data));
+        PageResult<GatewayAppRouteRegServer> data = clientServerRegisterService.serverPageList(clientId, pageable);
+        return ResultBody.ok(data);
     }
 
     /**
@@ -134,7 +137,7 @@ public class ClientServerRegisterRest extends BaseRest {
 //        regServer.setRouteId(regServerReq.getRouteId());
 //        int currentPage = getCurrentPage(regServerReq.getCurrentPage());
 //        int pageSize = getPageSize(regServerReq.getPageSize());
-        Page<Map<String, Object>> data = clientServerRegisterService.clientPageList(routeId, pageable);
+        PageResult<Map<String, Object>> data = clientServerRegisterService.clientPageList(routeId, pageable);
         return ResultBody.ok(data);
     }
 
@@ -262,7 +265,7 @@ public class ClientServerRegisterRest extends BaseRest {
 //        Assert.isTrue(StringUtils.isNotBlank(routeId), "未获取路由服务ID");
 //        int currentPage = getCurrentPage(regServerReq.getCurrentPage());
 //        int pageSize = getPageSize(regServerReq.getPageSize());
-        Page<OpenApp> data = clientServerRegisterService.notRegClientPageList(routeId, pageable);
+		Page<Client> data = clientServerRegisterService.notRegClientPageList(routeId, pageable);
         return ResultBody.ok(data);
     }
 

@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.framework.common.mybatis.base.entity.AbstractEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,28 +20,28 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("msg_email_config")
-@Schema(description = "EmailConfig对象", description = "邮件发送配置")
+@Schema(description = "EmailConfig对象", title = "邮件发送配置")
 public class EmailConfig extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "config_id", type = IdType.ASSIGN_ID)
     private Long configId;
 
-    @Schema(value = "配置名称")
+    @Schema(title = "配置名称")
     private String name;
 
-    @Schema(value = "发件服务器域名")
+    @Schema(title = "发件服务器域名")
     private String smtpHost;
 
-    @Schema(value = "发件服务器账户")
+    @Schema(title = "发件服务器账户")
     private String smtpUsername;
 
-    @Schema(value = "发件服务器密码")
+    @Schema(title = "发件服务器密码")
     private String smtpPassword;
 
-    @Schema(value = "保留数据0-否 1-是 不允许删除")
+    @Schema(title = "保留数据0-否 1-是 不允许删除")
     private Integer isPersist;
 
-    @Schema(value = "是否为默认 0-否 1-是 ")
+    @Schema(title = "是否为默认 0-否 1-是 ")
     private Integer isDefault;
 }

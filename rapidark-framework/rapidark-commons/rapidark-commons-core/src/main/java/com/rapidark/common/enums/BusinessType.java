@@ -3,7 +3,7 @@ package com.rapidark.common.enums;
 /**
  * 业务操作类型
  * 
- * @author rapidark
+ * @author Darkness
  */
 public enum BusinessType
 {

@@ -15,8 +15,8 @@
  */
 package me.zhengjie.modules.mnt.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import me.zhengjie.modules.mnt.domain.App;
@@ -38,20 +38,20 @@ import java.util.Set;
 */
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "运维：应用管理")
+@Schema(title = "运维：应用管理")
 @RequestMapping("/api/app")
 public class AppController {
 
     private final AppService appService;
 
-    @ApiOperation("导出应用数据")
+    @Schema(title = "导出应用数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('app:list')")
     public void download(HttpServletResponse response, AppQueryCriteria criteria) throws IOException {
         appService.download(appService.queryAll(criteria), response);
     }
 
-    @ApiOperation(value = "查询应用")
+    @Schema(title = "查询应用")
     @GetMapping
 	@PreAuthorize("@el.check('app:list')")
     public ResponseEntity<Object> query(AppQueryCriteria criteria, Pageable pageable){
@@ -59,7 +59,7 @@ public class AppController {
     }
 
     @Log("新增应用")
-    @ApiOperation(value = "新增应用")
+    @Schema(title = "新增应用")
     @PostMapping
 	@PreAuthorize("@el.check('app:add')")
     public ResponseEntity<Object> create(@Validated @RequestBody App resources){
@@ -68,7 +68,7 @@ public class AppController {
     }
 
     @Log("修改应用")
-    @ApiOperation(value = "修改应用")
+    @Schema(title = "修改应用")
     @PutMapping
 	@PreAuthorize("@el.check('app:edit')")
     public ResponseEntity<Object> update(@Validated @RequestBody App resources){
@@ -77,7 +77,7 @@ public class AppController {
     }
 
     @Log("删除应用")
-    @ApiOperation(value = "删除应用")
+    @Schema(title = "删除应用")
 	@DeleteMapping
 	@PreAuthorize("@el.check('app:del')")
     public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){

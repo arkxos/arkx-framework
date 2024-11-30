@@ -8,10 +8,8 @@ import com.bsd.payment.server.util.MyLog;
 import com.bsd.payment.server.util.ObjectValidUtil;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,7 +25,7 @@ import java.util.HashMap;
 /**
  * @author liujianhong
  */
-@Api(tags = "商户信息")
+@Schema(title = "商户信息")
 @RestController
 @RequestMapping("/mch_info")
 public class MchInfoController {
@@ -49,17 +47,17 @@ public class MchInfoController {
      * @param pageSize
      * @return ResultBody
      */
-    @ApiOperation(value = "商户列表", notes = "点击商户信息进入列表页面")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "name", value = "名称", paramType = "form"),
-            @ApiImplicitParam(name = "type", value = "类型", paramType = "form"),
-            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
-    })
+    @Schema(title = "商户列表", name = "点击商户信息进入列表页面")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "name", value = "名称", paramType = "form"),
+//            @ApiImplicitParam(name = "type", value = "类型", paramType = "form"),
+//            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
+//    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultBody<IPage<MchInfo>> list(@RequestParam(value = "mchId", required = false) String mchId,
                                            @RequestParam(value = "name", required = false) String name,
@@ -102,12 +100,12 @@ public class MchInfoController {
      * @param state 商户状态
      * @return
      */
-    @ApiOperation(value = "新增商户信息", notes = "新增商户信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "type", value = "类型", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", required = true, paramType = "form"),
-    })
+    @Schema(title = "新增商户信息", name = "新增商户信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "name", value = "名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "type", value = "类型", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", required = true, paramType = "form"),
+//    })
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResultBody<MchInfo> save(@RequestParam(value = "name") String name,
                                     @RequestParam(value = "type") String type,
@@ -137,13 +135,13 @@ public class MchInfoController {
      * @param state 商户状态
      * @return
      */
-    @ApiOperation(value = "修改商户信息", notes = "修改商户信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "name", value = "名称", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "type", value = "类型", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", required = true, paramType = "form"),
-    })
+    @Schema(title = "修改商户信息", name = "修改商户信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "name", value = "名称", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "type", value = "类型", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", required = true, paramType = "form"),
+//    })
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResultBody<MchInfo> update(@RequestParam(value = "mchId") String mchId,
                                       @RequestParam(value = "name") String name,
@@ -174,10 +172,10 @@ public class MchInfoController {
      * @param mchId
      * @return
      */
-    @ApiOperation(value = "查看商户详情", notes = "点击编辑按钮查看商户信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-    })
+    @Schema(title = "查看商户详情", name = "点击编辑按钮查看商户信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//    })
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultBody<MchInfo> detail(@RequestParam(value = "mchId") String mchId) {
         MchInfo mchinfo = mchInfoService.findMchInfo(mchId);

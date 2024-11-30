@@ -1,7 +1,7 @@
 package com.rapidark.cloud.msg.client.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,36 +10,36 @@ import java.util.Map;
 /**
  * @author woodev
  */
-@ApiModel("邮件消息")
+@Schema(title = "邮件消息")
 public class EmailMessage extends BaseMessage {
     /**
      * 收件人
      */
-    @Schema(value = "收件人")
+    @Schema(title = "收件人")
     private String[] to;
 
     /**
      * 抄送人
      */
-    @Schema(value = "抄送人")
+    @Schema(title = "抄送人")
     private String[] cc;
 
     /**
      * 邮件标题
      */
-    @Schema(value = "邮件标题")
+    @Schema(title = "邮件标题")
     private String subject;
 
     /**
      * 邮件内容
      */
-    @Schema(value = "邮件内容")
+    @Schema(title = "邮件内容")
     private String content;
 
     /**
      * 附件
      */
-    @Schema(value = "附件路径")
+    @Schema(title = "附件路径")
     private List<Map<String, String>> attachments = new ArrayList<>();
 
     public EmailMessage() {

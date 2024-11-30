@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rapidark.framework.common.mybatis.base.entity.AbstractEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,25 +20,25 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("msg_email_template")
-@Schema(description = "EmailTemplate对象", description = "邮件模板配置")
+@Schema(description = "EmailTemplate对象", title = "邮件模板配置")
 public class EmailTemplate extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "tpl_id", type = IdType.ASSIGN_ID)
     private Long tplId;
 
-    @Schema(value = "模板名称")
+    @Schema(title = "模板名称")
     private String name;
 
-    @Schema(value = "模板编码")
+    @Schema(title = "模板编码")
     private String code;
 
-    @Schema(value = "发送服务器配置")
+    @Schema(title = "发送服务器配置")
     private Long configId;
 
-    @Schema(value = "模板")
+    @Schema(title = "模板")
     private String template;
 
-    @Schema(value = "模板参数")
+    @Schema(title = "模板参数")
     private String params;
 }

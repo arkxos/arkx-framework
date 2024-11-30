@@ -1,6 +1,7 @@
 package com.bsd.org.server.model.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -14,27 +15,27 @@ public class DepartmentMenuVO {
     /**
      * 部门ID
      */
-    @Schema(value = "部门ID")
+    @Schema(title = "部门ID")
     private Long departmentId;
     /**
      * 部门编码
      */
-    @Schema(value = "部门编码")
+    @Schema(title = "部门编码")
     private String departmentCode;
     /**
      * 菜单title
      */
-    @Schema(value = "菜单title")
+    @Schema(title = "菜单title")
     private String title;
     /**
      * 部门名称
      */
-    @Schema(value = "部门名称")
+    @Schema(title = "部门名称")
     private String departmentName;
     /**
      * 下级部门
      */
-    @Schema(value = "下级部门")
+    @Schema(title = "下级部门")
     private List<DepartmentMenuVO> children;
 
     public String getTitle() {

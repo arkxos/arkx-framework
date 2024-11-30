@@ -17,7 +17,7 @@ package me.zhengjie.modules.system.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,30 +41,30 @@ public class Dept extends AbstractIdLongEntity implements Serializable {
     @Id
     @Column(name = "dept_id")
     @NotNull(groups = Update.class)
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JSONField(serialize = false)
     @ManyToMany(mappedBy = "depts")
-    @Schema(value = "角色")
+    @Schema(title = "角色")
     private Set<Role> roles;
 
-    @Schema(value = "排序")
+    @Schema(title = "排序")
     private Integer deptSort;
 
     @NotBlank
-    @Schema(value = "部门名称")
+    @Schema(title = "部门名称")
     private String name;
 
     @NotNull
-    @Schema(value = "是否启用")
+    @Schema(title = "是否启用")
     private Boolean enabled;
 
-    @Schema(value = "上级部门")
+    @Schema(title = "上级部门")
     private Long pid;
 
-    @Schema(value = "子节点数目", hidden = true)
+    @Schema(title = "子节点数目", hidden = true)
     private Integer subCount = 0;
 
     @Override

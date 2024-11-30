@@ -5,7 +5,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 转义和反转义工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class EscapeUtil
 {

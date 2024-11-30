@@ -5,7 +5,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 分页数据
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class PageDomain
 {

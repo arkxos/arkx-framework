@@ -10,14 +10,14 @@ import com.rapidark.cloud.gateway.manage.service.command.CreateDeveloperCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import com.rapidark.framework.common.utils.WebUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ import java.util.Map;
  * @date 2022/6/27 17:35
  * @version 1.0
  */
-@Api(tags = "系统用户-开发者管理")
+@Schema(title = "系统用户-开发者管理")
 @RestController
 public class BaseDeveloperController implements IBaseDeveloperServiceClient {
 
@@ -43,10 +43,10 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
     @Autowired
     private SystemIdGenerator systemIdGenerator;
 
-    @ApiOperation(value = "获取账号登录信息", notes = "仅限系统内部调用")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "path"),
-    })
+    @Schema(title = "获取账号登录信息", name = "仅限系统内部调用")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "path"),
+//    })
     @PostMapping("/developer/login")
     @Override
     public ResultBody<UserAccount> developerLogin(@RequestParam(value = "username") String username) {
@@ -58,20 +58,20 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
         return ResultBody.ok(account);
     }
 
-    @ApiOperation(value = "系统分页用户列表", notes = "系统分页用户列表")
+    @Schema(title = "系统分页用户列表", name = "系统分页用户列表")
     @GetMapping("/developer")
-    public ResultBody<PageData<BaseDeveloper>> getUserList(@RequestParam(required = false) Map map) {
-        PageData<BaseDeveloper> data = baseDeveloperService.findListPage(new PageParams(map));
+    public ResultBody<PageResult<BaseDeveloper>> getUserList(@RequestParam(required = false) Map map) {
+		PageResult<BaseDeveloper> data = baseDeveloperService.findListPage(new PageParams(map));
         return ResultBody.ok(data);
     }
 
-    @ApiOperation(value = "获取所有用户列表", notes = "获取所有用户列表")
+    @Schema(title = "获取所有用户列表", name = "获取所有用户列表")
     @GetMapping("/developer/all")
     public ResultBody<List<BaseDeveloper>> getUserAllList() {
         return ResultBody.ok(baseDeveloperService.findAllList());
     }
 
-    @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
+    @Schema(title = "添加系统用户", name = "添加系统用户")
     @PostMapping("/developer/add")
     public ResultBody<Long> addUser(@Valid @RequestBody CreateDeveloperCommand command) {
         BaseDeveloper developer = new BaseDeveloper();
@@ -91,21 +91,21 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
         return ResultBody.ok();
     }
 
-    @ApiOperation(value = "更新系统用户", notes = "更新系统用户")
+    @Schema(title = "更新系统用户", name = "更新系统用户")
     @PostMapping("/developer/update")
     public ResultBody updateUser(@Valid @RequestBody UpdateDeveloperCommand command) {
         baseDeveloperService.updateUser(command);
         return ResultBody.ok();
     }
 
-    @ApiOperation(value = "修改用户密码", notes = "修改用户密码")
+    @Schema(title = "修改用户密码", name = "修改用户密码")
     @PostMapping("/developer/update/password")
     public ResultBody updatePassword(@Valid @RequestBody ChangeDeveloperPasswordCommand command) {
         baseDeveloperService.updatePassword(command);
         return ResultBody.ok().msg("修改密码成功");
     }
 
-    @ApiOperation(value = "注册第三方系统登录账号", notes = "仅限系统内部调用")
+    @Schema(title = "注册第三方系统登录账号", name = "仅限系统内部调用")
     @PostMapping("/developer/add/thirdParty")
     @Override
     public ResultBody addDeveloperThirdParty(

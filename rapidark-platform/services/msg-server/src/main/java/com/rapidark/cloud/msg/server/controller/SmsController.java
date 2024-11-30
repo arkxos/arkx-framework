@@ -10,8 +10,8 @@ import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.cloud.msg.client.model.BatchSmsMessage;
 import com.rapidark.cloud.msg.client.model.SmsMessage;
 import com.rapidark.cloud.msg.client.service.ISmsClient;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author woodev
  */
 @RestController
-@Api(value = "短信", tags = "短信")
+@Schema(title = "短信", name = "短信")
 public class SmsController implements ISmsClient {
     @Autowired
     private MessageDispatcher dispatcher;
@@ -35,7 +35,7 @@ public class SmsController implements ISmsClient {
      *
      * @return
      */
-    @ApiOperation(value = "发送短信", notes = "发送短信")
+    @Schema(title = "发送短信", name = "发送短信")
     @PostMapping(value = "/sms")
     @Override
     public ResultBody<String> send(@RequestBody SmsMessage smsMessage) {
@@ -56,7 +56,7 @@ public class SmsController implements ISmsClient {
      * @param batchSmsMessage
      * @return
      */
-    @ApiOperation(value = "批量发送短信", notes = "SendBatchSms接口是短信批量发送接口，支持在一次请求中分别向多个不同的手机号码发送不同签名的短信")
+    @Schema(title = "批量发送短信", name = "SendBatchSms接口是短信批量发送接口，支持在一次请求中分别向多个不同的手机号码发送不同签名的短信")
     @PostMapping(value = "/sms/batch")
     public ResultBody sendBatchSms(BatchSmsMessage batchSmsMessage) {
         boolean isCheck = checkBatchSmsMessage(batchSmsMessage);

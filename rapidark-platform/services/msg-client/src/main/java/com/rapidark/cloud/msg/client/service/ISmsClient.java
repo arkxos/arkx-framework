@@ -2,7 +2,8 @@ package com.rapidark.cloud.msg.client.service;
 
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.cloud.msg.client.model.SmsMessage;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public interface ISmsClient {
      * @param message
      * @return
      */
-    @ApiOperation("发送短信")
+    @Schema(title = "发送短信")
     @PostMapping(value = "/sms")
     ResultBody<String> send(@RequestBody SmsMessage message);
 

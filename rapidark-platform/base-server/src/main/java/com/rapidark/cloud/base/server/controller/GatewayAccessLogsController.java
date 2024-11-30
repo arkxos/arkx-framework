@@ -4,8 +4,8 @@ import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.service.GatewayAccessLogsService;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @date: 2019/3/12 15:12
  * @description:
  */
-@Api(tags = "网关访问日志")
+@Schema(title = "网关访问日志")
 @RestController
 public class GatewayAccessLogsController {
 
@@ -33,7 +33,7 @@ public class GatewayAccessLogsController {
      *
      * @return
      */
-    @ApiOperation(value = "获取分页访问日志列表", notes = "获取分页访问日志列表")
+    @Schema(title = "获取分页访问日志列表", name = "获取分页访问日志列表")
     @GetMapping("/gateway/access/logs")
     public ResultBody<Page<GatewayAccessLogs>> getAccessLogListPage(@RequestParam(required = false) Map map) {
         return ResultBody.ok(gatewayAccessLogsService.findListPage(new PageParams(map)));

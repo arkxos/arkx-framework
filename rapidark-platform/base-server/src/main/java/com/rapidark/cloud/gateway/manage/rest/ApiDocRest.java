@@ -1,14 +1,14 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.entity.ApiDoc;
+import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
+import com.rapidark.cloud.platform.gateway.framework.service.ApiDocService;
+import com.rapidark.cloud.platform.gateway.framework.service.GatewayAppRouteService;
 import com.rapidark.framework.common.model.ResultBody;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.entity.ApiDoc;
-import com.rapidark.cloud.gateway.formwork.entity.GatewayAppRoute;
-import com.rapidark.cloud.gateway.manage.service.ApiDocService;
-import com.rapidark.cloud.gateway.manage.service.GatewayAppRouteService;
 
 import javax.annotation.Resource;
 
@@ -56,7 +56,7 @@ public class ApiDocRest extends BaseRest {
      * @return
      */
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultBody findById(@RequestParam Long id) {
+    public ResultBody findById(@RequestParam String id) {
 //        Assert.isTrue(StringUtils.isNotBlank(id), "未获取到请求ID");
         return ResultBody.ok(apiDocService.findById(id));
     }

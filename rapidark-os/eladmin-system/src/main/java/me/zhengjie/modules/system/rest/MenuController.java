@@ -16,8 +16,8 @@
 package me.zhengjie.modules.system.rest;
 
 import cn.hutool.core.collection.CollectionUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import com.rapidark.framework.common.exception.BadRequestException;
@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "系统：菜单管理")
+@Schema(title = "系统：菜单管理")
 @RequestMapping("/api/menus")
 public class MenuController {
 
@@ -52,7 +52,7 @@ public class MenuController {
     private final MenuMapper menuMapper;
     private static final String ENTITY_NAME = "menu";
 
-    @ApiOperation("导出菜单数据")
+    @Schema(title = "导出菜单数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('menu:list')")
     public void download(HttpServletResponse response, MenuQueryCriteria criteria) throws Exception {
@@ -60,21 +60,21 @@ public class MenuController {
     }
 
     @GetMapping(value = "/build")
-    @ApiOperation("获取前端所需菜单")
+    @Schema(title = "获取前端所需菜单")
     public ResponseEntity<Object> buildMenus(){
         List<MenuDto> menuDtoList = menuService.findByUser(SecurityUtils.getCurrentUserId());
         List<MenuDto> menuDtos = menuService.buildTree(menuDtoList);
         return new ResponseEntity<>(menuService.buildMenus(menuDtos),HttpStatus.OK);
     }
 
-    @ApiOperation("返回全部的菜单")
+    @Schema(title = "返回全部的菜单")
     @GetMapping(value = "/lazy")
     @PreAuthorize("@el.check('menu:list','roles:list')")
     public ResponseEntity<Object> query(@RequestParam Long pid){
         return new ResponseEntity<>(menuService.getMenus(pid),HttpStatus.OK);
     }
 
-    @ApiOperation("根据菜单ID返回所有子节点ID，包含自身ID")
+    @Schema(title = "根据菜单ID返回所有子节点ID，包含自身ID")
     @GetMapping(value = "/child")
     @PreAuthorize("@el.check('menu:list','roles:list')")
     public ResponseEntity<Object> child(@RequestParam Long id){
@@ -87,14 +87,14 @@ public class MenuController {
     }
 
     @GetMapping
-    @ApiOperation("查询菜单")
+    @Schema(title = "查询菜单")
     @PreAuthorize("@el.check('menu:list')")
     public ResponseEntity<Object> query(MenuQueryCriteria criteria) throws Exception {
         List<MenuDto> menuDtoList = menuService.queryAll(criteria, true);
         return new ResponseEntity<>(PageUtil.toPage(menuDtoList, menuDtoList.size()),HttpStatus.OK);
     }
 
-    @ApiOperation("查询菜单:根据ID获取同级与上级数据")
+    @Schema(title = "查询菜单:根据ID获取同级与上级数据")
     @PostMapping("/superior")
     @PreAuthorize("@el.check('menu:list')")
     public ResponseEntity<Object> getSuperior(@RequestBody List<Long> ids) {
@@ -110,7 +110,7 @@ public class MenuController {
     }
 
     @Log("新增菜单")
-    @ApiOperation("新增菜单")
+    @Schema(title = "新增菜单")
     @PostMapping
     @PreAuthorize("@el.check('menu:add')")
     public ResponseEntity<Object> create(@Validated @RequestBody Menu resources){
@@ -122,7 +122,7 @@ public class MenuController {
     }
 
     @Log("修改菜单")
-    @ApiOperation("修改菜单")
+    @Schema(title = "修改菜单")
     @PutMapping
     @PreAuthorize("@el.check('menu:edit')")
     public ResponseEntity<Object> update(@Validated(Menu.Update.class) @RequestBody Menu resources){
@@ -131,7 +131,7 @@ public class MenuController {
     }
 
     @Log("删除菜单")
-    @ApiOperation("删除菜单")
+    @Schema(title = "删除菜单")
     @DeleteMapping
     @PreAuthorize("@el.check('menu:del')")
     public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){

@@ -20,8 +20,8 @@ import com.rapidark.cloud.base.server.modules.system.service.DictDetailService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 //import com.rapidark.framework.commons.annotation.Log;
 import com.rapidark.framework.common.exception.BadRequestException;
@@ -44,21 +44,21 @@ import java.util.Map;
 */
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "系统：字典详情管理")
+@Schema(title = "系统：字典详情管理")
 @RequestMapping("/dictDetail")
 public class DictDetailController {
 
     private final DictDetailService dictDetailService;
     private static final String ENTITY_NAME = "dictDetail";
 
-    @ApiOperation("查询字典详情")
+    @Schema(title = "查询字典详情")
     @GetMapping
     public ResponseEntity<Object> query(DictDetailQueryCriteria criteria,
                                         @PageableDefault(sort = {"dictSort"}, direction = Sort.Direction.ASC) Pageable pageable){
         return new ResponseEntity<>(dictDetailService.queryAll(criteria,pageable),HttpStatus.OK);
     }
 
-    @ApiOperation("查询多个字典详情")
+    @Schema(title = "查询多个字典详情")
     @GetMapping(value = "/map")
     public ResponseEntity<Object> getDictDetailMaps(@RequestParam String dictName){
         String[] names = dictName.split("[,，]");
@@ -70,7 +70,7 @@ public class DictDetailController {
     }
 
 //    @Log("新增字典详情")
-    @ApiOperation("新增字典详情")
+    @Schema(title = "新增字典详情")
     @PostMapping
     @PreAuthorize("@el.check('dict:add')")
     public ResultBody<Object> create(@Validated @RequestBody DictDetail resources){
@@ -82,7 +82,7 @@ public class DictDetailController {
     }
 
 //    @Log("修改字典详情")
-    @ApiOperation("修改字典详情")
+    @Schema(title = "修改字典详情")
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
     public ResultBody<Object> update(@Validated(DictDetail.Update.class) @RequestBody DictDetail resources){
@@ -91,7 +91,7 @@ public class DictDetailController {
     }
 
 //    @Log("删除字典详情")
-    @ApiOperation("删除字典详情")
+    @Schema(title = "删除字典详情")
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("@el.check('dict:del')")
     public ResultBody<Object> delete(@PathVariable Long id){

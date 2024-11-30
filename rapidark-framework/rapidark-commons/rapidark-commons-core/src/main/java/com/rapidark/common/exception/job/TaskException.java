@@ -3,7 +3,7 @@ package com.rapidark.common.exception.job;
 /**
  * 计划策略异常
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class TaskException extends Exception
 {

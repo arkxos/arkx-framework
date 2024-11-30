@@ -9,10 +9,10 @@ import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author liuyadu
  */
-@Api(tags = "系统角色管理")
+@Schema(title = "系统角色管理")
 @RestController
 public class BaseRoleController {
     @Autowired
@@ -35,7 +35,7 @@ public class BaseRoleController {
      *
      * @return
      */
-    @ApiOperation(value = "获取分页角色列表", notes = "获取分页角色列表")
+    @Schema(title = "获取分页角色列表", name = "获取分页角色列表")
     @GetMapping("/role")
     public ResultBody<Page<BaseRole>> getRoleListPage(@RequestParam(required = false) Map map) {
         return ResultBody.ok(baseRoleService.findListPage(new PageParams(map)));
@@ -46,7 +46,7 @@ public class BaseRoleController {
      *
      * @return
      */
-    @ApiOperation(value = "获取所有角色列表", notes = "获取所有角色列表")
+    @Schema(title = "获取所有角色列表", name = "获取所有角色列表")
     @GetMapping("/role/all")
     public ResultBody<List<BaseRole>> getRoleAllList() {
         return ResultBody.ok(baseRoleService.findAllList());
@@ -58,10 +58,10 @@ public class BaseRoleController {
      * @param roleId
      * @return
      */
-    @ApiOperation(value = "获取角色详情", notes = "获取角色详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "path")
-    })
+    @Schema(title = "获取角色详情", name = "获取角色详情")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "path")
+//    })
     @GetMapping("/role/{roleId}/info")
     public ResultBody<BaseRole> getRole(@PathVariable(value = "roleId") Long roleId) {
         BaseRole result = baseRoleService.getRole(roleId);
@@ -73,7 +73,7 @@ public class BaseRoleController {
      *
      * @return
      */
-    @ApiOperation(value = "添加角色", notes = "添加角色")
+    @Schema(title = "添加角色", name = "添加角色")
     @PostMapping("/role/add")
     public ResultBody<Long> addRole(@RequestBody @Valid AddRoleCommand command) {
         BaseRole role = new BaseRole();
@@ -94,7 +94,7 @@ public class BaseRoleController {
      *
      * @return
      */
-    @ApiOperation(value = "编辑角色", notes = "编辑角色")
+    @Schema(title = "编辑角色", name = "编辑角色")
     @PostMapping("/role/update")
     public ResultBody updateRole(@Valid @RequestBody UpdateRoleCommand command) {
         BaseRole role = new BaseRole();
@@ -113,10 +113,10 @@ public class BaseRoleController {
      * @param roleId
      * @return
      */
-    @ApiOperation(value = "删除角色", notes = "删除角色")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
-    })
+    @Schema(title = "删除角色", name = "删除角色")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
+//    })
     @PostMapping("/role/remove")
     public ResultBody removeRole(
             @RequestParam(value = "roleId") Long roleId
@@ -132,7 +132,7 @@ public class BaseRoleController {
      * @param userIds
      * @return
      */
-    @ApiOperation(value = "角色添加成员", notes = "角色添加成员")
+    @Schema(title = "角色添加成员", name = "角色添加成员")
     @PostMapping("/role/users/add")
     public ResultBody addUserRoles(
             @RequestParam(value = "roleId") Long roleId,
@@ -148,7 +148,7 @@ public class BaseRoleController {
      * @param roleId
      * @return
      */
-    @ApiOperation(value = "查询角色成员", notes = "查询角色成员")
+    @Schema(title = "查询角色成员", name = "查询角色成员")
     @GetMapping("/role/users")
     public ResultBody<List<BaseRoleUser>> getRoleUsers(@RequestParam(value = "roleId", required = false) String roleId,
                                                        @RequestParam(value = "roleCode", required = false) String roleCode) {

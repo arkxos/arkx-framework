@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.controller.cmd;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 @Data
 public class UpdateMenuCommand extends CreateMenuCommand {
 
-    @Schema(required = true, value = "菜单ID")
+    @Schema(required = true, title = "菜单ID")
     @NotNull(message = "菜单id不能为空")
     private Long menuId;
 

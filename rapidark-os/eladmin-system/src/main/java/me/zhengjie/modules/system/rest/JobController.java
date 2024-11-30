@@ -15,8 +15,8 @@
  */
 package me.zhengjie.modules.system.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import com.rapidark.framework.common.exception.BadRequestException;
@@ -39,21 +39,21 @@ import java.util.Set;
 */
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "系统：岗位管理")
+@Schema(title = "系统：岗位管理")
 @RequestMapping("/api/job")
 public class JobController {
 
     private final JobService jobService;
     private static final String ENTITY_NAME = "job";
 
-    @ApiOperation("导出岗位数据")
+    @Schema(title = "导出岗位数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('job:list')")
     public void download(HttpServletResponse response, JobQueryCriteria criteria) throws IOException {
         jobService.download(jobService.queryAll(criteria), response);
     }
 
-    @ApiOperation("查询岗位")
+    @Schema(title = "查询岗位")
     @GetMapping
     @PreAuthorize("@el.check('job:list','user:list')")
     public ResponseEntity<Object> query(JobQueryCriteria criteria, Pageable pageable){
@@ -61,7 +61,7 @@ public class JobController {
     }
 
     @Log("新增岗位")
-    @ApiOperation("新增岗位")
+    @Schema(title = "新增岗位")
     @PostMapping
     @PreAuthorize("@el.check('job:add')")
     public ResponseEntity<Object> create(@Validated @RequestBody Job resources){
@@ -73,7 +73,7 @@ public class JobController {
     }
 
     @Log("修改岗位")
-    @ApiOperation("修改岗位")
+    @Schema(title = "修改岗位")
     @PutMapping
     @PreAuthorize("@el.check('job:edit')")
     public ResponseEntity<Object> update(@Validated(Job.Update.class) @RequestBody Job resources){
@@ -82,7 +82,7 @@ public class JobController {
     }
 
     @Log("删除岗位")
-    @ApiOperation("删除岗位")
+    @Schema(title = "删除岗位")
     @DeleteMapping
     @PreAuthorize("@el.check('job:del')")
     public ResponseEntity<Object> delete(@RequestBody Set<Long> ids){

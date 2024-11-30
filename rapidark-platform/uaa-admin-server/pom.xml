@@ -75,10 +75,31 @@
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc10</artifactId>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-upms-api</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-gateway-framework</artifactId>
+			<version>10.0.3</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
     <build>
         <!-- 打包名称 -->
         <finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>static/**</exclude>
+				</excludes>
+			</resource>
+		</resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -97,7 +118,8 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
                     <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+						<nonFilteredFileExtension>woff</nonFilteredFileExtension>
+						<nonFilteredFileExtension>woff2</nonFilteredFileExtension>
                         <nonFilteredFileExtension>eot</nonFilteredFileExtension>
                         <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
                         <nonFilteredFileExtension>svg</nonFilteredFileExtension>

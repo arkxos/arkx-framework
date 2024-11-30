@@ -14,10 +14,10 @@ import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,7 +34,7 @@ import java.util.List;
  * @date 2019-08-14
  */
 @Slf4j
-@Api(value = "人员信息（钉钉）", tags = "人员信息（钉钉）")
+@Schema(title = "人员信息（钉钉）", name = "人员信息（钉钉）")
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -51,22 +51,22 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "分页获取人员信息(钉钉)", notes = "分页获取人员信息(钉钉)")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "人员ID", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "parentId", value = "上级ID", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "companyId", value = "公司ID", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "positionId", value = "岗位ID", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "departmentId", value = "部门ID", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "positionCode", value = "职位编码", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "positionName", value = "职位名称", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "name", value = "员工名字", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "mobile", value = "手机号码", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "active", value = "是否已经激活:1已激活，0未激活", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "jobnumber", value = "员工工号", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页码", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页大小", required = false, paramType = "form")
-    })
+    @Schema(title = "分页获取人员信息(钉钉)", name = "分页获取人员信息(钉钉)")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userId", value = "人员ID", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "parentId", value = "上级ID", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "companyId", value = "公司ID", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "positionId", value = "岗位ID", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "departmentId", value = "部门ID", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "positionCode", value = "职位编码", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "positionName", value = "职位名称", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "name", value = "员工名字", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "mobile", value = "手机号码", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "active", value = "是否已经激活:1已激活，0未激活", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "jobnumber", value = "员工工号", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页码", required = false, paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页大小", required = false, paramType = "form")
+//    })
     @GetMapping(value = "/page")
     public ResultBody page(@RequestParam(value = "userId", required = false) Long userId,
                            @RequestParam(value = "parentId", required = false) Long parentId,
@@ -109,11 +109,11 @@ public class UserController {
      * @author zhangzz
      * @date 2019/12/9
      */
-    @ApiOperation(value = "根据部门ID获取用户ID列表", notes = "根据部门ID获取用户ID列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", required = false, value = "部门ID", paramType = "form"),
-            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
-    })
+    @Schema(title = "根据部门ID获取用户ID列表", name = "根据部门ID获取用户ID列表")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "departmentId", required = false, value = "部门ID", paramType = "form"),
+//            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
+//    })
     @GetMapping(value = "/userIds")
     public ResultBody getUserIdsByDepartmentId(@RequestParam("companyId") Long companyId, @RequestParam(value = "departmentId", required = false) Long departmentId) {
         if (companyId == null) {
@@ -132,7 +132,7 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "获取所有人员信息(钉钉)", notes = "获取所有人员信息(钉钉)")
+    @Schema(title = "获取所有人员信息(钉钉)", name = "获取所有人员信息(钉钉)")
     @GetMapping("/list")
     public ResultBody list() {
         List<UserDetailVO> users = userService.userDetailList(null);
@@ -142,7 +142,7 @@ public class UserController {
     /**
      * 查找人员信息(钉钉)
      */
-    @ApiOperation(value = "查找人员信息(钉钉)", notes = "根据用户ID查找人员信息(钉钉)数据")
+    @Schema(title = "查找人员信息(钉钉)", name = "根据用户ID查找人员信息(钉钉)数据")
     @GetMapping("/get")
     public ResultBody<UserDetailVO> get(@RequestParam("userId") Long userId) {
         //设置条件
@@ -166,10 +166,10 @@ public class UserController {
      * @param userId
      * @return
      */
-    @ApiOperation(value = "获取所有下级人员信息", notes = "根据用户ID获取所有下级人员信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form")
-    })
+    @Schema(title = "获取所有下级人员信息", name = "根据用户ID获取所有下级人员信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form")
+//    })
     @GetMapping("/children")
     public ResultBody children(@RequestParam("userId") Long userId) {
         //设置条件
@@ -181,10 +181,10 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "递归获取所有下级用户信息", notes = "根据用户ID递归获取所有下级用户信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form")
-    })
+    @Schema(title = "递归获取所有下级用户信息", name = "根据用户ID递归获取所有下级用户信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form")
+//    })
     @GetMapping("/cascadeChildren")
     public ResultBody<List<UserDetailVO>> cascadeChildren(@RequestParam("userId") Long userId) {
         //递归获取所有下级用户信息
@@ -197,7 +197,7 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
+    @Schema(title = "添加系统用户", name = "添加系统用户")
     @PostMapping("/add")
     public ResultBody add(@Valid @RequestBody AddDingDingUserCommand command) {
         User user = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getDdUserid, command.getDdUserid()));
@@ -238,27 +238,27 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "编辑用户(钉钉)", notes = "编辑用户(钉钉)")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ddUserid", required = true, value = "员工在当前企业内的钉钉唯一标识", paramType = "form"),
-            @ApiImplicitParam(name = "userId", required = true, value = "人员ID", example = "557063237640650752", paramType = "form"),
-            @ApiImplicitParam(name = "parentId", required = false, value = "上级ID", example = "521677655146233856", paramType = "form"),
-            @ApiImplicitParam(name = "positionId", required = true, value = "职位ID", example = "1162303811142623234", paramType = "form"),
-            @ApiImplicitParam(name = "unionid", required = false, value = "员工在当前开发者企业账号范围内的唯一标识", example = "0235036601785503", paramType = "form"),
-            @ApiImplicitParam(name = "name", required = true, value = "员工名字", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "tel", required = false, value = "分机号（仅限企业内部开发调用）", example = "", paramType = "form"),
-            @ApiImplicitParam(name = "workPlace", required = false, value = "办公地点", example = "办公地点", paramType = "form"),
-            @ApiImplicitParam(name = "remark", required = false, value = "备注", example = "备注", paramType = "form"),
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号码", example = "13189947695", paramType = "form"),
-            @ApiImplicitParam(name = "email", required = false, value = "员工的电子邮箱", example = "13189947695@163.com", paramType = "form"),
-            @ApiImplicitParam(name = "orgEmail", required = false, value = "员工的企业邮箱", example = "13189947695@163.com", paramType = "form"),
-            @ApiImplicitParam(name = "active", required = false, value = "是否已经激活:1已激活，0未激活", example = "0", paramType = "form"),
-            @ApiImplicitParam(name = "department", required = true, value = "成员所属部门id列表", example = "1173840209515470849", paramType = "form"),
-            @ApiImplicitParam(name = "position", required = false, value = "职位信息", example = "测试", paramType = "form"),
-            @ApiImplicitParam(name = "avatar", required = false, value = "头像url", example = "http://www.bsd.com/avatar", paramType = "form"),
-            @ApiImplicitParam(name = "hiredDate", required = false, value = "入职时间", example = "2019-07-11 00:00:00", paramType = "form"),
-            @ApiImplicitParam(name = "jobnumber", required = true, value = "员工工号", example = "20190917", paramType = "form")
-    })
+    @Schema(title = "编辑用户(钉钉)", name = "编辑用户(钉钉)")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "ddUserid", required = true, value = "员工在当前企业内的钉钉唯一标识", paramType = "form"),
+//            @ApiImplicitParam(name = "userId", required = true, value = "人员ID", example = "557063237640650752", paramType = "form"),
+//            @ApiImplicitParam(name = "parentId", required = false, value = "上级ID", example = "521677655146233856", paramType = "form"),
+//            @ApiImplicitParam(name = "positionId", required = true, value = "职位ID", example = "1162303811142623234", paramType = "form"),
+//            @ApiImplicitParam(name = "unionid", required = false, value = "员工在当前开发者企业账号范围内的唯一标识", example = "0235036601785503", paramType = "form"),
+//            @ApiImplicitParam(name = "name", required = true, value = "员工名字", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "tel", required = false, value = "分机号（仅限企业内部开发调用）", example = "", paramType = "form"),
+//            @ApiImplicitParam(name = "workPlace", required = false, value = "办公地点", example = "办公地点", paramType = "form"),
+//            @ApiImplicitParam(name = "remark", required = false, value = "备注", example = "备注", paramType = "form"),
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号码", example = "13189947695", paramType = "form"),
+//            @ApiImplicitParam(name = "email", required = false, value = "员工的电子邮箱", example = "13189947695@163.com", paramType = "form"),
+//            @ApiImplicitParam(name = "orgEmail", required = false, value = "员工的企业邮箱", example = "13189947695@163.com", paramType = "form"),
+//            @ApiImplicitParam(name = "active", required = false, value = "是否已经激活:1已激活，0未激活", example = "0", paramType = "form"),
+//            @ApiImplicitParam(name = "department", required = true, value = "成员所属部门id列表", example = "1173840209515470849", paramType = "form"),
+//            @ApiImplicitParam(name = "position", required = false, value = "职位信息", example = "测试", paramType = "form"),
+//            @ApiImplicitParam(name = "avatar", required = false, value = "头像url", example = "http://www.bsd.com/avatar", paramType = "form"),
+//            @ApiImplicitParam(name = "hiredDate", required = false, value = "入职时间", example = "2019-07-11 00:00:00", paramType = "form"),
+//            @ApiImplicitParam(name = "jobnumber", required = true, value = "员工工号", example = "20190917", paramType = "form")
+//    })
     @PostMapping("/update")
     public ResultBody update(
             @RequestParam(value = "ddUserid") String ddUserid,
@@ -310,11 +310,11 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "修改激活状态(钉钉)", notes = "修改激活状态(钉钉)")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true, value = "状态:0-未激活 1-已激活", paramType = "form")
-    })
+    @Schema(title = "修改激活状态(钉钉)", name = "修改激活状态(钉钉)")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "status", required = true, value = "状态:0-未激活 1-已激活", paramType = "form")
+//    })
     @PostMapping("/active")
     public ResultBody active(@RequestParam(value = "userId") Long userId, @RequestParam(value = "status") Boolean status) {
         userService.changeActiveStatus(userId, status);
@@ -326,7 +326,7 @@ public class UserController {
      *
      * @return
      */
-    /*@ApiOperation(value = "删除人员(钉钉)", notes = "删除人员(钉钉)")
+    /*@Schema(title = "删除人员(钉钉)", name = "删除人员(钉钉)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", required = true, value = "根据用户ID删除钉钉人员新", paramType = "form")
     })

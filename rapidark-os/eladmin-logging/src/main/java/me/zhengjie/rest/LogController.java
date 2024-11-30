@@ -15,8 +15,8 @@
  */
 package me.zhengjie.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import com.rapidark.framework.common.annotation.Log;
 import me.zhengjie.service.LogService;
@@ -37,13 +37,13 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/logs")
-@Api(tags = "系统：日志管理")
+@Schema(title = "系统：日志管理")
 public class LogController {
 
     private final LogService logService;
 
     @Log("导出数据")
-    @ApiOperation("导出数据")
+    @Schema(title = "导出数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check()")
     public void download(HttpServletResponse response, LogQueryCriteria criteria) throws IOException {
@@ -52,7 +52,7 @@ public class LogController {
     }
 
     @Log("导出错误数据")
-    @ApiOperation("导出错误数据")
+    @Schema(title = "导出错误数据")
     @GetMapping(value = "/error/download")
     @PreAuthorize("@el.check()")
     public void downloadErrorLog(HttpServletResponse response, LogQueryCriteria criteria) throws IOException {
@@ -60,7 +60,7 @@ public class LogController {
         logService.download(logService.queryAll(criteria), response);
     }
     @GetMapping
-    @ApiOperation("日志查询")
+    @Schema(title = "日志查询")
     @PreAuthorize("@el.check()")
     public ResponseEntity<Object> query(LogQueryCriteria criteria, Pageable pageable){
         criteria.setLogType("INFO");
@@ -68,7 +68,7 @@ public class LogController {
     }
 
     @GetMapping(value = "/user")
-    @ApiOperation("用户日志查询")
+    @Schema(title = "用户日志查询")
     public ResponseEntity<Object> queryUserLog(LogQueryCriteria criteria, Pageable pageable){
         criteria.setLogType("INFO");
         criteria.setBlurry(SecurityUtils.getCurrentUsername());
@@ -76,7 +76,7 @@ public class LogController {
     }
 
     @GetMapping(value = "/error")
-    @ApiOperation("错误日志查询")
+    @Schema(title = "错误日志查询")
     @PreAuthorize("@el.check()")
     public ResponseEntity<Object> queryErrorLog(LogQueryCriteria criteria, Pageable pageable){
         criteria.setLogType("ERROR");
@@ -84,14 +84,14 @@ public class LogController {
     }
 
     @GetMapping(value = "/error/{id}")
-    @ApiOperation("日志异常详情查询")
+    @Schema(title = "日志异常详情查询")
     @PreAuthorize("@el.check()")
     public ResponseEntity<Object> queryErrorLogs(@PathVariable Long id){
         return new ResponseEntity<>(logService.findByErrDetail(id), HttpStatus.OK);
     }
     @DeleteMapping(value = "/del/error")
     @Log("删除所有ERROR日志")
-    @ApiOperation("删除所有ERROR日志")
+    @Schema(title = "删除所有ERROR日志")
     @PreAuthorize("@el.check()")
     public ResponseEntity<Object> delAllErrorLog(){
         logService.delAllByError();
@@ -100,7 +100,7 @@ public class LogController {
 
     @DeleteMapping(value = "/del/info")
     @Log("删除所有INFO日志")
-    @ApiOperation("删除所有INFO日志")
+    @Schema(title = "删除所有INFO日志")
     @PreAuthorize("@el.check()")
     public ResponseEntity<Object> delAllInfoLog(){
         logService.delAllByInfo();

@@ -11,7 +11,7 @@ import com.rapidark.common.core.domain.entity.SysMenu;
 /**
  * Treeselect树结构实体类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class TreeSelect implements Serializable
 {

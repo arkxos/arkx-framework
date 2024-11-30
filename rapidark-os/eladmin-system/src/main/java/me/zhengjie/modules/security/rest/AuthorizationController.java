@@ -20,8 +20,8 @@ import com.rapidark.framework.common.utils.RedisUtils;
 import com.rapidark.framework.common.utils.RSAUtils;
 import com.wf.captcha.base.Captcha;
 import com.rapidark.boot.RsaProperties;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.rapidark.framework.common.annotation.rest.AnonymousDeleteMapping;
@@ -60,7 +60,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Api(tags = "系统：系统授权接口")
+@Schema(title = "系统：系统授权接口")
 public class AuthorizationController {
     private final SecurityProperties properties;
     private final RedisUtils redisUtils;
@@ -72,7 +72,7 @@ public class AuthorizationController {
     @Resource
     private RsaProperties rsaProperties;
 
-    @ApiOperation("登录授权")
+    @Schema(title = "登录授权")
     @AnonymousPostMapping(value = "/login")
     public ResponseEntity<Object> login(@Validated @RequestBody AuthUserDto authUser, HttpServletRequest request) throws Exception {
         // 密码解密
@@ -111,13 +111,13 @@ public class AuthorizationController {
         return ResponseEntity.ok(authInfo);
     }
 
-    @ApiOperation("获取用户信息")
+    @Schema(title = "获取用户信息")
     @GetMapping(value = "/info")
     public ResponseEntity<Object> getUserInfo() {
         return ResponseEntity.ok(SecurityUtils.getCurrentUser());
     }
 
-    @ApiOperation("获取验证码")
+    @Schema(title = "获取验证码")
     @AnonymousGetMapping(value = "/code")
     public ResponseEntity<Object> getCode() {
         // 获取运算的结果
@@ -138,7 +138,7 @@ public class AuthorizationController {
         return ResponseEntity.ok(imgResult);
     }
 
-    @ApiOperation("退出登录")
+    @Schema(title = "退出登录")
     @AnonymousDeleteMapping(value = "/logout")
     public ResponseEntity<Object> logout(HttpServletRequest request) {
         onlineUserService.logout(tokenProvider.getToken(request));

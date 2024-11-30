@@ -1,6 +1,5 @@
 package com.rapidark.cloud.portal.uaa.server.service.impl;
 
-import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.model.UserAccount;
 import com.rapidark.cloud.portal.uaa.server.service.feign.BaseDeveloperServiceClient;
 import com.rapidark.framework.common.model.ResultBody;

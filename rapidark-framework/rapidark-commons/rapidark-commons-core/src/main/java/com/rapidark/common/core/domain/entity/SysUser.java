@@ -22,7 +22,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 用户对象 sys_user
  * 
- * @author rapidark
+ * @author Darkness
  * @see com.rapidark.system.model.AccountEntity
  */
 @Deprecated

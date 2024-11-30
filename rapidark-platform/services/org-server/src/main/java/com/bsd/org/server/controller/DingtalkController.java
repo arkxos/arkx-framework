@@ -6,10 +6,10 @@ import com.bsd.org.server.model.vo.DingtalkVO;
 import com.bsd.org.server.service.DingtalkService;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenHelper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @author lrx
  * @date 2019-08-14
  */
-@Api(value = "钉钉配置信息", tags = "钉钉配置信息")
+@Schema(title = "钉钉配置信息", name = "钉钉配置信息")
 @RestController
 @RequestMapping("dingtalk")
 public class DingtalkController {
@@ -31,18 +31,18 @@ public class DingtalkController {
      *
      * @return
      */
-    @ApiOperation(value = "分页获取钉钉配置信息", notes = "分页获取钉钉配置信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", value = "企业ID", paramType = "form"),
-            @ApiImplicitParam(name = "corpId", value = "企业corpid", paramType = "form"),
-            @ApiImplicitParam(name = "agentdId", value = "应用的agentdId", paramType = "form"),
-            @ApiImplicitParam(name = "appKey", value = "应用的AppKey", paramType = "form"),
-            @ApiImplicitParam(name = "appSecret", value = "应用的AppSecret", paramType = "form"),
-            @ApiImplicitParam(name = "encodingAesKey", value = "数据加密密钥", paramType = "form"),
-            @ApiImplicitParam(name = "token", value = "加解密需要用到的token", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
-    })
+    @Schema(title = "分页获取钉钉配置信息", name = "分页获取钉钉配置信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", value = "企业ID", paramType = "form"),
+//            @ApiImplicitParam(name = "corpId", value = "企业corpid", paramType = "form"),
+//            @ApiImplicitParam(name = "agentdId", value = "应用的agentdId", paramType = "form"),
+//            @ApiImplicitParam(name = "appKey", value = "应用的AppKey", paramType = "form"),
+//            @ApiImplicitParam(name = "appSecret", value = "应用的AppSecret", paramType = "form"),
+//            @ApiImplicitParam(name = "encodingAesKey", value = "数据加密密钥", paramType = "form"),
+//            @ApiImplicitParam(name = "token", value = "加解密需要用到的token", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
+//    })
     @GetMapping(value = "/page")
     public ResultBody page(@RequestParam(value = "companyId", required = false) Long companyId,
                                        @RequestParam(value = "corpId", required = false) String corpId,
@@ -71,10 +71,10 @@ public class DingtalkController {
     /**
      * 查找钉钉配置信息
      */
-    @ApiOperation(value = "查找钉钉配置信息", notes = "根据公司ID查找钉钉配置信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", required = true, value = "companyId", paramType = "form")
-    })
+    @Schema(title = "查找钉钉配置信息", name = "根据公司ID查找钉钉配置信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", required = true, value = "companyId", paramType = "form")
+//    })
     @GetMapping("/get")
     public ResultBody<Dingtalk> get(@RequestParam("companyId") Long companyId) {
         Dingtalk dingtalk = dingtalkService.getById(companyId);
@@ -89,16 +89,16 @@ public class DingtalkController {
      *
      * @return
      */
-    @ApiOperation(value = "添加钉钉配置信息", notes = "添加钉钉配置信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", required = true, value = "企业ID", example = "1173825172121944065", paramType = "form"),
-            @ApiImplicitParam(name = "corpId", required = true, value = "企业corpid", paramType = "form"),
-            @ApiImplicitParam(name = "agentdId", required = true, value = "应用的agentdId", paramType = "form"),
-            @ApiImplicitParam(name = "appKey", required = true, value = "应用的AppKey", paramType = "form"),
-            @ApiImplicitParam(name = "appSecret", required = true, value = "应用的AppSecret", paramType = "form"),
-            @ApiImplicitParam(name = "encodingAesKey", required = false, value = "数据加密密钥", paramType = "form"),
-            @ApiImplicitParam(name = "token", required = false, value = "加解密需要用到的token", paramType = "form")
-    })
+    @Schema(title = "添加钉钉配置信息", name = "添加钉钉配置信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", required = true, value = "企业ID", example = "1173825172121944065", paramType = "form"),
+//            @ApiImplicitParam(name = "corpId", required = true, value = "企业corpid", paramType = "form"),
+//            @ApiImplicitParam(name = "agentdId", required = true, value = "应用的agentdId", paramType = "form"),
+//            @ApiImplicitParam(name = "appKey", required = true, value = "应用的AppKey", paramType = "form"),
+//            @ApiImplicitParam(name = "appSecret", required = true, value = "应用的AppSecret", paramType = "form"),
+//            @ApiImplicitParam(name = "encodingAesKey", required = false, value = "数据加密密钥", paramType = "form"),
+//            @ApiImplicitParam(name = "token", required = false, value = "加解密需要用到的token", paramType = "form")
+//    })
     @PostMapping("/add")
     public ResultBody add(
             @RequestParam(value = "companyId") Long companyId,
@@ -127,16 +127,16 @@ public class DingtalkController {
      *
      * @return
      */
-    @ApiOperation(value = "编辑钉钉配置信息", notes = "编辑钉钉配置信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", required = true, value = "企业ID", paramType = "form"),
-            @ApiImplicitParam(name = "corpId", required = true, value = "企业corpid", paramType = "form"),
-            @ApiImplicitParam(name = "agentdId", required = true, value = "应用的agentdId", paramType = "form"),
-            @ApiImplicitParam(name = "appKey", required = true, value = "应用的AppKey", paramType = "form"),
-            @ApiImplicitParam(name = "appSecret", required = true, value = "应用的AppSecret", paramType = "form"),
-            @ApiImplicitParam(name = "encodingAesKey", required = false, value = "数据加密密钥", paramType = "form"),
-            @ApiImplicitParam(name = "token", required = false, value = "加解密需要用到的token", paramType = "form")
-    })
+    @Schema(title = "编辑钉钉配置信息", name = "编辑钉钉配置信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", required = true, value = "企业ID", paramType = "form"),
+//            @ApiImplicitParam(name = "corpId", required = true, value = "企业corpid", paramType = "form"),
+//            @ApiImplicitParam(name = "agentdId", required = true, value = "应用的agentdId", paramType = "form"),
+//            @ApiImplicitParam(name = "appKey", required = true, value = "应用的AppKey", paramType = "form"),
+//            @ApiImplicitParam(name = "appSecret", required = true, value = "应用的AppSecret", paramType = "form"),
+//            @ApiImplicitParam(name = "encodingAesKey", required = false, value = "数据加密密钥", paramType = "form"),
+//            @ApiImplicitParam(name = "token", required = false, value = "加解密需要用到的token", paramType = "form")
+//    })
     @PostMapping("/update")
     public ResultBody update(
             @RequestParam(value = "companyId") Long companyId,
@@ -165,10 +165,10 @@ public class DingtalkController {
      *
      * @return
      */
-    @ApiOperation(value = "删除钉钉配置信息", notes = "删除钉钉配置信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
-    })
+    @Schema(title = "删除钉钉配置信息", name = "删除钉钉配置信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
+//    })
     @PostMapping("/remove")
     public ResultBody remove(@RequestParam(value = "companyId") Long companyId) {
         Dingtalk dingtalk = dingtalkService.getById(companyId);

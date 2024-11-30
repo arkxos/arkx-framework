@@ -16,7 +16,7 @@
 package me.zhengjie.modules.mnt.domain;
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.Getter;
@@ -38,7 +38,7 @@ public class Deploy extends AbstractIdLongEntity implements Serializable {
 
     @Id
 	@Column(name = "deploy_id")
-	@Schema(value = "ID", hidden = true)
+	@Schema(title = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -51,7 +51,7 @@ public class Deploy extends AbstractIdLongEntity implements Serializable {
 
 	@ManyToOne
     @JoinColumn(name = "app_id")
-	@Schema(value = "应用编号")
+	@Schema(title = "应用编号")
     private App app;
 
     public void copy(Deploy source){

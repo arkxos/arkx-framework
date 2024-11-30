@@ -1,6 +1,5 @@
 package com.xdreamaker.demo.axon.domain.command;
 
-import com.xdreamaker.demo.axon.domain.command.AbstractCommand;
 import com.xdreamaker.demo.axon.domain.model.ContractInterface;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

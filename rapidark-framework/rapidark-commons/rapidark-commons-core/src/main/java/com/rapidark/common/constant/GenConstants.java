@@ -3,7 +3,7 @@ package com.rapidark.common.constant;
 /**
  * 代码生成通用常量
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class GenConstants
 {

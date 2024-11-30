@@ -11,10 +11,10 @@ import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2ClientDeta
 import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2Service;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/user/third")
-@Api(tags = "第三方渠道登录")
+@Schema(title = "第三方渠道登录")
 public class UserAccountController {
     @Autowired
     @Qualifier("qqAuthServiceImpl")
@@ -51,10 +51,10 @@ public class UserAccountController {
      * @param code
      * @return
      */
-    @ApiOperation(value = "qq账号登录回调", notes = "qq回调给客户端，客户端调用服务的此接口,服务端返回qq账号是否绑定用户中心账号信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "code", required = true, value = "qq服务回调带的code参数", paramType = "form"),
-    })
+    @Schema(title = "qq账号登录回调", name = "qq回调给客户端，客户端调用服务的此接口,服务端返回qq账号是否绑定用户中心账号信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "code", required = true, value = "qq服务回调带的code参数", paramType = "form"),
+//    })
     @PostMapping("/qq/callback")
     public ResultBody callbackByQQ(@RequestParam(value = "code", required = true) String code) {
         return ResultBody.ok(userAccountService.isBindingsByQq(code));
@@ -66,11 +66,11 @@ public class UserAccountController {
      * @param code
      * @return
      */
-    @ApiOperation(value = "微信账号登录回调", notes = "微信回调给客户端，客户端调用服务的此接口,服务端返回微信账号是否绑定用户中心账号信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "code", required = true, value = "回调带的code参数", paramType = "form"),
-            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号 4-日历小程序", paramType = "form"),
-    })
+    @Schema(title = "微信账号登录回调", name = "微信回调给客户端，客户端调用服务的此接口,服务端返回微信账号是否绑定用户中心账号信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "code", required = true, value = "回调带的code参数", paramType = "form"),
+//            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号 4-日历小程序", paramType = "form"),
+//    })
     @GetMapping("/wechat/callback")
     public ResultBody callbackByWechat(@RequestParam(value = "code") String code,
                                        @RequestParam(value = "platform", required = false) Integer platform) {
@@ -95,11 +95,11 @@ public class UserAccountController {
      * @param code qq服务回调带的code参数
      * @return
      */
-    @ApiOperation(value = "第三方账号登录token获取", notes = "第三方账号登录token获取")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "code", required = true, value = "第三方服务回调带的code参数", paramType = "form"),
-            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", paramType = "form"),
-    })
+    @Schema(title = "第三方账号登录token获取", name = "第三方账号登录token获取")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "code", required = true, value = "第三方服务回调带的code参数", paramType = "form"),
+//            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", paramType = "form"),
+//    })
     @PostMapping("/login")
     public ResultBody loginByThirdPlatform(@RequestParam(value = "code", required = true) String code,
                                            @RequestParam(value = "platform", required = true) Integer platform,
@@ -120,14 +120,14 @@ public class UserAccountController {
      * @return
      */
 
-    @ApiOperation(value = "第三方账号绑定用户中心账号", notes = "第三方账号绑定用户中心账号")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "code", required = true, value = "第三方服务回调带的code参数", paramType = "form"),
-            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
-            @ApiImplicitParam(name = "mobileCode", required = true, value = "手机验证码", paramType = "form"),
-            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
-            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", allowableValues = "1,2,3,4,5,6", paramType = "form")
-    })
+    @Schema(title = "第三方账号绑定用户中心账号", name = "第三方账号绑定用户中心账号")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "code", required = true, value = "第三方服务回调带的code参数", paramType = "form"),
+//            @ApiImplicitParam(name = "mobile", required = true, value = "手机号", paramType = "form"),
+//            @ApiImplicitParam(name = "mobileCode", required = true, value = "手机验证码", paramType = "form"),
+//            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
+//            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", allowableValues = "1,2,3,4,5,6", paramType = "form")
+//    })
     @PostMapping("/bind")
     public ResultBody bindingsUser(@RequestParam(value = "code", required = true) String code,
                                    @RequestParam(value = "mobile", required = true) String mobile,
@@ -148,12 +148,12 @@ public class UserAccountController {
     }
 
 
-    @ApiOperation(value = "解绑第三方账号", notes = "解绑第三方账号")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
-            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
-            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", allowableValues = "1,2,3,4", paramType = "form")
-    })
+    @Schema(title = "解绑第三方账号", name = "解绑第三方账号")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "token", required = true, value = "登录token", paramType = "header"),
+//            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
+//            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", allowableValues = "1,2,3,4", paramType = "form")
+//    })
     @PostMapping("/unbind")
     public ResultBody unBindingsUser(@RequestParam(value = "platform", required = true) Integer platform,
                                      HttpServletRequest request) {
@@ -163,9 +163,9 @@ public class UserAccountController {
     }
 
 
-    @ApiOperation(value = "获取用户第三方账号信息", notes = "获取用户第三方账号信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "uids", required = true, value = "用户ID,多个使用,分割开", paramType = "form"),})
+    @Schema(title = "获取用户第三方账号信息", name = "获取用户第三方账号信息")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "uids", required = true, value = "用户ID,多个使用,分割开", paramType = "form"),})
     @PostMapping("/getByUserId")
     public ResultBody getUserAccountByUserId(@RequestParam(value = "uids", required = true) String uids) {
         List<String> idList = Arrays.asList(uids.split(","));
@@ -182,7 +182,7 @@ public class UserAccountController {
      *
      * @return
      */
-    @ApiOperation(value = "获取第三方登录URL", notes = "获取第三方登录URL")
+    @Schema(title = "获取第三方登录URL", name = "获取第三方登录URL")
     @GetMapping("/login/url")
     @ResponseBody
     public ResultBody getLoginThirdConfig() {
@@ -200,7 +200,7 @@ public class UserAccountController {
      *
      * @return
      */
-    @ApiOperation(value = "获取第三方登录配置", notes = "获取第三方登录配置")
+    @Schema(title = "获取第三方登录配置", name = "获取第三方登录配置")
     @GetMapping("/login/config")
     @ResponseBody
     public ResultBody getWechatConfig() {

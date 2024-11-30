@@ -16,10 +16,8 @@ import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,7 +35,7 @@ import java.util.Map;
 /**
  * @author liujianhong
  */
-@Api(tags = "退款订单")
+@Schema(title = "退款订单")
 @RestController
 @RequestMapping("/refund_order")
 public class RefundOrderController {
@@ -63,26 +61,26 @@ public class RefundOrderController {
      *
      * @return ResultBody
      */
-    @ApiOperation(value = "退款订单列表", notes = "点击退款订单进入列表页面")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "refundOrderId", value = "退款订单号", paramType = "form"),
-            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
-            @ApiImplicitParam(name = "channelPayOrderNo", value = "渠道支付单号", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchRefundNo", value = "商户退款单号", paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
-            @ApiImplicitParam(name = "status", value = "退款状态:0-订单生成,1-退款中,2-退款成功,3-退款失败,4-业务处理完成", paramType = "form"),
-            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", paramType = "form"),
-            @ApiImplicitParam(name = "userName", value = "用户姓名", paramType = "form"),
-            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "channelOrderNo", value = "渠道订单号", paramType = "form"),
-            @ApiImplicitParam(name = "refundSuccTimeStart", value = "订单退款成功时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "refundSuccTimeEnd", value = "订单退款成功时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
-    })
+    @Schema(title = "退款订单列表", name = "点击退款订单进入列表页面")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "refundOrderId", value = "退款订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "channelPayOrderNo", value = "渠道支付单号", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchRefundNo", value = "商户退款单号", paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
+//            @ApiImplicitParam(name = "status", value = "退款状态:0-订单生成,1-退款中,2-退款成功,3-退款失败,4-业务处理完成", paramType = "form"),
+//            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", paramType = "form"),
+//            @ApiImplicitParam(name = "userName", value = "用户姓名", paramType = "form"),
+//            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "channelOrderNo", value = "渠道订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "refundSuccTimeStart", value = "订单退款成功时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "refundSuccTimeEnd", value = "订单退款成功时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
+//    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultBody<IPage<RefundOrder>> list(@RequestParam(value = "refundOrderId", required = false) String refundOrderId,
                                                @RequestParam(value = "payOrderId", required = false) String payOrderId,
@@ -153,7 +151,7 @@ public class RefundOrderController {
         return ResultBody.ok(refundOrderService.findListPage(new PageParams(map)));
     }
 
-    @ApiOperation(value = "退款订单详情", notes = "点击查看详情进入详情页面")
+    @Schema(title = "退款订单详情", name = "点击查看详情进入详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultBody<RefundOrder> detail(@RequestParam String refundOrderId) {
         RefundOrder refundOrder = refundOrderService.findRefundOrder(refundOrderId);
@@ -171,20 +169,20 @@ public class RefundOrderController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @ApiOperation(value = "发起退款", notes = "发起退款")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "amount", value = "金额", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "subject", value = "订单标题", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "body", value = "商品描述", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "notifyUrl", value = "回调地址", paramType = "form"),
-            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
-            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", paramType = "form"),
-            @ApiImplicitParam(name = "param1", value = "扩展参数1", paramType = "form"),
-            @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form")
-    })
+    @Schema(title = "发起退款", name = "发起退款")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "amount", value = "金额", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "subject", value = "订单标题", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "body", value = "商品描述", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "notifyUrl", value = "回调地址", paramType = "form"),
+//            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "channelUser", value = "渠道用户标识,如微信openId,支付宝账号", paramType = "form"),
+//            @ApiImplicitParam(name = "param1", value = "扩展参数1", paramType = "form"),
+//            @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form")
+//    })
     @RequestMapping(value = "/refund", method = RequestMethod.POST)
     public ResultBody<JSONObject> pay(@RequestParam(value = "mchId") String mchId,
                                        @RequestParam(value = "channelCode") String channelCode,
@@ -250,14 +248,14 @@ public class RefundOrderController {
         return ResultBody.failed(retMap.get("retMsg").toString());
     }
 
-    @ApiOperation(value = "查询退款", notes = "查询退款是否已经成功")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "refundOrderId", value = "商户退款单号", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "payOrderId", value = "支付账单号", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelPayOrderNo", value = "渠道支付单号", paramType = "form")
-    })
+    @Schema(title = "查询退款", name = "查询退款是否已经成功")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "refundOrderId", value = "商户退款单号", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "payOrderId", value = "支付账单号", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelPayOrderNo", value = "渠道支付单号", paramType = "form")
+//    })
     @RequestMapping(value = "/getRefund", method = RequestMethod.GET)
     public ResultBody getRefund(@RequestParam(value = "mchId") String mchId,
                                              @RequestParam(value = "refundOrderId") String refundOrderId,

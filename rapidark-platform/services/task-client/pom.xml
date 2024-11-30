@@ -17,6 +17,10 @@
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+		</dependency>
     </dependencies>
     <build>
 

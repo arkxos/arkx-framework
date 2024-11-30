@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.controller.cmd;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,22 +15,22 @@ import jakarta.validation.constraints.NotNull;
 @Schema(description = "修改角色命令")
 public class UpdateRoleCommand {
 
-    @Schema(name = "roleId", value = "角色ID", example = "", required = true)
+    @Schema(name = "roleId", title = "角色ID", example = "", required = true)
     @NotNull
     private Long roleId;
 
-    @Schema(name = "roleCode", value = "角色编码", example = "", required = true)
+    @Schema(name = "roleCode", title = "角色编码", example = "", required = true)
     @NotNull
     private String roleCode;
 
-    @Schema(name = "roleName", value = "角色显示名称", example = "", required = true)
+    @Schema(name = "roleName", title = "角色显示名称", example = "", required = true)
     @NotNull
     private String roleName;
 
-    @Schema(name = "roleDesc", value = "描述", example = "", required = false)
+    @Schema(name = "roleDesc", title = "描述", example = "", required = false)
     private String roleDesc;
 
-    @Schema(name = "status", required = true, example = "1", allowableValues = "0,1", value = "是否启用")
+    @Schema(name = "status", required = true, example = "1", allowableValues = "0,1", title = "是否启用")
     @NotNull
     private Integer status = 1;
 

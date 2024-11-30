@@ -3,7 +3,7 @@ package com.rapidark.framework.common.core.constant;
 /**
  * 通用常量信息
  *
- * @author rapidark
+ * @author Darkness
  */
 public interface Constants {
 

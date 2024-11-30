@@ -8,10 +8,10 @@
 //import com.rapidark.framework.commons.model.PageParams;
 //import com.rapidark.framework.commons.model.ResultBody;
 //import com.rapidark.framework.commons.security.http.OpenRestTemplate;
-//import io.swagger.annotations.Api;
-//import io.swagger.annotations.ApiImplicitParam;
-//import io.swagger.annotations.ApiImplicitParams;
-//import io.swagger.annotations.ApiOperation;
+//
+//
+//
+//import io.swagger.v3.oas.annotations.media.Schema;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.web.bind.annotation.*;
 //
@@ -25,7 +25,7 @@
 // * @date: 2019/3/12 15:12
 // * @description:
 // */
-//@Api(tags = "网关智能路由")
+//@Schema(title = "网关智能路由")
 //@RestController
 //public class GatewayRouteController {
 //    @Autowired
@@ -38,7 +38,7 @@
 //     *
 //     * @return
 //     */
-////    @ApiOperation(value = "获取分页路由列表", notes = "获取分页路由列表")
+////    @Schema(title = "获取分页路由列表", name = "获取分页路由列表")
 ////    @GetMapping("/gateway/route")
 ////    public ResultBody<IPage<GatewayAppRoute>> getRouteListPage(@RequestParam(required = false) Map map) {
 ////        return ResultBody.ok(gatewayRouteService.findListPage(new PageParams(map)));
@@ -51,7 +51,7 @@
 //     * @param routeId
 //     * @return
 //     */
-//    @ApiOperation(value = "获取路由", notes = "获取路由")
+//    @Schema(title = "获取路由", name = "获取路由")
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "routeId", required = true, value = "路由ID", paramType = "path"),
 //    })
@@ -65,7 +65,7 @@
 //     *
 //     * @return
 //     */
-//    @ApiOperation(value = "添加路由", notes = "添加路由")
+//    @Schema(title = "添加路由", name = "添加路由")
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "path", required = true, value = "路径表达式", paramType = "form"),
 //            @ApiImplicitParam(name = "routeName", required = true, value = "路由标识", paramType = "form"),
@@ -109,7 +109,7 @@
 //     *
 //     * @return
 //     */
-//    @ApiOperation(value = "编辑路由", notes = "编辑路由")
+//    @Schema(title = "编辑路由", name = "编辑路由")
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "routeId", required = true, value = "路由Id", paramType = "form"),
 //            @ApiImplicitParam(name = "routeName", required = true, value = "路由标识", paramType = "form"),
@@ -157,7 +157,7 @@
 //     * @param routeId
 //     * @return
 //     */
-//    @ApiOperation(value = "移除路由", notes = "移除路由")
+//    @Schema(title = "移除路由", name = "移除路由")
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "routeId", required = true, value = "routeId", paramType = "form"),
 //    })

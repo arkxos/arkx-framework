@@ -5,7 +5,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 字符串格式化
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class StrFormatter
 {

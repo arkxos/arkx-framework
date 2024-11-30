@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
 /**
  * 验证码工具类
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class VerifyCodeUtils
 {

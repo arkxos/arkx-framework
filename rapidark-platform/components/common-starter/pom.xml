@@ -11,6 +11,14 @@
     <artifactId>common-starter</artifactId>
     <packaging>jar</packaging>
     <dependencies>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-bus</artifactId>
+		</dependency>
         <dependency>
             <groupId>cn.easyproject</groupId>
             <artifactId>orai18n</artifactId>
@@ -115,5 +123,11 @@
             <groupId>com.sagframe</groupId>
             <artifactId>sagacity-sqltoy-spring-starter</artifactId>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-data-mybatis</artifactId>
+			<version>10.0.3</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 </project>

@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import com.rapidark.framework.common.utils.DateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,6 @@ public class MultipartUtil {
     /**
      * 获取附件路径
      *
-     * @throws MessagingException
      */
     public static List<Map<String, String>> getMultipartFilePaths(MultipartFile[] multipartFiles) {
         List<Map<String, String>> paths = Lists.newArrayList();

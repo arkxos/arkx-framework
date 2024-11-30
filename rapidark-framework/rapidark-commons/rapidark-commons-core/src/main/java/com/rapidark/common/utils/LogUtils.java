@@ -3,7 +3,7 @@ package com.rapidark.common.utils;
 /**
  * 处理并记录日志文件
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class LogUtils
 {

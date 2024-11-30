@@ -14,7 +14,7 @@ import com.rapidark.common.utils.StringUtils;
 /**
  * 菜单权限表 sys_menu
  * 
- * @author rapidark
+ * @author Darkness
  * @see com.rapidark.system.model.MenuEntity
  */
 @Deprecated

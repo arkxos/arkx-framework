@@ -6,10 +6,8 @@ import com.bsd.payment.server.model.entity.MchNotify;
 import com.bsd.payment.server.service.IMchNotifyService;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +21,7 @@ import java.util.HashMap;
 /**
  * @author liujianhong
  */
-@Api(tags = "商户通知")
+@Schema(title = "商户通知")
 @RestController
 @RequestMapping("/mch_notify")
 public class MchNotifyController {
@@ -35,20 +33,20 @@ public class MchNotifyController {
      *
      * @return ResultBody
      */
-    @ApiOperation(value = "商户通知列表", notes = "点击商户通知进入列表页面")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", paramType = "form"),
-            @ApiImplicitParam(name = "orderType", value = "订单类型:1-支付,2-转账,3-退款", paramType = "form"),
-            @ApiImplicitParam(name = "status", value = "通知状态,1-通知中,2-通知成功,3-通知失败", paramType = "form"),
-            @ApiImplicitParam(name = "lastNotifyTimeStart", value = "最后一次通知时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "lastNotifyTimeEnd", value = "最后一次通知时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
-    })
+    @Schema(title = "商户通知列表", name = "点击商户通知进入列表页面")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "orderId", value = "订单ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "orderType", value = "订单类型:1-支付,2-转账,3-退款", paramType = "form"),
+//            @ApiImplicitParam(name = "status", value = "通知状态,1-通知中,2-通知成功,3-通知失败", paramType = "form"),
+//            @ApiImplicitParam(name = "lastNotifyTimeStart", value = "最后一次通知时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "lastNotifyTimeEnd", value = "最后一次通知时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
+//    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultBody<IPage<MchNotify>> list(@RequestParam(value = "orderId", required = false) String orderId,
                                              @RequestParam(value = "mchId", required = false) String mchId,
@@ -97,7 +95,7 @@ public class MchNotifyController {
         return ResultBody.ok(page);
     }
 
-    /*@ApiOperation(value = "新增商户通知", notes = "新增商户通知")
+    /*@Schema(title = "新增商户通知", name = "新增商户通知")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", paramType = "form"),
             @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
@@ -139,10 +137,10 @@ public class MchNotifyController {
     }*/
 
 
-    @ApiOperation(value = "商户通知详情", notes = "点击查看详情进入详情页面")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "form"),
-    })
+    @Schema(title = "商户通知详情", name = "点击查看详情进入详情页面")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "form"),
+//    })
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultBody<MchNotify> detail(@RequestParam(value = "orderId") String orderId) {
         MchNotify item = mchNotifyService.findMchNotify(orderId);

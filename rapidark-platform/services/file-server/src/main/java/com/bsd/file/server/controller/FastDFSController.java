@@ -4,10 +4,10 @@ import com.bsd.file.server.service.FastDFSService;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.ResultBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author liujianhong
  * @date 2019-07-01
  */
-@Api(tags = "FastDFS服务接口")
+@Schema(title = "FastDFS服务接口")
 @RequestMapping("/dfs")
 @Slf4j
 @RestController
@@ -34,11 +34,11 @@ public class FastDFSController {
      *
      * @return
      */
-    @ApiOperation(value = "文件上传", notes = "文件上传")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form"),
-            @ApiImplicitParam(name = "prefix", value = "上传文件夹,默认group0", paramType = "form")
-    })
+    @Schema(title = "文件上传", name = "文件上传")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "file", required = true, value = "文件流对象,接收数组格式", dataType = "__File", paramType = "form"),
+//            @ApiImplicitParam(name = "prefix", value = "上传文件夹,默认group0", paramType = "form")
+//    })
     @PostMapping("/upload")
     @ResponseBody
     public ResultBody fileUpload(@RequestParam("file") MultipartFile file, @RequestParam(value = "prefix", required = false) String prefix) {

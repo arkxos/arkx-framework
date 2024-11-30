@@ -2,8 +2,8 @@ package com.rapidark.cloud.uaa.admin.server.controller;
 
 import com.rapidark.cloud.uaa.admin.server.service.feign.OpenAppServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.provider.AuthorizationRequest;
-import org.springframework.security.oauth2.provider.ClientDetails;
+//import org.springframework.security.oauth2.provider.AuthorizationRequest;
+//import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,13 +63,13 @@ public class IndexController {
         model.put("scopeList", scopeList);
         Object auth = session.getAttribute("authorizationRequest");
         if (auth != null) {
-            try {
-                AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
-                ClientDetails clientDetails = openAppRemoteService.getAppClientInfo(authorizationRequest.getClientId()).getData();
-                model.put("app", clientDetails.getAdditionalInformation());
-            } catch (Exception e) {
-
-            }
+//            try {
+//                AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
+//                ClientDetails clientDetails = openAppRemoteService.getAppClientInfo(authorizationRequest.getClientId()).getData();
+//                model.put("app", clientDetails.getAdditionalInformation());
+//            } catch (Exception e) {
+//
+//            }
         }
         return "confirm_access";
     }

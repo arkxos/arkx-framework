@@ -16,9 +16,10 @@
 package com.rapidark.cloud.base.server.modules.mnt.domain;
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdStringEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,19 +38,19 @@ public class Database extends AbstractIdStringEntity implements Serializable {
 
     @Id
     @Column(name = "db_id")
-	@Schema(value = "ID", hidden = true)
+	@Schema(title = "ID", hidden = true)
     private String id;
 
-	@Schema(value = "数据库名称")
+	@Schema(title = "数据库名称")
     private String name;
 
-	@Schema(value = "数据库连接地址")
+	@Schema(title = "数据库连接地址")
     private String jdbcUrl;
 
-	@Schema(value = "数据库密码")
+	@Schema(title = "数据库密码")
     private String pwd;
 
-	@Schema(value = "用户名")
+	@Schema(title = "用户名")
     private String userName;
 
     public void copy(Database source){

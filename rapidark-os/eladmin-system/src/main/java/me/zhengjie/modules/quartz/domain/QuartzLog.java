@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.quartz.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.*;
@@ -33,35 +33,35 @@ public class QuartzLog implements Serializable {
 
     @Id
     @Column(name = "log_id")
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Schema(value = "任务名称", hidden = true)
+    @Schema(title = "任务名称", hidden = true)
     private String jobName;
 
-    @Schema(value = "bean名称", hidden = true)
+    @Schema(title = "bean名称", hidden = true)
     private String beanName;
 
-    @Schema(value = "方法名称", hidden = true)
+    @Schema(title = "方法名称", hidden = true)
     private String methodName;
 
-    @Schema(value = "参数", hidden = true)
+    @Schema(title = "参数", hidden = true)
     private String params;
 
-    @Schema(value = "cron表达式", hidden = true)
+    @Schema(title = "cron表达式", hidden = true)
     private String cronExpression;
 
-    @Schema(value = "状态", hidden = true)
+    @Schema(title = "状态", hidden = true)
     private Boolean isSuccess;
 
-    @Schema(value = "异常详情", hidden = true)
+    @Schema(title = "异常详情", hidden = true)
     private String exceptionDetail;
 
-    @Schema(value = "执行耗时", hidden = true)
+    @Schema(title = "执行耗时", hidden = true)
     private Long time;
 
     @CreationTimestamp
-    @Schema(value = "创建时间", hidden = true)
+    @Schema(title = "创建时间", hidden = true)
     private Timestamp createTime;
 }

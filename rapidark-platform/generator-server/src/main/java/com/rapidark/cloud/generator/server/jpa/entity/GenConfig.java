@@ -15,7 +15,8 @@
  */
 package com.rapidark.cloud.generator.server.jpa.entity;
 
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,45 +42,45 @@ public class GenConfig implements Serializable {
 
     @Id
     @Column(name = "config_id")
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
     @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
     @NotBlank
-    @Schema(value = "表名")
+    @Schema(title = "表名")
     private String tableName;
 
     @NotBlank
-    @Schema(value = "表英文名")
+    @Schema(title = "表英文名")
     private String tableEnName;
 
-    @Schema(value = "接口名称")
+    @Schema(title = "接口名称")
     private String apiAlias;
 
     @NotBlank
-    @Schema(value = "包路径")
+    @Schema(title = "包路径")
     private String pack;
 
     @NotBlank
-    @Schema(value = "模块名")
+    @Schema(title = "模块名")
     private String moduleName;
 
     @NotBlank
-    @Schema(value = "前端文件路径")
+    @Schema(title = "前端文件路径")
     private String path;
 
-    @Schema(value = "前端文件路径")
+    @Schema(title = "前端文件路径")
     private String apiPath;
 
-    @Schema(value = "作者")
+    @Schema(title = "作者")
     private String author;
 
-    @Schema(value = "表前缀")
+    @Schema(title = "表前缀")
     private String prefix;
 
-    @Schema(value = "是否覆盖")
+    @Schema(title = "是否覆盖")
     private Boolean cover = false;
 
 }

@@ -20,10 +20,8 @@ import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.WebUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -46,7 +44,7 @@ import java.util.Map;
  *
  * @author liujianhong
  */
-@Api(tags = "支付订单")
+@Schema(title = "支付订单")
 @RestController
 @RequestMapping("/order")
 public class PayOrderController {
@@ -64,21 +62,21 @@ public class PayOrderController {
     @Autowired
     private OpenCommonProperties openCommonProperties;
 
-    @ApiOperation(value = "统一下单", notes = "统一下单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "amount", value = "金额", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "subject", value = "订单标题", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "body", value = "商品描述", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "notifyUrl", value = "回调地址", paramType = "form"),
-            @ApiImplicitParam(name = "returnUrl", value = "同步回调地址", paramType = "form"),
-            @ApiImplicitParam(name = "param1", value = "扩展参数1", paramType = "form"),
-            @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form"),
-            @ApiImplicitParam(name = "openId", value = "微信openId,JSAPI支付必传字段", paramType = "form"),
-            @ApiImplicitParam(name = "productId", value = "商品Id,微信NATIVE扫码支付必传字段", paramType = "form")
-    })
+    @Schema(title = "统一下单", name = "统一下单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "amount", value = "金额", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "subject", value = "订单标题", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "body", value = "商品描述", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "notifyUrl", value = "回调地址", paramType = "form"),
+//            @ApiImplicitParam(name = "returnUrl", value = "同步回调地址", paramType = "form"),
+//            @ApiImplicitParam(name = "param1", value = "扩展参数1", paramType = "form"),
+//            @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form"),
+//            @ApiImplicitParam(name = "openId", value = "微信openId,JSAPI支付必传字段", paramType = "form"),
+//            @ApiImplicitParam(name = "productId", value = "商品Id,微信NATIVE扫码支付必传字段", paramType = "form")
+//    })
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     public ResultBody pay(@RequestParam(value = "mchId") String mchId,
                                     @RequestParam(value = "channelCode") String channelCode,
@@ -168,8 +166,8 @@ public class PayOrderController {
      * @param params
      * @return
      */
-    @ApiOperation(value = "统一下单接口",
-            notes = "     1)先验证接口参数以及签名信息\n" +
+    @Schema(title = "统一下单接口",
+            name = "     1)先验证接口参数以及签名信息\n" +
                     "     2)验证通过创建支付订单\n" +
                     "     3)根据商户选择渠道,调用支付服务进行下单\n" +
                     "     4)返回下单数据")
@@ -397,22 +395,22 @@ public class PayOrderController {
      *
      * @return
      */
-    @ApiOperation(value = "支付订单列表", notes = "点击支付订单进入列表页面")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
-            @ApiImplicitParam(name = "status", value = "支付状态,0-订单生成,1-支付中(目前未使用),2-支付成功,3-业务处理完成", paramType = "form"),
-            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "channelOrderNo", value = "渠道订单号", paramType = "form"),
-            @ApiImplicitParam(name = "paySuccTimeStart", value = "订单支付成功时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "paySuccTimeTimeEnd", value = "订单支付成功时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
-            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
-            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
-    })
+    @Schema(title = "支付订单列表", name = "点击支付订单进入列表页面")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "渠道编码", paramType = "form"),
+//            @ApiImplicitParam(name = "status", value = "支付状态,0-订单生成,1-支付中(目前未使用),2-支付成功,3-业务处理完成", paramType = "form"),
+//            @ApiImplicitParam(name = "channelMchId", value = "渠道商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "channelOrderNo", value = "渠道订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "paySuccTimeStart", value = "订单支付成功时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "paySuccTimeTimeEnd", value = "订单支付成功时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeStart", value = "创建时间开始", paramType = "form"),
+//            @ApiImplicitParam(name = "createTimeEnd", value = "创建时间截止", paramType = "form"),
+//            @ApiImplicitParam(name = "pageIndex", value = "页数", paramType = "form"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
+//    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultBody<IPage<PayOrder>> getApiList(
             @RequestParam(value = "payOrderId", required = false) String payOrderId,
@@ -469,7 +467,7 @@ public class PayOrderController {
     }
 
 
-    @ApiOperation(value = "支付订单详情", notes = "点击查看详情进入订单详情页面")
+    @Schema(title = "支付订单详情", name = "点击查看详情进入订单详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultBody<PayOrder> detail(@RequestParam String payOrderId) {
         PayOrder payOrder = payOrderService.findPayOrder(payOrderId);
@@ -479,17 +477,17 @@ public class PayOrderController {
         return ResultBody.ok(payOrder);
     }
 
-    @ApiOperation(value = "支付订单查询", notes = "查询支付订单接口:\n" +
+    @Schema(title = "支付订单查询", name = "查询支付订单接口:\n" +
             "     * 1)先验证接口参数以及签名信息\n" +
             "     * 2)根据参数查询订单\n" +
             "     * 3)返回订单数据")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
-            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", paramType = "form"),
-            @ApiImplicitParam(name = "executeNotify", value = "是否执行回调", paramType = "form"),
-            @ApiImplicitParam(name = "sign", value = "签名", paramType = "form"),
-    })
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "payOrderId", value = "支付订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", paramType = "form"),
+//            @ApiImplicitParam(name = "mchOrderNo", value = "商户订单号", paramType = "form"),
+//            @ApiImplicitParam(name = "executeNotify", value = "是否执行回调", paramType = "form"),
+//            @ApiImplicitParam(name = "sign", value = "签名", paramType = "form"),
+//    })
     @GetMapping(value = "/query")
     public ResultBody query(@RequestParam(value = "payOrderId", required = true) String payOrderId,
                             @RequestParam(value = "mchId", required = true) String mchId,
@@ -585,7 +583,7 @@ public class PayOrderController {
         return "success";
     }
 
-    @ApiOperation(value = "支付订单过期处理", notes = "查出订单创建时间是否超过24h，若超过则置为过期,前台不需要传参数")
+    @Schema(title = "支付订单过期处理", name = "查出订单创建时间是否超过24h，若超过则置为过期,前台不需要传参数")
     @RequestMapping(value = "/expire", method = RequestMethod.GET)
     public ResultBody<String> expire() {
         int count = payOrderService.updateStatus4Expired(1800);
@@ -593,7 +591,7 @@ public class PayOrderController {
         return ResultBody.ok("本次有" + count + "条支付订单未支付已置为过期!");
     }
 
-    @ApiOperation(value = "掉单支付结果同步", notes = "查出订单创建时间是否超过30分钟，若超过则主动查询结果,前台不需要传参数")
+    @Schema(title = "掉单支付结果同步", name = "查出订单创建时间是否超过30分钟，若超过则主动查询结果,前台不需要传参数")
     @RequestMapping(value = "/synPayResult", method = RequestMethod.GET)
     public ResultBody<String> synPayResult() {
         int count = payOrderService.synPayResult(1800);
@@ -606,13 +604,13 @@ public class PayOrderController {
      *
      * @return
      */
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "redirectUrl", value = "返回页面URL", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "code", value = "微信授权码", paramType = "form")
-    })
-    @ApiOperation(value = "获取微信授权openid", notes = "获取微信授权openid")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "redirectUrl", value = "返回页面URL", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "code", value = "微信授权码", paramType = "form")
+//    })
+    @Schema(title = "获取微信授权openid", name = "获取微信授权openid")
     @RequestMapping(value = "/getOpenId", method = RequestMethod.GET)
     public void getOpenId(HttpServletRequest request, HttpServletResponse response) throws IOException {
         _log.info("进入获取用户openID页面");
@@ -662,13 +660,13 @@ public class PayOrderController {
      *
      * @return
      */
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "redirectUrl", value = "返回页面URL", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "code", value = "微信授权码", paramType = "form")
-    })
-    @ApiOperation(value = "获取微信授权openid", notes = "获取微信授权openid")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "redirectUrl", value = "返回页面URL", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "channelCode", value = "支付渠道编码", required = true, paramType = "form"),
+//            @ApiImplicitParam(name = "code", value = "微信授权码", paramType = "form")
+//    })
+    @Schema(title = "获取微信授权openid", name = "获取微信授权openid")
     @RequestMapping(value = "/getOpenId2", method = RequestMethod.POST)
     public ResultBody getOpenId2(HttpServletRequest request) {
         _log.info("进入获取用户openID页面");

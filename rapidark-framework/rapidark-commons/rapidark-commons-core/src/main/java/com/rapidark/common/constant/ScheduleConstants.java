@@ -3,7 +3,7 @@ package com.rapidark.common.constant;
 /**
  * 任务调度通用常量
  * 
- * @author rapidark
+ * @author Darkness
  */
 public class ScheduleConstants
 {

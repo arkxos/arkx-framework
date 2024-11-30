@@ -5,10 +5,10 @@ import com.bsd.user.server.model.dto.JsSdkSignDTO;
 import com.bsd.user.server.service.DeveloperService;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 2019/9/19 12:02
  */
 @Slf4j
-@Api(tags = "开放平台")
+@Schema(title = "开放平台")
 @RestController
 @RequestMapping("/wx")
 public class WxController {
     @Autowired
     private DeveloperService developerService;
 
-    @ApiOperation(value = "获取微信JS-SDK权限验证配置", notes = "获取微信JS-SDK权限验证配置")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "url", required = true, value = "需要获取权限的URL地址", example = "http://www.xxx.com", paramType = "form")
-    })
+    @Schema(title = "获取微信JS-SDK权限验证配置", name = "获取微信JS-SDK权限验证配置")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "url", required = true, value = "需要获取权限的URL地址", example = "http://www.xxx.com", paramType = "form")
+//    })
     @PostMapping("/js/sdk/conf")
     public ResultBody<JsSdkSignDTO> init(@RequestParam(value = "url") String url) {
         //简单校验URL地址

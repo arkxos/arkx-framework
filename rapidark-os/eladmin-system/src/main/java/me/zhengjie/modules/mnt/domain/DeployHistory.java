@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.mnt.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.Getter;
@@ -37,23 +37,23 @@ public class DeployHistory implements Serializable {
 
     @Id
     @Column(name = "history_id")
-	@Schema(value = "ID", hidden = true)
+	@Schema(title = "ID", hidden = true)
     private String id;
 
-    @Schema(value = "应用名称")
+    @Schema(title = "应用名称")
     private String appName;
 
-	@Schema(value = "IP")
+	@Schema(title = "IP")
     private String ip;
 
 	@CreationTimestamp
-	@Schema(value = "部署时间")
+	@Schema(title = "部署时间")
     private Timestamp deployDate;
 
-	@Schema(value = "部署者")
+	@Schema(title = "部署者")
     private String deployUser;
 
-	@Schema(value = "部署ID")
+	@Schema(title = "部署ID")
 	private Long deployId;
 
     public void copy(DeployHistory source){

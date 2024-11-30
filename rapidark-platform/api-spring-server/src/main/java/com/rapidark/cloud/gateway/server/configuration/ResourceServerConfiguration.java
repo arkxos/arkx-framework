@@ -24,7 +24,7 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+//import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.oauth2.server.resource.web.server.authentication.ServerBearerTokenAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.WebFilterExchange;
@@ -102,43 +102,44 @@ public class ResourceServerConfiguration {
         JsonAuthenticationEntryPoint entryPoint = new JsonAuthenticationEntryPoint(accessLogService);
         JsonAccessDeniedHandler accessDeniedHandler = new JsonAccessDeniedHandler(accessLogService);
         AccessManager accessManager = new AccessManager(redisUtils, cacheChannel, resourceLocator, openAppServiceClient, apiProperties);
-        AuthenticationWebFilter oauth2 = new AuthenticationWebFilter(new RedisAuthenticationManager(new RedisTokenStore(redisConnectionFactory)));
+        AuthenticationWebFilter oauth2 = null;
+				//new AuthenticationWebFilter(new RedisAuthenticationManager(new RedisTokenStore(redisConnectionFactory)));
         oauth2.setServerAuthenticationConverter(new ServerBearerTokenAuthenticationConverter());
         oauth2.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(entryPoint));
-        oauth2.setAuthenticationSuccessHandler(new ServerAuthenticationSuccessHandler() {
-            @Override
-            public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
-                ServerWebExchange exchange = webFilterExchange.getExchange();
-                SecurityContextServerWebExchange securityContextServerWebExchange =
-                        new SecurityContextServerWebExchange(exchange,
-                                ReactiveSecurityContextHolder.getContext().subscriberContext(
-                                    ReactiveSecurityContextHolder.withAuthentication(authentication)
-                ));
-                return webFilterExchange.getChain().filter(securityContextServerWebExchange);
-            }
-        });
-        serverHttpSecurity
-                .httpBasic().disable()
-                .csrf().disable()
-                .authorizeExchange()
-                .pathMatchers("/", "/*/druid/**").permitAll()
-                // 动态权限验证
-                .anyExchange().access(accessManager)
-                .and().exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(entryPoint).and()
-                // 日志前置过滤器
-                .addFilterAt(new PreRequestFilter(), SecurityWebFiltersOrder.FIRST)
-                // 跨域过滤器
-                .addFilterAt(corsFilter(), SecurityWebFiltersOrder.CORS)
-                // 签名验证过滤器
-                .addFilterAt(new PreSignatureFilter(openAppServiceClient, apiProperties, new JsonSignatureDeniedHandler(accessLogService)), SecurityWebFiltersOrder.CSRF)
-                // 访问验证前置过滤器
-                .addFilterAt(new PreCheckFilter(accessManager, accessDeniedHandler), SecurityWebFiltersOrder.CSRF)
-                // oauth2认证过滤器
-                .addFilterAt(oauth2, SecurityWebFiltersOrder.AUTHENTICATION)
-                // 日志过滤器
-                .addFilterAt(new PreResponseFilter(accessLogService, apiProperties), SecurityWebFiltersOrder.SECURITY_CONTEXT_SERVER_WEB_EXCHANGE);
+//        oauth2.setAuthenticationSuccessHandler(new ServerAuthenticationSuccessHandler() {
+//            @Override
+//            public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
+//                ServerWebExchange exchange = webFilterExchange.getExchange();
+//                SecurityContextServerWebExchange securityContextServerWebExchange =
+//                        new SecurityContextServerWebExchange(exchange,
+//                                ReactiveSecurityContextHolder.getContext().subscriberContext(
+//                                    ReactiveSecurityContextHolder.withAuthentication(authentication)
+//                ));
+//                return webFilterExchange.getChain().filter(securityContextServerWebExchange);
+//            }
+//        });
+//        serverHttpSecurity
+//                .httpBasic().disable()
+//                .csrf().disable()
+//                .authorizeExchange()
+//                .pathMatchers("/", "/*/druid/**").permitAll()
+//                // 动态权限验证
+//                .anyExchange().access(accessManager)
+//                .and().exceptionHandling()
+//                .accessDeniedHandler(accessDeniedHandler)
+//                .authenticationEntryPoint(entryPoint).and()
+//                // 日志前置过滤器
+//                .addFilterAt(new PreRequestFilter(), SecurityWebFiltersOrder.FIRST)
+//                // 跨域过滤器
+//                .addFilterAt(corsFilter(), SecurityWebFiltersOrder.CORS)
+//                // 签名验证过滤器
+//                .addFilterAt(new PreSignatureFilter(openAppServiceClient, apiProperties, new JsonSignatureDeniedHandler(accessLogService)), SecurityWebFiltersOrder.CSRF)
+//                // 访问验证前置过滤器
+//                .addFilterAt(new PreCheckFilter(accessManager, accessDeniedHandler), SecurityWebFiltersOrder.CSRF)
+//                // oauth2认证过滤器
+//                .addFilterAt(oauth2, SecurityWebFiltersOrder.AUTHENTICATION)
+//                // 日志过滤器
+//                .addFilterAt(new PreResponseFilter(accessLogService, apiProperties), SecurityWebFiltersOrder.SECURITY_CONTEXT_SERVER_WEB_EXCHANGE);
         return serverHttpSecurity.build();
     }
 }

@@ -1,7 +1,8 @@
 package com.bsd.comment.server.model.query;
 
 import com.bsd.comment.server.validation.constraints.TopicType;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -16,24 +17,24 @@ public class CommentQuery {
      * 评论类型
      */
     @TopicType
-    @Schema(required = false, name = "commentType", value = "评论类型", example = "goods")
+    @Schema(required = false, name = "commentType", title = "评论类型", example = "goods")
     private String commentType;
 
     /**
      * 查询内容
      */
-    @Schema(required = false, name = "searchContent", value = "查询内容", example = "商品")
+    @Schema(required = false, name = "searchContent", title = "查询内容", example = "商品")
     private String searchContent;
 
     /**
      * 页数
      */
-    @Schema(required = false, name = "pageIndex", value = "页数", example = "1")
+    @Schema(required = false, name = "pageIndex", title = "页数", example = "1")
     private Integer pageIndex;
 
     /**
      * 每页大小
      */
-    @Schema(required = false, name = "pageSize", value = "每页大小", example = "20")
+    @Schema(required = false, name = "pageSize", title = "每页大小", example = "20")
     private Integer pageSize;
 }

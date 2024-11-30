@@ -1,16 +1,16 @@
 package com.rapidark.cloud.gateway.manage.rest;
 
+import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
+import com.rapidark.cloud.platform.gateway.framework.bean.LoadServerReq;
+import com.rapidark.cloud.platform.gateway.framework.service.LoadServerService;
 import com.rapidark.framework.common.model.ResultBody;
-import com.rapidark.framework.common.utils.PageData;
+import com.rapidark.framework.common.utils.PageResult;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rapidark.cloud.gateway.formwork.base.BaseRest;
-import com.rapidark.cloud.gateway.formwork.bean.LoadServerReq;
-import com.rapidark.cloud.gateway.manage.service.LoadServerService;
 
 import javax.annotation.Resource;
 
@@ -60,7 +60,7 @@ public class LoadServerRest extends BaseRest {
         }else {
             int currentPage = getCurrentPage(loadServerReq.getCurrentPage());
             int pageSize = getPageSize(loadServerReq.getPageSize());
-            PageData data = loadServerService.notLoadServerPageList(currentPage, pageSize);
+			PageResult data = loadServerService.notLoadServerPageList(currentPage, pageSize);
             return ResultBody.ok(data);
         }
     }

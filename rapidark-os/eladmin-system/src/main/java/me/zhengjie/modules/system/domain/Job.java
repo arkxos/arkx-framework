@@ -16,7 +16,7 @@
 package me.zhengjie.modules.system.domain;
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,20 +39,20 @@ public class Job extends AbstractIdLongEntity implements Serializable {
     @Id
     @Column(name = "job_id")
     @NotNull(groups = Update.class)
-    @Schema(value = "ID", hidden = true)
+    @Schema(title = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Schema(value = "岗位名称")
+    @Schema(title = "岗位名称")
     private String name;
 
     @NotNull
-    @Schema(value = "岗位排序")
+    @Schema(title = "岗位排序")
     private Long jobSort;
 
     @NotNull
-    @Schema(value = "是否启用")
+    @Schema(title = "是否启用")
     private Boolean enabled;
 
     @Override

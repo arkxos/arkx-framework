@@ -1,8 +1,8 @@
 package com.bsd.org.server.controller.command;
 
 import com.rapidark.cloud.base.client.service.command.AddUserCommand;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +18,7 @@ import jakarta.validation.constraints.NotEmpty;
 @Schema(description = "添加钉钉用户命令")
 public class AddDingDingUserCommand extends AddUserCommand {
 
-    @Schema(name = "ddUserid", value = "用户钉钉ID", example = "", required = true)
+    @Schema(name = "ddUserid", title = "用户钉钉ID", example = "", required = true)
     @NotEmpty(message = "用户钉钉ID不能为空")
     private String ddUserid;
 

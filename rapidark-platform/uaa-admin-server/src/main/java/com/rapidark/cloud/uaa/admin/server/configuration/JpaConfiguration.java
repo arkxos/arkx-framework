@@ -15,7 +15,7 @@ import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

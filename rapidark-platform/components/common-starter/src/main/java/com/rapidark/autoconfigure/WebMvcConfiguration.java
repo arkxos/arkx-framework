@@ -4,7 +4,6 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,24 +15,24 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     /**
      * 多个WebSecurityConfigurerAdapter
      */
-    @Configuration
-    @Order(101)
-    public static class ApiWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-        @Override
-        public void configure(WebSecurity web) {
-            web.ignoring().antMatchers(
-                    "/error",
-                    "/static/**",
-                    "/v2/api-docs/**",
-                    "/v2/api-docs-ext",
-                    "/v2/api-docs-ext/**",
-                    "/swagger-resources/**",
-                    "/webjars/**",
-                    "/favicon.ico",
-                    "/billGenerator/**"
-            );
-        }
-    }
+//    @Configuration
+//    @Order(101)
+//    public static class ApiWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+//        @Override
+//        public void configure(WebSecurity web) {
+//            web.ignoring().antMatchers(
+//                    "/error",
+//                    "/static/**",
+//                    "/v2/api-docs/**",
+//                    "/v2/api-docs-ext",
+//                    "/v2/api-docs-ext/**",
+//                    "/swagger-resources/**",
+//                    "/webjars/**",
+//                    "/favicon.ico",
+//                    "/billGenerator/**"
+//            );
+//        }
+//    }
 
     /**
      * 资源处理器

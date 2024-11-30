@@ -1,6 +1,6 @@
 package com.xdreamaker.framework.ddd.stream.channel;
 
-import org.springframework.cloud.stream.annotation.Output;
+//import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 /**
@@ -8,6 +8,6 @@ import org.springframework.messaging.MessageChannel;
  */
 public interface OutputChannel {
 
-    @Output(ChannelDefinition.CONTRACTS)
+//    @Output(ChannelDefinition.CONTRACTS)
     MessageChannel contract();
 }
