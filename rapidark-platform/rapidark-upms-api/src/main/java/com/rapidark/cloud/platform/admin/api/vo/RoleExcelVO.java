@@ -3,7 +3,7 @@ package com.rapidark.cloud.platform.admin.api.vo;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.pig4cloud.plugin.excel.annotation.ExcelLine;
+//import com.pig4cloud.plugin.excel.annotation.ExcelLine;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -25,7 +25,7 @@ public class RoleExcelVO implements Serializable {
 	/**
 	 * 导入时候回显行号
 	 */
-	@ExcelLine
+//	@ExcelLine
 	@ExcelIgnore
 	private Long lineNum;
 
