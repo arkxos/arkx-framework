@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.rapidark</groupId>
-		<artifactId>rapidark-cloud</artifactId>
+		<artifactId>rapidark-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
