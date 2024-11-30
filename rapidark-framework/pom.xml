@@ -27,7 +27,8 @@
         <module>rapidark-data</module>
         <module>rapidark-boot</module>
         <module>rapidark-sidecar</module>
-    </modules>
+		<module>rapidark-cloud</module>
+	</modules>
 
     <dependencies>
 <!--        <dependency>-->

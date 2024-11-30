@@ -12,6 +12,10 @@
     <artifactId>rapidark-gateway-framework</artifactId>
 
     <dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-bus</artifactId>
+		</dependency>
         <!-- springJPA-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

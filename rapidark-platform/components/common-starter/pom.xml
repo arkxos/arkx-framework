@@ -40,6 +40,11 @@
             <artifactId>rapidark-commons-core</artifactId>
             <version>${revision}</version>
         </dependency>
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-cloud</artifactId>
+			<version>${revision}</version>
+		</dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
@@ -126,7 +131,7 @@
 		<dependency>
 			<groupId>com.rapidark.framework</groupId>
 			<artifactId>rapidark-data-mybatis</artifactId>
-			<version>10.0.3</version>
+			<version>${revision}</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>

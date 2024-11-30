@@ -30,19 +30,7 @@
 		<dependency>
 			<groupId>com.rapidark.platform</groupId>
 			<artifactId>rapidark-upms-api</artifactId>
-			<version>17.0.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.rapidark.platform</groupId>
-			<artifactId>rapidark-upms-api</artifactId>
-			<version>17.0.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.rapidark.platform</groupId>
-			<artifactId>rapidark-upms-api</artifactId>
-			<version>17.0.0</version>
+			<version>${revision}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -54,7 +42,7 @@
 		<dependency>
 			<groupId>com.rapidark.platform</groupId>
 			<artifactId>rapidark-gateway-framework</artifactId>
-			<version>10.0.3</version>
+			<version>${revision}</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
