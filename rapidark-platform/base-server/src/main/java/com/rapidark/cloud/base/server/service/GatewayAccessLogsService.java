@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service.impl;
+package com.rapidark.cloud.base.server.service;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;

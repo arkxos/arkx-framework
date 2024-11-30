@@ -5,7 +5,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
 import com.rapidark.cloud.base.client.service.IBaseDeveloperServiceClient;
 
 import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPasswordCommand;
-import com.rapidark.cloud.base.server.service.impl.BaseDeveloperService;
+import com.rapidark.cloud.base.server.service.BaseDeveloperService;
 import com.rapidark.cloud.gateway.manage.service.command.CreateDeveloperCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
 import com.rapidark.framework.common.model.PageParams;

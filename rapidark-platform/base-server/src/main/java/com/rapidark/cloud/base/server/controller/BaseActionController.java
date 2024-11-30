@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
-import com.rapidark.cloud.base.server.service.impl.BaseActionService;
+import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.framework.common.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;

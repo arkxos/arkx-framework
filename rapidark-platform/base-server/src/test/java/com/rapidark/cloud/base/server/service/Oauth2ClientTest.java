@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service.impl;
+package com.rapidark.cloud.base.server.service;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

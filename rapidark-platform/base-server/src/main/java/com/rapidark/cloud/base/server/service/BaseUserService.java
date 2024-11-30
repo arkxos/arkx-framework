@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.service.impl;
+package com.rapidark.cloud.base.server.service;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
