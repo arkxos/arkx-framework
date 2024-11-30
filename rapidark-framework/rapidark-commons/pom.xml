@@ -29,6 +29,7 @@
 		<module>rapidark-common-swagger</module>
 		<module>rapidark-common-xss</module>
 		<module>rapidark-common-excel</module>
+        <module>rapidark-commons-webmvc</module>
     </modules>
 
     <dependencies>

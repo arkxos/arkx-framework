@@ -31,11 +31,11 @@
 
 
     <dependencies>
-<!--		<dependency>-->
-<!--			<groupId>com.rapidark.framework</groupId>-->
-<!--			<artifactId>rapidark-commons-core</artifactId>-->
-<!--			<version>${revision}</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-commons-core</artifactId>
+			<version>${revision}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson</artifactId>
