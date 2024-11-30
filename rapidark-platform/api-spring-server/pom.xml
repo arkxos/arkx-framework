@@ -91,11 +91,6 @@
             <artifactId>common-starter</artifactId>
             <version>${revision}</version>
         </dependency>-->
-        <dependency>
-            <groupId>com.rapidark.platform</groupId>
-            <artifactId>base-client</artifactId>
-            <version>${revision}</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-loadbalancer -->
         <dependency>

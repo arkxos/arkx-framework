@@ -26,11 +26,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <artifactId>base-client</artifactId>
-            <groupId>com.rapidark.platform</groupId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
             <groupId>com.rapidark.platform</groupId>
             <artifactId>rapidark-upms-api</artifactId>
             <version>${revision}</version>

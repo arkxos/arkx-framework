@@ -33,11 +33,6 @@
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
         <dependency>
-            <artifactId>base-client</artifactId>
-            <groupId>com.rapidark.platform</groupId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <scope>test</scope>

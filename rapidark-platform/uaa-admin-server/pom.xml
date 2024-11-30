@@ -54,11 +54,6 @@
             <artifactId>spring-security-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rapidark.platform</groupId>
-            <artifactId>base-client</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>

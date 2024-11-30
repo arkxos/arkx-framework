@@ -40,11 +40,6 @@
             <groupId>com.rapidark.platform</groupId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <artifactId>base-client</artifactId>
-            <groupId>com.rapidark.platform</groupId>
-            <version>${revision}</version>
-        </dependency>
         <!--mapStruct依赖-->
 <!--        <dependency>-->
 <!--            <groupId>org.mapstruct</groupId>-->

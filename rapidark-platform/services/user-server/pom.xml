@@ -24,11 +24,6 @@
             <groupId>com.rapidark.platform</groupId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <artifactId>base-client</artifactId>
-            <groupId>com.rapidark.platform</groupId>
-            <version>${revision}</version>
-        </dependency>
         <!--JJWT库-->
 <!--        <dependency>-->
 <!--            <groupId>io.jsonwebtoken</groupId>-->
