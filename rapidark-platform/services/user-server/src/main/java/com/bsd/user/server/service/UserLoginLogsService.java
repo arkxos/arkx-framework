@@ -1,7 +1,7 @@
 package com.bsd.user.server.service;
 
 import com.bsd.user.server.model.entity.UserLoginLogs;
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 /**
  * 用户-登录日志 服务类

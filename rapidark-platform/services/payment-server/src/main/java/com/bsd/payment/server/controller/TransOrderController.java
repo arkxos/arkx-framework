@@ -10,7 +10,7 @@ import com.bsd.payment.server.model.entity.TransOrder;
 import com.bsd.payment.server.service.IPayChannelService;
 import com.bsd.payment.server.service.ITransOrderService;
 import com.bsd.payment.server.service.mq.MqService;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.WebUtils;
 

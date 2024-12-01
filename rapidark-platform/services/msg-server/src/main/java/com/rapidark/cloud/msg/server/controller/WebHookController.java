@@ -3,7 +3,7 @@ package com.rapidark.cloud.msg.server.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.msg.server.service.DelayMessageService;
 import com.rapidark.cloud.msg.server.service.WebHookLogsService;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.cloud.msg.client.model.WebHookMessage;
 import com.rapidark.cloud.msg.client.model.entity.WebHookLogs;

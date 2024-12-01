@@ -20,7 +20,6 @@
 package com.rapidark.cloud.platform.admin.api.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +27,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Transient;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,7 @@ import java.util.List;
  */
 @Data
 @Schema(description = "菜单")
-@EqualsAndHashCode(callSuper = true)
-public class SysMenu extends Model<SysMenu> {
+public class SysMenu implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

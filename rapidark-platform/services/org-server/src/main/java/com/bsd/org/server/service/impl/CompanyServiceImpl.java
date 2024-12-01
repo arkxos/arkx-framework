@@ -13,7 +13,7 @@ import com.bsd.org.server.service.CompanyService;
 import com.bsd.org.server.service.DepartmentService;
 import com.bsd.org.server.service.UserService;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;

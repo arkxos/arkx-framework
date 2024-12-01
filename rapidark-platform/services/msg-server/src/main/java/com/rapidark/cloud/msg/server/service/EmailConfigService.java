@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.server.service;
 
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 import com.rapidark.cloud.msg.client.model.entity.EmailConfig;
 
 import java.util.List;

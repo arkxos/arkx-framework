@@ -1,7 +1,7 @@
 package com.bsd.comment.server.mapper;
 
 import com.bsd.comment.server.model.entity.Comment;
-import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.data.mybatis.mapper.SuperMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

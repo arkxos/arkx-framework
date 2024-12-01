@@ -9,7 +9,7 @@ import com.bsd.user.server.model.entity.User;
 import com.bsd.user.server.service.ConsigneeAddressService;
 import com.bsd.user.server.service.UserService;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.framework.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.msg.client.model.entity.EmailLogs;
 import com.rapidark.cloud.msg.server.service.EmailLogsService;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 
 import io.swagger.v3.oas.annotations.media.Schema;

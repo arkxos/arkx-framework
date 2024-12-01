@@ -12,7 +12,7 @@ import com.bsd.org.server.model.entity.Department;
 import com.bsd.org.server.model.vo.DepartmentVO;
 import com.bsd.org.server.service.DepartmentService;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.framework.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

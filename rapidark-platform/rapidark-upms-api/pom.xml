@@ -42,14 +42,9 @@
             <artifactId>rapidark-common-feign</artifactId>
         </dependency>
         <!--mybatis 依赖-->
-        <dependency>
-            <groupId>com.rapidark.framework</groupId>
-            <artifactId>rapidark-common-mybatis</artifactId>
-        </dependency>
-        <!-- excel 导入导出 -->
 <!--        <dependency>-->
 <!--            <groupId>com.rapidark.framework</groupId>-->
-<!--            <artifactId>rapidark-common-excel</artifactId>-->
+<!--            <artifactId>rapidark-data-mybatis</artifactId>-->
 <!--        </dependency>-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -64,14 +59,13 @@
         </dependency>
 		<dependency>
 			<groupId>com.rapidark.framework</groupId>
-			<artifactId>rapidark-data-mybatis</artifactId>
-			<version>${revision}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.rapidark.framework</groupId>
 			<artifactId>rapidark-commons-core</artifactId>
 			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-annotation</artifactId>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!-- groovy动态脚本引擎 -->
 		<dependency>

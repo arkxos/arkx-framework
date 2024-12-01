@@ -1,15 +1,15 @@
 package com.rapidark.cloud.platform.admin.api.util;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.platform.admin.api.feign.RemoteDictService;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 
+import com.rapidark.framework.common.utils.StringUtils;
+import jodd.util.StringPool;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.List;
 

@@ -25,6 +25,8 @@ spring:
     import:
       - optional:nacos:application-@profiles.active@.yml
       - optional:nacos:rapidark-dynamic-gateway.yml
+      - optional:nacos:redis.yml
+      - optional:nacos:rabbitmq.yml
       #- optional:nacos:${spring.application.name}-@profiles.active@.yml
 
 

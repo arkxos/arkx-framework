@@ -13,7 +13,7 @@ import com.bsd.payment.server.service.*;
 import com.bsd.payment.server.service.mq.Mq4RefundNotify;
 import com.bsd.payment.server.util.*;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;

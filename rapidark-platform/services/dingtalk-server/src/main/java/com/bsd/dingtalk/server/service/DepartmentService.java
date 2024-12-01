@@ -1,7 +1,7 @@
 package com.bsd.dingtalk.server.service;
 
 import com.bsd.dingtalk.server.model.entity.Department;
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 import java.util.List;
 

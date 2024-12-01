@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.server.mapper;
 
-import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.data.mybatis.mapper.SuperMapper;
 import com.rapidark.cloud.msg.client.model.entity.EmailLogs;
 import org.springframework.stereotype.Repository;
 

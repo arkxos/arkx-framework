@@ -13,7 +13,7 @@ import com.bsd.payment.server.util.PayDigestUtil;
 import com.bsd.payment.server.util.RpcUtil;
 import com.bsd.payment.server.util.XXPayUtil;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.WebUtils;
 

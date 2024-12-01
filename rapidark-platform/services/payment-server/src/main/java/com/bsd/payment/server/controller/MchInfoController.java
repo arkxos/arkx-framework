@@ -6,7 +6,7 @@ import com.bsd.payment.server.model.entity.MchInfo;
 import com.bsd.payment.server.service.IMchInfoService;
 import com.bsd.payment.server.util.MyLog;
 import com.bsd.payment.server.util.ObjectValidUtil;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 
 import io.swagger.v3.oas.annotations.media.Schema;

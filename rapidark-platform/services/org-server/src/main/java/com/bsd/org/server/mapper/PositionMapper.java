@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.bsd.org.server.model.entity.Position;
 import com.bsd.org.server.model.vo.PositionVO;
-import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.data.mybatis.mapper.SuperMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

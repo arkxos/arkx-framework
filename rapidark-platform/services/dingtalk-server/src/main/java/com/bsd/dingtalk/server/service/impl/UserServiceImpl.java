@@ -15,7 +15,7 @@ import com.bsd.dingtalk.server.util.AccessTokenUtil;
 import com.bsd.dingtalk.server.util.ContactHelper;
 import com.dingtalk.api.response.OapiDepartmentGetResponse;
 import com.dingtalk.api.response.OapiUserListResponse;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.framework.common.utils.RedisUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;

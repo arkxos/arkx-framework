@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.server.service.impl;
 
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.cloud.msg.client.model.entity.EmailLogs;
 import com.rapidark.cloud.msg.server.mapper.EmailLogsMapper;
 import com.rapidark.cloud.msg.server.service.EmailLogsService;

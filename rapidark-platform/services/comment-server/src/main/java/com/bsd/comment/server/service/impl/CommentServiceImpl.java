@@ -16,7 +16,7 @@ import com.bsd.comment.server.model.query.CommentQuery;
 import com.bsd.comment.server.service.CommentReplyService;
 import com.bsd.comment.server.service.CommentService;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.framework.common.security.OpenHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

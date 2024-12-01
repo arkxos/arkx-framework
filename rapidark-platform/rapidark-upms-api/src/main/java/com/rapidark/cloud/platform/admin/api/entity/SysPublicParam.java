@@ -18,11 +18,11 @@
 package com.rapidark.cloud.platform.admin.api.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -33,8 +33,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Schema(description = "公共参数")
-@EqualsAndHashCode(callSuper = true)
-public class SysPublicParam extends Model<SysPublicParam> {
+public class SysPublicParam implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

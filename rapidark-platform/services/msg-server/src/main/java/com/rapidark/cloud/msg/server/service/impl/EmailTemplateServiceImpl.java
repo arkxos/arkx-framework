@@ -1,7 +1,7 @@
 package com.rapidark.cloud.msg.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.cloud.msg.client.model.entity.EmailTemplate;
 import com.rapidark.cloud.msg.server.mapper.EmailTemplateMapper;
 import com.rapidark.cloud.msg.server.service.EmailTemplateService;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.bsd.payment.server.model.entity.MchNotify;
 import com.bsd.payment.server.service.IMchNotifyService;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -17,11 +17,11 @@
 
 package com.rapidark.cloud.platform.admin.api.feign;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
+import com.rapidark.framework.common.utils.PageResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +41,7 @@ public interface RemoteTokenService {
 	 */
 	@NoToken
 	@PostMapping("/token/page")
-	ResponseResult<Page> getTokenPage(@RequestBody Map<String, Object> params);
+	ResponseResult<PageResult> getTokenPage(@RequestBody Map<String, Object> params);
 
 	/**
 	 * 删除token

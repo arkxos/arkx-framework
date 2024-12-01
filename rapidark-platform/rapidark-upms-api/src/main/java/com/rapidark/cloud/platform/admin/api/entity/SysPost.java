@@ -18,13 +18,13 @@
 package com.rapidark.cloud.platform.admin.api.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -35,9 +35,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("sys_post")
-@EqualsAndHashCode(callSuper = true)
 @Schema(description = "岗位信息表")
-public class SysPost extends Model<SysPost> {
+public class SysPost implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

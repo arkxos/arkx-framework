@@ -1,7 +1,7 @@
 package com.bsd.dingtalk.server.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.rapidark.framework.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.framework.data.mybatis.model.AbstractEntity;
 
 /**
  * 钉钉配置信息

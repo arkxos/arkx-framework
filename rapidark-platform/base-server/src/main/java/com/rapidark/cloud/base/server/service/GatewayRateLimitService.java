@@ -8,7 +8,7 @@ import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitApiRepository;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

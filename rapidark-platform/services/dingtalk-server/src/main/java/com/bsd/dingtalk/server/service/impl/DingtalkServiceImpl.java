@@ -3,7 +3,7 @@ package com.bsd.dingtalk.server.service.impl;
 import com.bsd.dingtalk.server.mapper.DingtalkMapper;
 import com.bsd.dingtalk.server.model.entity.Dingtalk;
 import com.bsd.dingtalk.server.service.DingtalkService;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

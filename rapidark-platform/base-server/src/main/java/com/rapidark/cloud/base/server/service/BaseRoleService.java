@@ -10,7 +10,7 @@ import com.rapidark.cloud.base.server.repository.BaseUserRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

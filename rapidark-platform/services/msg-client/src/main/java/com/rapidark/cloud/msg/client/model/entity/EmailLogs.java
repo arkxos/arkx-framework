@@ -3,7 +3,7 @@ package com.rapidark.cloud.msg.client.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.rapidark.framework.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.framework.data.mybatis.model.AbstractEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;

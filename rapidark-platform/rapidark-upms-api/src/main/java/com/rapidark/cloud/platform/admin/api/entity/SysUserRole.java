@@ -19,10 +19,11 @@
 
 package com.rapidark.cloud.platform.admin.api.entity;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -34,8 +35,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @Schema(description = "用户角色")
-@EqualsAndHashCode(callSuper = true)
-public class SysUserRole extends Model<SysUserRole> {
+public class SysUserRole implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

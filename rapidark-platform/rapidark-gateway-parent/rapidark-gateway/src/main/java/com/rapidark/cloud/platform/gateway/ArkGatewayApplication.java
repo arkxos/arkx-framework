@@ -33,7 +33,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @EnableScheduling
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.rapidark")
 @EnableJpaRepositories(
 		basePackages = { "com.xdreamaker", "com.rapidark" },
 		repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)

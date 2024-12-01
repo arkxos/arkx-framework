@@ -6,7 +6,7 @@ import com.rapidark.cloud.base.client.model.entity.GatewayIpLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.repository.GatewayIpLimitApiRepository;
 import com.rapidark.cloud.base.server.repository.GatewayIpLimitRepository;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import lombok.extern.slf4j.Slf4j;

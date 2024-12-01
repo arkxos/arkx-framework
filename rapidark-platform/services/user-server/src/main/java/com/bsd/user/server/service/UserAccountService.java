@@ -2,7 +2,7 @@ package com.bsd.user.server.service;
 
 import com.bsd.user.server.model.UserAccountPo;
 import com.bsd.user.server.model.entity.UserAccount;
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 import java.util.List;
 import java.util.Map;

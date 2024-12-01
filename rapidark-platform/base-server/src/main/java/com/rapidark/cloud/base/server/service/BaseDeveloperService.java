@@ -15,7 +15,7 @@ import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPasswordCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;

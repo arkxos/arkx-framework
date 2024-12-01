@@ -18,7 +18,7 @@ import com.bsd.user.server.service.UserService;
 import com.bsd.user.server.service.WechatAuthService;
 import com.bsd.user.server.utils.JwtTokenUtils;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2Service;
 import com.rapidark.framework.common.utils.RandomValueUtils;
 import com.rapidark.framework.common.utils.RedisUtils;

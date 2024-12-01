@@ -2,7 +2,7 @@ package com.bsd.org.server.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.rapidark.framework.common.mybatis.base.entity.AbstractEntity;
+import com.rapidark.framework.data.mybatis.model.AbstractEntity;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

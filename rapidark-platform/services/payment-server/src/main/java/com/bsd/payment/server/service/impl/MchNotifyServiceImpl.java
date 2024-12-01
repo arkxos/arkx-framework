@@ -10,8 +10,8 @@ import com.bsd.payment.server.model.entity.MchNotify;
 import com.bsd.payment.server.service.IMchNotifyService;
 import com.bsd.payment.server.util.ObjectValidUtil;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.PageParams;
-import com.rapidark.framework.common.mybatis.base.service.impl.BaseServiceImpl;
+import com.rapidark.framework.data.mybatis.model.PageParams;
+import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

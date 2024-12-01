@@ -1,7 +1,7 @@
 package com.bsd.dingtalk.server.service;
 
 import com.bsd.dingtalk.server.model.entity.Company;
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 /**
  * 企业信息表 服务类

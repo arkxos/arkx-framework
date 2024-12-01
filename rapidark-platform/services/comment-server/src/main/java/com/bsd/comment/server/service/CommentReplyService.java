@@ -1,7 +1,7 @@
 package com.bsd.comment.server.service;
 
 import com.bsd.comment.server.model.entity.CommentReply;
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 import java.util.List;
 

@@ -15,7 +15,7 @@ import com.rapidark.cloud.base.server.repository.BaseRoleUserRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.security.OpenSecurityConstants;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;

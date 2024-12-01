@@ -6,37 +6,38 @@ server:
   # address: 0.0.0.0
 
 spring:
+  application:
+    # 应用服务名
+    name: rapidark-gateway-manage
   # address: 0.0.0.0
   config:
     import:
       - nacos:application-@profiles.active@.yml
       - nacos:${spring.application.name}-@profiles.active@.yml
-      - optional:classpath:application-db.yml
       - optional:classpath:application-mail.yml
-#
+      - optional:nacos:redis.yml
+      - optional:nacos:rabbitmq.yml
+
+  #
 #  config:
 #    # 在升级到springcloud-2021.0.1.x后spring-cloud-starter-alibaba-nacos-config模块移除了spring-cloud-starter-bootstrap依赖
 #    # 导致bootstarp.yml不会在进行加载，需要通过spring.config.import=optional:nacos: instead.加载nacos中心的指定dataId属性
 #    import:
 #      - optional:nacos:${spring.cloud.nacos.config.prefix}.${spring.cloud.nacos.config.file-extension}
 #
-  application:
-    # 应用服务名
-    name: rapidark-gateway-manage
+
 #  profiles:
 #    active: db,mail
 #  security:
 #    user:
 #      name: admin
 #      password: admin
-  cache:
-    type: redis # 缓存类型 Redis
-  data:
-    redis:
-      host: rapidark-redis  # Redis地址
-      password: rapidark # Redis密码，没有留空
-      port: 6379  # Redis端口
+#  cache:
+#    type: redis # 缓存类型 Redis
   cloud:
+    #手动配置Bus id,
+    bus:
+      id: ${spring.application.name}:${server.port}
     # 注册到nacos，服务注册发现和配置管理中心
     nacos:
       username: @nacos.username@
@@ -47,6 +48,9 @@ spring:
         # false只获取服务，不注册当前服务; 默认为true
         # register-enabled: false
         server-addr: ${NACOS_HOST:rapidark-register}:${NACOS_PORT:8848}
+        watch:
+          enabled: true
+        watch-delay: 1000
       config:
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         # 注意：管理模块和网关模块均采用统一的配置管理名称（dataId）和默认DEFAULT_GROUP组（group）

@@ -2,7 +2,7 @@ package com.bsd.org.server.service;
 
 import com.bsd.org.server.model.entity.Company;
 import com.bsd.org.server.model.vo.CompanyMenuVO;
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 import java.util.List;
 

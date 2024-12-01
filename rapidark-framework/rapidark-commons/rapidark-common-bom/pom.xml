@@ -55,7 +55,7 @@
             </dependency>
             <dependency>
                 <groupId>com.rapidark.framework</groupId>
-                <artifactId>rapidark-common-mybatis</artifactId>
+                <artifactId>rapidark-data-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

@@ -36,6 +36,11 @@
             <groupId>com.rapidark.framework</groupId>
             <artifactId>rapidark-common-feign</artifactId>
         </dependency>
+		<!-- excel 导入导出 -->
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-common-excel</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents.client5</groupId>
 			<artifactId>httpclient5</artifactId>
@@ -51,7 +56,7 @@
         <!--mybatis-->
         <dependency>
             <groupId>com.rapidark.framework</groupId>
-            <artifactId>rapidark-common-mybatis</artifactId>
+            <artifactId>rapidark-data-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

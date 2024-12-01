@@ -27,14 +27,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.rapidark.framework</groupId>
-			<artifactId>rapidark-common-mybatis</artifactId>
-		</dependency>
 	</dependencies>
 
 </project>

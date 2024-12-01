@@ -1,7 +1,7 @@
 package com.bsd.dingtalk.server.service;
 
 import com.bsd.dingtalk.server.model.entity.Position;
-import com.rapidark.framework.common.mybatis.base.service.IBaseService;
+import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 /**
  * 岗位体系表 服务类

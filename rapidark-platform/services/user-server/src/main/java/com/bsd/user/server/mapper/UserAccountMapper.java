@@ -1,7 +1,7 @@
 package com.bsd.user.server.mapper;
 
 import com.bsd.user.server.model.entity.UserAccount;
-import com.rapidark.framework.common.mybatis.base.mapper.SuperMapper;
+import com.rapidark.framework.data.mybatis.mapper.SuperMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

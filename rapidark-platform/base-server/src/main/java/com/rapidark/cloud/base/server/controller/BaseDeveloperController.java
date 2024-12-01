@@ -8,7 +8,7 @@ import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPassword
 import com.rapidark.cloud.base.server.service.BaseDeveloperService;
 import com.rapidark.cloud.gateway.manage.service.command.CreateDeveloperCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.SystemIdGenerator;

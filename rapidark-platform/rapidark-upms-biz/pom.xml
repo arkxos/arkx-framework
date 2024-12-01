@@ -36,6 +36,11 @@
             <artifactId>rapidark-upms-api</artifactId>
 			<version>${revision}</version>
         </dependency>
+		<!-- excel 导入导出 -->
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-common-excel</artifactId>
+		</dependency>
         <!--文件管理-->
         <dependency>
             <groupId>com.rapidark.framework</groupId>

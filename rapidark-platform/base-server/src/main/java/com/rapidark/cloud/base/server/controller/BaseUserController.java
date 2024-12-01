@@ -8,7 +8,7 @@ import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.cloud.base.server.controller.cmd.AddUserRolesCommand;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;

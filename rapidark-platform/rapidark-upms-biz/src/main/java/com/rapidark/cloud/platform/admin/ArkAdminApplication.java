@@ -37,7 +37,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableArkFeignClients
 @EnableArkResourceServer
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.rapidark")
 public class ArkAdminApplication {
 
 	public static void main(String[] args) {

@@ -17,12 +17,12 @@
 package com.rapidark.cloud.platform.admin.api.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -33,8 +33,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Schema(description = "字典项")
-@EqualsAndHashCode(callSuper = true)
-public class SysDictItem extends Model<SysDictItem> {
+public class SysDictItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

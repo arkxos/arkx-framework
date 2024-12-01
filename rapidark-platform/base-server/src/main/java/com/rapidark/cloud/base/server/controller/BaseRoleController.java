@@ -5,7 +5,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseRoleUser;
 import com.rapidark.cloud.base.server.controller.cmd.AddRoleCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateRoleCommand;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
-import com.rapidark.framework.common.model.PageParams;
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.data.jpa.entity.Status;

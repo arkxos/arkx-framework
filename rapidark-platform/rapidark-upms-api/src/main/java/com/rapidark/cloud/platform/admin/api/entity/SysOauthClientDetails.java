@@ -20,12 +20,12 @@
 package com.rapidark.cloud.platform.admin.api.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -38,8 +38,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Schema(description = "客户端信息")
-@EqualsAndHashCode(callSuper = true)
-public class SysOauthClientDetails extends Model<SysOauthClientDetails> {
+public class SysOauthClientDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
