@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.mybatis.handler;
+package com.rapidark.framework.data.mybatis.type.handler;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ArrayUtil;
