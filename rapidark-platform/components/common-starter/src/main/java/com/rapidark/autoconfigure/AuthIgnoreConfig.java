@@ -30,11 +30,11 @@ import java.util.regex.Pattern;
 @ConfigurationProperties(prefix = "security.oauth2.client.ignore-urls")
 public class AuthIgnoreConfig implements InitializingBean {
 
+	private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
+	private static final String ASTERISK = "*";
+
     @Autowired
     private WebApplicationContext applicationContext;
-
-    private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
-    private static final String ASTERISK = "*";
 
     @Getter
     @Setter

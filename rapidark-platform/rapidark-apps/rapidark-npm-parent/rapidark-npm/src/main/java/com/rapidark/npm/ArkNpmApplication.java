@@ -1,8 +1,7 @@
 package com.rapidark.npm;
 
-import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
+import com.rapidark.framework.boot.RapidArkApplication;
 import com.rapidark.npm.cdn.CDNServlet;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

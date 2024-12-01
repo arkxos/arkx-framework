@@ -16,7 +16,7 @@
 
 package com.rapidark.cloud.platform.auth;
 
-import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
+import com.rapidark.framework.boot.RapidArkApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 

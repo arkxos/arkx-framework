@@ -16,9 +16,8 @@
 
 package com.rapidark.cloud.platform.gateway;
 
-import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
+import com.rapidark.framework.boot.RapidArkApplication;
 import com.rapidark.framework.data.jpa.BaseRepositoryFactoryBean;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

@@ -16,9 +16,8 @@
 
 package com.rapidark.cloud.platform.monitor;
 
-import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
+import com.rapidark.framework.boot.RapidArkApplication;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 

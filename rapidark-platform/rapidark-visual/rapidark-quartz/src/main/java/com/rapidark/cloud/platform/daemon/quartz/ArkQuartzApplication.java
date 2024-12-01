@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.daemon.quartz;
 
-import com.rapidark.cloud.platform.common.core.boot.RapidArkApplication;
+import com.rapidark.framework.boot.RapidArkApplication;
 import com.rapidark.cloud.platform.common.feign.annotation.EnableArkFeignClients;
 import com.rapidark.cloud.platform.common.security.annotation.EnableArkResourceServer;
 import com.rapidark.cloud.platform.common.swagger.annotation.EnableArkDoc;

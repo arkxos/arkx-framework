@@ -141,9 +141,15 @@
 			<artifactId>spring-security-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.rapidark.platform</groupId>
-			<artifactId>rapidark-platform-support-common-biz</artifactId>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-boot</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
 		</dependency>
+		<!--		<dependency>-->
+<!--			<groupId>com.rapidark.platform</groupId>-->
+<!--			<artifactId>rapidark-platform-support-common-biz</artifactId>-->
+<!--		</dependency>-->
 	</dependencies>
 
 <!--	<build>-->

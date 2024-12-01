@@ -52,10 +52,10 @@ import java.util.Map;
  * @date 2018-11-24
  */
 @Slf4j
-@Configuration
-@EnableCaching
-@ConditionalOnClass(RedisOperations.class)
-@EnableConfigurationProperties(RedisProperties.class)
+//@Configuration
+//@EnableCaching
+//@ConditionalOnClass(RedisOperations.class)
+//@EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig implements CachingConfigurer {
 
     /**
