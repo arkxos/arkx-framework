@@ -79,7 +79,7 @@ public class NpmConfiguration {
 		config.addAllowedMethod("*");
 		config.addAllowedOriginPattern("*");
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/npm/cdn/**", config);
+		source.registerCorsConfiguration("/cdn/**", config);
 		return new CorsFilter(source);
 	}
 
