@@ -72,7 +72,8 @@ public class GatewayConfiguration {
 			authorizeExchangeSpec.pathMatchers(
 					"/npm/cdn/**",
 					"/auth/captcha/image",
-					"/auth/oauth2/token"
+					"/auth/oauth2/token",
+					"/**"
 			).permitAll();
 		}))
 		.csrf(ServerHttpSecurity.CsrfSpec::disable);
