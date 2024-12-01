@@ -18,6 +18,7 @@ import com.rapidark.cloud.platform.gateway.manage.rest.cmd.StringIdCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +55,7 @@ public class RouteConfigRest extends BaseRest {
      * @param gatewayAppRouteReq
      * @return
      */
-    @RequestMapping(value = "/add", method = {RequestMethod.POST})
+    @PostMapping(value = "/add")
     public ResponseResult add(@RequestBody GatewayAppRouteReq gatewayAppRouteReq){
         Assert.notNull(gatewayAppRouteReq, "未获取到对象");
         GatewayAppRouteDataBean gatewayAppRouteDataBean = toRoute(gatewayAppRouteReq);
@@ -87,7 +88,7 @@ public class RouteConfigRest extends BaseRest {
      * @param gatewayAppRouteReq
      * @return
      */
-    @RequestMapping(value = "/update", method = {RequestMethod.POST})
+    @PostMapping(value = "/update")
     public ResponseResult update(@RequestBody GatewayAppRouteReq gatewayAppRouteReq){
         Assert.notNull(gatewayAppRouteReq, "未获取到对象");
         GatewayAppRouteDataBean gatewayAppRouteDataBean = toRoute(gatewayAppRouteReq);
@@ -104,7 +105,7 @@ public class RouteConfigRest extends BaseRest {
         return ResponseResult.ok(gatewayAppRouteService.findById(id));
     }
 
-    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
+    @PostMapping(value = "/list")
     public ResponseResult list(@RequestBody GatewayAppRouteReq gatewayAppRouteReq){
         Assert.notNull(gatewayAppRouteReq, "未获取到对象");
         GatewayAppRouteDataBean gatewayAppRouteDataBean = toRoute(gatewayAppRouteReq);
@@ -112,8 +113,8 @@ public class RouteConfigRest extends BaseRest {
         return ResponseResult.ok(gatewayAppRouteService.list(gatewayAppRoute));
     }
 
-    @RequestMapping(value = "/pageList", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseResult pageList(@RequestBody GatewayAppRouteReq gatewayAppRouteReq){
+    @PostMapping(value = "/pageList")
+    public ResponseResult pageList(@RequestBody GatewayAppRouteReq gatewayAppRouteReq, Pageable pageable){
         Assert.notNull(gatewayAppRouteReq, "未获取到对象");
         int currentPage = getCurrentPage(gatewayAppRouteReq.getCurrentPage());
         int pageSize = getPageSize(gatewayAppRouteReq.getPageSize());

@@ -13,7 +13,8 @@ spring:
   config:
     import:
       - nacos:application-@profiles.active@.yml
-      - nacos:${spring.application.name}-@profiles.active@.yml
+      - nacos:${spring.application.name}.yml
+      - nacos:rapidark-gateway-db.yml
       - optional:classpath:application-mail.yml
       - optional:nacos:redis.yml
       - optional:nacos:rabbitmq.yml
