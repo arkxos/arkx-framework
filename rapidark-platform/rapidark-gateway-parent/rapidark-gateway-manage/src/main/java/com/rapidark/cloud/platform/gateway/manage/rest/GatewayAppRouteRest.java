@@ -2,6 +2,7 @@ package com.rapidark.cloud.platform.gateway.manage.rest;
 
 //import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 //import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.bean.*;
@@ -15,10 +16,13 @@ import com.rapidark.cloud.platform.gateway.framework.service.SentinelRuleService
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.cloud.platform.gateway.framework.util.RouteConstants;
 import com.rapidark.cloud.platform.gateway.manage.rest.cmd.StringIdCommand;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +37,7 @@ import java.util.List;
  * @Date 2020/05/14
  * @Version V1.0
  */
+@Schema(title = "网关路由")
 @Slf4j
 @RestController
 @RequestMapping("/route")
@@ -40,6 +45,9 @@ public class GatewayAppRouteRest extends BaseRest {
 
     @Resource
     private GatewayAppRouteService gatewayAppRouteService;
+
+	@Resource
+	private RedisTemplate redisTemplate;
 
     @Resource
     private MonitorService monitorService;
@@ -49,6 +57,9 @@ public class GatewayAppRouteRest extends BaseRest {
 
     @Resource
     private CustomNacosConfigService customNacosConfigService;
+
+//	@Autowired
+//	private OpenRestTemplate openRestTemplate;
 
     /**
      * 添加网关路由
@@ -67,6 +78,7 @@ public class GatewayAppRouteRest extends BaseRest {
         long count = gatewayAppRouteService.count(dbGatewayAppRoute);
         Assert.isTrue(count <= 0, "RouteId已存在，不能重复");
         return gatewayAppRouteService.saveForm(gatewayAppRouteDataBean, true);
+		// return this.save(gatewayAppRoute, toMonitor(routeReq), true);
     }
 
     /**
@@ -80,6 +92,10 @@ public class GatewayAppRouteRest extends BaseRest {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         gatewayAppRouteService.delete(id);
         customNacosConfigService.publishRouteNacosConfig(id);
+
+		// 刷新网关
+//		openRestTemplate.refreshGateway();
+
         return ResponseResult.ok();
     }
 
@@ -88,6 +104,7 @@ public class GatewayAppRouteRest extends BaseRest {
      * @param gatewayAppRouteReq
      * @return
      */
+	@Schema(title = "编辑路由", name = "编辑路由")
     @PostMapping(value = "/update")
     public ResponseResult update(@RequestBody GatewayAppRouteReq gatewayAppRouteReq){
         Assert.notNull(gatewayAppRouteReq, "未获取到对象");
@@ -96,6 +113,7 @@ public class GatewayAppRouteRest extends BaseRest {
         this.validate(gatewayAppRoute);
         Assert.isTrue(StringUtils.isNotBlank(gatewayAppRoute.getId()), "未获取到对象ID");
         return gatewayAppRouteService.saveForm(gatewayAppRouteDataBean, false);
+		//  return this.save(gatewayAppRoute, toMonitor(routeReq), false);
     }
 
     @RequestMapping(value = "/findById", method = {RequestMethod.GET, RequestMethod.POST})
@@ -176,8 +194,21 @@ public class GatewayAppRouteRest extends BaseRest {
     @Deprecated
     private ResponseResult saveForm(GatewayAppRoute gatewayAppRoute, GatewayAppRouteReq gatewayAppRouteReq, boolean isNews){
         Monitor monitor = toMonitor(gatewayAppRouteReq);
-        gatewayAppRoute.setUpdateTime(new Date());
+
+		gatewayAppRoute.setUpdateTime(new Date());
+		switch (gatewayAppRoute.getType()) {
+			case BaseConstants.ROUTE_TYPE_URL:
+//                gatewayAppRoute.setServiceId(null);
+				gatewayAppRoute.setUri(gatewayAppRoute.getUri().trim());
+				break;
+			default:
+//                gatewayAppRoute.setServiceId(gatewayAppRoute.getServiceId());
+				gatewayAppRoute.setUri(null);
+		}
+
         gatewayAppRouteService.save(gatewayAppRoute);
+
+		//this.setRouteCacheVersion();
         customNacosConfigService.publishRouteNacosConfig(gatewayAppRoute.getId());
 
 //        SentinelRule sentinelRule = toSentinelRule(routeReq);
@@ -205,6 +236,10 @@ public class GatewayAppRouteRest extends BaseRest {
                 }
             }
         }
+
+		// 刷新网关
+//		openRestTemplate.refreshGateway();
+
         return ResponseResult.ok();
     }
 
@@ -227,6 +262,7 @@ public class GatewayAppRouteRest extends BaseRest {
 
         GatewayAppRouteFilterBean filter = gatewayAppRouteReq.getFilter();
         GatewayAppRouteAccessBean access = gatewayAppRouteReq.getAccess();
+		RouteLimiterBean limiter = gatewayAppRouteReq.getLimiter();
         MonitorBean routeMonitor = gatewayAppRouteReq.getMonitor();
         FlowRuleBean flowRule = gatewayAppRouteReq.getFlowRule();
         DegradeRuleBean degradeRule = gatewayAppRouteReq.getDegradeRule();
@@ -248,6 +284,26 @@ public class GatewayAppRouteRest extends BaseRest {
             }
             gatewayAppRoute.setFilterGatewayName(StringUtils.join(routeFilterList.toArray(), Constants.SEPARATOR_SIGN));
         }
+
+		//添加熔断器
+//		if (hystrix != null) {
+//			if (hystrix.getDefaultChecked()) {
+//				gatewayAppRoute.setFilterHystrixName(RouteConstants.Hystrix.DEFAULT);
+//			} else if (hystrix.getCustomChecked()) {
+//				gatewayAppRoute.setFilterHystrixName(RouteConstants.Hystrix.CUSTOM);
+//			}
+//		}
+		//添加限流器
+//		if (limiter != null) {
+//			gatewayAppRoute.setFilterRateLimiterName(null);
+//			if (limiter.getIdChecked()) {
+//				gatewayAppRoute.setFilterRateLimiterName(RouteConstants.REQUEST_ID);
+//			}else if (limiter.getIpChecked()) {
+//				gatewayAppRoute.setFilterRateLimiterName(RouteConstants.IP);
+//			}else if (limiter.getUriChecked()) {
+//				gatewayAppRoute.setFilterRateLimiterName(RouteConstants.URI);
+//			}
+//		}
 
         //添加鉴权器
         if (access != null) {
@@ -392,4 +448,13 @@ public class GatewayAppRouteRest extends BaseRest {
 //        }
 //        return sentinelRule;
 //    }
+
+	/**
+	 * 对路由数据进行变更后，设置redis中缓存的版本号
+	 */
+	@Deprecated
+	private void setRouteCacheVersion(){
+		redisTemplate.opsForHash().put(RouteConstants.SYNC_VERSION_KEY, RouteConstants.ROUTE, String.valueOf(System.currentTimeMillis()));
+	}
+
 }
