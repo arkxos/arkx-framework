@@ -42,7 +42,6 @@
 
 		<module>api-spring-server</module>
 		<module>uaa-admin-server</module>
-		<module>base-server</module>
 		<module>generator-server</module>
 
 		<module>uaa-portal-server</module>
