@@ -36,7 +36,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/route")
-public class RouteConfigRest extends BaseRest {
+public class GatewayAppRouteRest extends BaseRest {
 
     @Resource
     private GatewayAppRouteService gatewayAppRouteService;

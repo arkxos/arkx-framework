@@ -24,12 +24,12 @@
 //    private NacosConfigProperties nacosConfigProperties;
 //
 //    /**
-//     *
+//     *给 RestTemplate 实例添加 @LoadBalanced 注解，开启负载轮询
 //     * @return
 //     */
 //    @LoadBalanced
 //    @Bean
 //    public RestTemplate restTemplate() {
-//
+//       return new RestTemplate(httpRequestFactory);
 //    }
 //}
