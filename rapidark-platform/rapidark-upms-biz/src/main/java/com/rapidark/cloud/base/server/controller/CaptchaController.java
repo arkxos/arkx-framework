@@ -26,9 +26,9 @@ import java.util.UUID;
 @Schema(title = "图形验证码")
 @RestController
 public class CaptchaController {
-    @Autowired
-    private RedisUtils<String> redisUtil;
 
+    @Autowired
+    private RedisUtils<Object> redisUtil;
 
     /**
      * 获取png验证码

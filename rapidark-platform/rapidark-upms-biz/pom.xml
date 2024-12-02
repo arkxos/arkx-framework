@@ -127,6 +127,10 @@
 			<version>10.0.3</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.rapidark.platform</groupId>
+			<artifactId>rapidark-platform-support-common-biz</artifactId>
+		</dependency>
 	</dependencies>
 
     <profiles>

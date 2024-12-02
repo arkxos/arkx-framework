@@ -32,7 +32,7 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccountRepository> {
 
-    @Autowired
+//    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private BaseAccountLogsRepository baseAccountLogsRepository;

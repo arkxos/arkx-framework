@@ -18,4 +18,6 @@ spring:
       - nacos:${spring.application.name}-@profiles.active@.yml
       - nacos:redis.yml
 
-
+mybatis:
+  mapper:
+    reload: true
