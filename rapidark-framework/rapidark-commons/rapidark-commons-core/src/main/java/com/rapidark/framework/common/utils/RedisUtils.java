@@ -1,5 +1,6 @@
 package com.rapidark.framework.common.utils;
 
+import cn.hutool.core.convert.Convert;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ObjectUtils;
@@ -7,10 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.RedisConnectionUtils;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -25,12 +25,40 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils<T> {
 
     private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
+	private static final Long SUCCESS = 1L;
+
+	private RedisTemplate<String, T> redisTemplate;
 
     public RedisUtils(RedisTemplate<String, T> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
-    private RedisTemplate<String, T> redisTemplate;
+
+	/**
+	 * 获取锁
+	 * @param lockKey 锁key
+	 * @param value value
+	 * @param expireTime：单位-秒
+	 * @return boolean
+	 */
+	public boolean getLock(String lockKey, T value, long expireTime) {
+		return Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(lockKey, value, expireTime, TimeUnit.SECONDS));
+	}
+
+	/**
+	 * 释放锁
+	 * @param lockKey 锁key
+	 * @param value value
+	 * @return boolean
+	 */
+	public boolean releaseLock(String lockKey, String value) {
+		String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+		RedisScript<Long> redisScript = new DefaultRedisScript<>(script, Long.class);
+		return Optional.ofNullable(redisTemplate.execute(redisScript, Collections.singletonList(lockKey), value))
+				.map(Convert::toLong)
+				.filter(SUCCESS::equals)
+				.isPresent();
+	}
 
     /**
      * 指定缓存失效时间
@@ -178,7 +206,7 @@ public class RedisUtils<T> {
                 List<String> keyList = (List<String>)CollectionUtils.arrayToList(keys);
                 long count = redisTemplate.delete(keyList);
                 log.debug("--------------------------------------------");
-                log.debug("成功删除缓存：" + CollectionUtils.arrayToList(keys).toString());
+                log.debug("成功删除缓存：" + CollectionUtils.arrayToList(keys));
                 log.debug("缓存删除数量：" + count + "个");
                 log.debug("--------------------------------------------");
             }
@@ -334,7 +362,7 @@ public class RedisUtils<T> {
      * @see RedisUtils#getMap
      */
     @Deprecated
-    public Map<Object, Object> hmget(String key) {
+    public <HK, HV> Map<HK, HV> hmget(String key) {
         return getMap(key);
 
     }
@@ -345,8 +373,8 @@ public class RedisUtils<T> {
      * @param key 键
      * @return 对应的多个键值
      */
-    public Map<Object, Object> getMap(String key) {
-        return redisTemplate.opsForHash().entries(key);
+    public <HK, HV> Map<HK, HV> getMap(String key) {
+        return redisTemplate.<HK, HV>opsForHash().entries(key);
     }
 
     /**
@@ -590,13 +618,21 @@ public class RedisUtils<T> {
      */
     public long setRemove(String key, Object... values) {
         try {
-            Long count = redisTemplate.opsForSet().remove(key, values);
-            return count;
+			return redisTemplate.opsForSet().remove(key, values);
         } catch (Exception e) {
              log.error(e.getMessage(), e);
             return 0;
         }
     }
+
+	/**
+	 * 获集合key1和集合key2的差集元素
+	 * @param key 键
+	 * @return
+	 */
+	public <T> Set<T> sDifference(String key, String otherKey) {
+		return (Set<T>) redisTemplate.opsForSet().difference(key, otherKey);
+	}
     // ===============================list=================================
 
     /**
@@ -856,8 +892,71 @@ public class RedisUtils<T> {
         long count = redisTemplate.delete(keys);
         // 此处提示可自行删除
         log.debug("--------------------------------------------");
-        log.debug("成功删除缓存：" + keys.toString());
+        log.debug("成功删除缓存：" + keys);
         log.debug("缓存删除数量：" + count + "个");
         log.debug("--------------------------------------------");
     }
+
+	/**
+	 * 将zSet数据放入缓存
+	 * @param key
+	 * @param time
+	 * @param tuples
+	 * @return
+	 */
+	public long zSetAndTime(String key, long time, Set<ZSetOperations.TypedTuple<T>> tuples) {
+		Long count = redisTemplate.opsForZSet().add(key, tuples);
+		if (time > 0) {
+			expire(key, time);
+		}
+		return count;
+	}
+
+	/**
+	 * Sorted set:有序集合获取
+	 * @param key
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public Set<T> zRangeByScore(String key, double min, double max) {
+		ZSetOperations<String, T> zset = redisTemplate.opsForZSet();
+		return zset.rangeByScore(key, min, max);
+	}
+
+
+	/**
+	 * Sorted set:有序集合获取 正序
+	 * @param key
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public Set<T> zRange(String key, long start, long end) {
+		ZSetOperations<String, T> zset = redisTemplate.opsForZSet();
+		return zset.range(key, start, end);
+
+	}
+
+	/**
+	 * Sorted set:有序集合获取 倒叙
+	 * @param key
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public Set<T> zReverseRange(String key, long start, long end) {
+		ZSetOperations<String, T> zset = redisTemplate.opsForZSet();
+		return zset.reverseRange(key, start, end);
+
+	}
+
+	/**
+	 * 获取zSet缓存的长度
+	 * @param key 键
+	 * @return
+	 */
+	public long zGetSetSize(String key) {
+		return redisTemplate.opsForZSet().size(key);
+	}
 }
