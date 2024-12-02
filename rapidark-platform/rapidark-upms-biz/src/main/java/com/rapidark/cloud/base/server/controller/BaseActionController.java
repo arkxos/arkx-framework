@@ -4,7 +4,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseAction;
 import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import com.rapidark.framework.common.security.http.OpenRestTemplate;
+//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.data.jpa.entity.Status;
 
 
@@ -25,8 +25,8 @@ public class BaseActionController {
 
     @Autowired
     private BaseActionService baseActionService;
-    @Autowired
-    private OpenRestTemplate openRestTemplate;
+//    @Autowired
+//    private OpenRestTemplate openRestTemplate;
 
     /**
      * 获取分页功能按钮列表
@@ -95,7 +95,7 @@ public class BaseActionController {
         BaseAction result = baseActionService.addAction(action);
         if (result != null) {
             actionId = result.getActionId();
-            openRestTemplate.refreshGateway();
+//            // openRestTemplate.refreshGateway();
         }
         return ResultBody.ok(actionId);
     }
@@ -142,7 +142,7 @@ public class BaseActionController {
         action.setActionDesc(actionDesc);
         baseActionService.updateAction(action);
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -163,7 +163,7 @@ public class BaseActionController {
     ) {
         baseActionService.removeAction(actionId);
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 }

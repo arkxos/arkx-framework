@@ -73,7 +73,7 @@ public class MonitorServiceImpl implements MonitorService {
     private Map<String,Object> getDiskInfo(OperatingSystem os) {
         Map<String,Object> diskInfo = new LinkedHashMap<>();
         FileSystem fileSystem = os.getFileSystem();
-        List<OSFileStore> fsArray = fileSystem.getFileStores();
+		List<OSFileStore> fsArray = fileSystem.getFileStores();
         String osName = System.getProperty("os.name");
         long available = 0, total = 0;
         for (OSFileStore fs : fsArray){

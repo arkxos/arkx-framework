@@ -15,7 +15,7 @@ import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import com.rapidark.framework.common.security.http.OpenRestTemplate;
+//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.data.jpa.entity.Status;
 
 
@@ -48,8 +48,8 @@ public class BaseMenuController {
     @Autowired
     private OpenAppService openAppService;
 
-    @Autowired
-    private OpenRestTemplate openRestTemplate;
+//    @Autowired
+//    private OpenRestTemplate openRestTemplate;
 
     /**
      * 所有服务列表
@@ -181,7 +181,7 @@ public class BaseMenuController {
         menu.setMenuDesc(command.getMenuDesc());
         menu.setServiceId(command.getServiceId());
         baseResourceMenuService.updateMenu(menu);
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -198,7 +198,7 @@ public class BaseMenuController {
     @PostMapping("/menu/remove")
     public ResultBody<Boolean> removeMenu(@RequestParam("menuId") Long menuId) {
         baseResourceMenuService.removeMenu(menuId);
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 }

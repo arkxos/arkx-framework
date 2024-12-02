@@ -13,7 +13,7 @@ import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenAuthority;
-import com.rapidark.framework.common.security.http.OpenRestTemplate;
+//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.StringUtils;
 
 
@@ -40,8 +40,8 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     private BaseAuthorityService baseAuthorityService;
     @Autowired
     private BaseUserService baseUserService;
-    @Autowired
-    private OpenRestTemplate openRestTemplate;
+//    @Autowired
+//    private OpenRestTemplate openRestTemplate;
 
     /**
      * 获取所有访问权限列表
@@ -180,7 +180,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {
         baseAuthorityService.addAuthorityRole(roleId, expireTime, StringUtils.isNotBlank(authorityIds) ? authorityIds.split(",") : new String[]{});
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -206,7 +206,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {
         baseAuthorityService.addAuthorityUser(userId, expireTime, StringUtils.isNotBlank(authorityIds) ? authorityIds.split(",") : new String[]{});
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -222,7 +222,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
         baseAuthorityService
                 .addAuthorityApp(command.getAppId(), command.getAppSystemCode(),
                         command.getExpireTime(), command.getAuthorityIds().split(","));
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -235,7 +235,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     @PostMapping("/authority/action/grant")
     public ResultBody grantAuthorityAction(@Valid @RequestBody GrantAuthorityActionCommand command) {
         baseAuthorityService.addAuthorityAction(command.getActionId(), StringUtils.isNotBlank(command.getAuthorityIds()) ? command.getAuthorityIds().split(",") : new String[]{});
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 }

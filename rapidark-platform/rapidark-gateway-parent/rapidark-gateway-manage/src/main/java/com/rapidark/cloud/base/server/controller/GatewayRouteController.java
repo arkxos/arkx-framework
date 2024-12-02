@@ -100,7 +100,7 @@
 //        }
 //        gatewayRouteService.addRoute(route);
 //        // 刷新网关
-//        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
 //        return ResultBody.ok();
 //    }
 //
@@ -146,7 +146,7 @@
 //        }
 //        gatewayRouteService.updateRoute(route);
 //        // 刷新网关
-//        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
 //        return ResultBody.ok();
 //    }
 //
@@ -167,7 +167,7 @@
 //    ) {
 //        gatewayRouteService.removeRoute(routeId);
 //        // 刷新网关
-//        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
 //        return ResultBody.ok();
 //    }
 //}

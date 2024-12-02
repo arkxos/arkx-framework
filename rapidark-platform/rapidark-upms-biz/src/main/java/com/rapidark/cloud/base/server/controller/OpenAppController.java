@@ -16,7 +16,7 @@ import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigSe
 import com.rapidark.framework.common.model.ResultBody;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.security.OpenClientDetails;
-import com.rapidark.framework.common.security.http.OpenRestTemplate;
+//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.jpa.entity.Status;
@@ -51,7 +51,7 @@ import java.util.*;
 public class OpenAppController implements IOpenAppServiceClient {
 
     private final OpenAppService openAppService;
-    private final OpenRestTemplate openRestTemplate;
+//    private final OpenRestTemplate openRestTemplate;
     private final CustomNacosConfigService customNacosConfigService;
     private final ClientServerRegisterService clientServerRegisterService;
     private final BaseAuthorityService baseAuthorityService;
@@ -272,7 +272,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         app.setEncryptType(command.getEncryptType());
         app.setPublicKey(command.getPublicKey());
         openAppService.update(app);
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         customNacosConfigService.publishClientNacosConfig(app.getAppId());
 
         return ResultBody.ok();
@@ -332,7 +332,7 @@ public class OpenAppController implements IOpenAppServiceClient {
             @RequestParam("appId") String appId
     ) {
         openAppService.deleteById(appId);
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         customNacosConfigService.publishClientNacosConfig(appId);
         return ResultBody.ok();
     }

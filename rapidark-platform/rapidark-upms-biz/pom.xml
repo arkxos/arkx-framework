@@ -40,6 +40,10 @@
 			<groupId>com.rapidark.framework</groupId>
 			<artifactId>rapidark-data-mybatis</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+		</dependency>
 		<!-- excel 导入导出 -->
 		<dependency>
 			<groupId>com.rapidark.framework</groupId>
@@ -110,6 +114,18 @@
 			<groupId>com.rapidark.framework</groupId>
 			<artifactId>rapidark-commons-core</artifactId>
 			<version>${revision}</version>
+		</dependency>
+        <dependency>
+            <groupId>com.rapidark.platform</groupId>
+            <artifactId>rapidark-gateway-framework</artifactId>
+            <version>10.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+			<groupId>com.rapidark.framework</groupId>
+			<artifactId>rapidark-ip2region-starter</artifactId>
+			<version>10.0.3</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

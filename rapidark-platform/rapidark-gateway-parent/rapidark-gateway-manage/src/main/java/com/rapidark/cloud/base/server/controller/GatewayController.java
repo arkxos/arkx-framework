@@ -29,6 +29,7 @@ import java.util.Map;
 @Schema(title = "网关对外接口")
 @RestController
 public class GatewayController implements IGatewayServiceClient {
+
     @Autowired
     private GatewayIpLimitService gatewayIpLimitService;
     @Autowired

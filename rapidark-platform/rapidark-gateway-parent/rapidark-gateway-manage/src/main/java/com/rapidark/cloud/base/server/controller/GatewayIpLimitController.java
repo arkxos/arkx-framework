@@ -5,7 +5,7 @@ import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import com.rapidark.framework.common.security.http.OpenRestTemplate;
+//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.StringUtils;
 
 
@@ -30,8 +30,8 @@ import java.util.Map;
 public class GatewayIpLimitController {
     @Autowired
     private GatewayIpLimitService gatewayIpLimitService;
-    @Autowired
-    private OpenRestTemplate openRestTemplate;
+//    @Autowired
+//    private OpenRestTemplate openRestTemplate;
 
     /**
      * 获取分页接口列表
@@ -79,7 +79,7 @@ public class GatewayIpLimitController {
             @RequestParam(value = "apiIds", required = false) String apiIds
     ) {
         gatewayIpLimitService.addIpLimitApis(policyId, StringUtils.isNotBlank(apiIds) ? apiIds.split(",") : new String[]{});
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -159,7 +159,7 @@ public class GatewayIpLimitController {
         ipLimit.setPolicyType(policyType);
         ipLimit.setIpAddress(ipAddress);
         gatewayIpLimitService.updateIpLimitPolicy(ipLimit);
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -180,7 +180,7 @@ public class GatewayIpLimitController {
     ) {
         gatewayIpLimitService.removeIpLimitPolicy(policyId);
         // 刷新网关
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 }

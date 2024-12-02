@@ -7,7 +7,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseApi;
 import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.framework.common.constants.QueueConstants;
-import com.rapidark.framework.common.security.http.OpenRestTemplate;
+//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +34,8 @@ public class ResourceScanHandler {
     private BaseApiService baseApiService;
     @Autowired
     private BaseAuthorityService baseAuthorityService;
-    @Autowired
-    private OpenRestTemplate restTemplate;
+//    @Autowired
+//    private OpenRestTemplate restTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -84,7 +84,7 @@ public class ResourceScanHandler {
             if (array != null && array.size() > 0) {
                 // 清理无效权限数据
                 baseAuthorityService.clearInvalidApi(serviceId, codes);
-                restTemplate.refreshGateway();
+//                restTemplate.refreshGateway();
                 redisTemplate.opsForValue().set(key, array.size(), Duration.ofMinutes(3));
             }
         } catch (Exception e) {

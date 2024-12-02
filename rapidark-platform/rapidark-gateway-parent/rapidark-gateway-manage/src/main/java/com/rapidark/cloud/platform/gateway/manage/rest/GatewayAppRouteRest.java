@@ -94,7 +94,7 @@ public class GatewayAppRouteRest extends BaseRest {
         customNacosConfigService.publishRouteNacosConfig(id);
 
 		// 刷新网关
-//		openRestTemplate.refreshGateway();
+//		// openRestTemplate.refreshGateway();
 
         return ResponseResult.ok();
     }
@@ -238,7 +238,7 @@ public class GatewayAppRouteRest extends BaseRest {
         }
 
 		// 刷新网关
-//		openRestTemplate.refreshGateway();
+//		// openRestTemplate.refreshGateway();
 
         return ResponseResult.ok();
     }

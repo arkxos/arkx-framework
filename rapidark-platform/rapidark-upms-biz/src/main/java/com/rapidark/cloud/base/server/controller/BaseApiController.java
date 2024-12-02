@@ -5,7 +5,7 @@ import com.rapidark.cloud.base.server.controller.cmd.AddApiCommand;
 import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResultBody;
-import com.rapidark.framework.common.security.http.OpenRestTemplate;
+//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.data.jpa.entity.Status;
 
@@ -29,8 +29,8 @@ import java.util.Map;
 public class BaseApiController {
     @Autowired
     private BaseApiService baseApiService;
-    @Autowired
-    private OpenRestTemplate openRestTemplate;
+//    @Autowired
+//    private OpenRestTemplate openRestTemplate;
 
     /**
      * 获取分页接口列表
@@ -112,7 +112,7 @@ public class BaseApiController {
         api.setIsOpen(command.getIsOpen());
 
         baseApiService.addApi(api);
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok(api.getApiId());
     }
 
@@ -171,7 +171,7 @@ public class BaseApiController {
         api.setIsOpen(isOpen);
         baseApiService.updateApi(api);
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -192,7 +192,7 @@ public class BaseApiController {
     ) {
         baseApiService.removeApi(apiId);
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -221,7 +221,7 @@ public class BaseApiController {
         }
 
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -252,7 +252,7 @@ public class BaseApiController {
         }
 
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -280,7 +280,7 @@ public class BaseApiController {
             baseApiService.save(entity);
         }
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -310,7 +310,7 @@ public class BaseApiController {
             baseApiService.save(entity);
         }
         // 刷新网关
-        openRestTemplate.refreshGateway();
+//        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 
@@ -338,7 +338,7 @@ public class BaseApiController {
             baseApiService.save(entity);
         }
         // 刷新网关
-        openRestTemplate.refreshGateway();
+        // openRestTemplate.refreshGateway();
         return ResultBody.ok();
     }
 }
