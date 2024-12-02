@@ -34,7 +34,8 @@ import java.util.Map;
 @EntityScan({
         "com.rapidark.cloud.base.client.model",
         "com.rapidark.cloud.base.server.modules",
-        "com.rapidark.cloud.gateway.formwork.entity"
+        "com.rapidark.cloud.gateway.formwork.entity",
+		"com.rapidark.cloud.platform.gateway.framework.entity"
 })
 public class JpaConfiguration {
 

@@ -19,6 +19,7 @@
 
 package com.rapidark.cloud.platform.admin;
 
+import com.rapidark.cloud.base.server.configuration.JpaConfiguration;
 import com.rapidark.framework.boot.RapidArkApplication;
 import com.rapidark.cloud.platform.common.feign.annotation.EnableArkFeignClients;
 import com.rapidark.cloud.platform.common.security.annotation.EnableArkResourceServer;
@@ -26,6 +27,7 @@ import com.rapidark.cloud.platform.common.swagger.annotation.EnableArkDoc;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author lengleng
@@ -38,6 +40,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableArkResourceServer
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "com.rapidark")
+@Import(JpaConfiguration.class)
 public class ArkAdminApplication {
 
 	public static void main(String[] args) {

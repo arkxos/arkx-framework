@@ -44,19 +44,15 @@ public class CurrentUserController {
 	private final SysMenuService sysMenuService;
 	private final RouterService routerService;
 
-	@Autowired
-	private BaseUserService baseUserService;
-	@Autowired
-	private BaseAuthorityService baseAuthorityService;
-	@Autowired
-	private OpenAppService openAppService;
+	private final BaseUserService baseUserService;
+	private final BaseAuthorityService baseAuthorityService;
+	private final OpenAppService openAppService;
 	//    @Autowired
 //    private RedisTokenStore redisTokenStore;
-	@Autowired
-	private BaseMenuService menuService;
+	private final BaseMenuService menuService;
 
-//	@Autowired
-	private PasswordEncoder passwordEncoder;
+	//	@Autowired
+//	private final PasswordEncoder passwordEncoder;
 
 	/**
 	 * 返回当前用户的树形菜单集合
@@ -91,12 +87,12 @@ public class CurrentUserController {
 		if (StringUtils.isBlank(password) || StringUtils.isBlank(confirmPassword) || !confirmPassword.equals(password)) {
 			throw new OpenAlertException("新密码与确认密码不一致");
 		}
-		if (StringUtils.isBlank(oldPassword) || !passwordEncoder.matches(oldPassword, user.getPassword())) {
-			throw new OpenAlertException("旧密码输入错误");
-		}
-		if (passwordEncoder.matches(password, user.getPassword())) {
-			throw new OpenAlertException("新密码与旧密码不能相同");
-		}
+//		if (StringUtils.isBlank(oldPassword) || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+//			throw new OpenAlertException("旧密码输入错误");
+//		}
+//		if (passwordEncoder.matches(password, user.getPassword())) {
+//			throw new OpenAlertException("新密码与旧密码不能相同");
+//		}
 		baseUserService.updatePassword(user.getUserId(), password);
 		return  ResultBody.ok().msg("修改密码成功");
 	}
