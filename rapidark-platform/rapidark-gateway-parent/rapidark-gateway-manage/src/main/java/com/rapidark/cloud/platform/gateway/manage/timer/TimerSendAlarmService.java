@@ -128,7 +128,7 @@ public class TimerSendAlarmService {
                 "<li>心跳检测地址："+ uri +"</li>" +
                 "<li>告警时间："+ alarmTime +"</li>" +
                 "<li>告警内容：网关服务对路由地址进行心跳检测失败！"+ topic +"</li>" +
-                "<li>发送告警系统：FLYING-FISH-GATEWAY 网关服务</li></ul>" +
+                "<li>发送告警系统：RAPIDARK-GATEWAY 网关服务</li></ul>" +
                 "<p style=\"color: #ffffff; background-color: dodgerblue;\">&nbsp;&nbsp;  此网关路由服务访问告警，请及时处理！</p>" +
                 "</div></body></html>";
     }

@@ -29,7 +29,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/regServer")
-public class RegServerRest extends BaseRest {
+public class ClientServerRegisterRest extends BaseRest {
 
     @Resource
     private ClientServerRegisterService clientServerRegisterService;
