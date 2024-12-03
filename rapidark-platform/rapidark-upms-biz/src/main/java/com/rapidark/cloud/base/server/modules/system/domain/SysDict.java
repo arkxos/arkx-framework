@@ -35,24 +35,38 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name="sys_dict")
-public class Dict extends AbstractIdLongEntity implements Serializable {
+@Schema(description = "字典类型")
+public class SysDict extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "dict_id")
     @NotNull(groups = Update.class)
-    @Schema(title = "ID", hidden = true)
+    @Schema(title = "编号", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
     @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
-    @OneToMany(mappedBy = "dict",cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    private List<DictDetail> dictDetails;
-
     @NotBlank
+    @Schema(title = "编码")
+    private String code;
+
     @Schema(title = "名称")
     private String name;
 
-    @Schema(title = "描述")
-    private String description;
+	/**
+	 * 是否是系统内置
+	 */
+	@Schema(description = "是否系统内置")
+	private String systemFlag;
+
+	/**
+	 * 备注信息
+	 */
+	@Schema(description = "备注信息")
+	private String remarks;
+
+	@OneToMany(mappedBy = "dict",cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+	private List<DictDetail> dictDetails;
+
 }

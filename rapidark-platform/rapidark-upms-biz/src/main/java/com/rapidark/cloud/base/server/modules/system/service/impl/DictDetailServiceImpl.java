@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service.impl;
 
-import com.rapidark.cloud.base.server.modules.system.domain.Dict;
+import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
 import com.rapidark.cloud.base.server.modules.system.domain.DictDetail;
 import com.rapidark.cloud.base.server.modules.system.repository.DictDetailRepository;
 import com.rapidark.cloud.base.server.modules.system.repository.DictRepository;
@@ -89,7 +89,7 @@ public class DictDetailServiceImpl implements DictDetailService {
     }
 
     public void delCaches(DictDetail dictDetail){
-        Dict dict = dictRepository.findById(dictDetail.getDict().getId()).orElseGet(Dict::new);
-        redisUtils.del(CacheKey.DICT_NAME + dict.getName());
+        SysDict sysDict = dictRepository.findById(dictDetail.getSysDict().getId()).orElseGet(SysDict::new);
+        redisUtils.del(CacheKey.DICT_NAME + sysDict.getCode());
     }
 }

@@ -95,7 +95,7 @@ public class SysDictController {
 		return ResponseResult.ok(sysDictService.page(page,
 				Wrappers.<SysDict>lambdaQuery()
 					.eq(StrUtil.isNotBlank(sysDict.getSystemFlag()), SysDict::getSystemFlag, sysDict.getSystemFlag())
-					.like(StrUtil.isNotBlank(sysDict.getDictType()), SysDict::getDictType, sysDict.getDictType())));
+					.like(StrUtil.isNotBlank(sysDict.getCode()), SysDict::getCode, sysDict.getCode())));
 	}
 
 	/**
@@ -144,9 +144,9 @@ public class SysDictController {
 	@GetMapping("/list")
 	public ResponseResult getDictList(String name) {
 		return ResponseResult.ok(sysDictService.list(Wrappers.<SysDict>lambdaQuery()
-			.like(StrUtil.isNotBlank(name), SysDict::getDictType, name)
+			.like(StrUtil.isNotBlank(name), SysDict::getCode, name)
 			.or()
-			.like(StrUtil.isNotBlank(name), SysDict::getDescription, name)));
+			.like(StrUtil.isNotBlank(name), SysDict::getName, name)));
 	}
 
 	/**

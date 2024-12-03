@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.repository;
 
-import com.rapidark.cloud.base.server.modules.system.domain.Dict;
+import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -26,7 +26,7 @@ import java.util.Set;
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface DictRepository extends JpaRepository<Dict, Long>, JpaSpecificationExecutor<Dict> {
+public interface DictRepository extends JpaRepository<SysDict, Long>, JpaSpecificationExecutor<SysDict> {
 
     /**
      * 删除
@@ -39,5 +39,5 @@ public interface DictRepository extends JpaRepository<Dict, Long>, JpaSpecificat
      * @param ids /
      * @return /
      */
-    List<Dict> findByIdIn(Set<Long> ids);
+    List<SysDict> findByIdIn(Set<Long> ids);
 }

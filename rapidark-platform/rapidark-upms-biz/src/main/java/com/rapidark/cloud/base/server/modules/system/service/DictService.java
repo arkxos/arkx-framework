@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service;
 
-import com.rapidark.cloud.base.server.modules.system.domain.Dict;
+import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import org.springframework.data.domain.Pageable;
@@ -51,13 +51,13 @@ public interface DictService {
      * @param resources /
      * @return /
      */
-    void create(Dict resources);
+    void create(SysDict resources);
 
     /**
      * 编辑
      * @param resources /
      */
-    void update(Dict resources);
+    void update(SysDict resources);
 
     /**
      * 删除

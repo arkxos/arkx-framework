@@ -47,7 +47,7 @@ public class DictDetail extends AbstractIdLongEntity implements Serializable {
     @JoinColumn(name = "dict_id")
     @ManyToOne(fetch=FetchType.LAZY)
     @Schema(title = "字典", hidden = true)
-    private Dict dict;
+    private SysDict sysDict;
 
     @Schema(title = "字典标签")
     private String label;

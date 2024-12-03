@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service.mapstruct;
 
-import com.rapidark.cloud.base.server.modules.system.domain.Dict;
+import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictSmallDto;
 import com.rapidark.framework.common.model.BaseMapper;
 import org.mapstruct.Mapper;
@@ -26,6 +26,6 @@ import org.mapstruct.ReportingPolicy;
 * @date 2019-04-10
 */
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DictSmallMapper extends BaseMapper<DictSmallDto, Dict> {
+public interface DictSmallMapper extends BaseMapper<DictSmallDto, SysDict> {
 
 }
