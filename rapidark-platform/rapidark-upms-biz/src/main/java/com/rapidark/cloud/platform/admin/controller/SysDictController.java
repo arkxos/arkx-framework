@@ -121,7 +121,7 @@ public class SysDictController {
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
 	public ResponseResult removeById(@RequestBody Long[] ids) {
-		return ResponseResult.ok(sysDictService.removeDictByIds(ids));
+		return ResponseResult.ok(sysDictService.delete(ids));
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class SysDictController {
 	@SysLog("修改字典")
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
 	public ResponseResult updateById(@Valid @RequestBody SysDict sysDict) {
-		return sysDictService.updateDict(sysDict);
+		return sysDictService.update(sysDict);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class SysDictController {
 	@SysLog("修改字典项")
 	@PutMapping("/item")
 	public ResponseResult updateById(@RequestBody SysDictItem sysDictItem) {
-		return sysDictItemService.updateDictItem(sysDictItem);
+		return sysDictItemService.update(sysDictItem);
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class SysDictController {
 	@SysLog("删除字典项")
 	@DeleteMapping("/item/{id}")
 	public ResponseResult removeDictItemById(@PathVariable Long id) {
-		return sysDictItemService.removeDictItem(id);
+		return sysDictItemService.delete(id);
 	}
 
 	/**

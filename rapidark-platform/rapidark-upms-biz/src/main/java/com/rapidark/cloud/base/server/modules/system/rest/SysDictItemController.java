@@ -15,8 +15,8 @@
  */
 package com.rapidark.cloud.base.server.modules.system.rest;
 
-import com.rapidark.cloud.base.server.modules.system.domain.SysDictItem;
-import com.rapidark.cloud.base.server.modules.system.service.DictDetailService;
+import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
+import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import com.rapidark.framework.common.model.ResultBody;
@@ -46,16 +46,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Schema(title = "系统：字典详情管理")
 @RequestMapping("/dictDetail")
-public class DictDetailController {
+public class SysDictItemController {
 
-    private final DictDetailService dictDetailService;
+    private final SysDictItemService sysDictItemService;
     private static final String ENTITY_NAME = "dictDetail";
 
     @Schema(title = "查询字典详情")
     @GetMapping
     public ResponseEntity<Object> query(DictDetailQueryCriteria criteria,
                                         @PageableDefault(sort = {"dictSort"}, direction = Sort.Direction.ASC) Pageable pageable){
-        return new ResponseEntity<>(dictDetailService.queryAll(criteria,pageable),HttpStatus.OK);
+        return new ResponseEntity<>(sysDictItemService.queryAll(criteria,pageable),HttpStatus.OK);
     }
 
     @Schema(title = "查询多个字典详情")
@@ -64,7 +64,7 @@ public class DictDetailController {
         String[] names = dictName.split("[,，]");
         Map<String, List<DictDetailDto>> dictMap = new HashMap<>(16);
         for (String name : names) {
-            dictMap.put(name, dictDetailService.getDictByName(name));
+            dictMap.put(name, sysDictItemService.getDictByName(name));
         }
         return new ResponseEntity<>(dictMap, HttpStatus.OK);
     }
@@ -77,7 +77,7 @@ public class DictDetailController {
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
         }
-        dictDetailService.create(resources);
+        sysDictItemService.create(resources);
         return ResultBody.ok();
     }
 
@@ -86,7 +86,7 @@ public class DictDetailController {
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
     public ResultBody<Object> update(@Validated(SysDictItem.Update.class) @RequestBody SysDictItem resources){
-        dictDetailService.update(resources);
+        sysDictItemService.update(resources);
         return ResultBody.ok();
     }
 
@@ -95,7 +95,7 @@ public class DictDetailController {
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("@el.check('dict:del')")
     public ResultBody<Object> delete(@PathVariable Long id){
-        dictDetailService.delete(id);
+        sysDictItemService.delete(id);
         return ResultBody.ok();
     }
 }

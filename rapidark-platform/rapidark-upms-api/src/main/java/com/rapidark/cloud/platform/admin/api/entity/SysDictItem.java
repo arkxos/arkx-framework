@@ -13,9 +13,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.domain;
+package com.rapidark.cloud.platform.admin.api.entity;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;

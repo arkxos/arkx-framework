@@ -17,12 +17,10 @@
 package com.rapidark.cloud.platform.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
-import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
-import com.rapidark.cloud.platform.admin.mapper.SysDictItemMapper;
-import com.rapidark.cloud.platform.admin.mapper.SysDictMapper;
+import com.rapidark.cloud.platform.admin.mapper.SysDictItemRepository;
+import com.rapidark.cloud.platform.admin.mapper.SysDictRepository;
 import com.rapidark.cloud.platform.admin.service.SysDictService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
@@ -46,9 +44,9 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
-public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements SysDictService {
+public class SysDictServiceImpl extends ServiceImpl<SysDictRepository, SysDict> implements SysDictService {
 
-	private final SysDictItemMapper dictItemMapper;
+	private final SysDictItemRepository dictItemMapper;
 
 	/**
 	 * 根据ID 删除字典
@@ -58,7 +56,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
-	public ResponseResult removeDictByIds(Long[] ids) {
+	public ResponseResult delete(Long[] ids) {
 
 		List<Long> dictIdList = baseMapper.selectBatchIds(CollUtil.toList(ids))
 			.stream()
@@ -68,7 +66,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
 		baseMapper.deleteBatchIds(dictIdList);
 
-		dictItemMapper.delete(Wrappers.<SysDictItem>lambdaQuery().in(SysDictItem::getDictId, dictIdList));
+//		dictItemMapper.delete(Wrappers.<SysDictItem>lambdaQuery().in(SysDictItem::getDictId, dictIdList));
 		return ResponseResult.ok();
 	}
 
@@ -79,7 +77,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, key = "#dict.code")
-	public ResponseResult updateDict(SysDict dict) {
+	public ResponseResult update(SysDict dict) {
 		SysDict sysDict = this.getById(dict.getId());
 		// 系统内置
 		if (DictTypeEnum.SYSTEM.getType().equals(sysDict.getSystemFlag())) {

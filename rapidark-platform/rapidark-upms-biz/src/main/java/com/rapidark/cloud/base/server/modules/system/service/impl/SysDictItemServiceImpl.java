@@ -15,11 +15,11 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service.impl;
 
-import com.rapidark.cloud.base.server.modules.system.domain.SysDictItem;
+import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.repository.DictDetailRepository;
-import com.rapidark.cloud.base.server.modules.system.repository.DictRepository;
-import com.rapidark.cloud.base.server.modules.system.service.DictDetailService;
+import com.rapidark.cloud.base.server.modules.system.repository.SysDictItemRepository;
+import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
+import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictDetailMapper;
@@ -41,23 +41,23 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @CacheConfig(cacheNames = "dict")
-public class DictDetailServiceImpl implements DictDetailService {
+public class SysDictItemServiceImpl implements SysDictItemService {
 
-    private final DictRepository dictRepository;
-    private final DictDetailRepository dictDetailRepository;
+    private final SysDictRepository sysDictRepository;
+    private final SysDictItemRepository sysDictItemRepository;
     private final DictDetailMapper dictDetailMapper;
     private final RedisUtils redisUtils;
 
     @Override
     public Map<String,Object> queryAll(DictDetailQueryCriteria criteria, Pageable pageable) {
-        Page<SysDictItem> page = dictDetailRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable);
+        Page<SysDictItem> page = sysDictItemRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable);
         return PageUtil.toPage(page.map(dictDetailMapper::toDto));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(SysDictItem resources) {
-        dictDetailRepository.save(resources);
+        sysDictItemRepository.save(resources);
         // 清理缓存
         delCaches(resources);
     }
@@ -65,10 +65,10 @@ public class DictDetailServiceImpl implements DictDetailService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysDictItem resources) {
-        SysDictItem sysDictItem = dictDetailRepository.findById(resources.getId()).orElseGet(SysDictItem::new);
+        SysDictItem sysDictItem = sysDictItemRepository.findById(resources.getId()).orElseGet(SysDictItem::new);
         ValidationUtil.isNull( sysDictItem.getId(),"DictDetail","id",resources.getId());
         resources.setId(sysDictItem.getId());
-        dictDetailRepository.save(resources);
+        sysDictItemRepository.save(resources);
         // 清理缓存
         delCaches(resources);
     }
@@ -76,20 +76,20 @@ public class DictDetailServiceImpl implements DictDetailService {
     @Override
     @Cacheable(key = "'name:' + #p0")
     public List<DictDetailDto> getDictByName(String name) {
-        return dictDetailMapper.toDto(dictDetailRepository.findByDictName(name));
+        return dictDetailMapper.toDto(sysDictItemRepository.findByDictCode(name));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        SysDictItem sysDictItem = dictDetailRepository.findById(id).orElseGet(SysDictItem::new);
+        SysDictItem sysDictItem = sysDictItemRepository.findById(id).orElseGet(SysDictItem::new);
         // 清理缓存
         delCaches(sysDictItem);
-        dictDetailRepository.deleteById(id);
+        sysDictItemRepository.deleteById(id);
     }
 
     public void delCaches(SysDictItem sysDictItem){
-        SysDict sysDict = dictRepository.findById(sysDictItem.getSysDict().getId()).orElseGet(SysDict::new);
+        SysDict sysDict = sysDictRepository.findById(sysDictItem.getSysDict().getId()).orElseGet(SysDict::new);
         redisUtils.del(CacheKey.DICT_NAME + sysDict.getCode());
     }
 }

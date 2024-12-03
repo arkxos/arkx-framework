@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.repository;
 
-import com.rapidark.cloud.base.server.modules.system.domain.SysDictItem;
+import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -25,12 +25,12 @@ import java.util.List;
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface DictDetailRepository extends JpaRepository<SysDictItem, Long>, JpaSpecificationExecutor<SysDictItem> {
+public interface SysDictItemRepository extends JpaRepository<SysDictItem, Long>, JpaSpecificationExecutor<SysDictItem> {
 
     /**
      * 根据字典名称查询
-     * @param name /
+     * @param code /
      * @return /
      */
-    List<SysDictItem> findByDictName(String name);
+    List<SysDictItem> findByDictCode(String code);
 }

@@ -17,16 +17,12 @@
 package com.rapidark.cloud.platform.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
-import com.rapidark.cloud.platform.admin.mapper.SysDictItemMapper;
+import com.rapidark.cloud.platform.admin.mapper.SysDictItemRepository;
 import com.rapidark.cloud.platform.admin.service.SysDictItemService;
 import com.rapidark.cloud.platform.admin.service.SysDictService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
-import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
-import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
-import com.rapidark.cloud.platform.common.core.util.MsgUtils;
 
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -40,7 +36,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDictItem> implements SysDictItemService {
+public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemRepository, SysDictItem> implements SysDictItemService {
 
 	private final SysDictService dictService;
 
@@ -51,14 +47,14 @@ public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDi
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
-	public ResponseResult removeDictItem(Long id) {
+	public ResponseResult delete(Long id) {
 		// 根据ID查询字典ID
 		SysDictItem dictItem = this.getById(id);
-		SysDict dict = dictService.getById(dictItem.getDictId());
+//		SysDict dict = dictService.getById(dictItem.getDictId());
 		// 系统内置
-		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
-			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_DICT_DELETE_SYSTEM));
-		}
+//		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
+//			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_DICT_DELETE_SYSTEM));
+//		}
 		return ResponseResult.ok(this.removeById(id));
 	}
 
@@ -69,13 +65,13 @@ public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDi
 	 */
 	@Override
 	@CacheEvict(value = CacheConstants.DICT_DETAILS, key = "#item.dictCode")
-	public ResponseResult updateDictItem(SysDictItem item) {
+	public ResponseResult update(SysDictItem item) {
 		// 查询字典
-		SysDict dict = dictService.getById(item.getDictId());
-		// 系统内置
-		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
-			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_DICT_UPDATE_SYSTEM));
-		}
+//		SysDict dict = dictService.getById(item.getDictId());
+//		// 系统内置
+//		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
+//			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_DICT_UPDATE_SYSTEM));
+//		}
 		return ResponseResult.ok(this.updateById(item));
 	}
 

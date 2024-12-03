@@ -26,7 +26,7 @@ import java.util.Set;
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface DictRepository extends JpaRepository<SysDict, Long>, JpaSpecificationExecutor<SysDict> {
+public interface SysDictRepository extends JpaRepository<SysDict, Long>, JpaSpecificationExecutor<SysDict> {
 
     /**
      * 删除

@@ -16,7 +16,7 @@
 package com.rapidark.cloud.base.server.modules.system.rest;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.service.DictService;
+import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import com.rapidark.framework.common.model.ResultBody;
 
@@ -43,30 +43,30 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Schema(title = "系统：字典管理")
 @RequestMapping("/dict")
-public class DictController {
+public class SysDictController {
 
-    private final DictService dictService;
+    private final SysDictService sysDictService;
     private static final String ENTITY_NAME = "dict";
 
     @Schema(title = "导出字典数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('dict:list')")
     public void download(HttpServletResponse response, DictQueryCriteria criteria) throws IOException {
-        dictService.download(dictService.queryAll(criteria), response);
+        sysDictService.download(sysDictService.queryAll(criteria), response);
     }
 
     @Schema(title = "查询字典")
     @GetMapping(value = "/all")
     @PreAuthorize("@el.check('dict:list')")
     public ResponseEntity<Object> queryAll(){
-        return new ResponseEntity<>(dictService.queryAll(new DictQueryCriteria()),HttpStatus.OK);
+        return new ResponseEntity<>(sysDictService.queryAll(new DictQueryCriteria()),HttpStatus.OK);
     }
 
     @Schema(title = "查询字典")
     @GetMapping
     @PreAuthorize("@el.check('dict:list')")
     public ResponseEntity<Object> query(DictQueryCriteria resources, Pageable pageable){
-        return new ResponseEntity<>(dictService.queryAll(resources,pageable),HttpStatus.OK);
+        return new ResponseEntity<>(sysDictService.queryAll(resources,pageable),HttpStatus.OK);
     }
 
 //    @Log("新增字典")
@@ -77,7 +77,7 @@ public class DictController {
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
         }
-        dictService.create(resources);
+        sysDictService.create(resources);
         return ResultBody.ok();
     }
 
@@ -86,7 +86,7 @@ public class DictController {
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
     public ResultBody<Object> update(@Validated(SysDict.Update.class) @RequestBody SysDict resources){
-        dictService.update(resources);
+        sysDictService.update(resources);
         return ResultBody.ok();
     }
 
@@ -95,7 +95,7 @@ public class DictController {
     @DeleteMapping
     @PreAuthorize("@el.check('dict:del')")
     public ResultBody<Object> delete(@RequestBody IdsParam param){
-        dictService.delete(param.getIds());
+        sysDictService.delete(param.getIds());
         return ResultBody.ok();
     }
 }

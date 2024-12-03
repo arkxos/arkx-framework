@@ -18,6 +18,7 @@ package com.rapidark.cloud.base.server.modules.system.service;
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import org.springframework.data.domain.Pageable;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,7 +30,7 @@ import java.util.Set;
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface DictService {
+public interface SysDictService {
 
     /**
      * 分页查询
@@ -72,4 +73,11 @@ public interface DictService {
      * @throws IOException /
      */
     void download(List<DictDto> queryAll, HttpServletResponse response) throws IOException;
+
+	/**
+	 * 同步缓存 （清空缓存）
+	 * @return ResponseResult
+	 */
+	ResponseResult syncDictCache();
+
 }

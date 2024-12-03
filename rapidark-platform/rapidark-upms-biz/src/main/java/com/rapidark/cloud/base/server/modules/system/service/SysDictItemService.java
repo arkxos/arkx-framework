@@ -16,7 +16,7 @@
 package com.rapidark.cloud.base.server.modules.system.service;
 
 
-import com.rapidark.cloud.base.server.modules.system.domain.SysDictItem;
+import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +27,7 @@ import java.util.Map;
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface DictDetailService {
+public interface SysDictItemService {
 
     /**
      * 创建
