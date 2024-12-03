@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.repository;
 
-import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
+import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

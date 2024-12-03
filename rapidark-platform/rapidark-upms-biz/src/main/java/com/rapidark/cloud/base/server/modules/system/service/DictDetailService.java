@@ -16,7 +16,7 @@
 package com.rapidark.cloud.base.server.modules.system.service;
 
 
-import com.rapidark.cloud.base.server.modules.system.domain.DictDetail;
+import com.rapidark.cloud.base.server.modules.system.domain.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import org.springframework.data.domain.Pageable;
@@ -33,13 +33,13 @@ public interface DictDetailService {
      * 创建
      * @param resources /
      */
-    void create(DictDetail resources);
+    void create(SysDictItem resources);
 
     /**
      * 编辑
      * @param resources /
      */
-    void update(DictDetail resources);
+    void update(SysDictItem resources);
 
     /**
      * 删除

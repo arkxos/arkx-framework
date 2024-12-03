@@ -16,7 +16,7 @@
 package com.rapidark.cloud.base.server.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
+import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.repository.DictRepository;
 import com.rapidark.cloud.base.server.modules.system.service.DictService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;

@@ -15,8 +15,8 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service.impl;
 
-import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
-import com.rapidark.cloud.base.server.modules.system.domain.DictDetail;
+import com.rapidark.cloud.base.server.modules.system.domain.SysDictItem;
+import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.repository.DictDetailRepository;
 import com.rapidark.cloud.base.server.modules.system.repository.DictRepository;
 import com.rapidark.cloud.base.server.modules.system.service.DictDetailService;
@@ -50,13 +50,13 @@ public class DictDetailServiceImpl implements DictDetailService {
 
     @Override
     public Map<String,Object> queryAll(DictDetailQueryCriteria criteria, Pageable pageable) {
-        Page<DictDetail> page = dictDetailRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable);
+        Page<SysDictItem> page = dictDetailRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable);
         return PageUtil.toPage(page.map(dictDetailMapper::toDto));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void create(DictDetail resources) {
+    public void create(SysDictItem resources) {
         dictDetailRepository.save(resources);
         // 清理缓存
         delCaches(resources);
@@ -64,10 +64,10 @@ public class DictDetailServiceImpl implements DictDetailService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(DictDetail resources) {
-        DictDetail dictDetail = dictDetailRepository.findById(resources.getId()).orElseGet(DictDetail::new);
-        ValidationUtil.isNull( dictDetail.getId(),"DictDetail","id",resources.getId());
-        resources.setId(dictDetail.getId());
+    public void update(SysDictItem resources) {
+        SysDictItem sysDictItem = dictDetailRepository.findById(resources.getId()).orElseGet(SysDictItem::new);
+        ValidationUtil.isNull( sysDictItem.getId(),"DictDetail","id",resources.getId());
+        resources.setId(sysDictItem.getId());
         dictDetailRepository.save(resources);
         // 清理缓存
         delCaches(resources);
@@ -82,14 +82,14 @@ public class DictDetailServiceImpl implements DictDetailService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        DictDetail dictDetail = dictDetailRepository.findById(id).orElseGet(DictDetail::new);
+        SysDictItem sysDictItem = dictDetailRepository.findById(id).orElseGet(SysDictItem::new);
         // 清理缓存
-        delCaches(dictDetail);
+        delCaches(sysDictItem);
         dictDetailRepository.deleteById(id);
     }
 
-    public void delCaches(DictDetail dictDetail){
-        SysDict sysDict = dictRepository.findById(dictDetail.getSysDict().getId()).orElseGet(SysDict::new);
+    public void delCaches(SysDictItem sysDictItem){
+        SysDict sysDict = dictRepository.findById(sysDictItem.getSysDict().getId()).orElseGet(SysDict::new);
         redisUtils.del(CacheKey.DICT_NAME + sysDict.getCode());
     }
 }

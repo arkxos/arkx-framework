@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service;
 
-import com.rapidark.cloud.base.server.modules.system.domain.SysDict;
+import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import org.springframework.data.domain.Pageable;

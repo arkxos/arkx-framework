@@ -238,7 +238,7 @@ public class SysDictController {
 	@GetMapping("/type/{type}")
 	@Cacheable(value = CacheConstants.DICT_DETAILS, key = "#type", unless = "#result.data.isEmpty()")
 	public ResponseResult<List<SysDictItem>> getDictByType(@PathVariable String type) {
-		return ResponseResult.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictType, type)));
+		return ResponseResult.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictCode, type)));
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class SysDictController {
 	@GetMapping("/remote/type/{type}")
 	@Cacheable(value = CacheConstants.DICT_DETAILS, key = "#type", unless = "#result.data.isEmpty()")
 	public ResponseResult<List<SysDictItem>> getRemoteDictByType(@PathVariable String type) {
-		return ResponseResult.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictType, type)));
+		return ResponseResult.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictCode, type)));
 	}
 
 }

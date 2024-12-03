@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.rest;
 
-import com.rapidark.cloud.base.server.modules.system.domain.DictDetail;
+import com.rapidark.cloud.base.server.modules.system.domain.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.DictDetailService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
@@ -73,7 +73,7 @@ public class DictDetailController {
     @Schema(title = "新增字典详情")
     @PostMapping
     @PreAuthorize("@el.check('dict:add')")
-    public ResultBody<Object> create(@Validated @RequestBody DictDetail resources){
+    public ResultBody<Object> create(@Validated @RequestBody SysDictItem resources){
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
         }
@@ -85,7 +85,7 @@ public class DictDetailController {
     @Schema(title = "修改字典详情")
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
-    public ResultBody<Object> update(@Validated(DictDetail.Update.class) @RequestBody DictDetail resources){
+    public ResultBody<Object> update(@Validated(SysDictItem.Update.class) @RequestBody SysDictItem resources){
         dictDetailService.update(resources);
         return ResultBody.ok();
     }

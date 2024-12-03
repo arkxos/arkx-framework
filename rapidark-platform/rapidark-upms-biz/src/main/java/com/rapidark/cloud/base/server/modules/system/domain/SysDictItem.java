@@ -15,6 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.domain;
 
+import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,12 +34,13 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table(name="sys_dict_detail")
-public class DictDetail extends AbstractIdLongEntity implements Serializable {
+@Schema(description = "字典项")
+public class SysDictItem extends AbstractIdLongEntity implements Serializable {
 
     @Id
     @Column(name = "detail_id")
     @NotNull(groups = Update.class)
-    @Schema(title = "ID", hidden = true)
+    @Schema(title = "编号", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
     @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
@@ -46,8 +48,14 @@ public class DictDetail extends AbstractIdLongEntity implements Serializable {
 
     @JoinColumn(name = "dict_id")
     @ManyToOne(fetch=FetchType.LAZY)
-    @Schema(title = "字典", hidden = true)
+    @Schema(title = "所属字典", hidden = true)
     private SysDict sysDict;
+
+	/**
+	 * 类型
+	 */
+	@Schema(description = "类型")
+	private String dictCode;
 
     @Schema(title = "字典标签")
     private String label;
@@ -56,5 +64,11 @@ public class DictDetail extends AbstractIdLongEntity implements Serializable {
     private String value;
 
     @Schema(title = "排序")
-    private Integer dictSort = 999;
+    private Integer sortOrder = 999;
+
+	/**
+	 * 描述
+	 */
+	@Schema(description = "描述")
+	private String description;
 }
