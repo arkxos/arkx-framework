@@ -23,9 +23,15 @@ import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictMapper;
+import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
+import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
+import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
+import com.rapidark.cloud.platform.common.core.util.MsgUtils;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.framework.common.utils.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -45,7 +51,7 @@ public class SysDictServiceImpl implements SysDictService {
 
     private final SysDictRepository sysDictRepository;
     private final DictMapper dictMapper;
-    private final RedisUtils redisUtils;
+    private final RedisUtils<Object> redisUtils;
 
     @Override
     public Map<String, Object> queryAll(DictQueryCriteria dict, Pageable pageable){
@@ -65,23 +71,40 @@ public class SysDictServiceImpl implements SysDictService {
         sysDictRepository.save(resources);
     }
 
+	/**
+	 * 更新字典
+	 * @param sysDict 字典
+	 * @return
+	 */
     @Override
     @Transactional(rollbackFor = Exception.class)
+	// @CacheEvict(value = CacheConstants.DICT_DETAILS, key = "#dict.code")
     public void update(SysDict resources) {
+		// 系统内置
+		if (DictTypeEnum.SYSTEM.getType().equals(resources.getSystemFlag())) {
+			throw new RuntimeException(MsgUtils.getMessage(ErrorCodes.SYS_DICT_UPDATE_SYSTEM));
+		}
+
         // 清理缓存
         delCaches(resources);
+
         SysDict sysDict = sysDictRepository.findById(resources.getId()).orElseGet(SysDict::new);
-        ValidationUtil.isNull( sysDict.getId(),"Dict","id",resources.getId());
+        ValidationUtil.isNull(sysDict.getId(),"Dict","id",resources.getId());
         resources.setId(sysDict.getId());
+
         sysDictRepository.save(resources);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+	// @CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
     public void delete(Set<Long> ids) {
         // 清理缓存
         List<SysDict> sysDicts = sysDictRepository.findByIdIn(ids);
         for (SysDict sysDict : sysDicts) {
+			if(DictTypeEnum.SYSTEM.getType().equals(sysDict.getSystemFlag())) {
+				throw new RuntimeException("系统内置类型不允许删除");
+			}
             delCaches(sysDict);
         }
         sysDictRepository.deleteByIdIn(ids);
@@ -117,4 +140,15 @@ public class SysDictServiceImpl implements SysDictService {
     public void delCaches(SysDict sysDict){
         redisUtils.del(CacheKey.DICT_NAME + sysDict.getCode());
     }
+
+	/**
+	 * 同步缓存 （清空缓存）
+	 * @return ResponseResult
+	 */
+	@Override
+//	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
+	public ResponseResult syncDictCache() {
+		return ResponseResult.ok();
+	}
+
 }

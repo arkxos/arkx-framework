@@ -23,6 +23,9 @@ import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictDetailMapper;
+import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
+import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
+import com.rapidark.cloud.platform.common.core.util.MsgUtils;
 import com.rapidark.framework.common.utils.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
@@ -67,7 +70,13 @@ public class SysDictItemServiceImpl implements SysDictItemService {
     public void update(SysDictItem resources) {
         SysDictItem sysDictItem = sysDictItemRepository.findById(resources.getId()).orElseGet(SysDictItem::new);
         ValidationUtil.isNull( sysDictItem.getId(),"DictDetail","id",resources.getId());
-        resources.setId(sysDictItem.getId());
+		SysDict dict = sysDictItem.getSysDict();
+		// 系统内置
+		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
+			throw new RuntimeException(MsgUtils.getMessage(ErrorCodes.SYS_DICT_DELETE_SYSTEM));
+		}
+
+		resources.setId(sysDictItem.getId());
         sysDictItemRepository.save(resources);
         // 清理缓存
         delCaches(resources);
@@ -81,9 +90,15 @@ public class SysDictItemServiceImpl implements SysDictItemService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+	//@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
     public void delete(Long id) {
         SysDictItem sysDictItem = sysDictItemRepository.findById(id).orElseGet(SysDictItem::new);
-        // 清理缓存
+		SysDict dict = sysDictItem.getSysDict();
+		// 系统内置
+		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
+			throw new RuntimeException(MsgUtils.getMessage(ErrorCodes.SYS_DICT_DELETE_SYSTEM));
+		}
+		// 清理缓存
         delCaches(sysDictItem);
         sysDictItemRepository.deleteById(id);
     }
