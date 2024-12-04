@@ -48,7 +48,7 @@ public class SysDictItem extends AbstractIdLongEntity implements Serializable {
     @JoinColumn(name = "dict_id")
     @ManyToOne(fetch=FetchType.LAZY)
     @Schema(title = "所属字典", hidden = true)
-    private SysDict sysDict;
+    private SysDict dict;
 
 	/**
 	 * 类型

@@ -70,7 +70,7 @@ public class SysDictItemServiceImpl implements SysDictItemService {
     public void update(SysDictItem resources) {
         SysDictItem sysDictItem = sysDictItemRepository.findById(resources.getId()).orElseGet(SysDictItem::new);
         ValidationUtil.isNull( sysDictItem.getId(),"DictDetail","id",resources.getId());
-		SysDict dict = sysDictItem.getSysDict();
+		SysDict dict = sysDictItem.getDict();
 		// 系统内置
 		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
 			throw new RuntimeException(MsgUtils.getMessage(ErrorCodes.SYS_DICT_DELETE_SYSTEM));
@@ -93,7 +93,7 @@ public class SysDictItemServiceImpl implements SysDictItemService {
 	//@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
     public void delete(Long id) {
         SysDictItem sysDictItem = sysDictItemRepository.findById(id).orElseGet(SysDictItem::new);
-		SysDict dict = sysDictItem.getSysDict();
+		SysDict dict = sysDictItem.getDict();
 		// 系统内置
 		if (DictTypeEnum.SYSTEM.getType().equals(dict.getSystemFlag())) {
 			throw new RuntimeException(MsgUtils.getMessage(ErrorCodes.SYS_DICT_DELETE_SYSTEM));
@@ -104,7 +104,7 @@ public class SysDictItemServiceImpl implements SysDictItemService {
     }
 
     public void delCaches(SysDictItem sysDictItem){
-        SysDict sysDict = sysDictRepository.findById(sysDictItem.getSysDict().getId()).orElseGet(SysDict::new);
+        SysDict sysDict = sysDictRepository.findById(sysDictItem.getDict().getId()).orElseGet(SysDict::new);
         redisUtils.del(CacheKey.DICT_NAME + sysDict.getCode());
     }
 }

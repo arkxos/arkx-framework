@@ -35,7 +35,8 @@ import java.util.Map;
         "com.rapidark.cloud.base.client.model",
         "com.rapidark.cloud.base.server.modules",
         "com.rapidark.cloud.gateway.formwork.entity",
-		"com.rapidark.cloud.platform.gateway.framework.entity"
+		"com.rapidark.cloud.platform.gateway.framework.entity",
+		"com.rapidark.cloud.platform.admin.api.entity"
 })
 public class JpaConfiguration {
 

@@ -67,6 +67,6 @@ public class SysDict extends AbstractIdLongEntity implements Serializable {
 	private String remarks;
 
 	@OneToMany(mappedBy = "dict",cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-	private List<SysDictItem> dictDetails;
+	private List<SysDictItem> dictItems;
 
 }
