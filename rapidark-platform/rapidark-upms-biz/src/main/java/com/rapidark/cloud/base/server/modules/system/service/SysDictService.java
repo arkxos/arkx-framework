@@ -15,10 +15,12 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service;
 
+import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.data.jpa.service.IBaseService;
 import org.springframework.data.domain.Pageable;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,7 +32,7 @@ import java.util.Set;
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface SysDictService {
+public interface SysDictService extends IBaseService<SysDict, Long, SysDictRepository> {
 
     /**
      * 分页查询

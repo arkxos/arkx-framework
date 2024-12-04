@@ -16,6 +16,7 @@
 package com.rapidark.cloud.base.server.modules.system.repository;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
+import com.rapidark.framework.data.jpa.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -26,7 +27,7 @@ import java.util.Set;
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface SysDictRepository extends JpaRepository<SysDict, Long>, JpaSpecificationExecutor<SysDict> {
+public interface SysDictRepository extends BaseRepository<SysDict, Long> {
 
     /**
      * 删除

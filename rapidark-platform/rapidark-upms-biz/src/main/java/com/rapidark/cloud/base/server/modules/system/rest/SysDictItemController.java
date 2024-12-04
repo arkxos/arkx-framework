@@ -15,10 +15,13 @@
  */
 package com.rapidark.cloud.base.server.modules.system.rest;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
+import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.framework.common.model.ResultBody;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,7 +48,6 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @Schema(title = "系统：字典详情管理")
-@RequestMapping("/dictDetail")
 public class SysDictItemController {
 
     private final SysDictItemService sysDictItemService;
@@ -58,7 +60,38 @@ public class SysDictItemController {
         return new ResponseEntity<>(sysDictItemService.queryAll(criteria,pageable),HttpStatus.OK);
     }
 
-    @Schema(title = "查询多个字典详情")
+	/**
+	 * 分页查询
+	 * @param page 分页对象
+	 * @param sysDictItem 字典项
+	 * @return
+	 */
+//	@GetMapping("/item/page")
+//	public ResponseResult getSysDictItemPage(Page page, SysDictItem sysDictItem) {
+//		return ResponseResult.ok(sysDictItemService.page(page, Wrappers.query(sysDictItem)));
+//	}
+
+	/**
+	 * 通过id查询字典项
+	 * @param id id
+	 * @return ResponseResult
+	 */
+//	@GetMapping("/item/details/{id}")
+//	public ResponseResult getDictItemById(@PathVariable("id") Long id) {
+//		return ResponseResult.ok(sysDictItemService.getById(id));
+//	}
+
+	/**
+	 * 查询字典项详情
+	 * @param query 查询条件
+	 * @return ResponseResult
+	 */
+//	@GetMapping("/item/details")
+//	public ResponseResult getDictItemDetails(SysDictItem query) {
+//		return ResponseResult.ok(sysDictItemService.getOne(Wrappers.query(query), false));
+//	}
+
+	@Schema(title = "查询多个字典详情")
     @GetMapping(value = "/map")
     public ResponseEntity<Object> getDictDetailMaps(@RequestParam String dictName){
         String[] names = dictName.split("[,，]");

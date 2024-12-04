@@ -29,6 +29,7 @@ import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
 import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.framework.common.utils.*;
+import com.rapidark.framework.data.jpa.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -47,7 +48,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @CacheConfig(cacheNames = "dict")
-public class SysDictServiceImpl implements SysDictService {
+public class SysDictServiceImpl extends BaseService<SysDict, Long, SysDictRepository> implements SysDictService {
 
     private final SysDictRepository sysDictRepository;
     private final DictMapper dictMapper;
@@ -73,7 +74,7 @@ public class SysDictServiceImpl implements SysDictService {
 
 	/**
 	 * 更新字典
-	 * @param sysDict 字典
+	 * @param resources 字典
 	 * @return
 	 */
     @Override
