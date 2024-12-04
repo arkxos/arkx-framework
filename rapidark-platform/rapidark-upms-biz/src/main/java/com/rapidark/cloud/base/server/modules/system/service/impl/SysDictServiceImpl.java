@@ -16,11 +16,11 @@
 package com.rapidark.cloud.base.server.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.rapidark.cloud.platform.admin.api.entity.SysDict;
+import com.rapidark.platform.system.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictMapper;
-import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
+import com.rapidark.platform.system.api.entity.SysDictItem;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;

@@ -21,8 +21,8 @@ package com.rapidark.cloud.platform.admin.service;
 
 import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rapidark.cloud.platform.admin.api.entity.SysDept;
-import com.rapidark.cloud.platform.admin.api.vo.DeptExcelVo;
+import com.rapidark.platform.system.api.entity.SysDept;
+import com.rapidark.platform.system.api.vo.DeptExcelVo;
 import com.rapidark.framework.common.model.ResponseResult;
 
 import org.springframework.validation.BindingResult;

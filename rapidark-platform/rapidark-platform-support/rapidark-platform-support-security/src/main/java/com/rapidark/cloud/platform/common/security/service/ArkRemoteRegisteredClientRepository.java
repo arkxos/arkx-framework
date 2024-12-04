@@ -3,8 +3,8 @@ package com.rapidark.cloud.platform.common.security.service;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
-import com.rapidark.cloud.platform.admin.api.feign.RemoteClientDetailsService;
+import com.rapidark.platform.system.api.entity.SysOauthClientDetails;
+import com.rapidark.platform.system.api.feign.RemoteClientDetailsService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
 import com.rapidark.cloud.platform.common.core.util.RetOps;

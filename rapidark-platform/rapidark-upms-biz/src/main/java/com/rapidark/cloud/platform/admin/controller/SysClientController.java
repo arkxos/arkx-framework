@@ -25,7 +25,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
-import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
+import com.rapidark.platform.system.api.entity.SysOauthClientDetails;
 import com.rapidark.cloud.platform.admin.service.SysOauthClientDetailsService;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;

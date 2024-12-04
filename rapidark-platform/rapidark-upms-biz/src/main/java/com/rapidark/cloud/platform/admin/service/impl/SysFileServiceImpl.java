@@ -23,7 +23,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import com.amazonaws.services.s3.model.S3Object;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.admin.api.entity.SysFile;
+import com.rapidark.platform.system.api.entity.SysFile;
 import com.rapidark.cloud.platform.admin.mapper.SysFileMapper;
 import com.rapidark.cloud.platform.admin.service.SysFileService;
 import com.rapidark.framework.common.model.ResponseResult;

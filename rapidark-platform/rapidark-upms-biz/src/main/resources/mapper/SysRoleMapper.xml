@@ -21,7 +21,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rapidark.cloud.platform.admin.mapper.SysRoleMapper">
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.rapidark.cloud.platform.admin.api.entity.SysRole">
+	<resultMap id="BaseResultMap" type="com.rapidark.platform.system.api.entity.SysRole">
 		<id column="role_id" property="roleId"/>
 		<result column="role_name" property="roleName"/>
 		<result column="role_code" property="roleCode"/>

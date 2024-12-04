@@ -20,7 +20,7 @@
 package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rapidark.cloud.platform.admin.api.entity.SysRoleMenu;
+import com.rapidark.platform.system.api.entity.SysRoleMenu;
 
 /**
  * <p>

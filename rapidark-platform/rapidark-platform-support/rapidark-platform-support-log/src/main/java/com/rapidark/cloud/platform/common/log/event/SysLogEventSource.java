@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.common.log.event;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysLog;
+import com.rapidark.platform.system.api.entity.SysLog;
 
 import lombok.Data;
 

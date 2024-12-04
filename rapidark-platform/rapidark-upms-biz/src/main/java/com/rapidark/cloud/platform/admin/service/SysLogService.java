@@ -21,8 +21,8 @@ package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rapidark.cloud.platform.admin.api.dto.SysLogDTO;
-import com.rapidark.cloud.platform.admin.api.entity.SysLog;
+import com.rapidark.platform.system.api.dto.SysLogDTO;
+import com.rapidark.platform.system.api.entity.SysLog;
 
 import java.util.List;
 

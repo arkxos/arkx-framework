@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.rest;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
+import com.rapidark.platform.system.api.entity.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
@@ -27,12 +27,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 //import com.rapidark.framework.commons.annotation.Log;
 import com.rapidark.framework.common.exception.BadRequestException;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

@@ -15,7 +15,7 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service.mapstruct;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysDict;
+import com.rapidark.platform.system.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
 import com.rapidark.framework.common.model.BaseMapper;
 import org.mapstruct.Mapper;

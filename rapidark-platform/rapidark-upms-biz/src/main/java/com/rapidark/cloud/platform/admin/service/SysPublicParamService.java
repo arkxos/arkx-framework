@@ -18,7 +18,7 @@
 package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rapidark.cloud.platform.admin.api.entity.SysPublicParam;
+import com.rapidark.platform.system.api.entity.SysPublicParam;
 import com.rapidark.framework.common.model.ResponseResult;
 
 /**

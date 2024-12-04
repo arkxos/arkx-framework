@@ -18,7 +18,7 @@ package com.rapidark.cloud.platform.common.log.event;
 
 import org.springframework.context.ApplicationEvent;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysLog;
+import com.rapidark.platform.system.api.entity.SysLog;
 
 /**
  * @author lengleng 系统日志事件

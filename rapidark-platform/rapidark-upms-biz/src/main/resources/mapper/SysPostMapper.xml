@@ -22,7 +22,7 @@
 
 <mapper namespace="com.rapidark.cloud.platform.admin.mapper.SysPostMapper">
 
-	<resultMap id="sysPostMap" type="com.rapidark.cloud.platform.admin.api.entity.SysPost">
+	<resultMap id="sysPostMap" type="com.rapidark.platform.system.api.entity.SysPost">
 		<id property="postId" column="post_id"/>
 		<result property="postCode" column="post_code"/>
 		<result property="postName" column="post_name"/>
@@ -34,7 +34,7 @@
 	</resultMap>
 
 	<!-- 通过用户ID，查询岗位信息-->
-	<select id="listPostsByUserId" resultType="com.rapidark.cloud.platform.admin.api.entity.SysPost">
+	<select id="listPostsByUserId" resultType="com.rapidark.platform.system.api.entity.SysPost">
 		SELECT p.post_id,
 			   p.post_name,
 			   p.post_code,

@@ -17,7 +17,7 @@ package com.rapidark.cloud.base.server.modules.system.service;
 
 
 import com.rapidark.cloud.base.server.modules.system.repository.SysDictItemRepository;
-import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
+import com.rapidark.platform.system.api.entity.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
 import com.rapidark.framework.data.jpa.service.IBaseService;
 

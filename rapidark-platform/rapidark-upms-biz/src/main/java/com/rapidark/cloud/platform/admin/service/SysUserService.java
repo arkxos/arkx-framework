@@ -22,11 +22,11 @@ package com.rapidark.cloud.platform.admin.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rapidark.cloud.platform.admin.api.dto.UserDTO;
-import com.rapidark.cloud.platform.admin.api.dto.UserInfo;
-import com.rapidark.cloud.platform.admin.api.entity.SysUser;
-import com.rapidark.cloud.platform.admin.api.vo.UserExcelVO;
-import com.rapidark.cloud.platform.admin.api.vo.UserVO;
+import com.rapidark.platform.system.api.dto.UserDTO;
+import com.rapidark.platform.system.api.dto.UserInfo;
+import com.rapidark.platform.system.api.entity.SysUser;
+import com.rapidark.platform.system.api.vo.UserExcelVO;
+import com.rapidark.platform.system.api.vo.UserVO;
 import com.rapidark.framework.common.model.ResponseResult;
 
 import org.springframework.validation.BindingResult;

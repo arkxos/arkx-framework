@@ -18,8 +18,8 @@
 package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rapidark.cloud.platform.admin.api.entity.SysPost;
-import com.rapidark.cloud.platform.admin.api.vo.PostExcelVO;
+import com.rapidark.platform.system.api.entity.SysPost;
+import com.rapidark.platform.system.api.vo.PostExcelVO;
 import com.rapidark.framework.common.model.ResponseResult;
 
 import org.springframework.validation.BindingResult;

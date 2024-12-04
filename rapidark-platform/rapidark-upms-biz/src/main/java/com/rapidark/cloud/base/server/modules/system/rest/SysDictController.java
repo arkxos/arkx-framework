@@ -17,7 +17,7 @@ package com.rapidark.cloud.base.server.modules.system.rest;
 
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
-import com.rapidark.cloud.platform.admin.api.entity.SysDict;
+import com.rapidark.platform.system.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
@@ -33,9 +33,6 @@ import com.rapidark.framework.common.model.IdsParam;
 import com.rapidark.framework.common.exception.BadRequestException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

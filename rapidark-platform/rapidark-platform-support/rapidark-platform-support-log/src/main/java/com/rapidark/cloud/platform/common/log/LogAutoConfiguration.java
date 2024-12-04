@@ -16,7 +16,7 @@
 
 package com.rapidark.cloud.platform.common.log;
 
-import com.rapidark.cloud.platform.admin.api.feign.RemoteLogService;
+import com.rapidark.platform.system.api.feign.RemoteLogService;
 import com.rapidark.cloud.platform.common.log.aspect.SysLogAspect;
 import com.rapidark.cloud.platform.common.log.config.ArkLogProperties;
 import com.rapidark.cloud.platform.common.log.event.SysLogListener;

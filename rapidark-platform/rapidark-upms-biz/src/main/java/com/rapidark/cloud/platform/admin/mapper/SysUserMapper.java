@@ -22,9 +22,9 @@ package com.rapidark.cloud.platform.admin.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rapidark.cloud.platform.admin.api.dto.UserDTO;
-import com.rapidark.cloud.platform.admin.api.entity.SysUser;
-import com.rapidark.cloud.platform.admin.api.vo.UserVO;
+import com.rapidark.platform.system.api.dto.UserDTO;
+import com.rapidark.platform.system.api.entity.SysUser;
+import com.rapidark.platform.system.api.vo.UserVO;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

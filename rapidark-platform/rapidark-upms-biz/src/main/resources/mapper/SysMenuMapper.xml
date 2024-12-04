@@ -21,7 +21,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rapidark.cloud.platform.admin.mapper.SysMenuMapper">
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.rapidark.cloud.platform.admin.api.entity.SysMenu">
+	<resultMap id="BaseResultMap" type="com.rapidark.platform.system.api.entity.SysMenu">
 		<id column="menu_id" property="menuId"/>
 		<result column="name" property="name"/>
 		<result column="app_Code" property="appCode"/>

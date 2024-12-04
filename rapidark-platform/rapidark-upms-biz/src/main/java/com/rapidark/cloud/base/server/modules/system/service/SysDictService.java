@@ -16,16 +16,12 @@
 package com.rapidark.cloud.base.server.modules.system.service;
 
 import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
-import com.rapidark.cloud.platform.admin.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
+import com.rapidark.platform.system.api.entity.SysDict;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.data.jpa.service.IBaseService;
-import org.springframework.data.domain.Pageable;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**

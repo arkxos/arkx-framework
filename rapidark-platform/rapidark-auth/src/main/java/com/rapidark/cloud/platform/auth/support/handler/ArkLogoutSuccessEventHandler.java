@@ -16,7 +16,7 @@
 
 package com.rapidark.cloud.platform.auth.support.handler;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysLog;
+import com.rapidark.platform.system.api.entity.SysLog;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 import com.rapidark.cloud.platform.common.core.util.WebUtils;
 import com.rapidark.cloud.platform.common.log.event.SysLogEvent;

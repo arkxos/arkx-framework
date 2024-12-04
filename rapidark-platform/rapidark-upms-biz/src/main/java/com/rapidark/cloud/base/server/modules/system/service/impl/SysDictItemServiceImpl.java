@@ -15,13 +15,12 @@
  */
 package com.rapidark.cloud.base.server.modules.system.service.impl;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
-import com.rapidark.cloud.platform.admin.api.entity.SysDict;
+import com.rapidark.platform.system.api.entity.SysDictItem;
+import com.rapidark.platform.system.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.repository.SysDictItemRepository;
 import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictDetailMapper;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
@@ -31,12 +30,9 @@ import com.rapidark.framework.data.jpa.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Map;
 
 /**
 * @author Zheng Jie

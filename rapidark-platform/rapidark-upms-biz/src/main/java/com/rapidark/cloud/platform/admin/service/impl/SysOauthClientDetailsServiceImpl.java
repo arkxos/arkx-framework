@@ -22,7 +22,7 @@ package com.rapidark.cloud.platform.admin.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
+import com.rapidark.platform.system.api.entity.SysOauthClientDetails;
 import com.rapidark.cloud.platform.admin.mapper.SysOauthClientDetailsMapper;
 import com.rapidark.cloud.platform.admin.service.SysOauthClientDetailsService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;

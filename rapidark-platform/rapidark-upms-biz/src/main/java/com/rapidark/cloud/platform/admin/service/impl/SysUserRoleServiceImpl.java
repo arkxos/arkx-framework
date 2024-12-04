@@ -20,7 +20,7 @@
 package com.rapidark.cloud.platform.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.admin.api.entity.SysUserRole;
+import com.rapidark.platform.system.api.entity.SysUserRole;
 import com.rapidark.cloud.platform.admin.mapper.SysUserRoleMapper;
 import com.rapidark.cloud.platform.admin.service.SysUserRoleService;
 

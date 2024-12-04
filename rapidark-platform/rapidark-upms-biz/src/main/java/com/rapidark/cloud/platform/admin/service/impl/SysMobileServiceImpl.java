@@ -20,7 +20,7 @@ package com.rapidark.cloud.platform.admin.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.rapidark.cloud.platform.admin.api.entity.SysUser;
+import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.cloud.platform.admin.mapper.SysUserMapper;
 import com.rapidark.cloud.platform.admin.service.SysMobileService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;

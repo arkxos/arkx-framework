@@ -22,7 +22,7 @@ package com.rapidark.cloud.platform.admin.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.admin.api.entity.SysRoleMenu;
+import com.rapidark.platform.system.api.entity.SysRoleMenu;
 import com.rapidark.cloud.platform.admin.mapper.SysRoleMenuMapper;
 import com.rapidark.cloud.platform.admin.service.SysRoleMenuService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;

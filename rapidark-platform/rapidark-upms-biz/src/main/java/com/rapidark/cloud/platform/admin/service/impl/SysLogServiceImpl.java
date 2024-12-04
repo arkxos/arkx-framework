@@ -25,8 +25,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.admin.api.dto.SysLogDTO;
-import com.rapidark.cloud.platform.admin.api.entity.SysLog;
+import com.rapidark.platform.system.api.dto.SysLogDTO;
+import com.rapidark.platform.system.api.entity.SysLog;
 import com.rapidark.cloud.platform.admin.mapper.SysLogMapper;
 import com.rapidark.cloud.platform.admin.service.SysLogService;
 

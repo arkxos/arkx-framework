@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.auth.support.handler;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 
-import com.rapidark.cloud.platform.admin.api.entity.SysLog;
+import com.rapidark.platform.system.api.entity.SysLog;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;

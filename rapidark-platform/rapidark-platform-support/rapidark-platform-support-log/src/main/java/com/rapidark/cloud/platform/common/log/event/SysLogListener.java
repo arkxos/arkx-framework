@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.rapidark.cloud.platform.admin.api.entity.SysLog;
-import com.rapidark.cloud.platform.admin.api.feign.RemoteLogService;
+import com.rapidark.platform.system.api.entity.SysLog;
+import com.rapidark.platform.system.api.feign.RemoteLogService;
 import com.rapidark.cloud.platform.common.core.jackson.ArkJavaTimeModule;
 import com.rapidark.cloud.platform.common.log.config.ArkLogProperties;
 

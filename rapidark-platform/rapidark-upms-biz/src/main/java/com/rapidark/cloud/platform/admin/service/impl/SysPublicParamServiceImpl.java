@@ -20,7 +20,7 @@ package com.rapidark.cloud.platform.admin.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rapidark.cloud.platform.admin.api.entity.SysPublicParam;
+import com.rapidark.platform.system.api.entity.SysPublicParam;
 import com.rapidark.cloud.platform.admin.mapper.SysPublicParamMapper;
 import com.rapidark.cloud.platform.admin.service.SysPublicParamService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;

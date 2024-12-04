@@ -20,7 +20,7 @@
 package com.rapidark.cloud.platform.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.rapidark.cloud.platform.admin.api.entity.SysRoleMenu;
+import com.rapidark.platform.system.api.entity.SysRoleMenu;
 
 import org.apache.ibatis.annotations.Mapper;
 
