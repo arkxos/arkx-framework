@@ -13,6 +13,7 @@ import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
@@ -82,7 +83,7 @@ public class BaseMenuController {
      */
     @Schema(title = "获取分页菜单资源列表", name = "获取分页菜单资源列表")
     @GetMapping("/menu")
-    public ResponseResult<Page<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
         return ResponseResult.ok(baseResourceMenuService.findListPage(new PageParams(map)));
     }
 

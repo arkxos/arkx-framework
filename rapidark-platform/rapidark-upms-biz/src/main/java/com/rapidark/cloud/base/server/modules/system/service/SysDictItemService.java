@@ -16,18 +16,17 @@
 package com.rapidark.cloud.base.server.modules.system.service;
 
 
+import com.rapidark.cloud.base.server.modules.system.repository.SysDictItemRepository;
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
-import org.springframework.data.domain.Pageable;
-import java.util.List;
-import java.util.Map;
+import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
+import com.rapidark.framework.data.jpa.service.IBaseService;
 
+import java.util.List;
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface SysDictItemService {
+public interface SysDictItemService extends IBaseService<SysDictItem, Long, SysDictItemRepository> {
 
     /**
      * 创建
@@ -47,18 +46,11 @@ public interface SysDictItemService {
      */
     void delete(Long id);
 
-    /**
-     * 分页查询
-     * @param criteria 条件
-     * @param pageable 分页参数
-     * @return /
-     */
-    Map<String,Object> queryAll(DictDetailQueryCriteria criteria, Pageable pageable);
 
     /**
      * 根据字典名称获取字典详情
-     * @param name 字典名称
+     * @param code 字典名称
      * @return /
      */
-    List<DictDetailDto> getDictByName(String name);
+    List<DictItemDto> getDictItemsByCode(String code);
 }

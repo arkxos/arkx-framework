@@ -19,10 +19,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictMapper;
+import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
@@ -31,8 +29,7 @@ import com.rapidark.framework.common.utils.*;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.servlet.http.HttpServletResponse;
@@ -51,18 +48,6 @@ public class SysDictServiceImpl extends BaseService<SysDict, Long, SysDictReposi
     private final SysDictRepository sysDictRepository;
     private final DictMapper dictMapper;
     private final RedisUtils<Object> redisUtils;
-
-    @Override
-    public Map<String, Object> queryAll(DictQueryCriteria dict, Pageable pageable){
-        Page<SysDict> page = sysDictRepository.findAll((root, query, cb) -> QueryHelp.getPredicate(root, dict, cb), pageable);
-        return PageUtil.toPage(page.map(dictMapper::toDto));
-    }
-
-    @Override
-    public List<DictDto> queryAll(DictQueryCriteria dict) {
-        List<SysDict> list = sysDictRepository.findAll((root, query, cb) -> QueryHelp.getPredicate(root, dict, cb));
-        return dictMapper.toDto(list);
-    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -110,14 +95,14 @@ public class SysDictServiceImpl extends BaseService<SysDict, Long, SysDictReposi
     }
 
     @Override
-    public void download(List<DictDto> dictDtos, HttpServletResponse response) throws IOException {
+    public void download(List<SysDict> dictDtos, HttpServletResponse response) throws IOException {
         List<Map<String, Object>> list = new ArrayList<>();
-        for (DictDto dictDTO : dictDtos) {
-            if(CollectionUtil.isNotEmpty(dictDTO.getDictDetails())){
-                for (DictDetailDto dictDetail : dictDTO.getDictDetails()) {
+        for (SysDict dictDTO : dictDtos) {
+            if(CollectionUtil.isNotEmpty(dictDTO.getDictItems())){
+                for (SysDictItem dictDetail : dictDTO.getDictItems()) {
                     Map<String,Object> map = new LinkedHashMap<>();
-                    map.put("字典名称", dictDTO.getName());
-                    map.put("字典描述", dictDTO.getDescription());
+                    map.put("字典名称", dictDTO.getCode());
+                    map.put("字典描述", dictDTO.getName());
                     map.put("字典标签", dictDetail.getLabel());
                     map.put("字典值", dictDetail.getValue());
                     map.put("创建日期", dictDetail.getCreateTime());
@@ -125,8 +110,8 @@ public class SysDictServiceImpl extends BaseService<SysDict, Long, SysDictReposi
                 }
             } else {
                 Map<String,Object> map = new LinkedHashMap<>();
-                map.put("字典名称", dictDTO.getName());
-                map.put("字典描述", dictDTO.getDescription());
+                map.put("字典名称", dictDTO.getCode());
+                map.put("字典描述", dictDTO.getName());
                 map.put("字典标签", null);
                 map.put("字典值", null);
                 map.put("创建日期", dictDTO.getCreateTime());
@@ -148,6 +133,13 @@ public class SysDictServiceImpl extends BaseService<SysDict, Long, SysDictReposi
 //	@CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
 	public ResponseResult syncDictCache() {
 		return ResponseResult.ok();
+	}
+
+	@Override
+	public boolean exists(String code) {
+		SysDict sysDict = new SysDict();
+		sysDict.setCode(code);
+		return entityRepository.exists(Example.of(sysDict));
 	}
 
 }

@@ -15,6 +15,7 @@
  */
 package com.rapidark.cloud.platform.admin.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,23 +33,27 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name="sys_dict_detail")
+@Table(name="sys_dict_item")
 @Schema(description = "字典项")
 public class SysDictItem extends AbstractIdLongEntity implements Serializable {
 
     @Id
-    @Column(name = "detail_id")
+    @Column(name = "id")
     @NotNull(groups = Update.class)
     @Schema(title = "编号", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
-    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
+//    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
+//    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
-    @JoinColumn(name = "dict_id")
-    @ManyToOne(fetch=FetchType.LAZY)
-    @Schema(title = "所属字典", hidden = true)
-    private SysDict dict;
+//    @JoinColumn(name = "dict_id")
+//    @ManyToOne(fetch=FetchType.LAZY)
+//
+//	@JsonIgnore
+//	private SysDict dict;
+
+	@Schema(title = "所属字典")
+	private Long dictId;
 
 	/**
 	 * 类型

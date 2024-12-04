@@ -17,10 +17,12 @@ package com.rapidark.cloud.base.server.modules.system.rest;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
+import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
 import com.rapidark.framework.common.model.ResponseResult;
 
+import com.rapidark.framework.common.utils.PageResult;
+import com.rapidark.framework.commons.data.model.PageParams;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 //import com.rapidark.framework.commons.annotation.Log;
@@ -51,10 +53,11 @@ public class SysDictItemController {
     private static final String ENTITY_NAME = "dictDetail";
 
     @Schema(title = "查询字典详情")
-    @GetMapping
-    public ResponseEntity<Object> query(DictDetailQueryCriteria criteria,
-                                        @PageableDefault(sort = {"dictSort"}, direction = Sort.Direction.ASC) Pageable pageable){
-        return new ResponseEntity<>(sysDictItemService.queryAll(criteria,pageable),HttpStatus.OK);
+	@GetMapping("/dict/item/queryPage")
+    public ResponseResult<PageResult<SysDictItem>> queryPage(DictDetailQueryCriteria criteria,
+//															 @PageableDefault(sort = {"sortOrder"}, direction = Sort.Direction.ASC)
+															 PageParams pageParams){
+        return ResponseResult.ok(sysDictItemService.findAllByCriteria(criteria,pageParams.toPageable()));
     }
 
 	/**
@@ -73,10 +76,23 @@ public class SysDictItemController {
 	 * @param id id
 	 * @return ResponseResult
 	 */
-//	@GetMapping("/item/details/{id}")
-//	public ResponseResult getDictItemById(@PathVariable("id") Long id) {
-//		return ResponseResult.ok(sysDictItemService.getById(id));
-//	}
+	@GetMapping("/dict/item/details/{id}")
+	public ResponseResult<SysDictItem> getDictItemById(@PathVariable("id") Long id) {
+		return ResponseResult.ok(sysDictItemService.findById(id));
+	}
+
+	/**
+	 * 通过id查询字典项
+	 * @param command 名称
+	 * @return ResponseResult
+	 */
+	@PostMapping("/dict/item/existLabel")
+	public ResponseResult<Boolean> existLabel(@RequestBody CheckDictItemExistCommand command) {
+		SysDictItem example = new SysDictItem();
+		example.setDictCode(command.getDictCode());
+		example.setLabel(command.getDictItemLabel());
+		return ResponseResult.ok(sysDictItemService.exists(example));
+	}
 
 	/**
 	 * 查询字典项详情
@@ -89,20 +105,20 @@ public class SysDictItemController {
 //	}
 
 	@Schema(title = "查询多个字典详情")
-    @GetMapping(value = "/map")
+    @GetMapping(value = "/dict/item/map")
     public ResponseEntity<Object> getDictDetailMaps(@RequestParam String dictName){
         String[] names = dictName.split("[,，]");
-        Map<String, List<DictDetailDto>> dictMap = new HashMap<>(16);
+        Map<String, List<DictItemDto>> dictMap = new HashMap<>(16);
         for (String name : names) {
-            dictMap.put(name, sysDictItemService.getDictByName(name));
+            dictMap.put(name, sysDictItemService.getDictItemsByCode(name));
         }
         return new ResponseEntity<>(dictMap, HttpStatus.OK);
     }
 
 //    @Log("新增字典详情")
     @Schema(title = "新增字典详情")
-    @PostMapping
-    @PreAuthorize("@el.check('dict:add')")
+    @PostMapping("/dict/item")
+//    @PreAuthorize("@el.check('dict:add')")
     public ResponseResult<Object> create(@Validated @RequestBody SysDictItem resources){
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
@@ -113,17 +129,18 @@ public class SysDictItemController {
 
 //    @Log("修改字典详情")
     @Schema(title = "修改字典详情")
-    @PutMapping
-    @PreAuthorize("@el.check('dict:edit')")
-    public ResponseResult<Object> update(@Validated(SysDictItem.Update.class) @RequestBody SysDictItem resources){
+    @PutMapping("/dict/item")
+//    @PreAuthorize("@el.check('dict:edit')")
+    public ResponseResult<Object> update(@Validated(SysDictItem.Update.class)
+										 @RequestBody SysDictItem resources){
         sysDictItemService.update(resources);
         return ResponseResult.ok();
     }
 
 //    @Log("删除字典详情")
     @Schema(title = "删除字典详情")
-    @DeleteMapping(value = "/{id}")
-    @PreAuthorize("@el.check('dict:del')")
+    @DeleteMapping(value = "/dict/item/{id}")
+//    @PreAuthorize("@el.check('dict:del')")
     public ResponseResult<Object> delete(@PathVariable Long id){
         sysDictItemService.delete(id);
         return ResponseResult.ok();

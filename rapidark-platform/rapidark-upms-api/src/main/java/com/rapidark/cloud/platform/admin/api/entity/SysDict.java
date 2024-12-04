@@ -39,12 +39,12 @@ import java.util.List;
 public class SysDict extends AbstractIdLongEntity implements Serializable {
 
     @Id
-    @Column(name = "dict_id")
+    @Column(name = "id")
     @NotNull(groups = Update.class)
     @Schema(title = "编号", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
-    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
+//    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
+//    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
     @NotBlank
@@ -66,7 +66,7 @@ public class SysDict extends AbstractIdLongEntity implements Serializable {
 	@Schema(description = "备注信息")
 	private String remarks;
 
-	@OneToMany(mappedBy = "dict",cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "dictId",cascade={CascadeType.PERSIST,CascadeType.REMOVE})
 	private List<SysDictItem> dictItems;
 
 }

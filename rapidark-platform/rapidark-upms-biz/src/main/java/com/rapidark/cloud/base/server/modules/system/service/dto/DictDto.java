@@ -31,7 +31,7 @@ public class DictDto extends BaseDTO implements Serializable {
 
     private Long id;
 
-    private List<DictDetailDto> dictDetails;
+    private List<DictItemDto> dictDetails;
 
     private String name;
 

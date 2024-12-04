@@ -16,12 +16,14 @@
 package com.rapidark.cloud.base.server.modules.system.rest;
 
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
+import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.framework.common.model.ResponseResult;
 
+import com.rapidark.framework.common.utils.PageResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,6 +41,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
 * @author Zheng Jie
@@ -48,7 +51,7 @@ import java.io.IOException;
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/dict")
+@RequestMapping
 public class SysDictController {
 
 	private static final String ENTITY_NAME = "dict";
@@ -57,24 +60,35 @@ public class SysDictController {
 	private final SysDictItemService sysDictItemService;
 
     @Schema(title = "导出字典数据")
-    @GetMapping(value = "/download")
-    @PreAuthorize("@el.check('dict:list')")
+    @GetMapping(value = "/dict/download")
+//    @PreAuthorize("@el.check('dict:list')")
     public void download(HttpServletResponse response, DictQueryCriteria criteria) throws IOException {
-        sysDictService.download(sysDictService.queryAll(criteria), response);
+        sysDictService.download(sysDictService.findAllByCriteria(criteria), response);
     }
 
     @Schema(title = "查询字典")
-    @GetMapping(value = "/all")
-    @PreAuthorize("@el.check('dict:list')")
-    public ResponseEntity<Object> queryAll(){
-        return new ResponseEntity<>(sysDictService.queryAll(new DictQueryCriteria()),HttpStatus.OK);
+    @GetMapping(value = "/dict/queryAll")
+//    @PreAuthorize("@el.check('dict:list')")
+    public ResponseResult<List<SysDict>> queryAll(){
+        return ResponseResult.ok(sysDictService.findAllByCriteria(new DictQueryCriteria()));
     }
 
 	@Schema(title = "查询字典")
-	@GetMapping
-	@PreAuthorize("@el.check('dict:list')")
-	public ResponseResult<Object> query(DictQueryCriteria resources, Pageable pageable){
-		return ResponseResult.ok(sysDictService.queryAll(resources,pageable));
+	@GetMapping("/dict/queryPage")
+//	@PreAuthorize("@el.check('dict:list')")
+	public ResponseResult<PageResult<SysDict>> query(DictQueryCriteria resources, Pageable pageable){
+		return ResponseResult.ok(sysDictService.findAllByCriteria(resources,pageable));
+	}
+
+	/**
+	 * 通过字典类型查找字典
+	 * @param code 类型
+	 * @return 同类型字典
+	 */
+	@GetMapping("/dict/type/{code}")
+//	@Cacheable(value = CacheConstants.DICT_DETAILS, key = "#type", unless = "#result.data.isEmpty()")
+	public ResponseResult<List<DictItemDto>> getDictItemsByDictCode(@PathVariable String code) {
+		return ResponseResult.ok(sysDictItemService.getDictItemsByCode(code));
 	}
 
 	/**
@@ -108,9 +122,19 @@ public class SysDictController {
 	 * @param id ID
 	 * @return 字典信息
 	 */
-	@GetMapping("/dict/item/{id}")
-	public ResponseResult findById(@PathVariable Long id) {
+	@GetMapping("/dict/details/{id}")
+	public ResponseResult<SysDict> findById(@PathVariable Long id) {
 		return ResponseResult.ok(sysDictService.findById(id));
+	}
+
+	/**
+	 * 通过ID查询字典信息
+	 * @param code 编码
+	 * @return 字典信息
+	 */
+	@GetMapping("/dict/exists/{code}")
+	public ResponseResult<Boolean> existsCode(@PathVariable String code) {
+		return ResponseResult.ok(sysDictService.exists(code));
 	}
 //
 //	/**
@@ -125,7 +149,7 @@ public class SysDictController {
 
 //    @Log("新增字典")
     @Schema(title = "新增字典")
-    @PostMapping
+    @PostMapping("/dict")
 	@SysLog("添加字典")
 //    @PreAuthorize("@el.check('dict:add')")
 //	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
@@ -139,8 +163,8 @@ public class SysDictController {
 
 //    @Log("修改字典")
     @Schema(title = "修改字典")
-    @PutMapping
-    @PreAuthorize("@el.check('dict:edit')")
+    @PutMapping("/dict")
+//    @PreAuthorize("@el.check('dict:edit')")
     public ResponseResult<Object> update(@Validated(SysDict.Update.class) @RequestBody SysDict resources){
         sysDictService.update(resources);
         return ResponseResult.ok();
@@ -148,8 +172,8 @@ public class SysDictController {
 
 //    @Log("删除字典")
     @Schema(title = "删除字典")
-    @DeleteMapping
-    @PreAuthorize("@el.check('dict:del')")
+    @DeleteMapping("/dict")
+//    @PreAuthorize("@el.check('dict:del')")
 	@SysLog("删除字典")
 	// @CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
     public ResponseResult<Object> delete(@RequestBody IdsParam param){
@@ -162,7 +186,7 @@ public class SysDictController {
 	 * @return ResponseResult
 	 */
 	@SysLog("同步字典")
-	@PutMapping("/sync")
+	@PutMapping("/dict/sync")
 	public ResponseResult sync() {
 		return sysDictService.syncDictCache();
 	}
@@ -173,16 +197,6 @@ public class SysDictController {
 //		return sysDictItemService.list(Wrappers.query(sysDictItem));
 //	}
 
-	/**
-	 * 通过字典类型查找字典
-	 * @param type 类型
-	 * @return 同类型字典
-	 */
-//	@GetMapping("/type/{type}")
-//	@Cacheable(value = CacheConstants.DICT_DETAILS, key = "#type", unless = "#result.data.isEmpty()")
-//	public ResponseResult<List<SysDictItem>> getDictByType(@PathVariable String type) {
-//		return ResponseResult.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictCode, type)));
-//	}
 
 	/**
 	 * 通过字典类型查找字典 (针对feign调用) TODO: 兼容性方案，代码重复

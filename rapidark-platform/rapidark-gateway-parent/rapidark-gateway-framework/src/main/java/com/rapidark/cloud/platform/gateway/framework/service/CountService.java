@@ -47,11 +47,11 @@ public class CountService {
 	 */
 	public ResponseResult countRouteList(GatewayAppRoute gatewayAppRoute, int currentPage, int pageSize){
 		PageResult<GatewayAppRoute> pageData = gatewayAppRouteService.pageList(gatewayAppRoute,currentPage, pageSize);
-		if (pageData.getPageSize() > 0){
+		if (pageData.getSize() > 0){
 			//只取当天的
 			String key = RouteConstants.COUNT_DAY_KEY + DateFormatUtils.format(new Date(), Constants.DATE_FORMAT_DAY);
 			Map<Long,String> countMap = redisTemplate.opsForHash().entries(key);
-			List<GatewayAppRoute> gatewayAppRouteList = pageData.getLists();
+			List<GatewayAppRoute> gatewayAppRouteList = pageData.getRecords();
 			List<GatewayAppRouteCountRsp> routeCountRspList = gatewayAppRouteList.stream().map(r -> {
 				GatewayAppRouteCountRsp rsp = new GatewayAppRouteCountRsp();
 				BeanUtils.copyProperties(r, rsp);
@@ -62,10 +62,10 @@ public class CountService {
 				return rsp;
 			}).collect(Collectors.toList());
 			PageResult<GatewayAppRouteCountRsp> pageData1 = new PageResult<>();
-			pageData1.setCurrentPage(currentPage);
-			pageData1.setPageSize(pageSize);
-			pageData1.setTotalNum(pageData.getTotalNum());
-			pageData1.setLists(routeCountRspList);
+			pageData1.setCurrent(currentPage);
+			pageData1.setSize(pageSize);
+			pageData1.setTotal(pageData.getTotal());
+			pageData1.setRecords(routeCountRspList);
 			return ResponseResult.ok(pageData1);
 		}
 		return ResponseResult.ok(pageData);

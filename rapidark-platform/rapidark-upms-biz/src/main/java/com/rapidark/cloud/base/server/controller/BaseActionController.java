@@ -2,6 +2,7 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
 import com.rapidark.cloud.base.server.service.BaseActionService;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
@@ -35,7 +36,7 @@ public class BaseActionController {
      */
     @Schema(title = "获取分页功能按钮列表", name = "获取分页功能按钮列表")
     @GetMapping("/action")
-    public ResponseResult<Page<BaseAction>> findActionListPage(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<BaseAction>> findActionListPage(@RequestParam(required = false) Map map) {
         return ResponseResult.ok(baseActionService.findListPage(new PageParams(map)));
     }
 

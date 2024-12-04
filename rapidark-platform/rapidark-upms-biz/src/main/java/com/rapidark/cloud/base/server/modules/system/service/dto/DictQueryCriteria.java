@@ -25,6 +25,6 @@ import com.rapidark.framework.common.annotation.Query;
 @Data
 public class DictQueryCriteria {
 
-    @Query(blurry = "name,description")
+    @Query(blurry = "code,name,description")
     private String blurry;
 }

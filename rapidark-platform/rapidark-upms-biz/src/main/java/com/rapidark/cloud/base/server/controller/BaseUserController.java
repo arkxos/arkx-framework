@@ -8,6 +8,7 @@ import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.cloud.base.server.controller.cmd.AddUserRolesCommand;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
@@ -71,7 +72,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "系统分页用户列表", name = "系统分页用户列表")
     @GetMapping("/user")
-    public ResponseResult<Page<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
         return ResponseResult.ok(baseUserService.findListPage(new PageParams(map)));
     }
 

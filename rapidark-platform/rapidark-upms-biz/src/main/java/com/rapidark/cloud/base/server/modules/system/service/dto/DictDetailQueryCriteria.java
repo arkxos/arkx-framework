@@ -25,9 +25,12 @@ import com.rapidark.framework.common.annotation.Query;
 @Data
 public class DictDetailQueryCriteria {
 
+	@Query(type = Query.Type.EQUAL)
+	private String dictId;
+
     @Query(type = Query.Type.INNER_LIKE)
     private String label;
 
-    @Query(propName = "name",joinName = "dict")
-    private String dictName;
+//    @Query(propName = "name", joinName = "dict")
+//    private String dictName;
 }

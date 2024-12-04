@@ -3,6 +3,7 @@ package com.rapidark.cloud.base.server.controller;
 import com.rapidark.cloud.base.client.model.entity.BaseApi;
 import com.rapidark.cloud.base.server.controller.cmd.AddApiCommand;
 import com.rapidark.cloud.base.server.service.BaseApiService;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
@@ -39,7 +40,7 @@ public class BaseApiController {
      */
     @Schema(title = "获取分页接口列表", name = "获取分页接口列表")
     @GetMapping(value = "/api")
-    public ResponseResult<Page<BaseApi>> getApiList(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<BaseApi>> getApiList(@RequestParam(required = false) Map map) {
         return ResponseResult.ok(baseApiService.findListPage(new PageParams(map)));
     }
 

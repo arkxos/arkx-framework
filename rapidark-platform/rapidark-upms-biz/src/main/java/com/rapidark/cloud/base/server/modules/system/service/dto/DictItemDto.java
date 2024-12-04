@@ -26,7 +26,7 @@ import java.io.Serializable;
 */
 @Getter
 @Setter
-public class DictDetailDto extends BaseDTO implements Serializable {
+public class DictItemDto extends BaseDTO implements Serializable {
 
     private Long id;
 

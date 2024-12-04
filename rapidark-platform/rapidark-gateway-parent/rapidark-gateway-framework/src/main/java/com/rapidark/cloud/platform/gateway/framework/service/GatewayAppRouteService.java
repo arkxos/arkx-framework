@@ -104,7 +104,7 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
             matcher = matcher.withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
         }
         PageResult<GatewayAppRoute> result = this.pageList(gatewayAppRoute, matcher, currentPage, pageSize);
-        List<GatewayAppRoute> gatewayAppRouteList = result.getLists();
+        List<GatewayAppRoute> gatewayAppRouteList = result.getRecords();
         if (CollectionUtils.isEmpty(gatewayAppRouteList)){
             return result;
         }
@@ -149,7 +149,7 @@ public class GatewayAppRouteService extends BaseService<GatewayAppRoute,String, 
             }
             return gatewayAppRouteRsp;
         }).collect(Collectors.toList());
-        result.setLists(gatewayAppRouteRspList);
+        result.setRecords(gatewayAppRouteRspList);
         return result;
     }
 

@@ -35,21 +35,6 @@ import java.util.Set;
 public interface SysDictService extends IBaseService<SysDict, Long, SysDictRepository> {
 
     /**
-     * 分页查询
-     * @param criteria 条件
-     * @param pageable 分页参数
-     * @return /
-     */
-    Map<String,Object> queryAll(DictQueryCriteria criteria, Pageable pageable);
-
-    /**
-     * 查询全部数据
-     * @param dict /
-     * @return /
-     */
-    List<DictDto> queryAll(DictQueryCriteria dict);
-
-    /**
      * 创建
      * @param resources /
      * @return /
@@ -74,7 +59,7 @@ public interface SysDictService extends IBaseService<SysDict, Long, SysDictRepos
      * @param response /
      * @throws IOException /
      */
-    void download(List<DictDto> queryAll, HttpServletResponse response) throws IOException;
+    void download(List<SysDict> queryAll, HttpServletResponse response) throws IOException;
 
 	/**
 	 * 同步缓存 （清空缓存）
@@ -82,4 +67,5 @@ public interface SysDictService extends IBaseService<SysDict, Long, SysDictRepos
 	 */
 	ResponseResult syncDictCache();
 
+	boolean exists(String code);
 }

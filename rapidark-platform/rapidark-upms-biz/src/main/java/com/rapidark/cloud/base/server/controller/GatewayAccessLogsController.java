@@ -2,6 +2,7 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.service.GatewayAccessLogsService;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 
@@ -35,7 +36,7 @@ public class GatewayAccessLogsController {
      */
     @Schema(title = "获取分页访问日志列表", name = "获取分页访问日志列表")
     @GetMapping("/gateway/access/logs")
-    public ResponseResult<Page<GatewayAccessLogs>> getAccessLogListPage(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<GatewayAccessLogs>> getAccessLogListPage(@RequestParam(required = false) Map map) {
         return ResponseResult.ok(gatewayAccessLogsService.findListPage(new PageParams(map)));
     }
 
