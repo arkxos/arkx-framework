@@ -20,6 +20,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.constants.ErrorCode;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -32,6 +33,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
+import org.springframework.data.domain.Page;
 
 /**
  * 所有接口调用返回的统一包装结果类
@@ -86,6 +88,11 @@ public class ResponseResult<T> implements Serializable {
 
 	public static <T> ResponseResult<T> ok() {
 		return restResult(null, ErrorCode.OK.getCode(), null);
+	}
+
+	public static <D> ResponseResult<PageResult<D>> ok(Page<D> pageData) {
+		PageResult<D> pageResult = PageResult.of(pageData);
+		return ok(pageResult);
 	}
 
 	public static <T> ResponseResult<T> ok(T data) {
