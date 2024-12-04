@@ -1,7 +1,5 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
-import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
@@ -10,6 +8,8 @@ import com.rapidark.framework.common.utils.StringUtils;
 
 
 import com.rapidark.framework.commons.data.model.PageParams;
+import com.rapidark.platform.system.api.entity.GatewayRateLimit;
+import com.rapidark.platform.system.api.entity.GatewayRateLimitApi;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

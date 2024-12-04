@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.listener;
 
 import com.alibaba.fastjson.JSON;
-import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
+import com.rapidark.platform.system.api.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.repository.GatewayAccessLogsRepository;
 import com.rapidark.framework.boot.ip2region.IP2regionTemplate;
 import com.rapidark.framework.common.constants.QueueConstants;

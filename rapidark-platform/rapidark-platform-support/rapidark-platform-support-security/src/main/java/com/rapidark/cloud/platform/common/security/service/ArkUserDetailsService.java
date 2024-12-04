@@ -3,6 +3,7 @@ package com.rapidark.cloud.platform.common.security.service;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 
+import com.rapidark.framework.data.jpa.entity.Status;
 import com.rapidark.platform.system.api.dto.UserInfo;
 import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
@@ -70,7 +71,7 @@ public interface ArkUserDetailsService extends UserDetailsService, Ordered {
 		// 构造security用户
 		return new ArkUser(user.getUserId(), user.getDeptId(), user.getUsername(),
 				SecurityConstants.BCRYPT + user.getPassword(), user.getMobile(), true, true, true,
-				StrUtil.equals(user.getLockFlag(), CommonConstants.STATUS_NORMAL), authorities);
+				user.getStatus() == Status.ENABLED, authorities);
 	}
 
 	/**

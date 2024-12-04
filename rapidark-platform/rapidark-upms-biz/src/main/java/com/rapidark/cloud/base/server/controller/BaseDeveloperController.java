@@ -1,7 +1,6 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
 import com.rapidark.cloud.base.client.service.IBaseDeveloperServiceClient;
 
 import com.rapidark.cloud.base.client.service.command.ChangeDeveloperPasswordCommand;
@@ -16,7 +15,7 @@ import com.rapidark.framework.common.utils.WebUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
 
 
-
+import com.rapidark.platform.system.api.entity.BaseDeveloper;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

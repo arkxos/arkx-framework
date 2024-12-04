@@ -1,10 +1,10 @@
 package com.rapidark.cloud.base.server.repository;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.cloud.base.client.model.entity.SysRoleAuthority;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
+import com.rapidark.platform.system.api.entity.SysRoleAuthority;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -35,4 +35,6 @@ public interface SysRoleAuthorityRepository extends BaseRepository<SysRoleAuthor
     List<AuthorityMenu> selectAuthorityMenuByRole(@Param("roleId") Long roleId, @Param("serviceId") String serviceId);
 
     void deleteByRoleId(@Param("roleId") Long roleId);
+
+	void deleteByAuthorityId(Long id);
 }

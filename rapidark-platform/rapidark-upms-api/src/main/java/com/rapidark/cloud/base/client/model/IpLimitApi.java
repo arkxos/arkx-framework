@@ -1,8 +1,8 @@
 package com.rapidark.cloud.base.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rapidark.cloud.base.client.model.entity.BaseApi;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.platform.system.api.entity.BaseApi;
 
 import java.io.Serializable;
 import java.util.Arrays;

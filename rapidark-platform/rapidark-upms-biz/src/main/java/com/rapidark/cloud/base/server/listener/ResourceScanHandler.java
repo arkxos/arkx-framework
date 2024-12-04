@@ -3,7 +3,7 @@ package com.rapidark.cloud.base.server.listener;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
-import com.rapidark.cloud.base.client.model.entity.BaseApi;
+import com.rapidark.platform.system.api.entity.BaseApi;
 import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.framework.common.constants.QueueConstants;

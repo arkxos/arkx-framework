@@ -13,7 +13,6 @@ import com.google.common.collect.Maps;
 import com.pig4cloud.plugin.excel.vo.ErrorMessage;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.cloud.base.client.model.entity.*;
 import com.rapidark.cloud.base.server.repository.SysRoleRepository;
 import com.rapidark.cloud.base.server.repository.SysUserRepository;
 import com.rapidark.cloud.base.server.repository.SysUserRoleRepository;
@@ -36,9 +35,7 @@ import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
 import com.rapidark.platform.system.api.dto.UserDTO;
 import com.rapidark.platform.system.api.dto.UserInfo;
-import com.rapidark.platform.system.api.entity.SysDept;
-import com.rapidark.platform.system.api.entity.SysPost;
-import com.rapidark.platform.system.api.entity.SysUserPost;
+import com.rapidark.platform.system.api.entity.*;
 import com.rapidark.platform.system.api.util.ParamResolver;
 import com.rapidark.platform.system.api.vo.UserExcelVO;
 import com.rapidark.platform.system.api.vo.UserVO;
@@ -700,7 +697,7 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
 	@CacheEvict(value = CacheConstants.USER_DETAILS, key = "#userDto.username")
 	public ResponseResult changePassword(UserDTO userDto) {
 		SysUser sysUser = entityRepository.findById(SecurityUtils.getUser().getId()).orElseThrow();
-		return ResponseResult.failed("用户不存在");
+//		return ResponseResult.failed("用户不存在");
 
 
 		if (StrUtil.isEmpty(userDto.getPassword())) {

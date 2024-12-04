@@ -1,7 +1,7 @@
 //package com.rapidark.cloud.base.server.service.impl;
 //
 //import com.rapidark.cloud.base.client.constants.BaseConstants;
-//import com.rapidark.cloud.base.client.model.entity.OpenApp;
+//import com.rapidark.platform.system.api.entity.OpenApp;
 //import com.rapidark.cloud.base.server.repository.OpenAppRepository;
 //import com.rapidark.cloud.base.server.service.OpenAppService;
 //import com.rapidark.cloud.base.server.service.BaseAuthorityService;

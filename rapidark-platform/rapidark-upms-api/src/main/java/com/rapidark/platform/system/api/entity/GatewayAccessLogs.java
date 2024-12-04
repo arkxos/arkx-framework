@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.model.entity;
+package com.rapidark.platform.system.api.entity;
 
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;

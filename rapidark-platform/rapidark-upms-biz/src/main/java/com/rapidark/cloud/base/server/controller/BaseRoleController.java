@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.cloud.base.client.model.entity.SysRole;
-import com.rapidark.cloud.base.client.model.entity.SysUserRole;
+import com.rapidark.platform.system.api.entity.SysRole;
+import com.rapidark.platform.system.api.entity.SysUserRole;
 import com.rapidark.cloud.base.server.controller.cmd.AddRoleCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateRoleCommand;
 import com.rapidark.cloud.base.server.service.SysRoleService;

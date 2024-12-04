@@ -3,8 +3,6 @@ package com.rapidark.cloud.base.server.controller;
 import com.rapidark.cloud.base.client.model.AuthorityApi;
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
-import com.rapidark.cloud.base.client.model.entity.BaseAuthorityAction;
-import com.rapidark.cloud.base.client.model.entity.SysUser;
 import com.rapidark.cloud.base.client.service.IBaseAuthorityServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.GrantAuthorityActionCommand;
 import com.rapidark.cloud.base.server.controller.cmd.GrantOpenClientAppApiAuthorityCommand;
@@ -17,7 +15,8 @@ import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.utils.StringUtils;
 
 
-
+import com.rapidark.platform.system.api.entity.BaseAuthorityAction;
+import com.rapidark.platform.system.api.entity.SysUser;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

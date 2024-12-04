@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.rapidark.cloud.base.client.model.entity.SysMenu;
+import com.rapidark.platform.system.api.entity.SysMenu;
 import lombok.Getter;
 import lombok.Setter;
 

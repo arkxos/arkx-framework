@@ -2,13 +2,13 @@ package com.rapidark.cloud.base.server.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.base.client.model.entity.SysAccount;
-import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.server.repository.BaseAccountLogsRepository;
 import com.rapidark.cloud.base.server.repository.SysAccountRepository;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.data.jpa.entity.Status;
+import com.rapidark.platform.system.api.entity.BaseAccountLogs;
+import com.rapidark.platform.system.api.entity.SysAccount;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

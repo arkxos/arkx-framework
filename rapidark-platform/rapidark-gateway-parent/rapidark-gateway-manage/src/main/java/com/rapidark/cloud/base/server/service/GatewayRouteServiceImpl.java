@@ -3,7 +3,7 @@
 //import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 //import com.baomidou.mybatisplus.core.metadata.IPage;
 //import com.rapidark.cloud.base.client.constants.BaseConstants;
-//import com.rapidark.cloud.base.client.model.entity.GatewayAppRoute;
+//import com.rapidark.platform.system.api.entity.GatewayAppRoute;
 //import com.rapidark.cloud.base.server.mapper.GatewayRouteMapper;
 //import com.rapidark.cloud.base.server.service.GatewayAppRouteService;
 //import com.rapidark.framework.commons.exception.OpenAlertException;

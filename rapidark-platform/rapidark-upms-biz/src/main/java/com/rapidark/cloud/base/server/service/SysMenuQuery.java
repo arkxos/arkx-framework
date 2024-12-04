@@ -1,8 +1,8 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.rapidark.cloud.base.client.model.entity.SysMenu;
 import com.rapidark.cloud.base.server.repository.SysMenuRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
+import com.rapidark.platform.system.api.entity.SysMenu;
 import org.springframework.stereotype.Service;
 
 /**

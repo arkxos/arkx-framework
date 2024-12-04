@@ -2,9 +2,9 @@ package com.rapidark.cloud.base.server.repository;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rapidark.cloud.base.client.model.entity.SysUser;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.platform.system.api.dto.UserDTO;
+import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.platform.system.api.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 

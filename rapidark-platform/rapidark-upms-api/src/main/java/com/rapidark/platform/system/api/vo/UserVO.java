@@ -20,9 +20,9 @@
 package com.rapidark.platform.system.api.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rapidark.cloud.base.client.model.entity.SysRole;
 import com.rapidark.platform.system.api.entity.SysPost;
 
+import com.rapidark.platform.system.api.entity.SysRole;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

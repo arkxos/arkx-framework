@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.cloud.base.client.model.entity.OpenApp;
+import com.rapidark.platform.system.api.entity.OpenApp;
 import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.CreateOpenAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;

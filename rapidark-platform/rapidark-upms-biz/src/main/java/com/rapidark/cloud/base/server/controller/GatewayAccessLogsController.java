@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
+import com.rapidark.platform.system.api.entity.GatewayAccessLogs;
 import com.rapidark.cloud.base.server.service.GatewayAccessLogsService;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;

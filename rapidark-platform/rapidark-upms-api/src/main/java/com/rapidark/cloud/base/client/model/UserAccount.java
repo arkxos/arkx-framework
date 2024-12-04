@@ -1,8 +1,8 @@
 package com.rapidark.cloud.base.client.model;
 
 import com.google.common.collect.Lists;
-import com.rapidark.cloud.base.client.model.entity.SysAccount;
 import com.rapidark.framework.common.security.OpenAuthority;
+import com.rapidark.platform.system.api.entity.SysAccount;
 
 import java.io.Serializable;
 import java.util.Collection;

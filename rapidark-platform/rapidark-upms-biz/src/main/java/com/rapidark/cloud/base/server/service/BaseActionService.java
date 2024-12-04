@@ -2,12 +2,12 @@ package com.rapidark.cloud.base.server.service;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.constants.ResourceType;
-import com.rapidark.cloud.base.client.model.entity.BaseAction;
 import com.rapidark.cloud.base.server.repository.BaseActionRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.platform.system.api.entity.BaseAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -43,13 +43,13 @@ public class RouterService {
 			router.setQuery(menu.getQueryParam());
 
 			MetaVo metaVo = new MetaVo(menu.getName(), menu.getIcon(), "0".equals(menu.getKeepAlive()), menu.getPath());
-			if("1".equals(menu.getEmbedded())) {
+//			if("1".equals(menu.getEmbedded())) {
 //
 //			}
 //			if(UserConstants.INTEGRATE_MODE_FRAME.equals(menu.getIntegrateMode())) {
-				metaVo.setType("iframe");
-				router.setName("iframe" + menu.getMenuId());
-			}
+//				metaVo.setType("iframe");
+//				router.setName("iframe" + menu.getMenuId());
+//			}
 			router.setMeta(metaVo);
 			List<SysMenu> cMenus = menu.getChildren();
 			if (!cMenus.isEmpty() && TYPE_APP.equals(menu.getMenuType())) {
@@ -63,7 +63,7 @@ public class RouterService {
 //				router.setChildren(buildMenus(cMenus));
 //			}
 //			else if (menu.isMenuFrame()) {
-			if("1".equals(menu.getEmbedded())) {
+//			if("1".equals(menu.getEmbedded())) {
 				String frameName = StringUtils.capitalize(menu.getPath()) + menu.getMenuId();
 				router.setMeta(null);
 				List<RouterVo> childrenList = new ArrayList<>();
@@ -75,7 +75,7 @@ public class RouterService {
 				children.setQuery(menu.getQueryParam());
 				childrenList.add(children);
 				router.setChildren(childrenList);
-			}
+//			}
 //			else if (menu.getParentId().intValue() == 0 && menu.isInnerLink()) {
 //				router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
 //				router.setPath("/");

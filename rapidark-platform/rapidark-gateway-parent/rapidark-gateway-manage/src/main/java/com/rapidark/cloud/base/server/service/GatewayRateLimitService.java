@@ -1,13 +1,13 @@
 package com.rapidark.cloud.base.server.service;
 
 import com.rapidark.cloud.base.client.model.RateLimitApi;
-import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
-import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitApiRepository;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitRepository;
 import com.rapidark.framework.commons.data.model.PageParams;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.platform.system.api.entity.GatewayRateLimit;
+import com.rapidark.platform.system.api.entity.GatewayRateLimitApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;

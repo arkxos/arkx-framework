@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.admin.controller;
 
+import com.rapidark.cloud.base.server.service.SysUserService;
 import com.rapidark.platform.system.api.dto.UserDTO;
-import com.rapidark.cloud.platform.admin.service.SysUserService;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;

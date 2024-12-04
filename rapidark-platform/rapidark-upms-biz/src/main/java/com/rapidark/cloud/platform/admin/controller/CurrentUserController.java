@@ -1,8 +1,8 @@
 package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.cloud.base.client.model.entity.SysMenu;
-import com.rapidark.cloud.base.client.model.entity.SysUser;
+import com.rapidark.platform.system.api.entity.SysMenu;
+import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.SysMenuService;
 import com.rapidark.cloud.base.server.service.SysUserService;
@@ -36,7 +36,7 @@ import java.util.*;
 @RestController
 public class CurrentUserController {
 
-	private final com.rapidark.cloud.platform.admin.service.SysMenuService sysMenuService;
+	private final SysMenuService sysMenuService;
 	private final RouterService routerService;
 
 	private final SysUserService sysUserService;

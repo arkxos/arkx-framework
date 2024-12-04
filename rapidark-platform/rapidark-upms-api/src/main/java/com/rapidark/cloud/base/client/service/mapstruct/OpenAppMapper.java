@@ -1,8 +1,8 @@
 package com.rapidark.cloud.base.client.service.mapstruct;
 
-import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
 import com.rapidark.framework.common.model.BaseMapper;
+import com.rapidark.platform.system.api.entity.OpenApp;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

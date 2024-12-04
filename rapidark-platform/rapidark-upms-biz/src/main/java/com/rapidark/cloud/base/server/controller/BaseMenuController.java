@@ -2,9 +2,6 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.rapidark.cloud.base.client.model.entity.BaseAction;
-
-import com.rapidark.cloud.base.client.model.entity.SysMenu;
 import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.rapidark.cloud.base.server.service.BaseActionService;
@@ -20,7 +17,8 @@ import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.data.jpa.entity.Status;
 
 
-
+import com.rapidark.platform.system.api.entity.BaseAction;
+import com.rapidark.platform.system.api.entity.SysMenu;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -143,7 +141,7 @@ public class BaseMenuController {
         menu.setPath(command.getPath());
         menu.setComponent(command.getComponent());
         menu.setScheme(command.getScheme());
-        menu.setIntegrateMode(command.getTarget());
+        menu.setIntegrateMode(command.getIntegrateMode());
         menu.setStatus(Status.codeOf(command.getStatus()));
         menu.setVisible(command.getVisible());
         menu.setParentId(command.getParentId());
@@ -174,7 +172,7 @@ public class BaseMenuController {
         menu.setPath(command.getPath());
         menu.setComponent(command.getComponent());
         menu.setScheme(command.getScheme());
-        menu.setIntegrateMode(command.getTarget());
+        menu.setIntegrateMode(command.getIntegrateMode());
         menu.setStatus(Status.codeOf(command.getStatus()));
         menu.setVisible(command.getVisible());
         menu.setParentId(command.getParentId());

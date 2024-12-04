@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
-import com.rapidark.cloud.base.client.model.entity.GatewayAccessLogs;
+import com.rapidark.platform.system.api.entity.GatewayAccessLogs;
 
 import com.rapidark.cloud.platform.gateway.util.ReactiveWebUtils;
 import com.rapidark.framework.common.constants.QueueConstants;

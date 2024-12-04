@@ -1,6 +1,6 @@
 //package com.rapidark.cloud.base.client.model;
 //
-//import com.rapidark.cloud.base.client.model.entity.OpenApp;
+//import com.rapidark.platform.system.api.entity.OpenApp;
 //
 //import java.io.Serializable;
 //

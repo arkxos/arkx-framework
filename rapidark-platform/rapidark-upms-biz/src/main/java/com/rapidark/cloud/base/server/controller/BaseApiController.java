@@ -1,6 +1,5 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.cloud.base.client.model.entity.BaseApi;
 import com.rapidark.cloud.base.server.controller.cmd.AddApiCommand;
 import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.framework.common.utils.PageResult;
@@ -11,7 +10,7 @@ import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.data.jpa.entity.Status;
 
 
-
+import com.rapidark.platform.system.api.entity.BaseApi;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

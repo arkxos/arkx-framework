@@ -1,8 +1,8 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.cloud.base.client.model.entity.SysRole;
-import com.rapidark.cloud.base.client.model.entity.SysUser;
+import com.rapidark.platform.system.api.entity.SysRole;
+import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.cloud.base.client.service.IBaseUserServiceClient;
 import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.cloud.base.server.controller.cmd.AddUserRolesCommand;

@@ -19,8 +19,8 @@
 
 package com.rapidark.cloud.platform.admin.controller;
 
+import com.rapidark.cloud.base.server.service.SysMenuService;
 import com.rapidark.platform.system.api.entity.SysMenu;
-import com.rapidark.cloud.platform.admin.service.SysMenuService;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
@@ -93,7 +93,7 @@ public class SysMenuController {
 	 */
 	@GetMapping("/{id}")
 	public ResponseResult getById(@PathVariable Long id) {
-		return ResponseResult.ok(sysMenuService.getById(id));
+		return ResponseResult.ok(sysMenuService.findById(id));
 	}
 
 	/**
@@ -118,7 +118,8 @@ public class SysMenuController {
 	@DeleteMapping("/{id}")
 	@HasPermission("sys_menu_del")
 	public ResponseResult removeById(@PathVariable Long id) {
-		return sysMenuService.removeMenuById(id);
+		sysMenuService.removeMenuById(id);
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -130,7 +131,8 @@ public class SysMenuController {
 	@PutMapping
 	@HasPermission("sys_menu_edit")
 	public ResponseResult update(@Valid @RequestBody SysMenu sysMenu) {
-		return ResponseResult.ok(sysMenuService.updateMenuById(sysMenu));
+		sysMenuService.updateMenuById(sysMenu);
+		return ResponseResult.ok();
 	}
 
 }

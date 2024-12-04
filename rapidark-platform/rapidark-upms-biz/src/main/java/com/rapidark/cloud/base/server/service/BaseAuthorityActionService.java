@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.rapidark.cloud.base.client.model.entity.BaseAuthorityAction;
+import com.rapidark.platform.system.api.entity.BaseAuthorityAction;
 import com.rapidark.cloud.base.server.repository.BaseAuthorityActionRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import org.springframework.stereotype.Service;

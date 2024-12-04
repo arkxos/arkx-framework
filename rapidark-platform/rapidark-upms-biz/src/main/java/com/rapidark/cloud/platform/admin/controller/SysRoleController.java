@@ -25,10 +25,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.RequestExcel;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
+import com.rapidark.cloud.base.server.service.SysRoleService;
 import com.rapidark.platform.system.api.entity.SysRole;
 import com.rapidark.platform.system.api.vo.RoleExcelVO;
 import com.rapidark.platform.system.api.vo.RoleVO;
-import com.rapidark.cloud.platform.admin.service.SysRoleService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
@@ -66,7 +66,7 @@ public class SysRoleController {
 	 */
 	@GetMapping("/details/{id}")
 	public ResponseResult getById(@PathVariable Long id) {
-		return ResponseResult.ok(sysRoleService.getById(id));
+		return ResponseResult.ok(sysRoleService.findById(id));
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class SysRoleController {
 	 */
 	@GetMapping("/details")
 	public ResponseResult getDetails(@ParameterObject SysRole query) {
-		return ResponseResult.ok(sysRoleService.getOne(Wrappers.query(query), false));
+		return ResponseResult.ok(sysRoleService.findOneByExample(query));
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class SysRoleController {
 	@HasPermission("sys_role_edit")
 	@CacheEvict(value = CacheConstants.ROLE_DETAILS, allEntries = true)
 	public ResponseResult update(@Valid @RequestBody SysRole sysRole) {
-		return ResponseResult.ok(sysRoleService.updateById(sysRole));
+		return ResponseResult.ok(sysRoleService.updateRole(sysRole));
 	}
 
 	/**
@@ -115,7 +115,8 @@ public class SysRoleController {
 	@HasPermission("sys_role_del")
 	@CacheEvict(value = CacheConstants.ROLE_DETAILS, allEntries = true)
 	public ResponseResult removeById(@RequestBody Long[] ids) {
-		return ResponseResult.ok(sysRoleService.removeRoleByIds(ids));
+		sysRoleService.removeRoleByIds(ids);
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -124,7 +125,7 @@ public class SysRoleController {
 	 */
 	@GetMapping("/list")
 	public ResponseResult listRoles() {
-		return ResponseResult.ok(sysRoleService.list(Wrappers.emptyWrapper()));
+		return ResponseResult.ok(sysRoleService.findAll());
 	}
 
 	/**
@@ -135,7 +136,7 @@ public class SysRoleController {
 	 */
 	@GetMapping("/page")
 	public ResponseResult getRolePage(Page page, SysRole role) {
-		return ResponseResult.ok(sysRoleService.page(page, Wrappers.<SysRole>lambdaQuery()
+		return ResponseResult.ok(sysRoleService.findAll(page, Wrappers.<SysRole>lambdaQuery()
 			.like(StrUtil.isNotBlank(role.getRoleName()), SysRole::getRoleName, role.getRoleName())));
 	}
 

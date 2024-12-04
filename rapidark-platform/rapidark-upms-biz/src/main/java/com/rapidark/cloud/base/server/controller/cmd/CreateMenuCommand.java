@@ -30,7 +30,7 @@ public class CreateMenuCommand {
     @Schema(required = false, title = "组件路径")
     private String component = "";
     @Schema(required = false, title = "打开方式", allowableValues = "_self,_blank", example = "_self")
-    private String target="_self";
+    private int integrateMode;//="_self";
     @Schema(required = true, allowableValues = "0,1", example="1", title = "是否启用")
     private Integer status = 1;
     @Schema(required = true, allowableValues = "0,1", example="1", title = "菜单可见")

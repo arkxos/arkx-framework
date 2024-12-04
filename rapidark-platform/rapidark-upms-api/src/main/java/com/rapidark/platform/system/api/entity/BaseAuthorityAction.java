@@ -1,14 +1,11 @@
-package com.rapidark.cloud.base.client.model.entity;
+package com.rapidark.platform.system.api.entity;
 
 
-import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 
 import lombok.Data;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**

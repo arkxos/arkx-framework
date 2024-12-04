@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rapidark.cloud.base.client.constants.ResourceType;
 import com.rapidark.cloud.base.client.constants.UserConstants;
-import com.rapidark.cloud.base.client.model.entity.SysMenu;
 import com.rapidark.cloud.base.server.repository.SysMenuRepository;
+import com.rapidark.cloud.base.server.repository.SysRoleAuthorityRepository;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 import com.rapidark.cloud.platform.common.core.constant.enums.MenuTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
@@ -19,6 +19,7 @@ import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.platform.system.api.entity.SysMenu;
 import com.rapidark.platform.system.api.entity.SysRoleAuthority;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
@@ -57,8 +58,10 @@ public class SysMenuService extends BaseService<SysMenu, Long, SysMenuRepository
 
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
+	@Autowired
+	private SysRoleAuthorityRepository sysRoleAuthorityRepository;
 
-    /**
+	/**
      * 分页查询
      *
      * @param pageParams
@@ -210,7 +213,7 @@ public class SysMenuService extends BaseService<SysMenu, Long, SysMenuRepository
 			throw new RuntimeException(MsgUtils.getMessage(ErrorCodes.SYS_MENU_DELETE_EXISTING));
 		}
 
-		sysRoleMenuMapper.delete(Wrappers.<SysRoleAuthority>query().lambda().eq(SysRoleAuthority::getAuthorityId, id));
+		sysRoleAuthorityRepository.deleteByAuthorityId(id);
 		// 删除当前菜单及其子菜单
 		this.deleteById(id);
 	}

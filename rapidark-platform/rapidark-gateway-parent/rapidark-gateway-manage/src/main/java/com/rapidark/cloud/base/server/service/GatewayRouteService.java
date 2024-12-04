@@ -1,7 +1,7 @@
 //package com.rapidark.cloud.base.server.service;
 //
 //import com.baomidou.mybatisplus.core.metadata.IPage;
-//import com.rapidark.cloud.base.client.model.entity.GatewayAppRoute;
+//import com.rapidark.platform.system.api.entity.GatewayAppRoute;
 //import com.rapidark.framework.commons.model.PageParams;
 //import com.rapidark.framework.commons.mybatis.base.service.IBaseService;
 //

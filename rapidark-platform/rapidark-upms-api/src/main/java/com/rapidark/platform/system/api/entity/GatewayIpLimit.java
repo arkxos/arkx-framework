@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.model.entity;
+package com.rapidark.platform.system.api.entity;
 
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
@@ -18,11 +18,14 @@ import jakarta.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name="gateway_rate_limit")
-public class GatewayRateLimit extends AbstractIdLongEntity {
+@Table(name="gateway_ip_limit")
+public class GatewayIpLimit extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 策略ID
+     */
     @Id
     @Column(name = "policy_Id")
     @Schema(title = "policyId")
@@ -34,19 +37,14 @@ public class GatewayRateLimit extends AbstractIdLongEntity {
     private String policyName;
 
     /**
-     * 限流规则类型:url,origin,user
+     * 策略类型:0-拒绝/黑名单 1-允许/白名单
      */
-    private String policyType;
+    private Integer policyType;
 
     /**
-     * 限制数
+     * ip地址/IP段:多个用隔开;最多10个
      */
-    private Long limitQuota;
-
-    /**
-     * 单位时间:seconds-秒,minutes-分钟,hours-小时,days-天
-     */
-    private String intervalUnit;
+    private String ipAddress;
 
     @Override
     public Long getId() {

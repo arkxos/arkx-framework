@@ -1,7 +1,6 @@
-package com.rapidark.cloud.base.client.model.entity;
+package com.rapidark.platform.system.api.entity;
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import com.rapidark.framework.data.jpa.entity.Status;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

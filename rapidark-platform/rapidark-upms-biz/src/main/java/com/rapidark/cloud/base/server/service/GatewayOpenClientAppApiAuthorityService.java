@@ -1,9 +1,9 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.rapidark.cloud.base.client.model.entity.GatewayOpenClientAppApiAuthority;
 import com.rapidark.cloud.base.server.repository.GatewayOpenClientAppApiAuthorityRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
 //import com.rapidark.cloud.gateway.manage.repository.ClientServerRegisterRepository;
+import com.rapidark.platform.system.api.entity.GatewayOpenClientAppApiAuthority;
 import org.springframework.stereotype.Service;
 
 /**

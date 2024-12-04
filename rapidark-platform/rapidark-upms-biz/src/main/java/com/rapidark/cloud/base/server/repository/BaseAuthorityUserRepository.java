@@ -1,10 +1,10 @@
 package com.rapidark.cloud.base.server.repository;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.cloud.base.client.model.entity.BaseAuthorityUser;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
+import com.rapidark.platform.system.api.entity.BaseAuthorityUser;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

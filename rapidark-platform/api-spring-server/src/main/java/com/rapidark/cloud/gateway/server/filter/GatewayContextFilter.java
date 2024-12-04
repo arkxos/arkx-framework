@@ -3,7 +3,7 @@ package com.rapidark.cloud.gateway.server.filter;
 import cn.hutool.core.collection.ConcurrentHashSet;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.base.client.model.entity.OpenApp;
+import com.rapidark.platform.system.api.entity.OpenApp;
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
 import com.rapidark.cloud.gateway.server.exception.RequestDecryptionExceptionHandler;
 import com.rapidark.cloud.gateway.server.filter.context.GatewayContext;

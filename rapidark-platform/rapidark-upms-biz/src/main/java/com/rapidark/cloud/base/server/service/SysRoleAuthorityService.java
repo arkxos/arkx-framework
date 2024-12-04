@@ -2,11 +2,11 @@ package com.rapidark.cloud.base.server.service;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.rapidark.cloud.base.client.model.entity.SysRoleAuthority;
 import com.rapidark.cloud.base.server.repository.SysRoleAuthorityRepository;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.data.jpa.service.BaseService;
+import com.rapidark.platform.system.api.entity.SysRoleAuthority;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
