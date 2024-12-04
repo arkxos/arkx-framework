@@ -1,16 +1,15 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.model.RateLimitApi;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitApiRepository;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitRepository;
+import com.rapidark.framework.commons.data.model.PageParams;
 import com.rapidark.framework.data.jpa.service.BaseService;
-import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -68,9 +67,6 @@ public class GatewayRateLimitService extends BaseService<GatewayRateLimit, Long,
      * @return
      */
     public List<GatewayRateLimitApi> findRateLimitApiList(Long policyId) {
-        QueryWrapper<GatewayRateLimitApi> queryWrapper = new QueryWrapper();
-        queryWrapper.lambda()
-                .eq(GatewayRateLimitApi::getPolicyId, policyId);
         List<GatewayRateLimitApi> list = gatewayRateLimitApiRepository.queryByPolicyId(policyId);
         return list;
     }

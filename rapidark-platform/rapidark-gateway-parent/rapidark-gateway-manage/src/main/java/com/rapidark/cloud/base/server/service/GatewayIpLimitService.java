@@ -1,15 +1,15 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.model.IpLimitApi;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.repository.GatewayIpLimitApiRepository;
 import com.rapidark.cloud.base.server.repository.GatewayIpLimitRepository;
-import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.framework.commons.data.model.PageParams;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

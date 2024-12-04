@@ -1,6 +1,5 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
@@ -74,7 +73,6 @@ public class BaseUser extends AbstractIdLongEntity {
      * 密码
      */
     @JsonIgnore
-    @TableField(exist = false)
     @Transient
     private String password;
 

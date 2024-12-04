@@ -17,7 +17,6 @@
 
 package com.rapidark.cloud.platform.admin.api.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,7 +39,7 @@ public class SysPublicParam implements Serializable {
 	/**
 	 * 编号
 	 */
-	@TableId(type = IdType.ASSIGN_ID)
+//	@TableId(type = IdType.ASSIGN_ID)
 	@Schema(description = "公共参数编号")
 	private Long publicId;
 
@@ -89,36 +88,36 @@ public class SysPublicParam implements Serializable {
 	/**
 	 * 创建人
 	 */
-	@TableField(fill = FieldFill.INSERT)
+//	@TableField(fill = FieldFill.INSERT)
 	@Schema(description = "创建人")
 	private String createBy;
 
 	/**
 	 * 修改人
 	 */
-	@TableField(fill = FieldFill.UPDATE)
+//	@TableField(fill = FieldFill.UPDATE)
 	@Schema(description = "修改人")
 	private String updateBy;
 
 	/**
 	 * 删除标记
 	 */
-	@TableLogic
-	@TableField(fill = FieldFill.INSERT)
+//	@TableLogic
+//	@TableField(fill = FieldFill.INSERT)
 	@Schema(description = "删除标记,1:已删除,0:正常")
 	private String delFlag;
 
 	/**
 	 * 创建时间
 	 */
-	@TableField(fill = FieldFill.INSERT)
+//	@TableField(fill = FieldFill.INSERT)
 	@Schema(description = "创建时间")
 	private LocalDateTime createTime;
 
 	/**
 	 * 更新时间
 	 */
-	@TableField(fill = FieldFill.UPDATE)
+//	@TableField(fill = FieldFill.UPDATE)
 	@Schema(description = "更新时间")
 	private LocalDateTime updateTime;
 

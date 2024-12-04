@@ -1,6 +1,5 @@
 package com.rapidark.cloud.base.client.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.rapidark.cloud.base.client.constants.UserConstants;
 
 import com.rapidark.framework.common.utils.StringUtils;
@@ -119,7 +118,7 @@ public class BaseMenu extends AbstractIdLongEntity {
     /**
      * 子菜单
      */
-    @TableField(exist = false)
+//    @TableField(exist = false)
     @Transient
     private List<BaseMenu> children = new ArrayList<>();
 

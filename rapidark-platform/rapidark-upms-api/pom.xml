@@ -62,11 +62,11 @@
 			<artifactId>rapidark-commons-core</artifactId>
 			<version>${revision}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-annotation</artifactId>
-			<version>${mybatis-plus.version}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.baomidou</groupId>-->
+<!--			<artifactId>mybatis-plus-annotation</artifactId>-->
+<!--			<version>${mybatis-plus.version}</version>-->
+<!--		</dependency>-->
 		<!-- groovy动态脚本引擎 -->
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>

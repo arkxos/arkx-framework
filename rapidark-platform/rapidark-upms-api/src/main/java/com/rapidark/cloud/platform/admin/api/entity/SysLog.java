@@ -21,7 +21,6 @@ package com.rapidark.cloud.platform.admin.api.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -46,7 +45,7 @@ public class SysLog implements Serializable {
 	/**
 	 * 编号
 	 */
-	@TableId(type = IdType.ASSIGN_ID)
+//	@TableId(type = IdType.ASSIGN_ID)
 	@ExcelProperty("日志编号")
 	@Schema(description = "日志编号")
 	private Long id;
@@ -71,7 +70,7 @@ public class SysLog implements Serializable {
 	 * 创建者
 	 */
 	@ExcelProperty("创建人")
-	@TableField(fill = FieldFill.INSERT)
+//	@TableField(fill = FieldFill.INSERT)
 	@Schema(description = "创建人")
 	private String createBy;
 
@@ -79,7 +78,7 @@ public class SysLog implements Serializable {
 	 * 创建时间
 	 */
 	@ExcelProperty("创建时间")
-	@TableField(fill = FieldFill.INSERT)
+//	@TableField(fill = FieldFill.INSERT)
 	@Schema(description = "创建时间")
 	private LocalDateTime createTime;
 
@@ -87,7 +86,7 @@ public class SysLog implements Serializable {
 	 * 更新时间
 	 */
 	@ExcelIgnore
-	@TableField(fill = FieldFill.UPDATE)
+//	@TableField(fill = FieldFill.UPDATE)
 	@Schema(description = "更新时间")
 	private LocalDateTime updateTime;
 
@@ -149,9 +148,9 @@ public class SysLog implements Serializable {
 	/**
 	 * 删除标记
 	 */
-	@TableLogic
+//	@TableLogic
 	@ExcelIgnore
-	@TableField(fill = FieldFill.INSERT)
+//	@TableField(fill = FieldFill.INSERT)
 	@Schema(description = "删除标记,1:已删除,0:正常")
 	private String delFlag;
 

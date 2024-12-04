@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		basePackages = { "com.rapidark" },
 		repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 @EntityScan({
+		"com.rapidark.cloud.base.client.model.entity",
 		"com.rapidark.cloud.platform.gateway.framework.entity"
 })
 public class JpaConfiguration {

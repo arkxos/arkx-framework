@@ -3,16 +3,16 @@ package com.rapidark.cloud.base.server.controller;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimit;
 import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
-import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.StringUtils;
 
 
-
+import com.rapidark.framework.commons.data.model.PageParams;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class GatewayIpLimitController {
      */
     @Schema(title = "获取分页接口列表", name = "获取分页接口列表")
     @GetMapping("/gateway/limit/ip")
-    public ResponseResult<Page<GatewayIpLimit>> getIpLimitListPage(@RequestParam(required = false) Map map) {
+    public ResponseResult<Page<GatewayIpLimit>> getIpLimitListPage(@RequestParam(required = false) Map map, Pageable pageable) {
         return ResponseResult.ok(gatewayIpLimitService.findListPage(new PageParams(map)));
     }
 

@@ -6,11 +6,12 @@ import com.rapidark.cloud.platform.gateway.manage.task.MonitorTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 
 /**
@@ -26,7 +27,7 @@ import jakarta.annotation.Resource;
 @EnableScheduling
 @SpringBootApplication(scanBasePackages = "com.rapidark")
 @EnableDiscoveryClient
-public class ArkGatewayManageApplication {
+public class ArkGatewayManageApplication implements ApplicationListener<ApplicationReadyEvent> {
 
     /**
      本服务单独部署，对外提供网关配置与管理服务；
@@ -48,10 +49,9 @@ public class ArkGatewayManageApplication {
     /**
      * 执行监控程序
      */
-    @PostConstruct
-    public void runMonitor(){
-        log.info("运行网关路由监控任务...");
-        monitorTaskService.executeMonitorTask();
-    }
-
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		log.info("运行网关路由监控任务...");
+		monitorTaskService.executeMonitorTask();
+	}
 }

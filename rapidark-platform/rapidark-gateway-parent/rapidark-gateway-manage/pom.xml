@@ -117,10 +117,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-bus</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>com.rapidark.framework</groupId>
-            <artifactId>rapidark-data-mybatis</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.rapidark.framework</groupId>-->
+<!--            <artifactId>rapidark-data-mybatis</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
 	<profiles>
