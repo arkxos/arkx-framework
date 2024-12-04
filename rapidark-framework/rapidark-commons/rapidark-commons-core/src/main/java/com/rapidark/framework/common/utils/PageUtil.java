@@ -55,8 +55,8 @@ public class PageUtil extends cn.hutool.core.util.PageUtil {
      */
     public static <T> PageResult<T> toPageData(Page page) {
         PageResult pageResult = new PageResult();
-        pageResult.setLists(page.getContent());
-        pageResult.setTotalNum(page.getTotalElements());
+        pageResult.setRecords(page.getContent());
+        pageResult.setTotal(page.getTotalElements());
         return pageResult;
     }
 

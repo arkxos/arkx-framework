@@ -5,6 +5,10 @@ import com.google.common.collect.Maps;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.StringUtils;
+import lombok.Data;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -15,6 +19,7 @@ import java.util.Map;
  * @author liuyau
  * @date 2018/07/10
  */
+@Data
 public class PageParams implements Serializable {
 
 	private static final long serialVersionUID = -1710273706052960025L;
@@ -123,5 +128,14 @@ public class PageParams implements Serializable {
 
 	public void setRequestMap(Map<String, Object> requestMap) {
 		this.requestMap = requestMap;
+	}
+
+	// 兼容mybatis 查询
+	private int current;
+	private int size;
+
+	public Pageable toPageable() {
+		Pageable pageable = PageRequest.of(current-1,size, Sort.by(Sort.Direction.ASC, "sortOrder"));
+		return pageable;
 	}
 }
