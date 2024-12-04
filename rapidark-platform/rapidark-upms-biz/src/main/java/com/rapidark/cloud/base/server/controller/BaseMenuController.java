@@ -35,6 +35,7 @@ import java.util.Map;
  */
 @Schema(title = "系统菜单资源管理")
 @RestController
+@RequestMapping("/basemenu")
 public class BaseMenuController {
 
     @Autowired
