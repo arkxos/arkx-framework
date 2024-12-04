@@ -1,11 +1,10 @@
-package com.rapidark.cloud.gateway.manage.service.command;
+package com.rapidark.cloud.base.client.service.command;
 
 import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
 
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 

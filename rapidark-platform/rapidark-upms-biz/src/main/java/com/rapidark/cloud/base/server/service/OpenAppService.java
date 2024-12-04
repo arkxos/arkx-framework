@@ -2,9 +2,9 @@ package com.rapidark.cloud.base.server.service;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.base.server.repository.OpenAppRepository;
-import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
-import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
-import com.rapidark.cloud.base.server.service.mapstruct.OpenAppMapper;
+import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
+import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
+import com.rapidark.cloud.base.client.service.mapstruct.OpenAppMapper;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.security.OpenClientDetails;

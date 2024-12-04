@@ -8,7 +8,7 @@ import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.platform.admin.api.entity.SysMenu;
-import com.rapidark.cloud.platform.admin.application.model.RouterVo;
+import com.rapidark.cloud.platform.admin.api.model.RouterVo;
 import com.rapidark.cloud.platform.admin.application.service.RouterService;
 import com.rapidark.cloud.platform.admin.service.SysMenuService;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;

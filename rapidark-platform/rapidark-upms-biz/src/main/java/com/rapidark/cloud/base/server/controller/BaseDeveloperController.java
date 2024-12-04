@@ -4,10 +4,10 @@ import com.rapidark.cloud.base.client.model.UserAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
 import com.rapidark.cloud.base.client.service.IBaseDeveloperServiceClient;
 
-import com.rapidark.cloud.gateway.manage.service.command.ChangeDeveloperPasswordCommand;
+import com.rapidark.cloud.base.client.service.command.ChangeDeveloperPasswordCommand;
 import com.rapidark.cloud.base.server.service.BaseDeveloperService;
-import com.rapidark.cloud.gateway.manage.service.command.CreateDeveloperCommand;
-import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
+import com.rapidark.cloud.base.client.service.command.CreateDeveloperCommand;
+import com.rapidark.cloud.base.client.service.command.UpdateDeveloperCommand;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.PageResult;

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.gateway.manage.service.command;
+package com.rapidark.cloud.base.client.service.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

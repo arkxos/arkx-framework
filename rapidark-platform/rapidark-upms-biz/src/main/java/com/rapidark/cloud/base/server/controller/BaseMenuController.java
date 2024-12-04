@@ -11,8 +11,8 @@ import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.cloud.base.server.service.BaseMenuQuery;
 import com.rapidark.cloud.base.server.service.BaseMenuService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
-import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
+import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
+import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
@@ -23,7 +23,6 @@ import com.rapidark.framework.data.jpa.entity.Status;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.rapidark.cloud.platform.admin.application.model;
+package com.rapidark.cloud.platform.admin.api.model;
 
 import com.rapidark.framework.common.utils.StringUtils;
 import lombok.Builder;

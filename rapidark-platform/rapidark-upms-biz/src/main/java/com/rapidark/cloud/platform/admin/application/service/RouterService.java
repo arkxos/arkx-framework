@@ -1,8 +1,8 @@
 package com.rapidark.cloud.platform.admin.application.service;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysMenu;
-import com.rapidark.cloud.platform.admin.application.model.MetaVo;
-import com.rapidark.cloud.platform.admin.application.model.RouterVo;
+import com.rapidark.cloud.platform.admin.api.model.MetaVo;
+import com.rapidark.cloud.platform.admin.api.model.RouterVo;
 import com.rapidark.framework.common.utils.StreamUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
