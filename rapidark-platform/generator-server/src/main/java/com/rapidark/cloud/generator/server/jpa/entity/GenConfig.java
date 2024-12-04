@@ -44,8 +44,8 @@ public class GenConfig implements Serializable {
     @Column(name = "config_id")
     @Schema(title = "ID", hidden = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
-    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
+//    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="oracleSeq")
+//    @SequenceGenerator(name="oracleSeq",sequenceName="SEQ_NEWSID",allocationSize=1)
     private Long id;
 
     @NotBlank
