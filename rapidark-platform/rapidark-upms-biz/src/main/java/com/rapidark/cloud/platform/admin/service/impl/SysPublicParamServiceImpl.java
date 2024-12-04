@@ -26,7 +26,7 @@ import com.rapidark.cloud.platform.admin.service.SysPublicParamService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
 
 import lombok.AllArgsConstructor;

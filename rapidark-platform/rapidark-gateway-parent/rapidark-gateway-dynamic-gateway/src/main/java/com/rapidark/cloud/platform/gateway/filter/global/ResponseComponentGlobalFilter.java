@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.filter.global;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.gateway.cache.RotueGroovyCache;
 import com.rapidark.cloud.platform.gateway.service.DynamicGroovyService;
 import com.rapidark.cloud.platform.gateway.vo.GroovyHandleData;

@@ -26,7 +26,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.platform.codegen.entity.GenDatasourceConf;
 import com.rapidark.cloud.platform.codegen.service.GenDatasourceConfService;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 import com.rapidark.cloud.platform.common.xss.core.XssCleanIgnore;

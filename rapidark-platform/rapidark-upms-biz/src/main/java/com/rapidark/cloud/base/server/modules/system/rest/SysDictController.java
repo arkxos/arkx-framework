@@ -73,8 +73,8 @@ public class SysDictController {
 	@Schema(title = "查询字典")
 	@GetMapping
 	@PreAuthorize("@el.check('dict:list')")
-	public com.rapidark.cloud.platform.common.core.util.ResponseResult<Object> query(DictQueryCriteria resources, Pageable pageable){
-		return com.rapidark.cloud.platform.common.core.util.ResponseResult.ok(sysDictService.queryAll(resources,pageable));
+	public ResponseResult<Object> query(DictQueryCriteria resources, Pageable pageable){
+		return ResponseResult.ok(sysDictService.queryAll(resources,pageable));
 	}
 
 	/**
@@ -109,8 +109,8 @@ public class SysDictController {
 	 * @return 字典信息
 	 */
 	@GetMapping("/dict/item/{id}")
-	public com.rapidark.cloud.platform.common.core.util.ResponseResult findById(@PathVariable Long id) {
-		return com.rapidark.cloud.platform.common.core.util.ResponseResult.ok(sysDictService.findById(id));
+	public ResponseResult findById(@PathVariable Long id) {
+		return ResponseResult.ok(sysDictService.findById(id));
 	}
 //
 //	/**
@@ -163,7 +163,7 @@ public class SysDictController {
 	 */
 	@SysLog("同步字典")
 	@PutMapping("/sync")
-	public com.rapidark.cloud.platform.common.core.util.ResponseResult sync() {
+	public ResponseResult sync() {
 		return sysDictService.syncDictCache();
 	}
 

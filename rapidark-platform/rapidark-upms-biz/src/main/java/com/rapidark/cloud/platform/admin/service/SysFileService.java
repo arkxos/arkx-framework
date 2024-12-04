@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysFile;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;

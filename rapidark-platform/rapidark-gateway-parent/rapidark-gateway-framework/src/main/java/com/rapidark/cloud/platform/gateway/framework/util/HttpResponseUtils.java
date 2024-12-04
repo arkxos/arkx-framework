@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.framework.util;
 
 import com.alibaba.fastjson.JSON;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

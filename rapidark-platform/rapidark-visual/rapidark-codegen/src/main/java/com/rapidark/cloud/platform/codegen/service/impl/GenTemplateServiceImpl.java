@@ -35,7 +35,7 @@ import com.rapidark.cloud.platform.codegen.mapper.GenTemplateMapper;
 import com.rapidark.cloud.platform.codegen.service.GenTemplateService;
 import com.rapidark.cloud.platform.codegen.util.vo.GenTemplateFileVO;
 import com.rapidark.cloud.platform.common.core.exception.CheckedException;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

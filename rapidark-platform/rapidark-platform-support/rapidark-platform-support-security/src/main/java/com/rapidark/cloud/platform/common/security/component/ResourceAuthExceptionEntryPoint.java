@@ -18,7 +18,7 @@ package com.rapidark.cloud.platform.common.security.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

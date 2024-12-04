@@ -22,7 +22,7 @@ package com.rapidark.cloud.platform.admin.api.feign;
 import com.rapidark.cloud.platform.admin.api.dto.UserDTO;
 import com.rapidark.cloud.platform.admin.api.dto.UserInfo;
 import com.rapidark.cloud.platform.common.core.constant.ServiceNameConstants;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.feign.annotation.NoToken;
 
 import org.springframework.cloud.openfeign.FeignClient;

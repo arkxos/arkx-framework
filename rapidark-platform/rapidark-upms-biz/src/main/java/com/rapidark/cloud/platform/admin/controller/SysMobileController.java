@@ -18,7 +18,7 @@
 package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.platform.admin.service.SysMobileService;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.rest;
 
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.service.GatewayAppRouteService;
 import com.rapidark.cloud.platform.gateway.service.DynamicRouteService;

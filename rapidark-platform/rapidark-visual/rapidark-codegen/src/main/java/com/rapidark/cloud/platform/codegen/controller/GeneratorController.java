@@ -21,7 +21,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 
 import com.rapidark.cloud.platform.codegen.service.GeneratorService;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

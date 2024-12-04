@@ -5,7 +5,7 @@ import cn.hutool.core.map.MapUtil;
 
 import com.pig4cloud.plugin.excel.handler.DictDataProvider;
 import com.pig4cloud.plugin.excel.vo.DictEnum;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 

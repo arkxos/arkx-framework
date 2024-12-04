@@ -26,7 +26,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rapidark.cloud.platform.admin.api.entity.SysFile;
 import com.rapidark.cloud.platform.admin.mapper.SysFileMapper;
 import com.rapidark.cloud.platform.admin.service.SysFileService;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.file.core.FileProperties;
 import com.rapidark.cloud.platform.common.file.core.FileTemplate;
 

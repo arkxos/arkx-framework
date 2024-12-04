@@ -27,7 +27,7 @@ import com.rapidark.cloud.platform.admin.api.vo.TokenVo;
 import com.rapidark.cloud.platform.auth.support.handler.ArkAuthenticationFailureEventHandler;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.RetOps;
 import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;

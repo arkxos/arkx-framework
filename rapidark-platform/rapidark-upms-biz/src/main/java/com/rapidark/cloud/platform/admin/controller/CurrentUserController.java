@@ -56,7 +56,7 @@ public class CurrentUserController {
 	 * @return 当前用户的树形菜单
 	 */
 	@GetMapping("/current/user/routers")
-	public com.rapidark.cloud.platform.common.core.util.ResponseResult<List<RouterVo>> ueryCurrentUserMenu() {
+	public ResponseResult<List<RouterVo>> ueryCurrentUserMenu() {
 		// 获取符合条件的菜单
 		Set<SysMenu> all = new HashSet<>();
 		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
@@ -64,7 +64,7 @@ public class CurrentUserController {
 		List<SysMenu> menus = new ArrayList<>(all);
 		menus.sort(Comparator.comparingLong(SysMenu::getParentId).thenComparingInt(SysMenu::getSortOrder));
 
-		return com.rapidark.cloud.platform.common.core.util.ResponseResult.ok(routerService.buildRouters(menus));
+		return ResponseResult.ok(routerService.buildRouters(menus));
 	}
 
 	/**

@@ -26,7 +26,7 @@ import com.rapidark.cloud.platform.admin.api.entity.SysOauthClientDetails;
 import com.rapidark.cloud.platform.admin.mapper.SysOauthClientDetailsMapper;
 import com.rapidark.cloud.platform.admin.service.SysOauthClientDetailsService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;

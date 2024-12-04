@@ -21,7 +21,7 @@ package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.platform.admin.api.entity.SysMenu;
 import com.rapidark.cloud.platform.admin.service.SysMenuService;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;

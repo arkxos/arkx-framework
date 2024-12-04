@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rapidark.cloud.platform.common.core.util;
+package com.rapidark.framework.common.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;

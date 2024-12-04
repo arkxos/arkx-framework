@@ -22,7 +22,7 @@ package com.rapidark.cloud.platform.admin.service;
 import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysMenu;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import java.util.List;
 import java.util.Set;

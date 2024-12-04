@@ -13,7 +13,7 @@ import com.rapidark.cloud.platform.gateway.framework.entity.Monitor;
 import com.rapidark.cloud.platform.gateway.framework.entity.ClientServerRegister;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.entity.SentinelRule;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.util.Constants;
 import com.rapidark.framework.common.utils.PageResult;
 import org.apache.commons.lang3.StringUtils;

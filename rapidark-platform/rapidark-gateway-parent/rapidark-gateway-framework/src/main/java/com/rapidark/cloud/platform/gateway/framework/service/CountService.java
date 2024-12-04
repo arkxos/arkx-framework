@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.gateway.framework.service;
 
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountReq;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountRsp;
 import com.rapidark.cloud.platform.gateway.framework.bean.CountTotalRsp;

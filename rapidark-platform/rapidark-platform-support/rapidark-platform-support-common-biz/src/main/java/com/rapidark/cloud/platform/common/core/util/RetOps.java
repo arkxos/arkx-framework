@@ -29,6 +29,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
+import com.rapidark.framework.common.model.ResponseResult;
 
 /**
  * 简化{@code ResponseResult<T>} 的访问操作,例子 <pre>

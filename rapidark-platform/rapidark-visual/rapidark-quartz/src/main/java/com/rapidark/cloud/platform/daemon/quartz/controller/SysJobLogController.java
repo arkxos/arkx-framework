@@ -20,7 +20,7 @@ package com.rapidark.cloud.platform.daemon.quartz.controller;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.daemon.quartz.entity.SysJobLog;
 import com.rapidark.cloud.platform.daemon.quartz.service.SysJobLogService;
 

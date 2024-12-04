@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysRole;
 import com.rapidark.cloud.platform.admin.api.vo.RoleExcelVO;
 import com.rapidark.cloud.platform.admin.api.vo.RoleVO;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import org.springframework.validation.BindingResult;
 

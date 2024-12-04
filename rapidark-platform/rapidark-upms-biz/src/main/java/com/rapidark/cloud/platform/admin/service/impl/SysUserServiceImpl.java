@@ -40,7 +40,7 @@ import com.rapidark.cloud.platform.admin.service.*;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
 

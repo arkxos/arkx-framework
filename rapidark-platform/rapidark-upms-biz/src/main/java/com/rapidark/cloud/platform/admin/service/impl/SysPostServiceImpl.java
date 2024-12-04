@@ -27,7 +27,7 @@ import com.rapidark.cloud.platform.admin.mapper.SysPostMapper;
 import com.rapidark.cloud.platform.admin.service.SysPostService;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;

@@ -34,7 +34,7 @@ import com.rapidark.cloud.platform.admin.service.SysRoleService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;

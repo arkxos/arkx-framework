@@ -17,7 +17,7 @@
 package com.rapidark.cloud.platform.common.feign.sentinel.handle;
 
 //import com.alibaba.csp.sentinel.Tracer;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

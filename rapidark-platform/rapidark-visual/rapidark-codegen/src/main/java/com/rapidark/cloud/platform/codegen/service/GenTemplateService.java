@@ -19,7 +19,7 @@ package com.rapidark.cloud.platform.codegen.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.codegen.entity.GenTemplateEntity;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 /**
  * 模板

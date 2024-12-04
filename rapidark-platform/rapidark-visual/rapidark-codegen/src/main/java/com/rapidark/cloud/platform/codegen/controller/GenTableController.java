@@ -24,7 +24,7 @@ import com.rapidark.cloud.platform.codegen.entity.GenTable;
 import com.rapidark.cloud.platform.codegen.entity.GenTableColumnEntity;
 import com.rapidark.cloud.platform.codegen.service.GenTableColumnService;
 import com.rapidark.cloud.platform.codegen.service.GenTableService;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,6 +1,6 @@
 package com.rapidark.cloud.platform.daemon.quartz.task;
 
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 
 import lombok.extern.slf4j.Slf4j;

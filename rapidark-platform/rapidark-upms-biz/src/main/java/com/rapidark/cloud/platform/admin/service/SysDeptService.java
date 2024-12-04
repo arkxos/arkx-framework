@@ -23,7 +23,7 @@ import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rapidark.cloud.platform.admin.api.entity.SysDept;
 import com.rapidark.cloud.platform.admin.api.vo.DeptExcelVo;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import org.springframework.validation.BindingResult;
 
