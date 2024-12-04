@@ -48,7 +48,7 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	@CreatedBy
 	@Column(name = "create_by", updatable = false)
 	@Schema(description = "创建人", hidden = true)
-	private String createBy = null;// 创建人
+	private String createBy;// 创建人
 
 	@LastModifiedBy
 	@Column(name = "update_by")

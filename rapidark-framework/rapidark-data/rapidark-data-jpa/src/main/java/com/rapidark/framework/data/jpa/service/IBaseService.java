@@ -36,6 +36,10 @@ public interface IBaseService<T, ID extends Serializable, R extends BaseReposito
 
 	T findOneByCriteria(CriteriaQueryWrapper<T> criteria);
 
+	<Q> List<T> findAllByCriteria(Q criteria);
+
+	<Q> Page<T> findAllByCriteria(Q criteria, Pageable pageable);
+
 	List<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria);
 
 	Page<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria, Pageable pageable);
@@ -67,4 +71,6 @@ public interface IBaseService<T, ID extends Serializable, R extends BaseReposito
 	List<Map<String,Object>> nativeQuery(String sql, List<Object> params);
 
 	PageResult setPageResult(List<?> list, int currentPage, int pageSize, long totalNum);
+
+	Boolean exists(T example);
 }

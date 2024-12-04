@@ -86,15 +86,23 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 	}
 
 	@Override
+	public <Q> List<T> findAllByCriteria(Q criteria) {
+		return entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder));
+	}
+
+	@Override
+	public <Q> Page<T> findAllByCriteria(Q criteria, Pageable pageable) {
+		return entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+	}
+
+	@Override
 	public List<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria) {
-		List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
-		return data;
+		return entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
 	}
 
 	@Override
 	public Page<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria, Pageable pageable) {
-		Page<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder), pageable);
-		return data;
+		return entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder), pageable);
 	}
 
 	@Override
@@ -219,11 +227,16 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 	public PageResult setPageResult(List<?> list, int currentPage, int pageSize, long totalNum){
 		//分页结果
 		PageResult pageResult = new PageResult();
-		pageResult.setCurrentPage(currentPage);
-		pageResult.setPageSize(pageSize);
-		pageResult.setTotalNum(totalNum);
-		pageResult.setLists(list);
+		pageResult.setCurrent(currentPage);
+		pageResult.setSize(pageSize);
+		pageResult.setTotal(totalNum);
+		pageResult.setRecords(list);
 		return pageResult;
+	}
+
+	@Override
+	public Boolean exists(T example) {
+		return entityRepository.exists(Example.of(example));
 	}
 
 }

@@ -212,7 +212,10 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 				operatorId = Account.getUserName();
 				occrOn = LocalDateTime.now();
 			}
-			
+
+			if(operatorId == null) {
+				operatorId = "unknown";
+			}
 			if(StringUtil.isEmpty(baseEntity.getCreateBy())) {
 				baseEntity.setCreateBy(operatorId);
 				baseEntity.setCreateTime(occrOn);

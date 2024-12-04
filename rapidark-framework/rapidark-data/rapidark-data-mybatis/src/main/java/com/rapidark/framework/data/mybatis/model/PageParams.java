@@ -5,6 +5,9 @@ import com.google.common.collect.Maps;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.StringUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -125,4 +128,5 @@ public class PageParams extends Page implements Serializable {
     public void setRequestMap(Map<String, Object> requestMap) {
         this.requestMap = requestMap;
     }
+
 }
