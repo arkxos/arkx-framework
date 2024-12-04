@@ -1,13 +1,13 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.cloud.base.client.model.entity.BaseRole;
-import com.rapidark.cloud.base.client.model.entity.BaseUser;
+import com.rapidark.cloud.base.client.model.entity.SysRole;
+import com.rapidark.cloud.base.client.model.entity.SysUser;
 import com.rapidark.cloud.base.client.service.IBaseUserServiceClient;
 import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.cloud.base.server.controller.cmd.AddUserRolesCommand;
-import com.rapidark.cloud.base.server.service.BaseRoleService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.cloud.base.server.service.SysRoleService;
+import com.rapidark.cloud.base.server.service.SysUserService;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
@@ -19,7 +19,6 @@ import com.rapidark.framework.data.jpa.entity.Status;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,9 +37,9 @@ import java.util.Map;
 public class BaseUserController implements IBaseUserServiceClient {
 
     @Autowired
-    private BaseUserService baseUserService;
+    private SysUserService sysUserService;
     @Autowired
-    private BaseRoleService baseRoleService;
+    private SysRoleService sysRoleService;
 
 
     /**
@@ -61,7 +60,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         HttpServletRequest request = WebUtils.getHttpServletRequest();
         String ip = WebUtils.getRemoteAddress(request);
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
-        UserAccount account = baseUserService.login(username, parameterMap , ip, userAgent);
+        UserAccount account = sysUserService.login(username, parameterMap , ip, userAgent);
         return ResponseResult.ok(account);
     }
 
@@ -72,8 +71,8 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "系统分页用户列表", name = "系统分页用户列表")
     @GetMapping("/user")
-    public ResponseResult<PageResult<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
-        return ResponseResult.ok(baseUserService.findListPage(new PageParams(map)));
+    public ResponseResult<PageResult<SysUser>> getUserList(@RequestParam(required = false) Map map) {
+        return ResponseResult.ok(sysUserService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -83,8 +82,8 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "获取所有用户列表", name = "获取所有用户列表")
     @GetMapping("/user/all")
-    public ResponseResult<List<BaseUser>> getUserAllList() {
-        return ResponseResult.ok(baseUserService.findAllList());
+    public ResponseResult<List<SysUser>> getUserAllList() {
+        return ResponseResult.ok(sysUserService.findAllList());
     }
 
     /**
@@ -96,8 +95,8 @@ public class BaseUserController implements IBaseUserServiceClient {
     @Schema(title = "添加系统用户", name = "添加系统用户")
     @PostMapping("/user/add")
     public ResponseResult<Long> addUser(@Valid @RequestBody AddUserCommand command) {
-        BaseUser user = new BaseUser();
-        user.setUserName(command.getUserName());
+        SysUser user = new SysUser();
+        user.setUsername(command.getUserName());
         user.setPassword(command.getPassword());
         user.setNickName(command.getNickName());
         user.setUserType(command.getUserType());
@@ -106,7 +105,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setUserDesc(command.getUserDesc());
         user.setAvatar(command.getAvatar());
         user.setStatus(Status.codeOf(command.getStatus()));
-        baseUserService.addUser(user);
+        sysUserService.addUser(user);
         return ResponseResult.ok(user.getUserId());
     }
 
@@ -135,7 +134,7 @@ public class BaseUserController implements IBaseUserServiceClient {
             @RequestParam(value = "userDesc", required = false) String userDesc,
             @RequestParam(value = "avatar", required = false) String avatar
     ) {
-        BaseUser user = new BaseUser();
+        SysUser user = new SysUser();
         user.setUserId(userId);
         user.setNickName(nickName);
         user.setUserType(userType);
@@ -144,7 +143,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setUserDesc(userDesc);
         user.setAvatar(avatar);
         user.setStatus(Status.codeOf(status));
-        baseUserService.updateUser(user);
+        sysUserService.updateUser(user);
         return ResponseResult.ok();
     }
 
@@ -162,7 +161,7 @@ public class BaseUserController implements IBaseUserServiceClient {
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "password") String password
     ) {
-        baseUserService.updatePassword(userId, password);
+        sysUserService.updatePassword(userId, password);
         return  ResponseResult.ok().msg("修改密码成功");
     }
 
@@ -174,7 +173,7 @@ public class BaseUserController implements IBaseUserServiceClient {
     @Schema(title = "用户分配角色", name = "用户分配角色")
     @PostMapping("/user/roles/add")
     public ResponseResult addUserRoles(@Valid @RequestBody AddUserRolesCommand command) {
-        baseRoleService.saveUserRoles(command.getUserId(), StringUtils.isNotBlank(command.getRoleIds()) ? command.getRoleIds().split(",") : new String[]{});
+        sysRoleService.saveUserRoles(command.getUserId(), StringUtils.isNotBlank(command.getRoleIds()) ? command.getRoleIds().split(",") : new String[]{});
         return ResponseResult.ok();
     }
 
@@ -187,10 +186,10 @@ public class BaseUserController implements IBaseUserServiceClient {
     @Override
     @Schema(title = "获取用户已分配角色", name = "获取用户已分配角色")
     @GetMapping("/user/roles")
-    public ResponseResult<List<BaseRole>> getUserRoles(
+    public ResponseResult<List<SysRole>> getUserRoles(
             @RequestParam(value = "userId") Long userId
     ) {
-        return ResponseResult.ok(baseRoleService.getUserRoles(userId));
+        return ResponseResult.ok(sysRoleService.getUserRoles(userId));
     }
 
 
@@ -212,12 +211,12 @@ public class BaseUserController implements IBaseUserServiceClient {
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "avatar") String avatar
     ) {
-        BaseUser user = new BaseUser();
+        SysUser user = new SysUser();
         user.setNickName(nickName);
-        user.setUserName(account);
+        user.setUsername(account);
         user.setPassword(password);
         user.setAvatar(avatar);
-        baseUserService.addUserThirdParty(user, accountType);
+        sysUserService.addUserThirdParty(user, accountType);
         return ResponseResult.ok();
     }
 }

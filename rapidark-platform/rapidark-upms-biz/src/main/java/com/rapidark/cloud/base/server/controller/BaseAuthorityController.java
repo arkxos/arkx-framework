@@ -4,12 +4,12 @@ import com.rapidark.cloud.base.client.model.AuthorityApi;
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
 import com.rapidark.cloud.base.client.model.entity.BaseAuthorityAction;
-import com.rapidark.cloud.base.client.model.entity.BaseUser;
+import com.rapidark.cloud.base.client.model.entity.SysUser;
 import com.rapidark.cloud.base.client.service.IBaseAuthorityServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.GrantAuthorityActionCommand;
 import com.rapidark.cloud.base.server.controller.cmd.GrantOpenClientAppApiAuthorityCommand;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.cloud.base.server.service.SysUserService;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenAuthority;
@@ -39,7 +39,7 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     @Autowired
     private BaseAuthorityService baseAuthorityService;
     @Autowired
-    private BaseUserService baseUserService;
+    private SysUserService sysUserService;
 //    @Autowired
 //    private OpenRestTemplate openRestTemplate;
 
@@ -134,8 +134,8 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     public ResponseResult<List<OpenAuthority>> findAuthorityUser(
             @RequestParam(value = "userId") Long userId
     ) {
-        BaseUser user = baseUserService.getUserById(userId);
-        List<OpenAuthority> result = baseAuthorityService.findAuthorityByUser(userId, CommonConstants.ROOT.equals(user.getUserName()));
+        SysUser user = sysUserService.getUserById(userId);
+        List<OpenAuthority> result = baseAuthorityService.findAuthorityByUser(userId, CommonConstants.ROOT.equals(user.getUsername()));
         return ResponseResult.ok(result);
     }
 

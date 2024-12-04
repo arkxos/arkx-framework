@@ -5,9 +5,10 @@ import com.rapidark.cloud.base.client.constants.UserConstants;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.core.constant.Constants;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
-import com.rapidark.framework.data.jpa.entity.IdLongEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -23,62 +24,69 @@ import java.util.List;
  */
 @Data
 @Entity
-@Table(name="base_menu")
-public class BaseMenu extends AbstractIdLongEntity {
+@Table(name="sys_menu")
+@Schema(description = "菜单")
+public class SysMenu extends AbstractIdLongEntity {
 
-    private static final long serialVersionUID = -4414780909980518788L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 菜单Id
      */
     @Id
     @Column(name = "menu_Id")
-    @Schema(title = "menuId")
+    @Schema(title = "菜单id")
     private Long menuId;
 
-    /**
-     * 父级菜单
-     */
-    private Long parentId;
+	@NotNull(message = "菜单父ID不能为空")
+	@Schema(description = "菜单父id")
+	private Long parentId;
 
-    /**
-     * 服务ID
-     */
-    private String appCode;
+	/**
+	 * 服务ID
+	 */
+	private String appCode;
 
     /**
      * 服务ID
      */
     private String serviceId;
 
-    /**
-     * 菜单编码
-     */
-    private String menuCode;
+	@Schema(description = "菜单编码")
+    private String code;
 
-    /**
-     * 菜单名称
-     */
-    private String menuName;
+	@NotBlank(message = "菜单名称不能为空")
+	@Schema(description = "菜单名称")
+    private String name;
 
-    /**
-     * 图标
-     */
+	/**
+	 * 菜单权限标识
+	 */
+	@Schema(description = "菜单权限标识")
+	private String permission;
+
+	@Schema(description = "菜单图标")
     private String icon;
+
+	@Schema(description = "排序值")
+	private Integer sortOrder;
 
     /**
      * 类型（M目录 C菜单 F按钮）
      */
-    private String menuType;
+	@NotNull(message = "菜单类型不能为空")
+	@Schema(description = "菜单类型,0:菜单 1:按钮")
+    private int menuType;
 
     /**
      * 请求协议:/,http://,https://
      */
     private String scheme;
 
-    /**
-     * 请求路径
-     */
+	/**
+	 * 前端路由标识路径
+	 */
+	@Schema(description = "前端路由标识路径")
     private String path;
 
     // 组件路径
@@ -90,7 +98,7 @@ public class BaseMenu extends AbstractIdLongEntity {
     /**
      * 集成模式：0：正常；1：iframe，2：link，3：micro
      */
-    private String integrateMode;
+    private int integrateMode;
 
     /**
      * 优先级 越小越靠前
@@ -102,7 +110,7 @@ public class BaseMenu extends AbstractIdLongEntity {
      */
     private String menuDesc;
 
-    // 菜单可见
+	@Schema(description = "菜单是否显示")
     private Integer visible = 1;
 
     /**
@@ -113,14 +121,15 @@ public class BaseMenu extends AbstractIdLongEntity {
     /**
      * 是否缓存（0缓存 1不缓存）
      */
-    private int isCache;
+	@Schema(description = "路由缓冲")
+    private int keepAlive;
 
     /**
      * 子菜单
      */
 //    @TableField(exist = false)
     @Transient
-    private List<BaseMenu> children = new ArrayList<>();
+    private List<SysMenu> children = new ArrayList<>();
 
     /**
      * 获取路由名称
@@ -145,7 +154,7 @@ public class BaseMenu extends AbstractIdLongEntity {
         }
         // 非外链并且是一级目录（类型为目录）
         if (0L == getParentId() && UserConstants.TYPE_DIR.equals(getMenuType())
-                && UserConstants.INTEGRATE_MODE_NORMAL.equals(getIntegrateMode())) {
+                && UserConstants.INTEGRATE_MODE_NORMAL == getIntegrateMode()) {
             routerPath = "/" + this.path;
         }
         // 非外链并且是一级目录（类型为菜单）
@@ -174,14 +183,14 @@ public class BaseMenu extends AbstractIdLongEntity {
      * 是否为菜单内部跳转
      */
     public boolean isMenuFrame() {
-        return getParentId() == 0L && UserConstants.TYPE_MENU.equals(menuType) && integrateMode.equals(UserConstants.INTEGRATE_MODE_NORMAL);
+        return getParentId() == 0L && UserConstants.TYPE_MENU.equals(menuType) && integrateMode == UserConstants.INTEGRATE_MODE_NORMAL;
     }
 
     /**
      * 是否为内链组件
      */
     public boolean isInnerLink() {
-        return integrateMode.equals(UserConstants.INTEGRATE_MODE_NORMAL) && StringUtils.ishttp(path);
+        return integrateMode == UserConstants.INTEGRATE_MODE_NORMAL && StringUtils.ishttp(path);
     }
 
     /**
@@ -208,4 +217,12 @@ public class BaseMenu extends AbstractIdLongEntity {
     public void setId(Long id) {
         this.menuId = id;
     }
+
+	public List<SysMenu> getChildren() {
+		if(children == null) {
+			children = new ArrayList<>();
+		}
+		return children;
+	}
+
 }

@@ -19,13 +19,13 @@
 
 package com.rapidark.platform.system.api.dto;
 
+import com.rapidark.cloud.base.client.model.entity.SysUser;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-import com.rapidark.platform.system.api.entity.SysUser;
 
 /**
  * @author lengleng

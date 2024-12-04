@@ -16,10 +16,11 @@ import jakarta.persistence.*;
  */
 @Data
 @Entity
-@Table(name="base_user")
-public class BaseUser extends AbstractIdLongEntity {
+@Table(name="sys_user")
+@Schema(description = "用户")
+public class SysUser extends AbstractIdLongEntity {
 
-    private static final long serialVersionUID = -735161640894047414L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 系统用户ID
@@ -29,10 +30,14 @@ public class BaseUser extends AbstractIdLongEntity {
     @Schema(title = "userId")
     private Long userId;
 
+	@Schema(description = "用户所属部门id")
+	private Long deptId;
+
     /**
      * 登陆名
      */
-    private String userName;
+	@Schema(description = "用户名")
+    private String username;
 
     /**
      * 用户类型:super-超级管理员 normal-普通管理员
@@ -47,21 +52,28 @@ public class BaseUser extends AbstractIdLongEntity {
     /**
      * 昵称
      */
+	@Schema(description = "昵称")
     private String nickName;
+
+	@Schema(description = "姓名")
+	private String name;
 
     /**
      * 头像
      */
+	@Schema(description = "头像地址")
     private String avatar;
 
     /**
      * 邮箱
      */
+	@Schema(description = "邮箱")
     private String email;
 
     /**
      * 手机号
      */
+	@Schema(description = "手机号")
     private String mobile;
 
     /**

@@ -5,6 +5,7 @@ import com.rapidark.cloud.base.client.model.entity.GatewayIpLimitApi;
 import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.StringUtils;
 
 
@@ -40,7 +41,7 @@ public class GatewayIpLimitController {
      */
     @Schema(title = "获取分页接口列表", name = "获取分页接口列表")
     @GetMapping("/gateway/limit/ip")
-    public ResponseResult<Page<GatewayIpLimit>> getIpLimitListPage(@RequestParam(required = false) Map map, Pageable pageable) {
+    public ResponseResult<PageResult<GatewayIpLimit>> getIpLimitListPage(@RequestParam(required = false) Map map, Pageable pageable) {
         return ResponseResult.ok(gatewayIpLimitService.findListPage(new PageParams(map)));
     }
 

@@ -1,10 +1,10 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.cloud.base.client.model.entity.BaseRole;
-import com.rapidark.cloud.base.client.model.entity.BaseRoleUser;
+import com.rapidark.cloud.base.client.model.entity.SysRole;
+import com.rapidark.cloud.base.client.model.entity.SysUserRole;
 import com.rapidark.cloud.base.server.controller.cmd.AddRoleCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateRoleCommand;
-import com.rapidark.cloud.base.server.service.BaseRoleService;
+import com.rapidark.cloud.base.server.service.SysRoleService;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
@@ -15,7 +15,6 @@ import com.rapidark.framework.data.jpa.entity.Status;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -29,7 +28,7 @@ import java.util.Map;
 @RestController
 public class BaseRoleController {
     @Autowired
-    private BaseRoleService baseRoleService;
+    private SysRoleService sysRoleService;
 
     /**
      * 获取分页角色列表
@@ -38,8 +37,8 @@ public class BaseRoleController {
      */
     @Schema(title = "获取分页角色列表", name = "获取分页角色列表")
     @GetMapping("/role")
-    public ResponseResult<PageResult<BaseRole>> getRoleListPage(@RequestParam(required = false) Map map) {
-        return ResponseResult.ok(baseRoleService.findListPage(new PageParams(map)));
+    public ResponseResult<PageResult<SysRole>> getRoleListPage(@RequestParam(required = false) Map map) {
+        return ResponseResult.ok(sysRoleService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -49,8 +48,8 @@ public class BaseRoleController {
      */
     @Schema(title = "获取所有角色列表", name = "获取所有角色列表")
     @GetMapping("/role/all")
-    public ResponseResult<List<BaseRole>> getRoleAllList() {
-        return ResponseResult.ok(baseRoleService.findAllList());
+    public ResponseResult<List<SysRole>> getRoleAllList() {
+        return ResponseResult.ok(sysRoleService.findAllList());
     }
 
     /**
@@ -64,8 +63,8 @@ public class BaseRoleController {
 //            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "path")
 //    })
     @GetMapping("/role/{roleId}/info")
-    public ResponseResult<BaseRole> getRole(@PathVariable(value = "roleId") Long roleId) {
-        BaseRole result = baseRoleService.getRole(roleId);
+    public ResponseResult<SysRole> getRole(@PathVariable(value = "roleId") Long roleId) {
+        SysRole result = sysRoleService.getRole(roleId);
         return ResponseResult.ok(result);
     }
 
@@ -77,13 +76,13 @@ public class BaseRoleController {
     @Schema(title = "添加角色", name = "添加角色")
     @PostMapping("/role/add")
     public ResponseResult<Long> addRole(@RequestBody @Valid AddRoleCommand command) {
-        BaseRole role = new BaseRole();
+        SysRole role = new SysRole();
         role.setRoleCode(command.getRoleCode());
         role.setRoleName(command.getRoleName());
         role.setStatus(Status.codeOf(command.getStatus()));
         role.setRoleDesc(command.getRoleDesc());
         Long roleId = null;
-        BaseRole result = baseRoleService.addRole(role);
+        SysRole result = sysRoleService.addRole(role);
         if (result != null) {
             roleId = result.getRoleId();
         }
@@ -98,13 +97,13 @@ public class BaseRoleController {
     @Schema(title = "编辑角色", name = "编辑角色")
     @PostMapping("/role/update")
     public ResponseResult updateRole(@Valid @RequestBody UpdateRoleCommand command) {
-        BaseRole role = new BaseRole();
+        SysRole role = new SysRole();
         role.setRoleId(command.getRoleId());
         role.setRoleCode(command.getRoleCode());
         role.setRoleName(command.getRoleName());
         role.setStatus(Status.codeOf(command.getStatus()));
         role.setRoleDesc(command.getRoleDesc());
-        baseRoleService.updateRole(role);
+        sysRoleService.updateRole(role);
         return ResponseResult.ok();
     }
 
@@ -122,7 +121,7 @@ public class BaseRoleController {
     public ResponseResult removeRole(
             @RequestParam(value = "roleId") Long roleId
     ) {
-        baseRoleService.removeRole(roleId);
+        sysRoleService.removeRole(roleId);
         return ResponseResult.ok();
     }
 
@@ -139,7 +138,7 @@ public class BaseRoleController {
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam(value = "userIds", required = false) String userIds
     ) {
-        baseRoleService.saveRoleUsers(roleId, StringUtils.isNotBlank(userIds) ? userIds.split(",") : new String[]{});
+        sysRoleService.saveRoleUsers(roleId, StringUtils.isNotBlank(userIds) ? userIds.split(",") : new String[]{});
         return ResponseResult.ok();
     }
 
@@ -151,11 +150,11 @@ public class BaseRoleController {
      */
     @Schema(title = "查询角色成员", name = "查询角色成员")
     @GetMapping("/role/users")
-    public ResponseResult<List<BaseRoleUser>> getRoleUsers(@RequestParam(value = "roleId", required = false) String roleId,
-                                                           @RequestParam(value = "roleCode", required = false) String roleCode) {
+    public ResponseResult<List<SysUserRole>> getRoleUsers(@RequestParam(value = "roleId", required = false) String roleId,
+														  @RequestParam(value = "roleCode", required = false) String roleCode) {
         if (roleId == null && StringUtils.isEmpty(roleCode)) {
             return ResponseResult.failed("查询参数角色ID与角色编码不能同时为空");
         }
-        return ResponseResult.ok(baseRoleService.findRoleUsersByRoleIdOrRoleCode(roleId, roleCode));
+        return ResponseResult.ok(sysRoleService.findRoleUsersByRoleIdOrRoleCode(roleId, roleCode));
     }
 }

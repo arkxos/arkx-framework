@@ -42,7 +42,7 @@ import java.util.*;
 public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseAuthorityRepository> {
 
     @Autowired
-    private BaseAuthorityRoleRepository baseAuthorityRoleRepository;
+    private SysRoleAuthorityRepository sysRoleAuthorityRepository;
     @Autowired
     private BaseAuthorityUserRepository baseAuthorityUserRepository;
     @Autowired
@@ -52,22 +52,22 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
     @Autowired
     private BaseAuthorityActionRepository baseAuthorityActionRepository;
     @Autowired
-    private BaseMenuQuery baseMenuQuery;
+    private SysMenuQuery sysMenuQuery;
     @Autowired
     private BaseActionRepository baseActionRepository;
     @Autowired
     private BaseApiRepository baseApiRepository;
     @Autowired
-    private BaseRoleService baseRoleService;
+    private SysRoleService sysRoleService;
     @Autowired
-    private BaseUserRepository baseUserRepository;
+    private SysUserRepository sysUserRepository;
 
 //    @Autowired
 //    private RedisTokenStore redisTokenStore;
     @Autowired
     private OpenAppRepository openAppRepository;
     @Autowired
-    private BaseAuthorityRoleService baseAuthorityRoleService;
+    private SysRoleAuthorityService sysRoleAuthorityService;
     @Autowired
     private BaseAuthorityUserService baseAuthorityUserService;
 
@@ -104,7 +104,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
         }
         map.put("status", status);
         List<AuthorityMenu> authorities = entityRepository.selectAuthorityMenu(map);
-        authorities.sort(Comparator.comparing(BaseMenu::getPriority));
+        authorities.sort(Comparator.comparing(SysMenu::getPriority));
         return authorities;
     }
 
@@ -147,8 +147,8 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
             baseAuthority = new BaseAuthority();
         }
         if (ResourceType.menu.equals(resourceType)) {
-            BaseMenu menu = baseMenuQuery.getMenu(resourceId);
-            authority = OpenSecurityConstants.AUTHORITY_PREFIX_MENU + menu.getMenuCode();
+            SysMenu menu = sysMenuQuery.getMenu(resourceId);
+            authority = OpenSecurityConstants.AUTHORITY_PREFIX_MENU + menu.getCode();
             baseAuthority.setMenuId(resourceId);
             baseAuthority.setStatus(menu.getStatus());
         }
@@ -228,9 +228,9 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
             return false;
         }
 
-        BaseAuthorityRole roleQueryWrapper = new BaseAuthorityRole();
+        SysRoleAuthority roleQueryWrapper = new SysRoleAuthority();
         roleQueryWrapper.setAuthorityId(authority.getAuthorityId());
-        long roleGrantedCount = baseAuthorityRoleService.count(roleQueryWrapper);
+        long roleGrantedCount = sysRoleAuthorityService.count(roleQueryWrapper);
 
         BaseAuthorityUser userQueryWrapper = new BaseAuthorityUser();
         userQueryWrapper.setAuthorityId(authority.getAuthorityId());
@@ -297,20 +297,20 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
             return;
         }
         // 清空角色已有授权
-        QueryWrapper<BaseAuthorityRole> roleQueryWrapper = new QueryWrapper();
-        roleQueryWrapper.lambda().eq(BaseAuthorityRole::getRoleId, roleId);
-        baseAuthorityRoleRepository.deleteByRoleId(roleId);
-        BaseAuthorityRole authority = null;
+        QueryWrapper<SysRoleAuthority> roleQueryWrapper = new QueryWrapper();
+        roleQueryWrapper.lambda().eq(SysRoleAuthority::getRoleId, roleId);
+        sysRoleAuthorityRepository.deleteByRoleId(roleId);
+        SysRoleAuthority authority = null;
         if (authorityIds != null && authorityIds.length > 0) {
             for (String id : authorityIds) {
-                authority = new BaseAuthorityRole();
+                authority = new SysRoleAuthority();
                 authority.setAuthorityId(Long.valueOf(id));
                 authority.setRoleId(roleId);
                 authority.setExpireTime(expireTime);
                 authority.setCreateTime(LocalDateTime.now());
                 authority.setUpdateTime(authority.getCreateTime());
                 // 批量添加授权
-                baseAuthorityRoleRepository.save(authority);
+                sysRoleAuthorityRepository.save(authority);
             }
         }
     }
@@ -327,17 +327,17 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
         if (userId == null) {
             return;
         }
-        Optional<BaseUser> userOptional = baseUserRepository.findById(userId);
+        Optional<SysUser> userOptional = sysUserRepository.findById(userId);
 
         if (userOptional.isEmpty()) {
             return;
         }
-        BaseUser user = userOptional.get();
-        if (CommonConstants.ROOT.equals(user.getUserName())) {
+        SysUser user = userOptional.get();
+        if (CommonConstants.ROOT.equals(user.getUsername())) {
             throw new OpenAlertException("默认用户无需授权!");
         }
         // 获取用户角色列表
-        List<String> roleIds = baseRoleService.getUserRoleIds(userId);
+        List<String> roleIds = sysRoleService.getUserRoleIds(userId);
         // 清空用户已有授权
         // 清空角色已有授权
         QueryWrapper<BaseAuthorityUser> userQueryWrapper = new QueryWrapper();
@@ -470,7 +470,7 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
      * @return
      */
     public List<OpenAuthority> findAuthorityByRole(Long roleId) {
-        return baseAuthorityRoleRepository.selectAuthorityByRole(roleId);
+        return sysRoleAuthorityRepository.selectAuthorityByRole(roleId);
     }
 
     /**
@@ -499,9 +499,9 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
             return findAuthorityByType("1");
         }
         List<OpenAuthority> authorities = Lists.newArrayList();
-        List<BaseRole> rolesList = baseRoleService.getUserRoles(userId);
+        List<SysRole> rolesList = sysRoleService.getUserRoles(userId);
         if (rolesList != null) {
-            for (BaseRole role : rolesList) {
+            for (SysRole role : rolesList) {
                 // 加入角色已授权
                 List<OpenAuthority> roleGrantedAuthority = findAuthorityByRole(role.getRoleId());
                 if (roleGrantedAuthority != null && roleGrantedAuthority.size() > 0) {
@@ -539,11 +539,11 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
         }
         // 用户权限列表
         List<AuthorityMenu> authorities = Lists.newArrayList();
-        List<BaseRole> rolesList = baseRoleService.getUserRoles(userId);
+        List<SysRole> rolesList = sysRoleService.getUserRoles(userId);
         if (rolesList != null) {
-            for (BaseRole role : rolesList) {
+            for (SysRole role : rolesList) {
                 // 加入角色已授权
-                List<AuthorityMenu> roleGrantedAuthority = baseAuthorityRoleRepository.selectAuthorityMenuByRole(role.getRoleId(), serviceId);
+                List<AuthorityMenu> roleGrantedAuthority = sysRoleAuthorityRepository.selectAuthorityMenuByRole(role.getRoleId(), serviceId);
                 if (roleGrantedAuthority != null && roleGrantedAuthority.size() > 0) {
                     authorities.addAll(roleGrantedAuthority);
                 }
@@ -574,11 +574,11 @@ public class BaseAuthorityService extends BaseService<BaseAuthority, Long, BaseA
         if (roleIds == null || roleIds.length == 0) {
             throw new OpenException("roleIds is empty");
         }
-        CriteriaQueryWrapper<BaseAuthorityRole> roleQueryWrapper = new CriteriaQueryWrapper();
+        CriteriaQueryWrapper<SysRoleAuthority> roleQueryWrapper = new CriteriaQueryWrapper();
         roleQueryWrapper
-                .in(BaseAuthorityRole::getRoleId, Arrays.asList(roleIds))
-                .eq(BaseAuthorityRole::getAuthorityId, authorityId);
-        int count = baseAuthorityRoleService.findAllByCriteria(roleQueryWrapper).size();
+                .in(SysRoleAuthority::getRoleId, Arrays.asList(roleIds))
+                .eq(SysRoleAuthority::getAuthorityId, authorityId);
+        int count = sysRoleAuthorityService.findAllByCriteria(roleQueryWrapper).size();
         return count > 0;
     }
 

@@ -69,7 +69,7 @@ public interface ArkUserDetailsService extends UserDetailsService, Ordered {
 
 		// 构造security用户
 		return new ArkUser(user.getUserId(), user.getDeptId(), user.getUsername(),
-				SecurityConstants.BCRYPT + user.getPassword(), user.getPhone(), true, true, true,
+				SecurityConstants.BCRYPT + user.getPassword(), user.getMobile(), true, true, true,
 				StrUtil.equals(user.getLockFlag(), CommonConstants.STATUS_NORMAL), authorities);
 	}
 

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.repository;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.cloud.base.client.model.entity.BaseAuthorityRole;
+import com.rapidark.cloud.base.client.model.entity.SysRoleAuthority;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
@@ -14,7 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseAuthorityRoleRepository extends BaseRepository<BaseAuthorityRole, Long> {
+public interface SysRoleAuthorityRepository extends BaseRepository<SysRoleAuthority, Long> {
 
     /**
      * 获取角色已授权权限

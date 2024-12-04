@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.client.service;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.cloud.base.client.model.entity.BaseRole;
+import com.rapidark.cloud.base.client.model.entity.SysRole;
 import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +51,7 @@ public interface IBaseUserServiceClient {
      * @return
      */
     @GetMapping("/user/roles")
-    ResponseResult<List<BaseRole>> getUserRoles(@RequestParam(value = "userId") Long userId);
+    ResponseResult<List<SysRole>> getUserRoles(@RequestParam(value = "userId") Long userId);
 
     /**
      * 添加系统用户

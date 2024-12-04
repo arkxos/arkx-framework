@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.server.mapper;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.cloud.base.client.model.entity.BaseAuthorityRole;
+import com.rapidark.cloud.base.client.model.entity.SysRoleAuthority;
 import com.rapidark.framework.data.mybatis.mapper.SuperMapper;
 import com.rapidark.framework.common.security.OpenAuthority;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author liuyadu
  */
 @Repository
-public interface BaseAuthorityRoleMapper extends SuperMapper<BaseAuthorityRole> {
+public interface BaseAuthorityRoleMapper extends SuperMapper<SysRoleAuthority> {
     /**
      * 获取角色已授权权限
      *

@@ -1,16 +1,14 @@
 package com.rapidark.cloud.platform.admin.controller;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.cloud.base.client.model.entity.BaseMenu;
-import com.rapidark.cloud.base.client.model.entity.BaseUser;
+import com.rapidark.cloud.base.client.model.entity.SysMenu;
+import com.rapidark.cloud.base.client.model.entity.SysUser;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
-import com.rapidark.cloud.base.server.service.BaseMenuService;
-import com.rapidark.cloud.base.server.service.BaseUserService;
+import com.rapidark.cloud.base.server.service.SysMenuService;
+import com.rapidark.cloud.base.server.service.SysUserService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.platform.system.api.entity.SysMenu;
 import com.rapidark.platform.system.api.model.RouterVo;
 import com.rapidark.cloud.platform.admin.application.service.RouterService;
-import com.rapidark.cloud.platform.admin.service.SysMenuService;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
@@ -38,15 +36,15 @@ import java.util.*;
 @RestController
 public class CurrentUserController {
 
-	private final SysMenuService sysMenuService;
+	private final com.rapidark.cloud.platform.admin.service.SysMenuService sysMenuService;
 	private final RouterService routerService;
 
-	private final BaseUserService baseUserService;
+	private final SysUserService sysUserService;
 	private final BaseAuthorityService baseAuthorityService;
 	private final OpenAppService openAppService;
 	//    @Autowired
 //    private RedisTokenStore redisTokenStore;
-	private final BaseMenuService menuService;
+	private final SysMenuService menuService;
 
 	//	@Autowired
 //	private final PasswordEncoder passwordEncoder;
@@ -58,11 +56,11 @@ public class CurrentUserController {
 	@GetMapping("/current/user/routers")
 	public ResponseResult<List<RouterVo>> ueryCurrentUserMenu() {
 		// 获取符合条件的菜单
-		Set<SysMenu> all = new HashSet<>();
+		Set<com.rapidark.platform.system.api.entity.SysMenu> all = new HashSet<>();
 		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
 
-		List<SysMenu> menus = new ArrayList<>(all);
-		menus.sort(Comparator.comparingLong(SysMenu::getParentId).thenComparingInt(SysMenu::getSortOrder));
+		List<com.rapidark.platform.system.api.entity.SysMenu> menus = new ArrayList<>(all);
+		menus.sort(Comparator.comparingLong(com.rapidark.platform.system.api.entity.SysMenu::getParentId).thenComparingInt(com.rapidark.platform.system.api.entity.SysMenu::getSortOrder));
 
 		return ResponseResult.ok(routerService.buildRouters(menus));
 	}
@@ -90,7 +88,7 @@ public class CurrentUserController {
 //		if (passwordEncoder.matches(password, user.getPassword())) {
 //			throw new OpenAlertException("新密码与旧密码不能相同");
 //		}
-		baseUserService.updatePassword(user.getUserId(), password);
+		sysUserService.updatePassword(user.getUserId(), password);
 		return  ResponseResult.ok().msg("修改密码成功");
 	}
 
@@ -111,7 +109,7 @@ public class CurrentUserController {
 	) {
 		OpenUserDetails openUserDetails = OpenHelper.getUser();
 		Assert.notNull(openUserDetails, "登录过期，请重新登录");
-		BaseUser user = new BaseUser();
+		SysUser user = new SysUser();
 		user.setUserId(openUserDetails.getUserId());
 		user.setNickName(nickName);
 		if (userDesc != null && !"".equals(userDesc)) {
@@ -120,7 +118,7 @@ public class CurrentUserController {
 		if (avatar != null && !"".equals(avatar)) {
 			user.setAvatar(avatar);
 		}
-		baseUserService.updateUser(user);
+		sysUserService.updateUser(user);
 		openUserDetails.setNickName(nickName);
 		openUserDetails.setAvatar(avatar);
 //        OpenHelper.updateOpenUser(redisTokenStore, openUserDetails);
@@ -158,9 +156,9 @@ public class CurrentUserController {
 		List<AuthorityMenu> menus = baseAuthorityService.findAuthorityMenuByUser(
 				user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), "");
 
-		List<BaseMenu> baseMenus = new ArrayList<>();
+		List<SysMenu> sysMenus = new ArrayList<>();
 		for (AuthorityMenu menu : menus) {
-			baseMenus.add(menu);
+			sysMenus.add(menu);
 		}
 		List<RouterVo> routers = null;//menuService.buildRouters(baseMenus);
 		return ResponseResult.ok(routers);

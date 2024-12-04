@@ -4,6 +4,7 @@ package com.rapidark.cloud.base.client.model.entity;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import jakarta.persistence.Column;
@@ -20,8 +21,8 @@ import jakarta.persistence.Table;
  */
 @Data
 @Entity
-@Table(name="base_role")
-public class BaseRole extends AbstractIdLongEntity {
+@Table(name="sys_role")
+public class SysRole extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = 5197785628543375591L;
 
@@ -30,22 +31,18 @@ public class BaseRole extends AbstractIdLongEntity {
      */
     @Id
     @Column(name = "role_Id")
-    @Schema(title = "roleId")
+	@Schema(description = "角色编号")
     private Long roleId;
 
-    /**
-     * 角色编码
-     */
+	@NotBlank(message = "角色标识不能为空")
+	@Schema(description = "角色标识")
     private String roleCode;
 
-    /**
-     * 角色名称
-     */
+	@NotBlank(message = "角色名称不能为空")
+	@Schema(description = "角色名称")
     private String roleName;
 
-    /**
-     * 角色描述
-     */
+	@Schema(description = "角色描述")
     private String roleDesc;
 
     @Override

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.rapidark.cloud.base.client.model.entity.BaseMenu;
+import com.rapidark.cloud.base.client.model.entity.SysMenu;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthorityMenu extends BaseMenu implements Serializable {
+public class AuthorityMenu extends SysMenu implements Serializable {
 
     private static final long serialVersionUID = 3474271304324863160L;
     /**

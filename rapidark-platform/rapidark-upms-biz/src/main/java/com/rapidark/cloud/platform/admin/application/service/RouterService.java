@@ -33,7 +33,7 @@ public class RouterService {
 			if("1".equals(menu.getMenuType())) {
 				continue;// 按钮
 			}
-			String name = menu.getEnName() + menu.getMenuId();
+			String name = menu.getCode() + menu.getMenuId();
 			RouterVo router = new RouterVo();
 			router.setAppCode(menu.getAppCode());
 			router.setHidden("0".equals(menu.getVisible()));

@@ -21,7 +21,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rapidark.platform.system.api.entity.SysUser;
-import com.rapidark.cloud.platform.admin.mapper.SysUserMapper;
+import com.rapidark.cloud.platform.admin.mapper.SysUserRepository;
 import com.rapidark.cloud.platform.admin.service.SysMobileService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
@@ -50,7 +50,7 @@ public class SysMobileServiceImpl implements SysMobileService {
 
 	private final RedisTemplate redisTemplate;
 
-	private final SysUserMapper userMapper;
+	private final SysUserRepository userMapper;
 
 	/**
 	 * 发送手机验证码 TODO: 调用短信网关发送验证码,测试返回前端
@@ -60,7 +60,7 @@ public class SysMobileServiceImpl implements SysMobileService {
 	@Override
 	public ResponseResult<Boolean> sendSmsCode(String mobile) {
 		List<SysUser> userList = userMapper
-			.selectList(Wrappers.<SysUser>query().lambda().eq(SysUser::getPhone, mobile));
+			.selectList(Wrappers.<SysUser>query().lambda().eq(SysUser::getMobile, mobile));
 
 		if (CollUtil.isEmpty(userList)) {
 			log.info("手机号未注册:{}", mobile);

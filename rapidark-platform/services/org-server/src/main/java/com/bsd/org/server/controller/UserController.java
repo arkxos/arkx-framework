@@ -219,7 +219,7 @@ public class UserController {
 
         ResponseResult responseResult = baseUserServiceClient.addUser(command);
         if (!responseResult.isOk()) {
-            return ResponseResult.failed(responseResult.getMessage());
+            return ResponseResult.failed(responseResult.getMsg());
         }
         Long userId = Long.valueOf(String.valueOf(responseResult.getData()));
         if (userId == null) {

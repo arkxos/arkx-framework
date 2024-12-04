@@ -1,6 +1,7 @@
 package com.rapidark.cloud.base.client.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rapidark.framework.data.jpa.entity.AbstractIdLongEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,7 +21,7 @@ import jakarta.persistence.Table;
 @Data
 @Entity
 @Table(name="base_account")
-public class BaseAccount extends AbstractIdLongEntity {
+public class SysAccount extends AbstractIdLongEntity {
 
     private static final long serialVersionUID = -4484479600033295192L;
 
@@ -42,7 +43,12 @@ public class BaseAccount extends AbstractIdLongEntity {
     /**
      * 密码凭证：站内的保存密码、站外的不保存或保存token）
      */
+	@Schema(description = "密码")
     private String password;
+
+	@JsonIgnore
+	@Schema(description = "随机盐")
+	private String salt;
 
     /**
      * 登录类型:password-密码、mobile-手机号、email-邮箱、weixin-微信、weibo-微博、qq-等等
@@ -59,11 +65,41 @@ public class BaseAccount extends AbstractIdLongEntity {
      */
     private String domain;
 
-    public BaseAccount() {
+	/**
+	 * 微信openid
+	 */
+	@Schema(description = "微信openid")
+	private String wxOpenid;
+
+	/**
+	 * 微信小程序openId
+	 */
+	@Schema(description = "微信小程序openid")
+	private String miniOpenid;
+
+	/**
+	 * QQ openid
+	 */
+	@Schema(description = "QQ openid")
+	private String qqOpenid;
+
+	/**
+	 * 码云唯一标识
+	 */
+	@Schema(description = "码云唯一标识")
+	private String giteeLogin;
+
+	/**
+	 * 开源中国唯一标识
+	 */
+	@Schema(description = "开源中国唯一标识")
+	private String oscId;
+
+    public SysAccount() {
 
     }
 
-    public BaseAccount(Long userId, String account, String password, String accountType, String domain, String registerIp) {
+    public SysAccount(Long userId, String account, String password, String accountType, String domain, String registerIp) {
         this.userId = userId;
         this.account = account;
         this.password = password;

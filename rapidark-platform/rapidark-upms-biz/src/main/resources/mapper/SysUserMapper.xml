@@ -19,7 +19,7 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rapidark.cloud.platform.admin.mapper.SysUserMapper">
+<mapper namespace="com.rapidark.cloud.platform.admin.mapper.SysUserRepository">
     <!-- 通用查询映射结果 -->
     <resultMap id="baseResultMap" type="com.rapidark.platform.system.api.vo.UserVO">
         <id column="user_id" property="userId"/>
@@ -42,7 +42,7 @@
         <result column="name" property="name"/>
         <result column="email" property="email"/>
         <collection property="roleList" ofType="com.rapidark.platform.system.api.entity.SysRole"
-                    select="com.rapidark.cloud.platform.admin.mapper.SysRoleMapper.listRolesByUserId" column="user_id">
+					select="com.rapidark.cloud.platform.admin.mapper.SysRoleRepository.listRolesByUserId" column="user_id">
         </collection>
         <collection property="postList" ofType="com.rapidark.platform.system.api.entity.SysPost"
                     select="com.rapidark.cloud.platform.admin.mapper.SysPostMapper.listPostsByUserId" column="user_id">

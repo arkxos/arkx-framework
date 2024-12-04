@@ -85,17 +85,17 @@ public interface UserConstants {
     /**
      * 是否菜单外链（是）
      */
-    String INTEGRATE_MODE_FRAME = "1";
+	int INTEGRATE_MODE_FRAME = 1;
 
     /**
      * 是否菜单外链（否）
      */
-    String INTEGRATE_MODE_NORMAL = "0";
+    int INTEGRATE_MODE_NORMAL = 0;
 
     /**
      * 菜单正常状态
      */
-    String MENU_NORMAL = "0";
+	int MENU_NORMAL = 0;
 
     /**
      * 菜单停用状态

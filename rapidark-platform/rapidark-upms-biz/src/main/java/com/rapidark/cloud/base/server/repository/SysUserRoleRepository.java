@@ -1,11 +1,12 @@
 package com.rapidark.cloud.base.server.repository;
 
-import com.rapidark.cloud.base.client.model.entity.BaseRole;
-import com.rapidark.cloud.base.client.model.entity.BaseRoleUser;
+import com.rapidark.cloud.base.client.model.entity.SysRole;
+import com.rapidark.cloud.base.client.model.entity.SysUserRole;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/29 11:23
  */
-public interface BaseRoleUserRepository extends BaseRepository<BaseRoleUser, Long> {
+public interface SysUserRoleRepository extends BaseRepository<SysUserRole, Long> {
 
     /**
      * 查询系统用户角色
@@ -22,7 +23,7 @@ public interface BaseRoleUserRepository extends BaseRepository<BaseRoleUser, Lon
      * @return
      */
     @SqlToyQuery
-    List<BaseRole> selectRoleUserList(@Param("userId") Long userId);
+    List<SysRole> selectRoleUserList(@Param("userId") Long userId);
 
     /**
      * 查询用户角色ID列表
@@ -34,9 +35,11 @@ public interface BaseRoleUserRepository extends BaseRepository<BaseRoleUser, Lon
     List<String> selectRoleUserIdList(@Param("userId") Long userId);
 
     @SqlToyQuery
-    List<BaseRoleUser> queryByRoleId(@Param("roleId") Long roleId);
+    List<SysUserRole> queryByRoleId(@Param("roleId") Long roleId);
 
     void deleteByRoleId(@Param("roleId") Long roleId);
 
     void deleteByUserId(@Param("roleId") Long userId);
+
+	void deleteByUserIds(ArrayList<Long> list);
 }

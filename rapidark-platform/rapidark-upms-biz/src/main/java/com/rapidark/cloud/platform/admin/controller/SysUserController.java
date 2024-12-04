@@ -71,7 +71,7 @@ public class SysUserController {
 		SysUser user = userService.getOne(Wrappers.<SysUser>query()
 			.lambda()
 			.eq(StrUtil.isNotBlank(username), SysUser::getUsername, username)
-			.eq(StrUtil.isNotBlank(phone), SysUser::getPhone, phone));
+			.eq(StrUtil.isNotBlank(phone), SysUser::getMobile, phone));
 		if (user == null) {
 			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, username));
 		}

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.client.model;
 
 import com.google.common.collect.Lists;
-import com.rapidark.cloud.base.client.model.entity.BaseAccount;
+import com.rapidark.cloud.base.client.model.entity.SysAccount;
 import com.rapidark.framework.common.security.OpenAuthority;
 
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @date: 2018/11/12 11:35
  * @description:
  */
-public class UserAccount extends BaseAccount implements Serializable {
+public class UserAccount extends SysAccount implements Serializable {
     private static final long serialVersionUID = 6717800085953996702L;
 
     private Collection<Map> roles = Lists.newArrayList();

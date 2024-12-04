@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+
+    <!-- 查询当前网关路由服务下已注册的客户端 -->
+    <sql id="SysRoleRepository_selectRoleList">
+        <value>
+            <![CDATA[
+              SELECT * FROM base_role
+            ]]>
+        </value>
+    </sql>
+
+	<!-- 通过用户ID，查询角色信息-->
+	<sql id="SysRoleRepository_listRolesByUserId">
+		<value>
+			<![CDATA[
+              SELECT sys_role.role_id,
+			   sys_role.role_name,
+			   sys_role.role_code,
+			   sys_role.role_desc,
+			   sys_role.create_time,
+			   sys_role.update_time,
+			   sys_role.del_flag
+		FROM sys_role,
+			 sys_user_role
+		WHERE sys_role.role_id = sys_user_role.role_id
+		  AND sys_role.del_flag = '0'
+		  and sys_user_role.user_id = :userId
+            ]]>
+		</value>
+	</sql>
+
+</sqltoy>

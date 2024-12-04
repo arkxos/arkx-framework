@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.cloud.base.client.model.entity.BaseAccount;
+import com.rapidark.cloud.base.client.model.entity.SysAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.client.model.entity.BaseDeveloper;
 import com.rapidark.cloud.base.server.repository.BaseDeveloperRepository;
@@ -176,35 +176,35 @@ public class BaseDeveloperService extends BaseService<BaseDeveloper, Long, BaseD
         }
         // 第三方登录标识
         String loginType = parameterMap.get("login_type");
-        BaseAccount baseAccount = null;
+        SysAccount sysAccount = null;
         if (StringUtils.isNotBlank(loginType)) {
-            baseAccount = baseAccountService.getAccount(account, loginType, ACCOUNT_DOMAIN);
+            sysAccount = baseAccountService.getAccount(account, loginType, ACCOUNT_DOMAIN);
         } else {
             // 非第三方登录
 
             //用户名登录
-            baseAccount = baseAccountService.getAccount(account, BaseConstants.ACCOUNT_TYPE_USERNAME, ACCOUNT_DOMAIN);
+            sysAccount = baseAccountService.getAccount(account, BaseConstants.ACCOUNT_TYPE_USERNAME, ACCOUNT_DOMAIN);
 
             // 手机号登陆
             if (StringUtils.matchMobile(account)) {
-                baseAccount = baseAccountService.getAccount(account, BaseConstants.ACCOUNT_TYPE_MOBILE, ACCOUNT_DOMAIN);
+                sysAccount = baseAccountService.getAccount(account, BaseConstants.ACCOUNT_TYPE_MOBILE, ACCOUNT_DOMAIN);
             }
             // 邮箱登陆
             if (StringUtils.matchEmail(account)) {
-                baseAccount = baseAccountService.getAccount(account, BaseConstants.ACCOUNT_TYPE_EMAIL, ACCOUNT_DOMAIN);
+                sysAccount = baseAccountService.getAccount(account, BaseConstants.ACCOUNT_TYPE_EMAIL, ACCOUNT_DOMAIN);
             }
         }
         // 获取用户详细信息
-        if (baseAccount != null) {
+        if (sysAccount != null) {
             //添加登录日志
             try {
                 if (!StringUtils.isEmpty(ip)) {
                     BaseAccountLogs log = new BaseAccountLogs();
                     log.setDomain(ACCOUNT_DOMAIN);
-                    log.setUserId(baseAccount.getUserId());
-                    log.setAccount(baseAccount.getAccount());
-                    log.setAccountId(String.valueOf(baseAccount.getAccountId()));
-                    log.setAccountType(baseAccount.getAccountType());
+                    log.setUserId(sysAccount.getUserId());
+                    log.setAccount(sysAccount.getAccount());
+                    log.setAccountId(String.valueOf(sysAccount.getAccountId()));
+                    log.setAccountType(sysAccount.getAccountType());
                     log.setLoginIp(ip);
                     log.setLoginAgent(userAgent);
                     baseAccountService.addLoginLog(log);
@@ -215,7 +215,7 @@ public class BaseDeveloperService extends BaseService<BaseDeveloper, Long, BaseD
             // 用户权限信息
             // 复制账号信息
             UserAccount userAccount = new UserAccount();
-            BeanUtils.copyProperties(userAccount, baseAccount);
+            BeanUtils.copyProperties(userAccount, sysAccount);
             return userAccount;
         }
         return null;

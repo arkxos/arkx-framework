@@ -2,10 +2,10 @@ package com.rapidark.cloud.base.server.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.base.client.model.entity.BaseAccount;
+import com.rapidark.cloud.base.client.model.entity.SysAccount;
 import com.rapidark.cloud.base.client.model.entity.BaseAccountLogs;
 import com.rapidark.cloud.base.server.repository.BaseAccountLogsRepository;
-import com.rapidark.cloud.base.server.repository.BaseAccountRepository;
+import com.rapidark.cloud.base.server.repository.SysAccountRepository;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.data.jpa.entity.Status;
@@ -30,7 +30,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccountRepository> {
+public class BaseAccountService extends BaseService<SysAccount, Long, SysAccountRepository> {
 
 //    @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,7 +44,7 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @param accountId
      * @return
      */
-    public BaseAccount getAccountById(Long accountId) {
+    public SysAccount getAccountById(Long accountId) {
         return findById(accountId);
     }
 
@@ -56,8 +56,8 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @param domain
      * @return
      */
-    public BaseAccount getAccount(String account, String accountType, String domain) {
-        BaseAccount criteria = new BaseAccount();
+    public SysAccount getAccount(String account, String accountType, String domain) {
+        SysAccount criteria = new SysAccount();
         criteria.setAccount(account);
         criteria.setAccountType(accountType);
         criteria.setDomain(domain);
@@ -76,19 +76,19 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @param registerIp
      * @return
      */
-    public BaseAccount register(Long userId, String account, String password, String accountType, Status status, String domain, String registerIp) {
+    public SysAccount register(Long userId, String account, String password, String accountType, Status status, String domain, String registerIp) {
         if (isExist(account, accountType, domain)) {
             // 账号已被注册
             throw new RuntimeException(String.format("account=[%s],domain=[%s]", account, domain));
         }
         //加密
         String encodePassword = passwordEncoder.encode(password);
-        BaseAccount baseAccount = new BaseAccount(userId, account, encodePassword, accountType, domain, registerIp);
-        baseAccount.setCreateTime(LocalDateTime.now());
-        baseAccount.setUpdateTime(baseAccount.getCreateTime());
-        baseAccount.setStatus(status);
-        entityRepository.save(baseAccount);
-        return baseAccount;
+        SysAccount sysAccount = new SysAccount(userId, account, encodePassword, accountType, domain, registerIp);
+        sysAccount.setCreateTime(LocalDateTime.now());
+        sysAccount.setUpdateTime(sysAccount.getCreateTime());
+        sysAccount.setStatus(status);
+        entityRepository.save(sysAccount);
+        return sysAccount;
     }
 
 
@@ -101,12 +101,12 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @return
      */
     public Boolean isExist(String account, String accountType, String domain) {
-        QueryWrapper<BaseAccount> queryWrapper = new QueryWrapper();
+        QueryWrapper<SysAccount> queryWrapper = new QueryWrapper();
         queryWrapper.lambda()
-                .eq(BaseAccount::getAccount, account)
-                .eq(BaseAccount::getAccountType, accountType)
-                .eq(BaseAccount::getDomain, domain);
-        BaseAccount example = new BaseAccount();
+                .eq(SysAccount::getAccount, account)
+                .eq(SysAccount::getAccountType, accountType)
+                .eq(SysAccount::getDomain, domain);
+        SysAccount example = new SysAccount();
         example.setAccount(account);
         example.setAccountType(accountType);
         example.setDomain(domain);
@@ -132,10 +132,10 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @param status
      */
     public void updateStatus(Long accountId, Status status) {
-        BaseAccount baseAccount = findById(accountId);
-        baseAccount.setUpdateTime(LocalDateTime.now());
-        baseAccount.setStatus(status);
-        entityRepository.save(baseAccount);
+        SysAccount sysAccount = findById(accountId);
+        sysAccount.setUpdateTime(LocalDateTime.now());
+        sysAccount.setStatus(status);
+        entityRepository.save(sysAccount);
     }
 
     /**
@@ -149,14 +149,14 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
         if (status == null) {
             return;
         }
-        BaseAccount example = new BaseAccount();
+        SysAccount example = new SysAccount();
         example.setUserId(userId);
         example.setDomain(domain);
-        BaseAccount baseAccount = findOneByExample(example);
-        baseAccount.setUpdateTime(LocalDateTime.now());
-        baseAccount.setStatus(status);
+        SysAccount sysAccount = findOneByExample(example);
+        sysAccount.setUpdateTime(LocalDateTime.now());
+        sysAccount.setStatus(status);
 
-        entityRepository.save(baseAccount);
+        entityRepository.save(sysAccount);
     }
 
     /**
@@ -168,12 +168,12 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      */
     public void updatePasswordByUserId(Long userId, String domain, String password) {
 
-        CriteriaQueryWrapper<BaseAccount> criteria = new CriteriaQueryWrapper<>();
-        criteria.in(BaseAccount::getAccountType, BaseConstants.ACCOUNT_TYPE_USERNAME, BaseConstants.ACCOUNT_TYPE_EMAIL, BaseConstants.ACCOUNT_TYPE_MOBILE)
-                .eq(BaseAccount::getUserId, userId)
-                .eq(BaseAccount::getDomain, domain);
-        List<BaseAccount> data = findAllByCriteria(criteria);
-        for (BaseAccount entity : data) {
+        CriteriaQueryWrapper<SysAccount> criteria = new CriteriaQueryWrapper<>();
+        criteria.in(SysAccount::getAccountType, BaseConstants.ACCOUNT_TYPE_USERNAME, BaseConstants.ACCOUNT_TYPE_EMAIL, BaseConstants.ACCOUNT_TYPE_MOBILE)
+                .eq(SysAccount::getUserId, userId)
+                .eq(SysAccount::getDomain, domain);
+        List<SysAccount> data = findAllByCriteria(criteria);
+        for (SysAccount entity : data) {
             entity.setPassword(passwordEncoder.encode(password));
             entity.setUpdateTime(LocalDateTime.now());
             save(entity);
@@ -188,9 +188,9 @@ public class BaseAccountService extends BaseService<BaseAccount, Long, BaseAccou
      * @return
      */
     public void removeAccountByUserId(Long userId, String domain) {
-        CriteriaQueryWrapper<BaseAccount> wrapper = new CriteriaQueryWrapper();
-        wrapper.eq(BaseAccount::getUserId, userId)
-               .eq(BaseAccount::getDomain, domain);
+        CriteriaQueryWrapper<SysAccount> wrapper = new CriteriaQueryWrapper();
+        wrapper.eq(SysAccount::getUserId, userId)
+               .eq(SysAccount::getDomain, domain);
 
         deleteByCriteria(wrapper);
     }

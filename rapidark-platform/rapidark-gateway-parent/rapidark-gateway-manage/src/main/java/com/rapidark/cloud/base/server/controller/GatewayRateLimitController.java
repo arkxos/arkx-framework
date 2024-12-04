@@ -5,6 +5,7 @@ import com.rapidark.cloud.base.client.model.entity.GatewayRateLimitApi;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.StringUtils;
 
 
@@ -39,7 +40,7 @@ public class GatewayRateLimitController {
      */
     @Schema(title = "获取分页接口列表", name = "获取分页接口列表")
     @GetMapping("/gateway/limit/rate")
-    public ResponseResult<Page<GatewayRateLimit>> getRateLimitListPage(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<GatewayRateLimit>> getRateLimitListPage(@RequestParam(required = false) Map map) {
         return ResponseResult.ok(gatewayRateLimitService.findListPage(new PageParams(map)));
     }
 

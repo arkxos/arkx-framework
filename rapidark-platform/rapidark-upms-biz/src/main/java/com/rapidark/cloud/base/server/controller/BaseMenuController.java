@@ -4,12 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
 
-import com.rapidark.cloud.base.client.model.entity.BaseMenu;
+import com.rapidark.cloud.base.client.model.entity.SysMenu;
 import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.rapidark.cloud.base.server.service.BaseActionService;
-import com.rapidark.cloud.base.server.service.BaseMenuQuery;
-import com.rapidark.cloud.base.server.service.BaseMenuService;
+import com.rapidark.cloud.base.server.service.SysMenuQuery;
+import com.rapidark.cloud.base.server.service.SysMenuService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
@@ -39,9 +39,9 @@ import java.util.Map;
 public class BaseMenuController {
 
     @Autowired
-    private BaseMenuService baseResourceMenuService;
+    private SysMenuService baseResourceMenuService;
     @Autowired
-    private BaseMenuQuery baseMenuQuery;
+    private SysMenuQuery sysMenuQuery;
 
     @Autowired
     private BaseActionService baseResourceOperationService;
@@ -82,7 +82,7 @@ public class BaseMenuController {
      */
     @Schema(title = "获取分页菜单资源列表", name = "获取分页菜单资源列表")
     @GetMapping("/menu")
-    public ResponseResult<PageResult<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<SysMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
         return ResponseResult.ok(baseResourceMenuService.findListPage(new PageParams(map)));
     }
 
@@ -93,7 +93,7 @@ public class BaseMenuController {
      */
     @Schema(title = "菜单所有资源列表", name = "菜单所有资源列表")
     @GetMapping("/menu/all")
-    public ResponseResult<List<BaseMenu>> getMenuAllList() {
+    public ResponseResult<List<SysMenu>> getMenuAllList() {
         return ResponseResult.ok(baseResourceMenuService.findAllList());
     }
 
@@ -124,8 +124,8 @@ public class BaseMenuController {
 //            @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
 //    })
     @GetMapping("/menu/{menuId}/info")
-    public ResponseResult<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
-        return ResponseResult.ok(baseMenuQuery.getMenu(menuId));
+    public ResponseResult<SysMenu> getMenu(@PathVariable("menuId") Long menuId) {
+        return ResponseResult.ok(sysMenuQuery.getMenu(menuId));
     }
 
     /**
@@ -136,9 +136,9 @@ public class BaseMenuController {
     @Schema(title = "添加菜单资源", name = "添加菜单资源")
     @PostMapping("/menu/add")
     public ResponseResult<Long> addMenu(@RequestBody CreateMenuCommand command) {
-        BaseMenu menu = new BaseMenu();
-        menu.setMenuCode(command.getMenuCode());
-        menu.setMenuName(command.getMenuName());
+        SysMenu menu = new SysMenu();
+        menu.setCode(command.getMenuCode());
+        menu.setName(command.getMenuName());
         menu.setIcon(command.getIcon());
         menu.setPath(command.getPath());
         menu.setComponent(command.getComponent());
@@ -151,7 +151,7 @@ public class BaseMenuController {
         menu.setMenuDesc(command.getMenuDesc());
         menu.setServiceId(command.getServiceId());
         Long menuId = null;
-        BaseMenu result = baseResourceMenuService.addMenu(menu);
+        SysMenu result = baseResourceMenuService.addMenu(menu);
         if (result != null) {
             menuId = result.getMenuId();
         }
@@ -166,10 +166,10 @@ public class BaseMenuController {
     @Schema(title = "编辑菜单资源", name = "编辑菜单资源")
     @PostMapping("/menu/update")
     public ResponseResult updateMenu(@RequestBody @Valid UpdateMenuCommand command) {
-        BaseMenu menu = new BaseMenu();
+        SysMenu menu = new SysMenu();
         menu.setMenuId(command.getMenuId());
-        menu.setMenuCode(command.getMenuCode());
-        menu.setMenuName(command.getMenuName());
+        menu.setCode(command.getMenuCode());
+        menu.setName(command.getMenuName());
         menu.setIcon(command.getIcon());
         menu.setPath(command.getPath());
         menu.setComponent(command.getComponent());
