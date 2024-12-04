@@ -11,7 +11,7 @@ import com.bsd.payment.server.service.IPayChannelService;
 import com.bsd.payment.server.service.ITransOrderService;
 import com.bsd.payment.server.service.mq.MqService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.WebUtils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -64,21 +64,21 @@ public class TransOrderController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
 //    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResultBody<IPage<TransOrder>> list(@RequestParam(value = "transOrderId", required = false) String transOrderId,
-                                              @RequestParam(value = "mchId", required = false) String mchId,
-                                              @RequestParam(value = "mchTransNo", required = false) String mchTransNo,
-                                              @RequestParam(value = "channelCode", required = false) String channelCode,
-                                              @RequestParam(value = "status", required = false) String status,
-                                              @RequestParam(value = "channelUser", required = false) String channelUser,
-                                              @RequestParam(value = "userName", required = false) String userName,
-                                              @RequestParam(value = "channelMchId", required = false) String channelMchId,
-                                              @RequestParam(value = "channelOrderNo", required = false) String channelOrderNo,
-                                              @RequestParam(value = "transSuccTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date transSuccTimeStart,
-                                              @RequestParam(value = "transSuccTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date transSuccTimeEnd,
-                                              @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeStart,
-                                              @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeEnd,
-                                              @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+    public ResponseResult<IPage<TransOrder>> list(@RequestParam(value = "transOrderId", required = false) String transOrderId,
+                                                  @RequestParam(value = "mchId", required = false) String mchId,
+                                                  @RequestParam(value = "mchTransNo", required = false) String mchTransNo,
+                                                  @RequestParam(value = "channelCode", required = false) String channelCode,
+                                                  @RequestParam(value = "status", required = false) String status,
+                                                  @RequestParam(value = "channelUser", required = false) String channelUser,
+                                                  @RequestParam(value = "userName", required = false) String userName,
+                                                  @RequestParam(value = "channelMchId", required = false) String channelMchId,
+                                                  @RequestParam(value = "channelOrderNo", required = false) String channelOrderNo,
+                                                  @RequestParam(value = "transSuccTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date transSuccTimeStart,
+                                                  @RequestParam(value = "transSuccTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date transSuccTimeEnd,
+                                                  @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeStart,
+                                                  @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeEnd,
+                                                  @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                                                  @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         HashMap<String, Object> map = new HashMap<>();
         if (ObjectUtils.isNotEmpty(transOrderId)) {
             map.put("transOrderId", transOrderId);
@@ -123,17 +123,17 @@ public class TransOrderController {
         map.put("limit", pageSize);
 
 
-        return ResultBody.ok(transOrderService.findListPage(new PageParams(map)));
+        return ResponseResult.ok(transOrderService.findListPage(new PageParams(map)));
     }
 
     @Schema(title = "转账订单详情", name ="点击查看详情进入详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ResultBody<TransOrder> detail(@RequestParam String transOrderId) {
+    public ResponseResult<TransOrder> detail(@RequestParam String transOrderId) {
         TransOrder transOrder = transOrderService.findTransOrder(transOrderId);
         if (transOrder == null) {
-            return ResultBody.failed("未查找到ID为" + transOrderId + "的转账订单信息");
+            return ResponseResult.failed("未查找到ID为" + transOrderId + "的转账订单信息");
         }
-        return ResultBody.ok(transOrder);
+        return ResponseResult.ok(transOrder);
     }
 
     @Schema(title = "发起转账", name ="发起转账")
@@ -155,25 +155,25 @@ public class TransOrderController {
 //            @ApiImplicitParam(name = "sign", value = "签名", required = true, paramType = "form")
 //    })
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResultBody create(@RequestParam(value = "mchId") String mchId,
-                             @RequestParam(value = "mchTransNo") String mchTransNo,
-                             @RequestParam(value = "channelCode") String channelCode,
-                             @RequestParam(value = "amount") Long amount,
-                             @RequestParam(value = "currency", required = false, defaultValue = "") String currency,
-                             @RequestParam(value = "clientIp", required = false, defaultValue = "") String clientIp,
-                             @RequestParam(value = "device", required = false, defaultValue = "") String device,
-                             @RequestParam(value = "extra", required = false, defaultValue = "") String extra,
-                             @RequestParam(value = "param1", required = false, defaultValue = "") String param1,
-                             @RequestParam(value = "param2", required = false, defaultValue = "") String param2,
-                             @RequestParam(value = "notifyUrl", required = false, defaultValue = "") String notifyUrl,
-                             @RequestParam(value = "channelUser") String channelUser,
-                             @RequestParam(value = "userName") String userName,
-                             @RequestParam(value = "remarkInfo") String remarkInfo,
-                             @RequestParam(value = "sign") String sign,
-                             HttpServletRequest request) {
+    public ResponseResult create(@RequestParam(value = "mchId") String mchId,
+                                 @RequestParam(value = "mchTransNo") String mchTransNo,
+                                 @RequestParam(value = "channelCode") String channelCode,
+                                 @RequestParam(value = "amount") Long amount,
+                                 @RequestParam(value = "currency", required = false, defaultValue = "") String currency,
+                                 @RequestParam(value = "clientIp", required = false, defaultValue = "") String clientIp,
+                                 @RequestParam(value = "device", required = false, defaultValue = "") String device,
+                                 @RequestParam(value = "extra", required = false, defaultValue = "") String extra,
+                                 @RequestParam(value = "param1", required = false, defaultValue = "") String param1,
+                                 @RequestParam(value = "param2", required = false, defaultValue = "") String param2,
+                                 @RequestParam(value = "notifyUrl", required = false, defaultValue = "") String notifyUrl,
+                                 @RequestParam(value = "channelUser") String channelUser,
+                                 @RequestParam(value = "userName") String userName,
+                                 @RequestParam(value = "remarkInfo") String remarkInfo,
+                                 @RequestParam(value = "sign") String sign,
+                                 HttpServletRequest request) {
         JSONObject payChannel = payChannelService.getByMchIdAndChannelCode(mchId, channelCode);
         if (payChannel == null) {
-            return ResultBody.failed("找不到支付渠道");
+            return ResponseResult.failed("找不到支付渠道");
         }
 
         //创建转账订单
@@ -202,9 +202,9 @@ public class TransOrderController {
             simpleTransDTO.setTransOrderId(transOrder.getTransOrderId());
             //发送异步转账消息
             rabbitMq4TransServiceImpl.send(JSON.toJSONString(simpleTransDTO));
-            return ResultBody.ok(transOrder);
+            return ResponseResult.ok(transOrder);
         } else {
-            return ResultBody.failed("发起转账失败");
+            return ResponseResult.failed("发起转账失败");
         }
     }
 
@@ -213,10 +213,10 @@ public class TransOrderController {
 //            @ApiImplicitParam(name = "transOrderId", value = "转账订单号", required = true, paramType = "form"),
 //    })
     @GetMapping(value = "/query")
-    public ResultBody query(@RequestParam(value = "transOrderId") String transOrderId) {
+    public ResponseResult query(@RequestParam(value = "transOrderId") String transOrderId) {
         //查询转账订单结果
         QueryTransResultDTO queryTransResultDTO = transOrderService.queryTransOrderResult(transOrderId);
         //返回转账订单结果
-        return ResultBody.ok(queryTransResultDTO);
+        return ResponseResult.ok(queryTransResultDTO);
     }
 }

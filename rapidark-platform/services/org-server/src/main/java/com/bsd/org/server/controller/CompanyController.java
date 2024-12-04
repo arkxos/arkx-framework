@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bsd.org.server.model.entity.Company;
 import com.bsd.org.server.model.vo.CompanyMenuVO;
 import com.bsd.org.server.service.CompanyService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.framework.common.utils.StringUtils;
@@ -54,14 +54,14 @@ public class CompanyController {
 //            @ApiImplicitParam(name = "pageIndex", value = "页码", paramType = "form"),
 //            @ApiImplicitParam(name = "pageSize", value = "每页条数", paramType = "form")
 //    })
-    public ResultBody page(Long companyId,
-                           @RequestParam(value = "companyName", required = false) String companyName,
-                           @RequestParam(value = "companyNameEn", required = false) String companyNameEn,
-                           @RequestParam(value = "natureId", required = false) Integer natureId,
-                           @RequestParam(value = "industryId", required = false) Integer industryId,
-                           @RequestParam(value = "areaId", required = false) Integer areaId,
-                           @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                           @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
+    public ResponseResult page(Long companyId,
+                               @RequestParam(value = "companyName", required = false) String companyName,
+                               @RequestParam(value = "companyNameEn", required = false) String companyNameEn,
+                               @RequestParam(value = "natureId", required = false) Integer natureId,
+                               @RequestParam(value = "industryId", required = false) Integer industryId,
+                               @RequestParam(value = "areaId", required = false) Integer areaId,
+                               @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
         //企业信息查询条件
         Company queryCompany = new Company();
         queryCompany.setCompanyId(companyId);
@@ -72,7 +72,7 @@ public class CompanyController {
         queryCompany.setAreaId(areaId);
         //查询分页数据
         IPage<Company> pageData = companyService.page(new Page<Company>(pageIndex, pageSize), Wrappers.<Company>query(queryCompany));
-        return ResultBody.ok(pageData);
+        return ResponseResult.ok(pageData);
     }
 
 
@@ -87,9 +87,9 @@ public class CompanyController {
     @Schema(title = "获取所有企业信息", name = "获取所有企业信息数据")
     @GetMapping(value = "/findAll")
 //    @ApiImplicitParams(value = {})
-    public ResultBody findAll() {
+    public ResponseResult findAll() {
         List<Company> companys = companyService.list();
-        return ResultBody.ok(companys);
+        return ResponseResult.ok(companys);
     }
 
 
@@ -98,12 +98,12 @@ public class CompanyController {
      */
     @Schema(title = "查找企业信息", name = "根据ID查找企业信息")
     @GetMapping("/get")
-    public ResultBody get(@RequestParam(value = "companyId") Long companyId) {
+    public ResponseResult get(@RequestParam(value = "companyId") Long companyId) {
         Company company = companyService.getById(companyId);
         if (company == null) {
-            return ResultBody.failed("未查找到ID为" + companyId + "的企业信息");
+            return ResponseResult.failed("未查找到ID为" + companyId + "的企业信息");
         }
-        return ResultBody.ok(company);
+        return ResponseResult.ok(company);
     }
 
 
@@ -133,7 +133,7 @@ public class CompanyController {
 //            @ApiImplicitParam(name = "logo", required = false, value = "企业Logo", example = "http://www.bsd.com/logo", paramType = "form"),
 //    })
     @PostMapping("/add")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "companyName") String companyName,
             @RequestParam(value = "companyNameEn", required = false) String companyNameEn,
             @RequestParam(value = "natureId", required = false) Integer natureId,
@@ -165,7 +165,7 @@ public class CompanyController {
         company.setProfile(profile);
         company.setContact(contact);
         if (!StringUtils.matchMobile(phone)) {
-            return ResultBody.failed("号码格式错误");
+            return ResponseResult.failed("号码格式错误");
         }
         company.setPhone(phone);
         company.setFax(fax);
@@ -177,11 +177,11 @@ public class CompanyController {
         company.setCreateBy(openUserDetails.getUserId()+"");
         boolean isSuc = companyService.save(company);
         if (!isSuc) {
-            return ResultBody.failed("添加企业信息失败");
+            return ResponseResult.failed("添加企业信息失败");
         }
         //删除菜单缓存信息
         companyService.removeMeunCache();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -212,7 +212,7 @@ public class CompanyController {
 //            @ApiImplicitParam(name = "logo", required = false, value = "企业Logo", example = "http://www.bsd.com/logo", paramType = "form")
 //    })
     @PostMapping("/update")
-    public ResultBody update(
+    public ResponseResult update(
             @RequestParam(value = "companyId") Long companyId,
             @RequestParam(value = "companyName") String companyName,
             @RequestParam(value = "companyNameEn", required = false) String companyNameEn,
@@ -234,7 +234,7 @@ public class CompanyController {
     ) {
         Company dbCompany = companyService.getById(companyId);
         if (dbCompany == null) {
-            return ResultBody.failed("企业信息不存在");
+            return ResponseResult.failed("企业信息不存在");
         }
         Company company = new Company();
         company.setCompanyId(companyId);
@@ -250,7 +250,7 @@ public class CompanyController {
         company.setProfile(profile);
         company.setContact(contact);
         if (!StringUtils.matchMobile(phone)) {
-            return ResultBody.failed("号码格式错误");
+            return ResponseResult.failed("号码格式错误");
         }
         company.setPhone(phone);
         company.setFax(fax);
@@ -263,19 +263,19 @@ public class CompanyController {
         company.setUpdateBy(openUserDetails.getUserId()+"");
         boolean isSuc = companyService.updateById(company);
         if (!isSuc) {
-            return ResultBody.failed("更新数据失败");
+            return ResponseResult.failed("更新数据失败");
         }
         //删除菜单缓存信息
         companyService.removeMeunCache();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
     @Schema(title = "获取公司部门菜单信息", name = "获取公司部门菜单信息")
     @GetMapping("/get/menu")
-    public ResultBody<List<CompanyMenuVO>> getMenu() {
+    public ResponseResult<List<CompanyMenuVO>> getMenu() {
         List<CompanyMenuVO> menus = companyService.getAllCompanyMenu();
-        return ResultBody.ok(menus);
+        return ResponseResult.ok(menus);
     }
 
 

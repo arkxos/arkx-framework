@@ -17,7 +17,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EntPayService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,7 @@ public class WxPayChannelServiceImpl implements IPayService {
      * @param transOrder
      */
     @Override
-    public ResultBody doTransReq(TransOrder transOrder, String configStr) {
+    public ResponseResult doTransReq(TransOrder transOrder, String configStr) {
         TransResultDTO transResultDTO = new TransResultDTO();
         //获取微信配置信息
         WxPayConfig wxPayConfig = WxPayUtil.getWxPayConfig(configStr, "", wxPayProperties.getCertRootPath(), wxPayProperties.getNotifyUrl());
@@ -64,7 +64,7 @@ public class WxPayChannelServiceImpl implements IPayService {
                 transResultDTO.setChannelOrderNo(result.getPaymentNo());//微信付款单号
                 transResultDTO.setTransSuccTime(DateUtil.getTextDate(result.getPaymentTime(), "yyyy-MM-dd HH:mm:ss"));
                 transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_SUCCESS);
-                return ResultBody.ok(transResultDTO);
+                return ResponseResult.ok(transResultDTO);
             } else if ("FAIL".equals(resultCode)) {
                 transResultDTO.setChannelErrCode(result.getErrCode());
                 transResultDTO.setChannelErrMsg(result.getErrCodeDes());
@@ -86,7 +86,7 @@ public class WxPayChannelServiceImpl implements IPayService {
             transResultDTO.setChannelErrMsg(StrUtil.substr("微信转账请求异常:" + e.getMessage(), PayConstant.TRANS_ERROR_INFO_MAX_SIZE));
             transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_FAIL);
         }
-        return ResultBody.failed(transResultDTO);
+        return ResponseResult.failed(transResultDTO);
     }
 
     /**
@@ -134,7 +134,7 @@ public class WxPayChannelServiceImpl implements IPayService {
      * @return
      */
     @Override
-    public ResultBody getTransReq(TransOrder transOrder, String configStr) {
+    public ResponseResult getTransReq(TransOrder transOrder, String configStr) {
         TransResultDTO transResultDTO = new TransResultDTO();
         //获取微信配置信息
         WxPayConfig wxPayConfig = WxPayUtil.getWxPayConfig(configStr, "", wxPayProperties.getCertRootPath(), wxPayProperties.getNotifyUrl());
@@ -158,7 +158,7 @@ public class WxPayChannelServiceImpl implements IPayService {
                     transResultDTO.setChannelOrderNo(entPayQueryResult.getDetailId());//微信付款单号
                     transResultDTO.setTransSuccTime(DateUtil.getTextDate(entPayQueryResult.getPaymentTime(), "yyyy-MM-dd HH:mm:ss"));
                     transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_SUCCESS);
-                    return ResultBody.ok(transResultDTO);
+                    return ResponseResult.ok(transResultDTO);
                 } else if ("PROCESSING".equals(status)) {
                     //处理中
                     transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_TRANING);
@@ -185,6 +185,6 @@ public class WxPayChannelServiceImpl implements IPayService {
             transResultDTO.setChannelErrMsg(StrUtil.substr("微信转账查询请求异常:" + e.getMessage(), PayConstant.TRANS_ERROR_INFO_MAX_SIZE));
             transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_FAIL);
         }
-        return ResultBody.failed(transResultDTO);
+        return ResponseResult.failed(transResultDTO);
     }
 }

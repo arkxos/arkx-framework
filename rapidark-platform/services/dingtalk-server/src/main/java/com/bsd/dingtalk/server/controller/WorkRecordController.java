@@ -13,7 +13,7 @@ import com.dingtalk.api.request.OapiWorkrecordUpdateRequest;
 import com.dingtalk.api.response.OapiWorkrecordAddResponse;
 import com.dingtalk.api.response.OapiWorkrecordGetbyuseridResponse;
 import com.dingtalk.api.response.OapiWorkrecordUpdateResponse;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class WorkRecordController {
     @Schema(title = "发起待办事项", name = "发起待办事项")
     @RequestMapping(value = "/workrecord/start", method = RequestMethod.POST)
     @ResponseBody
-    public ResultBody startWorkRecord() {
+    public ResponseResult startWorkRecord() {
         try {
             String userId = "manager7078";
             DingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_ADD_WORK_RECORD);
@@ -75,14 +75,14 @@ public class WorkRecordController {
 
             int errorCode = Integer.valueOf(rsp.getErrorCode());
             if (errorCode != 0) {
-                return ResultBody.failed().code(errorCode).msg(rsp.getErrmsg());
+                return ResponseResult.failed().code(errorCode).msg(rsp.getErrmsg());
             }
             localCache.put(id, rsp.getRecordId());
-            return ResultBody.ok(rsp.getRecordId());
+            return ResponseResult.ok(rsp.getRecordId());
         } catch (Exception e) {
             String errLog = LogFormatter.getKVLogData(LogFormatter.LogEvent.END, "startWorkRecord fail");
             log.info(errLog, e);
-            return ResultBody.failed().code(-1).msg("系统繁忙");
+            return ResponseResult.failed().code(-1).msg("系统繁忙");
         }
     }
 
@@ -125,7 +125,7 @@ public class WorkRecordController {
     @Schema(title = "获取待办事项", name = "获取待办事项")
     @RequestMapping(value = "/workrecord/get/{userid}", method = RequestMethod.GET)
     @ResponseBody
-    public ResultBody getWorkRecordByUserId(@PathVariable String userid) {
+    public ResponseResult getWorkRecordByUserId(@PathVariable String userid) {
         try {
             DingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_GET_WORK_RECORD_BY_USER_ID);
             OapiWorkrecordGetbyuseridRequest req = new OapiWorkrecordGetbyuseridRequest();
@@ -136,9 +136,9 @@ public class WorkRecordController {
             OapiWorkrecordGetbyuseridResponse rsp = client.execute(req, AccessTokenUtil.getToken(dingtalkProperties.getAppkey(), dingtalkProperties.getAppsecret()));
             System.out.println(rsp.getBody());
 
-            return ResultBody.ok(rsp.getRecords());
+            return ResponseResult.ok(rsp.getRecords());
         } catch (Exception e) {
-            return ResultBody.failed().code(-1).msg("系统繁忙");
+            return ResponseResult.failed().code(-1).msg("系统繁忙");
         }
     }
 }

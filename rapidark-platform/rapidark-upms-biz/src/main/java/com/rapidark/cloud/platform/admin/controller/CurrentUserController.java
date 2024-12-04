@@ -11,18 +11,15 @@ import com.rapidark.cloud.platform.admin.api.entity.SysMenu;
 import com.rapidark.cloud.platform.admin.application.model.RouterVo;
 import com.rapidark.cloud.platform.admin.application.service.RouterService;
 import com.rapidark.cloud.platform.admin.service.SysMenuService;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.framework.common.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,7 +56,7 @@ public class CurrentUserController {
 	 * @return 当前用户的树形菜单
 	 */
 	@GetMapping("/current/user/routers")
-	public ResponseResult<List<RouterVo>> ueryCurrentUserMenu() {
+	public com.rapidark.cloud.platform.common.core.util.ResponseResult<List<RouterVo>> ueryCurrentUserMenu() {
 		// 获取符合条件的菜单
 		Set<SysMenu> all = new HashSet<>();
 		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
@@ -67,7 +64,7 @@ public class CurrentUserController {
 		List<SysMenu> menus = new ArrayList<>(all);
 		menus.sort(Comparator.comparingLong(SysMenu::getParentId).thenComparingInt(SysMenu::getSortOrder));
 
-		return ResponseResult.ok(routerService.buildRouters(menus));
+		return com.rapidark.cloud.platform.common.core.util.ResponseResult.ok(routerService.buildRouters(menus));
 	}
 
 	/**
@@ -77,7 +74,7 @@ public class CurrentUserController {
 	 */
 	@Schema(title = "修改当前登录用户密码", name = "修改当前登录用户密码")
 	@PostMapping("/current/user/rest/password")
-	public ResultBody restPassword(
+	public ResponseResult restPassword(
 			@RequestParam(value = "oldPassword") String oldPassword,
 			@RequestParam(value = "password") String password,
 			@RequestParam(value = "confirmPassword") String confirmPassword
@@ -94,7 +91,7 @@ public class CurrentUserController {
 //			throw new OpenAlertException("新密码与旧密码不能相同");
 //		}
 		baseUserService.updatePassword(user.getUserId(), password);
-		return  ResultBody.ok().msg("修改密码成功");
+		return  ResponseResult.ok().msg("修改密码成功");
 	}
 
 	/**
@@ -107,7 +104,7 @@ public class CurrentUserController {
 	 */
 	@Schema(title = "修改当前登录用户基本信息", name = "修改当前登录用户基本信息")
 	@PostMapping("/current/user/update")
-	public ResultBody updateUserInfo(
+	public ResponseResult updateUserInfo(
 			@RequestParam(value = "nickName") String nickName,
 			@RequestParam(value = "userDesc", required = false) String userDesc,
 			@RequestParam(value = "avatar", required = false) String avatar
@@ -127,7 +124,7 @@ public class CurrentUserController {
 		openUserDetails.setNickName(nickName);
 		openUserDetails.setAvatar(avatar);
 //        OpenHelper.updateOpenUser(redisTokenStore, openUserDetails);
-		return ResultBody.ok();
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -137,7 +134,7 @@ public class CurrentUserController {
 	 */
 	@Schema(title = "获取当前登录用户已分配菜单权限", name = "获取当前登录用户已分配菜单权限")
 	@GetMapping("/current/user/menu")
-	public ResultBody<List<AuthorityMenu>> findAuthorityMenu(@RequestParam(value = "serviceId", required = false) String serviceId) {
+	public ResponseResult<List<AuthorityMenu>> findAuthorityMenu(@RequestParam(value = "serviceId", required = false) String serviceId) {
 		OpenUserDetails user = OpenHelper.getUser();
 		Assert.notNull(user, "登录过期，请重新登录");
 		if (StringUtils.isEmpty(serviceId)) {
@@ -147,7 +144,7 @@ public class CurrentUserController {
 		serviceId = serviceId.trim();
 		List<AuthorityMenu> result = baseAuthorityService.findAuthorityMenuByUser(
 				user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), serviceId);
-		return ResultBody.ok(result);
+		return ResponseResult.ok(result);
 	}
 
 	/**
@@ -156,7 +153,7 @@ public class CurrentUserController {
 	 * @return 路由信息
 	 */
 	@GetMapping("/current/user/routersx")
-	public ResultBody<List<RouterVo>> getRouters() {
+	public ResponseResult<List<RouterVo>> getRouters() {
 		OpenUserDetails user = OpenHelper.getUser();
 		List<AuthorityMenu> menus = baseAuthorityService.findAuthorityMenuByUser(
 				user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), "");
@@ -166,7 +163,7 @@ public class CurrentUserController {
 			baseMenus.add(menu);
 		}
 		List<RouterVo> routers = null;//menuService.buildRouters(baseMenus);
-		return ResultBody.ok(routers);
+		return ResponseResult.ok(routers);
 	}
 
 }

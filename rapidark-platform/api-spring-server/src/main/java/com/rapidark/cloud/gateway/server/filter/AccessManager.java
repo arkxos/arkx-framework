@@ -10,7 +10,7 @@ import com.rapidark.cloud.platform.gateway.util.matcher.ReactiveIpAddressMatcher
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.constants.ErrorCode;
 import com.rapidark.framework.common.exception.OpenException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.utils.RedisUtils;
 import com.rapidark.framework.common.utils.StringUtils;
@@ -113,11 +113,11 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
 
         if(registerApps == null || registerApps.isEmpty()) {
 // WebFlux异步调用，同步会报错
-            Future future = executorService.submit((Callable<ResultBody<OpenApp>>) () -> openAppServiceClient.queryAppByIp(openClientHost));
+            Future future = executorService.submit((Callable<ResponseResult<OpenApp>>) () -> openAppServiceClient.queryAppByIp(openClientHost));
 
-            ResultBody<OpenApp> queryOpenClientByIpResponse = null;
+            ResponseResult<OpenApp> queryOpenClientByIpResponse = null;
             try {
-                queryOpenClientByIpResponse = (ResultBody<OpenApp>)future.get();
+                queryOpenClientByIpResponse = (ResponseResult<OpenApp>)future.get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 throw new OpenException(e.getMessage());
@@ -128,9 +128,9 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
 
                 Future future2 = executorService.submit(() -> openAppServiceClient.queryClientRegisterAppsByAppId(clientId));
 
-                ResultBody<List<GatewayAppRouteRegServer>> registerAppsResponse = null;
+                ResponseResult<List<GatewayAppRouteRegServer>> registerAppsResponse = null;
                 try {
-                    registerAppsResponse = (ResultBody<List<GatewayAppRouteRegServer>>)future2.get();
+                    registerAppsResponse = (ResponseResult<List<GatewayAppRouteRegServer>>)future2.get();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                     throw new OpenException(e.getMessage());

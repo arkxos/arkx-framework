@@ -2,7 +2,7 @@ package com.bsd.org.server.exception;
 
 import com.rapidark.framework.common.constants.ErrorCode;
 import com.rapidark.framework.common.exception.OpenGlobalExceptionHandler;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -30,7 +30,7 @@ public class CustomerOpenGlobalExceptionHandler extends OpenGlobalExceptionHandl
         FieldError fieldError = bindException.getBindingResult().getFieldError();
         assert fieldError != null;
         log.error(fieldError.getField() + ":" + fieldError.getDefaultMessage());
-        return ResultBody.failed().code(ErrorCode.ALERT.getCode()).msg(fieldError.getDefaultMessage());
+        return ResponseResult.failed().code(ErrorCode.ALERT.getCode()).msg(fieldError.getDefaultMessage());
     }
 
     /**
@@ -44,6 +44,6 @@ public class CustomerOpenGlobalExceptionHandler extends OpenGlobalExceptionHandl
         FieldError fieldError = methodArgumentNotValidException.getBindingResult().getFieldError();
         assert fieldError != null;
         log.error(fieldError.getField() + ":" + fieldError.getDefaultMessage());
-        return ResultBody.failed().code(ErrorCode.ALERT.getCode()).msg(fieldError.getDefaultMessage());
+        return ResponseResult.failed().code(ErrorCode.ALERT.getCode()).msg(fieldError.getDefaultMessage());
     }
 }

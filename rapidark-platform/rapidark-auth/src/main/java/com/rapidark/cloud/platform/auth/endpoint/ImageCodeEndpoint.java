@@ -1,8 +1,7 @@
 package com.rapidark.cloud.platform.auth.endpoint;
 
 import cn.hutool.core.lang.Validator;
-import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import io.springboot.captcha.ArithmeticCaptcha;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,13 +9,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
 
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -65,7 +62,7 @@ public class ImageCodeEndpoint {
 	@Schema(description = "获取png验证码", title = "获取png验证码")
 	@SneakyThrows
 	@GetMapping("/captcha/image")
-	public ResultBody<CaptchaImageData> generateCaptchaImage() {
+	public ResponseResult<CaptchaImageData> generateCaptchaImage() {
 //		SpecCaptcha captcha = new SpecCaptcha(130, 48, 4);
 		ArithmeticCaptcha captcha = new ArithmeticCaptcha(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
 
@@ -78,7 +75,7 @@ public class ImageCodeEndpoint {
 				.set(CacheConstants.DEFAULT_CODE_KEY + verKey, verCode,
 						SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
 
-		return ResultBody.ok(new CaptchaImageData(verKey, captcha.toBase64()));
+		return ResponseResult.ok(new CaptchaImageData(verKey, captcha.toBase64()));
 	}
 
 }

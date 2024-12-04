@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.rapidark.cloud.msg.server.dispatcher.MessageDispatcher;
 import com.rapidark.cloud.msg.server.utils.RegexUtils;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.cloud.msg.client.model.BatchSmsMessage;
 import com.rapidark.cloud.msg.client.model.SmsMessage;
@@ -38,16 +38,16 @@ public class SmsController implements ISmsClient {
     @Schema(title = "发送短信", name = "发送短信")
     @PostMapping(value = "/sms")
     @Override
-    public ResultBody<String> send(@RequestBody SmsMessage smsMessage) {
+    public ResponseResult<String> send(@RequestBody SmsMessage smsMessage) {
         this.dispatcher.dispatch(smsMessage);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     @Override
     @PostMapping(value = "/sms/feign", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResultBody feignSendSms(SmsMessage message) {
+    public ResponseResult feignSendSms(SmsMessage message) {
         this.dispatcher.dispatch(message);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -58,14 +58,14 @@ public class SmsController implements ISmsClient {
      */
     @Schema(title = "批量发送短信", name = "SendBatchSms接口是短信批量发送接口，支持在一次请求中分别向多个不同的手机号码发送不同签名的短信")
     @PostMapping(value = "/sms/batch")
-    public ResultBody sendBatchSms(BatchSmsMessage batchSmsMessage) {
+    public ResponseResult sendBatchSms(BatchSmsMessage batchSmsMessage) {
         boolean isCheck = checkBatchSmsMessage(batchSmsMessage);
         if (!isCheck) {
-            ResultBody.failed("参数校验存在错误");
+            ResponseResult.failed("参数校验存在错误");
         }
         //转发批量发送短信请求到线程池中
         this.dispatcher.dispatch(batchSmsMessage);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**

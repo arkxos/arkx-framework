@@ -6,7 +6,7 @@ import com.bsd.payment.server.model.dto.QueryTransResultDTO;
 import com.bsd.payment.server.model.dto.TransResultDTO;
 import com.bsd.payment.server.model.entity.TransOrder;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.data.mybatis.service.IBaseService;
 
 import java.util.Date;
@@ -45,10 +45,10 @@ public interface ITransOrderService extends IBaseService<TransOrder> {
     /**
      * 处理转账订单结果
      *
-     * @param resultBody
+     * @param responseResult
      * @param transOrder
      */
-    void handleTransResult(ResultBody<TransResultDTO> resultBody, TransOrderPo transOrder);
+    void handleTransResult(ResponseResult<TransResultDTO> responseResult, TransOrderPo transOrder);
 
     /**
      * 更新转账订单为成功

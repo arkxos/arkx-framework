@@ -3,7 +3,7 @@ package com.rapidark.cloud.base.server.controller;
 import com.rapidark.cloud.base.client.model.entity.BaseAction;
 import com.rapidark.cloud.base.server.service.BaseActionService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.data.jpa.entity.Status;
 
@@ -35,8 +35,8 @@ public class BaseActionController {
      */
     @Schema(title = "获取分页功能按钮列表", name = "获取分页功能按钮列表")
     @GetMapping("/action")
-    public ResultBody<Page<BaseAction>> findActionListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok(baseActionService.findListPage(new PageParams(map)));
+    public ResponseResult<Page<BaseAction>> findActionListPage(@RequestParam(required = false) Map map) {
+        return ResponseResult.ok(baseActionService.findListPage(new PageParams(map)));
     }
 
 
@@ -51,8 +51,8 @@ public class BaseActionController {
 //            @ApiImplicitParam(name = "actionId", required = true, value = "功能按钮Id", paramType = "path"),
 //    })
     @GetMapping("/action/{actionId}/info")
-    public ResultBody<BaseAction> getAction(@PathVariable("actionId") Long actionId) {
-        return ResultBody.ok(baseActionService.getAction(actionId));
+    public ResponseResult<BaseAction> getAction(@PathVariable("actionId") Long actionId) {
+        return ResponseResult.ok(baseActionService.getAction(actionId));
     }
 
     /**
@@ -76,7 +76,7 @@ public class BaseActionController {
 //            @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
 //    })
     @PostMapping("/action/add")
-    public ResultBody<Long> addAction(
+    public ResponseResult<Long> addAction(
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
@@ -97,7 +97,7 @@ public class BaseActionController {
             actionId = result.getActionId();
 //            // openRestTemplate.refreshGateway();
         }
-        return ResultBody.ok(actionId);
+        return ResponseResult.ok(actionId);
     }
 
     /**
@@ -123,7 +123,7 @@ public class BaseActionController {
 //            @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
 //    })
     @PostMapping("/action/update")
-    public ResultBody updateAction(
+    public ResponseResult updateAction(
             @RequestParam("actionId") Long actionId,
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
@@ -143,7 +143,7 @@ public class BaseActionController {
         baseActionService.updateAction(action);
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -158,12 +158,12 @@ public class BaseActionController {
 //            @ApiImplicitParam(name = "actionId", required = true, value = "功能按钮ID", paramType = "form")
 //    })
     @PostMapping("/action/remove")
-    public ResultBody removeAction(
+    public ResponseResult removeAction(
             @RequestParam("actionId") Long actionId
     ) {
         baseActionService.removeAction(actionId);
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

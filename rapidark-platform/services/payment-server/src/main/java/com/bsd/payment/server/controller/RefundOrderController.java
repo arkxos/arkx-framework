@@ -14,7 +14,7 @@ import com.bsd.payment.server.util.RpcUtil;
 import com.bsd.payment.server.util.XXPayUtil;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.WebUtils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -82,23 +82,23 @@ public class RefundOrderController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
 //    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResultBody<IPage<RefundOrder>> list(@RequestParam(value = "refundOrderId", required = false) String refundOrderId,
-                                               @RequestParam(value = "payOrderId", required = false) String payOrderId,
-                                               @RequestParam(value = "channelPayOrderNo", required = false) String channelPayOrderNo,
-                                               @RequestParam(value = "mchId", required = false) String mchId,
-                                               @RequestParam(value = "mchRefundNo", required = false) String mchRefundNo,
-                                               @RequestParam(value = "channelCode", required = false) String channelCode,
-                                               @RequestParam(value = "status", required = false) String status,
-                                               @RequestParam(value = "channelUser", required = false) String channelUser,
-                                               @RequestParam(value = "userName", required = false) String userName,
-                                               @RequestParam(value = "channelMchId", required = false) String channelMchId,
-                                               @RequestParam(value = "channelOrderNo", required = false) String channelOrderNo,
-                                               @RequestParam(value = "refundSuccTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date refundSuccTimeStart,
-                                               @RequestParam(value = "refundSuccTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date refundSuccTimeEnd,
-                                               @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeStart,
-                                               @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeEnd,
-                                               @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+    public ResponseResult<IPage<RefundOrder>> list(@RequestParam(value = "refundOrderId", required = false) String refundOrderId,
+                                                   @RequestParam(value = "payOrderId", required = false) String payOrderId,
+                                                   @RequestParam(value = "channelPayOrderNo", required = false) String channelPayOrderNo,
+                                                   @RequestParam(value = "mchId", required = false) String mchId,
+                                                   @RequestParam(value = "mchRefundNo", required = false) String mchRefundNo,
+                                                   @RequestParam(value = "channelCode", required = false) String channelCode,
+                                                   @RequestParam(value = "status", required = false) String status,
+                                                   @RequestParam(value = "channelUser", required = false) String channelUser,
+                                                   @RequestParam(value = "userName", required = false) String userName,
+                                                   @RequestParam(value = "channelMchId", required = false) String channelMchId,
+                                                   @RequestParam(value = "channelOrderNo", required = false) String channelOrderNo,
+                                                   @RequestParam(value = "refundSuccTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date refundSuccTimeStart,
+                                                   @RequestParam(value = "refundSuccTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date refundSuccTimeEnd,
+                                                   @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeStart,
+                                                   @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeEnd,
+                                                   @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         HashMap<String, Object> map = new HashMap<>();
         if (ObjectUtils.isNotEmpty(refundOrderId)) {
             map.put("refundOrderId", refundOrderId);
@@ -148,17 +148,17 @@ public class RefundOrderController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok(refundOrderService.findListPage(new PageParams(map)));
+        return ResponseResult.ok(refundOrderService.findListPage(new PageParams(map)));
     }
 
     @Schema(title = "退款订单详情", name = "点击查看详情进入详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ResultBody<RefundOrder> detail(@RequestParam String refundOrderId) {
+    public ResponseResult<RefundOrder> detail(@RequestParam String refundOrderId) {
         RefundOrder refundOrder = refundOrderService.findRefundOrder(refundOrderId);
         if (refundOrder == null) {
-            return ResultBody.failed("未查找到ID为" + refundOrderId + "的退款订单信息");
+            return ResponseResult.failed("未查找到ID为" + refundOrderId + "的退款订单信息");
         }
-        return ResultBody.ok(refundOrder);
+        return ResponseResult.ok(refundOrder);
     }
 
     @InitBinder
@@ -184,18 +184,18 @@ public class RefundOrderController {
 //            @ApiImplicitParam(name = "param2", value = "扩展参数2", paramType = "form")
 //    })
     @RequestMapping(value = "/refund", method = RequestMethod.POST)
-    public ResultBody<JSONObject> pay(@RequestParam(value = "mchId") String mchId,
-                                       @RequestParam(value = "channelCode") String channelCode,
-                                       @RequestParam(value = "mchOrderNo") String mchOrderNo,
-                                       @RequestParam(value = "amount") Long amount,
-                                       @RequestParam(value = "subject") String subject,
-                                       @RequestParam(value = "body") String body,
-                                       @RequestParam(value = "notifyUrl", required = false) String notifyUrl,
-                                       @RequestParam(value = "param1", required = false) String param1,
-                                       @RequestParam(value = "param2", required = false) String param2,
-                                       @RequestParam(value = "payOrderId") String payOrderId,
-                                       @RequestParam(value = "channelUser") String channelUser,
-                                       HttpServletRequest request) {
+    public ResponseResult<JSONObject> pay(@RequestParam(value = "mchId") String mchId,
+                                          @RequestParam(value = "channelCode") String channelCode,
+                                          @RequestParam(value = "mchOrderNo") String mchOrderNo,
+                                          @RequestParam(value = "amount") Long amount,
+                                          @RequestParam(value = "subject") String subject,
+                                          @RequestParam(value = "body") String body,
+                                          @RequestParam(value = "notifyUrl", required = false) String notifyUrl,
+                                          @RequestParam(value = "param1", required = false) String param1,
+                                          @RequestParam(value = "param2", required = false) String param2,
+                                          @RequestParam(value = "payOrderId") String payOrderId,
+                                          @RequestParam(value = "channelUser") String channelUser,
+                                          HttpServletRequest request) {
         MchInfo mchInfo = mchInfoService.findMchInfo(mchId);
         if (mchInfo == null) {
             throw new OpenAlertException("找不到商户的信息");
@@ -243,9 +243,9 @@ public class RefundOrderController {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("refundOrderId", (retMap.get("refundOrderId").toString()));
             jsonObject.put("channelName", (retMap.get("channelName").toString()));
-            return ResultBody.ok(jsonObject).msg("退款处理中");
+            return ResponseResult.ok(jsonObject).msg("退款处理中");
         }
-        return ResultBody.failed(retMap.get("retMsg").toString());
+        return ResponseResult.failed(retMap.get("retMsg").toString());
     }
 
     @Schema(title = "查询退款", name = "查询退款是否已经成功")
@@ -257,11 +257,11 @@ public class RefundOrderController {
 //            @ApiImplicitParam(name = "channelPayOrderNo", value = "渠道支付单号", paramType = "form")
 //    })
     @RequestMapping(value = "/getRefund", method = RequestMethod.GET)
-    public ResultBody getRefund(@RequestParam(value = "mchId") String mchId,
-                                             @RequestParam(value = "refundOrderId") String refundOrderId,
-                                             @RequestParam(value = "channelCode") String channelCode,
-                                             @RequestParam(value = "payOrderId") String payOrderId,
-                                             @RequestParam(value = "channelPayOrderNo", required = false, defaultValue = "") String channelPayOrderNo) {
+    public ResponseResult getRefund(@RequestParam(value = "mchId") String mchId,
+                                    @RequestParam(value = "refundOrderId") String refundOrderId,
+                                    @RequestParam(value = "channelCode") String channelCode,
+                                    @RequestParam(value = "payOrderId") String payOrderId,
+                                    @RequestParam(value = "channelPayOrderNo", required = false, defaultValue = "") String channelPayOrderNo) {
         JSONObject payChannel = payChannelService.getByMchIdAndChannelCode(mchId, channelCode);
         //创建退款订单
         JSONObject jsonObject = new JSONObject();
@@ -279,7 +279,7 @@ public class RefundOrderController {
             String errorMessage = refundOrderService.validateQueryParams(paramMap, payContext);
             if (!"success".equalsIgnoreCase(errorMessage)) {
                 _log.warn(errorMessage);
-                return ResultBody.failed(errorMessage);
+                return ResponseResult.failed(errorMessage);
             }
             String jsonParam = RpcUtil.createBaseParam(jsonObject);
             //封装返回结果
@@ -291,17 +291,17 @@ public class RefundOrderController {
                 resultMap = payChannel4AliService.getAliRefundReq(jsonParam);
             } else {
                 _log.warn("不支持的退款渠道,停止退款处理.refundOrderId={},channelName={}", refundOrderId, channelName);
-                return ResultBody.failed("不支持的退款渠道,停止退款处理!");
+                return ResponseResult.failed("不支持的退款渠道,停止退款处理!");
             }
             if (resultMap == null) {
-                return ResultBody.failed("支付订单不存在！");
+                return ResponseResult.failed("支付订单不存在！");
             }
             Map<String, Object> map = XXPayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
             map.put("result", resultMap);
-            return ResultBody.ok().data(map);
+            return ResponseResult.ok().data(map);
         } catch (Exception e) {
             _log.error(e, "");
-            return ResultBody.failed("支付中心系统异常");
+            return ResponseResult.failed("支付中心系统异常");
         }
     }
 }

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.msg.server.service.EmailTemplateService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.msg.client.model.entity.EmailTemplate;
 
 
@@ -36,11 +36,11 @@ public class EmailTemplateController {
      */
     @Schema(title = "获取分页数据", name = "获取分页数据")
     @GetMapping(value = "/list")
-    public ResultBody<IPage<EmailTemplate>> list(@RequestParam(required = false) Map map) {
+    public ResponseResult<IPage<EmailTemplate>> list(@RequestParam(required = false) Map map) {
         PageParams pageParams = new PageParams(map);
         EmailTemplate query = pageParams.mapToObject(EmailTemplate.class);
         QueryWrapper<EmailTemplate> queryWrapper = new QueryWrapper();
-        return ResultBody.ok(targetService.page(new PageParams(map), queryWrapper));
+        return ResponseResult.ok(targetService.page(new PageParams(map), queryWrapper));
     }
 
     /**
@@ -49,9 +49,9 @@ public class EmailTemplateController {
     @Schema(title = "根据ID查找数据", name = "根据ID查找数据")
     @ResponseBody
     @GetMapping("/get")
-    public ResultBody<EmailTemplate> get(@RequestParam("id") Long id) {
+    public ResponseResult<EmailTemplate> get(@RequestParam("id") Long id) {
         EmailTemplate entity = targetService.getById(id);
-        return ResultBody.ok(entity);
+        return ResponseResult.ok(entity);
     }
 
     /**
@@ -68,7 +68,7 @@ public class EmailTemplateController {
 //            @ApiImplicitParam(name = "params", required = true, value = "模板参数", paramType = "form")
 //    })
     @PostMapping("/add")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "code") String code,
             @RequestParam(value = "configId") Long configId,
@@ -82,7 +82,7 @@ public class EmailTemplateController {
         entity.setTemplate(template);
         entity.setParams(params);
         targetService.save(entity);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -100,7 +100,7 @@ public class EmailTemplateController {
 //            @ApiImplicitParam(name = "params", required = true, value = "模板参数", paramType = "form")
 //    })
     @PostMapping("/update")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "tplId") Long tplId,
             @RequestParam(value = "name") String name,
             @RequestParam(value = "code") String code,
@@ -116,7 +116,7 @@ public class EmailTemplateController {
         entity.setTemplate(template);
         entity.setParams(params);
         targetService.updateById(entity);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -129,11 +129,11 @@ public class EmailTemplateController {
 //            @ApiImplicitParam(name = "id", required = true, value = "id", paramType = "form")
 //    })
     @PostMapping("/remove")
-    public ResultBody remove(
+    public ResponseResult remove(
             @RequestParam(value = "id") Long id
     ) {
         targetService.removeById(id);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -146,10 +146,10 @@ public class EmailTemplateController {
 //            @ApiImplicitParam(name = "id", required = true, value = "id", paramType = "form")
 //    })
     @PostMapping("/batch/remove")
-    public ResultBody batchRemove(
+    public ResponseResult batchRemove(
             @RequestParam(value = "ids") String ids
     ) {
         targetService.removeByIds(Arrays.asList(ids.split(",")));
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

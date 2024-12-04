@@ -7,7 +7,7 @@ import com.bsd.payment.server.service.IMchInfoService;
 import com.bsd.payment.server.util.MyLog;
 import com.bsd.payment.server.util.ObjectValidUtil;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,14 +59,14 @@ public class MchInfoController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
 //    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResultBody<IPage<MchInfo>> list(@RequestParam(value = "mchId", required = false) String mchId,
-                                           @RequestParam(value = "name", required = false) String name,
-                                           @RequestParam(value = "type", required = false) String type,
-                                           @RequestParam(value = "state", required = false) String state,
-                                           @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeStart,
-                                           @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeEnd,
-                                           @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                                           @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+    public ResponseResult<IPage<MchInfo>> list(@RequestParam(value = "mchId", required = false) String mchId,
+                                               @RequestParam(value = "name", required = false) String name,
+                                               @RequestParam(value = "type", required = false) String type,
+                                               @RequestParam(value = "state", required = false) String state,
+                                               @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeStart,
+                                               @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeEnd,
+                                               @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         HashMap<String, Object> map = new HashMap<>();
         if (ObjectUtils.isNotEmpty(mchId)) {
             map.put("mchId", mchId);
@@ -89,7 +89,7 @@ public class MchInfoController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok(mchInfoService.findListPage(new PageParams(map)));
+        return ResponseResult.ok(mchInfoService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -107,9 +107,9 @@ public class MchInfoController {
 //            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", required = true, paramType = "form"),
 //    })
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResultBody<MchInfo> save(@RequestParam(value = "name") String name,
-                                    @RequestParam(value = "type") String type,
-                                    @RequestParam(value = "state") Byte state) {
+    public ResponseResult<MchInfo> save(@RequestParam(value = "name") String name,
+                                        @RequestParam(value = "type") String type,
+                                        @RequestParam(value = "state") Byte state) {
         MchInfo mchInfo = new MchInfo();
         mchInfo.setName(name);
         mchInfo.setType(type);
@@ -120,9 +120,9 @@ public class MchInfoController {
         ObjectValidUtil.checkStrLength("name", mchInfo.getName(), 30);
         int result = mchInfoService.addMchInfo(mchInfo);
         if (result > 0) {
-            return ResultBody.ok(mchInfo).msg("保存成功");
+            return ResponseResult.ok(mchInfo).msg("保存成功");
         } else {
-            return ResultBody.failed("保存失败");
+            return ResponseResult.failed("保存失败");
         }
     }
 
@@ -143,13 +143,13 @@ public class MchInfoController {
 //            @ApiImplicitParam(name = "state", value = "商户状态,0-停止使用,1-使用中", required = true, paramType = "form"),
 //    })
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResultBody<MchInfo> update(@RequestParam(value = "mchId") String mchId,
-                                      @RequestParam(value = "name") String name,
-                                      @RequestParam(value = "type") String type,
-                                      @RequestParam(value = "state") Byte state) {
+    public ResponseResult<MchInfo> update(@RequestParam(value = "mchId") String mchId,
+                                          @RequestParam(value = "name") String name,
+                                          @RequestParam(value = "type") String type,
+                                          @RequestParam(value = "state") Byte state) {
         MchInfo info = mchInfoService.findMchInfo(mchId);
         if (info == null) {
-            return ResultBody.failed("商户信息不存在");
+            return ResponseResult.failed("商户信息不存在");
         }
         MchInfo mchInfo = new MchInfo();
         mchInfo.setMchId(info.getMchId());
@@ -160,9 +160,9 @@ public class MchInfoController {
         ObjectValidUtil.checkStrLength("name", mchInfo.getName(), 30);
         int result = mchInfoService.updateMchInfo(mchInfo);
         if (result > 0) {
-            return ResultBody.ok(mchInfo).msg("修改成功");
+            return ResponseResult.ok(mchInfo).msg("修改成功");
         } else {
-            return ResultBody.failed("修改失败");
+            return ResponseResult.failed("修改失败");
         }
     }
 
@@ -177,12 +177,12 @@ public class MchInfoController {
 //            @ApiImplicitParam(name = "mchId", value = "商户ID", required = true, paramType = "form"),
 //    })
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ResultBody<MchInfo> detail(@RequestParam(value = "mchId") String mchId) {
+    public ResponseResult<MchInfo> detail(@RequestParam(value = "mchId") String mchId) {
         MchInfo mchinfo = mchInfoService.findMchInfo(mchId);
         if (mchinfo == null) {
-            return ResultBody.failed("未查找到ID为" + mchId + "的商户信息");
+            return ResponseResult.failed("未查找到ID为" + mchId + "的商户信息");
         }
-        return ResultBody.ok(mchinfo);
+        return ResponseResult.ok(mchinfo);
     }
 
     @InitBinder

@@ -3,7 +3,7 @@ package com.bsd.user.server.controller;
 import com.bsd.user.server.constants.UserConstants;
 import com.bsd.user.server.model.ConsigneeAddressPo;
 import com.bsd.user.server.service.ConsigneeAddressService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 
 
@@ -45,17 +45,17 @@ public class ConsigneeAddressController {
 //            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话ID", paramType = "header"),
 //    })
     @PostMapping("/save")
-    public ResultBody saveOrUpdateAddress(@RequestParam(value = "consigneeName", required = true) String consigneeName,
-                                          @RequestParam(value = "countryCode", required = true) String countryCode,
-                                          @RequestParam(value = "mobile", required = true) String mobile,
-                                          @RequestParam(value = "postalCode", required = false) String postalCode,
-                                          @RequestParam(value = "country", required = true) String country,
-                                          @RequestParam(value = "province", required = true) String province,
-                                          @RequestParam(value = "city", required = true) String city,
-                                          @RequestParam(value = "detailAddress", required = true) String detailAddress,
-                                          @RequestParam(value = "isDefault", required = true) Integer isDefault,
-                                          @RequestParam(value = "id", required = false) Long id,
-                                          HttpServletRequest request) {
+    public ResponseResult saveOrUpdateAddress(@RequestParam(value = "consigneeName", required = true) String consigneeName,
+                                              @RequestParam(value = "countryCode", required = true) String countryCode,
+                                              @RequestParam(value = "mobile", required = true) String mobile,
+                                              @RequestParam(value = "postalCode", required = false) String postalCode,
+                                              @RequestParam(value = "country", required = true) String country,
+                                              @RequestParam(value = "province", required = true) String province,
+                                              @RequestParam(value = "city", required = true) String city,
+                                              @RequestParam(value = "detailAddress", required = true) String detailAddress,
+                                              @RequestParam(value = "isDefault", required = true) Integer isDefault,
+                                              @RequestParam(value = "id", required = false) Long id,
+                                              HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         ConsigneeAddressPo po = new ConsigneeAddressPo();
         po.setLoginMobile(LoginMoblie);
@@ -70,7 +70,7 @@ public class ConsigneeAddressController {
         po.setIsDefault(isDefault);
         po.setId(id);
         consigneeAddressService.saveOrUpdateConsigneeAddress(po);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -80,11 +80,11 @@ public class ConsigneeAddressController {
 //            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话ID", paramType = "header"),
 //    })
     @PostMapping("/list")
-    public ResultBody addressList(HttpServletRequest request) {
+    public ResponseResult addressList(HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         ConsigneeAddressPo po = new ConsigneeAddressPo();
         po.setLoginMobile(LoginMoblie);
-        return ResultBody.ok(consigneeAddressService.queryUserConsigneeAddress(po));
+        return ResponseResult.ok(consigneeAddressService.queryUserConsigneeAddress(po));
     }
 
 
@@ -93,8 +93,8 @@ public class ConsigneeAddressController {
 //            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form")
 //    })
     @PostMapping("/list/byUserId")
-    public ResultBody addressList(@RequestParam(value = "userId", required = true) Long userId) {
-        return ResultBody.ok(consigneeAddressService.queryUserConsigneeAddressByUserId(userId));
+    public ResponseResult addressList(@RequestParam(value = "userId", required = true) Long userId) {
+        return ResponseResult.ok(consigneeAddressService.queryUserConsigneeAddressByUserId(userId));
     }
 
 
@@ -105,14 +105,14 @@ public class ConsigneeAddressController {
 //            @ApiImplicitParam(name = "id", required = true, value = "唯一标识", paramType = "form")
 //    })
     @PostMapping("/delete")
-    public ResultBody addressDelete(HttpServletRequest request,
-                                    @RequestParam(value = "id", required = true) Long id) {
+    public ResponseResult addressDelete(HttpServletRequest request,
+                                        @RequestParam(value = "id", required = true) Long id) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         ConsigneeAddressPo po = new ConsigneeAddressPo();
         po.setLoginMobile(LoginMoblie);
         po.setId(id);
         consigneeAddressService.deleteUserConsigneeAddress(po);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -123,13 +123,13 @@ public class ConsigneeAddressController {
 //            @ApiImplicitParam(name = "id", required = true, value = "唯一标识", paramType = "form")
 //    })
     @PostMapping("/setDefault")
-    public ResultBody addressSetDefault(HttpServletRequest request,
-                                        @RequestParam(value = "id", required = true) Long id) {
+    public ResponseResult addressSetDefault(HttpServletRequest request,
+                                            @RequestParam(value = "id", required = true) Long id) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         ConsigneeAddressPo po = new ConsigneeAddressPo();
         po.setLoginMobile(LoginMoblie);
         po.setId(id);
         consigneeAddressService.setDefaultAddress(po);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

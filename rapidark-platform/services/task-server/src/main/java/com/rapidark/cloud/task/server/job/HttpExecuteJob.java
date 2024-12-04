@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.task.server.service.feign.GatewayServiceClient;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.RedisUtils;
 import com.rapidark.framework.common.utils.StringUtils;
@@ -104,8 +104,8 @@ public class HttpExecuteJob implements Job {
     public List<GatewayAppRoute> getApiRouteList() {
         List<String> routeJsonList = redisUtils.getList(BaseConstants.ROUTE_LIST_CACHE_KEY);
         if (routeJsonList.isEmpty()) {
-            ResultBody<List<GatewayAppRoute>> resultBody = gatewayServiceClient.getApiRouteList();
-            List<GatewayAppRoute> routes = resultBody.getData();
+            ResponseResult<List<GatewayAppRoute>> responseResult = gatewayServiceClient.getApiRouteList();
+            List<GatewayAppRoute> routes = responseResult.getData();
             if (!routes.isEmpty()) {
                 List<String> jsonList = convertToJson(routes);
                 routeJsonList = jsonList;

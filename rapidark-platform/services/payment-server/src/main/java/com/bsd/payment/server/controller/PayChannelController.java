@@ -9,7 +9,7 @@ import com.bsd.payment.server.service.IPayChannelService;
 import com.bsd.payment.server.util.MyLog;
 import com.bsd.payment.server.util.ObjectValidUtil;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,15 +56,15 @@ public class PayChannelController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
 //    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResultBody<IPage<PayChannel>> list(@RequestParam(value = "channelCode", required = false) String channelCode,
-                                              @RequestParam(value = "channelName", required = false) String channelName,
-                                              @RequestParam(value = "channelMchId", required = false) String channelMchId,
-                                              @RequestParam(value = "mchId", required = false) String mchId,
-                                              @RequestParam(value = "state", required = false) String state,
-                                              @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeStart,
-                                              @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeEnd,
-                                              @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+    public ResponseResult<IPage<PayChannel>> list(@RequestParam(value = "channelCode", required = false) String channelCode,
+                                                  @RequestParam(value = "channelName", required = false) String channelName,
+                                                  @RequestParam(value = "channelMchId", required = false) String channelMchId,
+                                                  @RequestParam(value = "mchId", required = false) String mchId,
+                                                  @RequestParam(value = "state", required = false) String state,
+                                                  @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeStart,
+                                                  @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date createTimeEnd,
+                                                  @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                                                  @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         HashMap<String, Object> map = new HashMap<>();
         if (ObjectUtils.isNotEmpty(channelCode)) {
             map.put("channelCode", channelCode);
@@ -90,7 +90,7 @@ public class PayChannelController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok(payChannelService.findListPage(new PageParams(map)));
+        return ResponseResult.ok(payChannelService.findListPage(new PageParams(map)));
     }
 
     @Schema(title = "新增渠道信息", name = "点击新增按钮保存渠道信息")
@@ -103,12 +103,12 @@ public class PayChannelController {
 //            @ApiImplicitParam(name = "remark", value = "备注", paramType = "form")
 //    })
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResultBody<PayChannel> save(@RequestParam(value = "mchId") String mchId,
-                                       @RequestParam(value = "channelMchId") String channelMchId,
-                                       @RequestParam(value = "channelCode") String channelCode,
-                                       @RequestParam(value = "state") Byte state,
-                                       @RequestParam(value = "param", required = false) String param,
-                                       @RequestParam(value = "remark", required = false) String remark
+    public ResponseResult<PayChannel> save(@RequestParam(value = "mchId") String mchId,
+                                           @RequestParam(value = "channelMchId") String channelMchId,
+                                           @RequestParam(value = "channelCode") String channelCode,
+                                           @RequestParam(value = "state") Byte state,
+                                           @RequestParam(value = "param", required = false) String param,
+                                           @RequestParam(value = "remark", required = false) String remark
     ) {
         PayChannel payChannel = new PayChannel();
         payChannel.setMchId(mchId);
@@ -122,9 +122,9 @@ public class PayChannelController {
         ObjectValidUtil.checkStrLength("channelCode", payChannel.getChannelCode(), 24);
         int result = payChannelService.addPayChannel(payChannel);
         if (result > 0) {
-            return ResultBody.ok(payChannel).msg("保存成功！");
+            return ResponseResult.ok(payChannel).msg("保存成功！");
         } else {
-            return ResultBody.failed("保存失败！");
+            return ResponseResult.failed("保存失败！");
         }
     }
 
@@ -139,17 +139,17 @@ public class PayChannelController {
 //            @ApiImplicitParam(name = "remark", value = "备注", paramType = "form")
 //    })
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResultBody<PayChannel> update(@RequestParam(value = "channelId") Integer channelId,
-                                         @RequestParam(value = "mchId") String mchId,
-                                         @RequestParam(value = "channelMchId") String channelMchId,
-                                         @RequestParam(value = "channelCode") String channelCode,
-                                         @RequestParam(value = "state") Byte state,
-                                         @RequestParam(value = "param", required = false) String param,
-                                         @RequestParam(value = "remark", required = false) String remark
+    public ResponseResult<PayChannel> update(@RequestParam(value = "channelId") Integer channelId,
+                                             @RequestParam(value = "mchId") String mchId,
+                                             @RequestParam(value = "channelMchId") String channelMchId,
+                                             @RequestParam(value = "channelCode") String channelCode,
+                                             @RequestParam(value = "state") Byte state,
+                                             @RequestParam(value = "param", required = false) String param,
+                                             @RequestParam(value = "remark", required = false) String remark
     ) {
         PayChannel channel = payChannelService.selectByPayChannelId(channelId);
         if (channel == null) {
-            return ResultBody.failed("渠道信息不存在");
+            return ResponseResult.failed("渠道信息不存在");
         }
         PayChannel payChannel = new PayChannel();
         payChannel.setChannelId(channelId.longValue());
@@ -164,20 +164,20 @@ public class PayChannelController {
         ObjectValidUtil.checkStrLength("channelCode", payChannel.getChannelCode(), 24);
         int result = payChannelService.updatePayChannel(payChannel);
         if (result > 0) {
-            return ResultBody.ok(payChannel).msg("修改成功！");
+            return ResponseResult.ok(payChannel).msg("修改成功！");
         } else {
-            return ResultBody.failed("修改失败！");
+            return ResponseResult.failed("修改失败！");
         }
     }
 
     @Schema(title = "渠道信息详情", name = "点击详情按钮进入渠道信息详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ResultBody<PayChannel> detail(@RequestParam String channelId) {
+    public ResponseResult<PayChannel> detail(@RequestParam String channelId) {
         PayChannel payChannel = payChannelService.findPayChannel(channelId);
         if (payChannel == null) {
-            return ResultBody.failed("未查找到ID为" + channelId + "的渠道信息");
+            return ResponseResult.failed("未查找到ID为" + channelId + "的渠道信息");
         }
-        return ResultBody.ok(payChannel);
+        return ResponseResult.ok(payChannel);
     }
 
     @InitBinder
@@ -190,7 +190,7 @@ public class PayChannelController {
 
     @Schema(title = "查询所有渠道", name = "后台把code转为name发给前端,前台不需要传参数")
     @RequestMapping(value = "/codeToName", method = RequestMethod.GET)
-    public ResultBody<List<PayChannelDto>> codeToName() {
+    public ResponseResult<List<PayChannelDto>> codeToName() {
         List<PayChannelDto> channelNameList = new ArrayList<>();
         for (ChannelEnum channelEnum : ChannelEnum.values()) {
             PayChannelDto dto = new PayChannelDto();
@@ -198,6 +198,6 @@ public class PayChannelController {
             dto.setChannelName(channelEnum.getValue());
             channelNameList.add(dto);
         }
-        return ResultBody.ok(channelNameList);
+        return ResponseResult.ok(channelNameList);
     }
 }

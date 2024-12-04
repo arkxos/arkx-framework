@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.controller;
 
 import com.rapidark.cloud.gateway.server.configuration.ApiProperties;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,26 +35,26 @@ public class IndexController {
 
     @ResponseBody
     @GetMapping("/test")
-    public ResultBody testGet() {
+    public ResponseResult testGet() {
         Map<String, String> data = new HashMap<>();
         data.put("code", "0001");
-        return ResultBody.ok(data);
+        return ResponseResult.ok(data);
     }
 
     @ResponseBody
     @PostMapping("/test")
-    public ResultBody testPost(@Valid @RequestBody TestCommand command) {
+    public ResponseResult testPost(@Valid @RequestBody TestCommand command) {
         Map<String, String> data = new HashMap<>();
         data.put("code", "0001");
-        return ResultBody.ok(data);
+        return ResponseResult.ok(data);
     }
 
     @PostMapping("/testFile")
-    public ResultBody testFile(MultipartFile file) {
+    public ResponseResult testFile(MultipartFile file) {
 //        WebUtils.getParameterMap(request);
         Map<String, String> data = new HashMap<>();
         data.put("code", "0001");
-        return ResultBody.ok(data);
+        return ResponseResult.ok(data);
     }
 
 }

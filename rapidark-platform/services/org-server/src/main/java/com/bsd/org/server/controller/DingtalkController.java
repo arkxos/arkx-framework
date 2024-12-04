@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bsd.org.server.model.entity.Dingtalk;
 import com.bsd.org.server.model.vo.DingtalkVO;
 import com.bsd.org.server.service.DingtalkService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 
 
@@ -44,15 +44,15 @@ public class DingtalkController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
 //    })
     @GetMapping(value = "/page")
-    public ResultBody page(@RequestParam(value = "companyId", required = false) Long companyId,
-                                       @RequestParam(value = "corpId", required = false) String corpId,
-                                       @RequestParam(value = "agentdId", required = false) String agentdId,
-                                       @RequestParam(value = "appKey", required = false) String appKey,
-                                       @RequestParam(value = "appSecret", required = false) String appSecret,
-                                       @RequestParam(value = "encodingAesKey", required = false) String encodingAesKey,
-                                       @RequestParam(value = "token", required = false) String token,
-                                       @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                                       @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
+    public ResponseResult page(@RequestParam(value = "companyId", required = false) Long companyId,
+                               @RequestParam(value = "corpId", required = false) String corpId,
+                               @RequestParam(value = "agentdId", required = false) String agentdId,
+                               @RequestParam(value = "appKey", required = false) String appKey,
+                               @RequestParam(value = "appSecret", required = false) String appSecret,
+                               @RequestParam(value = "encodingAesKey", required = false) String encodingAesKey,
+                               @RequestParam(value = "token", required = false) String token,
+                               @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
         //查询条件
         DingtalkVO dingtalkVO = new DingtalkVO();
         dingtalkVO.setCompanyId(companyId);
@@ -64,7 +64,7 @@ public class DingtalkController {
         dingtalkVO.setToken(token);
         //设置分页
         Page page = new Page<Dingtalk>(pageIndex, pageSize);
-        return ResultBody.ok(dingtalkService.pageByParam(dingtalkVO, page));
+        return ResponseResult.ok(dingtalkService.pageByParam(dingtalkVO, page));
     }
 
 
@@ -76,12 +76,12 @@ public class DingtalkController {
 //            @ApiImplicitParam(name = "companyId", required = true, value = "companyId", paramType = "form")
 //    })
     @GetMapping("/get")
-    public ResultBody<Dingtalk> get(@RequestParam("companyId") Long companyId) {
+    public ResponseResult<Dingtalk> get(@RequestParam("companyId") Long companyId) {
         Dingtalk dingtalk = dingtalkService.getById(companyId);
         if (dingtalk == null) {
-            return ResultBody.failed("未找到钉钉配置信息");
+            return ResponseResult.failed("未找到钉钉配置信息");
         }
-        return ResultBody.ok(dingtalk);
+        return ResponseResult.ok(dingtalk);
     }
 
     /**
@@ -100,7 +100,7 @@ public class DingtalkController {
 //            @ApiImplicitParam(name = "token", required = false, value = "加解密需要用到的token", paramType = "form")
 //    })
     @PostMapping("/add")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "companyId") Long companyId,
             @RequestParam(value = "corpId") String corpId,
             @RequestParam(value = "agentdId") String agentdId,
@@ -119,7 +119,7 @@ public class DingtalkController {
         dingtalk.setToken(token);
         dingtalk.setCreateBy(OpenHelper.getUser().getUserId()+"");
         dingtalkService.saveDingtalk(dingtalk);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -138,7 +138,7 @@ public class DingtalkController {
 //            @ApiImplicitParam(name = "token", required = false, value = "加解密需要用到的token", paramType = "form")
 //    })
     @PostMapping("/update")
-    public ResultBody update(
+    public ResponseResult update(
             @RequestParam(value = "companyId") Long companyId,
             @RequestParam(value = "corpId") String corpId,
             @RequestParam(value = "agentdId") String agentdId,
@@ -157,7 +157,7 @@ public class DingtalkController {
         dingtalk.setToken(token);
         dingtalk.setCreateBy(OpenHelper.getUser().getUserId()+"");
         dingtalkService.updateDingtalk(dingtalk);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -170,17 +170,17 @@ public class DingtalkController {
 //            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
 //    })
     @PostMapping("/remove")
-    public ResultBody remove(@RequestParam(value = "companyId") Long companyId) {
+    public ResponseResult remove(@RequestParam(value = "companyId") Long companyId) {
         Dingtalk dingtalk = dingtalkService.getById(companyId);
         if (dingtalk == null) {
-            return ResultBody.failed("钉钉配置信息不存在");
+            return ResponseResult.failed("钉钉配置信息不存在");
         }
 
         boolean isSuc = dingtalkService.removeById(companyId);
         if (!isSuc) {
-            return ResultBody.failed("删除钉钉配置信息失败");
+            return ResponseResult.failed("删除钉钉配置信息失败");
         }
 
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

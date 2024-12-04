@@ -11,7 +11,7 @@ import com.bsd.org.server.service.CompanyService;
 import com.bsd.org.server.service.UserService;
 import com.bsd.org.server.service.feign.BaseUserServiceClient;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 
@@ -68,19 +68,19 @@ public class UserController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页大小", required = false, paramType = "form")
 //    })
     @GetMapping(value = "/page")
-    public ResultBody page(@RequestParam(value = "userId", required = false) Long userId,
-                           @RequestParam(value = "parentId", required = false) Long parentId,
-                           @RequestParam(value = "companyId", required = false) Long companyId,
-                           @RequestParam(value = "positionId", required = false) Long positionId,
-                           @RequestParam(value = "departmentId", required = false) Long departmentId,
-                           @RequestParam(value = "positionCode", required = false) String positionCode,
-                           @RequestParam(value = "positionName", required = false) String positionName,
-                           @RequestParam(value = "name", required = false) String name,
-                           @RequestParam(value = "mobile", required = false) String mobile,
-                           @RequestParam(value = "active", required = false) Boolean active,
-                           @RequestParam(value = "jobnumber", required = false) String jobnumber,
-                           @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                           @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
+    public ResponseResult page(@RequestParam(value = "userId", required = false) Long userId,
+                               @RequestParam(value = "parentId", required = false) Long parentId,
+                               @RequestParam(value = "companyId", required = false) Long companyId,
+                               @RequestParam(value = "positionId", required = false) Long positionId,
+                               @RequestParam(value = "departmentId", required = false) Long departmentId,
+                               @RequestParam(value = "positionCode", required = false) String positionCode,
+                               @RequestParam(value = "positionName", required = false) String positionName,
+                               @RequestParam(value = "name", required = false) String name,
+                               @RequestParam(value = "mobile", required = false) String mobile,
+                               @RequestParam(value = "active", required = false) Boolean active,
+                               @RequestParam(value = "jobnumber", required = false) String jobnumber,
+                               @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
         UserDetailVO userDetailVO = new UserDetailVO();
         userDetailVO.setUserId(userId);
         userDetailVO.setParentId(parentId);
@@ -98,7 +98,7 @@ public class UserController {
         userDetailVO.setPositionId(positionId);
         IPage<UserDetailVO> page = new Page<UserDetailVO>(pageIndex, pageSize);
         IPage<UserDetailVO> users = userService.userDetailListPage(page, userDetailVO);
-        return ResultBody.ok(users);
+        return ResponseResult.ok(users);
     }
 
     /**
@@ -115,7 +115,7 @@ public class UserController {
 //            @ApiImplicitParam(name = "companyId", required = true, value = "公司ID", paramType = "form")
 //    })
     @GetMapping(value = "/userIds")
-    public ResultBody getUserIdsByDepartmentId(@RequestParam("companyId") Long companyId, @RequestParam(value = "departmentId", required = false) Long departmentId) {
+    public ResponseResult getUserIdsByDepartmentId(@RequestParam("companyId") Long companyId, @RequestParam(value = "departmentId", required = false) Long departmentId) {
         if (companyId == null) {
             throw new OpenAlertException("参数不可为空!");
         }
@@ -124,7 +124,7 @@ public class UserController {
         userDetailVO.setDepartmentId(departmentId);
         userDetailVO.setCompanyId(companyId);
         List<String> list = userService.userIdList(userDetailVO);
-        return ResultBody.ok(list);
+        return ResponseResult.ok(list);
     }
 
     /**
@@ -134,9 +134,9 @@ public class UserController {
      */
     @Schema(title = "获取所有人员信息(钉钉)", name = "获取所有人员信息(钉钉)")
     @GetMapping("/list")
-    public ResultBody list() {
+    public ResponseResult list() {
         List<UserDetailVO> users = userService.userDetailList(null);
-        return ResultBody.ok(users);
+        return ResponseResult.ok(users);
     }
 
     /**
@@ -144,7 +144,7 @@ public class UserController {
      */
     @Schema(title = "查找人员信息(钉钉)", name = "根据用户ID查找人员信息(钉钉)数据")
     @GetMapping("/get")
-    public ResultBody<UserDetailVO> get(@RequestParam("userId") Long userId) {
+    public ResponseResult<UserDetailVO> get(@RequestParam("userId") Long userId) {
         //设置条件
         UserDetailVO userDetailVO = new UserDetailVO();
         userDetailVO.setUserId(userId);
@@ -156,7 +156,7 @@ public class UserController {
         if (users.size() != 1) {
             throw new OpenAlertException("存在重复的用户信息");
         }
-        return ResultBody.ok(users.get(0));
+        return ResponseResult.ok(users.get(0));
     }
 
 
@@ -171,13 +171,13 @@ public class UserController {
 //            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form")
 //    })
     @GetMapping("/children")
-    public ResultBody children(@RequestParam("userId") Long userId) {
+    public ResponseResult children(@RequestParam("userId") Long userId) {
         //设置条件
         UserDetailVO userDetailVO = new UserDetailVO();
         userDetailVO.setParentId(userId);
         //查询下级用户
         List<UserDetailVO> users = userService.userDetailList(userDetailVO);
-        return ResultBody.ok(users);
+        return ResponseResult.ok(users);
     }
 
 
@@ -186,10 +186,10 @@ public class UserController {
 //            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form")
 //    })
     @GetMapping("/cascadeChildren")
-    public ResultBody<List<UserDetailVO>> cascadeChildren(@RequestParam("userId") Long userId) {
+    public ResponseResult<List<UserDetailVO>> cascadeChildren(@RequestParam("userId") Long userId) {
         //递归获取所有下级用户信息
         List<UserDetailVO> users = userService.getCascadeChildren(userId);
-        return ResultBody.ok(users);
+        return ResponseResult.ok(users);
     }
 
     /**
@@ -199,38 +199,38 @@ public class UserController {
      */
     @Schema(title = "添加系统用户", name = "添加系统用户")
     @PostMapping("/add")
-    public ResultBody add(@Valid @RequestBody AddDingDingUserCommand command) {
+    public ResponseResult add(@Valid @RequestBody AddDingDingUserCommand command) {
         User user = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getDdUserid, command.getDdUserid()));
         if (user == null) {
-            return ResultBody.failed("查询不到该钉钉唯一标识ID的用户信息");
+            return ResponseResult.failed("查询不到该钉钉唯一标识ID的用户信息");
         }
         if (user.getUserId() != null && user.getUserId().longValue() != 0) {
-            return ResultBody.failed("该用户已经添加过系统用户信息");
+            return ResponseResult.failed("该用户已经添加过系统用户信息");
         }
         //校验参数
         if (command.getStatus() != BaseUserConst.USER_STATUS_FORBIDDEN
                 && command.getStatus() != BaseUserConst.USER_STATUS_NORMAL
                 && command.getStatus() != BaseUserConst.USER_STATUS_LOCK) {
-            return ResultBody.failed("用户状态参数有误,请填写指定范围");
+            return ResponseResult.failed("用户状态参数有误,请填写指定范围");
         }
         if (!BaseUserConst.USER_TYPE_NORMAL.equals(command.getUserType()) && !BaseUserConst.USER_TYPE_SUPER.equals(command.getUserType())) {
-            return ResultBody.failed("用户类型参数有误,请填写指定范围");
+            return ResponseResult.failed("用户类型参数有误,请填写指定范围");
         }
 
-        ResultBody resultBody = baseUserServiceClient.addUser(command);
-        if (!resultBody.isOk()) {
-            return ResultBody.failed(resultBody.getMessage());
+        ResponseResult responseResult = baseUserServiceClient.addUser(command);
+        if (!responseResult.isOk()) {
+            return ResponseResult.failed(responseResult.getMessage());
         }
-        Long userId = Long.valueOf(String.valueOf(resultBody.getData()));
+        Long userId = Long.valueOf(String.valueOf(responseResult.getData()));
         if (userId == null) {
-            return ResultBody.failed("添加系统用户失败");
+            return ResponseResult.failed("添加系统用户失败");
         }
         user.setUserId(userId);
         boolean isSuc = userService.update(user, Wrappers.<User>lambdaQuery().eq(User::getDdUserid, command.getDdUserid()));
         if (!isSuc) {
-            return ResultBody.failed("绑定系统用户ID失败");
+            return ResponseResult.failed("绑定系统用户ID失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -260,7 +260,7 @@ public class UserController {
 //            @ApiImplicitParam(name = "jobnumber", required = true, value = "员工工号", example = "20190917", paramType = "form")
 //    })
     @PostMapping("/update")
-    public ResultBody update(
+    public ResponseResult update(
             @RequestParam(value = "ddUserid") String ddUserid,
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "parentId", required = false) Long parentId,
@@ -302,7 +302,7 @@ public class UserController {
         user.setJobnumber(jobnumber);
         user.setUpdateBy(openUserDetails.getUserId()+"");
         userService.updateUser(user);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -316,9 +316,9 @@ public class UserController {
 //            @ApiImplicitParam(name = "status", required = true, value = "状态:0-未激活 1-已激活", paramType = "form")
 //    })
     @PostMapping("/active")
-    public ResultBody active(@RequestParam(value = "userId") Long userId, @RequestParam(value = "status") Boolean status) {
+    public ResponseResult active(@RequestParam(value = "userId") Long userId, @RequestParam(value = "status") Boolean status) {
         userService.changeActiveStatus(userId, status);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**

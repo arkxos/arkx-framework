@@ -18,7 +18,7 @@ import com.google.common.collect.Maps;
 import com.rapidark.framework.common.configuration.OpenCommonProperties;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.WebUtils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -78,19 +78,19 @@ public class PayOrderController {
 //            @ApiImplicitParam(name = "productId", value = "商品Id,微信NATIVE扫码支付必传字段", paramType = "form")
 //    })
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public ResultBody pay(@RequestParam(value = "mchId") String mchId,
-                                    @RequestParam(value = "channelCode") String channelCode,
-                                    @RequestParam(value = "mchOrderNo") String mchOrderNo,
-                                    @RequestParam(value = "amount") Long amount,
-                                    @RequestParam(value = "subject") String subject,
-                                    @RequestParam(value = "body") String body,
-                                    @RequestParam(value = "notifyUrl", required = false) String notifyUrl,
-                                    @RequestParam(value = "returnUrl", required = false) String returnUrl,
-                                    @RequestParam(value = "param1", required = false) String param1,
-                                    @RequestParam(value = "param2", required = false) String param2,
-                                    @RequestParam(value = "openId", required = false) String openId,
-                                    @RequestParam(value = "productId", required = false) String productId,
-                                    HttpServletRequest request) {
+    public ResponseResult pay(@RequestParam(value = "mchId") String mchId,
+                              @RequestParam(value = "channelCode") String channelCode,
+                              @RequestParam(value = "mchOrderNo") String mchOrderNo,
+                              @RequestParam(value = "amount") Long amount,
+                              @RequestParam(value = "subject") String subject,
+                              @RequestParam(value = "body") String body,
+                              @RequestParam(value = "notifyUrl", required = false) String notifyUrl,
+                              @RequestParam(value = "returnUrl", required = false) String returnUrl,
+                              @RequestParam(value = "param1", required = false) String param1,
+                              @RequestParam(value = "param2", required = false) String param2,
+                              @RequestParam(value = "openId", required = false) String openId,
+                              @RequestParam(value = "productId", required = false) String productId,
+                              HttpServletRequest request) {
         MchInfo mchInfo = mchInfoService.findMchInfo(mchId);
         if (mchInfo == null) {
             throw new OpenAlertException("找不到商户信息");
@@ -150,10 +150,10 @@ public class PayOrderController {
             if (retMap.containsKey("payUrl") && PayConstant.CHANNEL_NAME_ALIPAY.equalsIgnoreCase(payChannel.getString("channelName"))) {
                 retMap.put("payUrl", Base64.encode(retMap.get("payUrl").toString(), "UTF-8"));
             }
-            return ResultBody.ok(retMap);
+            return ResponseResult.ok(retMap);
         }
 
-        return ResultBody.failed(retMap.get("retMsg").toString()).data(retMap);
+        return ResponseResult.failed(retMap.get("retMsg").toString()).data(retMap);
     }
 
     /**
@@ -412,7 +412,7 @@ public class PayOrderController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
 //    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResultBody<IPage<PayOrder>> getApiList(
+    public ResponseResult<IPage<PayOrder>> getApiList(
             @RequestParam(value = "payOrderId", required = false) String payOrderId,
             @RequestParam(value = "mchId", required = false) String mchId,
             @RequestParam(value = "mchOrderNo", required = false) String mchOrderNo,
@@ -463,18 +463,18 @@ public class PayOrderController {
         map.put("page", pageIndex);
         map.put("limit", pageSize);
 
-        return ResultBody.ok(payOrderService.findListPage(new PageParams(map)));
+        return ResponseResult.ok(payOrderService.findListPage(new PageParams(map)));
     }
 
 
     @Schema(title = "支付订单详情", name = "点击查看详情进入订单详情页面")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ResultBody<PayOrder> detail(@RequestParam String payOrderId) {
+    public ResponseResult<PayOrder> detail(@RequestParam String payOrderId) {
         PayOrder payOrder = payOrderService.findPayOrder(payOrderId);
         if (payOrder == null) {
-            return ResultBody.failed("未查找到ID为" + payOrderId + "的订单信息");
+            return ResponseResult.failed("未查找到ID为" + payOrderId + "的订单信息");
         }
-        return ResultBody.ok(payOrder);
+        return ResponseResult.ok(payOrder);
     }
 
     @Schema(title = "支付订单查询", name = "查询支付订单接口:\n" +
@@ -489,11 +489,11 @@ public class PayOrderController {
 //            @ApiImplicitParam(name = "sign", value = "签名", paramType = "form"),
 //    })
     @GetMapping(value = "/query")
-    public ResultBody query(@RequestParam(value = "payOrderId", required = true) String payOrderId,
-                            @RequestParam(value = "mchId", required = true) String mchId,
-                            @RequestParam(value = "mchOrderNo", required = true) String mchOrderNo,
-                            @RequestParam(value = "executeNotify", required = false) String executeNotify,
-                            @RequestParam(value = "sign", required = true) String sign) {
+    public ResponseResult query(@RequestParam(value = "payOrderId", required = true) String payOrderId,
+                                @RequestParam(value = "mchId", required = true) String mchId,
+                                @RequestParam(value = "mchOrderNo", required = true) String mchOrderNo,
+                                @RequestParam(value = "executeNotify", required = false) String executeNotify,
+                                @RequestParam(value = "sign", required = true) String sign) {
         _log.info("###### 开始接收商户查询支付订单请求 ######");
         HashMap<String, Object> payOrderMap = new HashMap<>();
         payOrderMap.put("payOrderId", payOrderId);
@@ -508,19 +508,19 @@ public class PayOrderController {
             String errorMessage = validateQueryParams(payOrderMap, payContext);
             if (!"success".equalsIgnoreCase(errorMessage)) {
                 _log.warn(errorMessage);
-                return ResultBody.failed(errorMessage);
+                return ResponseResult.failed(errorMessage);
             }
             _log.debug("请求参数及签名校验通过");
             JSONObject payOrder = payOrderService.queryPayOrder(mchId, payOrderId, mchOrderNo, executeNotify);
             _log.info("{}查询支付订单,结果:{}", logPrefix, payOrder);
             if (payOrder == null) {
-                return ResultBody.failed("支付订单不存在");
+                return ResponseResult.failed("支付订单不存在");
             }
             _log.info("###### 商户查询订单处理完成 ######");
-            return ResultBody.ok(payOrder);
+            return ResponseResult.ok(payOrder);
         } catch (Exception e) {
             _log.error(e, "");
-            return ResultBody.failed("支付中心系统异常");
+            return ResponseResult.failed("支付中心系统异常");
         }
     }
 
@@ -585,18 +585,18 @@ public class PayOrderController {
 
     @Schema(title = "支付订单过期处理", name = "查出订单创建时间是否超过24h，若超过则置为过期,前台不需要传参数")
     @RequestMapping(value = "/expire", method = RequestMethod.GET)
-    public ResultBody<String> expire() {
+    public ResponseResult<String> expire() {
         int count = payOrderService.updateStatus4Expired(1800);
 
-        return ResultBody.ok("本次有" + count + "条支付订单未支付已置为过期!");
+        return ResponseResult.ok("本次有" + count + "条支付订单未支付已置为过期!");
     }
 
     @Schema(title = "掉单支付结果同步", name = "查出订单创建时间是否超过30分钟，若超过则主动查询结果,前台不需要传参数")
     @RequestMapping(value = "/synPayResult", method = RequestMethod.GET)
-    public ResultBody<String> synPayResult() {
+    public ResponseResult<String> synPayResult() {
         int count = payOrderService.synPayResult(1800);
 
-        return ResultBody.ok("本次有" + count + "条支付订单状态已更新!");
+        return ResponseResult.ok("本次有" + count + "条支付订单状态已更新!");
     }
 
     /**
@@ -668,7 +668,7 @@ public class PayOrderController {
 //    })
     @Schema(title = "获取微信授权openid", name = "获取微信授权openid")
     @RequestMapping(value = "/getOpenId2", method = RequestMethod.POST)
-    public ResultBody getOpenId2(HttpServletRequest request) {
+    public ResponseResult getOpenId2(HttpServletRequest request) {
         _log.info("进入获取用户openID页面");
         String redirectUrl = request.getParameter("redirectUrl");
         String code = request.getParameter("code");
@@ -710,7 +710,7 @@ public class PayOrderController {
             _log.info("跳转URL={}", url);
             map.put("redirectUrl", url);
         }
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     @InitBinder

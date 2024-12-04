@@ -1,11 +1,8 @@
 package com.rapidark.cloud.uaa.admin.server.controller;
 
-import com.rapidark.cloud.common.encrypt.annotation.ApiEncrypt;
-import com.rapidark.cloud.uaa.admin.server.controller.cmd.*;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
-import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2ClientDetails;
 import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2ClientProperties;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.cloud.uaa.admin.server.service.feign.BaseUserServiceClient;
@@ -18,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-import java.security.Principal;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -50,11 +44,11 @@ public class LoginController {
      */
     @Schema(title = "获取当前登录用户信息", name = "获取当前登录用户信息")
     @GetMapping("/current/user")
-    public ResultBody getUserProfile() {
+    public ResponseResult getUserProfile() {
         OpenUserDetails user = OpenHelper.getUser();
         Map map = BeanConvertUtils.objectToMap(user);
         map.put("roles", baseUserServiceClient.getUserRoles(user.getUserId()).getData());
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**

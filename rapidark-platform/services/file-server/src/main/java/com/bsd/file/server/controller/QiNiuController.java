@@ -4,7 +4,7 @@ import com.bsd.file.server.dto.UploadDto;
 import com.bsd.file.server.service.QiNiuService;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 
 
@@ -45,10 +45,10 @@ public class QiNiuController {
     @Schema(title = "获取token", name = "获取token")
     @ResponseBody
     @GetMapping("/token")
-    public ResultBody token() {
+    public ResponseResult token() {
         Map<String, String> map = Maps.newHashMap();
         map.put("token", qiniuService.getToken());
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**
@@ -64,7 +64,7 @@ public class QiNiuController {
 //    })
     @ResponseBody
     @PostMapping("/upload")
-    public ResultBody uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseResult uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             throw new OpenAlertException("上传文件不能为空");
         }
@@ -76,7 +76,7 @@ public class QiNiuController {
         Map<String, String> map = Maps.newHashMap();
         map.put("fileName", fileName);
         map.put("fileUrl", qiniuService.getFileUrl(fileName));
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**
@@ -92,7 +92,7 @@ public class QiNiuController {
 //    })
     @ResponseBody
     @PostMapping("/batch/upload")
-    public ResultBody batchUploadFile(@RequestParam("files") MultipartFile[] files) throws Exception {
+    public ResponseResult batchUploadFile(@RequestParam("files") MultipartFile[] files) throws Exception {
         List<Object> list = new ArrayList<>();
         for (int i = 0; i < files.length; ++i) {
             if (!files[i].isEmpty()) {
@@ -106,7 +106,7 @@ public class QiNiuController {
                 list.add(map);
             }
         }
-        return ResultBody.ok(list);
+        return ResponseResult.ok(list);
     }
 
     /**

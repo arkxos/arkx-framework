@@ -9,7 +9,7 @@ import com.rapidark.cloud.gateway.server.filter.context.GatewayContext;
 import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenSignatureException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.SignatureUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -89,7 +89,7 @@ public class PreSignatureFilter implements WebFilter {
                 if (openAppServiceClient != null) {
                     String appId = params.get(CommonConstants.APP_ID_KEY);
                     // 获取客户端信息
-                    ResultBody<OpenApp> result = openAppServiceClient.getApp(appId);
+                    ResponseResult<OpenApp> result = openAppServiceClient.getApp(appId);
                     OpenApp app = result.getData();
                     if (app == null || app.getAppId() == null) {
                         return signatureDeniedHandler.handle(exchange, new OpenSignatureException("appId无效"));

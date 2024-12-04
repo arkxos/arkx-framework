@@ -1,6 +1,6 @@
 package com.rapidark.framework.common.exception;
 
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
@@ -18,8 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class OpenAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
-        ResultBody resultBody = OpenGlobalExceptionHandler.resolveException(exception, request.getRequestURI());
-        response.setStatus(resultBody.getHttpStatus());
-        WebUtils.writeJson(response, resultBody);
+        ResponseResult responseResult = OpenGlobalExceptionHandler.resolveException(exception, request.getRequestURI());
+        response.setStatus(responseResult.getHttpStatus());
+        WebUtils.writeJson(response, responseResult);
     }
 }

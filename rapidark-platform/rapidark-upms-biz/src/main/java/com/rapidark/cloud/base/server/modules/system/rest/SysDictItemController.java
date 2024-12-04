@@ -15,14 +15,11 @@
  */
 package com.rapidark.cloud.base.server.modules.system.rest;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailDto;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
@@ -106,29 +103,29 @@ public class SysDictItemController {
     @Schema(title = "新增字典详情")
     @PostMapping
     @PreAuthorize("@el.check('dict:add')")
-    public ResultBody<Object> create(@Validated @RequestBody SysDictItem resources){
+    public ResponseResult<Object> create(@Validated @RequestBody SysDictItem resources){
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
         }
         sysDictItemService.create(resources);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 //    @Log("修改字典详情")
     @Schema(title = "修改字典详情")
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
-    public ResultBody<Object> update(@Validated(SysDictItem.Update.class) @RequestBody SysDictItem resources){
+    public ResponseResult<Object> update(@Validated(SysDictItem.Update.class) @RequestBody SysDictItem resources){
         sysDictItemService.update(resources);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 //    @Log("删除字典详情")
     @Schema(title = "删除字典详情")
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("@el.check('dict:del')")
-    public ResultBody<Object> delete(@PathVariable Long id){
+    public ResponseResult<Object> delete(@PathVariable Long id){
         sysDictItemService.delete(id);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

@@ -6,7 +6,7 @@ import com.bsd.user.server.model.dto.UserAccountDTO;
 import com.bsd.user.server.service.UserAccountService;
 import com.bsd.user.server.service.WechatAuthService;
 import com.google.common.collect.Maps;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2ClientDetails;
 import com.rapidark.framework.common.security.oauth2.client.OpenOAuth2Service;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
@@ -56,8 +56,8 @@ public class UserAccountController {
 //            @ApiImplicitParam(name = "code", required = true, value = "qq服务回调带的code参数", paramType = "form"),
 //    })
     @PostMapping("/qq/callback")
-    public ResultBody callbackByQQ(@RequestParam(value = "code", required = true) String code) {
-        return ResultBody.ok(userAccountService.isBindingsByQq(code));
+    public ResponseResult callbackByQQ(@RequestParam(value = "code", required = true) String code) {
+        return ResponseResult.ok(userAccountService.isBindingsByQq(code));
     }
 
     /**
@@ -72,20 +72,20 @@ public class UserAccountController {
 //            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号 4-日历小程序", paramType = "form"),
 //    })
     @GetMapping("/wechat/callback")
-    public ResultBody callbackByWechat(@RequestParam(value = "code") String code,
-                                       @RequestParam(value = "platform", required = false) Integer platform) {
+    public ResponseResult callbackByWechat(@RequestParam(value = "code") String code,
+                                           @RequestParam(value = "platform", required = false) Integer platform) {
         //platform不传，设置默认值
         if (platform == null) {
             platform = UserConstants.PLATFORM_WECHAT_PC;
         }
         //校验platform
         if (!Arrays.asList(UserConstants.PLATFORM_ALL).contains(platform)) {
-            return ResultBody.failed("第三方平台参数错误");
+            return ResponseResult.failed("第三方平台参数错误");
         }
         if (userAccountService.isBindingsByWechat(code, platform)) {
-            return ResultBody.ok();
+            return ResponseResult.ok();
         }
-        return ResultBody.failed("您暂未绑定用户中心账号，请前往绑定");
+        return ResponseResult.failed("您暂未绑定用户中心账号，请前往绑定");
     }
 
 
@@ -101,14 +101,14 @@ public class UserAccountController {
 //            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", paramType = "form"),
 //    })
     @PostMapping("/login")
-    public ResultBody loginByThirdPlatform(@RequestParam(value = "code", required = true) String code,
-                                           @RequestParam(value = "platform", required = true) Integer platform,
-                                           HttpServletRequest request) {
+    public ResponseResult loginByThirdPlatform(@RequestParam(value = "code", required = true) String code,
+                                               @RequestParam(value = "platform", required = true) Integer platform,
+                                               HttpServletRequest request) {
         UserAccountPo accoutPo = new UserAccountPo();
         accoutPo.setCode(code);
         accoutPo.setPlatform(platform);
         accoutPo.setLoginIp(WebUtils.getRemoteAddress(request));
-        return ResultBody.ok(userAccountService.loginByThirdPlatform(accoutPo));
+        return ResponseResult.ok(userAccountService.loginByThirdPlatform(accoutPo));
     }
 
     /**
@@ -129,12 +129,12 @@ public class UserAccountController {
 //            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", allowableValues = "1,2,3,4,5,6", paramType = "form")
 //    })
     @PostMapping("/bind")
-    public ResultBody bindingsUser(@RequestParam(value = "code", required = true) String code,
-                                   @RequestParam(value = "mobile", required = true) String mobile,
-                                   @RequestParam(value = "password", required = true) String password,
-                                   @RequestParam(value = "platform", required = true) Integer platform,
-                                   @RequestParam(value = "mobileCode", required = true) String mobileCode,
-                                   HttpServletRequest request
+    public ResponseResult bindingsUser(@RequestParam(value = "code", required = true) String code,
+                                       @RequestParam(value = "mobile", required = true) String mobile,
+                                       @RequestParam(value = "password", required = true) String password,
+                                       @RequestParam(value = "platform", required = true) Integer platform,
+                                       @RequestParam(value = "mobileCode", required = true) String mobileCode,
+                                       HttpServletRequest request
     ) {
         UserAccountPo accountPo = new UserAccountPo();
         accountPo.setCode(code);
@@ -144,7 +144,7 @@ public class UserAccountController {
         accountPo.setMobileCode(mobileCode);
         accountPo.setLoginIp(WebUtils.getRemoteAddress(request));
         userAccountService.bindingsUser(accountPo);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -155,11 +155,11 @@ public class UserAccountController {
 //            @ApiImplicitParam(name = "platform", required = true, value = "第三方登录平台,1-微信移动应用 、2-微信网站应用、3-微信公众号、4-微信小程序、5-QQ、6-微博", allowableValues = "1,2,3,4", paramType = "form")
 //    })
     @PostMapping("/unbind")
-    public ResultBody unBindingsUser(@RequestParam(value = "platform", required = true) Integer platform,
-                                     HttpServletRequest request) {
+    public ResponseResult unBindingsUser(@RequestParam(value = "platform", required = true) Integer platform,
+                                         HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         userAccountService.unbindingsUser(LoginMoblie, platform);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -167,13 +167,13 @@ public class UserAccountController {
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "uids", required = true, value = "用户ID,多个使用,分割开", paramType = "form"),})
     @PostMapping("/getByUserId")
-    public ResultBody getUserAccountByUserId(@RequestParam(value = "uids", required = true) String uids) {
+    public ResponseResult getUserAccountByUserId(@RequestParam(value = "uids", required = true) String uids) {
         List<String> idList = Arrays.asList(uids.split(","));
         if (idList == null || idList.size() == 0) {
-            return ResultBody.failed("用户ID列表不能为空");
+            return ResponseResult.failed("用户ID列表不能为空");
         }
         List<UserAccountDTO> users = BeanConvertUtils.copyList(userAccountService.selectBatchUserIds(idList), UserAccountDTO.class);
-        return ResultBody.ok(users);
+        return ResponseResult.ok(users);
     }
 
 
@@ -185,14 +185,14 @@ public class UserAccountController {
     @Schema(title = "获取第三方登录URL", name = "获取第三方登录URL")
     @GetMapping("/login/url")
     @ResponseBody
-    public ResultBody getLoginThirdConfig() {
+    public ResponseResult getLoginThirdConfig() {
         Map<String, String> map = Maps.newHashMap();
         map.put("qq", qqAuthService.getAuthorizationUrl());
         //添加微信授权配置
         wechatAuthServiceMap.forEach((k, v) -> {
             map.put(v.getConfigTag(), v.getAuthorizationUrl());
         });
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**
@@ -203,7 +203,7 @@ public class UserAccountController {
     @Schema(title = "获取第三方登录配置", name = "获取第三方登录配置")
     @GetMapping("/login/config")
     @ResponseBody
-    public ResultBody getWechatConfig() {
+    public ResponseResult getWechatConfig() {
         Map<String, Object> map = Maps.newHashMap();
         Map<String, String> qqMap = Maps.newHashMap();
         OpenOAuth2ClientDetails qqObj = qqAuthService.getClientDetails();
@@ -219,6 +219,6 @@ public class UserAccountController {
             vMap.put("scope", vObj.getScope());
             map.put(v.getConfigTag(), vMap);
         });
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 }

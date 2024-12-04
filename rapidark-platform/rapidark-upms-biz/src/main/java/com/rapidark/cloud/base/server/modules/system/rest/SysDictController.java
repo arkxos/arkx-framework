@@ -15,21 +15,12 @@
  */
 package com.rapidark.cloud.base.server.modules.system.rest;
 
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
 import com.rapidark.cloud.platform.admin.api.entity.SysDict;
 import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
 import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
-import com.rapidark.cloud.platform.admin.api.entity.SysDictItem;
-import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
-import com.rapidark.cloud.platform.common.core.util.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
-import com.rapidark.cloud.platform.common.security.annotation.Inner;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -38,8 +29,6 @@ import lombok.RequiredArgsConstructor;
 //import com.rapidark.framework.commons.annotation.Log;
 import com.rapidark.framework.common.model.IdsParam;
 import com.rapidark.framework.common.exception.BadRequestException;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -50,7 +39,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
 * @author Zheng Jie
@@ -85,8 +73,8 @@ public class SysDictController {
 	@Schema(title = "查询字典")
 	@GetMapping
 	@PreAuthorize("@el.check('dict:list')")
-	public ResponseResult<Object> query(DictQueryCriteria resources, Pageable pageable){
-		return ResponseResult.ok(sysDictService.queryAll(resources,pageable));
+	public com.rapidark.cloud.platform.common.core.util.ResponseResult<Object> query(DictQueryCriteria resources, Pageable pageable){
+		return com.rapidark.cloud.platform.common.core.util.ResponseResult.ok(sysDictService.queryAll(resources,pageable));
 	}
 
 	/**
@@ -121,8 +109,8 @@ public class SysDictController {
 	 * @return 字典信息
 	 */
 	@GetMapping("/dict/item/{id}")
-	public ResponseResult findById(@PathVariable Long id) {
-		return ResponseResult.ok(sysDictService.findById(id));
+	public com.rapidark.cloud.platform.common.core.util.ResponseResult findById(@PathVariable Long id) {
+		return com.rapidark.cloud.platform.common.core.util.ResponseResult.ok(sysDictService.findById(id));
 	}
 //
 //	/**
@@ -141,21 +129,21 @@ public class SysDictController {
 	@SysLog("添加字典")
 //    @PreAuthorize("@el.check('dict:add')")
 //	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
-    public ResultBody<Object> create(@Validated @RequestBody SysDict resources){
+    public ResponseResult<Object> create(@Validated @RequestBody SysDict resources){
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
         }
         sysDictService.create(resources);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 //    @Log("修改字典")
     @Schema(title = "修改字典")
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
-    public ResultBody<Object> update(@Validated(SysDict.Update.class) @RequestBody SysDict resources){
+    public ResponseResult<Object> update(@Validated(SysDict.Update.class) @RequestBody SysDict resources){
         sysDictService.update(resources);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 //    @Log("删除字典")
@@ -164,9 +152,9 @@ public class SysDictController {
     @PreAuthorize("@el.check('dict:del')")
 	@SysLog("删除字典")
 	// @CacheEvict(value = CacheConstants.DICT_DETAILS, allEntries = true)
-    public ResultBody<Object> delete(@RequestBody IdsParam param){
+    public ResponseResult<Object> delete(@RequestBody IdsParam param){
         sysDictService.delete(param.getIds());
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 	/**
@@ -175,7 +163,7 @@ public class SysDictController {
 	 */
 	@SysLog("同步字典")
 	@PutMapping("/sync")
-	public ResponseResult sync() {
+	public com.rapidark.cloud.platform.common.core.util.ResponseResult sync() {
 		return sysDictService.syncDictCache();
 	}
 

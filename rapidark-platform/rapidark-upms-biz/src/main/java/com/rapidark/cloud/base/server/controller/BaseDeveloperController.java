@@ -9,7 +9,7 @@ import com.rapidark.cloud.base.server.service.BaseDeveloperService;
 import com.rapidark.cloud.gateway.manage.service.command.CreateDeveloperCommand;
 import com.rapidark.cloud.gateway.manage.service.command.UpdateDeveloperCommand;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import com.rapidark.framework.common.utils.WebUtils;
@@ -49,31 +49,31 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
 //    })
     @PostMapping("/developer/login")
     @Override
-    public ResultBody<UserAccount> developerLogin(@RequestParam(value = "username") String username) {
+    public ResponseResult<UserAccount> developerLogin(@RequestParam(value = "username") String username) {
         Map<String, String> parameterMap = WebUtils.getParameterMap(WebUtils.getHttpServletRequest());
         HttpServletRequest request = WebUtils.getHttpServletRequest();
         String ip = WebUtils.getRemoteAddress(request);
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
         UserAccount account = baseDeveloperService.login(username, parameterMap, ip, userAgent);
-        return ResultBody.ok(account);
+        return ResponseResult.ok(account);
     }
 
     @Schema(title = "系统分页用户列表", name = "系统分页用户列表")
     @GetMapping("/developer")
-    public ResultBody<PageResult<BaseDeveloper>> getUserList(@RequestParam(required = false) Map map) {
+    public ResponseResult<PageResult<BaseDeveloper>> getUserList(@RequestParam(required = false) Map map) {
 		PageResult<BaseDeveloper> data = baseDeveloperService.findListPage(new PageParams(map));
-        return ResultBody.ok(data);
+        return ResponseResult.ok(data);
     }
 
     @Schema(title = "获取所有用户列表", name = "获取所有用户列表")
     @GetMapping("/developer/all")
-    public ResultBody<List<BaseDeveloper>> getUserAllList() {
-        return ResultBody.ok(baseDeveloperService.findAllList());
+    public ResponseResult<List<BaseDeveloper>> getUserAllList() {
+        return ResponseResult.ok(baseDeveloperService.findAllList());
     }
 
     @Schema(title = "添加系统用户", name = "添加系统用户")
     @PostMapping("/developer/add")
-    public ResultBody<Long> addUser(@Valid @RequestBody CreateDeveloperCommand command) {
+    public ResponseResult<Long> addUser(@Valid @RequestBody CreateDeveloperCommand command) {
         BaseDeveloper developer = new BaseDeveloper();
         developer.setId(systemIdGenerator.generate());//UuidUtil.base58Uuid());
         developer.setCompanyName(command.getCompanyName());
@@ -88,27 +88,27 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
         developer.setAvatar(command.getAvatar());
         developer.setStatus(Status.codeOf(command.getStatus()));
         baseDeveloperService.addUser(developer);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     @Schema(title = "更新系统用户", name = "更新系统用户")
     @PostMapping("/developer/update")
-    public ResultBody updateUser(@Valid @RequestBody UpdateDeveloperCommand command) {
+    public ResponseResult updateUser(@Valid @RequestBody UpdateDeveloperCommand command) {
         baseDeveloperService.updateUser(command);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     @Schema(title = "修改用户密码", name = "修改用户密码")
     @PostMapping("/developer/update/password")
-    public ResultBody updatePassword(@Valid @RequestBody ChangeDeveloperPasswordCommand command) {
+    public ResponseResult updatePassword(@Valid @RequestBody ChangeDeveloperPasswordCommand command) {
         baseDeveloperService.updatePassword(command);
-        return ResultBody.ok().msg("修改密码成功");
+        return ResponseResult.ok().msg("修改密码成功");
     }
 
     @Schema(title = "注册第三方系统登录账号", name = "仅限系统内部调用")
     @PostMapping("/developer/add/thirdParty")
     @Override
-    public ResultBody addDeveloperThirdParty(
+    public ResponseResult addDeveloperThirdParty(
             @RequestParam(value = "account") String account,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "accountType") String accountType,
@@ -121,6 +121,6 @@ public class BaseDeveloperController implements IBaseDeveloperServiceClient {
         developer.setPassword(password);
         developer.setAvatar(avatar);
         baseDeveloperService.addUserThirdParty(developer, accountType);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

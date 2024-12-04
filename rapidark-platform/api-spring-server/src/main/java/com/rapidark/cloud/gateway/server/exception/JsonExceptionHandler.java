@@ -6,7 +6,7 @@ import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;
 import com.rapidark.framework.common.constants.ErrorCode;
 import com.rapidark.framework.common.exception.OpenGlobalExceptionHandler;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
@@ -61,7 +61,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
     /**
      * 存储处理异常后的信息
      */
-    private ThreadLocal<ResultBody> exceptionHandlerResult = new ThreadLocal<>();
+    private ThreadLocal<ResponseResult> exceptionHandlerResult = new ThreadLocal<>();
 
     /**
      * 参考AbstractErrorWebExceptionHandler
@@ -98,25 +98,25 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
          * 按照异常类型进行处理
          */
         ex.printStackTrace();
-        ResultBody resultBody;
+        ResponseResult responseResult;
         ServerHttpRequest request = exchange.getRequest();
         if ("/favicon.ico".equals(exchange.getRequest().getURI().getPath())) {
             return Mono.empty();
         }
         if (ex instanceof BlockException) {
             if (ex instanceof DegradeException) {
-                resultBody = ResultBody.failed().code(ErrorCode.GATEWAY_TIMEOUT.getCode()).msg("访问超时，请稍后再试!").httpStatus(HttpStatus.GATEWAY_TIMEOUT.value()).path(request.getURI().getPath());
+                responseResult = ResponseResult.failed().code(ErrorCode.GATEWAY_TIMEOUT.getCode()).msg("访问超时，请稍后再试!").httpStatus(HttpStatus.GATEWAY_TIMEOUT.value()).path(request.getURI().getPath());
             } else if (ex instanceof AuthorityException) {
-                resultBody = ResultBody.failed().code(ErrorCode.ACCESS_DENIED_BLACK_LIMITED.getCode()).msg(ErrorCode.ACCESS_DENIED_BLACK_LIMITED.getMessage()).httpStatus(HttpStatus.FORBIDDEN.value()).path(request.getURI().getPath());
+                responseResult = ResponseResult.failed().code(ErrorCode.ACCESS_DENIED_BLACK_LIMITED.getCode()).msg(ErrorCode.ACCESS_DENIED_BLACK_LIMITED.getMessage()).httpStatus(HttpStatus.FORBIDDEN.value()).path(request.getURI().getPath());
             } else {
-                resultBody = ResultBody.failed().code(ErrorCode.TOO_MANY_REQUESTS.getCode()).msg(ErrorCode.TOO_MANY_REQUESTS.getMessage()).httpStatus(HttpStatus.TOO_MANY_REQUESTS.value()).path(request.getURI().getPath());
+                responseResult = ResponseResult.failed().code(ErrorCode.TOO_MANY_REQUESTS.getCode()).msg(ErrorCode.TOO_MANY_REQUESTS.getMessage()).httpStatus(HttpStatus.TOO_MANY_REQUESTS.value()).path(request.getURI().getPath());
             }
-            log.error("==> 错误解析:{}", resultBody);
+            log.error("==> 错误解析:{}", responseResult);
         } else if (ex instanceof NotFoundException) {
-            resultBody = ResultBody.failed().code(ErrorCode.SERVICE_UNAVAILABLE.getCode()).msg(ErrorCode.SERVICE_UNAVAILABLE.getMessage()).httpStatus(HttpStatus.SERVICE_UNAVAILABLE.value()).path(request.getURI().getPath());
-            log.error("==> 错误解析:{}", resultBody);
+            responseResult = ResponseResult.failed().code(ErrorCode.SERVICE_UNAVAILABLE.getCode()).msg(ErrorCode.SERVICE_UNAVAILABLE.getMessage()).httpStatus(HttpStatus.SERVICE_UNAVAILABLE.value()).path(request.getURI().getPath());
+            log.error("==> 错误解析:{}", responseResult);
         } else {
-            resultBody = OpenGlobalExceptionHandler.resolveException(ex, exchange.getRequest().getURI().getPath());
+            responseResult = OpenGlobalExceptionHandler.resolveException(ex, exchange.getRequest().getURI().getPath());
         }
         /**
          * 参考AbstractErrorWebExceptionHandler
@@ -124,7 +124,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
         if (exchange.getResponse().isCommitted()) {
             return Mono.error(ex);
         }
-        exceptionHandlerResult.set(resultBody);
+        exceptionHandlerResult.set(responseResult);
         ServerRequest newRequest = ServerRequest.create(exchange, this.messageReaders);
         return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse).route(newRequest)
                 .switchIfEmpty(Mono.error(ex))
@@ -141,7 +141,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
      * @return
      */
     protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
-        ResultBody result = exceptionHandlerResult.get();
+        ResponseResult result = exceptionHandlerResult.get();
         exceptionHandlerResult.remove();
         return ServerResponse.status(result.getHttpStatus())
                 .contentType(MediaType.APPLICATION_JSON)

@@ -6,7 +6,7 @@ import com.bsd.comment.server.model.dto.CommentReplyTreeDTO;
 import com.bsd.comment.server.model.entity.CommentReply;
 import com.bsd.comment.server.service.CommentReplyService;
 import com.bsd.comment.server.utils.CommentReplyTreeUtils;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 
 
@@ -39,13 +39,13 @@ public class CommentReplyController {
      */
     @Schema(title = "获取评论下的回复(客户端)", name = "根据commentId获取评论下的所有回复")
     @GetMapping(value = "/client/replies")
-    public ResultBody clientTypeGetReplies(@RequestParam(required = false) Long commentId) {
+    public ResponseResult clientTypeGetReplies(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
         List<CommentReply> commentReplies = commentReplyService.listByCommentId(commentId, false);
         //PO转DTO
         List<CommentReplyRespDTO> result = BeanConvertUtils.copyList(commentReplies, CommentReplyRespDTO.class);
         //返回结果
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
     /**
@@ -56,19 +56,19 @@ public class CommentReplyController {
      */
     @Schema(title = "获取评论下的回复(后台)", name = "根据commentId获取评论下的所有回复")
     @GetMapping(value = "/admin/replies")
-    public ResultBody adminTypeGetReplies(@RequestParam(required = false) Long commentId) {
+    public ResponseResult adminTypeGetReplies(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
         List<CommentReply> commentReplies = commentReplyService.listByCommentId(commentId, true);
         //PO转DTO
         List<CommentReplyRespDTO> result = BeanConvertUtils.copyList(commentReplies, CommentReplyRespDTO.class);
         //返回结果
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
 
     @Schema(title = "获取评论下的回复JSON树(客户端)", name = "根获取评论下的回复JSON树")
     @GetMapping(value = "/client/json/replies")
-    public ResultBody clientTypeGetRepliesJson(@RequestParam(required = false) Long commentId) {
+    public ResponseResult clientTypeGetRepliesJson(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
         List<CommentReply> commentReplies = commentReplyService.listByCommentId(commentId, false);
         //PO转DTO
@@ -76,12 +76,12 @@ public class CommentReplyController {
         //转换成JSON Tree形式
         List<CommentReplyTreeDTO> resultTree = CommentReplyTreeUtils.getNodeJson(result);
         //返回结果
-        return ResultBody.ok(resultTree);
+        return ResponseResult.ok(resultTree);
     }
 
     @Schema(title = "获取评论下的回复JSON树(后台)", name = "根获取评论下的回复JSON树")
     @GetMapping(value = "/admin/json/replies")
-    public ResultBody adminTypeGetRepliesJson(@RequestParam(required = false) Long commentId) {
+    public ResponseResult adminTypeGetRepliesJson(@RequestParam(required = false) Long commentId) {
         //根据评论ID获取所有评论回复信息
         List<CommentReply> commentReplies = commentReplyService.listByCommentId(commentId, true);
         //PO转DTO
@@ -89,7 +89,7 @@ public class CommentReplyController {
         //转换成JSON Tree形式
         List<CommentReplyTreeDTO> resultTree = CommentReplyTreeUtils.getNodeJson(result);
         //返回结果
-        return ResultBody.ok(resultTree);
+        return ResponseResult.ok(resultTree);
     }
 
 
@@ -100,14 +100,14 @@ public class CommentReplyController {
      */
     @Schema(title = "添加回复", name = "添加回复")
     @PostMapping("/add")
-    public ResultBody add(@Validated CommentReplyDTO commentReplyDTO) {
+    public ResponseResult add(@Validated CommentReplyDTO commentReplyDTO) {
         CommentReply commentReply = BeanConvertUtils.copy(commentReplyDTO, CommentReply.class);
         //添加回复
         boolean isSuc = commentReplyService.saveCommentReply(commentReply);
         if (!isSuc) {
-            return ResultBody.failed("添加回复数据失败");
+            return ResponseResult.failed("添加回复数据失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -121,11 +121,11 @@ public class CommentReplyController {
 //            @ApiImplicitParam(name = "replyIds", required = true, value = "多个用,号隔开", paramType = "form")
 //    })
     @PostMapping("/batch/shield")
-    public ResultBody batchShield(@RequestParam(value = "replyIds") String replyIds) {
+    public ResponseResult batchShield(@RequestParam(value = "replyIds") String replyIds) {
         boolean isSuc = commentReplyService.shieldCommentReply(Arrays.asList(replyIds.split(",")));
         if (!isSuc) {
-            return ResultBody.failed("批量屏蔽回复失败");
+            return ResponseResult.failed("批量屏蔽回复失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

@@ -3,7 +3,7 @@ package com.bsd.file.server.controller;
 import com.bsd.file.server.service.FastDFSService;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 
 
@@ -41,7 +41,7 @@ public class FastDFSController {
 //    })
     @PostMapping("/upload")
     @ResponseBody
-    public ResultBody fileUpload(@RequestParam("file") MultipartFile file, @RequestParam(value = "prefix", required = false) String prefix) {
+    public ResponseResult fileUpload(@RequestParam("file") MultipartFile file, @RequestParam(value = "prefix", required = false) String prefix) {
         try {
             if (file.isEmpty()) {
                 throw new OpenAlertException("上传文件不能为空");
@@ -61,9 +61,9 @@ public class FastDFSController {
             Map<String, String> map = Maps.newHashMap();
             map.put("fileName", fileAbsolutePath[1]);
             map.put("fileUrl", path);
-            return ResultBody.ok(map);
+            return ResponseResult.ok(map);
         } catch (Exception e) {
-            return ResultBody.failed(e.getMessage());
+            return ResponseResult.failed(e.getMessage());
         }
     }
 }

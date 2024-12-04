@@ -2,7 +2,7 @@ package com.bsd.payment.server.service;
 
 import com.bsd.payment.server.model.dto.TransResultDTO;
 import com.bsd.payment.server.model.entity.TransOrder;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 /**
  * 支付通道服务接口
@@ -24,7 +24,7 @@ public interface IPayService {
      *
      * @param transOrder
      */
-    ResultBody<TransResultDTO> doTransReq(TransOrder transOrder, String configStr);
+    ResponseResult<TransResultDTO> doTransReq(TransOrder transOrder, String configStr);
 
 
     /**
@@ -33,7 +33,7 @@ public interface IPayService {
      * @param transOrder
      * @return
      */
-    ResultBody<TransResultDTO> getTransReq(TransOrder transOrder, String configStr);
+    ResponseResult<TransResultDTO> getTransReq(TransOrder transOrder, String configStr);
 
     /**
      * 退款

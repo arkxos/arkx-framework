@@ -3,7 +3,7 @@ package com.rapidark.cloud.base.client.service;
 import com.rapidark.cloud.base.client.model.IpLimitApi;
 import com.rapidark.cloud.base.client.model.RateLimitApi;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface IGatewayServiceClient {
      * @return
      */
     @GetMapping("/gateway/api/blackList")
-    ResultBody<List<IpLimitApi>> getApiBlackList();
+    ResponseResult<List<IpLimitApi>> getApiBlackList();
 
     /**
      * 获取接口白名单列表
@@ -26,7 +26,7 @@ public interface IGatewayServiceClient {
      * @return
      */
     @GetMapping("/gateway/api/whiteList")
-    ResultBody<List<IpLimitApi>> getApiWhiteList();
+    ResponseResult<List<IpLimitApi>> getApiWhiteList();
 
     /**
      * 获取限流列表
@@ -34,7 +34,7 @@ public interface IGatewayServiceClient {
      * @return
      */
     @GetMapping("/gateway/api/rateLimit")
-    ResultBody<List<RateLimitApi>> getApiRateLimitList();
+    ResponseResult<List<RateLimitApi>> getApiRateLimitList();
 
     /**
      * 获取路由列表
@@ -42,5 +42,5 @@ public interface IGatewayServiceClient {
      * @return
      */
     @GetMapping("/gateway/api/route")
-    ResultBody<List<GatewayAppRoute>> getApiRouteList();
+    ResponseResult<List<GatewayAppRoute>> getApiRouteList();
 }

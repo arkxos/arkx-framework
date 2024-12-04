@@ -6,7 +6,7 @@ import com.bsd.comment.server.model.dto.CommentDTO;
 import com.bsd.comment.server.model.entity.Comment;
 import com.bsd.comment.server.model.query.CommentQuery;
 import com.bsd.comment.server.service.CommentService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 
 
@@ -41,9 +41,9 @@ public class CommentController {
      */
     @Schema(title = "分页获取评论(后台)", name = "获取分页数据")
     @PostMapping(value = "/admin/list")
-    public ResultBody adminComments(CommentQuery commentQuery) {
+    public ResponseResult adminComments(CommentQuery commentQuery) {
         IPage<Comment> page = commentService.commentPage(commentQuery, true);
-        return ResultBody.ok(page);
+        return ResponseResult.ok(page);
     }
 
     /**
@@ -53,9 +53,9 @@ public class CommentController {
      */
     @Schema(title = "分页获取评论(客户端)", name = "获取分页数据")
     @PostMapping(value = "/client/list")
-    public ResultBody clientComments(CommentQuery commentQuery) {
+    public ResponseResult clientComments(CommentQuery commentQuery) {
         IPage<Comment> page = commentService.commentPage(commentQuery, false);
-        return ResultBody.ok(page);
+        return ResponseResult.ok(page);
     }
 
 
@@ -66,16 +66,16 @@ public class CommentController {
      */
     @Schema(title = "添加评论", name = "添加评论数据")
     @PostMapping("/add")
-    public ResultBody add(@Validated CommentDTO commentDTO) {
+    public ResponseResult add(@Validated CommentDTO commentDTO) {
         //拷贝属性
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentDTO, comment);
         //保存评论
         boolean isSuc = commentService.saveComment(comment);
         if (!isSuc) {
-            return ResultBody.failed("添加评论失败");
+            return ResponseResult.failed("添加评论失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -88,12 +88,12 @@ public class CommentController {
 //            @ApiImplicitParam(name = "commentIds", required = true, value = "多个用,号隔开", paramType = "form")
 //    })
     @PostMapping("/batch/audited")
-    public ResultBody batchAudited(@RequestParam(value = "commentIds") String commentIds) {
+    public ResponseResult batchAudited(@RequestParam(value = "commentIds") String commentIds) {
         boolean isSuc = commentService.changeStatus(CommentStatusEnum.NO_RESPONSE, Arrays.asList(commentIds.split(",")));
         if (!isSuc) {
-            return ResultBody.failed("批量审核评论失败");
+            return ResponseResult.failed("批量审核评论失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -109,13 +109,13 @@ public class CommentController {
 //            @ApiImplicitParam(name = "replyContent", required = true, value = "回复内容", paramType = "form")
 //    })
     @PostMapping("/batch/reply")
-    public ResultBody batchReply(@RequestParam(value = "commentIds") String commentIds,
-                                 @RequestParam(value = "replyContent") String replyContent) {
+    public ResponseResult batchReply(@RequestParam(value = "commentIds") String commentIds,
+                                     @RequestParam(value = "replyContent") String replyContent) {
         boolean isSuc = commentService.batchReply(Arrays.asList(commentIds.split(",")), replyContent);
         if (!isSuc) {
-            return ResultBody.failed("批量回复评论失败");
+            return ResponseResult.failed("批量回复评论失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -130,12 +130,12 @@ public class CommentController {
 //            @ApiImplicitParam(name = "commentIds", required = true, value = "多个用,号隔开", paramType = "form")
 //    })
     @PostMapping("/batch/shield")
-    public ResultBody batchShield(@RequestParam(value = "commentIds") String commentIds) {
+    public ResponseResult batchShield(@RequestParam(value = "commentIds") String commentIds) {
         boolean isSuc = commentService.changeStatus(CommentStatusEnum.SHIELD, Arrays.asList(commentIds.split(",")));
         if (!isSuc) {
-            return ResultBody.failed("批量屏蔽评论失败");
+            return ResponseResult.failed("批量屏蔽评论失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -150,12 +150,12 @@ public class CommentController {
 //            @ApiImplicitParam(name = "commentId", required = true, value = "评论ID", paramType = "form")
 //    })
     @PostMapping("/setTop")
-    public ResultBody setTop(@RequestParam(value = "commentId") String commentId) {
+    public ResponseResult setTop(@RequestParam(value = "commentId") String commentId) {
         boolean isSuc = commentService.setCommentToTop(commentId);
         if (!isSuc) {
-            return ResultBody.failed("置顶评论失败");
+            return ResponseResult.failed("置顶评论失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -172,12 +172,12 @@ public class CommentController {
 //            @ApiImplicitParam(name = "action", required = true, value = "1.点赞 2.点踩", paramType = "form")
 //    })
     @PostMapping("/action")
-    public ResultBody action(@RequestParam(value = "commentId") Long commentId,
-                             @RequestParam(value = "action") Integer action) {
+    public ResponseResult action(@RequestParam(value = "commentId") Long commentId,
+                                 @RequestParam(value = "action") Integer action) {
         boolean isSuc = commentService.doCommentAction(commentId, action);
         if (!isSuc) {
-            return ResultBody.failed("评论操作失败");
+            return ResponseResult.failed("评论操作失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

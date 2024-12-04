@@ -14,7 +14,7 @@ import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.server.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.data.jpa.entity.Status;
 
@@ -58,7 +58,7 @@ public class BaseMenuController {
      */
     @Schema(title = "所有服务列表", name = "所有服务列表")
     @GetMapping("/menu/services")
-    public ResultBody<List<JSONObject>> getServiceList() {
+    public ResponseResult<List<JSONObject>> getServiceList() {
         List<OpenAppDto> apps = openAppService.queryAll(new OpenClientQueryCriteria());
         List<JSONObject> jsonList = new ArrayList<>();
         for (OpenAppDto app : apps) {
@@ -71,7 +71,7 @@ public class BaseMenuController {
             json.put("serviceName", serviceNameDisplay);
             jsonList.add(json);
         }
-        return ResultBody.ok(jsonList);
+        return ResponseResult.ok(jsonList);
     }
 
     /**
@@ -81,8 +81,8 @@ public class BaseMenuController {
      */
     @Schema(title = "获取分页菜单资源列表", name = "获取分页菜单资源列表")
     @GetMapping("/menu")
-    public ResultBody<Page<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok(baseResourceMenuService.findListPage(new PageParams(map)));
+    public ResponseResult<Page<BaseMenu>> getMenuListPage(@RequestParam(required = false) Map map) {
+        return ResponseResult.ok(baseResourceMenuService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -92,8 +92,8 @@ public class BaseMenuController {
      */
     @Schema(title = "菜单所有资源列表", name = "菜单所有资源列表")
     @GetMapping("/menu/all")
-    public ResultBody<List<BaseMenu>> getMenuAllList() {
-        return ResultBody.ok(baseResourceMenuService.findAllList());
+    public ResponseResult<List<BaseMenu>> getMenuAllList() {
+        return ResponseResult.ok(baseResourceMenuService.findAllList());
     }
 
 
@@ -108,8 +108,8 @@ public class BaseMenuController {
 //            @ApiImplicitParam(name = "menuId", value = "menuId", paramType = "form"),
 //    })
     @GetMapping("/menu/action")
-    public ResultBody<List<BaseAction>> getMenuAction(Long menuId) {
-        return ResultBody.ok(baseResourceOperationService.findListByMenuId(menuId));
+    public ResponseResult<List<BaseAction>> getMenuAction(Long menuId) {
+        return ResponseResult.ok(baseResourceOperationService.findListByMenuId(menuId));
     }
 
     /**
@@ -123,8 +123,8 @@ public class BaseMenuController {
 //            @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
 //    })
     @GetMapping("/menu/{menuId}/info")
-    public ResultBody<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
-        return ResultBody.ok(baseMenuQuery.getMenu(menuId));
+    public ResponseResult<BaseMenu> getMenu(@PathVariable("menuId") Long menuId) {
+        return ResponseResult.ok(baseMenuQuery.getMenu(menuId));
     }
 
     /**
@@ -134,7 +134,7 @@ public class BaseMenuController {
      */
     @Schema(title = "添加菜单资源", name = "添加菜单资源")
     @PostMapping("/menu/add")
-    public ResultBody<Long> addMenu(@RequestBody CreateMenuCommand command) {
+    public ResponseResult<Long> addMenu(@RequestBody CreateMenuCommand command) {
         BaseMenu menu = new BaseMenu();
         menu.setMenuCode(command.getMenuCode());
         menu.setMenuName(command.getMenuName());
@@ -154,7 +154,7 @@ public class BaseMenuController {
         if (result != null) {
             menuId = result.getMenuId();
         }
-        return ResultBody.ok(menuId);
+        return ResponseResult.ok(menuId);
     }
 
     /**
@@ -164,7 +164,7 @@ public class BaseMenuController {
      */
     @Schema(title = "编辑菜单资源", name = "编辑菜单资源")
     @PostMapping("/menu/update")
-    public ResultBody updateMenu(@RequestBody @Valid UpdateMenuCommand command) {
+    public ResponseResult updateMenu(@RequestBody @Valid UpdateMenuCommand command) {
         BaseMenu menu = new BaseMenu();
         menu.setMenuId(command.getMenuId());
         menu.setMenuCode(command.getMenuCode());
@@ -182,7 +182,7 @@ public class BaseMenuController {
         menu.setServiceId(command.getServiceId());
         baseResourceMenuService.updateMenu(menu);
         // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -196,9 +196,9 @@ public class BaseMenuController {
 //            @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
 //    })
     @PostMapping("/menu/remove")
-    public ResultBody<Boolean> removeMenu(@RequestParam("menuId") Long menuId) {
+    public ResponseResult<Boolean> removeMenu(@RequestParam("menuId") Long menuId) {
         baseResourceMenuService.removeMenu(menuId);
         // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

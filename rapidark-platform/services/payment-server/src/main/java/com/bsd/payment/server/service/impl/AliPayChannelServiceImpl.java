@@ -17,7 +17,7 @@ import com.bsd.payment.server.service.IPayService;
 import com.bsd.payment.server.util.AmountUtil;
 import com.bsd.payment.server.util.DateUtil;
 import com.bsd.payment.server.util.StrUtil;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public class AliPayChannelServiceImpl implements IPayService {
      * @param transOrder
      */
     @Override
-    public ResultBody<TransResultDTO> doTransReq(TransOrder transOrder, String configStr) {
+    public ResponseResult<TransResultDTO> doTransReq(TransOrder transOrder, String configStr) {
         TransResultDTO transResultDTO = new TransResultDTO();
         //获取配置信息
         AlipayProperties alipayProperties = new AlipayProperties();
@@ -63,7 +63,7 @@ public class AliPayChannelServiceImpl implements IPayService {
                 transResultDTO.setChannelOrderNo(response.getOrderId());
                 transResultDTO.setTransSuccTime(DateUtil.getTextDate(response.getPayDate(), "yyyy-MM-dd HH:mm:ss"));
                 transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_SUCCESS);
-                return ResultBody.ok(transResultDTO);
+                return ResponseResult.ok(transResultDTO);
             } else {
                 transResultDTO.setChannelErrCode(response.getSubCode());
                 transResultDTO.setChannelErrMsg(response.getSubMsg());
@@ -76,7 +76,7 @@ public class AliPayChannelServiceImpl implements IPayService {
             transResultDTO.setChannelErrMsg(StrUtil.substr("支付宝转账请求异常:" + e.getMessage(), PayConstant.TRANS_ERROR_INFO_MAX_SIZE));
             transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_FAIL);
         }
-        return ResultBody.failed(transResultDTO);
+        return ResponseResult.failed(transResultDTO);
     }
 
 
@@ -88,7 +88,7 @@ public class AliPayChannelServiceImpl implements IPayService {
      * @return
      */
     @Override
-    public ResultBody getTransReq(TransOrder transOrder, String configStr) {
+    public ResponseResult getTransReq(TransOrder transOrder, String configStr) {
         TransResultDTO transResultDTO = new TransResultDTO();
         //获取配置信息
         AlipayProperties alipayProperties = new AlipayProperties();
@@ -124,7 +124,7 @@ public class AliPayChannelServiceImpl implements IPayService {
                     transResultDTO.setChannelOrderNo(response.getOrderId());
                     transResultDTO.setTransSuccTime(DateUtil.getTextDate(response.getPayDate(), "yyyy-MM-dd HH:mm:ss"));
                     transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_SUCCESS);
-                    return ResultBody.ok(transResultDTO);
+                    return ResponseResult.ok(transResultDTO);
                 } else if ("INIT".equals(status) || "DEALING".equals(status) || "UNKNOWN".equals(status)) {
                     transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_TRANING);
                 } else {
@@ -144,6 +144,6 @@ public class AliPayChannelServiceImpl implements IPayService {
             transResultDTO.setChannelErrMsg(StrUtil.substr("支付宝转账查询请求异常:" + e.getMessage(), PayConstant.TRANS_ERROR_INFO_MAX_SIZE));
             transResultDTO.setTransStatus(PayConstant.TRANS_STATUS_FAIL);
         }
-        return ResultBody.failed(transResultDTO);
+        return ResponseResult.failed(transResultDTO);
     }
 }

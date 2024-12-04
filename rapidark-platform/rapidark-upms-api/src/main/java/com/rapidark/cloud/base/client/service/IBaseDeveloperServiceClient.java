@@ -1,7 +1,7 @@
 package com.rapidark.cloud.base.client.service;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,7 +16,7 @@ public interface IBaseDeveloperServiceClient {
      * @return
      */
     @PostMapping("/developer/login")
-    ResultBody<UserAccount> developerLogin(@RequestParam(value = "username") String username);
+    ResponseResult<UserAccount> developerLogin(@RequestParam(value = "username") String username);
 
 
     /**
@@ -28,7 +28,7 @@ public interface IBaseDeveloperServiceClient {
      * @return
      */
     @PostMapping("/developer/register/thirdParty")
-    ResultBody addDeveloperThirdParty(
+    ResponseResult addDeveloperThirdParty(
             @RequestParam(value = "account") String account,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "accountType") String accountType,

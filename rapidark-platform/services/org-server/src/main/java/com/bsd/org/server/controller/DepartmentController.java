@@ -9,7 +9,7 @@ import com.bsd.org.server.model.entity.Department;
 import com.bsd.org.server.model.vo.DepartmentVO;
 import com.bsd.org.server.service.CompanyService;
 import com.bsd.org.server.service.DepartmentService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 
@@ -54,7 +54,7 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
 //    })
     @GetMapping(value = "/page")
-    public ResultBody page(
+    public ResponseResult page(
             @RequestParam(value = "departmentId", required = false) Long departmentId,
             @RequestParam(value = "parentId", required = false) Long parentId,
             @RequestParam(value = "departmentCode", required = false) String departmentCode,
@@ -74,7 +74,7 @@ public class DepartmentController {
         Page pageConf = new Page<DepartmentVO>(pageIndex, pageSize);
         //查询
         IPage<DepartmentVO> page = departmentService.pageByParam(pageConf, departmentVO);
-        return ResultBody.ok(page);
+        return ResponseResult.ok(page);
     }
 
 
@@ -84,13 +84,13 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "companyId", value = "所属企业ID", required = true, paramType = "form")
 //    })
     @GetMapping(value = "/select/list")
-    public ResultBody selectDepartmentList(@RequestParam(value = "departmentId", required = false) Long departmentId,
-                                           @RequestParam(value = "companyId", required = true) Long companyId) {
+    public ResponseResult selectDepartmentList(@RequestParam(value = "departmentId", required = false) Long departmentId,
+                                               @RequestParam(value = "companyId", required = true) Long companyId) {
         DepartmentVO departmentVO = new DepartmentVO();
         departmentVO.setCompanyId(companyId);
         departmentVO.setDepartmentId(departmentId);
         List<DepartmentVO> departments = departmentService.listSelectDepartments(departmentVO);
-        return ResultBody.ok(departments);
+        return ResponseResult.ok(departments);
     }
 
 
@@ -102,12 +102,12 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form")
 //    })
     @GetMapping("/get")
-    public ResultBody get(@RequestParam("departmentId") Long departmentId) {
+    public ResponseResult get(@RequestParam("departmentId") Long departmentId) {
         Department department = departmentService.getById(departmentId);
         if (department == null) {
-            return ResultBody.failed("未查找到部门信息");
+            return ResponseResult.failed("未查找到部门信息");
         }
-        return ResultBody.ok(department);
+        return ResponseResult.ok(department);
     }
 
 
@@ -121,10 +121,10 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "companyId", value = "所属企业ID", required = true, paramType = "form")
 //    })
     @GetMapping("/list")
-    public ResultBody list(@RequestParam(value = "companyId", required = true) Long companyId) {
+    public ResponseResult list(@RequestParam(value = "companyId", required = true) Long companyId) {
         DepartmentVO departmentVO = new DepartmentVO();
         departmentVO.setCompanyId(companyId);
-        return ResultBody.ok(departmentService.listByParam(departmentVO));
+        return ResponseResult.ok(departmentService.listByParam(departmentVO));
     }
 
     /**
@@ -134,8 +134,8 @@ public class DepartmentController {
      */
     @Schema(title = "获取所有启用的部门信息", name = "获取所有启用的部门信息")
     @GetMapping("/availableList")
-    public ResultBody availableList() {
-        return ResultBody.ok(departmentService.availableList());
+    public ResponseResult availableList() {
+        return ResponseResult.ok(departmentService.availableList());
     }
 
 
@@ -150,8 +150,8 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
 //    })
     @GetMapping("/children")
-    public ResultBody children(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok(departmentService.getChildrenDepartments(departmentId, null));
+    public ResponseResult children(@RequestParam("departmentId") Long departmentId) {
+        return ResponseResult.ok(departmentService.getChildrenDepartments(departmentId, null));
     }
 
     /**
@@ -165,8 +165,8 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "departmentId", required = true, value = "departmentId", paramType = "form")
 //    })
     @GetMapping("/availableChildrens")
-    public ResultBody availableChildrens(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok(departmentService.getChildrenDepartments(departmentId, true));
+    public ResponseResult availableChildrens(@RequestParam("departmentId") Long departmentId) {
+        return ResponseResult.ok(departmentService.getChildrenDepartments(departmentId, true));
     }
 
 
@@ -186,7 +186,7 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "companyId", required = true, value = "所属企业ID", example = "1173825172121944065", paramType = "form")
 //    })
     @PostMapping("/add")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "parentId", required = false) Long parentId,
             @RequestParam(value = "departmentCode") String departmentCode,
             @RequestParam(value = "departmentName") String departmentName,
@@ -210,7 +210,7 @@ public class DepartmentController {
         departmentService.saveDepartment(department);
         //删除菜单缓存信息
         companyService.removeMeunCache();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -230,7 +230,7 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "companyId", required = true, value = "所属企业ID", example = "1173825172121944065", paramType = "form")
 //    })
     @PostMapping("/update")
-    public ResultBody update(
+    public ResponseResult update(
             @RequestParam(value = "departmentId") Long departmentId,
             @RequestParam(value = "parentId", required = false) Long parentId,
             @RequestParam(value = "departmentCode") String departmentCode,
@@ -256,7 +256,7 @@ public class DepartmentController {
         departmentService.updateDepartment(department);
         //删除菜单缓存信息
         companyService.removeMeunCache();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -271,17 +271,17 @@ public class DepartmentController {
 //            @ApiImplicitParam(name = "status", required = true, value = "状态:0-禁用 1-启用", paramType = "form"),
 //    })
     @PostMapping("/status")
-    public ResultBody status(@RequestParam(value = "departmentId") Long departmentId, @RequestParam(value = "status") Boolean status) {
+    public ResponseResult status(@RequestParam(value = "departmentId") Long departmentId, @RequestParam(value = "status") Boolean status) {
         departmentService.changeStatus(departmentId, status);
         //删除菜单缓存信息
         companyService.removeMeunCache();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
     @Schema(title = "部门级别列表", name = "部门级别列表")
     @PostMapping("/levels")
-    public ResultBody levels() {
+    public ResponseResult levels() {
         JSONArray levelArray = new JSONArray();
         Arrays.asList(DepartmentLevelEnum.values()).forEach(x -> {
             JSONObject jsonObject = new JSONObject();
@@ -291,7 +291,7 @@ public class DepartmentController {
         });
         JSONObject levels = new JSONObject();
         levels.put("levels", levelArray);
-        return ResultBody.ok(levels);
+        return ResponseResult.ok(levels);
     }
 
 

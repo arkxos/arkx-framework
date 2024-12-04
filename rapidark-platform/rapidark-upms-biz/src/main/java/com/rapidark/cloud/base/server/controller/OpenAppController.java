@@ -13,7 +13,7 @@ import com.rapidark.cloud.base.server.service.dto.OpenClientQueryCriteria;
 import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRegServer;
 import com.rapidark.cloud.platform.gateway.framework.service.ClientServerRegisterService;
 import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.security.OpenClientDetails;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
@@ -101,9 +101,9 @@ public class OpenAppController implements IOpenAppServiceClient {
      */
     @Schema(title = "获取分页应用列表", name = "获取分页应用列表")
     @GetMapping("/app")
-    public ResultBody<PageResult<OpenAppDto>> getAppListPage(@RequestParam(required = false) OpenClientQueryCriteria criteria, Pageable pageable) {
+    public ResponseResult<PageResult<OpenAppDto>> getAppListPage(@RequestParam(required = false) OpenClientQueryCriteria criteria, Pageable pageable) {
 		PageResult<OpenAppDto> data = openAppService.queryAll(criteria, pageable);
-        return ResultBody.ok(data);
+        return ResponseResult.ok(data);
     }
 
     /**
@@ -118,14 +118,14 @@ public class OpenAppController implements IOpenAppServiceClient {
 //    })
     @GetMapping("/app/{appId}/info")
     @Override
-    public ResultBody<OpenApp> getApp(
+    public ResponseResult<OpenApp> getApp(
             @PathVariable("appId") String appId
     ) {
         OpenApp appInfo = openAppService.findById(appId);
         if(appInfo == null) {
-            return ResultBody.failed("该客户端不存在");
+            return ResponseResult.failed("该客户端不存在");
         }
-        return ResultBody.ok(appInfo);
+        return ResponseResult.ok(appInfo);
     }
 
     /**
@@ -140,13 +140,13 @@ public class OpenAppController implements IOpenAppServiceClient {
 //    })
     @GetMapping("/openClient/queryOpenClientByIp")
     @Override
-    public ResultBody<OpenApp> queryAppByIp(@RequestParam("ip") String ip) {
+    public ResponseResult<OpenApp> queryAppByIp(@RequestParam("ip") String ip) {
         Optional<OpenApp> openClientOptional = openAppRepository.findByIp(ip);
         if(openClientOptional.isEmpty()) {
-            return ResultBody.failed("该客户端不存在");
+            return ResponseResult.failed("该客户端不存在");
         }
         OpenApp openClient = openClientOptional.get();
-        return ResultBody.ok(openClient);
+        return ResponseResult.ok(openClient);
     }
 
     /**
@@ -161,11 +161,11 @@ public class OpenAppController implements IOpenAppServiceClient {
 //    })
     @GetMapping("/app/client/{clientId}/info")
     @Override
-    public ResultBody<OpenClientDetails> getAppClientInfo(
+    public ResponseResult<OpenClientDetails> getAppClientInfo(
             @PathVariable("clientId") String clientId
     ) {
         OpenClientDetails clientInfo = openAppService.getAppClientInfo(clientId);
-        return ResultBody.ok(clientInfo);
+        return ResponseResult.ok(clientInfo);
     }
 
     /**
@@ -191,7 +191,7 @@ public class OpenAppController implements IOpenAppServiceClient {
 //    })
     @Log("添加应用信息")
     @PostMapping("/app/add")
-    public ResultBody<String> addApp(@Validated @RequestBody CreateOpenAppCommand command) {
+    public ResponseResult<String> addApp(@Validated @RequestBody CreateOpenAppCommand command) {
         OpenApp app = new OpenApp();
         app.setAppName(command.getAppName());
         app.setAppNameEn(command.getAppNameEn());
@@ -215,7 +215,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         }
         customNacosConfigService.publishClientNacosConfig(app.getAppId());
 
-        return ResultBody.ok(appId);
+        return ResponseResult.ok(appId);
     }
 
     /**
@@ -253,7 +253,7 @@ public class OpenAppController implements IOpenAppServiceClient {
 //    })
     @Log("编辑应用信息")
     @PostMapping("/app/update")
-    public ResultBody updateApp(@Validated @RequestBody UpdateOpenClientCommand command) {
+    public ResponseResult updateApp(@Validated @RequestBody UpdateOpenClientCommand command) {
         OpenApp app = new OpenApp();
         app.setAppId(command.getAppId());
         app.setAppName(command.getAppName());
@@ -275,7 +275,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         // openRestTemplate.refreshGateway();
         customNacosConfigService.publishClientNacosConfig(app.getAppId());
 
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -285,7 +285,7 @@ public class OpenAppController implements IOpenAppServiceClient {
      */
     @Schema(title = "完善应用开发信息", name = "完善应用开发信息")
     @PostMapping("/app/client/update")
-    public ResultBody<String> updateAppClientInfo(@Valid @RequestBody UpdateAppClientInfoCommand command) {
+    public ResponseResult<String> updateAppClientInfo(@Valid @RequestBody UpdateAppClientInfoCommand command) {
         OpenApp app = openAppService.findById(command.getAppId());
         OpenClientDetails client = new OpenClientDetails(app.getApiKey(), "",
                 command.getScopes(), command.getGrantTypes(), "", command.getRedirectUrls());
@@ -295,7 +295,7 @@ public class OpenAppController implements IOpenAppServiceClient {
         Map info = BeanConvertUtils.objectToMap(app);
         client.setAdditionalInformation(info);
         openAppService.updateAppClientInfo(client);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -309,11 +309,11 @@ public class OpenAppController implements IOpenAppServiceClient {
 //            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
 //    })
     @PostMapping("/app/reset")
-    public ResultBody<String> resetAppSecret(
+    public ResponseResult<String> resetAppSecret(
             @RequestParam("appId") String appId
     ) {
         String result = openAppService.restSecret(appId);
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
     /**
@@ -328,13 +328,13 @@ public class OpenAppController implements IOpenAppServiceClient {
 //            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
 //    })
     @PostMapping("/app/remove")
-    public ResultBody removeApp(
+    public ResponseResult removeApp(
             @RequestParam("appId") String appId
     ) {
         openAppService.deleteById(appId);
         // openRestTemplate.refreshGateway();
         customNacosConfigService.publishClientNacosConfig(appId);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -343,13 +343,13 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @return
      */
     @RequestMapping(value = "/start", method = {RequestMethod.POST})
-    public ResultBody start(@RequestParam String id) {
+    public ResponseResult start(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         OpenApp dbClient = openAppService.findById(id);
         dbClient.setStatus(Status.ENABLED);
         openAppService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -358,13 +358,13 @@ public class OpenAppController implements IOpenAppServiceClient {
      * @return
      */
     @RequestMapping(value = "/stop", method = {RequestMethod.POST})
-    public ResultBody stop(@RequestParam String id) {
+    public ResponseResult stop(@RequestParam String id) {
         Assert.isTrue(StringUtils.isNotBlank(id), "未获取到对象ID");
         OpenApp dbClient = openAppService.findById(id);
         dbClient.setStatus(Status.DISABLED);
         openAppService.update(dbClient);
         customNacosConfigService.publishClientNacosConfig(id);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -372,7 +372,7 @@ public class OpenAppController implements IOpenAppServiceClient {
      */
     @Override
     @GetMapping(value = "/openClient/queryClientRegisterAppsByAppId")
-    public ResultBody<List<GatewayAppRouteRegServer>> queryClientRegisterAppsByAppId(@RequestParam("clientId") String clientId) {
+    public ResponseResult<List<GatewayAppRouteRegServer>> queryClientRegisterAppsByAppId(@RequestParam("clientId") String clientId) {
         Assert.isTrue(StringUtils.isNotBlank(clientId), "未获取到对象查询ID");
         List<GatewayAppRouteRegServer> data = clientServerRegisterService.queryClientRegisterAppsByAppId(clientId);
         for(GatewayAppRouteRegServer regServer : data) {
@@ -380,7 +380,7 @@ public class OpenAppController implements IOpenAppServiceClient {
             List<OpenAuthority> authrities = baseAuthorityService.findAuthorityByApp(clientId, systemCode);
             regServer.setAuthorities(authrities);
         }
-        return ResultBody.ok(data);
+        return ResponseResult.ok(data);
     }
 
 }

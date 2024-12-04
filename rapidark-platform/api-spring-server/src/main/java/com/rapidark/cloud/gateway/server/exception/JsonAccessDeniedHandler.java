@@ -2,7 +2,7 @@ package com.rapidark.cloud.gateway.server.exception;
 
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.framework.common.exception.OpenGlobalExceptionHandler;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.gateway.server.service.AccessLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -34,12 +34,12 @@ public class JsonAccessDeniedHandler implements ServerAccessDeniedHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
-        ResultBody resultBody = OpenGlobalExceptionHandler.resolveException(e, exchange.getRequest().getURI().getPath());
+        ResponseResult responseResult = OpenGlobalExceptionHandler.resolveException(e, exchange.getRequest().getURI().getPath());
         return Mono.defer(() -> Mono.just(exchange.getResponse())).flatMap((response) -> {
-            response.setStatusCode(HttpStatus.valueOf(resultBody.getHttpStatus()));
+            response.setStatusCode(HttpStatus.valueOf(responseResult.getHttpStatus()));
             response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
             DataBufferFactory dataBufferFactory = response.bufferFactory();
-            DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(resultBody).getBytes(Charset.defaultCharset()));
+            DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(responseResult).getBytes(Charset.defaultCharset()));
             // 保存日志
             accessLogService.sendLog(exchange, e);
             return response.writeWith(Mono.just(buffer)).doOnError((error) -> {

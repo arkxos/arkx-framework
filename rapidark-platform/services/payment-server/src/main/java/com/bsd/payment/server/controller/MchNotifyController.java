@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.bsd.payment.server.model.entity.MchNotify;
 import com.bsd.payment.server.service.IMchNotifyService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,17 +48,17 @@ public class MchNotifyController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "form")
 //    })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResultBody<IPage<MchNotify>> list(@RequestParam(value = "orderId", required = false) String orderId,
-                                             @RequestParam(value = "mchId", required = false) String mchId,
-                                             @RequestParam(value = "mchOrderNo", required = false) String mchOrderNo,
-                                             @RequestParam(value = "orderType", required = false) String orderType,
-                                             @RequestParam(value = "status", required = false) String status,
-                                             @RequestParam(value = "lastNotifyTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date lastNotifyTimeStart,
-                                             @RequestParam(value = "lastNotifyTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date lastNotifyTimeEnd,
-                                             @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeStart,
-                                             @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeEnd,
-                                             @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                                             @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+    public ResponseResult<IPage<MchNotify>> list(@RequestParam(value = "orderId", required = false) String orderId,
+                                                 @RequestParam(value = "mchId", required = false) String mchId,
+                                                 @RequestParam(value = "mchOrderNo", required = false) String mchOrderNo,
+                                                 @RequestParam(value = "orderType", required = false) String orderType,
+                                                 @RequestParam(value = "status", required = false) String status,
+                                                 @RequestParam(value = "lastNotifyTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date lastNotifyTimeStart,
+                                                 @RequestParam(value = "lastNotifyTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date lastNotifyTimeEnd,
+                                                 @RequestParam(value = "createTimeStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeStart,
+                                                 @RequestParam(value = "createTimeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createTimeEnd,
+                                                 @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                                                 @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         //设置查询条件
         HashMap<String, Object> map = new HashMap<>();
         if (ObjectUtils.isNotEmpty(orderId)) {
@@ -92,7 +92,7 @@ public class MchNotifyController {
         map.put("limit", pageSize);
 
         IPage<MchNotify> page = mchNotifyService.findListPage(new PageParams(map));
-        return ResultBody.ok(page);
+        return ResponseResult.ok(page);
     }
 
     /*@Schema(title = "新增商户通知", name = "新增商户通知")
@@ -142,11 +142,11 @@ public class MchNotifyController {
 //            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "form"),
 //    })
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ResultBody<MchNotify> detail(@RequestParam(value = "orderId") String orderId) {
+    public ResponseResult<MchNotify> detail(@RequestParam(value = "orderId") String orderId) {
         MchNotify item = mchNotifyService.findMchNotify(orderId);
         if (item == null) {
-            return ResultBody.failed("获取详情失败");
+            return ResponseResult.failed("获取详情失败");
         }
-        return ResultBody.ok(item);
+        return ResponseResult.ok(item);
     }
 }

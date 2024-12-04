@@ -1,7 +1,7 @@
 package com.rapidark.framework.common.exception;
 
 import com.rapidark.framework.common.constants.ErrorCode;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -36,10 +36,10 @@ public class OpenGlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler({AuthenticationException.class})
-    public static ResultBody authenticationException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
-        ResultBody resultBody = resolveException(ex, request.getRequestURI());
-        response.setStatus(resultBody.getHttpStatus());
-        return resultBody;
+    public static ResponseResult authenticationException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult responseResult = resolveException(ex, request.getRequestURI());
+        response.setStatus(responseResult.getHttpStatus());
+        return responseResult;
     }
 
     /**
@@ -66,10 +66,10 @@ public class OpenGlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler({OpenException.class})
-    public static ResultBody openException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
-        ResultBody resultBody = resolveException(ex, request.getRequestURI());
-        response.setStatus(resultBody.getHttpStatus());
-        return resultBody;
+    public static ResponseResult openException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult responseResult = resolveException(ex, request.getRequestURI());
+        response.setStatus(responseResult.getHttpStatus());
+        return responseResult;
     }
 
     /**
@@ -81,10 +81,10 @@ public class OpenGlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler({Exception.class})
-    public static ResultBody exception(Exception ex, HttpServletRequest request, HttpServletResponse response) {
-        ResultBody resultBody = resolveException(ex, request.getRequestURI());
-        response.setStatus(resultBody.getHttpStatus());
-        return resultBody;
+    public static ResponseResult exception(Exception ex, HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult responseResult = resolveException(ex, request.getRequestURI());
+        response.setStatus(responseResult.getHttpStatus());
+        return responseResult;
     }
 
     /**
@@ -93,7 +93,7 @@ public class OpenGlobalExceptionHandler {
      * @param ex
      * @return
      */
-    public static ResultBody resolveException(Throwable ex, String path) {
+    public static ResponseResult resolveException(Throwable ex, String path) {
         ErrorCode code = ErrorCode.ERROR;
         int httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
         String message = ex.getMessage();
@@ -213,12 +213,12 @@ public class OpenGlobalExceptionHandler {
      * @param exception
      * @return
      */
-    private static ResultBody buildBody(Throwable exception, String message, ErrorCode resultCode, String path, int httpStatus) {
+    private static ResponseResult buildBody(Throwable exception, String message, ErrorCode resultCode, String path, int httpStatus) {
         if (resultCode == null) {
             resultCode = ErrorCode.ERROR;
         }
-        ResultBody resultBody = ResultBody.failed().code(resultCode.getCode()).msg(message).path(path).httpStatus(httpStatus);
-        log.error("==> error:{} exception: {}", resultBody, exception);
-        return resultBody;
+        ResponseResult responseResult = ResponseResult.failed().code(resultCode.getCode()).msg(message).path(path).httpStatus(httpStatus);
+        log.error("==> error:{} exception: {}", responseResult, exception);
+        return responseResult;
     }
 }

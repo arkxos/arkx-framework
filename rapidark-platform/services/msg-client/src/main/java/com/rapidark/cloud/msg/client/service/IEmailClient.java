@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.client.service;
 
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +26,7 @@ public interface IEmailClient {
     @PostMapping(value = "/email/send",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ResultBody<String> send(
+    ResponseResult<String> send(
             @RequestParam(value = "to") String to,
             @RequestParam(value = "cc", required = false) String cc,
             @RequestParam(value = "subject") String subject,
@@ -49,7 +49,7 @@ public interface IEmailClient {
     @PostMapping(value = "/email/send/tpl",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ResultBody<String> sendByTpl(
+    ResponseResult<String> sendByTpl(
             @RequestParam(value = "to") String to,
             @RequestParam(value = "cc", required = false) String cc,
             @RequestParam(value = "subject") String subject,

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.platform.gateway.actuator;
 
 import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.cloud.bus.endpoint.AbstractBusEndpoint;
 import org.springframework.cloud.bus.event.Destination;
@@ -29,9 +29,9 @@ public class ApiEndpoint extends AbstractBusEndpoint {
      * @param destination
      */
     @PostMapping("/refresh")
-    public ResultBody busRefreshWithDestination(@RequestParam(required = false) String destination) {
+    public ResponseResult busRefreshWithDestination(@RequestParam(required = false) String destination) {
         this.publish(new RemoteRefreshRouteEvent(this, this.getInstanceId(), destination));
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 }

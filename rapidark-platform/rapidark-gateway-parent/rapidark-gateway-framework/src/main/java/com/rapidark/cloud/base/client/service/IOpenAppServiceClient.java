@@ -2,7 +2,7 @@ package com.rapidark.cloud.base.client.service;
 
 import com.rapidark.cloud.base.client.model.entity.OpenApp;
 import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRegServer;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenClientDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +25,7 @@ public interface IOpenAppServiceClient {
      * @return
      */
     @GetMapping("/app/{appId}/info")
-    ResultBody<OpenApp> getApp(@PathVariable("appId") String appId);
+    ResponseResult<OpenApp> getApp(@PathVariable("appId") String appId);
 
     /**
      * 根据ip查找数据
@@ -36,7 +36,7 @@ public interface IOpenAppServiceClient {
      * @return com.rapidark.framework.commons.model.ResultBody<com.rapidark.cloud.base.client.model.OpenClient>
      */
     @GetMapping("/openClient/queryOpenClientByIp")
-    ResultBody<OpenApp> queryAppByIp(@RequestParam("ip") String ip);
+    ResponseResult<OpenApp> queryAppByIp(@RequestParam("ip") String ip);
 
     /**
      * 获取应用开发配置信息
@@ -45,7 +45,7 @@ public interface IOpenAppServiceClient {
      * @return
      */
     @GetMapping("/app/client/{appId}/info")
-    ResultBody<OpenClientDetails> getAppClientInfo(@PathVariable("appId") String appId);
+    ResponseResult<OpenClientDetails> getAppClientInfo(@PathVariable("appId") String appId);
 
     /**
      * 查询客户端注册的所有应用
@@ -56,7 +56,7 @@ public interface IOpenAppServiceClient {
      * @return com.rapidark.framework.commons.model.ResultBody<java.util.List < com.rapidark.cloud.gateway.manage.service.dto.GatewayAppRouteRegServer>>
      */
     @GetMapping(value = "/openClient/queryClientRegisterAppsByAppId")
-    ResultBody<List<GatewayAppRouteRegServer>> queryClientRegisterAppsByAppId(@RequestParam("appId") String appId);
+    ResponseResult<List<GatewayAppRouteRegServer>> queryClientRegisterAppsByAppId(@RequestParam("appId") String appId);
 
 
 }

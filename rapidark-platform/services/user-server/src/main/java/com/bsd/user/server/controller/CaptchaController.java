@@ -7,7 +7,7 @@ import com.bsd.user.server.model.dto.CaptchaInitResultDTO;
 import com.bsd.user.server.model.dto.CaptchaValidateDTO;
 import com.bsd.user.server.model.dto.CaptchaValidateResultDTO;
 import com.bsd.user.server.service.CaptchaService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.RedisUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
@@ -58,9 +58,9 @@ public class CaptchaController {
 //            @ApiImplicitParam(name = "clientType", required = true, value = "客户端类型web(pc浏览器),h5(手机浏览器,包括webview),native(原生app),unknown(未知)", paramType = "form"),
 //    })
     @PostMapping("/init")
-    public ResultBody init(@RequestParam(value = "userId") Long userId,
-                           @RequestParam(value = "clientType") String clientType,
-                           HttpServletRequest request) {
+    public ResponseResult init(@RequestParam(value = "userId") Long userId,
+                               @RequestParam(value = "clientType") String clientType,
+                               HttpServletRequest request) {
         //业务参数
         CaptchaInitDTO captchaInitDTO = new CaptchaInitDTO();
         captchaInitDTO.setIp(WebUtils.getRemoteAddress(request));
@@ -72,7 +72,7 @@ public class CaptchaController {
         //初始化数据存到redis中
         captchaInitDTO.setGtServerStatus(captchaInitResultDTO.getGtServerStatus());
         redisUtils.set(captchaInitDTO.getUserId(), JSON.toJSONString(captchaInitDTO), 60 * 60);
-        return ResultBody.ok(captchaInitResultDTO);
+        return ResponseResult.ok(captchaInitResultDTO);
     }
 
     /**
@@ -92,15 +92,15 @@ public class CaptchaController {
 //            @ApiImplicitParam(name = "seccode", required = true, value = "极验验证二次验证表单数据 seccode", paramType = "form"),
 //    })
     @PostMapping("/validate")
-    public ResultBody validate(@RequestParam(value = "userId") Long userId,
-                               @RequestParam(value = "chllenge") String chllenge,
-                               @RequestParam(value = "validate") String validate,
-                               @RequestParam(value = "seccode") String seccode,
-                               HttpServletRequest request) {
+    public ResponseResult validate(@RequestParam(value = "userId") Long userId,
+                                   @RequestParam(value = "chllenge") String chllenge,
+                                   @RequestParam(value = "validate") String validate,
+                                   @RequestParam(value = "seccode") String seccode,
+                                   HttpServletRequest request) {
         //获取session中的数据
         String initStr = (String) redisUtils.get(CAPTCHA_INIT_USER_PREFIX + MD5Utils.md5Hex(userId+"", "UTF-8"));
         if (StringUtils.isEmpty(initStr)) {
-            return ResultBody.failed("二次验证之前未调用初始化接口");
+            return ResponseResult.failed("二次验证之前未调用初始化接口");
         }
         CaptchaInitDTO captchaInitDTO = JSON.parseObject(initStr, CaptchaInitDTO.class);
         //业务数据
@@ -116,9 +116,9 @@ public class CaptchaController {
         //二次验证请求
         CaptchaValidateResultDTO captchaValidateResultDTO = captchaService.validate(captchaValidateDTO);
         if ("success".equals(captchaValidateResultDTO.getStatus())) {
-            return ResultBody.ok(captchaValidateResultDTO);
+            return ResponseResult.ok(captchaValidateResultDTO);
         }
-        return ResultBody.failed(captchaValidateResultDTO);
+        return ResponseResult.failed(captchaValidateResultDTO);
     }
 
 }

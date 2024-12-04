@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.msg.server.service.EmailConfigService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.msg.client.model.entity.EmailConfig;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -34,11 +34,11 @@ public class EmailConfigController {
      */
     @Schema(title = "获取分页数据", name = "获取分页数据")
     @GetMapping(value = "/list")
-    public ResultBody<IPage<EmailConfig>> list(@RequestParam(required = false) Map map) {
+    public ResponseResult<IPage<EmailConfig>> list(@RequestParam(required = false) Map map) {
         PageParams pageParams = new PageParams(map);
         EmailConfig query = pageParams.mapToObject(EmailConfig.class);
         QueryWrapper<EmailConfig> queryWrapper = new QueryWrapper();
-        return ResultBody.ok(targetService.page(new PageParams(map), queryWrapper));
+        return ResponseResult.ok(targetService.page(new PageParams(map), queryWrapper));
     }
 
     /**
@@ -47,9 +47,9 @@ public class EmailConfigController {
     @Schema(title = "根据ID查找数据", name = "根据ID查找数据")
     @ResponseBody
     @GetMapping("/get")
-    public ResultBody<EmailConfig> get(@RequestParam("id") Long id) {
+    public ResponseResult<EmailConfig> get(@RequestParam("id") Long id) {
         EmailConfig entity = targetService.getById(id);
-        return ResultBody.ok(entity);
+        return ResponseResult.ok(entity);
     }
 
     /**
@@ -65,7 +65,7 @@ public class EmailConfigController {
 //            @ApiImplicitParam(name = "smtpPassword", required = true, value = "发件服务器密码", paramType = "form")
 //    })
     @PostMapping("/add")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "smtpHost") String smtpHost,
             @RequestParam(value = "smtpUsername") String smtpUsername,
@@ -77,7 +77,7 @@ public class EmailConfigController {
         entity.setSmtpUsername(smtpUsername);
         entity.setSmtpPassword(smtpPassword);
         targetService.save(entity);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -94,7 +94,7 @@ public class EmailConfigController {
 //            @ApiImplicitParam(name = "smtpPassword", required = true, value = "发件服务器密码", paramType = "form")
 //    })
     @PostMapping("/update")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "configId") Long configId,
             @RequestParam(value = "name") String name,
             @RequestParam(value = "smtpHost") String smtpHost,
@@ -108,7 +108,7 @@ public class EmailConfigController {
         entity.setSmtpUsername(smtpUsername);
         entity.setSmtpPassword(smtpPassword);
         targetService.updateById(entity);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -121,11 +121,11 @@ public class EmailConfigController {
 //            @ApiImplicitParam(name = "id", required = true, value = "id", paramType = "form")
 //    })
     @PostMapping("/remove")
-    public ResultBody remove(
+    public ResponseResult remove(
             @RequestParam(value = "id") Long id
     ) {
         targetService.removeById(id);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -138,10 +138,10 @@ public class EmailConfigController {
 //            @ApiImplicitParam(name = "id", required = true, value = "id", paramType = "form")
 //    })
     @PostMapping("/batch/remove")
-    public ResultBody batchRemove(
+    public ResponseResult batchRemove(
             @RequestParam(value = "ids") String ids
     ) {
         targetService.removeByIds(Arrays.asList(ids.split(",")));
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.msg.client.model.entity.EmailLogs;
 import com.rapidark.cloud.msg.server.service.EmailLogsService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +33,11 @@ public class EmailLogsController {
      */
     @Schema(title = "获取分页数据", name = "获取分页数据")
     @GetMapping(value = "/list")
-    public ResultBody<IPage<EmailLogs>> list(@RequestParam(required = false) Map map) {
+    public ResponseResult<IPage<EmailLogs>> list(@RequestParam(required = false) Map map) {
         PageParams pageParams = new PageParams(map);
         EmailLogs query = pageParams.mapToObject(EmailLogs.class);
         QueryWrapper<EmailLogs> queryWrapper = new QueryWrapper();
-        return ResultBody.ok(targetService.page(new PageParams(map), queryWrapper));
+        return ResponseResult.ok(targetService.page(new PageParams(map), queryWrapper));
     }
 
     /**
@@ -46,8 +46,8 @@ public class EmailLogsController {
     @Schema(title = "根据ID查找数据", name = "根据ID查找数据")
     @ResponseBody
     @GetMapping("/get")
-    public ResultBody<EmailLogs> get(@RequestParam("id") Long id) {
+    public ResponseResult<EmailLogs> get(@RequestParam("id") Long id) {
         EmailLogs entity = targetService.getById(id);
-        return ResultBody.ok(entity);
+        return ResponseResult.ok(entity);
     }
 }

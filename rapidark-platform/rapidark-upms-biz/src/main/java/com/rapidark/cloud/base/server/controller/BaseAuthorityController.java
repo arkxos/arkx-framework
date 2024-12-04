@@ -11,7 +11,7 @@ import com.rapidark.cloud.base.server.controller.cmd.GrantOpenClientAppApiAuthor
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.framework.common.constants.CommonConstants;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenAuthority;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.StringUtils;
@@ -51,9 +51,9 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     @Schema(title = "获取所有访问权限列表", name = "获取所有访问权限列表")
     @GetMapping("/authority/access")
     @Override
-    public ResultBody<List<AuthorityResource>> findAuthorityResource() {
+    public ResponseResult<List<AuthorityResource>> findAuthorityResource() {
         List<AuthorityResource> result = baseAuthorityService.findAuthorityResource();
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
     /**
@@ -63,11 +63,11 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
      */
     @Schema(title = "获取接口权限列表", name = "获取接口权限列表")
     @GetMapping("/authority/api")
-    public ResultBody<List<AuthorityApi>> findAuthorityApi(
+    public ResponseResult<List<AuthorityApi>> findAuthorityApi(
             @RequestParam(value = "serviceId", required = false) String serviceId
     ) {
         List<AuthorityApi> result = baseAuthorityService.findAuthorityApi(serviceId);
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
 
@@ -79,9 +79,9 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
     @Schema(title = "获取菜单权限列表", name = "获取菜单权限列表")
     @GetMapping("/authority/menu")
     @Override
-    public ResultBody<List<AuthorityMenu>> findAuthorityMenu() {
+    public ResponseResult<List<AuthorityMenu>> findAuthorityMenu() {
         List<AuthorityMenu> result = baseAuthorityService.findAuthorityMenu(1, null);
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
     /**
@@ -95,11 +95,11 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
 //            @ApiImplicitParam(name = "actionId", required = true, value = "功能按钮ID", paramType = "form")
 //    })
     @GetMapping("/authority/action")
-    public ResultBody<List<BaseAuthorityAction>> findAuthorityAction(
+    public ResponseResult<List<BaseAuthorityAction>> findAuthorityAction(
             @RequestParam(value = "actionId") Long actionId
     ) {
         List<BaseAuthorityAction> list = baseAuthorityService.findAuthorityAction(actionId);
-        return ResultBody.ok(list);
+        return ResponseResult.ok(list);
     }
 
 
@@ -114,9 +114,9 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
 //            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
 //    })
     @GetMapping("/authority/role")
-    public ResultBody<List<OpenAuthority>> findAuthorityRole(Long roleId) {
+    public ResponseResult<List<OpenAuthority>> findAuthorityRole(Long roleId) {
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByRole(roleId);
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
 
@@ -131,12 +131,12 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
 //            @ApiImplicitParam(name = "userId", value = "用户ID", defaultValue = "", required = true, paramType = "form")
 //    })
     @GetMapping("/authority/user")
-    public ResultBody<List<OpenAuthority>> findAuthorityUser(
+    public ResponseResult<List<OpenAuthority>> findAuthorityUser(
             @RequestParam(value = "userId") Long userId
     ) {
         BaseUser user = baseUserService.getUserById(userId);
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByUser(userId, CommonConstants.ROOT.equals(user.getUserName()));
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
 
@@ -151,12 +151,12 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
 //            @ApiImplicitParam(name = "appId", value = "应用Id", defaultValue = "", required = true, paramType = "form")
 //    })
     @GetMapping("/authority/app")
-    public ResultBody<List<OpenAuthority>> findAuthorityApp(
+    public ResponseResult<List<OpenAuthority>> findAuthorityApp(
             @RequestParam(value = "appId") String appId,
             @RequestParam(value = "appSystemCode") String appSystemCode
     ) {
         List<OpenAuthority> result = baseAuthorityService.findAuthorityByApp(appId, appSystemCode);
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
     /**
@@ -174,14 +174,14 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
 //            @ApiImplicitParam(name = "authorityIds", value = "权限ID.多个以,隔开.选填", defaultValue = "", required = false, paramType = "form")
 //    })
     @PostMapping("/authority/role/grant")
-    public ResultBody grantAuthorityRole(
+    public ResponseResult grantAuthorityRole(
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam(value = "expireTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date expireTime,
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {
         baseAuthorityService.addAuthorityRole(roleId, expireTime, StringUtils.isNotBlank(authorityIds) ? authorityIds.split(",") : new String[]{});
         // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -200,14 +200,14 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
 //            @ApiImplicitParam(name = "authorityIds", value = "权限ID.多个以,隔开.选填", defaultValue = "", required = false, paramType = "form")
 //    })
     @PostMapping("/authority/user/grant")
-    public ResultBody grantAuthorityUser(
+    public ResponseResult grantAuthorityUser(
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "expireTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date expireTime,
             @RequestParam(value = "authorityIds", required = false) String authorityIds
     ) {
         baseAuthorityService.addAuthorityUser(userId, expireTime, StringUtils.isNotBlank(authorityIds) ? authorityIds.split(",") : new String[]{});
         // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -218,12 +218,12 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
      */
     @Schema(title = "分配应用权限", name = "分配应用权限")
     @PostMapping("/authority/app/grant")
-    public ResultBody grantAuthorityApp(@Valid @RequestBody GrantOpenClientAppApiAuthorityCommand command) {
+    public ResponseResult grantAuthorityApp(@Valid @RequestBody GrantOpenClientAppApiAuthorityCommand command) {
         baseAuthorityService
                 .addAuthorityApp(command.getAppId(), command.getAppSystemCode(),
                         command.getExpireTime(), command.getAuthorityIds().split(","));
         // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -233,9 +233,9 @@ public class BaseAuthorityController implements IBaseAuthorityServiceClient {
      */
     @Schema(title = "功能按钮授权", name = "功能按钮授权")
     @PostMapping("/authority/action/grant")
-    public ResultBody grantAuthorityAction(@Valid @RequestBody GrantAuthorityActionCommand command) {
+    public ResponseResult grantAuthorityAction(@Valid @RequestBody GrantAuthorityActionCommand command) {
         baseAuthorityService.addAuthorityAction(command.getActionId(), StringUtils.isNotBlank(command.getAuthorityIds()) ? command.getAuthorityIds().split(",") : new String[]{});
         // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

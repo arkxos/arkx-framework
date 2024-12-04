@@ -12,7 +12,7 @@ import com.bsd.payment.server.service.ITransOrderService;
 import com.bsd.payment.server.service.mq.AbstractRabbitMqService;
 import com.bsd.payment.server.service.mq.MqConfig;
 import com.bsd.payment.server.service.mq.MqService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -79,9 +79,9 @@ public class RabbitMq4TransServiceImpl extends AbstractRabbitMqService implement
                 return;
             }
             //调用转账服务
-            ResultBody<TransResultDTO> resultBody = service.doTransReq(transOrder, configStr);
+            ResponseResult<TransResultDTO> responseResult = service.doTransReq(transOrder, configStr);
             //处理转账结果
-            handleTransResult(service, transOrder, configStr, resultBody);
+            handleTransResult(service, transOrder, configStr, responseResult);
         } catch (Exception ex) {
             //打印堆栈信息
             ex.printStackTrace();
@@ -96,19 +96,19 @@ public class RabbitMq4TransServiceImpl extends AbstractRabbitMqService implement
      * @param service
      * @param transOrder
      * @param configStr
-     * @param resultBody
+     * @param responseResult
      */
-    private void handleTransResult(IPayService service, TransOrder transOrder, String configStr, ResultBody<TransResultDTO> resultBody) {
+    private void handleTransResult(IPayService service, TransOrder transOrder, String configStr, ResponseResult<TransResultDTO> responseResult) {
         //判断是否业务结果未明,是否需要主动查询结果
-        TransResultDTO transResultDTO = resultBody.getData();
+        TransResultDTO transResultDTO = responseResult.getData();
         if (transResultDTO.isQuery()) {
             //主动查询转账结果,以确定未明订单状态
-            resultBody = service.getTransReq(transOrder, configStr);
+            responseResult = service.getTransReq(transOrder, configStr);
         }
         //处理转账结果
         TransOrderPo transOrderPo = new TransOrderPo();
         BeanUtils.copyProperties(transOrder, transOrderPo);
-        transOrderService.handleTransResult(resultBody, transOrderPo);
+        transOrderService.handleTransResult(responseResult, transOrderPo);
     }
 
     /**

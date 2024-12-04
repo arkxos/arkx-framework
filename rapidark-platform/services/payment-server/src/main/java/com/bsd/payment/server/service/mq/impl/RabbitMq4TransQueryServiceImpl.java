@@ -11,7 +11,7 @@ import com.bsd.payment.server.service.ITransOrderService;
 import com.bsd.payment.server.service.mq.AbstractRabbitMqService;
 import com.bsd.payment.server.service.mq.MqConfig;
 import com.bsd.payment.server.service.mq.MqService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -79,10 +79,10 @@ public class RabbitMq4TransQueryServiceImpl extends AbstractRabbitMqService impl
             return;
         }
         //查询转账结果
-        ResultBody<TransResultDTO> resultBody = service.getTransReq(transOrder, configStr);
+        ResponseResult<TransResultDTO> responseResult = service.getTransReq(transOrder, configStr);
         //查询次数加1
         transOrder.setQueryCount(queryCount + 1);
         //处理转账结果
-        transOrderService.handleTransResult(resultBody, transOrder);
+        transOrderService.handleTransResult(responseResult, transOrder);
     }
 }

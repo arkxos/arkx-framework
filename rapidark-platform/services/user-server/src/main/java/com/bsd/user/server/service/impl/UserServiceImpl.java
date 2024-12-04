@@ -23,7 +23,7 @@ import com.google.common.collect.Maps;
 import com.rapidark.cloud.base.client.constants.BaseConstants;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.RandomValueUtils;
@@ -795,8 +795,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     public List<GatewayAppRoute> getApiRouteList() {
         List<GatewayAppRoute> routes = redisUtils.getList(BaseConstants.ROUTE_LIST_CACHE_KEY);
         if (routes.isEmpty()) {
-            ResultBody<List<GatewayAppRoute>> resultBody = gatewayServiceClient.getApiRouteList();
-            routes = resultBody.getData();
+            ResponseResult<List<GatewayAppRoute>> responseResult = gatewayServiceClient.getApiRouteList();
+            routes = responseResult.getData();
             if (!routes.isEmpty()) {
                 redisUtils.setList(BaseConstants.ROUTE_LIST_CACHE_KEY, routes, BaseConstants.ROUTE_LIST_CACHE_TIME);
             }

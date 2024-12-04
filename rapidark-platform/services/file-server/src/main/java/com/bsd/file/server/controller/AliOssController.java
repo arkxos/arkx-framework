@@ -3,7 +3,7 @@ package com.bsd.file.server.controller;
 import com.bsd.file.server.service.OssFileService;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.FileHelper;
 
 
@@ -41,7 +41,7 @@ public class AliOssController {
 //    })
     @PostMapping("/upload")
     @ResponseBody
-    public ResultBody saveFile(@RequestParam("file") MultipartFile file, @RequestParam(value = "prefix") String prefix) {
+    public ResponseResult saveFile(@RequestParam("file") MultipartFile file, @RequestParam(value = "prefix") String prefix) {
         try {
             if (file.isEmpty()) {
                 throw new OpenAlertException("上传文件不能为空");
@@ -59,9 +59,9 @@ public class AliOssController {
             Map<String, String> map = Maps.newHashMap();
             map.put("fileName", fileName);
             map.put("fileUrl", url);
-            return ResultBody.ok(map);
+            return ResponseResult.ok(map);
         } catch (Exception e) {
-            return ResultBody.failed(e.getMessage());
+            return ResponseResult.failed(e.getMessage());
         }
     }
 
@@ -76,11 +76,11 @@ public class AliOssController {
 //    })
     @PostMapping(value = "/delete")
     @ResponseBody
-    public ResultBody deleteFile(@RequestParam(value = "name") String name) {
+    public ResponseResult deleteFile(@RequestParam(value = "name") String name) {
         ossFileService.deleteFile(name);
 
         //返回结果
-        return ResultBody.ok().msg("删除成功");
+        return ResponseResult.ok().msg("删除成功");
     }
 
     /**
@@ -92,16 +92,16 @@ public class AliOssController {
 //    })
     @GetMapping(value = "/url")
     @ResponseBody
-    public ResultBody getFileUrl(@RequestParam(value = "name") String name) {
+    public ResponseResult getFileUrl(@RequestParam(value = "name") String name) {
         String url = ossFileService.getFileUrl(name);
         if (url != null) {
             Map<String, String> map = Maps.newHashMap();
             map.put("url", url);
-            return ResultBody.ok(map);
+            return ResponseResult.ok(map);
         }
 
         //返回结果
-        return ResultBody.failed("获取失败");
+        return ResponseResult.failed("获取失败");
     }
 }
 

@@ -1,8 +1,7 @@
 package com.rapidark.cloud.msg.client.service;
 
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.msg.client.model.SmsMessage;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +21,7 @@ public interface ISmsClient {
      */
     @Schema(title = "发送短信")
     @PostMapping(value = "/sms")
-    ResultBody<String> send(@RequestBody SmsMessage message);
+    ResponseResult<String> send(@RequestBody SmsMessage message);
 
     /**
      * feign内部调用
@@ -31,5 +30,5 @@ public interface ISmsClient {
      * @return
      */
     @PostMapping(value = "/sms/feign", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    ResultBody feignSendSms(SmsMessage message);
+    ResponseResult feignSendSms(SmsMessage message);
 }

@@ -9,7 +9,7 @@ import com.rapidark.cloud.base.server.controller.cmd.AddUserRolesCommand;
 import com.rapidark.cloud.base.server.service.BaseRoleService;
 import com.rapidark.cloud.base.server.service.BaseUserService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
@@ -54,14 +54,14 @@ public class BaseUserController implements IBaseUserServiceClient {
 //    })
     @PostMapping("/user/login")
     @Override
-    public ResultBody<UserAccount> userLogin(@RequestParam(value = "username") String username) {
+    public ResponseResult<UserAccount> userLogin(@RequestParam(value = "username") String username) {
         Map<String, String> parameterMap = WebUtils.getParameterMap(WebUtils.getHttpServletRequest());
 
         HttpServletRequest request = WebUtils.getHttpServletRequest();
         String ip = WebUtils.getRemoteAddress(request);
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
         UserAccount account = baseUserService.login(username, parameterMap , ip, userAgent);
-        return ResultBody.ok(account);
+        return ResponseResult.ok(account);
     }
 
     /**
@@ -71,8 +71,8 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "系统分页用户列表", name = "系统分页用户列表")
     @GetMapping("/user")
-    public ResultBody<Page<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
-        return ResultBody.ok(baseUserService.findListPage(new PageParams(map)));
+    public ResponseResult<Page<BaseUser>> getUserList(@RequestParam(required = false) Map map) {
+        return ResponseResult.ok(baseUserService.findListPage(new PageParams(map)));
     }
 
     /**
@@ -82,8 +82,8 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "获取所有用户列表", name = "获取所有用户列表")
     @GetMapping("/user/all")
-    public ResultBody<List<BaseUser>> getUserAllList() {
-        return ResultBody.ok(baseUserService.findAllList());
+    public ResponseResult<List<BaseUser>> getUserAllList() {
+        return ResponseResult.ok(baseUserService.findAllList());
     }
 
     /**
@@ -94,7 +94,7 @@ public class BaseUserController implements IBaseUserServiceClient {
     @Override
     @Schema(title = "添加系统用户", name = "添加系统用户")
     @PostMapping("/user/add")
-    public ResultBody<Long> addUser(@Valid @RequestBody AddUserCommand command) {
+    public ResponseResult<Long> addUser(@Valid @RequestBody AddUserCommand command) {
         BaseUser user = new BaseUser();
         user.setUserName(command.getUserName());
         user.setPassword(command.getPassword());
@@ -106,7 +106,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setAvatar(command.getAvatar());
         user.setStatus(Status.codeOf(command.getStatus()));
         baseUserService.addUser(user);
-        return ResultBody.ok(user.getUserId());
+        return ResponseResult.ok(user.getUserId());
     }
 
     /**
@@ -124,7 +124,7 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "更新系统用户", name = "更新系统用户")
     @PostMapping("/user/update")
-    public ResultBody updateUser(
+    public ResponseResult updateUser(
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
@@ -144,7 +144,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setAvatar(avatar);
         user.setStatus(Status.codeOf(status));
         baseUserService.updateUser(user);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -157,12 +157,12 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "修改用户密码", name = "修改用户密码")
     @PostMapping("/user/update/password")
-    public ResultBody updatePassword(
+    public ResponseResult updatePassword(
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "password") String password
     ) {
         baseUserService.updatePassword(userId, password);
-        return  ResultBody.ok().msg("修改密码成功");
+        return  ResponseResult.ok().msg("修改密码成功");
     }
 
     /**
@@ -172,9 +172,9 @@ public class BaseUserController implements IBaseUserServiceClient {
      */
     @Schema(title = "用户分配角色", name = "用户分配角色")
     @PostMapping("/user/roles/add")
-    public ResultBody addUserRoles(@Valid @RequestBody AddUserRolesCommand command) {
+    public ResponseResult addUserRoles(@Valid @RequestBody AddUserRolesCommand command) {
         baseRoleService.saveUserRoles(command.getUserId(), StringUtils.isNotBlank(command.getRoleIds()) ? command.getRoleIds().split(",") : new String[]{});
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -186,10 +186,10 @@ public class BaseUserController implements IBaseUserServiceClient {
     @Override
     @Schema(title = "获取用户已分配角色", name = "获取用户已分配角色")
     @GetMapping("/user/roles")
-    public ResultBody<List<BaseRole>> getUserRoles(
+    public ResponseResult<List<BaseRole>> getUserRoles(
             @RequestParam(value = "userId") Long userId
     ) {
-        return ResultBody.ok(baseRoleService.getUserRoles(userId));
+        return ResponseResult.ok(baseRoleService.getUserRoles(userId));
     }
 
 
@@ -204,7 +204,7 @@ public class BaseUserController implements IBaseUserServiceClient {
     @Schema(title = "注册第三方系统登录账号", name = "仅限系统内部调用")
     @PostMapping("/user/add/thirdParty")
     @Override
-    public ResultBody addUserThirdParty(
+    public ResponseResult addUserThirdParty(
             @RequestParam(value = "account") String account,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "accountType") String accountType,
@@ -217,6 +217,6 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setPassword(password);
         user.setAvatar(avatar);
         baseUserService.addUserThirdParty(user, accountType);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

@@ -2,7 +2,7 @@ package com.rapidark.cloud.base.client.service;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.base.client.model.AuthorityResource;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface IBaseAuthorityServiceClient {
      * @return
      */
     @GetMapping("/authority/access")
-    ResultBody<List<AuthorityResource>> findAuthorityResource();
+    ResponseResult<List<AuthorityResource>> findAuthorityResource();
 
     /**
      * 获取菜单权限列表
@@ -27,5 +27,5 @@ public interface IBaseAuthorityServiceClient {
      * @return
      */
     @GetMapping("/authority/menu")
-    ResultBody<List<AuthorityMenu>> findAuthorityMenu();
+    ResponseResult<List<AuthorityMenu>> findAuthorityMenu();
 }

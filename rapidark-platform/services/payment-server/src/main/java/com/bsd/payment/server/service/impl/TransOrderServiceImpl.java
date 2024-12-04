@@ -29,7 +29,7 @@ import com.bsd.payment.server.util.XXPayUtil;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.data.mybatis.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -167,13 +167,13 @@ public class TransOrderServiceImpl extends BaseServiceImpl<TransOrderMapper, Tra
     /**
      * 处理转账订单结果
      *
-     * @param resultBody
+     * @param responseResult
      * @param transOrder
      */
     @Override
-    public void handleTransResult(ResultBody<TransResultDTO> resultBody, TransOrderPo transOrder) {
-        TransResultDTO transResultDTO = resultBody.getData();
-        if (resultBody.isOk()) {
+    public void handleTransResult(ResponseResult<TransResultDTO> responseResult, TransOrderPo transOrder) {
+        TransResultDTO transResultDTO = responseResult.getData();
+        if (responseResult.isOk()) {
             //转账成功
             updateStatus4Success(transOrder.getTransOrderId(), transResultDTO.getChannelOrderNo(), transResultDTO.getTransSuccTime());
         } else {
@@ -345,8 +345,8 @@ public class TransOrderServiceImpl extends BaseServiceImpl<TransOrderMapper, Tra
         }
 
         //调用第三方查询转账结果
-        ResultBody<TransResultDTO> resultBody = payService.getTransReq(transOrder, payChannel.getParam());
-        if (PayConstant.TRANS_STATUS_TRANING == resultBody.getData().getTransStatus()) {
+        ResponseResult<TransResultDTO> responseResult = payService.getTransReq(transOrder, payChannel.getParam());
+        if (PayConstant.TRANS_STATUS_TRANING == responseResult.getData().getTransStatus()) {
             //转账中,返回不确认结果
             return PayConstant.TRANS_RESULT_INIT;
         }
@@ -354,9 +354,9 @@ public class TransOrderServiceImpl extends BaseServiceImpl<TransOrderMapper, Tra
         //查询结果为成功或者失败,需要处理结果,再返回
         TransOrderPo transOrderPo = new TransOrderPo();
         BeanUtils.copyProperties(transOrder, transOrderPo);
-        handleTransResult(resultBody, transOrderPo);
+        handleTransResult(responseResult, transOrderPo);
 
-        return resultBody.getData().getTransStatus();
+        return responseResult.getData().getTransStatus();
     }
 
 

@@ -11,7 +11,7 @@ import com.rapidark.cloud.gateway.server.filter.support.CachedBodyOutputMessage;
 import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenCryptoException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.CryptoUtils;
 import com.rapidark.framework.common.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.http.codec.HttpMessageReader;
-import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.util.AntPathMatcher;
@@ -120,7 +119,7 @@ public class GatewayContextFilter implements WebFilter, Ordered {
 
             // 获取客户端信息
             String appId = headers.getFirst(CommonConstants.APP_ID_KEY);
-            ResultBody<OpenApp> result = openAppServiceClient.getApp(appId);
+            ResponseResult<OpenApp> result = openAppServiceClient.getApp(appId);
             OpenApp app = result.getData();
             if (app == null || app.getAppId() == null) {
                 return requestDecryptionExceptionHandler.handle(exchange, new OpenCryptoException("appId无效"));

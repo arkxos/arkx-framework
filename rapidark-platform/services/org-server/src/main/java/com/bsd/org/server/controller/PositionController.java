@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bsd.org.server.model.entity.Position;
 import com.bsd.org.server.model.vo.PositionVO;
 import com.bsd.org.server.service.PositionService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 
@@ -46,7 +46,7 @@ public class PositionController {
 //            @ApiImplicitParam(name = "pageSize", value = "每页大小", paramType = "form")
 //    })
     @GetMapping(value = "/page")
-    public ResultBody list(
+    public ResponseResult list(
             @RequestParam(value = "positionId", required = false) Long positionId,
             @RequestParam(value = "positionCode", required = false) String positionCode,
             @RequestParam(value = "positionName", required = false) String positionName,
@@ -65,7 +65,7 @@ public class PositionController {
         positionVO.setCompanyId(companyId);
         //设置分页
         Page<PositionVO> page = new Page<PositionVO>(pageIndex, pageSize);
-        return ResultBody.ok(positionService.page(page, positionVO));
+        return ResponseResult.ok(positionService.page(page, positionVO));
     }
 
     /**
@@ -76,12 +76,12 @@ public class PositionController {
 //            @ApiImplicitParam(name = "positionId", value = "职位ID", paramType = "form"),
 //    })
     @GetMapping("/get")
-    public ResultBody<Position> get(@RequestParam("positionId") Long positionId) {
+    public ResponseResult<Position> get(@RequestParam("positionId") Long positionId) {
         Position position = positionService.getById(positionId);
         if (position == null) {
-            return ResultBody.failed("未找到职位信息");
+            return ResponseResult.failed("未找到职位信息");
         }
-        return ResultBody.ok(position);
+        return ResponseResult.ok(position);
     }
 
 
@@ -92,8 +92,8 @@ public class PositionController {
      */
     @Schema(title = "获取所有职位", name = "获取所有职位")
     @GetMapping("/list")
-    public ResultBody list() {
-        return ResultBody.ok(positionService.listByParam(null));
+    public ResponseResult list() {
+        return ResponseResult.ok(positionService.listByParam(null));
     }
 
 
@@ -108,8 +108,8 @@ public class PositionController {
 //            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
 //    })
     @GetMapping("/findByDepartmentId/all")
-    public ResultBody allPositions(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok(positionService.findByDepartmentIdAndStatus(departmentId, null));
+    public ResponseResult allPositions(@RequestParam("departmentId") Long departmentId) {
+        return ResponseResult.ok(positionService.findByDepartmentIdAndStatus(departmentId, null));
     }
 
     @Schema(title = "根据部门ID列表获取所有职位", name = "根据部门ID列表获取所有职位")
@@ -117,8 +117,8 @@ public class PositionController {
 //            @ApiImplicitParam(name = "departmentIds", required = true, value = "部门ID列表,多个用,号隔开", paramType = "form")
 //    })
     @GetMapping("/findByDepartmentIds/all")
-    public ResultBody allPositions(@RequestParam(value = "departmentIds", required = true) String departmentIds) {
-        return ResultBody.ok(positionService.findByDepartmentIds(Arrays.asList(departmentIds.split(","))));
+    public ResponseResult allPositions(@RequestParam(value = "departmentIds", required = true) String departmentIds) {
+        return ResponseResult.ok(positionService.findByDepartmentIds(Arrays.asList(departmentIds.split(","))));
     }
 
 
@@ -133,8 +133,8 @@ public class PositionController {
 //            @ApiImplicitParam(name = "departmentId", required = true, value = "部门ID", paramType = "form")
 //    })
     @GetMapping("/findByDepartmentId/available")
-    public ResultBody availablePositions(@RequestParam("departmentId") Long departmentId) {
-        return ResultBody.ok(positionService.findByDepartmentIdAndStatus(departmentId, true));
+    public ResponseResult availablePositions(@RequestParam("departmentId") Long departmentId) {
+        return ResponseResult.ok(positionService.findByDepartmentIdAndStatus(departmentId, true));
     }
 
     /**
@@ -155,7 +155,7 @@ public class PositionController {
 //            @ApiImplicitParam(name = "departmentId", required = true, value = "所属部门ID", example = "1162211202827141121", paramType = "form")
 //    })
     @PostMapping("/add")
-    public ResultBody add(
+    public ResponseResult add(
             @RequestParam(value = "positionCode") String positionCode,
             @RequestParam(value = "positionName") String positionName,
             @RequestParam(value = "workContent", required = false) String workContent,
@@ -179,7 +179,7 @@ public class PositionController {
         position.setDepartmentId(departmentId);
         position.setCreateBy(openUserDetails.getUserId()+"");
         positionService.savePosition(position);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -201,7 +201,7 @@ public class PositionController {
 //            @ApiImplicitParam(name = "departmentId", required = true, value = "所属部门ID", example = "1162211202827141121", paramType = "form")
 //    })
     @PostMapping("/update")
-    public ResultBody update(
+    public ResponseResult update(
             @RequestParam(value = "positionId") Long positionId,
             @RequestParam(value = "positionCode") String positionCode,
             @RequestParam(value = "positionName") String positionName,
@@ -227,7 +227,7 @@ public class PositionController {
         position.setDepartmentId(departmentId);
         position.setCreateBy(openUserDetails.getUserId()+"");
         positionService.updatePosition(position);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -241,9 +241,9 @@ public class PositionController {
 //            @ApiImplicitParam(name = "status", required = true, value = "状态:0-禁用 1-启用", paramType = "form")
 //    })
     @PostMapping("/status")
-    public ResultBody status(@RequestParam(value = "positionId") Long positionId, @RequestParam(value = "status") Boolean status) {
+    public ResponseResult status(@RequestParam(value = "positionId") Long positionId, @RequestParam(value = "status") Boolean status) {
         positionService.status(positionId, status);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 

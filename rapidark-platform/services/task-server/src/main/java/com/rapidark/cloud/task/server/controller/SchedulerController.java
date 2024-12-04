@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.task.client.model.TaskInfo;
 import com.rapidark.cloud.task.client.model.entity.SchedulerJobLogs;
 import com.rapidark.cloud.task.server.job.HttpExecuteJob;
@@ -48,9 +48,9 @@ public class SchedulerController {
      */
     @Schema(title = "获取任务执行日志列表", name = "获取任务执行日志列表")
     @GetMapping(value = "/job/logs")
-    public ResultBody<IPage<SchedulerJobLogs>> getJobLogList(@RequestParam(required = false) Map map) {
+    public ResponseResult<IPage<SchedulerJobLogs>> getJobLogList(@RequestParam(required = false) Map map) {
         IPage<SchedulerJobLogs> result = schedulerJobLogsService.findListPage(new PageParams(map));
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
     /**
@@ -60,12 +60,12 @@ public class SchedulerController {
      */
     @Schema(title = "获取任务列表", name = "获取任务列表")
     @GetMapping(value = "/job")
-    public ResultBody<IPage<TaskInfo>> getJobList(@RequestParam(required = false) Map map) {
+    public ResponseResult<IPage<TaskInfo>> getJobList(@RequestParam(required = false) Map map) {
         List<TaskInfo> list = schedulerService.getJobList();
         IPage page = new Page();
         page.setRecords(list);
         page.setTotal(list.size());
-        return ResultBody.ok(page);
+        return ResponseResult.ok(page);
     }
 
     /**
@@ -103,19 +103,19 @@ public class SchedulerController {
 //            @ApiImplicitParam(name = "alarmMail", value = "告警邮箱", required = false, paramType = "form"),
 //    })
     @PostMapping("/job/add/http")
-    public ResultBody addHttpJob(@RequestParam(name = "jobName") String jobName,
-                                 @RequestParam(name = "jobDescription") String jobDescription,
-                                 @RequestParam(name = "jobType") String jobType,
-                                 @RequestParam(name = "cron", required = false) String cron,
-                                 @RequestParam(name = "startTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
-                                 @RequestParam(name = "endTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime,
-                                 @RequestParam(name = "repeatInterval", required = false, defaultValue = "0") Long repeatInterval,
-                                 @RequestParam(name = "repeatCount", required = false, defaultValue = "0") Integer repeatCount,
-                                 @RequestParam(name = "serviceId") String serviceId,
-                                 @RequestParam(name = "path") String path,
-                                 @RequestParam(name = "method", required = false) String method,
-                                 @RequestParam(name = "contentType", required = false) String contentType,
-                                 @RequestParam(name = "alarmMail", required = false) String alarmMail) {
+    public ResponseResult addHttpJob(@RequestParam(name = "jobName") String jobName,
+                                     @RequestParam(name = "jobDescription") String jobDescription,
+                                     @RequestParam(name = "jobType") String jobType,
+                                     @RequestParam(name = "cron", required = false) String cron,
+                                     @RequestParam(name = "startTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+                                     @RequestParam(name = "endTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime,
+                                     @RequestParam(name = "repeatInterval", required = false, defaultValue = "0") Long repeatInterval,
+                                     @RequestParam(name = "repeatCount", required = false, defaultValue = "0") Integer repeatCount,
+                                     @RequestParam(name = "serviceId") String serviceId,
+                                     @RequestParam(name = "path") String path,
+                                     @RequestParam(name = "method", required = false) String method,
+                                     @RequestParam(name = "contentType", required = false) String contentType,
+                                     @RequestParam(name = "alarmMail", required = false) String alarmMail) {
         TaskInfo taskInfo = new TaskInfo();
         Map data = Maps.newHashMap();
         data.put("serviceId", serviceId);
@@ -140,7 +140,7 @@ public class SchedulerController {
             Assert.notNull(taskInfo.getCronExpression(), "cron表达式不能为空");
             schedulerService.addCronJob(taskInfo);
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -178,19 +178,19 @@ public class SchedulerController {
 //            @ApiImplicitParam(name = "alarmMail", value = "告警邮箱", required = false, paramType = "form"),
 //    })
     @PostMapping("/job/update/http")
-    public ResultBody updateHttpJob(@RequestParam(name = "jobName") String jobName,
-                                    @RequestParam(name = "jobDescription") String jobDescription,
-                                    @RequestParam(name = "jobType") String jobType,
-                                    @RequestParam(name = "cron", required = false) String cron,
-                                    @RequestParam(name = "startTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
-                                    @RequestParam(name = "endTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime,
-                                    @RequestParam(name = "repeatInterval", required = false, defaultValue = "0") Long repeatInterval,
-                                    @RequestParam(name = "repeatCount", required = false, defaultValue = "0") Integer repeatCount,
-                                    @RequestParam(name = "serviceId") String serviceId,
-                                    @RequestParam(name = "path") String path,
-                                    @RequestParam(name = "method", required = false) String method,
-                                    @RequestParam(name = "contentType", required = false) String contentType,
-                                    @RequestParam(name = "alarmMail", required = false) String alarmMail) {
+    public ResponseResult updateHttpJob(@RequestParam(name = "jobName") String jobName,
+                                        @RequestParam(name = "jobDescription") String jobDescription,
+                                        @RequestParam(name = "jobType") String jobType,
+                                        @RequestParam(name = "cron", required = false) String cron,
+                                        @RequestParam(name = "startTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+                                        @RequestParam(name = "endTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime,
+                                        @RequestParam(name = "repeatInterval", required = false, defaultValue = "0") Long repeatInterval,
+                                        @RequestParam(name = "repeatCount", required = false, defaultValue = "0") Integer repeatCount,
+                                        @RequestParam(name = "serviceId") String serviceId,
+                                        @RequestParam(name = "path") String path,
+                                        @RequestParam(name = "method", required = false) String method,
+                                        @RequestParam(name = "contentType", required = false) String contentType,
+                                        @RequestParam(name = "alarmMail", required = false) String alarmMail) {
         TaskInfo taskInfo = new TaskInfo();
         Map data = Maps.newHashMap();
         data.put("serviceId", serviceId);
@@ -215,7 +215,7 @@ public class SchedulerController {
             Assert.notNull(taskInfo.getCronExpression(), "cron表达式不能为空");
             schedulerService.editCronJob(taskInfo);
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -230,9 +230,9 @@ public class SchedulerController {
 //            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
 //    })
     @PostMapping("/job/delete")
-    public ResultBody deleteJob(@RequestParam(name = "jobName") String jobName) {
+    public ResponseResult deleteJob(@RequestParam(name = "jobName") String jobName) {
         schedulerService.deleteJob(jobName, Scheduler.DEFAULT_GROUP);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -246,9 +246,9 @@ public class SchedulerController {
 //            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
 //    })
     @PostMapping("/job/pause")
-    public ResultBody pauseJob(@RequestParam(name = "jobName") String jobName) {
+    public ResponseResult pauseJob(@RequestParam(name = "jobName") String jobName) {
         schedulerService.pauseJob(jobName, Scheduler.DEFAULT_GROUP);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -263,8 +263,8 @@ public class SchedulerController {
 //            @ApiImplicitParam(name = "jobName", value = "任务名称", required = true, paramType = "form")
 //    })
     @PostMapping("/job/resume")
-    public ResultBody resumeJob(@RequestParam(name = "jobName") String jobName) {
+    public ResponseResult resumeJob(@RequestParam(name = "jobName") String jobName) {
         schedulerService.resumeJob(jobName, Scheduler.DEFAULT_GROUP);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

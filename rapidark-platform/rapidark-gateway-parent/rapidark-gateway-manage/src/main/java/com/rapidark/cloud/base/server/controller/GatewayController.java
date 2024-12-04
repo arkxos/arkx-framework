@@ -9,7 +9,7 @@ import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.platform.gateway.framework.service.GatewayAppRouteService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class GatewayController implements IGatewayServiceClient {
 
     @Schema(title = "获取服务列表", name = "获取服务列表")
     @GetMapping("/gateway/service/list")
-    public ResultBody getServiceList() {
+    public ResponseResult getServiceList() {
         List<Map> services = Lists.newArrayList();
         List<GatewayAppRoute> routes = gatewayAppRouteService.findAll();
         if (routes != null && routes.size() > 0) {
@@ -50,7 +50,7 @@ public class GatewayController implements IGatewayServiceClient {
                 services.add(service);
             });
         }
-        return ResultBody.ok(services);
+        return ResponseResult.ok(services);
     }
 
     /**
@@ -61,8 +61,8 @@ public class GatewayController implements IGatewayServiceClient {
     @Schema(title = "获取接口黑名单列表", name = "仅限内部调用")
     @GetMapping("/gateway/api/blackList")
     @Override
-    public ResultBody<List<IpLimitApi>> getApiBlackList() {
-        return ResultBody.ok(gatewayIpLimitService.findBlackList());
+    public ResponseResult<List<IpLimitApi>> getApiBlackList() {
+        return ResponseResult.ok(gatewayIpLimitService.findBlackList());
     }
 
     /**
@@ -73,8 +73,8 @@ public class GatewayController implements IGatewayServiceClient {
     @Schema(title = "获取接口白名单列表", name = "仅限内部调用")
     @GetMapping("/gateway/api/whiteList")
     @Override
-    public ResultBody<List<IpLimitApi>> getApiWhiteList() {
-        return ResultBody.ok(gatewayIpLimitService.findWhiteList());
+    public ResponseResult<List<IpLimitApi>> getApiWhiteList() {
+        return ResponseResult.ok(gatewayIpLimitService.findWhiteList());
     }
 
     /**
@@ -85,8 +85,8 @@ public class GatewayController implements IGatewayServiceClient {
     @Schema(title = "获取限流列表", name = "仅限内部调用")
     @GetMapping("/gateway/api/rateLimit")
     @Override
-    public ResultBody<List<RateLimitApi>> getApiRateLimitList() {
-        return ResultBody.ok(gatewayRateLimitService.findRateLimitApiList());
+    public ResponseResult<List<RateLimitApi>> getApiRateLimitList() {
+        return ResponseResult.ok(gatewayRateLimitService.findRateLimitApiList());
     }
 
     /**
@@ -97,7 +97,7 @@ public class GatewayController implements IGatewayServiceClient {
     @Schema(title = "获取路由列表", name = "仅限内部调用")
     @GetMapping("/gateway/api/route")
     @Override
-    public ResultBody<List<GatewayAppRoute>> getApiRouteList() {
-        return ResultBody.ok(gatewayAppRouteService.findAll());
+    public ResponseResult<List<GatewayAppRoute>> getApiRouteList() {
+        return ResponseResult.ok(gatewayAppRouteService.findAll());
     }
 }

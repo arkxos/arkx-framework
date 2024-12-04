@@ -3,7 +3,7 @@ package com.rapidark.cloud.msg.server.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.rapidark.cloud.msg.server.dispatcher.MessageDispatcher;
 import com.rapidark.cloud.msg.server.utils.MultipartUtil;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.msg.client.model.EmailMessage;
 import com.rapidark.cloud.msg.client.model.EmailTplMessage;
 import com.rapidark.cloud.msg.client.service.IEmailClient;
@@ -49,11 +49,11 @@ public class EmailController implements IEmailClient {
 //    })
     @PostMapping(value = "/email/send", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Override
-    public ResultBody send(@RequestParam(value = "to") String to,
-                           @RequestParam(value = "cc", required = false) String cc,
-                           @RequestParam(value = "subject") String subject,
-                           @RequestParam(value = "content") String content,
-                           @RequestPart(value = "attachments", required = false) MultipartFile[] attachments) {
+    public ResponseResult send(@RequestParam(value = "to") String to,
+                               @RequestParam(value = "cc", required = false) String cc,
+                               @RequestParam(value = "subject") String subject,
+                               @RequestParam(value = "content") String content,
+                               @RequestPart(value = "attachments", required = false) MultipartFile[] attachments) {
         EmailMessage message = new EmailMessage();
         message.setTo(StringUtils.delimitedListToStringArray(to, ";"));
         message.setCc(StringUtils.delimitedListToStringArray(cc, ";"));
@@ -61,7 +61,7 @@ public class EmailController implements IEmailClient {
         message.setAttachments(MultipartUtil.getMultipartFilePaths(attachments));
         message.setContent(content);
         this.dispatcher.dispatch(message);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -87,7 +87,7 @@ public class EmailController implements IEmailClient {
 //            @ApiImplicitParam(name = "attachments", required = false, value = "附件:最大不超过10M", dataType = "file", paramType = "form", allowMultiple = true),
 //    })
     @PostMapping(value = "/email/send/tpl", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResultBody sendByTpl(
+    public ResponseResult sendByTpl(
             @RequestParam(value = "to") String to,
             @RequestParam(value = "cc", required = false) String cc,
             @RequestParam(value = "subject") String subject,
@@ -103,6 +103,6 @@ public class EmailController implements IEmailClient {
         message.setTplCode(tplCode);
         message.setTplParams(JSONObject.parseObject(tplParams));
         this.dispatcher.dispatch(message);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

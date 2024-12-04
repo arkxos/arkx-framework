@@ -1,6 +1,6 @@
 package com.rapidark.cloud.msg.client.service;
 
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.msg.client.model.WebHookMessage;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ public interface IWebHookClient {
      */
     @Schema(title = "Webhook异步通知")
     @PostMapping("/webhook")
-    ResultBody<String> send(
+    ResponseResult<String> send(
             @RequestBody WebHookMessage message
     ) throws Exception;
 }

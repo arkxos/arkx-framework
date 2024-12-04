@@ -5,7 +5,7 @@ import com.bsd.dingtalk.server.service.UserService;
 import com.bsd.dingtalk.server.util.AccessTokenUtil;
 import com.bsd.dingtalk.server.util.ContactHelper;
 import com.google.common.collect.Maps;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 
 
@@ -43,10 +43,10 @@ public class IndexController {
 //    })
     @GetMapping("/login/config")
     @ResponseBody
-    public ResultBody getLoginOtherConfig() {
+    public ResponseResult getLoginOtherConfig() {
         Map<String, String> map = Maps.newHashMap();
         map.put("dingtalk", AccessTokenUtil.getAuthorizationUrl(dingtalkProperties.getAppkey(), "http://bsd.vaiwan.com/dingtalk/login"));
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**
@@ -60,7 +60,7 @@ public class IndexController {
 //    })
     @PostMapping(value = "/login")
     @ResponseBody
-    public ResultBody login(@RequestParam(value = "authCode") String authCode) {
+    public ResponseResult login(@RequestParam(value = "authCode") String authCode) {
         try {
             //获取accessToken
             String accessToken = AccessTokenUtil.getToken(dingtalkProperties.getAppkey(), dingtalkProperties.getAppsecret());
@@ -75,7 +75,7 @@ public class IndexController {
             Map resultMap = Maps.newHashMap();
             resultMap.put("userId", userId);
             resultMap.put("userName", userName);
-            return ResultBody.ok(resultMap);
+            return ResponseResult.ok(resultMap);
         } catch (RuntimeException e) {
             e.printStackTrace();
             return null;
@@ -87,9 +87,9 @@ public class IndexController {
      */
     @Schema(title = "钉钉组织架构同步", name = "同步钉钉部门和用户")
     @GetMapping(value = "/org/syn")
-    public ResultBody synOrg() {
+    public ResponseResult synOrg() {
         userService.synUserInfoByDingding();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }
 

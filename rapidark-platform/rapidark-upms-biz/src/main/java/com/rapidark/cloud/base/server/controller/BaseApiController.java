@@ -4,7 +4,7 @@ import com.rapidark.cloud.base.client.model.entity.BaseApi;
 import com.rapidark.cloud.base.server.controller.cmd.AddApiCommand;
 import com.rapidark.cloud.base.server.service.BaseApiService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 //import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.data.jpa.entity.Status;
@@ -39,8 +39,8 @@ public class BaseApiController {
      */
     @Schema(title = "获取分页接口列表", name = "获取分页接口列表")
     @GetMapping(value = "/api")
-    public ResultBody<Page<BaseApi>> getApiList(@RequestParam(required = false) Map map) {
-        return ResultBody.ok(baseApiService.findListPage(new PageParams(map)));
+    public ResponseResult<Page<BaseApi>> getApiList(@RequestParam(required = false) Map map) {
+        return ResponseResult.ok(baseApiService.findListPage(new PageParams(map)));
     }
 
 
@@ -51,8 +51,8 @@ public class BaseApiController {
      */
     @Schema(title = "获取所有接口列表", name = "获取所有接口列表")
     @GetMapping("/api/all")
-    public ResultBody<List<BaseApi>> getApiAllList(String serviceId) {
-        return ResultBody.ok(baseApiService.findAllList(serviceId));
+    public ResponseResult<List<BaseApi>> getApiAllList(String serviceId) {
+        return ResponseResult.ok(baseApiService.findAllList(serviceId));
     }
 
     /**
@@ -66,8 +66,8 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
 //    })
     @GetMapping("/api/{apiId}/info")
-    public ResultBody<BaseApi> getApi(@PathVariable("apiId") Long apiId) {
-        return ResultBody.ok(baseApiService.getApi(apiId));
+    public ResponseResult<BaseApi> getApi(@PathVariable("apiId") Long apiId) {
+        return ResponseResult.ok(baseApiService.getApi(apiId));
     }
 
     /**
@@ -96,7 +96,7 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "isOpen", required = false, defaultValue = "0", allowableValues = "0,1", value = "是否公开: 0-内部的 1-公开的", paramType = "form")
 //    })
     @PostMapping("/api/add")
-    public ResultBody<Long> addApi(
+    public ResponseResult<Long> addApi(
            @RequestBody AddApiCommand command
     ) {
         BaseApi api = new BaseApi();
@@ -113,7 +113,7 @@ public class BaseApiController {
 
         baseApiService.addApi(api);
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok(api.getApiId());
+        return ResponseResult.ok(api.getApiId());
     }
 
     /**
@@ -144,7 +144,7 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "isOpen", required = false, defaultValue = "0", allowableValues = "0,1", value = "是否公开: 0-内部的 1-公开的", paramType = "form")
 //    })
     @PostMapping("/api/update")
-    public ResultBody updateApi(
+    public ResponseResult updateApi(
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
@@ -172,7 +172,7 @@ public class BaseApiController {
         baseApiService.updateApi(api);
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -187,13 +187,13 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
 //    })
     @PostMapping("/api/remove")
-    public ResultBody removeApi(
+    public ResponseResult removeApi(
             @RequestParam("apiId") Long apiId
     ) {
         baseApiService.removeApi(apiId);
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -207,7 +207,7 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form")
 //    })
     @PostMapping("/api/batch/remove")
-    public ResultBody batchRemove(
+    public ResponseResult batchRemove(
             @RequestParam(value = "ids") String ids
     ) {
         CriteriaQueryWrapper<BaseApi> wrapper = new CriteriaQueryWrapper();
@@ -222,7 +222,7 @@ public class BaseApiController {
 
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -237,7 +237,7 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "open", required = true, value = "是否公开访问:0-否 1-是", paramType = "form")
 //    })
     @PostMapping("/api/batch/update/open")
-    public ResultBody batchUpdateOpen(
+    public ResponseResult batchUpdateOpen(
             @RequestParam(value = "ids") String ids,
             @RequestParam(value = "open") Integer open
     ) {
@@ -253,7 +253,7 @@ public class BaseApiController {
 
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -267,7 +267,7 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "status", required = true, value = "接口状态:0-禁用 1-启用", paramType = "form")
 //    })
     @PostMapping("/api/batch/update/status")
-    public ResultBody batchUpdateStatus(
+    public ResponseResult batchUpdateStatus(
             @RequestParam(value = "ids") String ids,
             @RequestParam(value = "status") Integer status
     ) {
@@ -281,7 +281,7 @@ public class BaseApiController {
         }
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -295,7 +295,7 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "auth", required = true, value = "是否身份认证:0-否 1-是", paramType = "form")
 //    })
     @PostMapping("/api/batch/update/auth")
-    public ResultBody batchUpdateAuth(
+    public ResponseResult batchUpdateAuth(
             @RequestParam(value = "ids") String ids,
             @RequestParam(value = "auth") Integer auth
     ) {
@@ -311,7 +311,7 @@ public class BaseApiController {
         }
         // 刷新网关
 //        // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -325,7 +325,7 @@ public class BaseApiController {
 //            @ApiImplicitParam(name = "persist", required = true, value = "保留数据:0-否 1-是 不允许删除", paramType = "form")
 //    })
     @PostMapping("/api/batch/update/persist")
-    public ResultBody batchUpdatePersist(
+    public ResponseResult batchUpdatePersist(
             @RequestParam(value = "ids") String ids,
             @RequestParam(value = "persist") Integer persist
     ) {
@@ -339,6 +339,6 @@ public class BaseApiController {
         }
         // 刷新网关
         // openRestTemplate.refreshGateway();
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

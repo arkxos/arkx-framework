@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rapidark.cloud.msg.server.service.DelayMessageService;
 import com.rapidark.cloud.msg.server.service.WebHookLogsService;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.msg.client.model.WebHookMessage;
 import com.rapidark.cloud.msg.client.model.entity.WebHookLogs;
 import com.rapidark.cloud.msg.client.service.IWebHookClient;
@@ -29,11 +29,11 @@ public class WebHookController implements IWebHookClient {
     @Schema(title = "Webhook异步通知", name = "即时推送，重试通知时间间隔为 5s、10s、2min、5min、10min、30min、1h、2h、6h、15h，直到你正确回复状态 200 并且返回 success 或者超过最大重发次数")
     @Override
     @PostMapping("/webhook")
-    public ResultBody<String> send(
+    public ResponseResult<String> send(
             @RequestBody WebHookMessage message
     ) throws Exception {
         delayMessageService.send(message);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -43,7 +43,7 @@ public class WebHookController implements IWebHookClient {
      */
     @Schema(title = "获取分页异步通知列表", name = "获取分页异步通知列表")
     @GetMapping("/webhook/logs")
-    public ResultBody<IPage<WebHookLogs>> getLogsListPage(@RequestParam(required = false) Map map) {
-        return ResultBody.ok(webHookLogsService.findListPage(new PageParams(map)));
+    public ResponseResult<IPage<WebHookLogs>> getLogsListPage(@RequestParam(required = false) Map map) {
+        return ResponseResult.ok(webHookLogsService.findListPage(new PageParams(map)));
     }
 }

@@ -3,7 +3,7 @@ package com.bsd.user.server.controller;
 import com.bsd.user.server.constants.DeveloperConstants;
 import com.bsd.user.server.model.dto.JsSdkSignDTO;
 import com.bsd.user.server.service.DeveloperService;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
 
 
@@ -35,16 +35,16 @@ public class WxController {
 //            @ApiImplicitParam(name = "url", required = true, value = "需要获取权限的URL地址", example = "http://www.xxx.com", paramType = "form")
 //    })
     @PostMapping("/js/sdk/conf")
-    public ResultBody<JsSdkSignDTO> init(@RequestParam(value = "url") String url) {
+    public ResponseResult<JsSdkSignDTO> init(@RequestParam(value = "url") String url) {
         //简单校验URL地址
         if (StringUtils.isEmpty(url)) {
-            return ResultBody.failed("URL地址不能为空!");
+            return ResponseResult.failed("URL地址不能为空!");
         }
         if (!url.startsWith(DeveloperConstants.HTTP_PREFIX) && !url.startsWith(DeveloperConstants.HTTPS_PREFIX)) {
-            return ResultBody.failed("URL地址有误,请确认地址正确性!");
+            return ResponseResult.failed("URL地址有误,请确认地址正确性!");
         }
         //获取签名授权
         JsSdkSignDTO jsSdkSignDTO = developerService.makeWxJsSdkSign(url);
-        return ResultBody.ok(jsSdkSignDTO);
+        return ResponseResult.ok(jsSdkSignDTO);
     }
 }

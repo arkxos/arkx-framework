@@ -21,7 +21,7 @@ import com.bsd.user.server.service.UserLoginLogsService;
 import com.bsd.user.server.service.UserService;
 import com.google.common.collect.Maps;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
 import com.rapidark.framework.common.utils.RandomValueUtils;
 import com.rapidark.framework.common.utils.StringUtils;
@@ -85,11 +85,11 @@ public class UserController {
 //            @ApiImplicitParam(name = "signSource", required = false, value = "短信签名 0-跨境知道 1-卖家成长 默认为0", allowableValues = "1,2,3,4,5,6", paramType = "form"),
 //    })
     @PostMapping("/get/smscode")
-    public ResultBody getcode(@RequestParam(value = "mobile", required = true) String mobile,
-                              @RequestParam(value = "type", required = true) Integer type,
-                              @RequestParam(value = "signSource", required = false, defaultValue = "0") Integer signSource) {
+    public ResponseResult getcode(@RequestParam(value = "mobile", required = true) String mobile,
+                                  @RequestParam(value = "type", required = true) Integer type,
+                                  @RequestParam(value = "signSource", required = false, defaultValue = "0") Integer signSource) {
         userService.sendSmsCode(mobile, type, signSource);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -112,12 +112,12 @@ public class UserController {
 //            @ApiImplicitParam(name = "invitedCode", required = false, value = "邀请码", paramType = "form")
 //    })
     @PostMapping("/register")
-    public ResultBody register(@RequestParam(value = "mobile", required = true) String mobile,
-                               @RequestParam(value = "password", required = true) String password,
-                               @RequestParam(value = "code", required = true) String code,
-                               @RequestParam(value = "source", required = true) Integer source,
-                               @RequestParam(value = "invitedCode", required = false) String invitedCode,
-                               HttpServletRequest request) {
+    public ResponseResult register(@RequestParam(value = "mobile", required = true) String mobile,
+                                   @RequestParam(value = "password", required = true) String password,
+                                   @RequestParam(value = "code", required = true) String code,
+                                   @RequestParam(value = "source", required = true) Integer source,
+                                   @RequestParam(value = "invitedCode", required = false) String invitedCode,
+                                   HttpServletRequest request) {
         UserPo user = new UserPo();
         user.setMobile(mobile);
         user.setPassword(password);
@@ -127,9 +127,9 @@ public class UserController {
         user.setInvitedCode(invitedCode);
         Integer result = userService.registerByPhone(user);
         if (result == null || result <= 0) {
-            return ResultBody.failed();
+            return ResponseResult.failed();
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -147,15 +147,15 @@ public class UserController {
 //            @ApiImplicitParam(name = "code", required = true, value = "短信验证码", paramType = "form"),
 //    })
     @PostMapping("/login/smscode")
-    public ResultBody loginByMobileCode(@RequestParam(value = "mobile", required = true) String mobile,
-                                        @RequestParam(value = "code", required = true) String code,
-                                        HttpServletRequest request) {
+    public ResponseResult loginByMobileCode(@RequestParam(value = "mobile", required = true) String mobile,
+                                            @RequestParam(value = "code", required = true) String code,
+                                            HttpServletRequest request) {
         UserPo user = new UserPo();
         user.setMobile(mobile);
         user.setInputCode(code);
         user.setLoginIp(WebUtils.getRemoteAddress(request));
         Map<String, Object> map = userService.loginByMobileCode(user);
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**
@@ -171,15 +171,15 @@ public class UserController {
 //            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form"),
 //    })
     @PostMapping("/login/password")
-    public ResultBody loginByMobilePassword(@RequestParam(value = "mobile", required = true) String mobile,
-                                            @RequestParam(value = "password", required = true) String password,
-                                            HttpServletRequest request) {
+    public ResponseResult loginByMobilePassword(@RequestParam(value = "mobile", required = true) String mobile,
+                                                @RequestParam(value = "password", required = true) String password,
+                                                HttpServletRequest request) {
         UserPo user = new UserPo();
         user.setMobile(mobile);
         user.setPassword(password);
         user.setLoginIp(WebUtils.getRemoteAddress(request));
         Map<String, Object> map = userService.loginByMobilePassword(user);
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**
@@ -193,12 +193,12 @@ public class UserController {
 //            @ApiImplicitParam(name = "token", required = true, value = "登录后返回的token", paramType = "header"),
 //    })
     @PostMapping("/get/info")
-    public ResultBody getInfo(HttpServletRequest request) {
+    public ResponseResult getInfo(HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         UserPo user = new UserPo();
         user.setLoginMobile(LoginMoblie);
         Map<String, Object> map = userService.authenticatingToken(user);
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
     /**
@@ -212,12 +212,12 @@ public class UserController {
 //            @ApiImplicitParam(name = "token", required = true, value = "登录后返回的token", paramType = "header"),
 //    })
     @PostMapping("/verify/token")
-    public ResultBody authenticatingToken(HttpServletRequest request) {
+    public ResponseResult authenticatingToken(HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         UserPo user = new UserPo();
         user.setLoginMobile(LoginMoblie);
         Map<String, Object> map = userService.authenticatingToken(user);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -235,16 +235,16 @@ public class UserController {
 //            @ApiImplicitParam(name = "sessionId", required = true, value = "登录会话id", paramType = "header"),
 //    })
     @PostMapping("/update/password")
-    public ResultBody updatePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword,
-                                     @RequestParam(value = "newPassword", required = true) String newPassword,
-                                     HttpServletRequest request) {
+    public ResponseResult updatePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword,
+                                         @RequestParam(value = "newPassword", required = true) String newPassword,
+                                         HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         UserPo user = new UserPo();
         user.setOldPassword(oldPassword);
         user.setPassword(newPassword);
         user.setLoginMobile(LoginMoblie);
         userService.updatePassword(user);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     @Schema(title = "重置密码", name = "重置密码")
@@ -254,15 +254,15 @@ public class UserController {
 //            @ApiImplicitParam(name = "newPassword", required = true, value = "新密码", paramType = "form"),
 //    })
     @PostMapping("/reset/password")
-    public ResultBody resetPassword(@RequestParam(value = "mobile", required = true) String mobile,
-                                    @RequestParam(value = "code", required = true) String code,
-                                    @RequestParam(value = "newPassword", required = true) String newPassword) {
+    public ResponseResult resetPassword(@RequestParam(value = "mobile", required = true) String mobile,
+                                        @RequestParam(value = "code", required = true) String code,
+                                        @RequestParam(value = "newPassword", required = true) String newPassword) {
         UserPo user = new UserPo();
         user.setMobile(mobile);
         user.setPassword(newPassword);
         user.setInputCode(code);
         userService.resetPassword(user);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     @Schema(title = "修改用户信息", name = "修改用户信息")
@@ -275,11 +275,11 @@ public class UserController {
 //            @ApiImplicitParam(name = "userDesc", required = false, value = "描述", paramType = "form"),
 //    })
     @PostMapping("/update/info")
-    public ResultBody updateUserInfo(@RequestParam(value = "nickname", required = false) String nickname,
-                                     @RequestParam(value = "avatar", required = false) String avatar,
-                                     @RequestParam(value = "email", required = false) String email,
-                                     @RequestParam(value = "userDesc", required = false) String userDesc,
-                                     HttpServletRequest request) {
+    public ResponseResult updateUserInfo(@RequestParam(value = "nickname", required = false) String nickname,
+                                         @RequestParam(value = "avatar", required = false) String avatar,
+                                         @RequestParam(value = "email", required = false) String email,
+                                         @RequestParam(value = "userDesc", required = false) String userDesc,
+                                         HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         UserPo user = new UserPo();
         user.setLoginMobile(LoginMoblie);
@@ -288,7 +288,7 @@ public class UserController {
         user.setEmail(email);
         user.setUserDesc(userDesc);
         userService.updateUserInfo(user);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -306,7 +306,7 @@ public class UserController {
 //            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
 //    })
     @PostMapping("/verify/OldMobile")
-    public ResultBody verifyOldMobile(
+    public ResponseResult verifyOldMobile(
             @RequestParam(value = "password", required = true) String password,
             @RequestParam(value = "code", required = true) String code,
             HttpServletRequest request) {
@@ -316,7 +316,7 @@ public class UserController {
         po.setLoginMobile(LoginMoblie);
         po.setOldPassword(password);
         userService.verifyOldMobile(po);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -335,9 +335,9 @@ public class UserController {
 //            @ApiImplicitParam(name = "code", required = true, value = "验证码", paramType = "form"),
 //    })
     @PostMapping("/update/mobile")
-    public ResultBody updateMobile(@RequestParam(value = "newMobile", required = true) String newMobile,
-                                   @RequestParam(value = "code", required = true) String code,
-                                   HttpServletRequest request) {
+    public ResponseResult updateMobile(@RequestParam(value = "newMobile", required = true) String newMobile,
+                                       @RequestParam(value = "code", required = true) String code,
+                                       HttpServletRequest request) {
         String LoginMoblie = (String) request.getAttribute(UserConstants.LOGIN_MOBILE);
         Map<String, Object> loginInfoMap = (Map<String, Object>) request.getAttribute(UserConstants.LOGIN_INFO);
         UserPo po = new UserPo();
@@ -346,7 +346,7 @@ public class UserController {
         po.setMobile(newMobile);
         po.setSessionId(loginInfoMap.get(UserConstants.SESSIONID).toString());
         userService.updateMobile(po);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 
@@ -369,11 +369,11 @@ public class UserController {
 //            @ApiImplicitParam(name = "pageSize", required = false, value = "每页条数", paramType = "form")
 //    })
     @PostMapping("/list")
-    public ResultBody list(@RequestParam(value = "source", required = false) Integer source,
-                           @RequestParam(value = "status", required = false) Integer status,
-                           @RequestParam(value = "searchContent", required = false) String searchContent,
-                           @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
-                           @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
+    public ResponseResult list(@RequestParam(value = "source", required = false) Integer source,
+                               @RequestParam(value = "status", required = false) Integer status,
+                               @RequestParam(value = "searchContent", required = false) String searchContent,
+                               @RequestParam(value = "pageIndex", required = false, defaultValue = "1") Integer pageIndex,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
         //查询条件
         UserPo userPo = new UserPo();
         userPo.setSource(source);
@@ -385,7 +385,7 @@ public class UserController {
         List<UserVO> users = BeanConvertUtils.copyList(resultPage.getRecords(), UserVO.class);
         resultPage.setRecords(users);
 
-        return ResultBody.ok(resultPage);
+        return ResponseResult.ok(resultPage);
     }
 
 
@@ -404,9 +404,9 @@ public class UserController {
 //            @ApiImplicitParam(name = "sex", required = true, value = "性别 (0 保密  1男 2女)", paramType = "form"),
 //    })
     @PostMapping("/manual/save")
-    public ResultBody list(@RequestParam(value = "mobile", required = true) String mobile,
-                           @RequestParam(value = "username", required = false) String username,
-                           @RequestParam(value = "sex", required = true) Integer sex) {
+    public ResponseResult list(@RequestParam(value = "mobile", required = true) String mobile,
+                               @RequestParam(value = "username", required = false) String username,
+                               @RequestParam(value = "sex", required = true) Integer sex) {
         //查询条件
         UserPo userPo = new UserPo();
         //手工录入
@@ -430,7 +430,7 @@ public class UserController {
         }
         Map<String, Object> result = Maps.newHashMap();
         result.put("user_id", userPo.getUserId());
-        return ResultBody.ok(result);
+        return ResponseResult.ok(result);
     }
 
     /**
@@ -494,7 +494,7 @@ public class UserController {
 
     @Schema(title = "获取用户来源列表", name = "获取用户来源列表")
     @PostMapping("/source/list")
-    public ResultBody list() {
+    public ResponseResult list() {
         JSONArray sourceArray = new JSONArray();
         Arrays.asList(UserSourceEnum.values()).forEach(x -> {
             JSONObject jsonObject = new JSONObject();
@@ -504,7 +504,7 @@ public class UserController {
         });
         JSONObject userSources = new JSONObject();
         userSources.put("user_source", sourceArray);
-        return ResultBody.ok(userSources);
+        return ResponseResult.ok(userSources);
     }
 
 
@@ -519,11 +519,11 @@ public class UserController {
 //            @ApiImplicitParam(name = "userId", required = true, value = "用户ID", paramType = "form"),
 //    })
     @PostMapping("/detail")
-    public ResultBody detail(@RequestParam(value = "userId", required = true) Long userId) {
+    public ResponseResult detail(@RequestParam(value = "userId", required = true) Long userId) {
         //查询用户信息
         User user = userService.getById(userId);
         if (user == null) {
-            return ResultBody.failed("用户详情不存在");
+            return ResponseResult.failed("用户详情不存在");
         }
         //查询用户地址信息
         List<ConsigneeAddress> addressList = consigneeAddressService.queryUserConsigneeAddressByUserId(userId);
@@ -553,7 +553,7 @@ public class UserController {
             log.error("PO转VO异常:{}", ex.getMessage());
             throw new OpenAlertException("获取详情失败");
         }
-        return ResultBody.ok(map);
+        return ResponseResult.ok(map);
     }
 
 
@@ -568,13 +568,13 @@ public class UserController {
 //            @ApiImplicitParam(name = "ids", required = true, value = "用户ID,多个用,号隔开", paramType = "form"),
 //    })
     @PostMapping("/batch/push")
-    public ResultBody push(@RequestParam(value = "ids", required = true) String ids, HttpServletRequest request) {
+    public ResponseResult push(@RequestParam(value = "ids", required = true) String ids, HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         boolean isSuc = userService.batchPush(Arrays.asList(ids.split(",")), authorization);
         if (!isSuc) {
-            return ResultBody.failed("批量推送用户信息到客户系统失败");
+            return ResponseResult.failed("批量推送用户信息到客户系统失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     /**
@@ -588,12 +588,12 @@ public class UserController {
 //            @ApiImplicitParam(name = "status", required = true, value = "0-禁用 1-启用", paramType = "form")
 //    })
     @PostMapping("/batch/change")
-    public ResultBody changeStatus(@RequestParam(value = "ids", required = true) String ids,
-                                   @RequestParam(value = "status", required = true) Integer status) {
+    public ResponseResult changeStatus(@RequestParam(value = "ids", required = true) String ids,
+                                       @RequestParam(value = "status", required = true) Integer status) {
         boolean isSuc = userService.batchChangeStatus(Arrays.asList(ids.split(",")), status);
         if (!isSuc) {
-            return ResultBody.failed("批量修改用户状态失败");
+            return ResponseResult.failed("批量修改用户状态失败");
         }
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 }

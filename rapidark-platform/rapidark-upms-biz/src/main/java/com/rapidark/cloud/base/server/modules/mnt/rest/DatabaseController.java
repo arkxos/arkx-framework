@@ -20,7 +20,7 @@ import com.rapidark.cloud.base.server.modules.mnt.service.DatabaseService;
 import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseDto;
 import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
 import com.rapidark.cloud.base.server.modules.mnt.util.SqlUtils;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
@@ -71,36 +71,36 @@ public class DatabaseController {
     @Schema(title = "新增数据库")
     @PostMapping
 	@PreAuthorize("@el.check('database:add')")
-    public ResultBody<Object> create(@Validated @RequestBody Database resources){
+    public ResponseResult<Object> create(@Validated @RequestBody Database resources){
 		databaseService.create(resources);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     @Log("修改数据库")
     @Schema(title = "修改数据库")
     @PutMapping
 	@PreAuthorize("@el.check('database:edit')")
-    public ResultBody<Object> update(@Validated @RequestBody Database resources){
+    public ResponseResult<Object> update(@Validated @RequestBody Database resources){
         databaseService.update(resources);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
     @Log("删除数据库")
     @Schema(title = "删除数据库")
     @DeleteMapping
 	@PreAuthorize("@el.check('database:del')")
-    public ResultBody<Object> delete(@RequestBody Set<String> ids){
+    public ResponseResult<Object> delete(@RequestBody Set<String> ids){
         databaseService.delete(ids);
-        return ResultBody.ok();
+        return ResponseResult.ok();
     }
 
 	@Log("测试数据库链接")
 	@Schema(title = "测试数据库链接")
 	@PostMapping("/testConnect")
 	@PreAuthorize("@el.check('database:testConnect')")
-	public ResultBody<Object> testConnect(@Validated @RequestBody Database resources){
+	public ResponseResult<Object> testConnect(@Validated @RequestBody Database resources){
 		boolean success = databaseService.testConnection(resources);
-		return ResultBody.ok(success);
+		return ResponseResult.ok(success);
 	}
 
 	@Log("执行SQL脚本")

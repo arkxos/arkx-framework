@@ -14,7 +14,7 @@ import com.dingtalk.api.request.OapiProcessinstanceGetRequest;
 import com.dingtalk.api.response.OapiProcessinstanceCreateResponse;
 import com.dingtalk.api.response.OapiProcessinstanceGetResponse;
 import com.google.common.collect.Maps;
-import com.rapidark.framework.common.model.ResultBody;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.taobao.api.internal.util.json.JSONWriter;
 
@@ -55,7 +55,7 @@ public class ProcessinstanceController {
 //    })
     @PostMapping("/media/upload")
     @ResponseBody
-    public ResultBody uploadFile(@RequestParam("type") String type, @RequestParam("file") MultipartFile file) {
+    public ResponseResult uploadFile(@RequestParam("type") String type, @RequestParam("file") MultipartFile file) {
         try {
             if (file.isEmpty()) {
                 throw new RuntimeException("上传文件不能为空");
@@ -72,9 +72,9 @@ public class ProcessinstanceController {
 
             Map<String, String> map = Maps.newHashMap();
             map.put("mediaId", mediaId);
-            return ResultBody.ok(map);
+            return ResponseResult.ok(map);
         } catch (Exception e) {
-            return ResultBody.ok().msg(e.getMessage());
+            return ResponseResult.ok().msg(e.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class ProcessinstanceController {
     @Schema(title = "发起审批", name = "发起审批")
     @RequestMapping(value = "/processinstance/start", method = RequestMethod.POST)
     @ResponseBody
-    public ResultBody startProcessInstance(@RequestBody ProcessInstanceInputVO processInstance) {
+    public ResponseResult startProcessInstance(@RequestBody ProcessInstanceInputVO processInstance) {
         try {
             DefaultDingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_PROCESSINSTANCE_CREATE);
             OapiProcessinstanceCreateRequest request = new OapiProcessinstanceCreateRequest();
@@ -102,15 +102,15 @@ public class ProcessinstanceController {
 
             int errorCode = Integer.valueOf(response.getErrorCode());
             if (errorCode != 0) {
-                return ResultBody.failed().code(errorCode).msg(response.getErrmsg());
+                return ResponseResult.failed().code(errorCode).msg(response.getErrmsg());
             }
             Map<String, String> map = Maps.newHashMap();
             map.put("instanceId", response.getProcessInstanceId());
-            return ResultBody.ok(map);
+            return ResponseResult.ok(map);
         } catch (Exception e) {
             String errLog = LogFormatter.getKVLogData(LogFormatter.LogEvent.END, LogFormatter.KeyValue.getNew("processInstance", JSON.toJSONString(processInstance)));
             log.info(errLog, e);
-            return ResultBody.failed().code(-1).msg("系统繁忙");
+            return ResponseResult.failed().code(-1).msg("系统繁忙");
         }
     }
 
@@ -126,7 +126,7 @@ public class ProcessinstanceController {
 //    })
     @RequestMapping(value = "/processinstance/get", method = RequestMethod.POST)
     @ResponseBody
-    public ResultBody getProcessinstanceById(@RequestParam String instanceId) {
+    public ResponseResult getProcessinstanceById(@RequestParam String instanceId) {
         try {
             DingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_GET_PROCESSINSTANCE);
             OapiProcessinstanceGetRequest request = new OapiProcessinstanceGetRequest();
@@ -134,13 +134,13 @@ public class ProcessinstanceController {
             OapiProcessinstanceGetResponse response = client.execute(request, AccessTokenUtil.getToken(dingtalkProperties.getAppkey(), dingtalkProperties.getAppsecret()));
             int errorCode = Integer.valueOf(response.getErrorCode());
             if (errorCode != 0) {
-                return ResultBody.failed().code(errorCode).msg(response.getErrmsg());
+                return ResponseResult.failed().code(errorCode).msg(response.getErrmsg());
             }
-            return ResultBody.ok(response.getProcessInstance());
+            return ResponseResult.ok(response.getProcessInstance());
         } catch (Exception e) {
             String errLog = LogFormatter.getKVLogData(LogFormatter.LogEvent.END, LogFormatter.KeyValue.getNew("instanceId", instanceId));
             log.info(errLog, e);
-            return ResultBody.failed().code(-1).msg("系统繁忙");
+            return ResponseResult.failed().code(-1).msg("系统繁忙");
         }
     }
 }
