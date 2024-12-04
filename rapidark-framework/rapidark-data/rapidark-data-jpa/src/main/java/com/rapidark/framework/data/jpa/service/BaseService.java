@@ -22,7 +22,7 @@ import java.util.*;
  * @Date 2020/05/16
  * @Version V1.0
  */
-public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, ID>> {
+public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, ID>> implements IBaseService<T, ID, R> {
 
 	private static final String DEFAULT_SORT_FIELD = "createTime";
 	@Autowired
@@ -32,35 +32,42 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 	public R entityRepository;
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	@Override
 	public void save(T t){
 		entityRepository.save(t);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	@Override
 	public List<T> saveAll(Iterable<T> ts){
 		return entityRepository.saveAll(ts);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	@Override
 	public void update(T t){
 		entityRepository.save(t);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	@Override
 	public void deleteById(ID id){
 		entityRepository.deleteById(id);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	@Override
 	public void delete(T t){
 		entityRepository.delete(t);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	@Override
 	public void deleteInBatch(Iterable<T> ts){
 		entityRepository.deleteInBatch(ts);
 	}
 
+	@Override
 	public T findById(ID id){
 		Optional<T> optional = entityRepository.findById(id);
 		if (optional.isPresent()){
@@ -69,6 +76,7 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 		return null;
 	}
 
+	@Override
 	public T findOneByCriteria(CriteriaQueryWrapper<T> criteria) {
 		List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder));
 		if(data.isEmpty()) {
@@ -77,16 +85,19 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 		return data.get(0);
 	}
 
+	@Override
 	public List<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria) {
 		List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
 		return data;
 	}
 
+	@Override
 	public Page<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria, Pageable pageable) {
 		Page<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder), pageable);
 		return data;
 	}
 
+	@Override
 	public void deleteByCriteria(CriteriaQueryWrapper<T> criteria) {
 		List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
 		for (T entity : data) {
@@ -94,6 +105,7 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 		}
 	}
 
+	@Override
 	public T findOneByExample(T example) {
 		List<T> data = entityRepository.findAll(Example.of(example));
 		if(data.isEmpty()) {
@@ -102,40 +114,49 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 		return data.get(0);
 	}
 
+	@Override
 	public List<T> findAll(){
 		return entityRepository.findAll();
 	}
 
+	@Override
 	public List<T> findAll(T t){
 		return entityRepository.findAll(Example.of(t));
 	}
 
+	@Override
 	public long count(){
 		return entityRepository.count();
 	}
 
+	@Override
 	public long count(T t){
 		return entityRepository.count(Example.of(t));
 	}
 
+	@Override
 	public List<T> list(T t){
 		return list(t, DEFAULT_SORT_FIELD);
 	}
 
-	public List list(T t, String ... properties){
+	@Override
+	public List list(T t, String... properties){
 		return entityRepository.findAll(Example.of(t,ExampleMatcher.matching()),Sort.by(Sort.Direction.ASC, properties));
 	}
 
+	@Override
 	public PageResult<T> pageList(T t, int currentPage, int pageSize){
 		return pageList(t, currentPage, pageSize, DEFAULT_SORT_FIELD);
 	}
 
-	public PageResult<T> pageList(T t, int currentPage, int pageSize, String ... properties){
+	@Override
+	public PageResult<T> pageList(T t, int currentPage, int pageSize, String... properties){
 		Pageable pageable = PageRequest.of(currentPage-1,pageSize, Sort.by(Sort.Direction.DESC, properties));
 		Page<T> pageData  =  entityRepository.findAll(Example.of(t), pageable);
 		return this.setPageResult(pageData.getContent(), currentPage, pageSize, pageData.getTotalElements());
 	}
 
+	@Override
 	public PageResult<T> pageList(T t, ExampleMatcher matcher, int currentPage, int pageSize){
 		Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by(Sort.Direction.DESC, DEFAULT_SORT_FIELD));
 		Page<T> pageData  =  entityRepository.findAll(Example.of(t, matcher), pageable);
@@ -150,6 +171,7 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 	 * @param pageSize
 	 * @return
 	 */
+	@Override
 	public PageResult pageNativeQuery(String sql, List<Object> params, int currentPage, int pageSize){
 		String sqlCount = "SELECT count(1) FROM (" +sql+") t ";
 		Query queryCount = entityManager.createNativeQuery(sqlCount);
@@ -173,6 +195,7 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 	 * @param params
 	 * @return
 	 */
+	@Override
 	public List<Map<String,Object>> nativeQuery(String sql, List<Object> params){
 		Query query = entityManager.createNativeQuery(sql);
 		if (params != null) {
@@ -192,6 +215,7 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 	 * @param totalNum
 	 * @return
 	 */
+	@Override
 	public PageResult setPageResult(List<?> list, int currentPage, int pageSize, long totalNum){
 		//分页结果
 		PageResult pageResult = new PageResult();
