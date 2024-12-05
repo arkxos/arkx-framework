@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.locator;
 
 import com.google.common.collect.Lists;
-import com.rapidark.cloud.base.client.model.RateLimitApi;
+import com.rapidark.platform.system.api.entity.RateLimitApi;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
 import com.rapidark.framework.common.utils.StringUtils;

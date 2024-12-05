@@ -1,9 +1,9 @@
 package com.rapidark.cloud.base.server.repository;
 
-import com.rapidark.cloud.base.client.model.RateLimitApi;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import com.rapidark.platform.system.api.entity.GatewayRateLimitApi;
+import com.rapidark.platform.system.api.entity.RateLimitApi;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.rapidark.cloud.base.client.model.RateLimitApi;
+import com.rapidark.platform.system.api.entity.RateLimitApi;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitApiRepository;
 import com.rapidark.cloud.base.server.repository.GatewayRateLimitRepository;
 import com.rapidark.framework.commons.data.model.PageParams;

@@ -1,7 +1,7 @@
 package com.rapidark.cloud.gateway.server.filter;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
-import com.rapidark.cloud.base.client.model.AuthorityResource;
+import com.rapidark.platform.system.api.entity.AuthorityResource;
 import com.rapidark.platform.system.api.entity.OpenApp;
 import com.rapidark.cloud.gateway.server.service.feign.OpenAppServiceClient;
 import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRegServer;

@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.service;
 
-import com.rapidark.cloud.base.client.model.IpLimitApi;
+import com.rapidark.platform.system.api.entity.IpLimitApi;
 import com.rapidark.cloud.base.server.repository.GatewayIpLimitApiRepository;
 import com.rapidark.cloud.base.server.repository.GatewayIpLimitRepository;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;

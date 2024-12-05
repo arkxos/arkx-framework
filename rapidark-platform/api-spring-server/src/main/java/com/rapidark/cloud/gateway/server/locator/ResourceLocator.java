@@ -1,8 +1,8 @@
 package com.rapidark.cloud.gateway.server.locator;
 
 import com.google.common.collect.Lists;
-import com.rapidark.cloud.base.client.model.AuthorityResource;
-import com.rapidark.cloud.base.client.model.IpLimitApi;
+import com.rapidark.platform.system.api.entity.AuthorityResource;
+import com.rapidark.platform.system.api.entity.IpLimitApi;
 import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
 import com.rapidark.cloud.gateway.server.service.feign.BaseAuthorityServiceClient;
 import com.rapidark.cloud.gateway.server.service.feign.GatewayServiceClient;

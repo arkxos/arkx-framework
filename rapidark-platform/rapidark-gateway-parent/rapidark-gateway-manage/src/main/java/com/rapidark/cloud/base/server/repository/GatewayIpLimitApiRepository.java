@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.repository;
 
-import com.rapidark.cloud.base.client.model.IpLimitApi;
+import com.rapidark.platform.system.api.entity.IpLimitApi;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import com.rapidark.platform.system.api.entity.GatewayIpLimitApi;

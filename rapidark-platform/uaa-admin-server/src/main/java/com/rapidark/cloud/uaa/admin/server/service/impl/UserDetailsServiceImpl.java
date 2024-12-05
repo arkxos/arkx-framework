@@ -1,6 +1,6 @@
 package com.rapidark.cloud.uaa.admin.server.service.impl;
 
-import com.rapidark.cloud.base.client.model.UserAccount;
+import com.rapidark.platform.system.api.entity.UserAccount;
 import com.rapidark.cloud.uaa.admin.server.service.feign.BaseUserServiceClient;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenUserDetails;

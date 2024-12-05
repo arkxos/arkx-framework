@@ -2,8 +2,8 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.rapidark.cloud.base.client.model.IpLimitApi;
-import com.rapidark.cloud.base.client.model.RateLimitApi;
+import com.rapidark.platform.system.api.entity.IpLimitApi;
+import com.rapidark.platform.system.api.entity.RateLimitApi;
 import com.rapidark.cloud.base.client.service.IGatewayServiceClient;
 import com.rapidark.cloud.base.server.service.GatewayIpLimitService;
 import com.rapidark.cloud.base.server.service.GatewayRateLimitService;
