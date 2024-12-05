@@ -34,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -59,8 +60,9 @@ public class SysMobileServiceImpl implements SysMobileService {
 	 */
 	@Override
 	public ResponseResult<Boolean> sendSmsCode(String mobile) {
-		List<SysUser> userList = userMapper
-			.selectList(Wrappers.<SysUser>query().lambda().eq(SysUser::getMobile, mobile));
+		List<SysUser> userList = new ArrayList<>();
+//				userMapper
+//			.selectList(Wrappers.<SysUser>query().lambda().eq(SysUser::getMobile, mobile));
 
 		if (CollUtil.isEmpty(userList)) {
 			log.info("手机号未注册:{}", mobile);

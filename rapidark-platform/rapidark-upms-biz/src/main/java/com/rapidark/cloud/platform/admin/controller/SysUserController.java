@@ -68,10 +68,11 @@ public class SysUserController {
 	@Inner
 	@GetMapping(value = { "/user/info/query" })
 	public ResponseResult info(@RequestParam(required = false) String username, @RequestParam(required = false) String phone) {
-		SysUser user = userService.getOne(Wrappers.<SysUser>query()
-			.lambda()
-			.eq(StrUtil.isNotBlank(username), SysUser::getUsername, username)
-			.eq(StrUtil.isNotBlank(phone), SysUser::getMobile, phone));
+		SysUser user = null;
+//		userService.getOne(Wrappers.<SysUser>query()
+//			.lambda()
+//			.eq(StrUtil.isNotBlank(username), SysUser::getUsername, username)
+//			.eq(StrUtil.isNotBlank(phone), SysUser::getMobile, phone));
 		if (user == null) {
 			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, username));
 		}
@@ -96,7 +97,8 @@ public class SysUserController {
 	@GetMapping(value = { "/user/currentUserInfo" })
 	public ResponseResult currentUserInfo() {
 		String username = SecurityUtils.getUser().getUsername();
-		SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
+		SysUser user = null;
+//		userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
 		if (user == null) {
 			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_QUERY_ERROR));
 		}
@@ -121,7 +123,7 @@ public class SysUserController {
 	@Inner(value = false)
 	@GetMapping("/user/details")
 	public ResponseResult getDetails(@ParameterObject SysUser query) {
-		SysUser sysUser = userService.getOne(Wrappers.query(query), false);
+		SysUser sysUser = null;//userService.getOne(Wrappers.query(query), false);
 		return ResponseResult.ok(sysUser == null ? null : CommonConstants.SUCCESS);
 	}
 

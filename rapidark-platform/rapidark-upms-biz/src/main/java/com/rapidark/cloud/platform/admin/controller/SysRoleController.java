@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.RequestExcel;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.rapidark.cloud.base.server.service.SysRoleService;
+import com.rapidark.framework.commons.data.model.PageParams;
 import com.rapidark.platform.system.api.entity.SysRole;
 import com.rapidark.platform.system.api.vo.RoleExcelVO;
 import com.rapidark.platform.system.api.vo.RoleVO;
@@ -89,7 +90,8 @@ public class SysRoleController {
 	@HasPermission("sys_role_add")
 	@CacheEvict(value = CacheConstants.ROLE_DETAILS, allEntries = true)
 	public ResponseResult save(@Valid @RequestBody SysRole sysRole) {
-		return ResponseResult.ok(sysRoleService.save(sysRole));
+		sysRoleService.save(sysRole);
+		return ResponseResult.ok();
 	}
 
 	/**
@@ -135,9 +137,11 @@ public class SysRoleController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public ResponseResult getRolePage(Page page, SysRole role) {
-		return ResponseResult.ok(sysRoleService.findAll(page, Wrappers.<SysRole>lambdaQuery()
-			.like(StrUtil.isNotBlank(role.getRoleName()), SysRole::getRoleName, role.getRoleName())));
+	public ResponseResult getRolePage(PageParams page, SysRole role) {
+		sysRoleService.findAll();
+//		page, Wrappers.<SysRole>lambdaQuery()
+//				.like(StrUtil.isNotBlank(role.getRoleName()), SysRole::getRoleName, role.getRoleName()));
+		return ResponseResult.ok();
 	}
 
 	/**

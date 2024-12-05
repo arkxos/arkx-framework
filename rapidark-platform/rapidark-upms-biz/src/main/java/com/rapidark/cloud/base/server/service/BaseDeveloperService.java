@@ -15,6 +15,7 @@ import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
+import com.rapidark.platform.system.api.entity.BaseAccountLogs;
 import com.rapidark.platform.system.api.entity.BaseDeveloper;
 import com.rapidark.platform.system.api.entity.SysAccount;
 import lombok.extern.slf4j.Slf4j;
