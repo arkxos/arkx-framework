@@ -45,7 +45,7 @@
 					select="com.rapidark.cloud.platform.admin.mapper.SysRoleRepository.listRolesByUserId" column="user_id">
         </collection>
         <collection property="postList" ofType="com.rapidark.platform.system.api.entity.SysPost"
-                    select="com.rapidark.cloud.platform.admin.mapper.SysPostMapper.listPostsByUserId" column="user_id">
+                    select="com.rapidark.platform.system.mapper.SysPostMapper.listPostsByUserId" column="user_id">
         </collection>
     </resultMap>
 
