@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.configuration;
+package com.rapidark.platform.system.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;

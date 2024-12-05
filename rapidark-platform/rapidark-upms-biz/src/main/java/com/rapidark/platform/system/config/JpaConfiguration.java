@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.configuration;
+package com.rapidark.platform.system.config;
 
 
 import com.rapidark.framework.common.annotation.JpaDto;
