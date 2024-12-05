@@ -1,6 +1,6 @@
 package com.rapidark.cloud.portal.uaa.server.service.feign;
 
-import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.platform.system.api.constants.BaseConstants;
 import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;

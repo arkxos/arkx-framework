@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.constants;
+package com.rapidark.platform.system.api.constants;
 
 /**
  * 通用权限常量

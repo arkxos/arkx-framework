@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.service.query;
+package com.rapidark.platform.system.api.query;
 
 import com.rapidark.framework.common.annotation.Query;
 import lombok.Data;

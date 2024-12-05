@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.service.dto;
+package com.rapidark.platform.system.api.dto;
 
 
 import com.rapidark.framework.data.jpa.entity.Status;

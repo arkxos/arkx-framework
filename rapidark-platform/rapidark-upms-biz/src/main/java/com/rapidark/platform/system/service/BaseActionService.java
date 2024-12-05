@@ -1,7 +1,7 @@
 package com.rapidark.platform.system.service;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.rapidark.cloud.base.client.constants.ResourceType;
+import com.rapidark.platform.system.api.constants.ResourceType;
 import com.rapidark.platform.system.repository.BaseActionRepository;
 import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.exception.OpenAlertException;

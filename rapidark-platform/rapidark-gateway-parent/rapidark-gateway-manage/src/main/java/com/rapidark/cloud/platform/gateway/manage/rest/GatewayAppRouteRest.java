@@ -2,7 +2,7 @@ package com.rapidark.cloud.platform.gateway.manage.rest;
 
 //import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 //import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
-import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.platform.system.api.constants.BaseConstants;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.gateway.framework.base.BaseRest;
 import com.rapidark.cloud.platform.gateway.framework.bean.*;

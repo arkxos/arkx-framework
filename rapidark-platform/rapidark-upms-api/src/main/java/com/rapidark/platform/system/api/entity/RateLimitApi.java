@@ -1,7 +1,5 @@
-package com.rapidark.cloud.base.client.model;
+package com.rapidark.platform.system.api.entity;
 
-
-import com.rapidark.platform.system.api.entity.BaseApi;
 
 import java.io.Serializable;
 

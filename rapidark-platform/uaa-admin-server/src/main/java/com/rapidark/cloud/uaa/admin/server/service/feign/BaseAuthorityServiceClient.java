@@ -1,7 +1,7 @@
 package com.rapidark.cloud.uaa.admin.server.service.feign;
 
-import com.rapidark.cloud.base.client.constants.BaseConstants;
-import com.rapidark.cloud.base.client.service.IBaseAuthorityServiceClient;
+import com.rapidark.platform.system.api.constants.BaseConstants;
+import com.rapidark.platform.system.api.service.IBaseAuthorityServiceClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 

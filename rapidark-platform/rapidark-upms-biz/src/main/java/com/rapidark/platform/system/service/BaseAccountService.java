@@ -1,7 +1,7 @@
 package com.rapidark.platform.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.platform.system.api.constants.BaseConstants;
 import com.rapidark.platform.system.repository.BaseAccountLogsRepository;
 import com.rapidark.platform.system.repository.SysAccountRepository;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;

@@ -2,7 +2,7 @@ package com.rapidark.cloud.task.server.job;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.platform.system.api.constants.BaseConstants;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.cloud.task.server.service.feign.GatewayServiceClient;
 import com.rapidark.framework.common.model.ResponseResult;

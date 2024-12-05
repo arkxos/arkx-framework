@@ -1,8 +1,8 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
-import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
-import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
+import com.rapidark.platform.system.api.dto.OpenAppDto;
+import com.rapidark.platform.system.api.dto.OpenClientQueryCriteria;
 import com.rapidark.cloud.base.server.controller.cmd.CreateOpenAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateOpenClientCommand;

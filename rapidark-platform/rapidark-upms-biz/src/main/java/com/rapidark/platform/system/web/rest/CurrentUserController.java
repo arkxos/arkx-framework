@@ -1,6 +1,5 @@
 package com.rapidark.platform.system.web.rest;
 
-import com.rapidark.cloud.base.client.model.AuthorityMenu;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
@@ -8,6 +7,7 @@ import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.platform.system.api.entity.AuthorityMenu;
 import com.rapidark.platform.system.api.entity.SysMenu;
 import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.platform.system.api.model.RouterVo;

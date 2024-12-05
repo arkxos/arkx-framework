@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.model;
+package com.rapidark.platform.system.api.entity;
 
 import lombok.Data;
 

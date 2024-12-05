@@ -1,6 +1,6 @@
 package com.rapidark.cloud.base.server.controller.cmd;
 
-import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.platform.system.api.constants.BaseConstants;
 import lombok.Data;
 
 /**

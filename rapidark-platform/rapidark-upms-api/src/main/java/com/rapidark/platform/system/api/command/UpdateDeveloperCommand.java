@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.service.command;
+package com.rapidark.platform.system.api.command;
 
 import com.rapidark.framework.data.jpa.entity.Status;
 import io.swagger.v3.oas.annotations.media.Schema;

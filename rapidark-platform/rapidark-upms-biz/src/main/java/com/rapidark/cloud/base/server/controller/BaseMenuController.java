@@ -1,8 +1,8 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
-import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
+import com.rapidark.platform.system.api.dto.OpenAppDto;
+import com.rapidark.platform.system.api.dto.OpenClientQueryCriteria;
 import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.rapidark.framework.common.model.ResponseResult;

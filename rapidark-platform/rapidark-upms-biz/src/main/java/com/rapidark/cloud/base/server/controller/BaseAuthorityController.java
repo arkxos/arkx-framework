@@ -1,17 +1,13 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.cloud.base.client.model.AuthorityApi;
-import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.cloud.base.client.model.AuthorityResource;
-import com.rapidark.cloud.base.client.service.IBaseAuthorityServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.GrantAuthorityActionCommand;
 import com.rapidark.cloud.base.server.controller.cmd.GrantOpenClientAppApiAuthorityCommand;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.utils.StringUtils;
-import com.rapidark.platform.system.api.entity.BaseAuthorityAction;
-import com.rapidark.platform.system.api.entity.SysUser;
+import com.rapidark.platform.system.api.entity.*;
+import com.rapidark.platform.system.api.service.IBaseAuthorityServiceClient;
 import com.rapidark.platform.system.service.BaseAuthorityService;
 import com.rapidark.platform.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.media.Schema;

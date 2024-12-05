@@ -1,6 +1,6 @@
 package com.rapidark.platform.system.api.entity;
 
-import com.rapidark.cloud.base.client.constants.UserConstants;
+import com.rapidark.platform.system.api.constants.UserConstants;
 
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.core.constant.Constants;

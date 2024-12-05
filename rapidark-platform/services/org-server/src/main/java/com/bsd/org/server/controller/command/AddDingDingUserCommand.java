@@ -1,6 +1,6 @@
 package com.bsd.org.server.controller.command;
 
-import com.rapidark.cloud.base.client.service.command.AddUserCommand;
+import com.rapidark.platform.system.api.command.AddUserCommand;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Getter;

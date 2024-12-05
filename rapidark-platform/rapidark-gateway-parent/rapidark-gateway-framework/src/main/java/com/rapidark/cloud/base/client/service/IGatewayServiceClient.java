@@ -1,9 +1,9 @@
 package com.rapidark.cloud.base.client.service;
 
-import com.rapidark.cloud.base.client.model.IpLimitApi;
-import com.rapidark.cloud.base.client.model.RateLimitApi;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.framework.common.model.ResponseResult;
+import com.rapidark.platform.system.api.entity.IpLimitApi;
+import com.rapidark.platform.system.api.entity.RateLimitApi;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;

@@ -1,15 +1,15 @@
-package com.rapidark.cloud.base.client.service;
+package com.rapidark.platform.system.api.service;
 
-import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.framework.common.model.ResponseResult;
+import com.rapidark.platform.system.api.command.AddUserCommand;
 import com.rapidark.platform.system.api.entity.SysRole;
+import com.rapidark.platform.system.api.entity.UserAccount;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**

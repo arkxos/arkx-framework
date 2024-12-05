@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.client.constants;
+package com.rapidark.platform.system.api.constants;
 
 /**
  * 用户常量信息

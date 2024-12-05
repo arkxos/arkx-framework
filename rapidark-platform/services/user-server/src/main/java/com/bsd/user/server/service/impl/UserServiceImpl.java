@@ -20,7 +20,7 @@ import com.bsd.user.server.utils.JwtTokenUtils;
 import com.bsd.user.server.utils.RegexUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.rapidark.cloud.base.client.constants.BaseConstants;
+import com.rapidark.platform.system.api.constants.BaseConstants;
 import com.rapidark.cloud.platform.gateway.framework.entity.GatewayAppRoute;
 import com.rapidark.framework.common.exception.OpenAlertException;
 import com.rapidark.framework.common.model.ResponseResult;
