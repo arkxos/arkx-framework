@@ -13,19 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.mnt.service.mapstruct;
+package com.rapidark.platform.system.repository;
 
-import com.rapidark.cloud.base.server.modules.mnt.domain.Database;
-import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseDto;
-import com.rapidark.framework.common.model.BaseMapper;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.rapidark.platform.system.entity.Database;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
 * @author zhanghouying
 * @date 2019-08-24
 */
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DatabaseMapper extends BaseMapper<DatabaseDto, Database> {
-
+public interface DatabaseRepository extends JpaRepository<Database, String>, JpaSpecificationExecutor<Database> {
 }

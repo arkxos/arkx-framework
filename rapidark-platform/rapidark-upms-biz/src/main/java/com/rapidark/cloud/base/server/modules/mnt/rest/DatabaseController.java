@@ -15,11 +15,11 @@
  */
 package com.rapidark.cloud.base.server.modules.mnt.rest;
 
-import com.rapidark.cloud.base.server.modules.mnt.domain.Database;
-import com.rapidark.cloud.base.server.modules.mnt.service.DatabaseService;
-import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseDto;
-import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
-import com.rapidark.cloud.base.server.modules.mnt.util.SqlUtils;
+import com.rapidark.platform.system.entity.Database;
+import com.rapidark.platform.system.service.DatabaseService;
+import com.rapidark.platform.system.dto.DatabaseDto;
+import com.rapidark.platform.system.dto.DatabaseQueryCriteria;
+import com.rapidark.platform.system.util.SqlUtils;
 import com.rapidark.framework.common.model.ResponseResult;
 
 import io.swagger.v3.oas.annotations.media.Schema;

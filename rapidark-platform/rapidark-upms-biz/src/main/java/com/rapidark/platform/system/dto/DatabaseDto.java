@@ -13,47 +13,43 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.mnt.domain;
+package com.rapidark.platform.system.dto;
 
-import com.rapidark.framework.data.jpa.entity.AbstractIdStringEntity;
-
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-
-import jakarta.persistence.*;
+import com.rapidark.framework.common.model.BaseDTO;
 import java.io.Serializable;
 
 /**
 * @author zhanghouying
 * @date 2019-08-24
 */
-@Entity
 @Getter
 @Setter
-@Table(name="mnt_database")
-public class Database extends AbstractIdStringEntity implements Serializable {
+public class DatabaseDto extends BaseDTO implements Serializable {
 
-    @Id
-    @Column(name = "db_id")
-	@Schema(title = "ID", hidden = true)
+	/**
+	 * id
+	 */
     private String id;
 
-	@Schema(title = "数据库名称")
+	/**
+	 * 数据库名称
+	 */
     private String name;
 
-	@Schema(title = "数据库连接地址")
+	/**
+	 * 数据库连接地址
+	 */
     private String jdbcUrl;
 
-	@Schema(title = "数据库密码")
+	/**
+	 * 数据库密码
+	 */
     private String pwd;
 
-	@Schema(title = "用户名")
+	/**
+	 * 用户名
+	 */
     private String userName;
-
-    public void copy(Database source){
-        BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));
-    }
 }

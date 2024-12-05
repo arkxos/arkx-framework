@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.mnt.service;
+package com.rapidark.platform.system.service;
 
-import com.rapidark.cloud.base.server.modules.mnt.domain.Database;
-import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseDto;
-import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
+import com.rapidark.platform.system.entity.Database;
+import com.rapidark.platform.system.dto.DatabaseDto;
+import com.rapidark.platform.system.dto.DatabaseQueryCriteria;
 import org.springframework.data.domain.Pageable;
 
 import jakarta.servlet.http.HttpServletResponse;

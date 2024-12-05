@@ -17,7 +17,7 @@
  *
  */
 
-package com.rapidark.cloud.base.server.modules.mnt.util;
+package com.rapidark.platform.system.util;
 import lombok.extern.slf4j.Slf4j;
 
 /**

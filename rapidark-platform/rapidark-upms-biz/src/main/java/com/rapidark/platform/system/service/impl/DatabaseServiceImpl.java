@@ -13,18 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.mnt.service.impl;
+package com.rapidark.platform.system.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.rapidark.cloud.base.server.modules.mnt.repository.DatabaseRepository;
-import com.rapidark.cloud.base.server.modules.mnt.service.mapstruct.DatabaseMapper;
+import com.rapidark.platform.system.repository.DatabaseRepository;
+import com.rapidark.platform.system.mapstruct.DatabaseMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import com.rapidark.cloud.base.server.modules.mnt.domain.Database;
-import com.rapidark.cloud.base.server.modules.mnt.service.DatabaseService;
-import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseDto;
-import com.rapidark.cloud.base.server.modules.mnt.service.dto.DatabaseQueryCriteria;
-import com.rapidark.cloud.base.server.modules.mnt.util.SqlUtils;
+import com.rapidark.platform.system.entity.Database;
+import com.rapidark.platform.system.service.DatabaseService;
+import com.rapidark.platform.system.dto.DatabaseDto;
+import com.rapidark.platform.system.dto.DatabaseQueryCriteria;
+import com.rapidark.platform.system.util.SqlUtils;
 import com.rapidark.framework.common.utils.FileUtil;
 import com.rapidark.framework.common.utils.PageUtil;
 import com.rapidark.framework.common.utils.QueryHelp;
