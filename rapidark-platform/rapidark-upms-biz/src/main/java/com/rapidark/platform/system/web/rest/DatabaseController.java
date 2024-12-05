@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.mnt.rest;
+package com.rapidark.platform.system.web.rest;
 
 import com.rapidark.platform.system.entity.Database;
 import com.rapidark.platform.system.service.DatabaseService;
