@@ -13,12 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.rest;
+package com.rapidark.platform.system.web.rest;
 
+import com.rapidark.platform.system.cmd.CheckDictItemExistCommand;
 import com.rapidark.platform.system.api.entity.SysDictItem;
-import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDetailQueryCriteria;
+import com.rapidark.platform.system.service.SysDictItemService;
+import com.rapidark.platform.system.dto.DictItemDto;
+import com.rapidark.platform.system.dto.DictDetailQueryCriteria;
 import com.rapidark.framework.common.model.ResponseResult;
 
 import com.rapidark.framework.common.utils.PageResult;

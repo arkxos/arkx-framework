@@ -13,19 +13,30 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.mapstruct;
+package com.rapidark.platform.system.repository;
 
 import com.rapidark.platform.system.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictSmallDto;
-import com.rapidark.framework.common.model.BaseMapper;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.rapidark.framework.data.jpa.BaseRepository;
+
+import java.util.List;
+import java.util.Set;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DictSmallMapper extends BaseMapper<DictSmallDto, SysDict> {
+public interface SysDictRepository extends BaseRepository<SysDict, Long> {
 
+    /**
+     * 删除
+     * @param ids /
+     */
+    void deleteByIdIn(Set<Long> ids);
+
+    /**
+     * 查询
+     * @param ids /
+     * @return /
+     */
+    List<SysDict> findByIdIn(Set<Long> ids);
 }

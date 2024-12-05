@@ -13,19 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service;
+package com.rapidark.platform.system.dto;
 
-import java.util.Map;
+import lombok.Data;
+import com.rapidark.framework.common.annotation.Query;
 
 /**
- * @author Zheng Jie
- * @date 2020-05-02
- */
-public interface MonitorService {
+* @author Zheng Jie
+* @date 2019-04-10
+*/
+@Data
+public class DictDetailQueryCriteria {
 
-    /**
-    * 查询数据分页
-    * @return Map<String,Object>
-    */
-    Map<String,Object> getServers();
+	@Query(type = Query.Type.EQUAL)
+	private String dictId;
+
+    @Query(type = Query.Type.INNER_LIKE)
+    private String label;
+
+//    @Query(propName = "name", joinName = "dict")
+//    private String dictName;
 }

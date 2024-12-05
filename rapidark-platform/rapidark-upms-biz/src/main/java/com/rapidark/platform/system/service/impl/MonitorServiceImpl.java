@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.impl;
+package com.rapidark.platform.system.service.impl;
 
 import cn.hutool.core.date.BetweenFormatter;
 import cn.hutool.core.date.DateUtil;
-import com.rapidark.cloud.base.server.modules.system.service.MonitorService;
+import com.rapidark.platform.system.service.MonitorService;
 import com.rapidark.framework.common.utils.ElAdminConstant;
 import com.rapidark.framework.common.utils.FileUtil;
 import com.rapidark.framework.common.utils.StringUtils;

@@ -13,24 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.dto;
+package com.rapidark.platform.system.dto;
 
 import lombok.Data;
 import com.rapidark.framework.common.annotation.Query;
 
 /**
-* @author Zheng Jie
-* @date 2019-04-10
-*/
+ * @author Zheng Jie
+ * 公共查询类
+ */
 @Data
-public class DictDetailQueryCriteria {
+public class DictQueryCriteria {
 
-	@Query(type = Query.Type.EQUAL)
-	private String dictId;
-
-    @Query(type = Query.Type.INNER_LIKE)
-    private String label;
-
-//    @Query(propName = "name", joinName = "dict")
-//    private String dictName;
+    @Query(blurry = "code,name,description")
+    private String blurry;
 }

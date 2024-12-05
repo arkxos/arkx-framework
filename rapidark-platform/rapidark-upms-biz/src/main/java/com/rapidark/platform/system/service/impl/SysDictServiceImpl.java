@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.impl;
+package com.rapidark.platform.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.rapidark.platform.system.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
-import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
-import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictMapper;
+import com.rapidark.platform.system.repository.SysDictRepository;
+import com.rapidark.platform.system.service.SysDictService;
+import com.rapidark.platform.system.mapstruct.DictMapper;
 import com.rapidark.platform.system.api.entity.SysDictItem;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;

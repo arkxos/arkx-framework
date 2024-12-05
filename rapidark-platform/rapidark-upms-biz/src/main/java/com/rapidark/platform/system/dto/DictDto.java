@@ -13,18 +13,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.dto;
+package com.rapidark.platform.system.dto;
 
-import lombok.Data;
-import com.rapidark.framework.common.annotation.Query;
+import lombok.Getter;
+import lombok.Setter;
+import com.rapidark.framework.common.model.BaseDTO;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * @author Zheng Jie
- * 公共查询类
- */
-@Data
-public class DictQueryCriteria {
+* @author Zheng Jie
+* @date 2019-04-10
+*/
+@Getter
+@Setter
+public class DictDto extends BaseDTO implements Serializable {
 
-    @Query(blurry = "code,name,description")
-    private String blurry;
+    private Long id;
+
+    private List<DictItemDto> dictDetails;
+
+    private String name;
+
+    private String description;
 }

@@ -13,27 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.dto;
+package com.rapidark.platform.system.mapstruct;
 
-import lombok.Getter;
-import lombok.Setter;
-import com.rapidark.framework.common.model.BaseDTO;
-import java.io.Serializable;
-import java.util.List;
+import com.rapidark.platform.system.api.entity.SysDict;
+import com.rapidark.platform.system.dto.DictDto;
+import com.rapidark.framework.common.model.BaseMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-@Getter
-@Setter
-public class DictDto extends BaseDTO implements Serializable {
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface DictMapper extends BaseMapper<DictDto, SysDict> {
 
-    private Long id;
-
-    private List<DictItemDto> dictDetails;
-
-    private String name;
-
-    private String description;
 }

@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.rest;
+package com.rapidark.platform.system.web.rest;
 
-import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
+import com.rapidark.platform.system.service.SysDictItemService;
+import com.rapidark.platform.system.dto.DictItemDto;
 import com.rapidark.platform.system.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.service.SysDictService;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictQueryCriteria;
+import com.rapidark.platform.system.service.SysDictService;
+import com.rapidark.platform.system.dto.DictQueryCriteria;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.framework.common.model.ResponseResult;
 

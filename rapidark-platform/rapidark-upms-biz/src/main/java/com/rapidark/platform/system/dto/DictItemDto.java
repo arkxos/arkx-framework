@@ -13,23 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.repository;
+package com.rapidark.platform.system.dto;
 
-import com.rapidark.platform.system.api.entity.SysDictItem;
-import com.rapidark.framework.data.jpa.BaseRepository;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import com.rapidark.framework.common.model.BaseDTO;
+import java.io.Serializable;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-public interface SysDictItemRepository extends BaseRepository<SysDictItem, Long> {
+@Getter
+@Setter
+public class DictItemDto extends BaseDTO implements Serializable {
 
-    /**
-     * 根据字典名称查询
-     * @param code /
-     * @return /
-     */
-    List<SysDictItem> findByDictCode(String code);
+    private Long id;
+
+    private DictSmallDto dict;
+
+    private String label;
+
+    private String value;
+
+    private Integer dictSort;
 }

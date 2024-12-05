@@ -1,4 +1,4 @@
-package com.rapidark.cloud.base.server.modules.system.rest;
+package com.rapidark.platform.system.cmd;
 
 import lombok.Data;
 

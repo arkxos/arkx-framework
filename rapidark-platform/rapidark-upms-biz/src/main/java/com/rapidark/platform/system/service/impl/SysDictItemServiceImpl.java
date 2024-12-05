@@ -13,15 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.impl;
+package com.rapidark.platform.system.service.impl;
 
 import com.rapidark.platform.system.api.entity.SysDictItem;
 import com.rapidark.platform.system.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.repository.SysDictItemRepository;
-import com.rapidark.cloud.base.server.modules.system.repository.SysDictRepository;
-import com.rapidark.cloud.base.server.modules.system.service.SysDictItemService;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
-import com.rapidark.cloud.base.server.modules.system.service.mapstruct.DictDetailMapper;
+import com.rapidark.platform.system.repository.SysDictItemRepository;
+import com.rapidark.platform.system.repository.SysDictRepository;
+import com.rapidark.platform.system.service.SysDictItemService;
+import com.rapidark.platform.system.dto.DictItemDto;
+import com.rapidark.platform.system.mapstruct.DictDetailMapper;
 import com.rapidark.cloud.platform.common.core.constant.enums.DictTypeEnum;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;

@@ -13,19 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.mapstruct;
+package com.rapidark.platform.system.repository;
 
-import com.rapidark.platform.system.api.entity.SysDict;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictDto;
-import com.rapidark.framework.common.model.BaseMapper;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.rapidark.platform.system.api.entity.SysDictItem;
+import com.rapidark.framework.data.jpa.BaseRepository;
+
+import java.util.List;
 
 /**
 * @author Zheng Jie
 * @date 2019-04-10
 */
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DictMapper extends BaseMapper<DictDto, SysDict> {
+public interface SysDictItemRepository extends BaseRepository<SysDictItem, Long> {
 
+    /**
+     * 根据字典名称查询
+     * @param code /
+     * @return /
+     */
+    List<SysDictItem> findByDictCode(String code);
 }

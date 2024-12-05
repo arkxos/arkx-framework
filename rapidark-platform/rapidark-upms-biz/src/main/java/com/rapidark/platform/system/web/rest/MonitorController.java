@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.rest;
+package com.rapidark.platform.system.web.rest;
 
-import com.rapidark.cloud.base.server.modules.system.service.MonitorService;
+import com.rapidark.platform.system.service.MonitorService;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;

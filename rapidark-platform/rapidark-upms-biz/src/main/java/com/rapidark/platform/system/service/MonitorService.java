@@ -13,19 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rapidark.cloud.base.server.modules.system.service.mapstruct;
+package com.rapidark.platform.system.service;
 
-import com.rapidark.platform.system.api.entity.SysDictItem;
-import com.rapidark.cloud.base.server.modules.system.service.dto.DictItemDto;
-import com.rapidark.framework.common.model.BaseMapper;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import java.util.Map;
 
 /**
-* @author Zheng Jie
-* @date 2019-04-10
-*/
-@Mapper(componentModel = "spring", uses = {DictSmallMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DictDetailMapper extends BaseMapper<DictItemDto, SysDictItem> {
+ * @author Zheng Jie
+ * @date 2020-05-02
+ */
+public interface MonitorService {
 
+    /**
+    * 查询数据分页
+    * @return Map<String,Object>
+    */
+    Map<String,Object> getServers();
 }
