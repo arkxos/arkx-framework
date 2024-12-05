@@ -20,6 +20,7 @@ public interface SysRoleRepository extends BaseRepository<SysRole, Long> {
 	 * @param userId
 	 * @return
 	 */
+	@SqlToyQuery
 	List<SysRole> listRolesByUserId(Long userId);
 
 	@SqlToyQuery
@@ -28,5 +29,5 @@ public interface SysRoleRepository extends BaseRepository<SysRole, Long> {
     @SqlToyQuery
     SysRole findByRoleIdOrRoleCode(@Param("roleId") String roleId, @Param("roleCode") String roleCode);
 
-	SysRole findByRoleCode(String defaultRole);
+	SysRole findByRoleCode(@Param("roleCode") String roleCode);
 }

@@ -6,7 +6,6 @@ import com.rapidark.platform.system.api.entity.SysRole;
 import com.rapidark.platform.system.api.entity.SysUserRole;
 import org.springframework.data.repository.query.Param;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +38,9 @@ public interface SysUserRoleRepository extends BaseRepository<SysUserRole, Long>
 
     void deleteByRoleId(@Param("roleId") Long roleId);
 
-    void deleteByUserId(@Param("roleId") Long userId);
+    void deleteByUserId(@Param("userId") Long userId);
 
-	void deleteByUserIds(ArrayList<Long> list);
+	@SqlToyQuery
+	void deleteByUserIds(List<Long> userIds);
+
 }

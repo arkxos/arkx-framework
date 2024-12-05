@@ -4,11 +4,11 @@
     xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
 
     <!-- 查询当前网关路由服务下已注册的客户端 -->
-    <sql id="BaseRoleUserRepository_selectRoleUserList">
+    <sql id="SysUserRoleRepository_selectRoleUserList">
         <value>
             <![CDATA[
               SELECT
-                    base_role_user.user_id,
+                    sys_user_role.user_id,
                     base_role.role_id,
                     base_role.role_code,
                     base_role.role_name,
@@ -16,27 +16,42 @@
                     base_role.status,
                     base_role.create_time,
                     base_role.update_time
-                    FROM base_role_user
-              INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
-              WHERE user_id = :userId AND base_role_user.status = 1
+                    FROM sys_user_role
+              INNER JOIN base_role ON sys_user_role.role_id = base_role.role_id
+              WHERE user_id = :userId AND sys_user_role.status = 1
                 AND base_role.status = 1
             ]]>
         </value>
     </sql>
 
     <!-- 查询当前网关路由服务下已注册的客户端 -->
-    <sql id="BaseRoleUserRepository_selectRoleUserIdList">
+    <sql id="SysUserRoleRepository_selectRoleUserIdList">
         <value>
             <![CDATA[
             SELECT
                 base_role.role_id
-            FROM base_role_user
-            INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
+            FROM sys_user_role
+            INNER JOIN base_role ON sys_user_role.role_id = base_role.role_id
             WHERE user_id = :userId
-              AND base_role_user.status = 1
+              AND sys_user_role.status = 1
               AND base_role.status = 1
             ]]>
         </value>
     </sql>
+
+	<!-- 查询当前网关路由服务下已注册的客户端 -->
+	<sql id="SysUserRoleRepository_deleteByUserIds">
+		<value>
+			<![CDATA[
+            SELECT
+                base_role.role_id
+            FROM sys_user_role
+            INNER JOIN base_role ON sys_user_role.role_id = base_role.role_id
+            WHERE user_id = :userId
+              AND sys_user_role.status = 1
+              AND base_role.status = 1
+            ]]>
+		</value>
+	</sql>
 
 </sqltoy>

@@ -3,6 +3,7 @@ package com.rapidark.platform.system.repository;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.framework.data.jpa.BaseRepository;
+import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import com.rapidark.platform.system.api.dto.UserDTO;
 import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.platform.system.api.vo.UserVO;
@@ -24,6 +25,7 @@ public interface SysUserRepository extends BaseRepository<SysUser, Long> {
 	 * @param username 用户名
 	 * @return userVo
 	 */
+	@SqlToyQuery
 	UserVO getUserVoByUsername(String username);
 
 	/**
@@ -33,6 +35,7 @@ public interface SysUserRepository extends BaseRepository<SysUser, Long> {
 	 * @param dataScope
 	 * @return list
 	 */
+	@SqlToyQuery
 	IPage<UserVO> getUserVosPage(Page page, @Param("query") UserDTO userDTO);
 
 	/**
@@ -40,6 +43,7 @@ public interface SysUserRepository extends BaseRepository<SysUser, Long> {
 	 * @param id 用户ID
 	 * @return userVo
 	 */
+	@SqlToyQuery
 	UserVO getUserVoById(Long id);
 
 	/**
@@ -48,6 +52,7 @@ public interface SysUserRepository extends BaseRepository<SysUser, Long> {
 	 * @param dataScope 数据权限声明
 	 * @return
 	 */
+	@SqlToyQuery
 	List<UserVO> selectVoList(@Param("query") UserDTO userDTO);
 
 }
