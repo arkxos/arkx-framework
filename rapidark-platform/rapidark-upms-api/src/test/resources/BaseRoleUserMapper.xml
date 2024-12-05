@@ -11,7 +11,7 @@
 
     <select id="selectRoleUserList" resultMap="com.rapidark.cloud.base.server.mapper.BaseRoleMapper.BaseResultMap">
         SELECT
-        base_role_user.user_id,
+        sys_user_role.user_id,
         base_role.role_id,
         base_role.role_code,
         base_role.role_name,
@@ -19,8 +19,8 @@
         base_role.status,
         base_role.create_time,
         base_role.update_time
-        FROM base_role_user
-        INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
+        FROM sys_user_role
+        INNER JOIN base_role ON sys_user_role.role_id = base_role.role_id
         WHERE user_id = #{userId} AND status = 1
     </select>
 
@@ -28,8 +28,8 @@
     <select id="selectRoleUserIdList" resultType="java.lang.Long">
         SELECT
         base_role.role_id
-        FROM base_role_user
-        INNER JOIN base_role ON base_role_user.role_id = base_role.role_id
+        FROM sys_user_role
+        INNER JOIN base_role ON sys_user_role.role_id = base_role.role_id
         WHERE user_id = #{userId} AND status = 1
     </select>
 </mapper>

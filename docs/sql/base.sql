@@ -491,11 +491,11 @@ insert  into `base_role`(`role_id`,`role_code`,`role_name`,`status`,`role_desc`,
 (2,'operator','运营人员',1,'运营人员','2018-07-29 21:14:54','2019-05-25 15:14:56',1),
 (3,'support','客服',1,'客服','2018-07-29 21:14:54','2019-05-25 15:17:07',1);
 
-/*Table structure for table `base_role_user` */
+/*Table structure for table `sys_user_role` */
 
-DROP TABLE IF EXISTS `base_role_user`;
+DROP TABLE IF EXISTS `sys_user_role`;
 
-CREATE TABLE `base_role_user` (
+CREATE TABLE `sys_user_role` (
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `role_id` bigint(20) NOT NULL COMMENT '角色ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -504,9 +504,9 @@ CREATE TABLE `base_role_user` (
   KEY `fk_role` (`role_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT COMMENT='系统角色-用户关联';
 
-/*Data for the table `base_role_user` */
+/*Data for the table `sys_user_role` */
 
-insert  into `base_role_user`(`user_id`,`role_id`,`create_time`,`update_time`) values 
+insert  into `sys_user_role`(`user_id`,`role_id`,`create_time`,`update_time`) values
 (521677655146233856,1,'2019-07-30 15:51:08','2019-07-30 15:51:08'),
 (557063237640650752,2,'2019-07-30 15:51:08','2019-07-30 15:51:08');
 

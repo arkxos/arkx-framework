@@ -4,8 +4,8 @@ UPDATE base_api SET is_open=1 WHERE service_id IN (SELECT name FROM gateway_app_
 /*菜单、操作及权限数据清理*/
 DELETE FROM base_menu WHERE parent_id IN (SELECT parent_id FROM (SELECT parent_id FROM base_menu WHERE parent_id!=0 AND parent_id NOT IN (SELECT menu_id FROM base_menu)) tmp);
 
-SELECT * FROM base_role_user WHERE (role_id IS NOT NULL AND role_id NOT IN (SELECT role_id FROM base_role)) OR (user_id IS NOT NULL AND user_id NOT IN (SELECT user_id FROM base_user));
-DELETE FROM base_role_user WHERE (role_id IS NOT NULL AND role_id NOT IN (SELECT role_id FROM base_role)) OR (user_id IS NOT NULL AND user_id NOT IN (SELECT user_id FROM base_user));
+SELECT * FROM sys_user_role WHERE (role_id IS NOT NULL AND role_id NOT IN (SELECT role_id FROM base_role)) OR (user_id IS NOT NULL AND user_id NOT IN (SELECT user_id FROM base_user));
+DELETE FROM sys_user_role WHERE (role_id IS NOT NULL AND role_id NOT IN (SELECT role_id FROM base_role)) OR (user_id IS NOT NULL AND user_id NOT IN (SELECT user_id FROM base_user));
 
 SELECT * FROM base_menu WHERE menu_id NOT IN (SELECT menu_id FROM base_authority UNION SELECT parent_id AS menu_id FROM base_menu);
 DELETE FROM base_menu WHERE menu_id NOT IN (SELECT menu_id FROM (SELECT menu_id FROM base_authority UNION SELECT parent_id AS menu_id FROM base_menu) tmp);
