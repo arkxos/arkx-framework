@@ -501,101 +501,101 @@ INSERT INTO `sys_role` VALUES (2, '普通用户', 'GENERAL_USER', '普通用户'
 COMMIT;
 
 -- ----------------------------
--- Table structure for sys_role_menu
+-- Table structure for sys_role_authority
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_role_menu`;
-CREATE TABLE `sys_role_menu` (
+DROP TABLE IF EXISTS `sys_role_authority`;
+CREATE TABLE `sys_role_authority` (
   `role_id` bigint NOT NULL COMMENT '角色ID',
   `menu_id` bigint NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`role_id`,`menu_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='角色菜单表';
 
 -- ----------------------------
--- Records of sys_role_menu
+-- Records of sys_role_authority
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role_menu` VALUES (1, 1000);
-INSERT INTO `sys_role_menu` VALUES (1, 1100);
-INSERT INTO `sys_role_menu` VALUES (1, 1101);
-INSERT INTO `sys_role_menu` VALUES (1, 1102);
-INSERT INTO `sys_role_menu` VALUES (1, 1103);
-INSERT INTO `sys_role_menu` VALUES (1, 1104);
-INSERT INTO `sys_role_menu` VALUES (1, 1200);
-INSERT INTO `sys_role_menu` VALUES (1, 1201);
-INSERT INTO `sys_role_menu` VALUES (1, 1202);
-INSERT INTO `sys_role_menu` VALUES (1, 1203);
-INSERT INTO `sys_role_menu` VALUES (1, 1300);
-INSERT INTO `sys_role_menu` VALUES (1, 1301);
-INSERT INTO `sys_role_menu` VALUES (1, 1302);
-INSERT INTO `sys_role_menu` VALUES (1, 1303);
-INSERT INTO `sys_role_menu` VALUES (1, 1304);
-INSERT INTO `sys_role_menu` VALUES (1, 1305);
-INSERT INTO `sys_role_menu` VALUES (1, 1400);
-INSERT INTO `sys_role_menu` VALUES (1, 1401);
-INSERT INTO `sys_role_menu` VALUES (1, 1402);
-INSERT INTO `sys_role_menu` VALUES (1, 1403);
-INSERT INTO `sys_role_menu` VALUES (1, 1600);
-INSERT INTO `sys_role_menu` VALUES (1, 1601);
-INSERT INTO `sys_role_menu` VALUES (1, 1602);
-INSERT INTO `sys_role_menu` VALUES (1, 1603);
-INSERT INTO `sys_role_menu` VALUES (1, 1604);
-INSERT INTO `sys_role_menu` VALUES (1, 1605);
-INSERT INTO `sys_role_menu` VALUES (1, 2000);
-INSERT INTO `sys_role_menu` VALUES (1, 2001);
-INSERT INTO `sys_role_menu` VALUES (1, 2100);
-INSERT INTO `sys_role_menu` VALUES (1, 2101);
-INSERT INTO `sys_role_menu` VALUES (1, 2102);
-INSERT INTO `sys_role_menu` VALUES (1, 2200);
-INSERT INTO `sys_role_menu` VALUES (1, 2201);
-INSERT INTO `sys_role_menu` VALUES (1, 2202);
-INSERT INTO `sys_role_menu` VALUES (1, 2203);
-INSERT INTO `sys_role_menu` VALUES (1, 2210);
-INSERT INTO `sys_role_menu` VALUES (1, 2211);
-INSERT INTO `sys_role_menu` VALUES (1, 2212);
-INSERT INTO `sys_role_menu` VALUES (1, 2213);
-INSERT INTO `sys_role_menu` VALUES (1, 2300);
-INSERT INTO `sys_role_menu` VALUES (1, 2400);
-INSERT INTO `sys_role_menu` VALUES (1, 2401);
-INSERT INTO `sys_role_menu` VALUES (1, 2402);
-INSERT INTO `sys_role_menu` VALUES (1, 2403);
-INSERT INTO `sys_role_menu` VALUES (1, 2600);
-INSERT INTO `sys_role_menu` VALUES (1, 2601);
-INSERT INTO `sys_role_menu` VALUES (1, 2800);
-INSERT INTO `sys_role_menu` VALUES (1, 2810);
-INSERT INTO `sys_role_menu` VALUES (1, 2820);
-INSERT INTO `sys_role_menu` VALUES (1, 2830);
-INSERT INTO `sys_role_menu` VALUES (1, 2840);
-INSERT INTO `sys_role_menu` VALUES (1, 2850);
-INSERT INTO `sys_role_menu` VALUES (1, 2860);
-INSERT INTO `sys_role_menu` VALUES (1, 2870);
-INSERT INTO `sys_role_menu` VALUES (1, 2871);
-INSERT INTO `sys_role_menu` VALUES (1, 2906);
-INSERT INTO `sys_role_menu` VALUES (1, 2907);
-INSERT INTO `sys_role_menu` VALUES (1, 4000);
-INSERT INTO `sys_role_menu` VALUES (1, 4001);
-INSERT INTO `sys_role_menu` VALUES (1, 4002);
-INSERT INTO `sys_role_menu` VALUES (1, 9000);
-INSERT INTO `sys_role_menu` VALUES (1, 9005);
-INSERT INTO `sys_role_menu` VALUES (1, 9006);
-INSERT INTO `sys_role_menu` VALUES (1, 9007);
-INSERT INTO `sys_role_menu` VALUES (1, 9050);
-INSERT INTO `sys_role_menu` VALUES (1, 9051);
-INSERT INTO `sys_role_menu` VALUES (1, 9052);
-INSERT INTO `sys_role_menu` VALUES (1, 9053);
-INSERT INTO `sys_role_menu` VALUES (1, 9054);
-INSERT INTO `sys_role_menu` VALUES (1, 9055);
-INSERT INTO `sys_role_menu` VALUES (1, 9056);
-INSERT INTO `sys_role_menu` VALUES (1, 9057);
-INSERT INTO `sys_role_menu` VALUES (1, 9059);
-INSERT INTO `sys_role_menu` VALUES (1, 9060);
-INSERT INTO `sys_role_menu` VALUES (1, 9061);
-INSERT INTO `sys_role_menu` VALUES (1, 9062);
-INSERT INTO `sys_role_menu` VALUES (1, 9063);
-INSERT INTO `sys_role_menu` VALUES (1, 9064);
-INSERT INTO `sys_role_menu` VALUES (1, 9065);
-INSERT INTO `sys_role_menu` VALUES (2, 4000);
-INSERT INTO `sys_role_menu` VALUES (2, 4001);
-INSERT INTO `sys_role_menu` VALUES (2, 4002);
+INSERT INTO `sys_role_authority` VALUES (1, 1000);
+INSERT INTO `sys_role_authority` VALUES (1, 1100);
+INSERT INTO `sys_role_authority` VALUES (1, 1101);
+INSERT INTO `sys_role_authority` VALUES (1, 1102);
+INSERT INTO `sys_role_authority` VALUES (1, 1103);
+INSERT INTO `sys_role_authority` VALUES (1, 1104);
+INSERT INTO `sys_role_authority` VALUES (1, 1200);
+INSERT INTO `sys_role_authority` VALUES (1, 1201);
+INSERT INTO `sys_role_authority` VALUES (1, 1202);
+INSERT INTO `sys_role_authority` VALUES (1, 1203);
+INSERT INTO `sys_role_authority` VALUES (1, 1300);
+INSERT INTO `sys_role_authority` VALUES (1, 1301);
+INSERT INTO `sys_role_authority` VALUES (1, 1302);
+INSERT INTO `sys_role_authority` VALUES (1, 1303);
+INSERT INTO `sys_role_authority` VALUES (1, 1304);
+INSERT INTO `sys_role_authority` VALUES (1, 1305);
+INSERT INTO `sys_role_authority` VALUES (1, 1400);
+INSERT INTO `sys_role_authority` VALUES (1, 1401);
+INSERT INTO `sys_role_authority` VALUES (1, 1402);
+INSERT INTO `sys_role_authority` VALUES (1, 1403);
+INSERT INTO `sys_role_authority` VALUES (1, 1600);
+INSERT INTO `sys_role_authority` VALUES (1, 1601);
+INSERT INTO `sys_role_authority` VALUES (1, 1602);
+INSERT INTO `sys_role_authority` VALUES (1, 1603);
+INSERT INTO `sys_role_authority` VALUES (1, 1604);
+INSERT INTO `sys_role_authority` VALUES (1, 1605);
+INSERT INTO `sys_role_authority` VALUES (1, 2000);
+INSERT INTO `sys_role_authority` VALUES (1, 2001);
+INSERT INTO `sys_role_authority` VALUES (1, 2100);
+INSERT INTO `sys_role_authority` VALUES (1, 2101);
+INSERT INTO `sys_role_authority` VALUES (1, 2102);
+INSERT INTO `sys_role_authority` VALUES (1, 2200);
+INSERT INTO `sys_role_authority` VALUES (1, 2201);
+INSERT INTO `sys_role_authority` VALUES (1, 2202);
+INSERT INTO `sys_role_authority` VALUES (1, 2203);
+INSERT INTO `sys_role_authority` VALUES (1, 2210);
+INSERT INTO `sys_role_authority` VALUES (1, 2211);
+INSERT INTO `sys_role_authority` VALUES (1, 2212);
+INSERT INTO `sys_role_authority` VALUES (1, 2213);
+INSERT INTO `sys_role_authority` VALUES (1, 2300);
+INSERT INTO `sys_role_authority` VALUES (1, 2400);
+INSERT INTO `sys_role_authority` VALUES (1, 2401);
+INSERT INTO `sys_role_authority` VALUES (1, 2402);
+INSERT INTO `sys_role_authority` VALUES (1, 2403);
+INSERT INTO `sys_role_authority` VALUES (1, 2600);
+INSERT INTO `sys_role_authority` VALUES (1, 2601);
+INSERT INTO `sys_role_authority` VALUES (1, 2800);
+INSERT INTO `sys_role_authority` VALUES (1, 2810);
+INSERT INTO `sys_role_authority` VALUES (1, 2820);
+INSERT INTO `sys_role_authority` VALUES (1, 2830);
+INSERT INTO `sys_role_authority` VALUES (1, 2840);
+INSERT INTO `sys_role_authority` VALUES (1, 2850);
+INSERT INTO `sys_role_authority` VALUES (1, 2860);
+INSERT INTO `sys_role_authority` VALUES (1, 2870);
+INSERT INTO `sys_role_authority` VALUES (1, 2871);
+INSERT INTO `sys_role_authority` VALUES (1, 2906);
+INSERT INTO `sys_role_authority` VALUES (1, 2907);
+INSERT INTO `sys_role_authority` VALUES (1, 4000);
+INSERT INTO `sys_role_authority` VALUES (1, 4001);
+INSERT INTO `sys_role_authority` VALUES (1, 4002);
+INSERT INTO `sys_role_authority` VALUES (1, 9000);
+INSERT INTO `sys_role_authority` VALUES (1, 9005);
+INSERT INTO `sys_role_authority` VALUES (1, 9006);
+INSERT INTO `sys_role_authority` VALUES (1, 9007);
+INSERT INTO `sys_role_authority` VALUES (1, 9050);
+INSERT INTO `sys_role_authority` VALUES (1, 9051);
+INSERT INTO `sys_role_authority` VALUES (1, 9052);
+INSERT INTO `sys_role_authority` VALUES (1, 9053);
+INSERT INTO `sys_role_authority` VALUES (1, 9054);
+INSERT INTO `sys_role_authority` VALUES (1, 9055);
+INSERT INTO `sys_role_authority` VALUES (1, 9056);
+INSERT INTO `sys_role_authority` VALUES (1, 9057);
+INSERT INTO `sys_role_authority` VALUES (1, 9059);
+INSERT INTO `sys_role_authority` VALUES (1, 9060);
+INSERT INTO `sys_role_authority` VALUES (1, 9061);
+INSERT INTO `sys_role_authority` VALUES (1, 9062);
+INSERT INTO `sys_role_authority` VALUES (1, 9063);
+INSERT INTO `sys_role_authority` VALUES (1, 9064);
+INSERT INTO `sys_role_authority` VALUES (1, 9065);
+INSERT INTO `sys_role_authority` VALUES (2, 4000);
+INSERT INTO `sys_role_authority` VALUES (2, 4001);
+INSERT INTO `sys_role_authority` VALUES (2, 4002);
 COMMIT;
 
 -- ----------------------------

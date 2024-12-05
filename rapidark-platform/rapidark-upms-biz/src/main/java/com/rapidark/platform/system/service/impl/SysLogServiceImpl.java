@@ -59,7 +59,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean saveLog(SysLog sysLog) {
-		baseMapper.insert(sysLog);
+//		baseMapper.insert(sysLog);
 		return Boolean.TRUE;
 	}
 

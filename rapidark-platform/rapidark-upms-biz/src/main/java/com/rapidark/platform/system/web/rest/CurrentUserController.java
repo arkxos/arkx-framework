@@ -109,7 +109,7 @@ public class CurrentUserController {
 		user.setUserId(openUserDetails.getUserId());
 		user.setNickName(nickName);
 		if (userDesc != null && !"".equals(userDesc)) {
-			user.setUserDesc(userDesc);
+			user.setRemarks(userDesc);
 		}
 		if (avatar != null && !"".equals(avatar)) {
 			user.setAvatar(avatar);

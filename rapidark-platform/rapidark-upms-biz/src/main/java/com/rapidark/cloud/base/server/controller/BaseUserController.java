@@ -99,7 +99,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setUserType(command.getUserType());
         user.setEmail(command.getEmail());
         user.setMobile(command.getMobile());
-        user.setUserDesc(command.getUserDesc());
+        user.setRemarks(command.getUserDesc());
         user.setAvatar(command.getAvatar());
         user.setStatus(Status.codeOf(command.getStatus()));
         sysUserService.addUser(user);
@@ -137,7 +137,7 @@ public class BaseUserController implements IBaseUserServiceClient {
         user.setUserType(userType);
         user.setEmail(email);
         user.setMobile(mobile);
-        user.setUserDesc(userDesc);
+        user.setRemarks(userDesc);
         user.setAvatar(avatar);
         user.setStatus(Status.codeOf(status));
         sysUserService.updateUser(user);

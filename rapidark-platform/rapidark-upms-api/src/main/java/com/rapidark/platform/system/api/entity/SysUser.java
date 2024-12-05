@@ -30,6 +30,11 @@ public class SysUser extends AbstractIdLongEntity {
     @Schema(title = "userId")
     private Long userId;
 
+	/**
+	 * 企业ID
+	 */
+	private Long companyId;
+
 	@Schema(description = "用户所属部门id")
 	private Long deptId;
 
@@ -43,11 +48,6 @@ public class SysUser extends AbstractIdLongEntity {
      * 用户类型:super-超级管理员 normal-普通管理员
      */
     private String userType;
-
-    /**
-     * 企业ID
-     */
-    private Long companyId;
 
     /**
      * 昵称
@@ -79,7 +79,7 @@ public class SysUser extends AbstractIdLongEntity {
     /**
      * 描述
      */
-    private String userDesc;
+    private String remarks;
 
     /**
      * 密码
