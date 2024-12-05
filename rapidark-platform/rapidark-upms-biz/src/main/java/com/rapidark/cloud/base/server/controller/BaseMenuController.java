@@ -1,29 +1,25 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
-
-import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
-import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
-import com.rapidark.cloud.base.server.service.BaseActionService;
-import com.rapidark.cloud.base.server.service.SysMenuQuery;
-import com.rapidark.cloud.base.server.service.SysMenuService;
-import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
 import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
-import com.rapidark.framework.common.utils.PageResult;
-import com.rapidark.framework.data.mybatis.model.PageParams;
+import com.rapidark.cloud.base.server.controller.cmd.CreateMenuCommand;
+import com.rapidark.cloud.base.server.controller.cmd.UpdateMenuCommand;
 import com.rapidark.framework.common.model.ResponseResult;
-//import com.rapidark.framework.common.security.http.OpenRestTemplate;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.jpa.entity.Status;
-
-
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.platform.system.api.entity.BaseAction;
 import com.rapidark.platform.system.api.entity.SysMenu;
+import com.rapidark.platform.system.service.BaseActionService;
+import com.rapidark.platform.system.service.OpenAppService;
+import com.rapidark.platform.system.service.SysMenuQuery;
+import com.rapidark.platform.system.service.SysMenuService;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

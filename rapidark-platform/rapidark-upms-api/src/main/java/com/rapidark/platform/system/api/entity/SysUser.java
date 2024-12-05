@@ -95,6 +95,6 @@ public class SysUser extends AbstractIdLongEntity {
 
     @Override
     public void setId(Long id) {
-
+		this.userId = id;
     }
 }

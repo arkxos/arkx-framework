@@ -14,6 +14,10 @@ import java.util.List;
 @Data
 public class CriteriaQueryWrapper<T> {
 
+	public static <T> CriteriaQueryWrapper<T> query() {
+		return new CriteriaQueryWrapper<>();
+	}
+
     private List<CriteriaQueryInfo> criteriaQueryInfos = new ArrayList<>();
 
     public CriteriaQueryWrapper<T> in(SFunction<T> function, Object... objects) {

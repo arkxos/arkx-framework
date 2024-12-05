@@ -2,27 +2,24 @@ package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
 import com.rapidark.cloud.base.client.service.IBaseDeveloperServiceClient;
-
 import com.rapidark.cloud.base.client.service.command.ChangeDeveloperPasswordCommand;
-import com.rapidark.cloud.base.server.service.BaseDeveloperService;
 import com.rapidark.cloud.base.client.service.command.CreateDeveloperCommand;
 import com.rapidark.cloud.base.client.service.command.UpdateDeveloperCommand;
-import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
 import com.rapidark.framework.common.utils.WebUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
-
-
+import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.platform.system.api.entity.BaseDeveloper;
+import com.rapidark.platform.system.service.BaseDeveloperService;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 

@@ -1,11 +1,13 @@
 package com.rapidark.cloud.base.server.service;
 
+import com.rapidark.platform.system.service.BaseAuthorityService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 
 public class BaseAuthorityServiceTest  {
+
     @Autowired
     private BaseAuthorityService baseAuthorityService;
 

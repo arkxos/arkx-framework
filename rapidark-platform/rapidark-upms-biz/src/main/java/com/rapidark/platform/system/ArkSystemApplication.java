@@ -19,12 +19,11 @@
 
 package com.rapidark.platform.system;
 
-import com.rapidark.cloud.base.server.configuration.JpaConfiguration;
-import com.rapidark.framework.boot.RapidArkApplication;
 import com.rapidark.cloud.platform.common.feign.annotation.EnableArkFeignClients;
 import com.rapidark.cloud.platform.common.security.annotation.EnableArkResourceServer;
 import com.rapidark.cloud.platform.common.swagger.annotation.EnableArkDoc;
-
+import com.rapidark.framework.boot.RapidArkApplication;
+import com.rapidark.platform.system.config.JpaConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;

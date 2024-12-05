@@ -1,14 +1,6 @@
 package com.rapidark.platform.system.web.rest;
 
 import com.rapidark.cloud.base.client.model.AuthorityMenu;
-import com.rapidark.platform.system.api.entity.SysMenu;
-import com.rapidark.platform.system.api.entity.SysUser;
-import com.rapidark.cloud.base.server.service.BaseAuthorityService;
-import com.rapidark.cloud.base.server.service.SysMenuService;
-import com.rapidark.cloud.base.server.service.SysUserService;
-import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.platform.system.api.model.RouterVo;
-import com.rapidark.platform.system.service.RouterService;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
@@ -16,6 +8,10 @@ import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenHelper;
 import com.rapidark.framework.common.security.OpenUserDetails;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.platform.system.api.entity.SysMenu;
+import com.rapidark.platform.system.api.entity.SysUser;
+import com.rapidark.platform.system.api.model.RouterVo;
+import com.rapidark.platform.system.service.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import org.springframework.util.Assert;

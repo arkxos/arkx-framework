@@ -19,22 +19,24 @@
 
 package com.rapidark.platform.system.web.rest;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.plugin.excel.annotation.RequestExcel;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
-import com.rapidark.cloud.base.server.service.SysUserService;
-import com.rapidark.platform.system.api.dto.UserDTO;
-import com.rapidark.platform.system.api.entity.SysUser;
-import com.rapidark.platform.system.api.vo.UserExcelVO;
 import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
-import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
-
+import com.rapidark.framework.common.model.ResponseResult;
+import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.platform.system.api.dto.UserDTO;
+import com.rapidark.platform.system.api.dto.UserInfo;
+import com.rapidark.platform.system.api.entity.SysUser;
+import com.rapidark.platform.system.api.vo.UserExcelVO;
+import com.rapidark.platform.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -65,12 +67,13 @@ public class SysUserController {
 	 */
 	@Inner
 	@GetMapping(value = { "/user/info/query" })
-	public ResponseResult info(@RequestParam(required = false) String username, @RequestParam(required = false) String phone) {
-		SysUser user = null;
-//		userService.getOne(Wrappers.<SysUser>query()
-//			.lambda()
-//			.eq(StrUtil.isNotBlank(username), SysUser::getUsername, username)
-//			.eq(StrUtil.isNotBlank(phone), SysUser::getMobile, phone));
+	public ResponseResult<UserInfo> info(@RequestParam(required = false) String username,
+										 @RequestParam(required = false) String phone) {
+		CriteriaQueryWrapper<SysUser> queryWrapper = CriteriaQueryWrapper.<SysUser>query()
+				.eq(StrUtil.isNotBlank(username), SysUser::getUsername, username)
+			    .eq(StrUtil.isNotBlank(phone), SysUser::getMobile, phone);
+		SysUser user = userService.findOneByCriteria(queryWrapper);
+
 		if (user == null) {
 			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, username));
 		}
@@ -95,8 +98,8 @@ public class SysUserController {
 	@GetMapping(value = { "/user/currentUserInfo" })
 	public ResponseResult currentUserInfo() {
 		String username = SecurityUtils.getUser().getUsername();
-		SysUser user = null;
-//		userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
+		SysUser user = userService.findByUsername(username);
+
 		if (user == null) {
 			return ResponseResult.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_QUERY_ERROR));
 		}
@@ -121,7 +124,7 @@ public class SysUserController {
 	@Inner(value = false)
 	@GetMapping("/user/details")
 	public ResponseResult getDetails(@ParameterObject SysUser query) {
-		SysUser sysUser = null;//userService.getOne(Wrappers.query(query), false);
+		SysUser sysUser = userService.findOneByExample(query);
 		return ResponseResult.ok(sysUser == null ? null : CommonConstants.SUCCESS);
 	}
 

@@ -734,4 +734,8 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
 			return ResponseResult.ok();
 		}
 	}
+
+	public SysUser findByUsername(String username) {
+		return entityRepository.findByUsername(username);
+	}
 }

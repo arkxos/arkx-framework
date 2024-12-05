@@ -1,11 +1,10 @@
 package com.rapidark.platform.system.web.rest;
 
-import com.rapidark.cloud.base.server.service.SysUserService;
-import com.rapidark.platform.system.api.dto.UserDTO;
-import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.Inner;
-
+import com.rapidark.framework.common.model.ResponseResult;
+import com.rapidark.platform.system.api.dto.UserDTO;
+import com.rapidark.platform.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.PostMapping;

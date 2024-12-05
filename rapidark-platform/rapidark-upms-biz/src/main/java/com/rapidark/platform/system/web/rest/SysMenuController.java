@@ -19,13 +19,12 @@
 
 package com.rapidark.platform.system.web.rest;
 
-import com.rapidark.cloud.base.server.service.SysMenuService;
-import com.rapidark.platform.system.api.entity.SysMenu;
-import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.cloud.platform.common.log.annotation.SysLog;
 import com.rapidark.cloud.platform.common.security.annotation.HasPermission;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
-
+import com.rapidark.framework.common.model.ResponseResult;
+import com.rapidark.platform.system.api.entity.SysMenu;
+import com.rapidark.platform.system.service.SysMenuService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

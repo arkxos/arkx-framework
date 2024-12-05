@@ -1,29 +1,26 @@
 package com.rapidark.cloud.base.server.controller;
 
 import com.rapidark.cloud.base.client.model.UserAccount;
-import com.rapidark.platform.system.api.entity.SysRole;
-import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.cloud.base.client.service.IBaseUserServiceClient;
 import com.rapidark.cloud.base.client.service.command.AddUserCommand;
 import com.rapidark.cloud.base.server.controller.cmd.AddUserRolesCommand;
-import com.rapidark.cloud.base.server.service.SysRoleService;
-import com.rapidark.cloud.base.server.service.SysUserService;
-import com.rapidark.framework.common.utils.PageResult;
-import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.framework.common.model.ResponseResult;
+import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
 import com.rapidark.framework.data.jpa.entity.Status;
-
-
-
+import com.rapidark.framework.data.mybatis.model.PageParams;
+import com.rapidark.platform.system.api.entity.SysRole;
+import com.rapidark.platform.system.api.entity.SysUser;
+import com.rapidark.platform.system.service.SysRoleService;
+import com.rapidark.platform.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 

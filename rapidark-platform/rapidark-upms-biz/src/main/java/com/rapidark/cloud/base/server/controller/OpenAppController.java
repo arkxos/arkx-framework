@@ -1,32 +1,30 @@
 package com.rapidark.cloud.base.server.controller;
 
-import com.rapidark.platform.system.api.entity.OpenApp;
 import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
+import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
+import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
 import com.rapidark.cloud.base.server.controller.cmd.CreateOpenAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateOpenClientCommand;
-import com.rapidark.platform.system.repository.OpenAppRepository;
-import com.rapidark.cloud.base.server.service.BaseAuthorityService;
-import com.rapidark.cloud.base.server.service.OpenAppService;
-import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
-import com.rapidark.cloud.base.client.service.dto.OpenClientQueryCriteria;
 import com.rapidark.cloud.platform.gateway.framework.bean.GatewayAppRouteRegServer;
 import com.rapidark.cloud.platform.gateway.framework.service.ClientServerRegisterService;
 import com.rapidark.cloud.platform.gateway.framework.service.CustomNacosConfigService;
+import com.rapidark.framework.common.annotation.Log;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.security.OpenClientDetails;
-//import com.rapidark.framework.common.security.http.OpenRestTemplate;
 import com.rapidark.framework.common.utils.BeanConvertUtils;
+import com.rapidark.framework.common.utils.FileUtil;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.data.jpa.entity.Status;
-
-
-
+import com.rapidark.platform.system.api.entity.OpenApp;
+import com.rapidark.platform.system.repository.OpenAppRepository;
+import com.rapidark.platform.system.service.BaseAuthorityService;
+import com.rapidark.platform.system.service.OpenAppService;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import com.rapidark.framework.common.annotation.Log;
-import com.rapidark.framework.common.utils.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,8 +32,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.*;
 
