@@ -4,38 +4,37 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pig4cloud.plugin.excel.vo.ErrorMessage;
-import com.rapidark.platform.system.api.constants.BaseConstants;
-import com.rapidark.platform.system.repository.SysRoleRepository;
-import com.rapidark.platform.system.repository.SysUserRepository;
-import com.rapidark.platform.system.repository.SysUserRoleRepository;
-import com.rapidark.platform.system.mapper.SysUserPostMapper;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;
 import com.rapidark.cloud.platform.common.core.exception.ErrorCodes;
 import com.rapidark.cloud.platform.common.core.util.MsgUtils;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
-import com.rapidark.framework.common.model.ResponseResult;
-import com.rapidark.framework.data.jpa.service.BaseService;
 import com.rapidark.framework.common.constants.CommonConstants;
 import com.rapidark.framework.common.exception.OpenAlertException;
-import com.rapidark.framework.data.mybatis.model.PageParams;
+import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.security.OpenAuthority;
 import com.rapidark.framework.common.security.OpenSecurityConstants;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
 import com.rapidark.framework.common.utils.StringUtils;
+import com.rapidark.framework.commons.data.model.PageParams;
 import com.rapidark.framework.data.jpa.entity.Status;
+import com.rapidark.framework.data.jpa.service.BaseService;
+import com.rapidark.platform.system.api.constants.BaseConstants;
 import com.rapidark.platform.system.api.dto.UserDTO;
 import com.rapidark.platform.system.api.dto.UserInfo;
 import com.rapidark.platform.system.api.entity.*;
 import com.rapidark.platform.system.api.util.ParamResolver;
 import com.rapidark.platform.system.api.vo.UserExcelVO;
 import com.rapidark.platform.system.api.vo.UserVO;
+import com.rapidark.platform.system.mapper.SysUserPostMapper;
+import com.rapidark.platform.system.repository.SysRoleRepository;
+import com.rapidark.platform.system.repository.SysUserRepository;
+import com.rapidark.platform.system.repository.SysUserRoleRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -108,9 +107,9 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
             //注册email账号登陆
             baseAccountService.register(sysUser.getUserId(), sysUser.getEmail(), sysUser.getPassword(), BaseConstants.ACCOUNT_TYPE_EMAIL, sysUser.getStatus(), ACCOUNT_DOMAIN, null);
         }
-        if (StringUtils.matchMobile(sysUser.getMobile())) {
+        if (StringUtils.matchMobile(sysUser.getPhone())) {
             //注册手机号账号登陆
-            baseAccountService.register(sysUser.getUserId(), sysUser.getMobile(), sysUser.getPassword(), BaseConstants.ACCOUNT_TYPE_MOBILE, sysUser.getStatus(), ACCOUNT_DOMAIN, null);
+            baseAccountService.register(sysUser.getUserId(), sysUser.getPhone(), sysUser.getPassword(), BaseConstants.ACCOUNT_TYPE_MOBILE, sysUser.getStatus(), ACCOUNT_DOMAIN, null);
         }
     }
 
@@ -171,7 +170,7 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
                 .eq(ObjectUtils.isNotEmpty(query.getUserId()), SysUser::getUserId, query.getUserId())
                 .eq(ObjectUtils.isNotEmpty(query.getUserType()), SysUser::getUserType, query.getUserType())
                 .eq(ObjectUtils.isNotEmpty(query.getUsername()), SysUser::getUsername, query.getUsername())
-                .eq(ObjectUtils.isNotEmpty(query.getMobile()), SysUser::getMobile, query.getMobile());
+                .eq(ObjectUtils.isNotEmpty(query.getPhone()), SysUser::getPhone, query.getPhone());
 //        queryWrapper.orderByDesc("create_time");
         Pageable pageable = PageRequest.of(pageParams.getPage(), pageParams.getLimit(),
                 Sort.by(Sort.Direction.DESC, "createTime"));
@@ -240,7 +239,7 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
         }
         UserAccount userAccount = new UserAccount();
         // 昵称
-        userAccount.setNickName(sysUser.getNickName());
+        userAccount.setNickName(sysUser.getNickname());
         // 头像
         userAccount.setAvatar(sysUser.getAvatar());
         // 权限信息
@@ -421,8 +420,8 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
 	 * @return
 	 */
 	
-	public IPage getUsersWithRolePage(com.baomidou.mybatisplus.extension.plugins.pagination.Page page, UserDTO userDTO) {
-		return entityRepository.getUserVosPage(page, userDTO);
+	public Page<UserVO> getUsersWithRolePage(PageParams page, UserDTO userDTO) {
+		return entityRepository.getUserVosPage(page.toPageable(), userDTO);
 	}
 
 	/**
@@ -468,9 +467,9 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
 	public ResponseResult<Boolean> updateUserInfo(UserDTO userDto) {
 		SysUser sysUser = new SysUser();
 		sysUser.setUserId(SecurityUtils.getUser().getId());
-		sysUser.setMobile(userDto.getMobile());
+		sysUser.setPhone(userDto.getPhone());
 		sysUser.setAvatar(userDto.getAvatar());
-		sysUser.setNickName(userDto.getNickName());
+		sysUser.setNickname(userDto.getNickname());
 		sysUser.setName(userDto.getName());
 		sysUser.setEmail(userDto.getEmail());
 		this.entityRepository.save(sysUser);
@@ -632,12 +631,12 @@ public class SysUserService extends BaseService<SysUser, Long, SysUserRepository
 								 List<SysPost> postCollList) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUsername(excel.getUsername());
-		userDTO.setMobile(excel.getPhone());
-		userDTO.setNickName(excel.getNickname());
+		userDTO.setPhone(excel.getPhone());
+		userDTO.setNickname(excel.getNickname());
 		userDTO.setName(excel.getName());
 		userDTO.setEmail(excel.getEmail());
 		// 批量导入初始密码为手机号
-		userDTO.setPassword(userDTO.getMobile());
+		userDTO.setPassword(userDTO.getPhone());
 		// 根据部门名称查询部门ID
 		userDTO.setDeptId(deptOptional.get().getDeptId());
 		// 插入岗位名称

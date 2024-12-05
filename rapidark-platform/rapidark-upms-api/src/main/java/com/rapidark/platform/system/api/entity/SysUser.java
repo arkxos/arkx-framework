@@ -53,7 +53,7 @@ public class SysUser extends AbstractIdLongEntity {
      * 昵称
      */
 	@Schema(description = "昵称")
-    private String nickName;
+    private String nickname;
 
 	@Schema(description = "姓名")
 	private String name;
@@ -74,7 +74,7 @@ public class SysUser extends AbstractIdLongEntity {
      * 手机号
      */
 	@Schema(description = "手机号")
-    private String mobile;
+    private String phone;
 
     /**
      * 描述
@@ -84,8 +84,8 @@ public class SysUser extends AbstractIdLongEntity {
     /**
      * 密码
      */
-    @JsonIgnore
-    @Transient
+//    @JsonIgnore
+//    @Transient
     private String password;
 
     @Override

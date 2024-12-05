@@ -22,7 +22,7 @@ public class UserAccountPo extends UserAccount {
         this.setOpenid(openid);
         this.setUnionid(unionid);
         this.setAvatar(avatar);
-        this.setNickname(nickname);
+        this.setNickName(nickname);
         this.setGender(gender);
         this.setLanguage(language);
         this.setCity(city);

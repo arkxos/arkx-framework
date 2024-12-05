@@ -650,7 +650,7 @@ CREATE TABLE `sys_user` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `dept_id` bigint(20) DEFAULT NULL COMMENT '部门名称',
   `username` varchar(255) DEFAULT NULL COMMENT '用户名',
-  `nick_name` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
   `gender` varchar(2) DEFAULT NULL COMMENT '性别',
   `phone` varchar(255) DEFAULT NULL COMMENT '手机号码',
   `email` varchar(255) DEFAULT NULL COMMENT '邮箱',

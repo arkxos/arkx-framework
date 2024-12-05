@@ -33,7 +33,7 @@ public class ExcelPropertyUserModel extends BaseRowModel {
      * 用户昵称
      */
     @ExcelProperty(value = "用户昵称", index = 2)
-    private String nickname;
+    private String nickName;
 
 
     /**

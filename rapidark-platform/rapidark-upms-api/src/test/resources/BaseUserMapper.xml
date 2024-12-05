@@ -6,8 +6,8 @@
           WARNING - @mbg.generated
         -->
         <id column="user_id" jdbcType="BIGINT" property="userId"/>
-        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
-        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="username" jdbcType="VARCHAR" property="userName"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickName"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>

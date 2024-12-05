@@ -43,7 +43,7 @@ public class UserAccount extends AbstractEntity {
     /**
      * 昵称
      */
-    private String nickname;
+    private String nickName;
 
     /**
      * 性别 0：未知、1：男、2：女
@@ -129,12 +129,12 @@ public class UserAccount extends AbstractEntity {
         this.avatar = avatar;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public Integer getGender() {
@@ -203,7 +203,7 @@ public class UserAccount extends AbstractEntity {
                 ", openid=" + openid +
                 ", unionid=" + unionid +
                 ", avatar=" + avatar +
-                ", nickname=" + nickname +
+                ", nickname=" + nickName +
                 ", gender=" + gender +
                 ", language=" + language +
                 ", city=" + city +

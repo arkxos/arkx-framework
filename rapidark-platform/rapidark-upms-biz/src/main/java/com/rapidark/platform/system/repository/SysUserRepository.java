@@ -1,13 +1,13 @@
 package com.rapidark.platform.system.repository;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rapidark.framework.data.jpa.BaseRepository;
 import com.rapidark.framework.data.jpa.sqltoy.SqlToyQuery;
 import com.rapidark.platform.system.api.dto.UserDTO;
 import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.platform.system.api.vo.UserVO;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -32,11 +32,10 @@ public interface SysUserRepository extends BaseRepository<SysUser, Long> {
 	 * 分页查询用户信息（含角色）
 	 * @param page 分页
 	 * @param userDTO 查询参数
-	 * @param dataScope
 	 * @return list
 	 */
 	@SqlToyQuery
-	IPage<UserVO> getUserVosPage(Page page, @Param("query") UserDTO userDTO);
+	Page<UserVO> getUserVosPage(Pageable page, @Param("query") UserDTO userDTO);
 
 	/**
 	 * 通过ID查询用户信息
@@ -49,7 +48,6 @@ public interface SysUserRepository extends BaseRepository<SysUser, Long> {
 	/**
 	 * 查询用户列表
 	 * @param userDTO 查询条件
-	 * @param dataScope 数据权限声明
 	 * @return
 	 */
 	@SqlToyQuery

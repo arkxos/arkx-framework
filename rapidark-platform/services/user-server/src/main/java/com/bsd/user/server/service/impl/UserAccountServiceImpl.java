@@ -258,8 +258,8 @@ public class UserAccountServiceImpl extends BaseServiceImpl<UserAccountMapper, U
             if (StringUtils.isEmpty(us.getAvatar()) && StringUtils.isNotEmpty(userAccout.getAvatar())) {
                 us.setAvatar(userAccout.getAvatar());
             }
-            if (StringUtils.isEmpty(us.getNickname()) && StringUtils.isNotEmpty(userAccout.getNickname())) {
-                us.setNickname(userAccout.getNickname());
+            if (StringUtils.isEmpty(us.getNickname()) && StringUtils.isNotEmpty(userAccout.getNickName())) {
+                us.setNickname(userAccout.getNickName());
             }
             userMapper.updateById(us);
         }
@@ -343,7 +343,7 @@ public class UserAccountServiceImpl extends BaseServiceImpl<UserAccountMapper, U
             if (userAccout != null) {
                 userPo.setSex(userAccout.getGender());
                 userPo.setAvatar(userAccout.getAvatar());
-                userPo.setNickname(userAccout.getNickname());
+                userPo.setNickname(userAccout.getNickName());
             }
             int count = userMapper.insert(userPo);
             if (count <= 0) {

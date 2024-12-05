@@ -64,13 +64,13 @@ public class CommonsAutoConfiguration {
      *
      * @return
      */
-    @Bean
-    @ConditionalOnMissingBean(BCryptPasswordEncoder.class)
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        log.info("BCryptPasswordEncoder [{}]", encoder);
-        return encoder;
-    }
+//    @Bean
+//    @ConditionalOnMissingBean(BCryptPasswordEncoder.class)
+//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        log.info("BCryptPasswordEncoder [{}]", encoder);
+//        return encoder;
+//    }
 
     /**
      * Spring上下文工具配置

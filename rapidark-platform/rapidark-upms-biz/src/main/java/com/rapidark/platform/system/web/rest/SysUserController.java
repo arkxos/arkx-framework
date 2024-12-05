@@ -32,6 +32,7 @@ import com.rapidark.cloud.platform.common.security.annotation.Inner;
 import com.rapidark.cloud.platform.common.security.util.SecurityUtils;
 import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
+import com.rapidark.framework.commons.data.model.PageParams;
 import com.rapidark.platform.system.api.dto.UserDTO;
 import com.rapidark.platform.system.api.dto.UserInfo;
 import com.rapidark.platform.system.api.entity.SysUser;
@@ -71,7 +72,7 @@ public class SysUserController {
 										 @RequestParam(required = false) String phone) {
 		CriteriaQueryWrapper<SysUser> queryWrapper = CriteriaQueryWrapper.<SysUser>query()
 				.eq(StrUtil.isNotBlank(username), SysUser::getUsername, username)
-			    .eq(StrUtil.isNotBlank(phone), SysUser::getMobile, phone);
+			    .eq(StrUtil.isNotBlank(phone), SysUser::getPhone, phone);
 		SysUser user = userService.findOneByCriteria(queryWrapper);
 
 		if (user == null) {
@@ -172,7 +173,7 @@ public class SysUserController {
 	 * @return 用户集合
 	 */
 	@GetMapping("/user/page")
-	public ResponseResult getUserPage(@ParameterObject Page page, @ParameterObject UserDTO userDTO) {
+	public ResponseResult getUserPage(@ParameterObject PageParams page, @ParameterObject UserDTO userDTO) {
 		return ResponseResult.ok(userService.getUsersWithRolePage(page, userDTO));
 	}
 

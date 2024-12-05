@@ -5,8 +5,8 @@ import com.rapidark.framework.common.model.ResponseResult;
 import com.rapidark.framework.common.utils.PageResult;
 import com.rapidark.framework.common.utils.StringUtils;
 import com.rapidark.framework.common.utils.WebUtils;
+import com.rapidark.framework.commons.data.model.PageParams;
 import com.rapidark.framework.data.jpa.entity.Status;
-import com.rapidark.framework.data.mybatis.model.PageParams;
 import com.rapidark.platform.system.api.command.AddUserCommand;
 import com.rapidark.platform.system.api.entity.SysRole;
 import com.rapidark.platform.system.api.entity.SysUser;
@@ -95,10 +95,10 @@ public class BaseUserController implements IBaseUserServiceClient {
         SysUser user = new SysUser();
         user.setUsername(command.getUserName());
         user.setPassword(command.getPassword());
-        user.setNickName(command.getNickName());
+        user.setNickname(command.getNickName());
         user.setUserType(command.getUserType());
         user.setEmail(command.getEmail());
-        user.setMobile(command.getMobile());
+        user.setPhone(command.getMobile());
         user.setRemarks(command.getUserDesc());
         user.setAvatar(command.getAvatar());
         user.setStatus(Status.codeOf(command.getStatus()));
@@ -133,10 +133,10 @@ public class BaseUserController implements IBaseUserServiceClient {
     ) {
         SysUser user = new SysUser();
         user.setUserId(userId);
-        user.setNickName(nickName);
+        user.setNickname(nickName);
         user.setUserType(userType);
         user.setEmail(email);
-        user.setMobile(mobile);
+        user.setPhone(mobile);
         user.setRemarks(userDesc);
         user.setAvatar(avatar);
         user.setStatus(Status.codeOf(status));
@@ -209,7 +209,7 @@ public class BaseUserController implements IBaseUserServiceClient {
             @RequestParam(value = "avatar") String avatar
     ) {
         SysUser user = new SysUser();
-        user.setNickName(nickName);
+        user.setNickname(nickName);
         user.setUsername(account);
         user.setPassword(password);
         user.setAvatar(avatar);

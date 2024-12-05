@@ -1,13 +1,16 @@
 package com.rapidark.platform.system.service;
 
+import com.rapidark.framework.common.utils.StreamUtils;
+import com.rapidark.platform.system.api.constants.UserConstants;
 import com.rapidark.platform.system.api.entity.SysMenu;
 import com.rapidark.platform.system.api.model.MetaVo;
 import com.rapidark.platform.system.api.model.RouterVo;
-import com.rapidark.framework.common.utils.StreamUtils;
-import com.rapidark.framework.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class RouterService {
@@ -25,34 +28,33 @@ public class RouterService {
 	 * @return 路由列表
 	 */
 	public List<RouterVo> buildMenus(List<SysMenu> menus) {
-		String TYPE_APP = "0";
+		int TYPE_APP = 0;
 //		String TYPE_DIR = "1";
 
 		List<RouterVo> routers = new LinkedList<>();
 		for (SysMenu menu : menus) {
-			if("1".equals(menu.getMenuType())) {
+			if(menu.getMenuType() == 1) {
 				continue;// 按钮
 			}
 			String name = menu.getCode() + menu.getMenuId();
 			RouterVo router = new RouterVo();
 			router.setAppCode(menu.getAppCode());
-			router.setHidden("0".equals(menu.getVisible()));
+			router.setHidden(menu.getVisible() == 0);
 			router.setName(name);
 			router.setPath(menu.getPath());
 			router.setComponent(menu.getComponent());
 			router.setQuery(menu.getQueryParam());
 
-			MetaVo metaVo = new MetaVo(menu.getName(), menu.getIcon(), "0".equals(menu.getKeepAlive()), menu.getPath());
-//			if("1".equals(menu.getEmbedded())) {
-//
-//			}
-//			if(UserConstants.INTEGRATE_MODE_FRAME.equals(menu.getIntegrateMode())) {
-//				metaVo.setType("iframe");
-//				router.setName("iframe" + menu.getMenuId());
-//			}
+			MetaVo metaVo = new MetaVo(menu.getName(), menu.getIcon(), menu.getKeepAlive() == 0, menu.getPath());
+
+			if(UserConstants.INTEGRATE_MODE_FRAME == menu.getIntegrateMode()) {
+				metaVo.setType("iframe");
+				router.setName("iframe" + menu.getMenuId());
+			}
+
 			router.setMeta(metaVo);
 			List<SysMenu> cMenus = menu.getChildren();
-			if (!cMenus.isEmpty() && TYPE_APP.equals(menu.getMenuType())) {
+			if (!cMenus.isEmpty() && TYPE_APP == menu.getMenuType()) {
 //				router.setAlwaysShow(true);
 //				router.setRedirect("noRedirect");
 				router.setChildren(buildMenus(cMenus));
@@ -64,17 +66,17 @@ public class RouterService {
 //			}
 //			else if (menu.isMenuFrame()) {
 //			if("1".equals(menu.getEmbedded())) {
-				String frameName = StringUtils.capitalize(menu.getPath()) + menu.getMenuId();
-				router.setMeta(null);
-				List<RouterVo> childrenList = new ArrayList<>();
-				RouterVo children = new RouterVo();
-				children.setPath(menu.getPath());
-				children.setComponent(menu.getComponent());
-				children.setName(frameName);
-				children.setMeta(new MetaVo(menu.getName(), menu.getIcon(), "0".equals(menu.getKeepAlive()), menu.getPath()));
-				children.setQuery(menu.getQueryParam());
-				childrenList.add(children);
-				router.setChildren(childrenList);
+//				String frameName = StringUtils.capitalize(menu.getPath()) + menu.getMenuId();
+//				router.setMeta(null);
+//				List<RouterVo> childrenList = new ArrayList<>();
+//				RouterVo children = new RouterVo();
+//				children.setPath(menu.getPath());
+//				children.setComponent(menu.getComponent());
+//				children.setName(frameName);
+//				children.setMeta(new MetaVo(menu.getName(), menu.getIcon(), "0".equals(menu.getKeepAlive()), menu.getPath()));
+//				children.setQuery(menu.getQueryParam());
+//				childrenList.add(children);
+//				router.setChildren(childrenList);
 //			}
 //			else if (menu.getParentId().intValue() == 0 && menu.isInnerLink()) {
 //				router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));

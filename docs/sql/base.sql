@@ -384,7 +384,7 @@ DROP TABLE IF EXISTS `base_developer`;
 CREATE TABLE `base_developer` (
   `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户ID',
   `user_name` varchar(255) DEFAULT NULL COMMENT '登陆账号',
-  `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
+  `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `avatar` varchar(255) DEFAULT '' COMMENT '头像',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
@@ -547,7 +547,7 @@ DROP TABLE IF EXISTS `base_user`;
 CREATE TABLE `base_user` (
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `user_name` varchar(255) DEFAULT NULL COMMENT '登陆账号',
-  `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
+  `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `avatar` varchar(255) DEFAULT '' COMMENT '头像',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
@@ -563,7 +563,7 @@ CREATE TABLE `base_user` (
 
 /*Data for the table `base_user` */
 
-insert  into `base_user`(`user_id`,`user_name`,`nick_name`,`avatar`,`email`,`mobile`,`user_type`,`company_id`,`user_desc`,`create_time`,`update_time`,`status`) values 
+insert  into `base_user`(`user_id`,`user_name`,`nickname`,`avatar`,`email`,`mobile`,`user_type`,`company_id`,`user_desc`,`create_time`,`update_time`,`status`) values
 (521677655146233856,'admin','超级管理员','','515608851@qq.com','','super',NULL,'','2018-12-10 13:20:45',NULL,1),
 (557063237640650752,'test','测试用户','','','','normal',NULL,'','2019-03-18 04:50:25',NULL,1);
 

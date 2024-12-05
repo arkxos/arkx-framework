@@ -10,7 +10,7 @@
         <result column="person_name" jdbcType="VARCHAR" property="personName"/>
         <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
-        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickName"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>

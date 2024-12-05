@@ -57,7 +57,7 @@ public class ArkAppUserDetailsServiceImpl implements ArkUserDetailsService {
 		}
 
 		UserDTO userDTO = new UserDTO();
-		userDTO.setMobile(phone);
+		userDTO.setPhone(phone);
 		ResponseResult<UserInfo> result = remoteUserService.info(userDTO);
 
 		UserDetails userDetails = getUserDetails(result);

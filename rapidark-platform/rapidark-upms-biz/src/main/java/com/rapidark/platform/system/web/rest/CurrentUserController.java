@@ -46,22 +46,6 @@ public class CurrentUserController {
 //	private final PasswordEncoder passwordEncoder;
 
 	/**
-	 * 返回当前用户的树形菜单集合
-	 * @return 当前用户的树形菜单
-	 */
-	@GetMapping("/current/user/routers")
-	public ResponseResult<List<RouterVo>> ueryCurrentUserMenu() {
-		// 获取符合条件的菜单
-		Set<com.rapidark.platform.system.api.entity.SysMenu> all = new HashSet<>();
-		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
-
-		List<com.rapidark.platform.system.api.entity.SysMenu> menus = new ArrayList<>(all);
-		menus.sort(Comparator.comparingLong(com.rapidark.platform.system.api.entity.SysMenu::getParentId).thenComparingInt(com.rapidark.platform.system.api.entity.SysMenu::getSortOrder));
-
-		return ResponseResult.ok(routerService.buildRouters(menus));
-	}
-
-	/**
 	 * 修改当前登录用户密码
 	 *
 	 * @return
@@ -107,7 +91,7 @@ public class CurrentUserController {
 		Assert.notNull(openUserDetails, "登录过期，请重新登录");
 		SysUser user = new SysUser();
 		user.setUserId(openUserDetails.getUserId());
-		user.setNickName(nickName);
+		user.setNickname(nickName);
 		if (userDesc != null && !"".equals(userDesc)) {
 			user.setRemarks(userDesc);
 		}
@@ -139,6 +123,22 @@ public class CurrentUserController {
 		List<AuthorityMenu> result = baseAuthorityService.findAuthorityMenuByUser(
 				user.getUserId(), CommonConstants.ROOT.equals(user.getUsername()), serviceId);
 		return ResponseResult.ok(result);
+	}
+
+	/**
+	 * 返回当前用户的树形菜单集合
+	 * @return 当前用户的树形菜单
+	 */
+	@GetMapping("/current/user/routers")
+	public ResponseResult<List<RouterVo>> ueryCurrentUserMenu() {
+		// 获取符合条件的菜单
+		Set<SysMenu> all = new HashSet<>();
+		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
+
+		List<SysMenu> menus = new ArrayList<>(all);
+		menus.sort(Comparator.comparingLong(SysMenu::getParentId).thenComparingInt(SysMenu::getSortOrder));
+
+		return ResponseResult.ok(routerService.buildRouters(menus));
 	}
 
 	/**
