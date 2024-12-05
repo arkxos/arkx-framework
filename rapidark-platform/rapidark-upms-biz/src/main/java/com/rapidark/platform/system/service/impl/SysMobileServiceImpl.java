@@ -19,7 +19,7 @@ package com.rapidark.platform.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.rapidark.cloud.base.server.repository.SysUserRepository;
+import com.rapidark.platform.system.repository.SysUserRepository;
 import com.rapidark.platform.system.api.entity.SysUser;
 import com.rapidark.platform.system.service.SysMobileService;
 import com.rapidark.cloud.platform.common.core.constant.CacheConstants;

@@ -5,7 +5,7 @@ import com.rapidark.cloud.base.client.service.IOpenAppServiceClient;
 import com.rapidark.cloud.base.server.controller.cmd.CreateOpenAppCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateAppClientInfoCommand;
 import com.rapidark.cloud.base.server.controller.cmd.UpdateOpenClientCommand;
-import com.rapidark.cloud.base.server.repository.OpenAppRepository;
+import com.rapidark.platform.system.repository.OpenAppRepository;
 import com.rapidark.cloud.base.server.service.BaseAuthorityService;
 import com.rapidark.cloud.base.server.service.OpenAppService;
 import com.rapidark.cloud.base.client.service.dto.OpenAppDto;
