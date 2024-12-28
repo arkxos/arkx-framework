@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2020 pig4cloud Authors. All Rights Reserved.
+  ~ Copyright (c) 2020 ArkX OS Authors. All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -19,12 +19,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rapidark</groupId>
-    <artifactId>rapidark-parent</artifactId>
+    <groupId>com.rapidark.framework</groupId>
+    <artifactId>rapidark-framework</artifactId>
+
     <name>${project.artifactId}</name>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <url>https://www.pig4cloud.com</url>
+    <url>https://www.arkxos.com</url>
 
     <properties>
         <!-- 项目版本号 -->
@@ -215,10 +216,14 @@
 		</dependency>
     </dependencies>
 
-    <modules>
-		<module>rapidark-framework</module>
-
-		<module>rapidark-platform</module>
+	<modules>
+		<module>rapidark-preloader</module>
+		<module>rapidark-commons</module>
+		<module>rapidark-ip2region-starter</module>
+		<module>rapidark-data</module>
+		<module>rapidark-boot</module>
+		<module>rapidark-sidecar</module>
+		<module>rapidark-cloud</module>
 	</modules>
 
     <dependencyManagement>
