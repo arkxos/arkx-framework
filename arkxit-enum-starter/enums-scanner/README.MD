@@ -17,7 +17,7 @@
 ```mxml
        <dependency>
              <groupId>com.arkxit</groupId>
-             <artifactId>spring-boot-starter-enums-scanner</artifactId>
+             <artifactId>arkxit-enums-starter-scanner</artifactId>
              <version>1.0.0-RELEASE</version>
        </dependency>
 ```

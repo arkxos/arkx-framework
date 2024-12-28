@@ -16,7 +16,7 @@
 <!--	</parent>-->
 
 <!--	<groupId>com.arkxit</groupId>-->
-	<artifactId>enum-spring-boot-starter</artifactId>
+	<artifactId>arkxit-enum-starter</artifactId>
 <!--	<version>1.1.8-RELEASE</version>-->
 	<packaging>pom</packaging>
 

@@ -219,7 +219,7 @@
 	<modules>
 		<module>arkxit-preloader</module>
 		<module>arkxit-commons</module>
-		<module>enums-spring-boot-starter</module>
+		<module>arkxit-enum-starter</module>
 		<module>arkxit-ip2region-starter</module>
 		<module>arkxit-data</module>
 		<module>arkxit-boot</module>

@@ -130,7 +130,7 @@ public class PluginOrderBillDTO {
 
 <dependency>
     <groupId>com.arkxit</groupId>
-    <artifactId>spring-boot-starter-enums-conversion</artifactId>
+    <artifactId>arkxit-enums-starter-conversion</artifactId>
     <version>1.1.8-RELEASE</version>
 </dependency>
 ```
@@ -182,7 +182,7 @@ public enum OrderBillStateEnum implements ExtensionEnum {
 
 <dependency>
     <groupId>com.arkxit</groupId>
-    <artifactId>spring-boot-starter-enums-scanner</artifactId>
+    <artifactId>arkxit-enums-starter-scanner</artifactId>
     <version>1.1.8-RELEASE</version>
 </dependency>
 ```
