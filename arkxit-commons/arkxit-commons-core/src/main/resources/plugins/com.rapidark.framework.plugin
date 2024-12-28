@@ -18,14 +18,14 @@
 	    <UIFlag>false</UIFlag>
 	  </extendPoint>
 	  <extendAction>
-	    <id>com.rapidark.framework.boot.InitBaseEntityInfo</id>
-	    <class>com.rapidark.framework.boot.InitBaseEntityInfo</class>
+	    <id>com.arkxit.framework.boot.InitBaseEntityInfo</id>
+	    <class>com.arkxit.framework.boot.InitBaseEntityInfo</class>
 	    <description>ORM Entity 基础字段默认值初始化处理</description>
 	    <extendPoint>org.ark.framework.EntitySave</extendPoint>
 	  </extendAction>
 	  <extendAction>
-	    <id>com.rapidark.framework.boot.HandleTreeEntity</id>
-	    <class>com.rapidark.framework.boot.HandleTreeEntity</class>
+	    <id>com.arkxit.framework.boot.HandleTreeEntity</id>
+	    <class>com.arkxit.framework.boot.HandleTreeEntity</class>
 	    <description>ORM Entity Tree处理</description>
 	    <extendPoint>org.ark.framework.EntitySave</extendPoint>
 	  </extendAction>

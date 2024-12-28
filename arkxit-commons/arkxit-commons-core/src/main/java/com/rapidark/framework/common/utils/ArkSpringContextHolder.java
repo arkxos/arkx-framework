@@ -2,7 +2,7 @@ package com.rapidark.framework.common.utils;
 
 import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.lang.TypeReference;
-import com.rapidark.common.utils.StringUtils;
+import com.arkxit.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;

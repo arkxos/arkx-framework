@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
-import com.rapidark.framework.data.jpa.BaseRepository;
-import com.rapidark.framework.data.jpa.annotation.TemplateQuery;
+import com.arkxit.data.jpa.BaseRepository;
+import com.arkxit.data.jpa.annotation.TemplateQuery;
 
 /**
  * .

@@ -1,0 +1,51 @@
+package com.arkxit.framework.util.task;
+
+import com.arkxit.framework.util.task.exception.TaskException;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+public class ResultBaseTask<T> extends AbstractTask implements ResultTask<T> {
+
+    private final ResultTaskRunner<T> executor;
+
+    public ResultBaseTask(ResultTaskRunner<T> executor) {
+        this(null, null, executor);
+    }
+
+    public ResultBaseTask(String type, String id, ResultTaskRunner<T> executor) {
+        super(type, id);
+        this.executor = executor;
+    }
+
+    public ResultTaskRunner<T> getExecutor() {
+        return executor;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T get() {
+        if (future != null) {
+            try {
+                return (T) future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new TaskException(e);
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T get(long timeout, TimeUnit unit) throws TimeoutException {
+        if (future != null) {
+            try {
+                return (T) future.get(timeout, unit);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new TaskException(e);
+            }
+        }
+        return null;
+    }
+}

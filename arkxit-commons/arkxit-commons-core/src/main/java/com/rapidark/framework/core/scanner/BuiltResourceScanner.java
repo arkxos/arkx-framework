@@ -1,7 +1,6 @@
 package com.rapidark.framework.core.scanner;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class BuiltResourceScanner {
 			classes = PackageUtil.findAnnotationClasses("com/rapidark", Alias.class);
 		}
 		{
-			String baseUiFacadeClassName = "com.rapidark.framework.boot.BaseUIFacade";
+			String baseUiFacadeClassName = "com.arkxit.framework.boot.BaseUIFacade";
 			String fileName = StringUtil.replaceEx(baseUiFacadeClassName, ".", "/") + ".class";
 			InputStream inputStream	= this.getClass().getResourceAsStream("/" + fileName);
 			BuiltResource br = new BuiltResource(fileName, inputStream);
@@ -201,7 +200,7 @@ public class BuiltResourceScanner {
 	}
 
 	public void scanOneResource(BuiltResource br) throws Exception {
-		if (br.getFullName().indexOf("com/rapidark/framework/") >= 0 && br.getFullName().indexOf("com/rapidark/framework/boot") == -1) {
+		if (br.getFullName().indexOf("com/rapidark/framework/") >= 0 && br.getFullName().indexOf("com/arkxit/framework/boot") == -1) {
 			return;
 		}
 		if(br.getFullName().indexOf("LoginUI")!=-1) {

@@ -36,7 +36,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import com.rapidark.cloud.platform.common.feign.ArkFeignAutoConfiguration;
+import com.arkxit.cloud.platform.common.feign.ArkFeignAutoConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;

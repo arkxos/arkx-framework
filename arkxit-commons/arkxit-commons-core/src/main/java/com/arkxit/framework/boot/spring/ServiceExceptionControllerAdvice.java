@@ -1,0 +1,58 @@
+package com.arkxit.framework.boot.spring;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.rapidark.framework.commons.exception.ServiceException;
+import com.rapidark.framework.core.JsonResult;
+import com.rapidark.framework.data.jdbc.Session;
+import com.rapidark.framework.data.jdbc.SessionFactory;
+
+@ControllerAdvice
+public class ServiceExceptionControllerAdvice {
+
+	/**
+	 * 全局异常捕捉处理
+	 * 
+	 * @param ex
+	 * @return
+	 */
+	@ResponseBody
+	@ExceptionHandler(value = Exception.class)
+	public JsonResult errorHandler(Exception ex) {
+		ex.printStackTrace();
+		try {
+			Session session = SessionFactory.currentSession();
+			if(session != null) {
+				session.rollback();
+				SessionFactory.clearCurrentSession();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.createErrorResult(ex.getMessage());
+	}
+
+	/**
+	 * 拦截捕捉自定义异常 MyException.class
+	 * 
+	 * @param ex
+	 * @return
+	 */
+	@ResponseBody
+	@ExceptionHandler(value = ServiceException.class)
+	public JsonResult myErrorHandler(ServiceException ex) {
+		ex.printStackTrace();
+		try {
+			Session session = SessionFactory.currentSession();
+			if(session != null) {
+				session.rollback();
+				SessionFactory.clearCurrentSession();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.createErrorResult(ex.getMessage());
+	}
+}

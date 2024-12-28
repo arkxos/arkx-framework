@@ -18,7 +18,7 @@ import org.objectweb.asm.tree.MethodNode;
 import com.rapidark.framework.Config;
 import com.rapidark.framework.annotation.Alias;
 import com.rapidark.framework.annotation.Priv;
-import com.rapidark.framework.boot.BaseUIFacade;
+import com.arkxit.framework.boot.BaseUIFacade;
 import com.rapidark.framework.commons.util.ObjectUtil;
 import com.rapidark.framework.commons.util.StringUtil;
 import com.rapidark.framework.core.method.UIMethod;

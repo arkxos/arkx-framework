@@ -1,11 +1,9 @@
 package com.rapidark.soa.config;
 
-import com.rapidark.framework.data.jpa.BaseRepositoryFactoryBean;
+import com.arkxit.data.jpa.BaseRepositoryFactoryBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import com.rapidark.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
 
 /**
  * @author Darkness

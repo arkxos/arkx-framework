@@ -2,8 +2,8 @@
   "groups": [
     {
       "name": "security.xss",
-      "type": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties"
+      "type": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties",
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties"
     }
   ],
   "properties": [
@@ -11,46 +11,46 @@
       "name": "security.xss.enable-escape",
       "type": "java.lang.Boolean",
       "description": "[clear 专用] 使用转义，默认关闭",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties",
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties",
       "defaultValue": false
     },
     {
       "name": "security.xss.enabled",
       "type": "java.lang.Boolean",
       "description": "开启xss",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties",
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties",
       "defaultValue": true
     },
     {
       "name": "security.xss.mode",
-      "type": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties$Mode",
+      "type": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties$Mode",
       "description": "模式：clear 清理（默认），escape 转义",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties"
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties"
     },
     {
       "name": "security.xss.path-exclude-patterns",
       "type": "java.util.List<java.lang.String>",
       "description": "放行的路由，默认为空",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties"
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties"
     },
     {
       "name": "security.xss.path-patterns",
       "type": "java.util.List<java.lang.String>",
       "description": "拦截的路由，默认为空",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties"
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties"
     },
     {
       "name": "security.xss.pretty-print",
       "type": "java.lang.Boolean",
       "description": "[clear 专用] prettyPrint，默认关闭： 保留换行",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties",
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties",
       "defaultValue": false
     },
     {
       "name": "security.xss.trim-text",
       "type": "java.lang.Boolean",
       "description": "全局：对文件进行首尾 trim",
-      "sourceType": "com.rapidark.cloud.platform.common.xss.config.ArkXssProperties",
+      "sourceType": "com.arkxit.cloud.platform.common.xss.config.ArkXssProperties",
       "defaultValue": true
     }
   ],

@@ -12,7 +12,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import com.rapidark.framework.data.jpa.sqltemplate.freemarker.FreemarkerSqlTemplates;
+import com.arkxit.data.jpa.sqltemplate.freemarker.FreemarkerSqlTemplates;
 
 /**
  * .

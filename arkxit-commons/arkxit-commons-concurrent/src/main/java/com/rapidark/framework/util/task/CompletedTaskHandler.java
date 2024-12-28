@@ -1,7 +1,0 @@
-package com.rapidark.framework.util.task;
-
-public interface CompletedTaskHandler {
-
-    void handle(final Task task);
-
-}

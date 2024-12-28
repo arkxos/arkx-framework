@@ -1,6 +1,6 @@
 package org.ark.framework.jaf;
 
-import com.rapidark.framework.boot.BaseUIFacade;
+import com.arkxit.framework.boot.BaseUIFacade;
 import com.rapidark.framework.commons.collection.Mapx;
 import com.rapidark.framework.commons.exception.ServiceException;
 import com.rapidark.framework.commons.util.ObjectUtil;
