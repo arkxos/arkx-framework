@@ -32,7 +32,7 @@
     <dependencies>
 <!--        <dependency>-->
 <!--            <groupId>com.arkxos</groupId>-->
-<!--            <artifactId>rapidark-platform-support-common-biz</artifactId>-->
+<!--            <artifactId>arkxos-platform-support-common-biz</artifactId>-->
 <!--        </dependency>-->
 		<dependency>
 			<groupId>com.arkxit</groupId>
@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.arkxit</groupId>
-			<artifactId>rapidark-commons-core</artifactId>
+			<artifactId>arkxit-commons-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 <!--        <dependency>-->

@@ -14,8 +14,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>rapidark-data-jpa</module>
-		<module>rapidark-data-mybatis</module>
+        <module>arkxit-data-jpa</module>
+		<module>arkxit-data-mybatis</module>
     </modules>
 
     <dependencies>

@@ -9,7 +9,7 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>arkxos-spring</artifactId>
+	<artifactId>arkxit-spring</artifactId>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>

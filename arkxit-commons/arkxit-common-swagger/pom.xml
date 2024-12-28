@@ -73,7 +73,7 @@
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.arkxos</groupId>-->
-<!--            <artifactId>rapidark-platform-support-common-biz</artifactId>-->
+<!--            <artifactId>arkxos-platform-support-common-biz</artifactId>-->
 <!--        </dependency>-->
     </dependencies>
 </project>

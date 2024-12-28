@@ -20,7 +20,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.arkxit</groupId>
-			<artifactId>rapidark-commons-core</artifactId>
+			<artifactId>arkxit-commons-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

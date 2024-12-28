@@ -10,27 +10,27 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>rapidark-commons</artifactId>
+    <artifactId>arkxit-commons</artifactId>
     <packaging>pom</packaging>
 
 	<description>公共聚合模块</description>
 
     <modules>
-		<module>rapidark-common-bom</module>
-		<module>arkxos-spring</module>
+		<module>arkxit-common-bom</module>
+		<module>arkxit-spring</module>
 
-		<module>rapidark-commons-core</module>
-		<module>rapidark-commons-concurrent</module>
-        <module>rapidark-common-encrypt</module>
+		<module>arkxit-commons-core</module>
+		<module>arkxit-commons-concurrent</module>
+        <module>arkxit-common-encrypt</module>
 
-		<module>rapidark-common-datasource</module>
-		<module>rapidark-common-oss</module>
-		<module>rapidark-common-seata</module>
-		<module>rapidark-common-feign</module>
-		<module>rapidark-common-swagger</module>
-		<module>rapidark-common-xss</module>
+		<module>arkxit-common-datasource</module>
+		<module>arkxit-common-oss</module>
+		<module>arkxit-common-seata</module>
+		<module>arkxit-common-feign</module>
+		<module>arkxit-common-swagger</module>
+		<module>arkxit-common-xss</module>
 
-        <module>rapidark-commons-webmvc</module>
+        <module>arkxit-commons-webmvc</module>
 	</modules>
 
     <dependencies>

@@ -7,7 +7,7 @@
 		<version>${revision}</version>
 	</parent>
 
-<artifactId>rapidark-preloader</artifactId>
+    <artifactId>arkxit-preloader</artifactId>
   
   <dependencies>
  <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->

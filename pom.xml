@@ -217,13 +217,13 @@
     </dependencies>
 
 	<modules>
-		<module>rapidark-preloader</module>
-		<module>rapidark-commons</module>
-		<module>rapidark-ip2region-starter</module>
-		<module>rapidark-data</module>
-		<module>rapidark-boot</module>
-		<module>rapidark-sidecar</module>
-		<module>rapidark-framework-cloud</module>
+		<module>arkxit-preloader</module>
+		<module>arkxit-commons</module>
+		<module>arkxit-ip2region-starter</module>
+		<module>arkxit-data</module>
+		<module>arkxit-boot</module>
+		<module>arkxit-sidecar</module>
+		<module>arkxit-cloud</module>
 	</modules>
 
     <dependencyManagement>
@@ -231,7 +231,7 @@
 			<!--ark 公共版本定义-->
 			<dependency>
 				<groupId>com.arkxit</groupId>
-				<artifactId>rapidark-common-bom</artifactId>
+				<artifactId>arkxit-common-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
