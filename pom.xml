@@ -19,13 +19,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arkxos.framework</groupId>
-    <artifactId>arkxos-framework</artifactId>
+    <groupId>com.arkxit</groupId>
+    <artifactId>arkxit</artifactId>
 
-    <name>arkxos-framework</name>
+    <name>arkxit</name>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <url>https://www.arkxos.com</url>
+    <url>https://www.arkxit.com</url>
 
     <properties>
         <!-- 项目版本号 -->
@@ -230,7 +230,7 @@
         <dependencies>
 			<!--ark 公共版本定义-->
 			<dependency>
-				<groupId>com.arkxos.framework</groupId>
+				<groupId>com.arkxit</groupId>
 				<artifactId>rapidark-common-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>

@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.arkxit</groupId>
+		<artifactId>arkxit</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+<artifactId>rapidark-preloader</artifactId>
+  
+  <dependencies>
+ <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+<!-- <dependency>
+    <groupId>org.apache.ant</groupId>
+    <artifactId>ant</artifactId>
+    <version>1.8.4</version>
+</dependency> -->
+<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	  <dependency>
+		  <groupId>jakarta.servlet</groupId>
+		  <artifactId>jakarta.servlet-api</artifactId>
+		  <version>6.0.0</version>
+	  </dependency>
+	  <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-all -->
+	  <dependency>
+		  <groupId>org.ow2.asm</groupId>
+		  <artifactId>asm</artifactId>
+		  <version>9.3</version>
+		  <!--		  <version>5.1</version>-->
+	  </dependency>
+	  <dependency>
+		  <groupId>org.ow2.asm</groupId>
+		  <artifactId>asm-tree</artifactId>
+		  <version>9.3</version>
+		  <!--		  <version>5.1</version>-->
+	  </dependency>
+  </dependencies>
+		
+  <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>17</source>
+					<target>17</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
