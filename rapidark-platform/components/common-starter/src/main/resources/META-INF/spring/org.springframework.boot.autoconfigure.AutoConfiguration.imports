@@ -1,7 +1,0 @@
-com.rapidark.autoconfigure.CommonsAutoConfiguration
-com.rapidark.autoconfigure.FeignAutoConfiguration
-com.rapidark.autoconfigure.MqAutoConfiguration
-com.rapidark.autoconfigure.SwaggerAutoConfiguration
-com.rapidark.autoconfigure.WebMvcConfiguration
-com.rapidark.autoconfigure.RedisCacheAutoConfiguration
-com.rapidark.autoconfigure.JacksonAutoConfiguration

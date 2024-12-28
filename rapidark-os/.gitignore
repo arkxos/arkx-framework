@@ -1,6 +1,0 @@
-### IDEA ###
-.idea/*
-*.iml
-*/target/*
-*/*.iml
-/.gradle/

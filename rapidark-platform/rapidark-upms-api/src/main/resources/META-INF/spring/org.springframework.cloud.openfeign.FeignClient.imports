@@ -1,6 +1,0 @@
-com.rapidark.platform.system.api.feign.RemoteClientDetailsService
-com.rapidark.platform.system.api.feign.RemoteDictService
-com.rapidark.platform.system.api.feign.RemoteLogService
-com.rapidark.platform.system.api.feign.RemoteParamService
-com.rapidark.platform.system.api.feign.RemoteTokenService
-com.rapidark.platform.system.api.feign.RemoteUserService
