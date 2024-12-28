@@ -19,17 +19,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rapidark.framework</groupId>
-    <artifactId>rapidark-framework</artifactId>
+    <groupId>com.arkxos.framework</groupId>
+    <artifactId>arkxos-framework</artifactId>
 
-    <name>${project.artifactId}</name>
+    <name>arkxos-framework</name>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <url>https://www.arkxos.com</url>
 
     <properties>
         <!-- 项目版本号 -->
-        <revision>10.0.3</revision>
+        <revision>0.1.0</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -230,9 +230,9 @@
         <dependencies>
 			<!--ark 公共版本定义-->
 			<dependency>
-				<groupId>com.rapidark.framework</groupId>
+				<groupId>com.arkxos.framework</groupId>
 				<artifactId>rapidark-common-bom</artifactId>
-				<version>${revision}</version>
+				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

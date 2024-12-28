@@ -2,8 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.rapidark.framework</groupId>
-		<artifactId>rapidark-framework</artifactId>
+		<groupId>com.arkxos.framework</groupId>
+		<artifactId>arkxos-framework</artifactId>
 		<version>${revision}</version>
 	</parent>
 

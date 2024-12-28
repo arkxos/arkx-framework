@@ -16,10 +16,10 @@
 
 package com.rapidark.cloud.platform.common.xss.core;
 
-import com.rapidark.cloud.platform.common.core.util.SpringContextHolder;
 import com.rapidark.cloud.platform.common.xss.config.ArkXssProperties;
 import com.rapidark.cloud.platform.common.xss.utils.XssUtil;
 
+import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -35,9 +35,9 @@ public class XssCleanDeserializer extends XssCleanDeserializerBase {
 	@Override
 	public String clean(String name, String text) throws IOException {
 		// 读取 xss 配置
-		ArkXssProperties properties = SpringContextHolder.getBean(ArkXssProperties.class);
+		ArkXssProperties properties = ArkSpringContextHolder.getBean(ArkXssProperties.class);
 		// 读取 XssCleaner bean
-		XssCleaner xssCleaner = SpringContextHolder.getBean(XssCleaner.class);
+		XssCleaner xssCleaner = ArkSpringContextHolder.getBean(XssCleaner.class);
 		if (xssCleaner != null) {
 			String value = xssCleaner.clean(XssUtil.trim(text, properties.isTrimText()));
 			log.debug("Json property value:{} cleaned up by mica-xss, current value is:{}.", text, value);

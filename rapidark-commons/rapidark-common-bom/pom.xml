@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rapidark.framework</groupId>
+    <groupId>com.arkxos.framework</groupId>
     <artifactId>rapidark-common-bom</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -15,7 +15,7 @@
 
     <properties>
         <!-- 项目版本号 -->
-        <revision>10.0.3</revision>
+        <revision>0.1.0</revision>
         <spring-boot.version>3.3.6</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
@@ -43,46 +43,46 @@
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
     <dependencyManagement>
         <dependencies>
+<!--            <dependency>-->
+<!--                <groupId>com.arkxos.cloud</groupId>-->
+<!--                <artifactId>rapidark-platform-support-common-biz</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--            </dependency>-->
             <dependency>
-                <groupId>com.rapidark.platform</groupId>
-                <artifactId>rapidark-platform-support-common-biz</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.rapidark.framework</groupId>
+                <groupId>com.arkxos.framework</groupId>
                 <artifactId>rapidark-common-datasource</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rapidark.framework</groupId>
+                <groupId>com.arkxos.framework</groupId>
                 <artifactId>rapidark-data-mybatis</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rapidark.framework</groupId>
+                <groupId>com.arkxos.framework</groupId>
                 <artifactId>rapidark-common-oss</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rapidark.framework</groupId>
+                <groupId>com.arkxos.framework</groupId>
                 <artifactId>rapidark-common-feign</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.rapidark.framework</groupId>
+                <groupId>com.arkxos.framework</groupId>
                 <artifactId>rapidark-common-swagger</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.rapidark.framework</groupId>
+                <groupId>com.arkxos.framework</groupId>
                 <artifactId>rapidark-common-xss</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <dependency>
-                <groupId>com.rapidark.framework</groupId>
-                <artifactId>rapidark-common-excel</artifactId>
-                <version>${revision}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.arkxos.framework</groupId>-->
+<!--                <artifactId>rapidark-common-excel</artifactId>-->
+<!--                <version>${revision}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>

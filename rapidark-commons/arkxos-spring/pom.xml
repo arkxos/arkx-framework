@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.arkxos.framework</groupId>
-		<artifactId>arkxos-framework</artifactId>
+		<artifactId>rapidark-commons</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>rapidark-framework-cloud</artifactId>
+	<artifactId>arkxos-spring</artifactId>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -19,13 +19,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.arkxos.framework</groupId>
-			<artifactId>rapidark-commons-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-bus</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
 		</dependency>
 	</dependencies>
 
