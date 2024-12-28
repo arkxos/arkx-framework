@@ -130,7 +130,7 @@ Add the following dependency to your pom.xml file:
 
 <dependency>
     <groupId>com.arkxit</groupId>
-    <artifactId>arkxit-enums-starter-conversion</artifactId>
+    <artifactId>arkxit-enum-starter-conversion</artifactId>
     <version>1.1.8-RELEASE</version>
 </dependency>
 ```

@@ -130,7 +130,7 @@ public class PluginOrderBillDTO {
 
 <dependency>
     <groupId>com.arkxit</groupId>
-    <artifactId>arkxit-enums-starter-conversion</artifactId>
+    <artifactId>arkxit-enum-starter-conversion</artifactId>
     <version>1.1.8-RELEASE</version>
 </dependency>
 ```

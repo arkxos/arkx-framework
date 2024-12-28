@@ -24,9 +24,9 @@
 	<description>top pom manager for enums starter</description>
 
 	<modules>
-		<module>enums-core</module>
-		<module>enum-conversion</module>
-		<module>enums-scanner</module>
+		<module>arkxit-enum-core</module>
+		<module>arkxit-enum-starter-conversion</module>
+		<module>arkxit-enum-starter-scanner</module>
 	</modules>
 
 
