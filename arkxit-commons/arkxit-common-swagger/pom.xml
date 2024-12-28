@@ -72,7 +72,7 @@
             <scope>provided</scope>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.arkxos.cloud</groupId>-->
+<!--            <groupId>com.arkxos</groupId>-->
 <!--            <artifactId>rapidark-platform-support-common-biz</artifactId>-->
 <!--        </dependency>-->
     </dependencies>

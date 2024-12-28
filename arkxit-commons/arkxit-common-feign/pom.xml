@@ -31,7 +31,7 @@
 
     <dependencies>
 <!--        <dependency>-->
-<!--            <groupId>com.arkxos.cloud</groupId>-->
+<!--            <groupId>com.arkxos</groupId>-->
 <!--            <artifactId>rapidark-platform-support-common-biz</artifactId>-->
 <!--        </dependency>-->
 		<dependency>

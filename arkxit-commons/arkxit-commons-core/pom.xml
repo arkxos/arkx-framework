@@ -1480,7 +1480,7 @@
             <artifactId>javassist</artifactId>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.arkxos.cloud</groupId>-->
+<!--            <groupId>com.arkxos</groupId>-->
 <!--            <artifactId>rapidark-data-jpa-sqltoy</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--        </dependency>-->

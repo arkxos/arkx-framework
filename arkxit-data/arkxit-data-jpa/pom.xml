@@ -52,7 +52,7 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-web</artifactId>-->
 <!--		</dependency>-->
-		<!-- <dependency> <groupId>com.arkxos.cloud</groupId> <artifactId>arkxit</artifactId>
+		<!-- <dependency> <groupId>com.arkxos</groupId> <artifactId>arkxit</artifactId>
 			<version>9.2.0</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
