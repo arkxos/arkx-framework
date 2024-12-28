@@ -1,7 +1,6 @@
 package com.arkxit.cloud.common.encrypt.enumd;
 
 import com.arkxit.cloud.common.encrypt.core.encryptor.*;
-import com.rapidark.cloud.common.encrypt.core.encryptor.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

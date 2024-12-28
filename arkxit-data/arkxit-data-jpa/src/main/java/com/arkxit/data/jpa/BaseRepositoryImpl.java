@@ -20,7 +20,6 @@ import jakarta.persistence.Query;
 
 import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import com.rapidark.framework.common.utils.SystemIdGenerator;
-import com.rapidark.framework.data.jpa.entity.*;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.SessionFactoryImpl;
