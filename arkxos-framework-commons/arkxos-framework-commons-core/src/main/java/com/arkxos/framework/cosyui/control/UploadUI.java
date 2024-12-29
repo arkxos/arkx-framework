@@ -2,6 +2,8 @@ package com.arkxos.framework.cosyui.control;
 
 import java.util.Map.Entry;
 
+import com.arkxos.framework.Constant;
+import com.arkxos.framework.Current;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.annotation.Verify;
 import com.arkxos.framework.commons.collection.CacheMapx;
@@ -11,8 +13,6 @@ import com.arkxos.framework.core.method.MethodLocatorUtil;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.security.PrivCheck;
 import com.arkxos.framework.security.VerifyCheck;
-import com.rapidark.framework.Constant;
-import com.rapidark.framework.Current;
 
 /**
  * 上传控件服务器端响应UI类

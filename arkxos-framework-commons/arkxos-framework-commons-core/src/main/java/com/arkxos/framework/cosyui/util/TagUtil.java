@@ -1,9 +1,9 @@
 package com.arkxos.framework.cosyui.util;
 
+import com.arkxos.framework.Current;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.cosyui.template.AbstractExecuteContext;
 import com.arkxos.framework.cosyui.zhtml.ZhtmlExecuteContext;
-import com.rapidark.framework.Current;
 
 /**
  * 标签工具类

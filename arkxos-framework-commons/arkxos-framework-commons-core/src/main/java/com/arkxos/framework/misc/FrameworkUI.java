@@ -2,6 +2,7 @@ package com.arkxos.framework.misc;
 
 import java.util.HashMap;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.ServletUtil;
@@ -9,7 +10,6 @@ import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.web.RequestData;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.data.db.DataCollection;
-import com.rapidark.framework.Constant;
 
 /**
  * @class org.ark.framework.FrameworkUI

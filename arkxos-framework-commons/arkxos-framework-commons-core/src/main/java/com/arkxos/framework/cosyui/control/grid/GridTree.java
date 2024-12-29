@@ -1,5 +1,6 @@
 package com.arkxos.framework.cosyui.control.grid;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
@@ -12,7 +13,6 @@ import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.control.DataGridAction;
 import com.arkxos.framework.cosyui.html.HtmlTD;
 import com.arkxos.framework.cosyui.template.AbstractExecuteContext;
-import com.rapidark.framework.Config;
 
 /**
  * 树状列

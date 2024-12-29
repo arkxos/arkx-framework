@@ -1,4 +1,4 @@
-package com.rapidark.framework;
+package com.arkxos.framework;
 
 import com.arkxos.framework.annotation.Plugin;
 import com.arkxos.framework.annotation.fastdb.Comment;

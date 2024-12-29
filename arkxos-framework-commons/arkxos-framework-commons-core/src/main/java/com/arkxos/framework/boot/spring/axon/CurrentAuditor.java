@@ -2,7 +2,7 @@ package com.arkxos.framework.boot.spring.axon;
 
 import java.time.LocalDateTime;
 
-import com.rapidark.framework.Current;
+import com.arkxos.framework.Current;
 
 import lombok.Data;
 

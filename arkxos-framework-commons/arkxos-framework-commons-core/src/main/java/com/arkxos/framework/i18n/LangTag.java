@@ -3,12 +3,12 @@ package com.arkxos.framework.i18n;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.cosyui.tag.ArkTag;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 国际化标签 ，用于在zhtml中根据当前语言显示一个国际化字符串

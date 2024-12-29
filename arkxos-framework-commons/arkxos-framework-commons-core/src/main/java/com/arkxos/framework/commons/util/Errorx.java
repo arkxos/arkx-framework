@@ -2,8 +2,8 @@ package com.arkxos.framework.commons.util;
 
 import java.util.ArrayList;
 
+import com.arkxos.framework.Current;
 import com.arkxos.framework.commons.lang.FastStringBuilder;
-import com.rapidark.framework.Current;
 
 /**
  * @class org.ark.framework.collection.Errorx

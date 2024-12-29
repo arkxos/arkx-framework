@@ -2,11 +2,11 @@ package com.arkxos.framework.schedule;
 
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.extend.AbstractExtendService;
 import com.arkxos.framework.extend.IExtendItem;
-import com.rapidark.framework.Config;
 
 /**
  * 系统定时任务扩展服务类

@@ -2,10 +2,10 @@ package org.ark.framework.schedule;
 
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.extend.AbstractExtendService;
-import com.rapidark.framework.Config;
 
 /**
  * @class org.ark.framework.schedule.SystemTaskService

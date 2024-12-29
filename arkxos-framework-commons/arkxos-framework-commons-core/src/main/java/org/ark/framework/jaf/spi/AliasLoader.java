@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.annotation.Alias;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.commons.collection.Mapx;
@@ -17,7 +18,6 @@ import com.arkxos.framework.commons.util.ZipUtil;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.i18n.LangUtil;
-import com.rapidark.framework.Config;
 
 
 /**
@@ -103,7 +103,7 @@ public class AliasLoader {
 	private static void scanAllAnnotation() {
 		long t = System.currentTimeMillis();
 
-		loadPath(new File(com.rapidark.framework.Config.getClassesPath()).getParentFile().getAbsolutePath() + File.separator);
+		loadPath(new File(com.arkxos.framework.Config.getClassesPath()).getParentFile().getAbsolutePath() + File.separator);
 		loadPath(Config.getPluginPath());
 
 		if (lastTime == 0L) {
@@ -161,7 +161,7 @@ public class AliasLoader {
 	 * @version V1.0
 	 */
 	private static void scanOneDir(File p, String prefix) throws ClassNotFoundException {
-		String classPath = com.rapidark.framework.Config.getClassesPath();
+		String classPath = com.arkxos.framework.Config.getClassesPath();
 		String path = FileUtil.normalizePath(p.getAbsolutePath());
 		if (!path.endsWith("/")) {
 			path = path + "/";

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.NumberUtil;
@@ -13,7 +14,6 @@ import com.arkxos.framework.core.bean.BeanUtil;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.json.JSON;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 变量定义/置值标签，用于在模板中定义和修改变量。<br>

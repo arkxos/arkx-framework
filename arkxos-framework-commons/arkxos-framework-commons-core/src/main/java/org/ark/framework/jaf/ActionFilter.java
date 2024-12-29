@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import org.ark.framework.security.PrivCheck;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.annotation.Path;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.ObjectUtil;
@@ -13,7 +14,6 @@ import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.web.CookieData;
 import com.arkxos.framework.cosyui.web.ResponseData;
 import com.arkxos.framework.extend.ExtendManager;
-import com.rapidark.framework.Config;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

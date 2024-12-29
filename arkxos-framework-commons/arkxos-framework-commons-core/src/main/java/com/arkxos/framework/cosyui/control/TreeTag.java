@@ -3,6 +3,9 @@ package com.arkxos.framework.cosyui.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.Config;
+import com.arkxos.framework.Current;
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.StringUtil;
@@ -22,9 +25,6 @@ import com.arkxos.framework.cosyui.template.command.TagCommand;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.security.PrivCheck;
 import com.arkxos.framework.security.exception.PrivException;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.Current;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 树标签　

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.arkxos.framework.Current;
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.core.JsonResult;
@@ -12,8 +14,6 @@ import com.arkxos.framework.core.method.MethodLocatorUtil;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.security.PrivCheck;
-import com.rapidark.framework.Current;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 变量初始化标签，用于为<ark:init>包围的区域中的表达式提供变量

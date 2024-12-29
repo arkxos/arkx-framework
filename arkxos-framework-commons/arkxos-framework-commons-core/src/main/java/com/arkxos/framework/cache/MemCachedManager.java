@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.MemcachedClientBuilder;

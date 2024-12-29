@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.CacheMapx;
 import com.arkxos.framework.commons.collection.ConcurrentMapx;
 import com.arkxos.framework.commons.collection.Mapx;
@@ -13,7 +14,6 @@ import com.arkxos.framework.commons.util.PropertiesUtil;
 import com.arkxos.framework.config.DefaultLanguage;
 import com.arkxos.framework.extend.plugin.PluginConfig;
 import com.arkxos.framework.extend.plugin.PluginManager;
-import com.rapidark.framework.Config;
 
 /**
  * 语言文件加载器

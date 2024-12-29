@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.arkxos.framework.Account;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
@@ -34,7 +35,6 @@ import com.arkxos.framework.data.jdbc.JdbcTemplate;
 import com.arkxos.framework.data.jdbc.Query;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
-import com.rapidark.framework.Account;
 
 /**
  * DAO虚拟类，表示数据表中的一条记录

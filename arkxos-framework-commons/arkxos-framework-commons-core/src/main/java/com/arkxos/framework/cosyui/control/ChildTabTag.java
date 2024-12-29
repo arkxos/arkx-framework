@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.util.StringFormat;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.tag.ArkTag;
@@ -13,7 +14,6 @@ import com.arkxos.framework.cosyui.template.TemplateCompiler;
 import com.arkxos.framework.cosyui.template.TemplateExecutor;
 import com.arkxos.framework.cosyui.template.command.TagCommand;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 子选项卡标签类

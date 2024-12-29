@@ -2,9 +2,9 @@ package com.arkxos.framework.misc;
 
 import java.io.File;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.schedule.SystemTask;
-import com.rapidark.framework.Config;
 /**
  * @class org.ark.framework.FrameworkTask
  * 定时清空Debug模式下的Session缓存

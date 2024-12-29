@@ -2,10 +2,10 @@ package org.ark.framework.i18n;
 
 import org.ark.framework.jaf.tag.SelectTag;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.i18n.LangUtil;
-import com.rapidark.framework.Config;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;

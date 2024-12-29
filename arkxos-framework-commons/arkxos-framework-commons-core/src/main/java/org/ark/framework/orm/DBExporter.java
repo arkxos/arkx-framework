@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.ark.framework.messages.LongTimeTask;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.util.BufferedRandomAccessFile;
 import com.arkxos.framework.commons.util.FileUtil;
@@ -22,7 +23,6 @@ import com.arkxos.framework.data.jdbc.JdbcTemplate;
 import com.arkxos.framework.data.jdbc.Query;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
-import com.rapidark.framework.Constant;
 
 
 /**

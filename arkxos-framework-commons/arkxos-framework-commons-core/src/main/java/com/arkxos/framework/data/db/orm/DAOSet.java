@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.arkxos.framework.Account;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.DataTypes;
@@ -28,7 +29,6 @@ import com.arkxos.framework.data.db.exception.DeleteException;
 import com.arkxos.framework.data.db.exception.InsertException;
 import com.arkxos.framework.data.db.exception.UpdateException;
 import com.arkxos.framework.data.jdbc.JdbcTemplate;
-import com.rapidark.framework.Account;
 
 /**
  * DAO集合，有序不可重复，对应于数据库中一组记录<br>

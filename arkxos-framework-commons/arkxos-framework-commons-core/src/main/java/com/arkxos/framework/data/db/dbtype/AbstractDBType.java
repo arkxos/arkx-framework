@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.db.DBUtil;
@@ -26,7 +27,6 @@ import com.arkxos.framework.data.db.command.RenameColumnCommand;
 import com.arkxos.framework.data.db.command.RenameTableCommand;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionConfig;
-import com.rapidark.framework.Config;
 
 /**
  * 数据库类型虚拟类。<br>

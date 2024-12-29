@@ -2,6 +2,7 @@ package com.arkxos.framework.cosyui.control.grid;
 
 import java.util.List;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.lang.FastStringBuilder;
@@ -12,7 +13,6 @@ import com.arkxos.framework.cosyui.html.HtmlTD;
 import com.arkxos.framework.cosyui.html.HtmlTR;
 import com.arkxos.framework.cosyui.template.AbstractExecuteContext;
 import com.arkxos.framework.i18n.LangMapping;
-import com.rapidark.framework.Constant;
 
 /**
  * 行号

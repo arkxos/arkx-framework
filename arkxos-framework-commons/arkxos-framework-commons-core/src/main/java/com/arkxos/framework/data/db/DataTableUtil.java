@@ -24,6 +24,8 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
+import com.arkxos.framework.Config;
+import com.arkxos.framework.Current;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
@@ -48,8 +50,6 @@ import com.arkxos.framework.cosyui.web.RequestData;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
 import com.arkxos.framework.security.PrivCheck;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.Current;
 
 public class DataTableUtil {
 	public static void main(String[] args) {

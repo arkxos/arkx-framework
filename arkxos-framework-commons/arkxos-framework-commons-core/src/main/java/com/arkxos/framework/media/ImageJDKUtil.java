@@ -39,12 +39,12 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import com.alibaba.simpleimage.ImageFormat;
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.NumberUtil;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 public class ImageJDKUtil
 {

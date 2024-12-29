@@ -3,6 +3,7 @@ package com.arkxos.framework.core.method;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import com.arkxos.framework.Current;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.annotation.util.AliasMapping;
 import com.arkxos.framework.commons.collection.ConcurrentMapx;
@@ -11,7 +12,6 @@ import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.core.exception.UIMethodNotFoundException;
 import com.arkxos.framework.cosyui.web.UIFacade;
-import com.rapidark.framework.Current;
 
 /**
  * 定位器工具类

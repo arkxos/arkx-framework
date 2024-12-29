@@ -6,7 +6,7 @@ import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Locale;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;

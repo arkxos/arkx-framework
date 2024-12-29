@@ -1,4 +1,4 @@
-package com.rapidark.framework;
+package com.arkxos.framework;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
 
+import com.arkxos.framework.Account.UserData;
 import com.arkxos.framework.commons.collection.ConcurrentMapx;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.LogUtil;
@@ -16,7 +17,6 @@ import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.i18n.LangUtil;
 import com.arkxos.framework.security.EncryptUtil;
-import com.rapidark.framework.Account.UserData;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -805,7 +805,7 @@ public class Config {
 	 * @version V1.0
 	 */
 	public static String getJavaVersion() {
-		return com.rapidark.framework.Config.getValue("System.JavaVersion");
+		return com.arkxos.framework.Config.getValue("System.JavaVersion");
 	}
 
 	/**
@@ -817,7 +817,7 @@ public class Config {
 	 * @version V1.0
 	 */
 	public static String getJavaVendor() {
-		return com.rapidark.framework.Config.getValue("System.JavaVendor");
+		return com.arkxos.framework.Config.getValue("System.JavaVendor");
 	}
 
 	/**

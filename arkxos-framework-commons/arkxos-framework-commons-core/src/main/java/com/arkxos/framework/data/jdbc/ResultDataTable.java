@@ -10,11 +10,11 @@ import java.util.Date;
 import org.ark.framework.orm.sql.DBUtil;
 import org.ark.framework.orm.sql.LobUtil;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 
 /**

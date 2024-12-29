@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.arkxos.framework.Current;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.Primitives;
 import com.arkxos.framework.commons.util.lang.ClassUtil;
@@ -13,7 +14,6 @@ import com.arkxos.framework.core.bean.BeanProperty;
 import com.arkxos.framework.core.bean.BeanUtil;
 import com.arkxos.framework.core.castor.CastorService;
 import com.arkxos.framework.thirdparty.el.Constants;
-import com.rapidark.framework.Current;
 
 /**
  * UI方法参数绑定器

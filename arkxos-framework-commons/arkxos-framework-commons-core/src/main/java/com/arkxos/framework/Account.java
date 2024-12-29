@@ -1,4 +1,4 @@
-package com.rapidark.framework;
+package com.arkxos.framework;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,12 +9,12 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.arkxos.framework.Member.MemberData;
 import com.arkxos.framework.common.utils.SecurityUtils;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.i18n.LangMapping;
 import com.arkxos.framework.i18n.LangUtil;
 import com.arkxos.framework.security.Privilege;
-import com.rapidark.framework.Member.MemberData;
 
 import jakarta.servlet.http.HttpServletRequest;
 

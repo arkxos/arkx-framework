@@ -6,11 +6,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeoutException;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.json.JSON;
 import com.arkxos.framework.json.JSONObject;
-import com.rapidark.framework.Config;
 
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.exception.MemcachedException;

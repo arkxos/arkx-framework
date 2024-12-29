@@ -1,4 +1,4 @@
-package com.rapidark.framework;
+package com.arkxos.framework;
 
 import org.ark.framework.orm.MaxNo;
 

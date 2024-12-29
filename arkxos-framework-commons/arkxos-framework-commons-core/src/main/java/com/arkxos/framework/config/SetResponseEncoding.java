@@ -1,6 +1,6 @@
 package com.arkxos.framework.config;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 /**
  * 是否统一设置http响应的字符集。

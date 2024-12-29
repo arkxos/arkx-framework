@@ -1,6 +1,6 @@
 package com.arkxos.framework.config;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 /**
  * 是否启用缓存同步，集群时必须启用。

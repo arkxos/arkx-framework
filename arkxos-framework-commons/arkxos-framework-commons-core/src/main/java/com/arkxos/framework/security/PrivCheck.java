@@ -1,5 +1,9 @@
 package com.arkxos.framework.security;
 
+import com.arkxos.framework.Account;
+import com.arkxos.framework.Config;
+import com.arkxos.framework.Current;
+import com.arkxos.framework.Member;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.annotation.Priv.LoginType;
 import com.arkxos.framework.commons.util.ObjectUtil;
@@ -13,10 +17,6 @@ import com.arkxos.framework.security.exception.MemberNotLoginException;
 import com.arkxos.framework.security.exception.NoPrivException;
 import com.arkxos.framework.security.exception.UserNotLoginException;
 import com.arkxos.framework.thirdparty.commons.ArrayUtils;
-import com.rapidark.framework.Account;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.Current;
-import com.rapidark.framework.Member;
 
 /**
  * 权限检查类，用于检查对当前页面、当前UI方法的访问是否被允许

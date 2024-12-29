@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.annotation.PluginAnnotationScannerParser;
 import com.arkxos.framework.commons.collection.ConcurrentMapx;
 import com.arkxos.framework.commons.collection.Mapx;
@@ -16,7 +17,6 @@ import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.PropertiesUtil;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 import lombok.extern.slf4j.Slf4j;
 

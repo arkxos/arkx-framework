@@ -3,12 +3,12 @@ package com.arkxos.framework.cosyui.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.tag.ArkTag;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 选项卡标签　

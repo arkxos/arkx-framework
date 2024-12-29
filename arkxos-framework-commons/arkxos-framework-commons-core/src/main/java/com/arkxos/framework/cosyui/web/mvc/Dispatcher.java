@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.web.mvc;
 
-import com.rapidark.framework.Current;
+import com.arkxos.framework.Current;
 
 /**
  * 转发器，用于保存forward和redirect操作的目标URL

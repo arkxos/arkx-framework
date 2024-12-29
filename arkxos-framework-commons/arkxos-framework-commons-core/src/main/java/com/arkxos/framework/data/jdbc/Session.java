@@ -8,6 +8,7 @@ import java.util.List;
 import org.ark.framework.infrastructure.repositories.extend.EntityDeleteExtendAction;
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
+import com.arkxos.framework.Account;
 import com.arkxos.framework.annotation.Column;
 import com.arkxos.framework.annotation.EntityAnnotationManager;
 import com.arkxos.framework.annotation.Ingore;
@@ -16,7 +17,6 @@ import com.arkxos.framework.commons.util.lang.ReflectionUtil;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.extend.ExtendManager;
-import com.rapidark.framework.Account;
 
 /**   
  * @class org.ark.framework.infrastructure.repositories.OrmManager

@@ -1,6 +1,6 @@
 package com.arkxos.framework.config;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 /**
  * 配置代码源。

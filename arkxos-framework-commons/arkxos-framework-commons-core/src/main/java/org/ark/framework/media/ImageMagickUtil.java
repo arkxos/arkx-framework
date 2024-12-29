@@ -10,9 +10,9 @@ import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 public class ImageMagickUtil
 {

@@ -1,9 +1,9 @@
 package com.arkxos.framework.config;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 public class ContainerStartUser implements IApplicationConfigItem {
 	public static final String ID = "ContainerStartUser";

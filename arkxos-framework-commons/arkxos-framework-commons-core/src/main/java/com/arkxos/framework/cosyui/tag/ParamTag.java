@@ -3,10 +3,10 @@ package com.arkxos.framework.cosyui.tag;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.i18n.LangUtil;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 参数求值标签，一般不需要再使用，直接在zhtml中使用表达式即可。

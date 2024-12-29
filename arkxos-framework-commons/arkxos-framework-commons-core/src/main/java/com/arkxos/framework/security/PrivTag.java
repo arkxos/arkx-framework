@@ -3,12 +3,12 @@ package com.arkxos.framework.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.annotation.Priv.LoginType;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.cosyui.expression.ExpressionException;
 import com.arkxos.framework.cosyui.tag.ArkTag;
 import com.arkxos.framework.cosyui.template.TagAttr;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 权限声明标签 ，用于在zhtml页面中声明需要的权限，如果当前用户不满声明的权限要求，则会重定向到权限不足页面。

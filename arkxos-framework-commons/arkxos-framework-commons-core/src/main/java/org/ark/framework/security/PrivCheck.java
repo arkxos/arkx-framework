@@ -7,6 +7,9 @@ import java.net.URLEncoder;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.jaf.PlaceHolderContext;
 
+import com.arkxos.framework.Account;
+import com.arkxos.framework.Config;
+import com.arkxos.framework.Member;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.commons.util.Html2Util;
 import com.arkxos.framework.commons.util.LogUtil;
@@ -17,9 +20,6 @@ import com.arkxos.framework.cosyui.web.ResponseData;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.extend.action.AfterPrivCheckFailedAction;
 import com.arkxos.framework.extend.action.PrivExtendAction;
-import com.rapidark.framework.Account;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.Member;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

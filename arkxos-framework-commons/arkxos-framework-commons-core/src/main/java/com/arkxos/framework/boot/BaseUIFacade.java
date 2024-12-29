@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.ark.framework.infrastructure.repositories.BaseRepository;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.annotation.Alias;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.commons.collection.DataTable;
@@ -26,7 +27,6 @@ import com.arkxos.framework.data.jdbc.Order;
 import com.arkxos.framework.data.jdbc.Restrictions;
 import com.arkxos.framework.data.jdbc.TreeEntity;
 import com.arkxos.framework.i18n.LangMapping;
-import com.rapidark.framework.Constant;
 
 /**   
  * @class org.ark.framework.jaf.BaseUIFacade

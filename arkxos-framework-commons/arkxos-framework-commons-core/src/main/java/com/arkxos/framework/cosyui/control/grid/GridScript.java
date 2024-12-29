@@ -1,5 +1,6 @@
 package com.arkxos.framework.cosyui.control.grid;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.Filter;
@@ -10,7 +11,6 @@ import com.arkxos.framework.cosyui.control.DataGridAction;
 import com.arkxos.framework.cosyui.html.HtmlElement;
 import com.arkxos.framework.data.db.DataCollection;
 import com.arkxos.framework.data.db.orm.DAOSet;
-import com.rapidark.framework.Constant;
 
 /**
  * 输出前端需要的样式

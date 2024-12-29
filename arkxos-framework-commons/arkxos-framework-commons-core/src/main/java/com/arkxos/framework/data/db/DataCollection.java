@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.DataTypes;
@@ -21,7 +22,6 @@ import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.data.xml.XMLParser;
 import com.arkxos.framework.json.JSON;
 import com.arkxos.framework.json.JSONObject;
-import com.rapidark.framework.Constant;
 
 /**
  * Http请求参数的封装，对应于前端JavaScript中的DataCollection对象

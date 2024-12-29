@@ -3,10 +3,10 @@ package com.arkxos.framework.extend;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.extend.exception.CreateExtendActionInstanceException;
-import com.rapidark.framework.Config;
 
 /**
  * @class org.ark.framework.extend.ExtendManager

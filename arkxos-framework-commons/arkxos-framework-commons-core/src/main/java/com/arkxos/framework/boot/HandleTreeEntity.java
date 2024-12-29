@@ -2,6 +2,7 @@ package com.arkxos.framework.boot;
 
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
+import com.arkxos.framework.NoUtil;
 import com.arkxos.framework.annotation.EntityAnnotationManager;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.jdbc.Criteria;
@@ -10,7 +11,6 @@ import com.arkxos.framework.data.jdbc.Restrictions;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
 import com.arkxos.framework.data.jdbc.TreeEntity;
-import com.rapidark.framework.NoUtil;
 
 /**
  * 

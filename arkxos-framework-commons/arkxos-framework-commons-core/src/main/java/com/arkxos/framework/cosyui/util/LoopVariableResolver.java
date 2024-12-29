@@ -2,12 +2,12 @@ package com.arkxos.framework.cosyui.util;
 
 import java.util.Map;
 
+import com.arkxos.framework.Current;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.cosyui.expression.ExpressionException;
 import com.arkxos.framework.cosyui.expression.IVariableResolver;
 import com.arkxos.framework.i18n.LangUtil;
-import com.rapidark.framework.Current;
 
 /**
  * 循环变量查找器，用于在for/while等循环代码中将DataRow和Map加入到变量查找序列中，以实现同样的<br>

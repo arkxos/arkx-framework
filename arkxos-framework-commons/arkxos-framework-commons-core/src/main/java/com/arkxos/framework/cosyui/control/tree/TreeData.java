@@ -2,6 +2,7 @@ package com.arkxos.framework.cosyui.control.tree;
 
 import java.util.ArrayList;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
@@ -13,7 +14,6 @@ import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.control.TreeAction;
 import com.arkxos.framework.thirdparty.commons.ArrayUtils;
-import com.rapidark.framework.Config;
 
 /**
  * 树形数据重排工具类<br>

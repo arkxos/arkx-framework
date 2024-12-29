@@ -1,5 +1,6 @@
 package com.arkxos.framework.cosyui.web;
 
+import com.arkxos.framework.Current;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.web.mvc.Dispatcher;
@@ -8,7 +9,6 @@ import com.arkxos.framework.data.jdbc.SessionFactory;
 import com.arkxos.framework.i18n.Lang;
 import com.arkxos.framework.json.JSONArray;
 import com.arkxos.framework.json.JSONObject;
-import com.rapidark.framework.Current;
 
 /**
  * 前端界面请求绑定界面门面

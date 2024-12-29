@@ -14,7 +14,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import com.rapidark.framework.Account;
+import com.arkxos.framework.Account;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

@@ -1,5 +1,7 @@
 package com.arkxos.framework.cosyui.control;
 
+import com.arkxos.framework.Constant;
+import com.arkxos.framework.Current;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.annotation.Verify;
 import com.arkxos.framework.commons.collection.Mapx;
@@ -15,8 +17,6 @@ import com.arkxos.framework.cosyui.tag.RestUtil;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.security.PrivCheck;
 import com.arkxos.framework.security.VerifyCheck;
-import com.rapidark.framework.Constant;
-import com.rapidark.framework.Current;
 
 /**
  * 树标签服务器端响应UI类

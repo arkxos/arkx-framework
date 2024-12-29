@@ -3,10 +3,10 @@ package com.arkxos.framework.media;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.Primitives;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 public class FfmpegCommandBuilder
 {

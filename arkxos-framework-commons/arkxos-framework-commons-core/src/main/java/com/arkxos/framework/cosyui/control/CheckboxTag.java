@@ -3,6 +3,8 @@ package com.arkxos.framework.cosyui.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.Current;
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.collection.Mapx;
@@ -14,8 +16,6 @@ import com.arkxos.framework.cosyui.tag.ArkTag;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.security.exception.PrivException;
-import com.rapidark.framework.Current;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 多选框标签 。<br>

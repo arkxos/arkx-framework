@@ -6,13 +6,13 @@ import java.util.regex.Pattern;
 
 import org.ark.framework.jaf.html.HtmlElement;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.collection.Treex;
 import com.arkxos.framework.commons.util.Errorx;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.StringFormat;
-import com.rapidark.framework.Config;
 
 
 /**

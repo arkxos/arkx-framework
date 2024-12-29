@@ -1,9 +1,9 @@
 package com.arkxos.framework.cosyui.expression.function;
 
+import com.arkxos.framework.Account;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.cosyui.expression.AbstractFunction;
 import com.arkxos.framework.cosyui.expression.IVariableResolver;
-import com.rapidark.framework.Account;
 
 /**
  * 判断当前用户是否拥有第一个参数指定的权限项

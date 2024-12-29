@@ -1,7 +1,7 @@
 package com.arkxos.framework.config;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.NumberUtil;
-import com.rapidark.framework.Config;
 
 /**
  * 最大文件上传大小，以字节为单位。<br>

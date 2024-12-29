@@ -7,9 +7,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.arkxos.common.annotation.Excel;
-import com.arkxos.common.annotation.Excels;
 import com.arkxos.common.annotation.Excel.ColumnType;
 import com.arkxos.common.annotation.Excel.Type;
+import com.arkxos.common.annotation.Excels;
 import com.arkxos.common.core.domain.BaseEntity;
 import com.arkxos.common.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;

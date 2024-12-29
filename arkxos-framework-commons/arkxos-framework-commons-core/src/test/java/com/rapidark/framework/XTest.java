@@ -2,6 +2,7 @@ package com.rapidark.framework;
 
 import org.aspectj.lang.annotation.Before;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.extend.plugin.ExtendPluginProvider;
 import com.arkxos.framework.extend.plugin.PluginManager;
 

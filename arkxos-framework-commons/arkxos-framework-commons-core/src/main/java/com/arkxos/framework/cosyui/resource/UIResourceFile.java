@@ -8,9 +8,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.cosyui.template.exception.TemplateNotFoundException;
-import com.rapidark.framework.Config;
 
 /**
  * 表示一个UI资源，可能处于.ui.jar中，也可能直接在应用目录下

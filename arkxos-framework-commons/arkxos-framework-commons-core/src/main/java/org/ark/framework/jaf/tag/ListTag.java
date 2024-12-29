@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.security.PrivCheck;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
@@ -15,7 +16,6 @@ import com.arkxos.framework.commons.util.Html2Util;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.ServletUtil;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Constant;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

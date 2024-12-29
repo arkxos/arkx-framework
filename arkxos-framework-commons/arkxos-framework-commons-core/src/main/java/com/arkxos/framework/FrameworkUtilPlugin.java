@@ -1,4 +1,4 @@
-package com.rapidark.framework;
+package com.arkxos.framework;
 
 import com.arkxos.framework.extend.plugin.AbstractPlugin;
 import com.arkxos.framework.extend.plugin.PluginException;

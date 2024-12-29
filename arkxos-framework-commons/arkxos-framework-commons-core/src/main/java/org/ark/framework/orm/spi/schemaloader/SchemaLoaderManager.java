@@ -3,7 +3,7 @@ package org.ark.framework.orm.spi.schemaloader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 
 /**   

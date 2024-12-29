@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.core.scanner.BuiltResource;
@@ -20,7 +21,6 @@ import com.arkxos.framework.core.scanner.IBuiltResourceVisitor;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.dbtype.DBTypeService;
 import com.arkxos.framework.data.db.dbtype.IDBType;
-import com.rapidark.framework.Config;
 
 /**
  * DAO和DAOSet操作的工具类<br>

@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
+import com.arkxos.framework.Account;
 import com.arkxos.framework.boot.spring.axon.CurrentAuditor;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Account;
 
 /**
  * 设置审计

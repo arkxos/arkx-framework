@@ -18,13 +18,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.ConcurrentMapx;
 import com.arkxos.framework.data.db.nativejdbc.CommonsDbcpNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.JBossNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.WebLogicNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.WebSphereNativeJdbcExtractor;
 import com.arkxos.framework.thirdparty.commons.ArrayUtils;
-import com.rapidark.framework.Config;
 
 /**
  * 数据库连接，调用本类的close()方法时不实际关闭连接，仅将连接释放回连接池。

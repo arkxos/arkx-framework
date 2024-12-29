@@ -3,14 +3,14 @@ package com.arkxos.framework.i18n;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.arkxos.framework.Account;
+import com.arkxos.framework.Config;
+import com.arkxos.framework.Current;
 import com.arkxos.framework.commons.collection.CacheMapx;
 import com.arkxos.framework.commons.collection.ConcurrentMapx;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringFormat;
-import com.rapidark.framework.Account;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.Current;
 
 /**
  * 国际化字符串映射器

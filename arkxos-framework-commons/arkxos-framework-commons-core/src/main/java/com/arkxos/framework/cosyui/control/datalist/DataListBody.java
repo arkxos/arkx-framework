@@ -1,12 +1,12 @@
 package com.arkxos.framework.cosyui.control.datalist;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.lang.FastStringBuilder;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.control.DataListAction;
 import com.arkxos.framework.cosyui.template.TemplateCompiler;
 import com.arkxos.framework.cosyui.template.TemplateExecutor;
 import com.arkxos.framework.cosyui.zhtml.ZhtmlManagerContext;
-import com.rapidark.framework.Constant;
 
 /**
  * DataList的标签体

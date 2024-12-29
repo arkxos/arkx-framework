@@ -1,6 +1,6 @@
 package com.arkxos.framework.config;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 /**
  * 配置后台用户登录页面相对于应用根目录的地址。

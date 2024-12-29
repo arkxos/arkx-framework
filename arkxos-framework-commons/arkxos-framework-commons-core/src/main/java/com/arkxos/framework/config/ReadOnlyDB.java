@@ -1,11 +1,11 @@
 package com.arkxos.framework.config;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.data.db.exception.DatabaseException;
 import com.arkxos.framework.data.jdbc.TransactionFactory;
-import com.rapidark.framework.Config;
 
 /**
  * 配置读写分离时的只读库的连接池名称，可以配置多个连接池名称，以逗号分隔。<br>

@@ -1,7 +1,7 @@
 package com.arkxos.framework.config;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.Config;
 
 /**
  * 配置日志管理器的实现类，此类必须实现com.rapidark.framework.utility.ILogManager接口。

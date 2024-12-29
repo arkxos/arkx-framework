@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.collection.Treex;
@@ -18,7 +19,6 @@ import com.arkxos.framework.cosyui.resource.UIResourceFile;
 import com.arkxos.framework.cosyui.template.exception.TemplateCompileException;
 import com.arkxos.framework.data.xml.XMLParser;
 import com.arkxos.framework.data.xml.XMLParser.ElementAttribute;
-import com.rapidark.framework.Config;
 
 /**
  * 模板解析器

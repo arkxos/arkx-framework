@@ -7,6 +7,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.ark.framework.security.LicenseInfo;
 //import org.ark.framework.security.ZRSACipher;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.Mapx;
@@ -15,7 +16,6 @@ import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
 import com.arkxos.framework.i18n.LangMapping;
 import com.arkxos.framework.i18n.LangUtil;
-import com.rapidark.framework.Config;
 
 
 /**   

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.db.command.AdvanceChangeColumnCommand;
@@ -15,7 +16,6 @@ import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionConfig;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
-import com.rapidark.framework.Config;
 import com.sun.star.uno.RuntimeException;
 
 /**

@@ -2,6 +2,7 @@ package com.arkxos.framework.data.db.orm;
 
 import java.util.Date;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.util.DateUtil;
 import com.arkxos.framework.commons.util.ObjectUtil;
@@ -10,7 +11,6 @@ import com.arkxos.framework.core.bean.BeanDescription;
 import com.arkxos.framework.core.bean.BeanManager;
 import com.arkxos.framework.core.bean.BeanProperty;
 import com.arkxos.framework.data.db.exception.DatabaseException;
-import com.rapidark.framework.Config;
 
 /**
  * 备份表DAO，用于执行备份表上的操作。

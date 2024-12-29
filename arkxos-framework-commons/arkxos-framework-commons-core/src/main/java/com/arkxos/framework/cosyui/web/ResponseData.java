@@ -1,9 +1,9 @@
 package com.arkxos.framework.cosyui.web;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.data.db.DataCollection;
-import com.rapidark.framework.Constant;
 
 import jakarta.servlet.http.HttpServletResponse;
 

@@ -1,6 +1,6 @@
 package com.arkxos.framework.extend.plugin;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 /**
  * @class org.ark.framework.extend.plugin.spi.JavaTestPluginProvider

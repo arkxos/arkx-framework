@@ -3,8 +3,8 @@ package com.arkxos.framework.cosyui.tag;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.cosyui.template.TagAttr;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * <ark:choose>标签,用于实现Choose/When支持

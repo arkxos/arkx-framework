@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.ark.framework.orm.sql.LobUtil;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.util.DateUtil;
 import com.arkxos.framework.commons.util.LogUtil;
@@ -33,7 +34,6 @@ import com.arkxos.framework.data.db.exception.DropException;
 import com.arkxos.framework.data.db.exception.InsertException;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.extend.action.AfterSQLExecutedAction;
-import com.rapidark.framework.Config;
 
 import lombok.extern.slf4j.Slf4j;
 

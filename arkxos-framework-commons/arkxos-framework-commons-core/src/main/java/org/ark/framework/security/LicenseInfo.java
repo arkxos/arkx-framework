@@ -3,6 +3,7 @@ package org.ark.framework.security;
 import java.security.PublicKey;
 import java.util.Date;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.DateUtil;
 import com.arkxos.framework.commons.util.FileUtil;
@@ -10,7 +11,6 @@ import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.StringFormat;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.commons.util.SystemInfo;
-import com.rapidark.framework.Config;
 
 /**
  * @class org.ark.framework.security.LicenseInfo

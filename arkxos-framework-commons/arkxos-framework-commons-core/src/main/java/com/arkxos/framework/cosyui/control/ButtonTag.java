@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
@@ -17,7 +18,6 @@ import com.arkxos.framework.cosyui.template.command.TagCommand;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.cosyui.util.TagUtil;
 import com.arkxos.framework.i18n.LangUtil;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 按钮标签

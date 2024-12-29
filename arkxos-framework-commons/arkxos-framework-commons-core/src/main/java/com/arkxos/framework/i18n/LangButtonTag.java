@@ -3,12 +3,12 @@ package com.arkxos.framework.i18n;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.Config;
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.template.AbstractTag;
 import com.arkxos.framework.cosyui.template.TagAttr;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 国际化字段按钮，用于在zhtml中为一个文本框/文本域添加国际化数据填写按钮。

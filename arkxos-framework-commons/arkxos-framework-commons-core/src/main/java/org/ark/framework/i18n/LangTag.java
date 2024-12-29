@@ -2,9 +2,9 @@ package org.ark.framework.i18n;
 
 import java.io.IOException;
 
+import com.arkxos.framework.Account;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.i18n.LangMapping;
-import com.rapidark.framework.Account;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;

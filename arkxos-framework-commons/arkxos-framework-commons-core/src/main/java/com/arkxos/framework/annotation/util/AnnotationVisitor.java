@@ -14,6 +14,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.LocalVariableNode;
 import org.objectweb.asm.tree.MethodNode;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.annotation.Alias;
 import com.arkxos.framework.annotation.Priv;
 import com.arkxos.framework.boot.BaseUIFacade;
@@ -26,7 +27,6 @@ import com.arkxos.framework.core.scanner.BuiltResourceScanner;
 import com.arkxos.framework.core.scanner.IBuiltResourceVisitor;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.data.xml.XMLElement;
-import com.rapidark.framework.Config;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -2,8 +2,8 @@ package org.ark.framework.jaf.tag;
 
 import java.io.IOException;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.StringUtil;
-import com.rapidark.framework.Config;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;

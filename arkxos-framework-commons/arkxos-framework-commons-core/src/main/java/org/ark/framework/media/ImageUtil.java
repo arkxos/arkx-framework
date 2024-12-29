@@ -16,8 +16,8 @@ import javax.imageio.stream.ImageInputStream;
 
 import org.w3c.dom.NodeList;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.NumberUtil;
-import com.rapidark.framework.Config;
 
 public class ImageUtil {
 	public static final int NorthWest = 1;

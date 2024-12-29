@@ -3,8 +3,8 @@ package org.ark.framework.orm.schema;
 import java.util.Arrays;
 import java.util.List;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.FileUtil;
-import com.rapidark.framework.Config;
 
 import lombok.extern.slf4j.Slf4j;
 

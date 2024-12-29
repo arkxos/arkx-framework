@@ -7,11 +7,11 @@ import java.util.Properties;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.log.ILogManager;
 import com.arkxos.framework.commons.util.log.ILogger;
 import com.arkxos.framework.core.FrameworkException;
-import com.rapidark.framework.Config;
 
 public class Log4jManager implements ILogManager {
 	ILogger console = null;

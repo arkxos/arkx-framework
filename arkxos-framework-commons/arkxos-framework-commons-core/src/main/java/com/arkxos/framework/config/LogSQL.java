@@ -1,6 +1,6 @@
 package com.arkxos.framework.config;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 /**
  * 配置是否输出SQL语句到日志中。

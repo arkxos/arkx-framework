@@ -1,6 +1,6 @@
 package com.arkxos.framework.media;
 
-import com.rapidark.framework.Config;
+import com.arkxos.framework.Config;
 
 public class MediaConfig
 {

@@ -10,6 +10,8 @@ import org.ark.framework.jaf.clazz.ClassMethodFinder;
 import org.ark.framework.jaf.spi.AliasMapping;
 import org.ark.framework.orm.Schema;
 
+import com.arkxos.framework.Config;
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.Mapx;
@@ -25,8 +27,6 @@ import com.arkxos.framework.cosyui.web.ResponseData;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.data.db.DataCollection;
 import com.arkxos.framework.i18n.LangMapping;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.Constant;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

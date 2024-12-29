@@ -3,6 +3,7 @@ package com.arkxos.framework.cosyui.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.FrameworkPlugin;
 import com.arkxos.framework.commons.util.NumberUtil;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
@@ -10,7 +11,6 @@ import com.arkxos.framework.cosyui.tag.ArkTag;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.cosyui.util.TagUtil;
-import com.rapidark.framework.FrameworkPlugin;
 
 /**
  * 滑块标签　

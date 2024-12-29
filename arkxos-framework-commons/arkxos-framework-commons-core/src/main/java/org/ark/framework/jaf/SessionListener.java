@@ -3,11 +3,11 @@ package org.ark.framework.jaf;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.arkxos.framework.Account;
+import com.arkxos.framework.Config;
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.extend.ExtendManager;
-import com.rapidark.framework.Account;
-import com.rapidark.framework.Config;
-import com.rapidark.framework.Constant;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionEvent;

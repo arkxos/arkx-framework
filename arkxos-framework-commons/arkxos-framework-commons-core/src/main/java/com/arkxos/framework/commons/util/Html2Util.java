@@ -26,6 +26,7 @@ import org.ark.framework.jaf.html.HtmlTable;
 import org.ark.framework.jaf.tag.SelectTag;
 import org.ark.framework.orm.Schema;
 
+import com.arkxos.framework.Constant;
 import com.arkxos.framework.cache.CacheManager;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.DataRow;
@@ -33,7 +34,6 @@ import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.data.jdbc.Query;
 import com.arkxos.framework.i18n.LangUtil;
-import com.rapidark.framework.Constant;
 
 
 
