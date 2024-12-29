@@ -17,7 +17,10 @@
 
 package org.springframework.cloud.openfeign;
 
-import lombok.Getter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -36,11 +39,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import com.arkxit.cloud.platform.common.feign.ArkFeignAutoConfiguration;
+import com.arkxos.cloud.platform.common.feign.ArkFeignAutoConfiguration;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import lombok.Getter;
 
 /**
  * @author L.cm
