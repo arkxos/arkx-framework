@@ -1,6 +1,6 @@
 package com.arkxit.cloud.platform.common.feign.core;
 
-import com.rapidark.cloud.platform.common.core.constant.SecurityConstants;
+import com.arkxos.common.core.constant.SecurityConstants;
 import com.arkxit.cloud.platform.common.feign.annotation.NoToken;
 
 import feign.RequestInterceptor;

@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.rapidark.cloud.platform.common.core.constant.CommonConstants;
+import com.arkxos.common.core.constant.CommonConstants;
 import org.springframework.data.domain.Page;
 
 /**

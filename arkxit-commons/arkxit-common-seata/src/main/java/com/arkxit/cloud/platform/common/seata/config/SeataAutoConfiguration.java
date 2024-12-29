@@ -4,7 +4,7 @@ import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.rapidark.cloud.platform.common.core.factory.YamlPropertySourceFactory;
+import com.arkxos.common.core.factory.YamlPropertySourceFactory;
 
 /**
  * Seata 配置类

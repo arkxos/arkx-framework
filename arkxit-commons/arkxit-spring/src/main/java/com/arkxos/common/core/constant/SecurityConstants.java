@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rapidark.cloud.platform.common.core.constant;
+package com.arkxos.common.core.constant;
 
 /**
  * @author lengleng

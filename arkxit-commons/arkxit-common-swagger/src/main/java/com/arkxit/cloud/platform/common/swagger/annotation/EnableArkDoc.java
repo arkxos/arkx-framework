@@ -16,7 +16,7 @@
 
 package com.arkxit.cloud.platform.common.swagger.annotation;
 
-import com.rapidark.cloud.platform.common.core.factory.YamlPropertySourceFactory;
+import com.arkxos.common.core.factory.YamlPropertySourceFactory;
 import com.arkxit.cloud.platform.common.swagger.config.OpenAPIDefinitionImportSelector;
 import com.arkxit.cloud.platform.common.swagger.support.SwaggerProperties;
 
