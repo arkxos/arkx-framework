@@ -1,13 +1,14 @@
 package com.arkxit.framework.boot.ip2region;
 
-import com.arkxit.framework.boot.ip2region.ext.RegionAddress;
-import com.arkxit.framework.boot.ip2region.ext.RegionEnum;
-import com.arkxit.framework.boot.ip2region.ext.XdbSearcher;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.ResourceLoader;
+
+import com.arkxos.framework.boot.ip2region.IP2regionTemplate;
+import com.arkxos.framework.boot.ip2region.ext.RegionAddress;
+import com.arkxos.framework.boot.ip2region.ext.RegionEnum;
+import com.arkxos.framework.boot.ip2region.ext.XdbSearcher;
 
 public class IP2RegionTemplate_Test {
 

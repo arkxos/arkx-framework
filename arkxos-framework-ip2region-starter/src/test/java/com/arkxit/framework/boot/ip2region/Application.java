@@ -15,12 +15,14 @@
  */
 package com.arkxit.framework.boot.ip2region;
 
-import com.arkxit.framework.boot.ip2region.ext.RegionAddress;
-import com.arkxit.framework.boot.ip2region.ext.RegionEnum;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.arkxos.framework.boot.ip2region.IP2regionTemplate;
+import com.arkxos.framework.boot.ip2region.ext.RegionAddress;
+import com.arkxos.framework.boot.ip2region.ext.RegionEnum;
 
 import java.io.IOException;
 

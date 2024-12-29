@@ -21,11 +21,11 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.preloader.zip.ZipEntry;
+import com.arkxos.framework.preloader.zip.ZipFile;
+import com.arkxos.framework.preloader.zip.ZipOutputStream;
 import com.github.junrar.Archive;
 import com.github.junrar.rarfile.FileHeader;
-import com.rapidark.preloader.zip.ZipEntry;
-import com.rapidark.preloader.zip.ZipFile;
-import com.rapidark.preloader.zip.ZipOutputStream;
 
 /**
  * ZIP压缩工具类，
