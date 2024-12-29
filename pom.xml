@@ -19,10 +19,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arkxit</groupId>
-    <artifactId>arkxit</artifactId>
+    <groupId>com.arkxos.framework</groupId>
+    <artifactId>arkxos-framework</artifactId>
 
-    <name>arkxit</name>
+    <name>arkxos-framework</name>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <url>https://www.arkxit.com</url>
@@ -217,22 +217,22 @@
     </dependencies>
 
 	<modules>
-		<module>arkxit-preloader</module>
-		<module>arkxit-commons</module>
-		<module>arkxit-enum-starter</module>
-		<module>arkxit-ip2region-starter</module>
-		<module>arkxit-data</module>
-		<module>arkxit-boot</module>
-		<module>arkxit-sidecar</module>
-		<module>arkxit-cloud</module>
+		<module>arkxos-framework-preloader</module>
+		<module>arkxos-framework-commons</module>
+		<module>arkxos-framework-enum-starter</module>
+		<module>arkxos-framework-ip2region-starter</module>
+		<module>arkxos-framework-data</module>
+		<module>arkxos-framework-boot</module>
+		<module>arkxos-framework-sidecar</module>
+		<module>arkxos-framework-cloud</module>
 	</modules>
 
     <dependencyManagement>
         <dependencies>
 			<!--ark 公共版本定义-->
 			<dependency>
-				<groupId>com.arkxit</groupId>
-				<artifactId>arkxit-common-bom</artifactId>
+				<groupId>com.arkxos.framework</groupId>
+				<artifactId>arkxos-framework-common-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>

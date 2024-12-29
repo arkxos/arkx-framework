@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.arkxos.framework</groupId>
+        <artifactId>arkxos-framework</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>arkxos-framework-commons</artifactId>
+    <packaging>pom</packaging>
+
+	<description>公共聚合模块</description>
+
+    <modules>
+		<module>arkxos-framework-common-bom</module>
+		<module>arkxos-framework-spring</module>
+
+		<module>arkxos-framework-commons-core</module>
+		<module>arkxos-framework-commons-concurrent</module>
+        <module>arkxos-framework-common-encrypt</module>
+
+		<module>arkxos-framework-common-datasource</module>
+		<module>arkxos-framework-common-oss</module>
+		<module>arkxos-framework-common-seata</module>
+		<module>arkxos-framework-common-feign</module>
+		<module>arkxos-framework-common-swagger</module>
+		<module>arkxos-framework-common-xss</module>
+
+        <module>arkxos-framework-commons-webmvc</module>
+	</modules>
+
+    <dependencies>
+
+    </dependencies>
+
+</project>
