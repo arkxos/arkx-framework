@@ -13,10 +13,10 @@ import com.arkxos.framework.data.jpa.BaseRepositoryFactoryBean;
  */
 @Configuration
 @EnableJpaRepositories(
-		basePackages = { "com.xdreamaker","com.rapidark" }, 
+		basePackages = { "com.xdreamaker","com.arkxos" },
 		repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 @EntityScan({
-	"com.rapidark.soa.entity"
+	"com.arkxos.soa.entity"
 })
 public class SoaConfig {
 

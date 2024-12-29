@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.fasttable;
+package com.arkxos.framework.data.fasttable;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;

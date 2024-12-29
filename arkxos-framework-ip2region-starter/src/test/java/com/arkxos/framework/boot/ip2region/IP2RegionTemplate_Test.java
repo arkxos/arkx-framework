@@ -1,4 +1,4 @@
-package com.arkxit.framework.boot.ip2region;
+package com.arkxos.framework.boot.ip2region;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

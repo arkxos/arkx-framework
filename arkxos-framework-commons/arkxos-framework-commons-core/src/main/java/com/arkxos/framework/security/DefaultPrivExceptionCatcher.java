@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 
  */
 public class DefaultPrivExceptionCatcher implements IExceptionCatcher {
-	public static final String ID = "com.rapidark.framework.security.DefaultPrivExceptionCatcher";
+	public static final String ID = "com.arkxos.framework.security.DefaultPrivExceptionCatcher";
 
 	@Override
 	public String getExtendItemID() {

@@ -26,11 +26,11 @@ package com.arkxos.framework.data.jdbc.connection;
 //import org.ark.framework.orm.db.IDatabaseType;
 //import org.ark.framework.orm.sql.CurrentConnection;
 //
-//import com.rapidark.framework.data.db.nativejdbc.CommonsDbcpNativeJdbcExtractor;
-//import com.rapidark.framework.data.db.nativejdbc.JBossNativeJdbcExtractor;
-//import com.rapidark.framework.data.db.nativejdbc.WebLogicNativeJdbcExtractor;
-//import com.rapidark.framework.data.db.nativejdbc.WebSphereNativeJdbcExtractor;
-//import com.rapidark.framework.framework.collection.Mapx;
+//import com.arkxos.framework.data.db.nativejdbc.CommonsDbcpNativeJdbcExtractor;
+//import com.arkxos.framework.data.db.nativejdbc.JBossNativeJdbcExtractor;
+//import com.arkxos.framework.data.db.nativejdbc.WebLogicNativeJdbcExtractor;
+//import com.arkxos.framework.data.db.nativejdbc.WebSphereNativeJdbcExtractor;
+//import com.arkxos.framework.framework.collection.Mapx;
 //
 //
 ///**

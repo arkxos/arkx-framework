@@ -6,7 +6,7 @@ import com.arkxos.framework.commons.collection.Mapx;
 /**
  * 
  * if(data instanceof DataTable) { this.data =
- * com.rapidark.framework.json.JSON.toJSONString((DataTable)data); }
+ * com.arkxos.framework.json.JSON.toJSONString((DataTable)data); }
  * 
  * @author Darkness
  * @date 2016年12月19日 下午3:21:04

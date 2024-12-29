@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(
 	basePackages = { 
-			"com.rapidark.framework",
+			"com.arkxos.framework",
 	})
 public class FrameworkConfig {
 

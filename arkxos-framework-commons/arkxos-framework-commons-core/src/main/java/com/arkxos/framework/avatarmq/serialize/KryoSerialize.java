@@ -1,4 +1,4 @@
-//package com.rapidark.framework.avatarmq.serialize;
+//package com.arkxos.framework.avatarmq.serialize;
 //
 //import java.io.IOException;
 //import java.io.InputStream;

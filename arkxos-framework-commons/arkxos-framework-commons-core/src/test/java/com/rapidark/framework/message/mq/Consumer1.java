@@ -1,9 +1,9 @@
-package com.rapidark.framework.message.mq;
+package com.arkxos.framework.message.mq;
 
 import com.arkxos.framework.message.mq.Consumer;
 import com.arkxos.framework.message.mq.MessageHandler;
 import com.arkxos.framework.message.tcp.struct.NettyMessage;
-import com.rapidark.framework.message.tcp.Config;
+import com.arkxos.framework.message.tcp.Config;
 
 public class Consumer1 {
 

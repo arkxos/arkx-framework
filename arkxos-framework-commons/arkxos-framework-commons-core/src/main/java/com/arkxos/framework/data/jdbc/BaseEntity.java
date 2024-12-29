@@ -14,7 +14,7 @@ import com.arkxos.framework.annotation.Ingore;
  * @author Darkness
  * @date 2012-5-18 下午4:38:36
  * @version V1.0
- * @see com.rapidark.framework.data.jpa.entity.BaseEntity
+ * @see com.arkxos.framework.data.jpa.entity.BaseEntity
  */
 // @MappedSuperclass
 @Deprecated

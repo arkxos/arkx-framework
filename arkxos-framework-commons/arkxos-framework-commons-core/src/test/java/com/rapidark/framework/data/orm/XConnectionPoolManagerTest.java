@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.orm;
+package com.arkxos.framework.data.orm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
-import com.rapidark.framework.XTest;
+import com.arkxos.framework.XTest;
 
 /**
  * 

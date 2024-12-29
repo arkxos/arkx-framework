@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.arkxos.framework.extend.plugin.PluginConfig;
 import com.arkxos.framework.extend.plugin.PluginManager;
-import com.rapidark.framework.XTest;
+import com.arkxos.framework.XTest;
 
 /**   
  * 

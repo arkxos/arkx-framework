@@ -1,16 +1,16 @@
 package com.arkxos.framework.data.db;
-//package com.rapidark.framework.data.db;
+//package com.arkxos.framework.data.db;
 //
 //import java.sql.SQLException;
 //
-//import com.rapidark.framework.commons.collection.Executor;
-//import com.rapidark.framework.data.db.connection.Connection;
-//import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
-//import com.rapidark.framework.data.db.exception.DatabaseException;
-//import com.rapidark.framework.data.db.orm.DAO;
-//import com.rapidark.framework.data.db.orm.DAOSet;
-//import com.rapidark.framework.data.jdbc.JdbcTemplate;
-//import com.rapidark.framework.data.jdbc.Query;
+//import com.arkxos.framework.commons.collection.Executor;
+//import com.arkxos.framework.data.db.connection.Connection;
+//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+//import com.arkxos.framework.data.db.exception.DatabaseException;
+//import com.arkxos.framework.data.db.orm.DAO;
+//import com.arkxos.framework.data.db.orm.DAOSet;
+//import com.arkxos.framework.data.jdbc.JdbcTemplate;
+//import com.arkxos.framework.data.jdbc.Query;
 //
 ///**
 // * 阻塞型事务处理类，使用本类处理事务时会在一开始就占用数据库连接，<br>
@@ -26,7 +26,7 @@ package com.arkxos.framework.data.db;
 // * <br>
 // * 注意：在阻塞式事务中不使用读写分离，所有操作都在主数据库上进行。
 // * 
-// * @see com.rapidark.framework.data.db.Transaction
+// * @see com.arkxos.framework.data.db.Transaction
 // */
 //public class BlockingTransaction extends Transaction {
 //

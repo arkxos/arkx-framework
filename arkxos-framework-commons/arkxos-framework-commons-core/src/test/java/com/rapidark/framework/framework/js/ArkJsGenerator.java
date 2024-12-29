@@ -1,4 +1,4 @@
-package com.rapidark.framework.framework.js;
+package com.arkxos.framework.framework.js;
 
 import java.io.File;
 import java.io.IOException;

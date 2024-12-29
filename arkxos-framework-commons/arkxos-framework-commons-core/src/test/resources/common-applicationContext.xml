@@ -9,11 +9,11 @@
 
 	<context:annotation-config />
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	<context:component-scan base-package="com.rapidark.framework.*" />
+	<context:component-scan base-package="com.arkxos.framework.*" />
 
 	<!-- PerformanceMonitorInterceptor -->
 	<bean id="performanceInterceptor"
-		class="com.rapidark.framework.common.monitor.PerformanceInterceptor" />
+		class="com.arkxos.framework.common.monitor.PerformanceInterceptor" />
 
 	<aop:config>
 

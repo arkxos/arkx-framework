@@ -1,9 +1,9 @@
 <p align="center">
- <img src="https://img.shields.io/badge/rapidark-3.8-success.svg" alt="Build Status">
+ <img src="https://img.shields.io/badge/arkxos-3.8-success.svg" alt="Build Status">
  <img src="https://img.shields.io/badge/Spring%20Cloud-2023-blue.svg" alt="Coverage Status">
  <img src="https://img.shields.io/badge/Spring%20Boot-3.3-blue.svg" alt="Downloads">
  <img src="https://img.shields.io/badge/Vue-3.4-blue.svg" alt="Downloads">
- <img src="https://img.shields.io/github/license/rapidark-mesh/pig"/>
+ <img src="https://img.shields.io/github/license/arkxos-mesh/pig"/>
 </p>
 
 ## 系统说明
@@ -50,32 +50,32 @@
 ### 模块说明
 
 ```lua
-rapidark-ui  -- https://gitee.com/log4j/rapidark-ui
+arkxos-ui  -- https://gitee.com/log4j/arkxos-ui
 
 pig
-├── rapidark-boot -- 单体模式启动器[9999]
-├── rapidark-auth -- 授权服务提供[3000]
-└── rapidark-common -- 系统公共模块
-     ├── rapidark-common-bom -- 全局依赖管理控制
-     ├── rapidark-common-core -- 公共工具类核心包
-     ├── rapidark-common-datasource -- 动态数据源包
-     ├── rapidark-common-log -- 日志服务
-     ├── rapidark-common-oss -- 文件上传工具类
-     ├── rapidark-common-mybatis -- mybatis 扩展封装
-     ├── rapidark-common-seata -- 分布式事务
-     ├── rapidark-common-security -- 安全工具类
-     ├── rapidark-common-swagger -- 接口文档
-     ├── rapidark-common-feign -- feign 扩展封装
-     └── rapidark-common-xss -- xss 安全封装
-├── rapidark-register -- Nacos Server[8848]
-├── rapidark-gateway -- Spring Cloud Gateway网关[9999]
-└── rapidark-upms -- 通用用户权限管理模块
-     └── rapidark-upms-api -- 通用用户权限管理系统公共api模块
-     └── rapidark-upms-biz -- 通用用户权限管理系统业务处理模块[4000]
-└── rapidark-visual
-     └── rapidark-monitor -- 服务监控 [5001]
-     ├── rapidark-codegen -- 图形化代码生成 [5002]
-     └── rapidark-quartz -- 定时任务管理台 [5007]
+├── arkxos-boot -- 单体模式启动器[9999]
+├── arkxos-auth -- 授权服务提供[3000]
+└── arkxos-common -- 系统公共模块
+     ├── arkxos-common-bom -- 全局依赖管理控制
+     ├── arkxos-common-core -- 公共工具类核心包
+     ├── arkxos-common-datasource -- 动态数据源包
+     ├── arkxos-common-log -- 日志服务
+     ├── arkxos-common-oss -- 文件上传工具类
+     ├── arkxos-common-mybatis -- mybatis 扩展封装
+     ├── arkxos-common-seata -- 分布式事务
+     ├── arkxos-common-security -- 安全工具类
+     ├── arkxos-common-swagger -- 接口文档
+     ├── arkxos-common-feign -- feign 扩展封装
+     └── arkxos-common-xss -- xss 安全封装
+├── arkxos-register -- Nacos Server[8848]
+├── arkxos-gateway -- Spring Cloud Gateway网关[9999]
+└── arkxos-upms -- 通用用户权限管理模块
+     └── arkxos-upms-api -- 通用用户权限管理系统公共api模块
+     └── arkxos-system -- 通用用户权限管理系统业务处理模块[4000]
+└── arkxos-visual
+     └── arkxos-monitor -- 服务监控 [5001]
+     ├── arkxos-codegen -- 图形化代码生成 [5002]
+     └── arkxos-quartz -- 定时任务管理台 [5007]
 ```
 
 ### 本地开发 运行
@@ -93,9 +93,9 @@ git clone https://gitee.com/log4j/pig.git -b jdk17
 cd pig && mvn clean install && docker compose up -d
 
 # 下载并运行前端UI
-git clone https://gitee.com/log4j/rapidark-ui.git
+git clone https://gitee.com/log4j/arkxos-ui.git
 
-cd rapidark-ui && npm install  --registry=https://registry.npmmirror.com
+cd arkxos-ui && npm install  --registry=https://registry.npmmirror.com
 
 npm install && npm run build:docker && cd docker && docker compose up -d
 ```

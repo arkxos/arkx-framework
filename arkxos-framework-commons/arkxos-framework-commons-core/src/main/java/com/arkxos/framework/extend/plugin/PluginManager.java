@@ -77,7 +77,7 @@ public class PluginManager {
 		
 		List<String> pluginIds = PluginAnnotationScannerParser.getPluginIds();
 		if (pluginIds.isEmpty()) {
-			pluginIds = Arrays.asList("com.rapidark.framework");
+			pluginIds = Arrays.asList("com.arkxos.framework");
 		}
 		configList = loadAllConfig(pluginIds);
 	}

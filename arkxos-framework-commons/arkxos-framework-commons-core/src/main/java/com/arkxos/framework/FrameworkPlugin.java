@@ -16,10 +16,10 @@ import com.arkxos.framework.i18n.LangMapping;
  * @version V1.0
  */
 @Comment
-@Plugin("com.rapidark.framework")
+@Plugin("com.arkxos.framework")
 public class FrameworkPlugin extends AbstractPlugin {
 	
-	public static final String ID = "com.rapidark.framework";
+	public static final String ID = "com.arkxos.framework";
 
 	@Override
 	public void install() throws PluginException {

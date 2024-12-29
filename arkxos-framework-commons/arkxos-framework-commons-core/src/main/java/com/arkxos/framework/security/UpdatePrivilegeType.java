@@ -5,12 +5,12 @@ public class UpdatePrivilegeType
 //  public static void main(String[] args)
 //  {
 //    HashMap<String, String> m = new HashMap();
-//    m.put("com.rapidark.framework.cms.ImagePlayer", "ImagePlayerManage");
-//    m.put("com.rapidark.framework.cms.ImagePlayer.Edit", "ImagePlayerManage.Edit");
-//    m.put("com.rapidark.framework.cms.ImagePlayer.Delete", "ImagePlayerManage.Delete");
-//    m.put("com.rapidark.framework.cms.ImagePlayer.CommitAudit", "ImagePlayerManage.CommitAudit");
-//    m.put("com.rapidark.framework.cms.ImagePlayer.Audit", "ImagePlayerManage.Audit");
-//    m.put("com.rapidark.framework.cms.ImagePlayer.Publish", "ImagePlayerManage.Publish");
+//    m.put("com.arkxos.framework.cms.ImagePlayer", "ImagePlayerManage");
+//    m.put("com.arkxos.framework.cms.ImagePlayer.Edit", "ImagePlayerManage.Edit");
+//    m.put("com.arkxos.framework.cms.ImagePlayer.Delete", "ImagePlayerManage.Delete");
+//    m.put("com.arkxos.framework.cms.ImagePlayer.CommitAudit", "ImagePlayerManage.CommitAudit");
+//    m.put("com.arkxos.framework.cms.ImagePlayer.Audit", "ImagePlayerManage.Audit");
+//    m.put("com.arkxos.framework.cms.ImagePlayer.Publish", "ImagePlayerManage.Publish");
 //    
 //    DAOSet<ZDPrivilege> set = new ZDPrivilege().query();
 //    Privilege p = new Privilege();

@@ -14,7 +14,7 @@
 		<config name="FrontDeploy">false</config>
 
 		<!-- 日志管理器配置 -->
-		<config name="LogManager">com.rapidark.framework.commons.util.Log4jManager</config>
+		<config name="LogManager">com.arkxos.framework.commons.util.Log4jManager</config>
 
 		<!-- 是否输出SQL到日志中 -->
 		<config name="Log.SQL">true</config>

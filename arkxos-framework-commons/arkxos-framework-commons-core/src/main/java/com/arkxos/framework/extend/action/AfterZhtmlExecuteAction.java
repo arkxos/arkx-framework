@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 
  */
 public abstract class AfterZhtmlExecuteAction implements IExtendAction {
-	public static final String ExtendPointID = "com.rapidark.framework.AfterZhtmlExecuteAction";
+	public static final String ExtendPointID = "com.arkxos.framework.AfterZhtmlExecuteAction";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

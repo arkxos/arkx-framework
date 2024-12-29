@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.lightning;
+package com.arkxos.framework.data.lightning;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

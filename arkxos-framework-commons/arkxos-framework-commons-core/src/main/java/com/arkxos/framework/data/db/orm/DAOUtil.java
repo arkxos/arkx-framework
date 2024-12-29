@@ -268,7 +268,7 @@ public class DAOUtil {
 
 	public static class DAOClassVisitor implements IBuiltResourceVisitor {
 		private static final String SUPER = DAO.class.getName().replace('.', '/');
-		private static final String FRAMEWORK = "com/rapidark/framework";
+		private static final String FRAMEWORK = "com/arkxos/framework";
 		Set<String> set = new HashSet<String>();
 
 		@Override

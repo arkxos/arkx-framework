@@ -1,102 +1,102 @@
 version: '3'
 services:
-  rapidark-mysql:
+  arkxos-mysql:
     build:
       context: ./db
     environment:
       MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: root
     restart: always
-    container_name: rapidark-mysql
-    image: rapidark-mysql
+    container_name: arkxos-mysql
+    image: arkxos-mysql
     ports:
       - 33306:3306
     networks:
       - spring_cloud_default
 
-  rapidark-redis:
+  arkxos-redis:
     image: registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/redis
     ports:
       - 36379:6379
     restart: always
-    container_name: rapidark-redis
-    hostname: rapidark-redis
+    container_name: arkxos-redis
+    hostname: arkxos-redis
     networks:
       - spring_cloud_default
 
-  rapidark-register:
+  arkxos-register:
     build:
-      context: ./rapidark-register
+      context: ./arkxos-register
     restart: always
     ports:
       - 8848:8848
       - 9848:9848
-    container_name: rapidark-register
-    hostname: rapidark-register
-    image: rapidark-register
+    container_name: arkxos-register
+    hostname: arkxos-register
+    image: arkxos-register
     networks:
       - spring_cloud_default
 
-  rapidark-gateway:
+  arkxos-gateway:
     build:
-      context: ./rapidark-gateway
+      context: ./arkxos-gateway
     restart: always
     ports:
       - 9999:9999
-    container_name: rapidark-gateway
-    hostname: rapidark-gateway
-    image: rapidark-gateway
+    container_name: arkxos-gateway
+    hostname: arkxos-gateway
+    image: arkxos-gateway
     networks:
       - spring_cloud_default
 
-  rapidark-auth:
+  arkxos-auth:
     build:
-      context: ./rapidark-auth
+      context: ./arkxos-auth
     restart: always
-    container_name: rapidark-auth
-    hostname: rapidark-auth
-    image: rapidark-auth
+    container_name: arkxos-auth
+    hostname: arkxos-auth
+    image: arkxos-auth
     networks:
       - spring_cloud_default
 
-  rapidark-upms:
+  arkxos-upms:
     build:
-      context: ./rapidark-upms/rapidark-upms-biz
+      context: ./arkxos-upms/arkxos-system
     restart: always
-    container_name: rapidark-upms
-    hostname: rapidark-upms
-    image: rapidark-upms
+    container_name: arkxos-upms
+    hostname: arkxos-upms
+    image: arkxos-upms
     networks:
       - spring_cloud_default
 
-  rapidark-monitor:
+  arkxos-monitor:
     build:
-      context: ./rapidark-visual/rapidark-monitor
+      context: ./arkxos-visual/arkxos-monitor
     restart: always
     ports:
       - 5001:5001
-    container_name: rapidark-monitor
-    hostname: rapidark-monitor
-    image: rapidark-monitor
+    container_name: arkxos-monitor
+    hostname: arkxos-monitor
+    image: arkxos-monitor
     networks:
       - spring_cloud_default
 
-  rapidark-codegen:
+  arkxos-codegen:
     build:
-      context: ./rapidark-visual/rapidark-codegen
+      context: ./arkxos-visual/arkxos-codegen
     restart: always
-    container_name: rapidark-codegen
-    hostname: rapidark-codegen
-    image: rapidark-codegen
+    container_name: arkxos-codegen
+    hostname: arkxos-codegen
+    image: arkxos-codegen
     networks:
       - spring_cloud_default
 
-  rapidark-quartz:
+  arkxos-quartz:
     build:
-      context: ./rapidark-visual/rapidark-quartz
+      context: ./arkxos-visual/arkxos-quartz
     restart: always
-    image: rapidark-quartz
-    container_name: rapidark-quartz
+    image: arkxos-quartz
+    container_name: arkxos-quartz
     networks:
       - spring_cloud_default
 

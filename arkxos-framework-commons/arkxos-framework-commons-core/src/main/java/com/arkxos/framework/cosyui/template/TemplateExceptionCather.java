@@ -15,7 +15,7 @@ public class TemplateExceptionCather implements IExceptionCatcher {
 
 	@Override
 	public String getExtendItemID() {
-		return "com.rapidark.framework.cosyui.template.TemplateExceptionCather";
+		return "com.arkxos.framework.cosyui.template.TemplateExceptionCather";
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.rapidark.framework.avatarmq;
+package com.arkxos.framework.avatarmq;
 
 import com.arkxos.framework.avatarmq.consumer.AvatarMQConsumer;
 import com.arkxos.framework.avatarmq.consumer.ProducerMessageHook;

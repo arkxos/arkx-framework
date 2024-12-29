@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @version V1.0
  */
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.rapidark.soa" })
+@ComponentScan(basePackages = { "com.arkxos.soa" })
 @EnableTransactionManagement
 public class SqlToyApplication {
 

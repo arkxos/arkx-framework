@@ -8,9 +8,9 @@
 //import org.junit.Assert;
 //import org.junit.Test;
 //
-//import com.rapidark.framework.data.db.connection.ConnectionConfig;
-//import com.rapidark.framework.data.db.connection.ConnectionPool;
-//import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
+//import com.arkxos.framework.data.db.connection.ConnectionConfig;
+//import com.arkxos.framework.data.db.connection.ConnectionPool;
+//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 //
 ///**
 //  * ConnectionConfig 测试用例

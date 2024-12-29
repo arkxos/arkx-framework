@@ -25,12 +25,12 @@ public class ClassLoadUtil {
 	public static void maidn(String[] args) {
 
 		// URLClassLoader clazzLoader =
-		// getClassLoad("C:\\Users\\Darkness\\Desktop\\rapidark-connection.jar",
+		// getClassLoad("C:\\Users\\Darkness\\Desktop\\arkxos-connection.jar",
 		// true);
 		URLClassLoader clazzLoader = getClassLoad("E:\\Projects\\MyEclipse9_32\\JAVA.NET_B_ORM\\schema_jar\\bbs_schema.jar", true);
 		try {
-			// System.out.println(clazzLoader.loadClass("com.rapidark.java.net.connection.DBConfig"));
-			System.out.println(clazzLoader.loadClass("com.rapidark.orm.db.bbs.schema.ArticleSchema"));
+			// System.out.println(clazzLoader.loadClass("com.arkxos.java.net.connection.DBConfig"));
+			System.out.println(clazzLoader.loadClass("com.arkxos.orm.db.bbs.schema.ArticleSchema"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -41,7 +41,7 @@ public class ClassLoadUtil {
 	 * addURLs("lib");
 		
 		try {
-			Class<?> c = Class.forName("com.rapidark.orm.db.permission.schema.UserSet");
+			Class<?> c = Class.forName("com.arkxos.orm.db.permission.schema.UserSet");
 			System.out.println(c + " loaded successfully");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -127,7 +127,7 @@ public class ClassLoadUtil {
 	/**
 	 * URLClassLoader classLoader = ClassLoadUtil.loadClass("E:\\Projects\\MyEclipse9_32\\JAVA.NET_B_ORM\\schema_jar\\permission_schema.jar", true);
 
-		Class<?> clazz = classLoader.loadClass("com.rapidark.orm.db.permission.schema.UserSet");
+		Class<?> clazz = classLoader.loadClass("com.arkxos.orm.db.permission.schema.UserSet");
 		System.out.println(clazz);
 	 * @author Darkness
 	 * @date 2011-12-7 下午02:27:06 

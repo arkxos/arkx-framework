@@ -535,11 +535,11 @@ public class StringUtil {// NO_UCD
 	 * 将字符串中的指定字符替换成其他字符，非正则替换，如：
 	 * 
 	 * 非正则替换：
-	 * String result1 = StringUtil.replaceEx("com.rapidark.framework.commons.util.StringUtil", ".", "/");
+	 * String result1 = StringUtil.replaceEx("com.arkxos.framework.commons.util.StringUtil", ".", "/");
 	 * __>org/framework/utility/StringUtil
 	 * 
 	 * 正则替换：
-	 * String result1 = "com.rapidark.framework.commons.util.StringUtil".replaceAll(".", "/");
+	 * String result1 = "com.arkxos.framework.commons.util.StringUtil".replaceAll(".", "/");
 	 * __>//////////////////////////////////////
 	 * 
 	 * 将一个字符串中的指定片段全部替换，替换过程中不进行正则处理。<br>

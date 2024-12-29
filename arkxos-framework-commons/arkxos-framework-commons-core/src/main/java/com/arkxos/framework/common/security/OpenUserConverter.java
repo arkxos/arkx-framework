@@ -1,6 +1,6 @@
-//package com.rapidark.framework.common.security;
+//package com.arkxos.framework.common.security;
 //
-//import com.rapidark.framework.common.utils.BeanConvertUtils;
+//import com.arkxos.framework.common.utils.BeanConvertUtils;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 //import org.springframework.security.core.Authentication;

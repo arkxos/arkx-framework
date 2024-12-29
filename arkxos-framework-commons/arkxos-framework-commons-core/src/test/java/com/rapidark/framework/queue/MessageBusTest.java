@@ -1,4 +1,4 @@
-package com.rapidark.framework.queue;
+package com.arkxos.framework.queue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;

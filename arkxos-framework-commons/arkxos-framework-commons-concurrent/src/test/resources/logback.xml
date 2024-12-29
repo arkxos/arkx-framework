@@ -75,7 +75,7 @@
         <appender-ref ref="error"/>
     </logger>
 
-    <logger name="com.rapidark" level="debug">
+    <logger name="com.arkxos" level="debug">
         <appender-ref ref="debug"/>
     </logger>
     <!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->

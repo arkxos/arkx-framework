@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.orm;
+package com.arkxos.framework.data.orm;
 
 
 /**   

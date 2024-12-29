@@ -1,2 +1,2 @@
-com.rapidark.framework.cloud.sidecar.nacos.SidecarNacosAutoConfiguration
-com.rapidark.framework.cloud.sidecar.SidecarAutoConfiguration
+com.arkxos.framework.cloud.sidecar.nacos.SidecarNacosAutoConfiguration
+com.arkxos.framework.cloud.sidecar.SidecarAutoConfiguration

@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.arkxos.framework.common.configuration.OpenCommonProperties;
 
-//import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
+//import com.arkxos.framework.common.event.RemoteRefreshRouteEvent;
 import lombok.extern.slf4j.Slf4j;
 
 /**

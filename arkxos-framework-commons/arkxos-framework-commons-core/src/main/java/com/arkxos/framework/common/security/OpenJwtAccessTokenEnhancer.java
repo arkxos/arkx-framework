@@ -1,4 +1,4 @@
-//package com.rapidark.framework.common.security;
+//package com.arkxos.framework.common.security;
 //
 //import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 //import org.springframework.security.oauth2.common.OAuth2AccessToken;

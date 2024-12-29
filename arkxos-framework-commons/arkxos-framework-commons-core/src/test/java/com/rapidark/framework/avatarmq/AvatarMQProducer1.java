@@ -1,4 +1,4 @@
-package com.rapidark.framework.avatarmq;
+package com.arkxos.framework.avatarmq;
 
 import org.apache.commons.lang3.StringUtils;
 

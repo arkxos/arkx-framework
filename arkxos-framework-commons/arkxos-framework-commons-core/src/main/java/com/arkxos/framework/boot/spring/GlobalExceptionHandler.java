@@ -1,12 +1,12 @@
-//package com.rapidark.framework.boot.spring;
+//package com.arkxos.framework.boot.spring;
 //
 //import org.springframework.web.bind.annotation.ExceptionHandler;
 //import org.springframework.web.bind.annotation.RestControllerAdvice;
 //
-//import com.rapidark.framework.commons.util.StringUtil;
-//import com.rapidark.framework.core.JsonResult;
-//import com.rapidark.framework.data.jdbc.Session;
-//import com.rapidark.framework.data.jdbc.SessionFactory;
+//import com.arkxos.framework.commons.util.StringUtil;
+//import com.arkxos.framework.core.JsonResult;
+//import com.arkxos.framework.data.jdbc.Session;
+//import com.arkxos.framework.data.jdbc.SessionFactory;
 //
 //import lombok.extern.slf4j.Slf4j;
 //

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:downloadMission xmlns:ns2="com.rapidark.common.download">
+<ns2:downloadMission xmlns:ns2="com.arkxos.common.download">
 	<URL>http://apache.fayea.com/tomcat/tomcat-9/v9.0.0.M11/bin/apache-tomcat-9.0.0.M11.zip</URL>
 	<SaveDirectory>C:\Users\Administrator\git\java-multithread-downloader\temp</SaveDirectory>
 	<SaveName>test1</SaveName>

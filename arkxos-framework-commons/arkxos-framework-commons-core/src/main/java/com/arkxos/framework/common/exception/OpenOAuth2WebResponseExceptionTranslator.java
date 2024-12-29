@@ -1,6 +1,6 @@
-//package com.rapidark.framework.common.exception;
+//package com.arkxos.framework.common.exception;
 //
-//import com.rapidark.framework.common.model.ResultBody;
+//import com.arkxos.framework.common.model.ResultBody;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;

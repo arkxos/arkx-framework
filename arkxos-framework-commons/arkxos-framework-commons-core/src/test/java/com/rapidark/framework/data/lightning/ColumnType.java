@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.lightning;
+package com.arkxos.framework.data.lightning;
 
 import com.arkxos.framework.commons.util.ByteUtil;
 

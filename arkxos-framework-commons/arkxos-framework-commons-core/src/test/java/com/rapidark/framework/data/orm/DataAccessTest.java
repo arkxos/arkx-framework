@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.orm;
+package com.arkxos.framework.data.orm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,7 +17,7 @@ import com.arkxos.framework.data.jdbc.ICallbackStatement;
 import com.arkxos.framework.data.jdbc.JdbcTemplate;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
-import com.rapidark.framework.XTest;
+import com.arkxos.framework.XTest;
 
 /**
  * 

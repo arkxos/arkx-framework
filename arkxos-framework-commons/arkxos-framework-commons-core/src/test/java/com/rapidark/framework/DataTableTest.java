@@ -1,4 +1,4 @@
-package com.rapidark.framework;
+package com.arkxos.framework;
 
 public class DataTableTest {
 

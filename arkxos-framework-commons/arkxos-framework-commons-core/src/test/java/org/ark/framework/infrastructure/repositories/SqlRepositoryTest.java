@@ -10,7 +10,7 @@ import org.ark.framework.infrastructure.repositoryframework.RepositoryFactory;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.Test;
 
-import com.rapidark.framework.XTest;
+import com.arkxos.framework.XTest;
 
 /**
  * 

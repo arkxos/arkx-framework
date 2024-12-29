@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.fasttable;
+package com.arkxos.framework.data.fasttable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

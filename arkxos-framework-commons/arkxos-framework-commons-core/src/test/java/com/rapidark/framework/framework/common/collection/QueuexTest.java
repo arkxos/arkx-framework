@@ -1,4 +1,4 @@
-package com.rapidark.framework.framework.common.collection;
+package com.arkxos.framework.framework.common.collection;
 
 import org.junit.jupiter.api.Test;
 

@@ -13,7 +13,7 @@ import com.arkxos.framework.schedule.SystemTask;
  * @version V1.0
  */
 public class FrameworkTask extends SystemTask {
-	public static final String ID = "com.rapidark.framework.FrameworkTask";
+	public static final String ID = "com.arkxos.framework.FrameworkTask";
 
 	@Override
 	public void execute() {

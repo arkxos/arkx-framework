@@ -17,10 +17,10 @@ package com.arkxos.framework.data.jdbc.connection;
 //import org.ark.framework.orm.query.QueryBuilder;
 //import org.ark.framework.orm.sql.DataAccess;
 //import org.ark.framework.utility.ObjectUtil;
-//import com.rapidark.framework.commons.util.StringUtil;
+//import com.arkxos.framework.commons.util.StringUtil;
 //
-//import com.rapidark.framework.framework.collection.Mapx;
-//import com.rapidark.framework.framework.utility.LogUtil;
+//import com.arkxos.framework.framework.collection.Mapx;
+//import com.arkxos.framework.framework.utility.LogUtil;
 //
 //
 ///**

@@ -121,7 +121,7 @@ public class MemcachedCacheSynchronizer implements ICacheSynchronizer {
 								}
 							}
 						}
-						ExtendManager.invoke("com.rapidark.framework.AfterClusteringRefresh", new Object[] { sj });
+						ExtendManager.invoke("com.arkxos.framework.AfterClusteringRefresh", new Object[] { sj });
 					}
 				}
 			}

@@ -41,7 +41,7 @@ public class ExcelTaskAnnotationScanner implements IBuiltResourceVisitor {
 
 	@Override
 	public String getExtendItemID() {
-		return "com.rapidark.framework.annotation.ExcelTaskAnnotationScanner";
+		return "com.arkxos.framework.annotation.ExcelTaskAnnotationScanner";
 	}
 
 	@Override

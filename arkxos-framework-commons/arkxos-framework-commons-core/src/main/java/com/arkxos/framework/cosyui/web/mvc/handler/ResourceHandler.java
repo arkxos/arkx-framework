@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 
  */
 public class ResourceHandler implements IURLHandler {
-	public static final String ID = "com.rapidark.framework.core.ResourceURLHandler";
+	public static final String ID = "com.arkxos.framework.core.ResourceURLHandler";
 
 	private static final String[] extensions = new String[] { ".gif", ".jpg", ".png", ".js", ".css", ".ico", ".swf", ".htm", ".html",
 			".shtml", ".xml", ".txt", ".properties", ".jpeg", ".cur", ".htc" };

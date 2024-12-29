@@ -82,7 +82,7 @@ public class DataTableSerializer implements ObjectSerializer {
 
 		jsonObject.put("Values", vs);
 		jsonObject.put("@arktype", "DataTable");
-//		jsonObject.put("@type", "com.rapidark.framework.commons.collection.DataTable");
+//		jsonObject.put("@type", "com.arkxos.framework.commons.collection.DataTable");
 		
 		out.write(JSON.toJSONString(jsonObject));
 	}

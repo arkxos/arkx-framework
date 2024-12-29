@@ -1,4 +1,4 @@
-package com.rapidark.framework.common.data;
+package com.arkxos.framework.common.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;

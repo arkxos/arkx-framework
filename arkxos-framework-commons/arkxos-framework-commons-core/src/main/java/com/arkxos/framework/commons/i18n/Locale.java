@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * <p>
  * If a match could not be found in the current language, it will try to match the symbol in the english (default) language. If it could not find a match there, it will display the string <code>Locale.UNKNOWN</code>.
  * <p>
- * The internationalisation files are kept in src/com/rapidark/evolution/util/locale/.
+ * The internationalisation files are kept in src/com/arkxos/evolution/util/locale/.
  * <p>
  * 
  * @author Andrew Leppard

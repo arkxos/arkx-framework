@@ -1,4 +1,4 @@
-package com.rapidark.framework.queen;
+package com.arkxos.framework.queen;
 
 import com.arkxos.framework.queen.Event;
 import com.arkxos.framework.queen.EventBuilder;

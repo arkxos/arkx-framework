@@ -1,4 +1,4 @@
-package com.arkxit.framework.boot.ip2region;
+package com.arkxos.framework.boot.ip2region;
 
 import org.lionsoul.ip2region.xdb.Searcher;
 import java.io.*;

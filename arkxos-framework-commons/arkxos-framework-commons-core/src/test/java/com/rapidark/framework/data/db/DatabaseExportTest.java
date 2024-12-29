@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.db;
+package com.arkxos.framework.data.db;
 
 import org.ark.framework.orm.db.DBOperator;
 import org.ark.framework.orm.schema.MySqlDataBaseSchemaGenerator;

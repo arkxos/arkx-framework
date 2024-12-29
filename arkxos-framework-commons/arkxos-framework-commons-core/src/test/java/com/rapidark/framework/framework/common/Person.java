@@ -1,4 +1,4 @@
-package com.rapidark.framework.framework.common;
+package com.arkxos.framework.framework.common;
 
 import java.util.Date;
 import java.util.List;

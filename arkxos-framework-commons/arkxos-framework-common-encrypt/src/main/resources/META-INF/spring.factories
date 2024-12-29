@@ -1,3 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.arkxit.cloud.common.encrypt.config.EncryptorAutoConfiguration,\
-com.arkxit.cloud.common.encrypt.config.ApiDecryptAutoConfiguration
+com.arkxos.cloud.common.encrypt.config.EncryptorAutoConfiguration,\
+com.arkxos.cloud.common.encrypt.config.ApiDecryptAutoConfiguration

@@ -1,12 +1,12 @@
-//package com.rapidark.framework.avatarmq.serialize;
+//package com.arkxos.framework.avatarmq.serialize;
 //
 //import org.objenesis.strategy.StdInstantiatorStrategy;
 //
 //import com.esotericsoftware.kryo.Kryo;
 //import com.esotericsoftware.kryo.pool.KryoFactory;
 //import com.esotericsoftware.kryo.pool.KryoPool;
-//import com.rapidark.framework.avatarmq.model.RequestMessage;
-//import com.rapidark.framework.avatarmq.model.ResponseMessage;
+//import com.arkxos.framework.avatarmq.model.RequestMessage;
+//import com.arkxos.framework.avatarmq.model.ResponseMessage;
 //
 ///**
 // * @filename:KryoPoolFactory.java

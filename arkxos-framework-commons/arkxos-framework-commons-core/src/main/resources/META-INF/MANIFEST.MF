@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Plugin-Version: 2.0
 Plugin-Revision: 25465
-Plugin-ID: com.rapidark.framework
+Plugin-ID: com.arkxos.framework
 Plugin-Author: Ark Software
 Plugin-Provider: Ark Software
 Plugin-CreateDate: 2015-07-30 17:40:21

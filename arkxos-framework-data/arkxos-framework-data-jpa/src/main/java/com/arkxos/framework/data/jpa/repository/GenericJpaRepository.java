@@ -1,5 +1,5 @@
 package com.arkxos.framework.data.jpa.repository;
-//package com.rapidark.framework.jpa.repository;
+//package com.arkxos.framework.jpa.repository;
 //
 //import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.repository.NoRepositoryBean;

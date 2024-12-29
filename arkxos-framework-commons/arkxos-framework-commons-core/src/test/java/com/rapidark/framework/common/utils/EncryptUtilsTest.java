@@ -1,4 +1,4 @@
-package com.rapidark.framework.common.utils;
+package com.arkxos.framework.common.utils;
 
 import static com.arkxos.last.utils.EncryptUtils.desDecrypt;
 import static com.arkxos.last.utils.EncryptUtils.desEncrypt;

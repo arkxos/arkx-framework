@@ -1,4 +1,4 @@
-package com.rapidark.framework.queen;
+package com.arkxos.framework.queen;
 
 import java.util.ArrayList;
 import java.util.List;

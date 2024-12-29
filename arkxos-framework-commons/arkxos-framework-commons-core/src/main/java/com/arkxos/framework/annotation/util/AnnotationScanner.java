@@ -50,7 +50,7 @@ public class AnnotationScanner implements IBuiltResourceVisitor {
 
 	@Override
 	public String getExtendItemID() {
-		return "com.rapidark.framework.annotation.AnnotationScanner";
+		return "com.arkxos.framework.annotation.AnnotationScanner";
 	}
 
 	@Override

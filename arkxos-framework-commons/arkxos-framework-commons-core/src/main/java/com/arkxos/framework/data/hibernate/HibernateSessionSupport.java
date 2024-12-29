@@ -1,4 +1,4 @@
-//package com.rapidark.framework.data.hibernate;
+//package com.arkxos.framework.data.hibernate;
 //
 //import java.util.List;
 //import java.util.UUID;

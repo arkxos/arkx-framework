@@ -7,13 +7,13 @@
         http://www.springframework.org/schema/lang/spring-lang.xsd">
 
 	<bean id="userSerivceImpl"
-		class="com.rapidark.framework.queue.simple.UserSerivceImpl" />
+		class="com.arkxos.framework.queue.simple.UserSerivceImpl" />
 
 	<bean id="otherSerivceImpl"
-		class="com.rapidark.framework.queue.simple.OtherServiceImpl" />
+		class="com.arkxos.framework.queue.simple.OtherServiceImpl" />
 
 	<!-- 启用event自动注册 -->
 	<bean id="eventRegister"
-		class="com.rapidark.framework.queue.EventBeanPostProcessor" />
+		class="com.arkxos.framework.queue.EventBeanPostProcessor" />
 
 </beans>

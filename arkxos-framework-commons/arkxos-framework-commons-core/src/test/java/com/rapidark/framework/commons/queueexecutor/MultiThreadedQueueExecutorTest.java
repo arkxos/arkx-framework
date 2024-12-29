@@ -1,4 +1,4 @@
-package com.rapidark.framework.commons.queueexecutor;
+package com.arkxos.framework.commons.queueexecutor;
 
 import java.util.Arrays;
 

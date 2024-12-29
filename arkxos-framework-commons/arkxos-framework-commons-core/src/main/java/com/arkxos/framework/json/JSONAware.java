@@ -1,4 +1,4 @@
-//package com.rapidark.framework.json;
+//package com.arkxos.framework.json;
 //
 ///**
 // * JSON输出标识接口

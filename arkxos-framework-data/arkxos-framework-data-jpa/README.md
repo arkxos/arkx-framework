@@ -1,4 +1,4 @@
-# rapidark-data-jpa-plus
+# arkxos-data-jpa-plus
 sqltoy 集成到 jpa
 
 # jpa Repository

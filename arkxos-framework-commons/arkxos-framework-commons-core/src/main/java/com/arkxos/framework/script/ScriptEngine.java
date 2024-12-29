@@ -209,14 +209,14 @@ public class ScriptEngine {
 	public static void main(String[] args) {
 		ScriptEngine se = new ScriptEngine(1);
 		se.setNeedCheck(false);
-		se.importPackage("com.rapidark.framework.cache");
-		se.importPackage("com.rapidark.framework.data");
-		se.importPackage("com.rapidark.framework.utility");
-		se.importPackage("com.rapidark.framework.statical");
-		se.importPackage("com.rapidark.framework.cms.template");
-		se.importPackage("com.rapidark.framework.cms.pub");
-		se.importPackage("com.rapidark.framework.cms.site");
-		se.importPackage("com.rapidark.framework.cms.document");
+		se.importPackage("com.arkxos.framework.cache");
+		se.importPackage("com.arkxos.framework.data");
+		se.importPackage("com.arkxos.framework.utility");
+		se.importPackage("com.arkxos.framework.statical");
+		se.importPackage("com.arkxos.framework.cms.template");
+		se.importPackage("com.arkxos.framework.cms.pub");
+		se.importPackage("com.arkxos.framework.cms.site");
+		se.importPackage("com.arkxos.framework.cms.document");
 		String script = FileUtil.readText("H:/Script.txt");
 		try {
 			se.compileFunction("a", script);

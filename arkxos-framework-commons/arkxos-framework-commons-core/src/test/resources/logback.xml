@@ -152,7 +152,7 @@
 
     <!-- 控制java下面包的打印,没设置等级,将继承上级root的等级 -->
     <logger name="com.test"/>
-    <logger name="com.rapidark" level="info"/>
+    <logger name="com.arkxos" level="info"/>
 	<logger name="org.apache.commons.beanutils" level="info"/>
 	<logger name="org.springframework" level="info"/>
     <logger name="org.codehaus.xfire" level="info"/>

@@ -44,7 +44,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 
  */
 public class UploadHandler implements IURLHandler {
-	public static final String ID = "com.rapidark.framework.core.UploadHandler";
+	public static final String ID = "com.arkxos.framework.core.UploadHandler";
 
 	// 多文件上传时需要先放到Map中，最后一个文件上传后才调用method
 	private static ConcurrentMapx<String, TaskFiles> uploadFileMap = new ConcurrentMapx<String, TaskFiles>(5000);

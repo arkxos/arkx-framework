@@ -33,7 +33,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * ZAction处理者
  */
 public class ActionHandler implements IURLHandler {
-	public static final String ID = "com.rapidark.framework.core.ActionHandler";
+	public static final String ID = "com.arkxos.framework.core.ActionHandler";
 
 	@Override
 	public String getExtendItemID() {

@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.oldfastdb;
+package com.arkxos.framework.data.oldfastdb;
 
 import static com.arkxos.framework.commons.collection.DataColumn.dateIndexColumn;
 import static com.arkxos.framework.commons.collection.DataColumn.doubleColumn;

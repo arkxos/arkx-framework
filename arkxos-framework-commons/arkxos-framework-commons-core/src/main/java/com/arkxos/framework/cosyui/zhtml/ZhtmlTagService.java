@@ -45,7 +45,7 @@ import com.arkxos.framework.security.PrivTag;
 
 /**
  * Zhtml标签扩展服务
- * com.rapidark.framework.cosyui.zhtml.ZhtmlTagService
+ * com.arkxos.framework.cosyui.zhtml.ZhtmlTagService
  */
 public class ZhtmlTagService extends AbstractExtendService<AbstractTag> {
 	private static ZhtmlTagService instance;

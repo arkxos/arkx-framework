@@ -305,7 +305,7 @@ public class DBImporter {
 								tc.createTable(set.getSchema().getColumns(), set.getSchema().TableComment,
 										set.getSchema().getTableCode(), autoCreate);
 								
-								tc.writeSqlToFile("d:/rapidark-oracle.sql");
+								tc.writeSqlToFile("d:/arkxos-oracle.sql");
 								try {
 									tc.executeAndClear(session);
 									map.put(set.getSchema().getTableCode(), "");

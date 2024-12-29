@@ -1,4 +1,4 @@
-//package com.rapidark.framework.security;
+//package com.arkxos.framework.security;
 //
 //import java.security.InvalidKeyException;
 //import java.security.Key;

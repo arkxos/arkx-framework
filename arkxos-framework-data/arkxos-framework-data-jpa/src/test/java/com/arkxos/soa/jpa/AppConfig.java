@@ -22,7 +22,7 @@ import com.arkxos.framework.data.jpa.sqltemplate.freemarker.FreemarkerSqlTemplat
  * @version V1.0, 16/3/15.
  */
 //@Configuration
-//@ComponentScan("com.rapidark")
+//@ComponentScan("com.arkxos")
 //@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class, repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 class AppConfig {
 
@@ -49,7 +49,7 @@ class AppConfig {
 		LocalContainerEntityManagerFactoryBean lemfb = new LocalContainerEntityManagerFactoryBean();
 		lemfb.setDataSource(dataSource());
 		lemfb.setJpaVendorAdapter(jpaVendorAdapter());
-		lemfb.setPackagesToScan("com.rapidark.spring.jpa");
+		lemfb.setPackagesToScan("com.arkxos.spring.jpa");
 		return lemfb;
 	}
 

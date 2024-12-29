@@ -1,4 +1,4 @@
-package com.rapidark.framework.framework.common.collection;
+package com.arkxos.framework.framework.common.collection;
 
 import static com.arkxos.framework.commons.collection.DataColumn.dateColumn;
 import static com.arkxos.framework.commons.collection.DataColumn.doubleColumn;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.DataTableUtil;
-import com.rapidark.framework.framework.common.Person;
+import com.arkxos.framework.framework.common.Person;
 
 /**
  * 

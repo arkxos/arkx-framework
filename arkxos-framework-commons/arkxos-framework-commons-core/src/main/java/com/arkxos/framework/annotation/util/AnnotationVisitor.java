@@ -46,8 +46,8 @@ public class AnnotationVisitor implements IBuiltResourceVisitor {
 	private static String UIMETHOD;
 	private static final String VALUE = "value";
 	private static final String ALONE = "alone";
-	private static final String SCHEMA = "com/rapidark/schema/";
-	private static final String FRAMEWORK = "com/rapidark/framework/";
+	private static final String SCHEMA = "com/arkxos/schema/";
+	private static final String FRAMEWORK = "com/arkxos/framework/";
 	private static BuiltResourceScanner scanner;
 
 	private static void init() {
@@ -97,7 +97,7 @@ public class AnnotationVisitor implements IBuiltResourceVisitor {
 
 	@Override
 	public String getExtendItemID() {
-		return "com.rapidark.framework.annotation.AnnotationVisitor";
+		return "com.arkxos.framework.annotation.AnnotationVisitor";
 	}
 
 	@Override
@@ -228,7 +228,7 @@ public class AnnotationVisitor implements IBuiltResourceVisitor {
 			names[i++] = a.name;
 		}
 		if (node.visibleParameterAnnotations != null) {
-			String paramAnnoation = "Lcom/rapidark/framework/annotation/Param;";
+			String paramAnnoation = "Lcom/arkxos/framework/annotation/Param;";
 			for (i = 0; i < node.visibleParameterAnnotations.length; i++) {
 				List<AnnotationNode> list = node.visibleParameterAnnotations[i];
 				if (list != null) {

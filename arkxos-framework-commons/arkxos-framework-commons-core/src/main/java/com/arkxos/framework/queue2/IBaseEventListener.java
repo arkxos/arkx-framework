@@ -1,5 +1,5 @@
 package com.arkxos.framework.queue2;
-//package com.rapidark.framework.queue;
+//package com.arkxos.framework.queue;
 //
 ///** 
 // * 事件处理接口，实现此接口并且getEventClasses方法的返回结果条数大于0，方可处理对应的事件 

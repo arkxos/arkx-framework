@@ -70,7 +70,7 @@ public class MD5Util {
     }
     
     public static void main(String[] args) {
-    	String md5 = getCryptogram(FileUtil.readByte(new File("D:\\git\\rapid-ark-v2\\rapid-ark-platform\\target\\rapidark-platform-8.0.0.jar")));
+    	String md5 = getCryptogram(FileUtil.readByte(new File("D:\\git\\rapid-ark-v2\\rapid-ark-platform\\target\\arkxos-platform-8.0.0.jar")));
     	System.out.println(md5);
     }
 

@@ -1,4 +1,4 @@
-//package com.rapidark.framework.common.security;
+//package com.arkxos.framework.common.security;
 //
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.security.core.AuthenticationException;

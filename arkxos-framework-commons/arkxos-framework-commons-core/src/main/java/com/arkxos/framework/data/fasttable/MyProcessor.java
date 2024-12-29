@@ -30,7 +30,7 @@ import com.arkxos.framework.data.fasttable.annotation.Serialize;
  * @date 2016年11月9日 上午10:55:30
  * @version V1.0
  */
-@SupportedAnnotationTypes("com.rapidark.infinity.persistence.fastdb.Serialize")
+@SupportedAnnotationTypes("com.arkxos.infinity.persistence.fastdb.Serialize")
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class MyProcessor extends AbstractProcessor {  
   

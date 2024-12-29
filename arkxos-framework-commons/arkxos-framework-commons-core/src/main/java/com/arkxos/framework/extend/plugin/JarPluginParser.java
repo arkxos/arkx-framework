@@ -32,7 +32,7 @@ public class JarPluginParser implements IPluginParser {
 			return true;
 		}
 		
-		if (f.getName().startsWith("rapidark-")) {
+		if (f.getName().startsWith("arkxos-")) {
 			return true;
 		}
 		

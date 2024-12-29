@@ -1,4 +1,4 @@
-package com.rapidark.framework.common.utils;
+package com.arkxos.framework.common.utils;
 
 import static com.arkxos.framework.common.utils.StringUtils.getIp;
 import static com.arkxos.framework.common.utils.StringUtils.getWeekDay;

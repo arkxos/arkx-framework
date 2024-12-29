@@ -1481,7 +1481,7 @@
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.arkxos</groupId>-->
-<!--            <artifactId>rapidark-data-jpa-sqltoy</artifactId>-->
+<!--            <artifactId>arkxos-data-jpa-sqltoy</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--        </dependency>-->
 

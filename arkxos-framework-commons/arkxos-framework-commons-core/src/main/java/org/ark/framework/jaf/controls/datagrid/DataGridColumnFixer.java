@@ -2,7 +2,7 @@
 //
 //import org.ark.framework.jaf.html.HtmlTable;
 //
-//import com.rapidark.framework.cosyui.control.DataGridAction;
+//import com.arkxos.framework.cosyui.control.DataGridAction;
 //
 ///**
 // * @class org.ark.framework.jaf.controls.datagrid.DataGridColumnFixer

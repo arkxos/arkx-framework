@@ -8,7 +8,7 @@ import com.arkxos.framework.commons.util.StringUtil;
  * <pre>
  * &lt;framework&gt;
  *   &lt;cron&gt;
- *     &lt;task id="com.rapidark.framework.misc.FrameworkTask" disabled="true" time="0 2 * * *"/&gt;
+ *     &lt;task id="com.arkxos.framework.misc.FrameworkTask" disabled="true" time="0 2 * * *"/&gt;
  *   &lt;/cron&gt;
  * &lt;/framework&gt;
  * </pre>

@@ -16,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(namespace = "com.rapidark.common.download")
+@XmlRootElement(namespace = "com.arkxos.common.download")
 @XmlAccessorType(XmlAccessType.NONE)
 public class DownloadMission {
 

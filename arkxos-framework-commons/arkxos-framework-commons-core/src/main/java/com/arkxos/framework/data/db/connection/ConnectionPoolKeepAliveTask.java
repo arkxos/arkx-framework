@@ -7,7 +7,7 @@ import com.arkxos.framework.schedule.SystemTask;
  * 
  */
 public class ConnectionPoolKeepAliveTask extends SystemTask {
-	public static final String ID = "com.rapidark.framework.data.db.connection.ConnectionPoolKeepAliveTask";
+	public static final String ID = "com.arkxos.framework.data.db.connection.ConnectionPoolKeepAliveTask";
 
 	@Override
 	public String getExtendItemID() {

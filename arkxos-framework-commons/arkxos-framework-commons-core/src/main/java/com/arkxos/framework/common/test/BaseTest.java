@@ -1,4 +1,4 @@
-//package com.rapidark.framework.common.test;
+//package com.arkxos.framework.common.test;
 //
 //import org.springframework.boot.test.context.SpringBootTest;
 //

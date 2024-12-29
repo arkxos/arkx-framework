@@ -1,4 +1,4 @@
-package com.rapidark.framework.framework.collection;
+package com.arkxos.framework.framework.collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

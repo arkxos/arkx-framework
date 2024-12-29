@@ -1,4 +1,4 @@
-package com.rapidark.framework.message.tcp;
+package com.arkxos.framework.message.tcp;
 
 import com.arkxos.framework.commons.util.UuidUtil;
 import com.arkxos.framework.message.tcp.client.NettyClient;

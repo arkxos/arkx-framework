@@ -1,4 +1,4 @@
-package com.rapidark.framework.framework.common;
+package com.arkxos.framework.framework.common;
 
 /**
  * 

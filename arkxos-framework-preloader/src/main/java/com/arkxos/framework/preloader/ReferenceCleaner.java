@@ -60,7 +60,7 @@ public class ReferenceCleaner {
 		InputStream is;
 		byte classBytes[];
 		int offset;
-		is = loader.getResourceAsStream("com/rapidark/preloader/JdbcLeakPrevention.class");
+		is = loader.getResourceAsStream("com/arkxos/preloader/JdbcLeakPrevention.class");
 		classBytes = new byte[2048];
 		offset = 0;
 		try {
@@ -73,7 +73,7 @@ public class ReferenceCleaner {
 				}
 			}
 
-			Class lpClass = loader.defineClassEx("com.rapidark.preloader.JdbcLeakPrevention", classBytes, 0, offset, getClass().getProtectionDomain());
+			Class lpClass = loader.defineClassEx("com.arkxos.preloader.JdbcLeakPrevention", classBytes, 0, offset, getClass().getProtectionDomain());
 			Object obj = lpClass.newInstance();
 			List driverNames = (List) obj.getClass().getMethod("clearJdbcDriverRegistrations", new Class[0]).invoke(obj, new Object[0]);
 			String name;

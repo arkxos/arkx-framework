@@ -11,7 +11,7 @@ import com.arkxos.framework.extend.IExtendAction;
  * @version V1.0
  */
 public abstract class AfterVerifyFailedAction implements IExtendAction {
-	public static final String ID = "com.rapidark.framework.AfterPrivCheckFailedAction";
+	public static final String ID = "com.arkxos.framework.AfterPrivCheckFailedAction";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

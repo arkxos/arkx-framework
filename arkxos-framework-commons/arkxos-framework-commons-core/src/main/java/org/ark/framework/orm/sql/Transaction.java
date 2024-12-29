@@ -7,14 +7,14 @@
 //import org.ark.framework.collection.Executor;
 //import org.ark.framework.orm.Schema;
 //import org.ark.framework.orm.SchemaSet;
-//import com.rapidark.framework.commons.util.StringUtil;
+//import com.arkxos.framework.commons.util.StringUtil;
 //
-//import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
-//import com.rapidark.framework.data.jdbc.Entity;
-//import com.rapidark.framework.data.jdbc.JdbcTemplate;
-//import com.rapidark.framework.data.jdbc.Query;
-//import com.rapidark.framework.data.jdbc.Session;
-//import com.rapidark.framework.data.jdbc.SessionFactory;
+//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+//import com.arkxos.framework.data.jdbc.Entity;
+//import com.arkxos.framework.data.jdbc.JdbcTemplate;
+//import com.arkxos.framework.data.jdbc.Query;
+//import com.arkxos.framework.data.jdbc.Session;
+//import com.arkxos.framework.data.jdbc.SessionFactory;
 //
 //
 ///**

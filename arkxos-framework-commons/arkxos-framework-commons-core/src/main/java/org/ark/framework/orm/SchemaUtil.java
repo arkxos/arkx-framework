@@ -372,7 +372,7 @@ public class SchemaUtil {
 		Class<?> c = null;
 		ArrayList<String> list = new ArrayList<String>();
 		try {
-			c = Class.forName("com.rapidark.schema.ZDCodeSchema");
+			c = Class.forName("com.arkxos.schema.ZDCodeSchema");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -406,7 +406,7 @@ public class SchemaUtil {
 			File[] fs = p.listFiles();
 			for (int i = 0; i < fs.length; i++) {
 				if (fs[i].getName().endsWith("Schema.class")) {
-					list.add("com/rapidark/schema/" + fs[i].getName());
+					list.add("com/arkxos/schema/" + fs[i].getName());
 				}
 			}
 		}

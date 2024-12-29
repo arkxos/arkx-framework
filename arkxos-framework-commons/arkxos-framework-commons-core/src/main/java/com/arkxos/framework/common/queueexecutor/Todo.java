@@ -1,8 +1,8 @@
 package com.arkxos.framework.common.queueexecutor;
-//package com.rapidark.framework.commons.task;
+//package com.arkxos.framework.commons.task;
 //
-//import com.rapidark.framework.commons.queueexecutor.ElementStatus;
-//import com.rapidark.framework.commons.queueexecutor.QueueInfo;
+//import com.arkxos.framework.commons.queueexecutor.ElementStatus;
+//import com.arkxos.framework.commons.queueexecutor.QueueInfo;
 //
 //
 //public class Todo<T> {

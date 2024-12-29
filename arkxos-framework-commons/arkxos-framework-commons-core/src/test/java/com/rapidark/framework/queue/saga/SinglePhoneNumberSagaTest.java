@@ -1,4 +1,4 @@
-package com.rapidark.framework.queue.saga;
+package com.arkxos.framework.queue.saga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

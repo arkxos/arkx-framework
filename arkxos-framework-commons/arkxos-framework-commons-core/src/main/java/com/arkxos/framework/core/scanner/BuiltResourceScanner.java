@@ -45,7 +45,7 @@ public class BuiltResourceScanner {
 	}
 	
 	public void scan(long lastTime, Class<? extends Annotation> annotationClass) {
-		scan(lastTime, annotationClass, Arrays.asList("com.rapidark","com.xdreamaker"));
+		scan(lastTime, annotationClass, Arrays.asList("com.arkxos","com.xdreamaker"));
 	}
 	
 	public void scan(long lastTime, Class<? extends Annotation> annotationClass, List<String> pageList) {
@@ -56,10 +56,10 @@ public class BuiltResourceScanner {
 				classes.addAll(PackageUtil.findAnnotationedClasses(page, annotationClass));
 			}
 		} else {
-			classes = PackageUtil.findAnnotationClasses("com/rapidark", Alias.class);
+			classes = PackageUtil.findAnnotationClasses("com/arkxos", Alias.class);
 		}
 		{
-			String baseUiFacadeClassName = "com.arkxit.framework.boot.BaseUIFacade";
+			String baseUiFacadeClassName = "com.arkxos.framework.boot.BaseUIFacade";
 			String fileName = StringUtil.replaceEx(baseUiFacadeClassName, ".", "/") + ".class";
 			InputStream inputStream	= this.getClass().getResourceAsStream("/" + fileName);
 			BuiltResource br = new BuiltResource(fileName, inputStream);
@@ -200,7 +200,7 @@ public class BuiltResourceScanner {
 	}
 
 	public void scanOneResource(BuiltResource br) throws Exception {
-		if (br.getFullName().indexOf("com/rapidark/framework/") >= 0 && br.getFullName().indexOf("com/arkxit/framework/boot") == -1) {
+		if (br.getFullName().indexOf("com/arkxos/framework/") >= 0 && br.getFullName().indexOf("com/arkxos/framework/boot") == -1) {
 			return;
 		}
 		if(br.getFullName().indexOf("LoginUI")!=-1) {

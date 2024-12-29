@@ -1,20 +1,20 @@
 package com.arkxos.framework.data.db;
-//package com.rapidark.framework.data.db;
+//package com.arkxos.framework.data.db;
 //
 //import java.sql.SQLException;
 //import java.util.ArrayList;
 //import java.util.List;
 //
-//import com.rapidark.framework.commons.collection.Executor;
-//import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
-//import com.rapidark.framework.data.db.exception.DatabaseException;
-//import com.rapidark.framework.data.db.orm.DAO;
-//import com.rapidark.framework.data.db.orm.DAOSet;
-//import com.rapidark.framework.data.jdbc.Entity;
-//import com.rapidark.framework.data.jdbc.JdbcTemplate;
-//import com.rapidark.framework.data.jdbc.Query;
-//import com.rapidark.framework.data.jdbc.Session;
-//import com.rapidark.framework.data.jdbc.SessionFactory;
+//import com.arkxos.framework.commons.collection.Executor;
+//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+//import com.arkxos.framework.data.db.exception.DatabaseException;
+//import com.arkxos.framework.data.db.orm.DAO;
+//import com.arkxos.framework.data.db.orm.DAOSet;
+//import com.arkxos.framework.data.jdbc.Entity;
+//import com.arkxos.framework.data.jdbc.JdbcTemplate;
+//import com.arkxos.framework.data.jdbc.Query;
+//import com.arkxos.framework.data.jdbc.Session;
+//import com.arkxos.framework.data.jdbc.SessionFactory;
 //
 ///**
 // * 非阻塞事务处理类，使用本类处理事务不会一开始即占用连接，只有在最后commit()时<br>
@@ -28,7 +28,7 @@ package com.arkxos.framework.data.db;
 // * 则需要使用阻塞型事务处理。 <br>
 // * 5、若要使用JDBC原生事务处理，请使用DataAccess类，一般情况下不推荐使用。<br>
 // * 
-// * @see com.rapidark.framework.data.db.BlockingTransaction
+// * @see com.arkxos.framework.data.db.BlockingTransaction
 // */
 //public class Transaction {
 //	/**
@@ -280,7 +280,7 @@ package com.arkxos.framework.data.db;
 //
 //	protected boolean executeOperation(Object obj, int type) throws SQLException {
 //		if (obj instanceof Query) {
-//			com.rapidark.framework.data.jdbc.Query query = (com.rapidark.framework.data.jdbc.Query) obj;
+//			com.arkxos.framework.data.jdbc.Query query = (com.arkxos.framework.data.jdbc.Query) obj;
 //			query.setConnection(dataAccess.getConnection());
 //			query.executeNoQuery();
 //		} else if ((obj instanceof Entity)) {

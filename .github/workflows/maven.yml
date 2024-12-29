@@ -33,13 +33,13 @@ jobs:
         run: mvn clean install
 
       - name:  failure
-        if: failure() && github.repository == 'rapidark-mesh/pig'
+        if: failure() && github.repository == 'arkxos-mesh/pig'
         uses: chf007/action-wechat-work@master
         env:
           WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
         with:
           msgtype: markdown
           content: |
-            # 💤🤷‍♀️ failure 🙅‍♂️💣 [rapidark-mesh/pig](https://github.com/rapidark-mesh/pig)
-            > Github Action: https://github.com/rapidark-mesh/pig failure
+            # 💤🤷‍♀️ failure 🙅‍♂️💣 [arkxos-mesh/pig](https://github.com/arkxos-mesh/pig)
+            > Github Action: https://github.com/arkxos-mesh/pig failure
             > (⋟﹏⋞)   from github action message

@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.lightning.filter;
+package com.arkxos.framework.data.lightning.filter;
 
 import com.google.common.base.Predicate;
 

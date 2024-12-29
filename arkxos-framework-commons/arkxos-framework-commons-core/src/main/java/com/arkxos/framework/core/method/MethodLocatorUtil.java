@@ -39,7 +39,7 @@ public class MethodLocatorUtil {
 				}
 				return new FacadeInnerClassLocator((Class<? extends UIMethod>) clazz);
 			} else {
-				if (fullName.startsWith("com.rapidark.framework.")) {// 框架下的文件默认都使用了全路径
+				if (fullName.startsWith("com.arkxos.framework.")) {// 框架下的文件默认都使用了全路径
 					int j = fullName.lastIndexOf(".");
 					fullName = fullName.substring(0, j) + "#" + fullName.substring(j + 1);
 				}

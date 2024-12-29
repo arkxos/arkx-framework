@@ -1,4 +1,4 @@
-package com.rapidark.framework.queue;
+package com.arkxos.framework.queue;
 
 public class User {
 

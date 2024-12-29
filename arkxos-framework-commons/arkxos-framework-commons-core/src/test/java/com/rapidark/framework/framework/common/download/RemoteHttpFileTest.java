@@ -1,4 +1,4 @@
-package com.rapidark.framework.framework.common.download;
+package com.arkxos.framework.framework.common.download;
 
 import java.io.File;
 import java.io.IOException;

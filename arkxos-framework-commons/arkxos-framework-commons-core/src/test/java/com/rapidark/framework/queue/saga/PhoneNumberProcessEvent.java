@@ -1,4 +1,4 @@
-package com.rapidark.framework.queue.saga;
+package com.arkxos.framework.queue.saga;
 
 import com.arkxos.framework.queue2.Message;
 

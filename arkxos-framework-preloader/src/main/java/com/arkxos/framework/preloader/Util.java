@@ -16,7 +16,7 @@ public class Util {
 
 	public static String getPluginPath() {
 		if (PluginPath == null) {
-			String preloadResourceName = "com/rapidark/preloader/PreClassLoader.class";
+			String preloadResourceName = "com/arkxos/preloader/PreClassLoader.class";
 			URL url = Thread.currentThread().getContextClassLoader().getResource(preloadResourceName);
 			if (url == null) {
 				try {

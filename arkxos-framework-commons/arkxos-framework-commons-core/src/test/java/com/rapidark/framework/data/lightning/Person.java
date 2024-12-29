@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.lightning;
+package com.arkxos.framework.data.lightning;
 
 import java.nio.ByteBuffer;
 import java.time.LocalDate;

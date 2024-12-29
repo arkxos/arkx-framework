@@ -1,4 +1,4 @@
-//package com.rapidark.framework;
+//package com.arkxos.framework;
 //
 //import java.util.List;
 //
@@ -7,14 +7,14 @@
 //import org.springframework.jdbc.core.JdbcTemplate;
 //import org.springframework.stereotype.Service;
 //
-//import com.rapidark.framework.commons.collection.ConcurrentMapx;
-//import com.rapidark.framework.commons.util.LogUtil;
-//import com.rapidark.framework.commons.util.StringUtil;
-//import com.rapidark.framework.commons.util.UuidUtil;
-//import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
-//import com.rapidark.framework.data.db.dbtype.DBTypeService;
-//import com.rapidark.framework.data.db.dbtype.MsSql;
-//import com.rapidark.framework.data.db.dbtype.MsSql2000;
+//import com.arkxos.framework.commons.collection.ConcurrentMapx;
+//import com.arkxos.framework.commons.util.LogUtil;
+//import com.arkxos.framework.commons.util.StringUtil;
+//import com.arkxos.framework.commons.util.UuidUtil;
+//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+//import com.arkxos.framework.data.db.dbtype.DBTypeService;
+//import com.arkxos.framework.data.db.dbtype.MsSql;
+//import com.arkxos.framework.data.db.dbtype.MsSql2000;
 //
 //@Service
 //public class NoService {

@@ -7,7 +7,7 @@ import com.arkxos.framework.schedule.SystemTask;
  */
 public class CacheSyncTask extends SystemTask {
 	
-	public static final String ID = "com.rapidark.framework.cache.ClusteringSyncTask";
+	public static final String ID = "com.arkxos.framework.cache.ClusteringSyncTask";
 
 	@Override
 	public String getExtendItemID() {

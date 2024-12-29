@@ -6,7 +6,7 @@ import com.arkxos.framework.i18n.LangMapping;
 
 public class FrameworkUtilPlugin extends AbstractPlugin {
 	
-	public static final String ID = "com.rapidark.frameworkutil";
+	public static final String ID = "com.arkxos.frameworkutil";
 
 	public void install() throws PluginException {
 		throw new PluginException(LangMapping.get("Framework.Plugin.InstallFail", new Object[0]));

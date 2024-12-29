@@ -6,12 +6,12 @@
         http://www.springframework.org/schema/lang
         http://www.springframework.org/schema/lang/spring-lang.xsd">
 
-	<bean id="userSerivce" class="com.rapidark.framework.queue.UserSerivce" />
+	<bean id="userSerivce" class="com.arkxos.framework.queue.UserSerivce" />
 
-	<bean id="otherSerivce" class="com.rapidark.framework.queue.OtherService" />
+	<bean id="otherSerivce" class="com.arkxos.framework.queue.OtherService" />
 
 	<!-- 启用event自动注册 -->
 	<bean id="eventRegister"
-		class="com.rapidark.framework.queue.EventBeanPostProcessor" />
+		class="com.arkxos.framework.queue.EventBeanPostProcessor" />
 
 </beans>

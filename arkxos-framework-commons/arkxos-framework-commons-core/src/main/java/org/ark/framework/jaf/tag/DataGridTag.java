@@ -14,9 +14,9 @@
 //import org.ark.framework.jaf.controls.DataGridAction;
 //import org.ark.framework.jaf.html.HtmlTable;
 //import org.ark.framework.security.PrivCheck;
-//import com.rapidark.framework.commons.util.StringUtil;
+//import com.arkxos.framework.commons.util.StringUtil;
 //
-//import com.rapidark.framework.framework.collection.DataTable;
+//import com.arkxos.framework.framework.collection.DataTable;
 //
 //
 ///**

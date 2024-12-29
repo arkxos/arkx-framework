@@ -1,5 +1,5 @@
 package com.arkxos.framework.cosyui;
-//package com.rapidark.framework.cosyui;
+//package com.arkxos.framework.cosyui;
 //
 ///**
 // * 可分页的Action

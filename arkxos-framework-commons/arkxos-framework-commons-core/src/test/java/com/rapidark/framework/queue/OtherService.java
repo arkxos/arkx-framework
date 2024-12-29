@@ -1,4 +1,4 @@
-package com.rapidark.framework.queue;
+package com.arkxos.framework.queue;
 
 import com.arkxos.framework.queue2.Message;
 import com.arkxos.framework.queue2.Subscribe;

@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PluginAnnotationScannerParser implements ApplicationContextAware, BeanFactoryPostProcessor {
 
 	private static final String EVENT_NAME = "插件注解扫描";
-	private static final String RESOURCE_PATTERN = "com/rapidark";
+	private static final String RESOURCE_PATTERN = "com/arkxos";
 	private static final String PATH_DOT = ".";
 
 	private ApplicationContext applicationContext;

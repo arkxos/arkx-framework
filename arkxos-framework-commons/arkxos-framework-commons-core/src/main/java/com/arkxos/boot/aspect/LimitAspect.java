@@ -54,7 +54,7 @@ public class LimitAspect {
         this.redisTemplate = redisTemplate;
     }
 
-    @Pointcut("@annotation(com.rapidark.framework.common.annotation.Limit)")
+    @Pointcut("@annotation(com.arkxos.framework.common.annotation.Limit)")
     public void pointcut() {
     }
 

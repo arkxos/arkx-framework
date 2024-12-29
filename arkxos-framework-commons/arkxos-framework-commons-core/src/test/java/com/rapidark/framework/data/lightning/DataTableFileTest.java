@@ -1,4 +1,4 @@
-package com.rapidark.framework.data.lightning;
+package com.arkxos.framework.data.lightning;
 
 import static com.arkxos.framework.commons.collection.DataColumn.dateColumn;
 import static com.arkxos.framework.commons.collection.DataColumn.doubleColumn;

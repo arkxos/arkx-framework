@@ -1,5 +1,5 @@
 package com.arkxos.framework.queue2;
-//package com.rapidark.framework.queue;
+//package com.arkxos.framework.queue;
 //
 ///**
 // * 实现顶层接口的抽象类

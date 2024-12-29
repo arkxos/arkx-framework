@@ -12,7 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class AvatarMQContainer implements Container {
 
-    public static final String AvatarMQConfigFilePath = "classpath:com/rapidark/avatarmq/spring/avatarmq-broker.xml";
+    public static final String AvatarMQConfigFilePath = "classpath:com/arkxos/avatarmq/spring/avatarmq-broker.xml";
 
     private AvatarMQContext springContext;
 

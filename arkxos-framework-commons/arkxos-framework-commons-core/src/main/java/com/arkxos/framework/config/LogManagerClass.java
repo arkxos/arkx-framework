@@ -4,7 +4,7 @@ import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.util.ObjectUtil;
 
 /**
- * 配置日志管理器的实现类，此类必须实现com.rapidark.framework.utility.ILogManager接口。
+ * 配置日志管理器的实现类，此类必须实现com.arkxos.framework.utility.ILogManager接口。
  * 
  */
 public class LogManagerClass implements IApplicationConfigItem {
@@ -18,13 +18,13 @@ public class LogManagerClass implements IApplicationConfigItem {
 
 	@Override
 	public String getExtendItemName() {
-		return "Class name which implements com.rapidark.framework.utility.log.ILogManager";
+		return "Class name which implements com.arkxos.framework.utility.log.ILogManager";
 	}
 
 	public static String getValue() {
 		String v = Config.getValue("App." + ID);
 		if (ObjectUtil.isEmpty(v)) {
-			v = "com.rapidark.framework.commons.util.log.ConsoleLogManager";
+			v = "com.arkxos.framework.commons.util.log.ConsoleLogManager";
 		}
 		return v;
 	}

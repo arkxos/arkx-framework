@@ -43,7 +43,7 @@ public class BreakTag extends ArkTag {
 	}
 
 	public String getPluginID() {
-		return "com.rapidark.framework";
+		return "com.arkxos.framework";
 	}
 
 	public String getDescription() {

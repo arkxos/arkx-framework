@@ -7,11 +7,11 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
  
-  <context:component-scan base-package="com.rapidark.framework.netty.rpc.core"/>
+  <context:component-scan base-package="com.arkxos.framework.netty.rpc.core"/>
   
-  <context:property-placeholder location="classpath:com/rapidark/framework/avatarmq/spring/avatarmq-broker.properties"/>
+  <context:property-placeholder location="classpath:com/arkxos/framework/avatarmq/spring/avatarmq-broker.properties"/>
   
-  <bean id="broker" class="com.rapidark.framework.avatarmq.spring.AvatarMQServer">
+  <bean id="broker" class="com.arkxos.framework.avatarmq.spring.AvatarMQServer">
     <constructor-arg name="serverAddress" value="${avatarmq.brokerserver.addr}"/>
   </bean>
   

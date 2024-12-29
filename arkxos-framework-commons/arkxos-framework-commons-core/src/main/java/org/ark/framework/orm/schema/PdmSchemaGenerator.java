@@ -171,7 +171,7 @@ public class PdmSchemaGenerator extends SchemaGenerator {
 
 	public static void main(String[] args) throws Exception {
 
-		String packageStr = "com.rapidark.schema";
+		String packageStr = "com.arkxos.schema";
 		String str = Config.getValue("App.PDM");
 		String[] files = str.split("\\,");
 

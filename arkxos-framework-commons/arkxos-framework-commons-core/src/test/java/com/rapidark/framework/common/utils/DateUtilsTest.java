@@ -1,4 +1,4 @@
-package com.rapidark.framework.common.utils;
+package com.arkxos.framework.common.utils;
 
 import java.time.LocalDateTime;
 import java.util.Date;
