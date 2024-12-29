@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rapidark.framework.cloud.sidecar;
+package com.arkxos.framework.cloud.sidecar;
 
 import java.net.URI;
 import java.util.ArrayList;

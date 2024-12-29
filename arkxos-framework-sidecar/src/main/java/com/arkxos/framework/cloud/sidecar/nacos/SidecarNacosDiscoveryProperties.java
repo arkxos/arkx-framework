@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.rapidark.framework.cloud.sidecar.nacos;
+package com.arkxos.framework.cloud.sidecar.nacos;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import com.rapidark.framework.cloud.sidecar.SidecarProperties;
+import com.arkxos.framework.cloud.sidecar.SidecarProperties;
 
 import org.springframework.util.StringUtils;
 

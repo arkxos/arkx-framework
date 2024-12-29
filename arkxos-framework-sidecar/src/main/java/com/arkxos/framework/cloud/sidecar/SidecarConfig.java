@@ -1,4 +1,4 @@
-package com.rapidark.framework.cloud.sidecar;
+package com.arkxos.framework.cloud.sidecar;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

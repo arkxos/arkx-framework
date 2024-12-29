@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.rapidark.framework.cloud.sidecar.nacos;
+package com.arkxos.framework.cloud.sidecar.nacos;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import com.alibaba.cloud.nacos.discovery.NacosDiscoveryAutoConfiguration;
-import com.rapidark.framework.cloud.sidecar.SidecarAutoConfiguration;
-import com.rapidark.framework.cloud.sidecar.SidecarDiscoveryClient;
-import com.rapidark.framework.cloud.sidecar.SidecarProperties;
+import com.arkxos.framework.cloud.sidecar.SidecarAutoConfiguration;
+import com.arkxos.framework.cloud.sidecar.SidecarDiscoveryClient;
+import com.arkxos.framework.cloud.sidecar.SidecarProperties;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rapidark.framework.cloud.sidecar;
+package com.arkxos.framework.cloud.sidecar;
 
 import org.springframework.boot.actuate.autoconfigure.health.ConditionalOnEnabledHealthIndicator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
