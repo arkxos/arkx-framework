@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
 
-import com.rapidark.framework.annotation.EntityAnnotationManager;
-import com.rapidark.framework.cache.CacheDataProvider;
-import com.rapidark.framework.cache.CacheManager;
-import com.rapidark.framework.commons.collection.CacheMapx;
-import com.rapidark.framework.data.jdbc.Entity;
+import com.arkxos.framework.annotation.EntityAnnotationManager;
+import com.arkxos.framework.cache.CacheDataProvider;
+import com.arkxos.framework.cache.CacheManager;
+import com.arkxos.framework.commons.collection.CacheMapx;
+import com.arkxos.framework.data.jdbc.Entity;
 
 
 /**   

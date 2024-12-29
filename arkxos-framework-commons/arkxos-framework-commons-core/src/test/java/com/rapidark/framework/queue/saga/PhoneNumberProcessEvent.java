@@ -1,6 +1,6 @@
 package com.rapidark.framework.queue.saga;
 
-import com.rapidark.framework.queue2.Message;
+import com.arkxos.framework.queue2.Message;
 
 /**
  * 电话号码流程事件

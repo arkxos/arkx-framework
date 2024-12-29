@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 
 /**

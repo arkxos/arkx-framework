@@ -1,8 +1,8 @@
 package org.ark.framework.messages;
 
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.data.jdbc.Transaction;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.data.jdbc.Transaction;
 
 /**
  * @class org.ark.framework.messages.Message

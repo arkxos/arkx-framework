@@ -9,13 +9,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-import com.rapidark.framework.thirdparty.commons.fileupload.servlet.ServletFileUpload;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import org.apache.commons.fileupload2.core.DiskFileItemFactory;
 import org.apache.commons.fileupload2.core.FileItem;
 import org.apache.commons.fileupload2.core.FileItemFactory;
@@ -25,14 +18,20 @@ import org.ark.framework.jaf.SessionListener;
 import org.ark.framework.security.PrivCheck;
 import org.ark.framework.security.VerifyCheck;
 
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.data.db.DataCollection;
+import com.arkxos.framework.i18n.LangMapping;
 import com.rapidark.framework.Account;
 import com.rapidark.framework.Config;
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.data.db.DataCollection;
-import com.rapidark.framework.i18n.LangMapping;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
 import com.rapidark.preloader.facade.HttpSessionListenerFacade;
@@ -112,7 +111,7 @@ public class UploadServlet extends HttpServlet {
 				if (session.getId().equals(sessionID)) {
 					break;
 				}
-				sessionOld = com.rapidark.framework.cosyui.web.mvc.SessionListener.getSession(sessionID);
+				sessionOld = com.arkxos.framework.cosyui.web.mvc.SessionListener.getSession(sessionID);
 				if (sessionOld != null) {
 					break;
 				}

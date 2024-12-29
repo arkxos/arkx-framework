@@ -1,6 +1,6 @@
 package org.ark.framework.json.convert;
 
-import com.rapidark.framework.extend.AbstractExtendService;
+import com.arkxos.framework.extend.AbstractExtendService;
 
 /**
  * 

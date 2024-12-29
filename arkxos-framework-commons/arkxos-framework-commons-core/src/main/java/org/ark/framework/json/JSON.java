@@ -9,8 +9,8 @@ import org.ark.framework.json.convert.IJSONConvertor;
 import org.ark.framework.json.convert.JSONConvertorService;
 import org.ark.framework.json.fastjson.DefaultJSONParser;
 
-import com.rapidark.framework.commons.lang.FastStringBuilder;
-import com.rapidark.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.lang.FastStringBuilder;
+import com.arkxos.framework.commons.util.ObjectUtil;
 
 
 /**

@@ -3,6 +3,9 @@ package com.rapidark.framework.data.lightning;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arkxos.framework.data.lightning.ILightningTable;
+import com.arkxos.framework.data.lightning.LightningColumn;
+
 /**
  *  
  * @author Darkness

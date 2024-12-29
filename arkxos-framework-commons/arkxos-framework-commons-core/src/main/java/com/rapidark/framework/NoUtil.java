@@ -2,17 +2,17 @@ package com.rapidark.framework;
 
 import org.ark.framework.orm.MaxNo;
 
-import com.rapidark.framework.commons.collection.ConcurrentMapx;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.data.db.connection.ConnectionConfig;
-import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
-import com.rapidark.framework.data.db.dbtype.DBTypeService;
-import com.rapidark.framework.data.db.dbtype.MsSql;
-import com.rapidark.framework.data.db.dbtype.MsSql2000;
-import com.rapidark.framework.data.jdbc.Session;
-import com.rapidark.framework.data.jdbc.SessionFactory;
-import com.rapidark.framework.data.jdbc.SimpleQuery;
+import com.arkxos.framework.commons.collection.ConcurrentMapx;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.data.db.connection.ConnectionConfig;
+import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+import com.arkxos.framework.data.db.dbtype.DBTypeService;
+import com.arkxos.framework.data.db.dbtype.MsSql;
+import com.arkxos.framework.data.db.dbtype.MsSql2000;
+import com.arkxos.framework.data.jdbc.Session;
+import com.arkxos.framework.data.jdbc.SessionFactory;
+import com.arkxos.framework.data.jdbc.SimpleQuery;
 
 /**
  * @class org.ark.framework.orm.NoUtil

@@ -1,8 +1,8 @@
 package com.rapidark.framework;
 
-import com.rapidark.framework.extend.plugin.AbstractPlugin;
-import com.rapidark.framework.extend.plugin.PluginException;
-import com.rapidark.framework.i18n.LangMapping;
+import com.arkxos.framework.extend.plugin.AbstractPlugin;
+import com.arkxos.framework.extend.plugin.PluginException;
+import com.arkxos.framework.i18n.LangMapping;
 
 public class FrameworkUtilPlugin extends AbstractPlugin {
 	

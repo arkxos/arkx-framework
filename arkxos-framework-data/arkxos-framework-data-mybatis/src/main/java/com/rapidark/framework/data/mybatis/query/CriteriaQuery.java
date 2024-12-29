@@ -1,13 +1,14 @@
 package com.rapidark.framework.data.mybatis.query;
 
+import com.arkxos.framework.common.annotation.TableAlias;
+import com.arkxos.framework.common.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.google.common.collect.Lists;
-import com.rapidark.framework.common.annotation.TableAlias;
 import com.rapidark.framework.data.mybatis.model.PageParams;
-import com.rapidark.framework.common.utils.StringUtils;
+
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.util.HashMap;

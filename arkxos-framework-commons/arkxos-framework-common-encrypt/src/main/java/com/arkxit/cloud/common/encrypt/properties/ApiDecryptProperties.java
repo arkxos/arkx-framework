@@ -1,7 +1,8 @@
 package com.arkxit.cloud.common.encrypt.properties;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Data;
 
 /**
  * api解密属性配置类

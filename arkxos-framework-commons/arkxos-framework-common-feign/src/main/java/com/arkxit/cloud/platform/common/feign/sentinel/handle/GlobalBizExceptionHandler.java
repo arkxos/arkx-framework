@@ -16,9 +16,6 @@
 
 package com.arkxit.cloud.platform.common.feign.sentinel.handle;
 
-//import com.alibaba.csp.sentinel.Tracer;
-import com.rapidark.framework.common.model.ResponseResult;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.annotation.Order;
@@ -32,6 +29,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.arkxos.framework.common.model.ResponseResult;
 
 import java.util.List;
 

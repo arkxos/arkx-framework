@@ -2,7 +2,7 @@ package org.ark.framework.infrastructure.repositoryframework;
 
 import org.ark.framework.infrastructure.IUnitOfWork;
 
-import com.rapidark.framework.data.jdbc.Entity;
+import com.arkxos.framework.data.jdbc.Entity;
 
 /**
  * @class org.ark.framework.infrastructure.repositoryframework.RepositoryBase

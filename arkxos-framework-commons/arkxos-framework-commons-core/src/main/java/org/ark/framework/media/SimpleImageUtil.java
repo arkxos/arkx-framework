@@ -20,7 +20,7 @@ import com.alibaba.simpleimage.render.ReadRender;
 import com.alibaba.simpleimage.render.ScaleParameter;
 import com.alibaba.simpleimage.render.ScaleRender;
 import com.alibaba.simpleimage.render.WriteRender;
-import com.rapidark.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.FileUtil;
 
 public class SimpleImageUtil {
 	public static void pressText(String filePath, String txt, Font font, Color fontColor, float opicty, int x, int y) throws Exception {

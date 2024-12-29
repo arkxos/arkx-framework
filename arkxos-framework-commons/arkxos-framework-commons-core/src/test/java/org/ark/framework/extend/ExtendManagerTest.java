@@ -1,7 +1,8 @@
 package org.ark.framework.extend;
 
-import com.rapidark.framework.extend.plugin.PluginManager;
 import org.aspectj.lang.annotation.Before;
+
+import com.arkxos.framework.extend.plugin.PluginManager;
 
 /**
  * 

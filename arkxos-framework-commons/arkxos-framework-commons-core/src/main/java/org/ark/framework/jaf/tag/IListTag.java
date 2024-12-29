@@ -1,6 +1,6 @@
 package org.ark.framework.jaf.tag;
 
-import com.rapidark.framework.commons.collection.DataRow;
+import com.arkxos.framework.commons.collection.DataRow;
 
 /**
  * @class org.ark.framework.jaf.tag.IListTag

@@ -2,7 +2,9 @@ package com.rapidark.framework.commons.queueexecutor;
 
 import java.util.Arrays;
 
-import com.rapidark.framework.commons.queueexecutor.processor.ElementProcessor;
+import com.arkxos.framework.commons.queueexecutor.Element;
+import com.arkxos.framework.commons.queueexecutor.MultiThreadedQueueExecutor;
+import com.arkxos.framework.commons.queueexecutor.processor.ElementProcessor;
 
 /**
  * @author Darkness

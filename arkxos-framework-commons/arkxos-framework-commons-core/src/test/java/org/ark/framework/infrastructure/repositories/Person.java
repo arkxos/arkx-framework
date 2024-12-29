@@ -2,9 +2,9 @@ package org.ark.framework.infrastructure.repositories;
 
 import java.util.Date;
 
-import com.rapidark.framework.annotation.Entity;
-import com.rapidark.framework.annotation.Ingore;
-import com.rapidark.framework.data.jdbc.BaseEntity;
+import com.arkxos.framework.annotation.Entity;
+import com.arkxos.framework.annotation.Ingore;
+import com.arkxos.framework.data.jdbc.BaseEntity;
 
 /**
  * 

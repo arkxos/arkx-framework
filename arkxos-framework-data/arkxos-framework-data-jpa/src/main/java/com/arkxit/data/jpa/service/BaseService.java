@@ -1,9 +1,10 @@
 package com.arkxit.data.jpa.service;
 
 import com.arkxit.data.jpa.BaseRepository;
-import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
-import com.rapidark.framework.common.utils.PageResult;
-import com.rapidark.framework.common.utils.QueryHelp;
+import com.arkxos.framework.common.utils.CriteriaQueryWrapper;
+import com.arkxos.framework.common.utils.PageResult;
+import com.arkxos.framework.common.utils.QueryHelp;
+
 import org.hibernate.query.sql.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;

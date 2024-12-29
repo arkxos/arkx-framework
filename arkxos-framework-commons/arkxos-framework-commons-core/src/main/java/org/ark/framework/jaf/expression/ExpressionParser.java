@@ -11,8 +11,8 @@ import java.util.List;
 import org.ark.framework.jaf.IExpressionContext;
 import org.ark.framework.jaf.PlaceHolder;
 
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 
 /**

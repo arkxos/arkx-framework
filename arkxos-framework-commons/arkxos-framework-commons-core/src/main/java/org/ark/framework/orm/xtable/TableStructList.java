@@ -3,8 +3,8 @@ package org.ark.framework.orm.xtable;
 import java.util.Date;
 import java.util.Hashtable;
 
-import com.rapidark.framework.commons.collection.DataTable;
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.collection.DataTable;
+import com.arkxos.framework.commons.util.StringUtil;
 
 
 /// TableStructList，提供对所有数据库的非系统表的基本属性访问。

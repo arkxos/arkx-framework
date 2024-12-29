@@ -1,6 +1,6 @@
 package org.ark.framework.json;
 
-import com.rapidark.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.collection.Mapx;
 
 /**
  * 

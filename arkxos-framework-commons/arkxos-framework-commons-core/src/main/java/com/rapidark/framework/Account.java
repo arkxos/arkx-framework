@@ -9,16 +9,14 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rapidark.framework.common.utils.SecurityUtils;
-import jakarta.servlet.http.HttpServletRequest;
-
+import com.arkxos.framework.common.utils.SecurityUtils;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.i18n.LangMapping;
+import com.arkxos.framework.i18n.LangUtil;
+import com.arkxos.framework.security.Privilege;
 import com.rapidark.framework.Member.MemberData;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.i18n.LangMapping;
-import com.rapidark.framework.i18n.LangUtil;
-import com.rapidark.framework.security.Privilege;
-import org.springframework.boot.actuate.web.exchanges.HttpExchange;
-import org.springframework.security.core.context.SecurityContextHolder;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 用户数据全局访问类，一个线程内的所有代码都可以直接访问用户数据<br>

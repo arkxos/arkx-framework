@@ -1,14 +1,19 @@
 package com.rapidark.framework.data.xml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.List;
 
-import com.rapidark.framework.commons.util.FileUtil;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.data.xml.XMLDocument;
+import com.arkxos.framework.data.xml.XMLElement;
+import com.arkxos.framework.data.xml.XMLMultiLoader;
+import com.arkxos.framework.data.xml.XMLParser;
 
 public class XMLTest {
 

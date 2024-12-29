@@ -1,9 +1,9 @@
 package com.rapidark.framework.avatarmq;
 
-import com.rapidark.framework.avatarmq.consumer.AvatarMQConsumer;
-import com.rapidark.framework.avatarmq.consumer.ProducerMessageHook;
-import com.rapidark.framework.avatarmq.msg.ConsumerAckMessage;
-import com.rapidark.framework.avatarmq.msg.Message;
+import com.arkxos.framework.avatarmq.consumer.AvatarMQConsumer;
+import com.arkxos.framework.avatarmq.consumer.ProducerMessageHook;
+import com.arkxos.framework.avatarmq.msg.ConsumerAckMessage;
+import com.arkxos.framework.avatarmq.msg.Message;
 
 /**
  * @filename:AvatarMQConsumer2.java

@@ -18,8 +18,8 @@ package com.arkxit.cloud.platform.common.xss.core;
 
 import com.arkxit.cloud.platform.common.xss.config.ArkXssProperties;
 import com.arkxit.cloud.platform.common.xss.utils.XssUtil;
+import com.arkxos.framework.common.utils.ArkSpringContextHolder;
 
-import com.rapidark.framework.common.utils.ArkSpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

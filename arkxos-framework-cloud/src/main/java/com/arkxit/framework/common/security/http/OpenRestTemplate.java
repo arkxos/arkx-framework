@@ -1,6 +1,5 @@
 package com.arkxit.framework.common.security.http;
 
-import com.rapidark.framework.common.configuration.OpenCommonProperties;
 //import com.rapidark.framework.common.event.RemoteRefreshRouteEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.bus.BusProperties;
@@ -10,6 +9,8 @@ import org.springframework.context.ApplicationEventPublisher;
 //import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 //import org.springframework.security.oauth2.common.AuthenticationScheme;
 import org.springframework.web.client.RestTemplate;
+
+import com.arkxos.framework.common.configuration.OpenCommonProperties;
 
 /**
  * 自定义RestTemplate请求工具类

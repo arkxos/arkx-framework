@@ -2,9 +2,9 @@ package com.rapidark.framework.data.fasttable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import com.rapidark.framework.data.fasttable.annotation.FastColumn;
-import com.rapidark.framework.data.fasttable.annotation.Serialize;
-import com.rapidark.framework.data.fasttable.util.RecordConverterGenerator;
+import com.arkxos.framework.data.fasttable.annotation.FastColumn;
+import com.arkxos.framework.data.fasttable.annotation.Serialize;
+import com.arkxos.framework.data.fasttable.util.RecordConverterGenerator;
 
 /**
  * 

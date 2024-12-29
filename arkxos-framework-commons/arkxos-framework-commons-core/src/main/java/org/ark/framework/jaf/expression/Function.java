@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.rapidark.framework.commons.util.DateUtil;
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.DateUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 
 /**

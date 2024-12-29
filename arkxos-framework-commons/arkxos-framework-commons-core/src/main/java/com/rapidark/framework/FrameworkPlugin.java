@@ -1,10 +1,10 @@
 package com.rapidark.framework;
 
-import com.rapidark.framework.annotation.Plugin;
-import com.rapidark.framework.annotation.fastdb.Comment;
-import com.rapidark.framework.extend.plugin.AbstractPlugin;
-import com.rapidark.framework.extend.plugin.PluginException;
-import com.rapidark.framework.i18n.LangMapping;
+import com.arkxos.framework.annotation.Plugin;
+import com.arkxos.framework.annotation.fastdb.Comment;
+import com.arkxos.framework.extend.plugin.AbstractPlugin;
+import com.arkxos.framework.extend.plugin.PluginException;
+import com.arkxos.framework.i18n.LangMapping;
 
 /**
  * @class org.ark.framework.extend.plugin.FrameworkPlugin

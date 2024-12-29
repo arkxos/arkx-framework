@@ -3,15 +3,15 @@ package org.ark.framework.orm;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.rapidark.framework.commons.collection.DataColumn;
-import com.rapidark.framework.commons.collection.DataTable;
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.BufferedRandomAccessFile;
-import com.rapidark.framework.commons.util.DateUtil;
-import com.rapidark.framework.commons.util.NumberUtil;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.commons.util.ZipUtil;
+import com.arkxos.framework.commons.collection.DataColumn;
+import com.arkxos.framework.commons.collection.DataTable;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.BufferedRandomAccessFile;
+import com.arkxos.framework.commons.util.DateUtil;
+import com.arkxos.framework.commons.util.NumberUtil;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.ZipUtil;
 
 
 /**

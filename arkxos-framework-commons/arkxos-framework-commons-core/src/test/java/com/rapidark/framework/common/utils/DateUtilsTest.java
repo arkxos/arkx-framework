@@ -1,10 +1,11 @@
 package com.rapidark.framework.common.utils;
 
-import com.rapidark.last.utils.DateUtil;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 import java.util.Date;
+
+import org.junit.jupiter.api.Test;
+
+import com.arkxos.last.utils.DateUtil;
 
 public class DateUtilsTest {
     @Test

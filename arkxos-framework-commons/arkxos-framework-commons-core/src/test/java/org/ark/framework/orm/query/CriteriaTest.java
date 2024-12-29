@@ -1,21 +1,21 @@
 package org.ark.framework.orm.query;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Date;
 import java.util.List;
 
 import org.ark.framework.infrastructure.repositories.Person;
-
-import com.rapidark.framework.commons.util.DateUtil;
-import com.rapidark.framework.data.jdbc.Criteria;
-import com.rapidark.framework.data.jdbc.Query;
-import com.rapidark.framework.data.jdbc.Restrictions;
-import com.rapidark.framework.data.jdbc.Session;
-import com.rapidark.framework.data.jdbc.SessionFactory;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.arkxos.framework.commons.util.DateUtil;
+import com.arkxos.framework.data.jdbc.Criteria;
+import com.arkxos.framework.data.jdbc.Query;
+import com.arkxos.framework.data.jdbc.Restrictions;
+import com.arkxos.framework.data.jdbc.Session;
+import com.arkxos.framework.data.jdbc.SessionFactory;
 
 
 /**   

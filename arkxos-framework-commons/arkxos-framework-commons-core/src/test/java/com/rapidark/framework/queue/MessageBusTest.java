@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.rapidark.framework.queue2.MessageBus;
+import com.arkxos.framework.queue2.MessageBus;
 
 public class MessageBusTest {
 

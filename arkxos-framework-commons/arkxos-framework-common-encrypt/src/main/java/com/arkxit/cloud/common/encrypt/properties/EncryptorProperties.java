@@ -1,10 +1,11 @@
 package com.arkxit.cloud.common.encrypt.properties;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import com.arkxit.cloud.common.encrypt.enumd.AlgorithmType;
 import com.arkxit.cloud.common.encrypt.enumd.EncodeType;
+
+import lombok.Data;
 
 /**
  * 加解密属性配置类

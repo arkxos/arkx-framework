@@ -1,6 +1,6 @@
 package org.ark.framework.orm.xtable;
 
-import com.rapidark.framework.commons.collection.DataRow;
+import com.arkxos.framework.commons.collection.DataRow;
 
 /// <summary>
 	/// 此表类似于SQL SERVER数据库的sysobjects表，是sysobjects表的扩展，此表用于存储数据库中各个表反映在本系统中的类的备注信息，即public class 上面的summary注释（本注释即存储于tablesremark表中tablename=tablesremark那一行的remark字段中）

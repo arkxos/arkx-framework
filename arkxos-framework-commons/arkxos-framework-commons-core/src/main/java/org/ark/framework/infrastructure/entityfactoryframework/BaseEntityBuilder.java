@@ -4,10 +4,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import com.rapidark.framework.annotation.Column;
-import com.rapidark.framework.annotation.Ingore;
-import com.rapidark.framework.commons.collection.DataRow;
-import com.rapidark.framework.commons.util.lang.ReflectionUtil;
+import com.arkxos.framework.annotation.Column;
+import com.arkxos.framework.annotation.Ingore;
+import com.arkxos.framework.commons.collection.DataRow;
+import com.arkxos.framework.commons.util.lang.ReflectionUtil;
 
 
 /**

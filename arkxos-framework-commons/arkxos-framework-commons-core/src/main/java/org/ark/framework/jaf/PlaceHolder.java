@@ -1,7 +1,7 @@
 package org.ark.framework.jaf;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.StringUtil;
 
 /**
  * @class org.ark.framework.jaf.PlaceHolder

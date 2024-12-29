@@ -3,11 +3,10 @@ package org.ark.framework.orm.schema;
 import java.util.Arrays;
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
-
+import com.arkxos.framework.commons.util.FileUtil;
 import com.rapidark.framework.Config;
-import com.rapidark.framework.commons.util.FileUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**   
  * @class org.ark.framework.orm.schema.SchemaGenerator

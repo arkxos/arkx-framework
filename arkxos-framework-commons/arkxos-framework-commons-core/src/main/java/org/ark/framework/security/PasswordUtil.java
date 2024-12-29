@@ -1,7 +1,7 @@
 package org.ark.framework.security;
 
-import com.rapidark.framework.commons.util.NumberUtil;
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.NumberUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 /**
  * @class org.ark.framework.security.PasswordUtil

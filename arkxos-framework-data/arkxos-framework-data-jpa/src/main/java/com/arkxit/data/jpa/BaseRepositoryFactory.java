@@ -30,9 +30,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import com.arkxit.framework.boot.spring.IocBeanRegister;
 import com.arkxit.data.jpa.entity.BaseEntity;
 import com.arkxit.data.jpa.sqltoy.SqlToyRepositoryFactory;
+import com.arkxos.framework.boot.spring.IocBeanRegister;
 
 /**
  * .<p>通用Jpa仓库构造工厂</p>

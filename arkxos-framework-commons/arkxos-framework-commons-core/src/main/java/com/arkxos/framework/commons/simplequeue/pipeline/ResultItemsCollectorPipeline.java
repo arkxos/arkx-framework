@@ -1,0 +1,26 @@
+package com.arkxos.framework.commons.simplequeue.pipeline;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.arkxos.framework.commons.simplequeue.ResultItems;
+import com.arkxos.framework.commons.simplequeue.Task;
+
+/**
+ * @author code4crafter@gmail.com
+ * @since 0.4.0
+ */
+public class ResultItemsCollectorPipeline implements CollectorPipeline<ResultItems> {
+
+    private List<ResultItems> collector = new ArrayList<ResultItems>();
+
+    @Override
+    public synchronized void process(ResultItems resultItems, Task task) {
+        collector.add(resultItems);
+    }
+
+    @Override
+    public List<ResultItems> getCollected() {
+        return collector;
+    }
+}

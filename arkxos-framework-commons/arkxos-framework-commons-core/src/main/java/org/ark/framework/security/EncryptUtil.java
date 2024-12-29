@@ -1,11 +1,8 @@
 package org.ark.framework.security;
 
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 
 /**

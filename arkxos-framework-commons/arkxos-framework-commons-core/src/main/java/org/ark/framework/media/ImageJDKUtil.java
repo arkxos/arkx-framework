@@ -29,10 +29,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.FileUtil;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.commons.util.NumberUtil;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.commons.util.NumberUtil;
 
 public class ImageJDKUtil {
 	public static BufferedImage scaleRate(BufferedImage srcImage, double rate) {

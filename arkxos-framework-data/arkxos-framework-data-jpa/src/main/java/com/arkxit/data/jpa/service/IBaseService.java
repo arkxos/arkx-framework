@@ -1,8 +1,9 @@
 package com.arkxit.data.jpa.service;
 
-import com.rapidark.framework.common.utils.CriteriaQueryWrapper;
-import com.rapidark.framework.common.utils.PageResult;
 import com.arkxit.data.jpa.BaseRepository;
+import com.arkxos.framework.common.utils.CriteriaQueryWrapper;
+import com.arkxos.framework.common.utils.PageResult;
+
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

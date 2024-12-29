@@ -1,6 +1,6 @@
 package org.ark.framework.extend.actions;
 
-import com.rapidark.framework.extend.IExtendAction;
+import com.arkxos.framework.extend.IExtendAction;
 
 /**
  * @class org.ark.framework.extend.actions.AfterConfigInitAction

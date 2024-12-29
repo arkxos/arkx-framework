@@ -3,10 +3,10 @@ package com.rapidark.framework.data.lightning;
 import java.nio.ByteBuffer;
 import java.time.LocalDate;
 
-import com.rapidark.framework.annotation.fastdb.Column;
-import com.rapidark.framework.annotation.fastdb.Comment;
-import com.rapidark.framework.annotation.fastdb.FixedString;
-import com.rapidark.framework.annotation.fastdb.Table;
+import com.arkxos.framework.annotation.fastdb.Column;
+import com.arkxos.framework.annotation.fastdb.Comment;
+import com.arkxos.framework.annotation.fastdb.FixedString;
+import com.arkxos.framework.annotation.fastdb.Table;
 
 @Comment("人员信息")
 @Table(namespace="defaultNamespace")

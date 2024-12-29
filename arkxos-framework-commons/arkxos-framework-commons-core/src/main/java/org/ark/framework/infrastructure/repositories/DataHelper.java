@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.rapidark.framework.commons.util.DateUtil;
-import com.rapidark.framework.data.jdbc.Entity;
+import com.arkxos.framework.commons.util.DateUtil;
+import com.arkxos.framework.data.jdbc.Entity;
 
 
 /**

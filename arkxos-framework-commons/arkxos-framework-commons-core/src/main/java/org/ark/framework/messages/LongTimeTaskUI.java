@@ -1,9 +1,9 @@
 package org.ark.framework.messages;
 
-import com.rapidark.framework.annotation.Priv;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.cosyui.web.UIFacade;
-import com.rapidark.framework.i18n.LangMapping;
+import com.arkxos.framework.annotation.Priv;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.cosyui.web.UIFacade;
+import com.arkxos.framework.i18n.LangMapping;
 
 /**
  * @class org.ark.framework.messages.LongTimeTaskUI

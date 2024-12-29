@@ -7,10 +7,10 @@ import java.util.Map;
 
 import org.ark.framework.infrastructure.ioc.IocManager;
 
-import com.rapidark.framework.commons.collection.DataRow;
-import com.rapidark.framework.commons.collection.DataTable;
-import com.rapidark.framework.data.jdbc.Session;
-import com.rapidark.framework.data.jdbc.SessionFactory;
+import com.arkxos.framework.commons.collection.DataRow;
+import com.arkxos.framework.commons.collection.DataTable;
+import com.arkxos.framework.data.jdbc.Session;
+import com.arkxos.framework.data.jdbc.SessionFactory;
 
 
 /**

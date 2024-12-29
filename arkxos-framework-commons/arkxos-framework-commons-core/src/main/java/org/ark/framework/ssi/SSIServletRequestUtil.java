@@ -1,9 +1,9 @@
 package org.ark.framework.ssi;
 
 
-import jakarta.servlet.http.HttpServletRequest;
+import com.arkxos.framework.commons.util.StringUtil;
 
-import com.rapidark.framework.commons.util.StringUtil;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @class org.ark.framework.ssi.SSIServletRequestUtil

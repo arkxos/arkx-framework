@@ -2,8 +2,8 @@ package org.ark.framework.security;
 
 import java.util.ArrayList;
 
-import com.rapidark.framework.cosyui.web.RequestData;
-import com.rapidark.framework.cosyui.web.ResponseData;
+import com.arkxos.framework.cosyui.web.RequestData;
+import com.arkxos.framework.cosyui.web.ResponseData;
 
 
 /**

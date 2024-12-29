@@ -1,6 +1,6 @@
 package org.ark.framework.core.castor;
 
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 /**
  * double[]类型转换器

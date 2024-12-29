@@ -1,6 +1,6 @@
 package org.ark.framework.script;
 
-import com.rapidark.framework.cosyui.web.UIFacade;
+import com.arkxos.framework.cosyui.web.UIFacade;
 
 /**
  * @class org.ark.framework.script.CheckScript

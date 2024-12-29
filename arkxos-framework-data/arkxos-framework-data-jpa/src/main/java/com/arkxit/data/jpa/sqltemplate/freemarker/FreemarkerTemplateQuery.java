@@ -21,9 +21,9 @@ import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 import org.springframework.util.CollectionUtils;
 
-import com.arkxit.framework.boot.spring.IocBeanRegister;
 import com.arkxit.data.jpa.AopTargetUtils;
 import com.arkxit.data.jpa.QueryBuilder;
+import com.arkxos.framework.boot.spring.IocBeanRegister;
 
 /**
  * <p>Freemarker模板查询</p>

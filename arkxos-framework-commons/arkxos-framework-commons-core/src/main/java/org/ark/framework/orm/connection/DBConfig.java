@@ -6,16 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.ark.framework.orm.sql.DBContext;
 import org.ark.framework.security.EncryptUtil;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.PropertiesUtil;
-import com.rapidark.framework.data.db.connection.ConnectionConfig;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.PropertiesUtil;
+import com.arkxos.framework.data.db.connection.ConnectionConfig;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @class org.ark.framework.orm.connection.DBConfig

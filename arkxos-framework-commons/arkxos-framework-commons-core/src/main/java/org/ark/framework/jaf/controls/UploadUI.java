@@ -7,12 +7,12 @@ import org.ark.framework.jaf.Current;
 import org.ark.framework.security.PrivCheck;
 import org.ark.framework.security.VerifyCheck;
 
-import com.rapidark.framework.annotation.Priv;
-import com.rapidark.framework.annotation.Verify;
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.cosyui.web.UIFacade;
-import com.rapidark.framework.i18n.LangMapping;
+import com.arkxos.framework.annotation.Priv;
+import com.arkxos.framework.annotation.Verify;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.cosyui.web.UIFacade;
+import com.arkxos.framework.i18n.LangMapping;
 
 
 /**

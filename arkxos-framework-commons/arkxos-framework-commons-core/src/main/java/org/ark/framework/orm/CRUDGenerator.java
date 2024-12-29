@@ -11,8 +11,8 @@ import org.dom4j.Namespace;
 import org.dom4j.QName;
 import org.dom4j.io.SAXReader;
 
+import com.arkxos.framework.commons.util.FileUtil;
 import com.rapidark.framework.Config;
-import com.rapidark.framework.commons.util.FileUtil;
 
 /**   
  * @class org.ark.framework.orm.CRUDGenerator

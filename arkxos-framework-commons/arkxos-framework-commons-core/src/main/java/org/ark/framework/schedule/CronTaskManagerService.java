@@ -1,6 +1,6 @@
 package org.ark.framework.schedule;
 
-import com.rapidark.framework.extend.AbstractExtendService;
+import com.arkxos.framework.extend.AbstractExtendService;
 
 /**
  * @class org.ark.framework.schedule.CronTaskManagerService

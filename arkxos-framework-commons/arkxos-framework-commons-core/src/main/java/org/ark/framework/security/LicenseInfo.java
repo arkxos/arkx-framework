@@ -1,18 +1,16 @@
 package org.ark.framework.security;
 
-import java.io.ByteArrayInputStream;
 import java.security.PublicKey;
-import java.security.cert.X509Certificate;
 import java.util.Date;
 
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.DateUtil;
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.commons.util.StringFormat;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.SystemInfo;
 import com.rapidark.framework.Config;
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.DateUtil;
-import com.rapidark.framework.commons.util.FileUtil;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.commons.util.StringFormat;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.commons.util.SystemInfo;
 
 /**
  * @class org.ark.framework.security.LicenseInfo

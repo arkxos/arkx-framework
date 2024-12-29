@@ -1,6 +1,6 @@
 package com.rapidark.framework.avatarmq;
 
-import com.rapidark.framework.avatarmq.broker.server.AvatarMQBrokerServer;
+import com.arkxos.framework.avatarmq.broker.server.AvatarMQBrokerServer;
 
 public class AvatarServer1 {
 

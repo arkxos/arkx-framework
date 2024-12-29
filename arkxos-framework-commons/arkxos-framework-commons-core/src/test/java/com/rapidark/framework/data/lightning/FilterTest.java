@@ -3,11 +3,12 @@ package com.rapidark.framework.data.lightning;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.rapidark.framework.data.lightning.filter.StringEqualFilter;
-import org.junit.jupiter.api.Test;
 
 public class FilterTest {
 

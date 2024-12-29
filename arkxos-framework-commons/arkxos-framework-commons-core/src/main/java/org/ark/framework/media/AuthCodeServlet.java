@@ -13,12 +13,13 @@ import java.io.OutputStream;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import com.rapidark.framework.Account;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import com.rapidark.framework.Account;
 
 public class AuthCodeServlet extends HttpServlet {
 	private static final long serialVersionUID = 20060808L;

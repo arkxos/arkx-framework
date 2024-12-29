@@ -1,6 +1,6 @@
 package com.rapidark.framework.data.lightning;
 
-import com.rapidark.framework.commons.util.ByteUtil;
+import com.arkxos.framework.commons.util.ByteUtil;
 
 /**
  *  

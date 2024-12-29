@@ -1,0 +1,39 @@
+package com.arkxos.framework.cosyui.expression.function;
+
+import com.arkxos.framework.cosyui.expression.AbstractFunction;
+import com.arkxos.framework.cosyui.expression.IVariableResolver;
+
+/**
+ * 判断第一个参数是否以第二个参数开始。
+ * 
+ */
+public class StartsWith extends AbstractFunction {
+
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) {
+		String input = (String) args[0];
+		String substring = (String) args[1];
+		if (input == null) {
+			input = "";
+		}
+		if (substring == null) {
+			substring = "";
+		}
+		return input.startsWith(substring);
+	}
+
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return AbstractFunction.Arg_String_String;
+	}
+
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
+
+	@Override
+	public String getFunctionName() {
+		return "startsWith";
+	}
+}

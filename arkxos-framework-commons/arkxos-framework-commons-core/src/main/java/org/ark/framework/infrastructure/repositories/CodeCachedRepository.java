@@ -1,6 +1,6 @@
 package org.ark.framework.infrastructure.repositories;
 
-import com.rapidark.framework.data.jdbc.CodeEntity;
+import com.arkxos.framework.data.jdbc.CodeEntity;
 
 /**   
  * @class org.ark.framework.infrastructure.repositories.CodeCachedRepository

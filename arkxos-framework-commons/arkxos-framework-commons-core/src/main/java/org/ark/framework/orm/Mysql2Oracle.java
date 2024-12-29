@@ -10,10 +10,10 @@ import org.dom4j.Namespace;
 import org.dom4j.QName;
 import org.dom4j.io.SAXReader;
 
-import com.rapidark.framework.commons.collection.DataTable;
-import com.rapidark.framework.commons.util.FileUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.data.jdbc.SessionFactory;
+import com.arkxos.framework.commons.collection.DataTable;
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.data.jdbc.SessionFactory;
 
 
 /**   

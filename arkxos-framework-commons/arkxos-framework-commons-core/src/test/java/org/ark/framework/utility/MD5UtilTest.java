@@ -1,9 +1,10 @@
 package org.ark.framework.utility;
 
-import com.rapidark.framework.commons.util.MD5Util;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.arkxos.framework.commons.util.MD5Util;
 
 /**   
  * 

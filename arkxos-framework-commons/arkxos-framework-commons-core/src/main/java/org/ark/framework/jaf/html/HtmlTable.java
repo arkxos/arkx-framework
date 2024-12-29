@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.rapidark.framework.commons.util.FileUtil;
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 
 /**

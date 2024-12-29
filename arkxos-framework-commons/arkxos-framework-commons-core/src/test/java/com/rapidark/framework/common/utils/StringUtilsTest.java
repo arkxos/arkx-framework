@@ -1,15 +1,20 @@
 package com.rapidark.framework.common.utils;
 
-import com.rapidark.framework.common.utils.StringUtils;
-import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
+import static com.arkxos.framework.common.utils.StringUtils.getIp;
+import static com.arkxos.framework.common.utils.StringUtils.getWeekDay;
+import static com.arkxos.framework.common.utils.StringUtils.toCamelCase;
+import static com.arkxos.framework.common.utils.StringUtils.toCapitalizeCamelCase;
+import static com.arkxos.framework.common.utils.StringUtils.toUnderScoreCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.rapidark.framework.common.utils.StringUtils.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+
+import com.arkxos.framework.common.utils.StringUtils;
 
 public class StringUtilsTest {
 

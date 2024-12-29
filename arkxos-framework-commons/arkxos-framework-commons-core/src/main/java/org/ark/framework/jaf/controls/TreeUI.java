@@ -7,12 +7,12 @@ import org.ark.framework.jaf.html.HtmlP;
 import org.ark.framework.security.PrivCheck;
 import org.ark.framework.security.VerifyCheck;
 
-import com.rapidark.framework.annotation.Priv;
-import com.rapidark.framework.annotation.Verify;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.cosyui.web.UIFacade;
+import com.arkxos.framework.annotation.Priv;
+import com.arkxos.framework.annotation.Verify;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.cosyui.web.UIFacade;
 
 
 /**

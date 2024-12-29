@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import com.rapidark.framework.commons.collection.CaseIgnoreMapx;
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.data.db.dbtype.DBTypeService;
-import com.rapidark.framework.data.db.dbtype.IDBType;
+import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.data.db.dbtype.DBTypeService;
+import com.arkxos.framework.data.db.dbtype.IDBType;
 
 
 /**   

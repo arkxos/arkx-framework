@@ -1,8 +1,8 @@
 package org.ark.framework.infrastructure.repositories.extend;
 
-import com.rapidark.framework.data.jdbc.Entity;
-import com.rapidark.framework.extend.ExtendException;
-import com.rapidark.framework.extend.IExtendAction;
+import com.arkxos.framework.data.jdbc.Entity;
+import com.arkxos.framework.extend.ExtendException;
+import com.arkxos.framework.extend.IExtendAction;
 
 /**
  * 

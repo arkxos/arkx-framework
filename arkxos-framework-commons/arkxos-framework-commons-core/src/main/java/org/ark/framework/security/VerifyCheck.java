@@ -4,11 +4,11 @@ import java.lang.reflect.Method;
 
 import org.ark.framework.jaf.Current;
 
-import com.rapidark.framework.annotation.Verify;
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.extend.ExtendManager;
+import com.arkxos.framework.annotation.Verify;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.extend.ExtendManager;
 
 
 /**

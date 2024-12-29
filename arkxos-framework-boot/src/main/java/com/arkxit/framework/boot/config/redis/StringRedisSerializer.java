@@ -3,7 +3,8 @@ package com.arkxit.framework.boot.config.redis;
 
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
-import com.rapidark.framework.common.utils.StringUtils;
+import com.arkxos.framework.common.utils.StringUtils;
+
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.nio.charset.Charset;

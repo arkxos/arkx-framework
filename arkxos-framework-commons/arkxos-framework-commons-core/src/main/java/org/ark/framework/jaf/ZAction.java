@@ -2,10 +2,10 @@ package org.ark.framework.jaf;
 
 import java.io.IOException;
 
+import com.arkxos.framework.cosyui.web.CookieData;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import com.rapidark.framework.cosyui.web.CookieData;
 
 /**
  * @class org.ark.framework.jaf.ZAction

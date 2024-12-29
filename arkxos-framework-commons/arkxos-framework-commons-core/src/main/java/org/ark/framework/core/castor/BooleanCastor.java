@@ -1,6 +1,6 @@
 package org.ark.framework.core.castor;
 
-import com.rapidark.framework.commons.util.NumberUtil;
+import com.arkxos.framework.commons.util.NumberUtil;
 
 /**
  * boolean转换器

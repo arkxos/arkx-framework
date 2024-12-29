@@ -2,7 +2,7 @@ package org.ark.framework.json.convert;
 
 import org.ark.framework.json.JSONObject;
 
-import com.rapidark.framework.extend.IExtendItem;
+import com.arkxos.framework.extend.IExtendItem;
 
 /**
  * 

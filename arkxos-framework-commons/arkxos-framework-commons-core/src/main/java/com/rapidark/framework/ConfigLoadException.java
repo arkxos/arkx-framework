@@ -1,6 +1,6 @@
 package com.rapidark.framework;
 
-import com.rapidark.framework.core.FrameworkException;
+import com.arkxos.framework.core.FrameworkException;
 
 /**
  * 配置文件加载异常

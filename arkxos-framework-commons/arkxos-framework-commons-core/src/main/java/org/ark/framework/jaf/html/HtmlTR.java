@@ -3,7 +3,7 @@ package org.ark.framework.jaf.html;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-import com.rapidark.framework.commons.util.StringUtil;
+import com.arkxos.framework.commons.util.StringUtil;
 
 
 /**

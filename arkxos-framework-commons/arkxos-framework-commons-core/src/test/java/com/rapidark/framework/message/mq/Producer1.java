@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.arkxos.framework.message.mq.Producer;
 import com.rapidark.framework.message.tcp.Config;
 
 public class Producer1 {

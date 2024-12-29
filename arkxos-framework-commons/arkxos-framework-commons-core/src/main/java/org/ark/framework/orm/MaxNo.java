@@ -1,7 +1,7 @@
 package org.ark.framework.orm;
 
-import com.rapidark.framework.annotation.Column;
-import com.rapidark.framework.data.jdbc.Entity;
+import com.arkxos.framework.annotation.Column;
+import com.arkxos.framework.data.jdbc.Entity;
 
 /**
  * @class org.ark.framework.orm.MaxNo
@@ -9,7 +9,7 @@ import com.rapidark.framework.data.jdbc.Entity;
  * @date 2012-11-25 下午06:01:07
  * @version V1.0
  */
-@com.rapidark.framework.annotation.Entity(name = "pt_comp__maxno")
+@com.arkxos.framework.annotation.Entity(name = "pt_comp__maxno")
 public class MaxNo extends Entity {
 	
 	private static final long serialVersionUID = 1L;

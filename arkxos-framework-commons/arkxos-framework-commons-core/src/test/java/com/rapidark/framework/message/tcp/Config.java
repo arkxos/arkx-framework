@@ -2,8 +2,8 @@ package com.rapidark.framework.message.tcp;
 
 import java.io.File;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.PropertiesUtil;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.PropertiesUtil;
 
 /**
  * @author Darkness

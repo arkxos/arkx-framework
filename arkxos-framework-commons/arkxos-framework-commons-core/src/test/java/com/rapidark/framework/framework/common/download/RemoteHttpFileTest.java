@@ -3,9 +3,9 @@ package com.rapidark.framework.framework.common.download;
 import java.io.File;
 import java.io.IOException;
 
-import com.rapidark.framework.commons.download.RemoteHttpFile;
-import com.rapidark.framework.commons.util.SystemInfo;
-import com.rapidark.framework.commons.util.TimeWatch;
+import com.arkxos.framework.commons.download.RemoteHttpFile;
+import com.arkxos.framework.commons.util.SystemInfo;
+import com.arkxos.framework.commons.util.TimeWatch;
 
 public class RemoteHttpFileTest {
 	

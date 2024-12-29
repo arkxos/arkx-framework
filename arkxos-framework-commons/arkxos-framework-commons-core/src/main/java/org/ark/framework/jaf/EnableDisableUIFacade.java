@@ -1,14 +1,14 @@
 package org.ark.framework.jaf;
 
-import com.arkxit.framework.boot.BaseUIFacade;
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.exception.ServiceException;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.data.jdbc.BaseEntity;
-import com.rapidark.framework.data.jdbc.Criteria;
-import com.rapidark.framework.data.jdbc.Entity;
-import com.rapidark.framework.data.jdbc.Restrictions;
-import com.rapidark.framework.i18n.LangMapping;
+import com.arkxos.framework.boot.BaseUIFacade;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.exception.ServiceException;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.data.jdbc.BaseEntity;
+import com.arkxos.framework.data.jdbc.Criteria;
+import com.arkxos.framework.data.jdbc.Entity;
+import com.arkxos.framework.data.jdbc.Restrictions;
+import com.arkxos.framework.i18n.LangMapping;
 
 /**   
  * @class org.ark.framework.jaf.EnableDisableUIFacade

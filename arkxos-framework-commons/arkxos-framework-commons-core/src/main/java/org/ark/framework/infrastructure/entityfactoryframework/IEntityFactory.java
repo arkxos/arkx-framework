@@ -1,6 +1,6 @@
 package org.ark.framework.infrastructure.entityfactoryframework;
 
-import com.rapidark.framework.commons.collection.DataRow;
+import com.arkxos.framework.commons.collection.DataRow;
 
 /**
  * @class org.ark.framework.infrastructure.entityfactoryframework.IEntityFactory

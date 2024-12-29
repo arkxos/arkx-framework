@@ -3,8 +3,8 @@ package com.rapidark.framework;
 import java.io.Serializable;
 import java.util.Map;
 
+import com.arkxos.framework.commons.collection.Mapx;
 import com.rapidark.framework.Account.UserData;
-import com.rapidark.framework.commons.collection.Mapx;
 
 /**
  * 存取前台会员用户的会话信息，实际数据存储在User对象中。

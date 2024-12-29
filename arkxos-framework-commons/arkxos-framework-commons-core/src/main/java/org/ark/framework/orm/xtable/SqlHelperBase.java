@@ -2,9 +2,9 @@ package org.ark.framework.orm.xtable;
 
 import java.util.List;
 
-import com.rapidark.framework.commons.collection.DataRow;
-import com.rapidark.framework.commons.collection.DataTable;
-import com.rapidark.framework.data.jdbc.SessionFactory;
+import com.arkxos.framework.commons.collection.DataRow;
+import com.arkxos.framework.commons.collection.DataTable;
+import com.arkxos.framework.data.jdbc.SessionFactory;
 
 
 /// SqlHelperBase,用于数据库存取操作的一些基类封装,静态类,不提供实例化方法。

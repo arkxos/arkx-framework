@@ -6,19 +6,19 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.function.Supplier;
 
-import com.rapidark.framework.annotation.EntityAnnotationManager;
-import com.rapidark.framework.annotation.Unique;
-import com.rapidark.framework.cache.CacheManager;
-import com.rapidark.framework.commons.exception.ServiceException;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.lang.ReflectionUtil;
-import com.rapidark.framework.data.jdbc.BaseEntity;
-import com.rapidark.framework.data.jdbc.Criteria;
-import com.rapidark.framework.data.jdbc.Entity;
-import com.rapidark.framework.data.jdbc.Restrictions;
-import com.rapidark.framework.data.jdbc.Session;
-import com.rapidark.framework.data.jdbc.SessionFactory;
-import com.rapidark.framework.i18n.LangMapping;
+import com.arkxos.framework.annotation.EntityAnnotationManager;
+import com.arkxos.framework.annotation.Unique;
+import com.arkxos.framework.cache.CacheManager;
+import com.arkxos.framework.commons.exception.ServiceException;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.lang.ReflectionUtil;
+import com.arkxos.framework.data.jdbc.BaseEntity;
+import com.arkxos.framework.data.jdbc.Criteria;
+import com.arkxos.framework.data.jdbc.Entity;
+import com.arkxos.framework.data.jdbc.Restrictions;
+import com.arkxos.framework.data.jdbc.Session;
+import com.arkxos.framework.data.jdbc.SessionFactory;
+import com.arkxos.framework.i18n.LangMapping;
 
 
 /**

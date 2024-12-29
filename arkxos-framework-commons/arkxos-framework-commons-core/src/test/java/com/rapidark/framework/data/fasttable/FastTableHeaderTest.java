@@ -1,10 +1,15 @@
 package com.rapidark.framework.data.fasttable;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import com.arkxos.framework.data.fasttable.FastColumn;
+import com.arkxos.framework.data.fasttable.FastTableHeader;
+import com.arkxos.framework.data.fasttable.FastTableHeaderDecoder;
+import com.arkxos.framework.data.fasttable.FastTableHeaderEncoder;
 
 /**
  * @author Darkness

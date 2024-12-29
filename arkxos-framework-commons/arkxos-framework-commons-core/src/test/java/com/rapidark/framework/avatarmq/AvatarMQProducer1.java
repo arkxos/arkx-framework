@@ -2,9 +2,9 @@ package com.rapidark.framework.avatarmq;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.rapidark.framework.avatarmq.msg.Message;
-import com.rapidark.framework.avatarmq.msg.ProducerAckMessage;
-import com.rapidark.framework.avatarmq.producer.AvatarMQProducer;
+import com.arkxos.framework.avatarmq.msg.Message;
+import com.arkxos.framework.avatarmq.msg.ProducerAckMessage;
+import com.arkxos.framework.avatarmq.producer.AvatarMQProducer;
 
 /**
  * @filename:AvatarMQProducer1.java

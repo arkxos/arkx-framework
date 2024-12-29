@@ -1,7 +1,7 @@
 package org.ark.framework.orm.xtable;
 
-import com.rapidark.framework.commons.collection.DataRow;
-import com.rapidark.framework.commons.collection.DataTable;
+import com.arkxos.framework.commons.collection.DataRow;
+import com.arkxos.framework.commons.collection.DataTable;
 
 /// <summary>
 	/// 下拉选框表，系统中对每一处可能用到的下拉选框，应对应一个本类，这些下拉选框在客户处的说法可能是“指标体系”，但下拉选框中存储了一些开发级定制的字典信息，这些信息对客户来说是透明的，但系统需要，例如“小数位数”，这并不是指标体系的内容，但系统中要用到这样的字典，则这样的内容均利用category及categoryvalue表进行存储，category与categoryvalue的关系，例如“性别”与“男”的关系，即category表中的一行数据，在categoryvalue表中可能有多行记录

@@ -3,8 +3,9 @@ package org.ark.framework.utility.lang;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import com.rapidark.framework.commons.util.lang.ReflectionUtil;
 import org.junit.jupiter.api.Test;
+
+import com.arkxos.framework.commons.util.lang.ReflectionUtil;
 
 /**
  * 

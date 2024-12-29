@@ -1,6 +1,6 @@
 package com.rapidark.framework.message.tcp;
 
-import com.rapidark.framework.message.tcp.server.NettyServer;
+import com.arkxos.framework.message.tcp.server.NettyServer;
 
 /**
  * com.xdreamaker.lighting.LightingServer

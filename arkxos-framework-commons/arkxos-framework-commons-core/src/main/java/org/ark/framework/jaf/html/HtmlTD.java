@@ -2,7 +2,7 @@ package org.ark.framework.jaf.html;
 
 import java.util.regex.Matcher;
 
-import com.rapidark.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.ObjectUtil;
 
 
 /**

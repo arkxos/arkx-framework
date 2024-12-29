@@ -3,7 +3,7 @@ package com.rapidark.framework.framework.js;
 import java.io.File;
 import java.io.IOException;
 
-import com.rapidark.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.FileUtil;
 
 /**
  *  

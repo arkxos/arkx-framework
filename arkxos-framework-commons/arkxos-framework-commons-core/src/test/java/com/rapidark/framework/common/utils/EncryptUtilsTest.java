@@ -1,10 +1,10 @@
 package com.rapidark.framework.common.utils;
 
-import org.junit.jupiter.api.Test;
-
-import static com.rapidark.last.utils.EncryptUtils.desDecrypt;
-import static com.rapidark.last.utils.EncryptUtils.desEncrypt;
+import static com.arkxos.last.utils.EncryptUtils.desDecrypt;
+import static com.arkxos.last.utils.EncryptUtils.desEncrypt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class EncryptUtilsTest {
 

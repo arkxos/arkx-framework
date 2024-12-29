@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.ark.framework.jaf.Current;
 
+import com.arkxos.framework.commons.util.StringFormat;
+import com.arkxos.framework.commons.util.StringUtil;
 import com.rapidark.framework.Config;
-import com.rapidark.framework.commons.util.StringFormat;
-import com.rapidark.framework.commons.util.StringUtil;
 
 
 /**

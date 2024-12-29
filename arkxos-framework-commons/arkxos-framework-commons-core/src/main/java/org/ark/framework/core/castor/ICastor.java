@@ -1,6 +1,6 @@
 package org.ark.framework.core.castor;
 
-import com.rapidark.framework.extend.IExtendItem;
+import com.arkxos.framework.extend.IExtendItem;
 
 /**
  * 类型转换器

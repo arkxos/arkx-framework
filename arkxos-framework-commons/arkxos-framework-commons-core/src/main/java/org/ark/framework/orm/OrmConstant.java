@@ -2,9 +2,9 @@ package org.ark.framework.orm;
 
 import java.lang.reflect.Method;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 
 
 /**   

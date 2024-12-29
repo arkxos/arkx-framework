@@ -8,9 +8,9 @@ import java.io.InputStreamReader;
 
 import org.ark.framework.jaf.controls.UploadUI;
 
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.LogUtil;
 import com.rapidark.framework.Config;
-import com.rapidark.framework.commons.util.FileUtil;
-import com.rapidark.framework.commons.util.LogUtil;
 
 public class VideoUtil {
 	public static final String _ConvertAvi2Flv = " -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:mbd=2:mv0:trell:v4mv:cbp:last_pred=3:dia=4:cmp=6:vb_strategy=1 -vf scale=512:-3 -ofps 12\t -srate 22050";

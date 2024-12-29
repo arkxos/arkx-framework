@@ -3,8 +3,8 @@ package org.ark.framework.json.convert;
 import org.ark.framework.json.JSONArray;
 import org.ark.framework.json.JSONObject;
 
-import com.rapidark.framework.commons.collection.DataColumn;
-import com.rapidark.framework.commons.collection.DataTable;
+import com.arkxos.framework.commons.collection.DataColumn;
+import com.arkxos.framework.commons.collection.DataTable;
 
 /**
  * 

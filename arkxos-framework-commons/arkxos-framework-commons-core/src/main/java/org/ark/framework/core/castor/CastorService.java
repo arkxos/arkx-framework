@@ -2,9 +2,9 @@ package org.ark.framework.core.castor;
 
 import java.util.Date;
 
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.extend.AbstractExtendService;
-import com.rapidark.framework.extend.IExtendItem;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.extend.AbstractExtendService;
+import com.arkxos.framework.extend.IExtendItem;
 
 
 /**

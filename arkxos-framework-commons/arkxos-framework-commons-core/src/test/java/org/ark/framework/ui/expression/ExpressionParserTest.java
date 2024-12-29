@@ -1,12 +1,12 @@
 package org.ark.framework.ui.expression;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.ark.framework.jaf.IExpressionContext;
 import org.ark.framework.jaf.PlaceHolder;
 import org.ark.framework.jaf.expression.ExpressionParser;
 import org.ark.framework.jaf.expression.ParseException;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 

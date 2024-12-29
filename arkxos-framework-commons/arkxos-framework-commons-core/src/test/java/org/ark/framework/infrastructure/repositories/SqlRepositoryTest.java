@@ -1,14 +1,16 @@
 package org.ark.framework.infrastructure.repositories;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 
 import org.ark.framework.infrastructure.repositoryframework.RepositoryFactory;
-
-import com.rapidark.framework.XTest;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.rapidark.framework.XTest;
 
 /**
  * 

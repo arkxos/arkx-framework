@@ -1,18 +1,18 @@
 package com.arkxit.cloud.common.encrypt.config;
 
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
-import com.arkxit.cloud.common.encrypt.core.EncryptorManager;
-import com.arkxit.cloud.common.encrypt.interceptor.MybatisDecryptInterceptor;
-import com.arkxit.cloud.common.encrypt.interceptor.MybatisEncryptInterceptor;
-import com.arkxit.cloud.common.encrypt.properties.EncryptorProperties;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+
+import com.arkxit.cloud.common.encrypt.core.EncryptorManager;
+import com.arkxit.cloud.common.encrypt.interceptor.MybatisDecryptInterceptor;
+import com.arkxit.cloud.common.encrypt.interceptor.MybatisEncryptInterceptor;
+import com.arkxit.cloud.common.encrypt.properties.EncryptorProperties;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 
 /**
  * 加解密配置

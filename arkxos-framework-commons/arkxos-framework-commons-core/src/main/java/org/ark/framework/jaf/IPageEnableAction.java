@@ -1,6 +1,6 @@
 package org.ark.framework.jaf;
 
-import com.rapidark.framework.commons.collection.IPageInfo;
+import com.arkxos.framework.commons.collection.IPageInfo;
 
 /**
  * @class org.ark.framework.jaf.IPageEnableAction

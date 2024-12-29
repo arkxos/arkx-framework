@@ -5,11 +5,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.commons.util.FileUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.data.xml.XMLElement;
-import com.rapidark.framework.data.xml.XMLMultiLoader;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.data.xml.XMLElement;
+import com.arkxos.framework.data.xml.XMLMultiLoader;
 
 /**
  * 全局配置文件加载器，会加载WEB-INF/plugins/classes下的所有xml文件中的配置信息

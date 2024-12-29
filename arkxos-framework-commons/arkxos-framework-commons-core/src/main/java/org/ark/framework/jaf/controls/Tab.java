@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.jaf.html.HtmlScript;
 
-import com.rapidark.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.ObjectUtil;
 
 
 /**   

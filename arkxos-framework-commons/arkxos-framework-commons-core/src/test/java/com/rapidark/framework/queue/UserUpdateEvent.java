@@ -1,6 +1,6 @@
 package com.rapidark.framework.queue;
 
-import com.rapidark.framework.queue2.Message;
+import com.arkxos.framework.queue2.Message;
 
 
 

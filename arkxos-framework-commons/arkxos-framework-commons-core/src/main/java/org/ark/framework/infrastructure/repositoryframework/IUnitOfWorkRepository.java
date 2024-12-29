@@ -1,6 +1,6 @@
 package org.ark.framework.infrastructure.repositoryframework;
 
-import com.rapidark.framework.data.jdbc.Entity;
+import com.arkxos.framework.data.jdbc.Entity;
 
 /**
  * @class org.ark.framework.infrastructure.repositoryframework.IUnitOfWorkRepository

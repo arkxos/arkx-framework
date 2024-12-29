@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -13,8 +11,10 @@ import org.dom4j.Namespace;
 import org.dom4j.QName;
 import org.dom4j.io.SAXReader;
 
+import com.arkxos.framework.commons.util.FileUtil;
 import com.rapidark.framework.Config;
-import com.rapidark.framework.commons.util.FileUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**

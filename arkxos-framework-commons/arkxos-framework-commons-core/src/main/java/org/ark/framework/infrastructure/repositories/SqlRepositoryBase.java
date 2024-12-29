@@ -15,10 +15,10 @@ import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFact
 import org.ark.framework.infrastructure.entityfactoryframework.IEntityFactory;
 import org.ark.framework.infrastructure.repositoryframework.RepositoryBase;
 
-import com.rapidark.framework.commons.util.StringFormat;
-import com.rapidark.framework.data.db.connection.ConnectionPoolManager;
-import com.rapidark.framework.data.jdbc.BaseEntity;
-import com.rapidark.framework.data.jdbc.Entity;
+import com.arkxos.framework.commons.util.StringFormat;
+import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+import com.arkxos.framework.data.jdbc.BaseEntity;
+import com.arkxos.framework.data.jdbc.Entity;
 
 
 /**

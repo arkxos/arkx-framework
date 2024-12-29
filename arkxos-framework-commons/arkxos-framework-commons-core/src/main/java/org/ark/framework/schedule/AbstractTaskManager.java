@@ -1,7 +1,7 @@
 package org.ark.framework.schedule;
 
-import com.rapidark.framework.commons.collection.Mapx;
-import com.rapidark.framework.extend.IExtendItem;
+import com.arkxos.framework.commons.collection.Mapx;
+import com.arkxos.framework.extend.IExtendItem;
 
 /**
  * @class org.ark.framework.schedule.AbstractTaskManager

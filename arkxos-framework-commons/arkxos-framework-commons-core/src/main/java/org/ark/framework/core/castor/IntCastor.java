@@ -1,6 +1,6 @@
 package org.ark.framework.core.castor;
 
-import com.rapidark.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.ObjectUtil;
 
 /**
  * int 类型转换器

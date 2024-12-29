@@ -9,15 +9,15 @@ import org.ark.framework.orm.db.create.MYSQLTableCreator;
 import org.ark.framework.orm.db.create.OracleTableCreator;
 import org.ark.framework.orm.db.create.SYBASETableCreator;
 
-import com.rapidark.framework.commons.util.FileUtil;
-import com.rapidark.framework.commons.util.LogUtil;
-import com.rapidark.framework.commons.util.ObjectUtil;
-import com.rapidark.framework.commons.util.StringUtil;
-import com.rapidark.framework.data.db.connection.Connection;
-import com.rapidark.framework.data.db.dbtype.IDBType;
-import com.rapidark.framework.data.jdbc.Query;
-import com.rapidark.framework.data.jdbc.Session;
-import com.rapidark.framework.data.jdbc.SessionFactory;
+import com.arkxos.framework.commons.util.FileUtil;
+import com.arkxos.framework.commons.util.LogUtil;
+import com.arkxos.framework.commons.util.ObjectUtil;
+import com.arkxos.framework.commons.util.StringUtil;
+import com.arkxos.framework.data.db.connection.Connection;
+import com.arkxos.framework.data.db.dbtype.IDBType;
+import com.arkxos.framework.data.jdbc.Query;
+import com.arkxos.framework.data.jdbc.Session;
+import com.arkxos.framework.data.jdbc.SessionFactory;
 
 
 /**

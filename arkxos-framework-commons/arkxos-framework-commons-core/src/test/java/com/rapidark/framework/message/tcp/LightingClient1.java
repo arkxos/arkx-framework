@@ -1,9 +1,9 @@
 package com.rapidark.framework.message.tcp;
 
-import com.rapidark.framework.commons.util.UuidUtil;
-import com.rapidark.framework.message.tcp.client.NettyClient;
-import com.rapidark.framework.message.tcp.struct.NettyMessage;
-import com.rapidark.framework.message.tcp.struct.RequestMessage;
+import com.arkxos.framework.commons.util.UuidUtil;
+import com.arkxos.framework.message.tcp.client.NettyClient;
+import com.arkxos.framework.message.tcp.struct.NettyMessage;
+import com.arkxos.framework.message.tcp.struct.RequestMessage;
 
 /**
  * @author Darkness

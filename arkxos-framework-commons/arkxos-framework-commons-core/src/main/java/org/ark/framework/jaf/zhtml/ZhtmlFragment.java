@@ -1,6 +1,6 @@
 package org.ark.framework.jaf.zhtml;
 
-import com.rapidark.framework.commons.collection.Mapx;
+import com.arkxos.framework.commons.collection.Mapx;
 
 /**
  * @class org.ark.framework.jaf.zhtml.ZhtmlFragment

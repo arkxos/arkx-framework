@@ -3,7 +3,7 @@ package org.ark.framework.extend.actions;
 
 import java.util.ArrayList;
 
-import com.rapidark.framework.cosyui.web.RequestData;
+import com.arkxos.framework.cosyui.web.RequestData;
 
 /**
  * @class org.ark.framework.extend.actions.JSPContext
