@@ -108,7 +108,8 @@ public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, I
 
 	@Override
 	public void deleteByCriteria(CriteriaQueryWrapper<T> criteria) {
-		List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
+		List<T> data = entityRepository.findAll((root, criteriaQuery, criteriaBuilder) ->
+				QueryHelp.buildPredicate(root, criteria, criteriaBuilder));
 		for (T entity : data) {
 			delete(entity);
 		}
