@@ -17,7 +17,7 @@
 package com.arkxos.framework.data.mybatis;
 
 import com.arkxos.framework.data.mybatis.handler.ModelMetaObjectHandler;
-import com.arkxos.framework.data.mybatis.interceptor.ArkPaginationInnerInterceptor;
+//import com.arkxos.framework.data.mybatis.interceptor.ArkPaginationInnerInterceptor;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 
@@ -39,7 +39,7 @@ public class MybatisAutoConfiguration {
 	@Bean
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-		interceptor.addInnerInterceptor(new ArkPaginationInnerInterceptor());
+//		interceptor.addInnerInterceptor(new ArkPaginationInnerInterceptor());
 		return interceptor;
 	}
 
