@@ -114,6 +114,8 @@ public class SqlToyTemplateQuery implements RepositoryQuery {
 			}
 			Object singleData = result.get(0);
 			return Optional.ofNullable(singleData);
+		} else if ((!List.class.isAssignableFrom(objectType))) {
+			return result.get(0);
 		}
 
 		return result;
