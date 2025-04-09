@@ -1,7 +1,5 @@
 package com.arkxos.framework.message.mq;
 
-import com.arkxos.framework.message.mq.Consumer;
-import com.arkxos.framework.message.mq.MessageHandler;
 import com.arkxos.framework.message.tcp.struct.NettyMessage;
 import com.arkxos.framework.message.tcp.Config;
 

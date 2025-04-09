@@ -4,10 +4,6 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
 
-import com.arkxos.framework.data.fasttable.FastColumn;
-import com.arkxos.framework.data.fasttable.FastColumnType;
-import com.arkxos.framework.data.fasttable.RecordConverter;
-
 public class PersonRecordConverter extends RecordConverter<Person> {
 
 	FastColumn nameColumn = new FastColumn("name", FastColumnType.String, 10);

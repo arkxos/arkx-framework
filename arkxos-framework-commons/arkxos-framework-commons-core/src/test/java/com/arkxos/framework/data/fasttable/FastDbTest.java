@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.arkxos.framework.commons.util.SystemInfo;
 import com.arkxos.framework.commons.util.TimeWatch;
-import com.arkxos.framework.data.fasttable.FastDatabase;
 
 public class FastDbTest {
 
