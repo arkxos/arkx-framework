@@ -19,6 +19,8 @@ import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.aop.AfterAdvice;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.OrderUtils;
+import org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory;
+import org.springframework.data.jpa.repository.query.EscapeCharacter;
 import org.springframework.data.jpa.repository.query.QueryRewriterProvider;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
@@ -26,6 +28,7 @@ import org.springframework.data.repository.core.RepositoryInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
+import org.springframework.data.repository.query.ValueExpressionDelegate;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -54,11 +57,16 @@ public class BaseRepositoryFactory<T extends BaseEntity, I extends Serializable>
 
 	@Override
     protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
-    		QueryMethodEvaluationContextProvider evaluationContextProvider) {
+																   ValueExpressionDelegate valueExpressionDelegate) {
         return Optional.of(
         		TemplateQueryLookupStrategy.create(sqlToyLazyDao,
-        				entityManager, key, extractor, evaluationContextProvider,
-						QueryRewriterProvider.simple()));
+						entityManager,
+						key,
+						extractor,
+						new DefaultJpaQueryMethodFactory(extractor),
+						valueExpressionDelegate,
+						QueryRewriterProvider.simple(),
+						EscapeCharacter.DEFAULT));
     }
 	
 	/**

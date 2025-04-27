@@ -28,8 +28,8 @@
     <url>https://www.arkxit.com</url>
 
     <properties>
-        <!-- 项目版本号 -->
-        <revision>0.1.0</revision>
+        <!-- 项目版本号，revision属性用于子模块版本控制 -->
+        <revision>0.2.0</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -43,9 +43,11 @@
 		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
 
-        <spring-boot.version>3.3.6</spring-boot.version>
-        <spring-cloud.version>2023.0.3</spring-cloud.version>
-        <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
+        <spring-boot.version>3.4.4</spring-boot.version>
+        <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
+		<spring-boot-admin.version>3.4.5</spring-boot-admin.version>
+		<spring.authorization.version>1.4.3</spring.authorization.version>
 
 		<slf4j.version>1.7.25</slf4j.version>
 
@@ -54,9 +56,6 @@
 
 		<sqltoy.version>5.6.42</sqltoy.version>
 
-
-        <spring-boot-admin.version>3.3.4</spring-boot-admin.version>
-        <spring.authorization.version>1.3.3</spring.authorization.version>
         <screw.version>0.0.3</screw.version>
         <captcha.version>2.2.3</captcha.version>
         <aws.version>1.12.675</aws.version>
@@ -104,7 +103,7 @@
 
 		<maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
 		<maven-dockerfile-plugin.version>1.4.13</maven-dockerfile-plugin.version>
-		<flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
+
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
 		<maven.version>3.6.0</maven.version>
 		<maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
@@ -841,7 +840,8 @@
                 <artifactId>flatten-maven-plugin</artifactId>
                 <version>${flatten-maven-plugin.version}</version>
                 <configuration>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+					<!-- 改为支持版本变量替换的模式 -->
+                    <flattenMode>oss</flattenMode>
                     <updatePomFile>true</updatePomFile>
                 </configuration>
                 <executions>

@@ -6,7 +6,7 @@
 
     <groupId>com.arkxos.framework</groupId>
     <artifactId>arkxos-framework-common-bom</artifactId>
-    <version>${revision}</version>
+    <version>0.2.0</version>
     <packaging>pom</packaging>
 
     <name>arkxos-framework-common-bom</name>
@@ -15,7 +15,7 @@
 
     <properties>
         <!-- 项目版本号 -->
-        <revision>0.1.0</revision>
+        <revision>0.2.0</revision>
         <spring-boot.version>3.3.6</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
@@ -66,22 +66,22 @@
             <dependency>
                 <groupId>com.arkxos.framework</groupId>
                 <artifactId>arkxos-framework-common-feign</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.arkxos.framework</groupId>
                 <artifactId>arkxos-framework-common-swagger</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.arkxos.framework</groupId>
                 <artifactId>arkxos-framework-common-xss</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
 <!--            <dependency>-->
 <!--                <groupId>com.arkxos.framework</groupId>-->
 <!--                <artifactId>arkxos-common-excel</artifactId>-->
-<!--                <version>${revision}</version>-->
+<!--                <version>${project.version}</version>-->
 <!--            </dependency>-->
             <dependency>
                 <groupId>com.mysql</groupId>

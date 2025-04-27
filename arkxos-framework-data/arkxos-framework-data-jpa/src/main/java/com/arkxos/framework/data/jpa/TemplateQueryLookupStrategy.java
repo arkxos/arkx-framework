@@ -7,6 +7,8 @@ import jakarta.persistence.EntityManager;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jpa.provider.QueryExtractor;
 import org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory;
+import org.springframework.data.jpa.repository.query.EscapeCharacter;
+import org.springframework.data.jpa.repository.query.JpaQueryMethodFactory;
 import org.springframework.data.jpa.repository.query.QueryRewriterProvider;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.repository.core.NamedQueries;
@@ -18,6 +20,7 @@ import org.springframework.data.repository.query.RepositoryQuery;
 import com.arkxos.framework.data.jpa.annotation.TemplateQuery;
 import com.arkxos.framework.data.jpa.sqltemplate.freemarker.FreemarkerTemplateQuery;
 import com.arkxos.framework.data.jpa.sqltoy.SqlToyQueryLookupStrategy;
+import org.springframework.data.repository.query.ValueExpressionDelegate;
 
 /**
  * <p>模板查询策略</p>
@@ -27,18 +30,22 @@ import com.arkxos.framework.data.jpa.sqltoy.SqlToyQueryLookupStrategy;
  */
 public class TemplateQueryLookupStrategy extends SqlToyQueryLookupStrategy {
 
-    public TemplateQueryLookupStrategy(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager, Key key,
-									   QueryExtractor extractor,
-									   QueryMethodEvaluationContextProvider evaluationContextProvider,
-									   QueryRewriterProvider queryRewriterProvider) {
-        super(sqlToyLazyDao, entityManager, key, extractor, evaluationContextProvider, queryRewriterProvider);
+    public TemplateQueryLookupStrategy(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager, Key key, QueryExtractor extractor,
+									   JpaQueryMethodFactory queryMethodFactory,
+									   ValueExpressionDelegate valueExpressionDelegate,
+									   QueryRewriterProvider queryRewriterProvider,
+									   EscapeCharacter escapeCharacter) {
+        super(sqlToyLazyDao, entityManager, key, extractor, queryMethodFactory, valueExpressionDelegate,
+				queryRewriterProvider, escapeCharacter);
     }
 
-    public static QueryLookupStrategy create(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager, Key key,
-											 QueryExtractor extractor,
-											 QueryMethodEvaluationContextProvider evaluationContextProvider,
-											 QueryRewriterProvider queryRewriterProvider) {
-        return new TemplateQueryLookupStrategy(sqlToyLazyDao, entityManager, key, extractor, evaluationContextProvider, queryRewriterProvider);
+    public static QueryLookupStrategy create(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager, Key key, QueryExtractor extractor,
+											 JpaQueryMethodFactory queryMethodFactory,
+											 ValueExpressionDelegate valueExpressionDelegate,
+											 QueryRewriterProvider queryRewriterProvider,
+											 EscapeCharacter escapeCharacter) {
+        return new TemplateQueryLookupStrategy(sqlToyLazyDao, entityManager, key, extractor, queryMethodFactory, valueExpressionDelegate,
+				queryRewriterProvider, escapeCharacter);
     }
 
     @Override
