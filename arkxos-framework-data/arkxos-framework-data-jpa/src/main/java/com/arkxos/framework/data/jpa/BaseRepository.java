@@ -46,4 +46,8 @@ public interface BaseRepository<T, ID extends Serializable>
 	DataTable queryDataTable(String sql, Object... params);
 	
 	List<Map<String, Object>> queryMap(String sql, Object... params);
+
+	List<T> queryList(String sql, Object... params);
+
+	long queryForLong(String sql, Object... params);
 }

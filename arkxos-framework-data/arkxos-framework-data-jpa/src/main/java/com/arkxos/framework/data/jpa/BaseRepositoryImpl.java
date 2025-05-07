@@ -306,9 +306,24 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 				query.setParameter(i++, param);
 			}
 		}
-		
-        query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-		List rows = query.getResultList();  
+
+		query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		List rows = query.getResultList();
+		return rows;
+	}
+
+	@Override
+	public List<T> queryList(String sql, Object... params) {
+		Query query = entityManager.createNativeQuery(sql);
+		if(params != null) {
+			int i = 0;
+			for (Object param : params) {
+				query.setParameter(i++, param);
+			}
+		}
+
+		query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.TO_LIST);
+		List rows = query.getResultList();
 		return rows;
 	}
 	
@@ -319,7 +334,8 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 //		}
 //		return Long.valueOf(result+"");
 //	}
-	
+
+	@Override
 	public long queryForLong(String sql, Object... params)  {
 		List<Long> results = jdbcTemplate().query(sql, params, new RowMapperResultSetExtractor<Long>(new SingleColumnRowMapper<>(Long.class)));
 		if(results.isEmpty()) {
