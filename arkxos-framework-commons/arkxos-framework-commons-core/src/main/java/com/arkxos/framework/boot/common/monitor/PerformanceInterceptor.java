@@ -1,7 +1,6 @@
 package com.arkxos.framework.boot.common.monitor;
 
-import javax.annotation.Resource;
-
+import jakarta.annotation.Resource;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.stereotype.Service;

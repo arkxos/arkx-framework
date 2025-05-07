@@ -89,10 +89,10 @@
             <artifactId>orai18n</artifactId>
             <version>12.1.0.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.javamoney.moneta</groupId>
-            <artifactId>moneta-core</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.javamoney.moneta</groupId>-->
+<!--            <artifactId>moneta-core</artifactId>-->
+<!--        </dependency>-->
         <!--负载均衡
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -103,21 +103,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>-->
-        <!--声明式接口调用-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>bcpkix-jdk15on</artifactId>
-                    <groupId>org.bouncycastle</groupId>
-                </exclusion>
-				<exclusion>
-					<artifactId>commons-fileupload</artifactId>
-					<groupId>commons-fileupload</groupId>
-				</exclusion>
-			</exclusions>
-        </dependency>
+
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
@@ -222,10 +208,7 @@
 <!--            <artifactId>mapstruct-processor</artifactId>-->
 <!--            <scope>provided</scope>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc10</artifactId>
@@ -403,7 +386,7 @@
         <!--阿里数据库连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
             <version>${druid.version}</version>
         </dependency>
 
@@ -782,11 +765,11 @@
             <version>1.3.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.javamoney/moneta -->
-        <dependency>
-            <groupId>org.javamoney</groupId>
-            <artifactId>moneta</artifactId>
-            <version>1.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.javamoney</groupId>-->
+<!--            <artifactId>moneta</artifactId>-->
+<!--            <version>1.1</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.jboss.marshalling/jboss-marshalling -->
         <dependency>
@@ -895,9 +878,9 @@
 <!--            <artifactId>hibernate-java8</artifactId>-->
 <!--        </dependency>-->
         <dependency>
-            <groupId>org.jboss</groupId>
+			<groupId>io.smallrye</groupId>
             <artifactId>jandex</artifactId>
-            <version>1.1.0.Final</version>
+			<version>3.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>
@@ -1186,7 +1169,7 @@
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
-            <version>3.1.0</version>
+            <version>9.11.1</version>
         </dependency>
         <!-- <dependency> <groupId>cms</groupId> <artifactId>cms-tools</artifactId>
             <version>2.0</version> </dependency> -->
@@ -1216,11 +1199,7 @@
             <artifactId>leveldb</artifactId>
             <version>0.5</version>
         </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.0-rc1</version>
-        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>org.jboss.resteasy</groupId>-->
 <!--            <artifactId>resteasy-cache-core</artifactId>-->
