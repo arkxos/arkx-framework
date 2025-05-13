@@ -5,8 +5,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.arkxos.framework</groupId>
-		<artifactId>arkxos-framework</artifactId>
+		<artifactId>arkxos-framework-parent</artifactId>
 		<version>${revision}</version>
+		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>arkxos-framework-cloud</artifactId>

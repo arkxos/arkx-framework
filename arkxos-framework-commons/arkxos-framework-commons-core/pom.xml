@@ -383,12 +383,7 @@
                 <scope>import</scope>
             </dependency>
            -->
-        <!--阿里数据库连接池 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-3-starter</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
+
 
         <!-- 解析客户端操作系统、浏览器等 -->
         <dependency>
@@ -428,7 +423,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons.io.version}</version>
+            <version>${apache.commons-io.version}</version>
         </dependency>
 
         <!--文件上传工具类 -->

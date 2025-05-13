@@ -3,8 +3,9 @@
 
 	<parent>
 		<groupId>com.arkxos.framework</groupId>
-		<artifactId>arkxos-framework</artifactId>
+		<artifactId>arkxos-framework-parent</artifactId>
 		<version>${revision}</version>
+		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
     <artifactId>arkxos-framework-preloader</artifactId>
