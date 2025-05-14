@@ -80,7 +80,7 @@
 		<okhttp.version>4.9.0</okhttp.version>
 		<jetty.version>9.4.12.v20180830</jetty.version>
 
-		<jsoup.version>1.18.1</jsoup.version>
+		<jsoup.version>1.18.2</jsoup.version>
 		<!--自定义版本-->
 		<!--        <opencloud.common.version>12.2.0-SNAPSHOT</opencloud.common.version>-->
 		<!--        <opencloud.base-client.version>12.2.0-SNAPSHOT</opencloud.base-client.version>-->
