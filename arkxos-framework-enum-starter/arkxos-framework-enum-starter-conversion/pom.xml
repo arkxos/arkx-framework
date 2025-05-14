@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <mybatis-plus.version>3.5.1</mybatis-plus.version>
+<!--        <mybatis-plus.version>3.5.1</mybatis-plus.version>-->
     </properties>
 
 
