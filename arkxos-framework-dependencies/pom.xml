@@ -155,7 +155,7 @@
 		<alipay.version>4.9.153.ALL</alipay.version>
 
 		<springdoc.version>2.6.0</springdoc.version>
-		<swagger.core.version>2.2.25</swagger.core.version>
+		<swagger.core.version>2.2.26</swagger.core.version>
 
 		<swagger.fox.version>3.0.0</swagger.fox.version>
 		<dynamic-ds.version>4.3.1</dynamic-ds.version>
