@@ -119,7 +119,7 @@
 		<commons-beanutils.version>1.9.2</commons-beanutils.version>
 		<apache.commons-lang3.version>3.9</apache.commons-lang3.version>
 		<apache.commons-text.version>1.10.0</apache.commons-text.version>
-		<apache.commons-io.version>2.17.0</apache.commons-io.version>
+		<apache.commons-io.version>2.18.0</apache.commons-io.version>
 		<apache.commons.beanutils>1.9.4</apache.commons.beanutils>
 		<com.google.zxing.version>3.4.0</com.google.zxing.version>
 
