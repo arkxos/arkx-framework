@@ -164,7 +164,7 @@
 		<asm.version>7.1</asm.version>
 		<sms.version>3.0.0</sms.version>
 		<shardingsphere.version>5.4.1</shardingsphere.version>
-		<hutool.version>5.8.35</hutool.version>
+		<hutool.version>5.8.36</hutool.version>
 	</properties>
 
 	<!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
