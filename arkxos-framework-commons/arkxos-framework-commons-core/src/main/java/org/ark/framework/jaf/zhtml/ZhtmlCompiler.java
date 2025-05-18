@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.arkxos.framework.commons.collection.Treex;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
+import com.arkxos.framework.commons.collection.tree.Treex;
 import com.arkxos.framework.commons.util.Errorx;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.LogUtil;
@@ -73,24 +74,24 @@ public class ZhtmlCompiler {
 		LogUtil.info("Compile " + this.fileName + " cost " + (System.currentTimeMillis() - start) + " ms.");
 	}
 
-	public void compile(Treex<ZhtmlFragment> tree) {
+	public void compile(Treex<String, ZhtmlFragment> tree) {
 		if (Errorx.hasError()) {
 			return;
 		}
 		this.VarID = 0;
 		this.commandStart = this.commandList.size();
 
-		Treex.TreeNodeList list = tree.getRoot().getChildren();
+		ArrayList list = tree.getRoot().getChildren();
 		for (int i = 0; i < list.size(); i++) {
-			compileNode((Treex.TreeNode) list.get(i), this.commandList);
+			compileNode((TreeNode) list.get(i), this.commandList);
 		}
 		this.commandList.add("RETURN:");
 		for (String m : this.methodList)
 			this.commandList.add(m);
 	}
 
-	public void compileNode(Treex.TreeNode<ZhtmlFragment> node, ArrayList<String> parentList) {
-		ZhtmlFragment tf = (ZhtmlFragment) node.getData();
+	public void compileNode(TreeNode<String, ZhtmlFragment> node, ArrayList<String> parentList) {
+		ZhtmlFragment tf = (ZhtmlFragment) node.getValue();
 		if (tf.Type == 1) {
 			String[] arr = tf.FragmentText.split("\\n");
 			for (int i = 0; i < arr.length; i++) {
@@ -126,8 +127,8 @@ public class ZhtmlCompiler {
 			}
 	}
 
-	public void compileTag(Treex.TreeNode<ZhtmlFragment> node, ArrayList<String> parentList) throws Exception {
-		ZhtmlFragment tf = (ZhtmlFragment) node.getData();
+	public void compileTag(TreeNode<String, ZhtmlFragment> node, ArrayList<String> parentList) throws Exception {
+		ZhtmlFragment tf = (ZhtmlFragment) node.getValue();
 		ZhtmlTag tag = this.parser.getTag(tf.TagPrefix, tf.TagName);
 		String methodName = tf.TagPrefix + "_" + tf.TagName + "_" + this.VarID++;
 
@@ -150,15 +151,15 @@ public class ZhtmlCompiler {
 			list.add("BEFOREBODY:");
 			if (tag.isIterative()) {
 				list.add("FOR:");
-				Treex.TreeNodeList nodeList = node.getChildren();
+				ArrayList nodeList = node.getChildren();
 				for (int i = 0; i < nodeList.size(); i++) {
-					compileNode((Treex.TreeNode) nodeList.get(i), list);
+					compileNode((TreeNode) nodeList.get(i), list);
 				}
 				list.add("ENDFOR:");
 			} else {
-				Treex.TreeNodeList nodeList = node.getChildren();
+				ArrayList nodeList = node.getChildren();
 				for (int i = 0; i < nodeList.size(); i++) {
-					compileNode((Treex.TreeNode) nodeList.get(i), list);
+					compileNode((TreeNode) nodeList.get(i), list);
 				}
 			}
 			list.add("AFTERBODY:");

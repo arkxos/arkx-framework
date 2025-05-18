@@ -10,7 +10,8 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.collection.Treex;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
+import com.arkxos.framework.commons.collection.tree.Treex;
 import com.arkxos.framework.commons.util.lang.ClassUtil;
 
 public class TreexObjectSerializer implements ObjectSerializer {
@@ -28,7 +29,7 @@ public class TreexObjectSerializer implements ObjectSerializer {
             return;
         }
 
-        Treex<?> tree = (Treex<?>) object;
+        Treex<?, ?> tree = (Treex<?, ?>) object;
         Mapx<String, Object> mapedData = convertNodeToMap(tree.getRoot());
         boolean isWarpTreeNode = tree.isWarpTreeNode();
         String jsonString = "";
@@ -40,13 +41,13 @@ public class TreexObjectSerializer implements ObjectSerializer {
         out.write(jsonString);
     }
 
-    private Mapx<String, Object> convertNodeToMap(Treex.TreeNode<?> node) {
+    private Mapx<String, Object> convertNodeToMap(TreeNode<?, ?> node) {
         Mapx<String, Object> mapedData = new Mapx<>();
-        if (node.getData() != null) {
-            mapedData = ClassUtil.objectToMapx(node.getData());
+        if (node.getValue() != null) {
+            mapedData = ClassUtil.objectToMapx(node.getValue());
         }
         List<Mapx<String, Object>> childMapedDataList = new ArrayList<>();
-        for (Treex.TreeNode<?> child : node.getChildren()) {
+        for (TreeNode<?, ?> child : node.getChildren()) {
             childMapedDataList.add(convertNodeToMap(child));
         }
         mapedData.put("children", childMapedDataList);

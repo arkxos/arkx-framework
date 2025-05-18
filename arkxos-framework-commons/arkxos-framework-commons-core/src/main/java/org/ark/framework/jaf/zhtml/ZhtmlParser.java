@@ -4,12 +4,13 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.arkxos.framework.commons.collection.tree.TreeNode;
 import org.ark.framework.jaf.html.HtmlElement;
 
 import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.collection.Treex;
+import com.arkxos.framework.commons.collection.tree.Treex;
 import com.arkxos.framework.commons.util.Errorx;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.StringFormat;
@@ -25,8 +26,8 @@ import com.arkxos.framework.commons.util.StringFormat;
 public class ZhtmlParser {
 	private String fileName;
 	private String content;
-	private Treex<ZhtmlFragment> tree;
-	private Treex.TreeNode<ZhtmlFragment> currentParent;
+	private Treex<String, ZhtmlFragment> tree;
+	private TreeNode<String, ZhtmlFragment> currentParent;
 	private Mapx<String, String> prefixToURIMap = new Mapx();
 	private boolean sessionFlag = true;
 	private String contentType = null;
@@ -167,7 +168,7 @@ public class ZhtmlParser {
 				tf.Type = 4;
 				tf.FragmentText = this.content.substring(scriptStartIndex + "<%".length(), i - "%>".length() + 1);
 				tf.StartLineNo = scriptStartLineNo;
-				this.currentParent.addChild(tf);
+				this.currentParent.addChildByValue(tf);
 				htmlStartIndex = i + 1;
 				htmlStartLineNo = currentLineNo;
 				scriptStartIndex = -1;
@@ -183,7 +184,7 @@ public class ZhtmlParser {
 					tf.Type = 1;
 					tf.FragmentText = this.content.substring(htmlStartIndex, i);
 					tf.StartLineNo = htmlStartLineNo;
-					this.currentParent.addChild(tf);
+					this.currentParent.addChildByValue(tf);
 					htmlStartIndex = -1;
 				}
 				holderStartIndex = i;
@@ -196,7 +197,7 @@ public class ZhtmlParser {
 						tf.StartLineNo = currentLineNo;
 						tf.StartCharIndex = holderStartIndex;
 						tf.EndCharIndex = i;
-						this.currentParent.addChild(tf);
+						this.currentParent.addChildByValue(tf);
 						htmlStartIndex = i + 1;
 						htmlStartLineNo = currentLineNo;
 					} else {
@@ -239,7 +240,7 @@ public class ZhtmlParser {
 								tf.Type = 1;
 								tf.FragmentText = this.content.substring(htmlStartIndex, i);
 								tf.StartLineNo = htmlStartLineNo;
-								this.currentParent.addChild(tf);
+								this.currentParent.addChildByValue(tf);
 								htmlStartIndex = -1;
 							}
 							String tag = this.content.substring(i + 1, tagEnd).trim();
@@ -250,12 +251,12 @@ public class ZhtmlParser {
 								tf.StartCharIndex = i;
 								tf.EndCharIndex = tagEnd;
 								tf.FragmentText = null;
-								this.currentParent.addChild(tf);
+								this.currentParent.addChildByValue(tf);
 							} else {
 								tf.StartLineNo = currentLineNo;
 								tf.Type = 2;
 								tf.StartCharIndex = i;
-								Treex.TreeNode tn = this.currentParent.addChild(tf);
+								TreeNode tn = this.currentParent.addChildByValue(tf);
 								this.currentParent = tn;
 							}
 							parseTagAttributes(tf, tag);
@@ -270,7 +271,7 @@ public class ZhtmlParser {
 						}
 						if ((cs[(i + 1)] == '/') && (isRegisteredTagEnd(lowerTemplate, i))) {
 							String tagEnd = this.content.substring(i, this.content.indexOf(">", i) + 1);
-							ZhtmlFragment tf = (ZhtmlFragment) this.currentParent.getData();
+							ZhtmlFragment tf = (ZhtmlFragment) this.currentParent.getValue();
 							if (tf == null) {
 								Errorx.addError("Error on line " + currentLineNo + ":" + tagEnd + " no start!");
 								return;
@@ -286,7 +287,7 @@ public class ZhtmlParser {
 								tf2.Type = 1;
 								tf2.FragmentText = this.content.substring(htmlStartIndex, i);
 								tf2.StartLineNo = htmlStartLineNo;
-								this.currentParent.addChild(tf2);
+								this.currentParent.addChildByValue(tf2);
 								htmlStartIndex = -1;
 							}
 							tf.FragmentText = this.content.substring(getTagEnd(cs, tf.StartCharIndex + 1) + 1, i);
@@ -310,7 +311,7 @@ public class ZhtmlParser {
 						tf.Type = 1;
 						tf.FragmentText = this.content.substring(htmlStartIndex, i);
 						tf.StartLineNo = htmlStartLineNo;
-						this.currentParent.addChild(tf);
+						this.currentParent.addChildByValue(tf);
 						htmlStartIndex = -1;
 						scriptStartIndex = i;
 						scriptStartLineNo = currentLineNo;
@@ -328,11 +329,11 @@ public class ZhtmlParser {
 			tf.Type = 1;
 			tf.FragmentText = this.content.substring(htmlStartIndex);
 			tf.StartLineNo = htmlStartLineNo;
-			this.currentParent.addChild(tf);
+			this.currentParent.addChildByValue(tf);
 			htmlStartIndex = -1;
 		}
-		for (Treex.TreeNode tn : this.tree.iterator()) {
-			ZhtmlFragment tf = (ZhtmlFragment) tn.getData();
+		for (TreeNode tn : this.tree.iterator()) {
+			ZhtmlFragment tf = (ZhtmlFragment) tn.getValue();
 			if ((tf == null) || (tf.Type != 2) || (tf.EndCharIndex > 0))
 				continue;
 			Errorx.addError("Error on line " + tf.StartLineNo + ": <" + tf.TagPrefix + ":" + tf.TagName + "> no end");
@@ -471,7 +472,7 @@ public class ZhtmlParser {
 		tf.Attributes = map;
 	}
 
-	public Treex<ZhtmlFragment> getTree() {
+	public Treex<String, ZhtmlFragment> getTree() {
 		return this.tree;
 	}
 

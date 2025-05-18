@@ -6,9 +6,9 @@ import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.Treex;
-import com.arkxos.framework.commons.collection.Treex.TreeIterator;
-import com.arkxos.framework.commons.collection.Treex.TreeNode;
+import com.arkxos.framework.commons.collection.tree.Treex;
+import com.arkxos.framework.commons.collection.tree.TreeIterator;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
 import com.arkxos.framework.commons.lang.FastStringBuilder;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
@@ -112,8 +112,8 @@ public class TreeData {
 			i++;
 		}
 
-		Treex<DataRow> tree = Treex.dataTableToTree(dt, ta.getIdentifierColumnName(), ta.getParentIdentifierColumnName());
-		TreeIterator<DataRow> ti = tree.iterator();
+		Treex<String, DataRow> tree = Treex.dataTableToTree(dt, ta.getIdentifierColumnName(), ta.getParentIdentifierColumnName());
+		TreeIterator<String, DataRow> ti = tree.iterator();
 
 		String levelStr = ta.getParam("LevelStr");
 		levelSB = new StringBuilder(levelStr == null ? "" : levelStr);
@@ -122,34 +122,34 @@ public class TreeData {
 		Object[][] values = new Object[dt.getRowCount()][dt.getColumnCount()];
 		i = 0;
 		while (ti.hasNext()) {
-			TreeNode<DataRow> node = ti.next();
-			DataRow dr = node.getData();
+			TreeNode<String, DataRow> node = ti.next();
+			DataRow dr = node.getValue();
 			if (dr != null) {
 				String id = dr.getString(_ID);
 				if (id.equals(ta.getParentID())) {
 					lazyParentFlag = true;
 				}
-				if (!ta.isLazyLoad() && node.getLevel() > ta.getLevel()) {
+				if (!ta.isLazyLoad() && node.getDepth() > ta.getLevel()) {
 					expand = true;
 					continue;
 				}
-				if (ta.isLazyLoad() && !ta.isExpand() && node.getLevel() != (lazyParentFlag ? 2 : 1)) {
+				if (ta.isLazyLoad() && !ta.isExpand() && node.getDepth() != (lazyParentFlag ? 2 : 1)) {
 					continue;
 				}
 				attributeSB.delete(0, attributeSB.length());
-				if (node.hasChild()) {
+				if (node.hasChildren()) {
 					// 首次加载且等于最大层级
-					if (!ta.isLazyLoad() && node.getLevel() == ta.getLevel()) {
+					if (!ta.isLazyLoad() && node.getDepth() == ta.getLevel()) {
 						addAttribute("lazy", "1");
 						expand = false;
 					}
 					// 延迟加载
-					else if (ta.isLazyLoad() && !ta.isExpand() && node.getLevel() == (lazyParentFlag ? 2 : 1)) {
+					else if (ta.isLazyLoad() && !ta.isExpand() && node.getDepth() == (lazyParentFlag ? 2 : 1)) {
 						addAttribute("lazy", "1");
 						expand = false;
 					}
 				}
-				if (node.hasChild()) {
+				if (node.hasChildren()) {
 					addAttribute("treenodetype", "trunk");
 				} else {
 					addAttribute("treenodetype", "leaf");
@@ -157,7 +157,7 @@ public class TreeData {
 				if (node.isLast()) {
 					addAttribute("islast", "true");
 				}
-				addAttribute("level", node.getLevel());
+				addAttribute("level", node.getDepth());
 				addAttribute("id", ta.getID() + "_" + id);
 				addAttribute("parentID", dr.getString(_ParentID));
 
@@ -180,20 +180,20 @@ public class TreeData {
 	 * 3、处理单选多选
 	 * 4、将节点HTML包裹上合适的dd/dl
 	 */
-	private void rewriteData(TreeNode<DataRow> node) {
-		DataRow dr = node.getData();
-		TreeNode<DataRow> parent = node.getParent();
+	private void rewriteData(TreeNode<String, DataRow> node) {
+		DataRow dr = node.getValue();
+		TreeNode<String, DataRow> parent = node.getParent();
 
 		// 准备层级关系标识串
 		levelSB.delete(levelStrLength, levelSB.length());
 
-		char[] arr = new char[parent.getLevel()];
+		char[] arr = new char[parent.getDepth()];
 		int i = 0;
 		while (parent != null && !parent.isRoot()) {
-			if (ta.isLazyLoad() && lazyParentFlag && parent.getLevel() == 1) {// 延迟加载时父节点本身也会加载进来，单独作为第1层级
+			if (ta.isLazyLoad() && lazyParentFlag && parent.getDepth() == 1) {// 延迟加载时父节点本身也会加载进来，单独作为第1层级
 				break;
 			}
-			i = parent.getLevel() - 1;
+			i = parent.getDepth() - 1;
 			if (parent.isLast()) {
 				arr[i] = '0';
 			} else {
@@ -217,25 +217,25 @@ public class TreeData {
 
 		// 节点类型图标
 		sb.append(imagePrefix);
-		if (node.hasChild() && node.isLast() && expand) {
+		if (node.hasChildren() && node.isLast() && expand) {
 			levelSB.append('0');
 			addAttribute("expand", Branch_Last_Expand);
 			sb.append(Class_Branch).append(" ").append(Class_Branch_Last_Expand);
-		} else if (node.hasChild() && node.isLast() && !expand) {
+		} else if (node.hasChildren() && node.isLast() && !expand) {
 			levelSB.append('0');
 			addAttribute("expand", Branch_Last_NotExpand);
 			sb.append(Class_Branch).append(" ").append(Class_Branch_Last_NotExpand);
-		} else if (node.hasChild() && !node.isLast() && !expand) {
+		} else if (node.hasChildren() && !node.isLast() && !expand) {
 			levelSB.append('1');
 			addAttribute("expand", Branch_NotLast_NotExpand);
 			sb.append(Class_Branch).append(" ").append(Class_Branch_NotLast_NotExpand);
-		} else if (node.hasChild() && !node.isLast() && expand) {
+		} else if (node.hasChildren() && !node.isLast() && expand) {
 			levelSB.append('1');
 			addAttribute("expand", Branch_NotLast_Expand);
 			sb.append(Class_Branch).append(" ").append(Class_Branch_NotLast_Expand);
-		} else if (!node.hasChild() && node.isLast()) {
+		} else if (!node.hasChildren() && node.isLast()) {
 			sb.append(Class_Leaf_Last);
-		} else if (!node.hasChild() && !node.isLast()) {
+		} else if (!node.hasChildren() && !node.isLast()) {
 			sb.append(Class_Leaf_NotLast);
 		}
 		sb.append("'>");
@@ -251,9 +251,9 @@ public class TreeData {
 		if (ObjectUtil.empty(icon)) {
 			if (node.isRoot()) {
 				icon = ta.getRootIcon();
-			} else if (!node.hasChild()) {
+			} else if (!node.hasChildren()) {
 				icon = ta.getLeafIcon();
-			} else if (node.hasChild()) {
+			} else if (node.hasChildren()) {
 				icon = ta.getBranchIcon();
 			}
 		}
@@ -277,14 +277,14 @@ public class TreeData {
 		String checkbox = ta.getCheckbox();
 		String radio = ta.getRadio();
 		if (StringUtil.isNotEmpty(checkbox)) {
-			if (checkbox.equals("all") || checkbox.equals("true") || checkbox.equals("branch") && node.hasChild()
-					|| checkbox.equals("leaf") && !node.hasChild()) {
+			if (checkbox.equals("all") || checkbox.equals("true") || checkbox.equals("branch") && node.hasChildren()
+					|| checkbox.equals("leaf") && !node.hasChildren()) {
 				sb.append(imagePrefix);
 				sb.append(Class_CheckBox).append("'>");
 			}
 		} else if (StringUtil.isNotEmpty(radio)) {
-			if (radio.equals("all") || radio.equals("true") || radio.equals("branch") && node.hasChild() || radio.equals("leaf")
-					&& !node.hasChild()) {
+			if (radio.equals("all") || radio.equals("true") || radio.equals("branch") && node.hasChildren() || radio.equals("leaf")
+					&& !node.hasChildren()) {
 				sb.append("<input type='radio' value='").append(dr.getString(_ID)).append("'").append(" name='").append(ta.getID())
 						.append("'>");
 			}
@@ -292,24 +292,24 @@ public class TreeData {
 		dr.set(_NodeIcons, sb.toStringAndClose());
 		// 包裹上dl/dd
 		boolean leafFlag = false;
-		if (!ta.isLazyLoad() && node.getLevel() == ta.getLevel()) {
+		if (!ta.isLazyLoad() && node.getDepth() == ta.getLevel()) {
 			// 首次加载且等于最大层级
 			leafFlag = true;
-		} else if (ta.isLazyLoad() && !ta.isExpand() && node.getLevel() == (lazyParentFlag ? 2 : 1)) {
+		} else if (ta.isLazyLoad() && !ta.isExpand() && node.getDepth() == (lazyParentFlag ? 2 : 1)) {
 			// 延迟加载
 			leafFlag = true;
 		}
 		dr.set(_NodeWrapStart, "<dl>");
 		sb.clear();
-		if (!node.hasChild() || leafFlag) {
+		if (!node.hasChildren() || leafFlag) {
 			sb.append("<dd style='display:none'>");
 			if (node.isLast()) {
 				parent = node.getParent();
 				while (!parent.isRoot() && parent.isLast()) {
 					parent = parent.getParent();
 				}
-				int level = parent.isRoot() ? 1 : parent.getLevel();
-				for (int j = 0; j < node.getLevel() - level; j++) {
+				int level = parent.isRoot() ? 1 : parent.getDepth();
+				for (int j = 0; j < node.getDepth() - level; j++) {
 					sb.append("</dd></dl>");
 				}
 			}

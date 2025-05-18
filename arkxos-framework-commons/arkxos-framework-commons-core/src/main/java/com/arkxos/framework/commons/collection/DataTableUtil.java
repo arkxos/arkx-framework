@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.arkxos.framework.commons.collection.tree.TreeIterator;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
+import com.arkxos.framework.commons.collection.tree.Treex;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -559,14 +562,14 @@ public class DataTableUtil {
 			dt.deleteColumn("_TreeLevel");
 		}
 		dt.insertColumn(DataColumn.intColumn("_TreeLevel"));
-		Treex<DataRow> tree = Treex.dataTableToTree(dt, identifierColumnName, parentIdentifierColumnName);
-		Treex.TreeIterator<DataRow> ti = tree.iterator();
+		Treex<String, DataRow> tree = Treex.dataTableToTree(dt, identifierColumnName, parentIdentifierColumnName);
+		TreeIterator<String, DataRow> ti = tree.iterator();
 		DataTable dest = new DataTable(dt.getDataColumns(), null);
 		while (ti.hasNext()) {
-			Treex.TreeNode<DataRow> node = ti.next();
-			DataRow dr = node.getData();// inner_code:null,parent_inner_code:null
+			TreeNode<String, DataRow> node = ti.next();
+			DataRow dr = node.getValue();// inner_code:null,parent_inner_code:null
 			if (dr != null) {
-				dr.set("_TreeLevel", node.getLevel());
+				dr.set("_TreeLevel", node.getDepth());
 				dr.set("inner_code", dr.get("tid"));
 				dr.set("parent_inner_code", dr.get("tpid"));
 				dest.insertRow(dr);

@@ -1,9 +1,9 @@
 package com.arkxos.framework.common.utils;
 
+import com.arkxos.framework.commons.collection.tree.TreeNode;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.arkxos.framework.common.model.TreeNode;
 
 /**
  * 树工具类
@@ -16,7 +16,7 @@ public class TreeUtils {
      * @return
      */
     public static <T extends TreeNode> List<T> bulid(List<T> treeNodes, Object root) {
-        List<T> trees = new ArrayList<T>();
+        List<T> trees = new ArrayList<>();
 
         for (T treeNode : treeNodes) {
             if (root.equals(treeNode.getParentId())) {
@@ -26,9 +26,9 @@ public class TreeUtils {
             for (T it : treeNodes) {
                 if (it.getParentId() == treeNode.getId()) {
                     if (treeNode.getChildren() == null) {
-                        treeNode.setChildren(new ArrayList<TreeNode>());
+                        treeNode.setChildren(new ArrayList<>());
                     }
-                    treeNode.add(it);
+                    treeNode.addChildByValue(it);
                 }
             }
         }
@@ -61,9 +61,9 @@ public class TreeUtils {
         for (T it : treeNodes) {
             if (treeNode.getId() == it.getParentId()) {
                 if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<TreeNode>());
+                    treeNode.setChildren(new ArrayList());
                 }
-                treeNode.add(findChildren(it, treeNodes));
+                treeNode.addChildByValue(findChildren(it, treeNodes));
             }
         }
         return treeNode;

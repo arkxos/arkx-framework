@@ -19,9 +19,8 @@ import org.xml.sax.SAXException;
 
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.collection.Treex;
-import com.arkxos.framework.commons.collection.Treex.TreeNode;
-import com.arkxos.framework.commons.collection.Treex.TreeNodeList;
+import com.arkxos.framework.commons.collection.tree.Treex;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
 
 
 /**
@@ -37,7 +36,7 @@ import com.arkxos.framework.commons.collection.Treex.TreeNodeList;
 @Deprecated
 public class XMLLoader {
 	
-	private Treex<NodeData> tree = new Treex<>();
+	private Treex<String, NodeData> tree = new Treex<>();
 
 	/**
 	 * 加载xml文件路径，如果是文件，直接加载，如果是文件夹，加载文件夹下的所有xml结尾的文件
@@ -109,7 +108,7 @@ public class XMLLoader {
 	}
 
 	public void clear() {
-		this.tree = new Treex<NodeData>();
+		this.tree = new Treex<String, NodeData>();
 	}
 
 	/**
@@ -139,14 +138,14 @@ public class XMLLoader {
 	}
 
 	/**
-	 * 将xml节点转换成Treex.TreeNode<NodeData>
+	 * 将xml节点转换成TreeNode<String, NodeData>
 	 * 
 	 * @author Darkness
 	 * @date 2012-8-9 下午2:14:07 
 	 * @version V1.0
 	 */
 	@SuppressWarnings("unchecked")
-	private void convertElement(Element ele, Treex.TreeNode<NodeData> parent) {
+	private void convertElement(Element ele, TreeNode<String, NodeData> parent) {
 		String name = ele.getName().toLowerCase();
 		NodeData data = new NodeData();
 		data.TagName = name;
@@ -158,7 +157,7 @@ public class XMLLoader {
 			map.put(attr.getName(), attr.getValue());
 		}
 		data.Attributes = map;
-		TreeNode<NodeData> node = parent.addChild(data);
+		TreeNode<String, NodeData> node = parent.addChildByValue(data);
 		data.treeNode = node;
 		List<Element> listElement = ele.elements();
 		for (int i = 0; i < listElement.size(); i++) {
@@ -176,8 +175,8 @@ public class XMLLoader {
 	 */
 	public NodeData[] getNodeDataList(String path) {
 		String[] arr = path.split("\\.");
-		TreeNode<NodeData> current = this.tree.getRoot();
-		ArrayList<TreeNode<NodeData>> list = new ArrayList<TreeNode<NodeData>>();
+		TreeNode<String, NodeData> current = this.tree.getRoot();
+		ArrayList<TreeNode<String, NodeData>> list = new ArrayList<TreeNode<String, NodeData>>();
 		list.add(current);
 		for (int i = 0; i < arr.length; i++) {
 			list = getChildren(list, arr[i]);
@@ -190,19 +189,19 @@ public class XMLLoader {
 		}
 		NodeData[] datas = new NodeData[list.size()];
 		for (int i = 0; i < list.size(); i++) {
-			TreeNode<NodeData> node = list.get(i);
-			datas[i] = node.getData();
+			TreeNode<String, NodeData> node = list.get(i);
+			datas[i] = node.getValue();
 		}
 		return datas;
 	}
 
-	private static ArrayList<Treex.TreeNode<NodeData>> getChildren(ArrayList<Treex.TreeNode<NodeData>> parentList, String pathPart) {
-		ArrayList<Treex.TreeNode<NodeData>> list = new ArrayList<Treex.TreeNode<NodeData>>();
+	private static ArrayList<TreeNode<String, NodeData>> getChildren(ArrayList<TreeNode<String, NodeData>> parentList, String pathPart) {
+		ArrayList<TreeNode<String, NodeData>> list = new ArrayList<TreeNode<String, NodeData>>();
 		for (int i = 0; i < parentList.size(); i++) {
-			TreeNode<NodeData> node = parentList.get(i);
-			TreeNodeList<NodeData> nodes = node.getChildren();
+			TreeNode<String, NodeData> node = parentList.get(i);
+			List<TreeNode<String, NodeData>> nodes = node.getChildren();
 			for (int j = 0; j < nodes.size(); j++) {
-				NodeData data = nodes.get(j).getData();
+				NodeData data = nodes.get(j).getValue();
 				if ((pathPart.equals("*")) || (data.getTagName().equalsIgnoreCase(pathPart))) {
 					list.add(nodes.get(j));
 				}
@@ -252,7 +251,7 @@ public class XMLLoader {
 		private Mapx<String, String> Attributes = new CaseIgnoreMapx<>();
 		private String TagName;
 		private String Body;
-		private Treex.TreeNode<NodeData> treeNode;
+		private TreeNode<String, NodeData> treeNode;
 
 		public Mapx<String, String> getAttributes() {
 			return this.Attributes;
@@ -266,21 +265,21 @@ public class XMLLoader {
 			return this.Body;
 		}
 
-		public Treex.TreeNode<NodeData> getTreeNode() {
+		public TreeNode<String, NodeData> getTreeNode() {
 			return this.treeNode;
 		}
 
 		public NodeData[] getChildrenDataList() {
 			NodeData[] arr = new NodeData[this.treeNode.getChildren().size()];
 			for (int i = 0; i < this.treeNode.getChildren().size(); i++) {
-				arr[i] = this.treeNode.getChildren().get(i).getData();
+				arr[i] = this.treeNode.getChildren().get(i).getValue();
 			}
 			return arr;
 		}
 
 		public NodeData[] getChildrenDataList(String path) {
 			String[] arr = path.split("\\.");
-			ArrayList<Treex.TreeNode<NodeData>> list = new ArrayList<>();
+			ArrayList<TreeNode<String, NodeData>> list = new ArrayList<>();
 			list.add(this.treeNode);
 			for (int i = 0; i < arr.length; i++) {
 				list = XMLLoader.getChildren(list, arr[i]);
@@ -293,8 +292,8 @@ public class XMLLoader {
 			}
 			NodeData[] datas = new NodeData[list.size()];
 			for (int i = 0; i < list.size(); i++) {
-				TreeNode<NodeData> node = list.get(i);
-				datas[i] = ((NodeData) node.getData());
+				TreeNode<String, NodeData> node = list.get(i);
+				datas[i] = ((NodeData) node.getValue());
 			}
 			return datas;
 		}

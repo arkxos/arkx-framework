@@ -8,8 +8,8 @@ import java.util.List;
 import com.arkxos.framework.Config;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.collection.Treex;
-import com.arkxos.framework.commons.collection.Treex.TreeNode;
+import com.arkxos.framework.commons.collection.tree.Treex;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.StringFormat;
 import com.arkxos.framework.cosyui.html.HtmlElement;
@@ -33,9 +33,9 @@ public class TemplateParser {
 
 	protected String html;
 
-	protected Treex<TemplateFragment> tree;
+	protected Treex<String, TemplateFragment> tree;
 
-	protected TreeNode<TemplateFragment> current;
+	protected TreeNode<String, TemplateFragment> current;
 
 	protected boolean sessionFlag = true;// 本页面是否产生session
 
@@ -114,8 +114,8 @@ public class TemplateParser {
 			includeFiles.put(file, it.LastModified);
 			includeFiles.putAll(it.IncludeTemplateParser.getIncludeFiles());
 
-			for (TreeNode<TemplateFragment> node : it.IncludeTemplateParser.getTree().getRoot().getChildren()) {
-				current.addChildNode(node);
+			for (TreeNode<String, TemplateFragment> node : it.IncludeTemplateParser.getTree().getRoot().getChildren()) {
+				current.addChild(node);
 			}
 		}
 	}
@@ -250,7 +250,7 @@ public class TemplateParser {
 		tf.Attributes = new CaseIgnoreMapx<String, String>();
 		tf.TagPrefix = prefix;
 		tf.TagName = tagName;
-		current = current.addChild(tf);
+		current = current.addChildByValue(tf);
 
 		start = index;
 
@@ -290,8 +290,8 @@ public class TemplateParser {
 	int expectTagEnd(int start, String name) {
 		String prefix = name.substring(0, name.indexOf(':'));
 		String tagName = name.substring(name.indexOf(':') + 1);
-		if (current.getData() == null || current.getData().TagPrefix == null || !current.getData().TagPrefix.equalsIgnoreCase(prefix)
-				|| !current.getData().TagName.equals(tagName)) {
+		if (current.getValue() == null || current.getValue().TagPrefix == null || !current.getValue().TagPrefix.equalsIgnoreCase(prefix)
+				|| !current.getValue().TagName.equals(tagName)) {
 			return start + 2;
 		}
 		int index = XMLParser.indexOf(cs, '>', start + 2);
@@ -299,7 +299,7 @@ public class TemplateParser {
 			throw new HtmlParseException("Tag not complete correctly, line number is " + XMLParser.getLineNum(lineNumList, cs, start));
 		}
 		addText(lastText, start);
-		TemplateFragment tf = current.getData();
+		TemplateFragment tf = current.getValue();
 		tf.setFragmentText(html.substring(tf.EndCharIndex, start));;
 		tf.EndCharIndex = index + 1;
 		tf.TagSource = html.substring(tf.StartCharIndex, tf.EndCharIndex);
@@ -317,7 +317,7 @@ public class TemplateParser {
 			tf.StartLineNo = XMLParser.getLineNum(lineNumList, cs, start);
 			tf.StartCharIndex = start;
 			tf.EndCharIndex = index + 2;
-			current.addChild(tf);
+			current.addChildByValue(tf);
 			if (XMLParser.expect(cs, start + 2, "@") > 0) {
 				parseDirective(tf.getFragmentText());
 			}
@@ -349,7 +349,7 @@ public class TemplateParser {
 					tf.StartLineNo = XMLParser.getLineNum(lineNumList, cs, start);
 					tf.StartCharIndex = start;
 					tf.EndCharIndex = j + 1;
-					current.addChild(tf);
+					current.addChildByValue(tf);
 					return lastText = j + 1;
 				}
 			} else if (h == '\n') {
@@ -370,7 +370,7 @@ public class TemplateParser {
 				tf.StartLineNo = XMLParser.getLineNum(lineNumList, cs, start);
 				tf.StartCharIndex = start;
 				tf.EndCharIndex = j + 1;
-				current.addChild(tf);
+				current.addChildByValue(tf);
 				return lastText = j + 1;
 			}
 		}
@@ -397,10 +397,10 @@ public class TemplateParser {
 		tf.StartLineNo = XMLParser.getLineNum(lineNumList, cs, start);
 		tf.StartCharIndex = start;
 		tf.EndCharIndex = end;
-		current.addChild(tf);
+		current.addChildByValue(tf);
 	}
 
-	public Treex<TemplateFragment> getTree() {
+	public Treex<String, TemplateFragment> getTree() {
 		return tree;
 	}
 

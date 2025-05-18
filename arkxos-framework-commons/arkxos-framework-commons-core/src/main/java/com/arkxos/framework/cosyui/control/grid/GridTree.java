@@ -5,7 +5,9 @@ import com.arkxos.framework.commons.collection.DataColumn;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.collection.Treex;
+import com.arkxos.framework.commons.collection.tree.TreeIterator;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
+import com.arkxos.framework.commons.collection.tree.Treex;
 import com.arkxos.framework.commons.lang.FastStringBuilder;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.ObjectUtil;
@@ -187,30 +189,30 @@ public class GridTree extends AbstractGridFeature {
 		if (!dt.containsColumn("_RowNo")) {
 			dt.insertColumn("_RowNo");
 		}
-		Treex<DataRow> tree = Treex.dataTableToTree(dt, gtp.IdentifierColumnName, gtp.ParentIdentifierColumnName);
-		Treex.TreeIterator<DataRow> ti = tree.iterator();
+		Treex<String, DataRow> tree = Treex.dataTableToTree(dt, gtp.IdentifierColumnName, gtp.ParentIdentifierColumnName);
+		TreeIterator<String, DataRow> ti = tree.iterator();
 		DataTable dest = new DataTable(dt.getDataColumns(), null);
 		while (ti.hasNext()) {
-			Treex.TreeNode<DataRow> node = ti.next();
-			DataRow dr = (DataRow) node.getData();
+			TreeNode<String, DataRow> node = ti.next();
+			DataRow dr = (DataRow) node.getValue();
 			if (dr != null) {
-				dr.set(TreeNodeHasChild, Boolean.valueOf(node.hasChild()));
+				dr.set(TreeNodeHasChild, node.hasChildren());
 				if ((gtp.isLazyLoad) && (gtp.ParentID != null)) {
 					// 如果是延迟载入的子节点
 					if ((dr.getString(gtp.ParentIdentifierColumnName).equalsIgnoreCase(gtp.ParentID))
 							&& (!dr.getString(gtp.IdentifierColumnName).equalsIgnoreCase(gtp.ParentID))) {
-						dr.set(TreeLevelField, Integer.valueOf(gtp.ParentLevel + 1));
+						dr.set(TreeLevelField, gtp.ParentLevel + 1);
 						dest.insertRow(dr);
 					}
-				} else if (node.getLevel() <= gtp.StartLevel) {
+				} else if (node.getDepth() <= gtp.StartLevel) {
 					// 如果只载入特定层级
-					dr.set(TreeLevelField, Integer.valueOf(node.getLevel()));
+					dr.set(TreeLevelField, node.getDepth());
 					dest.insertRow(dr);
 				}
 			}
 		}
 		for (int j = 0; j < dest.getRowCount(); j++) {
-			dest.set(j, "_RowNo", new Integer(j + 1));// 这是因为GridTree在GridRow之后，GridRow已经设定好的RowNo会被打乱
+			dest.set(j, "_RowNo", j + 1);// 这是因为GridTree在GridRow之后，GridRow已经设定好的RowNo会被打乱
 		}
 		return dest;
 	}

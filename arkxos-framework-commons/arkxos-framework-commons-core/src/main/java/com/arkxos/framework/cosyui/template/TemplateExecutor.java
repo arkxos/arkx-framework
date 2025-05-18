@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.collection.Treex;
+import com.arkxos.framework.commons.collection.tree.Treex;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 
 /**
@@ -33,7 +33,7 @@ public class TemplateExecutor implements Serializable {
 
 	protected ITemplateManagerContext managerContext;
 
-	protected Treex<AbstractTag> tree = new Treex<>();
+	protected Treex<String, AbstractTag> tree = new Treex<>();
 
 	protected Mapx<String, Object> attributes = new Mapx<>();
 
@@ -93,7 +93,7 @@ public class TemplateExecutor implements Serializable {
 		this.lastCheckTime = lastCheckTime;
 	}
 
-	public Treex<AbstractTag> getTagTree() {
+	public Treex<String, AbstractTag> getTagTree() {
 		return tree;
 	}
 

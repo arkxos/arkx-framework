@@ -7,9 +7,8 @@ import java.util.List;
 
 import org.ark.framework.jaf.zhtml.NotPrecompileException;
 
-import com.arkxos.framework.commons.collection.Treex;
-import com.arkxos.framework.commons.collection.Treex.TreeNode;
-import com.arkxos.framework.commons.collection.Treex.TreeNodeList;
+import com.arkxos.framework.commons.collection.tree.Treex;
+import com.arkxos.framework.commons.collection.tree.TreeNode;
 import com.arkxos.framework.commons.util.Errorx;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.LogUtil;
@@ -86,7 +85,7 @@ public class TemplateCompiler {
 
 	public void compile(TemplateParser parser) {
 		this.parser = parser;
-		Treex<TemplateFragment> tree = parser.getTree();
+		Treex<String, TemplateFragment> tree = parser.getTree();
 		if (Errorx.hasError()) {
 			return;
 		}
@@ -101,15 +100,15 @@ public class TemplateCompiler {
 		executor.includeFiles = parser.getIncludeFiles();
 
 		// execute()方法
-		TreeNodeList<TemplateFragment> list = tree.getRoot().getChildren();
+		List<TreeNode<String, TemplateFragment>> list = tree.getRoot().getChildren();
 		for (int i = 0; i < list.size(); i++) {
 			compileNode(list.get(i), commandList, executor.tree.getRoot());
 		}
 		executor.init(commandList);
 	}
 
-	protected void compileNode(TreeNode<TemplateFragment> node, List<ITemplateCommand> parentList, TreeNode<AbstractTag> parentTagNode) {
-		TemplateFragment tf = node.getData();
+	protected void compileNode(TreeNode<String, TemplateFragment> node, List<ITemplateCommand> parentList, TreeNode<String, AbstractTag> parentTagNode) {
+		TemplateFragment tf = node.getValue();
 		if (tf.Type == TemplateFragment.FRAGMENT_HTML) {
 			parentList.add(new PrintCommand(tf.getFragmentText()));
 		} else if (tf.Type == TemplateFragment.FRAGMENT_EXPRESSION) {
@@ -131,9 +130,9 @@ public class TemplateCompiler {
 		}
 	}
 
-	protected void compileTag(TreeNode<TemplateFragment> node, List<ITemplateCommand> parentList, TreeNode<AbstractTag> parentTagNode)
+	protected void compileTag(TreeNode<String, TemplateFragment> node, List<ITemplateCommand> parentList, TreeNode<String, AbstractTag> parentTagNode)
 			throws Exception {
-		TemplateFragment tf = node.getData();
+		TemplateFragment tf = node.getValue();
 		AbstractTag tag = managerContext.createNewTagInstance(tf.TagPrefix, tf.TagName);
 		if (fileName != null) {
 			int lastIndex = fileName.lastIndexOf("/");
@@ -144,16 +143,16 @@ public class TemplateCompiler {
 		for (String k : tf.Attributes.keySet()) {
 			tag.setAttribute(k, tf.Attributes.get(k));
 		}
-		TreeNode<AbstractTag> tagNode = parentTagNode.addChild(tag);
-		tag.setParent(parentTagNode.getData());
+		TreeNode<String, AbstractTag> tagNode = parentTagNode.addChildByValue(tag);
+		tag.setParent(parentTagNode.getValue());
 		ArrayList<ITemplateCommand> list = new ArrayList<>();
 		boolean hasBody = StringUtil.isNotEmpty(tf.getFragmentText());
 		if (hasBody) {
-			for (TreeNode<TemplateFragment> child : node.getChildren()) {
+			for (TreeNode<String, TemplateFragment> child : node.getChildren()) {
 				compileNode(child, list, tagNode);
 			}
 		}
-		TagCommand invoke = new TagCommand(tag, list, node.getLevel(), hasBody);
+		TagCommand invoke = new TagCommand(tag, list, node.getDepth(), hasBody);
 		if (tag.isKeepTagSource()) {
 			tag.tagSource = tf.TagSource;// 如果标签在被包含的文件里，则使用parser.getContent.substring();会取不到标签源代码
 			if (hasBody) {
