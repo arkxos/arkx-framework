@@ -89,7 +89,7 @@ public class Treex<K, T> implements Iterable<TreeNode<K, T>>, Serializable {
 		TreeIterator<K, T> ti = this.iterator();
 		while (ti.hasNext()) {
 			TreeNode<K, T> tn = ti.nextNode();
-			TreeNode<K, T> p = tn.getParent();
+			TreeNode<K, T> p = tn.getParentNode();
 			String str = "";
 			while (p != null && !p.isRoot()) {
 				if (p.isLast()) {
@@ -97,7 +97,7 @@ public class Treex<K, T> implements Iterable<TreeNode<K, T>>, Serializable {
 				} else {
 					str = "│ " + str;
 				}
-				p = p.getParent();
+				p = p.getParentNode();
 			}
 			sb.append(str);
 			if (!tn.isRoot()) {

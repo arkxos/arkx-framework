@@ -56,11 +56,11 @@ public class TreeIterator<K, T> implements Iterator<TreeNode<K, T>>, Iterable<Tr
 			next = next.getChildren().get(0);
 		} else {
 			while (next.getNextSibling() == null) {
-				if (next.getParent().isRoot()) {
+				if (next.getParentNode().isRoot()) {
 					next = null;
 					return last;
 				} else {
-					next = next.getParent();
+					next = next.getParentNode();
 				}
 			}
 			next = next.getNextSibling();
@@ -86,7 +86,7 @@ public class TreeIterator<K, T> implements Iterator<TreeNode<K, T>>, Iterable<Tr
 		if (last == null) {
 			throw new IllegalStateException();
 		}
-		last.getParent().getChildren().remove(last);
+		last.getParentNode().getChildren().remove(last);
 		last = null;
 	}
 

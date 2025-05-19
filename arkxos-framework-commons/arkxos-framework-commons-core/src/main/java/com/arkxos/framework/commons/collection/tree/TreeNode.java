@@ -2,15 +2,14 @@ package com.arkxos.framework.commons.collection.tree;
 
 
 
+import com.arkxos.framework.commons.collection.tree.jackson.TreeNodeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * 树形结构中的一个节点
@@ -54,6 +53,7 @@ import java.util.Queue;
  * @date 2025-05-18 18:02
  * @since 1.0
  */
+@JsonSerialize(using = TreeNodeSerializer.class)
 @Getter
 @Setter
 public class TreeNode<K, T> implements Serializable {
@@ -76,6 +76,8 @@ public class TreeNode<K, T> implements Serializable {
 	 */
 	private String name;
 
+	private String nodeType = "node";
+
 	/**
 	 * 节点路径，用于表示节点在树形结构中的路径
 	 */
@@ -86,10 +88,14 @@ public class TreeNode<K, T> implements Serializable {
 	 */
 	private T value;
 
+	private Map<String, Object> extraDatas = new HashMap<>();
+
 	/**
 	 * 父节点对象
 	 */
-	private TreeNode<K, T> parent;
+	private TreeNode<K, T> parentNode;
+
+	private Boolean isParent;
 
 	/**
 	 * 子节点列表
@@ -118,9 +124,9 @@ public class TreeNode<K, T> implements Serializable {
 		this.children = new ArrayList<>();
 	}
 
-	public TreeNode(K id, String name, T value, TreeNode<K, T> parent) {
+	public TreeNode(K id, String name, T value, TreeNode<K, T> parentNode) {
 		this(id, name, value);
-		this.parent = parent;
+		this.parentNode = parentNode;
 	}
 
 	public void setValue(T value) {
@@ -136,7 +142,7 @@ public class TreeNode<K, T> implements Serializable {
 
 	public TreeNode<K, T> addChild(TreeNode<K, T> child) {
 		child.setParentId(this.id);
-		child.parent = this;
+		child.parentNode = this;
 
 		child.depth = depth + 1;
 		child.position = children.size();
@@ -146,6 +152,10 @@ public class TreeNode<K, T> implements Serializable {
 	}
 
 	// ----------------- 基础操作方法 -----------------
+
+	public void addExtraData(String key, Object value) {
+		extraDatas.put(key, value);
+	}
 
 	/**
 	 * 为本节点添加一个子节点，并为子节点指定节点数据
@@ -171,7 +181,7 @@ public class TreeNode<K, T> implements Serializable {
 				tn.positionMinusOne();
 			}
 
-			child.setParent(null);
+			child.setParentNode(null);
 		}
 
 		return removed;
@@ -219,31 +229,31 @@ public class TreeNode<K, T> implements Serializable {
 		if (position == 0) {
 			return null;
 		}
-		return parent.getChildren().get(position - 1);
+		return parentNode.getChildren().get(position - 1);
 	}
 
 	/**
 	 * 下一个节点,没有下一个节点则返回null
 	 */
 	public TreeNode<K, T> getNextSibling() {
-		if (parent == null || position == parent.getChildren().size() - 1) {
+		if (parentNode == null || position == parentNode.getChildren().size() - 1) {
 			return null;
 		}
-		return parent.getChildren().get(position + 1);
+		return parentNode.getChildren().get(position + 1);
 	}
 
 	/**
 	 * 是否是根节点
 	 */
 	public boolean isRoot() {
-		return parent == null;
+		return parentNode == null;
 	}
 
 	/**
 	 * 是否是最后一个节点
 	 */
 	public boolean isLast() {
-		return parent == null || position == parent.getChildren().size() - 1;
+		return parentNode == null || position == parentNode.getChildren().size() - 1;
 	}
 
 	/**
@@ -268,7 +278,7 @@ public class TreeNode<K, T> implements Serializable {
 	 * 清空所有子节点
 	 */
 	public void clearChildren() {
-		children.forEach(child -> child.setParent(null));
+		children.forEach(child -> child.setParentNode(null));
 		children.clear();
 	}
 
@@ -294,6 +304,13 @@ public class TreeNode<K, T> implements Serializable {
 	 */
 	public boolean isLeaf() {
 		return children.isEmpty();
+	}
+
+	public boolean isParent() {
+		if (this.isParent != null) {
+			return this.isParent;
+		}
+		return !children.isEmpty();
 	}
 
 	/**

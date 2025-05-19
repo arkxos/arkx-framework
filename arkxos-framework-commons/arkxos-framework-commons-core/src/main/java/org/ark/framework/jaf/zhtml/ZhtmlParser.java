@@ -298,7 +298,7 @@ public class ZhtmlParser {
 								}
 							}
 							tf.EndCharIndex = (i = end);
-							this.currentParent = this.currentParent.getParent();
+							this.currentParent = this.currentParent.getParentNode();
 							htmlStartIndex = i + 1;
 							htmlStartLineNo = currentLineNo;
 							continue;

@@ -272,7 +272,7 @@ public class TemplateParser {
 		if ((index = XMLParser.expect(cs, start, "/>")) > 0) {
 			tf.EndCharIndex = index;
 			tf.TagSource = html.substring(tf.StartCharIndex, tf.EndCharIndex);
-			current = current.getParent();
+			current = current.getParentNode();
 			return lastText = index;
 		}
 		index = XMLParser.expect(cs, start, ">");
@@ -303,7 +303,7 @@ public class TemplateParser {
 		tf.setFragmentText(html.substring(tf.EndCharIndex, start));;
 		tf.EndCharIndex = index + 1;
 		tf.TagSource = html.substring(tf.StartCharIndex, tf.EndCharIndex);
-		current = current.getParent();
+		current = current.getParentNode();
 		return lastText = index + 1;
 	}
 

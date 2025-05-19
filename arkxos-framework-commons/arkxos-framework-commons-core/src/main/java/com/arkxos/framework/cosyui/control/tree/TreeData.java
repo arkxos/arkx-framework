@@ -182,7 +182,7 @@ public class TreeData {
 	 */
 	private void rewriteData(TreeNode<String, DataRow> node) {
 		DataRow dr = node.getValue();
-		TreeNode<String, DataRow> parent = node.getParent();
+		TreeNode<String, DataRow> parent = node.getParentNode();
 
 		// 准备层级关系标识串
 		levelSB.delete(levelStrLength, levelSB.length());
@@ -199,7 +199,7 @@ public class TreeData {
 			} else {
 				arr[i] = '1';
 			}
-			parent = parent.getParent();
+			parent = parent.getParentNode();
 		}
 		levelSB.append(arr, i, arr.length - i);
 
@@ -304,9 +304,9 @@ public class TreeData {
 		if (!node.hasChildren() || leafFlag) {
 			sb.append("<dd style='display:none'>");
 			if (node.isLast()) {
-				parent = node.getParent();
+				parent = node.getParentNode();
 				while (!parent.isRoot() && parent.isLast()) {
-					parent = parent.getParent();
+					parent = parent.getParentNode();
 				}
 				int level = parent.isRoot() ? 1 : parent.getDepth();
 				for (int j = 0; j < node.getDepth() - level; j++) {

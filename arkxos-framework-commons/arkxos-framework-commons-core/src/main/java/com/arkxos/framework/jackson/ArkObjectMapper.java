@@ -1,6 +1,8 @@
 package com.arkxos.framework.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -25,6 +27,9 @@ public class ArkObjectMapper extends ObjectMapper implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
+//		this.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
+		// 启用自动检测序列化器等设置
+//		this.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS.USE_EQUALITY_FOR_NULLS);
 		for (ArkObjectMapperConfig config : configs) {
 			config.configure(this);
 		}
