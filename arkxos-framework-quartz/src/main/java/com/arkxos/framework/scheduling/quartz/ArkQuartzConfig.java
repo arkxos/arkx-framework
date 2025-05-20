@@ -112,12 +112,10 @@ public class ArkQuartzConfig {
 
 	private void customize(SchedulerFactoryBean schedulerFactoryBean) {
 		if (this.customizers != null) {
-
 			for (SchedulerFactoryBeanCustomizer customizer : this.customizers) {
 				customizer.customize(schedulerFactoryBean);
 			}
 		}
-
 	}
 
 	/**

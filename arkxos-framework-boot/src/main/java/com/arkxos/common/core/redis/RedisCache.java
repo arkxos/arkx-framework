@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import com.arkxos.common.utils.IRedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,8 +20,8 @@ import org.springframework.stereotype.Component;
  **/
 @SuppressWarnings(value = { "unchecked", "rawtypes" })
 @Component
-public class RedisCache
-{
+public class RedisCache implements IRedisCache {
+
     @Autowired
     public RedisTemplate redisTemplate;
 
@@ -225,4 +226,5 @@ public class RedisCache
     {
         return redisTemplate.keys(pattern);
     }
+
 }
