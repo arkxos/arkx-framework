@@ -316,7 +316,7 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 	public List<T> queryList(String sql, Object... params) {
 		Query query = entityManager.createNativeQuery(sql);
 		if(params != null) {
-			int i = 0;
+			int i = 1;
 			for (Object param : params) {
 				query.setParameter(i++, param);
 			}
@@ -337,16 +337,18 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 
 	@Override
 	public long queryForLong(String sql, Object... params)  {
-		List<Long> results = jdbcTemplate().query(sql, params, new RowMapperResultSetExtractor<Long>(new SingleColumnRowMapper<>(Long.class)));
+		List<Long> results = jdbcTemplate().query(sql, params, new RowMapperResultSetExtractor<>(new SingleColumnRowMapper<>(Long.class)));
+		if(results == null) {
+			return 0L;
+		}
 		if(results.isEmpty()) {
 			return 0L;
 		}
 		if(results.get(0) == null) {
 			return 0L;
 		}
-		
-		long value = results.get(0);
-		return value; 
+
+		return results.get(0);
 	}
 	
 	public String getTableName() {
