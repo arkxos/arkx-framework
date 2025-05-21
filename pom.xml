@@ -48,7 +48,8 @@
 		<module>arkxos-framework-cloud</module>
 		<module>arkxos-framework-parent</module>
 		<module>arkxos-framework-quartz</module>
-	</modules>
+        <module>arkxos-framework-boot-starter</module>
+    </modules>
 
 
 
