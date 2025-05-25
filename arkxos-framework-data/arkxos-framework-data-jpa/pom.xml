@@ -81,8 +81,8 @@
 		</dependency>
 		<!-- 用于对象输出演示用,实际项目不依赖 -->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
+			<groupId>com.alibaba.fastjson2</groupId>
+    <artifactId>fastjson2</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
 		<dependency>
