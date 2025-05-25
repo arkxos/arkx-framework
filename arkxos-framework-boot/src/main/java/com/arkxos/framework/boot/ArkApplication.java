@@ -8,7 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @version 1.0
  * @date 2021/6/19 18:59
  */
-public class RapidArkApplication {
+public class ArkApplication {
 
     public static ConfigurableApplicationContext run(Class<?> primarySource, String... args) {
 //        ProxySelector.setDefault(null);
@@ -17,7 +17,7 @@ public class RapidArkApplication {
         ConfigurableApplicationContext context =  SpringApplication.run(primarySource, args);
 
         System.out.println("""
-				(♥◠‿◠)ﾉﾞ  RapidArk 10.0 启动成功   ლ(´ڡ`ლ)ﾞ
+				(♥◠‿◠)ﾉﾞ  Ark App 10.0 启动成功   ლ(´ڡ`ლ)ﾞ
                   _____             _     _                 _
                  |  __ \\           (_)   | |     /\\        | |
                  | |__) |__ _ _ __  _  __| |    /  \\   _ __| | __
