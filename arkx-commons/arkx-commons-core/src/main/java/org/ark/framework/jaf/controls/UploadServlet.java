@@ -111,7 +111,7 @@ public class UploadServlet extends HttpServlet {
 				if (session.getId().equals(sessionID)) {
 					break;
 				}
-				sessionOld = com.arkxos.framework.cosyui.web.mvc.SessionListener.getSession(sessionID);
+				sessionOld = io.arkx.framework.cosyui.web.mvc.SessionListener.getSession(sessionID);
 				if (sessionOld != null) {
 					break;
 				}

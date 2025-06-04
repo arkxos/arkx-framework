@@ -11,7 +11,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.exception.UIMethodNotFoundException;
-import com.arkxos.framework.cosyui.web.UIFacade;
+import io.arkx.framework.cosyui.web.UIFacade;
 
 /**
  * 定位器工具类

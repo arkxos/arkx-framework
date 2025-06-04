@@ -2,7 +2,7 @@ package org.ark.framework.jaf;
 
 import java.io.IOException;
 
-import com.arkxos.framework.cosyui.web.CookieData;
+import io.arkx.framework.cosyui.web.CookieData;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

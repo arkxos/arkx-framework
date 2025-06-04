@@ -10,7 +10,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.FrameworkException;
 import io.arkx.framework.core.method.IMethodLocator;
-import com.arkxos.framework.cosyui.template.AbstractExecuteContext;
+import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.extend.action.PrivExtendAction;
 import com.arkxos.framework.security.exception.MemberNotLoginException;

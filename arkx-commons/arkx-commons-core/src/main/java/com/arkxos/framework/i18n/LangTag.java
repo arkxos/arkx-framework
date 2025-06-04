@@ -6,9 +6,9 @@ import java.util.List;
 import com.arkxos.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.cosyui.tag.ArkTag;
-import com.arkxos.framework.cosyui.template.TagAttr;
-import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
+import io.arkx.framework.cosyui.tag.ArkTag;
+import io.arkx.framework.cosyui.template.TagAttr;
+import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 
 /**
  * 国际化标签 ，用于在zhtml中根据当前语言显示一个国际化字符串

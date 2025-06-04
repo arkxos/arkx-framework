@@ -7,7 +7,7 @@ import org.ark.framework.jaf.zhtml.ZhtmlIncludeResponseWrapper;
 import org.ark.framework.jaf.zhtml.ZhtmlManager;
 
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.cosyui.web.RequestData;
+import io.arkx.framework.cosyui.web.RequestData;
 import com.arkxos.framework.extend.ExtendException;
 import com.arkxos.framework.extend.IExtendAction;
 

@@ -207,10 +207,10 @@
 	</extendItem>
 	<!-- db -->
 	<extendService>
-		<id>com.arkxos.framework.cosyui.web.mvc.URLHandlerService</id>
-		<class>com.arkxos.framework.cosyui.web.mvc.URLHandlerService</class>
+		<id>mvc.web.io.arkx.framework.cosyui.URLHandlerService</id>
+		<class>mvc.web.io.arkx.framework.cosyui.URLHandlerService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.cosyui.web.mvc.IURLHandler</itemClass>
+		<itemClass>mvc.web.io.arkx.framework.cosyui.IURLHandler</itemClass>
 	</extendService>
 	<extendService>
 		<id>castor.io.arkx.framework.core.CastorService</id>
@@ -231,28 +231,28 @@
 		<itemClass>com.arkxos.framework.json.convert.IJSONConvertor</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.cosyui.zhtml.ZhtmlFunctionService</id>
-		<class>com.arkxos.framework.cosyui.zhtml.ZhtmlFunctionService</class>
+		<id>zhtml.io.arkx.framework.cosyui.ZhtmlFunctionService</id>
+		<class>zhtml.io.arkx.framework.cosyui.ZhtmlFunctionService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.cosyui.expression.IFunction</itemClass>
+		<itemClass>expression.io.arkx.framework.cosyui.IFunction</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.cosyui.zhtml.ZhtmlSourceProcessorService</id>
-		<class>com.arkxos.framework.cosyui.zhtml.ZhtmlSourceProcessorService</class>
+		<id>zhtml.io.arkx.framework.cosyui.ZhtmlSourceProcessorService</id>
+		<class>zhtml.io.arkx.framework.cosyui.ZhtmlSourceProcessorService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.cosyui.template.ITemplateSourceProcessor</itemClass>
+		<itemClass>template.io.arkx.framework.cosyui.ITemplateSourceProcessor</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.cosyui.zhtml.ZhtmlTagService</id>
-		<class>com.arkxos.framework.cosyui.zhtml.ZhtmlTagService</class>
+		<id>zhtml.io.arkx.framework.cosyui.ZhtmlTagService</id>
+		<class>zhtml.io.arkx.framework.cosyui.ZhtmlTagService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.cosyui.template.AbstractTag</itemClass>
+		<itemClass>template.io.arkx.framework.cosyui.AbstractTag</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.cosyui.weaver.ZhtmlWeaveService</id>
-		<class>com.arkxos.framework.cosyui.weaver.ZhtmlWeaveService</class>
+		<id>weaver.io.arkx.framework.cosyui.ZhtmlWeaveService</id>
+		<class>weaver.io.arkx.framework.cosyui.ZhtmlWeaveService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.cosyui.weaver.IZhtmlWeaver</itemClass>
+		<itemClass>weaver.io.arkx.framework.cosyui.IZhtmlWeaver</itemClass>
 	</extendService>
 	<extendItem>
 		<id>com.arkxos.framework.schedule.SystemTaskManager</id>
@@ -263,33 +263,33 @@
 	
 	<extendItem>
 		<id>com.arkxos.framework.cosyui.web.mvc.ZhtmlHandler</id>
-		<class>com.arkxos.framework.cosyui.web.mvc.handler.ZhtmlHandler</class>
+		<class>handler.mvc.web.io.arkx.framework.cosyui.ZhtmlHandler</class>
 		<description></description>
-		<extendService>com.arkxos.framework.cosyui.web.mvc.URLHandlerService</extendService>
+		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>com.arkxos.framework.cosyui.web.mvc.AjaxHandler</id>
-		<class>com.arkxos.framework.cosyui.web.mvc.handler.AjaxHandler</class>
+		<class>handler.mvc.web.io.arkx.framework.cosyui.AjaxHandler</class>
 		<description></description>
-		<extendService>com.arkxos.framework.cosyui.web.mvc.URLHandlerService</extendService>
+		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>com.arkxos.framework.cosyui.web.mvc.ActionHandler</id>
-		<class>com.arkxos.framework.cosyui.web.mvc.handler.ActionHandler</class>
+		<class>handler.mvc.web.io.arkx.framework.cosyui.ActionHandler</class>
 		<description></description>
-		<extendService>com.arkxos.framework.cosyui.web.mvc.URLHandlerService</extendService>
+		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>com.arkxos.framework.cosyui.web.mvc.UploadHandler</id>
-		<class>com.arkxos.framework.cosyui.web.mvc.handler.UploadHandler</class>
+		<class>handler.mvc.web.io.arkx.framework.cosyui.UploadHandler</class>
 		<description></description>
-		<extendService>com.arkxos.framework.cosyui.web.mvc.URLHandlerService</extendService>
+		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>com.arkxos.framework.cosyui.web.mvc.ResourceHandler</id>
-		<class>com.arkxos.framework.cosyui.web.mvc.handler.ResourceHandler</class>
+		<class>handler.mvc.web.io.arkx.framework.cosyui.ResourceHandler</class>
 		<description></description>
-		<extendService>com.arkxos.framework.cosyui.web.mvc.URLHandlerService</extendService>
+		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>com.arkxos.framework.misc.FrameworkTask</id>
@@ -304,8 +304,8 @@
 		<extendService>io.arkx.framework.core.ExceptionCatcherService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.web.mvc.ServiceExceptionCatcher</id>
-		<class>com.arkxos.framework.cosyui.web.mvc.ServiceExceptionCatcher</class>
+		<id>mvc.web.io.arkx.framework.cosyui.ServiceExceptionCatcher</id>
+		<class>mvc.web.io.arkx.framework.cosyui.ServiceExceptionCatcher</class>
 		<description></description>
 		<extendService>io.arkx.framework.core.ExceptionCatcherService</extendService>
 	</extendItem>
@@ -329,17 +329,17 @@
 		<extendService>com.arkxos.framework.json.convert.JSONConvertorService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.template.TemplateExceptionCather</id>
-		<class>com.arkxos.framework.cosyui.template.TemplateExceptionCather</class>
+		<id>template.io.arkx.framework.cosyui.TemplateExceptionCather</id>
+		<class>template.io.arkx.framework.cosyui.TemplateExceptionCather</class>
 		<description></description>
 		<extendService>io.arkx.framework.core.ExceptionCatcherService</extendService>
 	</extendItem>
 	
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.expression.function.ParseInt</id>
-		<class>com.arkxos.framework.cosyui.expression.function.ParseInt</class>
+		<id>function.expression.io.arkx.framework.cosyui.ParseInt</id>
+		<class>function.expression.io.arkx.framework.cosyui.ParseInt</class>
 		<description></description>
-		<extendService>com.arkxos.framework.cosyui.zhtml.ZhtmlFunctionService</extendService>
+		<extendService>zhtml.io.arkx.framework.cosyui.ZhtmlFunctionService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>com.arkxos.framework.data.db.connection.ConnectionPoolKeepAliveTask</id>

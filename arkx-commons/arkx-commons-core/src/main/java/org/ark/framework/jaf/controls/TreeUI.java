@@ -12,7 +12,7 @@ import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.cosyui.web.UIFacade;
+import io.arkx.framework.cosyui.web.UIFacade;
 
 
 /**

@@ -1,8 +1,8 @@
 package org.ark.framework.jaf;
 
-import com.arkxos.framework.cosyui.web.CookieData;
-import com.arkxos.framework.cosyui.web.RequestData;
-import com.arkxos.framework.cosyui.web.ResponseData;
+import io.arkx.framework.cosyui.web.CookieData;
+import io.arkx.framework.cosyui.web.RequestData;
+import io.arkx.framework.cosyui.web.ResponseData;
 
 /**   
  * @class org.ark.framework.jaf.IPage

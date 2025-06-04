@@ -1,6 +1,6 @@
 package com.arkxos.framework.script;
 
-import com.arkxos.framework.cosyui.web.UIFacade;
+import io.arkx.framework.cosyui.web.UIFacade;
 
 public class CheckScript extends UIFacade {
 	public void check(String script, String language) {

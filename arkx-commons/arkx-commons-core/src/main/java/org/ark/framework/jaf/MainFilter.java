@@ -14,7 +14,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.Errorx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.cosyui.web.ResponseData;
+import io.arkx.framework.cosyui.web.ResponseData;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.i18n.LangUtil;
 
@@ -153,7 +153,7 @@ public class MainFilter implements Filter {
 									u = Account.getCachedUser(cs[i].getValue());
 									if (u != null) {
 										flag = false;
-										com.arkxos.framework.cosyui.web.mvc.SessionListener.setSession(session.getId(), session);
+										io.arkx.framework.cosyui.web.mvc.SessionListener.setSession(session.getId(), session);
 										break;
 									}
 								}
@@ -165,8 +165,8 @@ public class MainFilter implements Filter {
 					}
 				}
 				u.setSessionID(session.getId());
-				if (com.arkxos.framework.cosyui.web.mvc.SessionListener.getSession(session.getId()) == null) {
-					com.arkxos.framework.cosyui.web.mvc.SessionListener.setSession(session.getId(), session);
+				if (io.arkx.framework.cosyui.web.mvc.SessionListener.getSession(session.getId()) == null) {
+					io.arkx.framework.cosyui.web.mvc.SessionListener.setSession(session.getId(), session);
 				}
 				Account.setCurrent(u);
 			} else {

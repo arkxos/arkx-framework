@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arkxos.framework.FrameworkPlugin;
-import com.arkxos.framework.cosyui.tag.ArkTag;
-import com.arkxos.framework.cosyui.template.TagAttr;
+import io.arkx.framework.cosyui.tag.ArkTag;
+import io.arkx.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.extend.ExtendManager;
 
 /**

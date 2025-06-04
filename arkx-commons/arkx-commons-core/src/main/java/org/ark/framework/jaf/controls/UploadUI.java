@@ -11,7 +11,7 @@ import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
-import com.arkxos.framework.cosyui.web.UIFacade;
+import io.arkx.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.i18n.LangMapping;
 
 

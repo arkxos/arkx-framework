@@ -15,9 +15,9 @@ import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.NumberUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.cosyui.web.CookieData;
-import com.arkxos.framework.cosyui.web.RequestData;
-import com.arkxos.framework.cosyui.web.ResponseData;
+import io.arkx.framework.cosyui.web.CookieData;
+import io.arkx.framework.cosyui.web.RequestData;
+import io.arkx.framework.cosyui.web.ResponseData;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.PageContext;

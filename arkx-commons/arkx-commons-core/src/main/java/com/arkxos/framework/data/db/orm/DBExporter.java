@@ -22,7 +22,7 @@ import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.NumberUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.cosyui.control.LongTimeTask;
+import io.arkx.framework.cosyui.control.LongTimeTask;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.data.db.dbtype.DBTypeService;

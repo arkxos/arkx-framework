@@ -55,9 +55,9 @@
 
 package com.arkxos.framework.thirdparty.el;
 
-import com.arkxos.framework.cosyui.expression.ExpressionException;
-import com.arkxos.framework.cosyui.expression.IFunctionMapper;
-import com.arkxos.framework.cosyui.expression.IVariableResolver;
+import io.arkx.framework.cosyui.expression.ExpressionException;
+import io.arkx.framework.cosyui.expression.IFunctionMapper;
+import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * <p>

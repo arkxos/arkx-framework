@@ -16,7 +16,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.bean.BeanUtil;
-import com.arkxos.framework.cosyui.web.RequestData;
+import io.arkx.framework.cosyui.web.RequestData;
 import com.arkxos.framework.data.db.orm.DAO;
 import com.arkxos.framework.data.db.orm.DAOColumn;
 import com.arkxos.framework.data.db.orm.DAOSet;

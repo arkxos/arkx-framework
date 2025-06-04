@@ -27,8 +27,8 @@ import com.arkxos.framework.Config;
 import com.arkxos.framework.Current;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
-import com.arkxos.framework.cosyui.web.CookieData;
-import com.arkxos.framework.cosyui.web.RequestData;
+import io.arkx.framework.cosyui.web.CookieData;
+import io.arkx.framework.cosyui.web.RequestData;
 import com.arkxos.framework.json.JSON;
 
 import jakarta.servlet.http.Cookie;

@@ -18,7 +18,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.ServletUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.cosyui.CodeSourceUI;
+import io.arkx.framework.cosyui.CodeSourceUI;
 import com.arkxos.framework.data.db.DataCollection;
 import com.arkxos.framework.i18n.LangUtil;
 

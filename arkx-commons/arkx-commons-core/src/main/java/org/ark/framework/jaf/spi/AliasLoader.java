@@ -15,7 +15,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.PropertiesUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.ZipUtil;
-import com.arkxos.framework.cosyui.web.UIFacade;
+import io.arkx.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.i18n.LangUtil;
 

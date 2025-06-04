@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import io.arkx.framework.core.exception.UIMethodInvokeException;
-import com.arkxos.framework.cosyui.web.mvc.Dispatcher.DispatchException;
+import io.arkx.framework.cosyui.web.mvc.Dispatcher.DispatchException;
 
 /**
  * UIMethod类定位器

@@ -57,7 +57,7 @@ package com.arkxos.framework.thirdparty.el.operator;
 
 import java.math.BigDecimal;
 
-import com.arkxos.framework.cosyui.expression.ExpressionException;
+import io.arkx.framework.cosyui.expression.ExpressionException;
 import com.arkxos.framework.thirdparty.el.Coercions;
 import com.arkxos.framework.thirdparty.el.Constants;
 import com.arkxos.framework.thirdparty.el.Logger;

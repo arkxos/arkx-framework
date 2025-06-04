@@ -2,7 +2,7 @@ package com.arkxos.framework.extend.action;
 
 import java.util.ArrayList;
 
-import com.arkxos.framework.cosyui.web.RequestData;
+import io.arkx.framework.cosyui.web.RequestData;
 
 /**
  * Zhtml扩展点执行上下文

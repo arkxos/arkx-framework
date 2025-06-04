@@ -14,7 +14,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.config.SetRequestEncoding;
 import com.arkxos.framework.config.SetResponseEncoding;
-import com.arkxos.framework.cosyui.web.mvc.SessionListener;
+import io.arkx.framework.cosyui.web.mvc.SessionListener;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

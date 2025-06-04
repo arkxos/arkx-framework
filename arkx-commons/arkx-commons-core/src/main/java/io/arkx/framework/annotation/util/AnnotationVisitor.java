@@ -25,7 +25,7 @@ import io.arkx.framework.core.scanner.AsmUtil;
 import io.arkx.framework.core.scanner.BuiltResource;
 import io.arkx.framework.core.scanner.BuiltResourceScanner;
 import io.arkx.framework.core.scanner.IBuiltResourceVisitor;
-import com.arkxos.framework.cosyui.web.UIFacade;
+import io.arkx.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.data.xml.XMLElement;
 
 import lombok.extern.slf4j.Slf4j;

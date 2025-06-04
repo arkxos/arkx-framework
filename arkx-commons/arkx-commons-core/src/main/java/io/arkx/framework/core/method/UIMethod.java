@@ -1,6 +1,6 @@
 package io.arkx.framework.core.method;
 
-import com.arkxos.framework.cosyui.web.UIFacade;
+import io.arkx.framework.cosyui.web.UIFacade;
 
 /**
  * UI方法类，前台的一个URL请求或者一次UI控件中的服务器调用

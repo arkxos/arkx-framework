@@ -7,8 +7,8 @@ import com.arkxos.framework.Config;
 import com.arkxos.framework.FrameworkPlugin;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.cosyui.template.AbstractTag;
-import com.arkxos.framework.cosyui.template.TagAttr;
+import io.arkx.framework.cosyui.template.AbstractTag;
+import io.arkx.framework.cosyui.template.TagAttr;
 
 /**
  * 国际化字段按钮，用于在zhtml中为一个文本框/文本域添加国际化数据填写按钮。
