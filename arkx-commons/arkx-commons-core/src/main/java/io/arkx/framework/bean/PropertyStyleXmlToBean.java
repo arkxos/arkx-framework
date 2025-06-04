@@ -1,4 +1,4 @@
-package com.arkxos.framework.bean;
+package io.arkx.framework.bean;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

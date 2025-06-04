@@ -1,4 +1,4 @@
-package com.arkxos.framework.bean;
+package io.arkx.framework.bean;
 
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;

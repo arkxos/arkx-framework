@@ -1,4 +1,4 @@
-package com.arkxos.framework.bean;
+package io.arkx.framework.bean;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -13,14 +13,8 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.FIELD })
-public @interface XmlField {
+@Target({ java.lang.annotation.ElementType.TYPE })
+public @interface XmlBean {
 
-	String refer() default "";
-	
-	boolean parentIdField() default false;
-
-	boolean spelling() default false;
-
-	String prefix() default "";
+	String value();
 }
