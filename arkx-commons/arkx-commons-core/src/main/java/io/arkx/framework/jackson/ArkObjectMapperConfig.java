@@ -1,4 +1,4 @@
-package com.arkxos.framework.jackson;
+package io.arkx.framework.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
