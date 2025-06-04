@@ -7,7 +7,7 @@
 
     <parent>
         <groupId>io.arkx.framework</groupId>
-        <artifactId>arkxos-framework-commons</artifactId>
+        <artifactId>arkx-commons</artifactId>
         <version>${revision}</version>
     </parent>
 

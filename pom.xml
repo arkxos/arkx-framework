@@ -40,7 +40,7 @@
 		<module>arkx-dependencies</module>
 		<module>arkx-parent</module>
 		<module>arkx-preloader</module>
-		<module>arkxos-framework-commons</module>
+		<module>arkx-commons</module>
 		<module>arkx-enum-starter</module>
 		<module>arkx-ip2region-starter</module>
 		<module>arkx-data</module>
