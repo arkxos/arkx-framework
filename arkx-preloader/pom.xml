@@ -11,13 +11,13 @@
     <artifactId>arkx-preloader</artifactId>
   
   <dependencies>
- <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
-<!-- <dependency>
-    <groupId>org.apache.ant</groupId>
-    <artifactId>ant</artifactId>
-    <version>1.8.4</version>
-</dependency> -->
-<dependency>
+	 <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+	<!-- <dependency>
+		<groupId>org.apache.ant</groupId>
+		<artifactId>ant</artifactId>
+		<version>1.8.4</version>
+	</dependency> -->
+	<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
