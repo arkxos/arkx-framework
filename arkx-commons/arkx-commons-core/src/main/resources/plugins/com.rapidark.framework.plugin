@@ -120,10 +120,10 @@
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendService>
-		<id>com.arkxos.framework.cache.CacheService</id>
-		<class>com.arkxos.framework.cache.CacheService</class>
+		<id>io.arkx.framework.cache.CacheService</id>
+		<class>io.arkx.framework.cache.CacheService</class>
 		<description>@{Framework.CacheService}</description>
-		<itemClass>com.arkxos.framework.cache.CacheDataProvider</itemClass>
+		<itemClass>io.arkx.framework.cache.CacheDataProvider</itemClass>
 	</extendService>
 	<extendService>
 		<id>com.arkxos.framework.schedule.CronTaskManagerService</id>
@@ -348,8 +348,8 @@
 		<extendService>com.arkxos.framework.schedule.SystemTaskService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.cache.CacheSyncTask</id>
-		<class>com.arkxos.framework.cache.CacheSyncTask</class>
+		<id>io.arkx.framework.cache.CacheSyncTask</id>
+		<class>io.arkx.framework.cache.CacheSyncTask</class>
 		<description></description>
 		<extendService>com.arkxos.framework.schedule.SystemTaskService</extendService>
 	</extendItem>

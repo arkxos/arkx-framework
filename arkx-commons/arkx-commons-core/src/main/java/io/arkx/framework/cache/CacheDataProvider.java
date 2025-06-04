@@ -1,4 +1,4 @@
-package com.arkxos.framework.cache;
+package io.arkx.framework.cache;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

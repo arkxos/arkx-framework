@@ -2,7 +2,7 @@ package com.arkxos.framework.commons.util;
 
 import java.util.Map;
 
-import com.arkxos.framework.cache.CacheManager;
+import io.arkx.framework.cache.CacheManager;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.Mapx;

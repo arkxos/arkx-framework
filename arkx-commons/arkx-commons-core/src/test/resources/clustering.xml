@@ -6,10 +6,10 @@
 		<!-- 缓存同步事件有效时长，单位为秒 -->
 		<config name="CacheSyncExpires">3</config>
 		<!-- 缓存同步器类名 -->
-		<config name="CacheSynchronizerClass">com.arkxos.framework.cache.SocketCacheSynchronizer</config>
+		<config name="CacheSynchronizerClass">io.arkx.framework.cache.SocketCacheSynchronizer</config>
 		<config name="SocketHost">localhost:11211</config>
 
-		<!-- 使用Memached缓存同步器 <config name="CacheSynchronizerClass">com.arkxos.framework.cache.MemcachedCacheSynchronizer</config>
+		<!-- 使用Memached缓存同步器 <config name="CacheSynchronizerClass">io.arkx.framework.cache.MemcachedCacheSynchronizer</config>
 			<config name="MemcachedHost">localhost:11211</config> -->
 		<!-- 是否启用API缓存 -->
 		<config name="APICacheEnable">false</config>

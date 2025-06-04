@@ -1,4 +1,4 @@
-package com.arkxos.framework.cache;
+package io.arkx.framework.cache;
 
 import com.arkxos.framework.schedule.SystemTask;
 

@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   MemCachedManager.java
 
-package com.arkxos.framework.cache;
+package io.arkx.framework.cache;
 
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;

@@ -16,7 +16,7 @@ public class CacheSynchronizerClass implements IApplicationConfigItem {
 
 	@Override
 	public String getExtendItemName() {
-		return "Class name which implements com.arkxos.framework.cache.ICacheSynchronizer";
+		return "Class name which implements io.arkx.framework.cache.ICacheSynchronizer";
 	}
 
 	public static String getValue() {
