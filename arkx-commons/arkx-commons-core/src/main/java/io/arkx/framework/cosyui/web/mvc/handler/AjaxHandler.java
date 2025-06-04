@@ -16,7 +16,7 @@ import com.arkxos.framework.Current;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.config.LoginMethod;
+import io.arkx.framework.config.LoginMethod;
 import io.arkx.framework.core.JsonResult;
 import io.arkx.framework.core.exception.UIMethodNotFoundException;
 import io.arkx.framework.core.method.IMethodLocator;

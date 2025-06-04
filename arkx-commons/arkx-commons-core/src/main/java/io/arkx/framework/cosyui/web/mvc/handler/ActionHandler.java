@@ -14,7 +14,7 @@ import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Current;
 import io.arkx.framework.commons.util.LogUtil;
-import com.arkxos.framework.config.UploadMaxSize;
+import io.arkx.framework.config.UploadMaxSize;
 import io.arkx.framework.core.method.IMethodLocator;
 import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.control.UploadAction;

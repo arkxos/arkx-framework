@@ -1,13 +1,13 @@
-package com.arkxos.framework.config;
+package io.arkx.framework.config;
 
 import com.arkxos.framework.Config;
 
 /**
- * 配置代码源。
+ * 是否启用缓存同步，集群时必须启用。
  * 
  */
-public class CodeSourceClass implements IApplicationConfigItem {
-	public static final String ID = "CodeSource";
+public class CacheSyncEnable implements IApplicationConfigItem {
+	public static final String ID = "CacheSyncEnable";
 
 	@Override
 	public String getExtendItemID() {
@@ -16,7 +16,7 @@ public class CodeSourceClass implements IApplicationConfigItem {
 
 	@Override
 	public String getExtendItemName() {
-		return "CodeSource's subclass which provider code data";
+		return "Cache sync enabled";
 	}
 
 	public static String getValue() {

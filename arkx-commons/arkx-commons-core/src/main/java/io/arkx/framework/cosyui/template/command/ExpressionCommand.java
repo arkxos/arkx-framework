@@ -4,7 +4,7 @@ import java.util.Date;
 
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.config.ExpressionAutoEscaping;
+import io.arkx.framework.config.ExpressionAutoEscaping;
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import io.arkx.framework.cosyui.template.AbstractTag;

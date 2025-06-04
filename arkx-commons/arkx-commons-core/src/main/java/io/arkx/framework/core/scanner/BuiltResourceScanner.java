@@ -18,7 +18,7 @@ import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.ZipUtil;
-import com.arkxos.framework.config.ExcludeClassScan;
+import io.arkx.framework.config.ExcludeClassScan;
 
 /**
  * 编译后资源扫描器

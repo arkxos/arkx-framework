@@ -1,7 +1,7 @@
 package io.arkx.framework.cache;
 
-import com.arkxos.framework.config.CacheSyncEnable;
-import com.arkxos.framework.config.CacheSynchronizerClass;
+import io.arkx.framework.config.CacheSyncEnable;
+import io.arkx.framework.config.CacheSynchronizerClass;
 
 /**
  */

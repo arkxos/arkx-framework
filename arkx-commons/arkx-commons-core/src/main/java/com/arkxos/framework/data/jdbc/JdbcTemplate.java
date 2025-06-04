@@ -20,7 +20,7 @@ import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.Objects;
 import io.arkx.framework.commons.util.StringFormat;
-import com.arkxos.framework.config.LogSQL;
+import io.arkx.framework.config.LogSQL;
 import com.arkxos.framework.data.db.QueryException;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionConfig;

@@ -17,7 +17,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.ServletUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.UuidUtil;
-import com.arkxos.framework.config.UploadMaxSize;
+import io.arkx.framework.config.UploadMaxSize;
 import io.arkx.framework.core.method.IMethodLocator;
 import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.control.UploadAction;

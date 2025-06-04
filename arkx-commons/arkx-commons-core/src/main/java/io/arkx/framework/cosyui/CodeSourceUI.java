@@ -6,7 +6,7 @@ import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.config.CodeSourceClass;
+import io.arkx.framework.config.CodeSourceClass;
 import io.arkx.framework.core.method.IMethodLocator;
 import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.web.UIFacade;

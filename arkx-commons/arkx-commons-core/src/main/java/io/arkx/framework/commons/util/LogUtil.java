@@ -7,7 +7,7 @@ import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.log.ILogManager;
 import io.arkx.framework.commons.util.log.ILogger;
 import io.arkx.framework.commons.util.log.LogAppender;
-import com.arkxos.framework.config.LogManagerClass;
+import io.arkx.framework.config.LogManagerClass;
 import com.arkxos.framework.schedule.CronMonitor;
 
 /**

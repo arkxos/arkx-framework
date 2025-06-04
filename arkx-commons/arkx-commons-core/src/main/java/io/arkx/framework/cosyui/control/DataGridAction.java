@@ -11,7 +11,7 @@ import io.arkx.framework.commons.collection.DataTableUtil;
 import io.arkx.framework.commons.collection.IPageData;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
-import com.arkxos.framework.config.MaxPageSize;
+import io.arkx.framework.config.MaxPageSize;
 import io.arkx.framework.cosyui.UIException;
 import io.arkx.framework.cosyui.control.grid.AbstractGridFeature;
 import io.arkx.framework.cosyui.control.grid.DataGridBody;

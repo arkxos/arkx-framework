@@ -5,7 +5,7 @@ import org.ark.framework.jaf.IPageEnableAction;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.config.MaxPageSize;
+import io.arkx.framework.config.MaxPageSize;
 import io.arkx.framework.cosyui.template.AbstractTag;
 import com.arkxos.framework.data.jdbc.Query;
 

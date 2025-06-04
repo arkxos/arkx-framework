@@ -1,15 +1,15 @@
-package com.arkxos.framework.config;
+package io.arkx.framework.config;
 
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.NumberUtil;
 
 /**
- * 每页记录数的最大值，默认1000。<br>
+ * 最大文件上传大小，以字节为单位。<br>
  * 
  */
-public class MaxPageSize implements IApplicationConfigItem {
-	public static final String ID = "MaxPageSize";
-	public static final int DEFAULT = 1_0000;
+public class UploadMaxSize implements IApplicationConfigItem {
+	public static final String ID = "UploadMaxSize";
+	public static final int DEFAULT = 2 * 1024 * 1024 * 1024;
 	private static int max = -1;
 
 	@Override
@@ -19,7 +19,7 @@ public class MaxPageSize implements IApplicationConfigItem {
 
 	@Override
 	public String getExtendItemName() {
-		return "Maxiumn page size";
+		return "Maxiumn file size of upload";
 	}
 
 	public static int getValue() {

@@ -6,7 +6,7 @@ import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.config.MaxPageSize;
+import io.arkx.framework.config.MaxPageSize;
 import io.arkx.framework.cosyui.control.datalist.DataListBody;
 import io.arkx.framework.cosyui.tag.ListTag;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;

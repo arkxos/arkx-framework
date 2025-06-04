@@ -11,7 +11,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.PropertiesUtil;
-import com.arkxos.framework.config.DefaultLanguage;
+import io.arkx.framework.config.DefaultLanguage;
 import com.arkxos.framework.extend.plugin.PluginConfig;
 import com.arkxos.framework.extend.plugin.PluginManager;
 
