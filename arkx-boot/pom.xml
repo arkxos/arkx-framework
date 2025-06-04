@@ -11,7 +11,7 @@
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
-    <artifactId>arkxos-framework-boot</artifactId>
+    <artifactId>arkx-boot</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
