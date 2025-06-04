@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import com.arkxos.framework.annotation.Column;
-import com.arkxos.framework.annotation.Ingore;
+import io.arkx.framework.annotation.Column;
+import io.arkx.framework.annotation.Ingore;
 import com.arkxos.framework.commons.collection.DataRow;
 import com.arkxos.framework.commons.util.lang.ReflectionUtil;
 

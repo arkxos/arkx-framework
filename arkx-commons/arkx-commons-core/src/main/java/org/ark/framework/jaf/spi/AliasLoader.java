@@ -6,8 +6,8 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.annotation.Alias;
-import com.arkxos.framework.annotation.Priv;
+import io.arkx.framework.annotation.Alias;
+import io.arkx.framework.annotation.Priv;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.LogUtil;

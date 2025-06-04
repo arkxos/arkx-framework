@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import org.ark.framework.security.PrivCheck;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.annotation.Path;
+import io.arkx.framework.annotation.Path;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.ServletUtil;

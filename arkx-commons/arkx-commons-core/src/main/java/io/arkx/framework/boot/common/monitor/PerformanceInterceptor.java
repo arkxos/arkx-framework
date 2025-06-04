@@ -5,7 +5,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.stereotype.Service;
 
-import com.arkxos.framework.annotation.fastdb.IngorePerformanceLog;
+import io.arkx.framework.annotation.fastdb.IngorePerformanceLog;
 
 /**
  * 

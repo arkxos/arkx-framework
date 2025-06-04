@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Constant;
-import com.arkxos.framework.annotation.dao.NotExport;
+import io.arkx.framework.annotation.dao.NotExport;
 import com.arkxos.framework.commons.collection.DataTypes;
 import com.arkxos.framework.commons.util.DateUtil;
 import com.arkxos.framework.commons.util.FileUtil;

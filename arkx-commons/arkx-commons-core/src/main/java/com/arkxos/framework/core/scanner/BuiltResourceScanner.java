@@ -11,8 +11,8 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InnerClassNode;
 
-import com.arkxos.framework.annotation.Alias;
-import com.arkxos.framework.annotation.util.PackageUtil;
+import io.arkx.framework.annotation.Alias;
+import io.arkx.framework.annotation.util.PackageUtil;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.FileUtil;
 import com.arkxos.framework.commons.util.ObjectUtil;

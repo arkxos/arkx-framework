@@ -6,8 +6,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.function.Supplier;
 
-import com.arkxos.framework.annotation.EntityAnnotationManager;
-import com.arkxos.framework.annotation.Unique;
+import io.arkx.framework.annotation.EntityAnnotationManager;
+import io.arkx.framework.annotation.Unique;
 import com.arkxos.framework.cache.CacheManager;
 import com.arkxos.framework.commons.exception.ServiceException;
 import com.arkxos.framework.commons.util.ObjectUtil;

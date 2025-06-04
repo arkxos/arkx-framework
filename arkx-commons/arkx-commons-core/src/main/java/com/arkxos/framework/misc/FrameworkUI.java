@@ -3,7 +3,7 @@ package com.arkxos.framework.misc;
 import java.util.HashMap;
 
 import com.arkxos.framework.Constant;
-import com.arkxos.framework.annotation.Priv;
+import io.arkx.framework.annotation.Priv;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.ServletUtil;
 import com.arkxos.framework.commons.util.StringUtil;

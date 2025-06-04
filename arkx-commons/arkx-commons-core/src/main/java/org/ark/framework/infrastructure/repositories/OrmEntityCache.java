@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
 
-import com.arkxos.framework.annotation.EntityAnnotationManager;
+import io.arkx.framework.annotation.EntityAnnotationManager;
 import com.arkxos.framework.cache.CacheDataProvider;
 import com.arkxos.framework.cache.CacheManager;
 import com.arkxos.framework.commons.collection.CacheMapx;

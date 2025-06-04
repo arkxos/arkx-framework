@@ -2,7 +2,7 @@ package org.ark.framework.i18n;
 
 import org.ark.framework.jaf.tag.ListAction;
 
-import com.arkxos.framework.annotation.Priv;
+import io.arkx.framework.annotation.Priv;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.cosyui.web.UIFacade;

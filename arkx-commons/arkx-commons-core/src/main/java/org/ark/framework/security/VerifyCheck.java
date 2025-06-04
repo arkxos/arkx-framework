@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import org.ark.framework.jaf.Current;
 
-import com.arkxos.framework.annotation.Verify;
+import io.arkx.framework.annotation.Verify;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;

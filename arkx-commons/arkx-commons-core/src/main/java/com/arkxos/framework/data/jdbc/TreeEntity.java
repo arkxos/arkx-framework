@@ -1,7 +1,7 @@
 package com.arkxos.framework.data.jdbc;
 
-import com.arkxos.framework.annotation.Column;
-import com.arkxos.framework.annotation.Ingore;
+import io.arkx.framework.annotation.Column;
+import io.arkx.framework.annotation.Ingore;
 
 /**   
  * @class org.ark.framework.infrastructure.domainbase.TreeEntity

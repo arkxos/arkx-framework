@@ -7,8 +7,8 @@ import java.util.List;
 import org.ark.framework.infrastructure.repositories.BaseRepository;
 
 import com.arkxos.framework.Constant;
-import com.arkxos.framework.annotation.Alias;
-import com.arkxos.framework.annotation.Priv;
+import io.arkx.framework.annotation.Alias;
+import io.arkx.framework.annotation.Priv;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.DataTableUtil;
 import com.arkxos.framework.commons.collection.IPageData;

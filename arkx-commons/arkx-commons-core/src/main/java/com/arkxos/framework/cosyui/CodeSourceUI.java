@@ -2,7 +2,7 @@ package com.arkxos.framework.cosyui;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.annotation.Priv;
+import io.arkx.framework.annotation.Priv;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.StringUtil;

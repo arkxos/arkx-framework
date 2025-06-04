@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.arkxos.framework.annotation.Column;
+import io.arkx.framework.annotation.Column;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.thoughtworks.paranamer.BytecodeReadingParanamer;

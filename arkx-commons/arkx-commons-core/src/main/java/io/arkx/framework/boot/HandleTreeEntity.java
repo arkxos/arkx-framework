@@ -3,7 +3,7 @@ package io.arkx.framework.boot;
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
 import com.arkxos.framework.NoUtil;
-import com.arkxos.framework.annotation.EntityAnnotationManager;
+import io.arkx.framework.annotation.EntityAnnotationManager;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.jdbc.Criteria;
 import com.arkxos.framework.data.jdbc.Entity;

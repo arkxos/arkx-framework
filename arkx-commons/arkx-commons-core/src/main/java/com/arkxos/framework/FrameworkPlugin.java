@@ -1,7 +1,7 @@
 package com.arkxos.framework;
 
-import com.arkxos.framework.annotation.Plugin;
-import com.arkxos.framework.annotation.fastdb.Comment;
+import io.arkx.framework.annotation.Plugin;
+import io.arkx.framework.annotation.fastdb.Comment;
 import com.arkxos.framework.extend.plugin.AbstractPlugin;
 import com.arkxos.framework.extend.plugin.PluginException;
 import com.arkxos.framework.i18n.LangMapping;

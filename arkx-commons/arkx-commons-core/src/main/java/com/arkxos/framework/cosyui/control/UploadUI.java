@@ -4,8 +4,8 @@ import java.util.Map.Entry;
 
 import com.arkxos.framework.Constant;
 import com.arkxos.framework.Current;
-import com.arkxos.framework.annotation.Priv;
-import com.arkxos.framework.annotation.Verify;
+import io.arkx.framework.annotation.Priv;
+import io.arkx.framework.annotation.Verify;
 import com.arkxos.framework.commons.collection.CacheMapx;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.core.method.IMethodLocator;

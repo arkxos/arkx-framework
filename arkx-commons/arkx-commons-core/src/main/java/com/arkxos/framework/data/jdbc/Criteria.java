@@ -7,9 +7,9 @@ import java.util.List;
 import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
 import org.ark.framework.orm.sql.DBUtil;
 
-import com.arkxos.framework.annotation.Column;
-import com.arkxos.framework.annotation.Entity;
-import com.arkxos.framework.annotation.Ingore;
+import io.arkx.framework.annotation.Column;
+import io.arkx.framework.annotation.Entity;
+import io.arkx.framework.annotation.Ingore;
 import com.arkxos.framework.commons.collection.DataTable;
 import com.arkxos.framework.commons.collection.DataTableUtil;
 import com.arkxos.framework.commons.collection.IPageData;

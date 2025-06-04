@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import com.arkxos.framework.Current;
-import com.arkxos.framework.annotation.Priv;
-import com.arkxos.framework.annotation.util.AliasMapping;
+import io.arkx.framework.annotation.Priv;
+import io.arkx.framework.annotation.util.AliasMapping;
 import com.arkxos.framework.commons.collection.ConcurrentMapx;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.util.LogUtil;

@@ -5,9 +5,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.annotation.dao.Column;
-import com.arkxos.framework.annotation.dao.Indexes;
-import com.arkxos.framework.annotation.dao.Table;
+import io.arkx.framework.annotation.dao.Column;
+import io.arkx.framework.annotation.dao.Indexes;
+import io.arkx.framework.annotation.dao.Table;
 import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.core.bean.BeanDescription;

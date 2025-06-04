@@ -1,6 +1,6 @@
 package org.ark.framework.orm;
 
-import com.arkxos.framework.annotation.Column;
+import io.arkx.framework.annotation.Column;
 import com.arkxos.framework.data.jdbc.Entity;
 
 /**
@@ -9,7 +9,7 @@ import com.arkxos.framework.data.jdbc.Entity;
  * @date 2012-11-25 下午06:01:07
  * @version V1.0
  */
-@com.arkxos.framework.annotation.Entity(name = "pt_comp__maxno")
+@io.arkx.framework.annotation.Entity(name = "pt_comp__maxno")
 public class MaxNo extends Entity {
 	
 	private static final long serialVersionUID = 1L;

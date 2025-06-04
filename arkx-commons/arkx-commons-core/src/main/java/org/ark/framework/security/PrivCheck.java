@@ -10,7 +10,7 @@ import org.ark.framework.jaf.PlaceHolderContext;
 import com.arkxos.framework.Account;
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Member;
-import com.arkxos.framework.annotation.Priv;
+import io.arkx.framework.annotation.Priv;
 import com.arkxos.framework.commons.util.Html2Util;
 import com.arkxos.framework.commons.util.LogUtil;
 import com.arkxos.framework.commons.util.ObjectUtil;

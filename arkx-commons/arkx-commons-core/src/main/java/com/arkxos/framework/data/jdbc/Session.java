@@ -9,9 +9,9 @@ import org.ark.framework.infrastructure.repositories.extend.EntityDeleteExtendAc
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
 import com.arkxos.framework.Account;
-import com.arkxos.framework.annotation.Column;
-import com.arkxos.framework.annotation.EntityAnnotationManager;
-import com.arkxos.framework.annotation.Ingore;
+import io.arkx.framework.annotation.Column;
+import io.arkx.framework.annotation.EntityAnnotationManager;
+import io.arkx.framework.annotation.Ingore;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.commons.util.lang.ReflectionUtil;
 import com.arkxos.framework.data.db.connection.Connection;
