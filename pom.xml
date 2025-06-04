@@ -49,7 +49,8 @@
 		<module>arkx-cloud</module>
 		<module>arkx-quartz</module>
         <module>arkx-boot-starter</module>
-    </modules>
+		<module>arkx-cosyui</module>
+	</modules>
 
 
 
