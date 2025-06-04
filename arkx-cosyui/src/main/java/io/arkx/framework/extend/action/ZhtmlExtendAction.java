@@ -2,7 +2,7 @@ package io.arkx.framework.extend.action;
 
 import java.util.Map.Entry;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.ServletUtil;
@@ -18,7 +18,7 @@ public abstract class ZhtmlExtendAction implements IExtendAction {
 	@Override
 	public Object execute(Object[] args) throws ExtendException {
 		AbstractExecuteContext pageContext = (AbstractExecuteContext) args[0];
-		ZhtmlContext context = new ZhtmlContext(Current.getRequest());
+		ZhtmlContext context = new ZhtmlContext(WebCurrent.getRequest());
 		execute(context);
 		if (!ObjectUtil.isEmpty(context.getOut())) {
 			pageContext.getOut().write(context.getOut());

@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpSession;
  * 当前数据类，访问当前http请求中的相关对象的便捷方式
  * 
  */
-public class Current {
+public class WebCurrent {
 	/**
 	 * 各线程数据分离
 	 */
@@ -94,13 +94,13 @@ public class Current {
 			current.set(cd);
 		}
 		if (cd.handler == null && servletRequest != null) {
-			RequestData request = Current.getRequest();
+			RequestData request = WebCurrent.getRequest();
 			String data = servletRequest.getParameter(Constant.Data);
 			
 			String realPath = servletRequest.getSession().getServletContext().getRealPath("/");  
 			request.setRealPath(realPath);
 			request.setServletRequest(servletRequest);
-			Current.getResponse().setServletResponse(servletResponse);
+			WebCurrent.getResponse().setServletResponse(servletResponse);
 
 			request.setQueryString(servletRequest.getQueryString());
 			request.setHttpMethod(servletRequest.getMethod());
@@ -290,7 +290,7 @@ public class Current {
 	}
 	
 	public static boolean isAdmin() {
-		return Current.getUser().getUserName().equals("admin");
+		return WebCurrent.getUser().getUserName().equals("admin");
 	}
 
 	/**

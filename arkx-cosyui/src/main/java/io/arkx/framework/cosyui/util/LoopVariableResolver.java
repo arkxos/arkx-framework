@@ -2,7 +2,7 @@ package io.arkx.framework.cosyui.util;
 
 import java.util.Map;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.cosyui.expression.ExpressionException;
@@ -22,8 +22,8 @@ public class LoopVariableResolver implements IVariableResolver {
 	protected Map<?, ?> map;
 
 	public LoopVariableResolver() {
-		if (Current.getExecuteContext() != null) {
-			vr = Current.getExecuteContext();
+		if (WebCurrent.getExecuteContext() != null) {
+			vr = WebCurrent.getExecuteContext();
 		}
 	}
 

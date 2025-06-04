@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.core.JsonResult;
 import io.arkx.framework.cosyui.control.PagedData;
@@ -44,7 +44,7 @@ public class RestUtil {
 //	}
 	
 	private static String basePath() {
-		HttpServletRequest request = Current.getRequest().getServletRequest();
+		HttpServletRequest request = WebCurrent.getRequest().getServletRequest();
 		String path2 = request.getContextPath();
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path2;
 		if(!basePath.endsWith("/")){
@@ -54,15 +54,15 @@ public class RestUtil {
 	}
 	
 	public static JsonResult post(String method) {
-		return post(method, Current.getRequest(), Object.class);
+		return post(method, WebCurrent.getRequest(), Object.class);
 	}
 	
 	public static JsonResult post(String method, Class<?> clazz) {
-		return post(method, Current.getRequest(), clazz);
+		return post(method, WebCurrent.getRequest(), clazz);
 	}
 	
 	public static JsonResult post(String method, Object object, Class<?> clazz) {
-		HttpServletRequest request = Current.getRequest().getServletRequest();
+		HttpServletRequest request = WebCurrent.getRequest().getServletRequest();
 		HttpHeaders headers = new HttpHeaders();
 		         MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
 		       headers.setContentType(type);

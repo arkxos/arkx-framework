@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
@@ -82,7 +82,7 @@ public class ListTag extends ArkTag implements IListTag, IBreakableTag {
 			if (ObjectUtil.notEmpty(method)) {
 				IMethodLocator m = MethodLocatorUtil.find(method);
 				PrivCheck.check(m);
-				RequestData request = Current.getRequest();
+				RequestData request = WebCurrent.getRequest();
 				ListAction la = new ListAction();
 				la.setParams(request);
 				la.setPage(page);
@@ -106,7 +106,7 @@ public class ListTag extends ArkTag implements IListTag, IBreakableTag {
 				dataTable = la.getDataSource();
 				pageContext.setAttribute(id + Constant.ActionInPageContext, la);// 供PageBar标签使用
 			} else if (ObjectUtil.notEmpty(rest)) {
-				RequestData request = Current.getRequest();
+				RequestData request = WebCurrent.getRequest();
 				
 				if(rest.indexOf("?") != -1) {
 					// name=John&Age=18&Age=18&Gender=3

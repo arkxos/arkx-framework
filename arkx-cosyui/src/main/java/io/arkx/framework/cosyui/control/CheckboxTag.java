@@ -3,7 +3,7 @@ package io.arkx.framework.cosyui.control;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -74,7 +74,7 @@ public class CheckboxTag extends ArkTag {
 	}
 
 	public String getHtml() {
-		Mapx<String, Object> map = Current.getRequest();
+		Mapx<String, Object> map = WebCurrent.getRequest();
 		try {
 			DataTable dt = SelectTag.getCodeData(code, method, rest, options, pageContext, map);
 			if (dt == null || dt.getRowCount() == 0) {

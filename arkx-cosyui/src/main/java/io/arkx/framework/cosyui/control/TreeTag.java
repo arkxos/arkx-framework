@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
@@ -96,10 +96,10 @@ public class TreeTag extends ArkTag {
 			}
 
 			TreeAction ta = prepareAction();
-			ta.setParams(Current.getRequest());
+			ta.setParams(WebCurrent.getRequest());
 			
 			if(StringUtil.isNotEmpty(rest)) {
-				JsonResult jsonResult = RestUtil.post(rest, Current.getRequest(), Tree.class);
+				JsonResult jsonResult = RestUtil.post(rest, WebCurrent.getRequest(), Tree.class);
 				Tree tree = (Tree)jsonResult.getData();
 				
 				String branchIcon = tree.getBranchIcon();

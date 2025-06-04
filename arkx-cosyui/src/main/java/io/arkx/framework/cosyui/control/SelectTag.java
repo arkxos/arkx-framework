@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -135,7 +135,7 @@ public class SelectTag extends ArkTag {
 		appendAttribute(sb, "class", this.className);
 		appendAttribute(sb, "style", this.style);
 		sb.append("> ");
-		Mapx<String, Object> params = Current.getRequest();
+		Mapx<String, Object> params = WebCurrent.getRequest();
 		if (StringUtil.isNotEmpty(this.conditionField)) {
 			params.put("ConditionField", this.conditionField);
 			params.put("ConditionValue", this.conditionValue);
@@ -192,7 +192,7 @@ public class SelectTag extends ArkTag {
 		if (lazy) {// 延迟加载，前台页面通过JS加载
 			return;
 		}
-		Mapx<String, Object> params = Current.getRequest();
+		Mapx<String, Object> params = WebCurrent.getRequest();
 		if (StringUtil.isNotEmpty(conditionField)) {
 			params.put("ConditionField", conditionField);
 			params.put("ConditionValue", conditionValue);
@@ -279,7 +279,7 @@ public class SelectTag extends ArkTag {
 			}
 		} else if (ObjectUtil.notEmpty(rest)) {
 			try {
-				RequestData requestData = Current.getRequest();
+				RequestData requestData = WebCurrent.getRequest();
 				JsonResult jsonResult = RestUtil.post(rest, requestData, DataTable.class);
 				if(!jsonResult.isSuccess()) {
 					throw new TemplateRuntimeException(jsonResult.getMessage());

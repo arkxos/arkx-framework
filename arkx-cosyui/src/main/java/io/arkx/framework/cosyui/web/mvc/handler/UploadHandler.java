@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
@@ -161,7 +161,7 @@ public class UploadHandler implements IURLHandler {
 					method = params.getString("_Method");
 				}
 				IMethodLocator m = MethodLocatorUtil.find(method);
-				Current.getRequest().putAll(fields);
+				WebCurrent.getRequest().putAll(fields);
 				try {
 					PrivCheck.check(m);
 				} catch (PrivException e) {				
@@ -178,7 +178,7 @@ public class UploadHandler implements IURLHandler {
 
 				// 参数检查
 				if (!VerifyCheck.check(m)) {
-					String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+					String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
 					LogUtil.warn(message);
 
 					uploadFileMap.remove(taskID);
@@ -190,7 +190,7 @@ public class UploadHandler implements IURLHandler {
 
 				UploadAction ua = new UploadAction();
 				ua.setItems(uploadedFiles.Files);
-				ua.setCookies(Current.getCookies());
+				ua.setCookies(WebCurrent.getCookies());
 		        ua.setRequest(request);
 		        ua.setResponse(response);
 		        
@@ -207,9 +207,9 @@ public class UploadHandler implements IURLHandler {
 					responseFormat = params.getString("responseFormat");
 				}
 				if("json".equals(responseFormat)) {
-					response.getWriter().write(Current.getResponse().toJSON());// 将结果返回给页面
+					response.getWriter().write(WebCurrent.getResponse().toJSON());// 将结果返回给页面
 				} else {
-					response.getWriter().write(Current.getResponse().toXML());// 将结果返回给页面
+					response.getWriter().write(WebCurrent.getResponse().toXML());// 将结果返回给页面
 				}
 				
 			} else {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
@@ -49,9 +49,9 @@ public class InitTag extends ArkTag {
 			}
 			Object data = jsonResult.getData();
 			if(data instanceof Map) {
-				Current.getResponse().putAll((Map)data);
+				WebCurrent.getResponse().putAll((Map)data);
 			}
-			Current.getResponse().putAll(jsonResult.getExtraData());
+			WebCurrent.getResponse().putAll(jsonResult.getExtraData());
 		}
 		return EVAL_BODY_INCLUDE;
 	}

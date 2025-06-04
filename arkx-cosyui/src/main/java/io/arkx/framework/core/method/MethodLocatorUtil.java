@@ -3,7 +3,7 @@ package io.arkx.framework.core.method;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.util.AliasMapping;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
@@ -93,8 +93,8 @@ public class MethodLocatorUtil {
 			String params = alias.substring(i + 1);
 			alias = alias.substring(0, i);
 			Mapx<String, String> map = StringUtil.splitToMapx(params, "&", "=");
-			if (Current.getRequest() != null) {
-				Current.getRequest().putAll(map);
+			if (WebCurrent.getRequest() != null) {
+				WebCurrent.getRequest().putAll(map);
 			}
 		}
 		String fullName = AliasMapping.get(alias);
@@ -106,7 +106,7 @@ public class MethodLocatorUtil {
 				throw new UIMethodNotFoundException(alias);
 			}
 		}
-		Current.setMethod(m);
+		WebCurrent.setMethod(m);
 		return m;
 	}
 }

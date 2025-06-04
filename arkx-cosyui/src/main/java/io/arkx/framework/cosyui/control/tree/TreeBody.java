@@ -1,7 +1,7 @@
 package io.arkx.framework.cosyui.control.tree;
 
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.lang.FastStringBuilder;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.control.TreeAction;
@@ -58,7 +58,7 @@ public class TreeBody {
 		if (StringUtil.isNotEmpty(afterDrag)) {
 			item.setAttribute("dragEnd", "Tree.dragEnd");
 			item.setAttribute("onMouseUp", "DragManager.onMouseUp(event,this)");
-			String userAgent = Current.getRequest().getHeaders().getString("user-agent");
+			String userAgent = WebCurrent.getRequest().getHeaders().getString("user-agent");
 			if (userAgent != null && userAgent.indexOf("msie") >= 0) {
 				item.setAttribute("onMouseEnter", "DragManager.onMouseOver(event,this)");
 			} else {

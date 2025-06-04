@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.web;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher;
@@ -52,9 +52,9 @@ public abstract class UIFacade implements IUIFacade {
 	 * （ 本方法通常用于从UI类A中调用UI类B中的方法时初始化B中的内置对象）
 	 */
 	public UIFacade() {
-		Request = Current.getRequest();
-		Cookies = Current.getCookies();
-		Response = Current.getResponse();
+		Request = WebCurrent.getRequest();
+		Cookies = WebCurrent.getCookies();
+		Response = WebCurrent.getResponse();
 		if (Response == null) {
 			Response = new ResponseData();
 		}

@@ -1,7 +1,7 @@
 package io.arkx.framework.cosyui.control;
 
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.Mapx;
@@ -74,7 +74,7 @@ public class TreeUI extends UIFacade { // NO_UCD
 			ta.setTagBody(TreeBodyManager.get(Request.getString(Constant.TagBody)));
 
 			if(!StringUtil.isEmpty(rest)) {
-				JsonResult jsonResult = RestUtil.post(rest, Current.getRequest(), Tree.class);
+				JsonResult jsonResult = RestUtil.post(rest, WebCurrent.getRequest(), Tree.class);
 				Tree tree = (Tree)jsonResult.getData();
 				
 				String branchIcon = tree.getBranchIcon();
@@ -109,9 +109,9 @@ public class TreeUI extends UIFacade { // NO_UCD
 				PrivCheck.check(m);
 				// 参数检查
 				if (!VerifyCheck.check(m)) {
-					String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+					String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
 					LogUtil.warn(message);
-					Current.getResponse().setFailedMessage(message);
+					WebCurrent.getResponse().setFailedMessage(message);
 					return;
 				}
 				m.execute(ta);

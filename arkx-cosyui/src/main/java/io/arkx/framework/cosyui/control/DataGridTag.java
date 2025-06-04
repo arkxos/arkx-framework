@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -83,7 +83,7 @@ public class DataGridTag extends ArkTag {
 			} else if (ObjectUtil.notEmpty(this.method)) {
 				IMethodLocator m = MethodLocatorUtil.find(this.method);
 				PrivCheck.check(m);
-				dga.setParams(Current.getRequest());
+				dga.setParams(WebCurrent.getRequest());
 				m.execute(new Object[] { dga });
 			} else if (this.data != null) {
 				if ((this.data instanceof DataTable)) {

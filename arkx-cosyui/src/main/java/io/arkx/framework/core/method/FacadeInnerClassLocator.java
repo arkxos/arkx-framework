@@ -1,6 +1,6 @@
 package io.arkx.framework.core.method;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.core.exception.UIMethodInvokeException;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher.DispatchException;
@@ -40,12 +40,12 @@ public class FacadeInnerClassLocator extends MethodClassLocator {
 	private UIFacade createFacadeInstance() {
 		Class<?> c = null;
 		c = clazz.getDeclaringClass();
-		if (Current.getUIFacade() != null && Current.getUIFacade().getClass() == c) {
-			return Current.getUIFacade();
+		if (WebCurrent.getUIFacade() != null && WebCurrent.getUIFacade().getClass() == c) {
+			return WebCurrent.getUIFacade();
 		} else {
 			try {
 				UIFacade facade = (UIFacade) c.newInstance();
-				Current.setUIFacade(facade);
+				WebCurrent.setUIFacade(facade);
 				return facade;
 			} catch (Exception e) {
 				throw new UIMethodInvokeException(e);

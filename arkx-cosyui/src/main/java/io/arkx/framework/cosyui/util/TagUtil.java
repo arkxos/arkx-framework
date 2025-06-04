@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.util;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import io.arkx.framework.cosyui.zhtml.ZhtmlExecuteContext;
@@ -24,7 +24,7 @@ public class TagUtil {
 		pageContext.addRootVariable(PageContextAttribte_TagID, ++tagid);
 		String uri = "";
 		if (pageContext instanceof ZhtmlExecuteContext) {
-			uri = Current.getRequest().getURL();
+			uri = WebCurrent.getRequest().getURL();
 			if (uri.indexOf("?") > -1) {
 				uri = uri.substring(0, uri.indexOf("?"));
 			}

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
@@ -115,9 +115,9 @@ public class AjaxHandler extends AbstractHtmlHandler {
 
 			// 参数检查
 			if (!VerifyCheck.check(ml)) {
-				String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+				String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
 				LogUtil.warn(message);
-				Current.getResponse().setFailedMessage(message);
+				WebCurrent.getResponse().setFailedMessage(message);
 				write(resultDataFormat, response);
 				return true;
 			}
@@ -194,8 +194,8 @@ public class AjaxHandler extends AbstractHtmlHandler {
 			}
 			
 			ServiceException serviceException = (ServiceException)e;
-			Current.getResponse().setFailedMessage(serviceException.getMessage());
-			Current.getResponse().put("serviceExceptionCode", serviceException.getCode());
+			WebCurrent.getResponse().setFailedMessage(serviceException.getMessage());
+			WebCurrent.getResponse().put("serviceExceptionCode", serviceException.getCode());
 			
 			write(resultDataFormat, response);
 		} catch (DispatchException e) {
@@ -209,9 +209,9 @@ public class AjaxHandler extends AbstractHtmlHandler {
 			}
 			
 			ResponseData r = new ResponseData();
-			String redirectURL = Current.getDispatcher().getRedirectURL();
+			String redirectURL = WebCurrent.getDispatcher().getRedirectURL();
 			if (redirectURL == null) {
-				redirectURL = Current.getDispatcher().getForwardURL();
+				redirectURL = WebCurrent.getDispatcher().getForwardURL();
 			}
 			r.put(Constant.ResponseScriptAttr, "window.location.href='" + Config.getContextPath() + redirectURL + "';");
 			write(resultDataFormat, response);
@@ -225,8 +225,8 @@ public class AjaxHandler extends AbstractHtmlHandler {
 				e1.printStackTrace();
 			}
 			
-			Current.getResponse().setFailedMessage(e.getMessage());
-			Current.getResponse().put("serviceExceptionCode", "500");
+			WebCurrent.getResponse().setFailedMessage(e.getMessage());
+			WebCurrent.getResponse().put("serviceExceptionCode", "500");
 			
 			write(resultDataFormat, response);
 		}  finally {
@@ -253,8 +253,8 @@ public class AjaxHandler extends AbstractHtmlHandler {
 			} else if (!useArg) {
 //				LogUtil.debug("匹配失败，将从request中获取名称为[" + paramNames[j] + "]的值...");
 
-				RequestData request = Current.getRequest();
-				request.putAll(Current.getValues());
+				RequestData request = WebCurrent.getRequest();
+				request.putAll(WebCurrent.getValues());
 				Object[] keys = request.keySet().toArray();
 				for (Object key : keys) {
 					if (paramNames[j].equalsIgnoreCase(key.toString())) {
@@ -286,7 +286,7 @@ public class AjaxHandler extends AbstractHtmlHandler {
 				if (HttpServletRequest.class.isAssignableFrom(cs[j])) {
 					result[j] = request.getServletRequest();
 				} else if(HttpServletResponse.class.isAssignableFrom(cs[j])) {
-					result[j] = Current.getResponse().getServletResponse();
+					result[j] = WebCurrent.getResponse().getServletResponse();
 				}
 			}
 		}
@@ -304,16 +304,16 @@ public class AjaxHandler extends AbstractHtmlHandler {
 			sb.append("\">");
 			sb.append("</head><body>");
 			sb.append("<script id=\"jsonData\" type=\"text/json\">");
-			sb.append(Current.getResponse().toJSON());
+			sb.append(WebCurrent.getResponse().toJSON());
 			sb.append("</script>");
 			sb.append("<script>window.name=document.getElementById('jsonData').innerHTML;</script>");
 			sb.append("</body></html>");
 		} else if (resultDataFormat.equalsIgnoreCase("json")) {
 			response.setContentType("application/json");
-			sb.append(Current.getResponse().toJSON());
+			sb.append(WebCurrent.getResponse().toJSON());
 		} else if (resultDataFormat.equalsIgnoreCase("xml")) {
 			response.setContentType("text/xml");
-			sb.append(Current.getResponse().toXML());
+			sb.append(WebCurrent.getResponse().toXML());
 		}
 		response.getWriter().write(sb.toString());
 	}

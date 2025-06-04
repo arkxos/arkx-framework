@@ -3,7 +3,7 @@ package io.arkx.framework.cosyui.control;
 import java.util.Map.Entry;
 
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.CacheMapx;
@@ -35,9 +35,9 @@ public class UploadUI extends UIFacade {
 		PrivCheck.check(m);
 		// 参数检查
 		if (!VerifyCheck.check(m)) {
-			String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+			String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
 			LogUtil.warn(message);
-			Current.getResponse().setFailedMessage(message);
+			WebCurrent.getResponse().setFailedMessage(message);
 			return;
 		}
 		m.execute(new UploadAction());
@@ -46,7 +46,7 @@ public class UploadUI extends UIFacade {
 	@Priv(login = false)
 	@Verify(ignoreAll = true)
 	public void getSessionID() {
-		String sessionID = Current.getRequest().getSessionID();
+		String sessionID = WebCurrent.getRequest().getSessionID();
 		$S("sessionID", sessionID);
 	}
 

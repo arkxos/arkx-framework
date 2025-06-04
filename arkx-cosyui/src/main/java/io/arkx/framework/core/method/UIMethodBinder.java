@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.commons.util.lang.ClassUtil;
@@ -39,7 +39,7 @@ public class UIMethodBinder {
 //	}
 //}
 	public static void bind(UIMethod m, Object[] args) {
-		BeanUtil.fill(m, Current.getRequest());
+		BeanUtil.fill(m, WebCurrent.getRequest());
 		BeanDescription bd = BeanManager.getBeanDescription(m.getClass());
 		for (BeanProperty bp : bd.getPropertyMap().values()) {
 			if (bp.canWrite()) {
@@ -55,8 +55,8 @@ public class UIMethodBinder {
 					}
 				}
 				try {
-					if ((!flag) && (Current.getRequest() != null)) {
-						for (Map.Entry<String, Object> e : Current.getRequest().entrySet()) {
+					if ((!flag) && (WebCurrent.getRequest() != null)) {
+						for (Map.Entry<String, Object> e : WebCurrent.getRequest().entrySet()) {
 							if (((String) e.getKey()).equalsIgnoreCase(bp.getName())) {
 								bp.write(m, CastorService.toType(e.getValue(), bp.getPropertyType()));
 								flag = true;
@@ -64,8 +64,8 @@ public class UIMethodBinder {
 							}
 						}
 					}
-					if ((!flag) && (Current.getResponse() != null)) {
-						for (Map.Entry<String, Object> e : Current.getResponse().entrySet()) {
+					if ((!flag) && (WebCurrent.getResponse() != null)) {
+						for (Map.Entry<String, Object> e : WebCurrent.getResponse().entrySet()) {
 							if (((String) e.getKey()).equalsIgnoreCase(bp.getName())) {
 								bp.write(m, CastorService.toType(e.getValue(), bp.getPropertyType()));
 								break;
@@ -120,8 +120,8 @@ public class UIMethodBinder {
 			if (params != null) {
 				String name = params[i];
 				try {
-					if ((!flag) && (Current.getRequest() != null)) {
-						for (Entry<String, Object> e : Current.getRequest().entrySet()) {
+					if ((!flag) && (WebCurrent.getRequest() != null)) {
+						for (Entry<String, Object> e : WebCurrent.getRequest().entrySet()) {
 							if (e.getKey().equalsIgnoreCase(name)) {
 								arr[i] = CastorService.toType(e.getValue(), cs[i]);
 								flag = true;
@@ -129,8 +129,8 @@ public class UIMethodBinder {
 							}
 						}
 					}
-					if ((!flag) && (Current.getResponse() != null)) {
-						for (Entry<String, Object> e : Current.getResponse().entrySet()) {
+					if ((!flag) && (WebCurrent.getResponse() != null)) {
+						for (Entry<String, Object> e : WebCurrent.getResponse().entrySet()) {
 							if (e.getKey().equalsIgnoreCase(name)) {
 								arr[i] = CastorService.toType(e.getValue(), cs[i]);
 								break;
@@ -142,9 +142,9 @@ public class UIMethodBinder {
 			}
 			if(arr[i] == null) {
 				if (cs[i] == Mapx.class) {
-					arr[i] = Current.getRequest();
+					arr[i] = WebCurrent.getRequest();
 				} else {
-					arr[i] = ClassUtil.mapToObject(cs[i], Current.getRequest());					
+					arr[i] = ClassUtil.mapToObject(cs[i], WebCurrent.getRequest());
 				}
 			}
 		}

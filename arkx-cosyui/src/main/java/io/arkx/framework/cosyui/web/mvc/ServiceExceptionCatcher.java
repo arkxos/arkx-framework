@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.web.mvc;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.core.IExceptionCatcher;
 
@@ -34,8 +34,8 @@ public class ServiceExceptionCatcher implements IExceptionCatcher {
 	public void doCatch(RuntimeException e, HttpServletRequest request, HttpServletResponse response) {
 		if (e instanceof ServiceException) {
 			ServiceException serviceException = (ServiceException)e;
-			Current.getResponse().setFailedMessage(serviceException.getMessage());
-			Current.getResponse().put("serviceExceptionCode", serviceException.getCode());
+			WebCurrent.getResponse().setFailedMessage(serviceException.getMessage());
+			WebCurrent.getResponse().put("serviceExceptionCode", serviceException.getCode());
 		}
 	}
 

@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.web.mvc;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 
 /**
  * 转发器，用于保存forward和redirect操作的目标URL
@@ -17,7 +17,7 @@ public class Dispatcher {
 	}
 
 	public static void forward(String url) {
-		Dispatcher d = Current.getDispatcher();
+		Dispatcher d = WebCurrent.getDispatcher();
 		if (d == null) {
 			return;
 		}
@@ -27,7 +27,7 @@ public class Dispatcher {
 	}
 
 	public static void redirect(String url) {
-		Dispatcher d = Current.getDispatcher();
+		Dispatcher d = WebCurrent.getDispatcher();
 		if (d == null) {
 			return;
 		}

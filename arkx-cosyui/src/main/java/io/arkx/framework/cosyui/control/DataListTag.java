@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -96,13 +96,13 @@ public class DataListTag extends ArkTag {
 				IMethodLocator m = MethodLocatorUtil.find(method);
 				PrivCheck.check(m);
 	
-				if (Current.getRequest() != null) {
-					dla.setParams(Current.getRequest());
+				if (WebCurrent.getRequest() != null) {
+					dla.setParams(WebCurrent.getRequest());
 				}
 				m.execute(dla);
 			} else {
 				if(this.page) {
-					RequestData requestData = Current.getRequest();
+					RequestData requestData = WebCurrent.getRequest();
 					requestData.put("pageIndex", dla.getPageIndex());
 					requestData.put("pageSize", dla.getPageSize());
 					JsonResult jsonResult = RestUtil.post(rest, requestData, PagedData.class);
@@ -113,7 +113,7 @@ public class DataListTag extends ArkTag {
 					dla.setTotal(pagedData.getTotal());
 					dla.bindData(pagedData.getDataTable());
 				} else {
-					RequestData requestData = Current.getRequest();
+					RequestData requestData = WebCurrent.getRequest();
 					JsonResult jsonResult = RestUtil.post(rest, requestData, DataTable.class);
 					if(!jsonResult.isSuccess()) {
 						throw new TemplateRuntimeException(jsonResult.getMessage());

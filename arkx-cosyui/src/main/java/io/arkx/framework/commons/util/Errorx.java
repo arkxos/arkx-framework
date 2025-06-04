@@ -2,7 +2,7 @@ package io.arkx.framework.commons.util;
 
 import java.util.ArrayList;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
@@ -174,7 +174,7 @@ public class Errorx {
 	 * @return
 	 */
 	public static Errorx getCurrent() {
-		return Current.getErrorx();
+		return WebCurrent.getErrorx();
 	}
 
 	/**

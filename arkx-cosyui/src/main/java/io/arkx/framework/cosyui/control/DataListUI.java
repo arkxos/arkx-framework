@@ -1,7 +1,7 @@
 package io.arkx.framework.cosyui.control;
 
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.DataTable;
@@ -62,15 +62,15 @@ public class DataListUI extends UIFacade {
 				PrivCheck.check(m);
 				// 参数检查
 				if (!VerifyCheck.check(m)) {
-					String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+					String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
 					LogUtil.warn(message);
-					Current.getResponse().setFailedMessage(message);
+					WebCurrent.getResponse().setFailedMessage(message);
 					return;
 				}
 				m.execute(dla);
 			} else {
 				if(dla.isPageEnabled()) {
-					RequestData requestData = Current.getRequest();
+					RequestData requestData = WebCurrent.getRequest();
 					requestData.put("pageIndex", dla.getPageIndex());
 					requestData.put("pageSize", dla.getPageSize());
 					JsonResult jsonResult = RestUtil.post(rest, requestData, PagedData.class);
@@ -81,7 +81,7 @@ public class DataListUI extends UIFacade {
 					dla.setTotal(pagedData.getTotal());
 					dla.bindData(pagedData.getDataTable());
 				} else {
-					RequestData requestData = Current.getRequest();
+					RequestData requestData = WebCurrent.getRequest();
 					JsonResult jsonResult = RestUtil.post(rest, requestData, DataTable.class);
 					if(!jsonResult.isSuccess()) {
 						throw new TemplateRuntimeException(jsonResult.getMessage());

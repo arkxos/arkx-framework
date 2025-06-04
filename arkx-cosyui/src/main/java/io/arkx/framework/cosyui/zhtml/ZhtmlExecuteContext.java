@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import io.arkx.framework.Account;
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.Member;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
@@ -83,11 +83,11 @@ public class ZhtmlExecuteContext extends AbstractExecuteContext implements IVari
 		} else if (lowerVar.equals("config")) {
 			return Config.getMapx();
 		} else if (lowerVar.equals("current")) {
-			return Current.getCurrentData().values;
+			return WebCurrent.getCurrentData().values;
 		} else if (lowerVar.equals("request")) {
-			return Current.getRequest();
+			return WebCurrent.getRequest();
 		} else if (lowerVar.equals("response")) {
-			return Current.getResponse();
+			return WebCurrent.getResponse();
 		} else if (lowerVar.equals("context")) {
 			return this;
 		}
@@ -96,13 +96,13 @@ public class ZhtmlExecuteContext extends AbstractExecuteContext implements IVari
 			return v;
 		}
 		if (v == null) {
-			v = Current.getResponse().get(var);
+			v = WebCurrent.getResponse().get(var);
 		}
 		if (v == null) {
-			v = Current.get(var);
+			v = WebCurrent.get(var);
 		}
 		if (v == null) {
-			v = Current.getRequest().get(var);// Request中的值优先级应该最低，以防止某些情况下用户通过URL传入值覆盖程序本来应该输出的值
+			v = WebCurrent.getRequest().get(var);// Request中的值优先级应该最低，以防止某些情况下用户通过URL传入值覆盖程序本来应该输出的值
 		}
 		return v;
 	}

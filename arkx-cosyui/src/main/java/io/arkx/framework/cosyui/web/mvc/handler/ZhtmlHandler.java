@@ -1,7 +1,7 @@
 package io.arkx.framework.cosyui.web.mvc.handler;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.cosyui.template.exception.TemplateNotFoundException;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher;
 import io.arkx.framework.cosyui.zhtml.ZhtmlExecuteContext;
@@ -55,7 +55,7 @@ public class ZhtmlHandler extends AbstractHtmlHandler {
 			return true;
 		}
 		ZhtmlExecuteContext context = new ZhtmlExecuteContext(ZhtmlManagerContext.getInstance(), request, response);
-		Current.setExecuteContext(context);
+		WebCurrent.setExecuteContext(context);
 		
 		Session session = null;
 		try {

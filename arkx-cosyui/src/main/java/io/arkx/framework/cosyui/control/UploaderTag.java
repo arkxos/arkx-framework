@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.StringUtil;
@@ -140,7 +140,7 @@ public class UploaderTag extends ArkTag {
 		if (this.fileMaxSize != 0) {
 			attrs = attrs + " fileMaxSize=\"" + this.fileMaxSize + "\"";
 		}
-		attrs = attrs + " sessionid=\"" + Current.getRequest().getSessionID() + "\"";
+		attrs = attrs + " sessionid=\"" + WebCurrent.getRequest().getSessionID() + "\"";
 		if (this.width == 0) {
 			this.width = 250;
 		}

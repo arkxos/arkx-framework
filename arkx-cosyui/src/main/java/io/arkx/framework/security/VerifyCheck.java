@@ -3,7 +3,7 @@ package io.arkx.framework.security;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
@@ -40,9 +40,9 @@ public class VerifyCheck {
 				String value = r.substring(i + 1);
 				map.put(name, value);
 			}
-			return check(m, Current.getRequest(), nocheck, map);
+			return check(m, WebCurrent.getRequest(), nocheck, map);
 		} else {
-			return check(m, Current.getRequest(), null, new Mapx<String, String>());// 默认全部检查
+			return check(m, WebCurrent.getRequest(), null, new Mapx<String, String>());// 默认全部检查
 		}
 	}
 

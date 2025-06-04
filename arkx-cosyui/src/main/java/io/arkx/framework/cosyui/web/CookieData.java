@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.cosyui.web.CookieData.CookieObject;
 
@@ -217,8 +217,8 @@ public class CookieData extends ArrayList<CookieObject> {
 	 */
 	public void write() {
 		HttpServletResponse response = null;
-		if (Current.getResponse() != null) {
-			response = Current.getResponse().servletResponse;
+		if (WebCurrent.getResponse() != null) {
+			response = WebCurrent.getResponse().servletResponse;
 		}
 		if (response == null) {
 			return;

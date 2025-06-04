@@ -12,7 +12,7 @@ import org.apache.commons.fileupload2.core.FileItem;
 import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.config.UploadMaxSize;
 import io.arkx.framework.core.method.IMethodLocator;
@@ -109,10 +109,10 @@ public class ActionHandler implements IURLHandler {
 		PrivCheck.check(method);
 		// 参数检查
 		if (!VerifyCheck.check(method)) {
-			String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+			String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
 			LogUtil.warn(message);
-			Current.getResponse().setFailedMessage(message);
-			response.getWriter().write(Current.getResponse().toXML());
+			WebCurrent.getResponse().setFailedMessage(message);
+			response.getWriter().write(WebCurrent.getResponse().toXML());
 			return true;
 		}
 		
@@ -121,13 +121,13 @@ public class ActionHandler implements IURLHandler {
 		if (ServletFileUpload.isMultipartContent(request)) {
 			UploadAction ua = new UploadAction();
 			ua.setItems(prepareUploadAction(request));
-			ua.setCookies(Current.getCookies());
+			ua.setCookies(WebCurrent.getCookies());
 			ua.setRequest(request);
 			ua.setResponse(response);
 			action = ua;
 		} else {
 			action = new ZAction();
-			action.setCookies(Current.getCookies());
+			action.setCookies(WebCurrent.getCookies());
 			action.setRequest(request);
 			action.setResponse(response);
 		}
@@ -177,7 +177,7 @@ public class ActionHandler implements IURLHandler {
 				}
 			}
 
-			Current.getRequest().putAll(fields);
+			WebCurrent.getRequest().putAll(fields);
 			return files;
 		} catch (Exception e) {
 			e.printStackTrace();

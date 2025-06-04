@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.core.exception.UIMethodException;
 import io.arkx.framework.core.exception.UIMethodInvokeException;
@@ -68,12 +68,12 @@ public class FacadeMemberMethodLocator implements IMethodLocator {
 	private UIFacade createFacadeInstance() {
 		Class<?> c = null;
 		c = clazz;//m.getDeclaringClass();
-		if (Current.getUIFacade() != null && Current.getUIFacade().getClass() == c) {
-			return Current.getUIFacade();
+		if (WebCurrent.getUIFacade() != null && WebCurrent.getUIFacade().getClass() == c) {
+			return WebCurrent.getUIFacade();
 		} else {
 			try {
 				UIFacade facade = (UIFacade) c.newInstance();
-				Current.setUIFacade(facade);
+				WebCurrent.setUIFacade(facade);
 				return facade;
 			} catch (Exception e) {
 				throw new UIMethodInvokeException(e);

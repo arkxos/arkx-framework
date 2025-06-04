@@ -5,7 +5,7 @@ import java.util.Map;
 
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.DataTable;
@@ -53,7 +53,7 @@ public class DataGridUI extends UIFacade {
 		dga.setScroll($B(Constant.DataGridScroll));
 		dga.setLazy($B(Constant.Lazy));
 		dga.setCacheSize($I(Constant.CacheSize));
-		dga.setParams(Current.getRequest());
+		dga.setParams(WebCurrent.getRequest());
 		if (dga.isPageEnabled()) {
 			dga.setPageIndex(0);
 			dga.setPageIndex($I(Constant.DataGridPageIndex));
@@ -92,9 +92,9 @@ public class DataGridUI extends UIFacade {
 			
 			// 参数检查
 			if (!VerifyCheck.check(m)) {
-				String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+				String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
 				LogUtil.warn(message);
-				Current.getResponse().setFailedMessage(message);
+				WebCurrent.getResponse().setFailedMessage(message);
 				return;
 			}
 			m.execute(new Object[] { dga });
@@ -144,7 +144,7 @@ public class DataGridUI extends UIFacade {
 				DataTable dt = (DataTable) JSON.tryReverse(dataSource);
 				IMethodLocator m = MethodLocatorUtil.find(method);
 				PrivCheck.check(m);
-				Mapx<String, Object> map = Current.getRequest();
+				Mapx<String, Object> map = WebCurrent.getRequest();
 				for (Map.Entry<String, Object> e : map.entrySet()) {
 					String k = e.getKey();
 					if (k.startsWith(xls)) {

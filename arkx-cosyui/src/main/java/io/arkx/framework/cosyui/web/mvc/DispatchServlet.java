@@ -9,7 +9,7 @@ import io.arkx.framework.Account;
 import io.arkx.framework.Account.UserData;
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.util.Errorx;
 import io.arkx.framework.commons.util.FileUtil;
@@ -236,7 +236,7 @@ public class DispatchServlet extends HttpServlet {
 				response.setCharacterEncoding(Config.getGlobalCharset());
 			}
 		}
-		Current.prepare(request, response);
+		WebCurrent.prepare(request, response);
 		try {
 //			if (Thread.currentThread().getContextClassLoader() != PreClassLoader.getInstance()) {
 				httpThreads.put(Thread.currentThread(), Thread.currentThread().getContextClassLoader());
@@ -293,7 +293,7 @@ public class DispatchServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Current.clear();// 确保Current中的数据被清空
+			WebCurrent.clear();// 确保Current中的数据被清空
 			t = System.currentTimeMillis() - t;
 			if (t > 100) {
 //				System.out.println("URL " + url + " cost " + t + "ms.");
@@ -349,7 +349,7 @@ public class DispatchServlet extends HttpServlet {
 		try {
 			for (IURLHandler up : URLHandlerService.getInstance().getAll()) {
 				if (up.match(url)) {
-					Current.setURLHandler(up);
+					WebCurrent.setURLHandler(up);
 					try {
 						if (up.handle(url, request, response)) {
 							return;
@@ -386,7 +386,7 @@ public class DispatchServlet extends HttpServlet {
 				}
 			}
 		} catch (DispatchException e) {// 此异常仅用于指示跳转
-			Dispatcher d = Current.getDispatcher();
+			Dispatcher d = WebCurrent.getDispatcher();
 			if (d != null) {
 				if (d.forwardURL != null) {
 					url = d.forwardURL;
@@ -411,7 +411,7 @@ public class DispatchServlet extends HttpServlet {
 		for (String str : welcomeFiles) {
 			for (IURLHandler up : URLHandlerService.getInstance().getAll()) {
 				if (up.match(url + str)) {
-					Current.setURLHandler(up);
+					WebCurrent.setURLHandler(up);
 					try {
 						if (up.handle(url + str, request, response)) {
 							return;

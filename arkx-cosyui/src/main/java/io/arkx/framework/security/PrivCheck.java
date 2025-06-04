@@ -2,7 +2,7 @@ package io.arkx.framework.security;
 
 import io.arkx.framework.Account;
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.Member;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.Priv.LoginType;
@@ -48,7 +48,7 @@ public class PrivCheck {
 				privVlaue = childPriv;
 			}
 			
-			check(methodPriv.login(), methodPriv.loginType(), methodPriv.userType(), privVlaue, Current.getExecuteContext());
+			check(methodPriv.login(), methodPriv.loginType(), methodPriv.userType(), privVlaue, WebCurrent.getExecuteContext());
 		} else {// 必须有@Priv注解，否则禁止访问
 			throw new NoPrivException("Method hasn't @Priv annotation");
 		}
@@ -90,7 +90,7 @@ public class PrivCheck {
 	 * 用默认的占位符上下文来校验
 	 */
 	public static boolean check(String priv) {
-		return check(Current.getExecuteContext(), priv);
+		return check(WebCurrent.getExecuteContext(), priv);
 	}
 
 	public static void assertPriv(String priv) {
