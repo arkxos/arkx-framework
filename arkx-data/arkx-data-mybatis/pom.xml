@@ -9,7 +9,7 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>arkxos-framework-data-mybatis</artifactId>
+	<artifactId>arkx-data-mybatis</artifactId>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -29,7 +29,7 @@
 		</dependency>
 		<dependency>
 			<groupId>io.arkx.framework</groupId>
-			<artifactId>arkxos-framework-commons-core</artifactId>
+			<artifactId>arkx-commons-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

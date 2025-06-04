@@ -7,7 +7,7 @@
 		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkx-dependencies</artifactId>
 		<version>${revision}</version>
-		<relativePath>../arkxos-framework-dependencies/pom.xml</relativePath>
+		<relativePath>../arkx-dependencies/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>arkx-parent</artifactId>

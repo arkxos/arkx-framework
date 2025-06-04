@@ -10,7 +10,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>arkxos-framework-commons-core</artifactId>
+    <artifactId>arkx-commons-core</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -1499,8 +1499,8 @@
             <artifactId>javassist</artifactId>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.arkxos</groupId>-->
-<!--            <artifactId>arkxos-data-jpa-sqltoy</artifactId>-->
+<!--            <groupId>com.arkx</groupId>-->
+<!--            <artifactId>arkx-data-jpa-sqltoy</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--        </dependency>-->
 

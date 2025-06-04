@@ -8,7 +8,7 @@
 		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkx-parent</artifactId>
 		<version>${revision}</version>
-		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
+		<relativePath>../arkx-parent/pom.xml</relativePath>
 	</parent>
 
     <artifactId>arkx-commons</artifactId>
@@ -17,21 +17,21 @@
 	<description>公共聚合模块</description>
 
     <modules>
-		<module>arkxos-framework-common-bom</module>
-		<module>arkxos-framework-spring</module>
+		<module>arkx-commons-bom</module>
+		<module>arkx-spring</module>
 
-		<module>arkxos-framework-commons-core</module>
-		<module>arkxos-framework-commons-concurrent</module>
-        <module>arkxos-framework-common-encrypt</module>
+		<module>arkx-commons-core</module>
+		<module>arkx-commons-concurrent</module>
+        <module>arkx-commons-encrypt</module>
 
-		<module>arkxos-framework-common-datasource</module>
-		<module>arkxos-framework-common-oss</module>
-		<module>arkxos-framework-common-seata</module>
-		<module>arkxos-framework-common-feign</module>
-		<module>arkxos-framework-common-swagger</module>
-		<module>arkxos-framework-common-xss</module>
+		<module>arkx-commons-datasource</module>
+		<module>arkx-commons-oss</module>
+		<module>arkx-commons-seata</module>
+		<module>arkx-commons-feign</module>
+		<module>arkx-commons-swagger</module>
+		<module>arkx-commons-xss</module>
 
-        <module>arkxos-framework-commons-webmvc</module>
+        <module>arkx-commons-webmvc</module>
 	</modules>
 
     <dependencies>

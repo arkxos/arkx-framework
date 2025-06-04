@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>arkxos-framework-common-oss</artifactId>
+    <artifactId>arkx-commons-oss</artifactId>
     <packaging>jar</packaging>
 
     <description>文件系统依赖</description>

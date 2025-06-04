@@ -8,10 +8,10 @@
 		<version>${revision}</version>
 	</parent>
 
-    <artifactId>arkxos-framework-enum-core</artifactId>
+    <artifactId>arkx-enum-core</artifactId>
 <!--    <version>${parent.version}</version>-->
 
-    <name>arkxos-framework-enum-core</name>
+    <name>arkx-enum-core</name>
     <description>core code from enum spring boot starter</description>
 
     <properties>

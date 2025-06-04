@@ -9,7 +9,7 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>arkxos-framework-commons-webmvc</artifactId>
+	<artifactId>arkx-commons-webmvc</artifactId>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -20,7 +20,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.arkx.framework</groupId>
-			<artifactId>arkxos-framework-commons-core</artifactId>
+			<artifactId>arkx-commons-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

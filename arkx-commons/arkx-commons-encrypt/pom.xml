@@ -11,17 +11,17 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>arkxos-framework-common-encrypt</artifactId>
+    <artifactId>arkx-commons-encrypt</artifactId>
 
     <description>
-        arkxos-common-encrypt 数据加解密模块
+        arkx-common-encrypt 数据加解密模块
     </description>
 
     <dependencies>
 
         <dependency>
             <groupId>io.arkx.framework</groupId>
-            <artifactId>arkxos-framework-commons-core</artifactId>
+            <artifactId>arkx-commons-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 

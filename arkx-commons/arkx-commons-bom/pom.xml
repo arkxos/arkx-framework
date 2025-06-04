@@ -10,12 +10,12 @@
 		<version>${revision}</version>
 	</parent>
 
-    <artifactId>arkxos-framework-commons-bom</artifactId>
+    <artifactId>arkx-commons-bom</artifactId>
 
     <packaging>pom</packaging>
 
-    <name>arkxos-framework-common-bom</name>
-    <url>arkxos parent</url>
+    <name>arkx-commons-bom</name>
+    <url>arkx parent</url>
     <description>cloud parent</description>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
@@ -23,37 +23,37 @@
         <dependencies>
             <dependency>
                 <groupId>io.arkx.framework</groupId>
-                <artifactId>arkxos-framework-common-datasource</artifactId>
+                <artifactId>arkx-commons-datasource</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.arkx.framework</groupId>
-                <artifactId>arkxos-framework-data-mybatis</artifactId>
+                <artifactId>arkx-data-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.arkx.framework</groupId>
-                <artifactId>arkxos-framework-common-oss</artifactId>
+                <artifactId>arkx-commons-oss</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.arkx.framework</groupId>
-                <artifactId>arkxos-framework-common-feign</artifactId>
+                <artifactId>arkx-commons-feign</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.arkx.framework</groupId>
-                <artifactId>arkxos-framework-common-swagger</artifactId>
+                <artifactId>arkx-commons-swagger</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.arkx.framework</groupId>
-                <artifactId>arkxos-framework-common-xss</artifactId>
+                <artifactId>arkx-commons-xss</artifactId>
                 <version>${project.version}</version>
             </dependency>
 <!--            <dependency>-->
 <!--                <groupId>io.arkx.framework</groupId>-->
-<!--                <artifactId>arkxos-common-excel</artifactId>-->
+<!--                <artifactId>arkx-common-excel</artifactId>-->
 <!--                <version>${project.version}</version>-->
 <!--            </dependency>-->
 

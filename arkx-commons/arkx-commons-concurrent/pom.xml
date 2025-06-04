@@ -10,7 +10,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>arkxos-framework-commons-concurrent</artifactId>
+    <artifactId>arkx-commons-concurrent</artifactId>
 
     <name>ATask</name>
     <description>A simple multi-purpose asynchronous task execution framework.</description>

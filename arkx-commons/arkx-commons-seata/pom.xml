@@ -26,7 +26,7 @@
 		<version>${revision}</version>
 	</parent>
 
-    <artifactId>arkxos-framework-common-seata</artifactId>
+    <artifactId>arkx-commons-seata</artifactId>
     <packaging>jar</packaging>
 
     <description>分布式事务处理模块</description>
@@ -35,7 +35,7 @@
         <!--核心依赖-->
         <dependency>
             <groupId>io.arkx.framework</groupId>
-            <artifactId>arkxos-framework-spring</artifactId>
+            <artifactId>arkx-spring</artifactId>
 			<version>${project.version}</version>
 		</dependency>
         <!-- seata-->

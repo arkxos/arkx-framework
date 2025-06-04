@@ -26,22 +26,22 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <artifactId>arkxos-framework-common-feign</artifactId>
+    <artifactId>arkx-commons-feign</artifactId>
     <description>feign-sentinel服务降级熔断、限流组件</description>
 
     <dependencies>
 <!--        <dependency>-->
-<!--            <groupId>com.arkxos</groupId>-->
-<!--            <artifactId>arkxos-platform-support-common-biz</artifactId>-->
+<!--            <groupId>com.arkx</groupId>-->
+<!--            <artifactId>arkx-platform-support-common-biz</artifactId>-->
 <!--        </dependency>-->
 		<dependency>
 			<groupId>io.arkx.framework</groupId>
-			<artifactId>arkxos-framework-spring</artifactId>
+			<artifactId>arkx-spring</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.arkx.framework</groupId>
-			<artifactId>arkxos-framework-commons-core</artifactId>
+			<artifactId>arkx-commons-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 <!--        <dependency>-->

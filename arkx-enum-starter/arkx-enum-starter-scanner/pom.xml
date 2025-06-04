@@ -8,7 +8,7 @@
 		<version>${revision}</version>
 	</parent>
 
-    <artifactId>arkxos-framework-enum-starter-scanner</artifactId>
+    <artifactId>arkx-enum-starter-scanner</artifactId>
 <!--    <version>${parent.version}</version>-->
     <name>enums-scanner</name>
 
@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>io.arkx.framework</groupId>
-            <artifactId>arkxos-framework-enum-core</artifactId>
+            <artifactId>arkx-enum-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

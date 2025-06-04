@@ -173,7 +173,7 @@
 			<!--ark 公共版本定义-->
 <!--			<dependency>-->
 <!--				<groupId>io.arkx.framework</groupId>-->
-<!--				<artifactId>arkxos-framework-commons-bom</artifactId>-->
+<!--				<artifactId>arkx-commons-bom</artifactId>-->
 <!--				<version>${project.version}</version>-->
 <!--				<type>pom</type>-->
 <!--				<scope>import</scope>-->

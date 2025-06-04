@@ -7,7 +7,7 @@
 		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkx-parent</artifactId>
 		<version>${revision}</version>
-		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
+		<relativePath>../arkx-parent/pom.xml</relativePath>
 	</parent>
 <!--	<parent>-->
 <!--		<groupId>org.springframework.boot</groupId>-->
@@ -25,9 +25,9 @@
 	<description>top pom manager for enums starter</description>
 
 	<modules>
-		<module>arkxos-framework-enum-core</module>
-		<module>arkxos-framework-enum-starter-conversion</module>
-		<module>arkxos-framework-enum-starter-scanner</module>
+		<module>arkx-enum-core</module>
+		<module>arkx-enum-starter-conversion</module>
+		<module>arkx-enum-starter-scanner</module>
 	</modules>
 
 

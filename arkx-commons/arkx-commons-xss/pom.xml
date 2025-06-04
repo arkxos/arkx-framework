@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>arkxos-framework-common-xss</artifactId>
+    <artifactId>arkx-commons-xss</artifactId>
     <packaging>jar</packaging>
 
     <description>pigx xss 安全过滤插件 基于 JSOUP</description>
@@ -19,8 +19,8 @@
 
     <dependencies>
 <!--        <dependency>-->
-<!--            <groupId>com.arkxos</groupId>-->
-<!--            <artifactId>arkxos-platform-support-common-biz</artifactId>-->
+<!--            <groupId>com.arkx</groupId>-->
+<!--            <artifactId>arkx-platform-support-common-biz</artifactId>-->
 <!--        </dependency>-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -61,7 +61,7 @@
         </dependency>
 		<dependency>
 			<groupId>io.arkx.framework</groupId>
-			<artifactId>arkxos-framework-commons-core</artifactId>
+			<artifactId>arkx-commons-core</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
