@@ -1,2 +1,2 @@
-com.arkxos.cloud.common.encrypt.config.EncryptorAutoConfiguration
-com.arkxos.cloud.common.encrypt.config.ApiDecryptAutoConfiguration
+io.arkx.cloud.common.encrypt.config.EncryptorAutoConfiguration
+io.arkx.cloud.common.encrypt.config.ApiDecryptAutoConfiguration

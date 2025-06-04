@@ -1,1 +1,1 @@
-com.arkxos.framework.data.mybatis.MybatisAutoConfiguration
+io.arkx.framework.data.mybatis.MybatisAutoConfiguration

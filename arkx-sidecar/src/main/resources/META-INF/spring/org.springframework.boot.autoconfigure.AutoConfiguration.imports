@@ -1,2 +1,2 @@
-com.arkxos.framework.cloud.sidecar.nacos.SidecarNacosAutoConfiguration
-com.arkxos.framework.cloud.sidecar.SidecarAutoConfiguration
+io.arkx.framework.cloud.sidecar.nacos.SidecarNacosAutoConfiguration
+io.arkx.framework.cloud.sidecar.SidecarAutoConfiguration

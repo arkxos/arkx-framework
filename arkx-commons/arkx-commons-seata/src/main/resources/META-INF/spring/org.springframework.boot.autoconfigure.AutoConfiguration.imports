@@ -1,1 +1,1 @@
- com.arkxos.cloud.platform.common.seata.config.SeataAutoConfiguration
+ io.arkx.cloud.platform.common.seata.config.SeataAutoConfiguration

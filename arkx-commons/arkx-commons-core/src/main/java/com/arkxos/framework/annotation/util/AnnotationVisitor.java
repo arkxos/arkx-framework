@@ -17,7 +17,7 @@ import org.objectweb.asm.tree.MethodNode;
 import com.arkxos.framework.Config;
 import com.arkxos.framework.annotation.Alias;
 import com.arkxos.framework.annotation.Priv;
-import com.arkxos.framework.boot.BaseUIFacade;
+import io.arkx.framework.boot.BaseUIFacade;
 import com.arkxos.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.commons.util.StringUtil;
 import com.arkxos.framework.core.method.UIMethod;

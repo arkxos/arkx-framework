@@ -1,3 +1,3 @@
-com.arkxos.cloud.platform.common.feign.ArkFeignAutoConfiguration
-com.arkxos.cloud.platform.common.feign.sentinel.SentinelAutoConfiguration
-com.arkxos.cloud.platform.common.feign.sentinel.handle.GlobalBizExceptionHandler
+io.arkx.cloud.platform.common.feign.ArkFeignAutoConfiguration
+io.arkx.cloud.platform.common.feign.sentinel.SentinelAutoConfiguration
+io.arkx.cloud.platform.common.feign.sentinel.handle.GlobalBizExceptionHandler

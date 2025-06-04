@@ -1,6 +1,6 @@
 package org.ark.framework.jaf;
 
-import com.arkxos.framework.boot.BaseUIFacade;
+import io.arkx.framework.boot.BaseUIFacade;
 import com.arkxos.framework.commons.collection.Mapx;
 import com.arkxos.framework.commons.exception.ServiceException;
 import com.arkxos.framework.commons.util.ObjectUtil;

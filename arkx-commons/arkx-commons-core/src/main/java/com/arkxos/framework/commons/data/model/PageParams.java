@@ -8,9 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.arkxos.framework.common.constants.CommonConstants;
-import com.arkxos.framework.common.utils.BeanConvertUtils;
-import com.arkxos.framework.common.utils.StringUtils;
+import io.arkx.framework.common.constants.CommonConstants;
+import io.arkx.framework.common.utils.BeanConvertUtils;
+import io.arkx.framework.common.utils.StringUtils;
 import com.google.common.collect.Maps;
 
 import lombok.Data;
