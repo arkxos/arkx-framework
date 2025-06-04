@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.arkxos.framework</groupId>
+		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkxos-framework-commons</artifactId>
 		<version>${revision}</version>
 	</parent>
@@ -22,37 +22,37 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.arkxos.framework</groupId>
+                <groupId>io.arkx.framework</groupId>
                 <artifactId>arkxos-framework-common-datasource</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.arkxos.framework</groupId>
+                <groupId>io.arkx.framework</groupId>
                 <artifactId>arkxos-framework-data-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.arkxos.framework</groupId>
+                <groupId>io.arkx.framework</groupId>
                 <artifactId>arkxos-framework-common-oss</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.arkxos.framework</groupId>
+                <groupId>io.arkx.framework</groupId>
                 <artifactId>arkxos-framework-common-feign</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.arkxos.framework</groupId>
+                <groupId>io.arkx.framework</groupId>
                 <artifactId>arkxos-framework-common-swagger</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.arkxos.framework</groupId>
+                <groupId>io.arkx.framework</groupId>
                 <artifactId>arkxos-framework-common-xss</artifactId>
                 <version>${project.version}</version>
             </dependency>
 <!--            <dependency>-->
-<!--                <groupId>com.arkxos.framework</groupId>-->
+<!--                <groupId>io.arkx.framework</groupId>-->
 <!--                <artifactId>arkxos-common-excel</artifactId>-->
 <!--                <version>${project.version}</version>-->
 <!--            </dependency>-->

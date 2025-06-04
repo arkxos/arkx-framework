@@ -14,7 +14,7 @@
 
 ```mxml
        <dependency>
-             <groupId>com.arkxos.framework</groupId>
+             <groupId>io.arkx.framework</groupId>
              <artifactId>spring-boot-starter-jpa-conversion</artifactId>
              <version>1.0.0-RELEASE</version>
        </dependency>

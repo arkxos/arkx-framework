@@ -4,8 +4,8 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.arkxos.framework</groupId>
-		<artifactId>arkxos-framework</artifactId>
+		<groupId>io.arkx.framework</groupId>
+		<artifactId>arkx-framework</artifactId>
 		<version>${revision}</version>
 	</parent>
 
@@ -172,7 +172,7 @@
 		<dependencies>
 			<!--ark 公共版本定义-->
 <!--			<dependency>-->
-<!--				<groupId>com.arkxos.framework</groupId>-->
+<!--				<groupId>io.arkx.framework</groupId>-->
 <!--				<artifactId>arkxos-framework-commons-bom</artifactId>-->
 <!--				<version>${project.version}</version>-->
 <!--				<type>pom</type>-->

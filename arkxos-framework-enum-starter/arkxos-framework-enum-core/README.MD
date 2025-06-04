@@ -9,7 +9,7 @@
 
 ```mxml
        <dependency>
-             <groupId>com.arkxos.framework</groupId>
+             <groupId>io.arkx.framework</groupId>
              <artifactId>enums-core</artifactId>
              <version>1.0.0-RELEASE</version>
        </dependency>

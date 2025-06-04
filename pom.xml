@@ -19,13 +19,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arkxos.framework</groupId>
-    <artifactId>arkxos-framework</artifactId>
+    <groupId>io.arkx.framework</groupId>
+    <artifactId>arkx-framework</artifactId>
 
-    <name>arkxos-framework</name>
+    <name>arkx-framework</name>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <url>https://www.arkxit.com</url>
+    <url>https://www.arkx.io</url>
 
     <properties>
         <!-- 项目版本号，revision属性用于子模块版本控制 -->
@@ -38,6 +38,7 @@
 
 	<modules>
 		<module>arkxos-framework-dependencies</module>
+		<module>arkxos-framework-parent</module>
 		<module>arkxos-framework-preloader</module>
 		<module>arkxos-framework-commons</module>
 		<module>arkxos-framework-enum-starter</module>
@@ -46,7 +47,6 @@
 		<module>arkxos-framework-boot</module>
 		<module>arkxos-framework-sidecar</module>
 		<module>arkxos-framework-cloud</module>
-		<module>arkxos-framework-parent</module>
 		<module>arkxos-framework-quartz</module>
         <module>arkxos-framework-boot-starter</module>
     </modules>

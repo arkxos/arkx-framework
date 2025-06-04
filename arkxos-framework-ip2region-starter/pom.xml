@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.arkxos.framework</groupId>
+		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkxos-framework-parent</artifactId>
 		<version>${revision}</version>
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>

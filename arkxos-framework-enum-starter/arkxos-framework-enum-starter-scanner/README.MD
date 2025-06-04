@@ -16,7 +16,7 @@
 
 ```mxml
        <dependency>
-             <groupId>com.arkxos.framework</groupId>
+             <groupId>io.arkx.framework</groupId>
              <artifactId>arkxos-framework-enums-starter-scanner</artifactId>
              <version>1.0.0-RELEASE</version>
        </dependency>

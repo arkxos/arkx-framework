@@ -37,7 +37,7 @@ Add the following dependency to your pom.xml file:
    ```xml 
    
    <dependency>
-       <groupId>com.arkxos.framework</groupId>
+       <groupId>io.arkx.framework</groupId>
        <artifactId>enums-core</artifactId>
        <version>1.1.8-RELEASE</version>
    </dependency>
@@ -129,7 +129,7 @@ Add the following dependency to your pom.xml file:
 ```xml
 
 <dependency>
-    <groupId>com.arkxos.framework</groupId>
+    <groupId>io.arkx.framework</groupId>
     <artifactId>arkxos-framework-enum-starter-conversion</artifactId>
     <version>1.1.8-RELEASE</version>
 </dependency>
@@ -185,7 +185,7 @@ Add the following dependency to your pom.xml file:
 ```xml
 
 <dependency>
-    <groupId>com.arkxos.framework</groupId>
+    <groupId>io.arkx.framework</groupId>
     <artifactId>arkxos-framework-enums-starter-scanner</artifactId>
     <version>1.1.8-RELEASE</version>
 </dependency>

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.arkxos.framework</groupId>
+		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkxos-framework-data</artifactId>
 		<version>${revision}</version>
 	</parent>
@@ -52,7 +52,7 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-web</artifactId>-->
 <!--		</dependency>-->
-		<!-- <dependency> <groupId>com.arkxos</groupId> <artifactId>arkxos-framework</artifactId>
+		<!-- <dependency> <groupId>com.arkxos</groupId> <artifactId>arkx-framework</artifactId>
 			<version>9.2.0</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -91,7 +91,7 @@
 			<version>${commons-beanutils.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.arkxos.framework</groupId>
+			<groupId>io.arkx.framework</groupId>
 			<artifactId>arkxos-framework-commons-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>

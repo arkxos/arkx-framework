@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.arkxos.framework</groupId>
+		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkxos-framework-parent</artifactId>
 		<version>${revision}</version>
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
@@ -16,7 +16,7 @@
 <!--		<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
 <!--	</parent>-->
 
-<!--	<groupId>com.arkxos.framework</groupId>-->
+<!--	<groupId>io.arkx.framework</groupId>-->
 	<artifactId>arkxos-framework-enum-starter</artifactId>
 <!--	<version>1.1.8-RELEASE</version>-->
 	<packaging>pom</packaging>
