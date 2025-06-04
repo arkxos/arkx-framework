@@ -8,7 +8,7 @@
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
-    <artifactId>arkxos-framework-preloader</artifactId>
+    <artifactId>arkx-preloader</artifactId>
   
   <dependencies>
  <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->

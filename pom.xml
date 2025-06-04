@@ -39,7 +39,7 @@
 	<modules>
 		<module>arkx-dependencies</module>
 		<module>arkx-parent</module>
-		<module>arkxos-framework-preloader</module>
+		<module>arkx-preloader</module>
 		<module>arkxos-framework-commons</module>
 		<module>arkx-enum-starter</module>
 		<module>arkx-ip2region-starter</module>
