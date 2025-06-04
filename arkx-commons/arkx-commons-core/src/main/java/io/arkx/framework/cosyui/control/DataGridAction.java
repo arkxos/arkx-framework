@@ -25,7 +25,7 @@ import io.arkx.framework.cosyui.zhtml.ZhtmlExecuteContext;
 import io.arkx.framework.cosyui.zhtml.ZhtmlManagerContext;
 import io.arkx.framework.data.db.DBUtil;
 import io.arkx.framework.data.jdbc.Query;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * DataGrid绑定行为类

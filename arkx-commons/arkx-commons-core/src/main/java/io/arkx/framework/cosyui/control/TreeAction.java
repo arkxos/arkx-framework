@@ -15,7 +15,7 @@ import io.arkx.framework.cosyui.tag.ListTag;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import io.arkx.framework.cosyui.zhtml.ZhtmlExecuteContext;
 import io.arkx.framework.cosyui.zhtml.ZhtmlManagerContext;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 树数据绑定行为

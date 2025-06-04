@@ -12,7 +12,7 @@ import io.arkx.framework.cosyui.control.DataGridAction;
 import io.arkx.framework.cosyui.html.HtmlTD;
 import io.arkx.framework.cosyui.html.HtmlTR;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 /**
  * 行号

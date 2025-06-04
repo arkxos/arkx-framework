@@ -8,7 +8,7 @@ import io.arkx.framework.data.jdbc.BaseEntity;
 import io.arkx.framework.data.jdbc.Criteria;
 import io.arkx.framework.data.jdbc.Entity;
 import io.arkx.framework.data.jdbc.Restrictions;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 /**   
  * @class org.ark.framework.jaf.EnableDisableUIFacade

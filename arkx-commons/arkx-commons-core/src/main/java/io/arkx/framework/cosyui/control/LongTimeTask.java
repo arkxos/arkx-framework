@@ -11,7 +11,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 /**
  * 长时间任务类。<br>

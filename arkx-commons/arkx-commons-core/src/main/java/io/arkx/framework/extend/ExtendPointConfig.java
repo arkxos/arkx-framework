@@ -4,7 +4,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.extend.plugin.PluginConfig;
 import io.arkx.framework.extend.plugin.PluginException;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * @class org.ark.framework.extend.plugin.ExtendPointConfig

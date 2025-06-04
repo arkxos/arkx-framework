@@ -1,7 +1,7 @@
 package io.arkx.framework.cosyui.template.exception;
 
 import io.arkx.framework.cosyui.template.AbstractTag;
-import com.arkxos.framework.i18n.Lang;
+import io.arkx.framework.i18n.Lang;
 
 /**
  * 模板运行时异常

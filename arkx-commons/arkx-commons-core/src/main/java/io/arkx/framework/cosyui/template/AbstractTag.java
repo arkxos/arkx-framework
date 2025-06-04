@@ -16,8 +16,8 @@ import io.arkx.framework.cosyui.template.command.TagCommand;
 import io.arkx.framework.cosyui.template.exception.TemplateCompileException;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.extend.IExtendItem;
-import com.arkxos.framework.i18n.Lang;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.Lang;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 标签虚拟类，所有标签都必须继承这个类。

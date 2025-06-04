@@ -5,7 +5,7 @@ import java.util.Timer;
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 定时器管理器，以指定的间隔调用CronMontior中的run()

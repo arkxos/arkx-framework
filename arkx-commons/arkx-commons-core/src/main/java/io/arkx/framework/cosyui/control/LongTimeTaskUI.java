@@ -4,7 +4,7 @@ import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.UIFacade;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 /**
  * 长时间任务UI类，用于向前台的进度条控件提供进度数据。

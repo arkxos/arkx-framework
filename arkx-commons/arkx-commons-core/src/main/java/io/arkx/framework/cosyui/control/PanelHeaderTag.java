@@ -11,7 +11,7 @@ import io.arkx.framework.cosyui.tag.ArkTag;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.cosyui.util.TagUtil;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 可折叠面板标签

@@ -6,7 +6,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import com.arkxos.framework.i18n.Lang;
+import io.arkx.framework.i18n.Lang;
 import com.arkxos.framework.json.JSONArray;
 import com.arkxos.framework.json.JSONObject;
 

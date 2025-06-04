@@ -10,7 +10,7 @@ import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import io.arkx.framework.cosyui.template.AbstractTag;
 import io.arkx.framework.cosyui.template.ITemplateCommand;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 表达式命令

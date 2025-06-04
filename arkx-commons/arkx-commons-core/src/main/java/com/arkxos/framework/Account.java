@@ -12,8 +12,8 @@ import java.util.Map;
 import com.arkxos.framework.Member.MemberData;
 import io.arkx.framework.common.utils.SecurityUtils;
 import io.arkx.framework.commons.util.LogUtil;
-import com.arkxos.framework.i18n.LangMapping;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangUtil;
 import com.arkxos.framework.security.Privilege;
 
 import jakarta.servlet.http.HttpServletRequest;

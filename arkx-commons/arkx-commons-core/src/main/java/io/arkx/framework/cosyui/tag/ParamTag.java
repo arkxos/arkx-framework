@@ -6,7 +6,7 @@ import java.util.List;
 import com.arkxos.framework.FrameworkPlugin;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 参数求值标签，一般不需要再使用，直接在zhtml中使用表达式即可。

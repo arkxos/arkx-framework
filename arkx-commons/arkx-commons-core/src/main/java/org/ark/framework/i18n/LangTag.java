@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.arkxos.framework.Account;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;

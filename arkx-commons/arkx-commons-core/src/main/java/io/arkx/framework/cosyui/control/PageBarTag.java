@@ -17,7 +17,7 @@ import io.arkx.framework.cosyui.tag.ArkTag;
 import io.arkx.framework.cosyui.tag.ListAction;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 /**
  * 分页条标签　

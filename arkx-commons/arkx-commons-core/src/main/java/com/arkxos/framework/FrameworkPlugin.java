@@ -4,7 +4,7 @@ import io.arkx.framework.annotation.Plugin;
 import io.arkx.framework.annotation.fastdb.Comment;
 import io.arkx.framework.extend.plugin.AbstractPlugin;
 import io.arkx.framework.extend.plugin.PluginException;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 /**
  * @class org.ark.framework.extend.plugin.FrameworkPlugin

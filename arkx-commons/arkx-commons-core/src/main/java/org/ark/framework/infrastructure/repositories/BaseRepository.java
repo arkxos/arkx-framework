@@ -18,7 +18,7 @@ import io.arkx.framework.data.jdbc.Entity;
 import io.arkx.framework.data.jdbc.Restrictions;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 
 /**

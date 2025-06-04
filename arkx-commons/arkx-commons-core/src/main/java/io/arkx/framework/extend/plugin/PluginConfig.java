@@ -12,7 +12,7 @@ import io.arkx.framework.extend.ExtendActionConfig;
 import io.arkx.framework.extend.ExtendItemConfig;
 import io.arkx.framework.extend.ExtendPointConfig;
 import io.arkx.framework.extend.ExtendServiceConfig;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 插件配置信息，对应一个.plugin文件

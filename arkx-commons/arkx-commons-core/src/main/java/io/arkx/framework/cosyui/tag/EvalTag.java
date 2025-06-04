@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 表达式求值标签，一般不需要使用本标签，可以直接在zhtml中使用表达式。

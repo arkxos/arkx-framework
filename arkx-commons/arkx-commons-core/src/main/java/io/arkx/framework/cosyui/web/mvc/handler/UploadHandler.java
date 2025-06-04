@@ -26,7 +26,7 @@ import io.arkx.framework.cosyui.web.mvc.IURLHandler;
 import io.arkx.framework.data.db.DataCollection;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 import com.arkxos.framework.security.PrivCheck;
 import com.arkxos.framework.security.VerifyCheck;
 import com.arkxos.framework.security.exception.PrivException;

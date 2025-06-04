@@ -10,7 +10,7 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import io.arkx.framework.cosyui.template.ITemplateManagerContext;
 import io.arkx.framework.cosyui.template.TemplateWriter;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

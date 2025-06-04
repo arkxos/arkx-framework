@@ -11,7 +11,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.ServletUtil;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;

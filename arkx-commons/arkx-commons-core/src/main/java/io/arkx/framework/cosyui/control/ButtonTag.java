@@ -17,7 +17,7 @@ import io.arkx.framework.cosyui.template.TemplateExecutor;
 import io.arkx.framework.cosyui.template.command.TagCommand;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.cosyui.util.TagUtil;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 按钮标签

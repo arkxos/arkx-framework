@@ -17,7 +17,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.ZipUtil;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.data.xml.XMLElement;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 
 /**

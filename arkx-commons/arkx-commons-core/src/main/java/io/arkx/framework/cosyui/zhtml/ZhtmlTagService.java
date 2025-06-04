@@ -39,8 +39,8 @@ import io.arkx.framework.cosyui.tag.WhenTag;
 import io.arkx.framework.cosyui.template.AbstractTag;
 import io.arkx.framework.extend.AbstractExtendService;
 import io.arkx.framework.extend.action.ExtendTag;
-import com.arkxos.framework.i18n.LangButtonTag;
-import com.arkxos.framework.i18n.LangTag;
+import io.arkx.framework.i18n.LangButtonTag;
+import io.arkx.framework.i18n.LangTag;
 import com.arkxos.framework.security.PrivTag;
 
 /**

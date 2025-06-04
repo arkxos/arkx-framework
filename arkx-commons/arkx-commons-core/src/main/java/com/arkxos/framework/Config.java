@@ -15,7 +15,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.mvc.SessionListener;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
 import io.arkx.framework.data.xml.XMLElement;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 import com.arkxos.framework.security.EncryptUtil;
 
 import jakarta.servlet.http.HttpSession;

@@ -12,7 +12,7 @@ import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.cosyui.expression.DefaultFunctionMapper;
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.zhtml.ZhtmlManagerContext;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 占位符工具

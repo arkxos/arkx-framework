@@ -14,8 +14,8 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.data.jdbc.Query;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import com.arkxos.framework.i18n.LangMapping;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangUtil;
 
 
 /**   

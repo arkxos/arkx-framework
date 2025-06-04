@@ -12,7 +12,7 @@ import io.arkx.framework.cosyui.html.HtmlTD;
 import io.arkx.framework.cosyui.html.HtmlTR;
 import io.arkx.framework.cosyui.html.HtmlTable;
 import io.arkx.framework.cosyui.util.PlaceHolderUtil;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * @class org.ark.framework.utility.HtmlUtil

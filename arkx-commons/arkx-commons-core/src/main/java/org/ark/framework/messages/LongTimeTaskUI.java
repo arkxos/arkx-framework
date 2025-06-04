@@ -3,7 +3,7 @@ package org.ark.framework.messages;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.UIFacade;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 /**
  * @class org.ark.framework.messages.LongTimeTaskUI

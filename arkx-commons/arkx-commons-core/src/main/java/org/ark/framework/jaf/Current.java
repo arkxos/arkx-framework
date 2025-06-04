@@ -26,7 +26,7 @@ import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.cosyui.web.ResponseData;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.data.db.DataCollection;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

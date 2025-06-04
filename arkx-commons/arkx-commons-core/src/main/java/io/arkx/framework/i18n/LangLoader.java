@@ -1,4 +1,4 @@
-package com.arkxos.framework.i18n;
+package io.arkx.framework.i18n;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

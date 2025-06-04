@@ -12,7 +12,7 @@ import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.cosyui.web.UIFacade;
-import com.arkxos.framework.i18n.LangMapping;
+import io.arkx.framework.i18n.LangMapping;
 
 
 /**

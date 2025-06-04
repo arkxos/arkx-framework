@@ -12,7 +12,7 @@ import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 
 /**

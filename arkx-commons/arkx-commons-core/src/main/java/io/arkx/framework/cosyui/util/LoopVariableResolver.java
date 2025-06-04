@@ -7,7 +7,7 @@ import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
-import com.arkxos.framework.i18n.LangUtil;
+import io.arkx.framework.i18n.LangUtil;
 
 /**
  * 循环变量查找器，用于在for/while等循环代码中将DataRow和Map加入到变量查找序列中，以实现同样的<br>
