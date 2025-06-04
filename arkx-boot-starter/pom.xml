@@ -11,7 +11,7 @@
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>arkxos-framework-boot-starter</artifactId>
+	<artifactId>arkx-boot-starter</artifactId>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
