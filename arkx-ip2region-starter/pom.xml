@@ -10,7 +10,7 @@
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>arkxos-framework-ip2region-starter</artifactId>
+	<artifactId>arkx-ip2region-starter</artifactId>
 	<description>Spring Boot Starter For ip2region</description>
 <!--	<version>2.7.x.20240823.RELEASE</version>-->
 <!--	<name>${project.groupId}:${project.artifactId}</name>-->
