@@ -46,7 +46,7 @@
 		<module>arkxos-framework-data</module>
 		<module>arkx-boot</module>
 		<module>arkxos-framework-sidecar</module>
-		<module>arkxos-framework-cloud</module>
+		<module>arkx-cloud</module>
 		<module>arkxos-framework-quartz</module>
         <module>arkx-boot-starter</module>
     </modules>
