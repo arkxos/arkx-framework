@@ -3,8 +3,8 @@ package org.ark.framework.security;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.jaf.PlaceHolderContext;
 
-import com.arkxos.framework.Account;
-import com.arkxos.framework.Config;
+import io.arkx.framework.Account;
+import io.arkx.framework.Config;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.util.ObjectUtil;
 

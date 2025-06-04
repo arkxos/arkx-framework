@@ -3,7 +3,7 @@ package io.arkx.framework.data.db.connection;
 import java.util.Collection;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;

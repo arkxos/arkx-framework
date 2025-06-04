@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.jar.JarFile;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.StringUtil;

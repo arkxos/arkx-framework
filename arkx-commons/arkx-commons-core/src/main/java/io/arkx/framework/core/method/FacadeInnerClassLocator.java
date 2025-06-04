@@ -1,6 +1,6 @@
 package io.arkx.framework.core.method;
 
-import com.arkxos.framework.Current;
+import io.arkx.framework.Current;
 import io.arkx.framework.core.exception.UIMethodInvokeException;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher.DispatchException;

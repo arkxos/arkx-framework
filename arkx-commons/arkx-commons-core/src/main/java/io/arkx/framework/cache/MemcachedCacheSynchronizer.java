@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeoutException;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.extend.ExtendManager;
 import io.arkx.framework.json.JSON;

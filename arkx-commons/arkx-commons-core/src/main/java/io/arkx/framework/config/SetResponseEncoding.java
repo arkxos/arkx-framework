@@ -1,6 +1,6 @@
 package io.arkx.framework.config;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 
 /**
  * 是否统一设置http响应的字符集。

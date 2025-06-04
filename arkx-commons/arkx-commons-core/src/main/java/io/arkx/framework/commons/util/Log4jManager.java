@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.log.ILogManager;
 import io.arkx.framework.commons.util.log.ILogger;

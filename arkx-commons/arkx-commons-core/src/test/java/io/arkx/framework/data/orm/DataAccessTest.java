@@ -17,7 +17,7 @@ import io.arkx.framework.data.jdbc.ICallbackStatement;
 import io.arkx.framework.data.jdbc.JdbcTemplate;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import com.arkxos.framework.XTest;
+import io.arkx.framework.XTest;
 
 /**
  * 

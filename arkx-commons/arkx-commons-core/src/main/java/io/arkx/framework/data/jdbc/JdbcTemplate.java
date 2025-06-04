@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.ark.framework.orm.sql.LobUtil;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.LogUtil;

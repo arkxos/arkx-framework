@@ -10,8 +10,8 @@ import org.ark.framework.jaf.clazz.ClassMethodFinder;
 import org.ark.framework.jaf.spi.AliasMapping;
 import org.ark.framework.orm.Schema;
 
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Config;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.Mapx;

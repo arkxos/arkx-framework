@@ -1,6 +1,6 @@
 package io.arkx.framework.config;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 
 /**
  * 配置后台用户登录页面相对于应用根目录的地址。

@@ -2,7 +2,7 @@ package io.arkx.framework.cosyui.control.grid;
 
 import java.util.List;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;

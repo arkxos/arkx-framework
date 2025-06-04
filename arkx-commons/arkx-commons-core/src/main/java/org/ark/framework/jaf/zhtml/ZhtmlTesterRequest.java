@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import com.arkxos.framework.Account;
-import com.arkxos.framework.Config;
+import io.arkx.framework.Account;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.Enumerator;
 import io.arkx.framework.commons.util.ObjectUtil;
 

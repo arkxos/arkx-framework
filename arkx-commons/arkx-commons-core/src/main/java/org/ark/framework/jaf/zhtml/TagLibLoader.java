@@ -2,7 +2,7 @@ package org.ark.framework.jaf.zhtml;
 
 import java.io.File;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.XMLLoader;
 

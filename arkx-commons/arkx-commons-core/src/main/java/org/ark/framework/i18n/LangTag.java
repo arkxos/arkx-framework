@@ -2,7 +2,7 @@ package org.ark.framework.i18n;
 
 import java.io.IOException;
 
-import com.arkxos.framework.Account;
+import io.arkx.framework.Account;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.i18n.LangMapping;
 

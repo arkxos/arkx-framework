@@ -3,12 +3,12 @@ package io.arkx.framework.commons.util;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.log.ILogManager;
 import io.arkx.framework.commons.util.log.ILogger;
 import io.arkx.framework.commons.util.log.LogAppender;
 import io.arkx.framework.config.LogManagerClass;
-import com.arkxos.framework.schedule.CronMonitor;
+import io.arkx.framework.schedule.CronMonitor;
 
 /**
  * 日志工具类

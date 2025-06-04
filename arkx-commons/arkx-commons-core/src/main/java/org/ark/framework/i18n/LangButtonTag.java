@@ -2,7 +2,7 @@ package org.ark.framework.i18n;
 
 import org.ark.framework.jaf.tag.SelectTag;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.i18n.LangUtil;

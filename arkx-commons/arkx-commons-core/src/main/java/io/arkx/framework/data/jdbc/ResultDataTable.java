@@ -10,7 +10,7 @@ import java.util.Date;
 import org.ark.framework.orm.sql.DBUtil;
 import org.ark.framework.orm.sql.LobUtil;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;

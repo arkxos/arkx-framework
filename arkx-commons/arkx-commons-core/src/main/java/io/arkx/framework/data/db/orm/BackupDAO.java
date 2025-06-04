@@ -2,7 +2,7 @@ package io.arkx.framework.data.db.orm;
 
 import java.util.Date;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.ObjectUtil;

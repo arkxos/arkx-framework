@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Config;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;

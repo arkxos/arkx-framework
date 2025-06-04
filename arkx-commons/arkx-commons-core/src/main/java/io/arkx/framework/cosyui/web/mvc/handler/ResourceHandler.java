@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.ObjectUtil;

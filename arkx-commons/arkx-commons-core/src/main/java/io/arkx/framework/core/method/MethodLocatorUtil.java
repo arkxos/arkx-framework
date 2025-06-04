@@ -3,7 +3,7 @@ package io.arkx.framework.core.method;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import com.arkxos.framework.Current;
+import io.arkx.framework.Current;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.annotation.util.AliasMapping;
 import io.arkx.framework.commons.collection.ConcurrentMapx;

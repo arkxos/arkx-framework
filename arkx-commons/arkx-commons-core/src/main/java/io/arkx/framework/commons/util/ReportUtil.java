@@ -7,7 +7,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.ark.framework.security.LicenseInfo;
 //import org.ark.framework.security.ZRSACipher;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;

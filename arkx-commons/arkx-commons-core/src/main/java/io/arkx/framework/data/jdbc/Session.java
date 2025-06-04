@@ -8,7 +8,7 @@ import java.util.List;
 import org.ark.framework.infrastructure.repositories.extend.EntityDeleteExtendAction;
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
-import com.arkxos.framework.Account;
+import io.arkx.framework.Account;
 import io.arkx.framework.annotation.Column;
 import io.arkx.framework.annotation.EntityAnnotationManager;
 import io.arkx.framework.annotation.Ingore;

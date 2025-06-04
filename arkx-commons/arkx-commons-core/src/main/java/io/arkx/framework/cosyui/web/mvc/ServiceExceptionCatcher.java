@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.web.mvc;
 
-import com.arkxos.framework.Current;
+import io.arkx.framework.Current;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.core.IExceptionCatcher;
 

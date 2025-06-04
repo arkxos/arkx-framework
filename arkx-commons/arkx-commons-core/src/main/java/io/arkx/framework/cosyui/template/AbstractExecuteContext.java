@@ -3,7 +3,7 @@ package io.arkx.framework.cosyui.template;
 import java.io.PrintWriter;
 import java.util.Map;
 
-import com.arkxos.framework.Account;
+import io.arkx.framework.Account;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.Mapx;

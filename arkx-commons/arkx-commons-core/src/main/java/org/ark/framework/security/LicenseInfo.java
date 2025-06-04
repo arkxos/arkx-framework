@@ -3,7 +3,7 @@ package org.ark.framework.security;
 import java.security.PublicKey;
 import java.util.Date;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.FileUtil;

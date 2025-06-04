@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;

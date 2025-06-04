@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.control.grid;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Filter;

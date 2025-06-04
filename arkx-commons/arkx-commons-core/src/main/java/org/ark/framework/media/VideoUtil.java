@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 import org.ark.framework.jaf.controls.UploadUI;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;
 

@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;

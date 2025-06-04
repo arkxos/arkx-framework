@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.arkxos.framework.Current;
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.Current;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.JsonResult;
@@ -13,7 +13,7 @@ import io.arkx.framework.core.method.IMethodLocator;
 import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.arkxos.framework.security.PrivCheck;
+import io.arkx.framework.security.PrivCheck;
 
 /**
  * 变量初始化标签，用于为<ark:init>包围的区域中的表达式提供变量

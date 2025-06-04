@@ -18,8 +18,8 @@ import org.ark.framework.jaf.SessionListener;
 import org.ark.framework.security.PrivCheck;
 import org.ark.framework.security.VerifyCheck;
 
-import com.arkxos.framework.Account;
-import com.arkxos.framework.Config;
+import io.arkx.framework.Account;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.ObjectUtil;

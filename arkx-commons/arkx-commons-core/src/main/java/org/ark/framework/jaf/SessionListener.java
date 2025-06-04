@@ -3,9 +3,9 @@ package org.ark.framework.jaf;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.arkxos.framework.Account;
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Account;
+import io.arkx.framework.Config;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.extend.ExtendManager;
 

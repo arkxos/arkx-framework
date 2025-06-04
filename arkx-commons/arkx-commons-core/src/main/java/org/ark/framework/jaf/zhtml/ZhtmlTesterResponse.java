@@ -6,7 +6,7 @@ import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Locale;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;

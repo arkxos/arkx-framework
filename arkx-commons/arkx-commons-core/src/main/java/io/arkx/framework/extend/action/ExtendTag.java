@@ -3,7 +3,7 @@ package io.arkx.framework.extend.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.cosyui.tag.ArkTag;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.extend.ExtendManager;

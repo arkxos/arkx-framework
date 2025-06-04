@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.ark.framework.messages.LongTimeTask;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.BufferedRandomAccessFile;
 import io.arkx.framework.commons.util.FileUtil;

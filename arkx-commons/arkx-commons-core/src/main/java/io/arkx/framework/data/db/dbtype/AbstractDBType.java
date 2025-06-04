@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.data.db.DBUtil;

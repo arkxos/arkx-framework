@@ -2,7 +2,7 @@
 <plugin>
 	<id>com.arkxos.framework</id>
 	<name>Framework</name>
-	<class>com.arkxos.framework.FrameworkPlugin</class>
+	<class>io.arkx.framework.FrameworkPlugin</class>
 	<author>RapidArk Software</author>
 	<provider>RapidArk Software</provider>
 	<version>2.0</version>
@@ -126,16 +126,16 @@
 		<itemClass>io.arkx.framework.cache.CacheDataProvider</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.schedule.CronTaskManagerService</id>
-		<class>com.arkxos.framework.schedule.CronTaskManagerService</class>
+		<id>schedule.io.arkx.framework.CronTaskManagerService</id>
+		<class>schedule.io.arkx.framework.CronTaskManagerService</class>
 		<description>@{Framework.CronTaskManagerService}</description>
-		<itemClass>com.arkxos.framework.schedule.AbstractTaskManager</itemClass>
+		<itemClass>schedule.io.arkx.framework.AbstractTaskManager</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.schedule.SystemTaskService</id>
-		<class>com.arkxos.framework.schedule.SystemTaskService</class>
+		<id>schedule.io.arkx.framework.SystemTaskService</id>
+		<class>schedule.io.arkx.framework.SystemTaskService</class>
 		<description>@{Framework.SystemTaskService}</description>
-		<itemClass>com.arkxos.framework.schedule.SystemTask</itemClass>
+		<itemClass>schedule.io.arkx.framework.SystemTask</itemClass>
 	</extendService>
 	
 	<!-- db -->
@@ -255,10 +255,10 @@
 		<itemClass>weaver.io.arkx.framework.cosyui.IZhtmlWeaver</itemClass>
 	</extendService>
 	<extendItem>
-		<id>com.arkxos.framework.schedule.SystemTaskManager</id>
-		<class>com.arkxos.framework.schedule.SystemTaskManager</class>
+		<id>schedule.io.arkx.framework.SystemTaskManager</id>
+		<class>schedule.io.arkx.framework.SystemTaskManager</class>
 		<description></description>
-		<extendService>com.arkxos.framework.schedule.CronTaskManagerService</extendService>
+		<extendService>schedule.io.arkx.framework.CronTaskManagerService</extendService>
 	</extendItem>
 	
 	<extendItem>
@@ -292,14 +292,14 @@
 		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.misc.FrameworkTask</id>
-		<class>com.arkxos.framework.misc.FrameworkTask</class>
+		<id>misc.io.arkx.framework.FrameworkTask</id>
+		<class>misc.io.arkx.framework.FrameworkTask</class>
 		<description></description>
-		<extendService>com.arkxos.framework.schedule.SystemTaskService</extendService>
+		<extendService>schedule.io.arkx.framework.SystemTaskService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.security.DefaultPrivExceptionCatcher</id>
-		<class>com.arkxos.framework.security.DefaultPrivExceptionCatcher</class>
+		<id>security.io.arkx.framework.DefaultPrivExceptionCatcher</id>
+		<class>security.io.arkx.framework.DefaultPrivExceptionCatcher</class>
 		<description></description>
 		<extendService>io.arkx.framework.core.ExceptionCatcherService</extendService>
 	</extendItem>
@@ -345,13 +345,13 @@
 		<id>connection.db.io.arkx.framework.data.ConnectionPoolKeepAliveTask</id>
 		<class>connection.db.io.arkx.framework.data.ConnectionPoolKeepAliveTask</class>
 		<description></description>
-		<extendService>com.arkxos.framework.schedule.SystemTaskService</extendService>
+		<extendService>schedule.io.arkx.framework.SystemTaskService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>io.arkx.framework.cache.CacheSyncTask</id>
 		<class>io.arkx.framework.cache.CacheSyncTask</class>
 		<description></description>
-		<extendService>com.arkxos.framework.schedule.SystemTaskService</extendService>
+		<extendService>schedule.io.arkx.framework.SystemTaskService</extendService>
 	</extendItem>
 	
 	<files>

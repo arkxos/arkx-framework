@@ -2,7 +2,7 @@ package org.ark.framework.schedule;
 
 import java.util.List;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.extend.AbstractExtendService;

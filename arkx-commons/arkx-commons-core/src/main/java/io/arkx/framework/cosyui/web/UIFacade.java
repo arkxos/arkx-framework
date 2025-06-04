@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.web;
 
-import com.arkxos.framework.Current;
+import io.arkx.framework.Current;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher;

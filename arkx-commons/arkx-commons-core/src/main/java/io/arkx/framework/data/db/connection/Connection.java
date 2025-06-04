@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.data.db.nativejdbc.CommonsDbcpNativeJdbcExtractor;
 import io.arkx.framework.data.db.nativejdbc.JBossNativeJdbcExtractor;

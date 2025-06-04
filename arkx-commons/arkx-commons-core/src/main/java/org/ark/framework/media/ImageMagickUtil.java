@@ -10,7 +10,7 @@ import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.StringUtil;
 

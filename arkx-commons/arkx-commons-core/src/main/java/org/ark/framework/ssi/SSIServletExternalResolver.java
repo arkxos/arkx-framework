@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.ServletUtil;

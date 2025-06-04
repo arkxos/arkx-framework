@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.scanner.BuiltResource;

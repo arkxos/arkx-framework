@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.annotation.Alias;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.collection.Mapx;
@@ -103,7 +103,7 @@ public class AliasLoader {
 	private static void scanAllAnnotation() {
 		long t = System.currentTimeMillis();
 
-		loadPath(new File(com.arkxos.framework.Config.getClassesPath()).getParentFile().getAbsolutePath() + File.separator);
+		loadPath(new File(Config.getClassesPath()).getParentFile().getAbsolutePath() + File.separator);
 		loadPath(Config.getPluginPath());
 
 		if (lastTime == 0L) {
@@ -161,7 +161,7 @@ public class AliasLoader {
 	 * @version V1.0
 	 */
 	private static void scanOneDir(File p, String prefix) throws ClassNotFoundException {
-		String classPath = com.arkxos.framework.Config.getClassesPath();
+		String classPath = Config.getClassesPath();
 		String path = FileUtil.normalizePath(p.getAbsolutePath());
 		if (!path.endsWith("/")) {
 			path = path + "/";

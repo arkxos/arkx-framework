@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.cosyui.template.exception.TemplateNotFoundException;
 

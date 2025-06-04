@@ -4,7 +4,7 @@ import org.ark.framework.orm.db.DBOperator;
 import org.ark.framework.orm.schema.MySqlDataBaseSchemaGenerator;
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import io.arkx.framework.extend.plugin.ExtendPluginProvider;

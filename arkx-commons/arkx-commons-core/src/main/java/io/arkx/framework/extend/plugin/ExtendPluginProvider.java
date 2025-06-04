@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;
@@ -20,7 +20,7 @@ import io.arkx.framework.extend.ExtendManager;
 import io.arkx.framework.extend.ExtendPointConfig;
 import io.arkx.framework.extend.ExtendServiceConfig;
 import io.arkx.framework.extend.action.AfterAllPluginStartedAction;
-import com.arkxos.framework.schedule.CronManager;
+import io.arkx.framework.schedule.CronManager;
 
 /**   
  * @class org.ark.framework.extend.plugin.ExtendPluginProvider

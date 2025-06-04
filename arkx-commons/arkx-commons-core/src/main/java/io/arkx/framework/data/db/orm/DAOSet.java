@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.arkxos.framework.Account;
+import io.arkx.framework.Account;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;

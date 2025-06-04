@@ -1,6 +1,6 @@
 package io.arkx.framework.config;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 
 /**
  * 是否启用缓存同步，集群时必须启用。

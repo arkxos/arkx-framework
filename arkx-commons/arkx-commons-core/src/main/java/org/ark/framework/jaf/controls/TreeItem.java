@@ -3,7 +3,7 @@ package org.ark.framework.jaf.controls;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.jaf.html.HtmlP;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.util.StringUtil;
 

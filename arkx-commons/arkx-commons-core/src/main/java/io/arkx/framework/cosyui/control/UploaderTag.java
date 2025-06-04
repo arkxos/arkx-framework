@@ -3,9 +3,9 @@ package io.arkx.framework.cosyui.control;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Current;
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.Config;
+import io.arkx.framework.Current;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.tag.ArkTag;

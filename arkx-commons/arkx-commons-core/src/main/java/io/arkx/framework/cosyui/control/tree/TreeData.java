@@ -2,7 +2,7 @@ package io.arkx.framework.cosyui.control.tree;
 
 import java.util.ArrayList;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;

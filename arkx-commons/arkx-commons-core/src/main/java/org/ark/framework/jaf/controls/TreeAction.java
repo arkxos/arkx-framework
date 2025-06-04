@@ -7,7 +7,7 @@ import org.ark.framework.jaf.html.HtmlP;
 import org.ark.framework.jaf.html.HtmlScript;
 import org.ark.framework.orm.SchemaSet;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;

@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 
 import jakarta.servlet.RequestDispatcher;

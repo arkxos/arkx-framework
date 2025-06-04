@@ -7,8 +7,8 @@ import java.lang.reflect.Method;
 import org.ark.framework.security.PrivCheck;
 import org.ark.framework.security.VerifyCheck;
 
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Config;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.ResponseData;

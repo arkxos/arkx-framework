@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.arkxos.framework.Current;
+import io.arkx.framework.Current;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
 

@@ -1,1 +1,1 @@
-http\://www.rapidark.com/schema/templatequery.xsd=com/arkxos/framework/jpa/templatequery.xsd
+http\://www.rapidark.com/schema/templatequery.xsd=../io/arkx/framework/jpa/templatequery.xsd

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.security.PrivCheck;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;

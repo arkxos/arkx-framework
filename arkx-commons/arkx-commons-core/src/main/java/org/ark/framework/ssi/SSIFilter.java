@@ -11,7 +11,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Date;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.extend.ExtendManager;
 

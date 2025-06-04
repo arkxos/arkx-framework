@@ -3,9 +3,9 @@ package io.arkx.framework.i18n;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.Account;
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Current;
+import io.arkx.framework.Account;
+import io.arkx.framework.Config;
+import io.arkx.framework.Current;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;

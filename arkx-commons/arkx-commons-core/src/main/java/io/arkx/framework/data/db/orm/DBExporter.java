@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Config;
+import io.arkx.framework.Constant;
 import io.arkx.framework.annotation.dao.NotExport;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.DateUtil;

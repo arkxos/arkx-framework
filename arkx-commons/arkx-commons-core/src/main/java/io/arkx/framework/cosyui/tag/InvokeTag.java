@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.StringUtil;

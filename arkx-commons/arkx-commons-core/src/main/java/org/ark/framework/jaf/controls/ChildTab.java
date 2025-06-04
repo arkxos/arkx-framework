@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.ark.framework.jaf.Current;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
 

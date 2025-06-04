@@ -26,7 +26,7 @@ import org.ark.framework.jaf.html.HtmlTable;
 import org.ark.framework.jaf.tag.SelectTag;
 import org.ark.framework.orm.Schema;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.cache.CacheManager;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.DataRow;

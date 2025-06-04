@@ -10,7 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.data.db.dbtype.DBTypeService;

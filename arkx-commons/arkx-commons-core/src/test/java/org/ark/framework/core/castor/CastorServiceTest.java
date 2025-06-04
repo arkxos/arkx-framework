@@ -9,7 +9,7 @@ import java.util.Date;
 import org.junit.jupiter.api.Test;
 
 import io.arkx.framework.commons.util.DateUtil;
-import com.arkxos.framework.XTest;
+import io.arkx.framework.XTest;
 
 /**
  * 

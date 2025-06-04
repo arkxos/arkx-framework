@@ -1,6 +1,6 @@
 package io.arkx.framework.data.db.connection;
 
-import com.arkxos.framework.schedule.SystemTask;
+import io.arkx.framework.schedule.SystemTask;
 
 /**
  * 数据库连接保持活动任务,每三分钟执行一次

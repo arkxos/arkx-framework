@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.web;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.data.db.DataCollection;

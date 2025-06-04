@@ -23,8 +23,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Current;
+import io.arkx.framework.Config;
+import io.arkx.framework.Current;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
 import io.arkx.framework.cosyui.web.CookieData;

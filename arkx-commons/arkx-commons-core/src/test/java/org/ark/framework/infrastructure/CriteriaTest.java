@@ -16,7 +16,7 @@ import io.arkx.framework.data.jdbc.Entity;
 import io.arkx.framework.data.jdbc.Restrictions;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import com.arkxos.framework.XTest;
+import io.arkx.framework.XTest;
 
 /**   
  * 

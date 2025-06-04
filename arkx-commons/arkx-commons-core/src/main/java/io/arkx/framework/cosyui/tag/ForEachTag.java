@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.Primitives;

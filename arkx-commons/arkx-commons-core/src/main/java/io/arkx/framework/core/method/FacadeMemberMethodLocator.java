@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import com.arkxos.framework.Current;
+import io.arkx.framework.Current;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.core.exception.UIMethodException;
 import io.arkx.framework.core.exception.UIMethodInvokeException;

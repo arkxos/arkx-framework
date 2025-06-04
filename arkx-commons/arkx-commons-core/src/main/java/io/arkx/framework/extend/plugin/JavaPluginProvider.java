@@ -1,6 +1,6 @@
 package io.arkx.framework.extend.plugin;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 
 /**
  * @class org.ark.framework.extend.plugin.spi.JavaPluginProvider

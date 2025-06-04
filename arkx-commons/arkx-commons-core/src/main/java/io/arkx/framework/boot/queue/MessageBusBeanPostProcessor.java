@@ -4,8 +4,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
-import com.arkxos.framework.queue2.Consumer;
-import com.arkxos.framework.queue2.MessageBus;
+import io.arkx.framework.queue2.Consumer;
+import io.arkx.framework.queue2.MessageBus;
 
 /**   
  * 

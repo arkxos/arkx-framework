@@ -2,7 +2,7 @@ package org.ark.framework.jaf;
 
 import org.ark.framework.schedule.CronManager;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.extend.plugin.PluginManager;
 
 import jakarta.servlet.ServletContext;

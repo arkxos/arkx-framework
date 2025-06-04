@@ -14,7 +14,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.LocalVariableNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.annotation.Alias;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.boot.BaseUIFacade;

@@ -41,7 +41,7 @@ import io.arkx.framework.extend.AbstractExtendService;
 import io.arkx.framework.extend.action.ExtendTag;
 import io.arkx.framework.i18n.LangButtonTag;
 import io.arkx.framework.i18n.LangTag;
-import com.arkxos.framework.security.PrivTag;
+import io.arkx.framework.security.PrivTag;
 
 /**
  * Zhtml标签扩展服务

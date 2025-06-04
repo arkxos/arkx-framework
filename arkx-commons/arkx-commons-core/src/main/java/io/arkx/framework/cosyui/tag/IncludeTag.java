@@ -3,7 +3,7 @@ package io.arkx.framework.cosyui.tag;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import io.arkx.framework.cosyui.template.TagAttr;

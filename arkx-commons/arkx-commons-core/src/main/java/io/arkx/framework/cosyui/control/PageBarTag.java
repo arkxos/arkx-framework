@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.ark.framework.jaf.IPageEnableAction;
 
-import com.arkxos.framework.Constant;
-import com.arkxos.framework.FrameworkPlugin;
+import io.arkx.framework.Constant;
+import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;

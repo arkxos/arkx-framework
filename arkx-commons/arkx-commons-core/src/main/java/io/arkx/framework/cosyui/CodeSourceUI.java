@@ -10,7 +10,7 @@ import io.arkx.framework.config.CodeSourceClass;
 import io.arkx.framework.core.method.IMethodLocator;
 import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.web.UIFacade;
-import com.arkxos.framework.security.PrivCheck;
+import io.arkx.framework.security.PrivCheck;
 
 /**
  * 下拉框代码UI类，响应前端JS中的下拉框loadData请求

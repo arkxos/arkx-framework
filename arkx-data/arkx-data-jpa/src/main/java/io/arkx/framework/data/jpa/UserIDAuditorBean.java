@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
-import com.arkxos.framework.Account;
+import io.arkx.framework.Account;
 import io.arkx.framework.boot.spring.axon.CurrentAuditor;
 import io.arkx.framework.commons.util.StringUtil;
 

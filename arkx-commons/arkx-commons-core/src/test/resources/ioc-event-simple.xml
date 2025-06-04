@@ -7,10 +7,10 @@
         http://www.springframework.org/schema/lang/spring-lang.xsd">
 
 	<bean id="userSerivceImpl"
-		class="com.arkxos.framework.queue.simple.UserSerivceImpl" />
+		class="io.arkx.framework.queue.simple.UserSerivceImpl" />
 
 	<bean id="otherSerivceImpl"
-		class="com.arkxos.framework.queue.simple.OtherServiceImpl" />
+		class="io.arkx.framework.queue.simple.OtherServiceImpl" />
 
 	<!-- 启用event自动注册 -->
 	<bean id="eventRegister"

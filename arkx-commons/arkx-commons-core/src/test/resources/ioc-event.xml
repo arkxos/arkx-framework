@@ -6,9 +6,9 @@
         http://www.springframework.org/schema/lang
         http://www.springframework.org/schema/lang/spring-lang.xsd">
 
-	<bean id="userSerivce" class="com.arkxos.framework.queue.UserSerivce" />
+	<bean id="userSerivce" class="io.arkx.framework.queue.UserSerivce" />
 
-	<bean id="otherSerivce" class="com.arkxos.framework.queue.OtherService" />
+	<bean id="otherSerivce" class="io.arkx.framework.queue.OtherService" />
 
 	<!-- 启用event自动注册 -->
 	<bean id="eventRegister"

@@ -2,7 +2,7 @@ package org.ark.framework.messages;
 
 import java.util.ArrayList;
 
-import com.arkxos.framework.Account;
+import io.arkx.framework.Account;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringFormat;

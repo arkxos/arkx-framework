@@ -1,7 +1,7 @@
 package io.arkx.framework.cosyui.web.mvc.handler;
 
-import com.arkxos.framework.Config;
-import com.arkxos.framework.Current;
+import io.arkx.framework.Config;
+import io.arkx.framework.Current;
 import io.arkx.framework.cosyui.template.exception.TemplateNotFoundException;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher;
 import io.arkx.framework.cosyui.zhtml.ZhtmlExecuteContext;

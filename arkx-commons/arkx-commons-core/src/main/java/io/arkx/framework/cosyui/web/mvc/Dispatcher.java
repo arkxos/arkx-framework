@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.web.mvc;
 
-import com.arkxos.framework.Current;
+import io.arkx.framework.Current;
 
 /**
  * 转发器，用于保存forward和redirect操作的目标URL

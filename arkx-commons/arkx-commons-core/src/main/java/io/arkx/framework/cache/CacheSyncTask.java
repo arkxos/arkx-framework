@@ -1,6 +1,6 @@
 package io.arkx.framework.cache;
 
-import com.arkxos.framework.schedule.SystemTask;
+import io.arkx.framework.schedule.SystemTask;
 
 /**
  * 缓存事件同步任务,每秒执行一次

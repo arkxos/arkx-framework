@@ -15,7 +15,7 @@ import org.ark.framework.orm.schema.SchemaGenerator;
 import org.ark.framework.orm.schema.SqlServerDataBaseSchemaGenerator;
 import org.ark.framework.orm.sql.DBContext;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.ClassLoadUtil;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.JarUtil;

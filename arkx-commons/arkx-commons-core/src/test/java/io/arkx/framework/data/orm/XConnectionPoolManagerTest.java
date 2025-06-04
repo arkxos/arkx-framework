@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
-import com.arkxos.framework.XTest;
+import io.arkx.framework.XTest;
 
 /**
  * 

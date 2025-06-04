@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.ark.framework.infrastructure.repositories.BaseRepository;
 
-import com.arkxos.framework.Constant;
+import io.arkx.framework.Constant;
 import io.arkx.framework.annotation.Alias;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.collection.DataTable;

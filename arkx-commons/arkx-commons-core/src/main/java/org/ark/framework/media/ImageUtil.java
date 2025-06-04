@@ -16,7 +16,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import org.w3c.dom.NodeList;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.NumberUtil;
 
 public class ImageUtil {

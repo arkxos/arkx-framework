@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import io.arkx.framework.commons.collection.tree.TreeNode;
 import org.ark.framework.jaf.html.HtmlElement;
 
-import com.arkxos.framework.Config;
+import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.collection.tree.Treex;
