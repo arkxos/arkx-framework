@@ -10,7 +10,7 @@
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>arkxos-framework-sidecar</artifactId>
+	<artifactId>arkx-sidecar</artifactId>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
