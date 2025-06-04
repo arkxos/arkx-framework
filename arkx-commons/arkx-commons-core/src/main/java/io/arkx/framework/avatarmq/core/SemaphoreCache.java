@@ -1,0 +1,63 @@
+package io.arkx.framework.avatarmq.core;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import io.arkx.framework.avatarmq.netty.NettyClustersConfig;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+/**
+ * @filename:SemaphoreCache.java
+ * @description:SemaphoreCache功能模块
+ * @author tangjie<https://github.com/tang-jie>
+ * @blog http://www.cnblogs.com/jietang/
+ * @since 2016-8-11
+ */
+public class SemaphoreCache {
+
+    private final static int hookTime = MessageSystemConfig.SemaphoreCacheHookTimeValue;
+
+    private static final LoadingCache<String, Semaphore> cache = CacheBuilder.newBuilder().
+            concurrencyLevel(NettyClustersConfig.getWorkerThreads()).
+            build(new CacheLoader<String, Semaphore>() {
+                public Semaphore load(String input) throws Exception {
+                    return new Semaphore(0);
+                }
+            });
+
+    public static int getAvailablePermits(String key) {
+        try {
+            return cache.get(key).availablePermits();
+        } catch (ExecutionException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+
+    public static void release(String key) {
+        try {
+            cache.get(key).release();
+            TimeUnit.MILLISECONDS.sleep(hookTime);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void acquire(String key) {
+        try {
+            cache.get(key).acquire();
+            TimeUnit.MILLISECONDS.sleep(hookTime);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
