@@ -1,6 +1,6 @@
 package com.arkxos.framework.json.convert;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 import com.arkxos.framework.json.JSONObject;
 
 /**

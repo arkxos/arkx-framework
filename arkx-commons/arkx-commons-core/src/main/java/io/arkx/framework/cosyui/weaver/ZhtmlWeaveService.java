@@ -3,7 +3,7 @@ package io.arkx.framework.cosyui.weaver;
 import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.commons.util.RegexParser;
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * Zhtml织入服务类

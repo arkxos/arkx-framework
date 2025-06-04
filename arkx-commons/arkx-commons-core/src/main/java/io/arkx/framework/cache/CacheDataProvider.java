@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.commons.collection.CacheMapx;
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 缓存提供者抽象类，使用方式如下：<br/>

@@ -9,7 +9,7 @@ import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.cosyui.web.mvc.handler.ActionHandler;
 import io.arkx.framework.cosyui.zhtml.ZhtmlExecuteContext;
-import com.arkxos.framework.extend.plugin.PluginManager;
+import io.arkx.framework.extend.plugin.PluginManager;
 import com.arkxos.framework.security.exception.PrivException;
 
 import jakarta.servlet.http.HttpServletRequest;

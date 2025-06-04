@@ -1,6 +1,6 @@
 package io.arkx.framework.config;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 对应于framework.xml中的一个framework/application/config配置项

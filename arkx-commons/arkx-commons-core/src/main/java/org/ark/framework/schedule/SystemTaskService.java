@@ -5,7 +5,7 @@ import java.util.List;
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.xml.XMLElement;
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * @class org.ark.framework.schedule.SystemTaskService

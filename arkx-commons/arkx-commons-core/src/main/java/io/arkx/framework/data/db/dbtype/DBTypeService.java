@@ -1,6 +1,6 @@
 package io.arkx.framework.data.db.dbtype;
 
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * 数据库类型扩展服务

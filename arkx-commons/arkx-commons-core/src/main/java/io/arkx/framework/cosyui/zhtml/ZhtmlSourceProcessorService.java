@@ -3,7 +3,7 @@ package io.arkx.framework.cosyui.zhtml;
 import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.cosyui.template.ITemplateSourceProcessor;
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * Zhtml源代码处理器扩展服务。

@@ -1,6 +1,6 @@
 package com.arkxos.framework.schedule;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 任务虚拟类

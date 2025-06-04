@@ -12,8 +12,8 @@ import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.ZipUtil;
-import com.arkxos.framework.extend.plugin.PluginConfig;
-import com.arkxos.framework.extend.plugin.PluginManager;
+import io.arkx.framework.extend.plugin.PluginConfig;
+import io.arkx.framework.extend.plugin.PluginManager;
 
 /**
  * 所有Jar中的资源

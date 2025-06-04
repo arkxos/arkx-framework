@@ -1,7 +1,7 @@
 package org.ark.framework.extend.actions;
 
 
-import com.arkxos.framework.extend.ExtendManager;
+import io.arkx.framework.extend.ExtendManager;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.tagext.TagSupport;

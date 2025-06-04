@@ -1,6 +1,6 @@
 package com.arkxos.framework.schedule;
 
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * 任务管理器扩展服务类

@@ -3,8 +3,8 @@ package org.ark.framework.extend.actions;
 
 import java.lang.reflect.Method;
 
-import com.arkxos.framework.extend.ExtendException;
-import com.arkxos.framework.extend.IExtendAction;
+import io.arkx.framework.extend.ExtendException;
+import io.arkx.framework.extend.IExtendAction;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

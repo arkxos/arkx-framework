@@ -12,9 +12,9 @@ import com.arkxos.framework.Constant;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.ResponseData;
-import com.arkxos.framework.extend.ExtendManager;
-import com.arkxos.framework.extend.action.AfterUIMethodInvokeAction;
-import com.arkxos.framework.extend.action.BeforeUIMethodInvokeAction;
+import io.arkx.framework.extend.ExtendManager;
+import io.arkx.framework.extend.action.AfterUIMethodInvokeAction;
+import io.arkx.framework.extend.action.BeforeUIMethodInvokeAction;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

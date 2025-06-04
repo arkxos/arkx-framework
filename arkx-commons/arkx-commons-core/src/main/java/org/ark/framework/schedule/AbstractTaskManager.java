@@ -1,7 +1,7 @@
 package org.ark.framework.schedule;
 
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * @class org.ark.framework.schedule.AbstractTaskManager

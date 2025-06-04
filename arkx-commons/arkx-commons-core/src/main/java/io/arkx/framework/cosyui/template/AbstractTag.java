@@ -15,7 +15,7 @@ import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.template.command.TagCommand;
 import io.arkx.framework.cosyui.template.exception.TemplateCompileException;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 import com.arkxos.framework.i18n.Lang;
 import com.arkxos.framework.i18n.LangUtil;
 

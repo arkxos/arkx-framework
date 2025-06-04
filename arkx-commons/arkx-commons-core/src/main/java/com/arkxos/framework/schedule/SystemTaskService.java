@@ -5,8 +5,8 @@ import java.util.List;
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.xml.XMLElement;
-import com.arkxos.framework.extend.AbstractExtendService;
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 系统定时任务扩展服务类

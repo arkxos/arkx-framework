@@ -4,8 +4,8 @@ import java.util.Date;
 
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.core.exception.CastorNotFoundException;
-import com.arkxos.framework.extend.AbstractExtendService;
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 类型转换器扩展服务

@@ -8,7 +8,7 @@ import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.extend.ExtendManager;
+import io.arkx.framework.extend.ExtendManager;
 
 
 /**

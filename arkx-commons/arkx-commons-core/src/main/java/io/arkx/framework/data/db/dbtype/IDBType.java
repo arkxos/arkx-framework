@@ -19,7 +19,7 @@ import io.arkx.framework.data.db.command.RenameColumnCommand;
 import io.arkx.framework.data.db.command.RenameTableCommand;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 数据库类型接口

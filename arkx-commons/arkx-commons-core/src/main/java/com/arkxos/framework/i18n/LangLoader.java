@@ -12,8 +12,8 @@ import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.PropertiesUtil;
 import io.arkx.framework.config.DefaultLanguage;
-import com.arkxos.framework.extend.plugin.PluginConfig;
-import com.arkxos.framework.extend.plugin.PluginManager;
+import io.arkx.framework.extend.plugin.PluginConfig;
+import io.arkx.framework.extend.plugin.PluginManager;
 
 /**
  * 语言文件加载器

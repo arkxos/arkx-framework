@@ -2,7 +2,7 @@ package io.arkx.framework.core.scanner;
 
 import org.objectweb.asm.tree.ClassNode;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 编译后资源遍历器

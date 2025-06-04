@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.extend.plugin.PluginConfig;
-import com.arkxos.framework.extend.plugin.PluginManager;
+import io.arkx.framework.extend.plugin.PluginConfig;
+import io.arkx.framework.extend.plugin.PluginManager;
 import com.arkxos.framework.XTest;
 
 /**   

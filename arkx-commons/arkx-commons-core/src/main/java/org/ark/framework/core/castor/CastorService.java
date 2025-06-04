@@ -3,8 +3,8 @@ package org.ark.framework.core.castor;
 import java.util.Date;
 
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.extend.AbstractExtendService;
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.IExtendItem;
 
 
 /**

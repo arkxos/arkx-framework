@@ -17,9 +17,9 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.cosyui.web.ResponseData;
-import com.arkxos.framework.extend.ExtendManager;
-import com.arkxos.framework.extend.action.AfterPrivCheckFailedAction;
-import com.arkxos.framework.extend.action.PrivExtendAction;
+import io.arkx.framework.extend.ExtendManager;
+import io.arkx.framework.extend.action.AfterPrivCheckFailedAction;
+import io.arkx.framework.extend.action.PrivExtendAction;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

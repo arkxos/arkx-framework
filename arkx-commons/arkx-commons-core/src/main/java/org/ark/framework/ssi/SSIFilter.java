@@ -13,7 +13,7 @@ import java.util.Date;
 
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.extend.ExtendManager;
+import io.arkx.framework.extend.ExtendManager;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

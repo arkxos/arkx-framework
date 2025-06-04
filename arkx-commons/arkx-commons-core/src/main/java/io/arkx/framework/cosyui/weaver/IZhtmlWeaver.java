@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.weaver;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * Zhtml文件织入器，用于向zhtml文件中织入代码。

@@ -1,6 +1,6 @@
 package io.arkx.framework.core.castor;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 类型转换器

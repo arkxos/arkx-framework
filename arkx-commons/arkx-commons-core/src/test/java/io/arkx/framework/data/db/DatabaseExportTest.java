@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
-import com.arkxos.framework.extend.plugin.ExtendPluginProvider;
-import com.arkxos.framework.extend.plugin.PluginManager;
+import io.arkx.framework.extend.plugin.ExtendPluginProvider;
+import io.arkx.framework.extend.plugin.PluginManager;
 
 /**   
  * 

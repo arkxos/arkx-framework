@@ -1,8 +1,8 @@
 package com.arkxos.framework.security.exception;
 
 import io.arkx.framework.core.FrameworkException;
-import com.arkxos.framework.extend.ExtendManager;
-import com.arkxos.framework.extend.action.AfterPrivCheckFailedAction;
+import io.arkx.framework.extend.ExtendManager;
+import io.arkx.framework.extend.action.AfterPrivCheckFailedAction;
 
 /**
  * 权限异常

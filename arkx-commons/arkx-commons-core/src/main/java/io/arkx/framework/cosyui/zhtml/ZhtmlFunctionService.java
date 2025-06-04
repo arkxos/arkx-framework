@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import io.arkx.framework.cosyui.expression.DefaultFunctionMapper;
 import io.arkx.framework.cosyui.expression.IFunction;
 import io.arkx.framework.cosyui.expression.IFunctionMapper;
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * Zhtml模板函数扩展服务

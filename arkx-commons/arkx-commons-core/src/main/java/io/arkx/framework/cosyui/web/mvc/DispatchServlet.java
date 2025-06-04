@@ -25,7 +25,7 @@ import io.arkx.framework.cosyui.web.mvc.Dispatcher.DispatchException;
 import io.arkx.framework.cosyui.web.mvc.Dispatcher.HandleEndException;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.data.xml.XMLParser;
-import com.arkxos.framework.extend.plugin.ExtendPluginProvider;
+import io.arkx.framework.extend.plugin.ExtendPluginProvider;
 import com.arkxos.framework.i18n.LangUtil;
 
 import jakarta.servlet.RequestDispatcher;

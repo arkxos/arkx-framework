@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.expression;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 表达式函数接口

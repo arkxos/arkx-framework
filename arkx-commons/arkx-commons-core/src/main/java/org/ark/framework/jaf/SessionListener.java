@@ -7,7 +7,7 @@ import com.arkxos.framework.Account;
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Constant;
 import io.arkx.framework.commons.util.FileUtil;
-import com.arkxos.framework.extend.ExtendManager;
+import io.arkx.framework.extend.ExtendManager;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionEvent;

@@ -2,7 +2,7 @@ package io.arkx.framework.cosyui.web.mvc;
 
 import java.io.IOException;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

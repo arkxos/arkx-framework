@@ -1,6 +1,6 @@
 package org.ark.framework.json.convert;
 
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * 

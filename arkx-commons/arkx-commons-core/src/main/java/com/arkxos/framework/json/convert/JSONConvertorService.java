@@ -1,6 +1,6 @@
 package com.arkxos.framework.json.convert;
 
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * JSON转换器扩展服务类

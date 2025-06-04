@@ -13,7 +13,7 @@ import io.arkx.framework.commons.util.ServletUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.CookieData;
 import io.arkx.framework.cosyui.web.ResponseData;
-import com.arkxos.framework.extend.ExtendManager;
+import io.arkx.framework.extend.ExtendManager;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

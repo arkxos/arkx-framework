@@ -16,7 +16,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.lang.ReflectionUtil;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
-import com.arkxos.framework.extend.ExtendManager;
+import io.arkx.framework.extend.ExtendManager;
 
 /**   
  * @class org.ark.framework.infrastructure.repositories.OrmManager

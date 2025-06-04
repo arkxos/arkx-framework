@@ -1,6 +1,6 @@
 package io.arkx.framework.core;
 
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * Runtime异常捕获器扩展服务

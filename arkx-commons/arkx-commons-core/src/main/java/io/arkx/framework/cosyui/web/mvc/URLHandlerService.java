@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import io.arkx.framework.commons.collection.ReadOnlyList;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * URL处理者扩展服务

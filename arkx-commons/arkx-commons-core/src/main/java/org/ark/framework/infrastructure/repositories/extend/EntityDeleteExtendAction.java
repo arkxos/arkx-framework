@@ -1,7 +1,7 @@
 package org.ark.framework.infrastructure.repositories.extend;
 
-import com.arkxos.framework.extend.ExtendException;
-import com.arkxos.framework.extend.IExtendAction;
+import io.arkx.framework.extend.ExtendException;
+import io.arkx.framework.extend.IExtendAction;
 
 /**   
  * @class org.ark.framework.infrastructure.repositories.extend.EntityDeleteExtendAction

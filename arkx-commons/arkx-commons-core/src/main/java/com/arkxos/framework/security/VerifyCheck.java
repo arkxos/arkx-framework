@@ -8,8 +8,8 @@ import io.arkx.framework.annotation.Verify;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.core.method.IMethodLocator;
-import com.arkxos.framework.extend.ExtendManager;
-import com.arkxos.framework.extend.action.AfterVerifyFailedAction;
+import io.arkx.framework.extend.ExtendManager;
+import io.arkx.framework.extend.action.AfterVerifyFailedAction;
 
 /**
  * 数据校验类

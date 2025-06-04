@@ -1,6 +1,6 @@
 package org.ark.framework.schedule;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * @class org.ark.framework.schedule.AbstractTask

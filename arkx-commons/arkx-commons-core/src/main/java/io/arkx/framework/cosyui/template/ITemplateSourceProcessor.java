@@ -1,6 +1,6 @@
 package io.arkx.framework.cosyui.template;
 
-import com.arkxos.framework.extend.IExtendItem;
+import io.arkx.framework.extend.IExtendItem;
 
 /**
  * 模板源代码处理器接口，在模板编译前执行。<br>

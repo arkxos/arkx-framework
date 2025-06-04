@@ -1,6 +1,6 @@
 package io.arkx.framework.cache;
 
-import com.arkxos.framework.extend.AbstractExtendService;
+import io.arkx.framework.extend.AbstractExtendService;
 
 /**
  * @class org.ark.framework.cache.CacheService

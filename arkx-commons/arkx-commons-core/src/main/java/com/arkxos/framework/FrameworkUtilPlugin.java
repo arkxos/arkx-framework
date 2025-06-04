@@ -1,7 +1,7 @@
 package com.arkxos.framework;
 
-import com.arkxos.framework.extend.plugin.AbstractPlugin;
-import com.arkxos.framework.extend.plugin.PluginException;
+import io.arkx.framework.extend.plugin.AbstractPlugin;
+import io.arkx.framework.extend.plugin.PluginException;
 import com.arkxos.framework.i18n.LangMapping;
 
 public class FrameworkUtilPlugin extends AbstractPlugin {

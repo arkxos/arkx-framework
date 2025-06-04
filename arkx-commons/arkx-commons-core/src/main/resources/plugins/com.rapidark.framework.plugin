@@ -37,85 +37,85 @@
 	  </extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.PrivCheck</id>
-		<class>com.arkxos.framework.extend.action.PrivExtendAction</class>
+		<class>action.io.arkx.framework.extend.PrivExtendAction</class>
 		<description>@{Framework.Plugin.PrivCheck}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterSessionCreate</id>
-		<class>com.arkxos.framework.extend.action.AfterSessionCreateAction</class>
+		<class>action.io.arkx.framework.extend.AfterSessionCreateAction</class>
 		<description>@{Framework.Plugin.AfterSessionCreate}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterCronTaskExecutedAction</id>
-		<class>com.arkxos.framework.extend.action.AfterCronTaskExecutedAction</class>
+		<class>action.io.arkx.framework.extend.AfterCronTaskExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.BeforeCronTaskExecutedAction</id>
-		<class>com.arkxos.framework.extend.action.BeforeCronTaskExecutedAction</class>
+		<class>action.io.arkx.framework.extend.BeforeCronTaskExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.BeforeUIMethodInvoke</id>
-		<class>com.arkxos.framework.extend.action.BeforeUIMethodInvokeAction</class>
+		<class>action.io.arkx.framework.extend.BeforeUIMethodInvokeAction</class>
 		<description>@{Framework.Plugin.BeforeUIMethodInvoke}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterUIMethodInvoke</id>
-		<class>com.arkxos.framework.extend.action.AfterUIMethodInvokeAction</class>
+		<class>action.io.arkx.framework.extend.AfterUIMethodInvokeAction</class>
 		<description>@{Framework.Plugin.AfterUIMethodInvoke}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.BeforeSessionDestory</id>
-		<class>com.arkxos.framework.extend.action.BeforeSessionDestroyAction</class>
+		<class>action.io.arkx.framework.extend.BeforeSessionDestroyAction</class>
 		<description>@{Framework.Plugin.BeforeSessionDestory}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterSQLExecutedAction</id>
-		<class>com.arkxos.framework.extend.action.AfterSQLExecutedAction</class>
+		<class>action.io.arkx.framework.extend.AfterSQLExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterCronTaskExecutedAction</id>
-		<class>com.arkxos.framework.extend.action.AfterCronTaskExecutedAction</class>
+		<class>action.io.arkx.framework.extend.AfterCronTaskExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterPrivCheckFailedAction</id>
-		<class>com.arkxos.framework.extend.action.AfterPrivCheckFailedAction</class>
+		<class>action.io.arkx.framework.extend.AfterPrivCheckFailedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterVerifyFailedAction</id>
-		<class>com.arkxos.framework.extend.action.AfterVerifyFailedAction</class>
+		<class>action.io.arkx.framework.extend.AfterVerifyFailedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterAllPluginStarted</id>
-		<class>com.arkxos.framework.extend.action.AfterAllPluginStartedAction</class>
+		<class>action.io.arkx.framework.extend.AfterAllPluginStartedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterClusteringRefresh</id>
-		<class>com.arkxos.framework.extend.action.AfterClusteringRefreshAction</class>
+		<class>action.io.arkx.framework.extend.AfterClusteringRefreshAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
 		<id>com.arkxos.framework.AfterZhtmlExecuteAction</id>
-		<class>com.arkxos.framework.extend.action.AfterZhtmlExecuteAction</class>
+		<class>action.io.arkx.framework.extend.AfterZhtmlExecuteAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>

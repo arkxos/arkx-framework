@@ -32,8 +32,8 @@ import io.arkx.framework.data.db.exception.DatabaseException;
 import io.arkx.framework.data.db.exception.DeleteException;
 import io.arkx.framework.data.db.exception.DropException;
 import io.arkx.framework.data.db.exception.InsertException;
-import com.arkxos.framework.extend.ExtendManager;
-import com.arkxos.framework.extend.action.AfterSQLExecutedAction;
+import io.arkx.framework.extend.ExtendManager;
+import io.arkx.framework.extend.action.AfterSQLExecutedAction;
 
 import lombok.extern.slf4j.Slf4j;
 
