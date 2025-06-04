@@ -43,7 +43,7 @@
 		<module>arkxos-framework-commons</module>
 		<module>arkxos-framework-enum-starter</module>
 		<module>arkxos-framework-ip2region-starter</module>
-		<module>arkxos-framework-data</module>
+		<module>arkx-data</module>
 		<module>arkx-boot</module>
 		<module>arkxos-framework-sidecar</module>
 		<module>arkx-cloud</module>

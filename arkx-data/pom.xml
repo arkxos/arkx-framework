@@ -11,7 +11,7 @@
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>
 
-    <artifactId>arkxos-framework-data</artifactId>
+    <artifactId>arkx-data</artifactId>
     <packaging>pom</packaging>
 
     <modules>
