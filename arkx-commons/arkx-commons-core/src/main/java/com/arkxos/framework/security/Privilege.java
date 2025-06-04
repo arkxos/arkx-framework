@@ -11,7 +11,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.ZipUtil;
 import com.arkxos.framework.json.JSON;
 import com.arkxos.framework.json.JSONObject;
-import com.arkxos.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
 
 /**
  * 权限集合。每一个用户会话中都有一个本类的实例。

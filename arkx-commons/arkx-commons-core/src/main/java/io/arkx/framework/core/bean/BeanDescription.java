@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.util.LogUtil;
-import com.arkxos.framework.thirdparty.el.Constants;
+import io.arkx.framework.thirdparty.el.Constants;
 
 /**
  * Bean描述信息，用于缓存指定Bean的反射信息

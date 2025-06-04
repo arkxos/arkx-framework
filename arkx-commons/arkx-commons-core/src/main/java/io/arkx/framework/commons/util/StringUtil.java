@@ -18,8 +18,8 @@ import java.util.regex.Pattern;
 
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
-import com.arkxos.framework.thirdparty.commons.ArrayUtils;
-import com.arkxos.framework.thirdparty.commons.StringEscapeUtils;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.StringEscapeUtils;
 
 /**
  * 字符串工具类

@@ -14,7 +14,7 @@ import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.core.bean.BeanUtil;
 import com.arkxos.framework.json.convert.IJSONConvertor;
 import com.arkxos.framework.json.convert.JSONConvertorService;
-import com.arkxos.framework.thirdparty.fastjson.DefaultJSONParser;
+import io.arkx.framework.thirdparty.fastjson.DefaultJSONParser;
 
 /**
  * JSON解析/输出工具类

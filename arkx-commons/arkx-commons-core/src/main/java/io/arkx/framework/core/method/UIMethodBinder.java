@@ -13,7 +13,7 @@ import io.arkx.framework.core.bean.BeanManager;
 import io.arkx.framework.core.bean.BeanProperty;
 import io.arkx.framework.core.bean.BeanUtil;
 import io.arkx.framework.core.castor.CastorService;
-import com.arkxos.framework.thirdparty.el.Constants;
+import io.arkx.framework.thirdparty.el.Constants;
 
 /**
  * UI方法参数绑定器

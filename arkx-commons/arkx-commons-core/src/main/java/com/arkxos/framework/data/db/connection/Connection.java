@@ -24,7 +24,7 @@ import com.arkxos.framework.data.db.nativejdbc.CommonsDbcpNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.JBossNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.WebLogicNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.WebSphereNativeJdbcExtractor;
-import com.arkxos.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
 
 /**
  * 数据库连接，调用本类的close()方法时不实际关闭连接，仅将连接释放回连接池。

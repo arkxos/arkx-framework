@@ -30,10 +30,10 @@ import com.arkxos.framework.i18n.LangMapping;
 import com.arkxos.framework.security.PrivCheck;
 import com.arkxos.framework.security.VerifyCheck;
 import com.arkxos.framework.security.exception.PrivException;
-import com.arkxos.framework.thirdparty.commons.fileupload.FileItem;
-import com.arkxos.framework.thirdparty.commons.fileupload.FileItemFactory;
-import com.arkxos.framework.thirdparty.commons.fileupload.disk.DiskFileItemFactory;
-import com.arkxos.framework.thirdparty.commons.fileupload.servlet.ServletFileUpload;
+import io.arkx.framework.thirdparty.commons.fileupload.FileItem;
+import io.arkx.framework.thirdparty.commons.fileupload.FileItemFactory;
+import io.arkx.framework.thirdparty.commons.fileupload.disk.DiskFileItemFactory;
+import io.arkx.framework.thirdparty.commons.fileupload.servlet.ServletFileUpload;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

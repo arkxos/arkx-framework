@@ -23,7 +23,7 @@ import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
 import com.arkxos.framework.security.PrivCheck;
 import com.arkxos.framework.security.VerifyCheck;
-import com.arkxos.framework.thirdparty.commons.fileupload.servlet.ServletFileUpload;
+import io.arkx.framework.thirdparty.commons.fileupload.servlet.ServletFileUpload;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

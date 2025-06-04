@@ -16,7 +16,7 @@ import com.arkxos.framework.extend.action.PrivExtendAction;
 import com.arkxos.framework.security.exception.MemberNotLoginException;
 import com.arkxos.framework.security.exception.NoPrivException;
 import com.arkxos.framework.security.exception.UserNotLoginException;
-import com.arkxos.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
 
 /**
  * 权限检查类，用于检查对当前页面、当前UI方法的访问是否被允许

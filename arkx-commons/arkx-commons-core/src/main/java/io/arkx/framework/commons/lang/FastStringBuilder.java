@@ -2,7 +2,7 @@ package io.arkx.framework.commons.lang;
 
 import java.lang.ref.SoftReference;
 
-import com.arkxos.framework.thirdparty.fastjson.IOUtils;
+import io.arkx.framework.thirdparty.fastjson.IOUtils;
 
 /**
  * 快速的字符串构造器，在构造长度较长(100个字符以上)的字符串时有性能优势，在非框架代码中需要谨慎使用。<br>

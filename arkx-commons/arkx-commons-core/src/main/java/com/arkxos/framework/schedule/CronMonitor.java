@@ -22,7 +22,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.extend.action.AfterCronTaskExecutedAction;
 import com.arkxos.framework.extend.action.BeforeCronTaskExecutedAction;
-import com.arkxos.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
 
 /**
  * 任务监听器，用于定期检测计划任务是否完成，若己完成，则添加新的计划任务

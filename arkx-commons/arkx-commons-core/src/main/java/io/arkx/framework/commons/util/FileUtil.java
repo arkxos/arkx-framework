@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
 import com.google.common.base.Joiner;
 
 /**

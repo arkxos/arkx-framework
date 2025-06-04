@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.cosyui.web.mvc.handler.ZAction;
-import com.arkxos.framework.thirdparty.commons.fileupload.FileItem;
+import io.arkx.framework.thirdparty.commons.fileupload.FileItem;
 
 /**
  * 上传数据绑定行为类

@@ -13,7 +13,7 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.control.TreeAction;
-import com.arkxos.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
 
 /**
  * 树形数据重排工具类<br>

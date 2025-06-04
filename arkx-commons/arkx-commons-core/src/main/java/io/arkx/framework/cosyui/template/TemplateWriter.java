@@ -6,7 +6,7 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.thirdparty.fastjson.IOUtils;
+import io.arkx.framework.thirdparty.fastjson.IOUtils;
 
 /**
  * 模板输出，能够通过getResult()得到写入的字符串。
