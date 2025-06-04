@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.Account;
 import io.arkx.framework.Config;
-import io.arkx.framework.Current;
+//import io.arkx.framework.Current;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
@@ -66,11 +66,11 @@ public class LangMapping {
 
 	public String getValue(String key, Object... args) {
 		String lang = null;
-		if (Current.getExecuteContext() != null) {
-			lang = Current.getExecuteContext().getLanguage();
-		} else {
+//		if (Current.getExecuteContext() != null) {
+//			lang = Current.getExecuteContext().getLanguage();
+//		} else {
 			lang = Account.getLanguage();
-		}
+//		}
 		if (ObjectUtil.isEmpty(lang)) {
 			lang = defaultLanguage;
 		}

@@ -12,13 +12,10 @@ import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import io.arkx.framework.cosyui.web.mvc.SessionListener;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.i18n.LangUtil;
 import io.arkx.framework.security.EncryptUtil;
-
-import jakarta.servlet.http.HttpSession;
 
 /**
 import com.rapidark.preloader.facade.HttpSessionListenerFacade;
@@ -537,33 +534,6 @@ public class Config {
 		return System.getProperty("file.encoding");
 	}
 
-	/**
-	 * @return 己登录的后台用户数
-	 */
-	public static int getLoginUserCount() {
-		int count = 0;
-		for (HttpSession session : SessionListener.getMap().values()) {
-			UserData ud = SessionListener.getUserDataFromSession(session);
-			if (ud != null && ud.isLogin()) {
-				count++;
-			}
-		}
-		return count;
-	}
-
-	/**
-	 * @return 己登录的会员数
-	 */
-	public static int getLoginMemberCount() {
-		int count = 0;
-		for (HttpSession session : SessionListener.getMap().values()) {
-			UserData ud = SessionListener.getUserDataFromSession(session);
-			if (ud != null && ud.getMemberData() != null && ud.getMemberData().isLogin) {
-				count++;
-			}
-		}
-		return count;
-	}
 
 	/**
 	 * 中间件是否是Tomcat
@@ -738,10 +708,6 @@ public class Config {
 
 	public static void setInstalled(boolean isInstalled) {
 		Config.isInstalled = isInstalled;
-	}
-
-	public static int getOnlineUserCount() {
-		return SessionListener.getMap().size();
 	}
 
 	public static int getServletMajorVersion() {

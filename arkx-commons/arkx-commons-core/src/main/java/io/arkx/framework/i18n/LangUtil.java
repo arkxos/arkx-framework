@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import io.arkx.framework.Account;
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
+//import io.arkx.framework.Current;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
@@ -16,7 +16,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.bean.BeanUtil;
-import io.arkx.framework.cosyui.web.RequestData;
+//import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.data.db.orm.DAO;
 import io.arkx.framework.data.db.orm.DAOColumn;
 import io.arkx.framework.data.db.orm.DAOSet;
@@ -109,11 +109,11 @@ public class LangUtil {
 
 	static String getCurrentLanguage() {
 		String lang = null;
-		if (Current.getExecuteContext() != null) {
-			lang = Current.getExecuteContext().getLanguage();
-		} else {
+//		if (Current.getExecuteContext() != null) {
+//			lang = Current.getExecuteContext().getLanguage();
+//		} else {
 			lang = Account.getLanguage();
-		}
+//		}
 		if (lang == null) {
 			lang = LangMapping.getInstance().defaultLanguage;
 		}
@@ -458,10 +458,10 @@ public class LangUtil {
 	/**
 	 * 获取前台传入的国际化字段的值
 	 */
-	public static String getI18nFieldValue(String name) {
-		RequestData dc = Current.getRequest();
-		return getI18nFieldValue(dc, name);
-	}
+//	public static String getI18nFieldValue(String name) {
+//		RequestData dc = Current.getRequest();
+//		return getI18nFieldValue(dc, name);
+//	}
 	
 	/**
 	 * 获取前台传入的国际化字段的值
