@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import io.arkx.framework.Account;
+//import io.arkx.framework.Account;
 import io.arkx.framework.NoUtil;
 import io.arkx.framework.boot.spring.IocBeanRegister;
 import io.arkx.framework.boot.spring.axon.Auditor;
@@ -208,7 +208,7 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 				operatorId = currentAuditor.getOperatorId();
 				occrOn = currentAuditor.getOccurredOn();
 			} else {
-				operatorId = Account.getUserName();
+//				operatorId = Account.getUserName();
 				occrOn = LocalDateTime.now();
 			}
 

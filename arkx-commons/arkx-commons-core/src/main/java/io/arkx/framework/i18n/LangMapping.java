@@ -3,7 +3,6 @@ package io.arkx.framework.i18n;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import io.arkx.framework.Account;
 import io.arkx.framework.Config;
 //import io.arkx.framework.Current;
 import io.arkx.framework.commons.collection.CacheMapx;
@@ -34,7 +33,7 @@ public class LangMapping {
 			lock.lock();
 			try {
 				if (lastTime == 0 || Config.isDebugMode() && System.currentTimeMillis() - lastTime > 3000) {
-					instance = LangLoader.load();
+//					instance = LangLoader.load();
 					lastTime = System.currentTimeMillis();
 				}
 			} finally {
@@ -69,7 +68,7 @@ public class LangMapping {
 //		if (Current.getExecuteContext() != null) {
 //			lang = Current.getExecuteContext().getLanguage();
 //		} else {
-			lang = Account.getLanguage();
+//			lang = Account.getLanguage();
 //		}
 		if (ObjectUtil.isEmpty(lang)) {
 			lang = defaultLanguage;

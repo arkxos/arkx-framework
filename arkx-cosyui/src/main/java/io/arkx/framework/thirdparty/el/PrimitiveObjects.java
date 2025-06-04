@@ -114,7 +114,7 @@ public class PrimitiveObjects {
 		if (pValue >= INTEGER_LOWER_BOUND && pValue <= INTEGER_UPPER_BOUND) {
 			return mIntegers[pValue - INTEGER_LOWER_BOUND];
 		} else {
-			return new Integer(pValue);
+			return Integer.valueOf(pValue);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class PrimitiveObjects {
 		if (pValue >= LONG_LOWER_BOUND && pValue <= LONG_UPPER_BOUND) {
 			return mLongs[(int) pValue - LONG_LOWER_BOUND];
 		} else {
-			return new Long(pValue);
+			return Long.valueOf(pValue);
 		}
 	}
 
@@ -169,7 +169,7 @@ public class PrimitiveObjects {
 		Integer[] ret = new Integer[len];
 		int val = INTEGER_LOWER_BOUND;
 		for (int i = 0; i < len; i++, val++) {
-			ret[i] = new Integer(val);
+			ret[i] = Integer.valueOf(val);
 		}
 		return ret;
 	}
@@ -179,7 +179,7 @@ public class PrimitiveObjects {
 		Long[] ret = new Long[len];
 		long val = LONG_LOWER_BOUND;
 		for (int i = 0; i < len; i++, val++) {
-			ret[i] = new Long(val);
+			ret[i] = Long.valueOf(val);
 		}
 		return ret;
 	}

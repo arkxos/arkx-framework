@@ -128,10 +128,10 @@ public class TypeConvertUtil {
 
 			switch (getIntType(type)) {
 			case INTEGER: {
-				return new Integer(value+"");
+				return Integer.valueOf(value+"");
 			}
 			case LONG: {
-				return new Long(value+"");
+				return Long.valueOf(value+"");
 			}
 			case FLOAT: {
 				return new Float(value+"");
@@ -140,10 +140,10 @@ public class TypeConvertUtil {
 				return new BigDecimal(value+"");
 			}
 			case BASIC_INT: {
-				return new Integer(value+"");
+				return Integer.valueOf(value+"");
 			}
 			case BASIC_LONG: {
-				return new Long(value+"");
+				return Long.valueOf(value+"");
 			}
 			case BASIC_FLOAT: {
 				return new Float(value+"");

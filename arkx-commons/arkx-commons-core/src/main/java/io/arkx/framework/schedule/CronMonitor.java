@@ -13,8 +13,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import io.arkx.framework.Account;
-import io.arkx.framework.Account.UserData;
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.util.LogUtil;
@@ -70,11 +68,11 @@ public class CronMonitor extends TimerTask {
 			running = true;
 			try {
 				// 为定时任务设定当前用户
-				UserData u = new UserData();
-				u.setBranchInnerCode("0000");
-				u.setUserName("CronTask");
-				u.setLogin(true);
-				Account.setCurrent(u);
+//				UserData u = new UserData();
+//				u.setBranchInnerCode("0000");
+//				u.setUserName("CronTask");
+//				u.setLogin(true);
+//				Account.setCurrent(u);
 				runMain();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -202,7 +200,7 @@ public class CronMonitor extends TimerTask {
 			int v = Integer.parseInt(exp);
 			v = v > max ? max : v;
 			v = v < min ? min : v;
-			list.add(new Integer(v));
+			list.add(Integer.valueOf(v));
 		} else if (P2.matcher(exp).matches()) {
 			String[] arr = exp.split("\\-");
 			int[] is = new int[] { Integer.parseInt(arr[0]), Integer.parseInt(arr[1]) };
@@ -212,14 +210,14 @@ public class CronMonitor extends TimerTask {
 			is[1] = is[1] < min ? min : is[1];
 			if (is[0] > is[1]) {
 				for (int j = is[0]; j <= max; j++) {
-					list.add(new Integer(j));
+					list.add(Integer.valueOf(j));
 				}
 				for (int j = min; j <= is[1]; j++) {
-					list.add(new Integer(j));
+					list.add(Integer.valueOf(j));
 				}
 			} else {
 				for (int j = is[0]; j <= is[1]; j++) {
-					list.add(new Integer(j));
+					list.add(Integer.valueOf(j));
 				}
 			}
 		} else if (P3.matcher(exp).matches()) {
@@ -234,18 +232,18 @@ public class CronMonitor extends TimerTask {
 					tmp[1] = tmp[1] < min ? min : tmp[1];
 					if (tmp[0] > tmp[1]) {
 						for (int j = tmp[0]; j <= max; j++) {
-							list.add(new Integer(j));
+							list.add(Integer.valueOf(j));
 						}
 						for (int j = min; j <= tmp[1]; j++) {
-							list.add(new Integer(j));
+							list.add(Integer.valueOf(j));
 						}
 					} else {
 						for (int j = tmp[0]; j <= tmp[1]; j++) {
-							list.add(new Integer(j));
+							list.add(Integer.valueOf(j));
 						}
 					}
 				} else {
-					list.add(new Integer(Integer.parseInt(str)));
+					list.add(Integer.valueOf(Integer.parseInt(str)));
 				}
 			}
 		} else if (P4.matcher(exp).matches()) {
@@ -269,11 +267,11 @@ public class CronMonitor extends TimerTask {
 				cm = is[1] + len;
 			}
 			for (int i = is[0]; i <= cm; i += step) {
-				list.add(new Integer(i > max ? i - len : i));
+				list.add(Integer.valueOf(i > max ? i - len : i));
 			}
 		} else if (exp.equals("*")) {
 			for (int i = min; i <= max; i++) {
-				list.add(new Integer(i));
+				list.add(Integer.valueOf(i));
 			}
 		} else {
 			throw new CronExpressionException("Invalid cron expression:" + exp);

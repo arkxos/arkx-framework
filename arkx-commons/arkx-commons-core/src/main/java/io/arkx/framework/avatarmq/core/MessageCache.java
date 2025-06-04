@@ -65,7 +65,7 @@ public class MessageCache<T> {
 
     protected Pair<Integer, Integer> calculateBlocks(int parallel, int sizeOfTasks) {
         int numberOfThreads = parallel > sizeOfTasks ? sizeOfTasks : parallel;
-        Pair<Integer, Integer> pair = new MutablePair<Integer, Integer>(new Integer(sizeOfTasks / numberOfThreads), new Integer(numberOfThreads));
+        Pair<Integer, Integer> pair = new MutablePair<Integer, Integer>(Integer.valueOf(sizeOfTasks / numberOfThreads), Integer.valueOf(numberOfThreads));
         return pair;
     }
 }

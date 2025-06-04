@@ -8,7 +8,7 @@ import java.util.List;
 import org.ark.framework.infrastructure.repositories.extend.EntityDeleteExtendAction;
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
-import io.arkx.framework.Account;
+//import io.arkx.framework.Account;
 import io.arkx.framework.annotation.Column;
 import io.arkx.framework.annotation.EntityAnnotationManager;
 import io.arkx.framework.annotation.Ingore;
@@ -16,7 +16,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.lang.ReflectionUtil;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
-import io.arkx.framework.extend.ExtendManager;
+//import io.arkx.framework.extend.ExtendManager;
 
 /**   
  * @class org.ark.framework.infrastructure.repositories.OrmManager
@@ -114,7 +114,7 @@ public class Session {
 		List<Entity> list = new ArrayList<>();
 		list.add(entity);
 		
-		ExtendManager.invoke(EntitySaveExtendAction.ExtendPointID, entity);
+//		ExtendManager.invoke(EntitySaveExtendAction.ExtendPointID, entity);
 		
 		return save(list);
 	}
@@ -148,14 +148,14 @@ public class Session {
 				baseEntity.setUpdateTime(baseEntity.getCreateTime());
 				baseEntity.setSortOrder(++sortOrder);
 				
-				if(!StringUtil.isEmpty(Account.getId())) {
-					if(StringUtil.isEmpty(baseEntity.getCreatorId())) {
-						baseEntity.setCreatorId(Account.getId());
-					}
-					if(StringUtil.isEmpty(baseEntity.getUpdatorId())) {
-						baseEntity.setUpdatorId(Account.getId());
-					}
-				}
+//				if(!StringUtil.isEmpty(Account.getId())) {
+//					if(StringUtil.isEmpty(baseEntity.getCreatorId())) {
+//						baseEntity.setCreatorId(Account.getId());
+//					}
+//					if(StringUtil.isEmpty(baseEntity.getUpdatorId())) {
+//						baseEntity.setUpdatorId(Account.getId());
+//					}
+//				}
 			}
 		}
 
@@ -224,11 +224,11 @@ public class Session {
 		if(BaseEntity.class.isAssignableFrom(entity.getClass())) {
 			BaseEntity baseEntity = (BaseEntity)entity;
 			baseEntity.setUpdateTime(new Date());
-			if(!StringUtil.isEmpty(Account.getId())) {
-				if(StringUtil.isEmpty(baseEntity.getUpdatorId())) {
-					baseEntity.setUpdatorId(Account.getId());
-				}
-			}
+//			if(!StringUtil.isEmpty(Account.getId())) {
+//				if(StringUtil.isEmpty(baseEntity.getUpdatorId())) {
+//					baseEntity.setUpdatorId(Account.getId());
+//				}
+//			}
 		}
 		
 		return update(list);
@@ -284,11 +284,11 @@ public class Session {
 			if(BaseEntity.class.isAssignableFrom(entity.getClass())) {
 				BaseEntity baseEntity = (BaseEntity)entity;
 				baseEntity.setUpdateTime(new Date());
-				if(!StringUtil.isEmpty(Account.getId())) {
-					if(StringUtil.isEmpty(baseEntity.getUpdatorId())) {
-						baseEntity.setUpdatorId(Account.getId());
-					}
-				}
+//				if(!StringUtil.isEmpty(Account.getId())) {
+//					if(StringUtil.isEmpty(baseEntity.getUpdatorId())) {
+//						baseEntity.setUpdatorId(Account.getId());
+//					}
+//				}
 			}
 			
 			ArrayList<Object> params = new ArrayList<>();
@@ -336,7 +336,7 @@ public class Session {
 		String sql = "DELETE FROM " + tableName + " WHERE id in (" + ids + ")";
 		int rows = new Query(transaction, sql).executeNoQuery();
 		
-		ExtendManager.invoke(EntityDeleteExtendAction.ExtendPointID, new Object[]{tableName, ids});
+//		ExtendManager.invoke(EntityDeleteExtendAction.ExtendPointID, new Object[]{tableName, ids});
 		
 		return rows;
 	}

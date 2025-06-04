@@ -131,9 +131,9 @@ public class DAOUtil {
 						} else if (v instanceof Float) {
 							destDAO.setV(order, new Float(((Float) v).floatValue()));
 						} else if (v instanceof Integer) {
-							destDAO.setV(order, new Integer(((Integer) v).intValue()));
+							destDAO.setV(order, Integer.valueOf(((Integer) v).intValue()));
 						} else if (v instanceof Long) {
-							destDAO.setV(order, new Long(((Long) v).longValue()));
+							destDAO.setV(order, Long.valueOf(((Long) v).longValue()));
 						} else if (v instanceof byte[]) {
 							destDAO.setV(order, ((byte[]) v).clone());
 						} else if (v instanceof String) {

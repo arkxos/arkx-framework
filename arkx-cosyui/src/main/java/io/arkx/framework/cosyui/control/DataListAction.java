@@ -99,7 +99,7 @@ public class DataListAction implements IPageEnableAction {
 		}
 		for (int j = 0; j < dataSource.getRowCount(); j++) {
 			int rowNo = pageIndex * pageSize + j + 1;
-			dataSource.set(j, "_RowNo", new Integer(rowNo));
+			dataSource.set(j, "_RowNo", Integer.valueOf(rowNo));
 		}
 		if (isAjaxRequest) {
 			ZhtmlExecuteContext context = new ZhtmlExecuteContext(ZhtmlManagerContext.getInstance(), null, null);

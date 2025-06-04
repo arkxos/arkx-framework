@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import io.arkx.framework.Account;
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
 //import io.arkx.framework.Current;
@@ -112,7 +111,7 @@ public class LangUtil {
 //		if (Current.getExecuteContext() != null) {
 //			lang = Current.getExecuteContext().getLanguage();
 //		} else {
-			lang = Account.getLanguage();
+//			lang = Account.getLanguage();
 //		}
 		if (lang == null) {
 			lang = LangMapping.getInstance().defaultLanguage;
@@ -459,7 +458,7 @@ public class LangUtil {
 	 * 获取前台传入的国际化字段的值
 	 */
 //	public static String getI18nFieldValue(String name) {
-//		RequestData dc = Current.getRequest();
+//		RequestData dc = WebCurrent.getRequest();
 //		return getI18nFieldValue(dc, name);
 //	}
 	
@@ -469,7 +468,7 @@ public class LangUtil {
 	public static String getI18nFieldValue(Mapx<String, ?> params, String name) {
 		Mapx<String, ?> dc = params;
 		if (dc == null) {
-			throw new RuntimeException(" Current.getRequest() failed!");
+			throw new RuntimeException(" WebCurrent.getRequest() failed!");
 		}
 		String currenStr = dc.getString(name);
 		String langStr = dc.getString(name + "_I18N");

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.locks.ReentrantLock;
 
-import io.arkx.framework.Account;
-import io.arkx.framework.Account.UserData;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.i18n.LangMapping;
+import org.ark.framework.messages.StopThreadException;
 
 /**
  * 长时间任务类。<br>
@@ -39,7 +38,7 @@ public abstract class LongTimeTask extends Thread {
 
 	private boolean stopFlag;
 
-	private UserData user;
+//	private UserData user;
 
 	private String type;// 用来标识同一个来源的任务
 
@@ -58,7 +57,7 @@ public abstract class LongTimeTask extends Thread {
 	}
 
 	public static LongTimeTask getInstanceById(long id) {
-		return map.get(new Long(id));
+		return map.get(id);
 	}
 
 	public static Collection<LongTimeTask> getAllInstance() {
@@ -66,7 +65,7 @@ public abstract class LongTimeTask extends Thread {
 	}
 
 	public static void removeInstanceById(long id) {
-		map.remove(new Long(id));
+		map.remove(id);
 	}
 
 	/**
@@ -110,7 +109,7 @@ public abstract class LongTimeTask extends Thread {
 		if (flag) {
 			setName("LongTimeTask Thread");
 			id = IDBase++;
-			map.put(new Long(id), this);
+			map.put(id, this);
 			clearStopedTask();
 		}
 	}
@@ -172,7 +171,7 @@ public abstract class LongTimeTask extends Thread {
 			}
 		}
 		try {
-			Account.setCurrent(user);
+//			Account.setCurrent(user);
 			execute();
 		} catch (StopThreadException e) {
 			e.printStackTrace();
@@ -220,9 +219,9 @@ public abstract class LongTimeTask extends Thread {
 		return finishedInfo;
 	}
 
-	public void setUser(UserData user) {
-		this.user = user;
-	}
+//	public void setUser(UserData user) {
+//		this.user = user;
+//	}
 
 	public void addError(String error) {
 		errors.add(error);

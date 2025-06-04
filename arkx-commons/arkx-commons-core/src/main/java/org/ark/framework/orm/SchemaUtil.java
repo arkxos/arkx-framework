@@ -208,11 +208,11 @@ public class SchemaUtil {
 							break;
 						}
 						if ((v instanceof Integer)) {
-							destSchema.setV(order, new Integer(((Integer) v).intValue()));
+							destSchema.setV(order, Integer.valueOf(((Integer) v).intValue()));
 							break;
 						}
 						if ((v instanceof Long)) {
-							destSchema.setV(order, new Long(((Long) v).longValue()));
+							destSchema.setV(order, Long.valueOf(((Long) v).longValue()));
 							break;
 						}
 						if ((v instanceof byte[])) {
@@ -258,7 +258,7 @@ public class SchemaUtil {
 			ArrayList list = new ArrayList();
 			for (int i = 0; i < bset.Columns.length; i++) {
 				if ((bset.Columns[i].isPrimaryKey()) && (!bset.Columns[i].getColumnName().equalsIgnoreCase("BackupNo"))) {
-					list.add(new Integer(i));
+					list.add(Integer.valueOf(i));
 				}
 			}
 			int[] keys = new int[list.size()];

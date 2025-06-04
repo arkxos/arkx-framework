@@ -237,7 +237,7 @@ public class ZDTParser {
 					vs[i] = Integer.valueOf(Integer.parseInt(v));
 				else if (scs[i].getColumnType() == 7) {
 					if ("\"\"".equals(v)) {
-						vs[i] = new Long(0L);
+						vs[i] = Long.valueOf(0L);
 					} else {
 						try {
 							vs[i] = Long.valueOf(Long.parseLong(v));

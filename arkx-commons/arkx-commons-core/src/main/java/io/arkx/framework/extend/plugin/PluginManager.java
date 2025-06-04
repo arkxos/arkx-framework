@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.Config;
-import io.arkx.framework.annotation.PluginAnnotationScannerParser;
+import io.arkx.framework.annotation.util.PluginAnnotationScannerParser;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.collection.ReadOnlyList;

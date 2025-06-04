@@ -32,8 +32,8 @@ import io.arkx.framework.data.db.exception.DatabaseException;
 import io.arkx.framework.data.db.exception.DeleteException;
 import io.arkx.framework.data.db.exception.DropException;
 import io.arkx.framework.data.db.exception.InsertException;
-import io.arkx.framework.extend.ExtendManager;
-import io.arkx.framework.extend.action.AfterSQLExecutedAction;
+//import io.arkx.framework.extend.ExtendManager;
+//import io.arkx.framework.extend.action.AfterSQLExecutedAction;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,7 +76,7 @@ public class JdbcTemplate {
 			LogUtil.debug(time + "ms\t" + message);
 		}
 		// 扩展点,主要用于SQL日志分析
-		ExtendManager.invoke(AfterSQLExecutedAction.ID, new Object[] { time, message });
+//		ExtendManager.invoke(AfterSQLExecutedAction.ID, new Object[] { time, message });
 	}
 	
 	public static String getPagedSQL(ConnectionConfig connectionConfig, String sql, int pageSize, int pageIndex) {

@@ -534,7 +534,7 @@ public class ZipFile {
             archive.readFully(localExtraData);
             ze.setExtra(localExtraData);
             /*dataOffsets.put(ze,
-                            new Long(offset + LFH_OFFSET_FOR_FILENAME_LENGTH
+                            Long.valueOf(offset + LFH_OFFSET_FOR_FILENAME_LENGTH
                                      + SHORT + SHORT + fileNameLen + extraFieldLen));
             */
             offsetEntry.dataOffset = offset + LFH_OFFSET_FOR_FILENAME_LENGTH

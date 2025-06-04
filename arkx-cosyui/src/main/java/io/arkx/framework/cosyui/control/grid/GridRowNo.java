@@ -22,7 +22,7 @@ public class GridRowNo extends AbstractGridFeature {
 			}
 			for (int j = 0; j < dataSource.getRowCount(); j++) {
 				int rowNo = dga.getPageIndex() * dga.getPageSize() + j + 1;
-				dataSource.set(j, "_RowNo", new Integer(rowNo));
+				dataSource.set(j, "_RowNo", Integer.valueOf(rowNo));
 			}
 		}
 

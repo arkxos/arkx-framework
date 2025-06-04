@@ -90,10 +90,10 @@ public class ZHConverter {
                     String keySubstring = key.substring(0, i + 1);
                     if (stringPossibilities.containsKey(keySubstring)) {
                         Integer integer = (Integer)(stringPossibilities.get(keySubstring));
-                        stringPossibilities.put(keySubstring, new Integer(
+                        stringPossibilities.put(keySubstring, Integer.valueOf(
                                 integer.intValue() + 1));
                     } else {
-                        stringPossibilities.put(keySubstring, new Integer(1));
+                        stringPossibilities.put(keySubstring, Integer.valueOf(1));
                     }
                 }
             }

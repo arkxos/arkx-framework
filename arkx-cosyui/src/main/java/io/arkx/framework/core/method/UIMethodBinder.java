@@ -26,7 +26,7 @@ public class UIMethodBinder {
 	 * @param args 参数列表
 	 */
 //	public static void bind(UIMethod m, Object[] args) {
-//	BeanUtil.fill(m, Current.getRequest());
+//	BeanUtil.fill(m, WebCurrent.getRequest());
 //	BeanDescription bd = BeanManager.getBeanDescription(m.getClass());
 //	for (BeanProperty bp : bd.getPropertyMap().values()) {
 //		if (bp.canWrite()) {

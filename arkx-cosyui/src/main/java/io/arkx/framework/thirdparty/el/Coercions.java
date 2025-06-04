@@ -236,8 +236,8 @@ import io.arkx.framework.thirdparty.el.operator.RelationalOperator;
  *             Otherwise, return <code>new BigDecimal(A.doubleValue())</code>
  *        If N is Byte, return <code>new Byte(A.byteValue())</code>
  *        If N is Short, return <code>new Short(A.shortValue())</code>
- *        If N is Integer, return <code>new Integer(A.integerValue())</code>
- *        If N is Long, return <code>new Long(A.longValue())</code>
+ *        If N is Integer, return <code>Integer.valueOf(A.integerValue())</code>
+ *        If N is Long, return <code>Long.valueOf(A.longValue())</code>
  *        If N is Float, return <code>new Float(A.floatValue())</code>
  *        If N is Double, return <code>new Double(A.doubleValue())</code>
  *        otherwise ERROR
@@ -307,7 +307,7 @@ import io.arkx.framework.thirdparty.el.operator.RelationalOperator;
  **/
 
 public class Coercions {
-	private static final Number ZERO = new Integer(0);
+	private static final Number ZERO = Integer.valueOf(0);
 
 	/**
 	 * Coerces the given value to the specified class.

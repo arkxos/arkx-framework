@@ -109,7 +109,7 @@ public class Operators {// NO_UCD
 		if (d2 == 0) {
 			return new Double(0);
 		}
-		return new Long(d1 % d2);
+		return Long.valueOf(d1 % d2);
 	}
 
 	/**

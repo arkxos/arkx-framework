@@ -56,7 +56,7 @@ public final class ImageUtils {
 
             // 计算比例
             if ((itempHeight > height) || (itempWidth > width)) {
-                ratio = Math.min((new Integer(height)).doubleValue() / itempHeight, (new Integer(width)).doubleValue() / itempWidth);
+                ratio = Math.min((Integer.valueOf(height)).doubleValue() / itempHeight, (Integer.valueOf(width)).doubleValue() / itempWidth);
                 AffineTransformOp op = new AffineTransformOp(AffineTransform.getScaleInstance(ratio, ratio), null);
                 itemp = op.filter(bi, null);
                 ImageIO.write((BufferedImage) itemp, pictype, d);
@@ -84,7 +84,7 @@ public final class ImageUtils {
 
             // 计算比例
             if (itempWidth != width) {
-                ratio = ((new Integer(width)).doubleValue() / itempWidth);
+                ratio = ((Integer.valueOf(width)).doubleValue() / itempWidth);
                 AffineTransformOp op = new AffineTransformOp(AffineTransform.getScaleInstance(ratio, ratio), null);
                 itemp = op.filter(bi, null);
                 ImageIO.write((BufferedImage) itemp, pictype, d);

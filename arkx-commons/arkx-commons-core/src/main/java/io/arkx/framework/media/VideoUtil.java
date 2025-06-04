@@ -21,7 +21,7 @@ public class VideoUtil
     
     long duration = parser.getDuration();
     if (duration < 30L) {
-      return captureImage(src, dest, new Long(duration / 3L).intValue(), parser.getWidth(), parser.getHeight());
+      return captureImage(src, dest, Long.valueOf(duration / 3L).intValue(), parser.getWidth(), parser.getHeight());
     }
     return captureImage(src, dest, 15, parser.getWidth(), parser.getHeight());
   }

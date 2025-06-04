@@ -1001,11 +1001,11 @@ public class FileUtil {
 				} else if (b == 2) {
 					vbs = new byte[8];
 					bis.read(vbs);
-					v = new Long(NumberUtil.toLong(vbs));
+					v = Long.valueOf(NumberUtil.toLong(vbs));
 				} else if (b == 3) {
 					vbs = new byte[4];
 					bis.read(vbs);
-					v = new Integer(NumberUtil.toInt(vbs));
+					v = Integer.valueOf(NumberUtil.toInt(vbs));
 				} else if (b == 4) {
 					int i = bis.read();
 					v = new Boolean(i == 1 ? true : false);

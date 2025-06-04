@@ -81,7 +81,7 @@ public class ReportUtil {
 	}
 
 	public static Date getStartStatDate(long siteID) {
-		Date date = (Date) StartDateMap.get(new Long(siteID));
+		Date date = (Date) StartDateMap.get(Long.valueOf(siteID));
 		if (date == null) {
 			Query qb = getSession().createQuery("select * from ZCStatItem where SiteID=? and Type='Global' and SubType='PV' order by Period", new Object[] { Long.valueOf(siteID) });
 			DataTable dt = (DataTable)qb.executePagedDataTable(1, 0).getData();
@@ -92,7 +92,7 @@ public class ReportUtil {
 				if (dt.getInt(0, i) != 0) {
 					i -= 4;
 					date = DateUtil.parse(dt.getString(0, "Period") + (i > 9 ? i : new StringBuilder("0").append(i).toString()), "yyyyMMdd");
-					StartDateMap.put(new Long(siteID), date);
+					StartDateMap.put(Long.valueOf(siteID), date);
 					break;
 				}
 			}
@@ -350,7 +350,7 @@ public class ReportUtil {
 			other += dt.getInt(i, 1);
 			dt.deleteRow(i);
 		}
-		dt.insertRow(new Object[] { LangMapping.get("Common.Other"), new Integer(other) });
+		dt.insertRow(new Object[] { LangMapping.get("Common.Other"), Integer.valueOf(other) });
 		LangUtil.decode(dt, dt.getDataColumn(0).getColumnName());
 	}
 

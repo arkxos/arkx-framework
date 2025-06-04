@@ -26,71 +26,18 @@ import jakarta.servlet.http.HttpSession;
  * 当前数据类，访问当前http请求中的相关对象的便捷方式
  * 
  */
-public class WebCurrent {
-	/**
-	 * 各线程数据分离
-	 */
-	private static ThreadLocal<CurrentData> current = new ThreadLocal<>();
+public class WebCurrent extends Current {
 
-	/**
-	 * 清除当前数据
-	 */
-	public static void clear() {
-		if (current.get() != null) {
-			current.get().clear();
-		}
-	}
 
-	/**
-	 * 设置线程上下文有效的变量
-	 */
-	public static void put(String key, Object value) {
-		CurrentData data = current.get();
-		if (data == null) {
-			data = new CurrentData();
-			data.values = new Mapx<>();
-			current.set(data);
-		} else if (data.values == null) {
-			data.values = new Mapx<>();
-		}
-		if (value instanceof Map) {
-			Map<?, ?> vmap = (Map<?, ?>) value;
-			for (Object k : vmap.keySet()) {
-				data.values.put(key + "." + k, vmap.get(k));
-			}
-		}
-		data.values.put(key, value);
-	}
 
-	/**
-	 * 获得线程上下文有效的变量
-	 */
-	public static Object get(String key) {
-		CurrentData data = current.get();
-		if (data == null) {
-			return null;
-		}
-		return data.values.get(key);
-	}
-
-	/**
-	 * 获得线程上下文有效的所有变量
-	 */
-	public static Map<String, Object> getValues() {// NO_UCD
-		CurrentData data = current.get();
-		if (data == null) {
-			return null;
-		}
-		return data.values;
-	}
 
 	/**
 	 * 准备Current数据
 	 */
 	public static void prepare(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
-		CurrentData cd = current.get();
+		WebCurrentData cd = (WebCurrentData)current.get();
 		if (cd == null) {
-			cd = new CurrentData();
+			cd = new WebCurrentData();
 			current.set(cd);
 		}
 		if (cd.handler == null && servletRequest != null) {
@@ -167,7 +114,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static RequestData getRequest() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -180,7 +127,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static UIFacade getUIFacade() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -191,9 +138,9 @@ public class WebCurrent {
 	 * 设置当前的UIFacade对象
 	 */
 	public static void setUIFacade(UIFacade facade) {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
-			data = new CurrentData();
+			data = new WebCurrentData();
 			current.set(data);
 		}
 		data.facade = facade;
@@ -205,7 +152,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static ResponseData getResponse() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -218,7 +165,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static CookieData getCookies() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -244,7 +191,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static AbstractExecuteContext getExecuteContext() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -258,9 +205,9 @@ public class WebCurrent {
 	 * 设置当前的模板执行上下文
 	 */
 	public static void setExecuteContext(AbstractExecuteContext context) {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
-			data = new CurrentData();
+			data = new WebCurrentData();
 			current.set(data);
 		}
 		data.executeContext = context;
@@ -270,9 +217,9 @@ public class WebCurrent {
 	 * 设置用户
 	 */
 	public static void setUser(UserData ud) {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
-			data = new CurrentData();
+			data = new WebCurrentData();
 			current.set(data);
 		}
 		data.userData = ud;
@@ -282,7 +229,7 @@ public class WebCurrent {
 	 * 获取用户
 	 */
 	public static UserData getUser() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -299,7 +246,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static Dispatcher getDispatcher() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -312,9 +259,9 @@ public class WebCurrent {
 	 * @param handler
 	 */
 	public static void setURLHandler(IURLHandler handler) {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
-			data = new CurrentData();
+			data = new WebCurrentData();
 			current.set(data);
 		}
 		data.handler = handler;
@@ -326,7 +273,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static IURLHandler getURLHandler() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -339,9 +286,9 @@ public class WebCurrent {
 	 * @param handler
 	 */
 	public static void setMethod(IMethodLocator method) {
-		CurrentData data = current.get();
+		WebCurrentData data =(WebCurrentData)current.get();
 		if (data == null) {
-			data = new CurrentData();
+			data = new WebCurrentData();
 			current.set(data);
 		}
 		data.method = method;
@@ -353,7 +300,7 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static IMethodLocator getMethod() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
 			return null;
 		}
@@ -366,9 +313,9 @@ public class WebCurrent {
 	 * @return
 	 */
 	public static Errorx getErrorx() {
-		CurrentData data = current.get();
+		WebCurrentData data = (WebCurrentData)current.get();
 		if (data == null) {
-			data = new CurrentData();
+			data = new WebCurrentData();
 			current.set(data);
 		}
 		if (data.errorx == null) {
@@ -382,62 +329,10 @@ public class WebCurrent {
 	 * 
 	 * @return
 	 */
-	public static CurrentData getCurrentData() {
-		return current.get();
+	public static WebCurrentData getCurrentData() {
+		return (WebCurrentData)current.get();
 	}
 
-	public static class CurrentData {
-		public IURLHandler handler;
-		public AbstractExecuteContext executeContext;
-		public UIFacade facade;
-		public IMethodLocator method;
-		public UserData userData;
 
-		public RequestData request = new RequestData();
-		public ResponseData response = new ResponseData();
-//		public Transaction transaction = new Transaction();
-		public Dispatcher dispatcher = new Dispatcher();
-		public Mapx<String, Object> values = new Mapx<String, Object>();
-		public Errorx errorx = new Errorx();
-
-		/**
-		 * 清空数据
-		 */
-		public void clear() {
-			handler = null;
-			facade = null;
-			method = null;
-			executeContext = null;
-			userData = null;
-//			transaction = null;
-			if (errorx != null) {
-				Errorx.clear();
-			}
-			if (values != null) {
-				if (values.getEntryTableLength() < 64) {
-					values.clear();
-				} else {
-					values = new Mapx<String, Object>();
-				}
-			}
-			if (dispatcher != null) {
-				dispatcher.clear();
-			}
-			if (request != null) {
-				if (request.getEntryTableLength() < 64) {
-					request.clear();
-				} else {
-					request = new RequestData();
-				}
-			}
-			if (response != null) {
-				if (response.getEntryTableLength() < 64) {
-					response.clear();
-				} else {
-					response = new ResponseData();
-				}
-			}
-		}
-	}
 
 }

@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import io.arkx.framework.Account;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -462,7 +461,7 @@ public class DAOSet<T extends DAO<T>> implements Serializable, Cloneable, Set<T>
 			backupMemo = DAO.MEMO_DELETE;
 		}
 		try {
-			backupOperator = ObjectUtil.empty(backupOperator) ? Account.getUserName() : backupOperator;
+//			backupOperator = ObjectUtil.empty(backupOperator) ? Account.getUserName() : backupOperator;
 			backupOperator = ObjectUtil.empty(backupOperator) ? "SYSTEM" : backupOperator;
 			if (outerConnFlag) {
 				if (!backup(backupOperator, backupMemo)) {
@@ -507,7 +506,7 @@ public class DAOSet<T extends DAO<T>> implements Serializable, Cloneable, Set<T>
 			return true;
 		}
 		DAOMetadata meta = get(0).metadata();
-		backupOperator = StringUtil.isEmpty(backupOperator) ? Account.getUserName() : backupOperator;
+//		backupOperator = StringUtil.isEmpty(backupOperator) ? Account.getUserName() : backupOperator;
 		backupOperator = StringUtil.isEmpty(backupOperator) ? "SYSTEM" : backupOperator;
 		@SuppressWarnings("unchecked")
 		BackupDAO<T> bDao = new BackupDAO<T>((Class<T>) get(0).getClass());

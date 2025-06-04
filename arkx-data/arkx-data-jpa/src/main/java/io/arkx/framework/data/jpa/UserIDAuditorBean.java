@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
-import io.arkx.framework.Account;
+//import io.arkx.framework.Account;
 import io.arkx.framework.boot.spring.axon.CurrentAuditor;
 import io.arkx.framework.commons.util.StringUtil;
 
@@ -26,9 +26,9 @@ public class UserIDAuditorBean implements AuditorAware<String> {
     	if(CurrentAuditor.get() != null) {
     		return Optional.of(CurrentAuditor.get().getOperatorId());
     	}
-    	if(!StringUtil.isEmpty(Account.getUserName())) {
-    		return Optional.of(Account.getUserName());
-    	}
+//    	if(!StringUtil.isEmpty(Account.getUserName())) {
+//    		return Optional.of(Account.getUserName());
+//    	}
 //    	if(!StringUtil.isEmpty(SecurityUtils.getCurrentUsername())) {
 //    		return Optional.of(SecurityUtils.getCurrentUsername());
 //    	}

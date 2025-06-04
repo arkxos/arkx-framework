@@ -77,7 +77,7 @@ public class IntegerLiteral extends Literal {
 	 * Parses the given token into the literal value
 	 **/
 	static Object getValueFromToken(String pToken) {
-		return new Long(pToken);
+		return Long.valueOf(pToken);
 	}
 
 	// -------------------------------------

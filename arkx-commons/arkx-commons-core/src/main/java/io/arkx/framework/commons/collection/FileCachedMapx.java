@@ -324,10 +324,10 @@ public class FileCachedMapx {
 		byte type = bs[0];
 		bs = ArrayUtils.subarray(bs, 1, bs.length);
 		if (type == 1) {
-			return new Integer(NumberUtil.toInt(bs, 0));
+			return Integer.valueOf(NumberUtil.toInt(bs, 0));
 		}
 		if (type == 2) {
-			return new Long(NumberUtil.toLong(bs));
+			return Long.valueOf(NumberUtil.toLong(bs));
 		}
 		if (type == 3) {
 			return new String(bs);

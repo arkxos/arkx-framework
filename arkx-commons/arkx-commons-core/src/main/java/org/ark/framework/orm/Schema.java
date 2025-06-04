@@ -705,11 +705,11 @@ public abstract class Schema implements Serializable, Cloneable {
 						break;
 					}
 					if (type == 7) {
-						setV(j, new Long(value.toString()));
+						setV(j, Long.valueOf(value.toString()));
 						break;
 					}
 					if (type == 8) {
-						setV(j, new Integer(value.toString()));
+						setV(j, Integer.valueOf(value.toString()));
 						break;
 					}
 					setV(j, value);
@@ -772,9 +772,9 @@ public abstract class Schema implements Serializable, Cloneable {
 		if (type == 5)
 			return new Float(value.toString());
 		if (type == 7)
-			return new Long(value.toString());
+			return Long.valueOf(value.toString());
 		if (type == 8)
-			return new Integer(value.toString());
+			return Integer.valueOf(value.toString());
 
 		return value;
 	}

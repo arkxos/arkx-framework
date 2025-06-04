@@ -24,6 +24,7 @@ import io.arkx.framework.cosyui.html.HtmlTR;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.cosyui.web.mvc.handler.ZAction;
 import io.arkx.framework.data.db.DataTableUtil;
+import io.arkx.framework.data.db.WebDataTableUtil;
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONObject;
 import io.arkx.framework.security.PrivCheck;
@@ -161,7 +162,7 @@ public class DataGridUI extends UIFacade {
 //									String.class, String.class, String.class });
 //					htmlTableToExcel.invoke(null, new Object[] {  });
 					
-					DataTableUtil.prepareHtmlTableToExcel(os, dga, dt, xls, strIndexes, strRows, strWidths);
+					WebDataTableUtil.prepareHtmlTableToExcel(os, dga, dt, xls, strIndexes, strRows, strWidths);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -172,7 +173,7 @@ public class DataGridUI extends UIFacade {
 //					String excelPageFlag, String pageIndex, String pageSize, 
 //					String pageFlag, String method, String rest, String xls,
 //					String strIndexes, String strRows, String strWidths, int pageLimit
-					DataTableUtil.prepareHtmlTableToExcel( os, dga, rowTotal, excelPageFlag, pageIndex, pageSize,
+					WebDataTableUtil.prepareHtmlTableToExcel( os, dga, rowTotal, excelPageFlag, pageIndex, pageSize,
 							pageFlag, method, "", xls, strIndexes, strRows, strWidths, Integer.valueOf(pageLimit) );
 //					Class<?> clazz = Class.forName(DataTableUtil.class.getName());
 //					Method htmlTableToExcel = clazz.getMethod("prepareHtmlTableToExcel",

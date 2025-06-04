@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
 
-import io.arkx.framework.Account.UserData;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
@@ -390,7 +389,7 @@ public class Config {
 	 */
 	public static String getContextPath() {
 		if (isComplexDepolyMode) {
-			String path = (String) Account.getValue("App.ContextPath");
+			String path = "";//(String) Account.getValue("App.ContextPath");
 			if (StringUtil.isEmpty(path)) {
 				path = Config.getValue("App.ContextPath");
 			}

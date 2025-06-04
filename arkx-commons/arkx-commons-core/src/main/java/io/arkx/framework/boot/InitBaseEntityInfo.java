@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
-import io.arkx.framework.Account;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.data.jdbc.BaseEntity;
 import io.arkx.framework.data.jdbc.Entity;
@@ -25,10 +24,10 @@ public class InitBaseEntityInfo extends EntitySaveExtendAction {
 			baseEntity.setCreateTime(new Date());
 			baseEntity.setUpdateTime(baseEntity.getCreateTime());
 			
-			if(!StringUtil.isEmpty(Account.getId())) {
-				baseEntity.setCreatorId(Account.getId());
-				baseEntity.setUpdatorId(Account.getId());
-			}
+//			if(!StringUtil.isEmpty(Account.getId())) {
+//				baseEntity.setCreatorId(Account.getId());
+//				baseEntity.setUpdatorId(Account.getId());
+//			}
 		}
 	}
 

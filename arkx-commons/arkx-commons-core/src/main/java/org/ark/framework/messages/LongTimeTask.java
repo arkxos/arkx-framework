@@ -2,7 +2,6 @@ package org.ark.framework.messages;
 
 import java.util.ArrayList;
 
-import io.arkx.framework.Account;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringFormat;
@@ -29,7 +28,7 @@ public abstract class LongTimeTask extends Thread {
 	private String finishedInfo;
 	protected ArrayList<String> errors = new ArrayList();
 	private boolean stopFlag;
-	private Account.UserData user;
+//	private Account.UserData user;
 	private String type;
 	private long stopTime = System.currentTimeMillis() + 1440000L;
 
@@ -41,12 +40,12 @@ public abstract class LongTimeTask extends Thread {
 	}
 
 	public static LongTimeTask getInstanceById(long id) {
-		return (LongTimeTask) map.get(new Long(id));
+		return (LongTimeTask) map.get(id);
 	}
 
 	public static void removeInstanceById(long id) {
 		synchronized (LongTimeTask.class) {
-			map.remove(new Long(id));
+			map.remove(Long.valueOf(id));
 		}
 	}
 
@@ -86,7 +85,7 @@ public abstract class LongTimeTask extends Thread {
 			setName("LongTimeTask Thread");
 			synchronized (LongTimeTask.class) {
 				this.id = (IDBase++);
-				map.put(new Long(this.id), this);
+				map.put(Long.valueOf(this.id), this);
 				clearStopedTask();
 			}
 		}
@@ -130,7 +129,7 @@ public abstract class LongTimeTask extends Thread {
 				return;
 		}
 		try {
-			Account.setCurrent(this.user);
+//			Account.setCurrent(this.user);
 			execute();
 		} catch (StopThreadException ie) {
 			interrupt();
@@ -176,9 +175,9 @@ public abstract class LongTimeTask extends Thread {
 		return this.finishedInfo;
 	}
 
-	public void setUser(Account.UserData user) {
-		this.user = user;
-	}
+//	public void setUser(Account.UserData user) {
+//		this.user = user;
+//	}
 
 	public void addError(String error) {
 		this.errors.add(error);

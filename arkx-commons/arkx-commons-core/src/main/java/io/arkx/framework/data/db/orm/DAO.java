@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import io.arkx.framework.Account;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
@@ -373,7 +372,7 @@ public abstract class DAO<T extends DAO<T>> {
 		}
 		Connection conn = __dataAccess.getConnection();
 		IDBType db = DBTypeService.getInstance().get(__dataAccess.getConnection().getDBConfig().DBType);
-		backupOperator = StringUtil.isEmpty(backupOperator) ? Account.getUserName() : backupOperator;
+//		backupOperator = StringUtil.isEmpty(backupOperator) ? Account.getUserName() : backupOperator;
 		backupOperator = StringUtil.isEmpty(backupOperator) ? "SYSTEM" : backupOperator;
 		@SuppressWarnings("unchecked")
 		BackupDAO<T> bDao = new BackupDAO<T>((Class<T>) getClass());
@@ -485,7 +484,7 @@ public abstract class DAO<T extends DAO<T>> {
 		if (ObjectUtil.empty(backupMemo)) {
 			backupMemo = MEMO_DELETE;
 		}
-		backupOperator = ObjectUtil.empty(backupOperator) ? Account.getUserName() : backupOperator;
+//		backupOperator = ObjectUtil.empty(backupOperator) ? Account.getUserName() : backupOperator;
 		backupOperator = ObjectUtil.empty(backupOperator) ? "SYSTEM" : backupOperator;
 		if (!__outerConnFlag) {
 			__dataAccess = new JdbcTemplate(ConnectionPoolManager.getConnection(__targetConnPool));
@@ -871,13 +870,13 @@ public abstract class DAO<T extends DAO<T>> {
 							}
 						}
 					} else if (type == DataTypes.DOUBLE) {
-						setV(j, new Double(value.toString()));
+						setV(j, Double.valueOf(value.toString()));
 					} else if (type == DataTypes.FLOAT) {
-						setV(j, new Float(value.toString()));
+						setV(j, Float.valueOf(value.toString()));
 					} else if (type == DataTypes.LONG) {
-						setV(j, new Long(value.toString()));
+						setV(j, Long.valueOf(value.toString()));
 					} else if (type == DataTypes.INTEGER) {
-						setV(j, new Integer(value.toString()));
+						setV(j, Integer.valueOf(value.toString()));
 					} else {
 						setV(j, value);
 					}
@@ -932,13 +931,13 @@ public abstract class DAO<T extends DAO<T>> {
 								setV(j, DateUtil.parseDateTime(value.toString()));
 							}
 						} else if (type == DataTypes.DOUBLE) {
-							setV(j, new Double(value.toString()));
+							setV(j, Double.valueOf(value.toString()));
 						} else if (type == DataTypes.FLOAT) {
-							setV(j, new Float(value.toString()));
+							setV(j, Float.valueOf(value.toString()));
 						} else if (type == DataTypes.LONG) {
-							setV(j, new Long(value.toString()));
+							setV(j, Long.valueOf(value.toString()));
 						} else if (type == DataTypes.INTEGER) {
-							setV(j, new Integer(value.toString()));
+							setV(j, Integer.valueOf(value.toString()));
 						} else {
 							setV(j, value);
 						}

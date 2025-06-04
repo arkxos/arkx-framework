@@ -124,7 +124,7 @@ package io.arkx.framework.data.db;
 //	 * @return 实例本身
 //	 */
 //	public void add(Query q) {
-//		list.add(new Object[] { q, new Integer(Transaction.SQL) });
+//		list.add(new Object[] { q, Integer.valueOf(Transaction.SQL) });
 //	}
 //	
 //	public void insert(Entity entity) {
@@ -398,25 +398,25 @@ package io.arkx.framework.data.db;
 //	}
 //	
 //	public void add(Entity entity, int type) {
-//		this.list.add(new Object[] { entity, new Integer(type) });
+//		this.list.add(new Object[] { entity, Integer.valueOf(type) });
 //	}
 //
 //	public void add(List<?> set, int type) {
-//		this.list.add(new Object[] { set, new Integer(type) });
+//		this.list.add(new Object[] { set, Integer.valueOf(type) });
 //	}
 //	
 //	/**
 //	 * 增加一个DAO操作，操作类型为opType
 //	 */
 //	public void add(DAO<?> repository, int opType) {
-//		list.add(new Object[] { repository, new Integer(opType) });
+//		list.add(new Object[] { repository, Integer.valueOf(opType) });
 //	}
 //
 //	/**
 //	 * 增加一个DAOSet操作，操作类型为opType
 //	 */
 //	public void add(DAOSet<?> set, int opType) {
-//		list.add(new Object[] { set, new Integer(opType) });
+//		list.add(new Object[] { set, Integer.valueOf(opType) });
 //	}
 //
 //	

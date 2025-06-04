@@ -686,11 +686,11 @@ public class DataCollection extends JSONObject {
 					} else if (dcs[j].getColumnType() == DataTypes.FLOAT) {
 						values[i][j] = new Float(Float.parseFloat(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.INTEGER) {
-						values[i][j] = new Integer(Integer.parseInt(r[j]));
+						values[i][j] = Integer.valueOf(Integer.parseInt(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.LONG) {
-						values[i][j] = new Long(Long.parseLong(r[j]));
+						values[i][j] = Long.valueOf(Long.parseLong(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.SMALLINT) {
-						values[i][j] = new Integer(Integer.parseInt(r[j]));
+						values[i][j] = Integer.valueOf(Integer.parseInt(r[j]));
 					}
 				}
 			}

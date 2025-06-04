@@ -328,7 +328,7 @@ public class ZDTParser {
 				vs[i] = Integer.parseInt(v);
 			} else if (dataTypes == DataTypes.LONG) {
 				if ("\"\"".equals(v)) {
-					vs[i] = new Long(0);
+					vs[i] = Long.valueOf(0);
 				} else {
 					try {
 						vs[i] = Long.parseLong(v);

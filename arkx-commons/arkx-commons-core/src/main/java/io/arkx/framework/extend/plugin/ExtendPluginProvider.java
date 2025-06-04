@@ -13,7 +13,6 @@ import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.PropertiesUtil;
-import io.arkx.framework.cosyui.web.mvc.SessionListener;
 import io.arkx.framework.extend.ExtendActionConfig;
 import io.arkx.framework.extend.ExtendItemConfig;
 import io.arkx.framework.extend.ExtendManager;
@@ -446,7 +445,7 @@ public class ExtendPluginProvider {
 	 * 一般在系统安装、插件安装卸载时调用。
 	 */
 	public void restart() {// NO_UCD
-		SessionListener.forceExit();// 现有会话强制退出
+//		SessionListener.forceExit();// 现有会话强制退出
 		Config.setAllowLogin(false);// 暂时不允许登录
 		CronManager.getInstance().destory();// 定时任务强制退出
 

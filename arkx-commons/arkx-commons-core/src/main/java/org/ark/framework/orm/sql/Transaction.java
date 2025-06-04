@@ -61,23 +61,23 @@
 //	}
 //
 //	public void add(Query qb) {
-//		this.list.add(new Object[] { qb, new Integer(7) });
+//		this.list.add(new Object[] { qb, Integer.valueOf(7) });
 //	}
 //
 //	public void add(Schema schema, int type) {
-//		this.list.add(new Object[] { schema, new Integer(type) });
+//		this.list.add(new Object[] { schema, Integer.valueOf(type) });
 //	}
 //	
 //	public void add(Entity entity, int type) {
-//		this.list.add(new Object[] { entity, new Integer(type) });
+//		this.list.add(new Object[] { entity, Integer.valueOf(type) });
 //	}
 //
 //	public void add(SchemaSet<?> set, int type) {
-//		this.list.add(new Object[] { set, new Integer(type) });
+//		this.list.add(new Object[] { set, Integer.valueOf(type) });
 //	}
 //	
 //	public void add(List<?> set, int type) {
-//		this.list.add(new Object[] { set, new Integer(type) });
+//		this.list.add(new Object[] { set, Integer.valueOf(type) });
 //	}
 //
 //	public void insert(Schema schema) {
