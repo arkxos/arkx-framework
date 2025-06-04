@@ -27,6 +27,21 @@ import lombok.extern.slf4j.Slf4j;
 @ResponseBody
 @Slf4j
 public class OpenGlobalExceptionHandler {
+
+	@ExceptionHandler({RuntimeException.class})
+	public static ResponseResult runtimeException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
+		ResponseResult responseResult = resolveException(ex, request.getRequestURI());
+		response.setStatus(responseResult.getHttpStatus());
+		return responseResult;
+	}
+
+	@ExceptionHandler({Throwable.class})
+	public static ResponseResult runtimeException(Throwable ex, HttpServletRequest request, HttpServletResponse response) {
+		ResponseResult responseResult = resolveException(ex, request.getRequestURI());
+		response.setStatus(responseResult.getHttpStatus());
+		return responseResult;
+	}
+
     /**
      * 统一异常处理
      * AuthenticationException
