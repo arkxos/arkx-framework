@@ -2,8 +2,8 @@ package io.arkx.framework.core.castor;
 
 import java.util.Collection;
 
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONArray;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONArray;
 
 public class JSONArrayCastor extends AbstractCastor {
 	

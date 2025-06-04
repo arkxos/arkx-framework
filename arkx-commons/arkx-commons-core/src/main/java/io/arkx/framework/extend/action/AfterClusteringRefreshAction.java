@@ -2,7 +2,7 @@ package io.arkx.framework.extend.action;
 
 import io.arkx.framework.extend.ExtendException;
 import io.arkx.framework.extend.IExtendAction;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * 提供集群缓存更新后扩展，此扩展点供非cachemanage管理的缓存扩展使用，

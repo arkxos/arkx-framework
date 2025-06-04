@@ -1,4 +1,4 @@
-package com.arkxos.framework.json;
+package io.arkx.framework.json;
 
 import io.arkx.framework.core.FrameworkException;
 

@@ -16,9 +16,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-import com.arkxos.framework.json.JSONArray;
-import com.arkxos.framework.json.JSONException;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSONArray;
+import io.arkx.framework.json.JSONException;
+import io.arkx.framework.json.JSONObject;
 
 public abstract class AbstractJSONParser {
 

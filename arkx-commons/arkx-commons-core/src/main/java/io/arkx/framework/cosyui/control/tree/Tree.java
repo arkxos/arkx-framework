@@ -2,6 +2,7 @@ package io.arkx.framework.cosyui.control.tree;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.json.JSON;
 
 /**
  * 
@@ -23,7 +24,7 @@ public class Tree {
 	}
 
 	public Tree(DataTable dataTable) {
-		this.data = com.arkxos.framework.json.JSON.toJSONString(dataTable);
+		this.data = JSON.toJSONString(dataTable);
 	}
 
 	public String getData() {
@@ -32,7 +33,7 @@ public class Tree {
 	
 	@JSONField(serialize=false)
 	public DataTable getDataTable() {
-		DataTable dataTable = com.arkxos.framework.json.JSON.parseBean(data, DataTable.class);
+		DataTable dataTable = JSON.parseBean(data, DataTable.class);
 		return dataTable;
 	}
 

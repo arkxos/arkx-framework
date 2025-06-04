@@ -7,6 +7,6 @@
 //public interface JSONAware {
 //	String toJSONString();
 //}
-package com;
+package io.arkx.framework.json;
 
 

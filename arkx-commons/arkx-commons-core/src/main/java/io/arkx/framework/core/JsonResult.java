@@ -62,7 +62,7 @@ public class JsonResult {
 		this.message = message;
 		
 		if(data instanceof DataTable) {
-			this.data = com.arkxos.framework.json.JSON.toJSONString((DataTable)data);
+			this.data = io.arkx.framework.json.JSON.toJSONString((DataTable)data);
 		} else {
 			this.data = data;
 		}

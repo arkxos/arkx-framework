@@ -1,8 +1,8 @@
-package com.arkxos.framework.json.datatable;
+package io.arkx.framework.json.datatable;
 
 import com.alibaba.fastjson.JSON;
 import io.arkx.framework.commons.collection.DataTable;
-import com.arkxos.framework.json.convert.DataTableConvertor;
+import io.arkx.framework.json.convert.DataTableConvertor;
 
 /**  
  * 

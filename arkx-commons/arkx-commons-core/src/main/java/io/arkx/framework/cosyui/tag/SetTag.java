@@ -13,7 +13,7 @@ import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.core.bean.BeanUtil;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
-import com.arkxos.framework.json.JSON;
+import io.arkx.framework.json.JSON;
 
 /**
  * 变量定义/置值标签，用于在模板中定义和修改变量。<br>

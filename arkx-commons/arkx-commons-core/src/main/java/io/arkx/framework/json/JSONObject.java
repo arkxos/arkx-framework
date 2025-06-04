@@ -1,4 +1,4 @@
-package com.arkxos.framework.json;
+package io.arkx.framework.json;
 
 import com.alibaba.fastjson.JSONAware;
 import io.arkx.framework.commons.collection.Mapx;

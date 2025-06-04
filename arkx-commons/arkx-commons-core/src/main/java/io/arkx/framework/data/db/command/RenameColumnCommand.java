@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * 重命名字段指令

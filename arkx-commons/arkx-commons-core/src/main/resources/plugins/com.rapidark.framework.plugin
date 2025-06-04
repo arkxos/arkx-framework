@@ -225,10 +225,10 @@
 		<itemClass>io.arkx.framework.core.IExceptionCatcher</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.json.convert.JSONConvertorService</id>
-		<class>com.arkxos.framework.json.convert.JSONConvertorService</class>
+		<id>convert.io.arkx.framework.json.JSONConvertorService</id>
+		<class>convert.io.arkx.framework.json.JSONConvertorService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.json.convert.IJSONConvertor</itemClass>
+		<itemClass>convert.io.arkx.framework.json.IJSONConvertor</itemClass>
 	</extendService>
 	<extendService>
 		<id>zhtml.io.arkx.framework.cosyui.ZhtmlFunctionService</id>
@@ -311,22 +311,22 @@
 	</extendItem>
 	
 	<extendItem>
-		<id>com.arkxos.framework.json.convert.DataTableConvertor</id>
-		<class>com.arkxos.framework.json.convert.DataTableConvertor</class>
+		<id>convert.io.arkx.framework.json.DataTableConvertor</id>
+		<class>convert.io.arkx.framework.json.DataTableConvertor</class>
 		<description></description>
-		<extendService>com.arkxos.framework.json.convert.JSONConvertorService</extendService>
+		<extendService>convert.io.arkx.framework.json.JSONConvertorService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.json.convert.DAOSetConvertor</id>
-		<class>com.arkxos.framework.json.convert.DAOSetConvertor</class>
+		<id>convert.io.arkx.framework.json.DAOSetConvertor</id>
+		<class>convert.io.arkx.framework.json.DAOSetConvertor</class>
 		<description></description>
-		<extendService>com.arkxos.framework.json.convert.JSONConvertorService</extendService>
+		<extendService>convert.io.arkx.framework.json.JSONConvertorService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.json.convert.DAOConvertor</id>
-		<class>com.arkxos.framework.json.convert.DAOConvertor</class>
+		<id>convert.io.arkx.framework.json.DAOConvertor</id>
+		<class>convert.io.arkx.framework.json.DAOConvertor</class>
 		<description></description>
-		<extendService>com.arkxos.framework.json.convert.JSONConvertorService</extendService>
+		<extendService>convert.io.arkx.framework.json.JSONConvertorService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>template.io.arkx.framework.cosyui.TemplateExceptionCather</id>

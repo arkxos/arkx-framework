@@ -1,4 +1,4 @@
-package com.arkxos.framework.json.datatable;
+package io.arkx.framework.json.datatable;
 
 import java.lang.reflect.Type;
 

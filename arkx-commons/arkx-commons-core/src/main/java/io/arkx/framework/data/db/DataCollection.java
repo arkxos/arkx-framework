@@ -20,8 +20,8 @@ import io.arkx.framework.data.db.orm.DAOUtil;
 import io.arkx.framework.data.xml.XMLDocument;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.data.xml.XMLParser;
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * Http请求参数的封装，对应于前端JavaScript中的DataCollection对象

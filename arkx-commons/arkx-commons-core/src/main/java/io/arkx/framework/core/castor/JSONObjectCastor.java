@@ -3,8 +3,8 @@ package io.arkx.framework.core.castor;
 import java.util.Map;
 
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONObject;
 
 public class JSONObjectCastor extends AbstractCastor {
 	

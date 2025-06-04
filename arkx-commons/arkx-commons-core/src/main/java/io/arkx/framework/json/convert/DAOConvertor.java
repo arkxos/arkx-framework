@@ -1,8 +1,8 @@
-package com.arkxos.framework.json.convert;
+package io.arkx.framework.json.convert;
 
 import io.arkx.framework.data.db.orm.DAO;
 import io.arkx.framework.data.db.orm.DAOColumn;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * DAO的JSON转换器

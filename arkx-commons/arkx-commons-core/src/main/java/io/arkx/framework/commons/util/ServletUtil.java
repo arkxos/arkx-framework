@@ -29,7 +29,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
 import io.arkx.framework.cosyui.web.CookieData;
 import io.arkx.framework.cosyui.web.RequestData;
-import com.arkxos.framework.json.JSON;
+import io.arkx.framework.json.JSON;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
-package com.arkxos.framework.json.convert;
+package io.arkx.framework.json.convert;
 
 import io.arkx.framework.extend.IExtendItem;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * JSON转换器接口

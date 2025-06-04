@@ -7,7 +7,7 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import io.arkx.framework.commons.collection.DataTable;
-import com.arkxos.framework.json.JSON;
+import io.arkx.framework.json.JSON;
 
 /**
  * @author Darkness

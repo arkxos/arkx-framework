@@ -1,4 +1,4 @@
-package com.arkxos.framework.json.convert;
+package io.arkx.framework.json.convert;
 
 import io.arkx.framework.extend.AbstractExtendService;
 

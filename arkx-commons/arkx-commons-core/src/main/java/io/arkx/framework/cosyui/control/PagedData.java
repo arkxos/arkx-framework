@@ -2,7 +2,7 @@ package io.arkx.framework.cosyui.control;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.arkx.framework.commons.collection.DataTable;
-import com.arkxos.framework.json.JSON;
+import io.arkx.framework.json.JSON;
 
 /**
  * 

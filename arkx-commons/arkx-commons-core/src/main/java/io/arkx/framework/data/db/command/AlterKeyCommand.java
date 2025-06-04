@@ -7,9 +7,9 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
 import io.arkx.framework.data.db.dbtype.MsSql;
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONArray;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONArray;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * 修改主键指令

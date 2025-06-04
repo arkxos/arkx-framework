@@ -26,7 +26,7 @@ import io.arkx.framework.cosyui.template.command.TagCommand;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.i18n.Lang;
-import com.arkxos.framework.json.JSON;
+import io.arkx.framework.json.JSON;
 import com.arkxos.framework.security.PrivCheck;
 import com.arkxos.framework.security.exception.PrivException;
 import com.google.common.base.Joiner;

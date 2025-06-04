@@ -6,8 +6,8 @@ import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
 import io.arkx.framework.data.db.dbtype.Sybase;
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * 添加字段指令

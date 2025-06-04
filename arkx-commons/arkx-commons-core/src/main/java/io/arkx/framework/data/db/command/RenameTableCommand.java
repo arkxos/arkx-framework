@@ -2,8 +2,8 @@ package io.arkx.framework.data.db.command;
 
 import java.util.HashMap;
 
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * 重命名数据表指令

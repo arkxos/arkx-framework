@@ -9,8 +9,8 @@ import java.util.concurrent.TimeoutException;
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.extend.ExtendManager;
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONObject;
 
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.exception.MemcachedException;

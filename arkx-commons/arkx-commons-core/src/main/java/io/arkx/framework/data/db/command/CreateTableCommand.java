@@ -9,9 +9,9 @@ import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
 import io.arkx.framework.data.db.dbtype.Sybase;
 import io.arkx.framework.data.db.orm.DAOColumn;
-import com.arkxos.framework.json.JSON;
-import com.arkxos.framework.json.JSONArray;
-import com.arkxos.framework.json.JSONObject;
+import io.arkx.framework.json.JSON;
+import io.arkx.framework.json.JSONArray;
+import io.arkx.framework.json.JSONObject;
 
 /**
  * 创建数据表指令

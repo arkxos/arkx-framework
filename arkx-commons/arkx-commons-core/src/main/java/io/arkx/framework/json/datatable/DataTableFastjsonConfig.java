@@ -1,4 +1,4 @@
-package com.arkxos.framework.json.datatable;
+package io.arkx.framework.json.datatable;
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;

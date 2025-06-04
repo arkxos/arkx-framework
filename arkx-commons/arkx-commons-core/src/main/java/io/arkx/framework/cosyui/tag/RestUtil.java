@@ -98,7 +98,7 @@ public class RestUtil {
 		} else if(clazz == DataTable.class) {
 			JSONObject jsonObject = JSON.parseObject(result);
 			String data = jsonObject.getString("data");
-			DataTable dataTable = com.arkxos.framework.json.JSON.parseBean(data, DataTable.class);
+			DataTable dataTable = io.arkx.framework.json.JSON.parseBean(data, DataTable.class);
 			jsonResult.setData(dataTable);
 		} else if(clazz == Tree.class) {
 			JSONObject jsonObject = JSON.parseObject(result);
