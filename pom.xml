@@ -37,7 +37,7 @@
 	</properties>
 
 	<modules>
-		<module>arkxos-framework-dependencies</module>
+		<module>arkx-dependencies</module>
 		<module>arkxos-framework-parent</module>
 		<module>arkxos-framework-preloader</module>
 		<module>arkxos-framework-commons</module>
