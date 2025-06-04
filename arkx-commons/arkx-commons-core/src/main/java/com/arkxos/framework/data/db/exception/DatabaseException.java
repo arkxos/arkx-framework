@@ -1,6 +1,6 @@
 package com.arkxos.framework.data.db.exception;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * 数据库异常

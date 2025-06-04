@@ -11,7 +11,7 @@ import com.arkxos.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.log.ILogManager;
 import io.arkx.framework.commons.util.log.ILogger;
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 public class Log4jManager implements ILogManager {
 	ILogger console = null;

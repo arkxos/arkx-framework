@@ -7,9 +7,9 @@ import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.core.bean.BeanDescription;
-import com.arkxos.framework.core.bean.BeanManager;
-import com.arkxos.framework.core.bean.BeanProperty;
+import io.arkx.framework.core.bean.BeanDescription;
+import io.arkx.framework.core.bean.BeanManager;
+import io.arkx.framework.core.bean.BeanProperty;
 import com.arkxos.framework.data.db.exception.DatabaseException;
 
 /**

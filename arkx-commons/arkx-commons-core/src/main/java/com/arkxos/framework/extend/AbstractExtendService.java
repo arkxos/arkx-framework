@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.ReadOnlyList;
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * 扩展服务抽象基类

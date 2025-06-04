@@ -3,7 +3,7 @@ package com.arkxos.framework.json;
 import java.util.ArrayList;
 
 import com.alibaba.fastjson.JSONAware;
-import com.arkxos.framework.core.castor.LongCastor;
+import io.arkx.framework.core.castor.LongCastor;
 
 /**
  * JSON数组,继承ArrayList<Object>

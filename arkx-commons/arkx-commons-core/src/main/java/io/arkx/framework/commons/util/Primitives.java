@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.util;
 
-import com.arkxos.framework.core.castor.BooleanCastor;
-import com.arkxos.framework.core.castor.DoubleCastor;
-import com.arkxos.framework.core.castor.FloatCastor;
-import com.arkxos.framework.core.castor.IntCastor;
-import com.arkxos.framework.core.castor.LongCastor;
+import io.arkx.framework.core.castor.BooleanCastor;
+import io.arkx.framework.core.castor.DoubleCastor;
+import io.arkx.framework.core.castor.FloatCastor;
+import io.arkx.framework.core.castor.IntCastor;
+import io.arkx.framework.core.castor.LongCastor;
 
 /**
  * 基本类型工具类

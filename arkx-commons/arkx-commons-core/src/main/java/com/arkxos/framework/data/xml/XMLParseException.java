@@ -1,6 +1,6 @@
 package com.arkxos.framework.data.xml;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * XML解析异常

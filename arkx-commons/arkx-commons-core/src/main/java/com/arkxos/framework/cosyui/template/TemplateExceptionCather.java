@@ -1,7 +1,7 @@
 package com.arkxos.framework.cosyui.template;
 
 import io.arkx.framework.commons.util.LogUtil;
-import com.arkxos.framework.core.IExceptionCatcher;
+import io.arkx.framework.core.IExceptionCatcher;
 import com.arkxos.framework.cosyui.template.exception.TemplateException;
 
 import jakarta.servlet.http.HttpServletRequest;

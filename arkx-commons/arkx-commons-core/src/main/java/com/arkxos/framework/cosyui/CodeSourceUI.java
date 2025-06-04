@@ -7,8 +7,8 @@ import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.config.CodeSourceClass;
-import com.arkxos.framework.core.method.IMethodLocator;
-import com.arkxos.framework.core.method.MethodLocatorUtil;
+import io.arkx.framework.core.method.IMethodLocator;
+import io.arkx.framework.core.method.MethodLocatorUtil;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.security.PrivCheck;
 

@@ -3,7 +3,7 @@ package com.arkxos.framework.cosyui.zhtml;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.core.bean.BeanUtil;
+import io.arkx.framework.core.bean.BeanUtil;
 import com.arkxos.framework.cosyui.expression.CachedEvaluator;
 import com.arkxos.framework.cosyui.expression.IEvaluator;
 import com.arkxos.framework.cosyui.expression.IFunctionMapper;

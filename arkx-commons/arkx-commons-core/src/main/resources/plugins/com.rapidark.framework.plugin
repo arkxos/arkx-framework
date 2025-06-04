@@ -213,16 +213,16 @@
 		<itemClass>com.arkxos.framework.cosyui.web.mvc.IURLHandler</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.core.castor.CastorService</id>
-		<class>com.arkxos.framework.core.castor.CastorService</class>
+		<id>castor.io.arkx.framework.core.CastorService</id>
+		<class>castor.io.arkx.framework.core.CastorService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.core.castor.ICastor</itemClass>
+		<itemClass>castor.io.arkx.framework.core.ICastor</itemClass>
 	</extendService>
 	<extendService>
-		<id>com.arkxos.framework.core.ExceptionCatcherService</id>
-		<class>com.arkxos.framework.core.ExceptionCatcherService</class>
+		<id>io.arkx.framework.core.ExceptionCatcherService</id>
+		<class>io.arkx.framework.core.ExceptionCatcherService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.core.IExceptionCatcher</itemClass>
+		<itemClass>io.arkx.framework.core.IExceptionCatcher</itemClass>
 	</extendService>
 	<extendService>
 		<id>com.arkxos.framework.json.convert.JSONConvertorService</id>
@@ -301,13 +301,13 @@
 		<id>com.arkxos.framework.security.DefaultPrivExceptionCatcher</id>
 		<class>com.arkxos.framework.security.DefaultPrivExceptionCatcher</class>
 		<description></description>
-		<extendService>com.arkxos.framework.core.ExceptionCatcherService</extendService>
+		<extendService>io.arkx.framework.core.ExceptionCatcherService</extendService>
 	</extendItem>
 	<extendItem>
 		<id>com.arkxos.framework.cosyui.web.mvc.ServiceExceptionCatcher</id>
 		<class>com.arkxos.framework.cosyui.web.mvc.ServiceExceptionCatcher</class>
 		<description></description>
-		<extendService>com.arkxos.framework.core.ExceptionCatcherService</extendService>
+		<extendService>io.arkx.framework.core.ExceptionCatcherService</extendService>
 	</extendItem>
 	
 	<extendItem>
@@ -332,7 +332,7 @@
 		<id>com.arkxos.framework.cosyui.template.TemplateExceptionCather</id>
 		<class>com.arkxos.framework.cosyui.template.TemplateExceptionCather</class>
 		<description></description>
-		<extendService>com.arkxos.framework.core.ExceptionCatcherService</extendService>
+		<extendService>io.arkx.framework.core.ExceptionCatcherService</extendService>
 	</extendItem>
 	
 	<extendItem>

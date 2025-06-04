@@ -1,6 +1,6 @@
 package com.arkxos.framework.security.exception;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.extend.action.AfterPrivCheckFailedAction;
 

@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.template.exception;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * 模板异常

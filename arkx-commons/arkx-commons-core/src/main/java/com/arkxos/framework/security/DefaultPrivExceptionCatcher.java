@@ -8,7 +8,7 @@ import com.arkxos.framework.Current;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.config.MemberLoginPage;
-import com.arkxos.framework.core.IExceptionCatcher;
+import io.arkx.framework.core.IExceptionCatcher;
 import com.arkxos.framework.cosyui.web.ResponseData;
 import com.arkxos.framework.cosyui.web.mvc.handler.AjaxHandler;
 import com.arkxos.framework.security.exception.MemberNotLoginException;

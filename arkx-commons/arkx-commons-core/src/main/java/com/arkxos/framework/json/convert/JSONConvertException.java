@@ -1,6 +1,6 @@
 package com.arkxos.framework.json.convert;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * JSON转换异常

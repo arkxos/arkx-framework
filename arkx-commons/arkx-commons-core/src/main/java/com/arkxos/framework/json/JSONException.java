@@ -1,6 +1,6 @@
 package com.arkxos.framework.json;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * JSON异常

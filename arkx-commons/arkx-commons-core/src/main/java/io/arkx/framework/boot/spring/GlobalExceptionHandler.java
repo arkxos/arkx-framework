@@ -4,7 +4,7 @@
 //import org.springframework.web.bind.annotation.RestControllerAdvice;
 //
 //import util.io.arkx.framework.commons.StringUtil;
-//import com.arkxos.framework.core.JsonResult;
+//import io.arkx.framework.core.JsonResult;
 //import com.arkxos.framework.data.jdbc.Session;
 //import com.arkxos.framework.data.jdbc.SessionFactory;
 //

@@ -1,6 +1,6 @@
 package com.arkxos.framework.extend.exception;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * 创建扩展项实例异常

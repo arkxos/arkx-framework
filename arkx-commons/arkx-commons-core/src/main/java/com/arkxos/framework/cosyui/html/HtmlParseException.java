@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.html;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * HTML解析异常

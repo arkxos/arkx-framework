@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.extend.plugin.ExtendPluginProvider;
 import com.arkxos.framework.extend.plugin.PluginConfig;

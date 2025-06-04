@@ -10,7 +10,7 @@ import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.NumberUtil;
 import io.arkx.framework.commons.util.Primitives;
-import com.arkxos.framework.core.bean.BeanUtil;
+import io.arkx.framework.core.bean.BeanUtil;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 import com.arkxos.framework.json.JSON;

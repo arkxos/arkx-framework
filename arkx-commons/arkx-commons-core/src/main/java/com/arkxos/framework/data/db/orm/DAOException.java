@@ -1,6 +1,6 @@
 package com.arkxos.framework.data.db.orm;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * DAO操作异常

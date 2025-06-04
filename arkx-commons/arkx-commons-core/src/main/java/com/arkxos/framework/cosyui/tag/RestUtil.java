@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.arkxos.framework.Current;
 import io.arkx.framework.commons.collection.DataTable;
-import com.arkxos.framework.core.JsonResult;
+import io.arkx.framework.core.JsonResult;
 import com.arkxos.framework.cosyui.control.PagedData;
 import com.arkxos.framework.cosyui.control.tree.Tree;
 import com.google.common.base.Joiner;

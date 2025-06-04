@@ -1,6 +1,6 @@
 package com.arkxos.framework;
 
-import com.arkxos.framework.core.FrameworkException;
+import io.arkx.framework.core.FrameworkException;
 
 /**
  * 配置文件加载异常

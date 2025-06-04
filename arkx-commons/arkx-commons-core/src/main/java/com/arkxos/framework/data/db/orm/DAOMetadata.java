@@ -10,9 +10,9 @@ import io.arkx.framework.annotation.dao.Indexes;
 import io.arkx.framework.annotation.dao.Table;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.core.bean.BeanDescription;
-import com.arkxos.framework.core.bean.BeanManager;
-import com.arkxos.framework.core.bean.BeanProperty;
+import io.arkx.framework.core.bean.BeanDescription;
+import io.arkx.framework.core.bean.BeanManager;
+import io.arkx.framework.core.bean.BeanProperty;
 import com.arkxos.framework.data.db.dbtype.IDBType;
 
 /**
