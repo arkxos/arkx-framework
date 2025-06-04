@@ -41,7 +41,7 @@
 		<module>arkx-parent</module>
 		<module>arkxos-framework-preloader</module>
 		<module>arkxos-framework-commons</module>
-		<module>arkxos-framework-enum-starter</module>
+		<module>arkx-enum-starter</module>
 		<module>arkxos-framework-ip2region-starter</module>
 		<module>arkx-data</module>
 		<module>arkx-boot</module>

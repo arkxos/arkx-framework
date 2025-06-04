@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
 		<groupId>io.arkx.framework</groupId>
-        <artifactId>arkxos-framework-enum-starter</artifactId>
+        <artifactId>arkx-enum-starter</artifactId>
         <version>${revision}</version>
     </parent>
 
