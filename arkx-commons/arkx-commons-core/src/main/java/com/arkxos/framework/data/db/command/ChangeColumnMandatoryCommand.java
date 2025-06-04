@@ -2,7 +2,7 @@ package com.arkxos.framework.data.db.command;
 
 import java.util.HashMap;
 
-import com.arkxos.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.DataTypes;
 import com.arkxos.framework.data.db.dbtype.DBTypeService;
 import com.arkxos.framework.data.db.dbtype.IDBType;
 import com.arkxos.framework.data.db.dbtype.Sybase;

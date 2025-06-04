@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 public class EncryptUtil {
 	public static final String DEFAULT_KEY = "27jrWz3sxrVbR+pnyg6j";

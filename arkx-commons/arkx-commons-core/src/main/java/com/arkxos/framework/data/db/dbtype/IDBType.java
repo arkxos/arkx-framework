@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.arkxos.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.DataTypes;
 import com.arkxos.framework.data.db.command.AddColumnCommand;
 import com.arkxos.framework.data.db.command.AdvanceChangeColumnCommand;
 import com.arkxos.framework.data.db.command.AlterKeyCommand;

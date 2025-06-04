@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**   
  * 

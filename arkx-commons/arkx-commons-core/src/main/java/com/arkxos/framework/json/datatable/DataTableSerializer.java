@@ -10,12 +10,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
-import com.arkxos.framework.commons.collection.DataColumn;
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.DateUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.DateUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 /**
  * 
@@ -82,7 +82,7 @@ public class DataTableSerializer implements ObjectSerializer {
 
 		jsonObject.put("Values", vs);
 		jsonObject.put("@arktype", "DataTable");
-//		jsonObject.put("@type", "com.arkxos.framework.commons.collection.DataTable");
+//		jsonObject.put("@type", "collection.io.arkx.framework.commons.DataTable");
 		
 		out.write(JSON.toJSONString(jsonObject));
 	}

@@ -11,8 +11,8 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 
-import com.arkxos.framework.commons.util.LogUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 public class MediaInfoParser
 {

@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.Primitives;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.Primitives;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.core.exception.BeanInitException;
 
 /**

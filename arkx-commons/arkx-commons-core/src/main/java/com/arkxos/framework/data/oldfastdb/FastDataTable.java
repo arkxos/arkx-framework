@@ -3,9 +3,9 @@ package com.arkxos.framework.data.oldfastdb;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.DataColumn;
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTypes;
 import com.arkxos.framework.data.fasttable.FastColumn;
 import com.arkxos.framework.data.fasttable.FastColumnIndexType;
 import com.arkxos.framework.data.fasttable.FastColumnType;

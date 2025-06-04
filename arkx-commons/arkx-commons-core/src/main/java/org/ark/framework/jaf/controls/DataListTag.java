@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import org.ark.framework.jaf.Current;
 import org.ark.framework.security.PrivCheck;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.lang.ClassUtil;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.lang.ClassUtil;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.data.xml.XMLMultiLoader;
 

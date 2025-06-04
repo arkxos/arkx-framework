@@ -1,7 +1,7 @@
 package com.arkxos.framework.core;
 
 import com.alibaba.fastjson.JSON;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  * 

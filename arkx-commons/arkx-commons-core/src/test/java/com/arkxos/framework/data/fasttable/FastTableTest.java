@@ -2,12 +2,8 @@ package com.arkxos.framework.data.fasttable;
 
 import java.io.File;
 
-import com.arkxos.framework.commons.util.SystemInfo;
-import com.arkxos.framework.commons.util.UuidUtil;
-import com.arkxos.framework.data.fasttable.FastColumn;
-import com.arkxos.framework.data.fasttable.FastTable;
-import com.arkxos.framework.data.fasttable.FastTableBuilder;
-import com.arkxos.framework.data.fasttable.FastTableHeader;
+import io.arkx.framework.commons.util.SystemInfo;
+import io.arkx.framework.commons.util.UuidUtil;
 
 /**
  * @author Darkness

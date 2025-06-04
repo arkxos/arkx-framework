@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.arkxos.framework.FrameworkPlugin;
 import io.arkx.framework.annotation.Priv.LoginType;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 import com.arkxos.framework.cosyui.expression.ExpressionException;
 import com.arkxos.framework.cosyui.tag.ArkTag;
 import com.arkxos.framework.cosyui.template.TagAttr;

@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.arkxos.framework.commons.collection.ThreeTuple;
-import com.arkxos.framework.commons.collection.TwoTuple;
-import com.arkxos.framework.commons.util.TimeWatch;
+import io.arkx.framework.commons.collection.ThreeTuple;
+import io.arkx.framework.commons.collection.TwoTuple;
+import io.arkx.framework.commons.util.TimeWatch;
 import com.arkxos.framework.data.fasttable.FastColumn;
 import com.arkxos.framework.data.fasttable.FastTableHeader;
 import com.arkxos.framework.data.fasttable.MappedFile;

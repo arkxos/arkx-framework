@@ -1,6 +1,6 @@
 package com.arkxos.framework.core.castor;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 /**
  * 字符串数组类型转换器

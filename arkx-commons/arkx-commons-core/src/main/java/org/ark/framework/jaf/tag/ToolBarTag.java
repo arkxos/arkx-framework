@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.ark.framework.jaf.TagUtil;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;

@@ -13,7 +13,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

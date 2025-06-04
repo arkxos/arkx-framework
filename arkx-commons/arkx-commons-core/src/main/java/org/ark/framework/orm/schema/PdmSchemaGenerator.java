@@ -12,7 +12,7 @@ import org.dom4j.QName;
 import org.dom4j.io.SAXReader;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

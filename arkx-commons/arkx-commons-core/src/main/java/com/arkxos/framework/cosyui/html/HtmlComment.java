@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.html;
 
-import com.arkxos.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * HTML中的注释

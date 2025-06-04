@@ -15,7 +15,7 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
-import com.arkxos.framework.commons.util.NumberUtil;
+import io.arkx.framework.commons.util.NumberUtil;
 
 public class GifUtil
 {

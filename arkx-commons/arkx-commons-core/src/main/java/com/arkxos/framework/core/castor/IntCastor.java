@@ -1,6 +1,6 @@
 package com.arkxos.framework.core.castor;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * 整型转换器

@@ -3,7 +3,7 @@ package com.arkxos.framework.data.jdbc;
 import java.io.Serializable;
 
 import io.arkx.framework.annotation.Ingore;
-import com.arkxos.framework.commons.util.UuidUtil;
+import io.arkx.framework.commons.util.UuidUtil;
 
 
 /**

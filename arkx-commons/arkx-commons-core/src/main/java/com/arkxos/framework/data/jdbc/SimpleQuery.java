@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.arkxos.framework.commons.util.NumberUtil;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.NumberUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.db.QueryException;
 
 /**

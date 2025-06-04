@@ -9,11 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.data.xml.XMLDocument;
-import com.arkxos.framework.data.xml.XMLElement;
-import com.arkxos.framework.data.xml.XMLMultiLoader;
-import com.arkxos.framework.data.xml.XMLParser;
+import io.arkx.framework.commons.util.FileUtil;
 
 public class XMLTest {
 

@@ -3,11 +3,11 @@ package org.ark.framework.orm;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.CharsetConvert;
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.CharsetConvert;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.db.dbtype.IDBType;
 
 

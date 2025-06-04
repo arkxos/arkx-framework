@@ -1,4 +1,4 @@
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 public class dd {
 	

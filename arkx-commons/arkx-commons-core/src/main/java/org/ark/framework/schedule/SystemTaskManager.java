@@ -3,7 +3,7 @@ package org.ark.framework.schedule;
 
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 
 /**

@@ -10,8 +10,8 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.commons.collection.ConcurrentMapx;
-import com.arkxos.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.collection.ConcurrentMapx;
+import io.arkx.framework.commons.util.LogUtil;
 import com.arkxos.framework.thirdparty.el.Constants;
 
 /**

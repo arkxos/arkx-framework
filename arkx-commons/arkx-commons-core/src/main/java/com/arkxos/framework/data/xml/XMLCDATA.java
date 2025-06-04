@@ -1,6 +1,6 @@
 package com.arkxos.framework.data.xml;
 
-import com.arkxos.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * 表示XML中一个CDATA块

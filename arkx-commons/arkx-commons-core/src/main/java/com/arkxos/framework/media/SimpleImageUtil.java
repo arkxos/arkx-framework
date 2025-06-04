@@ -33,10 +33,10 @@ import com.alibaba.simpleimage.render.ScaleRender;
 import com.alibaba.simpleimage.render.WatermarkParameter;
 import com.alibaba.simpleimage.render.WatermarkRender;
 import com.alibaba.simpleimage.render.WriteRender;
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.LogUtil;
-import com.arkxos.framework.commons.util.NumberUtil;
-import com.arkxos.framework.commons.util.Primitives;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.NumberUtil;
+import io.arkx.framework.commons.util.Primitives;
 import com.arkxos.framework.media.render.ZDrawTextItem;
 
 public class SimpleImageUtil {

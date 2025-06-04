@@ -4,7 +4,7 @@ package org.ark.framework.messages;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 import com.arkxos.framework.data.jdbc.Transaction;
 
 /**

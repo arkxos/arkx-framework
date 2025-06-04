@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 import com.arkxos.framework.cosyui.template.exception.TemplateNotFoundException;
 
 /**

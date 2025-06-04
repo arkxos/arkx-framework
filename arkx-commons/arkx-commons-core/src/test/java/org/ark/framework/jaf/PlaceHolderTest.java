@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 import jakarta.servlet.http.HttpServletRequest;
 

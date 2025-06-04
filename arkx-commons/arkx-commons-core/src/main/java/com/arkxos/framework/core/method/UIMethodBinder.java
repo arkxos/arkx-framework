@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.arkxos.framework.Current;
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.Primitives;
-import com.arkxos.framework.commons.util.lang.ClassUtil;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.Primitives;
+import io.arkx.framework.commons.util.lang.ClassUtil;
 import com.arkxos.framework.core.bean.BeanDescription;
 import com.arkxos.framework.core.bean.BeanManager;
 import com.arkxos.framework.core.bean.BeanProperty;

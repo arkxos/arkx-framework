@@ -15,7 +15,7 @@ import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFact
 import org.ark.framework.infrastructure.entityfactoryframework.IEntityFactory;
 import org.ark.framework.infrastructure.repositoryframework.RepositoryBase;
 
-import com.arkxos.framework.commons.util.StringFormat;
+import io.arkx.framework.commons.util.StringFormat;
 import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.data.jdbc.BaseEntity;
 import com.arkxos.framework.data.jdbc.Entity;

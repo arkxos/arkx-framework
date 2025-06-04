@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTable;
 import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;

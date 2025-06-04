@@ -7,7 +7,7 @@
 //import org.ark.framework.collection.Executor;
 //import org.ark.framework.orm.Schema;
 //import org.ark.framework.orm.SchemaSet;
-//import com.arkxos.framework.commons.util.StringUtil;
+//import util.io.arkx.framework.commons.StringUtil;
 //
 //import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 //import com.arkxos.framework.data.jdbc.Entity;

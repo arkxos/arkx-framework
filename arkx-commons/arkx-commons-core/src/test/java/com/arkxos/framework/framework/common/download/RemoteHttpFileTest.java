@@ -3,9 +3,9 @@ package com.arkxos.framework.framework.common.download;
 import java.io.File;
 import java.io.IOException;
 
-import com.arkxos.framework.commons.download.RemoteHttpFile;
-import com.arkxos.framework.commons.util.SystemInfo;
-import com.arkxos.framework.commons.util.TimeWatch;
+import io.arkx.framework.commons.download.RemoteHttpFile;
+import io.arkx.framework.commons.util.SystemInfo;
+import io.arkx.framework.commons.util.TimeWatch;
 
 public class RemoteHttpFileTest {
 	

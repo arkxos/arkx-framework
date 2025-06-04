@@ -2,7 +2,7 @@ package com.arkxos.framework.core.castor;
 
 import java.util.Date;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.core.exception.CastorNotFoundException;
 import com.arkxos.framework.extend.AbstractExtendService;
 import com.arkxos.framework.extend.IExtendItem;

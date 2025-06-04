@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arkxos.framework.FrameworkPlugin;
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.Primitives;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.Primitives;
 import com.arkxos.framework.cosyui.template.TagAttr;
 import com.arkxos.framework.cosyui.template.exception.TemplateRuntimeException;
 

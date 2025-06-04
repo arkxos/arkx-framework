@@ -2,7 +2,7 @@ package org.ark.framework.jaf.html;
 
 import java.util.regex.Matcher;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 
 /**

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTable;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.jdbc.ICallbackStatement;
 import com.arkxos.framework.data.jdbc.JdbcTemplate;

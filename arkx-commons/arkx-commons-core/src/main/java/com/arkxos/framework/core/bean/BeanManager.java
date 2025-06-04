@@ -3,7 +3,7 @@ package com.arkxos.framework.core.bean;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import com.arkxos.framework.commons.collection.ConcurrentMapx;
+import io.arkx.framework.commons.collection.ConcurrentMapx;
 
 /**
  * Bean描述信息管理类

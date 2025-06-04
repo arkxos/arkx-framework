@@ -6,8 +6,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.util.SystemInfo;
-import com.arkxos.framework.commons.util.TimeWatch;
+import io.arkx.framework.commons.util.SystemInfo;
+import io.arkx.framework.commons.util.TimeWatch;
 
 public class FastDbTest {
 

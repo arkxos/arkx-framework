@@ -9,10 +9,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.collection.tree.TreeNode;
-import com.arkxos.framework.commons.collection.tree.Treex;
-import com.arkxos.framework.commons.util.lang.ClassUtil;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.tree.TreeNode;
+import io.arkx.framework.commons.collection.tree.Treex;
+import io.arkx.framework.commons.util.lang.ClassUtil;
 
 public class TreexObjectSerializer implements ObjectSerializer {
 

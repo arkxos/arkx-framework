@@ -1,7 +1,7 @@
 package org.ark.framework.orm.xtable;
 
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataTable;
 
 /// <summary>
 	/// 各表的各字段的中文释意及英文释意及字段的填写特征等扩展属性，此表与sql server数据库中的系统表syscolumns表作用相似，其存储的信息是对syscolumns表的扩展（syscolumns表中不存在或调用不方便，但本软件中需要用到——例如“字段别名”——，则在此表中存储）

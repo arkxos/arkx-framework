@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.arkxos.framework.commons.collection.DataColumn;
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.collection.ThreeTuple;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.ThreeTuple;
 import com.arkxos.framework.data.fasttable.FastColumn;
 import com.arkxos.framework.data.fasttable.FastColumnIndexType;
 import com.arkxos.framework.data.fasttable.FastColumnType;

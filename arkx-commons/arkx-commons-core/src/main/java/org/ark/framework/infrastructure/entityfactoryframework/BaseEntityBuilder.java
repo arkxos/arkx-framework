@@ -6,8 +6,8 @@ import java.lang.reflect.Type;
 
 import io.arkx.framework.annotation.Column;
 import io.arkx.framework.annotation.Ingore;
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.util.lang.ReflectionUtil;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.util.lang.ReflectionUtil;
 
 
 /**

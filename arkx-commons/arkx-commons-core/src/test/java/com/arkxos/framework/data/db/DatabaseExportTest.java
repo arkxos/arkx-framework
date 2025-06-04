@@ -5,7 +5,7 @@ import org.ark.framework.orm.schema.MySqlDataBaseSchemaGenerator;
 import org.junit.jupiter.api.Test;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 import com.arkxos.framework.data.db.connection.ConnectionConfig;
 import com.arkxos.framework.extend.plugin.ExtendPluginProvider;
 import com.arkxos.framework.extend.plugin.PluginManager;

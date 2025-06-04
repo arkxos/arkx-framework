@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.arkxos.framework.commons.util.DateUtil;
+import io.arkx.framework.commons.util.DateUtil;
 
 /**
  * 数据检验规则类

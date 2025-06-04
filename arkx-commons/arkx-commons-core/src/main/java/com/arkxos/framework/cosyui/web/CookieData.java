@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Current;
-import com.arkxos.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.LogUtil;
 import com.arkxos.framework.cosyui.web.CookieData.CookieObject;
 
 import jakarta.servlet.http.Cookie;

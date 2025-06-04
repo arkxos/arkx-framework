@@ -1,7 +1,7 @@
 package org.ark.framework.messages;
 
 import io.arkx.framework.annotation.Priv;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.web.UIFacade;
 import com.arkxos.framework.i18n.LangMapping;
 

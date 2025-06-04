@@ -1,7 +1,7 @@
 package com.arkxos.framework.cosyui.util;
 
 import com.arkxos.framework.Current;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.cosyui.template.AbstractExecuteContext;
 import com.arkxos.framework.cosyui.zhtml.ZhtmlExecuteContext;
 

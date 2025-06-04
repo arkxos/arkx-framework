@@ -2,8 +2,8 @@ package com.arkxos.framework.data.db.dbtype;
 
 import java.sql.SQLException;
 
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.db.command.DropTableCommand;
 import com.arkxos.framework.data.db.command.RenameTableCommand;
 import com.arkxos.framework.data.db.connection.Connection;

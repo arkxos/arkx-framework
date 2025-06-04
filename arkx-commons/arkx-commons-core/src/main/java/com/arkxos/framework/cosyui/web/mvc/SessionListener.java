@@ -8,7 +8,7 @@ import com.arkxos.framework.Account;
 import com.arkxos.framework.Account.UserData;
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Constant;
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 import com.arkxos.framework.extend.ExtendManager;
 import com.arkxos.framework.extend.action.AfterSessionCreateAction;
 import com.arkxos.framework.extend.action.BeforeSessionDestroyAction;

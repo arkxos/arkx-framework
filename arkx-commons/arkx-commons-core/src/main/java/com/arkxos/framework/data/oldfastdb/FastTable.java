@@ -14,9 +14,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.arkxos.framework.commons.collection.TwoTuple;
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.collection.TwoTuple;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.fasttable.FastColumn;
 import com.arkxos.framework.data.fasttable.FastTableHeader;
 import com.google.common.collect.HashMultimap;

@@ -2,7 +2,7 @@ package com.arkxos.framework.message.mq;
 
 import java.util.Collection;
 
-import com.arkxos.framework.commons.util.UuidUtil;
+import io.arkx.framework.commons.util.UuidUtil;
 import com.arkxos.framework.message.tcp.server.NettyServer;
 import com.arkxos.framework.message.tcp.struct.RequestMessage;
 import com.google.common.collect.ArrayListMultimap;

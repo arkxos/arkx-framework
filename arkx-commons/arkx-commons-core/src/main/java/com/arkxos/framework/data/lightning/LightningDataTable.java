@@ -3,9 +3,9 @@ package com.arkxos.framework.data.lightning;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.DataColumn;
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTypes;
 
 public class LightningDataTable extends DataTable implements ILightningTable {
 

@@ -1,7 +1,7 @@
 package com.arkxos.framework.data.oldfastdb;
 
-import com.arkxos.framework.commons.collection.ThreeTuple;
-import com.arkxos.framework.commons.collection.TwoTuple;
+import io.arkx.framework.commons.collection.ThreeTuple;
+import io.arkx.framework.commons.collection.TwoTuple;
 
 /**
  *  

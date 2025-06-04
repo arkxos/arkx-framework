@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.arkxos.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.DataTypes;
 
 /**
  * 用于标识DAO类中的字段信息

@@ -1,7 +1,7 @@
 package com.arkxos.framework.config;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * 配置前台会员登录页面相对于应用根目录的地址。

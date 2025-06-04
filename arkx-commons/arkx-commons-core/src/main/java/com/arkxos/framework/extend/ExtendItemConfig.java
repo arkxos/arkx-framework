@@ -1,6 +1,6 @@
 package com.arkxos.framework.extend;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.xml.XMLElement;
 import com.arkxos.framework.extend.exception.CreateExtendItemInstanceException;
 import com.arkxos.framework.extend.plugin.PluginConfig;

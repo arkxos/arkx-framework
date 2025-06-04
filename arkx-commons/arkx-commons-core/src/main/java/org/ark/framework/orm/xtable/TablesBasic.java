@@ -3,8 +3,8 @@ package org.ark.framework.orm.xtable;
 import java.util.Date;
 import java.util.Hashtable;
 
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataTable;
 
 	/// <summary>
 	/// TablesBasic ，所有Table类的基类。

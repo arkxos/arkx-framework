@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 import com.arkxos.framework.Constant;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 
 /**   

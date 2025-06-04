@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.template;
 
-import com.arkxos.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataRow;
 import com.arkxos.framework.cosyui.expression.ITagData;
 import com.arkxos.framework.cosyui.tag.IListTag;
 

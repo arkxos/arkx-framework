@@ -1,6 +1,6 @@
 package org.ark.framework.core.castor;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * float类型转换器

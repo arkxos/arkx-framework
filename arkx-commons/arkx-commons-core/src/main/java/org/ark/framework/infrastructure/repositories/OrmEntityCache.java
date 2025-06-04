@@ -7,7 +7,7 @@ import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFact
 import io.arkx.framework.annotation.EntityAnnotationManager;
 import io.arkx.framework.cache.CacheDataProvider;
 import io.arkx.framework.cache.CacheManager;
-import com.arkxos.framework.commons.collection.CacheMapx;
+import io.arkx.framework.commons.collection.CacheMapx;
 import com.arkxos.framework.data.jdbc.Entity;
 
 

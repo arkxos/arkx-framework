@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.util.DateUtil;
+import io.arkx.framework.commons.util.DateUtil;
 import com.arkxos.framework.data.jdbc.Criteria;
 import com.arkxos.framework.data.jdbc.Query;
 import com.arkxos.framework.data.jdbc.Restrictions;

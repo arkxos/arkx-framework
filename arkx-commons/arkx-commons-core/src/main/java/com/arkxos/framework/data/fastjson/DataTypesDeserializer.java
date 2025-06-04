@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.JSONLexer;
 import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
-import com.arkxos.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.DataTypes;
 
 public class DataTypesDeserializer implements ObjectDeserializer {
 

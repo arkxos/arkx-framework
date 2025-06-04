@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
-import com.arkxos.framework.commons.util.UuidUtil;
+import io.arkx.framework.commons.util.UuidUtil;
 import com.arkxos.framework.message.tcp.client.NettyClient;
 import com.arkxos.framework.message.tcp.struct.NettyMessage;
 import com.arkxos.framework.message.tcp.struct.RequestMessage;

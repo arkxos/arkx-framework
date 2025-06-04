@@ -1,9 +1,9 @@
 package io.arkx.framework.bean;
 
-import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.exception.ServiceException;
-import com.arkxos.framework.commons.util.lang.ClassUtil;
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.exception.ServiceException;
+import io.arkx.framework.commons.util.lang.ClassUtil;
 
 /**   
  * 

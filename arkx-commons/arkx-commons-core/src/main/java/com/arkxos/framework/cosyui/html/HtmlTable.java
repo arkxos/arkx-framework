@@ -3,7 +3,7 @@ package com.arkxos.framework.cosyui.html;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * Html中的table元素

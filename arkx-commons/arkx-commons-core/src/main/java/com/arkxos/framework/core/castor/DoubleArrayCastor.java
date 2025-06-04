@@ -2,7 +2,7 @@ package com.arkxos.framework.core.castor;
 
 import java.util.Collection;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 /**
  * 双字节浮点数组类型转换器

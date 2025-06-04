@@ -2,7 +2,7 @@ package com.arkxos.framework.json.datatable;
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTable;
 
 /**  
  * 

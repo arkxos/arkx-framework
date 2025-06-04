@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.db.command.AdvanceChangeColumnCommand;
 import com.arkxos.framework.data.db.command.CreateTableCommand;
 import com.arkxos.framework.data.db.command.DropIndexCommand;

@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.db.command.AddColumnCommand;
 import com.arkxos.framework.data.db.command.ChangeColumnLengthCommand;
 import com.arkxos.framework.data.db.command.ChangeColumnMandatoryCommand;

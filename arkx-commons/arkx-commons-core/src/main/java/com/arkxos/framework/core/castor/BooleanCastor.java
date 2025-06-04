@@ -1,6 +1,6 @@
 package com.arkxos.framework.core.castor;
 
-import com.arkxos.framework.commons.util.NumberUtil;
+import io.arkx.framework.commons.util.NumberUtil;
 
 /**
  * 布尔类型转换器

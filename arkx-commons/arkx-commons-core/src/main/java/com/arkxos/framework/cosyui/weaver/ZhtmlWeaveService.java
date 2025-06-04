@@ -2,7 +2,7 @@ package com.arkxos.framework.cosyui.weaver;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.commons.util.RegexParser;
+import io.arkx.framework.commons.util.RegexParser;
 import com.arkxos.framework.extend.AbstractExtendService;
 
 /**

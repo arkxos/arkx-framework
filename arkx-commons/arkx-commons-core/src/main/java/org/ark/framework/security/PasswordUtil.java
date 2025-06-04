@@ -1,7 +1,7 @@
 package org.ark.framework.security;
 
-import com.arkxos.framework.commons.util.NumberUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.NumberUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 /**
  * @class org.ark.framework.security.PasswordUtil

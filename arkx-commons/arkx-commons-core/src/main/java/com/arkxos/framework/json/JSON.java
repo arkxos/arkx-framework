@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.alibaba.fastjson.JSONAware;
-import com.arkxos.framework.commons.lang.FastStringBuilder;
-import com.arkxos.framework.commons.util.Primitives;
+import io.arkx.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.util.Primitives;
 import com.arkxos.framework.core.bean.BeanUtil;
 import com.arkxos.framework.json.convert.IJSONConvertor;
 import com.arkxos.framework.json.convert.JSONConvertorService;

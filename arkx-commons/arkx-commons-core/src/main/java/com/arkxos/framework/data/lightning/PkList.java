@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataRow;
 
 public class PkList {
 

@@ -5,7 +5,7 @@ import java.util.Date;
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
 import com.arkxos.framework.Account;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.jdbc.BaseEntity;
 import com.arkxos.framework.data.jdbc.Entity;
 

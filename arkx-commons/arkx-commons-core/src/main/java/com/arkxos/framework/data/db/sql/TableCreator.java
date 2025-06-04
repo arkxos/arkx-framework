@@ -3,9 +3,9 @@ package com.arkxos.framework.data.db.sql;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.util.LogUtil;
-import com.arkxos.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.db.QueryException;
 import com.arkxos.framework.data.db.command.CreateIndexCommand;
 import com.arkxos.framework.data.db.command.CreateTableCommand;

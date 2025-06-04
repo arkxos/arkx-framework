@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.TwoTuple;
+import io.arkx.framework.commons.collection.TwoTuple;
 
 /**
  * 

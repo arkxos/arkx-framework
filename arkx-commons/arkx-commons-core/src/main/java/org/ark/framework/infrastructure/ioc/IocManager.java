@@ -3,9 +3,9 @@ package org.ark.framework.infrastructure.ioc;
 import java.io.File;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.XMLLoader;
-import com.arkxos.framework.commons.util.XMLLoader.NodeData;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.XMLLoader;
+import io.arkx.framework.commons.util.XMLLoader.NodeData;
 
 
 /**

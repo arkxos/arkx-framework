@@ -13,7 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.text.AttributedString;
 
 import com.alibaba.simpleimage.render.DrawTextItem;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 public class ZDrawTextItem
   extends DrawTextItem

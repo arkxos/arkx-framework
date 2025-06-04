@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.html;
 
-import com.arkxos.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * 表示一个Html文档或者文档片段

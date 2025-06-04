@@ -3,7 +3,7 @@ package com.arkxos.framework.schedule;
 import java.util.List;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 import com.arkxos.framework.core.FrameworkException;
 
 /**

@@ -16,9 +16,9 @@ import org.ark.framework.orm.schema.SqlServerDataBaseSchemaGenerator;
 import org.ark.framework.orm.sql.DBContext;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.ClassLoadUtil;
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.JarUtil;
+import io.arkx.framework.commons.util.ClassLoadUtil;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.JarUtil;
 import com.arkxos.framework.data.db.connection.ConnectionConfig;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;

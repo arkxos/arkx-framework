@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.ark.framework.infrastructure.ioc.IocManager;
 
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataTable;
 import com.arkxos.framework.data.jdbc.Session;
 import com.arkxos.framework.data.jdbc.SessionFactory;
 

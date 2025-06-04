@@ -1,6 +1,6 @@
 package org.ark.framework.json;
 
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  * 

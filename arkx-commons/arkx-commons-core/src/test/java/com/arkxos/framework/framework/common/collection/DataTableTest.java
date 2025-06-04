@@ -1,10 +1,10 @@
 package com.arkxos.framework.framework.common.collection;
 
-import static com.arkxos.framework.commons.collection.DataColumn.dateColumn;
-import static com.arkxos.framework.commons.collection.DataColumn.doubleColumn;
-import static com.arkxos.framework.commons.collection.DataColumn.floatColumn;
-import static com.arkxos.framework.commons.collection.DataColumn.intColumn;
-import static com.arkxos.framework.commons.collection.DataColumn.stringColumn;
+import static io.arkx.framework.commons.collection.DataColumn.dateColumn;
+import static io.arkx.framework.commons.collection.DataColumn.doubleColumn;
+import static io.arkx.framework.commons.collection.DataColumn.floatColumn;
+import static io.arkx.framework.commons.collection.DataColumn.intColumn;
+import static io.arkx.framework.commons.collection.DataColumn.stringColumn;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
@@ -13,9 +13,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.collection.DataColumn;
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.DataTableUtil;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTableUtil;
 import com.arkxos.framework.framework.common.Person;
 
 /**

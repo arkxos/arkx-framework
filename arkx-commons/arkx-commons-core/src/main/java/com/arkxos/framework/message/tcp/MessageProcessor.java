@@ -3,7 +3,7 @@ package com.arkxos.framework.message.tcp;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.arkxos.framework.commons.util.UuidUtil;
+import io.arkx.framework.commons.util.UuidUtil;
 import com.arkxos.framework.message.tcp.client.NettyClient;
 import com.arkxos.framework.message.tcp.struct.NettyMessage;
 

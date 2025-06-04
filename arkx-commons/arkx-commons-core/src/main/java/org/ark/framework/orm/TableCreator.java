@@ -9,10 +9,10 @@ import org.ark.framework.orm.db.create.MYSQLTableCreator;
 import org.ark.framework.orm.db.create.OracleTableCreator;
 import org.ark.framework.orm.db.create.SYBASETableCreator;
 
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.LogUtil;
-import com.arkxos.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.dbtype.IDBType;
 import com.arkxos.framework.data.jdbc.Query;

@@ -2,8 +2,8 @@ package com.arkxos.framework.cosyui.web;
 
 import java.util.Enumeration;
 
-import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.Mapx;
 import com.arkxos.framework.data.db.DataCollection;
 
 import jakarta.servlet.http.HttpServletRequest;

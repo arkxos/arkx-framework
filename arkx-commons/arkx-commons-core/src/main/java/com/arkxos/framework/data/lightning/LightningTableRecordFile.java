@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.TwoTuple;
+import io.arkx.framework.commons.collection.TwoTuple;
 import com.arkxos.framework.data.fasttable.MappedFile;
 
 /**

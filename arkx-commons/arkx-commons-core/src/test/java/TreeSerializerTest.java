@@ -3,7 +3,7 @@ import org.ark.common.Person;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.arkxos.framework.commons.collection.tree.Treex;
+import io.arkx.framework.commons.collection.tree.Treex;
 import com.arkxos.framework.data.fastjson.TreexObjectSerializer;
 
 public class TreeSerializerTest {

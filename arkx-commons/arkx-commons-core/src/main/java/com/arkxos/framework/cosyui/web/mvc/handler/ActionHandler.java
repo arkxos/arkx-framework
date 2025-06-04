@@ -13,7 +13,7 @@ import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Current;
-import com.arkxos.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.LogUtil;
 import com.arkxos.framework.config.UploadMaxSize;
 import com.arkxos.framework.core.method.IMethodLocator;
 import com.arkxos.framework.core.method.MethodLocatorUtil;

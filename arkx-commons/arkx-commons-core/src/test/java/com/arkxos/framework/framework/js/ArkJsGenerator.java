@@ -3,7 +3,7 @@ package com.arkxos.framework.framework.js;
 import java.io.File;
 import java.io.IOException;
 
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 
 /**
  *  

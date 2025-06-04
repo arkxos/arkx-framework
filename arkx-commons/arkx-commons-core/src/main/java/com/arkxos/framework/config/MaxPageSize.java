@@ -1,7 +1,7 @@
 package com.arkxos.framework.config;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.NumberUtil;
+import io.arkx.framework.commons.util.NumberUtil;
 
 /**
  * 每页记录数的最大值，默认1000。<br>

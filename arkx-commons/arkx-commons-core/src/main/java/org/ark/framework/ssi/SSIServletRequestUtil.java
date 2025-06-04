@@ -1,7 +1,7 @@
 package org.ark.framework.ssi;
 
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 

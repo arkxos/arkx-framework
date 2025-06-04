@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.template;
 
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  * 表示模板中的一个片段

@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.template;
 
-import com.arkxos.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.LogUtil;
 import com.arkxos.framework.core.IExceptionCatcher;
 import com.arkxos.framework.cosyui.template.exception.TemplateException;
 

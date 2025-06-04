@@ -2,7 +2,7 @@ package com.arkxos.framework.extend.plugin;
 
 import java.io.File;
 
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 
 
 /**

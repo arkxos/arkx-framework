@@ -12,7 +12,7 @@ import java.io.Writer;
 import java.util.Date;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

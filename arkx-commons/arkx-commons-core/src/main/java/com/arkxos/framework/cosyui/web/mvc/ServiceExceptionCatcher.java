@@ -1,7 +1,7 @@
 package com.arkxos.framework.cosyui.web.mvc;
 
 import com.arkxos.framework.Current;
-import com.arkxos.framework.commons.exception.ServiceException;
+import io.arkx.framework.commons.exception.ServiceException;
 import com.arkxos.framework.core.IExceptionCatcher;
 
 import jakarta.servlet.http.HttpServletRequest;

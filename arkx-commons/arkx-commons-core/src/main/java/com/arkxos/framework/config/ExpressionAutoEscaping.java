@@ -1,7 +1,7 @@
 package com.arkxos.framework.config;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.Primitives;
+import io.arkx.framework.commons.util.Primitives;
 
 /**
  * 转义符是否自动转义，默认为false<br>

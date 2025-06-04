@@ -3,7 +3,7 @@ package com.arkxos.framework.cosyui.expression.function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.expression.AbstractFunction;
 import com.arkxos.framework.cosyui.expression.ExpressionException;
 import com.arkxos.framework.cosyui.expression.IVariableResolver;

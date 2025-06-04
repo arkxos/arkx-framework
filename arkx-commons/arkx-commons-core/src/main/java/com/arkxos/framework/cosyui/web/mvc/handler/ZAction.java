@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Constant;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.cosyui.web.CookieData;
 import com.arkxos.framework.cosyui.web.mvc.Dispatcher;
 

@@ -1,7 +1,7 @@
 package com.arkxos.framework.json;
 
 import com.alibaba.fastjson.JSONAware;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  * JSON对象，继承Mapx<String,Object>

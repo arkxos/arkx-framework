@@ -1,7 +1,7 @@
 package com.arkxos.framework.cosyui;
 
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  * 代码来源虚拟类

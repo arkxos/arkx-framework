@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.arkxos.framework.commons.util.SystemInfo;
+import io.arkx.framework.commons.util.SystemInfo;
 
 /**
  *  

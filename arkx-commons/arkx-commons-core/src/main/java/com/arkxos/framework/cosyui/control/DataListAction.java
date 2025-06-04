@@ -2,10 +2,10 @@ package com.arkxos.framework.cosyui.control;
 
 import org.ark.framework.jaf.IPageEnableAction;
 
-import com.arkxos.framework.commons.collection.DataColumn;
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.Mapx;
 import com.arkxos.framework.config.MaxPageSize;
 import com.arkxos.framework.cosyui.control.datalist.DataListBody;
 import com.arkxos.framework.cosyui.tag.ListTag;

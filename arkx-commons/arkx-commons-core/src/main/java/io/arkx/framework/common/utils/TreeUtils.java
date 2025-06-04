@@ -1,6 +1,6 @@
 package io.arkx.framework.common.utils;
 
-import com.arkxos.framework.commons.collection.tree.TreeNode;
+import io.arkx.framework.commons.collection.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

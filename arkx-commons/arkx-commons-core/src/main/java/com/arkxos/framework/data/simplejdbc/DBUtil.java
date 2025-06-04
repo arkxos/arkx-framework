@@ -15,7 +15,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.arkxos.framework.commons.util.PropertiesUtil;
+import io.arkx.framework.commons.util.PropertiesUtil;
 import com.arkxos.framework.data.simplejdbc.query.Criterion;
 
 /**

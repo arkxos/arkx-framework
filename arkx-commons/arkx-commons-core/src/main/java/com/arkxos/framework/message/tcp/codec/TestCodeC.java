@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.arkxos.framework.commons.util.UuidUtil;
+import io.arkx.framework.commons.util.UuidUtil;
 import com.arkxos.framework.message.tcp.MessageType;
 import com.arkxos.framework.message.tcp.struct.NettyMessage;
 

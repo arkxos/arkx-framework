@@ -3,9 +3,9 @@ package com.arkxos.framework.data.lightning;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.DataColumn;
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataTable;
 
 /**
  *  

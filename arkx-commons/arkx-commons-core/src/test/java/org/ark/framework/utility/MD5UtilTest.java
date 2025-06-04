@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.util.MD5Util;
+import io.arkx.framework.commons.util.MD5Util;
 
 /**   
  * 

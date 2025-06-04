@@ -2,9 +2,9 @@ package com.arkxos.framework.cosyui.tag;
 
 import org.ark.framework.jaf.IPageEnableAction;
 
-import com.arkxos.framework.commons.collection.DataRow;
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.Mapx;
 import com.arkxos.framework.config.MaxPageSize;
 import com.arkxos.framework.cosyui.template.AbstractTag;
 import com.arkxos.framework.data.jdbc.Query;

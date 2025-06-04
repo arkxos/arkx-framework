@@ -11,8 +11,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.collection.ConcurrentMapx;
-import com.arkxos.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.collection.ConcurrentMapx;
+import io.arkx.framework.commons.util.LogUtil;
 import com.arkxos.framework.data.db.dbtype.DBTypeService;
 import com.arkxos.framework.data.db.dbtype.IDBType;
 import com.arkxos.framework.data.db.exception.DatabaseException;

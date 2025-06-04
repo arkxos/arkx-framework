@@ -10,9 +10,9 @@ import org.mozilla.javascript.ImporterTopLevel;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.LogUtil;
 
 import bsh.EvalError;
 import bsh.Interpreter;

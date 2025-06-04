@@ -3,7 +3,7 @@ package io.arkx.framework.cache;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.arkxos.framework.commons.collection.CacheMapx;
+import io.arkx.framework.commons.collection.CacheMapx;
 import com.arkxos.framework.extend.IExtendItem;
 
 /**

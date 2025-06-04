@@ -1,6 +1,6 @@
 package com.arkxos.framework.data.lightning;
 
-import com.arkxos.framework.commons.util.ByteUtil;
+import io.arkx.framework.commons.util.ByteUtil;
 
 public enum LightningColumnType {
 	

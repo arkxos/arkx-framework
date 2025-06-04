@@ -7,7 +7,7 @@ import org.ark.framework.jaf.PlaceHolderContext;
 import org.ark.framework.jaf.expression.Operators;
 import org.ark.framework.jaf.expression.Primitives;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;

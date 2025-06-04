@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.arkxos.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * HTML元素容器虚拟类

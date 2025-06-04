@@ -1,8 +1,8 @@
 package io.arkx.framework.annotation.util;
 
-import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.collection.ReadOnlyMapx;
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.ReadOnlyMapx;
 
 /**
  * UI方法的别名映射，在三个地方可以使用别名映射:<br>

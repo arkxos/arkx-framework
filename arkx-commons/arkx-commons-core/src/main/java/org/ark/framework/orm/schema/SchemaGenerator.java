@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -97,7 +97,7 @@ public abstract class SchemaGenerator {
 		isb.append("import org.ark.framework.orm.Schema;\n");
 		isb.append("import org.ark.framework.orm.SchemaColumn;\n");
 		isb.append("import org.ark.framework.orm.SchemaSet;\n");
-		isb.append("import com.arkxos.framework.commons.collection.DataTypes;\n");
+		isb.append("import collection.io.arkx.framework.commons.DataTypes;\n");
 		isb.append("import com.arkxos.framework.data.jdbc.Query;\n");
 
 		hsb.append("\tpublic static final SchemaColumn[] _Columns = new SchemaColumn[] {\n");

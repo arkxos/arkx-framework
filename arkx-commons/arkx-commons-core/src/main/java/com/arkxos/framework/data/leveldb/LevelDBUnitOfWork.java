@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.WriteBatch;
 
-import com.arkxos.framework.commons.serializer.ObjectSerializer;
+import io.arkx.framework.commons.serializer.ObjectSerializer;
 import com.google.gson.reflect.TypeToken;
 
 public class LevelDBUnitOfWork {

@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.control.grid;
 
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 import com.arkxos.framework.cosyui.control.DataGridAction;
 import com.arkxos.framework.cosyui.zhtml.ZhtmlManagerContext;
 

@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.db.DBUtil;
 import com.arkxos.framework.data.db.command.AddColumnCommand;
 import com.arkxos.framework.data.db.command.AdvanceChangeColumnCommand;

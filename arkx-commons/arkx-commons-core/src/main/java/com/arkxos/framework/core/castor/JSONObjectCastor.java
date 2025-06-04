@@ -2,7 +2,7 @@ package com.arkxos.framework.core.castor;
 
 import java.util.Map;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.json.JSON;
 import com.arkxos.framework.json.JSONObject;
 

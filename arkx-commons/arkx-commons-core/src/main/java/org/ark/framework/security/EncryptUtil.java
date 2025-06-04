@@ -2,7 +2,7 @@ package org.ark.framework.security;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 
 /**

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.DataTypes;
 import com.arkxos.framework.data.db.dbtype.DBTypeService;
 import com.arkxos.framework.data.db.dbtype.IDBType;
 import com.arkxos.framework.data.db.dbtype.Sybase;

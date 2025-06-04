@@ -3,8 +3,8 @@ package com.arkxos.framework.data.db.command;
 import java.util.HashMap;
 import java.util.List;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.commons.util.StringFormat;
+import io.arkx.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.StringFormat;
 import com.arkxos.framework.data.db.dbtype.DBTypeService;
 import com.arkxos.framework.data.db.dbtype.IDBType;
 import com.arkxos.framework.json.JSON;

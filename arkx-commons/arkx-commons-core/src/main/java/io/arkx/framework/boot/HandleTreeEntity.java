@@ -4,7 +4,7 @@ import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendActi
 
 import com.arkxos.framework.NoUtil;
 import io.arkx.framework.annotation.EntityAnnotationManager;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.data.jdbc.Criteria;
 import com.arkxos.framework.data.jdbc.Entity;
 import com.arkxos.framework.data.jdbc.Restrictions;

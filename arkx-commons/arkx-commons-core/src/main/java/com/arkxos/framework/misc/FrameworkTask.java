@@ -3,7 +3,7 @@ package com.arkxos.framework.misc;
 import java.io.File;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 import com.arkxos.framework.schedule.SystemTask;
 /**
  * @class org.ark.framework.FrameworkTask

@@ -3,7 +3,7 @@ package com.arkxos.framework.data.xml;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * 内存中的的XML文档。<br>

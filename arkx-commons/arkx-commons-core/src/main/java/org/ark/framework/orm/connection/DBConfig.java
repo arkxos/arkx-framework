@@ -11,8 +11,8 @@ import org.ark.framework.security.EncryptUtil;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.PropertiesUtil;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.PropertiesUtil;
 import com.arkxos.framework.data.db.connection.ConnectionConfig;
 
 import lombok.extern.slf4j.Slf4j;

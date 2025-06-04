@@ -1,7 +1,7 @@
 package com.arkxos.framework.config;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.data.db.exception.DatabaseException;

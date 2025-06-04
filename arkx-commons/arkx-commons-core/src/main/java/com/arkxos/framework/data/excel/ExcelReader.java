@@ -118,7 +118,7 @@ public abstract class ExcelReader {
 				case NUMERIC: // 数值型
 					if (DateUtil.isCellDateFormatted(cell)) {
 						Date date = DateUtil.getJavaDate(cell.getNumericCellValue());
-						strExcelCell = com.arkxos.framework.commons.util.DateUtil.toString(date);
+						strExcelCell = io.arkx.framework.commons.util.DateUtil.toString(date);
 					} else {
 						strExcelCell = df.format(cell.getNumericCellValue());
 					}

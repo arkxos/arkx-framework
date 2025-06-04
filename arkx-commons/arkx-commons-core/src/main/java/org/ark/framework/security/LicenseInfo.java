@@ -4,13 +4,13 @@ import java.security.PublicKey;
 import java.util.Date;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.DateUtil;
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.LogUtil;
-import com.arkxos.framework.commons.util.StringFormat;
-import com.arkxos.framework.commons.util.StringUtil;
-import com.arkxos.framework.commons.util.SystemInfo;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.DateUtil;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.StringFormat;
+import io.arkx.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.SystemInfo;
 
 /**
  * @class org.ark.framework.security.LicenseInfo

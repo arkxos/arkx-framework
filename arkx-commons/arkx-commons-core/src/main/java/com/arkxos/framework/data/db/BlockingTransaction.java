@@ -3,7 +3,7 @@ package com.arkxos.framework.data.db;
 //
 //import java.sql.SQLException;
 //
-//import com.arkxos.framework.commons.collection.Executor;
+//import collection.io.arkx.framework.commons.Executor;
 //import com.arkxos.framework.data.db.connection.Connection;
 //import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 //import com.arkxos.framework.data.db.exception.DatabaseException;

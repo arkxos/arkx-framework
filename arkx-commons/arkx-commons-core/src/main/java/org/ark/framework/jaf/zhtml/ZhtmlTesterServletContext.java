@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.arkxos.framework.commons.collection.Enumerator;
+import io.arkx.framework.commons.collection.Enumerator;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;

@@ -3,6 +3,8 @@ package com.arkxos.framework.cosyui.web.mvc.handler;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.lang.ClassUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +13,9 @@ import com.alibaba.fastjson.JSON;
 import com.arkxos.framework.Config;
 import com.arkxos.framework.Constant;
 import com.arkxos.framework.Current;
-import com.arkxos.framework.commons.exception.ServiceException;
-import com.arkxos.framework.commons.util.LogUtil;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.exception.ServiceException;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.StringUtil;
 import com.arkxos.framework.config.LoginMethod;
 import com.arkxos.framework.core.JsonResult;
 import com.arkxos.framework.core.exception.UIMethodNotFoundException;
@@ -238,7 +240,7 @@ public class AjaxHandler extends AbstractHtmlHandler {
 		Class<?>[] cs = m.getParameterTypes();
 		Object[] result = new Object[cs.length];
 
-		String[] paramNames = com.arkxos.framework.commons.util.lang.ClassUtil.getMethodParamNames(m.getDeclaringClass(), m.getName());
+		String[] paramNames = ClassUtil.getMethodParamNames(m.getDeclaringClass(), m.getName());
 		for (int j = 0; j < cs.length; j++) {
 //			LogUtil.debug("方法第" + j + "个参数" + paramNames[j] + "[" + cs[j].getName() + "]");
 
@@ -277,7 +279,7 @@ public class AjaxHandler extends AbstractHtmlHandler {
 //					schema.setValue(getRequest());
 //					result[j] = schema;
 //				} else 
-				if(com.arkxos.framework.commons.collection.Mapx.class.isAssignableFrom(cs[j])) {
+				if(Mapx.class.isAssignableFrom(cs[j])) {
 					result[j] = request;
 				}
 				

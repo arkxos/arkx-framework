@@ -1,7 +1,7 @@
 package org.ark.framework.script;
 
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.LogUtil;
 
 /**
  * @class org.ark.framework.script.SecurityChecker

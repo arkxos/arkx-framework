@@ -2,7 +2,7 @@ package org.ark.framework.core.castor;
 
 import java.util.Date;
 
-import com.arkxos.framework.commons.util.DateUtil;
+import io.arkx.framework.commons.util.DateUtil;
 
 
 /**

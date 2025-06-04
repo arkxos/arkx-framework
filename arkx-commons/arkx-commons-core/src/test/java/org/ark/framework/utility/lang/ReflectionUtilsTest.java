@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.util.lang.ReflectionUtil;
+import io.arkx.framework.commons.util.lang.ReflectionUtil;
 
 /**
  * 

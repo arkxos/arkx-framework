@@ -19,7 +19,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.collection.ConcurrentMapx;
+import io.arkx.framework.commons.collection.ConcurrentMapx;
 import com.arkxos.framework.data.db.nativejdbc.CommonsDbcpNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.JBossNativeJdbcExtractor;
 import com.arkxos.framework.data.db.nativejdbc.WebLogicNativeJdbcExtractor;

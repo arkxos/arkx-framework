@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import com.arkxos.framework.Current;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.core.exception.UIMethodException;
 import com.arkxos.framework.core.exception.UIMethodInvokeException;
 import com.arkxos.framework.cosyui.web.UIFacade;

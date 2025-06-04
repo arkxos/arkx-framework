@@ -3,7 +3,7 @@ package com.arkxos.framework.message.tcp.extend;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.arkxos.framework.commons.util.UuidUtil;
+import io.arkx.framework.commons.util.UuidUtil;
 import com.arkxos.framework.message.tcp.NettyBusinessType;
 import com.arkxos.framework.message.tcp.client.NettyClient;
 import com.arkxos.framework.message.tcp.struct.NettyMessage;

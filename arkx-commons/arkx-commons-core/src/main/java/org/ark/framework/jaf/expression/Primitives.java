@@ -1,7 +1,7 @@
 package org.ark.framework.jaf.expression;
 
-import com.arkxos.framework.commons.util.NumberUtil;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.NumberUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * @class org.ark.framework.jaf.expression.Primitives

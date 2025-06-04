@@ -1,7 +1,7 @@
 package com.arkxos.framework.data.db.dbtype;
 
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.ObjectUtil;
 import com.arkxos.framework.data.db.command.AddColumnCommand;
 import com.arkxos.framework.data.db.command.ChangeColumnLengthCommand;
 import com.arkxos.framework.data.db.command.ChangeColumnMandatoryCommand;

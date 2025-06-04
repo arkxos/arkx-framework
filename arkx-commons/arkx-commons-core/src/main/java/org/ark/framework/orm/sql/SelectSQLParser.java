@@ -2,7 +2,7 @@ package org.ark.framework.orm.sql;
 
 import java.util.ArrayList;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 
 /**

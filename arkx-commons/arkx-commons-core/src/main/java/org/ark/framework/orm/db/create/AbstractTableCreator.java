@@ -2,7 +2,7 @@ package org.ark.framework.orm.db.create;
 
 import org.ark.framework.orm.SchemaColumn;
 
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * @class org.ark.framework.orm.db.create.AbstractTableCreator

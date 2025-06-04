@@ -7,10 +7,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import com.arkxos.framework.commons.util.FileUtil;
-import com.arkxos.framework.commons.util.LogUtil;
-import com.arkxos.framework.commons.util.Primitives;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.Primitives;
+import io.arkx.framework.commons.util.StringUtil;
 
 public class VideoUtil
 {

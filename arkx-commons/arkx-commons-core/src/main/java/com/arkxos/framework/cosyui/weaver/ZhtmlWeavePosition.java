@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.weaver;
 
-import com.arkxos.framework.commons.util.RegexParser;
+import io.arkx.framework.commons.util.RegexParser;
 
 /**
  * Zhtml织入位置

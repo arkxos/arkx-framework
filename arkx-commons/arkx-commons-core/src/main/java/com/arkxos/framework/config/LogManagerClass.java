@@ -1,7 +1,7 @@
 package com.arkxos.framework.config;
 
 import com.arkxos.framework.Config;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * 配置日志管理器的实现类，此类必须实现com.arkxos.framework.utility.ILogManager接口。
@@ -24,7 +24,7 @@ public class LogManagerClass implements IApplicationConfigItem {
 	public static String getValue() {
 		String v = Config.getValue("App." + ID);
 		if (ObjectUtil.isEmpty(v)) {
-			v = "com.arkxos.framework.commons.util.log.ConsoleLogManager";
+			v = "log.util.io.arkx.framework.commons.ConsoleLogManager";
 		}
 		return v;
 	}

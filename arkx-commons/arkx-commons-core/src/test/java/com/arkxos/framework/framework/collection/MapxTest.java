@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.commons.collection.CacheMapx;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.CacheMapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  *  

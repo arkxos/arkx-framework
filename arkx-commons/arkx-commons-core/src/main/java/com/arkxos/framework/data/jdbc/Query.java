@@ -7,8 +7,8 @@ import java.util.List;
 import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
 import org.ark.framework.orm.sql.SelectSQLParser;
 
-import com.arkxos.framework.commons.collection.DataTable;
-import com.arkxos.framework.commons.collection.PageDataTable;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.PageDataTable;
 import com.arkxos.framework.data.db.QueryException;
 import com.arkxos.framework.data.db.connection.Connection;
 import com.arkxos.framework.data.db.connection.ConnectionConfig;

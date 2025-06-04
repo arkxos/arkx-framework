@@ -1,7 +1,7 @@
 package com.arkxos.framework.cosyui.template;
 
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  * 标签属性描述类

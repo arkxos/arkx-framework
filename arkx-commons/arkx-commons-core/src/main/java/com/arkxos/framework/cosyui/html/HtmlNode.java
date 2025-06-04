@@ -2,7 +2,7 @@ package com.arkxos.framework.cosyui.html;
 
 import java.util.ArrayList;
 
-import com.arkxos.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * HTML节点虚拟类

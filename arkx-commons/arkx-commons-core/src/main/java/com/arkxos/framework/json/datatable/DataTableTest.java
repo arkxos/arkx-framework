@@ -1,7 +1,7 @@
 package com.arkxos.framework.json.datatable;
 
 import com.alibaba.fastjson.JSON;
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTable;
 import com.arkxos.framework.json.convert.DataTableConvertor;
 
 /**  

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 
 /**
  * XML写入工具类

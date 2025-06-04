@@ -1,6 +1,6 @@
 package org.ark.framework.messages;
 
-import com.arkxos.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.Mapx;
 
 /**
  * @class org.ark.framework.messages.MessageReceiver

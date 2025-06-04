@@ -7,7 +7,7 @@ package com.arkxos.framework.data.jdbc.connection;
 //import org.apache.log4j.Logger;
 //import org.ark.framework.orm.db.DatabaseService;
 //import org.ark.framework.utility.ObjectUtil;
-//import com.arkxos.framework.commons.util.StringUtil;
+//import util.io.arkx.framework.commons.StringUtil;
 //
 //import com.arkxos.framework.framework.utility.LogUtil;
 //

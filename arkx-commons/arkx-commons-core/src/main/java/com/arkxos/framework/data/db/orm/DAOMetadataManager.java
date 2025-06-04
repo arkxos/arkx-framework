@@ -1,6 +1,6 @@
 package com.arkxos.framework.data.db.orm;
 
-import com.arkxos.framework.commons.collection.ConcurrentMapx;
+import io.arkx.framework.commons.collection.ConcurrentMapx;
 
 /**
  * DAO元数据管理器

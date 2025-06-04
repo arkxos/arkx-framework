@@ -6,7 +6,7 @@ import org.ark.framework.jaf.PlaceHolderContext;
 import com.arkxos.framework.Account;
 import com.arkxos.framework.Config;
 import io.arkx.framework.annotation.Priv;
-import com.arkxos.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.jsp.JspException;

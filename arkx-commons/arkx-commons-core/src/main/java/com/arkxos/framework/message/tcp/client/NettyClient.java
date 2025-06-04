@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.arkxos.framework.commons.util.SystemInfo;
+import io.arkx.framework.commons.util.SystemInfo;
 import com.arkxos.framework.message.tcp.MessageProcessor;
 import com.arkxos.framework.message.tcp.TcpNode;
 import com.arkxos.framework.message.tcp.codec.NettyMessageDecoder;

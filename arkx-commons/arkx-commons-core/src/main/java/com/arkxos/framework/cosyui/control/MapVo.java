@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.control;
 
-import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 
 public class MapVo {
 

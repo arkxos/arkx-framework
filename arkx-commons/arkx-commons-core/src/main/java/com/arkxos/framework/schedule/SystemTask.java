@@ -1,6 +1,6 @@
 package com.arkxos.framework.schedule;
 
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 /**
  * 系统定时任务,可以在framework.xml配置是否执行及执行周期，例如：<br>

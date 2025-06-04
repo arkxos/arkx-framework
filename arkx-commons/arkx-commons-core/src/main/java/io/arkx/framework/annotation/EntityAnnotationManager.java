@@ -4,9 +4,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.Mapx;
-import com.arkxos.framework.commons.util.StringUtil;
-import com.arkxos.framework.commons.util.lang.ReflectionUtil;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.lang.ReflectionUtil;
 import com.arkxos.framework.data.jdbc.Entity;
 
 /**   

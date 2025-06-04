@@ -5,7 +5,7 @@ package com.arkxos.framework.data.db;
 //import java.util.ArrayList;
 //import java.util.List;
 //
-//import com.arkxos.framework.commons.collection.Executor;
+//import collection.io.arkx.framework.commons.Executor;
 //import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
 //import com.arkxos.framework.data.db.exception.DatabaseException;
 //import com.arkxos.framework.data.db.orm.DAO;

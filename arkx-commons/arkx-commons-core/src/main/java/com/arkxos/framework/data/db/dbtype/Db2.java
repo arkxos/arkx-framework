@@ -3,9 +3,9 @@ package com.arkxos.framework.data.db.dbtype;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.commons.collection.DataTypes;
-import com.arkxos.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.commons.util.StringFormat;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.StringFormat;
 import com.arkxos.framework.data.db.command.AdvanceChangeColumnCommand;
 import com.arkxos.framework.data.db.command.ChangeColumnLengthCommand;
 import com.arkxos.framework.data.db.command.ChangeColumnMandatoryCommand;

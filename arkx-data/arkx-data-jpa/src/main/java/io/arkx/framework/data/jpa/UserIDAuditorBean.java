@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.arkxos.framework.Account;
 import io.arkx.framework.boot.spring.axon.CurrentAuditor;
-import com.arkxos.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.StringUtil;
 
 /**
  * 设置审计

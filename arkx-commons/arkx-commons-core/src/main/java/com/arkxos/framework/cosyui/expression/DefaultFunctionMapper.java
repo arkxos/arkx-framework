@@ -1,6 +1,6 @@
 package com.arkxos.framework.cosyui.expression;
 
-import com.arkxos.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import com.arkxos.framework.cosyui.expression.function.CharWidth;
 import com.arkxos.framework.cosyui.expression.function.ClearHtmlTag;
 import com.arkxos.framework.cosyui.expression.function.Contains;

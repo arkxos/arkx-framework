@@ -1,6 +1,6 @@
 package org.ark.framework.orm.xtable;
 
-import com.arkxos.framework.commons.collection.DataRow;
+import io.arkx.framework.commons.collection.DataRow;
 
 public class Categoryvalue extends TablesBasic {
 	// #region 构造函数

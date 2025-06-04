@@ -1,7 +1,7 @@
 package com.arkxos.framework.cosyui.control.tree;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.arkxos.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTable;
 
 /**
  * 

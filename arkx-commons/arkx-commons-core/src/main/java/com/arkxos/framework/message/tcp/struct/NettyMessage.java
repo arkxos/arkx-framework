@@ -2,7 +2,7 @@ package com.arkxos.framework.message.tcp.struct;
 
 import java.util.Map;
 
-import com.arkxos.framework.commons.util.ByteUtil;
+import io.arkx.framework.commons.util.ByteUtil;
 import com.arkxos.framework.message.tcp.MessageType;
 
 /**

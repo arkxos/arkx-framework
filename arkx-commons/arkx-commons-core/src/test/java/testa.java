@@ -1,4 +1,4 @@
-import com.arkxos.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.FileUtil;
 
 /**
  * @author Darkness
