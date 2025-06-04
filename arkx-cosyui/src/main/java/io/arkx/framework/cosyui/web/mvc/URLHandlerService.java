@@ -12,7 +12,7 @@ import io.arkx.framework.extend.AbstractExtendService;
  */
 public class URLHandlerService extends AbstractExtendService<IURLHandler> {
 	public static URLHandlerService getInstance() {
-		return findInstance(URLHandlerService.class);
+		return AbstractExtendService.findInstance(URLHandlerService.class);
 	}
 
 	@Override

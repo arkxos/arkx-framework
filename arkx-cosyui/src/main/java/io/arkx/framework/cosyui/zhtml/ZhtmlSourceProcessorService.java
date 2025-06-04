@@ -18,7 +18,7 @@ public class ZhtmlSourceProcessorService extends AbstractExtendService<ITemplate
 			lock.lock();
 			try {
 				if (instance == null) {
-					instance = findInstance(ZhtmlSourceProcessorService.class);
+					instance = AbstractExtendService.findInstance(ZhtmlSourceProcessorService.class);
 				}
 			} finally {
 				lock.unlock();

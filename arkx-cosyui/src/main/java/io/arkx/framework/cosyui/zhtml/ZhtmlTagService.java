@@ -56,7 +56,7 @@ public class ZhtmlTagService extends AbstractExtendService<AbstractTag> {
 			lock.lock();
 			try {
 				if (instance == null) {
-					ZhtmlTagService tmp = findInstance(ZhtmlTagService.class);
+					ZhtmlTagService tmp = AbstractExtendService.findInstance(ZhtmlTagService.class);
 					tmp.register(new DataGridTag());
 					tmp.register(new DataListTag());
 					tmp.register(new InitTag());

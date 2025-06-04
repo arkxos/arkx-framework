@@ -13,7 +13,7 @@ public class ZhtmlWeaveService extends AbstractExtendService<IZhtmlWeaver> {
 	private static ReentrantLock lock = new ReentrantLock();
 
 	public static ZhtmlWeaveService getInstance() {
-		return findInstance(ZhtmlWeaveService.class);
+		return AbstractExtendService.findInstance(ZhtmlWeaveService.class);
 	}
 
 	/**

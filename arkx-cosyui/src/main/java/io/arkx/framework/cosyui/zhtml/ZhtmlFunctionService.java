@@ -21,7 +21,7 @@ public class ZhtmlFunctionService extends AbstractExtendService<IFunction> {
 			lock.lock();
 			try {
 				if (instance == null) {
-					instance = findInstance(ZhtmlFunctionService.class);
+					instance = AbstractExtendService.findInstance(ZhtmlFunctionService.class);
 				}
 			} finally {
 				lock.unlock();
