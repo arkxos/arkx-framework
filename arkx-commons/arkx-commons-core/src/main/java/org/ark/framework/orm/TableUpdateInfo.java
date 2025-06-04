@@ -1,6 +1,6 @@
 package org.ark.framework.orm;
 
-import com.arkxos.framework.data.db.dbtype.IDBType;
+import io.arkx.framework.data.db.dbtype.IDBType;
 
 /**
  * @class org.ark.framework.orm.TableUpdateInfo

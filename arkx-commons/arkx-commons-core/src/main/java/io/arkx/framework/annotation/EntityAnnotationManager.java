@@ -7,7 +7,7 @@ import java.util.List;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.lang.ReflectionUtil;
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Entity;
 
 /**   
  * 实体注解管理器

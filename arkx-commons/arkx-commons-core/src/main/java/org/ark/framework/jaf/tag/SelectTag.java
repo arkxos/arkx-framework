@@ -19,7 +19,7 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.ServletUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.CodeSourceUI;
-import com.arkxos.framework.data.db.DataCollection;
+import io.arkx.framework.data.db.DataCollection;
 import com.arkxos.framework.i18n.LangUtil;
 
 import jakarta.servlet.http.HttpServletRequest;

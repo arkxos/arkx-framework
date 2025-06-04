@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.arkx.framework.commons.util.DateUtil;
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Entity;
 
 
 /**

@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arkxos.framework.data.db.connection.ConnectionConfig;
-import com.arkxos.framework.data.db.connection.ConnectionPool;
+import io.arkx.framework.data.db.connection.ConnectionConfig;
+import io.arkx.framework.data.db.connection.ConnectionPool;
 
 
 /**

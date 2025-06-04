@@ -8,9 +8,9 @@
 //import org.junit.Assert;
 //import org.junit.Test;
 //
-//import com.arkxos.framework.data.db.connection.ConnectionConfig;
-//import com.arkxos.framework.data.db.connection.ConnectionPool;
-//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+//import connection.db.io.arkx.framework.data.ConnectionConfig;
+//import connection.db.io.arkx.framework.data.ConnectionPool;
+//import connection.db.io.arkx.framework.data.ConnectionPoolManager;
 //
 ///**
 //  * ConnectionConfig 测试用例

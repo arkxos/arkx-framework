@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
-import com.arkxos.framework.data.db.dbtype.DBTypeService;
-import com.arkxos.framework.data.db.dbtype.IDBType;
+import io.arkx.framework.data.db.connection.ConnectionPoolManager;
+import io.arkx.framework.data.db.dbtype.DBTypeService;
+import io.arkx.framework.data.db.dbtype.IDBType;
 
 /**   
  * 

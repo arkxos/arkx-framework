@@ -2,7 +2,7 @@ package org.ark.framework.messages;
 
 
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.data.jdbc.Transaction;
+import io.arkx.framework.data.jdbc.Transaction;
 
 /**
  * @class org.ark.framework.messages.Message

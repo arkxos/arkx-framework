@@ -17,9 +17,9 @@ import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.bean.BeanUtil;
 import io.arkx.framework.cosyui.web.RequestData;
-import com.arkxos.framework.data.db.orm.DAO;
-import com.arkxos.framework.data.db.orm.DAOColumn;
-import com.arkxos.framework.data.db.orm.DAOSet;
+import io.arkx.framework.data.db.orm.DAO;
+import io.arkx.framework.data.db.orm.DAOColumn;
+import io.arkx.framework.data.db.orm.DAOSet;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

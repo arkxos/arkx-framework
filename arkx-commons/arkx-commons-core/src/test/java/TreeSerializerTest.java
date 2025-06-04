@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import io.arkx.framework.commons.collection.tree.Treex;
-import com.arkxos.framework.data.fastjson.TreexObjectSerializer;
+import io.arkx.framework.data.fastjson.TreexObjectSerializer;
 
 public class TreeSerializerTest {
     public static void main(String[] args) {

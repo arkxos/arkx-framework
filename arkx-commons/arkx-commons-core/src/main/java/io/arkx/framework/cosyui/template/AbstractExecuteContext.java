@@ -15,7 +15,7 @@ import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.expression.IFunctionMapper;
 import io.arkx.framework.cosyui.expression.ITagData;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
-import com.arkxos.framework.data.db.orm.DAO;
+import io.arkx.framework.data.db.orm.DAO;
 
 /**
  * 模板执行上下文虚拟类

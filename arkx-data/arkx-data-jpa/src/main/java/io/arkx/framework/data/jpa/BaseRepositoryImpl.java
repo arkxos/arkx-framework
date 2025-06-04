@@ -24,8 +24,7 @@ import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.UuidUtil;
-import com.arkxos.framework.data.jdbc.ResultDataTable;
-import com.arkxos.framework.data.jpa.entity.*;
+import io.arkx.framework.data.jdbc.ResultDataTable;
 
 import io.arkx.framework.data.jpa.entity.*;
 import jakarta.persistence.EntityManager;

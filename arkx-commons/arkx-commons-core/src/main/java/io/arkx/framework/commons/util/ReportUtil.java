@@ -11,9 +11,9 @@ import com.arkxos.framework.Config;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.data.jdbc.Query;
-import com.arkxos.framework.data.jdbc.Session;
-import com.arkxos.framework.data.jdbc.SessionFactory;
+import io.arkx.framework.data.jdbc.Query;
+import io.arkx.framework.data.jdbc.Session;
+import io.arkx.framework.data.jdbc.SessionFactory;
 import com.arkxos.framework.i18n.LangMapping;
 import com.arkxos.framework.i18n.LangUtil;
 

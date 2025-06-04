@@ -3,7 +3,7 @@ package com.arkxos.framework.extend;
 import java.util.concurrent.locks.ReentrantLock;
 
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.data.xml.XMLElement;
+import io.arkx.framework.data.xml.XMLElement;
 import com.arkxos.framework.extend.exception.CreateExtendActionInstanceException;
 import com.arkxos.framework.extend.plugin.ExtendPluginProvider;
 import com.arkxos.framework.extend.plugin.PluginConfig;

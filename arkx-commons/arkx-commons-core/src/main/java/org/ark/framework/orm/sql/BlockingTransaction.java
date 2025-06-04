@@ -6,11 +6,11 @@
 //import org.ark.framework.orm.Schema;
 //import org.ark.framework.orm.SchemaSet;
 //
-//import com.arkxos.framework.data.db.connection.Connection;
-//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
-//import com.arkxos.framework.data.db.exception.CommitException;
-//import com.arkxos.framework.data.jdbc.JdbcTemplate;
-//import com.arkxos.framework.data.jdbc.Query;
+//import connection.db.io.arkx.framework.data.Connection;
+//import connection.db.io.arkx.framework.data.ConnectionPoolManager;
+//import exception.db.io.arkx.framework.data.CommitException;
+//import jdbc.io.arkx.framework.data.JdbcTemplate;
+//import jdbc.io.arkx.framework.data.Query;
 //
 //
 ///**

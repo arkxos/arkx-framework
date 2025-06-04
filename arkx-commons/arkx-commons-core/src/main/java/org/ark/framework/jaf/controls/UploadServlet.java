@@ -24,7 +24,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.data.db.DataCollection;
+import io.arkx.framework.data.db.DataCollection;
 import com.arkxos.framework.i18n.LangMapping;
 
 import jakarta.servlet.ServletException;

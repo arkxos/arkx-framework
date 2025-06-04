@@ -21,8 +21,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.arkxos.framework.data.xml.XMLDocument;
-import com.arkxos.framework.data.xml.XMLParser;
+import io.arkx.framework.data.xml.XMLDocument;
+import io.arkx.framework.data.xml.XMLParser;
 /**
  * @class org.ark.framework.utility.XMLUtil
  * xml处理工具类

@@ -7,7 +7,7 @@ import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.config.MaxPageSize;
 import io.arkx.framework.cosyui.template.AbstractTag;
-import com.arkxos.framework.data.jdbc.Query;
+import io.arkx.framework.data.jdbc.Query;
 
 /**
  * 列表数据绑定行为类

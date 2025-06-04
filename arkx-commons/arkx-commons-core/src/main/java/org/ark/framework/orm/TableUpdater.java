@@ -10,8 +10,8 @@ import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.data.db.dbtype.DBTypeService;
-import com.arkxos.framework.data.db.dbtype.IDBType;
+import io.arkx.framework.data.db.dbtype.DBTypeService;
+import io.arkx.framework.data.db.dbtype.IDBType;
 
 
 /**   

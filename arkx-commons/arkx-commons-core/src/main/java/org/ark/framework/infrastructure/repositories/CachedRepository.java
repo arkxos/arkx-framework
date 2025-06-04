@@ -2,7 +2,7 @@
 //
 //import java.util.List;
 //
-//import com.arkxos.framework.data.jdbc.Entity;
+//import jdbc.io.arkx.framework.data.Entity;
 //
 //
 ///**

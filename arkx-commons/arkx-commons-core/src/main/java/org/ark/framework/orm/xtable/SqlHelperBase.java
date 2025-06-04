@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
-import com.arkxos.framework.data.jdbc.SessionFactory;
+import io.arkx.framework.data.jdbc.SessionFactory;
 
 
 /// SqlHelperBase,用于数据库存取操作的一些基类封装,静态类,不提供实例化方法。

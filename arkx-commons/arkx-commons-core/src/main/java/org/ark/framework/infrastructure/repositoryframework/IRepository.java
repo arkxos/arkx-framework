@@ -2,7 +2,7 @@ package org.ark.framework.infrastructure.repositoryframework;
 
 import java.util.List;
 
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Entity;
 
 
 /**

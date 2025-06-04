@@ -6,8 +6,8 @@ import java.util.Set;
 
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.data.xml.XMLElement;
-import com.arkxos.framework.data.xml.XMLParser;
+import io.arkx.framework.data.xml.XMLElement;
+import io.arkx.framework.data.xml.XMLParser;
 import com.arkxos.framework.extend.ExtendActionConfig;
 import com.arkxos.framework.extend.ExtendItemConfig;
 import com.arkxos.framework.extend.ExtendPointConfig;

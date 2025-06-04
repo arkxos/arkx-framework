@@ -9,7 +9,7 @@ import io.arkx.framework.commons.util.ServletUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.cosyui.web.UIFacade;
-import com.arkxos.framework.data.db.DataCollection;
+import io.arkx.framework.data.db.DataCollection;
 
 /**
  * @class org.ark.framework.FrameworkUI

@@ -1,7 +1,7 @@
 package org.ark.framework.orm;
 
 import io.arkx.framework.annotation.Column;
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Entity;
 
 /**
  * @class org.ark.framework.orm.MaxNo

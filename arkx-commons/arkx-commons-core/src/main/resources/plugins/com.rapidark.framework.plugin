@@ -140,70 +140,70 @@
 	
 	<!-- db -->
 	<extendService>
-		<id>com.arkxos.framework.data.db.dbtype.DBTypeService</id>
-		<class>com.arkxos.framework.data.db.dbtype.DBTypeService</class>
+		<id>dbtype.db.io.arkx.framework.data.DBTypeService</id>
+		<class>dbtype.db.io.arkx.framework.data.DBTypeService</class>
 		<description></description>
-		<itemClass>com.arkxos.framework.data.db.dbtype.IDBType</itemClass>
+		<itemClass>dbtype.db.io.arkx.framework.data.IDBType</itemClass>
 	</extendService>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.Dm</id>
-		<class>com.arkxos.framework.data.db.dbtype.Dm</class>
+		<id>dbtype.db.io.arkx.framework.data.Dm</id>
+		<class>dbtype.db.io.arkx.framework.data.Dm</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.DerbyEmbedded</id>
-		<class>com.arkxos.framework.data.db.dbtype.DerbyEmbedded</class>
+		<id>dbtype.db.io.arkx.framework.data.DerbyEmbedded</id>
+		<class>dbtype.db.io.arkx.framework.data.DerbyEmbedded</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.DerbyServer</id>
-		<class>com.arkxos.framework.data.db.dbtype.DerbyServer</class>
+		<id>dbtype.db.io.arkx.framework.data.DerbyServer</id>
+		<class>dbtype.db.io.arkx.framework.data.DerbyServer</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.Db2</id>
-		<class>com.arkxos.framework.data.db.dbtype.Db2</class>
+		<id>dbtype.db.io.arkx.framework.data.Db2</id>
+		<class>dbtype.db.io.arkx.framework.data.Db2</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.HsqlDb</id>
-		<class>com.arkxos.framework.data.db.dbtype.HsqlDb</class>
+		<id>dbtype.db.io.arkx.framework.data.HsqlDb</id>
+		<class>dbtype.db.io.arkx.framework.data.HsqlDb</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.MsSql2000</id>
-		<class>com.arkxos.framework.data.db.dbtype.MsSql2000</class>
+		<id>dbtype.db.io.arkx.framework.data.MsSql2000</id>
+		<class>dbtype.db.io.arkx.framework.data.MsSql2000</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.MySql</id>
-		<class>com.arkxos.framework.data.db.dbtype.MySql</class>
+		<id>dbtype.db.io.arkx.framework.data.MySql</id>
+		<class>dbtype.db.io.arkx.framework.data.MySql</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.Oracle</id>
-		<class>com.arkxos.framework.data.db.dbtype.Oracle</class>
+		<id>dbtype.db.io.arkx.framework.data.Oracle</id>
+		<class>dbtype.db.io.arkx.framework.data.Oracle</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.MsSql</id>
-		<class>com.arkxos.framework.data.db.dbtype.MsSql</class>
+		<id>dbtype.db.io.arkx.framework.data.MsSql</id>
+		<class>dbtype.db.io.arkx.framework.data.MsSql</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.dbtype.Sybase</id>
-		<class>com.arkxos.framework.data.db.dbtype.Sybase</class>
+		<id>dbtype.db.io.arkx.framework.data.Sybase</id>
+		<class>dbtype.db.io.arkx.framework.data.Sybase</class>
 		<description></description>
-		<extendService>com.arkxos.framework.data.db.dbtype.DBTypeService</extendService>
+		<extendService>dbtype.db.io.arkx.framework.data.DBTypeService</extendService>
 	</extendItem>
 	<!-- db -->
 	<extendService>
@@ -342,8 +342,8 @@
 		<extendService>zhtml.io.arkx.framework.cosyui.ZhtmlFunctionService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.data.db.connection.ConnectionPoolKeepAliveTask</id>
-		<class>com.arkxos.framework.data.db.connection.ConnectionPoolKeepAliveTask</class>
+		<id>connection.db.io.arkx.framework.data.ConnectionPoolKeepAliveTask</id>
+		<class>connection.db.io.arkx.framework.data.ConnectionPoolKeepAliveTask</class>
 		<description></description>
 		<extendService>com.arkxos.framework.schedule.SystemTaskService</extendService>
 	</extendItem>

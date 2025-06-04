@@ -7,7 +7,7 @@ import org.ark.framework.orm.sql.DBUtil;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.data.jdbc.Query;
+import io.arkx.framework.data.jdbc.Query;
 
 import jakarta.servlet.jsp.tagext.Tag;
 

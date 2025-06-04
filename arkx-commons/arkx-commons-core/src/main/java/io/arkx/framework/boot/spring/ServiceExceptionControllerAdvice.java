@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.core.JsonResult;
-import com.arkxos.framework.data.jdbc.Session;
-import com.arkxos.framework.data.jdbc.SessionFactory;
+import io.arkx.framework.data.jdbc.Session;
+import io.arkx.framework.data.jdbc.SessionFactory;
 
 @ControllerAdvice
 public class ServiceExceptionControllerAdvice {

@@ -4,10 +4,10 @@ import io.arkx.framework.boot.BaseUIFacade;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.data.jdbc.BaseEntity;
-import com.arkxos.framework.data.jdbc.Criteria;
-import com.arkxos.framework.data.jdbc.Entity;
-import com.arkxos.framework.data.jdbc.Restrictions;
+import io.arkx.framework.data.jdbc.BaseEntity;
+import io.arkx.framework.data.jdbc.Criteria;
+import io.arkx.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Restrictions;
 import com.arkxos.framework.i18n.LangMapping;
 
 /**   

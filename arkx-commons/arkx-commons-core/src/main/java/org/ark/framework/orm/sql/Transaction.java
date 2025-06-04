@@ -9,12 +9,12 @@
 //import org.ark.framework.orm.SchemaSet;
 //import util.io.arkx.framework.commons.StringUtil;
 //
-//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
-//import com.arkxos.framework.data.jdbc.Entity;
-//import com.arkxos.framework.data.jdbc.JdbcTemplate;
-//import com.arkxos.framework.data.jdbc.Query;
-//import com.arkxos.framework.data.jdbc.Session;
-//import com.arkxos.framework.data.jdbc.SessionFactory;
+//import connection.db.io.arkx.framework.data.ConnectionPoolManager;
+//import jdbc.io.arkx.framework.data.Entity;
+//import jdbc.io.arkx.framework.data.JdbcTemplate;
+//import jdbc.io.arkx.framework.data.Query;
+//import jdbc.io.arkx.framework.data.Session;
+//import jdbc.io.arkx.framework.data.SessionFactory;
 //
 //
 ///**

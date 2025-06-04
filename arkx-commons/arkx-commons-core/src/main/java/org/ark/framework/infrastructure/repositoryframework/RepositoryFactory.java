@@ -7,7 +7,7 @@ import java.util.Map;
 import org.ark.framework.infrastructure.IUnitOfWork;
 import org.ark.framework.infrastructure.ioc.IocManager;
 
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Entity;
 
 
 /**

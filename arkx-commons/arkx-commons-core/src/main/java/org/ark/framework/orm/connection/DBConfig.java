@@ -13,7 +13,7 @@ import org.dom4j.Element;
 
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.PropertiesUtil;
-import com.arkxos.framework.data.db.connection.ConnectionConfig;
+import io.arkx.framework.data.db.connection.ConnectionConfig;
 
 import lombok.extern.slf4j.Slf4j;
 

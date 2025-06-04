@@ -8,8 +8,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.data.xml.XMLElement;
-import com.arkxos.framework.data.xml.XMLMultiLoader;
+import io.arkx.framework.data.xml.XMLElement;
+import io.arkx.framework.data.xml.XMLMultiLoader;
 
 /**
  * 全局配置文件加载器，会加载WEB-INF/plugins/classes下的所有xml文件中的配置信息

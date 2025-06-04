@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.ark.framework.infrastructure.repositoryframework.IUnitOfWorkRepository;
 
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Entity;
 
 
 /**

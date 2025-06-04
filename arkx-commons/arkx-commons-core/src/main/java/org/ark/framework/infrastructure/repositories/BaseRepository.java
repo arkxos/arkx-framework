@@ -12,12 +12,12 @@ import io.arkx.framework.cache.CacheManager;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.lang.ReflectionUtil;
-import com.arkxos.framework.data.jdbc.BaseEntity;
-import com.arkxos.framework.data.jdbc.Criteria;
-import com.arkxos.framework.data.jdbc.Entity;
-import com.arkxos.framework.data.jdbc.Restrictions;
-import com.arkxos.framework.data.jdbc.Session;
-import com.arkxos.framework.data.jdbc.SessionFactory;
+import io.arkx.framework.data.jdbc.BaseEntity;
+import io.arkx.framework.data.jdbc.Criteria;
+import io.arkx.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Restrictions;
+import io.arkx.framework.data.jdbc.Session;
+import io.arkx.framework.data.jdbc.SessionFactory;
 import com.arkxos.framework.i18n.LangMapping;
 
 

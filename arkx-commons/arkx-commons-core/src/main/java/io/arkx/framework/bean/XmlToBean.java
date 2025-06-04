@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.arkxos.framework.data.xml.XMLMultiLoader;
+import io.arkx.framework.data.xml.XMLMultiLoader;
 
 /**
  * 

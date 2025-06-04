@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.lang.ClassUtil;
-import com.arkxos.framework.data.xml.XMLElement;
-import com.arkxos.framework.data.xml.XMLMultiLoader;
+import io.arkx.framework.data.xml.XMLElement;
+import io.arkx.framework.data.xml.XMLMultiLoader;
 
 /**
  * 根据xml的attribute转换成bean

@@ -5,12 +5,12 @@ import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendActi
 import com.arkxos.framework.NoUtil;
 import io.arkx.framework.annotation.EntityAnnotationManager;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.data.jdbc.Criteria;
-import com.arkxos.framework.data.jdbc.Entity;
-import com.arkxos.framework.data.jdbc.Restrictions;
-import com.arkxos.framework.data.jdbc.Session;
-import com.arkxos.framework.data.jdbc.SessionFactory;
-import com.arkxos.framework.data.jdbc.TreeEntity;
+import io.arkx.framework.data.jdbc.Criteria;
+import io.arkx.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Restrictions;
+import io.arkx.framework.data.jdbc.Session;
+import io.arkx.framework.data.jdbc.SessionFactory;
+import io.arkx.framework.data.jdbc.TreeEntity;
 
 /**
  * 

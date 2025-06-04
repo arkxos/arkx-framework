@@ -4,7 +4,7 @@ import java.util.Date;
 
 import io.arkx.framework.annotation.Entity;
 import io.arkx.framework.annotation.Ingore;
-import com.arkxos.framework.data.jdbc.BaseEntity;
+import io.arkx.framework.data.jdbc.BaseEntity;
 
 /**
  * 

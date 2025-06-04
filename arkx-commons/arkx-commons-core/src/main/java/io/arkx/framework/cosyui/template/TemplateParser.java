@@ -17,8 +17,8 @@ import io.arkx.framework.cosyui.html.HtmlParseException;
 import io.arkx.framework.cosyui.html.HtmlParser;
 import io.arkx.framework.cosyui.resource.UIResourceFile;
 import io.arkx.framework.cosyui.template.exception.TemplateCompileException;
-import com.arkxos.framework.data.xml.XMLParser;
-import com.arkxos.framework.data.xml.XMLParser.ElementAttribute;
+import io.arkx.framework.data.xml.XMLParser;
+import io.arkx.framework.data.xml.XMLParser.ElementAttribute;
 
 /**
  * 模板解析器

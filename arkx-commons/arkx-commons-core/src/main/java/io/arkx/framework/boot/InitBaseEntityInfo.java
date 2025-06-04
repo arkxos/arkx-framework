@@ -6,8 +6,8 @@ import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendActi
 
 import com.arkxos.framework.Account;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.data.jdbc.BaseEntity;
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.BaseEntity;
+import io.arkx.framework.data.jdbc.Entity;
 
 
 /**   

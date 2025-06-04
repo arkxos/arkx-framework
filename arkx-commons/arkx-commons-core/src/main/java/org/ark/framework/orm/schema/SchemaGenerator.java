@@ -98,7 +98,7 @@ public abstract class SchemaGenerator {
 		isb.append("import org.ark.framework.orm.SchemaColumn;\n");
 		isb.append("import org.ark.framework.orm.SchemaSet;\n");
 		isb.append("import collection.io.arkx.framework.commons.DataTypes;\n");
-		isb.append("import com.arkxos.framework.data.jdbc.Query;\n");
+		isb.append("import jdbc.io.arkx.framework.data.Query;\n");
 
 		hsb.append("\tpublic static final SchemaColumn[] _Columns = new SchemaColumn[] {\n");
 

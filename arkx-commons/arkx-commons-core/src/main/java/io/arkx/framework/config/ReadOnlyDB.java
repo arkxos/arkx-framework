@@ -2,10 +2,10 @@ package io.arkx.framework.config;
 
 import com.arkxos.framework.Config;
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.data.db.connection.Connection;
-import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
-import com.arkxos.framework.data.db.exception.DatabaseException;
-import com.arkxos.framework.data.jdbc.TransactionFactory;
+import io.arkx.framework.data.db.connection.Connection;
+import io.arkx.framework.data.db.connection.ConnectionPoolManager;
+import io.arkx.framework.data.db.exception.DatabaseException;
+import io.arkx.framework.data.jdbc.TransactionFactory;
 
 /**
  * 配置读写分离时的只读库的连接池名称，可以配置多个连接池名称，以逗号分隔。<br>

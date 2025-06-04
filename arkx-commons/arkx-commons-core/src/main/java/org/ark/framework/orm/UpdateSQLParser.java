@@ -8,7 +8,7 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.CharsetConvert;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.data.db.dbtype.IDBType;
+import io.arkx.framework.data.db.dbtype.IDBType;
 
 
 /**   

@@ -11,11 +11,11 @@ import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 
 import io.arkx.framework.commons.util.DateUtil;
-import com.arkxos.framework.data.jdbc.Criteria;
-import com.arkxos.framework.data.jdbc.Query;
-import com.arkxos.framework.data.jdbc.Restrictions;
-import com.arkxos.framework.data.jdbc.Session;
-import com.arkxos.framework.data.jdbc.SessionFactory;
+import io.arkx.framework.data.jdbc.Criteria;
+import io.arkx.framework.data.jdbc.Query;
+import io.arkx.framework.data.jdbc.Restrictions;
+import io.arkx.framework.data.jdbc.Session;
+import io.arkx.framework.data.jdbc.SessionFactory;
 
 
 /**   

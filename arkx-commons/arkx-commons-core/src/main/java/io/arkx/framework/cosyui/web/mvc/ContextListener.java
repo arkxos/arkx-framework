@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.arkxos.framework.Config;
 import io.arkx.framework.cache.CacheManager;
-import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
+import io.arkx.framework.data.db.connection.ConnectionPoolManager;
 import com.arkxos.framework.extend.plugin.ExtendPluginProvider;
 import com.arkxos.framework.schedule.CronManager;
 

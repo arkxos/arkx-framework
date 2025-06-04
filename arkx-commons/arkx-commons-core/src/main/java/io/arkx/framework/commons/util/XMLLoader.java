@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.arkx.framework.data.xml.XMLParser;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -28,7 +29,7 @@ import io.arkx.framework.commons.collection.tree.TreeNode;
  * xml加载器
  * 
  * 使用XMLParser替代
- * @see com.arkxos.framework.data.xml.XMLParser
+ * @see XMLParser
  * @author Darkness
  * @date 2012-8-6 下午9:56:05 
  * @version V1.0

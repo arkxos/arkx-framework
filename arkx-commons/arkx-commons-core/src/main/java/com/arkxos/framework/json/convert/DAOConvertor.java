@@ -1,7 +1,7 @@
 package com.arkxos.framework.json.convert;
 
-import com.arkxos.framework.data.db.orm.DAO;
-import com.arkxos.framework.data.db.orm.DAOColumn;
+import io.arkx.framework.data.db.orm.DAO;
+import io.arkx.framework.data.db.orm.DAOColumn;
 import com.arkxos.framework.json.JSONObject;
 
 /**

@@ -1,7 +1,7 @@
 package com.arkxos.framework.extend;
 
 import io.arkx.framework.commons.util.ObjectUtil;
-import com.arkxos.framework.data.xml.XMLElement;
+import io.arkx.framework.data.xml.XMLElement;
 import com.arkxos.framework.extend.plugin.PluginConfig;
 import com.arkxos.framework.extend.plugin.PluginException;
 import com.arkxos.framework.i18n.LangUtil;

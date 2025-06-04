@@ -3,7 +3,7 @@ package io.arkx.framework.cosyui.web;
 import com.arkxos.framework.Constant;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
-import com.arkxos.framework.data.db.DataCollection;
+import io.arkx.framework.data.db.DataCollection;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -110,7 +110,7 @@ public class ResponseData extends DataCollection {
 	/**
 	 * 将ResponseImpl转化成XML
 	 * 
-	 * @see com.arkxos.framework.data.db.DataCollection#toXML()
+	 * @see DataCollection#toXML()
 	 */
 	@Override
 	public String toXML() {
@@ -121,7 +121,7 @@ public class ResponseData extends DataCollection {
 	/**
 	 * 将ResponseImpl转化成XML
 	 * 
-	 * @see com.arkxos.framework.data.db.DataCollection#toJSON()
+	 * @see DataCollection#toJSON()
 	 */
 	@Override
 	public String toJSON() {

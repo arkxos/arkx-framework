@@ -8,7 +8,7 @@ import io.arkx.framework.annotation.EntityAnnotationManager;
 import io.arkx.framework.cache.CacheDataProvider;
 import io.arkx.framework.cache.CacheManager;
 import io.arkx.framework.commons.collection.CacheMapx;
-import com.arkxos.framework.data.jdbc.Entity;
+import io.arkx.framework.data.jdbc.Entity;
 
 
 /**   

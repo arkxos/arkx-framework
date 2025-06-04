@@ -11,10 +11,10 @@
 //import util.io.arkx.framework.commons.LogUtil;
 //import util.io.arkx.framework.commons.StringUtil;
 //import util.io.arkx.framework.commons.UuidUtil;
-//import com.arkxos.framework.data.db.connection.ConnectionPoolManager;
-//import com.arkxos.framework.data.db.dbtype.DBTypeService;
-//import com.arkxos.framework.data.db.dbtype.MsSql;
-//import com.arkxos.framework.data.db.dbtype.MsSql2000;
+//import connection.db.io.arkx.framework.data.ConnectionPoolManager;
+//import dbtype.db.io.arkx.framework.data.DBTypeService;
+//import dbtype.db.io.arkx.framework.data.MsSql;
+//import dbtype.db.io.arkx.framework.data.MsSql2000;
 //
 //@Service
 //public class NoService {

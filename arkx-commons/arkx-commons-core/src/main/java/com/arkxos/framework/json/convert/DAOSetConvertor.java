@@ -2,8 +2,8 @@ package com.arkxos.framework.json.convert;
 
 import java.util.ArrayList;
 
-import com.arkxos.framework.data.db.orm.DAO;
-import com.arkxos.framework.data.db.orm.DAOSet;
+import io.arkx.framework.data.db.orm.DAO;
+import io.arkx.framework.data.db.orm.DAOSet;
 import com.arkxos.framework.json.JSONArray;
 import com.arkxos.framework.json.JSONObject;
 

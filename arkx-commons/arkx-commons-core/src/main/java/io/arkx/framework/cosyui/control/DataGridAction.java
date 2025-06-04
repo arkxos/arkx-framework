@@ -23,8 +23,8 @@ import io.arkx.framework.cosyui.tag.ListTag;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;
 import io.arkx.framework.cosyui.zhtml.ZhtmlExecuteContext;
 import io.arkx.framework.cosyui.zhtml.ZhtmlManagerContext;
-import com.arkxos.framework.data.db.DBUtil;
-import com.arkxos.framework.data.jdbc.Query;
+import io.arkx.framework.data.db.DBUtil;
+import io.arkx.framework.data.jdbc.Query;
 import com.arkxos.framework.i18n.LangUtil;
 
 /**

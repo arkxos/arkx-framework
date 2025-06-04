@@ -9,8 +9,8 @@ import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import com.arkxos.framework.data.xml.XMLParser;
-import com.arkxos.framework.data.xml.XMLParser.ElementAttribute;
+import io.arkx.framework.data.xml.XMLParser;
+import io.arkx.framework.data.xml.XMLParser.ElementAttribute;
 
 /**
  * HTML元素
