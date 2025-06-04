@@ -6,7 +6,7 @@
 
 	<parent>
 		<groupId>io.arkx.framework</groupId>
-		<artifactId>arkxos-framework-parent</artifactId>
+		<artifactId>arkx-parent</artifactId>
 		<version>${revision}</version>
 		<relativePath>../arkxos-framework-parent/pom.xml</relativePath>
 	</parent>

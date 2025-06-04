@@ -10,7 +10,7 @@
 		<relativePath>../arkxos-framework-dependencies/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>arkxos-framework-parent</artifactId>
+	<artifactId>arkx-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<properties>
