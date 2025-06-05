@@ -50,6 +50,7 @@
 		<module>arkx-quartz</module>
         <module>arkx-boot-starter</module>
 		<module>arkx-cosyui</module>
+		<module>arkx-performance-monitor</module>
 	</modules>
 
 
