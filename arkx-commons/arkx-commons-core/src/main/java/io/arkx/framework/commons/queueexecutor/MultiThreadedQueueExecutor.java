@@ -1,10 +1,15 @@
 package io.arkx.framework.commons.queueexecutor;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.arkx.framework.commons.util.CountableThreadPool;
+import io.arkx.framework.commons.util.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,6 +172,13 @@ public class MultiThreadedQueueExecutor<T> {
 	protected String currentInfo;
 	
 	protected void execute() {
+		NumberFormat perFormat = NumberFormat.getPercentInstance(Locale.CHINA);
+		DecimalFormat percentFormat = (DecimalFormat) perFormat;
+		//设置Pattern 会使百分比格式，自带格式失效
+//            percentFormat.applyPattern("##.00");
+		//设置小数部分 最小位数为2
+		percentFormat.setMinimumFractionDigits(2);
+
 		while(!Thread.currentThread().isInterrupted()) {
 			Element<T> element = scheduler.poll();
 			if (element == null) {
@@ -178,9 +190,11 @@ public class MultiThreadedQueueExecutor<T> {
 				int total = scheduler.getTotalElementsCount();
 				int left = scheduler.getLeftElementsCount();
 				int already = total-left;
-				this.percent = new Double((already) * 100.0D /total).intValue();
+				this.percent = Double.valueOf((already) * 100.0D /total).intValue();
 				this.currentInfo = this.name+ " " + already+"/"+total;
-//				System.out.println("总数："+scheduler.getTotalRequestsCount()+"，剩余："+scheduler.getLeftRequestsCount()+"，剩余百分比："+((scheduler.getLeftRequestsCount()-0.0)/scheduler.getTotalRequestsCount())+"%");
+				System.out.println("总数："+scheduler.getTotalElementsCount()+"，剩余："+scheduler.getLeftElementsCount()+"，剩余百分比："+
+						percentFormat.format(
+								(scheduler.getLeftElementsCount()-0.0)/scheduler.getTotalElementsCount())+"");
 				final Element<T> elementFinal = element;
                 threadPool.execute(new Runnable() {
                     @Override

@@ -17,14 +17,13 @@ public interface Scheduler<T> {
 	/**
 	 * add a url to fetch
 	 * 
-	 * @param task
+	 * @param element
 	 */
 	void push(Element<T> element);
 
 	/**
 	 * get an url to crawl
-	 * 
-	 * @param task the task of spider
+	 *
 	 * @return the url to crawl
 	 */
 	Element<T> poll();

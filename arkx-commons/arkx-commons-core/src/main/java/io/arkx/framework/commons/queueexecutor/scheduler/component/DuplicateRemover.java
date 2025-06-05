@@ -14,23 +14,20 @@ public interface DuplicateRemover<T> {
 	 * 
 	 * Check whether the request is duplicate.
 	 * 
-	 * @param task
-	 * @param task
+	 * @param element
 	 * @return
 	 */
 	boolean isDuplicate(Element<T> element);
 
 	/**
 	 * Reset duplicate check.
-	 * 
-	 * @param task
+	 *
 	 */
 	void resetDuplicateCheck();
 
 	/**
 	 * Get TotalRequestsCount for monitor.
-	 * 
-	 * @param task
+	 *
 	 * @return
 	 */
 	int getTotalElementsCount();
