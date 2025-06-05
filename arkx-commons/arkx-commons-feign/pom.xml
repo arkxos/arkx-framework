@@ -32,7 +32,7 @@
     <dependencies>
 <!--        <dependency>-->
 <!--            <groupId>com.arkx</groupId>-->
-<!--            <artifactId>arkx-platform-support-common-biz</artifactId>-->
+<!--            <artifactId>arkx-platform-support-commons-biz</artifactId>-->
 <!--        </dependency>-->
 		<dependency>
 			<groupId>io.arkx.framework</groupId>

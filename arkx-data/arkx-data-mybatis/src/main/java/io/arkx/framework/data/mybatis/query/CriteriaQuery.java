@@ -1,7 +1,7 @@
 package io.arkx.framework.data.mybatis.query;
 
-import io.arkx.common.utils.StringUtil;
-import io.arkx.common.utils.StringUtils;
+import io.arkx.commons.utils.StringUtil;
+import io.arkx.commons.utils.StringUtils;
 import io.arkx.framework.common.annotation.TableAlias;
 import io.arkx.framework.data.mybatis.model.PageParams;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

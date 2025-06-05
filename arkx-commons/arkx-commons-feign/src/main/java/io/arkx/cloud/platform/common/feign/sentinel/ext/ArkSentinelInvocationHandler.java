@@ -14,7 +14,7 @@
 // * limitations under the License.
 // */
 //
-//package com.rapidark.cloud.platform.common.feign.sentinel.ext;
+//package com.rapidark.cloud.platform.commons.feign.sentinel.ext;
 //
 ////import com.alibaba.cloud.sentinel.feign.SentinelContractHolder;
 ////import com.alibaba.cloud.sentinel.feign.SentinelInvocationHandler;
@@ -24,7 +24,7 @@
 ////import com.alibaba.csp.sentinel.Tracer;
 ////import com.alibaba.csp.sentinel.context.ContextUtil;
 ////import com.alibaba.csp.sentinel.slots.block.BlockException;
-//import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+//import com.rapidark.cloud.platform.commons.core.util.ResponseResult;
 //
 //import feign.Feign;
 //import feign.InvocationHandlerFactory;

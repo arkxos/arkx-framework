@@ -1,15 +1,15 @@
 package io.arkx.framework.common.utils;
 
-import static io.arkx.common.utils.StringUtil.*;
-import static io.arkx.common.utils.StringUtils.toCamelCase;
-import static io.arkx.common.utils.StringUtils.toUnderScoreCase;
+import static io.arkx.commons.utils.StringUtil.*;
+import static io.arkx.commons.utils.StringUtils.toCamelCase;
+import static io.arkx.commons.utils.StringUtils.toUnderScoreCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.arkx.common.utils.StringUtil;
+import io.arkx.commons.utils.StringUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 

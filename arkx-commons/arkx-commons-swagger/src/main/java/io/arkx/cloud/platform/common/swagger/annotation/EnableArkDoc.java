@@ -29,7 +29,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import io.arkx.cloud.platform.common.swagger.config.OpenAPIDefinitionImportSelector;
 import io.arkx.cloud.platform.common.swagger.support.SwaggerProperties;
-import io.arkx.common.core.factory.YamlPropertySourceFactory;
+import io.arkx.commons.core.factory.YamlPropertySourceFactory;
 
 /**
  * 开启 pig spring doc

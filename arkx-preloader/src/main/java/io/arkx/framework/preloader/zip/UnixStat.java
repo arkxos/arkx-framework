@@ -51,7 +51,7 @@ public interface UnixStat {
     int DIR_FLAG =           040000;
 
     // ----------------------------------------------------------
-    // somewhat arbitrary choices that are quite common for shared
+    // somewhat arbitrary choices that are quite commons for shared
     // installations
     // -----------------------------------------------------------
 

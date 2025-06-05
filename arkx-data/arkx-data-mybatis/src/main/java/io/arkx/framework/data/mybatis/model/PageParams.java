@@ -2,9 +2,9 @@ package io.arkx.framework.data.mybatis.model;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Maps;
-import io.arkx.common.utils.BeanConvertUtils;
-import io.arkx.common.utils.StringUtil;
-import io.arkx.common.utils.StringUtils;
+import io.arkx.commons.utils.BeanConvertUtils;
+import io.arkx.commons.utils.StringUtil;
+import io.arkx.commons.utils.StringUtils;
 import io.arkx.framework.commons.constants.CommonConstants;
 
 import java.io.Serializable;

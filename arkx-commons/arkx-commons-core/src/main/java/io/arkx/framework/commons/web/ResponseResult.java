@@ -27,7 +27,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import org.springframework.data.domain.Page;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import io.arkx.common.core.constant.CommonConstants;
+import io.arkx.commons.core.constant.CommonConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 

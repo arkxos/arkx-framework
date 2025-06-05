@@ -1,6 +1,6 @@
 package io.arkx.framework.common.utils;
 
-import io.arkx.common.utils.EncodeUtils;
+import io.arkx.commons.utils.EncodeUtils;
 
 import java.awt.Graphics;
 import java.awt.Image;

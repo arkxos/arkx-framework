@@ -82,7 +82,7 @@
 
 		<jsoup.version>1.18.3</jsoup.version>
 		<!--自定义版本-->
-		<!--        <opencloud.common.version>12.2.0-SNAPSHOT</opencloud.common.version>-->
+		<!--        <opencloud.commons.version>12.2.0-SNAPSHOT</opencloud.commons.version>-->
 		<!--        <opencloud.base-client.version>12.2.0-SNAPSHOT</opencloud.base-client.version>-->
 		<!--        <opencloud.msg-client.version>12.2.0-SNAPSHOT</opencloud.msg-client.version>-->
 		<!--        <opencloud.bpm-client.version>12.2.0-SNAPSHOT</opencloud.bpm-client.version>-->

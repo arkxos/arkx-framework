@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 
-import io.arkx.common.utils.StringUtil;
+import io.arkx.commons.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**

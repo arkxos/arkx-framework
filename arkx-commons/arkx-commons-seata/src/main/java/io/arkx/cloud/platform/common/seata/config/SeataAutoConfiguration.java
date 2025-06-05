@@ -3,7 +3,7 @@ package io.arkx.cloud.platform.common.seata.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import io.arkx.common.core.factory.YamlPropertySourceFactory;
+import io.arkx.commons.core.factory.YamlPropertySourceFactory;
 
 import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 

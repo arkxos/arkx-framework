@@ -1,5 +1,5 @@
 package io.arkx.framework.commons.download;
-//package com.rapidark.infinity.common.download;
+//package com.rapidark.infinity.commons.download;
 //
 //import java.util.concurrent.BlockingQueue;
 //import java.util.concurrent.ConcurrentHashMap;
@@ -8,10 +8,10 @@ package io.arkx.framework.commons.download;
 //import java.util.concurrent.ThreadPoolExecutor;
 //import java.util.concurrent.TimeUnit;
 //
-//import com.rapidark.infinity.common.task.Element;
-//import com.rapidark.infinity.common.task.ElementProcessor;
-//import com.rapidark.infinity.common.task.MultiThreadedQueueExecutor;
-//import com.rapidark.infinity.common.task.QueueExecuteFinishHandler;
+//import com.rapidark.infinity.commons.task.Element;
+//import com.rapidark.infinity.commons.task.ElementProcessor;
+//import com.rapidark.infinity.commons.task.MultiThreadedQueueExecutor;
+//import com.rapidark.infinity.commons.task.QueueExecuteFinishHandler;
 //
 //public class DownloadScheduler {
 //

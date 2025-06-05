@@ -14,12 +14,12 @@
 // * limitations under the License.
 // */
 //
-//package com.rapidark.cloud.platform.common.feign.sentinel.handle;
+//package com.rapidark.cloud.platform.commons.feign.sentinel.handle;
 //
 //import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
 //import com.alibaba.csp.sentinel.slots.block.BlockException;
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.rapidark.cloud.platform.common.core.util.ResponseResult;
+//import com.rapidark.cloud.platform.commons.core.util.ResponseResult;
 //
 //import jakarta.servlet.http.HttpServletRequest;
 //import jakarta.servlet.http.HttpServletResponse;

@@ -14,7 +14,7 @@
 // * limitations under the License.
 // */
 //
-//package com.rapidark.cloud.platform.common.feign.sentinel.ext;
+//package com.rapidark.cloud.platform.commons.feign.sentinel.ext;
 //
 ////import com.alibaba.cloud.sentinel.feign.SentinelContractHolder;
 //import feign.Contract;
