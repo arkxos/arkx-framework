@@ -45,7 +45,6 @@
 		<spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
 		<spring-security.version>5.8.15</spring-security.version>
 		<spring-boot-admin.version>3.4.5</spring-boot-admin.version>
-		<spring.authorization.version>1.4.3</spring.authorization.version>
 
 		<git.commit.plugin>9.0.1</git.commit.plugin>
 
