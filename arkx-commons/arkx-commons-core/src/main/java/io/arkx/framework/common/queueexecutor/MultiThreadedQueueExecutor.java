@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.arkx.framework.commons.util.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.arkx.framework.common.queueexecutor.processor.ElementProcessor;
 import io.arkx.framework.common.queueexecutor.scheduler.QueueScheduler;
 import io.arkx.framework.common.utils.CountableThreadPool;
-import io.arkx.framework.common.utils.Handler;
 
 /**
  * 
@@ -188,7 +188,7 @@ public class MultiThreadedQueueExecutor<T> {
 				int total = scheduler.getTotalElementsCount();
 				int left = scheduler.getLeftElementsCount();
 				int already = total-left;
-				this.percent = new Double((already) * 100.0D /total).intValue();
+				this.percent = Double.valueOf((already) * 100.0D /total).intValue();
 				this.currentInfo = this.name+ " " + already+"/"+total;
 				System.out.println("总数："+scheduler.getTotalElementsCount()+"，剩余："+scheduler.getLeftElementsCount()+"，剩余百分比："+
 						percentFormat.format(

@@ -5,10 +5,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import io.arkx.framework.commons.util.UuidUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import io.arkx.framework.common.utils.UuidUtil;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
