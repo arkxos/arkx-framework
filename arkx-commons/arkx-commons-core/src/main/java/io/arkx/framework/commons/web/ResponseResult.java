@@ -27,7 +27,7 @@ import io.arkx.framework.commons.util.StringUtil;
 import org.springframework.data.domain.Page;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import io.arkx.commons.core.constant.CommonConstants;
+import io.arkx.framework.commons.constants.CommonConstants1;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 
@@ -101,27 +101,27 @@ public class ResponseResult<T> implements Serializable {
 	}
 
 	public static <T> ResponseResult<T> ok(T data) {
-		return restResult(data, CommonConstants.SUCCESS, null);
+		return restResult(data, CommonConstants1.SUCCESS, null);
 	}
 
 	public static <T> ResponseResult<T> ok(T data, String msg) {
-		return restResult(data, CommonConstants.SUCCESS, msg);
+		return restResult(data, CommonConstants1.SUCCESS, msg);
 	}
 
 	public static <T> ResponseResult<T> failed() {
-		return restResult(null, CommonConstants.FAIL, null);
+		return restResult(null, CommonConstants1.FAIL, null);
 	}
 
 	public static <T> ResponseResult<T> failed(String msg) {
-		return restResult(null, CommonConstants.FAIL, msg);
+		return restResult(null, CommonConstants1.FAIL, msg);
 	}
 
 	public static <T> ResponseResult<T> failed(T data) {
-		return restResult(data, CommonConstants.FAIL, null);
+		return restResult(data, CommonConstants1.FAIL, null);
 	}
 
 	public static <T> ResponseResult<T> failed(T data, String msg) {
-		return restResult(data, CommonConstants.FAIL, msg);
+		return restResult(data, CommonConstants1.FAIL, msg);
 	}
 
 	public static <T> ResponseResult<T> restResult(T data, int code, String msg) {

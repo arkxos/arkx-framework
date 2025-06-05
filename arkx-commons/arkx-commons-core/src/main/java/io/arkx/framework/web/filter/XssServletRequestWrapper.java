@@ -1,6 +1,6 @@
 package io.arkx.framework.web.filter;
 
-import io.arkx.commons.utils.StringUtil;
+import io.arkx.framework.commons.utils2.StringUtil;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;

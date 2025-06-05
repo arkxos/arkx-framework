@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import io.arkx.commons.utils.StringUtil;
+import io.arkx.framework.commons.utils2.StringUtil;
 import io.arkx.framework.commons.annotation.DataPermission;
 import io.arkx.framework.commons.annotation.Query;
 

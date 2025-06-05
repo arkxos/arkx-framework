@@ -4,7 +4,7 @@ package io.arkx.framework.boot.config.redis;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import io.arkx.commons.utils.StringUtils;
+import io.arkx.framework.commons.utils2.StringUtils;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import com.alibaba.fastjson.JSON;

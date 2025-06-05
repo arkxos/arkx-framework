@@ -3,7 +3,7 @@ package io.arkx.commons.core.text;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import io.arkx.commons.utils.StringUtils;
+import io.arkx.framework.commons.utils2.StringUtils;
 
 /**
  * 字符集工具类

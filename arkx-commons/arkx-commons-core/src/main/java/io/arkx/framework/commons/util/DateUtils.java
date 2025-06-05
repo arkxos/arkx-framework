@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import io.arkx.commons.utils.StringUtil;
+import io.arkx.framework.commons.utils2.StringUtil;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**

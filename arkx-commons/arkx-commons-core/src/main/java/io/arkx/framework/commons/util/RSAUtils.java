@@ -31,10 +31,9 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import io.arkx.framework.commons.collection.TwoTuple;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.ArrayUtils;
-
-import io.arkx.framework.common.collection.TwoTuple;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -430,12 +429,12 @@ public class RSAUtils {
 //     */
 //    private static void test1(RsaKeyPair keyPair) throws Exception {
 //        System.out.println("***************** 公钥加密私钥解密开始 *****************");
-//        String text1 = encryptByPublicKey(keyPair.getPublicKey(), me.zhengjie.utils.RSAUtils.SRC);
+//        String text1 = encryptByPublicKey(keyPair.getPublicKey(), me.zhengjie.utils2.RSAUtils.SRC);
 //        String text2 = decryptByPrivateKey(keyPair.getPrivateKey(), text1);
-//        System.out.println("加密前：" + me.zhengjie.utils.RSAUtils.SRC);
+//        System.out.println("加密前：" + me.zhengjie.utils2.RSAUtils.SRC);
 //        System.out.println("加密后：" + text1);
 //        System.out.println("解密后：" + text2);
-//        if (me.zhengjie.utils.RSAUtils.SRC.equals(text2)) {
+//        if (me.zhengjie.utils2.RSAUtils.SRC.equals(text2)) {
 //            System.out.println("解密字符串和原始字符串一致，解密成功");
 //        } else {
 //            System.out.println("解密字符串和原始字符串不一致，解密失败");
@@ -449,12 +448,12 @@ public class RSAUtils {
 //     */
 //    private static void test2(RsaKeyPair keyPair) throws Exception {
 //        System.out.println("***************** 私钥加密公钥解密开始 *****************");
-//        String text1 = encryptByPrivateKey(keyPair.getPrivateKey(), me.zhengjie.utils.RSAUtils.SRC);
+//        String text1 = encryptByPrivateKey(keyPair.getPrivateKey(), me.zhengjie.utils2.RSAUtils.SRC);
 //        String text2 = decryptByPublicKey(keyPair.getPublicKey(), text1);
-//        System.out.println("加密前：" + me.zhengjie.utils.RSAUtils.SRC);
+//        System.out.println("加密前：" + me.zhengjie.utils2.RSAUtils.SRC);
 //        System.out.println("加密后：" + text1);
 //        System.out.println("解密后：" + text2);
-//        if (me.zhengjie.utils.RSAUtils.SRC.equals(text2)) {
+//        if (me.zhengjie.utils2.RSAUtils.SRC.equals(text2)) {
 //            System.out.println("解密字符串和原始字符串一致，解密成功");
 //        } else {
 //            System.out.println("解密字符串和原始字符串不一致，解密失败");

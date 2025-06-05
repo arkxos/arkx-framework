@@ -10,8 +10,8 @@ import java.util.Objects;
  */
 public class TwoTuple<A, B> {
 
-	public static <A, B> io.arkx.framework.common.collection.TwoTuple<A, B> of(A a, B b) {
-		return new io.arkx.framework.common.collection.TwoTuple<>(a, b);
+	public static <A, B> TwoTuple<A, B> of(A a, B b) {
+		return new TwoTuple<>(a, b);
 	}
 
 	public final A first;
@@ -26,7 +26,7 @@ public class TwoTuple<A, B> {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		io.arkx.framework.common.collection.TwoTuple<?, ?> twoTuple = (io.arkx.framework.common.collection.TwoTuple<?, ?>) o;
+		TwoTuple<?, ?> twoTuple = (TwoTuple<?, ?>) o;
 		return Objects.equals(first, twoTuple.first) && Objects.equals(second, twoTuple.second);
 	}
 

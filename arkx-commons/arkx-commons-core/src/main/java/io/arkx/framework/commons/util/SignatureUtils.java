@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import io.arkx.commons.utils.StringUtil;
+import io.arkx.framework.commons.utils2.StringUtil;
 import io.arkx.framework.commons.constants.CommonConstants;
 import org.springframework.util.Assert;
 

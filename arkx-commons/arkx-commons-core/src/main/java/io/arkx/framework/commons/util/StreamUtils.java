@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
-import io.arkx.commons.utils.StringUtil;
+import io.arkx.framework.commons.utils2.StringUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
