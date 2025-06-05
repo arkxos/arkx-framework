@@ -1,4 +1,4 @@
-package io.arkx.framework.commons.util;
+package io.arkx.framework.common.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -160,31 +160,31 @@ public class Base58 {
 	public static void main(String[] args) {
 		byte[] ss = Base58.decode("EKJMFEkWt6cdiBpatPooJ2");
 		System.out.print(ss.length);
-			
+
 		System.out.println("---");
 		System.out.println((byte)131);
-		
+
 		// data from c#
 		int[] data = new int[] { 126, 176, 176, 217, 163, 97, 127, 73, 184, 234, 59, 19, 175, 27, 147, 233 };
-		
+
 		byte[] real = new byte[16];
 		for(int i=0;i<data.length;i++) {
 			real[i]= (byte)(data[i] & 0xff);
 		}
-		
+
 		System.out.println(encode(real));
-		
+
 		byte d = -125;
 		System.out.println((int)d);
-		
+
 		String testString = "A2wFfue5wUWPbFctC4tw6Y";
 		System.out.println(testString + "--->" + testString.getBytes().length);
 		String encodedTestString = encode(testString.getBytes());
 		System.out.println(encodedTestString + "--->" + encodedTestString.length());
 		System.out.println(new String(decode(encodedTestString)));
-		
+
 		System.out.println("A2wFfue5wUWPbFctC4tw6Y");
-		
+
 		byte[] datasss = new byte[] {125,2,3,4,5};
 		System.out.println(Base58.encode(datasss).getBytes().length);
 	}
