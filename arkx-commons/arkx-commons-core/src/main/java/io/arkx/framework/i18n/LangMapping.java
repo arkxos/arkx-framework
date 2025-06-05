@@ -10,6 +10,7 @@ import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringFormat;
+import lombok.Getter;
 
 /**
  * 国际化字符串映射器
@@ -17,6 +18,7 @@ import io.arkx.framework.commons.util.StringFormat;
  */
 public class LangMapping {
 	protected ConcurrentMapx<String, ConcurrentMapx<String, String>> mapping = null;
+	@Getter
 	protected String defaultLanguage = "zh-cn";// 默认为中文，可以通过framework.xml配置DefaultLanguage选项
 	protected CacheMapx<String, String> languageMap;
 	private static LangMapping instance = null;
@@ -26,6 +28,7 @@ public class LangMapping {
 	public LangMapping() {
 		String lang = System.getProperty("user.language");
 		defaultLanguage = LangUtil.getLanguage(lang);
+		mapping = new ConcurrentMapx<>();
 	}
 
 	public static LangMapping getInstance() {
@@ -33,7 +36,7 @@ public class LangMapping {
 			lock.lock();
 			try {
 				if (lastTime == 0 || Config.isDebugMode() && System.currentTimeMillis() - lastTime > 3000) {
-//					instance = LangLoader.load();
+					instance = LangLoader.load();
 					lastTime = System.currentTimeMillis();
 				}
 			} finally {
@@ -45,10 +48,6 @@ public class LangMapping {
 
 	public Mapx<String, String> getLanguageMap() {
 		return languageMap;
-	}
-
-	public String getDefaultLanguage() {
-		return defaultLanguage;
 	}
 
 	public Mapx<String, String> getAllValue(String lang) {
@@ -64,7 +63,7 @@ public class LangMapping {
 	}
 
 	public String getValue(String key, Object... args) {
-		String lang = null;
+		String lang = getDefaultLanguage();
 //		if (Current.getExecuteContext() != null) {
 //			lang = Current.getExecuteContext().getLanguage();
 //		} else {
@@ -104,6 +103,7 @@ public class LangMapping {
 		if (map == null) {
 			lock.lock();
 			try {
+				map = mapping.get(lang); // 重新获取一次，确保最新值
 				if (map == null) {
 					map = new ConcurrentMapx<>();
 					mapping.put(lang, map);

@@ -6,7 +6,6 @@ import java.io.InputStream;
 
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CacheMapx;
-import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
@@ -31,9 +30,7 @@ public class LangLoader {
 			}
 			return lm;
 		} else {
-			LangMapping lm = new LangMapping();
-			lm.mapping = new ConcurrentMapx<>();
- 			return lm;
+			return new LangMapping();
 		}
 	}
 
@@ -41,9 +38,7 @@ public class LangLoader {
 	 * 读取指定应用下的国际化资源文件,path参数应该一个UI/WEB-INF/目录
 	 */
 	public static LangMapping loadMapping(String path) {
-		ConcurrentMapx<String, ConcurrentMapx<String, String>> mapping = new ConcurrentMapx<>();
 		LangMapping lm = new LangMapping();
-		lm.mapping = mapping;
 
 		File langFile = new File(path + "/classes/lang/lang.i18n");
 		if (langFile.exists()) {
