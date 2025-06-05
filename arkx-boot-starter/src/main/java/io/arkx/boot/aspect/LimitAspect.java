@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 
 import io.arkx.framework.common.annotation.Limit;
 import io.arkx.framework.common.aspect.LimitType;
-import io.arkx.framework.common.utils.RequestHolder;
+import io.arkx.framework.commons.util.RequestHolder;
 import com.google.common.collect.ImmutableList;
 
 import jakarta.servlet.http.HttpServletRequest;

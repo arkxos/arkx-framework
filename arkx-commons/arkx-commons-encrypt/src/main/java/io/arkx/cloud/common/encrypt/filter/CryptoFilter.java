@@ -13,7 +13,7 @@ import io.arkx.cloud.common.encrypt.annotation.ApiEncrypt;
 import io.arkx.cloud.common.encrypt.properties.ApiDecryptProperties;
 import io.arkx.framework.common.core.constant.HttpStatus;
 import io.arkx.framework.common.exception.OpenException;
-import io.arkx.framework.common.utils.ArkSpringContextHolder;
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
 
 import cn.hutool.core.util.ObjectUtil;
 import jakarta.servlet.Filter;

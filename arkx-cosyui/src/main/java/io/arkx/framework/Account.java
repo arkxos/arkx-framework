@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.arkx.framework.Member.MemberData;
-import io.arkx.framework.common.utils.SecurityUtils;
+import io.arkx.framework.commons.util.SecurityUtils;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.i18n.LangMapping;
 import io.arkx.framework.i18n.LangUtil;

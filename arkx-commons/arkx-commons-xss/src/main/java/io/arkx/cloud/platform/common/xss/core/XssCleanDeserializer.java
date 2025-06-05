@@ -18,7 +18,7 @@ package io.arkx.cloud.platform.common.xss.core;
 
 import io.arkx.cloud.platform.common.xss.config.ArkXssProperties;
 import io.arkx.cloud.platform.common.xss.utils.XssUtil;
-import io.arkx.framework.common.utils.ArkSpringContextHolder;
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
 
 import lombok.extern.slf4j.Slf4j;
 
