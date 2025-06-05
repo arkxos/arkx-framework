@@ -1,6 +1,6 @@
 package io.arkx.framework.commons.domain.page;
 
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 
 /**
  * 分页数据

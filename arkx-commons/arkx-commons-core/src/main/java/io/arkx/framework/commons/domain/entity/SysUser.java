@@ -11,7 +11,7 @@ import io.arkx.framework.commons.annotation.Excel.ColumnType;
 import io.arkx.framework.commons.annotation.Excel.Type;
 import io.arkx.framework.commons.annotation.Excels;
 import io.arkx.framework.commons.domain.BaseEntity;
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

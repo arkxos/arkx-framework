@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.springframework.http.MediaType;
 
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

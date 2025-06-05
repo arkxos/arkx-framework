@@ -21,8 +21,6 @@ import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import io.arkx.framework.commons.utils2.StringUtils;
-
 import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.lang.TypeReference;
 import lombok.extern.slf4j.Slf4j;

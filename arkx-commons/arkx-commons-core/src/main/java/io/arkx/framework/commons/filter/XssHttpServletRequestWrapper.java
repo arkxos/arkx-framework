@@ -7,8 +7,8 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import io.arkx.framework.commons.utils2.StringUtils;
-import io.arkx.framework.commons.utils2.html.EscapeUtil;
+import io.arkx.framework.commons.util.StringUtils;
+import io.arkx.framework.commons.util.html.EscapeUtil;
 
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;

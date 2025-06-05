@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import io.arkx.framework.commons.domain.BaseEntity;
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 
 import jakarta.validation.constraints.NotBlank;
 

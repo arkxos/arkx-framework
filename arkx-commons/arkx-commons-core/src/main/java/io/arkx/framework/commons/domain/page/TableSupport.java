@@ -1,6 +1,6 @@
 package io.arkx.framework.commons.domain.page;
 
-import io.arkx.framework.commons.utils2.ServletUtils;
+import io.arkx.framework.commons.util.ServletUtils;
 
 /**
  * 表格数据处理

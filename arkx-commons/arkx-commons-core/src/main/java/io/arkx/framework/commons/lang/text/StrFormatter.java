@@ -1,6 +1,6 @@
 package io.arkx.framework.commons.lang.text;
 
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 
 /**
  * 字符串格式化

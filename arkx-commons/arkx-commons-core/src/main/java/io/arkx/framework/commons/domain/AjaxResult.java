@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.arkx.framework.commons.constants.HttpStatus1;
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 
 /**
  * 操作消息提醒

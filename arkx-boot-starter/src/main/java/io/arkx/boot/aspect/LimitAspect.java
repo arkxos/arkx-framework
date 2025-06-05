@@ -18,7 +18,7 @@ package io.arkx.boot.aspect;
 import java.lang.reflect.Method;
 
 import io.arkx.framework.commons.utils2.StringUtil;
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 import io.arkx.framework.commons.exception.BadRequestException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

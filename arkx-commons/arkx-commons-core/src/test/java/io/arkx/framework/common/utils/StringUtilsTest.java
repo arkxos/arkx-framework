@@ -3,8 +3,8 @@ package io.arkx.framework.common.utils;
 import static io.arkx.framework.commons.util.StringHelper.toCapitalizeCamelCase;
 import static io.arkx.framework.commons.utils2.StringUtil.getIp;
 import static io.arkx.framework.commons.utils2.StringUtil.getWeekDay;
-import static io.arkx.framework.commons.utils2.StringUtils.toCamelCase;
-import static io.arkx.framework.commons.utils2.StringUtils.toUnderScoreCase;
+import static io.arkx.framework.commons.util.StringUtils.toCamelCase;
+import static io.arkx.framework.commons.util.StringUtils.toUnderScoreCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 

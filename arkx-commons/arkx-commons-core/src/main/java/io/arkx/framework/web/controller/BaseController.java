@@ -15,8 +15,8 @@ import io.arkx.framework.commons.domain.page.PageDomain;
 import io.arkx.framework.commons.domain.page.TableDataInfo;
 import io.arkx.framework.commons.domain.page.TableSupport;
 import io.arkx.framework.commons.utils2.DateUtils;
-import io.arkx.framework.commons.utils2.StringUtils;
-import io.arkx.framework.commons.utils2.sql.SqlUtil;
+import io.arkx.framework.commons.util.StringUtils;
+import io.arkx.framework.commons.util.sql.SqlUtil;
 
 /**
  * web层通用数据处理

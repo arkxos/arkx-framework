@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import java.text.NumberFormat;
 import java.util.Set;
 
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.StringUtils;
 
 /**
  * 类型转换器

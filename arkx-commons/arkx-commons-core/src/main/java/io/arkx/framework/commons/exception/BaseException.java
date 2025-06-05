@@ -1,7 +1,7 @@
 package io.arkx.framework.commons.exception;
 
-import io.arkx.framework.commons.utils2.MessageUtils;
-import io.arkx.framework.commons.utils2.StringUtils;
+import io.arkx.framework.commons.util.MessageUtils;
+import io.arkx.framework.commons.util.StringUtils;
 
 /**
  * 基础异常
