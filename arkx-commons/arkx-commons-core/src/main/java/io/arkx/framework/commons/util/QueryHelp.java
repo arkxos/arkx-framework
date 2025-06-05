@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.List;
 
 import io.arkx.commons.utils.StringUtil;
-import io.arkx.framework.common.annotation.DataPermission;
-import io.arkx.framework.common.annotation.Query;
+import io.arkx.framework.commons.annotation.DataPermission;
+import io.arkx.framework.commons.annotation.Query;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.arkx.framework.common.annotation.rest;
+package io.arkx.framework.commons.annotation.rest;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -26,7 +26,7 @@ import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import io.arkx.framework.common.annotation.AnonymousAccess;
+import io.arkx.framework.commons.annotation.AnonymousAccess;
 
 /**
  * Annotation for mapping HTTP {@code PATCH} requests onto specific handler

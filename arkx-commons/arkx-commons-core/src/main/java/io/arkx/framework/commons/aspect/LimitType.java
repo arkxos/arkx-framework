@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2021 RapidArk
+ *  Copyright 2019-2020 Zheng Jie
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,23 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package io.arkx.framework.common.annotation;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package io.arkx.framework.commons.aspect;
 
 /**
- * @author jacky
- *  用于标记匿名访问方法
+ * 限流枚举
+ * @author darkness
+ * @date 2021/7/12 12:33
+ * @version 1.0
  */
-@Inherited
-@Documented
-@Target({ElementType.METHOD,ElementType.ANNOTATION_TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AnonymousAccess {
+public enum LimitType {
+    // 默认
+    CUSTOMER,
 
+    //  by ip addr
+    IP
 }

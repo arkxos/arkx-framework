@@ -1,7 +1,7 @@
-package io.arkx.framework.common.collection;
+package io.arkx.framework.commons.collection;
 
 
-import io.arkx.framework.common.annotation.JpaDto;
+import io.arkx.framework.commons.annotation.JpaDto;
 
 import jakarta.persistence.EntityResult;
 import jakarta.persistence.FieldResult;

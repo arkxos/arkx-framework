@@ -1,4 +1,4 @@
-package io.arkx.framework.common.core.constant;
+package io.arkx.framework.commons.constants;
 
 /**
  * 返回状态码

@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import io.arkx.boot.annotation.NoRepeatSubmit;
-import io.arkx.framework.common.exception.OpenException;
+import io.arkx.framework.commons.exception.OpenException;
 import com.google.common.collect.Maps;
 
 /**

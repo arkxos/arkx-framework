@@ -1,4 +1,4 @@
-package io.arkx.framework.common.exception;
+package io.arkx.framework.commons.exception;
 
 import io.arkx.framework.commons.constants.ErrorCode;
 

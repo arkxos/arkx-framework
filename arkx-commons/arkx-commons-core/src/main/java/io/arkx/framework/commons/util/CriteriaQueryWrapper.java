@@ -3,7 +3,7 @@ package io.arkx.framework.commons.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.arkx.framework.common.annotation.Query;
+import io.arkx.framework.commons.annotation.Query;
 
 import lombok.Data;
 

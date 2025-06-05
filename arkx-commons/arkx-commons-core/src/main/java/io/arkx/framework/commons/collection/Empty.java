@@ -1,4 +1,4 @@
-package io.arkx.framework.common.collection;
+package io.arkx.framework.commons.collection;
 
 /**
  * @author darkness

@@ -1,4 +1,4 @@
-package io.arkx.framework.common.annotation;
+package io.arkx.framework.commons.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

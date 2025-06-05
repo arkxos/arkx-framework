@@ -32,8 +32,8 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
-import io.arkx.framework.common.annotation.Limit;
-import io.arkx.framework.common.aspect.LimitType;
+import io.arkx.framework.commons.annotation.Limit;
+import io.arkx.framework.commons.aspect.LimitType;
 import io.arkx.framework.commons.util.RequestHolder;
 import com.google.common.collect.ImmutableList;
 
@@ -55,7 +55,7 @@ public class LimitAspect {
         this.redisTemplate = redisTemplate;
     }
 
-    @Pointcut("@annotation(io.arkx.framework.common.annotation.Limit)")
+    @Pointcut("@annotation(io.arkx.framework.commons.annotation.Limit)")
     public void pointcut() {
     }
 

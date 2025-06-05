@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package io.arkx.framework.common.annotation;
+package io.arkx.framework.commons.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

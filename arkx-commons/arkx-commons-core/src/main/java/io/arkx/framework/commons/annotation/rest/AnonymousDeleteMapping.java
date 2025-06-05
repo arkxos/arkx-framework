@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.arkx.framework.common.annotation.rest;
+package io.arkx.framework.commons.annotation.rest;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -26,26 +26,26 @@ import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import io.arkx.framework.common.annotation.AnonymousAccess;
+import io.arkx.framework.commons.annotation.AnonymousAccess;
 
 /**
- * Annotation for mapping HTTP {@code PUT} requests onto specific handler
+ * Annotation for mapping HTTP {@code DELETE} requests onto specific handler
  * methods.
- * * 支持匿名访问  PutMapping
+ * 支持匿名访问  DeleteMapping
  *
  * @author liaojinlong
  * @see AnonymousGetMapping
  * @see AnonymousPostMapping
  * @see AnonymousPutMapping
- * @see AnonymousDeleteMapping
+ * @see AnonymousPatchMapping
  * @see RequestMapping
  */
 @AnonymousAccess
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@RequestMapping(method = RequestMethod.PUT)
-public @interface AnonymousPutMapping {
+@RequestMapping(method = RequestMethod.DELETE)
+public @interface AnonymousDeleteMapping {
 
     /**
      * Alias for {@link RequestMapping#name}.
