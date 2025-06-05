@@ -1,4 +1,4 @@
-package io.arkx.commons.core.text;
+package io.arkx.framework.commons.lang.text;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

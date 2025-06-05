@@ -1,9 +1,9 @@
 package io.arkx.framework.common.utils;
 
-import static io.arkx.last.utils.FileUtil.getExtensionName;
-import static io.arkx.last.utils.FileUtil.getFileNameNoEx;
-import static io.arkx.last.utils.FileUtil.getSize;
-import static io.arkx.last.utils.FileUtil.toFile;
+import static io.arkx.framework.commons.utils3.FileUtil.getExtensionName;
+import static io.arkx.framework.commons.utils3.FileUtil.getFileNameNoEx;
+import static io.arkx.framework.commons.utils3.FileUtil.getSize;
+import static io.arkx.framework.commons.utils3.FileUtil.toFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;

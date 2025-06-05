@@ -13,25 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package io.arkx.last.utils;
+package io.arkx.framework.commons.utils3;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.Objects;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * 异常工具 2019-01-06
+ * 获取 HttpServletRequest
  * @author Zheng Jie
+ * @date 2018-11-24
  */
-public class ThrowableUtil {
+public class RequestHolder {
 
-    /**
-     * 获取堆栈信息
-     */
-    public static String getStackTrace(Throwable throwable){
-        StringWriter sw = new StringWriter();
-        try (PrintWriter pw = new PrintWriter(sw)) {
-            throwable.printStackTrace(pw);
-            return sw.toString();
-        }
+    public static HttpServletRequest getHttpServletRequest() {
+        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
     }
 }

@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package io.arkx.last.utils;
+package io.arkx.framework.commons.utils3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

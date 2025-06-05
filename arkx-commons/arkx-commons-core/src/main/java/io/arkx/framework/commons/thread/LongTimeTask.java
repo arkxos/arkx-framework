@@ -1,4 +1,4 @@
-package io.arkx.framework.cosyui.control;
+package io.arkx.framework.commons.thread;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +18,7 @@ import org.ark.framework.messages.StopThreadException;
  * 
  */
 public abstract class LongTimeTask extends Thread {
+
 	private static CacheMapx<Long, LongTimeTask> map = new CacheMapx<>();
 
 	private static long IDBase = System.currentTimeMillis();

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.arkx.commons.core.text.StrFormatter;
+import io.arkx.framework.commons.lang.text.StrFormatter;
 
 /**
  * 字符串工具类

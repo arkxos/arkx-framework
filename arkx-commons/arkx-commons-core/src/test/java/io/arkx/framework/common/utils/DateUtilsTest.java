@@ -5,7 +5,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import io.arkx.last.utils.DateUtil;
+import io.arkx.framework.commons.utils3.DateUtil;
 
 public class DateUtilsTest {
     @Test

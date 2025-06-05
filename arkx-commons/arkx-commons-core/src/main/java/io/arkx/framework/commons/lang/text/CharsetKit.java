@@ -1,4 +1,4 @@
-package io.arkx.commons.core.text;
+package io.arkx.framework.commons.lang.text;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

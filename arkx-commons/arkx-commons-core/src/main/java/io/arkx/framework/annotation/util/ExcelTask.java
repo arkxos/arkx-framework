@@ -1,7 +1,7 @@
 package io.arkx.framework.annotation.util;
 
 import io.arkx.framework.commons.collection.Mapx;
-import io.arkx.framework.cosyui.control.LongTimeTask;
+import io.arkx.framework.commons.thread.LongTimeTask;
 
 public interface ExcelTask {
 

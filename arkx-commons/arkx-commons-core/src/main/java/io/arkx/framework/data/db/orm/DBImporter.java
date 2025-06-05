@@ -9,7 +9,7 @@ import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
-import io.arkx.framework.cosyui.control.LongTimeTask;
+import io.arkx.framework.commons.thread.LongTimeTask;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
 import io.arkx.framework.data.db.dbtype.DBTypeService;

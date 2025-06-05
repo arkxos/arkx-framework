@@ -1,7 +1,7 @@
 package io.arkx.framework.common.utils;
 
-import static io.arkx.last.utils.EncryptUtils.desDecrypt;
-import static io.arkx.last.utils.EncryptUtils.desEncrypt;
+import static io.arkx.framework.commons.utils3.EncryptUtils.desDecrypt;
+import static io.arkx.framework.commons.utils3.EncryptUtils.desEncrypt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;

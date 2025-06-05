@@ -1,4 +1,4 @@
-package io.arkx.boot.service;
+package io.arkx.framework.lock;
 
 /**
  * @author darkness

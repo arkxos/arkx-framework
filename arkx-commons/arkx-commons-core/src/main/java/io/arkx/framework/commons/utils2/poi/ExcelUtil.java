@@ -47,7 +47,7 @@ import io.arkx.framework.commons.annotation1.Excel.Type;
 import io.arkx.framework.commons.annotation1.Excels;
 import io.arkx.framework.commons.config.RapidArkConfig;
 import io.arkx.framework.commons.domain.AjaxResult;
-import io.arkx.commons.core.text.Convert;
+import io.arkx.framework.commons.lang.text.Convert;
 import io.arkx.framework.commons.exception.CustomException;
 import io.arkx.framework.commons.utils2.DateUtils;
 import io.arkx.framework.commons.utils2.DictUtils;

@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.arkx.framework.commons.util.EncryptUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
-import io.arkx.boot.annotation.NoRepeatSubmit;
 import io.arkx.framework.commons.exception.OpenException;
 import com.google.common.collect.Maps;
 

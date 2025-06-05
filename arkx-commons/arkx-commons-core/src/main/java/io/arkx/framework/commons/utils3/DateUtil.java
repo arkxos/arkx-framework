@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.arkx.last.utils;
+package io.arkx.framework.commons.utils3;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

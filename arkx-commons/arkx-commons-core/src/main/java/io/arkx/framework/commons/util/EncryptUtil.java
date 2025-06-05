@@ -1,4 +1,4 @@
-package io.arkx.boot.aspect;
+package io.arkx.framework.commons.util;
 
 import io.arkx.framework.common.utils.Base58;
 

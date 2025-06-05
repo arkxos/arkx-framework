@@ -1,4 +1,4 @@
-package io.arkx.commons.core.text;
+package io.arkx.framework.commons.lang.text;
 
 import io.arkx.framework.commons.utils2.StringUtils;
 
