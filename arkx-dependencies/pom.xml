@@ -42,7 +42,7 @@
 
 		<spring-boot.version>3.5.0</spring-boot.version>
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
-		<spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
+		<spring-cloud-alibaba.version>2023.0.3.3</spring-cloud-alibaba.version>
 		<spring-security.version>5.8.15</spring-security.version>
 		<spring-boot-admin.version>3.4.5</spring-boot-admin.version>
 
@@ -153,8 +153,8 @@
 		<qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
 		<alipay.version>4.9.153.ALL</alipay.version>
 
-		<springdoc.version>2.8.6</springdoc.version>
-		<swagger.core.version>2.2.29</swagger.core.version>
+		<springdoc.version>2.8.8</springdoc.version>
+		<swagger.core.version>2.2.32</swagger.core.version>
 
 		<swagger.fox.version>3.0.0</swagger.fox.version>
 		<dynamic-ds.version>4.3.1</dynamic-ds.version>
