@@ -1,9 +1,9 @@
 package io.arkx.boot.aspect;
 
+import io.arkx.framework.commons.util.Base58;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import io.arkx.framework.common.utils.Base58;
 
 /**
  * @author darkness

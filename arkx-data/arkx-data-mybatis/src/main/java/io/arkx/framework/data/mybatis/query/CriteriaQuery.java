@@ -1,7 +1,8 @@
 package io.arkx.framework.data.mybatis.query;
 
+import io.arkx.common.utils.StringUtil;
+import io.arkx.common.utils.StringUtils;
 import io.arkx.framework.common.annotation.TableAlias;
-import io.arkx.framework.common.utils.StringUtils;
 import io.arkx.framework.data.mybatis.model.PageParams;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
@@ -48,7 +49,7 @@ public class CriteriaQuery<T> extends QueryWrapper<T> {
             //自动添加ordery by
             String order = pageParams.getOrder();
             Boolean isAsc = StringUtils.equalsIgnoreCase(SqlKeyword.ASC.name(), order);
-            sort = StringUtils.camelToUnderline(sort);
+            sort = StringUtil.camelToUnderline(sort);
             orderBy(true, isAsc, sort);
         }
     }

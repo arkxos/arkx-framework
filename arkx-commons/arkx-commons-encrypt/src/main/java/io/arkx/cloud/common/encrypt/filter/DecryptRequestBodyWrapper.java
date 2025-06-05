@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+import io.arkx.common.constant.Constants;
 import org.springframework.http.MediaType;
 
 import io.arkx.cloud.common.encrypt.utils.EncryptUtils;
-import io.arkx.framework.common.core.constant.Constants;
 
 import cn.hutool.core.io.IoUtil;
 import jakarta.servlet.ReadListener;

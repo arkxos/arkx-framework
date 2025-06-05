@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import io.arkx.common.utils.StringUtil;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
@@ -421,7 +422,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @return 返回结果 如："2016-09-05 16:06:42";
      */
     public static String unixTimeStamp2Date(String timestampString, String pattern) {
-        if (StringUtils.isBlank(pattern)) {
+        if (StringUtil.isBlank(pattern)) {
             pattern = "yyyy-MM-dd HH:mm:ss";
         }
         Long timestamp = Long.parseLong(timestampString) * ONE_MINUTE;

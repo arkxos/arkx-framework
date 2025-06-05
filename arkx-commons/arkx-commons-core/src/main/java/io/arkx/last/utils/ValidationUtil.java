@@ -15,9 +15,8 @@
  */
 package io.arkx.last.utils;
 
+import io.arkx.framework.commons.exception.BadRequestException;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
-
-import io.arkx.framework.common.exception.BadRequestException;
 
 import cn.hutool.core.util.ObjectUtil;
 

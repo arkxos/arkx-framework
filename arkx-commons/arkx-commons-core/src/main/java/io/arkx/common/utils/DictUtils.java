@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.arkx.common.constant.Constants;
 import io.arkx.common.core.domain.entity.SysDictData;
-import io.arkx.framework.common.utils.ArkSpringContextHolder;
+import io.arkx.framework.boot.spring.IocBeanRegister;
 
 /**
  * 字典工具类
@@ -27,7 +27,7 @@ public class DictUtils
      */
     public static void setDictCache(String key, List<SysDictData> dictDatas)
     {
-        ArkSpringContextHolder.getBean(IRedisCache.class).setCacheObject(getCacheKey(key), dictDatas);
+        IocBeanRegister.getBean(IRedisCache.class).setCacheObject(getCacheKey(key), dictDatas);
     }
 
     /**
@@ -38,7 +38,7 @@ public class DictUtils
      */
     public static List<SysDictData> getDictCache(String key)
     {
-        Object cacheObj = ArkSpringContextHolder.getBean(IRedisCache.class).getCacheObject(getCacheKey(key));
+        Object cacheObj = IocBeanRegister.getBean(IRedisCache.class).getCacheObject(getCacheKey(key));
         if (StringUtils.isNotNull(cacheObj))
         {
             List<SysDictData> dictDatas = StringUtils.cast(cacheObj);
@@ -156,8 +156,8 @@ public class DictUtils
      */
     public static void clearDictCache()
     {
-        Collection<String> keys = ArkSpringContextHolder.getBean(IRedisCache.class).keys(Constants.SYS_DICT_KEY + "*");
-        ArkSpringContextHolder.getBean(IRedisCache.class).deleteObject(keys);
+        Collection<String> keys = IocBeanRegister.getBean(IRedisCache.class).keys(Constants.SYS_DICT_KEY + "*");
+        IocBeanRegister.getBean(IRedisCache.class).deleteObject(keys);
     }
 
     /**

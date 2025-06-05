@@ -1,7 +1,7 @@
 package io.arkx.framework.data.jpa.service;
 
 import io.arkx.framework.common.utils.CriteriaQueryWrapper;
-import io.arkx.framework.common.utils.PageResult;
+import io.arkx.framework.commons.model.PageResult;
 import io.arkx.framework.data.jpa.BaseRepository;
 
 import org.springframework.data.domain.ExampleMatcher;

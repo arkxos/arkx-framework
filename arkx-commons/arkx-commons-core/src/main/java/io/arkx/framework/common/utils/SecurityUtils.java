@@ -17,13 +17,13 @@ package io.arkx.framework.common.utils;
 
 import java.util.List;
 
+import io.arkx.framework.commons.exception.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import io.arkx.framework.common.exception.BadRequestException;
 import io.arkx.framework.common.utils.enums.DataScopeEnum;
 
 import cn.hutool.json.JSONArray;

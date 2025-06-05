@@ -1,6 +1,6 @@
 package io.arkx.framework.common.exception;
 
-import io.arkx.framework.common.constants.ErrorCode;
+import io.arkx.framework.commons.constants.ErrorCode;
 
 /**
  * 基础错误异常

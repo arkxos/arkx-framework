@@ -17,6 +17,9 @@ package io.arkx.boot.aspect;
 
 import java.lang.reflect.Method;
 
+import io.arkx.common.utils.StringUtil;
+import io.arkx.common.utils.StringUtils;
+import io.arkx.framework.commons.exception.BadRequestException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,9 +34,7 @@ import org.springframework.stereotype.Component;
 
 import io.arkx.framework.common.annotation.Limit;
 import io.arkx.framework.common.aspect.LimitType;
-import io.arkx.framework.common.exception.BadRequestException;
 import io.arkx.framework.common.utils.RequestHolder;
-import io.arkx.framework.common.utils.StringUtils;
 import com.google.common.collect.ImmutableList;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,7 +69,7 @@ public class LimitAspect {
         String key = limit.key();
         if (StringUtils.isEmpty(key)) {
             if (limitType == LimitType.IP) {
-                key = StringUtils.getIp(request);
+                key = StringUtil.getIp(request);
             } else {
                 key = signatureMethod.getName();
             }

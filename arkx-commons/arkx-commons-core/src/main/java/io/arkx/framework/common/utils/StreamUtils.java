@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
+import io.arkx.common.utils.StringUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -79,7 +80,7 @@ public class StreamUtils {
      * @return 拼接后的list
      */
     public static <E> String join(Collection<E> collection, Function<E, String> function) {
-        return join(collection, function, StringUtils.CommaSeparator);
+        return join(collection, function, StringUtil.CommaSeparator);
     }
 
     /**
@@ -92,7 +93,7 @@ public class StreamUtils {
      */
     public static <E> String join(Collection<E> collection, Function<E, String> function, CharSequence delimiter) {
         if (CollUtil.isEmpty(collection)) {
-            return StringUtils.EMPTY;
+            return StringUtil.EMPTY;
         }
         return collection.stream().map(function).filter(Objects::nonNull).collect(Collectors.joining(delimiter));
     }

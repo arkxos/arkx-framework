@@ -13,6 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 
+import io.arkx.common.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -46,7 +47,7 @@ public class CryptoUtils {
      */
     public static String encrypt(String paramString, String clientSecret, CryptoType type) {
         String encryptStr = "";
-        if (StringUtils.isNotEmpty(paramString)) {
+        if (StringUtil.isNotEmpty(paramString)) {
             if (type == null) {
                 type = CryptoType.RSA;
             }
@@ -86,7 +87,7 @@ public class CryptoUtils {
     public static Map<String, String> decryptToMap(String paramString, String clientSecret, CryptoType type) {
         Map<String, String> paramMap = new HashMap<>(0);
         String decryptStr = decrypt(paramString, clientSecret, type);
-        if (StringUtils.isNotEmpty(decryptStr)) {
+        if (StringUtil.isNotEmpty(decryptStr)) {
             paramMap = JSONObject.parseObject(decryptStr, new TypeReference<Map<String, String>>() {
             });
         }
@@ -103,7 +104,7 @@ public class CryptoUtils {
      */
     public static String decrypt(String paramString, String clientSecret, CryptoType type) {
         String decryptStr = "";
-        if (StringUtils.isNotEmpty(paramString)) {
+        if (StringUtil.isNotEmpty(paramString)) {
             if (type == null) {
                 type = CryptoType.RSA;
             }

@@ -4,10 +4,10 @@ package io.arkx.framework.boot.config.redis;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import io.arkx.common.utils.StringUtils;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import com.alibaba.fastjson.JSON;
-import io.arkx.framework.common.utils.StringUtils;
 
 import cn.hutool.core.lang.Assert;
 

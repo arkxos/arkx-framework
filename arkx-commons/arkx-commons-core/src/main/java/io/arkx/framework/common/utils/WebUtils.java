@@ -19,6 +19,8 @@ import java.util.Map.Entry;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
+import io.arkx.common.utils.EncodeUtils;
+import io.arkx.common.utils.StringUtil;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -46,7 +48,7 @@ public class WebUtils {
     /**
      * 静态文件后缀
      */
-    private final static String[] staticFiles = StringUtils.split(staticSuffix, ",");
+    private final static String[] staticFiles = StringUtil.split(staticSuffix, ",");
 
     /**
      * 动态映射URL后缀
@@ -385,7 +387,7 @@ public class WebUtils {
         } else if (contentType != null && contentType.contains(MediaType.APPLICATION_JSON_VALUE)) {
             // json表单
             String body = getBodyString(request);
-            if (StringUtils.isNotBlank(body)) {
+            if (StringUtil.isNotBlank(body)) {
                 try {
                     returnMap = JSONObject.parseObject(body, Map.class);
                 } catch (Exception e) {
@@ -512,8 +514,8 @@ public class WebUtils {
      * @throws Exception
      */
     public static boolean isStaticFile(String uri) {
-        return StringUtils.endsWithAny(uri, staticFiles) && !StringUtils.endsWithAny(uri, new String[]{urlSuffix})
-                && !StringUtils.endsWithAny(uri, new String[]{".jsp"}) && !StringUtils.endsWithAny(uri, new String[]{".java"});
+        return StringUtil.endsWithAny(uri, staticFiles) && !StringUtil.endsWithAny(uri, new String[]{urlSuffix})
+                && !StringUtil.endsWithAny(uri, new String[]{".jsp"}) && !StringUtil.endsWithAny(uri, new String[]{".java"});
     }
 
     /**

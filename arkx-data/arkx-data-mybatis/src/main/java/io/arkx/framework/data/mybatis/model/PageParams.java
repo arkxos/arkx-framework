@@ -1,10 +1,11 @@
 package io.arkx.framework.data.mybatis.model;
 
-import io.arkx.framework.common.constants.CommonConstants;
-import io.arkx.framework.common.utils.BeanConvertUtils;
-import io.arkx.framework.common.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Maps;
+import io.arkx.common.utils.BeanConvertUtils;
+import io.arkx.common.utils.StringUtil;
+import io.arkx.common.utils.StringUtils;
+import io.arkx.framework.commons.constants.CommonConstants;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class PageParams extends Page implements Serializable {
             order = "asc";
         }
         if (StringUtils.isNotBlank(sort)) {
-            this.setOrderBy(String.format("%s %s", StringUtils.camelToUnderline(sort), order));
+            this.setOrderBy(String.format("%s %s", StringUtil.camelToUnderline(sort), order));
         }
         return orderBy;
     }

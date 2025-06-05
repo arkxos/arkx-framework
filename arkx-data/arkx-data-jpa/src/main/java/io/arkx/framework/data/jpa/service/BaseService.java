@@ -1,8 +1,8 @@
 package io.arkx.framework.data.jpa.service;
 
 import io.arkx.framework.common.utils.CriteriaQueryWrapper;
-import io.arkx.framework.common.utils.PageResult;
 import io.arkx.framework.common.utils.QueryHelp;
+import io.arkx.framework.commons.model.PageResult;
 import io.arkx.framework.data.jpa.BaseRepository;
 
 import org.hibernate.query.sql.internal.NativeQueryImpl;

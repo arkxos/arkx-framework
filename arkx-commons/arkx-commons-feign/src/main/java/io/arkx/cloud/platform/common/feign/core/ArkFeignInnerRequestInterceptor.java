@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import org.springframework.core.Ordered;
 
 import io.arkx.cloud.platform.common.feign.annotation.NoToken;
-import io.arkx.common.core.constant.SecurityConstants;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

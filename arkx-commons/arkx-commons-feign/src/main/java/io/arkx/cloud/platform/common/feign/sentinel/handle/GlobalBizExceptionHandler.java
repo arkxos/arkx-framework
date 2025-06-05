@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import io.arkx.framework.common.model.ResponseResult;
+import io.arkx.framework.commons.web.ResponseResult;
 
 import lombok.extern.slf4j.Slf4j;
 

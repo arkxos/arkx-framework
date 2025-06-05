@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import io.arkx.common.utils.StringUtil;
 import io.arkx.framework.common.annotation.DataPermission;
 import io.arkx.framework.common.annotation.Query;
 
@@ -54,10 +55,10 @@ public class QueryHelp {
             // 获取数据权限
             List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
             if(CollectionUtil.isNotEmpty(dataScopes)){
-                if(StringUtils.isNotBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                if(StringUtil.isNotBlank(permission.joinName()) && StringUtil.isNotBlank(permission.fieldName())) {
                     Join join = root.join(permission.joinName(), JoinType.LEFT);
                     list.add(getExpression(permission.fieldName(),join, root).in(dataScopes));
-                } else if (StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                } else if (StringUtil.isBlank(permission.joinName()) && StringUtil.isNotBlank(permission.fieldName())) {
                     list.add(getExpression(permission.fieldName(),null, root).in(dataScopes));
                 }
             }
@@ -146,10 +147,10 @@ public class QueryHelp {
             // 获取数据权限
             List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
             if(CollectionUtil.isNotEmpty(dataScopes)){
-                if(StringUtils.isNotBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                if(StringUtil.isNotBlank(permission.joinName()) && StringUtil.isNotBlank(permission.fieldName())) {
                     Join join = root.join(permission.joinName(), JoinType.LEFT);
                     list.add(getExpression(permission.fieldName(),join, root).in(dataScopes));
-                } else if (StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                } else if (StringUtil.isBlank(permission.joinName()) && StringUtil.isNotBlank(permission.fieldName())) {
                     list.add(getExpression(permission.fieldName(),null, root).in(dataScopes));
                 }
             }

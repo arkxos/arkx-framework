@@ -4,13 +4,14 @@ package io.arkx.framework.commons.data.model;
 import java.io.Serializable;
 import java.util.Map;
 
+import io.arkx.common.utils.BeanConvertUtils;
+import io.arkx.common.utils.StringUtil;
+import io.arkx.common.utils.StringUtils;
+import io.arkx.framework.commons.constants.CommonConstants;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import io.arkx.framework.common.constants.CommonConstants;
-import io.arkx.framework.common.utils.BeanConvertUtils;
-import io.arkx.framework.common.utils.StringUtils;
 import com.google.common.collect.Maps;
 
 import lombok.Data;
@@ -111,7 +112,7 @@ public class PageParams implements Serializable {
 			order = "asc";
 		}
 		if (StringUtils.isNotBlank(sort)) {
-			this.setOrderBy(String.format("%s %s", StringUtils.camelToUnderline(sort), order));
+			this.setOrderBy(String.format("%s %s", StringUtil.camelToUnderline(sort), order));
 		}
 		return orderBy;
 	}

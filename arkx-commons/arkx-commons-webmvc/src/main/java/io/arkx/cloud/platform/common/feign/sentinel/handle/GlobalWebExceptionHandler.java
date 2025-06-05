@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import io.arkx.framework.common.model.ResponseResult;
+import io.arkx.framework.commons.web.ResponseResult;
 
 import lombok.extern.slf4j.Slf4j;
 

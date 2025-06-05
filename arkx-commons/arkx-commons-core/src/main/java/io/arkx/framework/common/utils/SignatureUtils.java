@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import io.arkx.common.utils.StringUtil;
+import io.arkx.framework.commons.constants.CommonConstants;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSONObject;
-import io.arkx.framework.common.constants.CommonConstants;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -110,7 +111,7 @@ public class SignatureUtils {
         StringBuilder sb = new StringBuilder();
         String signType = paramMap.get(CommonConstants.SIGN_TYPE_KEY);
         SignType type = null;
-        if (StringUtils.isNotBlank(signType)) {
+        if (StringUtil.isNotBlank(signType)) {
             type = SignType.valueOf(signType);
         }
         if (type == null) {

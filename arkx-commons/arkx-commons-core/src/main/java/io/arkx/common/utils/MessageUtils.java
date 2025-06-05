@@ -1,9 +1,8 @@
 package io.arkx.common.utils;
 
+import io.arkx.framework.boot.spring.IocBeanRegister;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-
-import io.arkx.framework.common.utils.ArkSpringContextHolder;
 
 /**
  * 获取i18n资源文件
@@ -21,7 +20,7 @@ public class MessageUtils
      */
     public static String message(String code, Object... args)
     {
-        MessageSource messageSource = ArkSpringContextHolder.getBean(MessageSource.class);
+        MessageSource messageSource = IocBeanRegister.getBean(MessageSource.class);
         return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

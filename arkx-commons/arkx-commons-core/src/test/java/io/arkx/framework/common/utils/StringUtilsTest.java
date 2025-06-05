@@ -1,16 +1,15 @@
 package io.arkx.framework.common.utils;
 
-import static io.arkx.framework.common.utils.StringUtils.getIp;
-import static io.arkx.framework.common.utils.StringUtils.getWeekDay;
-import static io.arkx.framework.common.utils.StringUtils.toCamelCase;
-import static io.arkx.framework.common.utils.StringUtils.toCapitalizeCamelCase;
-import static io.arkx.framework.common.utils.StringUtils.toUnderScoreCase;
+import static io.arkx.common.utils.StringUtil.*;
+import static io.arkx.common.utils.StringUtils.toCamelCase;
+import static io.arkx.common.utils.StringUtils.toUnderScoreCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.arkx.common.utils.StringUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -23,13 +22,13 @@ public class StringUtilsTest {
 
     @Test
     public void testToCapitalizeCamelCase() {
-        assertNull(StringUtils.toCapitalizeCamelCase(null));
+        assertNull(StringUtil.toCapitalizeCamelCase(null));
         assertEquals("HelloWorld", toCapitalizeCamelCase("hello_world"));
     }
 
     @Test
     public void testToUnderScoreCase() {
-        assertNull(StringUtils.toUnderScoreCase(null));
+        assertNull(StringUtil.toUnderScoreCase(null));
         assertEquals("hello_world", toUnderScoreCase("helloWorld"));
         assertEquals("\u0000\u0000", toUnderScoreCase("\u0000\u0000"));
         assertEquals("\u0000_a", toUnderScoreCase("\u0000A"));
