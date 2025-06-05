@@ -1,4 +1,4 @@
-package io.arkx.framework.common.utils;
+package io.arkx.framework.commons.util;
 
 import java.awt.Color;
 import java.awt.Font;

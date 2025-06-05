@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package io.arkx.framework.common.utils;
+package io.arkx.framework.commons.util;
 
 import io.arkx.framework.commons.exception.BadRequestException;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
@@ -25,7 +25,7 @@ import cn.hutool.core.util.ObjectUtil;
  * @author Zheng Jie
  * @date 2018-11-23
  */
-public class ValidationUtil{
+public class ValidationUtil {
 
     /**
      * 验证空

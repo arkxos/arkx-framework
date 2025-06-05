@@ -1,5 +1,7 @@
 package io.arkx.framework.common.utils;
 
+import io.arkx.framework.commons.util.Value;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -104,8 +106,6 @@ public class CountableThreadPool {
             });
         }
         exec.shutdown();// 并不是终止线程的运行，而是禁止在这个Executor中添加新的任务
-
-        Value<Integer> value = new Value<>(0);
 
         CountableThreadPool countableThreadPool = new CountableThreadPool(5);
         for (int i = 0; i < 100; i++) {
