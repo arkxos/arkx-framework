@@ -1,23 +1,28 @@
-package io.arkx.framework.commons.annotation1;
+package io.arkx.framework.commons.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自定义注解防止表单重复提交
+ * 数据权限过滤注解
  * 
  * @author Darkness
- *
  */
-@Inherited
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RepeatSubmit
+public @interface DataScope
 {
+    /**
+     * 部门表的别名
+     */
+    public String deptAlias() default "";
 
+    /**
+     * 用户表的别名
+     */
+    public String userAlias() default "";
 }

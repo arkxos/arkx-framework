@@ -6,10 +6,10 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import io.arkx.framework.commons.annotation1.Excel;
-import io.arkx.framework.commons.annotation1.Excel.ColumnType;
-import io.arkx.framework.commons.annotation1.Excel.Type;
-import io.arkx.framework.commons.annotation1.Excels;
+import io.arkx.framework.commons.annotation.Excel;
+import io.arkx.framework.commons.annotation.Excel.ColumnType;
+import io.arkx.framework.commons.annotation.Excel.Type;
+import io.arkx.framework.commons.annotation.Excels;
 import io.arkx.framework.commons.domain.BaseEntity;
 import io.arkx.framework.commons.utils2.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;

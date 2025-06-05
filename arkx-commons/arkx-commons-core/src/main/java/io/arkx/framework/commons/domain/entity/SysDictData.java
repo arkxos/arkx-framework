@@ -3,8 +3,8 @@ package io.arkx.framework.commons.domain.entity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import io.arkx.framework.commons.annotation1.Excel;
-import io.arkx.framework.commons.annotation1.Excel.ColumnType;
+import io.arkx.framework.commons.annotation.Excel;
+import io.arkx.framework.commons.annotation.Excel.ColumnType;
 import io.arkx.framework.commons.constants.UserConstants;
 import io.arkx.framework.commons.domain.BaseEntity;
 
