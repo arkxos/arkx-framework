@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.arkx.framework.commons.util.CountableThreadPool;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.slf4j.Logger;
@@ -26,7 +27,6 @@ import io.arkx.framework.commons.simplequeue.pipeline.ResultItemsCollectorPipeli
 import io.arkx.framework.commons.simplequeue.scheduler.MonitorableScheduler;
 import io.arkx.framework.commons.simplequeue.scheduler.QueueScheduler;
 import io.arkx.framework.commons.simplequeue.scheduler.Scheduler;
-import io.arkx.framework.commons.simplequeue.thread.CountableThreadPool;
 import io.arkx.framework.commons.simplequeue.utils.WMCollections;
 import io.arkx.framework.commons.util.NumberUtil;
 
