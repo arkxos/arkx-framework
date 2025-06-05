@@ -14,7 +14,6 @@ import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
  * @date 2022/3/29
  */
 @PropertySource(value = "classpath:seata-config.yml", factory = YamlPropertySourceFactory.class)
-@EnableAutoDataSourceProxy(useJdkProxy = true)
 @Configuration(proxyBeanMethods = false)
 public class SeataAutoConfiguration {
 
