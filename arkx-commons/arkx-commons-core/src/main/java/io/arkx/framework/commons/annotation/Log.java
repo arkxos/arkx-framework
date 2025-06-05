@@ -1,4 +1,4 @@
-package io.arkx.framework.commons.annotation1;
+package io.arkx.framework.commons.annotation;
 
 import io.arkx.framework.commons.enums.BusinessType;
 import io.arkx.framework.commons.enums.OperatorType;
