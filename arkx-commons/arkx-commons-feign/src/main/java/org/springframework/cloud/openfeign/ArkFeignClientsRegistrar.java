@@ -39,7 +39,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import io.arkx.cloud.platform.common.feign.ArkFeignAutoConfiguration;
+import io.arkx.framework.cloud.feign.ArkFeignAutoConfiguration;
 
 import lombok.Getter;
 

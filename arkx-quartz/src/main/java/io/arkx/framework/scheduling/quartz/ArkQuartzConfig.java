@@ -1,6 +1,6 @@
 package io.arkx.framework.scheduling.quartz;
 
-import io.arkx.commons.core.factory.YamlPropertySourceFactory;
+import io.arkx.framework.core.YamlPropertySourceFactory;
 import org.quartz.Calendar;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
