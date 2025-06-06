@@ -1,0 +1,33 @@
++-----------------+     +---------------------+     +-----------------+
+|    OSHI库       | <-- | SystemInfoService   | <-- | SystemMonitor    |
+| (系统信息底层库)   |     | (系统指标获取)       |     | (业务逻辑监控)     |
++-----------------+     +---------+-----------+     +---------+-------+
+       ↑                           |                           |
+       |                           |                           ↓
++-----------------+     +---------+-----------+     +---------+-------+
+| TraceRepository | <-- |   TraceRecorder    | <-- |   TraceContext   |
+| (存储实现)        |     | (跟踪记录器)         |     | (跟踪上下文管理)    |
++-----------------+     +---------+-----------+     +---------+-------+
+                    ↑            |           ↑              |
+                    |            |           |              |
++-----------------+ | +---------+-----------+ | +-----------------+
+|   Config        | | |  MethodMonitorAspect| | |  Interceptors   |
+| (监控配置)        | | | (方法监控切面)       | | | (HTTP/SQL拦截器)  |
++-----------------+ | +---------------------+ | +-----------------+
+                    |                         |              |
+                    |                         |              ↓
++-----------------+ |                         | +-----------------+
+|   API Controllers|---------------------------|  HTTP Clients   |
+| (监控API端点)     |                             | (客户端请求)       |
++-----------------+                             +-----------------+
+
+组件关系说明:
+1. OSHI -> SystemInfoService: 提供硬件级系统指标
+2. SystemInfoService -> SystemMonitor: 提供处理后的系统指标
+3. TraceContext -> TraceRecorder: 提供跟踪上下文
+4. TraceRecorder -> TraceRepository: 批量存储跟踪数据
+5. MethodMonitorAspect -> TraceContext: 方法调用信息
+6. Interceptors -> TraceContext: HTTP/SQL调用信息
+7. SystemMonitor -> Config: 动态调整配置参数
+8. Config -> 所有组件: 提供运行时配置
+9. API Controllers -> 所有业务组件: 提供监控数据API
