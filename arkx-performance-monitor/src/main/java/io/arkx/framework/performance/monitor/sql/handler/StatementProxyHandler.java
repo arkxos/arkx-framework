@@ -2,7 +2,6 @@ package io.arkx.framework.performance.monitor.sql.handler;
 
 import io.arkx.framework.performance.monitor.TraceContext;
 import io.arkx.framework.performance.monitor.TraceRecorder;
-import io.arkx.framework.performance.monitor.config.MonitorConfig;
 import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 import io.arkx.framework.performance.monitor.model.TraceNode;
 import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
@@ -31,6 +30,9 @@ public class StatementProxyHandler implements InvocationHandler {
 	private final MonitorConfigService configService;
 	private final TraceRecorder recorder;
 	private final Map<Integer, Object> parameters = new ConcurrentHashMap<>();
+
+	// 新增常量
+	private static final Object NULL_PLACEHOLDER = new Object();
 
 	public StatementProxyHandler(Statement realStatement, String sql,
 								 MonitorConfigService configService,
@@ -62,7 +64,8 @@ public class StatementProxyHandler implements InvocationHandler {
 			if (args != null && args.length > 1 && args[0] instanceof Integer) {
 				int index = (Integer) args[0];
 				Object value = args[1];
-				parameters.put(index, value);
+				// 将 null 替换为占位符
+				parameters.put(index, value != null ? value : NULL_PLACEHOLDER);
 			}
 		} catch (Exception e) {
 			log.debug("Error capturing SQL parameter", e);
@@ -94,7 +97,7 @@ public class StatementProxyHandler implements InvocationHandler {
 			sqlNode.complete();
 
 			// 采样决策
-			if (configService.shouldSample(sqlNode.getSql())) {
+			if (configService.shouldSample(sqlNode.getRawSql())) {
 				recorder.record(sqlNode);
 			}
 
@@ -111,7 +114,7 @@ public class StatementProxyHandler implements InvocationHandler {
 	private TraceNode createSqlTraceNode() {
 		TraceNode node = new TraceNode();
 		node.setType("SQL");
-		node.setSql(sql);
+		node.setRawSql(sql);
 		node.setStartTime(System.nanoTime());
 
 		// 生成完整SQL
@@ -134,7 +137,11 @@ public class StatementProxyHandler implements InvocationHandler {
 	private String serializeParameters() {
 		if (parameters.isEmpty()) return "[]";
 		return parameters.entrySet().stream()
-				.map(e -> e.getKey() + "=" + formatSqlValue(e.getValue()))
+				.map(e -> {
+					Object value = e.getValue();
+					String strValue = value == NULL_PLACEHOLDER ? "NULL" : formatSqlValue(value);
+					return e.getKey() + "=" + strValue;
+				})
 				.collect(Collectors.joining(", ", "[", "]"));
 	}
 
@@ -162,9 +169,14 @@ public class StatementProxyHandler implements InvocationHandler {
 			Object param = params.get(i);
 			if (param == null) continue;
 
-			String value = param instanceof String ?
-					"'" + escapeSql(param.toString()) + "'" :
-					param.toString();
+			String value;
+			if (param == NULL_PLACEHOLDER) {
+				value = "NULL"; // 直接生成 SQL 的 NULL 关键字
+			} else if (param instanceof String) {
+				value = "'" + escapeSql(param.toString()) + "'";
+			} else {
+				value = param.toString();
+			}
 
 			int pos = fullSql.indexOf("?", offset);
 			if (pos < 0) break;

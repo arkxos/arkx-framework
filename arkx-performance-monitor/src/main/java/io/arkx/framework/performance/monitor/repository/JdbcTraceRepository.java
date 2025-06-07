@@ -30,16 +30,16 @@ public  class JdbcTraceRepository implements TraceRepository {
 
 	// JDBC资源
 	private final DataSource dataSource;
-	private final Connection dedicatedConn;
+//	private final Connection dedicatedConn;
 //	private final PreparedStatement insertStmt;
 
 	// SQL模板
 	// 使用PreparedStatement优化性能
 	private static final String INSERT_TRACE = "INSERT INTO monitor_trace (" +
-			"trace_id, parent_id, node_type, class_name, method_name, " +
-			"sql, sql_parameters, full_sql, start_time, end_time, duration, " +
-			"success, error_message, depth, request_id, endpoint" +
-			") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			" trace_id, parent_id, node_type, class_name, method_name, signature," + // 新增 signature
+			" raw_sql, sql_parameters, full_sql, depth, start_time, end_time," +        // 调整字段顺序
+			" duration, success, error_message, request_id, session_id, endpoint" + // 新增 session_id
+			") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";      // 18个?
 
 	private static final String INSERT_SLOW_SQL = "INSERT INTO monitor_slow_sql (" +
 			"sql_hash, sql_template, max_duration, avg_duration, occurrence_count, last_occurrence" +
@@ -68,8 +68,8 @@ public  class JdbcTraceRepository implements TraceRepository {
 	public JdbcTraceRepository(@Lazy DataSource dataSource, @Lazy MonitorConfig config) throws SQLException {
 		this.dataSource = dataSource;
 		this.config = config;
-		this.dedicatedConn = dataSource.getConnection();
-		this.dedicatedConn.setAutoCommit(false);
+//		this.dedicatedConn = dataSource.getConnection();
+//		this.dedicatedConn.setAutoCommit(false);
 //		this.insertStmt = dedicatedConn.prepareStatement(INSERT_SQL);
 	}
 
@@ -84,7 +84,7 @@ public  class JdbcTraceRepository implements TraceRepository {
 			 PreparedStatement methodStmt = config.isCaptureSlowMethods() ?
 					 conn.prepareStatement(INSERT_SLOW_METHOD) : null) {
 
-			conn.setAutoCommit(false);
+//			conn.setAutoCommit(false);
 
 			// 批量保存原始跟踪数据
 			for (TraceNode node : nodes) {
@@ -109,7 +109,7 @@ public  class JdbcTraceRepository implements TraceRepository {
 			if (sqlStmt != null) sqlStmt.executeBatch();
 			if (methodStmt != null) methodStmt.executeBatch();
 
-			conn.commit();
+//			conn.commit();
 
 		} catch (SQLException e) {
 			log.error("Failed to save trace batch", e);
@@ -145,7 +145,7 @@ public  class JdbcTraceRepository implements TraceRepository {
 		node.setClassName(rs.getString("class_name"));
 		node.setMethodName(rs.getString("method_name"));
 		node.setSignature(rs.getString("signature"));
-		node.setSql(rs.getString("sql"));
+		node.setRawSql(rs.getString("raw_sql"));
 		node.setSqlParameters(rs.getString("sql_parameters"));
 		node.setFullSql(rs.getString("full_sql"));
 		node.setStartTime(rs.getLong("start_time"));
@@ -183,38 +183,38 @@ public  class JdbcTraceRepository implements TraceRepository {
 	private void bindTraceParameters(PreparedStatement stmt, TraceNode node) throws SQLException {
 		int index = 1;
 
-		// 基本参数
-		stmt.setString(index++, node.getTraceId());
-		stmt.setString(index++, node.getParentId());
-		stmt.setString(index++, node.getType());
-		stmt.setString(index++, node.getClassName());
-		stmt.setString(index++, node.getMethodName());
-		stmt.setString(index++, node.getSignature());
+		// 基本参数（与 SQL 字段顺序严格一致）
+		stmt.setString(index++, node.getTraceId());      // trace_id
+		stmt.setString(index++, node.getParentId());     // parent_id
+		stmt.setString(index++, node.getType());         // node_type
+		stmt.setString(index++, node.getClassName());    // class_name
+		stmt.setString(index++, node.getMethodName());   // method_name
+		stmt.setString(index++, node.getSignature());    // signature
 
 		// SQL信息
-		stmt.setString(index++, node.getSql());
-		stmt.setString(index++, node.getSqlParameters());
-		stmt.setString(index++, node.getFullSql());
+		stmt.setString(index++, node.getRawSql());          // raw_sql
+		stmt.setString(index++, node.getSqlParameters()); // sql_parameters
+		stmt.setString(index++, node.getFullSql());       // full_sql
 
 		// 时间信息
-		stmt.setInt(index++, node.getDepth());
-		stmt.setLong(index++, node.getStartTime());
-		stmt.setLong(index++, node.getEndTime());
-		stmt.setLong(index++, node.getDuration());
+		stmt.setInt(index++, node.getDepth());           // depth（位置调整）
+		stmt.setLong(index++, node.getStartTime());      // start_time
+		stmt.setLong(index++, node.getEndTime());        // end_time
+		stmt.setLong(index++, node.getDuration());       // duration
 
 		// 状态信息
-		stmt.setBoolean(index++, node.isSuccess());
-		stmt.setString(index++, node.getErrorMessage());
+		stmt.setBoolean(index++, node.isSuccess());      // success
+		stmt.setString(index++, node.getErrorMessage()); // error_message
 
 		// 上下文
-		stmt.setString(index++, node.getRequestId());
-		stmt.setString(index++, node.getSessionId());
-		stmt.setString(index++, node.getEndpoint());
+		stmt.setString(index++, node.getRequestId());    // request_id
+		stmt.setString(index++, node.getSessionId());    // session_id（新增）
+		stmt.setString(index++, node.getEndpoint());     // endpoint
 	}
 
 	private void bindSlowSqlParameters(PreparedStatement stmt, TraceNode node) throws SQLException {
 		String sql = StringUtils.isNotBlank(node.getFullSql()) ?
-				node.getFullSql() : node.getSql();
+				node.getFullSql() : node.getRawSql();
 		String sqlHash = DigestUtils.md5Hex(sql);
 
 		stmt.setString(1, sqlHash);
@@ -242,13 +242,13 @@ public  class JdbcTraceRepository implements TraceRepository {
 	// 重置数据库连接
 	private void resetConnection() {
 		try {
-			if (dedicatedConn != null && !dedicatedConn.isClosed()) {
-				dedicatedConn.rollback();
-			}
+//			if (dedicatedConn != null && !dedicatedConn.isClosed()) {
+//				dedicatedConn.rollback();
+//			}
 //			if (insertStmt != null) {
 //				insertStmt.clearBatch();
 //			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			log.error("Failed to reset connection", e);
 		}
 	}
@@ -257,8 +257,8 @@ public  class JdbcTraceRepository implements TraceRepository {
 	public void shutdown() {
 		try {
 //			if (insertStmt != null) insertStmt.close();
-			if (dedicatedConn != null) dedicatedConn.close();
-		} catch (SQLException e) {
+//			if (dedicatedConn != null) dedicatedConn.close();
+		} catch (Exception e) {
 			log.error("Error closing JDBC resources", e);
 		}
 	}

@@ -2,7 +2,6 @@ package io.arkx.framework.performance.monitor.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
@@ -34,7 +33,7 @@ public class TraceNode {
 	private int depth;
 
 	// SQL专用信息
-	private String sql;
+	private String rawSql;
 	private String sqlParameters;
 	private String fullSql;
 
@@ -173,9 +172,9 @@ public class TraceNode {
 	}
 
 	private String summarizeSql() {
-		if (!StringUtils.hasText(sql)) return "Unknown SQL";
+		if (!StringUtils.hasText(rawSql)) return "Unknown SQL";
 
-		String workingSql = StringUtils.hasText(fullSql) ? fullSql : sql;
+		String workingSql = StringUtils.hasText(fullSql) ? fullSql : rawSql;
 		String sqlType = getSqlType(workingSql);
 		String table = extractTableName(workingSql);
 
