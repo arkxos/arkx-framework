@@ -24,9 +24,9 @@ public class MessageBusBeanPostProcessor implements BeanPostProcessor {
 		return bean;
 	}
 
-	@Override
-	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		return bean;
-	}
+//	@Override
+//	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+//		return bean;
+//	}
 
 }
