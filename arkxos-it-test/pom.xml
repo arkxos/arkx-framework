@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>io.arkx.framework</groupId>
+		<artifactId>arkx-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../arkx-parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>arkxos-it-test</artifactId>
+
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<arkxos.version>0.2.2</arkxos.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.arkx.framework</groupId>
+			<artifactId>arkx-performance-monitor</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!--		<dependency>-->
+		<!--			<groupId>com.baomidou</groupId>-->
+		<!--			<artifactId>dynamic-datasource-druid-starter</artifactId>-->
+		<!--			<version>4.3.1</version> &lt;!&ndash; 与 dynamic-datasource 主版本一致 &ndash;&gt;-->
+		<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+		<!--必备：认证中心模块-->
+		<dependency>
+			<groupId>com.arkxos</groupId>
+			<artifactId>arkxos-auth</artifactId>
+			<version>${arkxos.version}</version>
+		</dependency>
+		<!--必备：用户管理模块-->
+		<dependency>
+			<groupId>com.arkxos</groupId>
+			<artifactId>arkxos-system</artifactId>
+			<version>${arkxos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.arkxos.arkpack</groupId>
+			<artifactId>arkpack-npm</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.arkxos.arkpack</groupId>
+			<artifactId>arkpack-web-core</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>asm</artifactId>
+					<groupId>org.ow2.asm</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>asm-analysis</artifactId>
+					<groupId>org.ow2.asm</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>asm-util</artifactId>
+					<groupId>org.ow2.asm</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--可选：代码生成模块-->
+<!--		<dependency>-->
+<!--			<groupId>com.arkxos</groupId>-->
+<!--			<artifactId>arkxos-codegen</artifactId>-->
+<!--			<version>${arkxos.version}</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<artifactId>arkx-commons-datasource</artifactId>-->
+<!--					<groupId>io.arkx.framework</groupId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
+		<!--可选：定时任务模块-->
+		<dependency>
+			<groupId>com.arkxos</groupId>
+			<artifactId>arkxos-quartz</artifactId>
+			<version>${arkxos.version}</version>
+		</dependency>
+		<!--安全模块-->
+		<dependency>
+			<groupId>com.arkxos</groupId>
+			<artifactId>arkxos-platform-support-security</artifactId>
+			<version>${arkxos.version}</version>
+		</dependency>
+		<!-- 接口文档UI  -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springboot</groupId>
+			<artifactId>knife4j-boot-openapi3-ui</artifactId>
+		</dependency>
+		<!--接口文档-->
+		<dependency>
+			<groupId>io.arkx.framework</groupId>
+			<artifactId>arkx-commons-swagger</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!--undertow容器-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

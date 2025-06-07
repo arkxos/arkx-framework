@@ -1,0 +1,95 @@
+
+arkpack:
+  basedir: E:/arkpack-repository
+  home: ${arkpack.basedir}/arkpack
+  vault: ${arkpack.basedir}/arkpack-vault
+  etc: ${arkpack.home}/etc
+  temp: ${arkpack.home}/tmp
+  config:
+    file: ${arkpack.home}/etc/conf/arkpack.yaml
+  storage:
+    booter:
+      basedir: ${arkpack.vault}/storages
+  host: localhost
+  port: 8888
+  nuget:
+    download:
+      feed: false
+  version: 1.0-SNAPSHOT
+  revision: 1.0-SNAPSHOT
+  orientdb:
+    studio:
+      enabled: true
+      ip:
+        address: 127.0.0.1
+      port: 2480
+  server:
+    database:
+      path: ${arkpack.vault}/db
+  users:
+    external:
+      cache:
+        seconds: 300
+  sse:
+    timeoutMillis: 600000
+
+java:
+  io:
+    tmpdir: ${arkpack.vault}/tmp
+ehcache:
+  disk:
+    store:
+      dir: ${arkpack.vault}/cache
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,beans,metrics,trace,scheduledtasks,threaddump,loggers
+      base-path: /api/monitoring
+cacheManagerConfiguration:
+  groupConfig:
+    name: arkpack
+    password: password
+  enableMulticastConfig: false
+  multicast:
+    multicastGroup: 224.2.2.3
+    multicastPort: 54327
+    multicastTimeoutSeconds: 2
+    multicastTimeToLive: 32
+    trustedInterfaces: en0,en1
+    loopbackModeEnabled: false
+  instanceId: arkpack
+  caches:
+    remoteRepositoryAliveness:
+      maxSizeLimit: 1000
+      maxSizePolicy: FREE_HEAP_SIZE
+      evictionPolicy: LFU
+    tags:
+      maxSizeLimit: 1000
+      maxSizePolicy: FREE_HEAP_SIZE
+      evictionPolicy: LFU
+    authentications:
+      cacheLocalEntries: true
+      evictionConfigSize: 1000
+      evictionConfigMaxSizePolicy: ENTRY_COUNT
+      invalidateOnChange: true
+      timeToLiveSeconds: 10
+
+# Changes to these properties must also be applied to [arkpack/arkpack-web-integration-tests] and possibly the pipeline.
+# Please ping us on our chat channel (https://chat.carlspring.org/) to confirm.
+logging:
+  debug: true
+  console:
+    enabled: true
+  file:
+    enabled: true
+    size:
+      single: 128MB
+      total: 1GB
+    history: 31
+  dir: ${arkpack.vault}/logs

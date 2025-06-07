@@ -1,0 +1,10 @@
+
+npm:
+  enabled: true
+  registry-url: http://localhost:8888/arkpack/storages/npm/storage-npm/npm/
+  home-directory: E:\arkpack-repository\arkxos-npm-repository
+  download-directory: E:\arkpack-repository\arkxos-npm-repository\download
+  install-directory: E:\arkpack-repository\arkxos-npm-repository\install
+  username: rapidark
+  password: rapidark@123
+  use-cache: true

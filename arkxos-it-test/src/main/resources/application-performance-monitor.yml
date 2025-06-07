@@ -1,0 +1,45 @@
+
+# 数据库配置
+#spring:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/monitoring_db
+#    username: monitor
+#    password: Secure!Pass123
+#    hikari:
+#      maximum-pool-size: 5
+
+# 监控配置
+arkx:
+  performance:
+    monitor:
+      enabled: true
+      sampling-rate: 40
+      slow-threshold: 200
+      capture-sql-parameters: true
+      store-to-database: true
+
+      # 包含规则
+      include-packages: io.arkx.**, com.arkxos.**
+      include-classes: '*Controller, *Service*, *Repository'
+      #include-methods: process.*, execute.*
+
+      exclude-packages: com.hazelcast.**
+
+      # 自适应采样配置
+      high-load-threshold: 0.85
+      medium-load-threshold: 0.6
+      low-load-threshold: 0.3
+      critical-load-threshold: 0.95
+      high-load-reduction-percent: 50
+      medium-load-reduction-percent: 10
+      low-load-increase-percent: 20
+      min-sampling-rate: 5
+      max-sampling-rate: 100
+
+      # 队列和并发配置
+      queue-capacity: 50000
+      max-concurrent-requests: 500
+
+      # 监控系统自身配置
+      monitoring-interval-ms: 5000  # 监控系统状态间隔
+      request-timeout-ms: 10000     # 请求超时阈值
