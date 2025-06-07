@@ -15,5 +15,8 @@ public interface TraceRepository {
 
 	void saveBatch(List<TraceNode> nodes) throws SQLException;
 
+	List<TraceNode> findByRequestId(String requestId) throws SQLException;
+
 	void shutdown();
+
 }

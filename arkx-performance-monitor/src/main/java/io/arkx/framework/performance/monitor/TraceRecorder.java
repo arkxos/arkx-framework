@@ -3,6 +3,7 @@ package io.arkx.framework.performance.monitor;
 import io.arkx.framework.performance.monitor.config.MonitorConfig;
 import io.arkx.framework.performance.monitor.model.TraceNode;
 import io.arkx.framework.performance.monitor.repository.TraceRepository;
+import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,8 @@ import java.util.stream.Collectors;
  */
 /* ====================== 高性能跟踪记录器 ====================== */
 @Slf4j
-@Component
-public  class TraceRecorder {
+//@Component
+public class TraceRecorder {
 
 	// 性能参数
 	private static final int QUEUE_CAPACITY = 100_000;
@@ -32,12 +33,13 @@ public  class TraceRecorder {
 	private final ExecutorService writerThread = Executors.newSingleThreadExecutor();
 
 	// 依赖组件
-	private final MonitorConfig config;
 	private final TraceRepository repository;
 
-	public TraceRecorder(MonitorConfig config, TraceRepository repository) {
-		this.config = config;
-		this.queue =  new LinkedBlockingQueue<>(Math.max(config.getQueueCapacity(), 10_000));
+	private MonitorConfig monitorConfig;
+
+	public TraceRecorder(MonitorConfig monitorConfig, TraceRepository repository) {
+		this.monitorConfig = monitorConfig;
+		this.queue =  new LinkedBlockingQueue<>(Math.max(monitorConfig.getQueueCapacity(), 10_000));
 		this.repository = repository;
 		this.writerThread.execute(this::runBatchWriter);
 	}
@@ -61,7 +63,7 @@ public  class TraceRecorder {
 
 	// 核心写逻辑
 	private void runBatchWriter() {
-		List<TraceNode> batch = new ArrayList<>(config.getWriteBatchSize());
+		List<TraceNode> batch = new ArrayList<>(monitorConfig.getWriteBatchSize());
 
 		while (running || !queue.isEmpty()) {
 			try {
@@ -72,7 +74,7 @@ public  class TraceRecorder {
 				batch.add(node);
 
 				// 批量获取更多节点
-				queue.drainTo(batch, config.getWriteBatchSize() - 1);
+				queue.drainTo(batch, monitorConfig.getWriteBatchSize() - 1);
 
 				// 时间或数量触发写入
 				processBatch(batch);
@@ -104,7 +106,7 @@ public  class TraceRecorder {
 
 		try {
 			// 批量存储
-			if (config.isStoreToDatabase()) {
+			if (monitorConfig.isStoreToDatabase()) {
 				repository.saveBatch(validNodes);
 			}
 		} catch (Exception e) {

@@ -24,7 +24,9 @@ public class RequestLifecycleManager {
 	}
 
 	public void startRequest(HttpServletRequest request) {
-		traceContext.startRequest(UUID.randomUUID().toString());
+		String requestId = UUID.randomUUID().toString();
+		request.setAttribute("REQUEST_ID", requestId);
+		traceContext.startRequest(requestId);
 	}
 
 	public void endRequest(HttpServletRequest request) {

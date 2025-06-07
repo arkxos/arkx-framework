@@ -3,6 +3,7 @@ package io.arkx.framework.performance.monitor.sql.handler;
 import io.arkx.framework.performance.monitor.TraceContext;
 import io.arkx.framework.performance.monitor.TraceRecorder;
 import io.arkx.framework.performance.monitor.config.MonitorConfig;
+import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 import io.arkx.framework.performance.monitor.model.TraceNode;
 import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 import lombok.extern.slf4j.Slf4j;
@@ -24,17 +25,19 @@ import java.util.stream.Collectors;
 @Slf4j
 // 语句代理处理器
 public class StatementProxyHandler implements InvocationHandler {
+
 	private final Statement realStatement;
 	private final String sql;
-	private final MonitorConfig config;
+	private final MonitorConfigService configService;
 	private final TraceRecorder recorder;
 	private final Map<Integer, Object> parameters = new ConcurrentHashMap<>();
 
 	public StatementProxyHandler(Statement realStatement, String sql,
-								 MonitorConfig config, TraceRecorder recorder) {
+								 MonitorConfigService configService,
+								 TraceRecorder recorder) {
 		this.realStatement = realStatement;
 		this.sql = sql;
-		this.config = config;
+		this.configService = configService;
 		this.recorder = recorder;
 	}
 
@@ -91,12 +94,12 @@ public class StatementProxyHandler implements InvocationHandler {
 			sqlNode.complete();
 
 			// 采样决策
-			if (config.shouldSample(sqlNode.getSql())) {
+			if (configService.shouldSample(sqlNode.getSql())) {
 				recorder.record(sqlNode);
 			}
 
 			// 慢SQL日志
-			if (sqlNode.getDuration() > config.getSlowThreshold() * 1_000_000) {
+			if (sqlNode.getDuration() > configService.getSlowThreshold() * 1_000_000) {
 				log.warn("Slow SQL detected ({}ms): {}",
 						TimeUnit.NANOSECONDS.toMillis(sqlNode.getDuration()),
 						sqlNode.getFullSql());
@@ -112,7 +115,7 @@ public class StatementProxyHandler implements InvocationHandler {
 		node.setStartTime(System.nanoTime());
 
 		// 生成完整SQL
-		if (config.isCaptureSqlParameters()) {
+		if (configService.isCaptureSqlParameters()) {
 			node.setSqlParameters(serializeParameters());
 			node.setFullSql(generateFullSql(sql, parameters));
 		}

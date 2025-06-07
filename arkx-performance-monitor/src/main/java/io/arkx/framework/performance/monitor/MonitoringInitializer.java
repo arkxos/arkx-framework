@@ -1,6 +1,7 @@
 package io.arkx.framework.performance.monitor;
 
 import io.arkx.framework.performance.monitor.config.MonitorConfig;
+import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,7 +29,7 @@ public class MonitoringInitializer {
 	// 周期性刷新配置缓存
 	@Scheduled(fixedRate = 10_000)
 	public void refreshConfigCache() {
-		ApplicationContextHolder.getBean(MonitorConfig.class).refreshCache();
+		ApplicationContextHolder.getBean(MonitorConfigService.class).refreshCache();
 	}
 
 }

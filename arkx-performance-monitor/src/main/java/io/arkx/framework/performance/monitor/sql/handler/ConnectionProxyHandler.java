@@ -2,6 +2,8 @@ package io.arkx.framework.performance.monitor.sql.handler;
 
 import io.arkx.framework.performance.monitor.TraceRecorder;
 import io.arkx.framework.performance.monitor.config.MonitorConfig;
+import io.arkx.framework.performance.monitor.config.MonitorConfigService;
+import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -19,18 +21,33 @@ import java.sql.Statement;
 public class ConnectionProxyHandler implements InvocationHandler {
 
 	private final Connection realConnection;
-	private final MonitorConfig config;
+	private final MonitorConfigService configService;
 	private final TraceRecorder recorder;
 
-	public ConnectionProxyHandler(Connection realConnection, MonitorConfig config,
+	public ConnectionProxyHandler(Connection realConnection,
+								  MonitorConfigService configService,
 								  TraceRecorder recorder) {
 		this.realConnection = realConnection;
-		this.config = config;
+		this.configService = configService;
 		this.recorder = recorder;
 	}
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		// 重要：处理 Object 的基础方法
+		if (method.getDeclaringClass() == Object.class) {
+			return method.invoke(realConnection, args);
+		}
+
+		if (!ApplicationContextHolder.isReady()) {
+			return method.invoke(realConnection, args);
+		}
+
+		String methodName = method.getName();
+		boolean isExecuteMethod = methodName.startsWith("execute")
+				|| methodName.startsWith("prepare")
+				|| methodName.startsWith("create");
+
 		// 拦截语句创建方法
 		if ("prepareStatement".equals(method.getName()) && args != null && args.length > 0) {
 			PreparedStatement stmt = (PreparedStatement) method.invoke(realConnection, args);
@@ -41,6 +58,7 @@ public class ConnectionProxyHandler implements InvocationHandler {
 			Statement stmt = (Statement) method.invoke(realConnection, args);
 			return createMonitoredStatement(stmt, "");
 		}
+
 		return method.invoke(realConnection, args);
 	}
 
@@ -49,7 +67,7 @@ public class ConnectionProxyHandler implements InvocationHandler {
 		return Proxy.newProxyInstance(
 				Statement.class.getClassLoader(),
 				new Class[]{Statement.class, PreparedStatement.class},
-				new StatementProxyHandler(stmt, sql, config, recorder)
+				new StatementProxyHandler(stmt, sql, configService, recorder)
 		);
 	}
 }

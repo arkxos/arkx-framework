@@ -1,56 +1,56 @@
 -- 为监控系统优化的MySQL 5.7兼容表结构
 CREATE TABLE `monitor_trace` (
-                                 `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-                                 `trace_id` CHAR(36) NOT NULL COMMENT '跟踪ID',
-                                 `parent_id` CHAR(36) DEFAULT NULL COMMENT '父节点ID',
-                                 `node_type` VARCHAR(10) NOT NULL COMMENT '节点类型(METHOD/SQL)',
-                                 `class_name` VARCHAR(255) DEFAULT NULL COMMENT '类名',
-                                 `method_name` VARCHAR(100) DEFAULT NULL COMMENT '方法名',
-                                 `sql` TEXT COMMENT '原始SQL',
-                                 `sql_parameters` TEXT COMMENT 'SQL参数',
-                                 `full_sql` TEXT COMMENT '完整SQL(带参数)',
-                                 `start_time` BIGINT(20) NOT NULL COMMENT '开始时间(纳秒)',
-                                 `end_time` BIGINT(20) NOT NULL COMMENT '结束时间(纳秒)',
-                                 `duration` BIGINT(20) NOT NULL COMMENT '执行时长(纳秒)',
-                                 `success` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '是否成功',
-                                 `error_message` TEXT COMMENT '错误信息',
-                                 `depth` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '调用深度',
-                                 `request_id` CHAR(36) DEFAULT NULL COMMENT '请求ID',
-                                 `endpoint` VARCHAR(255) DEFAULT NULL COMMENT 'API端点',
-                                 PRIMARY KEY (`id`),
+    `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `trace_id` CHAR(36) NOT NULL COMMENT '跟踪ID',
+    `parent_id` CHAR(36) DEFAULT NULL COMMENT '父节点ID',
+    `node_type` VARCHAR(10) NOT NULL COMMENT '节点类型(METHOD/SQL)',
+    `class_name` VARCHAR(255) DEFAULT NULL COMMENT '类名',
+    `method_name` VARCHAR(100) DEFAULT NULL COMMENT '方法名',
+    `sql` TEXT COMMENT '原始SQL',
+    `sql_parameters` TEXT COMMENT 'SQL参数',
+    `full_sql` TEXT COMMENT '完整SQL(带参数)',
+    `start_time` BIGINT(20) NOT NULL COMMENT '开始时间(纳秒)',
+    `end_time` BIGINT(20) NOT NULL COMMENT '结束时间(纳秒)',
+    `duration` BIGINT(20) NOT NULL COMMENT '执行时长(纳秒)',
+    `success` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '是否成功',
+    `error_message` TEXT COMMENT '错误信息',
+    `depth` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '调用深度',
+    `request_id` CHAR(36) DEFAULT NULL COMMENT '请求ID',
+    `endpoint` VARCHAR(255) DEFAULT NULL COMMENT 'API端点',
+    PRIMARY KEY (`id`),
     -- MySQL 5.7有限制的索引
-                                 KEY `idx_node_type` (`node_type`),
-                                 KEY `idx_class_name` (`class_name`(191)),
-                                 KEY `idx_method_name` (`method_name`(100)),
-                                 KEY `idx_start_time` (`start_time`),
-                                 KEY `idx_trace_id` (`trace_id`),
-                                 KEY `idx_request_id` (`request_id`)
+    KEY `idx_node_type` (`node_type`),
+    KEY `idx_class_name` (`class_name`(191)),
+    KEY `idx_method_name` (`method_name`(100)),
+    KEY `idx_start_time` (`start_time`),
+    KEY `idx_trace_id` (`trace_id`),
+    KEY `idx_request_id` (`request_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方法监控跟踪表';
 
 -- 慢SQL统计表
 CREATE TABLE `monitor_slow_sql` (
-                                    `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-                                    `sql_hash` CHAR(32) NOT NULL COMMENT 'SQL哈希值',
-                                    `sql_template` TEXT NOT NULL COMMENT 'SQL模板',
-                                    `max_duration` BIGINT(20) NOT NULL COMMENT '最长执行时间',
-                                    `avg_duration` BIGINT(20) NOT NULL COMMENT '平均执行时间',
-                                    `occurrence_count` INT(11) NOT NULL COMMENT '出现次数',
-                                    `last_occurrence` DATETIME NOT NULL COMMENT '最后发生时间',
-                                    PRIMARY KEY (`id`),
-                                    UNIQUE KEY `uniq_sql_hash` (`sql_hash`)
+    `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `sql_hash` CHAR(32) NOT NULL COMMENT 'SQL哈希值',
+    `sql_template` TEXT NOT NULL COMMENT 'SQL模板',
+    `max_duration` BIGINT(20) NOT NULL COMMENT '最长执行时间',
+    `avg_duration` BIGINT(20) NOT NULL COMMENT '平均执行时间',
+    `occurrence_count` INT(11) NOT NULL COMMENT '出现次数',
+    `last_occurrence` DATETIME NOT NULL COMMENT '最后发生时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uniq_sql_hash` (`sql_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 慢方法统计表
 CREATE TABLE `monitor_slow_method` (
-                                       `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-                                       `class_name` VARCHAR(255) NOT NULL,
-                                       `method_name` VARCHAR(100) NOT NULL,
-                                       `max_duration` BIGINT(20) NOT NULL COMMENT '最长执行时间',
-                                       `avg_duration` BIGINT(20) NOT NULL COMMENT '平均执行时间',
-                                       `occurrence_count` INT(11) NOT NULL COMMENT '出现次数',
-                                       `last_occurrence` DATETIME NOT NULL COMMENT '最后发生时间',
-                                       PRIMARY KEY (`id`),
-                                       UNIQUE KEY `uniq_class_method` (`class_name`(191), `method_name`(100))
+   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+   `class_name` VARCHAR(255) NOT NULL,
+   `method_name` VARCHAR(100) NOT NULL,
+   `max_duration` BIGINT(20) NOT NULL COMMENT '最长执行时间',
+   `avg_duration` BIGINT(20) NOT NULL COMMENT '平均执行时间',
+   `occurrence_count` INT(11) NOT NULL COMMENT '出现次数',
+   `last_occurrence` DATETIME NOT NULL COMMENT '最后发生时间',
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `uniq_class_method` (`class_name`(191), `method_name`(100))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 分区管理存储过程(减少单表数据量)

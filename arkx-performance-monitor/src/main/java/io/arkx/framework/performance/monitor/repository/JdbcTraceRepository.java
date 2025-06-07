@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,9 +59,13 @@ public  class JdbcTraceRepository implements TraceRepository {
 			"occurrence_count = occurrence_count + 1, " +
 			"last_occurrence = NOW()";
 
+	// 新增查询SQL
+	private static final String SELECT_BY_REQUEST_ID =
+			"SELECT * FROM monitor_trace WHERE request_id = ? ORDER BY start_time ASC";
+
 	private MonitorConfig config;
 
-	public JdbcTraceRepository(@Lazy DataSource dataSource, MonitorConfig config) throws SQLException {
+	public JdbcTraceRepository(@Lazy DataSource dataSource, @Lazy MonitorConfig config) throws SQLException {
 		this.dataSource = dataSource;
 		this.config = config;
 		this.dedicatedConn = dataSource.getConnection();
@@ -110,6 +115,49 @@ public  class JdbcTraceRepository implements TraceRepository {
 			log.error("Failed to save trace batch", e);
 			// 添加重试逻辑处理
 		}
+	}
+
+	@Override
+	public List<TraceNode> findByRequestId(String requestId) throws SQLException {
+		List<TraceNode> nodes = new ArrayList<>();
+
+		try (Connection conn = dataSource.getConnection();
+			 PreparedStatement stmt = conn.prepareStatement(SELECT_BY_REQUEST_ID)) {
+
+			stmt.setString(1, requestId);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					TraceNode node = mapRowToTraceNode(rs);
+					nodes.add(node);
+				}
+			}
+		}
+
+		return nodes;
+	}
+
+	private TraceNode mapRowToTraceNode(ResultSet rs) throws SQLException {
+		TraceNode node = new TraceNode();
+		node.setTraceId(rs.getString("trace_id"));
+		node.setParentId(rs.getString("parent_id"));
+		node.setType(rs.getString("node_type"));
+		node.setClassName(rs.getString("class_name"));
+		node.setMethodName(rs.getString("method_name"));
+		node.setSignature(rs.getString("signature"));
+		node.setSql(rs.getString("sql"));
+		node.setSqlParameters(rs.getString("sql_parameters"));
+		node.setFullSql(rs.getString("full_sql"));
+		node.setStartTime(rs.getLong("start_time"));
+		node.setEndTime(rs.getLong("end_time"));
+		node.setDuration(rs.getLong("duration"));
+		node.setSuccess(rs.getBoolean("success"));
+		node.setErrorMessage(rs.getString("error_message"));
+		node.setDepth(rs.getInt("depth"));
+		node.setRequestId(rs.getString("request_id"));
+		node.setSessionId(rs.getString("session_id"));
+		node.setEndpoint(rs.getString("endpoint"));
+		return node;
 	}
 
 	private boolean isSlowSql(TraceNode node) {
@@ -218,41 +266,41 @@ public  class JdbcTraceRepository implements TraceRepository {
 	// 创建表结构
 	@PostConstruct
 	public void createTableIfMissing() {
-		try (Connection conn = dataSource.getConnection();
-			 Statement stmt = conn.createStatement()) {
-
-			stmt.execute("CREATE TABLE IF NOT EXISTS trace_nodes (" +
-					"id BIGINT AUTO_INCREMENT PRIMARY KEY," +
-					"trace_id VARCHAR(36) NOT NULL," +
-					"parent_id VARCHAR(36)," +
-					"type VARCHAR(10) NOT NULL," +
-					"class_name VARCHAR(255)," +
-					"method_name VARCHAR(100)," +
-					"signature TEXT," +
-					"sql TEXT," +
-					"sql_parameters TEXT," +
-					"full_sql TEXT," +
-					"depth INT," +
-					"start_time BIGINT," +
-					"end_time BIGINT," +
-					"duration BIGINT," +
-					"success BOOLEAN," +
-					"error_message TEXT," +
-					"request_id VARCHAR(36)," +
-					"session_id VARCHAR(36)," +
-					"endpoint VARCHAR(255)," +
-					"INDEX idx_trace_id (trace_id)," +
-					"INDEX idx_parent_id (parent_id)," +
-					"INDEX idx_type (type)," +
-					"INDEX idx_class (class_name)," +
-					"INDEX idx_method (method_name)," +
-					"INDEX idx_start_time (start_time)" +
-					")");
-
-			log.info("Trace node table created/validated");
-		} catch (SQLException e) {
-			log.error("Failed to create trace table", e);
-		}
+//		try (Connection conn = dataSource.getConnection();
+//			 Statement stmt = conn.createStatement()) {
+//
+//			stmt.execute("CREATE TABLE IF NOT EXISTS monitor_trace (" +
+//					"id BIGINT AUTO_INCREMENT PRIMARY KEY," +
+//					"trace_id VARCHAR(36) NOT NULL," +
+//					"parent_id VARCHAR(36)," +
+//					"type VARCHAR(10) NOT NULL," +
+//					"class_name VARCHAR(255)," +
+//					"method_name VARCHAR(100)," +
+//					"signature TEXT," +
+//					"sql TEXT," +
+//					"sql_parameters TEXT," +
+//					"full_sql TEXT," +
+//					"depth INT," +
+//					"start_time BIGINT," +
+//					"end_time BIGINT," +
+//					"duration BIGINT," +
+//					"success BOOLEAN," +
+//					"error_message TEXT," +
+//					"request_id VARCHAR(36)," +
+//					"session_id VARCHAR(36)," +
+//					"endpoint VARCHAR(255)," +
+//					"INDEX idx_trace_id (trace_id)," +
+//					"INDEX idx_parent_id (parent_id)," +
+//					"INDEX idx_type (type)," +
+//					"INDEX idx_class (class_name)," +
+//					"INDEX idx_method (method_name)," +
+//					"INDEX idx_start_time (start_time)" +
+//					")");
+//
+//			log.info("Trace node table created/validated");
+//		} catch (SQLException e) {
+//			log.error("Failed to create trace table", e);
+//		}
 	}
 
 	// 每天执行的归档任务
