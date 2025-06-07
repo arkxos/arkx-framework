@@ -1,6 +1,7 @@
 package io.arkx.framework.performance.monitor.controller;
 
 import io.arkx.framework.performance.monitor.config.MonitorConfig;
+import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,9 +19,11 @@ public class ConfigController {
 
 	private final MonitorConfig config;
 	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
+	private final MonitorConfigService monitorConfigService;
 
-	public ConfigController(MonitorConfig config) {
+	public ConfigController(MonitorConfig config, MonitorConfigService monitorConfigService) {
 		this.config = config;
+		this.monitorConfigService = monitorConfigService;
 	}
 
 	@GetMapping
@@ -51,7 +54,7 @@ public class ConfigController {
 				config.setStoreToDatabase((Boolean) updates.get("storeToDatabase"));
 
 			// 标记配置已变更
-			config.markDirty();
+			monitorConfigService.markDirty();
 
 			return "Config updated successfully";
 		} finally {
