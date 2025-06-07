@@ -58,17 +58,17 @@ public class BuiltResourceScanner {
 		} else {
 			classes = PackageUtil.findAnnotationClasses("com/arkxos", Alias.class);
 		}
-		{
-			String baseUiFacadeClassName = "io.arkx.framework.boot.BaseUIFacade";
-			String fileName = StringUtil.replaceEx(baseUiFacadeClassName, ".", "/") + ".class";
-			InputStream inputStream	= this.getClass().getResourceAsStream("/" + fileName);
-			BuiltResource br = new BuiltResource(fileName, inputStream);
-			try {
-				scanOneResource(br);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		{
+//			String baseUiFacadeClassName = "io.arkx.framework.boot.BaseUIFacade";
+//			String fileName = StringUtil.replaceEx(baseUiFacadeClassName, ".", "/") + ".class";
+//			InputStream inputStream	= this.getClass().getResourceAsStream("/" + fileName);
+//			BuiltResource br = new BuiltResource(fileName, inputStream);
+//			try {
+//				scanOneResource(br);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 		for (String clazzName : classes) {
 			String fileName = StringUtil.replaceEx(clazzName, ".", "/") + ".class";
