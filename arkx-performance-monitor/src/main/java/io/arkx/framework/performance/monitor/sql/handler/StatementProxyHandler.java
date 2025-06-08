@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -42,9 +43,22 @@ public class StatementProxyHandler implements InvocationHandler {
 		this.configService = configService;
 		this.recorder = recorder;
 	}
+	private static final Set<String> MONITOR_TABLES = Set.of(
+			"monitor_trace", "monitor_slow_sql", "monitor_slow_method"
+	);
 
+	public static boolean isMonitorTableStatement(String sql) {
+		if (sql == null) return false;
+		String normalized = sql.toLowerCase().replaceAll("\\s+", " ");
+		return MONITOR_TABLES.stream().anyMatch(normalized::contains);
+	}
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		// 添加递归过滤检查
+		if (isMonitorTableStatement(sql)) {
+			return method.invoke(realStatement, args); // 直接执行不监控
+		}
+
 		// 拦截参数绑定方法
 		if (method.getName().startsWith("set")) {
 			handleSetParameter(method, args);

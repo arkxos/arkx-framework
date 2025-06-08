@@ -88,11 +88,12 @@ public class TraceNode {
 		}
 
 		// 添加耗时
-		long ms = duration > 1000000 ?
+		long ms = duration > 1_000000 ?
 				TimeUnit.NANOSECONDS.toMillis(duration) :
 				duration / 1000;
 
-		String durationUnit = duration > 1000000 ? "ms" : "μs";
+		// 37_536500
+		String durationUnit = duration > 1_000000 ? "ms" : "μs";
 		double percent = (this.getTotalDuration(totalduration) > 0) ?
 				(double) duration / this.getTotalDuration(totalduration) * 100 : 0;
 

@@ -32,8 +32,6 @@ public class SqlInterceptor {
 		return new DataSourcePostProcessor();
 	}
 
-
-
 	@Bean
 	public DataSourceProxyFactory dataSourceProxyFactory() {
 		return new DataSourceProxyFactory();

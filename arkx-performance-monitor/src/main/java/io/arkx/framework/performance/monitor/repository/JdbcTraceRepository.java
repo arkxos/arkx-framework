@@ -111,6 +111,7 @@ public  class JdbcTraceRepository implements TraceRepository {
 
 //			conn.commit();
 
+//			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			log.error("Failed to save trace batch", e);
 			// 添加重试逻辑处理
