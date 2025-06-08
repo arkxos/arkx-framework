@@ -58,22 +58,22 @@ public class TraceNode {
 	}
 
 	public String toTreeString() {
-		return toTreeString(0, new StringBuilder(), true).toString();
+		return toTreeString(this.duration, 0, new StringBuilder(), true).toString();
 	}
 
-	private StringBuilder toTreeString(int depth, StringBuilder sb, boolean isLast) {
-		buildNodeLine(sb, depth, isLast);
+	private StringBuilder toTreeString(long totalduration, int depth, StringBuilder sb, boolean isLast) {
+		buildNodeLine(totalduration, sb, depth, isLast);
 		sb.append("\n");
 
 		for (int i = 0; i < children.size(); i++) {
 			boolean childIsLast = (i == children.size() - 1);
-			children.get(i).toTreeString(depth + 1, sb, childIsLast);
+			children.get(i).toTreeString(totalduration, depth + 1, sb, childIsLast);
 		}
 
 		return sb;
 	}
 
-	private void buildNodeLine(StringBuilder sb, int depth, boolean isLast) {
+	private void buildNodeLine(long totalduration, StringBuilder sb, int depth, boolean isLast) {
 		// 非根节点：缩进+连接线
 		if (depth > 0) {
 			for (int i = 0; i < depth - 1; i++) {
@@ -93,8 +93,8 @@ public class TraceNode {
 				duration / 1000;
 
 		String durationUnit = duration > 1000000 ? "ms" : "μs";
-		double percent = (this.getTotalDuration() > 0) ?
-				(double) duration / this.getTotalDuration() * 100 : 0;
+		double percent = (this.getTotalDuration(totalduration) > 0) ?
+				(double) duration / this.getTotalDuration(totalduration) * 100 : 0;
 
 		// 高耗时警告
 		boolean isSlow = ms > 100;
@@ -133,17 +133,18 @@ public class TraceNode {
 		}
 	}
 
-	public long getTotalDuration() {
-		TraceNode root = this;
-		while (root.parentId != null && root.depth > 0) {
-			// 遍历直到根节点
-			if (root.parentId == null) break;
-			// 实际应用中应优化查找逻辑
-			// 这里简化为假设当前节点可能是根节点
-			if (root.depth == 0) break;
-			root = root.getRootNode();
-		}
-		return root.duration;
+	public long getTotalDuration(long totalduration) {
+//		TraceNode root = this;
+//		while (root.parentId != null && root.depth > 0) {
+//			// 遍历直到根节点
+//			if (root.parentId == null) break;
+//			// 实际应用中应优化查找逻辑
+//			// 这里简化为假设当前节点可能是根节点
+//			if (root.depth == 0) break;
+//			root = root.getRootNode();
+//		}
+//		return root.duration;
+		return totalduration;
 	}
 
 	private TraceNode getRootNode() {
