@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.UUID;
 
 /**
  * 跟踪上下文管理
@@ -52,7 +53,12 @@ public class TraceContext {
 	}
 
 	public String currentRequestId() {
-		return requestIdLocal.get();
+		String requestId = requestIdLocal.get();
+		if (requestId == null) {
+			requestId = "SYS_" + UUID.randomUUID();
+			requestIdLocal.set(requestId);
+		}
+		return requestId;
 	}
 
 	// 结束请求

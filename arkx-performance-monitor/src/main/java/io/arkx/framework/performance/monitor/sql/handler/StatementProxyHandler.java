@@ -139,6 +139,8 @@ public class StatementProxyHandler implements InvocationHandler {
 
 		// 设置父节点
 		TraceContext traceContext = ApplicationContextHolder.getBean(TraceContext.class);
+		node.setRequestId(traceContext.currentRequestId());
+
 		TraceNode current = traceContext.current();
 		if (current != null) {
 			node.setParentId(current.getTraceId());
