@@ -101,16 +101,22 @@ public class TraceNode {
 		boolean isSlow = ms > 100;
 		boolean isWarning = ms > 50;
 
-		if (isSlow) sb.append("\033[31m");
-		else if (isWarning) sb.append("\033[33m");
+//		if (isSlow) sb.append("\033[31m");
+//		else if (isWarning) sb.append("\033[33m");
 
+//		if (percent > 0.1) {
+//			sb.append(String.format("[%3d%s (%.2f%%)] ", ms, durationUnit, percent));
+//		} else {
+//			sb.append(String.format("[%3d%s] ", ms, durationUnit));
+//		}
+		String formattedDuration = formatDuration(duration);
 		if (percent > 0.1) {
-			sb.append(String.format("[%3d%s (%.0f%%)] ", ms, durationUnit, percent));
+			sb.append(String.format("[%s (%.2f%%)] ", formattedDuration, percent));
 		} else {
-			sb.append(String.format("[%3d%s] ", ms, durationUnit));
+			sb.append(String.format("[%s] ", formattedDuration));
 		}
 
-		if (isSlow || isWarning) sb.append("\033[0m");
+//		if (isSlow || isWarning) sb.append("\033[0m");
 
 		// 添加节点图标
 		sb.append(getNodeIcon()).append(" ");
@@ -133,6 +139,33 @@ public class TraceNode {
 			sb.append(" \033[31m❌\033[0m");
 		}
 	}
+
+	// 新增时间格式化方法
+	private String formatDuration(long nanos) {
+		// 微秒级处理 (<1ms)
+		if (nanos < 1_000_000) {
+			return String.format("%dμs", nanos / 1_000);
+		}
+
+		// 毫秒级处理 (1ms~999ms)
+		if (nanos < 1_000_000_000) {
+			double millis = nanos / 1_000_000.0;
+			return String.format("%.3fms", millis); // 保留3位小数
+		}
+
+		// 秒级处理 (1s~59s)
+		if (nanos < 60_000_000_000L) {
+			double seconds = nanos / 1_000_000_000.0;
+			return String.format("%.3fs", seconds); // 保留3位小数
+		}
+
+		// 分钟级处理 (≥1min)
+		long minutes = TimeUnit.NANOSECONDS.toMinutes(nanos);
+		long remainingNanos = nanos % TimeUnit.MINUTES.toNanos(1);
+		double seconds = remainingNanos / 1_000_000_000.0;
+		return String.format("%dm %.3fs", minutes, seconds);
+	}
+
 
 	public long getTotalDuration(long totalduration) {
 //		TraceNode root = this;
