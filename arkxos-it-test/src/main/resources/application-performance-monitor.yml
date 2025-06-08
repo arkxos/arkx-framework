@@ -19,11 +19,14 @@ arkx:
       store-to-database: true
 
       # 包含规则
-      include-packages: io.arkx.**, com.arkxos.**
-      include-classes: '*Controller, *Service*, *Repository'
+#      include-packages: io.arkx.**, com.arkxos.**
+#      include-classes:
+#        - ".*Controller"       # 匹配所有Controller结尾的类
+#        - ".*Service.*"        # 匹配包含Service的类
+#        - ".*Repository"       # 匹配所有Repository结尾的类
       #include-methods: process.*, execute.*
 
-      exclude-packages: com.hazelcast.**
+#      exclude-packages: com.hazelcast.**
 
       # 自适应采样配置
       high-load-threshold: 0.85

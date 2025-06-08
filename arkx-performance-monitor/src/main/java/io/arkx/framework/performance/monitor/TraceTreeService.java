@@ -34,6 +34,7 @@ public class TraceTreeService {
 			// 转换为树状文本
 			return root.toTreeString();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new RuntimeException("Failed to build trace tree", e);
 		}
 	}

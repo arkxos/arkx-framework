@@ -10,7 +10,9 @@ import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -100,14 +102,24 @@ public class MethodMonitorAspect {
 //    @Around("execution(* *.*(..)) && " +
 //		"!within(org.springframework..*) && " +
 //		"!within(javax..*)")
-	@Around("execution(public !static * *(..)) && " +
-			"!within(io.arkx.framework.performance.monitor..*) && " +
-			"!target(org.springframework.beans.factory.config.BeanPostProcessor) && " +
-
-			"!within(org.springframework..*) && " +
-			"!within(javax..*) && " +
-			"!within(java..*) && " +
-			"!within(com.hazelcast..*)")
+//	@Around("execution(public !static * *(..)) && " +
+////			"(" +
+////			"execution(public * com.arkxos.arkpack.controllers..*(..)) || " +
+////			"execution(public * com.arkxos.arkpack.services..*(..))" +
+////			") && " +
+//			"!within(io.arkx.framework.performance.monitor..*) && " +
+//			"!target(org.springframework.beans.factory.config.BeanPostProcessor) && " +
+//
+////			"!within(org.springframework..*) && " +
+//			"!within(javax..*) && " +
+//			"!within(java..*)")
+	@Around(
+		"!within(io.arkx.framework.performance.monitor..*) && " +
+		"(@within(org.springframework.stereotype.Controller) || " +
+		"@within(org.springframework.web.bind.annotation.RestController) || " +
+		"@within(org.springframework.stereotype.Service) || " +
+		"@within(org.springframework.stereotype.Repository))"
+	)
 	public Object monitor(ProceedingJoinPoint joinPoint) throws Throwable {
 		// 检查是否在排除列表中
 //		if (EXCLUDED_CLASSES.contains(joinPoint.getTarget().getClass())) {
@@ -185,6 +197,17 @@ public class MethodMonitorAspect {
 			// 记录节点
 			recorder().record(node);
 		}
+	}
+
+	@AfterReturning(pointcut =
+			"@within(org.springframework.stereotype.Controller) || " +
+			"@within(org.springframework.web.bind.annotation.RestController)",
+			returning = "result")
+	public void afterControllerMethod(JoinPoint joinPoint, Object result) {
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		log.debug("【Controller拦截】方法执行完成: {}.{}",
+				signature.getDeclaringType().getSimpleName(),
+				signature.getName());
 	}
 
 	// 检查最终类逻辑

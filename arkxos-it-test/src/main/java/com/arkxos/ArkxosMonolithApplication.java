@@ -29,8 +29,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author lengleng 单体版本启动器，只需要运行此模块则整个系统启动
  */
 @EnableScheduling
-//@EnableAspectJAutoProxy(proxyTargetClass = false)
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+//@EnableAspectJAutoProxy
 @EnableArkDoc(value = "admin", isMicro = false)
 @EnableArkResourceServer
 @SpringBootApplication(

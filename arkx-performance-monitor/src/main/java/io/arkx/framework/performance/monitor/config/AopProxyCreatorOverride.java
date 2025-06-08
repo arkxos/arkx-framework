@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2025-06-07 22:53
  * @since 1.0
  */
-@Configuration
+//@Configuration
 public class AopProxyCreatorOverride implements BeanDefinitionRegistryPostProcessor {
 
 	@Override

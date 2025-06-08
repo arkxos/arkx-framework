@@ -2,6 +2,7 @@ package io.arkx.framework.performance.monitor.interceptor;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -25,26 +26,42 @@ public class FinalSafeAnnotationAwareAspectJAutoProxyCreator extends AnnotationA
 		System.out.println("---------");
 	}
 
+	@Override
+	protected void customizeProxyFactory(ProxyFactory proxyFactory) {
+		super.customizeProxyFactory(proxyFactory);
+		// 强制使用CGLIB
+		proxyFactory.setProxyTargetClass(true);
+	}
+
 	/**
 	 * 返回适用于当前 Bean 的所有切面或拦截器
 	 */
 	@Override
 	protected Object[] getAdvicesAndAdvisorsForBean(Class<?> beanClass, String beanName, TargetSource customTargetSource) throws BeansException {
+
+		System.out.print("==[proxy]======" + beanClass + "========");
+
 		// 如果是 final 类或特定包下的类，则不应用任何切面
 		if (Modifier.isFinal(beanClass.getModifiers())) {
+			System.out.println("========DO_NOT_PROXY");
 			return DO_NOT_PROXY; // 表示不要代理该 Bean
 		}
 
+		System.out.println("========PROXY");
 		// 否则返回 null，表示使用 Spring 默认的切面匹配机制
-		return null;
+		return super.getAdvicesAndAdvisorsForBean(beanClass, beanName, customTargetSource);
 	}
 
 	@Override
 	protected boolean shouldSkip(Class<?> beanClass, String beanName) {
 		boolean skip = super.shouldSkip(beanClass, beanName);
 		if (skip) {
-			return skip;
+		} else {
+			skip = Modifier.isFinal(beanClass.getModifiers());
 		}
-		return Modifier.isFinal(beanClass.getModifiers());
+
+		System.out.print("==[proxy]======" + beanClass + "========" + skip);
+
+		return skip;
 	}
 }
