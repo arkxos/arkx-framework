@@ -115,10 +115,13 @@ public class MethodMonitorAspect {
 //			"!within(java..*)")
 	@Around(
 		"!within(io.arkx.framework.performance.monitor..*) && " +
-		"(@within(org.springframework.stereotype.Controller) || " +
-		"@within(org.springframework.web.bind.annotation.RestController) || " +
-		"@within(org.springframework.stereotype.Service) || " +
-		"@within(org.springframework.stereotype.Repository))"
+		"(" +
+			"@within(org.springframework.stereotype.Controller) || " +
+			"@within(org.springframework.web.bind.annotation.RestController) || " +
+			"@within(org.springframework.stereotype.Service) || " +
+			"@within(org.springframework.stereotype.Repository) ||" +
+			"target(org.springframework.data.repository.Repository)" +
+		")"
 	)
 	public Object monitor(ProceedingJoinPoint joinPoint) throws Throwable {
 		// 检查是否在排除列表中
@@ -129,11 +132,18 @@ public class MethodMonitorAspect {
 //		if (FactoryBean.class.isAssignableFrom(joinPoint.getTarget().getClass())) {
 //			return joinPoint.proceed();
 //		}
+		// 获取方法信息
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		String className = signature.getDeclaringType().getName();
+		String methodName = signature.getName();
+		String methodKey = className + "#" + methodName;
 
+		log.debug("====[before]" + methodKey);
 		// 先检查类类型
-		if (isFinalClass(joinPoint.getTarget().getClass())) {
-			return joinPoint.proceed();
-		}
+		// jdk proxy生成的类是final，这边这么写还不正确
+//		if (isFinalClass(joinPoint.getTarget().getClass())) {
+//			return joinPoint.proceed();
+//		}
 
 		// 关键点1：仅在上下文就绪时执行
 		if (!ApplicationContextHolder.isReady()) {
@@ -145,12 +155,9 @@ public class MethodMonitorAspect {
 			return joinPoint.proceed();
 		}
 
-		// 获取方法信息
-		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		String className = signature.getDeclaringType().getName();
-		String methodName = signature.getName();
-		String methodKey = className + "#" + methodName;
 
+
+		log.debug("====[methodKey]" + methodKey);
 		// 是否应该监控此方法
 		if (!monitorConfigService().shouldMonitorMethod(className, methodName)) {
 			skippedCount.increment();
