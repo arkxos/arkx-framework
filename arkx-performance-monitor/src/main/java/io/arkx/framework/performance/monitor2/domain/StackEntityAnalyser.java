@@ -1,7 +1,8 @@
-package io.arkx.framework.performance.monitor2;
+package io.arkx.framework.performance.monitor2.domain;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import io.arkx.framework.performance.monitor2.model.LogMethodPerformance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

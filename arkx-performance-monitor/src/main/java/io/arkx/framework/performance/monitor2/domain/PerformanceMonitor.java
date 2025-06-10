@@ -1,4 +1,4 @@
-package io.arkx.framework.performance.monitor2;
+package io.arkx.framework.performance.monitor2.domain;
 
 import org.springframework.stereotype.Service;
 
