@@ -14,6 +14,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
+		<dependency>
+			<groupId>io.arkx.framework</groupId>
+			<artifactId>arkx-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
         <dependency>
             <groupId>io.github.linpeilie</groupId>
             <artifactId>mapstruct-plus-spring-boot-starter</artifactId>

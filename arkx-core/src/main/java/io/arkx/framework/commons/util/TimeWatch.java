@@ -1,4 +1,4 @@
-package io.arkx.framework.util;
+package io.arkx.framework.commons.util;
 
 import java.time.LocalTime;
 import java.util.LinkedHashMap;

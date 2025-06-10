@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import io.arkx.framework.commons.util.TimeWatch;
 import io.arkx.framework.data.fasttable.MappedFile;
 
 /**
@@ -44,7 +43,7 @@ public class IndexGroupFile extends MappedFile {
 		List<Integer> result = new ArrayList<>();
 		
 		try {
-			TimeWatch timeWatch = new TimeWatch();
+//			TimeWatch timeWatch = new TimeWatch();
 //			timeWatch.startWithTaskName("open file");
 			openFileChannel();
 //			timeWatch.stopAndPrint();
