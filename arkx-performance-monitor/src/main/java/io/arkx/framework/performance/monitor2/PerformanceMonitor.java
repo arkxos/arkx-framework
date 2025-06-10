@@ -1,9 +1,6 @@
-package io.arkx.framework.boot.common.monitor;
+package io.arkx.framework.performance.monitor2;
 
 import org.springframework.stereotype.Service;
-
-import io.arkx.framework.commons.monitor.StackData;
-import io.arkx.framework.commons.monitor.StackEntry;
 
 /**
  * 性能监控
@@ -50,7 +47,6 @@ public class PerformanceMonitor {
 	}
 
 	/**
-	 * @param threshold
 	 *            打印日志的阈值
 	 */
 	public void stop() {

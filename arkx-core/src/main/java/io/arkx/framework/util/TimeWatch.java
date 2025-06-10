@@ -1,4 +1,4 @@
-package io.arkx.framework.commons.util;
+package io.arkx.framework.util;
 
 import java.time.LocalTime;
 import java.util.LinkedHashMap;
@@ -71,16 +71,6 @@ public class TimeWatch {
 		return cost;
 	}
 
-	public static void main(String[] args) {
-		int totalMs = 276399;
-		System.out.println(formatTime(totalMs));
-		System.out.println(LocalTime.ofSecondOfDay(276399/1000).withNano(276399%1000));
-		
-		TimeWatch timeWatch = TimeWatch.create().startWithTaskName("abc");
-		System.out.println("ddd");
-		timeWatch.stopAndPrint();
-	}
-	
 	/* 
 	 * 毫秒转化时分秒毫秒 
 	 */  
@@ -140,5 +130,17 @@ public class TimeWatch {
 		marks.put(desc, cost);
 		
 		this.markStart = System.nanoTime();
-	}  
+	}
+
+
+	public static void main(String[] args) {
+		int totalMs = 276399;
+		System.out.println(formatTime(totalMs));
+		System.out.println(LocalTime.ofSecondOfDay(276399/1000).withNano(276399%1000));
+
+		TimeWatch timeWatch = TimeWatch.create().startWithTaskName("abc");
+		System.out.println("ddd");
+		timeWatch.stopAndPrint();
+	}
+
 }

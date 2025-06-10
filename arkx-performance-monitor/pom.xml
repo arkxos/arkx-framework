@@ -20,6 +20,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>io.arkx.framework</groupId>
+			<artifactId>arkx-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>

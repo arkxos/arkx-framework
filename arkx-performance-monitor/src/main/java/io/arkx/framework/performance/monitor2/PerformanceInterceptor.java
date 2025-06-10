@@ -1,11 +1,10 @@
-package io.arkx.framework.boot.common.monitor;
+package io.arkx.framework.performance.monitor2;
 
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.stereotype.Service;
-
-import io.arkx.framework.annotation.fastdb.IngorePerformanceLog;
 
 /**
  * 
@@ -13,11 +12,16 @@ import io.arkx.framework.annotation.fastdb.IngorePerformanceLog;
  * @date 2013-7-22 下午04:46:39
  * @version V1.0
  */
+@Slf4j
 @Service
 public class PerformanceInterceptor implements MethodInterceptor {
 	
 	@Resource
 	private PerformanceMonitor performanceMonitor;
+
+	public PerformanceInterceptor() {
+		log.debug("PerformanceInterceptor init");
+	}
 
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {

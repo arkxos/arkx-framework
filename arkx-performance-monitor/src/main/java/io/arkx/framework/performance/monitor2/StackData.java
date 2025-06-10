@@ -1,12 +1,11 @@
-package io.arkx.framework.commons.monitor;
+package io.arkx.framework.performance.monitor2;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import io.arkx.framework.util.TimeWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.arkx.framework.commons.util.TimeWatch;
 
 /**
  * 监控信息变量
@@ -28,8 +27,7 @@ public class StackData {
 	
 	/**
 	 * 此处还可以进行改进，可以将超时的数据放入一个有界队列 里，在另一个线程进行打印。
-	 * 
-	 * @param data
+	 *
 	 */
 	public void printStack() {
 		if (logger.isWarnEnabled()) {

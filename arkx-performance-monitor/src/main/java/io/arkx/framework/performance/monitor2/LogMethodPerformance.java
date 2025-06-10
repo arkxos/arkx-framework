@@ -1,4 +1,4 @@
-package io.arkx.framework.commons.monitor;
+package io.arkx.framework.performance.monitor2;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package io.arkx.framework.annotation.fastdb;
+package io.arkx.framework.performance.monitor2;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

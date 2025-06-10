@@ -14,7 +14,7 @@ arkx:
     monitor:
       enabled: true
       sampling-rate: 40
-      slow-threshold: 200
+      slow-threshold: 500
       capture-sql-parameters: true
       store-to-database: true
 

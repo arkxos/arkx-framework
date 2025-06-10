@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -115,9 +116,12 @@ public class MethodMonitorAspect {
 //			"!within(java..*)")
 	@Around(
 		"!within(io.arkx.framework.performance.monitor..*) && " +
+		"!target(org.springframework.beans.factory.config.BeanPostProcessor) && " +
+
 		"(" +
 			"@within(org.springframework.stereotype.Controller) || " +
 			"@within(org.springframework.web.bind.annotation.RestController) || " +
+			"@within(org.springframework.stereotype.Component) || " +
 			"@within(org.springframework.stereotype.Service) || " +
 			"@within(org.springframework.stereotype.Repository) ||" +
 			"target(org.springframework.data.repository.Repository)" +
@@ -146,7 +150,8 @@ public class MethodMonitorAspect {
 //		}
 
 		// 关键点1：仅在上下文就绪时执行
-		if (!ApplicationContextHolder.isReady()) {
+		if (!ApplicationContextHolder.isReady()
+			|| !BeanFactoryUtils.isGeneratedBeanName("methodMonitorAspect")) {
 			return joinPoint.proceed();
 		}
 
