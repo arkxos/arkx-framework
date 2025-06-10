@@ -1,5 +1,6 @@
 package io.arkx.framework.performance.monitor2.domain;
 
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,18 +18,15 @@ public class PerformanceMonitor {
 	/**
 	 * 性能监控开关 可以在运行时动态设置开关
 	 */
-	private volatile boolean switchOn = true;
+	@Getter
+    private volatile boolean switchOn = true;
 
 	/**
 	 * 方法执行阈值
 	 */
 	private volatile int threshold = 100;
-	
-	public boolean isSwitchOn() {
-		return switchOn;
-	}
 
-	public void start(String logName) {
+    public void start(String logName) {
 		StackData data = dataHolder.get();
 		StackEntry currentEntry = new StackEntry(logName, System.currentTimeMillis());
 		if (data == null) {
@@ -47,7 +45,7 @@ public class PerformanceMonitor {
 	}
 
 	/**
-	 *            打印日志的阈值
+	 *  打印日志
 	 */
 	public void stop() {
 		StackData data = dataHolder.get();

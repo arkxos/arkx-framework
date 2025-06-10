@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.arkx.framework</groupId>
-			<artifactId>arkx-core</artifactId>
+			<artifactId>arkx-data-jpa</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

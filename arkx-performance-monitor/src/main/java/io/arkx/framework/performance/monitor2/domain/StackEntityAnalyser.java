@@ -1,10 +1,12 @@
 package io.arkx.framework.performance.monitor2.domain;
 
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+import io.arkx.framework.boot.spring.IocBeanRegister;
+import io.arkx.framework.performance.monitor2.LogMethodPerformanceRepository;
 import io.arkx.framework.performance.monitor2.model.LogMethodPerformance;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -12,9 +14,8 @@ import org.slf4j.LoggerFactory;
  * @date 2013-7-22 下午07:42:46
  * @version V1.0
  */
+@Slf4j
 public class StackEntityAnalyser {
-
-	private static Logger logger = LoggerFactory.getLogger(StackEntityAnalyser.class);
 
 	private static ConcurrentHashMap<String, MethodStats> methodStats = new ConcurrentHashMap<String, MethodStats>();
 	private static long statLogFrequency = 10;
@@ -33,19 +34,19 @@ public class StackEntityAnalyser {
 		}
 
 		if (elapsedTime > methodWarningThreshold) {
-			//logger.warn("method warning: " + methodName + "(), cnt = " + stats.count + ", lastTime = " + elapsedTime + ", maxTime = " + stats.maxTime);
+			log.warn("method warning: " + methodName + "(), cnt = " + stats.count + ", lastTime = " + elapsedTime + ", maxTime = " + stats.maxTime);
 		}
 
 		if (stats.count % statLogFrequency == 0) {
 			long avgTime = stats.totalTime / stats.count;
 			long runningAvg = (stats.totalTime - stats.lastTotalTime) / statLogFrequency;
-//			logger.info("====性能监控===>method: " + methodName + "(), cnt = " + stats.count + " ms, lastTime = " + elapsedTime + " ms, avgTime = " + avgTime
-//					+ " ms, runningAvg = " + runningAvg + " ms, maxTime = " + stats.maxTime + " ms");
+			log.info("====性能监控===>method: " + methodName + "(), cnt = " + stats.count + " ms, lastTime = " + elapsedTime + " ms, avgTime = " + avgTime
+					+ " ms, runningAvg = " + runningAvg + " ms, maxTime = " + stats.maxTime + " ms");
 
 			// reset the last total time
 			stats.lastTotalTime = stats.totalTime;
 			
-//			LogMethodPerformanceRepository logMethodPerformanceRepository = (LogMethodPerformanceRepository)SpringUtil.getBean("logMethodPerformanceRepository");
+			LogMethodPerformanceRepository logMethodPerformanceRepository = IocBeanRegister.getBean("logMethodPerformanceRepository");
 			LogMethodPerformance logMethodPerformance = new LogMethodPerformance();
 			logMethodPerformance.setAvgTime(runningAvg);
 			
@@ -59,16 +60,20 @@ public class StackEntityAnalyser {
 				logMethodPerformance.setClassName("resource");
 				logMethodPerformance.setMethodName(methodName);
 			}
-			
-//			LogMethodPerformance oldLogMethodPerformance = logMethodPerformanceRepository.findOneByProperties(LogMethodPerformance.class,
-//					"className", logMethodPerformance.getClassName(),
-//					"methodName", logMethodPerformance.getMethodName());
-//			if(oldLogMethodPerformance!=null) {
-//				oldLogMethodPerformance.setAvgTime(logMethodPerformance.getAvgTime());
-//				logMethodPerformanceRepository.update(oldLogMethodPerformance);
-//			} else {
-//				logMethodPerformanceRepository.save(logMethodPerformance);
-//			}
+
+			Optional<LogMethodPerformance> oldLogMethodPerformanceOptional =
+            	logMethodPerformanceRepository
+                    .findOneByClassNameAndMethodName(
+						logMethodPerformance.getClassName(),
+						logMethodPerformance.getMethodName());
+
+			if (oldLogMethodPerformanceOptional.isPresent()) {
+				LogMethodPerformance oldLogMethodPerformance = oldLogMethodPerformanceOptional.get();
+				oldLogMethodPerformance.setAvgTime(logMethodPerformance.getAvgTime());
+				logMethodPerformanceRepository.save(oldLogMethodPerformance);
+			} else {
+				logMethodPerformanceRepository.save(logMethodPerformance);
+			}
 		}
 	}
 

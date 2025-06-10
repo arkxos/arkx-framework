@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class StackEntry {
 
-	public String logName;
-	public long beginTime;
-	public long endTime;
+	String logName;
+	long beginTime;
+	long endTime;
 
-	public int level;// 节点所处高度
-	public List<StackEntry> child;// 调用的子方法
-	public StackEntry parent;// 上级节点
+	int level;// 节点所处高度
+	List<StackEntry> child;// 调用的子方法
+	StackEntry parent;// 上级节点
 
 	public StackEntry(String logName, long currentTimeMillis) {
 		this.logName = logName;

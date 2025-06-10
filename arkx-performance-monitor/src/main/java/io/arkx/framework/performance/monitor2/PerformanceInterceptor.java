@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
  * @version V1.0
  */
 @Slf4j
-@Service
 public class PerformanceInterceptor implements MethodInterceptor {
 	
 	@Resource

@@ -3,9 +3,8 @@ package io.arkx.framework.performance.monitor2.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.arkx.framework.util.TimeWatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.arkx.framework.commons.util.TimeWatch;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 监控信息变量
@@ -14,9 +13,8 @@ import org.slf4j.LoggerFactory;
  * @date 2013-7-22 下午07:51:03
  * @version V1.0
  */
+@Slf4j
 public class StackData {
-	
-	private Logger logger = LoggerFactory.getLogger(StackData.class);
 
 	// 记录根根节点
 	public StackEntry root;
@@ -24,18 +22,17 @@ public class StackData {
 	public StackEntry currentEntry;
 	// 堆栈树高度
 	public int level;
-	
 	/**
 	 * 此处还可以进行改进，可以将超时的数据放入一个有界队列 里，在另一个线程进行打印。
 	 *
 	 */
 	public void printStack() {
-		if (logger.isWarnEnabled()) {
+//		if (logger.isWarnEnabled()) {
 			StringBuilder sb = new StringBuilder("\r\n");
 			StackEntry root = this.root;
 			mergeNode(root, sb);
-			logger.warn(sb.toString());
-		}
+			log.debug(sb.toString());
+//		}
 	}
 
 	/**
