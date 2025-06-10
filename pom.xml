@@ -52,6 +52,7 @@
 		<module>arkx-cosyui</module>
 		<module>arkx-performance-monitor</module>
 		<module>arkxos-it-test</module>
+		<module>arkx-core</module>
 	</modules>
 
 
