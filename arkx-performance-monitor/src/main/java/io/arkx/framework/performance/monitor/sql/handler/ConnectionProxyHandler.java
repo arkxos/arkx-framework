@@ -1,7 +1,6 @@
 package io.arkx.framework.performance.monitor.sql.handler;
 
 import io.arkx.framework.performance.monitor.TraceRecorder;
-import io.arkx.framework.performance.monitor.config.MonitorConfig;
 import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 
@@ -39,7 +38,7 @@ public class ConnectionProxyHandler implements InvocationHandler {
 			return method.invoke(realConnection, args);
 		}
 
-		if (!ApplicationContextHolder.isReady()) {
+		if (ApplicationContextHolder.notReady()) {
 			return method.invoke(realConnection, args);
 		}
 

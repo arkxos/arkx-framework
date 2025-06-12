@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MonitorWebMvcConfigurer implements WebMvcConfigurer {
 
 	@Autowired
-	private RequestMonitoringInterceptor monitoringInterceptor;
+	private RequestMonitoringInterceptor requestMonitoringInterceptor;
 
 	public MonitorWebMvcConfigurer() {
 		System.out.println("----------------");
@@ -27,7 +27,7 @@ public class MonitorWebMvcConfigurer implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(monitoringInterceptor)
+		registry.addInterceptor(requestMonitoringInterceptor)
 				.addPathPatterns("/**") // 所有路径
 				.order(Ordered.HIGHEST_PRECEDENCE); // 设置最高优先级
 	}

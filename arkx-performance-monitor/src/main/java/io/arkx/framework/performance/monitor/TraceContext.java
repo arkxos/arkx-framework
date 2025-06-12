@@ -28,9 +28,6 @@ public class TraceContext {
 	// 上下文栈
 	private static final ThreadLocal<Stack<TraceNode>> callStack = new ThreadLocal<>();
 
-	// 配置最大深度
-//	private final int maxDepth;
-
 	private MonitorConfig config;
 
 	private MonitorConfig config() {

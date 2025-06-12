@@ -1,10 +1,14 @@
 package io.arkx.framework.performance.monitor.model;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,20 +17,44 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Nobody
- * @date 2025-06-06 0:39
- * @since 1.0
+ * 跟踪节点模型
+ *
+ * @author Darkness
+ * @date 2013-7-22 下午07:49:34
+ * @version V1.0
  */
-/* ====================== 跟踪节点模型 ====================== */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TraceNode {
 
+	// 创建方法跟踪节点
+	public static TraceNode createMethodNode(Method method) {
+		String className = method.getDeclaringClass().getName();
+		String methodName = method.getName();
+		String signature = method.toString();
+		TraceNode node = new TraceNode();
+		node.setType("METHOD");
+		node.setClassName(className);
+		node.setMethodName(methodName);
+		node.setSignature(signature);
+		node.setStartTime(System.nanoTime());
+
+		// 尝试获取HTTP请求信息
+		if (RequestContextHolder.getRequestAttributes() != null) {
+			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+			node.setSessionId(request.getSession(false) != null ?
+					request.getSession().getId() : null);
+		}
+
+		return node;
+	}
+
 	// 基础信息
 	private String traceId = UUID.randomUUID().toString();
 	private String parentId;
 	private String type; // METHOD or SQL
+	private String name;
 	private String className;
 	private String methodName;
 	private String signature;
@@ -51,6 +79,7 @@ public class TraceNode {
 	private String sessionId;
 	private String endpoint;
 
+	private TraceNode parent;
 	private List<TraceNode> children = new ArrayList<>();
 
 	public void addChild(TraceNode node) {
@@ -241,10 +270,16 @@ public class TraceNode {
 		return error.substring(0, 47) + "...";
 	}
 
-	public void complete() {
-		if (endTime > 0) {
-			duration = endTime - startTime;
-		}
+	/**
+	 * 方法调用结束
+	 *
+	 * @author Darkness
+	 * @date 2013-7-22 下午07:57:17
+	 * @version V1.0
+	 */
+	public void end() {
+		this.endTime = System.nanoTime();
+		this.duration = endTime - startTime;
 	}
 
 }

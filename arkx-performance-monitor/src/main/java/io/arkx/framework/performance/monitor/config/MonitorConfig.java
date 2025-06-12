@@ -30,9 +30,8 @@ import java.util.regex.Pattern;
 @Getter
 @Setter
 @Slf4j
-//@Configuration
 @ConfigurationProperties(prefix = "arkx.performance.monitor")
-//@Component
+@Component
 public class MonitorConfig {
 
 	// 基础配置
@@ -66,6 +65,8 @@ public class MonitorConfig {
 	private int lowLoadIncreasePercent = 20; // 低负载时增加百分比
 	private int minSamplingRate = 5; // 最低采样率
 	private int maxSamplingRate = 100; // 最高采样率
+
+	private String pointcut;
 
 	// 包含/排除规则
 	private volatile List<String> includePackages = new ArrayList<>();

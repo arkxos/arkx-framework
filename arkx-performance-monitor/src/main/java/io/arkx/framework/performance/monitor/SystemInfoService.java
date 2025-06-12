@@ -1,5 +1,6 @@
 package io.arkx.framework.performance.monitor;
 
+import org.springframework.stereotype.Component;
 import oshi.SystemInfo;
 import oshi.hardware.*;
 import oshi.software.os.FileSystem;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @date 2025-06-06 11:58
  * @since 1.0
  */
+@Component
 public class SystemInfoService {
 	private static final long MIN_CPU_INTERVAL = 500;
 

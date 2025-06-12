@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 /* ====================== 高性能跟踪记录器 ====================== */
 @Slf4j
-//@Component
+@Component
 public class TraceRecorder {
 
 	// 性能参数
@@ -35,7 +35,7 @@ public class TraceRecorder {
 	// 依赖组件
 	private final TraceRepository repository;
 
-	private MonitorConfig monitorConfig;
+	private final MonitorConfig monitorConfig;
 
 	public TraceRecorder(MonitorConfig monitorConfig, TraceRepository repository) {
 		this.monitorConfig = monitorConfig;

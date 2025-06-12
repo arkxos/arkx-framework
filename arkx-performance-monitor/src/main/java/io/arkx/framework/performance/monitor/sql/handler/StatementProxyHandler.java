@@ -108,7 +108,7 @@ public class StatementProxyHandler implements InvocationHandler {
 		} finally {
 			// 完成节点
 			sqlNode.setEndTime(System.nanoTime());
-			sqlNode.complete();
+			sqlNode.end();
 
 			// 采样决策
 			if (configService.shouldSample(sqlNode.getRawSql())) {

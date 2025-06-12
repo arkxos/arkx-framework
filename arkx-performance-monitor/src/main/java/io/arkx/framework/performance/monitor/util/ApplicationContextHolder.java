@@ -1,39 +1,51 @@
 package io.arkx.framework.performance.monitor.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Nobody
  * @date 2025-06-06 0:43
  * @since 1.0
  */
+@Slf4j
 /* ====================== 上下文辅助类 ====================== */
 @Component
-public  class ApplicationContextHolder implements ApplicationContextAware {
+public class ApplicationContextHolder
+		implements
+			ApplicationContextAware,
+			ApplicationListener<ContextRefreshedEvent> {
 
-	private static final AtomicReference<ApplicationContext> CONTEXT_REF =
-			new AtomicReference<>();
+	private static volatile boolean contextReady = false;
+	private static ApplicationContext context;
 
 	@Override
-	public void setApplicationContext(ApplicationContext context) {
-		CONTEXT_REF.compareAndSet(null, context);
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		context = applicationContext;
+	}
+
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
+		// 只在根应用上下文初始化完成时设置标志
+		if (event.getApplicationContext().getParent() == null) {
+			contextReady = true;
+			log.info("Spring root context initialized");
+		}
 	}
 
 	public static <T> T getBean(Class<T> beanClass) {
-		ApplicationContext context = CONTEXT_REF.get();
 		if (context != null) {
 			return context.getBean(beanClass);
 		}
 		throw new IllegalStateException("Application context not initialized");
 	}
 
-	public static boolean isReady() {
-		return CONTEXT_REF.get() != null;
+	public static boolean notReady() {
+		return !contextReady;
 	}
 
 }
