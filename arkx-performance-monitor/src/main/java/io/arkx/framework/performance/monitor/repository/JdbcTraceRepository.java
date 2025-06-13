@@ -267,41 +267,39 @@ public  class JdbcTraceRepository implements TraceRepository {
 	// 创建表结构
 	@PostConstruct
 	public void createTableIfMissing() {
-//		try (Connection conn = dataSource.getConnection();
-//			 Statement stmt = conn.createStatement()) {
-//
-//			stmt.execute("CREATE TABLE IF NOT EXISTS monitor_trace (" +
-//					"id BIGINT AUTO_INCREMENT PRIMARY KEY," +
-//					"trace_id VARCHAR(36) NOT NULL," +
-//					"parent_id VARCHAR(36)," +
-//					"type VARCHAR(10) NOT NULL," +
-//					"class_name VARCHAR(255)," +
-//					"method_name VARCHAR(100)," +
-//					"signature TEXT," +
-//					"sql TEXT," +
-//					"sql_parameters TEXT," +
-//					"full_sql TEXT," +
-//					"depth INT," +
-//					"start_time BIGINT," +
-//					"end_time BIGINT," +
-//					"duration BIGINT," +
-//					"success BOOLEAN," +
-//					"error_message TEXT," +
-//					"request_id VARCHAR(36)," +
-//					"session_id VARCHAR(36)," +
-//					"endpoint VARCHAR(255)," +
-//					"INDEX idx_trace_id (trace_id)," +
-//					"INDEX idx_parent_id (parent_id)," +
-//					"INDEX idx_type (type)," +
-//					"INDEX idx_class (class_name)," +
-//					"INDEX idx_method (method_name)," +
-//					"INDEX idx_start_time (start_time)" +
-//					")");
-//
-//			log.info("Trace node table created/validated");
-//		} catch (SQLException e) {
-//			log.error("Failed to create trace table", e);
-//		}
+		try (Connection conn = dataSource.getConnection();
+			 Statement stmt = conn.createStatement()) {
+
+			stmt.execute("CREATE TABLE IF NOT EXISTS monitor_trace  (\n" +
+					"  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',\n" +
+					"  `trace_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '跟踪ID',\n" +
+					"  `parent_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '父节点ID',\n" +
+					"  `node_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '节点类型(METHOD/SQL)',\n" +
+					"  `class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类名',\n" +
+					"  `method_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方法名',\n" +
+					"  `signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类方法签名',\n" +
+					"  `raw_sql` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '原始SQL',\n" +
+					"  `sql_parameters` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT 'SQL参数',\n" +
+					"  `full_sql` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '完整SQL(带参数)',\n" +
+					"  `start_time` bigint(20) NOT NULL COMMENT '开始时间(纳秒)',\n" +
+					"  `end_time` bigint(20) NOT NULL COMMENT '结束时间(纳秒)',\n" +
+					"  `duration` bigint(20) NOT NULL COMMENT '执行时长(纳秒)',\n" +
+					"  `success` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否成功',\n" +
+					"  `error_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '错误信息',\n" +
+					"  `depth` tinyint(3) NOT NULL DEFAULT 0 COMMENT '调用深度',\n" +
+					"  `request_id` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求ID',\n" +
+					"  `session_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'sessionId',\n" +
+					"  `endpoint` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API端点',\n" +
+					"  PRIMARY KEY (`id`) USING BTREE,\n" +
+					"  INDEX `idx_node_type`(`node_type`) USING BTREE,\n" +
+					"  INDEX `idx_trace_id`(`trace_id`) USING BTREE,\n" +
+					"  INDEX `idx_request_id`(`request_id`) USING BTREE\n" +
+					") COMMENT = '方法监控跟踪表' ");
+
+			log.info("Trace node table created/validated");
+		} catch (SQLException e) {
+			log.error("Failed to create trace table", e);
+		}
 	}
 
 	// 每天执行的归档任务
