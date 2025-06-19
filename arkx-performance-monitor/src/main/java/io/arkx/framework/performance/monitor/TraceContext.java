@@ -23,10 +23,12 @@ import java.util.UUID;
 public class TraceContext {
 
 	// 当前请求ID
-	private static final ThreadLocal<String> requestIdLocal = new ThreadLocal<>();
+	private static final ThreadLocal<String> requestIdLocal = new InheritableThreadLocal<>();
 
 	// 上下文栈
 	private static final ThreadLocal<Stack<TraceNode>> callStack = new ThreadLocal<>();
+	// 流上下文管理器
+	private static final ThreadLocal<TraceNode> streamParentHolder = new ThreadLocal<>();
 
 	private MonitorConfig config;
 
@@ -41,6 +43,24 @@ public class TraceContext {
 
 	public TraceContext() {
 //		this.maxDepth = config.getMaxTraceDepth();
+	}
+
+	// 开始流处理上下文
+	public void startStreamProcessing() {
+		TraceNode current = current();
+		if (current != null) {
+			streamParentHolder.set(current);
+		}
+	}
+
+	// 结束流处理上下文
+	public void endStreamProcessing() {
+		streamParentHolder.remove();
+	}
+
+	// 获取流父节点
+	public TraceNode getStreamParent() {
+		return streamParentHolder.get();
 	}
 
 	// 开始新请求
@@ -68,11 +88,23 @@ public class TraceContext {
 	public TraceNode pushNode(TraceNode node) {
 		Stack<TraceNode> currentStack = callStack.get();
 
-		if (currentStack == null) return node;
+		if (currentStack == null) {
+			callStack.set(new Stack<>());
+			currentStack = callStack.get();
+		}
 
 		// 设置父节点（如果存在）
-		if (!currentStack.isEmpty()) {
+		// 优先使用流父节点
+		TraceNode streamParent = getStreamParent();
+		if (streamParent != null) {
+			node.setParentId(streamParent.getTraceId());
+		}
+		// 其次使用栈顶节点
+		else if (!currentStack.isEmpty()) {
 			node.setParentId(currentStack.peek().getTraceId());
+		} else {// 当前调用根节点
+//			currentStack.push(node);
+//			return null;
 		}
 
 		// 设置调用深度

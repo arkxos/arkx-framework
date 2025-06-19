@@ -53,7 +53,14 @@ public class PerformanceInterceptor implements MethodInterceptor {
 		if (ApplicationContextHolder.notReady()) {
 			return invocation.proceed();
 		}
-		log.debug("PerformanceInterceptor invoke " + invocation.getMethod());
+
+		// 获取方法信息
+		Method method = invocation.getMethod();
+		String className = method.getDeclaringClass().getName();
+		String methodName = method.getName();
+		String signature = SignatureBuilder.build(className, methodName);
+
+		log.debug("PerformanceInterceptor.invoke: {}", signature);
 		IngorePerformanceLog classIngorePerformanceLog = invocation.getMethod().getDeclaringClass().getAnnotation(IngorePerformanceLog.class);
 		if(classIngorePerformanceLog != null) {
 			return invocation.proceed();
@@ -68,11 +75,6 @@ public class PerformanceInterceptor implements MethodInterceptor {
 			return invocation.proceed();
 		}
 
-		// 获取方法信息
-		Method method = invocation.getMethod();
-		String className = method.getDeclaringClass().getName();
-		String methodName = method.getName();
-		String signature = SignatureBuilder.build(className, methodName);
 
 		// 是否应该监控此方法
 		if (!monitorConfigService().shouldMonitorMethod(className, methodName)) {
@@ -107,7 +109,7 @@ public class PerformanceInterceptor implements MethodInterceptor {
 			// 记录慢方法
 			if (node.getDuration() > monitorConfig().getSlowThreshold() * 1_000_000) {
 				log.warn("Slow method detected: {}.{} ({}ms)",
-						"className", "methodName",
+						className, methodName,
 						TimeUnit.NANOSECONDS.toMillis(node.getDuration()));
 			}
 
