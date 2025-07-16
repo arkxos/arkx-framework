@@ -169,6 +169,12 @@
 	<!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
 	<dependencyManagement>
 		<dependencies>
+			<!-- lombok自动get与set属性方法 -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
 			<!--ark 公共版本定义-->
 <!--			<dependency>-->
 <!--				<groupId>io.arkx.framework</groupId>-->
@@ -801,6 +807,12 @@
 							</image>
 						</images>
 					</configuration>
+				</plugin>
+				<!-- 统一 revision 版本 -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>flatten-maven-plugin</artifactId>
+					<version>${flatten-maven-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

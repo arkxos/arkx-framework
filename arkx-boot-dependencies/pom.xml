@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.arkx.framework</groupId>
+		<artifactId>arkx-framework</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>arkx-boot-dependencies</artifactId>
+	<packaging>pom</packaging>
+
+	<!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
+	<dependencyManagement>
+		<dependencies>
+			<!--ark 公共版本定义-->
+			<dependency>
+				<groupId>io.arkx.framework</groupId>
+				<artifactId>arkx-dependencies</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!--ark 公共版本定义-->
+			<dependency>
+				<groupId>io.arkx.framework</groupId>
+				<artifactId>arkx-commons-bom</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.arkx.framework</groupId>
+				<artifactId>arkx-boot</artifactId>
+				<version>${revision}</version>
+				<scope>compile</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- 统一 revision 版本 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+					<flattenDependencyMode>all</flattenDependencyMode>
+					<updatePomFile>true</updatePomFile>
+					<pomElements>
+						<properties>resolve</properties>
+						<dependencies>resolve</dependencies> <!-- 建议添加 -->
+					</pomElements>
+					<!-- 显式定义要解析的属性 -->
+					<properties>
+						<resolve>project.version</resolve> <!-- 新增 -->
+						<resolve>revision</resolve> <!-- 新增 -->
+					</properties>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

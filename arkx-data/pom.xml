@@ -17,6 +17,7 @@
     <modules>
         <module>arkx-data-jpa</module>
 		<module>arkx-data-mybatis</module>
+		<module>arkx-data-jdbc</module>
     </modules>
 
     <dependencies>

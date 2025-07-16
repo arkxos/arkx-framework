@@ -78,7 +78,8 @@ public class PerformanceMonitorConfiguration {
 						"   @within(org.springframework.stereotype.Component) || " +
 						"   @within(org.springframework.stereotype.Service) || " +
 						"   @within(org.springframework.stereotype.Repository) || " +
-						"   target(org.springframework.data.repository.Repository)" +
+						"   target(org.springframework.data.repository.Repository) || " +
+						"   within(org.springframework.data.jpa.repository.support..*)" +
 						")"
 		);
 

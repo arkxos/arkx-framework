@@ -82,12 +82,7 @@
             <artifactId>logback-classic</artifactId>
             <scope>compile</scope>
         </dependency>
-        <!-- lombok自动get与set属性方法 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
+
     </dependencies>
 
     <profiles>
