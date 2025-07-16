@@ -55,10 +55,10 @@ public class ProductService {
 	}
 
 	// 按价格范围和活跃状态筛选（分页）
-	public Page<ProductDTO> getProductsByPriceRangeAndActive(double minPrice, double maxPrice, boolean active, Pageable pageable) {
-		return productRepository.findByPriceRangeAndActive(minPrice, maxPrice, active, pageable)
-				.map(ProductDTO::fromEntity);
-	}
+//	public Page<ProductDTO> getProductsByPriceRangeAndActive(double minPrice, double maxPrice, boolean active, Pageable pageable) {
+//		return productRepository.findByPriceRangeAndActive(minPrice, maxPrice, active, pageable)
+//				.map(ProductDTO::fromEntity);
+//	}
 
 	// 获取单个产品
 	public ProductDTO getProductById(Long id) {

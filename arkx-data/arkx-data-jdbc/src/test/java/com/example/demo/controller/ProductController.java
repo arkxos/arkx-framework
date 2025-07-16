@@ -51,9 +51,9 @@ public class ProductController {
 		if (name.isPresent() && category.isPresent()) {
 			products = productService.getProductsByNameAndCategory(
 					name.get(), category.get(), pageable);
-		} else if (minPrice.isPresent() && maxPrice.isPresent() && active.isPresent()) {
-			products = productService.getProductsByPriceRangeAndActive(
-					minPrice.get(), maxPrice.get(), active.get(), pageable);
+//		} else if (minPrice.isPresent() && maxPrice.isPresent() && active.isPresent()) {
+//			products = productService.getProductsByPriceRangeAndActive(
+//					minPrice.get(), maxPrice.get(), active.get(), pageable);
 		} else {
 			products = productService.getAllProducts(pageable);
 		}

@@ -26,6 +26,6 @@ public interface ProductRepository extends CrudRepository<Product, Long>, Paging
 	Page<Product> findByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);
 
 	// 自定义查询：按价格范围和活跃状态过滤
-	@Query("SELECT * FROM products WHERE price BETWEEN :minPrice AND :maxPrice AND active = :active")
-	Page<Product> findByPriceRangeAndActive(double minPrice, double maxPrice, boolean active, Pageable pageable);
+//	@Query("SELECT * FROM products WHERE price BETWEEN :minPrice AND :maxPrice AND active = :active")
+//	Page<Product> findByPriceRangeAndActive(double minPrice, double maxPrice, boolean active, Pageable pageable);
 }
