@@ -1,0 +1,102 @@
+package com.example.demo.test;
+
+/**
+ * @author Nobody
+ * @date 2025-07-17 1:04
+ * @since 1.0
+ */
+
+import com.example.demo.model.Product;
+import com.example.demo.repository.ProductRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@DataJdbcTest // 仅加载 JDBC 相关 Bean
+@ActiveProfiles("test") // 使用测试配置（可选）
+public class ProductRepositoryTest {
+
+	@Autowired
+	private ProductRepository productRepository;
+
+	// 测试保存和查询
+	@Test
+	void saveAndFindById_ShouldReturnProduct() {
+		Product product = Product.builder()
+				.name("Test Product")
+				.price(99.99)
+				.category("Test Category")
+				.active(true)
+				.build();
+
+		Product saved = productRepository.save(product);
+		Optional<Product> found = productRepository.findById(saved.getId());
+
+		assertThat(found).isPresent();
+		assertThat(found.get().getName()).isEqualTo("Test Product");
+		assertThat(found.get().getPrice()).isEqualTo(99.99);
+	}
+
+	// 测试删除
+	@Test
+	void delete_ShouldRemoveProduct() {
+		Product product = productRepository.save(Product.builder()
+				.name("To Delete")
+				.price(50.0)
+				.build());
+		Long productId = product.getId();
+
+		productRepository.deleteById(productId);
+		Optional<Product> afterDelete = productRepository.findById(productId);
+
+		assertThat(afterDelete).isEmpty();
+	}
+
+	// 测试自定义查询：按名称和类别筛选（分页）
+	@Test
+	void findByNameAndCategory_WithPagination_ShouldReturnPage() {
+		// 插入测试数据
+		productRepository.saveAll(List.of(
+				Product.builder().name("Apple").category("Fruit").build(),
+				Product.builder().name("Banana").category("Fruit").build(),
+				Product.builder().name("Carrot").category("Vegetable").build()
+		));
+
+		// 查询名称含"App"且类别为"Fruit"的第一页（每页2条）
+		Page<Product> result = productRepository.findByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(
+				"App", "Fruit", PageRequest.of(0, 2));
+
+		assertThat(result.getTotalElements()).isEqualTo(1); // 只有Apple符合条件
+		assertThat(result.getContent()).hasSize(1);
+		assertThat(result.getContent().get(0).getName()).isEqualTo("Apple");
+	}
+
+	// 测试自定义查询：价格范围和活跃状态（分页）
+	@Test
+	void findByPriceRangeAndActive_WithPagination_ShouldReturnPage() {
+		// 插入测试数据
+		productRepository.saveAll(List.of(
+				Product.builder().price(100.0).active(true).build(),
+				Product.builder().price(200.0).active(true).build(),
+				Product.builder().price(300.0).active(false).build(),
+				Product.builder().price(250.0).active(true).build()
+		));
+
+		// 查询价格在150-250之间且活跃的产品（第0页，每页2条）
+		Page<Product> result = productRepository.findByPriceRangeAndActive(
+				150.0, 250.0, true, PageRequest.of(0, 2));
+
+		assertThat(result.getTotalElements()).isEqualTo(2); // 200和250符合条件
+		assertThat(result.getContent()).hasSize(2);
+		assertThat(result.getContent().get(0).getPrice()).isEqualTo(200.0);
+		assertThat(result.getContent().get(1).getPrice()).isEqualTo(250.0);
+	}
+}
