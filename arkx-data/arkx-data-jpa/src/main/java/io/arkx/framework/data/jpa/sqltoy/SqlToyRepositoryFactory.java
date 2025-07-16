@@ -36,7 +36,12 @@ public class SqlToyRepositoryFactory extends JpaRepositoryFactory {
 	@Override
     protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
 																   ValueExpressionDelegate valueExpressionDelegate) {
+		// 获取默认策略
+		QueryLookupStrategy defaultStrategy = super.getQueryLookupStrategy(key, valueExpressionDelegate)
+				.orElseThrow(() -> new IllegalStateException("No default query strategy found"));
+
 		QueryLookupStrategy queryLookupStrategy = SqlToyQueryLookupStrategy.create(
+				defaultStrategy,
 				sqlToyLazyDao,
 				entityManager,
 				key,
