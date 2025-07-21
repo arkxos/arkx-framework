@@ -29,7 +29,7 @@ public interface ProductRepository extends CrudRepository<Product, Long>, Paging
 //	@Query("SELECT * FROM products WHERE price BETWEEN :minPrice AND :maxPrice AND active = :active")
 //	Page<Product> findByPriceRangeAndActive(double minPrice, double maxPrice, boolean active, Pageable pageable);
 
-	@XmlSqlQuery
+//	@XmlSqlQuery
 	Page<Product> findByPriceBetweenAndActive(double minPrice, double maxPrice, boolean active, Pageable pageable);
 
 }
