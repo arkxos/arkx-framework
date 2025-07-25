@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
 import io.arkx.framework.data.jpa.entity.BaseEntity;
-import io.arkx.framework.data.jpa.sqltoy.ContextHolder;
+import io.arkx.framework.data.common.ContextHolder;
 import io.arkx.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
 
 /**

@@ -2,6 +2,8 @@ package io.arkx.framework.data.jpa.sqltoy;
 
 import java.lang.reflect.Method;
 
+import io.arkx.framework.data.common.sqltoy.SqlToyQuery;
+import io.arkx.framework.data.common.sqltoy.SqlToyTemplateQuery;
 import jakarta.persistence.EntityManager;
 
 import jakarta.validation.constraints.NotNull;

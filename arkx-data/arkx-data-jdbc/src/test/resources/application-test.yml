@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:productdb
+    driver-class-name: org.h2.Driver  # ? driverClassName ??? kebab-case???????
+    username: sa
+    password: ""  # ?????????????????? password:?
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql  # ?????????
+      data-locations: classpath:data.sql      # ??????????????
+      # ???? data ???
+      # data-locations:
+      #   - classpath:data-init.sql
+      #   - classpath:data-test.sql

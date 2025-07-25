@@ -54,7 +54,7 @@
 		<module>arkxos-it-test</module>
 		<module>arkx-core</module>
 		<module>arkx-boot-dependencies</module>
-<!--		<module>arkx-data/arkx-data-jdbc</module>-->
+        <!--		<module>arkx-data/arkx-data-jdbc</module>-->
 	</modules>
 
 

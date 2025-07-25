@@ -2,6 +2,7 @@ package io.arkx.framework.data.jpa.sqltoy;
 
 import java.io.Serializable;
 
+import io.arkx.framework.data.common.ContextHolder;
 import jakarta.persistence.EntityManager;
 
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
