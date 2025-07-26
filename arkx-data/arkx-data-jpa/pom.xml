@@ -99,7 +99,6 @@
 			<groupId>io.arkx.framework</groupId>
 			<artifactId>arkx-data-common</artifactId>
 			<version>${project.version}</version>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

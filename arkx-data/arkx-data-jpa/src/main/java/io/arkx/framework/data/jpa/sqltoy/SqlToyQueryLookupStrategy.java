@@ -94,6 +94,6 @@ public class SqlToyQueryLookupStrategy implements QueryLookupStrategy {
 				PersistenceProvider.fromEntityManager(entityManager)
 		).build(method, metadata, factory);
 
-		return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod, entityManager);
+		return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod);
 	}
 }

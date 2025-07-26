@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import io.arkx.framework.data.jpa.sqltoy.SqlToyQuery;
+import io.arkx.framework.data.common.sqltoy.SqlToyQuery;
 import io.arkx.soa.entity.StaffEntity;
 
 /**

@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
+		<module>arkx-data-common</module>
         <module>arkx-data-jpa</module>
 		<module>arkx-data-mybatis</module>
 		<module>arkx-data-jdbc</module>
