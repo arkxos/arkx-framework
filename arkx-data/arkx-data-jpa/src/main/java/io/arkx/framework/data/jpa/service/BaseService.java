@@ -3,8 +3,8 @@ package io.arkx.framework.data.jpa.service;
 import io.arkx.framework.commons.util.CriteriaQueryWrapper;
 import io.arkx.framework.commons.util.QueryHelp;
 import io.arkx.framework.commons.model.PageResult;
-import io.arkx.framework.data.jpa.BaseRepository;
 
+import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 import org.hibernate.query.sql.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import java.util.*;
  * @Date 2020/05/16
  * @Version V1.0
  */
-public class BaseService<T,ID extends Serializable,R extends BaseRepository<T, ID>> implements IBaseService<T, ID, R> {
+public class BaseService<T,ID extends Serializable,R extends BaseJpaRepository<T, ID>> implements IBaseService<T, ID, R> {
 
 	private static final String DEFAULT_SORT_FIELD = "createTime";
 	@Autowired

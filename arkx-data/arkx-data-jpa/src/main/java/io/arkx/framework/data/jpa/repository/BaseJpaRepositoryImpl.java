@@ -1,4 +1,4 @@
-package io.arkx.framework.data.jpa;
+package io.arkx.framework.data.jpa.repository;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -24,10 +24,10 @@ import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.UuidUtil;
-import io.arkx.framework.data.common.entity.Status;
+import io.arkx.framework.data.common.entity.*;
+import io.arkx.framework.data.common.repository.ExtBaseRepository;
 import io.arkx.framework.data.jdbc.ResultDataTable;
 
-import io.arkx.framework.data.jpa.entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
@@ -38,7 +38,6 @@ import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.persister.entity.SingleTableEntityPersister;
 import org.hibernate.query.sql.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
-import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -55,10 +54,11 @@ import org.springframework.util.ReflectionUtils;
  * @date 2019-07-19 18:41:49
  * @version V1.0
  */
-public class BaseRepositoryImpl<T extends Object, ID extends Serializable> extends SimpleJpaRepository<T, ID>
-		implements BaseRepository<T, ID> {
+public class BaseJpaRepositoryImpl<T, ID extends Serializable>
+		extends SimpleJpaRepository<T, ID>
+		implements ExtBaseRepository<T, ID> {
 
-	private final Class<T> domainClass;
+	private Class<T> domainClass;
 	private EntityManager entityManager;
 	JpaEntityInformation<T, Serializable> entityInformation;
 	private SystemIdGenerator systemIdGenerator;
@@ -66,7 +66,7 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
     private Method statusReadMethod;// 状态字段读方法
     private Method statusWriteMethod;// 状态字段写方法
     
-	public BaseRepositoryImpl(JpaEntityInformation<T, Serializable> entityInformation, EntityManager entityManager) {
+	public BaseJpaRepositoryImpl(JpaEntityInformation<T, Serializable> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);
 		this.entityManager = entityManager;
 		this.entityInformation = entityInformation;
@@ -86,7 +86,7 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
 		}
 	}
 	
-	 /**
+	/**
      * 根据id查询map结构数据
      */
     @Override
@@ -168,22 +168,6 @@ public class BaseRepositoryImpl<T extends Object, ID extends Serializable> exten
         }
     }
 
-    /**
-     * 获取对象属性描述
-     * @param target
-     * @param fieldClass
-     * @return
-     */
-    private PropertyDescriptor findFieldPropertyDescriptor(Class<?> target, Class<?> fieldClass) {
-        PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(target);
-        for (PropertyDescriptor pd : propertyDescriptors) {
-            if (pd.getPropertyType() == fieldClass) {
-                return pd;
-            }
-        }
-        return null;
-    }
-	
 	@Override
 	public boolean support(String modelType) {
 		return domainClass.getName().equals(modelType);

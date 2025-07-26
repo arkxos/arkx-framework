@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
+import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -12,7 +13,6 @@ import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.support.Repositories;
 
-import io.arkx.framework.data.jpa.BaseRepository;
 import io.arkx.framework.data.jpa.auditing.CachingJpaRepository;
 
 /**
@@ -26,7 +26,7 @@ public abstract class RepoBasedConverter<S, D, ID extends Serializable> extends 
 
     private Repositories repositories;
 
-    private BaseRepository<S, ID> genericJpaRepository;
+    private BaseJpaRepository<S, ID> genericJpaRepository;
 
     private EntityInformation<S, ID> entityInformation;
 
@@ -57,7 +57,7 @@ public abstract class RepoBasedConverter<S, D, ID extends Serializable> extends 
         Class<?> clazz = classes[0];
         this.repositories = new Repositories(context);
         this.entityInformation = repositories.getEntityInformationFor(clazz);
-        this.genericJpaRepository = (BaseRepository<S, ID>) repositories.getRepositoryFor(clazz).orElse(null);
+        this.genericJpaRepository = (BaseJpaRepository<S, ID>) repositories.getRepositoryFor(clazz).orElse(null);
         this.useCache = genericJpaRepository instanceof CachingJpaRepository;
     }
 }

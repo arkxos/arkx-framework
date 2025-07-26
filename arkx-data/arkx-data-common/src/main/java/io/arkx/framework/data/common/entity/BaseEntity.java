@@ -1,20 +1,19 @@
-package io.arkx.framework.data.jpa.entity;
+package io.arkx.framework.data.common.entity;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
-import io.arkx.framework.data.common.entity.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
@@ -34,14 +33,14 @@ public abstract class BaseEntity<PK extends Serializable> implements Serializabl
 	/* 分组校验 */
 	public @interface Update {}
 
-	@CreationTimestamp
 	@Column(name = "create_time", updatable = false)
 	@Schema(description = "创建时间", hidden = true)
+	@CreatedDate
 	private LocalDateTime createTime;
 
-	@UpdateTimestamp
 	@Column(name = "update_time")
 	@Schema(description = "更新时间", hidden = true)
+	@LastModifiedDate
 	private LocalDateTime updateTime;
 
 	//    @CreatedBy

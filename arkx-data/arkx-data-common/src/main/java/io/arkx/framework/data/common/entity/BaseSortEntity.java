@@ -1,4 +1,4 @@
-package io.arkx.framework.data.jpa.entity;
+package io.arkx.framework.data.common.entity;
 
 import lombok.Getter;
 import lombok.Setter;

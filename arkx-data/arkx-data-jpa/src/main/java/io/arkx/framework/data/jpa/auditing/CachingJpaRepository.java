@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.NoRepositoryBean;
-
-import io.arkx.framework.data.jpa.BaseRepository;
 
 /**
  * .
@@ -16,7 +15,7 @@ import io.arkx.framework.data.jpa.BaseRepository;
  * @author stormning on 16/6/19.
  */
 @NoRepositoryBean
-public interface CachingJpaRepository<T, ID extends Serializable> extends BaseRepository<T, ID> {
+public interface CachingJpaRepository<T, ID extends Serializable> extends BaseJpaRepository<T, ID> {
 
     @Cacheable(value = "dict")
     @Override

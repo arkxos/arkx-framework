@@ -2,8 +2,8 @@ package io.arkx.framework.data.jpa.service;
 
 import io.arkx.framework.commons.util.CriteriaQueryWrapper;
 import io.arkx.framework.commons.model.PageResult;
-import io.arkx.framework.data.jpa.BaseRepository;
 
+import io.arkx.framework.data.common.repository.ExtBaseRepository;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public interface IBaseService<T, ID extends Serializable, R extends BaseRepository<T, ID>> {
+public interface IBaseService<T, ID extends Serializable, R extends ExtBaseRepository<T, ID>> {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
 	void save(T t);
 

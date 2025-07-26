@@ -3,11 +3,11 @@ package io.arkx.soa.jpa;
 import java.util.List;
 import java.util.Map;
 
+import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
-import io.arkx.framework.data.jpa.BaseRepository;
 import io.arkx.framework.data.jpa.annotation.TemplateQuery;
 
 /**
@@ -17,7 +17,7 @@ import io.arkx.framework.data.jpa.annotation.TemplateQuery;
  * @author <a href="mailto:stormning@163.com">stormning</a>
  * @version V1.0, 16/3/15.
  */
-public interface SampleRepository extends BaseRepository<Sample, Long> {
+public interface SampleRepository extends BaseJpaRepository<Sample, Long> {
 
 	@TemplateQuery
 	Page<Sample> findByContent(String content, Pageable pageable);

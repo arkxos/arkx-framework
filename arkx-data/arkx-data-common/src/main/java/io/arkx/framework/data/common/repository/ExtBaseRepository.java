@@ -1,12 +1,12 @@
-package io.arkx.framework.data.jpa;
+package io.arkx.framework.data.common.repository;
 
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import io.arkx.framework.commons.collection.DataTable;
@@ -25,11 +25,26 @@ import io.arkx.framework.commons.collection.DataTable;
  * @date 2022/6/29 11:39
  */
 @NoRepositoryBean
-public interface BaseRepository<T, ID extends Serializable>
-        extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
+public interface ExtBaseRepository<T, ID extends Serializable> {
 
 	boolean support(String modelType);
-	
+
+	/**
+	 * 获取对象属性描述
+	 * @param target
+	 * @param fieldClass
+	 * @return
+	 */
+	default PropertyDescriptor findFieldPropertyDescriptor(Class<?> target, Class<?> fieldClass) {
+		PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(target);
+		for (PropertyDescriptor pd : propertyDescriptors) {
+			if (pd.getPropertyType() == fieldClass) {
+				return pd;
+			}
+		}
+		return null;
+	}
+
 	Map<ID, T> mget(Collection<ID> ids);
 
     //for cache
@@ -50,4 +65,5 @@ public interface BaseRepository<T, ID extends Serializable>
 	List<T> queryList(String sql, Object... params);
 
 	long queryForLong(String sql, Object... params);
+
 }

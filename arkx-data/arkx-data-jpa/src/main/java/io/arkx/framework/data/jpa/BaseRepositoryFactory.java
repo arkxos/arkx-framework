@@ -1,24 +1,12 @@
 package io.arkx.framework.data.jpa;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
-import jakarta.persistence.Entity;
+import io.arkx.framework.data.jpa.repository.BaseJpaRepositoryImpl;
 import jakarta.persistence.EntityManager;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
-import org.springframework.aop.AfterAdvice;
-import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.core.annotation.OrderUtils;
 import org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory;
 import org.springframework.data.jpa.repository.query.EscapeCharacter;
 import org.springframework.data.jpa.repository.query.QueryRewriterProvider;
@@ -30,10 +18,8 @@ import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.ValueExpressionDelegate;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
-import io.arkx.framework.boot.spring.IocBeanRegister;
-import io.arkx.framework.data.jpa.entity.BaseEntity;
+import io.arkx.framework.data.common.entity.BaseEntity;
 import io.arkx.framework.data.jpa.sqltoy.SqlToyRepositoryFactory;
 
 /**
@@ -77,14 +63,14 @@ public class BaseRepositoryFactory<T extends BaseEntity, I extends Serializable>
 	protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
         JpaEntityInformation<?, Serializable> entityInformation = this.getEntityInformation(information.getDomainType());
         Object repository = this.getTargetRepositoryViaReflection(information, new Object[]{entityInformation, entityManager});
-        Assert.isInstanceOf(BaseRepositoryImpl.class, repository);
+        Assert.isInstanceOf(BaseJpaRepositoryImpl.class, repository);
         return (JpaRepositoryImplementation<?, ?>)repository;
 	}
 	
 	//设置自定义实现类class
 	@Override
 	protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-		return BaseRepositoryImpl.class;
+		return BaseJpaRepositoryImpl.class;
 	}
 }
 

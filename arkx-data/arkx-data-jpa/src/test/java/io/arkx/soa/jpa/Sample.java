@@ -1,6 +1,6 @@
 package io.arkx.soa.jpa;
 
-import io.arkx.framework.data.jpa.entity.IdLongEntity;
+import io.arkx.framework.data.common.entity.IdLongEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

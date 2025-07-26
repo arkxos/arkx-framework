@@ -7,7 +7,7 @@ import java.util.Map;
 import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.commons.collection.tree.TreeNode;
 import io.arkx.framework.commons.exception.ServiceException;
-import io.arkx.framework.data.jpa.entity.TreeEntity;
+import io.arkx.framework.data.common.entity.TreeEntity;
 
 /**
  * @author Darkness
