@@ -227,43 +227,43 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
 		if (TreeEntity.class.isAssignableFrom(entity.getClass())) {
 			TreeEntity treeEntity = (TreeEntity) entity;
 
-			if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
-				if (StringUtil.isEmpty(treeEntity.getParentInnerCode()) || "0".equals(treeEntity.getParentInnerCode())) {
-					treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", 4));
-					treeEntity.setParentInnerCode(treeEntity.getInnerCode());
-
-					Long sortOrder = jdbcTemplate().queryForObject(
-							"SELECT max(SORT_ORDER) FROM " + getTableName() + " ORDER BY SORT_ORDER", Long.class);
-					if (sortOrder == null) {
-						sortOrder = 0L;
-					}
-					treeEntity.setSortOrder(sortOrder + 1L);
-				} else {
-					Query query = entityManager.createQuery("FROM " + entity.getClass().getSimpleName() + " WHERE innerCode='"+treeEntity.getParentInnerCode()+"'");
-					TreeEntity parentEntity = (TreeEntity)query.getSingleResult();
-
-					if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
-						treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", parentEntity.getInnerCode(), 4));
-					}
-//					treeEntity.setParentInnerCode(parentEntity.getInnerCode());
-					treeEntity.setTreeLevel(parentEntity.getTreeLevel() + 1L);
-
-					Long sortOrder = jdbcTemplate().queryForObject(
-							"SELECT max(SORT_ORDER) FROM " + getTableName() + " WHERE INNER_CODE LIKE ?", new Object[] {parentEntity.getInnerCode() + "%"}, Long.class);
-					if (sortOrder == null) {
-						sortOrder = 0L;
-					}
-					treeEntity.setSortOrder(sortOrder + 1L);
-
-					if ("Y".equals(parentEntity.getIsLeaf())) {
-						parentEntity.setIsLeaf("N");
-					}
-					if (parentEntity.getIsTreeLeaf() == 1) {
-						parentEntity.setIsTreeLeaf(0);
-					}
-//					getSession().createQuery("update " + EntityAnnotationManager.getTableName(entity.getClass()) + " set sort_order=sort_order+1 where sort_order>?", orderflag).executeNoQuery();
-				}
-			}
+//			if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
+//				if (StringUtil.isEmpty(treeEntity.getParentInnerCode()) || "0".equals(treeEntity.getParentInnerCode())) {
+//					treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", 4));
+//					treeEntity.setParentInnerCode(treeEntity.getInnerCode());
+//
+//					Long sortOrder = jdbcTemplate().queryForObject(
+//							"SELECT max(SORT_ORDER) FROM " + getTableName() + " ORDER BY SORT_ORDER", Long.class);
+//					if (sortOrder == null) {
+//						sortOrder = 0L;
+//					}
+//					treeEntity.setSortOrder(sortOrder + 1L);
+//				} else {
+//					Query query = entityManager.createQuery("FROM " + entity.getClass().getSimpleName() + " WHERE innerCode='"+treeEntity.getParentInnerCode()+"'");
+//					TreeEntity parentEntity = (TreeEntity)query.getSingleResult();
+//
+//					if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
+//						treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", parentEntity.getInnerCode(), 4));
+//					}
+////					treeEntity.setParentInnerCode(parentEntity.getInnerCode());
+//					treeEntity.setTreeLevel(parentEntity.getTreeLevel() + 1L);
+//
+//					Long sortOrder = jdbcTemplate().queryForObject(
+//							"SELECT max(SORT_ORDER) FROM " + getTableName() + " WHERE INNER_CODE LIKE ?", new Object[] {parentEntity.getInnerCode() + "%"}, Long.class);
+//					if (sortOrder == null) {
+//						sortOrder = 0L;
+//					}
+//					treeEntity.setSortOrder(sortOrder + 1L);
+//
+//					if ("Y".equals(parentEntity.getIsLeaf())) {
+//						parentEntity.setIsLeaf("N");
+//					}
+//					if (parentEntity.getIsTreeLeaf() == 1) {
+//						parentEntity.setIsTreeLeaf(0);
+//					}
+////					getSession().createQuery("update " + EntityAnnotationManager.getTableName(entity.getClass()) + " set sort_order=sort_order+1 where sort_order>?", orderflag).executeNoQuery();
+//				}
+//			}
 		}
 		
 		return super.save(entity);

@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @date 2025-07-25 23:20
  * @since 1.0
  */
-public class SqlToyJpaRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends Serializable>
+public class SqlToyJdbcRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends Serializable>
 		extends TransactionalRepositoryFactoryBeanSupport<T, S, ID>
 		implements ApplicationEventPublisherAware, ApplicationContextAware {
 
@@ -46,7 +46,7 @@ public class SqlToyJpaRepositoryFactoryBean<T extends Repository<S, ID>, S, ID e
 	 *
 	 * @param repositoryInterface must not be {@literal null}.
 	 */
-	public SqlToyJpaRepositoryFactoryBean(
+	public SqlToyJdbcRepositoryFactoryBean(
 			Class<? extends T> repositoryInterface) {
 		super(repositoryInterface);
 	}

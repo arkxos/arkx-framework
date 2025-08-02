@@ -15,9 +15,14 @@ import java.io.Serializable;
  * @date 2025-07-26 16:47
  * @since 1.0
  */
-public interface BaseJdbcRepository<T, ID extends Serializable>
-		extends CrudRepository<T, ID>,
-		PagingAndSortingRepository<T, ID>,
-		QueryByExampleExecutor<T>,
+public interface BaseJdbcRepository<T, ID>
+		extends ListCrudRepository<T, ID>,
+		ListPagingAndSortingRepository<T, ID>,
+		ListQueryByExampleExecutor<T>,
 		ExtBaseRepository<T, ID> {
+
+	T insert(T instance);
+
+	T update(T instance);
+
 }

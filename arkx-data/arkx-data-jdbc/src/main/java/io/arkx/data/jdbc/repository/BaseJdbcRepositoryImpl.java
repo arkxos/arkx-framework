@@ -18,6 +18,7 @@ import org.springframework.data.jdbc.core.convert.JdbcConverter;
 import org.springframework.data.jdbc.repository.support.SimpleJdbcRepository;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.relational.repository.query.RelationalExampleMapper;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
@@ -39,7 +40,7 @@ import java.util.*;
  * @date 2025-07-26 16:34
  * @since 1.0
  */
-@Repository
+@NoRepositoryBean
 public class BaseJdbcRepositoryImpl<T, ID extends Serializable>
 	extends SimpleJdbcRepository<T, ID>
 		implements ExtBaseRepository<T, ID> {
@@ -61,6 +62,14 @@ public class BaseJdbcRepositoryImpl<T, ID extends Serializable>
 		this.entity = entity;
 		this.exampleMapper = new RelationalExampleMapper(converter.getMappingContext());
 		this.initStatusInfo();
+	}
+
+	public T insert(T entity) {
+		return this.entityOperations.insert(entity);
+	}
+
+	public T update(T entity) {
+		return this.entityOperations.update(entity);
 	}
 
 	/**

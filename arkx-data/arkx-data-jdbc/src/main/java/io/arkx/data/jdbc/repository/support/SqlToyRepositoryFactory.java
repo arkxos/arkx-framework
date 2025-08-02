@@ -1,5 +1,6 @@
 package io.arkx.data.jdbc.repository.support;
 
+import io.arkx.data.jdbc.repository.BaseJdbcRepositoryImpl;
 import io.arkx.framework.boot.spring.IocBeanRegister;
 import io.arkx.framework.data.common.ContextHolder;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
@@ -9,6 +10,7 @@ import org.springframework.data.jdbc.core.convert.JdbcConverter;
 import org.springframework.data.jdbc.repository.support.JdbcRepositoryFactory;
 import org.springframework.data.relational.core.dialect.Dialect;
 import org.springframework.data.relational.core.mapping.RelationalMappingContext;
+import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.ValueExpressionDelegate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -44,6 +46,11 @@ public class SqlToyRepositoryFactory extends JdbcRepositoryFactory {
 								   NamedParameterJdbcOperations operations) {
 		super(dataAccessStrategy, context, converter, dialect, publisher, operations);
 		this.context = context;
+	}
+
+	@Override
+	protected Class<?> getRepositoryBaseClass(RepositoryMetadata repositoryMetadata) {
+		return BaseJdbcRepositoryImpl.class;
 	}
 
 	@Override

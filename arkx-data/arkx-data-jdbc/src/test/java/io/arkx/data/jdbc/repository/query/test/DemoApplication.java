@@ -6,7 +6,7 @@ package io.arkx.data.jdbc.repository.query.test;
  * @since 1.0
  */
 
-import io.arkx.data.jdbc.repository.support.SqlToyJpaRepositoryFactoryBean;
+import io.arkx.data.jdbc.repository.support.SqlToyJdbcRepositoryFactoryBean;
 import org.sagacity.sqltoy.configure.SqltoyAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
 @Import(SqltoyAutoConfiguration.class)
-@EnableJdbcRepositories(repositoryFactoryBeanClass = SqlToyJpaRepositoryFactoryBean.class)
+@EnableJdbcRepositories(repositoryFactoryBeanClass = SqlToyJdbcRepositoryFactoryBean.class)
 @SpringBootApplication(scanBasePackages = { "io.arkx", "org.sagacity.sqltoy" })
 public class DemoApplication {
 	public static void main(String[] args) {

@@ -25,7 +25,7 @@ import io.arkx.framework.commons.collection.DataTable;
  * @date 2022/6/29 11:39
  */
 @NoRepositoryBean
-public interface ExtBaseRepository<T, ID extends Serializable> {
+public interface ExtBaseRepository<T, ID> {
 
 	boolean support(String modelType);
 

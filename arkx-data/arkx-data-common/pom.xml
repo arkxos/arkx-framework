@@ -46,6 +46,7 @@
 		<dependency>
 			<groupId>io.arkx.framework</groupId>
 			<artifactId>arkx-commons-core</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
