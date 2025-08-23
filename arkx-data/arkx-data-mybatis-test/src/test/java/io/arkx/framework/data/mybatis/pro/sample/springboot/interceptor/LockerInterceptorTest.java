@@ -6,11 +6,11 @@ import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Insert;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import static com.ninja_squad.dbsetup.Operations.insertInto;

@@ -1,5 +1,6 @@
 package io.arkx.framework.data.mybatis.pro.autoconfiguration;
 
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarker;
 import io.arkx.framework.data.mybatis.pro.base.typehandler.EnumTypeHandler;
 import io.arkx.framework.data.mybatis.pro.core.consts.MyBatisProProperties;
 import io.arkx.framework.data.mybatis.pro.interceptor.LogicalDeleteInterceptor;
@@ -100,14 +101,14 @@ public class MyBatisProAutoConfiguration {
         if (StringUtils.hasText(this.properties.getConfigLocation())) {
             factory.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));
         }
-        applyConfiguration(factory);
+//        applyConfiguration(factory);
         if (this.properties.getConfigurationProperties() != null) {
             factory.setConfigurationProperties(this.properties.getConfigurationProperties());
         }
 
         // 如果枚举处理器开启，那么加入到configuratin中
         if (props.isEnableEnumTypeHandler()) {
-            properties.getConfiguration().getTypeHandlerRegistry().register(new EnumTypeHandler<>());
+//            properties.getConfiguration().getTypeHandlerRegistry().register(EnumMarker.class, new EnumTypeHandler<>());
         }
 
         // 如果逻辑删除开启，这里将逻辑删除插件加入到插件列表
@@ -176,19 +177,19 @@ public class MyBatisProAutoConfiguration {
         return factory.getObject();
     }
 
-    private void applyConfiguration(SqlSessionFactoryBean factory) {
-        // 这里特殊说明一下：configuration是properties的一个嵌套属性，如果application.properties里面配置了configuration的属性，那么就会被初始化，否则这里的configuration就是null
-        org.apache.ibatis.session.Configuration configuration = this.properties.getConfiguration();
-        if (configuration == null && !StringUtils.hasText(this.properties.getConfigLocation())) {
-            configuration = new org.apache.ibatis.session.Configuration();
-        }
-        if (configuration != null && !CollectionUtils.isEmpty(this.configurationCustomizers)) {
-            for (ConfigurationCustomizer customizer : this.configurationCustomizers) {
-                customizer.customize(configuration);
-            }
-        }
-        factory.setConfiguration(configuration);
-    }
+//    private void applyConfiguration(SqlSessionFactoryBean factory) {
+//        // 这里特殊说明一下：configuration是properties的一个嵌套属性，如果application.properties里面配置了configuration的属性，那么就会被初始化，否则这里的configuration就是null
+//        org.apache.ibatis.session.Configuration configuration = this.properties.getConfiguration();
+//        if (configuration == null && !StringUtils.hasText(this.properties.getConfigLocation())) {
+//            configuration = new org.apache.ibatis.session.Configuration();
+//        }
+//        if (configuration != null && !CollectionUtils.isEmpty(this.configurationCustomizers)) {
+//            for (ConfigurationCustomizer customizer : this.configurationCustomizers) {
+//                customizer.customize(configuration);
+//            }
+//        }
+//        factory.setConfiguration(configuration);
+//    }
 
     /**
      * 获取mapper接口的包路径集合

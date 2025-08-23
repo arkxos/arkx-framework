@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @EnableSQLPrinter
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@MapperScan("com.github.dreamroute.mybatis.pro.sample.springboot.mapper")
+@MapperScan("io.arkx.framework.data.mybatis.pro.sample.springboot.mapper")
 public class Application {
 
     public static void main(String[] args) {

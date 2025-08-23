@@ -2,7 +2,7 @@ package com.github.dreamroute.locker.sample.mapper;
 
 import com.github.dreamroute.locker.anno.Locker;
 import com.github.dreamroute.locker.sample.domain.User;
-import com.github.dreamroute.mybatis.pro.service.mapper.BaseMapper;
+import io.arkx.framework.data.mybatis.pro.service.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Update;
 
 /**

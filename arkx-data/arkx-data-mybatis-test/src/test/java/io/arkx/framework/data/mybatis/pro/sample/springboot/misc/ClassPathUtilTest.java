@@ -17,15 +17,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ClassPathUtilTest {
     @Test
     void resolvePackageTest() {
-        String path = "com.github.dreamroute.mybatis.pro.sample.springboot.*.mapper";
-        String a = "com.github.dreamroute.mybatis.pro.sample.springboot.a.mapper";
-        String b = "com.github.dreamroute.mybatis.pro.sample.springboot.b.mapper";
+        String path = "io.arkx.framework.data.mybatis.pro.sample.springboot.*.mapper";
+        String a = "io.arkx.framework.data.mybatis.pro.sample.springboot.a.mapper";
+        String b = "io.arkx.framework.data.mybatis.pro.sample.springboot.b.mapper";
         String[] pkg = resolvePackage(path);
         HashSet<String> result = Sets.newHashSet(pkg);
         assertTrue(result.contains(a));
         assertTrue(result.contains(b));
 
-        String basePath = "com.github.dreamroute.mybatis.pro.sample.springboot.c";
+        String basePath = "io.arkx.framework.data.mybatis.pro.sample.springboot.c";
         String[] pkgs = resolvePackage(basePath);
         if (!ObjectUtils.isEmpty(pkgs)) {
             for (String p : pkgs) {

@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.JdbcParameter;
-import net.sf.jsqlparser.expression.Parenthesis;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import net.sf.jsqlparser.expression.operators.relational.ParenthesedExpressionList;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.update.Update;
@@ -121,7 +121,7 @@ public class LockerInterceptor implements Interceptor, ApplicationListener<Conte
         // 获取新的sql
         Update update = (Update) CCJSqlParserUtil.parse(old);
         Expression where = update.getWhere();
-        Parenthesis p = new Parenthesis(where);
+		ParenthesedExpressionList p = new ParenthesedExpressionList(where);
         EqualsTo lock = new EqualsTo(new Column(versionColumn), new JdbcParameter());
         AndExpression newWhere = new AndExpression().withLeftExpression(p).withRightExpression(lock);
         update.setWhere(newWhere);

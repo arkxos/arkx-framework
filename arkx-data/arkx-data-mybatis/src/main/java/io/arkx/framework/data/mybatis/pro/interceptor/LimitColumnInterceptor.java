@@ -6,12 +6,13 @@ import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
 import io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil;
 import io.arkx.framework.data.mybatis.pro.core.util.SqlUtil;
 import io.arkx.framework.data.mybatis.pro.sdk.SelectMapper;
+import jakarta.annotation.Resource;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
-import net.sf.jsqlparser.expression.Parenthesis;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import net.sf.jsqlparser.expression.operators.relational.ParenthesedExpressionList;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.select.PlainSelect;
@@ -33,7 +34,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.util.*;
@@ -143,7 +143,7 @@ public class LimitColumnInterceptor implements Interceptor, ApplicationListener<
                 // where不为空时，由于存在多个组合查询条件，将状态条件放在任何地方都不合适，因为可能会改变原有sql的含义，所以需要将原有条件用小括号包含然后和状态做与运算
                 else {
                     // (原始条件) and state = xxx
-                    Parenthesis p = new Parenthesis(where);
+					ParenthesedExpressionList p = new ParenthesedExpressionList(where);
                     AndExpression newWhere = new AndExpression().withLeftExpression(p).withRightExpression(state);
                     body.setWhere(newWhere);
                 }

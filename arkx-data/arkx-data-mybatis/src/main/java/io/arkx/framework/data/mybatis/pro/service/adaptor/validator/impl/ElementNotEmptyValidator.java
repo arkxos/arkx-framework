@@ -3,8 +3,8 @@ package io.arkx.framework.data.mybatis.pro.service.adaptor.validator.impl;
 
 import io.arkx.framework.data.mybatis.pro.service.adaptor.validator.ElementNotEmpty;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * 

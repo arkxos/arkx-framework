@@ -1,7 +1,7 @@
 package com.github.dreamroute.locker.sample.domain;
 
-import com.github.dreamroute.mybatis.pro.core.annotations.Id;
-import com.github.dreamroute.mybatis.pro.core.annotations.Table;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Id;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

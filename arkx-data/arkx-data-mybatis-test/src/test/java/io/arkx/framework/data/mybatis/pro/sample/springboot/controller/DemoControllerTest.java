@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import static io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Gender.FEMALE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;

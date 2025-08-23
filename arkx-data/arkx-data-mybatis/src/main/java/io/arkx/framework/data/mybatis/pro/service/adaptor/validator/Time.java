@@ -3,8 +3,8 @@ package io.arkx.framework.data.mybatis.pro.service.adaptor.validator;
 import io.arkx.framework.data.mybatis.pro.service.adaptor.validator.Time.List;
 import io.arkx.framework.data.mybatis.pro.service.adaptor.validator.impl.TimeValidator;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
