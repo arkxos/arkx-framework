@@ -11,15 +11,13 @@ import org.apache.ibatis.reflection.Reflector;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ReflectionUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,9 +117,11 @@ public class MapperUtil {
      * 将通用crud方法填充到resource里
      */
     public Resource parse() {
+        Set<String> existingIds = getExistingIdsFromXml();
         Method[] methods = Mapper.class.getMethods();
         Stream.of(methods)
                 .map(Method::getName)
+                .filter(methodName -> !existingIds.contains(methodName))
                 .forEach(methodName -> {
                     MapperLabel ml;
                     String returnType = null;
@@ -139,6 +139,34 @@ public class MapperUtil {
                     DocumentUtil.fillSqlNode(this.document, ml, methodName, returnType, methodName2Sql.get(methodName), type, idName);
                 });
         return DocumentUtil.createResourceFromDocument(this.document);
+    }
+
+    private Set<String> getExistingIdsFromXml() {
+        Set<String> existingIds = new HashSet<>();
+        NodeList selectNodes = document.getElementsByTagName("select");
+        NodeList insertNodes = document.getElementsByTagName("insert");
+        NodeList updateNodes = document.getElementsByTagName("update");
+        NodeList deleteNodes = document.getElementsByTagName("delete");
+
+        addIdsFromNodeList(selectNodes, existingIds);
+        addIdsFromNodeList(insertNodes, existingIds);
+        addIdsFromNodeList(updateNodes, existingIds);
+        addIdsFromNodeList(deleteNodes, existingIds);
+
+        return existingIds;
+    }
+
+    private void addIdsFromNodeList(NodeList nodeList, Set<String> existingIds) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            NamedNodeMap attributes = node.getAttributes();
+            if (attributes != null) {
+                Node idNode = attributes.getNamedItem("id");
+                if (idNode != null) {
+                    existingIds.add(idNode.getNodeValue());
+                }
+            }
+        }
     }
 
     private void createSqlFragment() {
