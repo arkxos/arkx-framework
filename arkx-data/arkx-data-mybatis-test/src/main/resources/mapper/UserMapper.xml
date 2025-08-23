@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper">
+    <select id="selectUserById" resultType="io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User">
+        select * from smart_user where id = #{id}
+    </select>
+
+    <select id="selectAllPage" resultType="io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User">
+        select * from smart_user where name = #{name}
+    </select>
+
+    <select id="dynamicSqlSourceTest" resultType="io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User">
+        select * from smart_user where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="rawSqlSourceTest" resultType="io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User">
+        select * from smart_user where id = #{id}
+    </select>
+
+    <select id="testTrim" resultType="io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User">
+        select *
+        from smart_user
+        <trim prefixOverrides="and" prefix="where">
+            <if test="name != null and name != ''">and name = #{name}</if>
+            <if test="password != null and password != ''">and password = #{password}</if>
+        </trim>
+    </select>
+
+    <select id="testWhere" resultType="io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User">
+        select * from smart_user
+        <where>
+            <if test="name != null and name != ''">and name = #{name}</if>
+            <if test ="password != null and password != ''">and password = #{password}</if>
+        </where>
+    </select>
+
+</mapper>

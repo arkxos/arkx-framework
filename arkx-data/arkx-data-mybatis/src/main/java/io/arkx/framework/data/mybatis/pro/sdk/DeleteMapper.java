@@ -1,0 +1,22 @@
+package io.arkx.framework.data.mybatis.pro.sdk;
+
+import java.util.List;
+
+/**
+ * 删除接口
+ *
+ * @author w.dehai
+ */
+public interface DeleteMapper<ID> {
+
+    /**
+     * 根据id删除
+     */
+    int deleteById(ID id);
+
+    /**
+     * 根据id批量删除
+     */
+    int deleteByIds(List<ID> ids);
+
+}
