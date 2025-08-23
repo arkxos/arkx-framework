@@ -86,7 +86,7 @@ public class MyBatisProUtil {
     public static Set<Resource> processSpecialMethods(Set<Resource> resources) {
         return resources.stream().map(resource -> {
             Class<?> mapperCls = getNamespaceFromXmlResource(resource);
-            validateDuplicateMethods(mapperCls, resource);
+            Set<String> existingMethods = validateDuplicateMethods(mapperCls, resource);
 
             Document doc = createDocumentFromResource(resource);
             List<String> specialMethods = getSpecialMethods(mapperCls);
@@ -101,28 +101,30 @@ public class MyBatisProUtil {
                 cacheAlias(name2Type);
 
                 specialMethods.forEach(specialMethodName -> {
-                    String conditions = null;
-                    String sql = null;
-                    MapperLabel mapperLabel = SELECT;
-                    if (specialMethodName.startsWith("findBy")) {
-                        conditions = specialMethodName.substring(6);
-                        sql = "select * from ";
-                    } else if (specialMethodName.startsWith("deleteBy")) {
-                        conditions = specialMethodName.substring(8);
-                        sql = "delete from ";
-                        mapperLabel = DELETE;
-                    } else if (specialMethodName.startsWith("countBy")) {
-                        conditions = specialMethodName.substring(7);
-                        sql = "select count(*) c from ";
-                    } else if (specialMethodName.startsWith("existBy")) {
-                        conditions = specialMethodName.substring(7);
-                        sql = "select (case when count(*)=0 then 'false' ELSE 'true' end) from ";
-                    }
-                    sql += getAnnotationValue(entityCls, Table.class) + " <where> " + createCondition(conditions, FIELDS_ALIAS_CACHE.get(entityCls));
+                    if (!existingMethods.contains(specialMethodName)) {
+                        String conditions = null;
+                        String sql = null;
+                        MapperLabel mapperLabel = SELECT;
+                        if (specialMethodName.startsWith("findBy")) {
+                            conditions = specialMethodName.substring(6);
+                            sql = "select * from ";
+                        } else if (specialMethodName.startsWith("deleteBy")) {
+                            conditions = specialMethodName.substring(8);
+                            sql = "delete from ";
+                            mapperLabel = DELETE;
+                        } else if (specialMethodName.startsWith("countBy")) {
+                            conditions = specialMethodName.substring(7);
+                            sql = "select count(*) c from ";
+                        } else if (specialMethodName.startsWith("existBy")) {
+                            conditions = specialMethodName.substring(7);
+                            sql = "select (case when count(*)=0 then 'false' ELSE 'true' end) from ";
+                        }
+                        sql += getAnnotationValue(entityCls, Table.class) + " <where> " + createCondition(conditions, FIELDS_ALIAS_CACHE.get(entityCls));
 
-                    //  对于delete需要特殊处理，delete不需要设置resultType
-                    String resultType = mapperLabel == DELETE ? null : name2Type.get(specialMethodName);
-                    fillSqlNode(doc, mapperLabel, specialMethodName, resultType, sql, null, null);
+                        //  对于delete需要特殊处理，delete不需要设置resultType
+                        String resultType = mapperLabel == DELETE ? null : name2Type.get(specialMethodName);
+                        fillSqlNode(doc, mapperLabel, specialMethodName, resultType, sql, null, null);
+                    }
                 });
             }
             return createResourceFromDocument(doc);
@@ -150,7 +152,7 @@ public class MyBatisProUtil {
     /**
      * 校验Mapper接口内的xxxBy方法不能与xml文件的方法有同名
      */
-    private static void validateDuplicateMethods(Class<?> mapperCls, Resource resource) {
+    private static Set<String> validateDuplicateMethods(Class<?> mapperCls, Resource resource) {
         XPathParser xPathParser;
         try {
             xPathParser = new XPathParser(resource.getInputStream(), true, null, new XMLMapperEntityResolver());
@@ -166,18 +168,21 @@ public class MyBatisProUtil {
         methods.addAll(insertMethods);
         methods.addAll(updateMethods);
         methods.addAll(deleteMethods);
-        Set<String> xmlMethodNames = methods.stream().map(node -> node.getStringAttribute(ID.getCode())).collect(toSet());
 
-        // BaseMapper的方法 + xxxBy方法
-        Set<String> innerMethodNames = getBaseMethodNames();
-        List<String> specialMethods = getSpecialMethods(mapperCls);
-        innerMethodNames.addAll(specialMethods);
+		Set<String> xmlMethodNames = methods.stream().map(node -> node.getStringAttribute(ID.getCode())).collect(toSet());
 
-        SetView<String> intersection = Sets.intersection(xmlMethodNames, innerMethodNames);
-        if (!isEmpty(intersection)) {
-            throw new MyBatisProException("不允许接口" + mapperCls.getName() + "的方法" + toJsonStr(innerMethodNames) + "与" + resource.getFilename() + "文件中的方法重名");
-        }
-    }
+		// BaseMapper的方法 + xxxBy方法
+//		Set<String> innerMethodNames = getBaseMethodNames();
+//		List<String> specialMethods = getSpecialMethods(mapperCls);
+//		innerMethodNames.addAll(specialMethods);
+
+//		SetView<String> intersection = Sets.intersection(xmlMethodNames, innerMethodNames);
+//		if (!isEmpty(intersection)) {
+//			throw new MyBatisProException("不允许接口" + mapperCls.getName() + "的方法" + toJsonStr(innerMethodNames) + "与" + resource.getFilename() + "文件中的方法重名");
+//		}
+
+		return xmlMethodNames;
+	}
 
     /**
      * 将方法名转换成sql语句
