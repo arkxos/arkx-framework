@@ -1,0 +1,45 @@
+server:
+  port: 10000
+
+mybatis:
+  mapper:
+    reload: true
+  mapper-locations: /mapper/*
+  configuration:
+    map-underscore-to-camel-case: true
+
+  pro:
+    enable-enum-type-handler: true
+    enable-logical-delete: true
+    # logical-delete-type: update
+
+# mybatis-plus ??
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml,classpath*:/org/maxkey/persistence/mapper/xml/mysql/*.xml # mapper????
+  global-config:
+    banner: false # ???? mybatis-plus banner
+    db-config:
+      id-type: auto  # ????
+      where-strategy: not_empty # where ????
+      insert-strategy: not_empty # ????
+      update-strategy: not_null  # ????
+  type-handlers-package: io.arkx.framework.data.mybatis.type.handler # ??????
+  configuration:
+    jdbc-type-for-null: 'null' # ???????null
+    call-setters-on-nulls: true # ????set?????null?
+    shrink-whitespaces-in-sql: true # ??sql??????
+
+spring:
+  datasource:
+    dynamic:
+      primary: master # ????????????
+      datasource:
+        master:
+          # type: com.alibaba.druid.pool.DruidDataSource
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&rewriteBatchedStatements=true
+          username: root
+          password: 123456
+sqlprinter:
+  showResult: true

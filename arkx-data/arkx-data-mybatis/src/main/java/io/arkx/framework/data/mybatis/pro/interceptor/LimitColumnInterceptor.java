@@ -28,7 +28,6 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationListener;
@@ -58,7 +57,6 @@ import static java.util.stream.Collectors.toList;
         @Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})
 })
 @ConditionalOnBean(SqlSessionFactory.class)
-@EnableConfigurationProperties({MybatisProperties.class, MyBatisProProperties.class})
 public class LimitColumnInterceptor implements Interceptor, ApplicationListener<ContextRefreshedEvent> {
 
     private static final String ASTERISK = "*";

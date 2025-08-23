@@ -59,3 +59,4 @@ Thumbs.db
 Servers
 .metadata
 .flattened-pom.xml
+/arkx-data/arkx-data-mybatis-test/logs/logs

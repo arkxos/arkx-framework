@@ -1,1 +1,3 @@
+io.arkx.framework.data.mybatis.pro.core.consts.MyBatisProProperties
 io.arkx.framework.data.mybatis.MybatisAutoConfiguration
+io.arkx.framework.data.mybatis.pro.interceptor.LimitColumnInterceptor

@@ -64,8 +64,8 @@ public class DocumentUtil {
     public static Document createDocumentFromResource(Resource resource) {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+//            documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+//            documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             documentBuilderFactory.setValidating(false);
             documentBuilderFactory.setNamespaceAware(false);
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
