@@ -43,7 +43,7 @@ public class ProductRepositoryTest {
 
 		assertThat(found).isPresent();
 		assertThat(found.get().getName()).isEqualTo("Test Product");
-		assertThat(found.get().getPrice()).isEqualTo(99.99);
+		assertThat(found.get().getPrice()).isEqualTo(new BigDecimal("99.99"));
 	}
 
 	// 测试删除

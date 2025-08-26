@@ -169,6 +169,16 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
     }
 
 	@Override
+	public T insert(T instance) {
+		return save(instance);
+	}
+
+	@Override
+	public T update(T instance) {
+		return save(instance);
+	}
+
+	@Override
 	public boolean support(String modelType) {
 		return domainClass.getName().equals(modelType);
 	}

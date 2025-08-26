@@ -64,10 +64,12 @@ public class BaseJdbcRepositoryImpl<T, ID extends Serializable>
 		this.initStatusInfo();
 	}
 
+	@Override
 	public T insert(T entity) {
 		return this.entityOperations.insert(entity);
 	}
 
+	@Override
 	public T update(T entity) {
 		return this.entityOperations.update(entity);
 	}

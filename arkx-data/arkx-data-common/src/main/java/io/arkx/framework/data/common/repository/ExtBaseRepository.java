@@ -27,6 +27,12 @@ import io.arkx.framework.commons.collection.DataTable;
 @NoRepositoryBean
 public interface ExtBaseRepository<T, ID> {
 
+
+	T insert(T instance);
+
+	T update(T instance);
+
+
 	boolean support(String modelType);
 
 	/**

@@ -152,46 +152,47 @@ public class BaseServiceImpl<T, ID, R extends BaseJdbcRepository<T, ID>> impleme
 
 	@Override
 	public List<T> findAll(Sort sort) {
-		return List.of();
+		return this.myRepository.findAll(sort);
 	}
 
 	@Override
 	public Page<T> findAll(Pageable pageable) {
-		return null;
+		return this.myRepository.findAll(pageable);
 	}
 
 	@Override
 	public <S extends T> Optional<S> findOne(Example<S> example) {
-		return Optional.empty();
+		return this.myRepository.findOne(example);
 	}
 
 	@Override
 	public <S extends T> List<S> findAll(Example<S> example) {
-		return List.of();
+		return this.myRepository.findAll(example);
 	}
 
 	@Override
 	public <S extends T> List<S> findAll(Example<S> example, Sort sort) {
-		return List.of();
+		return this.myRepository.findAll(example, sort);
 	}
 
 	@Override
 	public <S extends T> Page<S> findAll(Example<S> example, Pageable pageable) {
-		return null;
+		return this.myRepository.findAll(example, pageable);
 	}
 
 	@Override
 	public <S extends T> long count(Example<S> example) {
-		return 0;
+		return this.myRepository.count(example);
 	}
 
 	@Override
 	public <S extends T> boolean exists(Example<S> example) {
-		return false;
+		return this.myRepository.exists(example);
 	}
 
 	@Override
 	public <S extends T, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-		return null;
+		return this.myRepository.findBy(example, queryFunction);
 	}
+
 }

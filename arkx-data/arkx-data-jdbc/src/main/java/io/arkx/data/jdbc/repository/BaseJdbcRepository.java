@@ -21,8 +21,4 @@ public interface BaseJdbcRepository<T, ID>
 		ListQueryByExampleExecutor<T>,
 		ExtBaseRepository<T, ID> {
 
-	T insert(T instance);
-
-	T update(T instance);
-
 }
