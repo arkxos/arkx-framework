@@ -1,0 +1,27 @@
+POST /api/ultimate-query
+{
+    "batchQueries": [
+        {
+            "tableName": "employees",
+            "fields": ["id", "name"],
+            "rule": {
+                "ruleType": "DynamicFieldRule",
+                "field": "id",
+                "operator": "less_than",
+                "type": "number",
+                "value": 100
+            }
+        },
+        {
+            "tableName": "departments",
+            "fields": ["id", "name"],
+            "rule": {
+                "ruleType": "DynamicFieldRule",
+                "field": "name",
+                "operator": "like",
+                "type": "string",
+                "value": "IT"
+            }
+        }
+    ]
+}

@@ -2,18 +2,22 @@ package io.arkx.data.jdbc.query;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.arkx.framework.commons.util.StringUtils;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @RestController
 public class AdvancedQueryController {
 
-	private final ObjectMapper objectMapper = new ObjectMapper();
 	private static final Pattern SQL_INJECTION_PATTERN = Pattern.compile("^[a-zA-Z0-9_]+$");
 
 	/**
@@ -23,31 +27,74 @@ public class AdvancedQueryController {
 	 * @return 生成的SQL语句
 	 */
 	@PostMapping("/api/advanced-query")
-	public QueryResult advancedQuery(@RequestBody AdvancedQueryRequest request) {
+	public QueryResponse advancedQuery(@RequestBody @NotNull AdvancedQueryRequest request) {
+		long startTime = System.nanoTime();
+
 		try {
 			// 1. 验证输入参数
 			validateRequest(request);
 
-			// 2. 解析条件规则
-			Rule rule = objectMapper.readValue(request.getRuleJson(), Rule.class);
-			String whereClause = rule.toSql();
+			// 3. 处理批量查询
+			if (request.getBatchQueries() != null && !request.getBatchQueries().isEmpty()) {
+				return handleBatchQueries(request);
+			}
 
-			// 3. 构建基础SQL
-			String baseSql = buildBaseSql(request);
+			// 4. 执行单个查询
+			QueryResult result = executeSingleQuery(request);
 
-			// 4. 添加WHERE条件
-			String fullSql = addWhereCondition(baseSql, whereClause);
-
-			// 5. 添加排序
-			fullSql = addOrderBy(fullSql, request.getSortFields());
-
-			// 6. 添加分页
-			fullSql = addPagination(fullSql, request.getPageNum(), request.getPageSize());
-
-			return new QueryResult(fullSql);
+			// 5. 记录查询统计
+			long duration = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+			return new QueryResponse(true, "查询成功", Arrays.asList(result),
+					new QueryStats(duration, 1, result.getSql().length()));
 		} catch (Exception e) {
-			throw new RuntimeException("执行高级查询失败", e);
+			long duration = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+			return new QueryResponse(false, e.getMessage(), Collections.emptyList(),
+					new QueryStats(duration, 0, 0));
 		}
+	}
+
+	private QueryResponse handleBatchQueries(AdvancedQueryRequest request) {
+		List<QueryResult> results = new ArrayList<>();
+		long totalDuration = 0;
+		int totalQueries = 0;
+		int totalSize = 0;
+
+		for (AdvancedQueryRequest subRequest : request.getBatchQueries()) {
+			long startTime = System.nanoTime();
+			try {
+				QueryResult result = executeSingleQuery(subRequest);
+				results.add(result);
+				totalQueries++;
+				totalSize += result.getSql().length();
+			} catch (Exception e) {
+				results.add(new QueryResult(null, e.getMessage()));
+			} finally {
+				totalDuration += TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+			}
+		}
+
+		return new QueryResponse(true, "批量查询完成", results,
+				new QueryStats(totalDuration, totalQueries, totalSize));
+	}
+
+	private QueryResult executeSingleQuery(AdvancedQueryRequest request) {
+		// 1. 构建基础SQL
+		String baseSql = buildBaseSql(request);
+
+		// 2. 添加WHERE条件
+		String whereClause = request.getRule() != null ? request.getRule().toSql() : "";
+		String fullSql = addWhereCondition(baseSql, whereClause);
+
+		// 3. 添加排序
+		fullSql = addOrderBy(fullSql, request.getSortFields());
+
+		// 4. 添加分页
+		fullSql = addPagination(fullSql, request.getPageNum(), request.getPageSize());
+
+		// 5. 格式化结果
+		String formattedSql = formatSql(fullSql, request.getFormatOptions());
+
+		return new QueryResult(formattedSql, null);
 	}
 
 	private void validateRequest(AdvancedQueryRequest request) {
@@ -127,6 +174,21 @@ public class AdvancedQueryController {
 		return String.format("%s LIMIT %d OFFSET %d", sql, pageSize, offset);
 	}
 
+	private String formatSql(String sql, FormatOptions options) {
+		if (options == null) {
+			return sql;
+		}
 
+		// 这里可以实现各种格式化逻辑，如美化SQL、添加注释等
+		if (options.isPretty()) {
+			// 简单的美化逻辑
+			return sql.replaceAll("(?i)SELECT", "SELECT\n  ")
+					.replaceAll("(?i)FROM", "\nFROM\n  ")
+					.replaceAll("(?i)WHERE", "\nWHERE\n  ")
+					.replaceAll("(?i)ORDER BY", "\nORDER BY\n  ")
+					.replaceAll("(?i)LIMIT", "\nLIMIT\n  ");
+		}
+		return sql;
+	}
 
 }

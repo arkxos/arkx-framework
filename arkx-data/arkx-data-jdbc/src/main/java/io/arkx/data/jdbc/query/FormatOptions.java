@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QueryResult {
-
-	private String sql; // 生成的SQL语句
-	private String error;
-
+public  class FormatOptions {
+	private boolean pretty = true;
+	private boolean includeComments;
+	private String comment;
 }
