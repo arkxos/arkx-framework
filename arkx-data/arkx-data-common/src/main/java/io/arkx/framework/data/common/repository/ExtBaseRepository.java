@@ -1,15 +1,13 @@
 package io.arkx.framework.data.common.repository;
 
-import java.beans.PropertyDescriptor;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
+import io.arkx.framework.commons.collection.DataTable;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import io.arkx.framework.commons.collection.DataTable;
+import java.beans.PropertyDescriptor;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>抽象DAO层基类 提供一些简便方法<br/>
@@ -27,11 +25,9 @@ import io.arkx.framework.commons.collection.DataTable;
 @NoRepositoryBean
 public interface ExtBaseRepository<T, ID> {
 
+	<S extends T> S insert(S instance);
 
-	T insert(T instance);
-
-	T update(T instance);
-
+	<S extends T> S update(S instance);
 
 	boolean support(String modelType);
 
@@ -71,5 +67,7 @@ public interface ExtBaseRepository<T, ID> {
 	List<T> queryList(String sql, Object... params);
 
 	long queryForLong(String sql, Object... params);
+
+
 
 }

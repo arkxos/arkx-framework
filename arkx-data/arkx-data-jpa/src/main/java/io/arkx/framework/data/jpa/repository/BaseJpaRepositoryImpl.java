@@ -1,37 +1,20 @@
 package io.arkx.framework.data.jpa.repository;
 
-import java.beans.PropertyDescriptor;
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-//import io.arkx.framework.Account;
-import io.arkx.framework.NoUtil;
 import io.arkx.framework.boot.spring.IocBeanRegister;
 import io.arkx.framework.boot.spring.axon.Auditor;
 import io.arkx.framework.boot.spring.axon.CurrentAuditor;
-import io.arkx.framework.commons.util.ArkSpringContextHolder;
-import io.arkx.framework.commons.util.SystemIdGenerator;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.exception.ServiceException;
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
 import io.arkx.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.SystemIdGenerator;
 import io.arkx.framework.commons.util.UuidUtil;
 import io.arkx.framework.data.common.entity.*;
 import io.arkx.framework.data.common.repository.ExtBaseRepository;
 import io.arkx.framework.data.jdbc.ResultDataTable;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.persister.entity.EntityPersister;
@@ -47,6 +30,14 @@ import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
+
+import java.beans.PropertyDescriptor;
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * <p>通用Jpa仓库实现</p>
@@ -129,9 +120,9 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
             if (targetOptional.isPresent()) {
             	T target = targetOptional.get();
                 Status status = (Status) ReflectionUtils.invokeMethod(statusReadMethod, target);
-                if (status == Status.ENABLED || status == Status.DISABLED) {
+                if (status == Status.ACTIVE || status == Status.INACTIVE) {
                     ReflectionUtils.invokeMethod(statusWriteMethod, target,
-                            status == Status.DISABLED ? Status.ENABLED : Status.DISABLED);
+                            status == Status.INACTIVE ? Status.ACTIVE : Status.INACTIVE);
                     save(target);
                 }
             }
@@ -169,12 +160,12 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
     }
 
 	@Override
-	public T insert(T instance) {
+	public <S extends T> S insert(S instance) {
 		return save(instance);
 	}
 
 	@Override
-	public T update(T instance) {
+	public <S extends T> S update(S instance) {
 		return save(instance);
 	}
 
@@ -221,14 +212,12 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
 			}
 		}
 
-		if(entity instanceof AbstractIdLongEntity) {
-			AbstractIdLongEntity baseEntity = (AbstractIdLongEntity)entity;
+		if(entity instanceof LongId baseEntity) {
 			if (baseEntity.getId() == null) {
 				Long id = getSystemIdGenerator().generate();
 				baseEntity.setId(id);
 			}
-		} else if(entity instanceof AbstractIdStringEntity) {
-			AbstractIdStringEntity baseEntity = (AbstractIdStringEntity)entity;
+		} else if(entity instanceof StringId baseEntity) {
 			if (StringUtil.isEmpty(baseEntity.getId())) {
 				baseEntity.setId(UuidUtil.base58Uuid());
 			}

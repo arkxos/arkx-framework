@@ -1,3 +1,4 @@
+import io.arkx.framework.commons.collection.tree.TreeNode;
 import org.ark.common.Person;
 
 import com.alibaba.fastjson.JSON;
@@ -9,9 +10,11 @@ import io.arkx.framework.data.fastjson.TreexObjectSerializer;
 public class TreeSerializerTest {
     public static void main(String[] args) {
         Treex<String, Person> tree = new Treex<>();
-        tree.getRoot().setValue(new Person());
-        tree.getRoot().addChildByValue(new Person());
-        tree.getRoot().addChildByValue(new Person());
+		TreeNode<String, Person> rootNode = tree.getRoot();
+		rootNode.setId("0");
+		rootNode.setValue(new Person());
+		rootNode.addChildByValue(new Person());
+		rootNode.addChildByValue(new Person());
 
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(

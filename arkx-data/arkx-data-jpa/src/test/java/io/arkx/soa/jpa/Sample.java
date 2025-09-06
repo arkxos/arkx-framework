@@ -1,6 +1,6 @@
 package io.arkx.soa.jpa;
 
-import io.arkx.framework.data.common.entity.IdLongEntity;
+import io.arkx.framework.data.common.entity.LongIdEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "t_sample")
-public class Sample extends IdLongEntity {
+public class Sample extends LongIdEntity {
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private long id;

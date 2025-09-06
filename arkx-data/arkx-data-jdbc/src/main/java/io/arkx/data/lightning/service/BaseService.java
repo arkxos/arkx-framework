@@ -1,0 +1,31 @@
+package io.arkx.data.lightning.service;
+
+import io.arkx.data.lightning.repository.BaseJdbcRepository;
+
+import java.util.List;
+
+/**
+ * @author Nobody
+ * @date 2025-07-26 17:06
+ * @since 1.0
+ */
+public interface BaseService<T, ID, R extends BaseJdbcRepository<T, ID>>
+		extends ListCrudService<T, ID>,
+		ListPagingAndSortingService<T, ID>,
+		ListQueryByExampleExecutorService<T>,
+		ExtBaseService<T, ID> {
+
+	T insert(T instance);
+
+	T update(T instance);
+
+	@Deprecated
+	default List<T> list() {
+		return findAll();
+	}
+
+	default T getById(ID id) {
+		return findById(id).orElse(null);
+	}
+
+}

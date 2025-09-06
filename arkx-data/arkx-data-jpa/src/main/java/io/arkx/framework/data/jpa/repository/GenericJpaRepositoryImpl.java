@@ -98,9 +98,9 @@ package io.arkx.framework.data.jpa.repository;
 //            Optional<T> target = findById(id);
 //            if (target.isPresent()) {
 //                Status status = (Status) ReflectionUtils.invokeMethod(statusReadMethod, target);
-//                if (status == Status.ENABLED || status == Status.DISABLED) {
+//                if (status == Status.ACTIVE || status == Status.DISABLED) {
 //                    ReflectionUtils.invokeMethod(statusWriteMethod, target,
-//                            status == Status.DISABLED ? Status.ENABLED : Status.DISABLED);
+//                            status == Status.DISABLED ? Status.ACTIVE : Status.DISABLED);
 //                    save(target.get());
 //                }
 //            }

@@ -1,0 +1,3 @@
+1、支持long、string两种id
+2、支持mysql 5.7、oracle的特殊版本优化
+3、支持配置表的配套闭包表使用默认的ark_tree_closure还是独立的表名+closure单独的闭包数据表

@@ -26,7 +26,7 @@
     <sql id="ProductRepository_findBySqlToyQuery">
         <value>
             <![CDATA[
-            select * from PRODUCTS t
+            select * from TEST_SIMPLE_MODEL t
             where #[t.name like :name]
                   #[and t.category = :category]
             ]]>

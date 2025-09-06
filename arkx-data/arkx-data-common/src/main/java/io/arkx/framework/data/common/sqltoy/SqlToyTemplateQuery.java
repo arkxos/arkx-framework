@@ -225,7 +225,7 @@ public class SqlToyTemplateQuery implements RepositoryQuery {
 					return null;
 				}
 				if(Status.class.getName().equals(javaTypeName)) {
-					return Status.codeOf((int)jdbcValue);
+					return Status.fromCode((int)jdbcValue);
 				}
 				return jdbcValue;
 			}

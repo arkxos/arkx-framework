@@ -60,3 +60,4 @@ Servers
 .metadata
 .flattened-pom.xml
 /arkx-data/arkx-data-mybatis-test/logs/logs
+/arkx-data/arkx-data-jdbc/logs/logs

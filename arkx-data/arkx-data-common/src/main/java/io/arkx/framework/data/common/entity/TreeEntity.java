@@ -2,11 +2,8 @@ package io.arkx.framework.data.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  * 自身树状结构实体基类
@@ -20,15 +17,13 @@ import java.io.Serializable;
 @MappedSuperclass
 public class TreeEntity<ID> extends BaseEntity<ID> {
 
-	@Column(name = "id")
-	private ID id;
 	@Column(name = "parent_id")
 	private ID parentId;
 
-	@Column(name = "IS_LEAF")
+	@Column(name = "is_leaf")
 	private int isLeaf = 1;
 
-	@Column(name = "SORT_ORDER")
+	@Column(name = "sort_order")
 	private long sortOrder = 0;// 排序号
 
 	/**
@@ -39,8 +34,8 @@ public class TreeEntity<ID> extends BaseEntity<ID> {
 	 * @date 2012-9-11 下午1:38:55
 	 * @version V1.0
 	 */
-	public boolean isTop() {
-		return this.getParentId() == null;
+	public boolean isRoot() {
+		return parentId == null;
 	}
 
 }

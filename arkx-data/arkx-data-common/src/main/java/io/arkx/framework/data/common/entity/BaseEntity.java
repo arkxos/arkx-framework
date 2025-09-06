@@ -1,20 +1,21 @@
 package io.arkx.framework.data.common.entity;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.*;
+import org.springframework.data.domain.Persistable;
+
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 
 /**
  * @author Darkness
@@ -24,14 +25,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity<PK> implements Serializable {
+//@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity<ID> implements Persistable<ID>, Identifier<ID>, Serializable {
 
 	/* 分组校验 */
 	public @interface Create {}
 
 	/* 分组校验 */
 	public @interface Update {}
+
+	@Id
+	protected ID id;
 
 	@Column(name = "create_time", updatable = false)
 	@Schema(description = "创建时间", hidden = true)
@@ -59,8 +63,13 @@ public abstract class BaseEntity<PK> implements Serializable {
      * EnumType:  ORDINAL 枚举序数  默认选项（int）。eg:TEACHER 数据库存储的是 0
      *            STRING：枚举名称       (String)。eg:TEACHER 数据库存储的是 "TEACHER"
      */
-    @Enumerated(EnumType.ORDINAL)  
-	private Status status = Status.ENABLED;
+    @Enumerated(EnumType.ORDINAL)
+//	@ValueConverter
+	private Status status = Status.ACTIVE;
+
+	// 这里我们使用一个瞬态字段`newEntity`来标记
+	@Transient
+	private boolean newEntity;
 
 	/**
 	 * 给当前实体对象生成一个新的id
@@ -75,9 +84,51 @@ public abstract class BaseEntity<PK> implements Serializable {
 //		this.id = generateId();
 //	}
 
-	public abstract PK getId();
+// 主键访问器（可被覆盖）
+	@Override
+	public ID getId() {
+		return id;
+	}
 
-	public abstract void setId(PK id);
+	@Override
+	public void setId(ID id) {
+		this.id = id;
+	}
+
+	public void setNewId(ID id) {
+		this.newEntity = true;
+		this.setId(id);
+	}
+
+	@Override
+	public boolean isNew() {
+		if (this.getId() == null) {
+			return true;
+		}
+		return newEntity;
+	}
+
+	/**
+	 * 获取主键(ID)的类型
+	 *
+	 * @return 主键类型的Class对象
+	 */
+	@SuppressWarnings("unchecked")
+	public Class<ID> getPkClass() {
+		Type superClass = getClass().getGenericSuperclass();
+		if (superClass instanceof ParameterizedType) {
+			Type[] typeArguments = ((ParameterizedType) superClass).getActualTypeArguments();
+			if (typeArguments.length > 0) {
+				Type pkType = typeArguments[0];
+				if (pkType instanceof Class) {
+					return (Class<ID>) pkType;
+				} else if (pkType instanceof ParameterizedType) {
+					return (Class<ID>) ((ParameterizedType) pkType).getRawType();
+				}
+			}
+		}
+		throw new IllegalStateException("无法确定主键类型: " + getClass().getName());
+	}
 
 	@Override
 	public String toString() {
