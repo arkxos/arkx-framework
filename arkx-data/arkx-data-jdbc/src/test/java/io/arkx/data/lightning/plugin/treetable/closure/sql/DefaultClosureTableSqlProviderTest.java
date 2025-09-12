@@ -1,6 +1,6 @@
 package io.arkx.data.lightning.plugin.treetable.closure.sql;
 
-import io.arkx.data.lightning.plugin.treetable.closure.entity.IdType;
+import io.arkx.framework.data.common.entity.IdType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -5,5 +5,5 @@ import io.arkx.data.lightning.sample.model.Dept;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DeptRepository extends BaseJdbcRepository<Dept, Long> {
+public interface DeptRepository extends BaseJdbcRepository<Dept, String> {
 }

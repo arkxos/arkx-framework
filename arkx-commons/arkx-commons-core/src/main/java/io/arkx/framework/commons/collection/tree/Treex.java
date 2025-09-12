@@ -1,10 +1,5 @@
 package io.arkx.framework.commons.collection.tree;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
@@ -12,6 +7,11 @@ import io.arkx.framework.commons.collection.Formatter;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import lombok.Getter;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @class org.ark.framework.collection.Treex

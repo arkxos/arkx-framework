@@ -6,8 +6,8 @@ package io.arkx.data.lightning.plugin.treetable.closure.sql;
  * @since 1.0
  */
 
-import io.arkx.data.lightning.plugin.treetable.closure.entity.BusinessTableMeta;
-import io.arkx.data.lightning.plugin.treetable.closure.entity.IdType;
+import io.arkx.data.lightning.plugin.treetable.closure.entity.BizTableMeta;
+import io.arkx.framework.data.common.entity.IdType;
 import org.springframework.stereotype.Component;
 
 @Component("defaultSqlProvider")
@@ -89,11 +89,69 @@ public class DefaultClosureTableSqlProvider implements ClosureTableSqlProvider {
 	}
 
 	@Override
-	public String findParentDescendantSql(String closureTable, IdType idType, BusinessTableMeta meta) {
+	public String findParentDescendantSql(String closureTable, IdType idType, BizTableMeta meta) {
 		return String.format("""
-            SELECT ancestor_id FROM %s WHERE descendant_id = ? %s
+            SELECT ancestor_id FROM %s 
+            WHERE descendant_id = ? %s
             """, closureTable,
 				// 公共闭包表需过滤biz_table
 				meta.isUseIndependent() ? "" : "AND biz_table = ?");
+	}
+
+	@Override
+	public String deleteIndependentClosureSql(String closureTable, IdType idType) {
+		return "DELETE c1 FROM " + closureTable + " c1 " +
+				"JOIN " + closureTable + " c2 ON c1.descendant_id = c2.descendant_id " +
+				"WHERE c2.ancestor_id = ?";
+	}
+
+	@Override
+	public String deleteCommonClosureSql(String closureTable, IdType idType) {
+		return "DELETE c1 FROM " + closureTable + " c1 " +
+				"JOIN " + closureTable + " c2 ON c1.descendant_id = c2.descendant_id " +
+				"WHERE c1.biz_table = ? " +
+				"  AND c2.biz_table = ? " +
+				"  AND c2.ancestor_id = ?";
+	}
+
+	@Override
+	public boolean support(String lowerCase) {
+		return false;
+	}
+
+	@Override
+	public String insertAncestorRelationsSql(String closureTable, IdType idType, BizTableMeta meta) {
+		if (meta.isUseIndependent()) {
+			// 独立闭包表 - 兼容所有数据库的写法
+			return "INSERT INTO " + closureTable + " (ancestor_id, descendant_id, depth) " +
+					"SELECT ancestor_id, ?, depth + 1 " +
+					"FROM " + closureTable + " " +
+					"WHERE descendant_id = ?";
+		} else {
+			// 公共闭包表 - 兼容所有数据库的写法
+			return "INSERT INTO " + closureTable + " (ancestor_id, descendant_id, depth, biz_table) " +
+					"SELECT ancestor_id, ?, depth + 1, ? " +
+					"FROM " + closureTable + " " +
+					"WHERE descendant_id = ? AND biz_table = ?";
+		}
+	}
+
+	/**
+	 * 查询树状数据的SQL（单次JOIN查询）
+	 */
+	public String queryTreeDataSql(String closureTable, BizTableMeta meta) {
+		if (meta.isUseIndependent()) {
+			return "SELECT biz.*, closure.depth " +
+					"FROM " + meta.getBizTable() + " biz " +
+					"JOIN " + closureTable + " closure ON closure.descendant_id = biz.id " +
+					"WHERE closure.ancestor_id = ? " +
+					"ORDER BY closure.depth, biz.id";
+		} else {
+			return "SELECT biz.*, closure.depth " +
+					"FROM " + meta.getBizTable() + " biz " +
+					"JOIN " + closureTable + " closure ON closure.descendant_id = biz.id " +
+					"WHERE closure.ancestor_id = ? AND closure.biz_table = ? " +
+					"ORDER BY closure.depth, biz.id";
+		}
 	}
 }

@@ -28,7 +28,7 @@ public class TreeNodeSerializer extends JsonSerializer<TreeNode<?, ?>> {
 		gen.writeStringField("nodeType", node.getNodeType());
 		gen.writeObjectField("value", node.getValue());
 		gen.writeObjectField("parentId", node.getParentId());
-		gen.writeStringField("path", node.getPath());
+//		gen.writeStringField("path", node.getPath());
 		gen.writeBooleanField("isParent", node.isParent());
 		gen.writeBooleanField("isLeaf", node.isLeaf());
 		gen.writeNumberField("depth", node.getDepth());

@@ -334,7 +334,12 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
 
 		return results.get(0);
 	}
-	
+
+	@Override
+	public int executeSql(String sql, Object... params) {
+		return 0;
+	}
+
 	public String getTableName() {
 		//通过EntityManager获取factory
 		EntityManagerFactory entityManagerFactory = entityManager.getEntityManagerFactory();

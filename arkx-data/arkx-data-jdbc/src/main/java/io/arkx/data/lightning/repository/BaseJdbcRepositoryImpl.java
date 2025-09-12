@@ -1,20 +1,19 @@
 package io.arkx.data.lightning.repository;
 
-import io.arkx.data.lightning.plugin.treetable.closure.entity.BusinessTableMeta;
-import io.arkx.data.lightning.plugin.treetable.closure.entity.IdType;
-import io.arkx.data.lightning.plugin.treetable.closure.service.SmartClosureTableServiceImpl;
 import io.arkx.data.lightning.annotation.TreeTable;
+import io.arkx.data.lightning.plugin.treetable.closure.entity.BizTableMeta;
+import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableService;
+import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
+import io.arkx.data.lightning.plugin.treetable.closure.service.TreeTableUtil;
 import io.arkx.framework.boot.spring.IocBeanRegister;
 import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.ArkSpringContextHolder;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.commons.util.SystemIdGenerator;
 import io.arkx.framework.commons.util.UuidUtil;
-import io.arkx.framework.data.common.entity.LongId;
-import io.arkx.framework.data.common.entity.Status;
-import io.arkx.framework.data.common.entity.StringId;
-import io.arkx.framework.data.common.entity.TreeEntity;
+import io.arkx.framework.data.common.entity.*;
 import io.arkx.framework.data.common.repository.ExtBaseRepository;
 import io.arkx.framework.data.jdbc.ResultDataTable;
 import org.springframework.dao.DataAccessException;
@@ -50,7 +49,7 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 		implements ExtBaseRepository<T, ID> {
 
 	private final JdbcAggregateOperations entityOperations;
-	private final PersistentEntity<T, ?> entity;
+	private final PersistentEntity<T, ?> persistentEntity;
 	private final RelationalExampleMapper exampleMapper;
 
 	private Class<T> domainClass;
@@ -63,10 +62,12 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 								  JdbcConverter converter) {
 		super(entityOperations, entity, converter);
 		this.entityOperations = entityOperations;
-		this.entity = entity;
+		this.domainClass = entity.getTypeInformation().getType();
+		this.persistentEntity = entity;
 		this.exampleMapper = new RelationalExampleMapper(converter.getMappingContext());
 		this.initStatusInfo();
 	}
+
 
 	@Override
 	public <S extends T> S insert(S entity) {
@@ -82,30 +83,17 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 		}
 
 		if (TreeEntity.class.isAssignableFrom(entity.getClass())) {
-			TreeEntity treeEntity = (TreeEntity) entity;
+			TreeEntity<?> treeEntity = (TreeEntity<?>) entity;
 			String bizTable = "xxx";
-			BusinessTableMetaJdbcRepository businessTableMetaJdbcRepository = ArkSpringContextHolder.getBean(BusinessTableMetaJdbcRepository.class);
-			// 2. 闭包表关系插入（由闭包服务完成）
-			BusinessTableMeta meta = businessTableMetaJdbcRepository.findByBusinessTable(bizTable)
-					.orElse(new BusinessTableMeta());
+			BizTableMeta meta = TreeTableUtil.findBizTableMeta(treeEntity.getClass());
 
-			IdType idType =  treeEntity instanceof LongId ? IdType.LONG : IdType.STRING;
-			if (treeEntity.getClass().isAnnotationPresent(TreeTable.class)) {
-				TreeTable treeTable = treeEntity.getClass().getAnnotation(TreeTable.class);
-				bizTable = treeTable.businessTableName();
+			ClosureTableService closureTableService = ArkSpringContextHolder.getBean(ClosureTableService.class);
 
-				meta.setBizTable(bizTable);
-				meta.setUseIndependent(false);
-				meta.setIdType(idType);
-			}
-
-			SmartClosureTableServiceImpl closureService = ArkSpringContextHolder.getBean(SmartClosureTableServiceImpl.class);
-
-			closureService.insertClosureRelations(
+			closureTableService.insertClosureRelations(
 					treeEntity.getId(),          // nodeId
 					treeEntity.getParentId(),    // parentId
 					meta,                // businessTable
-					idType      // idType
+					meta.getIdType()      // idType
 			);
 
 //			if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
@@ -155,14 +143,66 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 
 	@Override
 	public <S extends T> S update(S entity) {
-		return this.entityOperations.update(entity);
+		// 1. 执行默认更新逻辑
+		S updatedEntity = this.entityOperations.update(entity);
+		// 2. 树表增强逻辑
+		if (isTreeEntity(entity)) {
+			handleTreeEntityUpdate((TreeEntity) entity);
+		}
+		return updatedEntity;
+	}
+
+	private <S extends T> boolean isTreeEntity(S entity) {
+		return entity instanceof TreeEntity &&
+				entity.getClass().isAnnotationPresent(TreeTable.class);
+	}
+
+	private void handleTreeEntityUpdate(TreeEntity<ID> entity) {
+		ClosureTableServiceImpl closureService = ArkSpringContextHolder.getBean(ClosureTableServiceImpl.class);
+
+		T oldEntity = findById(entity.getId()).orElse(null);
+		BizTableMeta meta = TreeTableUtil.findBizTableMeta(entity.getClass());
+		if (oldEntity != null && isParentChanged((TreeEntity) oldEntity, entity)) {
+			closureService.updateClosureRelations(
+					entity.getId(),
+					entity.getParentId(),
+					meta
+			);
+		}
+	}
+
+	private ClosureTableServiceImpl getClosureService() {
+		return ArkSpringContextHolder.getBean(ClosureTableServiceImpl.class);
+	}
+
+	private IdType getIdType(TreeEntity entity) {
+		return entity instanceof LongId ? IdType.LONG : IdType.STRING;
+	}
+
+	private boolean isParentChanged(TreeEntity oldEntity, TreeEntity newEntity) {
+		return !Objects.equals(oldEntity.getParentId(), newEntity.getParentId());
+	}
+
+	@Override
+	public void delete(T entity) {
+		// 1. 执行默认删除逻辑
+		this.entityOperations.delete(entity);
+
+		// 2. 树表增强逻辑
+		if (isTreeEntity(entity)) {
+			BizTableMeta meta = TreeTableUtil.findBizTableMeta((Class<? extends TreeEntity>) entity.getClass());
+			getClosureService().deleteClosureRelations(
+					((TreeEntity) entity).getId(),
+					meta
+			);
+		}
 	}
 
 	/**
 	 * 初始化状态信息
 	 */
 	private void initStatusInfo() {
-		PropertyDescriptor descriptor = findFieldPropertyDescriptor(entity.getType(), Status.class);
+		PropertyDescriptor descriptor = findFieldPropertyDescriptor(persistentEntity.getType(), Status.class);
 		isStatusAble = descriptor != null;
 		if (isStatusAble) {
 			statusReadMethod = descriptor.getReadMethod();
@@ -196,7 +236,7 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 		Map<ID, T> result = new LinkedHashMap<>();
 		for (T t : list) {
 			if (t != null) {
-				result.put((ID)entity.getIdentifierAccessor(t).getIdentifier(), t);
+				result.put((ID) persistentEntity.getIdentifierAccessor(t).getIdentifier(), t);
 			}
 		}
 		return result;
@@ -340,6 +380,29 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 		}
 
 		return results.get(0);
+	}
+
+	@Override
+	public int executeSql(String sql, Object... params) {
+		return jdbcTemplate().update(sql, params);
+	}
+
+	@Override
+	public Treex<String, T> queryTreeByParentId(String parentId) {
+		if (TreeEntity.class.isAssignableFrom(domainClass)) {
+//			TreeEntity<?> treeEntity = (TreeEntity<?>) entity;
+			String bizTable = "xxx";
+			BizTableMeta meta = TreeTableUtil.findBizTableMeta((Class<? extends TreeEntity>)domainClass);
+
+			ClosureTableService closureTableService = ArkSpringContextHolder.getBean(ClosureTableService.class);
+
+			return closureTableService.queryTreeData(
+					parentId,
+					meta,
+					(Class<? extends TreeEntity>)domainClass
+			);
+		}
+		return null;
 	}
 
 	public String getTableName() {

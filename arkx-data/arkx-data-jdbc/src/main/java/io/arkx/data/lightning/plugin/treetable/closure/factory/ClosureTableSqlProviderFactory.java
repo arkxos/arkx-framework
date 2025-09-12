@@ -31,7 +31,7 @@ public class ClosureTableSqlProviderFactory {
 			// 优先查找特定数据库的扩展实现（如MySQL 5.7、Oracle）
 			for (ClosureTableSqlProvider provider : allProviders) {
 				String providerName = provider.getClass().getSimpleName();
-				if (providerName.contains(dbType.toLowerCase())) {
+				if (provider.support(dbType.toLowerCase())) {
 					return provider;
 				}
 			}

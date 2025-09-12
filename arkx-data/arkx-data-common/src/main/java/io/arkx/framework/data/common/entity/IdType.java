@@ -1,4 +1,4 @@
-package io.arkx.data.lightning.plugin.treetable.closure.entity;
+package io.arkx.framework.data.common.entity;
 
 /**
  * @author Nobody

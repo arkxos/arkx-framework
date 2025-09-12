@@ -9,6 +9,6 @@ import lombok.Setter;
 @MappedSuperclass
 public class LongIdTreeEntity extends TreeEntity<Long> implements LongId {
 
-	private String name;
+//	private String name;
 
 }

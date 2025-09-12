@@ -1,6 +1,7 @@
 package io.arkx.framework.data.common.repository;
 
 import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.tree.Treex;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -68,6 +69,7 @@ public interface ExtBaseRepository<T, ID> {
 
 	long queryForLong(String sql, Object... params);
 
+	int executeSql(String sql, Object... params);
 
-
+	Treex<String, T> queryTreeByParentId(String parentId);
 }

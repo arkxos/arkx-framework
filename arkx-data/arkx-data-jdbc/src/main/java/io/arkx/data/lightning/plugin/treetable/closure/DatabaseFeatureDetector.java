@@ -1,16 +1,18 @@
 package io.arkx.data.lightning.plugin.treetable.closure;
 
+
+import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+
 /**
  * @author Nobody
  * @date 2025-07-28 1:59
  * @since 1.0
  */
-
-import org.springframework.jdbc.support.JdbcUtils;
-import org.springframework.stereotype.Component;
-import javax.sql.DataSource;
-import java.sql.*;
-
 @Component
 public class DatabaseFeatureDetector {
 	private final DataSource dataSource;

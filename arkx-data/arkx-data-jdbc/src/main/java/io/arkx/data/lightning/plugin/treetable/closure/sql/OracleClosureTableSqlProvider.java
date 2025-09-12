@@ -6,11 +6,16 @@ package io.arkx.data.lightning.plugin.treetable.closure.sql;
  * @since 1.0
  */
 
-import io.arkx.data.lightning.plugin.treetable.closure.entity.IdType;
+import io.arkx.framework.data.common.entity.IdType;
 import org.springframework.stereotype.Component;
 
 @Component("oracleSqlProvider")
 public class OracleClosureTableSqlProvider extends DefaultClosureTableSqlProvider {
+
+	@Override
+	public boolean support(String dbtype) {
+		return "oracle".equalsIgnoreCase(dbtype);
+	}
 
 	@Override
 	public String rebuildCommonClosureSql(String closureTable, String bizTable, IdType idType) {

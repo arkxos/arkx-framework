@@ -1,6 +1,6 @@
 package io.arkx.data.lightning.sample.service;
 
-import io.arkx.data.lightning.plugin.treetable.closure.service.SmartClosureTableServiceImpl;
+import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
 import io.arkx.data.lightning.sample.model.BlogComment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +16,9 @@ import java.util.List;
 @Service
 public class BlogCommentService {
 
-	private final SmartClosureTableServiceImpl closureService;
+	private final ClosureTableServiceImpl closureService;
 
-	public BlogCommentService(SmartClosureTableServiceImpl closureService) {
+	public BlogCommentService(ClosureTableServiceImpl closureService) {
 		this.closureService = closureService;
 	}
 

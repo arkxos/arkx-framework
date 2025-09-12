@@ -5,11 +5,16 @@ package io.arkx.data.lightning.plugin.treetable.closure.sql;
  * @date 2025-07-28 1:57
  * @since 1.0
  */
-import io.arkx.data.lightning.plugin.treetable.closure.entity.IdType;
+import io.arkx.framework.data.common.entity.IdType;
 import org.springframework.stereotype.Component;
 
 @Component("mysql57SqlProvider")
 public class MySql57ClosureTableSqlProvider extends DefaultClosureTableSqlProvider {
+
+	@Override
+	public boolean support(String dbtype) {
+		return "mysql".equalsIgnoreCase(dbtype);
+	}
 
 	@Override
 	public String rebuildCommonClosureSql(String closureTable, String bizTable, IdType idType) {

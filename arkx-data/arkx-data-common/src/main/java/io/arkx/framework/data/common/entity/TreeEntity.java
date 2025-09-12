@@ -1,5 +1,6 @@
 package io.arkx.framework.data.common.entity;
 
+import io.arkx.framework.commons.collection.tree.TreeNodeData;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -15,10 +16,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class TreeEntity<ID> extends BaseEntity<ID> {
+public class TreeEntity<ID> extends BaseEntity<ID> implements TreeNodeData<ID> {
 
 	@Column(name = "parent_id")
 	private ID parentId;
+
+	private String name;
 
 	@Column(name = "is_leaf")
 	private int isLeaf = 1;

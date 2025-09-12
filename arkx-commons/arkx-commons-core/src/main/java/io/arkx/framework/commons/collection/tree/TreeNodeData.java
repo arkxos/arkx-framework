@@ -13,6 +13,6 @@ public interface TreeNodeData<K> {
 
 	String getName();
 
-	String getPath();
+//	String getPath();
 
 }

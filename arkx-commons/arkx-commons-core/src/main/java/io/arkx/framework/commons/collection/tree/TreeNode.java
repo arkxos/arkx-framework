@@ -81,7 +81,7 @@ public class TreeNode<K, T> implements Serializable {
 	/**
 	 * 节点路径，用于表示节点在树形结构中的路径
 	 */
-	private String path;
+//	private String path;
 
 	/**
 	 * 节点数据
@@ -136,7 +136,7 @@ public class TreeNode<K, T> implements Serializable {
 			this.id = tn.getId();
 			this.parentId = tn.getParentId();
 			this.name = tn.getName();
-			this.path = tn.getPath();
+//			this.path = tn.getPath();
 		}
 	}
 
@@ -387,6 +387,12 @@ public class TreeNode<K, T> implements Serializable {
 
 		for (TreeNode<K, T> child : node.getChildren()) {
 			printTree(child, indent + 1);
+		}
+	}
+
+	public void addChildren(List<TreeNode<K, T>> treeNodes) {
+		for (TreeNode<K, T> child : treeNodes) {
+			this.addChild(child);
 		}
 	}
 }
