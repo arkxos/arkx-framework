@@ -6,6 +6,12 @@ package io.arkx.data.lightning.test;
  * @since 1.0
  */
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.arkx.data.lightning.config.EntityAutoConfiguration;
 import io.arkx.data.lightning.plugin.treetable.closure.entity.BizTableMeta;
 import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
@@ -28,6 +34,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +50,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 		basePackages={"io.arkx.data.lightning.sample.repository"})
 @SpringBootTest // 仅加载 JDBC 相关 Bean
 @ActiveProfiles("test") // 使用测试配置（可选）
-public class ClosureTableServiceTest {
+public class TreeTableIntegrateTest {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -50,6 +59,7 @@ public class ClosureTableServiceTest {
 	private ClosureTableServiceImpl closureService;
 	@Autowired
 	private DeptRepository deptRepository;
+	private String testDeptRootId;
 
 	@BeforeEach
 	public void before() {
@@ -66,6 +76,7 @@ public class ClosureTableServiceTest {
 		Dept dept = new Dept();
 		dept.setName("总公司");
 		deptRepository.insert(dept);
+		testDeptRootId = dept.getId();
 
 		Dept childDept1 = new Dept();
 		childDept1.setName("研发部门");
@@ -207,14 +218,37 @@ public class ClosureTableServiceTest {
 	@Rollback(false)
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Test
-	public void testQueryTree() {
+	public void testQueryTree() throws JsonProcessingException {
 		createDept();
 
-		String parentId = null;
+		dumpTreeByParentId(null);
+
+		dumpTreeByParentId(testDeptRootId);
+	}
+
+	private void dumpTreeByParentId(String parentId) throws JsonProcessingException {
 		Treex<String, Dept> treex = deptRepository.queryTreeByParentId(parentId);
+		treex.setWarpTreeNode(false);
 		System.out.println("======================");
 		System.out.println(treex);
 		System.out.println("-------------------");
+		// 只序列化子节点
+//		treex.setWarpTreeNode(false);
+		ObjectMapper objectMapper = new ObjectMapper();
+		// 启用美化输出（缩进）
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+		JavaTimeModule javaTimeModule = new JavaTimeModule();
+		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(
+				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+		));
+		javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(
+				DateTimeFormatter.ofPattern("yyyy-MM-dd")
+		));
+		objectMapper.registerModule(javaTimeModule);
+
+		String childrenJson = objectMapper.writeValueAsString(treex);
+		System.out.println(childrenJson);
 	}
 
 }

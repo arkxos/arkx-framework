@@ -95,7 +95,7 @@ public abstract class BaseEntity<ID> implements Persistable<ID>, Identifier<ID>,
 		this.id = id;
 	}
 
-	public void setNewId(ID id) {
+	public void bindNewId(ID id) {
 		this.newEntity = true;
 		this.setId(id);
 	}
@@ -114,7 +114,7 @@ public abstract class BaseEntity<ID> implements Persistable<ID>, Identifier<ID>,
 	 * @return 主键类型的Class对象
 	 */
 	@SuppressWarnings("unchecked")
-	public Class<ID> getPkClass() {
+	public Class<ID> findPkClass() {
 		Type superClass = getClass().getGenericSuperclass();
 		if (superClass instanceof ParameterizedType) {
 			Type[] typeArguments = ((ParameterizedType) superClass).getActualTypeArguments();

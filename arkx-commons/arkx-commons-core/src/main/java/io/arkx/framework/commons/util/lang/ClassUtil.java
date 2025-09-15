@@ -1,37 +1,27 @@
 package io.arkx.framework.commons.util.lang;
 
+import com.thoughtworks.paranamer.BytecodeReadingParanamer;
+import com.thoughtworks.paranamer.Paranamer;
+import io.arkx.framework.annotation.Column;
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.Mapx;
+import javassist.*;
+import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.LocalVariableAttribute;
+import javassist.bytecode.MethodInfo;
+import lombok.extern.slf4j.Slf4j;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import io.arkx.framework.annotation.Column;
-import io.arkx.framework.commons.collection.CaseIgnoreMapx;
-import io.arkx.framework.commons.collection.Mapx;
-import com.thoughtworks.paranamer.BytecodeReadingParanamer;
-import com.thoughtworks.paranamer.Paranamer;
-
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.Modifier;
-import javassist.NotFoundException;
-import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.LocalVariableAttribute;
-import javassist.bytecode.MethodInfo;
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
 
 /**
  * @class org.ark.framework.utility.lang.ClassUtil
@@ -336,11 +326,7 @@ public class ClassUtil {
 			Object value = null;
 			try {
 				value = propertyDescriptor.getReadMethod().invoke(object);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 

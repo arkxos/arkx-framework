@@ -1,12 +1,15 @@
 package io.arkx.framework.commons.collection.tree;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Formatter;
+import io.arkx.framework.commons.collection.tree.jackson.TreexSerializer;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,7 +24,9 @@ import java.util.HashMap;
  * @date 2012-8-6 下午10:03:39
  * @version V1.0
  */
+@Setter
 @Getter
+@JsonSerialize(using = TreexSerializer.class)
 public class Treex<K, T> implements Iterable<TreeNode<K, T>>, Serializable {
 
 	@Serial

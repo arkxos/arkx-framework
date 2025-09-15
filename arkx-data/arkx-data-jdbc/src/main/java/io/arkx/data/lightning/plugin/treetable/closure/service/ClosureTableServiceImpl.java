@@ -256,8 +256,11 @@ public class ClosureTableServiceImpl implements ClosureTableService {
             sql = "select * from " + meta.getBizTable();
 			flatNodes = executeTreeQuery(sql, targetClass);
         } else {
-            sql = provider.queryTreeDataSql(closureTable, meta);
-			flatNodes = executeTreeQuery(sql, nodeId, meta, targetClass);
+            sql = "select * from " + meta.getBizTable() + " where parent_id=?";
+//            System.out.println("parentId = " + nodeId);
+            flatNodes = executeTreeQuery(sql, new Object[]{nodeId}, targetClass);
+//            sql = provider.queryTreeDataSql(closureTable, meta);
+//			flatNodes = executeTreeQuery(sql, nodeId, meta, targetClass);
         }
 
         // 4. 构建树形结构

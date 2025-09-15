@@ -65,6 +65,7 @@ public class TreeUtil {
 				if (parent != null) {
 					parent.addChild(node);
 				} else {
+					roots.add(node);
 					// 可选：记录孤儿节点或抛出异常
 					System.err.println("Orphan node: " + node.getId());
 				}
