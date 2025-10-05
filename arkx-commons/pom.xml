@@ -30,6 +30,7 @@
 		<module>arkx-commons-feign</module>
 		<module>arkx-commons-swagger</module>
 		<module>arkx-commons-xss</module>
+		<module>arkx-commons-uid-generator</module>
 
         <module>arkx-commons-webmvc</module>
 	</modules>
