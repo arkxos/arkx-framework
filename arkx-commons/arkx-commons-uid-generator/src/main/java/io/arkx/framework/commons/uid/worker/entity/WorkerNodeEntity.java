@@ -15,117 +15,62 @@
  */
 package io.arkx.framework.commons.uid.worker.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Date;
-
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-import io.arkx.framework.commons.uid.worker.WorkerNodeType;
 
 /**
  * Entity for M_WORKER_NODE
  *
  * @author yutianbao
  */
-public class WorkerNodeEntity {
+@Data
+@Entity
+@Table(name = "ark_uid_worker_node")
+public class WorkerNodeEntity implements Serializable {
 
     /**
      * Entity unique id (table unique)
      */
-    private long id;
+    @Id
+    @Column(name = "id", unique = true, columnDefinition = "bigint NOT NULL AUTO_INCREMENT COMMENT 'auto increment id'")
+    private Long id;
 
     /**
      * Type of CONTAINER: HostName, ACTUAL : IP.
      */
+    @Column(name = "host_name", columnDefinition = "VARCHAR(64) NOT NULL COMMENT 'host name'")
     private String hostName;
 
     /**
      * Type of CONTAINER: Port, ACTUAL : Timestamp + Random(0-10000)
      */
+    @Column(name = "port", columnDefinition = "VARCHAR(64) NOT NULL COMMENT 'port'")
     private String port;
 
-    /**
-     * type of {@link WorkerNodeType}
-     */
+    @Column(name = "type", columnDefinition = "TINYINT(2) NOT NULL COMMENT 'node type: ACTUAL or CONTAINER'")
     private int type;
 
     /**
      * Worker launch date, default now
      */
+    @Column(name = "launch_date", columnDefinition = "DATETIME NOT NULL COMMENT 'launch date'")
     private Date launchDate = new Date();
 
     /**
      * Created time
      */
+    @Column(name = "created", columnDefinition = "DATETIME NOT NULL COMMENT 'created time'")
     private Date created;
 
     /**
      * Last modified
      */
+    @Column(name = "modified", columnDefinition = "DATETIME NOT NULL COMMENT 'modified time'")
     private Date modified;
-
-    /**
-     * Getters & Setters
-     */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getHostName() {
-        return hostName;
-    }
-
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public Date getLaunchDate() {
-        return launchDate;
-    }
-
-    public void setLaunchDateDate(Date launchDate) {
-        this.launchDate = launchDate;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
 }

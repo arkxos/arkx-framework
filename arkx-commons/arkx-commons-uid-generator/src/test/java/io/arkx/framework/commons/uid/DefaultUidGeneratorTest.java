@@ -7,16 +7,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.annotation.Resource;
-
-import org.apache.commons.lang.StringUtils;
+import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import io.arkx.framework.commons.uid.impl.DefaultUidGenerator;
+import io.arkx.framework.commons.uid.component.DefaultUidGenerator;
 
 /**
  * Test for {@link DefaultUidGenerator}

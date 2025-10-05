@@ -18,7 +18,9 @@ package io.arkx.framework.commons.uid.buffer;
 /**
  * If cursor catches the tail it means that the ring buffer is empty, any more buffer take request will be rejected.
  * Specify the policy to handle the reject. This is a Lambda supported interface
- * 
+ * 拒绝策略: 当环已空, 无法继续获取时
+ * 默认无需指定, 将记录日志, 并抛出UidGenerateException异常. 如有特殊需求, 请实现RejectedTakeBufferHandler接口(支持Lambda表达式)
+ *
  * @author yutianbao
  */
 @FunctionalInterface
@@ -26,7 +28,7 @@ public interface RejectedTakeBufferHandler {
 
     /**
      * Reject take buffer request
-     * 
+     *
      * @param ringBuffer
      */
     void rejectTakeBuffer(RingBuffer ringBuffer);

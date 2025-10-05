@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.arkx.framework.commons.uid.worker;
+package io.arkx.framework.commons.uid.constant;
 
 import io.arkx.framework.commons.uid.utils.ValuedEnum;
 
@@ -26,7 +26,18 @@ import io.arkx.framework.commons.uid.utils.ValuedEnum;
  */
 public enum WorkerNodeType implements ValuedEnum<Integer> {
 
-    CONTAINER(1), ACTUAL(2);
+    /**
+     * 容器
+     */
+    CONTAINER(1),
+    /**
+     * 物理机
+     */
+    ACTUAL(2),
+    /**
+     * 虚拟
+     */
+    FAKE(3);
 
     /**
      * Lock type
@@ -36,7 +47,7 @@ public enum WorkerNodeType implements ValuedEnum<Integer> {
     /**
      * Constructor with field of type
      */
-    private WorkerNodeType(Integer type) {
+     WorkerNodeType(Integer type) {
         this.type = type;
     }
 
@@ -44,5 +55,4 @@ public enum WorkerNodeType implements ValuedEnum<Integer> {
     public Integer value() {
         return type;
     }
-
 }

@@ -15,13 +15,12 @@
  */
 package io.arkx.framework.commons.uid.buffer;
 
-import java.util.concurrent.atomic.AtomicLong;
-
+import io.arkx.framework.commons.uid.utils.PaddedAtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import io.arkx.framework.commons.uid.utils.PaddedAtomicLong;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Represents a ring buffer based on array.<br>
@@ -33,7 +32,7 @@ import io.arkx.framework.commons.uid.utils.PaddedAtomicLong;
  * <li><b>flags:</b> flag array corresponding the same index with the slots, indicates whether can take or put slot
  * <li><b>tail:</b> a sequence of the max slot position to produce 
  * <li><b>cursor:</b> a sequence of the min slot position to consume
- * 
+ *
  * @author yutianbao
  */
 public class RingBuffer {
@@ -41,8 +40,10 @@ public class RingBuffer {
 
     /** Constants */
     private static final int START_POINT = -1;
+    /** 标记当前slot的状态 **/
     private static final long CAN_PUT_FLAG = 0L;
     private static final long CAN_TAKE_FLAG = 1L;
+    /** 填充slots的默认阈值：当剩余的可用的slot的个数小于bufferSize的50%时，则表示需要生成id将slots填满 */
     public static final int DEFAULT_PADDING_PERCENT = 50;
 
     /** The size of RingBuffer's slots, each slot hold a UID */

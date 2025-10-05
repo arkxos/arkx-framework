@@ -1,0 +1,45 @@
+server:
+  port: 8001
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml # mapper文件位置
+  global-config:
+    banner: false # 是否打印 mybatis-plus banner
+    db-config:
+      id-type: auto  # 主键类型
+      where-strategy: not_empty # where 条件策略
+      insert-strategy: not_empty # 插入策略
+      update-strategy: not_null  # 更新策略
+  # type-handlers-package: io.arkx.framework.data.mybatis.type.handler # 类型处理器包
+  configuration:
+    jdbc-type-for-null: 'null' # 是否设置字段为null
+    call-setters-on-nulls: true # 是否调用set方法时传入null值
+    shrink-whitespaces-in-sql: true # 去掉sql中多余的空格
+
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations: classpath:sql-init/schema.sql
+#      # data-locations: classpath:sql-init/data.sql
+
+# +-----+-------------------+-------------------+------------+
+# | sign |   delta seconds   |  worker node id   |  sequence  |
+# +-----+-------------------+-------------------+------------+
+# | 1bit|      28bits       |       22bits      |   13bits   |
+# +-----+-------------------+-------------------+------------+
+arkx:
+  uid:
+    # 分配器：none（默认）、db、redis
+    assigner-mode: db
+    # 生成器：none（默认）、memory
+    generator-mode: memory
+    timeBits: 31
+    workerBits: 19
+    seqBits: 13
+    epochStr: 2025-10-01

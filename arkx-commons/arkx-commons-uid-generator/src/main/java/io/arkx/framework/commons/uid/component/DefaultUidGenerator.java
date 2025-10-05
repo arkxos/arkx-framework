@@ -13,32 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.arkx.framework.commons.uid.impl;
+package io.arkx.framework.commons.uid.component;
 
+import io.arkx.framework.commons.uid.UidGenerator;
+import io.arkx.framework.commons.uid.exception.UidGenerateException;
+import io.arkx.framework.commons.uid.utils.BitsAllocator;
+import io.arkx.framework.commons.uid.utils.DateUtils;
+import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+
+import org.springframework.beans.factory.InitializingBean;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-
-import io.arkx.framework.commons.uid.BitsAllocator;
-import io.arkx.framework.commons.uid.UidGenerator;
-import io.arkx.framework.commons.uid.exception.UidGenerateException;
-import io.arkx.framework.commons.uid.utils.DateUtils;
-import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
-
 /**
  * Represents an implementation of {@link UidGenerator}
- *
+ * <p>
  * The unique id has 64bits (long), default allocated as blow:<br>
  * <li>sign: The highest bit is 0
  * <li>delta seconds: The next 28 bits, represents delta seconds since a customer epoch(2016-05-20 00:00:00.000).
- *                    Supports about 8.7 years until to 2024-11-20 21:24:16
+ * Supports about 8.7 years until to 2024-11-20 21:24:16
  * <li>worker id: The next 22 bits, represents the worker's id which assigns based on database, max id is about 420W
  * <li>sequence: The next 13 bits, represents a sequence within the same second, max for 8192/s<br><br>
- *
+ * <p>
  * The {@link DefaultUidGenerator#parseUID(long)} is a tool method to parse the bits
  *
  * <pre>{@code
@@ -47,7 +50,7 @@ import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
  * +------+----------------------+----------------+-----------+
  *   1bit          28bits              22bits         13bits
  * }</pre>
- *
+ * <p>
  * You can also specified the bits by Spring property setting.
  * <li>timeBits: default as 28
  * <li>workerBits: default as 22
@@ -58,27 +61,52 @@ import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
  *
  * @author yutianbao
  */
+@Slf4j
 public class DefaultUidGenerator implements UidGenerator, InitializingBean {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUidGenerator.class);
 
-    /** Bits allocate */
-    protected int timeBits = 28;
-    protected int workerBits = 22;
+    /**
+     * Bits allocate
+     */
+    protected int timeBits = 31;
+    protected int workerBits = 19;
     protected int seqBits = 13;
 
-    /** Customer epoch, unit as second. For example 2016-05-20 (ms: 1463673600000)*/
-    protected String epochStr = "2016-05-20";
-    protected long epochSeconds = TimeUnit.MILLISECONDS.toSeconds(1463673600000L);
+    /**
+     * Customer epoch, unit as second. For example 2025-10-01 (ms: 1759248000000)
+     */
+    protected String epochStr = "2025-10-01";
+    protected long epochSeconds = TimeUnit.MILLISECONDS.toSeconds(1759248000000L);
 
-    /** Stable fields after spring bean initializing */
+//    public static void main(String[] args) {
+//        LocalDate localDate = LocalDate.of(2016, 5, 20);
+//
+//        // 定义纪元起点和指定日期的开始时刻（UTC时区）
+//        LocalDateTime epochStart = LocalDateTime.of(1970, 1, 1, 0, 0);
+//        LocalDateTime dateStart = localDate.atTime(LocalTime.MAX);
+//
+//        // 计算两个时间点之间的秒数差
+//        long secondsSinceEpoch = ChronoUnit.SECONDS.between(epochStart, dateStart);
+//        System.out.println("秒数 (Epoch): " + secondsSinceEpoch);
+//
+//        System.out.println(TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern("2025-10-01").getTime()));
+//    }
+
+
+    /**
+     * Stable fields after spring bean initializing
+     */
     protected BitsAllocator bitsAllocator;
     protected long workerId;
 
-    /** Volatile fields caused by nextId() */
+    /**
+     * Volatile fields caused by nextId()
+     */
     protected long sequence = 0L;
     protected long lastSecond = -1L;
 
-    /** Spring property */
+    /**
+     * Spring property
+     */
     protected WorkerIdAssigner workerIdAssigner;
 
     @Override
@@ -89,10 +117,9 @@ public class DefaultUidGenerator implements UidGenerator, InitializingBean {
         // initialize worker id
         workerId = workerIdAssigner.assignWorkerId();
         if (workerId > bitsAllocator.getMaxWorkerId()) {
-            throw new RuntimeException("Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
+            throw new UidGenerateException("Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
         }
-
-        LOGGER.info("Initialized bits(1, {}, {}, {}) for workerID:{}", timeBits, workerBits, seqBits, workerId);
+        log.info("Initialized bits(1, {}, {}, {}) for workerID:{}", timeBits, workerBits, seqBits, workerId);
     }
 
     @Override
@@ -100,7 +127,7 @@ public class DefaultUidGenerator implements UidGenerator, InitializingBean {
         try {
             return nextId();
         } catch (Exception e) {
-            LOGGER.error("Generate unique id exception. ", e);
+            log.error("Generate unique id exception. ", e);
             throw new UidGenerateException(e);
         }
     }
@@ -149,7 +176,7 @@ public class DefaultUidGenerator implements UidGenerator, InitializingBean {
                 currentSecond = getNextSecond(lastSecond);
             }
 
-        // At the different second, sequence restart from zero
+            // At the different second, sequence restart from zero
         } else {
             sequence = 0L;
         }

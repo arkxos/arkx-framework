@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>io.arkx.framework</groupId>
         <artifactId>arkx-commons</artifactId>
@@ -13,9 +11,23 @@
     <artifactId>arkx-commons-uid-generator</artifactId>
 
     <name>UID-Generator</name>
-    <description>An unique id generator</description>
+    <description>
+        算法来源于百度：https://github.com/baidu/uid-generator/blob/master/README.zh_cn.md
+        分布式ID生成器SpringBoot-starter，基于百度分布式UIDGenerator与SpringBoot整合进行自动配置注入，
+        支持多服务同数据库（Datasource）与各服务独立数据库环境（Redis）。
+        此外，还提供了基于内存（缓冲存储、连续发号）的全局发号器以及支持JPA的Identity策略生成器。
+        可通过properties配置的方式切换生成环境，轻松上手使用。
+    </description>
 
     <packaging>jar</packaging>
+
+    <developers>
+        <developer>
+            <name>MrDJun</name>
+            <email>mr.djun@qq.com</email>
+            <timezone>2021-5-11 14:23:20</timezone>
+        </developer>
+    </developers>
 
     <!-- Properties -->
     <properties>
@@ -25,6 +37,30 @@
 
     <!-- Dependencies -->
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>provided</scope>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate.orm</groupId>-->
+<!--            <artifactId>hibernate-core</artifactId>-->
+<!--            <version>6.6.22.Final</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -42,25 +78,32 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- MyBatis -->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis</groupId>-->
+<!--            <artifactId>mybatis</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis</groupId>-->
+<!--            <artifactId>mybatis-spring</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Apache Commons -->
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
+            <version>3.2</version>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Logger -->
@@ -72,10 +115,10 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>log4j-over-slf4j</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Test. Scope test only -->
         <dependency>
@@ -91,46 +134,53 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.2.0</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-                <version>3.5.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>${jdk.version}</source>-->
+<!--                    <target>${jdk.version}</target>-->
+<!--                    <encoding>${project.build.sourceEncoding}</encoding>-->
+<!--                </configuration>-->
+<!--                <version>${maven-compiler-plugin.version}</version>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-source-plugin</artifactId>-->
+<!--                <version>3.0.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 
 </project>

@@ -15,7 +15,7 @@
  */
 package io.arkx.framework.commons.uid.worker;
 
-import io.arkx.framework.commons.uid.impl.DefaultUidGenerator;
+import io.arkx.framework.commons.uid.component.DefaultUidGenerator;
 
 /**
  * Represents a worker id assigner for {@link DefaultUidGenerator}

@@ -1,0 +1,3 @@
+io.arkx.framework.commons.uid.config.UidGeneratorAutoConfigure
+io.arkx.framework.commons.uid.config.UidDatasourceAssignerConfigure
+io.arkx.framework.commons.uid.config.UidRedisAssignerConfigure
