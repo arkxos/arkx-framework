@@ -2,20 +2,19 @@ package io.arkx.data.lightning.rest;
 
 import io.arkx.data.lightning.service.BaseService;
 import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.tree.Treex;
+import io.arkx.framework.commons.model.PageResult;
+import io.arkx.framework.commons.web.ResponseResult;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * 通用基础控制器 - 支持完整的CRUD、批量操作、状态管理和原生SQL查询
@@ -26,190 +25,223 @@ import java.util.Optional;
  */
 public class BaseController<T, ID extends Serializable, S extends BaseService<T, ID, ?>> {
 
-	protected final S service;
+	protected final S myService;
 
-	public BaseController(S service) {
-		this.service = service;
+	public BaseController(S myService) {
+		this.myService = myService;
 	}
 
 	// ==================== 基本CRUD操作 ====================
 
 	@GetMapping("/{id}")
-	public ResponseEntity<T> getById(@PathVariable("id") ID id) {
-		return ResponseEntity.of(service.findById(id));
+	public ResponseResult<T> getById(@PathVariable("id") ID id) {
+		return ResponseResult.ok(myService.getById(id));
 	}
 
-	@GetMapping
-	public ResponseEntity<List<T>> getAll() {
-		return ResponseEntity.ok(service.findAll());
+	@GetMapping("/all")
+	public ResponseResult<List<T>> getAll() {
+		return ResponseResult.ok(myService.findAll());
 	}
 
 	@GetMapping("/page")
-	public ResponseEntity<Page<T>> getAllPage(@PageableDefault Pageable pageable) {
-		return ResponseEntity.ok(service.findAll(pageable));
+	public ResponseResult<PageResult<T>> getAllPage(@PageableDefault Pageable pageable) {
+		return ResponseResult.ok(myService.findAll(pageable));
 	}
 
 	@GetMapping("/sorted")
-	public ResponseEntity<List<T>> getAllSorted(Sort sort) {
-		return ResponseEntity.ok(service.findAll(sort));
+	public ResponseResult<List<T>> getAllSorted(Sort sort) {
+		return ResponseResult.ok(myService.findAll(sort));
 	}
 
 	@PostMapping
-	public ResponseEntity<T> create(@RequestBody T entity) {
-		T savedEntity = service.insert(entity);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedEntity);
+	public ResponseResult<T> create(@RequestBody T entity) {
+		T savedEntity = myService.insert(entity);
+		return ResponseResult.ok(savedEntity);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<T> update(@PathVariable ID id, @RequestBody T entity) {
-		T updatedEntity = service.update(entity);
-		return ResponseEntity.ok(updatedEntity);
+	@PutMapping
+	public ResponseResult<T> update(@RequestBody T entity) {
+		T updatedEntity = myService.update(entity);
+		return ResponseResult.ok(updatedEntity);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable ID id) {
-		service.deleteById(id);
-		return ResponseEntity.noContent().build();
+	public ResponseResult<Void> delete(@PathVariable ID id) {
+		myService.deleteById(id);
+		return ResponseResult.ok();
 	}
 
 	@DeleteMapping
-	public ResponseEntity<Void> deleteAll() {
-		service.deleteAll();
-		return ResponseEntity.noContent().build();
+	public ResponseResult<Void> deleteAll() {
+		myService.deleteAll();
+		return ResponseResult.ok();
 	}
 
 	// ==================== 批量操作 ====================
 
 	@PostMapping("/batch")
-	public ResponseEntity<List<T>> createBatch(@RequestBody List<T> entities) {
-		List<T> savedEntities = service.saveAll(entities);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedEntities);
+	public ResponseResult<List<T>> createBatch(@RequestBody List<T> entities) {
+		List<T> savedEntities = myService.saveAll(entities);
+		return ResponseResult.ok(savedEntities);
 	}
 
 	@GetMapping("/batch")
-	public ResponseEntity<List<T>> getBatch(@RequestParam Collection<ID> ids) {
-		return ResponseEntity.ok(service.findAllById(ids));
+	public ResponseResult<List<T>> getBatch(@RequestParam Collection<ID> ids) {
+		return ResponseResult.ok(myService.findAllById(ids));
 	}
 
 	@DeleteMapping("/batch")
-	public ResponseEntity<Void> deleteBatch(@RequestParam Collection<ID> ids) {
-		service.deleteAllById(ids);
-		return ResponseEntity.noContent().build();
+	public ResponseResult<Void> deleteBatch(@RequestParam Collection<ID> ids) {
+		myService.deleteAllById(ids);
+		return ResponseResult.ok();
 	}
 
 	// ==================== 批量Map操作 ====================
 
 	@GetMapping("/mget")
-	public ResponseEntity<Map<ID, T>> mget(@RequestParam Collection<ID> ids) {
-		return ResponseEntity.ok(service.mget(ids));
+	public ResponseResult<Map<ID, T>> mget(@RequestParam Collection<ID> ids) {
+		return ResponseResult.ok(myService.mget(ids));
 	}
 
 	@GetMapping("/mget-one-by-one")
-	public ResponseEntity<Map<ID, T>> mgetOneByOne(@RequestParam Collection<ID> ids) {
-		return ResponseEntity.ok(service.mgetOneByOne(ids));
+	public ResponseResult<Map<ID, T>> mgetOneByOne(@RequestParam Collection<ID> ids) {
+		return ResponseResult.ok(myService.mgetOneByOne(ids));
 	}
 
 	@GetMapping("/find-all-one-by-one")
-	public ResponseEntity<List<T>> findAllOneByOne(@RequestParam Collection<ID> ids) {
-		return ResponseEntity.ok(service.findAllOneByOne(ids));
+	public ResponseResult<List<T>> findAllOneByOne(@RequestParam Collection<ID> ids) {
+		return ResponseResult.ok(myService.findAllOneByOne(ids));
 	}
 
 	// ==================== 状态管理 ====================
 
 	@PatchMapping("/{id}/toggle-status")
-	public ResponseEntity<Void> toggleStatus(@PathVariable ID id) {
-		service.toggleStatus(id);
-		return ResponseEntity.ok().build();
+	public ResponseResult<Void> toggleStatus(@PathVariable ID id) {
+		myService.toggleStatus(id);
+		return ResponseResult.ok();
 	}
 
 	@PatchMapping("/fake-delete")
-	public ResponseEntity<Void> fakeDelete(@RequestParam ID... ids) {
-		service.fakeDelete(ids);
-		return ResponseEntity.ok().build();
+	public ResponseResult<Void> fakeDelete(@RequestParam ID... ids) {
+		myService.fakeDelete(ids);
+		return ResponseResult.ok();
 	}
 
 	// ==================== 示例查询 ====================
 
 	@PostMapping("/by-example")
-	public ResponseEntity<List<T>> findByExample(@RequestBody T example) {
-		return ResponseEntity.ok(service.findAll(Example.of(example)));
+	public ResponseResult<List<T>> findByExample(@RequestBody T example) {
+		return ResponseResult.ok(myService.findAll(Example.of(example)));
 	}
 
 	@PostMapping("/by-example/page")
-	public ResponseEntity<Page<T>> findByExamplePage(@RequestBody T example,
+	public ResponseResult<PageResult<T>> findByExamplePage(@RequestBody T example,
 													 @PageableDefault Pageable pageable) {
-		return ResponseEntity.ok(service.findAll(Example.of(example), pageable));
+		return ResponseResult.ok(myService.findAll(Example.of(example), pageable));
 	}
 
 	@PostMapping("/by-example/sorted")
-	public ResponseEntity<List<T>> findByExampleSorted(@RequestBody T example, Sort sort) {
-		return ResponseEntity.ok(service.findAll(Example.of(example), sort));
+	public ResponseResult<List<T>> findByExampleSorted(@RequestBody T example, Sort sort) {
+		return ResponseResult.ok(myService.findAll(Example.of(example), sort));
 	}
 
 	@PostMapping("/by-example/exists")
-	public ResponseEntity<Boolean> existsByExample(@RequestBody T example) {
-		return ResponseEntity.ok(service.exists(Example.of(example)));
+	public ResponseResult<Boolean> existsByExample(@RequestBody T example) {
+		return ResponseResult.ok(myService.exists(Example.of(example)));
 	}
 
 	@PostMapping("/by-example/count")
-	public ResponseEntity<Long> countByExample(@RequestBody T example) {
-		return ResponseEntity.ok(service.count(Example.of(example)));
+	public ResponseResult<Long> countByExample(@RequestBody T example) {
+		return ResponseResult.ok(myService.count(Example.of(example)));
 	}
 
 	// ==================== 原生SQL查询 ====================
 
 	@PostMapping("/query/data-table")
-	public ResponseEntity<DataTable> queryDataTable(@RequestParam String sql,
+	public ResponseResult<DataTable> queryDataTable(@RequestParam String sql,
 													@RequestBody(required = false) Object[] params) {
-		return ResponseEntity.ok(service.queryDataTable(sql, params));
+		return ResponseResult.ok(myService.queryDataTable(sql, params));
 	}
 
 	@PostMapping("/query/map")
-	public ResponseEntity<List<Map<String, Object>>> queryMap(@RequestParam String sql,
+	public ResponseResult<List<Map<String, Object>>> queryMap(@RequestParam String sql,
 															  @RequestBody(required = false) Object[] params) {
-		return ResponseEntity.ok(service.queryMap(sql, params));
+		return ResponseResult.ok(myService.queryMap(sql, params));
 	}
 
 	@PostMapping("/query/list")
-	public ResponseEntity<List<T>> queryList(@RequestParam String sql,
+	public ResponseResult<List<T>> queryList(@RequestParam String sql,
 											 @RequestBody(required = false) Object[] params) {
-		return ResponseEntity.ok(service.queryList(sql, params));
+		return ResponseResult.ok(myService.queryList(sql, params));
 	}
 
 	@PostMapping("/query/long")
-	public ResponseEntity<Long> queryForLong(@RequestParam String sql,
+	public ResponseResult<Long> queryForLong(@RequestParam String sql,
 											 @RequestBody(required = false) Object[] params) {
-		return ResponseEntity.ok(service.queryForLong(sql, params));
+		return ResponseResult.ok(myService.queryForLong(sql, params));
 	}
 
 	// ==================== 工具方法 ====================
 
 	@GetMapping("/exists/{id}")
-	public ResponseEntity<Boolean> exists(@PathVariable ID id) {
-		return ResponseEntity.ok(service.existsById(id));
+	public ResponseResult<Boolean> exists(@PathVariable ID id) {
+		return ResponseResult.ok(myService.existsById(id));
 	}
 
 	@GetMapping("/count")
-	public ResponseEntity<Long> count() {
-		return ResponseEntity.ok(service.count());
+	public ResponseResult<Long> count() {
+		return ResponseResult.ok(myService.count());
 	}
 
 	@GetMapping("/support/{modelType}")
-	public ResponseEntity<Boolean> support(@PathVariable String modelType) {
-		return ResponseEntity.ok(service.support(modelType));
+	public ResponseResult<Boolean> support(@PathVariable String modelType) {
+		return ResponseResult.ok(myService.support(modelType));
 	}
 
 	// ==================== 兼容性方法 ====================
 
 	@GetMapping("/list")
 	@Deprecated
-	public ResponseEntity<List<T>> list() {
-		return ResponseEntity.ok(service.list());
+	public ResponseResult<List<T>> list() {
+		return ResponseResult.ok(myService.list());
 	}
 
 	@GetMapping("/get-by-id")
 	@Deprecated
-	public ResponseEntity<T> getByIdOld(@RequestParam ID id) {
-		return ResponseEntity.of(Optional.ofNullable(service.getById(id)));
+	public ResponseResult<T> getByIdOld(@RequestParam ID id) {
+		return ResponseResult.ok(myService.getById(id));
 	}
+
+	@GetMapping("/findChildrenByParentId")
+	public ResponseResult<List<T>> findChildrenByParentId(@RequestParam ID parentId) {
+		return ResponseResult.ok(myService.findChildrenByParentId(parentId));
+	}
+
+	@GetMapping("/tree")
+	public ResponseResult<Treex<String, T>> findAllTree() {
+		return ResponseResult.ok(myService.findAllTree());
+	}
+
+	/**
+	 * 导出部门
+	 * @return
+	 */
+//	@ResponseExcel
+//	@GetMapping("/export")
+//	public List<DeptExcelVo> export() {
+//		return sysOrganizationService.listExcelVo();
+//	}
+//
+//	/**
+//	 * 导入部门
+//	 * @param excelVOList
+//	 * @param bindingResult
+//	 * @return
+//	 */
+//	@PostMapping("import")
+//	public ResponseResult importDept(@RequestExcel List<DeptExcelVo> excelVOList, BindingResult bindingResult) {
+//
+//		return sysOrganizationService.importDept(excelVOList, bindingResult);
+//	}
+
 }

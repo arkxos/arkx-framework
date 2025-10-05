@@ -71,5 +71,10 @@ public interface ExtBaseRepository<T, ID> {
 
 	int executeSql(String sql, Object... params);
 
+	Treex<String, T> findAllTree();
+
 	Treex<String, T> queryTreeByParentId(String parentId);
+
+	List<T> findChildrenByParentId(ID parentId);
+
 }

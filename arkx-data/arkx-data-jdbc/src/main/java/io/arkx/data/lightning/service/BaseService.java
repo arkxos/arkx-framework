@@ -1,6 +1,7 @@
 package io.arkx.data.lightning.service;
 
 import io.arkx.data.lightning.repository.BaseJdbcRepository;
+import io.arkx.framework.commons.collection.tree.Treex;
 
 import java.util.List;
 
@@ -28,4 +29,7 @@ public interface BaseService<T, ID, R extends BaseJdbcRepository<T, ID>>
 		return findById(id).orElse(null);
 	}
 
+	List<T> findChildrenByParentId(ID parentId);
+
+	Treex<String, T> findAllTree();
 }

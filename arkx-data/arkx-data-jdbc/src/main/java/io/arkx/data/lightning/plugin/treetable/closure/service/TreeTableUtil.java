@@ -1,10 +1,12 @@
 package io.arkx.data.lightning.plugin.treetable.closure.service;
 
-import io.arkx.data.lightning.annotation.TreeTable;
 import io.arkx.data.lightning.plugin.treetable.closure.entity.BizTableMeta;
+import io.arkx.framework.commons.util.StringUtils;
+import io.arkx.framework.commons.utils2.StringUtil;
 import io.arkx.framework.data.common.entity.IdType;
 import io.arkx.framework.data.common.entity.LongId;
 import io.arkx.framework.data.common.entity.TreeEntity;
+import org.springframework.data.relational.core.mapping.Table;
 
 /**
  *
@@ -20,10 +22,15 @@ public class TreeTableUtil {
 		BizTableMeta meta = new BizTableMeta();
 
 		IdType idType =  LongId.class.isAssignableFrom(clazz) ? IdType.LONG : IdType.STRING;
-		if (clazz.isAnnotationPresent(TreeTable.class)) {
-			TreeTable treeTable = clazz.getAnnotation(TreeTable.class);
-			String bizTable = treeTable.businessTableName();
-
+		if (clazz.isAnnotationPresent(Table.class)) {
+			Table treeTable = clazz.getAnnotation(Table.class);
+			String bizTable = treeTable.name();
+			if (StringUtils.isEmpty(bizTable)) {
+				bizTable = treeTable.value();
+			}
+			if (StringUtils.isEmpty(bizTable)) {
+				bizTable = StringUtil.camelToUnderline(clazz.getSimpleName());
+			}
 			meta.setBizTable(bizTable);
 			meta.setUseIndependent(false);
 			meta.setIdType(idType);

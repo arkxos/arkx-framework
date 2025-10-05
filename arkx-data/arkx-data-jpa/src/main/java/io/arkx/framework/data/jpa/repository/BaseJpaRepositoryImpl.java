@@ -4,6 +4,7 @@ import io.arkx.framework.boot.spring.IocBeanRegister;
 import io.arkx.framework.boot.spring.axon.Auditor;
 import io.arkx.framework.boot.spring.axon.CurrentAuditor;
 import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.commons.util.ArkSpringContextHolder;
 import io.arkx.framework.commons.util.StringUtil;
@@ -338,6 +339,21 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
 	@Override
 	public int executeSql(String sql, Object... params) {
 		return 0;
+	}
+
+	@Override
+	public Treex<String, T> findAllTree() {
+		return null;
+	}
+
+	@Override
+	public Treex<String, T> queryTreeByParentId(String parentId) {
+		return null;
+	}
+
+	@Override
+	public List<T> findChildrenByParentId(ID parentId) {
+		return List.of();
 	}
 
 	public String getTableName() {

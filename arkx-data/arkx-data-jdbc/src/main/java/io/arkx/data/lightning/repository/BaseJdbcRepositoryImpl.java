@@ -1,6 +1,5 @@
 package io.arkx.data.lightning.repository;
 
-import io.arkx.data.lightning.annotation.TreeTable;
 import io.arkx.data.lightning.plugin.treetable.closure.entity.BizTableMeta;
 import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableService;
 import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
@@ -18,10 +17,12 @@ import io.arkx.framework.data.common.repository.ExtBaseRepository;
 import io.arkx.framework.data.jdbc.ResultDataTable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Persistable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.jdbc.core.convert.JdbcConverter;
 import org.springframework.data.jdbc.repository.support.SimpleJdbcRepository;
 import org.springframework.data.mapping.PersistentEntity;
+import org.springframework.data.relational.core.query.Query;
 import org.springframework.data.relational.repository.query.RelationalExampleMapper;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,6 +39,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static org.springframework.data.relational.core.query.Criteria.where;
+import static org.springframework.data.relational.core.query.Query.query;
+
 /**
  * @author Nobody
  * @date 2025-07-26 16:34
@@ -51,6 +55,7 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 	private final JdbcAggregateOperations entityOperations;
 	private final PersistentEntity<T, ?> persistentEntity;
 	private final RelationalExampleMapper exampleMapper;
+//	private final NamedParameterJdbcOperations operations;
 
 	private Class<T> domainClass;
 	private SystemIdGenerator systemIdGenerator;
@@ -58,10 +63,13 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 	private Method statusReadMethod;// 状态字段读方法
 	private Method statusWriteMethod;// 状态字段写方法
 
-	public BaseJdbcRepositoryImpl(JdbcAggregateOperations entityOperations, PersistentEntity<T, ?> entity,
-								  JdbcConverter converter) {
+	public BaseJdbcRepositoryImpl(
+			JdbcAggregateOperations entityOperations,
+			PersistentEntity<T, ?> entity,
+			JdbcConverter converter) {
 		super(entityOperations, entity, converter);
 		this.entityOperations = entityOperations;
+//		this.operations = operations;
 		this.domainClass = entity.getTypeInformation().getType();
 		this.persistentEntity = entity;
 		this.exampleMapper = new RelationalExampleMapper(converter.getMappingContext());
@@ -153,8 +161,7 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 	}
 
 	private <S extends T> boolean isTreeEntity(S entity) {
-		return entity instanceof TreeEntity &&
-				entity.getClass().isAnnotationPresent(TreeTable.class);
+		return entity instanceof TreeEntity;
 	}
 
 	private void handleTreeEntityUpdate(TreeEntity<ID> entity) {
@@ -403,6 +410,19 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 			);
 		}
 		return null;
+	}
+
+	@Override
+	public Treex<String, T> findAllTree() {
+		return this.queryTreeByParentId(null);
+	}
+
+	@Override
+	public List<T> findChildrenByParentId(ID parentId) {
+		// 构建查询条件
+		Query query = query(where("parent_id").is(parentId))
+				.sort(Sort.by("sort_order").ascending());
+		return this.entityOperations.findAll(query, domainClass);
 	}
 
 	public String getTableName() {

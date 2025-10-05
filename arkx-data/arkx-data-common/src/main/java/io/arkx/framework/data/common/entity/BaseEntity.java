@@ -34,6 +34,7 @@ public abstract class BaseEntity<ID> implements Persistable<ID>, Identifier<ID>,
 	/* 分组校验 */
 	public @interface Update {}
 
+	@jakarta.persistence.Id
 	@Id
 	protected ID id;
 
@@ -67,8 +68,11 @@ public abstract class BaseEntity<ID> implements Persistable<ID>, Identifier<ID>,
 //	@ValueConverter
 	private Status status = Status.ACTIVE;
 
+	private int delFlag;
+
 	// 这里我们使用一个瞬态字段`newEntity`来标记
 	@Transient
+	@jakarta.persistence.Transient
 	private boolean newEntity;
 
 	/**

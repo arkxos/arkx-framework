@@ -32,7 +32,7 @@ public class Treex<K, T> implements Iterable<TreeNode<K, T>>, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	private boolean isWarpTreeNode = true;
+	private boolean isWarpTreeNode = false;
 
 	/**
 	 *  获取根节点对象
@@ -40,7 +40,7 @@ public class Treex<K, T> implements Iterable<TreeNode<K, T>>, Serializable {
 	private TreeNode<K, T> root = new TreeNode<>();
 	
 	public Treex() {
-		this(true);
+		this(false);
 	}
 
 	public Treex(boolean isWarpTreeNode) {
