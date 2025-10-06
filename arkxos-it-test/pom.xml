@@ -36,41 +36,41 @@
 			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
 		<!--必备：认证中心模块-->
-		<dependency>
-			<groupId>com.arkxos</groupId>
-			<artifactId>arkxos-auth</artifactId>
-			<version>${arkxos.version}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.arkxos</groupId>-->
+<!--			<artifactId>arkxos-auth</artifactId>-->
+<!--			<version>${arkxos.version}</version>-->
+<!--		</dependency>-->
 		<!--必备：用户管理模块-->
-		<dependency>
-			<groupId>com.arkxos</groupId>
-			<artifactId>arkxos-system</artifactId>
-			<version>${arkxos.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.arkxos.arkpack</groupId>
-			<artifactId>arkpack-npm</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.arkxos.arkpack</groupId>
-			<artifactId>arkpack-web-core</artifactId>
-			<version>1.0-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>asm</artifactId>
-					<groupId>org.ow2.asm</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>asm-analysis</artifactId>
-					<groupId>org.ow2.asm</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>asm-util</artifactId>
-					<groupId>org.ow2.asm</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.arkxos</groupId>-->
+<!--			<artifactId>arkxos-system</artifactId>-->
+<!--			<version>${arkxos.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.arkxos.arkpack</groupId>-->
+<!--			<artifactId>arkpack-npm</artifactId>-->
+<!--			<version>1.0-SNAPSHOT</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.arkxos.arkpack</groupId>-->
+<!--			<artifactId>arkpack-web-core</artifactId>-->
+<!--			<version>1.0-SNAPSHOT</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<artifactId>asm</artifactId>-->
+<!--					<groupId>org.ow2.asm</groupId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<artifactId>asm-analysis</artifactId>-->
+<!--					<groupId>org.ow2.asm</groupId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<artifactId>asm-util</artifactId>-->
+<!--					<groupId>org.ow2.asm</groupId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 		<!--可选：代码生成模块-->
 <!--		<dependency>-->
 <!--			<groupId>com.arkxos</groupId>-->
@@ -84,17 +84,17 @@
 <!--			</exclusions>-->
 <!--		</dependency>-->
 		<!--可选：定时任务模块-->
-		<dependency>
-			<groupId>com.arkxos</groupId>
-			<artifactId>arkxos-quartz</artifactId>
-			<version>${arkxos.version}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.arkxos</groupId>-->
+<!--			<artifactId>arkxos-quartz</artifactId>-->
+<!--			<version>${arkxos.version}</version>-->
+<!--		</dependency>-->
 		<!--安全模块-->
-		<dependency>
-			<groupId>com.arkxos</groupId>
-			<artifactId>arkxos-platform-support-security</artifactId>
-			<version>${arkxos.version}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.arkxos</groupId>-->
+<!--			<artifactId>arkxos-platform-support-security</artifactId>-->
+<!--			<version>${arkxos.version}</version>-->
+<!--		</dependency>-->
 		<!-- 接口文档UI  -->
 		<dependency>
 			<groupId>org.springdoc</groupId>

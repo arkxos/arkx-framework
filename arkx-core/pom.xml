@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>io.arkx.framework</groupId>
 		<artifactId>arkx-framework</artifactId>
-		<version>0.3.0</version>
+		<version>${revision}</version>
 	</parent>
 
 	<artifactId>arkx-core</artifactId>
