@@ -23,11 +23,11 @@ public class TreeNodeSerializer extends JsonSerializer<TreeNode<?, ?>> {
 		gen.writeStartObject();
 
 		// 序列化节点的基本属性
-//		gen.writeObjectField("id", node.getId());
-//		gen.writeStringField("name", node.getName());
+		gen.writeObjectField("id", node.getId());
+		gen.writeStringField("name", node.getName());
 		gen.writeStringField("nodeType", node.getNodeType());
-//		gen.writeObjectField("value", node.getValue());
-//		gen.writeObjectField("parentId", node.getParentId());
+		gen.writeObjectField("value", node.getValue());
+		gen.writeObjectField("parentId", node.getParentId());
 //		gen.writeStringField("path", node.getPath());
 		gen.writeBooleanField("isParent", node.isParent());
 		gen.writeBooleanField("isLeaf", node.isLeaf());
