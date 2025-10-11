@@ -3,8 +3,6 @@ package io.arkx.framework.data.db.common.util;
 import io.arkx.framework.data.db.common.entity.*;
 import lombok.Setter;
 
-import org.dromara.dbswitch.common.entity.*;
-
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
