@@ -456,7 +456,7 @@ public class SelectTag extends BodyTagSupport {
 				v = StringUtil.replaceEx(v, "\\,", ",");
 				v = StringUtil.replaceEx(v, "\\:", ":");
 				k = LangUtil.get(k);
-				dt.insertRow(new String[] { v, k });
+				dt.insertRow(v, k );
 			}
 			return dt;
 		}

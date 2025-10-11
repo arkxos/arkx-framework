@@ -55,11 +55,11 @@ public final class RequestUtil {
 			buf.append("; Secure");
 		}
 
-		if (cookie.getVersion() > 0) {
-			buf.append("; Version=\"");
-			buf.append(cookie.getVersion());
-			buf.append("\"");
-		}
+//		if (cookie.getVersion() > 0) {
+//			buf.append("; Version=\"");
+//			buf.append(cookie.getVersion());
+//			buf.append("\"");
+//		}
 
 		return buf.toString();
 	}
