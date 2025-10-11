@@ -234,12 +234,12 @@ import io.arkx.framework.thirdparty.el.operator.RelationalOperator;
  *        if N is BigDecimal
  *             If A is a BigInteger, return <code>new BigDecimal(A)</code>
  *             Otherwise, return <code>new BigDecimal(A.doubleValue())</code>
- *        If N is Byte, return <code>new Byte(A.byteValue())</code>
- *        If N is Short, return <code>new Short(A.shortValue())</code>
+ *        If N is Byte, return <code>Byte.valueOf(A.byteValue())</code>
+ *        If N is Short, return <code>Short.valueOf(A.shortValue())</code>
  *        If N is Integer, return <code>Integer.valueOf(A.integerValue())</code>
  *        If N is Long, return <code>Long.valueOf(A.longValue())</code>
- *        If N is Float, return <code>new Float(A.floatValue())</code>
- *        If N is Double, return <code>new Double(A.doubleValue())</code>
+ *        If N is Float, return <code>Float.valueOf(A.floatValue())</code>
+ *        If N is Double, return <code>Double.valueOf(A.doubleValue())</code>
  *        otherwise ERROR
  *     A is String
  *       If N is BigDecimal then:
@@ -364,7 +364,7 @@ public class Coercions {
 			return coerceToPrimitiveNumber(ZERO, pClass);
 		} else if (pValue instanceof Character) {
 			char val = ((Character) pValue).charValue();
-			return coerceToPrimitiveNumber(new Short((short) val), pClass);
+			return coerceToPrimitiveNumber(Short.valueOf((short) val), pClass);
 		} else if (pValue instanceof Boolean) {
 			if (pLogger.isLoggingError()) {
 				pLogger.logError(Constants.BOOLEAN_TO_NUMBER, pValue, pClass.getName());

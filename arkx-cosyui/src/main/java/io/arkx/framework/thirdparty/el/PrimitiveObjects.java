@@ -90,7 +90,7 @@ public class PrimitiveObjects {
 		if (pValue >= BYTE_LOWER_BOUND) {// && pValue <= BYTE_UPPER_BOUND不需要，byte最大为127，不可能大于这个值
 			return mBytes[pValue - BYTE_LOWER_BOUND];
 		} else {
-			return new Byte(pValue);
+			return Byte.valueOf(pValue);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class PrimitiveObjects {
 		if (pValue >= CHARACTER_LOWER_BOUND && pValue <= CHARACTER_UPPER_BOUND) {
 			return mCharacters[pValue - CHARACTER_LOWER_BOUND];
 		} else {
-			return new Character(pValue);
+			return Character.valueOf(pValue);
 		}
 	}
 
@@ -106,7 +106,7 @@ public class PrimitiveObjects {
 		if (pValue >= SHORT_LOWER_BOUND && pValue <= SHORT_UPPER_BOUND) {
 			return mShorts[pValue - SHORT_LOWER_BOUND];
 		} else {
-			return new Short(pValue);
+			return Short.valueOf(pValue);
 		}
 	}
 
@@ -127,11 +127,11 @@ public class PrimitiveObjects {
 	}
 
 	public static Float getFloat(float pValue) {
-		return new Float(pValue);
+		return Float.valueOf(pValue);
 	}
 
 	public static Double getDouble(double pValue) {
-		return new Double(pValue);
+		return Double.valueOf(pValue);
 	}
 
 	static Byte[] createBytes() {
@@ -139,7 +139,7 @@ public class PrimitiveObjects {
 		Byte[] ret = new Byte[len];
 		byte val = (byte) BYTE_LOWER_BOUND;
 		for (int i = 0; i < len; i++, val++) {
-			ret[i] = new Byte(val);
+			ret[i] = Byte.valueOf(val);
 		}
 		return ret;
 	}
@@ -149,7 +149,7 @@ public class PrimitiveObjects {
 		Character[] ret = new Character[len];
 		char val = (char) CHARACTER_LOWER_BOUND;
 		for (int i = 0; i < len; i++, val++) {
-			ret[i] = new Character(val);
+			ret[i] = Character.valueOf(val);
 		}
 		return ret;
 	}
@@ -159,7 +159,7 @@ public class PrimitiveObjects {
 		Short[] ret = new Short[len];
 		short val = (short) SHORT_LOWER_BOUND;
 		for (int i = 0; i < len; i++, val++) {
-			ret[i] = new Short(val);
+			ret[i] = Short.valueOf(val);
 		}
 		return ret;
 	}

@@ -200,11 +200,11 @@ public class SchemaUtil {
 							break;
 						}
 						if ((v instanceof Double)) {
-							destSchema.setV(order, new Double(((Double) v).doubleValue()));
+							destSchema.setV(order, Double.valueOf(((Double) v).doubleValue()));
 							break;
 						}
 						if ((v instanceof Float)) {
-							destSchema.setV(order, new Float(((Float) v).floatValue()));
+							destSchema.setV(order, Float.valueOf(((Float) v).floatValue()));
 							break;
 						}
 						if ((v instanceof Integer)) {

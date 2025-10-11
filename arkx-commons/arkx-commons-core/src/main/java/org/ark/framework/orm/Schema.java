@@ -697,11 +697,11 @@ public abstract class Schema implements Serializable, Cloneable {
 					}
 
 					if (type == 6) {
-						setV(j, new Double(value.toString()));
+						setV(j, Double.valueOf(value.toString()));
 						break;
 					}
 					if (type == 5) {
-						setV(j, new Float(value.toString()));
+						setV(j, Float.valueOf(value.toString()));
 						break;
 					}
 					if (type == 7) {
@@ -768,9 +768,9 @@ public abstract class Schema implements Serializable, Cloneable {
 					return DateUtil.parseDateTime(value.toString());
 		}
 		if (type == 6)
-			return new Double(value.toString());
+			return Double.valueOf(value.toString());
 		if (type == 5)
-			return new Float(value.toString());
+			return Float.valueOf(value.toString());
 		if (type == 7)
 			return Long.valueOf(value.toString());
 		if (type == 8)

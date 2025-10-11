@@ -256,7 +256,7 @@ public class ArraySuffix extends ValueSuffix {
 				}
 			} else if (val.getDataColumn(indexStr) == null) {
 				if (NumberUtil.isNumber(indexStr)) {
-					int i = new Double(Double.parseDouble(indexStr)).intValue();
+					int i = Double.valueOf(Double.parseDouble(indexStr)).intValue();
 					if (val.getColumnCount() > i) {
 						return val.get(i);
 					}

@@ -66,11 +66,11 @@ public class DBExporter {
 			for (int i = 0; i < arr.length; i++) {
 				try {
 					if (this.task != null) {
-						this.task.setPercent(new Double(i * 100.0D / arr.length).intValue());
+						this.task.setPercent(Double.valueOf(i * 100.0D / arr.length).intValue());
 						this.task.setCurrentInfo("正在导出表" + arr[i]);
 						
 					}
-					int totalPercent = new Double(i * 100.0D / arr.length).intValue();
+					int totalPercent = Double.valueOf(i * 100.0D / arr.length).intValue();
 					System.out.println("【"+totalPercent+"%】正在导出表" + arr[i]);
 					transferOneTable(totalPercent, arr[i], classLoader);
 				} catch (Exception e) {
@@ -154,7 +154,7 @@ public class DBExporter {
 				int currentPageByteLength = 4 + schemaNameBtyes.length + 4 + zipedDataSetBytes.length;
 				System.out.println("第" + (i + 1) + "页，数据长度：" + currentPageByteLength);
 				totalByteLength += currentPageByteLength;
-				System.out.println("【"+totalPercent+"%】当前表["+schema.TableCode+"]进度：" + new Double(i * PageSize * 100.0D / count).intValue() + "%, " + "("+i * PageSize+"/"+count+")");
+				System.out.println("【"+totalPercent+"%】当前表["+schema.TableCode+"]进度：" + Double.valueOf(i * PageSize * 100.0D / count).intValue() + "%, " + "("+i * PageSize+"/"+count+")");
 			} 
 			System.out.println("数据总长度：" + totalByteLength);
 			SessionFactory.currentSession().close();
@@ -210,7 +210,7 @@ public class DBExporter {
 				try {
 					ZDTParser.ZDTTableInfo table = this.Tables.get(i);
 					if (this.task != null) {
-						this.task.setPercent(new Double(i * 100.0D / this.Tables.size()).intValue());
+						this.task.setPercent(Double.valueOf(i * 100.0D / this.Tables.size()).intValue());
 						this.task.setCurrentInfo("Exporting table " + table.Name);
 					}
 					String tableCode = table.Name;

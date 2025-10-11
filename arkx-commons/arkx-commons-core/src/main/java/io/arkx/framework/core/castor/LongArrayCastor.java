@@ -39,7 +39,7 @@ public class LongArrayCastor extends AbstractCastor {
 			double[] ds = DoubleArrayCastor.toDoubleArray(obj.toString());
 			long[] arr = new long[ds.length];
 			for (int i = 0; i < ds.length; i++) {
-				arr[i] = new Double(ds[i]).longValue();
+				arr[i] = Double.valueOf(ds[i]).longValue();
 			}
 			return arr;
 		}

@@ -41,7 +41,7 @@ public class IntArrayCastor extends AbstractCastor {
 			double[] ds = DoubleArrayCastor.toDoubleArray(obj.toString());
 			int[] arr = new int[ds.length];
 			for (int i = 0; i < ds.length; i++) {
-				arr[i] = new Double(ds[i]).intValue();
+				arr[i] = Double.valueOf(ds[i]).intValue();
 			}
 			return arr;
 		}

@@ -16,12 +16,6 @@
 
     <dependency>
       <groupId>io.arkx.framework</groupId>
-      <artifactId>arkx-data-db-common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.arkx.framework</groupId>
       <artifactId>arkx-data-db-core</artifactId>
       <version>${project.version}</version>
     </dependency>

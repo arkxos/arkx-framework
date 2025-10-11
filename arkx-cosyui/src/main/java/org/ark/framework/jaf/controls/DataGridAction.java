@@ -366,7 +366,7 @@
 //
 //	public String getPageBarHtml(String id, Mapx<String, Object> params, int total, int pageIndex, int pageSize, boolean simpleFlag) {
 //		StringBuilder sb = new StringBuilder();
-//		int totalPages = new Double(Math.ceil(total * 1.0D / pageSize)).intValue();
+//		int totalPages = Double.valueOf(Math.ceil(total * 1.0D / pageSize)).intValue();
 //
 //		params.put("_ARK_PAGETOTAL", total);
 //		params.remove("_ARK_PAGEINDEX");
@@ -417,7 +417,7 @@
 //
 //	public static String getPageBarHtml1(String id, Mapx<String, Object> params, int total, int pageIndex, int pageSize, boolean simpleFlag) {
 //		StringBuilder sb = new StringBuilder();
-//		int totalPages = new Double(Math.ceil(total * 1.0D / pageSize)).intValue();
+//		int totalPages = Double.valueOf(Math.ceil(total * 1.0D / pageSize)).intValue();
 //
 //		params.put("_ARK_PAGETOTAL", total);
 //		params.remove("_ARK_PAGEINDEX");
@@ -472,7 +472,7 @@
 //
 //	public static String getPageBarHtml2(String id, Mapx<String, Object> params, int total, int pageIndex, int pageSize, boolean simpleFlag) {
 //		StringBuilder sb = new StringBuilder();
-//		int totalPages = new Double(Math.ceil(total * 1.0D / pageSize)).intValue();
+//		int totalPages = Double.valueOf(Math.ceil(total * 1.0D / pageSize)).intValue();
 //
 //		params.put("_ARK_PAGETOTAL", total);
 //		params.remove("_ARK_PAGEINDEX");
@@ -575,7 +575,7 @@
 //	public void setTotal(int total) {
 //		this.Total = total;
 //		if (this.PageIndex > Math.ceil(this.Total * 1.0D / this.PageSize)) {
-//			this.PageIndex = new Double(Math.floor(this.Total * 1.0D / this.PageSize)).intValue();
+//			this.PageIndex = Double.valueOf(Math.floor(this.Total * 1.0D / this.PageSize)).intValue();
 //		}
 //		this.TotalFlag = true;
 //	}

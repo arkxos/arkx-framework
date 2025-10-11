@@ -73,7 +73,7 @@ public class ReportUtil {
 			}.start();
 		}
 
-		int c = new Double(Math.ceil(System.currentTimeMillis() - getStartStatDate(siteID).getTime() * 1.0D / 86400000.0D)).intValue();
+		int c = Double.valueOf(Math.ceil(System.currentTimeMillis() - getStartStatDate(siteID).getTime() * 1.0D / 86400000.0D)).intValue();
 		if (c == 0) {
 			c = 1;
 		}
@@ -373,7 +373,7 @@ public class ReportUtil {
 		}
 		for (int i = 0; i < dt.getRowCount(); i++) {
 			int count = Integer.parseInt(dt.getString(i, columName));
-			dt.set(i, destColumnName, new Double(NumberUtil.round(count * 100.0D / total, 2)));
+			dt.set(i, destColumnName, Double.valueOf(NumberUtil.round(count * 100.0D / total, 2)));
 		}
 	}
 

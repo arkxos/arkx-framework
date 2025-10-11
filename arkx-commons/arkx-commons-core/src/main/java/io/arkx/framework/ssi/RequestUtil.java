@@ -22,12 +22,7 @@ public final class RequestUtil
     StringBuffer buf = new StringBuffer(cookie.getName());
     buf.append("=");
     buf.append(cookie.getValue());
-    if (cookie.getComment() != null)
-    {
-      buf.append("; Comment=\"");
-      buf.append(cookie.getComment());
-      buf.append("\"");
-    }
+
     if (cookie.getDomain() != null)
     {
       buf.append("; Domain=\"");
@@ -48,12 +43,6 @@ public final class RequestUtil
     }
     if (cookie.getSecure()) {
       buf.append("; Secure");
-    }
-    if (cookie.getVersion() > 0)
-    {
-      buf.append("; Version=\"");
-      buf.append(cookie.getVersion());
-      buf.append("\"");
     }
     return buf.toString();
   }

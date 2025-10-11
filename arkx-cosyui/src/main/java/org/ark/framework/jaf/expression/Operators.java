@@ -35,12 +35,12 @@ public class Operators {
 		double d2 = Primitives.getDouble(obj2);
 		if (((obj1 instanceof Integer)) || ((obj1 instanceof Long))) {
 			if (((obj2 instanceof Integer)) || ((obj2 instanceof Long)))
-				return Long.valueOf(new Double(d1 + d2).longValue());
+				return Long.valueOf(Double.valueOf(d1 + d2).longValue());
 			if (((obj2 instanceof String)) && (NumberUtil.isLong(obj2.toString()))) {
-				return Long.valueOf(new Double(d1 + d2).longValue());
+				return Long.valueOf(Double.valueOf(d1 + d2).longValue());
 			}
 		}
-		return new Double(d1 + d2);
+		return Double.valueOf(d1 + d2);
 	}
 
 	public static Object minus(Object obj1, Object obj2) {
@@ -48,63 +48,63 @@ public class Operators {
 		double d2 = Primitives.getDouble(obj2);
 		if (((obj1 instanceof Integer)) || ((obj1 instanceof Long))) {
 			if (((obj2 instanceof Integer)) || ((obj2 instanceof Long)))
-				return Long.valueOf(new Double(d1 - d2).longValue());
+				return Long.valueOf(Double.valueOf(d1 - d2).longValue());
 			if (((obj2 instanceof String)) && (NumberUtil.isLong(obj2.toString())))
-				return Long.valueOf(new Double(d1 - d2).longValue());
+				return Long.valueOf(Double.valueOf(d1 - d2).longValue());
 		} else if (((obj1 instanceof String)) && (NumberUtil.isLong(obj1.toString()))) {
 			if (((obj2 instanceof Integer)) || ((obj2 instanceof Long)))
-				return Long.valueOf(new Double(d1 - d2).longValue());
+				return Long.valueOf(Double.valueOf(d1 - d2).longValue());
 			if (((obj2 instanceof String)) && (NumberUtil.isLong(obj2.toString()))) {
-				return Long.valueOf(new Double(d1 - d2).longValue());
+				return Long.valueOf(Double.valueOf(d1 - d2).longValue());
 			}
 		}
-		return new Double(d1 - d2);
+		return Double.valueOf(d1 - d2);
 	}
 
 	public static Object minus(Object obj1) {
 		double d1 = Primitives.getDouble(obj1);
 		if (((obj1 instanceof Integer)) || ((obj1 instanceof Long))) {
-			return Long.valueOf(new Double(-d1).longValue());
+			return Long.valueOf(Double.valueOf(-d1).longValue());
 		}
-		return new Double(-d1);
+		return Double.valueOf(-d1);
 	}
 
 	public static Object multiply(Object obj1, Object obj2) {
 		double d1 = Primitives.getDouble(obj1);
 		double d2 = Primitives.getDouble(obj2);
 		if ((((obj1 instanceof Integer)) || ((obj1 instanceof Long))) && (((obj2 instanceof Integer)) || ((obj2 instanceof Long)))) {
-			return Long.valueOf(new Double(d1 * d2).longValue());
+			return Long.valueOf(Double.valueOf(d1 * d2).longValue());
 		}
 
 		if (((obj1 instanceof String)) && ((obj2 instanceof String)) && (NumberUtil.isLong(obj1.toString())) && (NumberUtil.isLong(obj2.toString()))) {
-			return Long.valueOf(new Double(d1 * d2).longValue());
+			return Long.valueOf(Double.valueOf(d1 * d2).longValue());
 		}
 
-		return new Double(d1 * d2);
+		return Double.valueOf(d1 * d2);
 	}
 
 	public static Object divide(Object obj1, Object obj2) {
 		double d1 = Primitives.getDouble(obj1);
 		double d2 = Primitives.getDouble(obj2);
 		if (d2 == 0.0D) {
-			return new Double(0.0D);
+			return Double.valueOf(0.0D);
 		}
 		if ((((obj1 instanceof Integer)) || ((obj1 instanceof Long))) && (((obj2 instanceof Integer)) || ((obj2 instanceof Long)))) {
-			return Long.valueOf(new Double(d1 / d2).longValue());
+			return Long.valueOf(Double.valueOf(d1 / d2).longValue());
 		}
 
 		if (((obj1 instanceof String)) && ((obj2 instanceof String)) && (NumberUtil.isLong(obj1.toString())) && (NumberUtil.isLong(obj2.toString()))) {
-			return Long.valueOf(new Double(d1 / d2).longValue());
+			return Long.valueOf(Double.valueOf(d1 / d2).longValue());
 		}
 
-		return new Double(d1 / d2);
+		return Double.valueOf(d1 / d2);
 	}
 
 	public static Object mod(Object obj1, Object obj2) {
 		long d1 = Primitives.getLong(obj1);
 		long d2 = Primitives.getLong(obj2);
 		if (d2 == 0L) {
-			return new Double(0.0D);
+			return Double.valueOf(0.0D);
 		}
 		return Long.valueOf(d1 % d2);
 	}

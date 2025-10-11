@@ -39,7 +39,7 @@ public class FloatArrayCastor extends AbstractInnerCastor {
 			double[] ds = DoubleArrayCastor.toDoubleArray(obj.toString());
 			float[] arr = new float[ds.length];
 			for (int i = 0; i < ds.length; i++) {
-				arr[i] = new Double(ds[i]).floatValue();
+				arr[i] = Double.valueOf(ds[i]).floatValue();
 			}
 			return arr;
 		}

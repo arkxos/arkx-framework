@@ -240,7 +240,7 @@ public class DataGridAction implements IPageEnableAction {
 		}
 		this.total = total;
 		if (this.pageIndex > Math.ceil(total * 1.0D / this.pageSize)) {
-			this.pageIndex = new Double(Math.floor(total * 1.0D / this.pageSize)).intValue();
+			this.pageIndex = Double.valueOf(Math.floor(total * 1.0D / this.pageSize)).intValue();
 		}
 		this.totalRecalFlag = true;
 	}

@@ -106,7 +106,7 @@ public class PageBarTag extends BodyTagSupport {
 		String pagebar = LangMapping.get("Framework.DataGrid.PageBar");
 
 		StringBuilder sb = new StringBuilder();
-		int totalPages = new Double(Math.ceil(total * 1.0D / pageSize)).intValue();
+		int totalPages = Double.valueOf(Math.ceil(total * 1.0D / pageSize)).intValue();
 		sb.append("<div id='_PageBar_").append(target).append("' class=\"pagebar_wrap\" pagebartype=0>");
 		sb.append("<div style=\"float:right;\" class=\"tfoot-fr\"><div class=\"pagebar\">&nbsp;");
 		String queryString = null;
@@ -187,7 +187,7 @@ public class PageBarTag extends BodyTagSupport {
 		String pagebar1 = LangMapping.get("Framework.DataGrid.PageBar1");
 
 		StringBuilder sb = new StringBuilder();
-		int totalPages = new Double(Math.ceil(total * 1.0D / pageSize)).intValue();
+		int totalPages = Double.valueOf(Math.ceil(total * 1.0D / pageSize)).intValue();
 		sb.append("<div id='_PageBar_").append(target).append("' class=\"pagebar_wrap\" pagebartype=1>");
 		sb.append("<div style=\"float:right;\" class=\"tfoot-fr\"><div class=\"pagebar\">&nbsp;");
 		String queryString = null;
@@ -268,7 +268,7 @@ public class PageBarTag extends BodyTagSupport {
 		String pagebar = LangMapping.get("Framework.DataGrid.PageBar");
 
 		StringBuilder sb = new StringBuilder();
-		int totalPages = new Double(Math.ceil(total * 1.0D / pageSize)).intValue();
+		int totalPages = Double.valueOf(Math.ceil(total * 1.0D / pageSize)).intValue();
 		sb.append("<div id='_PageBar_").append(target).append("' class=\"pagebar_wrap\" pagebartype=2>");
 		sb.append("<div style=\"float:right;\" class=\"tfoot-fr\"><div class=\"pagebar\">&nbsp;");
 		String queryString = null;

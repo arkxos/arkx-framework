@@ -18,12 +18,12 @@ public class Operators {// NO_UCD
 		double d2 = Primitives.getDouble(obj2);
 		if (obj1 instanceof Integer || obj1 instanceof Long) {
 			if (obj2 instanceof Integer || obj2 instanceof Long) {
-				return new Double(d1 + d2).longValue();
+				return Double.valueOf(d1 + d2).longValue();
 			} else if (obj2 instanceof String && NumberUtil.isLong(obj2.toString())) {
-				return new Double(d1 + d2).longValue();
+				return Double.valueOf(d1 + d2).longValue();
 			}
 		}
-		return new Double(d1 + d2);
+		return Double.valueOf(d1 + d2);
 	}
 
 	/**
@@ -34,18 +34,18 @@ public class Operators {// NO_UCD
 		double d2 = Primitives.getDouble(obj2);
 		if (obj1 instanceof Integer || obj1 instanceof Long) {
 			if (obj2 instanceof Integer || obj2 instanceof Long) {
-				return new Double(d1 - d2).longValue();
+				return Double.valueOf(d1 - d2).longValue();
 			} else if (obj2 instanceof String && NumberUtil.isLong(obj2.toString())) {
-				return new Double(d1 - d2).longValue();
+				return Double.valueOf(d1 - d2).longValue();
 			}
 		} else if (obj1 instanceof String && NumberUtil.isLong(obj1.toString())) {
 			if (obj2 instanceof Integer || obj2 instanceof Long) {
-				return new Double(d1 - d2).longValue();
+				return Double.valueOf(d1 - d2).longValue();
 			} else if (obj2 instanceof String && NumberUtil.isLong(obj2.toString())) {
-				return new Double(d1 - d2).longValue();
+				return Double.valueOf(d1 - d2).longValue();
 			}
 		}
-		return new Double(d1 - d2);
+		return Double.valueOf(d1 - d2);
 	}
 
 	/**
@@ -54,9 +54,9 @@ public class Operators {// NO_UCD
 	public static Object minus(Object obj1) {
 		double d1 = Primitives.getDouble(obj1);
 		if (obj1 instanceof Integer || obj1 instanceof Long) {
-			return new Double(-d1).longValue();
+			return Double.valueOf(-d1).longValue();
 		}
-		return new Double(-d1);
+		return Double.valueOf(-d1);
 	}
 
 	/**
@@ -67,15 +67,15 @@ public class Operators {// NO_UCD
 		double d2 = Primitives.getDouble(obj2);
 		if (obj1 instanceof Integer || obj1 instanceof Long) {
 			if (obj2 instanceof Integer || obj2 instanceof Long) {
-				return new Double(d1 * d2).longValue();
+				return Double.valueOf(d1 * d2).longValue();
 			}
 		}
 		if (obj1 instanceof String && obj2 instanceof String) {
 			if (NumberUtil.isLong(obj1.toString()) && NumberUtil.isLong(obj2.toString())) {
-				return new Double(d1 * d2).longValue();
+				return Double.valueOf(d1 * d2).longValue();
 			}
 		}
-		return new Double(d1 * d2);
+		return Double.valueOf(d1 * d2);
 	}
 
 	/**
@@ -85,19 +85,19 @@ public class Operators {// NO_UCD
 		double d1 = Primitives.getDouble(obj1);
 		double d2 = Primitives.getDouble(obj2);
 		if (d2 == 0) {
-			return new Double(0);
+			return Double.valueOf(0);
 		}
 		if (obj1 instanceof Integer || obj1 instanceof Long) {
 			if (obj2 instanceof Integer || obj2 instanceof Long) {
-				return new Double(d1 / d2).longValue();
+				return Double.valueOf(d1 / d2).longValue();
 			}
 		}
 		if (obj1 instanceof String && obj2 instanceof String) {
 			if (NumberUtil.isLong(obj1.toString()) && NumberUtil.isLong(obj2.toString())) {
-				return new Double(d1 / d2).longValue();
+				return Double.valueOf(d1 / d2).longValue();
 			}
 		}
-		return new Double(d1 / d2);
+		return Double.valueOf(d1 / d2);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Operators {// NO_UCD
 		long d1 = Primitives.getLong(obj1);
 		long d2 = Primitives.getLong(obj2);
 		if (d2 == 0) {
-			return new Double(0);
+			return Double.valueOf(0);
 		}
 		return Long.valueOf(d1 % d2);
 	}

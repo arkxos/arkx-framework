@@ -217,7 +217,7 @@ public class DataListAction implements IPageEnableAction {
 	public void setTotal(int total) {
 		this.total = total;
 		if (this.pageIndex > Math.ceil(total * 1.0D / this.pageSize)) {
-			this.pageIndex = new Double(Math.floor(total * 1.0D / this.pageSize)).intValue();
+			this.pageIndex = Double.valueOf(Math.floor(total * 1.0D / this.pageSize)).intValue();
 		}
 		this.TotalFlag = true;
 	}

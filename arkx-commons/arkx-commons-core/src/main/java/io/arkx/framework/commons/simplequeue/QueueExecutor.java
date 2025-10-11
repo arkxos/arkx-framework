@@ -141,7 +141,7 @@ public class QueueExecutor implements Runnable, Task {
      * Set startUrls of Spider.<br>
      * Prior to startUrls of Site.
      *
-     * @param startUrls startUrls
+     * @param startElements startElements
      * @return this
      */
     public QueueExecutor startElements(List<String> startElements) {

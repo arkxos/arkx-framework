@@ -80,5 +80,5 @@ public class ColumnPlusEntity {
      * 是否映射
      */
     @TableField(exist = false)
-    private Boolean isMapping = false;
+    private boolean isMapping;
 }

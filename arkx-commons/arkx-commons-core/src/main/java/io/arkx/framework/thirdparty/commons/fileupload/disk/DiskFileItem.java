@@ -488,13 +488,13 @@ public class DiskFileItem implements FileItem {
 	/**
 	 * Removes the file contents from the temporary storage.
 	 */
-	protected void finalize() {
-		File outputFile = dfos.getFile();
-
-		if (outputFile != null && outputFile.exists()) {
-			outputFile.delete();
-		}
-	}
+//	protected void finalize() {
+//		File outputFile = dfos.getFile();
+//
+//		if (outputFile != null && outputFile.exists()) {
+//			outputFile.delete();
+//		}
+//	}
 
 	/**
 	 * Creates and returns a {@link java.io.File File} representing a uniquely

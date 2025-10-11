@@ -100,7 +100,7 @@ public class DBExporter {
 				try {
 					ZDTTableInfo table = Tables.get(i);
 					if (task != null) {
-						task.setPercent(new Double(i * 100.0 / Tables.size()).intValue());
+						task.setPercent(Double.valueOf(i * 100.0D / Tables.size()).intValue());
 						task.setCurrentInfo("Exporting table " + table.Name);
 					}
 					String tableCode = Tables.get(i).Name;

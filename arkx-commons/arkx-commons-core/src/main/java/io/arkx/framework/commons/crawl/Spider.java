@@ -157,7 +157,7 @@ public class Spider extends LongTimeTask {
 				int total = scheduler.getTotalRequestsCount();
 				int left = scheduler.getLeftRequestsCount();
 				int already = total-left;
-				this.setPercent(new Double((already) * 100.0D /total).intValue());
+				this.setPercent(Double.valueOf((already) * 100.0D /total).intValue());
 				this.setCurrentInfo(this.spiderName+already+"/"+total);
 //				System.out.println("总数："+scheduler.getTotalRequestsCount()+"，剩余："+scheduler.getLeftRequestsCount()+"，剩余百分比："+((scheduler.getLeftRequestsCount()-0.0)/scheduler.getTotalRequestsCount())+"%");
 				final Request requestFinal = request;

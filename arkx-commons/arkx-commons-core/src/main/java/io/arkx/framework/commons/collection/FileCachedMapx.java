@@ -64,7 +64,7 @@ public class FileCachedMapx {
 
 	public FileCachedMapx(String cacheDir, int initEntrySize, boolean compressiable, int maxItemInMemory) {
 		this.cacheDirectory = cacheDir;
-		this.total = new Double(Math.pow(2.0D, Math.ceil(Math.log(initEntrySize) / Math.log(2.0D)))).intValue();
+		this.total = Double.valueOf(Math.pow(2.0D, Math.ceil(Math.log(initEntrySize) / Math.log(2.0D)))).intValue();
 		this.compressible = compressiable;
 		this.maxItemInMemory = maxItemInMemory;
 		this.map = new Mapx(maxItemInMemory);
@@ -73,9 +73,9 @@ public class FileCachedMapx {
 
 	private void initFiles() {
 		try {
-			this.addressFileCount = new Double(Math.ceil(this.total * 1.0D / 268435456.0D)).intValue();
+			this.addressFileCount = Double.valueOf(Math.ceil(this.total * 1.0D / 268435456.0D)).intValue();
 			this.addressFiles = new BufferedRandomAccessFile[this.addressFileCount];
-			int prefix = new Double(Math.log(this.total / 16) / Math.log(2.0D)).intValue();
+			int prefix = Double.valueOf(Math.log(this.total / 16) / Math.log(2.0D)).intValue();
 			for (int i = 0; i < this.addressFileCount; i++) {
 				this.addressFiles[i] = new BufferedRandomAccessFile(this.cacheDirectory + prefix + "key" + i + ".idx", "rw");
 				if (i == this.addressFileCount - 1) {
@@ -606,9 +606,9 @@ public class FileCachedMapx {
 			return;
 		}
 		int total2 = this.total * 2;
-		int fileCount = new Double(Math.ceil(total2 * 1.0D / 268435456.0D)).intValue();
+		int fileCount = Double.valueOf(Math.ceil(total2 * 1.0D / 268435456.0D)).intValue();
 		BufferedRandomAccessFile[] files = new BufferedRandomAccessFile[fileCount];
-		int prefix = new Double(Math.log(total2 / 16) / Math.log(2.0D)).intValue();
+		int prefix = Double.valueOf(Math.log(total2 / 16) / Math.log(2.0D)).intValue();
 		for (int i = 0; i < fileCount; i++) {
 			files[i] = new BufferedRandomAccessFile(this.cacheDirectory + prefix + "key" + i + ".idx", "rw");
 			if (i == this.addressFileCount - 1)

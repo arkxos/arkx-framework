@@ -342,7 +342,7 @@ public class ExpressionParser implements ExpressionParserConstants {
 		case FLOAT: // '\034'
 		{
 			Token t = jj_consume_token(FLOAT);
-			return new Double(t.image);
+			return Double.valueOf(t.image);
 		}
 
 		case TRUE: // '\030'

@@ -35,16 +35,16 @@ public class Function {
 				return str.substring(index, index + 1);
 			}
 			if (method.equals("endsWith")) {
-				return new Boolean(str.endsWith((String) args.get(0)));
+				return Boolean.valueOf(str.endsWith((String) args.get(0)));
 			}
 			if (method.equals("startsWith")) {
-				return new Boolean(str.startsWith((String) args.get(0)));
+				return Boolean.valueOf(str.startsWith((String) args.get(0)));
 			}
 			if (method.equals("equalsIgnoreCase")) {
-				return new Boolean(str.equalsIgnoreCase((String) args.get(0)));
+				return Boolean.valueOf(str.equalsIgnoreCase((String) args.get(0)));
 			}
 			if (method.equals("matches")) {
-				return new Boolean(str.matches((String) args.get(0)));
+				return Boolean.valueOf(str.matches((String) args.get(0)));
 			}
 			if (method.equals("toUpperCase")) {
 				return str.toUpperCase();

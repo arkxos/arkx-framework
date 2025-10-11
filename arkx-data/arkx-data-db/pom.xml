@@ -19,7 +19,6 @@
     </properties>
 
     <modules>
-        <module>arkx-data-db-common</module>
         <module>arkx-data-db-core</module>
         <module>arkx-data-db-product</module>
     </modules>

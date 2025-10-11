@@ -54,7 +54,7 @@ public class BeanManager {
 				Method m;
 				try {
 					m = clazz.getDeclaredMethod(pMethod.getName(), pMethod.getParameterTypes());
-				} catch (java.security.AccessControlException ex) {
+				} catch (Exception ex) {
 					m = clazz.getMethod(pMethod.getName(), pMethod.getParameterTypes());
 				}
 				if (Modifier.isPublic(m.getModifiers())) {

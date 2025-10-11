@@ -58,7 +58,7 @@ public class GridPageBar extends AbstractGridFeature {
 	public String getPageBarHtml(String id, Mapx<String, Object> params, int total, int pageIndex, int pageSize, boolean simpleFlag,
 			int type) {
 		FastStringBuilder sb = new FastStringBuilder();
-		int totalPages = new Double(Math.ceil(total * 1.0 / pageSize)).intValue();
+		int totalPages = Double.valueOf(Math.ceil(total * 1.0 / pageSize)).intValue();
 
 		params.put(Constant.DataGridPageTotal, "" + total);
 		params.remove(Constant.DataGridPageIndex);

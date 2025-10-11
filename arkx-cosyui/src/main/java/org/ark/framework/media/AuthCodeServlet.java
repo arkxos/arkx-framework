@@ -145,7 +145,7 @@ public class AuthCodeServlet extends HttpServlet {
 		Graphics g = image.getGraphics();
 		g.setColor(getRandColor(200, 250));
 		g.fillRect(0, 0, Width, Height);
-		g.setFont(new Font("Arial", 0, new Double(Height * 1.0D / 14.0D * 12.0D).intValue()));
+		g.setFont(new Font("Arial", 0, Double.valueOf(Height * 1.0D / 14.0D * 12.0D).intValue()));
 
 		g.setColor(getRandColor(160, 200));
 		for (int i = 0; i < 80; i++)
@@ -154,7 +154,7 @@ public class AuthCodeServlet extends HttpServlet {
 			String c = seed.substring(i, i + 1);
 			g.setColor(new Color(20 + rand.nextInt(110), 20 + rand.nextInt(110), 20 + rand.nextInt(110)));
 
-			g.drawString(c, new Double(Width * 1.0D / 50.0D * 11.0D).intValue() * i + new Double(Width * 1.0D / 50.0D * 3.0D).intValue(), new Double(Height * 1.0D / 14.0D * 11.0D).intValue());
+			g.drawString(c, Double.valueOf(Width * 1.0D / 50.0D * 11.0D).intValue() * i + Double.valueOf(Width * 1.0D / 50.0D * 3.0D).intValue(), Double.valueOf(Height * 1.0D / 14.0D * 11.0D).intValue());
 		}
 		g.dispose();
 		return image;
@@ -165,7 +165,7 @@ public class AuthCodeServlet extends HttpServlet {
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		g.setColor(getRandColor(200, 250));
 		g.fillRect(0, 0, Width, Height);
-		g.setFont(new Font("Times New Roman", 0, 12));
+		g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 
 		g.setColor(getRandColor(160, 200));
 		for (int i = 0; i < 155; i++) {

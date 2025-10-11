@@ -85,7 +85,7 @@ public class DBImporter {
 					map.put(ti.Name, "");
 				}
 				if (task != null) {
-					task.setPercent(new Double(++j * 100.0 / parser.getTables().size()).intValue());
+					task.setPercent(Double.valueOf(++j * 100.0D / parser.getTables().size()).intValue());
 					task.setCurrentInfo("Importing table " + ti.Name);
 				}
 				String version = parser.getVersion();

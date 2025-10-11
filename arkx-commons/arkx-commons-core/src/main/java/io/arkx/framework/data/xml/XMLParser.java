@@ -668,7 +668,7 @@ public class XMLParser {
 				}
 			}
 		}
-		int start = new Double(charIndex * 1.0 / cs.length * lineNumList.size()).intValue();
+		int start = Double.valueOf(charIndex * 1.0D / cs.length * lineNumList.size()).intValue();
 		if (lineNumList.size() > start && lineNumList.get(start) > charIndex) {
 			for (int i = start - 1; i >= 0; i--) {
 				if (lineNumList.get(i) < charIndex) {

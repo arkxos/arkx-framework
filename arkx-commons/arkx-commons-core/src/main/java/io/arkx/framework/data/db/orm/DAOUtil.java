@@ -127,13 +127,13 @@ public class DAOUtil {
 						} else if (v instanceof Date) {
 							destDAO.setV(order, ((Date) v).clone());
 						} else if (v instanceof Double) {
-							destDAO.setV(order, new Double(((Double) v).doubleValue()));
+							destDAO.setV(order, v);
 						} else if (v instanceof Float) {
-							destDAO.setV(order, new Float(((Float) v).floatValue()));
+							destDAO.setV(order, v);
 						} else if (v instanceof Integer) {
-							destDAO.setV(order, Integer.valueOf(((Integer) v).intValue()));
+							destDAO.setV(order, v);
 						} else if (v instanceof Long) {
-							destDAO.setV(order, Long.valueOf(((Long) v).longValue()));
+							destDAO.setV(order, v);
 						} else if (v instanceof byte[]) {
 							destDAO.setV(order, ((byte[]) v).clone());
 						} else if (v instanceof String) {

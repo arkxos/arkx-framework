@@ -50,7 +50,7 @@ public class DataListUI extends UIFacade {
 				if ((this.Request.get("_ARK_PAGETOTAL") != null) && (!this.Request.get("_ARK_PAGETOTAL").equals(""))) {
 					dla.setTotal(Integer.parseInt(this.Request.get("_ARK_PAGETOTAL").toString()));
 					if (dla.getPageIndex() > Math.ceil(dla.getTotal() * 1.0D / dla.getPageSize())) {
-						dla.setPageIndex(new Double(Math.floor(dla.getTotal() * 1.0D / dla.getPageSize())).intValue());
+						dla.setPageIndex(Double.valueOf(Math.floor(dla.getTotal() * 1.0D / dla.getPageSize())).intValue());
 					}
 				}
 			}

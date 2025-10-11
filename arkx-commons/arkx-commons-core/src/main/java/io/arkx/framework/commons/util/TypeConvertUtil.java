@@ -134,7 +134,7 @@ public class TypeConvertUtil {
 				return Long.valueOf(value+"");
 			}
 			case FLOAT: {
-				return new Float(value+"");
+				return Float.valueOf(value+"");
 			}
 			case DECIMAL: {
 				return new BigDecimal(value+"");
@@ -146,13 +146,13 @@ public class TypeConvertUtil {
 				return Long.valueOf(value+"");
 			}
 			case BASIC_FLOAT: {
-				return new Float(value+"");
+				return Float.valueOf(value+"");
 			}
 			case BASIC_DOUBLE: {
-				return new Double(value+"");
+				return Double.valueOf(value+"");
 			}
 			case BASIC_SHORT: {
-				return new Short(value+"");
+				return Short.valueOf(value+"");
 			}
 			case BOOLEAN: {
 				if ("true".equalsIgnoreCase(value+"")) {

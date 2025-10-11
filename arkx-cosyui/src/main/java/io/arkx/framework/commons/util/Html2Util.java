@@ -891,7 +891,7 @@ public class Html2Util {
 					if (w < 100.0D) {
 						w = 100.0D;
 					}
-					sheet.setColumnWidth(i, new Double(w * 35.0D).intValue());
+					sheet.setColumnWidth(i, Double.valueOf(w * 35.0D).intValue());
 				}
 			}
 

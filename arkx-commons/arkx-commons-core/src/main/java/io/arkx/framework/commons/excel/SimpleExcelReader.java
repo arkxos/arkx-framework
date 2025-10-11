@@ -34,7 +34,7 @@ public class SimpleExcelReader extends ListExcelReader {
 			String temp = cell.getStringCellValue();
 			// 判断是否包含小数点，如果不含小数点，则以字符串读取，如果含小数点，则转换为Double类型的字符串
 			if (temp.indexOf(".") > -1) {
-				return String.valueOf(new Double(temp)).trim();
+				return String.valueOf(Double.valueOf(temp)).trim();
 			} else {
 				return temp.trim();
 			}

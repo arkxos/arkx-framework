@@ -12,7 +12,6 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.IValueHa
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.IValueHandlerProvider;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.RangeValueHandler;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.ValueHandlerProvider;
-import org.dromara.dbswitch.product.postgresql.copy.pgsql.model.geometric.*;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Box;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Circle;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Line;

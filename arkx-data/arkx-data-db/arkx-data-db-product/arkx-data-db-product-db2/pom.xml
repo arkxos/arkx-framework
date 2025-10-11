@@ -13,11 +13,6 @@
   <artifactId>arkx-data-db-product-db2</artifactId>
 
   <dependencies>
-    <dependency>
-      <groupId>io.arkx.framework</groupId>
-      <artifactId>arkx-data-db-common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>io.arkx.framework</groupId>

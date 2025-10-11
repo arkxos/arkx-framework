@@ -77,7 +77,7 @@ public class FloatingPointLiteral extends Literal {
 	 * Parses the given token into the literal value
 	 **/
 	static Object getValueFromToken(String pToken) {
-		return new Double(pToken);
+		return Double.valueOf(pToken);
 	}
 
 	// -------------------------------------

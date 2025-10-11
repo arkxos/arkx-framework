@@ -139,7 +139,7 @@ public class Oracle extends AbstractDBType {
 		Object oc = conn.getPhysicalConnection();
 		try {
 			Method m = blobClass.getMethod("createTemporary", new Class[] { java.sql.Connection.class, boolean.class, int.class });
-			blob = m.invoke(null, new Object[] { oc, new Boolean(true), Integer.valueOf(1) });
+			blob = m.invoke(null, new Object[] { oc, Boolean.valueOf(true), Integer.valueOf(1) });
 			// 相当于blob=BLOB.createTemporary(oc,true,1);
 			// Oracle9i中是1,10G中变成了10，但还是会将1自动转为10
 
@@ -179,7 +179,7 @@ public class Oracle extends AbstractDBType {
 		Object oc = conn.getPhysicalConnection();
 		try {
 			Method m = clobClass.getMethod("createTemporary", new Class[] { java.sql.Connection.class, boolean.class, int.class });
-			clob = m.invoke(null, new Object[] { oc, new Boolean(true), Integer.valueOf(1) });
+			clob = m.invoke(null, new Object[] { oc, Boolean.valueOf(true), Integer.valueOf(1) });
 			// 相当于clob=CLOB.createTemporary(oc,true,1);
 			// Oracle9i中是1,10G中变成了10，但还是会将1自动转为10
 

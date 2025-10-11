@@ -49,7 +49,7 @@ public class SHA1Util {
         for (int i = 0; i < binarray.length * 4; i++) {
             char a = (char) hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xf);
             char b = (char) hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xf);
-            str += (new Character(a).toString() + new Character(b).toString());
+            str += (Character.valueOf(a).toString() + Character.valueOf(b).toString());
         }
 
         return str;

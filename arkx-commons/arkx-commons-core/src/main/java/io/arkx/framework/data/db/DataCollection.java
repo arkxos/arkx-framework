@@ -676,15 +676,15 @@ public class DataCollection extends JSONObject {
 					if (r[j].equals("_ARK_NULL") || StringUtil.isEmpty(r[j])) {
 						values[i][j] = null;
 					} else if (dcs[j].getColumnType() == DataTypes.BIGDECIMAL) {
-						values[i][j] = new Double(Double.parseDouble(r[j]));
+						values[i][j] = Double.valueOf(Double.parseDouble(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.DATETIME) {
 						values[i][j] = DateUtil.parse(r[j]);
 					} else if (dcs[j].getColumnType() == DataTypes.DECIMAL) {
-						values[i][j] = new Double(Double.parseDouble(r[j]));
+						values[i][j] = Double.valueOf(Double.parseDouble(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.DOUBLE) {
-						values[i][j] = new Double(Double.parseDouble(r[j]));
+						values[i][j] = Double.valueOf(Double.parseDouble(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.FLOAT) {
-						values[i][j] = new Float(Float.parseFloat(r[j]));
+						values[i][j] = Float.valueOf(Float.parseFloat(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.INTEGER) {
 						values[i][j] = Integer.valueOf(Integer.parseInt(r[j]));
 					} else if (dcs[j].getColumnType() == DataTypes.LONG) {

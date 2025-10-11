@@ -52,7 +52,7 @@ public class NewDictInfoEntity {
      * 如果作为数据字典列表查询，可查询是否已经映射过，方便前端进行区分标记
      */
     @TableField(exist = false)
-    private boolean hasMapped = false;
+    private boolean hasMapped;
 
 }
 

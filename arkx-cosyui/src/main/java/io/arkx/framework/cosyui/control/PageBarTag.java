@@ -111,7 +111,7 @@ public class PageBarTag extends ArkTag {
 			jsClass = "DataGrid";
 		}
 		StringBuilder sb = new StringBuilder();
-		int totalPages = new Double(Math.ceil(total * 1.0 / pageSize)).intValue();
+		int totalPages = Double.valueOf(Math.ceil(total * 1.0 / pageSize)).intValue();
 		sb.append("<div id='_PageBar_").append(target).append("' class=\"pagebar_wrap\" pagebartype=\"" + type + "\">");
 		sb.append("<div style=\"float:right;\" class=\"tfoot-fr\"><div class=\"pagebar\">&nbsp;");
 		String queryString = null;

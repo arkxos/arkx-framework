@@ -101,7 +101,7 @@ public class DBImporter {
 //					map.put(ti.Name, "");
 //				}
 //				j++;
-//				this.task.setPercent(new Double(j * 100.0D / parser.getTables().size()).intValue());
+//				this.task.setPercent(Double.valueOf(j * 100.0D / parser.getTables().size()).intValue());
 //				for (int i = 0; i < ti.Positions.size();) {
 //					DataTable dt = parser.getDataTable(ti, i * 500, (i + 1) * 500);
 //					try {
@@ -322,7 +322,7 @@ public class DBImporter {
 								
 							}
 							if (this.task != null) {
-								this.task.setPercent(new Double(i++ * 100.0D / 600.0D).intValue());
+								this.task.setPercent(Double.valueOf(i++ * 100.0D / 600.0D).intValue());
 								this.task.setCurrentInfo("正在导入表" + set.getSchema().getTableCode());
 							}
 							importOneSet(set, poolName);
@@ -378,7 +378,7 @@ public class DBImporter {
 							importOneTable(currentImportTableName, (DataTable) obj, insertQB);
 						}
 						if (this.task != null) {
-							this.task.setPercent(new Double(
+							this.task.setPercent(Double.valueOf(
 									i++ * 100.0D / 600.0D).intValue());
 							this.task.setCurrentInfo("正在导入表" + currentImportTableName);
 						}
@@ -430,7 +430,7 @@ public class DBImporter {
 //						break;
 					}
 				}
-//				System.out.println((new Double(i * 100.0D / set.size()).intValue()) + ", " + i + "/" + set.size());
+//				System.out.println((Double.valueOf(i * 100.0D / set.size()).intValue()) + ", " + i + "/" + set.size());
 			}
 		}
 		
