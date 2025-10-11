@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.arkx.framework</groupId>
+    <artifactId>arkx-data-db</artifactId>
+    <version>${revision}</version>
+  </parent>
+
+  <artifactId>arkx-data-db-product</artifactId>
+
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>arkx-data-db-register-product</module>
+    <module>arkx-data-db-product-mysql</module>
+    <module>arkx-data-db-product-oracle</module>
+    <module>arkx-data-db-product-postgresql</module>
+    <module>arkx-data-db-product-sqlserver</module>
+    <module>arkx-data-db-product-db2</module>
+    <module>arkx-data-db-product-dm</module>
+    <module>arkx-data-db-product-sybase</module>
+    <module>arkx-data-db-product-kingbase</module>
+    <module>arkx-data-db-product-oscar</module>
+    <module>arkx-data-db-product-sqlite</module>
+    <module>arkx-data-db-product-mariadb</module>
+    <module>arkx-data-db-product-hive</module>
+    <module>arkx-data-db-product-gbase</module>
+    <module>arkx-data-db-product-openguass</module>
+    <module>arkx-data-db-product-mongodb</module>
+    <module>arkx-data-db-product-clickhouse</module>
+    <module>arkx-data-db-product-elasticsearch</module>
+    <module>arkx-data-db-product-highgo</module>
+    <module>arkx-data-db-product-starrocks</module>
+    <module>arkx-data-db-product-greenplum</module>
+    <module>arkx-data-db-product-doris</module>
+    <module>arkx-data-db-product-oceanbase</module>
+    <module>arkx-data-db-product-tdengine</module>
+  </modules>
+
+</project>

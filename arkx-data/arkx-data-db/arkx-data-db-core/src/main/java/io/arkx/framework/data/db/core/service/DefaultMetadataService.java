@@ -1,0 +1,255 @@
+// Copyright tang.  All rights reserved.
+// https://gitee.com/inrgihc/dbswitch
+//
+// Use of this source code is governed by a BSD-style license
+//
+// Author: tang (inrgihc@126.com)
+// Date : 2020/1/2
+// Location: beijing , china
+/// //////////////////////////////////////////////////////////
+package io.arkx.framework.data.db.core.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.sql.DataSource;
+
+import io.arkx.framework.data.db.common.type.ProductTypeEnum;
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.provider.ProductProviderFactory;
+import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
+import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
+import io.arkx.framework.data.db.core.schema.ColumnDescription;
+import io.arkx.framework.data.db.core.schema.ColumnValue;
+import io.arkx.framework.data.db.core.schema.IndexDescription;
+import io.arkx.framework.data.db.core.schema.SchemaTableData;
+import io.arkx.framework.data.db.core.schema.SchemaTableMeta;
+import io.arkx.framework.data.db.core.schema.SourceProperties;
+import io.arkx.framework.data.db.core.schema.TableDescription;
+import io.arkx.framework.data.db.core.util.GenerateSqlUtils;
+import io.arkx.framework.data.db.core.util.SyncUtil;
+
+/**
+ * 用DataSource对象的元数据获取服务
+ *
+ * @author tang
+ */
+public class DefaultMetadataService implements MetadataService {
+
+    private DataSource dataSource;
+    private ProductFactoryProvider factoryProvider;
+    private MetadataProvider metaQueryProvider;
+    private TableDataQueryProvider dataQueryProvider;
+
+    public DefaultMetadataService(DataSource dataSource, ProductTypeEnum type) {
+        this.dataSource = dataSource;
+        this.factoryProvider = ProductProviderFactory
+                .newProvider(type, dataSource);
+        this.metaQueryProvider = factoryProvider.createMetadataQueryProvider();
+        this.dataQueryProvider = factoryProvider.createTableDataQueryProvider();
+    }
+
+    @Override
+    public void close() {
+        if (dataSource instanceof AutoCloseable closeable) {
+            try {
+                closeable.close();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public DataSource getDataSource() {
+        return this.dataSource;
+    }
+
+    @Override
+    public List<String> querySchemaList() {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.querySchemaList(connection);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public List<TableDescription> queryTableList(String schemaName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.queryTableList(connection, schemaName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public String getTableDDL(String schemaName, String tableName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.getTableDDL(connection, schemaName, tableName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public String getTableRemark(String schemaName, String tableName) {
+        try (Connection connection = dataSource.getConnection()) {
+            TableDescription td = metaQueryProvider.queryTableMeta(connection, schemaName, tableName);
+            return null == td ? null : td.getRemarks();
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public String getViewDDL(String schemaName, String tableName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.getViewDDL(connection, schemaName, tableName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public List<String> queryTableColumnName(String schemaName, String tableName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.queryTableColumnName(connection, schemaName, tableName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public List<ColumnDescription> queryTableColumnMeta(String schemaName, String tableName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.queryTableColumnMeta(connection, schemaName, tableName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public List<ColumnDescription> querySqlColumnMeta(String querySql) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.querySelectSqlColumnMeta(connection, querySql);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public List<String> queryTablePrimaryKeys(String schemaName, String tableName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.queryTablePrimaryKeys(connection, schemaName, tableName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public List<IndexDescription> queryTableIndexes(String schemaName, String tableName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return metaQueryProvider.queryTableIndexes(connection, schemaName, tableName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public SchemaTableMeta queryTableMeta(String schemaName, String tableName) {
+        SchemaTableMeta tableMeta = new SchemaTableMeta();
+
+        try (Connection connection = dataSource.getConnection()) {
+            TableDescription tableDesc = metaQueryProvider.queryTableMeta(connection, schemaName, tableName);
+            if (null == tableDesc) {
+                throw new IllegalArgumentException("Table Or View Not Exist");
+            }
+
+            List<ColumnDescription> columns = metaQueryProvider.queryTableColumnMeta(
+                    connection, schemaName, tableName);
+
+            List<String> pks;
+            String createSql;
+            List<IndexDescription> indexes;
+            if (tableDesc.isViewTable()) {
+                pks = Collections.emptyList();
+                createSql = metaQueryProvider.getViewDDL(connection, schemaName, tableName);
+                indexes = Collections.emptyList();
+            } else {
+                pks = metaQueryProvider.queryTablePrimaryKeys(connection, schemaName, tableName);
+                createSql = metaQueryProvider.getTableDDL(connection, schemaName, tableName);
+                indexes = metaQueryProvider.queryTableIndexes(connection, schemaName, tableName);
+            }
+
+            tableMeta.setSchemaName(schemaName);
+            tableMeta.setTableName(tableName);
+            tableMeta.setTableType(tableDesc.getTableTypeName());
+            tableMeta.setRemarks(tableDesc.getRemarks());
+            tableMeta.setColumns(columns);
+            tableMeta.setPrimaryKeys(pks);
+            tableMeta.setCreateSql(createSql);
+            tableMeta.setIndexes(indexes);
+
+            return tableMeta;
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public SchemaTableData queryTableData(String schemaName, String tableName, int rowCount) {
+        try (Connection connection = dataSource.getConnection()) {
+            return dataQueryProvider.queryTableData(connection, schemaName, tableName, rowCount);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public ColumnValue queryIncrementPoint(String schemaName, String tableName, String filedName) {
+        try (Connection connection = dataSource.getConnection()) {
+            return dataQueryProvider.queryFieldMaxValue(connection, schemaName, tableName, filedName);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public void testQuerySQL(String sql) {
+        try (Connection connection = dataSource.getConnection()) {
+            metaQueryProvider.testQuerySQL(connection, sql);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public List<String> getDDLCreateTableSQL(MetadataProvider provider,
+                                             List<ColumnDescription> fieldNames, List<String> primaryKeys, String schemaName,
+                                             String tableName, String tableRemarks, boolean autoIncr, SourceProperties tblProperties,
+                                             String dbSyncMode, String slaveDbCode) {
+
+        List<ColumnDescription> targetTableColumnDescriptions = new ArrayList<>(fieldNames);
+        List<String> targetTablePrimaryKeys = new ArrayList<>(primaryKeys);
+        // 分库同步到主库
+        if (SyncUtil.isShardDbSync(dbSyncMode)) {
+            ColumnDescription arkShardDbCodeColumn = new ColumnDescription();
+            arkShardDbCodeColumn.setFieldName("ark_shard_db_code");
+            arkShardDbCodeColumn.setFieldType(Types.INTEGER);
+            targetTableColumnDescriptions.addFirst(arkShardDbCodeColumn);
+            targetTablePrimaryKeys.addFirst("ark_shard_db_code");
+
+            ColumnDescription arkSyncIdColumn = new ColumnDescription();
+            arkSyncIdColumn.setFieldName("ark_sync_id");
+            arkSyncIdColumn.setFieldType(Types.INTEGER);
+            targetTableColumnDescriptions.addFirst(arkSyncIdColumn);
+        }
+        return GenerateSqlUtils.getDDLCreateTableSQL(
+                provider, targetTableColumnDescriptions, targetTablePrimaryKeys, schemaName, tableName, tableRemarks, autoIncr, tblProperties);
+    }
+
+}
