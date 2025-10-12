@@ -102,18 +102,22 @@ public class LimitColumnInterceptor implements Interceptor, ApplicationListener<
 
         BoundSql boundSql = (BoundSql) mo.getValue("delegate.boundSql");
         String sql = null;
-        if (Boolean.TRUE.equals(findByCache)) {
-            Class<?> returnType = ms.getResultMaps().get(0).getType();
+        if (findByCache) {
+            Class<?> returnType = ms.getResultMaps().getFirst().getType();
             Map<String, String> alias = MyBatisProUtil.FIELDS_ALIAS_CACHE.get(returnType);
 
-            String cols = getCols(id, boundSql, alias);
-            cols = cols == null ? toColumns(alias.keySet(), alias) : cols;
+            if (alias != null) {
+                String cols = getCols(id, boundSql, alias);
+                cols = cols == null ? toColumns(alias.keySet(), alias) : cols;
 
-            sql = boundSql.getSql();
+                sql = boundSql.getSql();
 
-            // 替换星号
-            sql = sql.replace(ASTERISK, cols);
-        } else if (TRUE.equals(existByOrCountByCache)) {
+                // 替换星号
+                sql = sql.replace(ASTERISK, cols);
+            } else {
+                sql = boundSql.getSql();
+            }
+        } else if (existByOrCountByCache) {
             sql = boundSql.getSql();
         }
 

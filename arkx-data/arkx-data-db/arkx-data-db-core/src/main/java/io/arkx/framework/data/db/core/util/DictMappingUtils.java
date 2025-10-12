@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 
 public class DictMappingUtils {
 
-    private static Map<Integer, Map<String, RawDictInfoEntity>> CZ_MAP;
+    private static Map<Integer, Map<String, RawDictInfoEntity>> Raw_MAP;
     private static Map<Integer, NewDictInfoEntity> DICT_MAPPING;
 
     public static void init() {
 
         // 加载旧系统字典
-        CZ_MAP = DataDumpCenter.rawDictInfoDao_getAll().get().stream()
+        Raw_MAP = DataDumpCenter.rawDictInfoDao_getAll().get().stream()
             .collect(
                 // 根据parentId进行分组
                 Collectors.groupingBy(
@@ -34,9 +34,9 @@ public class DictMappingUtils {
             .stream()
             .map(mapping -> {
                 // 通过映射关系查询yth字典
-                NewDictInfoEntity ythDict = DataDumpCenter.newDictInfoDao_getDictById().apply(mapping.getNewDictId());
+                NewDictInfoEntity newDict = DataDumpCenter.newDictInfoDao_getDictById().apply(mapping.getNewDictId());
                 HashMap<Integer, NewDictInfoEntity> mapper = new HashMap<>();
-                mapper.put(mapping.getRawDictId(), ythDict);
+                mapper.put(mapping.getRawDictId(), newDict);
                 return mapper;
             })
             .flatMap(map -> map.entrySet().stream())
@@ -50,7 +50,7 @@ public class DictMappingUtils {
         if ((!(oldValue instanceof String) && !(oldValue instanceof Number))) {
             return null;
         }
-        Map<String, RawDictInfoEntity> stringRawDictInfoEntityMap = CZ_MAP.get(rawParentDictId);
+        Map<String, RawDictInfoEntity> stringRawDictInfoEntityMap = Raw_MAP.get(rawParentDictId);
         if (null == stringRawDictInfoEntityMap) {
             return null;
         }
@@ -61,19 +61,19 @@ public class DictMappingUtils {
         return DICT_MAPPING.get(rawDictInfoEntity.getId());
     }
 
-    public static NewDictInfoEntity getNewDict(Integer czDictId) {
-        return DICT_MAPPING.get(czDictId);
+    public static NewDictInfoEntity getNewDict(Integer dictId) {
+        return DICT_MAPPING.get(dictId);
     }
 
-    public static RawDictInfoEntity getCzDict(Integer czParentDictId, Object oldValue) {
+    public static RawDictInfoEntity getRawDict(Integer parentDictId, Object oldValue) {
         if ((!(oldValue instanceof String) && !(oldValue instanceof Number))) {
             return null;
         }
-        Map<String, RawDictInfoEntity> czzptDictInfoEntityMap = CZ_MAP.get(czParentDictId);
-        if (null == czzptDictInfoEntityMap) {
+        Map<String, RawDictInfoEntity> rawDictInfoEntityMap = Raw_MAP.get(parentDictId);
+        if (null == rawDictInfoEntityMap) {
             return null;
         }
-        return czzptDictInfoEntityMap.get(String.valueOf(oldValue));
+        return rawDictInfoEntityMap.get(String.valueOf(oldValue));
     }
 
 }

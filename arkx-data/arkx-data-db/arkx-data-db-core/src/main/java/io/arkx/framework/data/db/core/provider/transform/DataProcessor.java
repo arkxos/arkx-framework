@@ -85,14 +85,14 @@ public class DataProcessor {
                             }
                             if (split.length == 1) { // 两集级联字典
                                 RawDictInfoEntity czDict =
-                                    DictMappingUtils.getCzDict(columnPlus.getCzDictId(), originalTemp[index]);
+                                    DictMappingUtils.getRawDict(columnPlus.getRawDictId(), originalTemp[index]);
                                 applyDictMapping(czDict, originalTemp, originalResult, finalI);
                             } else { // 三级级联字典
                                 RawDictInfoEntity pzDict =
-                                    DictMappingUtils.getCzDict(columnPlus.getCzDictId(), originalTemp[index]);
+                                    DictMappingUtils.getRawDict(columnPlus.getRawDictId(), originalTemp[index]);
                                 int cIndex = columns.indexOf(split[1]);
                                 RawDictInfoEntity czDict =
-                                    DictMappingUtils.getCzDict(pzDict.getId(), originalTemp[cIndex]);
+                                    DictMappingUtils.getRawDict(pzDict.getId(), originalTemp[cIndex]);
                                 applyDictMapping(czDict, originalTemp, originalResult, finalI);
                             }
                         }
@@ -136,7 +136,7 @@ public class DataProcessor {
         String[] ythDictValues = new String[originalValues.length];
 
         for (int j = 0; j < originalValues.length; j++) {
-            NewDictInfoEntity ythDict = DictMappingUtils.getNewDict(columnPlus.getCzDictId(), originalValues[j]);
+            NewDictInfoEntity ythDict = DictMappingUtils.getNewDict(columnPlus.getRawDictId(), originalValues[j]);
             ythDictValues[j] = (ythDict != null) ? ythDict.getDictCode() : originalValues[j];
         }
         // 将处理完成的结果赋给原数据

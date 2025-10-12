@@ -55,26 +55,26 @@ public class ColumnPlusEntity {
     /**
      * 字典名称
      */
-    @TableField("cz_dict_name")
-    private String czDictName;
+    @TableField("raw_dict_name")
+    private String rawDictName;
 
     /**
      * 字典id信息
      */
-    @TableField("cz_dict_id")
-    private Integer czDictId;
+    @TableField("raw_dict_id")
+    private Integer rawDictId;
 
     /**
      * 新系统字典名称
      */
-    @TableField("yth_dict_name")
-    private String ythDictName;
+    @TableField("new_dict_name")
+    private String newDictName;
 
     /**
      * 新系统字典信息
      */
-    @TableField("yth_dict_id")
-    private Integer ythDictId;
+    @TableField("new_dict_id")
+    private Integer newDictId;
 
     /**
      * 是否映射

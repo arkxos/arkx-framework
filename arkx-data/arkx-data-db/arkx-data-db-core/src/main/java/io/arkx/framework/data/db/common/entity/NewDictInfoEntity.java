@@ -19,13 +19,13 @@ public class NewDictInfoEntity {
     /**
      * 主键ID，自动递增
      */
-    @TableId(value = "YTH_DICT_ID", type = IdType.AUTO)
-    private Integer ythDictId;
+    @TableId(value = "NEW_DICT_ID", type = IdType.AUTO)
+    private Integer newDictId;
 
     /**
      * 父级Id
      */
-    @TableField("PARENT_YTH_DICT_ID")
+    @TableField("PARENT_NEW_DICT_ID")
     private Integer parentNewDictId;
     /**
      * 字典值
