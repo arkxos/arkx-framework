@@ -18,6 +18,11 @@
       <artifactId>arkx-data-db-core</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-db</artifactId>
+      <version>5.8.38</version>
+    </dependency>
 
   </dependencies>
 </project>

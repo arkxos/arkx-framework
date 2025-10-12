@@ -1,6 +1,6 @@
 package io.arkx.framework.data.db.core.provider.transform;
 
-import cn.hutool.extra.spring.SpringUtil;
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -99,7 +99,7 @@ public class DataProcessor {
                         return null;
                     });
 
-                List<ColumnValueTransformer> transformers = SpringUtil.getBeansOfType(ColumnValueTransformer.class).values().stream().toList();
+                List<ColumnValueTransformer> transformers = ArkSpringContextHolder.getBeansOfType(ColumnValueTransformer.class).values().stream().toList();
                 for (ColumnValueTransformer transformer : transformers) {
                     transformer.transform(columns.get(i), originalResult, i);
                 }

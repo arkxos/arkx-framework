@@ -68,10 +68,15 @@
       <artifactId>httpclient5</artifactId>
     </dependency>
 
+<!--    <dependency>-->
+<!--      <groupId>cn.hutool</groupId>-->
+<!--      <artifactId>hutool-all</artifactId>-->
+<!--      <version>5.7.5</version>-->
+<!--    </dependency>-->
     <dependency>
-      <groupId>cn.hutool</groupId>
-      <artifactId>hutool-all</artifactId>
-      <version>5.7.5</version>
+      <groupId>io.arkx.framework</groupId>
+      <artifactId>arkx-commons-core</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
