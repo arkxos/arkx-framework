@@ -76,6 +76,12 @@ public class BaseJdbcRepositoryImpl<T extends Persistable<ID>, ID extends Serial
 		this.initStatusInfo();
 	}
 
+	@Override
+	public <S extends T> void batchInsert(List<S> entities) {
+		for (S entity : entities) {
+			insert(entity);
+		}
+	}
 
 	@Override
 	public <S extends T> S insert(S entity) {

@@ -166,6 +166,11 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
 	}
 
 	@Override
+	public <S extends T> void batchInsert(List<S> entities) {
+
+	}
+
+	@Override
 	public <S extends T> S update(S instance) {
 		return save(instance);
 	}

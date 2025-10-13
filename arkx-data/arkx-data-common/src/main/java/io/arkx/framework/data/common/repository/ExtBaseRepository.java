@@ -28,6 +28,8 @@ public interface ExtBaseRepository<T, ID> {
 
 	<S extends T> S insert(S instance);
 
+	<S extends T> void batchInsert(List<S> entities);
+
 	<S extends T> S update(S instance);
 
 	boolean support(String modelType);
