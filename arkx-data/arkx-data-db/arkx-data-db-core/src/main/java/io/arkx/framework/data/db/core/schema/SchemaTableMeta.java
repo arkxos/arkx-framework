@@ -22,5 +22,6 @@ public class SchemaTableMeta extends TableDescription {
     private String createSql;
     private List<ColumnDescription> columns;
     private List<IndexDescription> indexes;
+    private List<ColumnForeignKey> foreignKeys;
 
 }
