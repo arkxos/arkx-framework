@@ -1,4 +1,4 @@
-//package com.arkxos.framework.boot.spring.axon;
+//package io.arkx.framework.boot.spring.axon;
 //
 //import org.axonframework.eventhandling.EventListener;
 //import org.axonframework.eventhandling.EventMessage;

@@ -30,7 +30,7 @@ package io.arkx.framework.data.jdbc.connection;
 //import nativejdbc.db.io.arkx.framework.data.JBossNativeJdbcExtractor;
 //import nativejdbc.db.io.arkx.framework.data.WebLogicNativeJdbcExtractor;
 //import nativejdbc.db.io.arkx.framework.data.WebSphereNativeJdbcExtractor;
-//import com.arkxos.framework.framework.collection.Mapx;
+//import io.arkx.framework.framework.collection.Mapx;
 //
 //
 ///**

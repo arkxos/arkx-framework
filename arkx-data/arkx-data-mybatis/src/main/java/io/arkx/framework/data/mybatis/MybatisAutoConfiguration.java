@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.spring.MybatisPlusApplicationContextAware;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import io.arkx.framework.data.mybatis.handler.ModelMetaObjectHandler;
-//import com.arkxos.framework.data.mybatis.interceptor.ArkPaginationInnerInterceptor;
+//import io.arkx.framework.data.mybatis.interceptor.ArkPaginationInnerInterceptor;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 

@@ -1,5 +1,5 @@
 package io.arkx.framework.data.jpa.repository;
-//package com.arkxos.framework.jpa.repository;
+//package io.arkx.framework.jpa.repository;
 //
 //import java.lang.reflect.ParameterizedType;
 //import java.util.ArrayList;
@@ -25,9 +25,9 @@ package io.arkx.framework.data.jpa.repository;
 //import org.springframework.lang.Nullable;
 //import org.springframework.util.CollectionUtils;
 //
-//import com.arkxos.framework.jpa.ContextHolder;
-//import com.arkxos.framework.jpa.EntityAssembler;
-//import com.arkxos.framework.jpa.TemplateQueryLookupStrategy;
+//import io.arkx.framework.jpa.ContextHolder;
+//import io.arkx.framework.jpa.EntityAssembler;
+//import io.arkx.framework.jpa.TemplateQueryLookupStrategy;
 //
 ///**
 // * .<p>通用Jpa仓库构造工厂</p>

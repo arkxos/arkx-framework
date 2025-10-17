@@ -1,4 +1,4 @@
-//package com.arkxos.framework.security;
+//package io.arkx.framework.security;
 //
 //import java.security.InvalidKeyException;
 //import java.security.Key;

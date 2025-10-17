@@ -1,5 +1,5 @@
 package io.arkx.framework.commons.queueexecutor;
-//package com.arkxos.framework.commons.task;
+//package io.arkx.framework.commons.task;
 //
 //import queueexecutor.io.arkx.framework.commons.ElementStatus;
 //import queueexecutor.io.arkx.framework.commons.QueueInfo;

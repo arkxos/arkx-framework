@@ -7,8 +7,8 @@ package io.arkx.framework.data.jdbc.connection;
 //import org.ark.framework.orm.sql.CurrentConnection;
 //import org.ark.framework.orm.sql.DBContext;
 //
-//import com.arkxos.framework.framework.Config;
-//import com.arkxos.framework.framework.collection.Mapx;
+//import io.arkx.framework.framework.Config;
+//import io.arkx.framework.framework.collection.Mapx;
 //
 ///**
 // * @class org.ark.framework.orm.connection.XConnectionPoolManager

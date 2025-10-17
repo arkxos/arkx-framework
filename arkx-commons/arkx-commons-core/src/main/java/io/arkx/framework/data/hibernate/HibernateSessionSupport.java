@@ -1,4 +1,4 @@
-//package com.arkxos.framework.data.hibernate;
+//package io.arkx.framework.data.hibernate;
 //
 //import java.util.List;
 //import java.util.UUID;

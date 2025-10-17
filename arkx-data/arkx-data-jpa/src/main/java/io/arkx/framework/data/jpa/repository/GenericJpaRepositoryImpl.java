@@ -1,5 +1,5 @@
 package io.arkx.framework.data.jpa.repository;
-//package com.arkxos.framework.jpa.repository;
+//package io.arkx.framework.jpa.repository;
 //
 //import java.beans.PropertyDescriptor;
 //import java.io.Serializable;
@@ -19,7 +19,7 @@ package io.arkx.framework.data.jpa.repository;
 //import org.springframework.transaction.annotation.Transactional;
 //import org.springframework.util.ReflectionUtils;
 //
-//import com.arkxos.framework.jpa.domain.ext.Status;
+//import io.arkx.framework.jpa.domain.ext.Status;
 //
 ///**
 // * <p>通用Jpa仓库实现</p>

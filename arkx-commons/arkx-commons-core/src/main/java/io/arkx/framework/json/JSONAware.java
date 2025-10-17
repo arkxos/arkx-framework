@@ -1,4 +1,4 @@
-//package com.arkxos.framework.json;
+//package io.arkx.framework.json;
 //
 ///**
 // * JSON输出标识接口

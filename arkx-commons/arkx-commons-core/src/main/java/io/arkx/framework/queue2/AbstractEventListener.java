@@ -1,5 +1,5 @@
 package io.arkx.framework.queue2;
-//package com.arkxos.framework.queue;
+//package io.arkx.framework.queue;
 //
 ///**
 // * 实现顶层接口的抽象类

@@ -1,5 +1,5 @@
 package io.arkx.framework.data.jpa.repository;
-//package com.arkxos.framework.jpa.repository;
+//package io.arkx.framework.jpa.repository;
 //
 //import org.springframework.beans.BeansException;
 //import org.springframework.context.ApplicationContext;
@@ -8,7 +8,7 @@ package io.arkx.framework.data.jpa.repository;
 //import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
 //import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 //
-//import com.arkxos.framework.jpa.ContextHolder;
+//import io.arkx.framework.jpa.ContextHolder;
 //
 //import jakarta.persistence.EntityManager;
 //import java.io.Serializable;

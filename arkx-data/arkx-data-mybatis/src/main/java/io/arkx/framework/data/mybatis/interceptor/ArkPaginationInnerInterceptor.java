@@ -1,4 +1,4 @@
-//package com.arkxos.framework.data.mybatis.interceptor;
+//package io.arkx.framework.data.mybatis.interceptor;
 //
 //import com.baomidou.mybatisplus.annotation.DbType;
 //import com.baomidou.mybatisplus.core.metadata.IPage;

@@ -1,7 +1,7 @@
 #spring.datasource.url = jdbc:mysql://localhost:3306/zhanglfdatabase
 #spring.datasource.username = root
 #spring.datasource.password = 
-#spring.datasource.driverClassName = com.mysql.jdbc.Driver
+#spring.datasource.driverClassName = com.mysql.cj.jdbc.Driver
 #数据库支持多种连接模式和连接设置，不同的连接模式和连接设置是通过不同的URL来区分的，URL中的设置是不区分大小写。内存数据库（私有）
 #jdbc:h2:mem:
 #内存数据库（被命名）

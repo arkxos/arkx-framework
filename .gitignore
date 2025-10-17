@@ -61,3 +61,5 @@ Servers
 .flattened-pom.xml
 /arkx-data/arkx-data-mybatis-test/logs/logs
 /arkx-data/arkx-data-jdbc/logs/logs
+/data-sync/devops/logs/logs
+/data-sync/devops/lib/arkxos-framework-commons-core.jar

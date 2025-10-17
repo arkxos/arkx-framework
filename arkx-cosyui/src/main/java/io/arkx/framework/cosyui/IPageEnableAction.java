@@ -1,5 +1,5 @@
 package io.arkx.framework.cosyui;
-//package com.arkxos.framework.cosyui;
+//package io.arkx.framework.cosyui;
 //
 ///**
 // * 可分页的Action

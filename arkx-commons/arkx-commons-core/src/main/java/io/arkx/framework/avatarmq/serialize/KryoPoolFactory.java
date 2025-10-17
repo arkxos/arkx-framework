@@ -1,4 +1,4 @@
-//package com.arkxos.framework.avatarmq.serialize;
+//package io.arkx.framework.avatarmq.serialize;
 //
 //import org.objenesis.strategy.StdInstantiatorStrategy;
 //

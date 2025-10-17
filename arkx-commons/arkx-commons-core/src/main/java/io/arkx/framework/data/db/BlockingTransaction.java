@@ -1,5 +1,5 @@
 package io.arkx.framework.data.db;
-//package com.arkxos.framework.data.db;
+//package io.arkx.framework.data.db;
 //
 //import java.sql.SQLException;
 //
