@@ -44,6 +44,10 @@ public class Dm extends AbstractDBType {
 		sb.append(dcc.DBPort);
 		sb.append("/");
 		sb.append(dcc.DBName);
+
+		// 添加schema参数，默认使用数据库名作为schema
+		sb.append("?schema="+dcc.DBName);
+
 		return sb.toString();
 	}
 

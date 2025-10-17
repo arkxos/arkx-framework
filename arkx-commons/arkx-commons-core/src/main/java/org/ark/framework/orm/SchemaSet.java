@@ -3,9 +3,12 @@ package org.ark.framework.orm;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 
+import lombok.Getter;
+import org.apache.poi.ss.formula.functions.Columns;
 import org.ark.framework.orm.sql.DBContext;
 
 import io.arkx.framework.commons.collection.DataColumn;
@@ -35,9 +38,9 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 	private static final long serialVersionUID = 1L;
 	private Class<T> schemaClass;
 	private T schema;
-	
 
-	
+
+
 	@SuppressWarnings("unchecked")
 	public T getSchema() {
 		try {
@@ -55,7 +58,7 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 		}
 		return schema;
 	}
-	
+
 	public void initDeleteQueryBuilder(Query queryBuilder) {
 		queryBuilder.setBatchMode(true);
 		for (int k = 0; k < elementCount; ++k) {
@@ -73,14 +76,14 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 		Query queryBuilder = getSession().createQuery(getSchema().DeleteSQL);
 		initDeleteQueryBuilder(queryBuilder);
 //		try {
-			return queryBuilder.executeNoQuery() != -1;
+		return queryBuilder.executeNoQuery() != -1;
 //		} catch (SQLException e) {
 //			logger.warn("操作表" + getSchema().TableCode + "时发生错误!");
 //			e.printStackTrace();
 //		}
 //		return false;
 	}
-	
+
 	/**
 	 * @tag category
 	 * name = "OP"
@@ -170,15 +173,19 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 	public boolean deleteAndBackup() {
 		return deleteAndBackup(null, null);
 	}
-	
+
 	public boolean insert() {
 		try {
 //			try {
-				Query queryBuilder = getSession().createQuery(getSchema().InsertAllSQL);
+			if (elementCount == 0) {
+				return true;
+			}
 
-				initInsertQueryBuilder(queryBuilder);
+			Query queryBuilder = getSession().createQuery(getSchema().InsertAllSQL);
 
-				return queryBuilder.executeNoQuery() != -1;
+			initInsertQueryBuilder(queryBuilder);
+
+			return queryBuilder.executeNoQuery() != -1;
 //			} catch (SQLException e) {
 //				logger.warn("操作表" + getSchema().TableCode + "时发生错误:" + e.getMessage());
 //				throw e;
@@ -208,11 +215,11 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 	private String getPoolName() {
 		if(StringUtil.isEmpty(_poolName)) {
 			if(DBContext.getCurrentContext() != null)
-			_poolName = DBContext.getCurrentContext().getPoolName();
+				_poolName = DBContext.getCurrentContext().getPoolName();
 		}
 		return _poolName;
 	}
-	
+
 	public void initInsertQueryBuilder(Query queryBuilder) {
 		try {
 			queryBuilder.setBatchMode(true);
@@ -240,7 +247,7 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 		this.capacityIncrement = capacityIncrement;
 		elementCount = 0;
 	}
-	
+
 	public abstract T[] createSchemaSet(int initialCapacity);
 
 	/**
@@ -254,13 +261,13 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 		initUpdateQueryBuilder(queryBuilder);
 
 //		try {
-			return queryBuilder.executeNoQuery() != -1;
+		return queryBuilder.executeNoQuery() != -1;
 //		} catch (Throwable e) {
 //			logger.getLogger().warn("操作表" + getSchema().TableCode + "时发生错误:" + e.getMessage());
 //			throw new RuntimeException(e);
 //		}
 	}
-	
+
 	public void initUpdateQueryBuilder(Query queryBuilder) {
 		queryBuilder.setBatchMode(true);
 		for (int k = 0; k < this.elementCount; ++k) {
@@ -299,6 +306,85 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 
 		elementCount += n;
 		return true;
+	}
+
+	/**
+	 * 将另一个SchemaSet中的所有Schema对象添加到当前SchemaSet中
+	 * 此方法与add(SchemaSet)功能相同，但命名保持与Collection接口一致
+	 *
+	 * @param schemaSet 要添加的SchemaSet
+	 * @return 如果添加成功则返回true，否则返回false
+	 */
+	public boolean addAll(SchemaSet<T> schemaSet) {
+		return add(schemaSet);
+	}
+
+	/**
+	 * 将任意泛型类型的SchemaSet中的所有Schema对象添加到当前SchemaSet中
+	 * 此方法处理通配符泛型，确保在使用SchemaSet<?>时也能正常工作
+	 *
+	 * @param schemaSet 要添加的任意泛型类型的SchemaSet
+	 * @return 如果添加成功则返回true，否则返回false
+	 */
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public boolean addAllWildcard(SchemaSet<?> schemaSet) {
+		if (schemaSet == null)
+			return false;
+
+		if (schemaSet.isEmpty())
+			return true;
+
+		// 检查表代码是否匹配
+		String sourceTableCode = schemaSet.getSchema().TableCode;
+		String targetTableCode = getSchema().TableCode;
+
+		if (!sourceTableCode.equals(targetTableCode)) {
+			log.warn("尝试将表 {} 的SchemaSet添加到表 {} 的SchemaSet，表代码不匹配",
+					sourceTableCode, targetTableCode);
+			return false;
+		}
+
+		// 使用原始类型进行操作，绕过泛型检查
+		// 因为我们已经验证了表代码匹配，这个操作在运行时应该是安全的
+		int n = schemaSet.size();
+		ensureCapacityHelper(elementCount + n);
+
+		for (int i = 0; i < n; i++) {
+			Schema schema = schemaSet.getObject(i);
+			// 这里的类型转换在运行时是安全的，因为我们已经验证了表代码匹配
+			elementData[elementCount + i] = (T)schema;
+		}
+
+		elementCount += n;
+		return true;
+	}
+
+	/**
+	 * 将一个集合中的所有Schema对象添加到当前SchemaSet中
+	 *
+	 * @param collection 包含要添加的Schema对象的集合
+	 * @return 如果全部添加成功则返回true，否则返回false
+	 */
+	public boolean addAll(Collection<T> collection) {
+		if (collection == null || collection.isEmpty())
+			return false;
+
+		int n = collection.size();
+		ensureCapacityHelper(elementCount + n);
+
+		boolean allSuccess = true;
+		for (T schema : collection) {
+			if (schema == null || schema.TableCode != getSchema().TableCode) {
+				log.warn("集合中包含null或类型不匹配的Schema对象: {}",
+						schema == null ? "null" : schema.TableCode);
+				allSuccess = false;
+				continue;
+			}
+
+			elementData[elementCount++] = schema;
+		}
+
+		return allSuccess;
 	}
 
 	public boolean remove(T aSchema) {
@@ -598,6 +684,7 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 
 	protected abstract SchemaSet<T> newInstance();
 
+	@Getter
 	protected T elementData[];
 	protected int elementCount;
 	private int capacityIncrement;
@@ -612,11 +699,12 @@ public abstract class SchemaSet<T extends Schema> implements Serializable, Clone
 		}
 		return session;
 	}
-	
+
 	private Session session;
-	
+
 	public void setSession(Session session) {
 		this.session = session;
 	}
+
 }
 

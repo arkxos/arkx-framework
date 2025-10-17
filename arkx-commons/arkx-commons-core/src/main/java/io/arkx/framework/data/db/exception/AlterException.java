@@ -12,4 +12,12 @@ public class AlterException extends DDLException {
 		super(e);
 	}
 
+	public AlterException(String message) {
+		super(message);
+	}
+
+	public AlterException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

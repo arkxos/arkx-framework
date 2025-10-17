@@ -1193,7 +1193,7 @@ public class FileUtil {
 		ObjectInputStream s = null;
 		try {
 			FileInputStream in = new FileInputStream(fileName);
-			s = new ObjectInputStream(in);
+			s = new ContextClassLoaderObjectInputStream(in);
 			Object o = s.readObject();
 			return o;
 		} catch (Exception e) {
@@ -1216,7 +1216,7 @@ public class FileUtil {
 		ObjectInputStream s = null;
 		try {
 			ByteArrayInputStream in = new ByteArrayInputStream(bs);
-			s = new ObjectInputStream(in);
+			s = new ContextClassLoaderObjectInputStream(in);
 			Object o = s.readObject();
 			return o;
 		} catch (Exception e) {

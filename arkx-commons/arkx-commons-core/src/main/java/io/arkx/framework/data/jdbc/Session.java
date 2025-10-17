@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
 import org.ark.framework.infrastructure.repositories.extend.EntityDeleteExtendAction;
 import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
 
@@ -29,6 +30,7 @@ public class Session {
 	public static final String PRIMARY_KEY_NAME = "id";
 
 	private Transaction transaction;
+	@Getter
 	String poolName;
 	
 	Session() {

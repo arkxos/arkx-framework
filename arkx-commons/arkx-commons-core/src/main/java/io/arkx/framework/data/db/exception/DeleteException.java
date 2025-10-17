@@ -16,4 +16,8 @@ public class DeleteException extends DatabaseException {
 		super(message);
 	}
 
+	public DeleteException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

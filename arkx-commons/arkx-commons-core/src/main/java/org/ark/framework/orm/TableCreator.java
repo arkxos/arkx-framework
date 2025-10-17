@@ -1,13 +1,10 @@
 package org.ark.framework.orm;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.ark.framework.orm.db.create.DB2TableCreator;
-import org.ark.framework.orm.db.create.HSQLDBTableCretor;
-import org.ark.framework.orm.db.create.MSSQLTableCreator;
-import org.ark.framework.orm.db.create.MYSQLTableCreator;
-import org.ark.framework.orm.db.create.OracleTableCreator;
-import org.ark.framework.orm.db.create.SYBASETableCreator;
+import org.ark.framework.orm.db.create.*;
 
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;
@@ -27,9 +24,9 @@ import io.arkx.framework.data.jdbc.SessionFactory;
  * @version V1.0
  */
 public class TableCreator {
-	
+
 	//private static Logger logger = Logger.getLogger(TableCreator.class);
-	
+
 	private ArrayList<String> list = new ArrayList<String>();
 	private IDBType DBType;
 
@@ -43,9 +40,9 @@ public class TableCreator {
 
 	public void createTable(SchemaColumn[] scs, String tableComment, String tableCode, boolean create) throws Exception {
 		if (!create) {
-			this.list.add("delete from " + tableCode);
+//			this.list.add("delete from " + tableCode);
 		} else {
-			dropTable(tableCode);
+//			dropTable(tableCode);
 			this.list.add(createTable(scs, tableCode, this.DBType));
 			if("oracle".equalsIgnoreCase(this.DBType.getExtendItemID())) {
 				this.list.add("COMMENT ON TABLE "+tableCode+" IS '"+tableComment+"'");
@@ -72,7 +69,10 @@ public class TableCreator {
 		if (DBType.getExtendItemID().equalsIgnoreCase("SYBASE")) {
 			return new SYBASETableCreator().createTableSql(scs, tableCode);
 		}
-		return null;
+		if (DBType.getExtendItemID().equalsIgnoreCase("DM")) {
+			return new DMTableCreator().createTableSql(scs, tableCode);
+		}
+		throw new NullPointerException(DBType.getClass()+": createTable 不支持");
 	}
 
 	public void executeAndClear() {
@@ -86,7 +86,7 @@ public class TableCreator {
 		}
 		this.list.clear();
 	}
-	
+
 	public void writeSqlToFile(String filePath) {
 		for (int i = 0; i < this.list.size(); i++) {
 			String sql = this.list.get(i) + ";\r\n";
@@ -96,7 +96,7 @@ public class TableCreator {
 	}
 
 	public void executeAndClear(Connection conn) {
-		
+
 		for (int i = 0; i < this.list.size(); i++) {
 			Query qb = getSession().createQuery(this.list.get(i));
 			try {
@@ -140,7 +140,7 @@ public class TableCreator {
 	}
 
 	public static String toSQLType(int columnType, int length, int precision, IDBType DBType) {
-		
+
 		if (DBType.getExtendItemID().equalsIgnoreCase("MSSQL")) {
 			return new MSSQLTableCreator().toSQLType(columnType, length, precision);
 		}
@@ -159,9 +159,9 @@ public class TableCreator {
 		if (DBType.getExtendItemID().equalsIgnoreCase("HSQLDB")) {
 			return new HSQLDBTableCretor().toSQLType(columnType, length, precision);
 		}
-		
+
 		return null;
-		
+
 	}
 
 	public void dropTable(String tableCode) {
@@ -208,10 +208,17 @@ public class TableCreator {
 		if ((dbType.getExtendItemID().equalsIgnoreCase("MYSQL")) || (dbType.getExtendItemID().equalsIgnoreCase("HSQLDB"))) {
 			dropSQL = "drop table if exists " + tableCode;
 		}
+		if (dbType.getExtendItemID().equalsIgnoreCase("DM")) {
+			dropSQL = "DROP TABLE IF EXISTS " + tableCode;
+		}
+		if (dbType == null) {
+			throw new NullPointerException(dbType.getExtendItemID()+": 未适配 dropTable");
+		}
+
 		return dropSQL;
 	}
 
-	
+
 
 	public static String dropIndex(String table, String name, IDBType dbtype) {
 		if (dbtype.getExtendItemID().equalsIgnoreCase("MYSQL"))
@@ -243,7 +250,7 @@ public class TableCreator {
 		sb.append(")");
 		return sb.toString();
 	}
-	
+
 
 	public static Session getSession() {
 		return SessionFactory.currentSession();

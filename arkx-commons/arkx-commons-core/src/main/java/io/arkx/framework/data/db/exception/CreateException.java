@@ -12,4 +12,12 @@ public class CreateException extends DDLException {
 		super(e);
 	}
 
+	public CreateException(String message) {
+		super(message);
+	}
+
+	public CreateException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

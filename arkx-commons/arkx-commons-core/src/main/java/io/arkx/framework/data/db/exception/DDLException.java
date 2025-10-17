@@ -12,4 +12,12 @@ public abstract class DDLException extends DatabaseException {
 		super(e);
 	}
 
+	public DDLException(String message) {
+		super(message);
+	}
+
+	public DDLException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

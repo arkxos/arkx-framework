@@ -1,14 +1,9 @@
 package io.arkx.framework.data.db.connection;
 
-import io.arkx.framework.data.db.dbtype.Db2;
-import io.arkx.framework.data.db.dbtype.DerbyEmbedded;
-import io.arkx.framework.data.db.dbtype.DerbyServer;
-import io.arkx.framework.data.db.dbtype.HsqlDb;
-import io.arkx.framework.data.db.dbtype.MsSql;
-import io.arkx.framework.data.db.dbtype.MsSql2000;
-import io.arkx.framework.data.db.dbtype.MySql;
-import io.arkx.framework.data.db.dbtype.Oracle;
-import io.arkx.framework.data.db.dbtype.Sybase;
+import io.arkx.framework.data.db.dbtype.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 数据库连接池配置信息类
@@ -33,6 +28,12 @@ public class ConnectionConfig {
 	public static final String DERBY_EMBEDDED = DerbyEmbedded.ID;
 
 	public static final String DERBY_SERVER = DerbyServer.ID;
+
+	public static final String DM = Dm.ID;
+
+	public static final String KING_BASE = KingBase.ID;
+
+	private List<String> tableList = new ArrayList<>();
 
 	/**
 	 * JDBC驱动类名称
@@ -67,13 +68,15 @@ public class ConnectionConfig {
 	/**
 	 * 连接最长使用时间（单位为毫秒），如果连接不是长时连接，则超过此时间会抛出异常
 	 */
-	public int MaxConnUsingTime = 5 * 60 * 1000;// 以毫秒为单位
+	public int MaxConnUsingTime = 30 * 60 * 1000;// 以毫秒为单位
 
 	/**
 	 * 保持活动间隔（单位为毫秒），如果连接池中的连接超过此间隔，则会发一次测试语句给数据库以免数据库服务器将此连接自动关闭。
 	 */
 	//RefershPeriod
 	public int KeepAliveInterval = 30_000;// 一分钟检查一次连接是否己失效（数据库重启等原因造成）
+
+	public boolean isExport = false;
 
 	/**
 	 * 数据库类型
@@ -139,6 +142,18 @@ public class ConnectionConfig {
 		this.DBName = databaseName;
 		this.DBUserName = userName;
 		this.DBPassword = password;
+	}
+
+	public void setTestTable(String testTable) {
+		TestTable = testTable;
+	}
+
+	public List<String> getTableList() {
+		return tableList;
+	}
+
+	public void setTableList(List<String> tableList) {
+		this.tableList = tableList;
 	}
 	
 	public String getPoolName() {
@@ -262,6 +277,20 @@ public class ConnectionConfig {
 	 */
 	public boolean isDerbyServer() {
 		return DBType.equalsIgnoreCase(DERBY_SERVER);
+	}
+
+	/**
+	 * @return 数据库服务器是否是达梦
+	 */
+	public boolean isDM() {
+		return DBType.equalsIgnoreCase(DM);
+	}
+
+	/**
+	 * @return 数据库服务器是否是达梦
+	 */
+	public boolean isKingBase() {
+		return DBType.equalsIgnoreCase(KING_BASE);
 	}
 
 }

@@ -17,4 +17,8 @@ public class QueryException extends DatabaseException {
 		super(e);
 	}
 
+	public QueryException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

@@ -1,5 +1,8 @@
 package org.ark.framework.orm;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +11,8 @@ import java.io.Serializable;
  * @date 2012-3-8 下午1:59:40
  * @version V1.0
  */
+@Getter
+@Setter
 public class SchemaColumn implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,7 +21,8 @@ public class SchemaColumn implements Serializable {
 	private int ColumnOrder;
 	private int Length;
 	private int Precision;
-	private boolean Mandatory;// 必填
+	private boolean Mandatory;//
+	// 必填
 	private boolean isPrimaryKey;
 	private String memo;
 

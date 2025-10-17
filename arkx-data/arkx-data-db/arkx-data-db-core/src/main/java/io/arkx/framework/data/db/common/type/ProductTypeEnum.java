@@ -26,7 +26,7 @@ public enum ProductTypeEnum {
   /**
    * MySQL数据库类型
    */
-  MYSQL(1, "`", "MySQL", "com.mysql.jdbc.Driver", 3306,
+  MYSQL(1, "`", "MySQL", "com.mysql.cj.jdbc.Driver", 3306,
       "/* ping */ SELECT 1",
       "jdbc:mysql://",
       new String[]{"jdbc:mysql://{host}[:{port}]/[{database}][\\?{params}]"},
@@ -208,7 +208,7 @@ public enum ProductTypeEnum {
   /**
    * DORIS数据库类型
    */
-  DORIS(21, "`", "Doris", "com.mysql.jdbc.Driver", 9030,
+  DORIS(21, "`", "Doris", "com.mysql.cj.jdbc.Driver", 9030,
       "/* ping */ SELECT 1",
       "jdbc:mysql://",
       new String[]{"jdbc:mysql://{host}[:{port}]/[{database}][\\?{params}]"},

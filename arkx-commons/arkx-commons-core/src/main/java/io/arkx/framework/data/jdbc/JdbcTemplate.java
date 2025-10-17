@@ -227,24 +227,29 @@ public class JdbcTemplate {
 
 			int r = stmt.executeUpdate();
 			conn.setLastSuccessExecuteTime(System.currentTimeMillis());
-
+//			String formattedSql = SQLFormatter.format(sql, params);
 			return r;
 		} catch (SQLException e) {
+			// 使用SQLFormatter生成可执行的SQL以便调试
+			String formattedSql = SQLFormatter.format(sql, params);
+			String errorDetail = SQLFormatter.formatError(sql, params, e.getMessage());
+			log.error("SQL执行失败: {}", errorDetail);
+
 			String lowerSQL = sql.trim().toLowerCase();
 			if (lowerSQL.startsWith("delete ")) {
-				throw new DeleteException(e);
+				throw new DeleteException("执行SQL失败: " + formattedSql, e);
 			} else if (lowerSQL.startsWith("update ")) {
-				throw new DeleteException(e);
+				throw new DeleteException("执行SQL失败: " + formattedSql, e);
 			} else if (lowerSQL.startsWith("insert ")) {
-				throw new InsertException(e);
+				throw new InsertException("执行SQL失败: " + formattedSql, e);
 			} else if (lowerSQL.startsWith("create ")) {
-				throw new CreateException(e);
+				throw new CreateException("执行SQL失败: " + formattedSql, e);
 			} else if (lowerSQL.startsWith("drop ")) {
-				throw new DropException(e);
+				throw new DropException("执行SQL失败: " + formattedSql, e);
 			} else if (lowerSQL.startsWith("alter ")) {
-				throw new AlterException(e);
+				throw new AlterException("执行SQL失败: " + formattedSql, e);
 			} else {
-				throw new DatabaseException(e);
+				throw new DatabaseException("执行SQL失败: " + formattedSql, e);
 			}
 		} finally {
 			dispose(rs, stmt);
@@ -272,7 +277,26 @@ public class JdbcTemplate {
 
 			return r;
 		} catch (Exception e) {
-//			System.out.println(JSON.toJSONString(params));
+            // 使用SQLFormatter记录批处理SQL信息以便调试
+			StringBuilder batchDetail = new StringBuilder("批处理SQL执行失败:\n");
+			batchDetail.append("SQL模板: ").append(sql).append("\n");
+			batchDetail.append("批次数量: ").append(params.size()).append("\n");
+			batchDetail.append("批处理内容详情:\n");
+
+			// 记录每个批次的SQL
+			int batchIndex = 0;
+			for (ArrayList<Object> batchParams : params) {
+				batchDetail.append("批次[").append(batchIndex++).append("]: ")
+						.append(SQLFormatter.format(sql, batchParams)).append("\n");
+
+				// 仅记录前5个批次详情，避免日志过大
+				if (batchIndex >= 5 && params.size() > 5) {
+					batchDetail.append("... 共").append(params.size()).append("个批次 ...\n");
+					break;
+				}
+			}
+
+			log.error(batchDetail.toString());
 			throw e;
 		} finally {
 			dispose(rs, stmt);
@@ -299,12 +323,17 @@ public class JdbcTemplate {
 			return statement.execute(conn, stmt, rs);
 		} catch (Throwable e) {
 			e.printStackTrace();
+			// 使用SQLFormatter生成详细的错误信息
+			String formattedSql = SQLFormatter.format(sql, params);
+			String errorDetail = SQLFormatter.formatError(sql, params, e.getMessage());
+			log.error("查询SQL执行失败: {}", errorDetail);
+
 			JdbcTemplate.log(System.currentTimeMillis(), "Error:" + e.getMessage(), null);
 			if (e instanceof QueryException) {
 				throw (QueryException) e;
 			}
-			System.out.println("error sql: " + sql);
-			throw new QueryException(e);
+			System.out.println("error sql: " + formattedSql);
+			throw new QueryException("执行查询失败: " + formattedSql, e);
 		} finally {
 			dispose(rs, stmt);
 			if (Config.isDebugLoglevel()) {

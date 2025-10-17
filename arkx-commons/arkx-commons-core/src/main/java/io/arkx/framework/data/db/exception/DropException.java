@@ -12,4 +12,12 @@ public class DropException extends DDLException {
 		super(e);
 	}
 
+	public DropException(String message) {
+		super(message);
+	}
+
+	public DropException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

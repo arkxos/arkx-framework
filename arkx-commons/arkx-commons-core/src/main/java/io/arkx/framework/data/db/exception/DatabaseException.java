@@ -18,4 +18,8 @@ public class DatabaseException extends FrameworkException {
 		super(message);
 	}
 
+	public DatabaseException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

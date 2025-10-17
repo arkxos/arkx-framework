@@ -16,4 +16,8 @@ public class InsertException extends DatabaseException {
 		super(message);
 	}
 
+	public InsertException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

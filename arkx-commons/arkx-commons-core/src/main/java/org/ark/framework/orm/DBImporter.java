@@ -390,7 +390,7 @@ public class DBImporter {
 				} catch (Exception e) {
 //					private static final long serialVersionUID = -4218492595750785904L;
 					log.warn("导入数据时发生错误:" + e.getMessage());
-					
+					e.printStackTrace();
 					//ResumeSerialVersion.resume(e.getMessage());
 				}
 			}

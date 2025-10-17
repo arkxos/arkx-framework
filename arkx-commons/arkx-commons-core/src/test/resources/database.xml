@@ -2,17 +2,67 @@
 <framework>
 	<databases>
 		<database name="Default">
-			<config name="Type">MSSQL</config>
-			<config name="ServerAddress">192.168.132.13</config>
-			<config name="Port">1433</config>
-			<config name="Name">njsys_ThreeInOne</config>
-			<config name="UserName">zbsa</config>
-			<config name="Password">sysjg321#@!</config>
+			<config name="Type">MYSQL</config>
+			<config name="ServerAddress">192.168.0.2</config>
+			<config name="Port">33061</config>
+			<config name="Name">testdb</config>
+			<config name="UserName">root</config>
+			<config name="Password">root1234</config>
 			<config name="MaxConnCount">1000</config>
 			<config name="InitConnCount">0</config>
-			<config name="TestTable">sysorg</config>
+			<config name="TestTable">USER</config>
 		</database>
-		<!-- 
+		<database name="TargetDb02">
+			<config name="Type">DM</config>
+			<config name="ServerAddress">192.168.0.28</config>
+			<config name="Port">5236</config>
+			<config name="Name">TEST_DEV</config>
+			<config name="UserName">SYSDBA</config>
+			<config name="Password">SYSDBA</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">GEN_TABLE</config>
+		</database>
+
+
+
+
+		<database name="test01">
+			<config name="Type">DM</config>
+			<config name="ServerAddress">192.168.0.28</config>
+			<config name="Port">5236</config>
+			<config name="Name">TEST_DEV</config>
+			<config name="UserName">SYSDBA</config>
+			<config name="Password">SYSDBA</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">GEN_TABLE</config>
+		</database>
+
+		<database name="SYNC_TEST">
+			<config name="Type">DM</config>
+			<config name="ServerAddress">192.168.0.28</config>
+			<config name="Port">5236</config>
+			<config name="Name">SYNC_TEST</config>
+			<config name="UserName">SYSDBA</config>
+			<config name="Password">SYSDBA</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">GEN_TABLE</config>
+		</database>
+
+		<database name="TestMysql02">
+			<config name="Type">MYSQL</config>
+			<config name="ServerAddress">192.168.0.107</config>
+			<config name="Port">33061</config>
+			<config name="Name">ark-update</config>
+			<config name="UserName">root</config>
+			<config name="Password">root1234</config>
+			<config name="MaxConnCount">1000</config>
+			<config name="InitConnCount">0</config>
+			<config name="TestTable">USER</config>
+		</database>
+		<!--
 		<database name="Default">
 			<config name="Type">MYSQL</config>
 			<config name="ServerAddress">127.0.0.1</config>
@@ -24,15 +74,15 @@
 			<config name="InitConnCount">0</config>
 			<config name="TestTable">PT_COMP__MAXNO</config>
 		</database> -->
- 		<database name="Default_oracle">
-			<config name="Type">ORACLE</config>
-			<config name="ConnectionURL">jdbc:oracle:thin:@49.234.238.177:1521/orclpdb1</config>
-			<config name="UserName">mi2001</config>
-			<config name="Password">mi2001</config>
-			<config name="MaxConnCount">1000</config>
-			<config name="InitConnCount">0</config>
-			<config name="TestTable">PT_COMP__MAXNO</config>
-		</database> 
+		<!-- 		<database name="Default_oracle">-->
+		<!--			<config name="Type">ORACLE</config>-->
+		<!--			<config name="ConnectionURL">jdbc:oracle:thin:@49.234.238.177:1521/orclpdb1</config>-->
+		<!--			<config name="UserName">mi2001</config>-->
+		<!--			<config name="Password">mi2001</config>-->
+		<!--			<config name="MaxConnCount">1000</config>-->
+		<!--			<config name="InitConnCount">0</config>-->
+		<!--			<config name="TestTable">PT_COMP__MAXNO</config>-->
+		<!--		</database> -->
 		<!-- 
 		<database name="Default_oracle">
 			<config name="Type">ORACLE</config>
@@ -49,11 +99,11 @@
 		<!-- 
 		<database name="Default_oracle">
 			<config name="Type">ORACLE</config>
-			<config name="ServerAddress">58.217.53.61</config>
+			<config name="ServerAddress">127.0.0.1</config>
 			<config name="Name">xe</config>
 			<config name="Port">1521</config>
-			<config name="UserName">lshsa</config>
-			<config name="Password">lshsa741121</config>
+			<config name="UserName">test</config>
+			<config name="Password">test</config>
 			<config name="MaxConnCount">1000</config>
 			<config name="InitConnCount">0</config>
 			<config name="TestTable">PT_COMP__MAXNO</config>

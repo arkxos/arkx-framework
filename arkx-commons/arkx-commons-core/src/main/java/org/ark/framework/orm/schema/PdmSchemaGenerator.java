@@ -178,7 +178,13 @@ public class PdmSchemaGenerator extends SchemaGenerator {
 		String prefix = Config.getContextRealPath();
 		prefix = prefix.substring(0, prefix.length() - 1);
 		prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
-		String javapath = prefix + "Java/" + packageStr.replaceAll("\\.", "/");
+		// 使用File对象确保路径分隔符一致
+		File javaPathDir = new File(prefix, "Java");
+		String[] packageParts = packageStr.split("\\.");
+		for (String part : packageParts) {
+			javaPathDir = new File(javaPathDir, part);
+		}
+		String javapath = javaPathDir.getPath();
 		FileUtil.mkdir(javapath);
 		FileUtil.deleteEx(javapath + "/.+java");
 
