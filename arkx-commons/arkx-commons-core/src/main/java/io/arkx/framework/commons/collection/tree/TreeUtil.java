@@ -1,9 +1,8 @@
 package io.arkx.framework.commons.collection.tree;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.checkerframework.checker.units.qual.K;
+
+import java.util.*;
 
 /**
  * @author Nobody
@@ -17,7 +16,7 @@ public class TreeUtil {
 	 * @param nodes 所有节点列表（包含 id/parentId）
 	 * @return 构建完成的根节点列表
 	 */
-	public static <K, T> List<? extends TreeNode<K, T>> buildTree(List<? extends TreeNode<K, T>> nodes) {
+	public static <K, T> List<? extends TreeNode<K, T>> buildTree(Collection<? extends TreeNode<K, T>> nodes) {
 		Map<K, TreeNode<K, T>> nodeMap = new HashMap<>();
 		List<TreeNode<K, T>> roots = new ArrayList<>();
 
@@ -44,7 +43,15 @@ public class TreeUtil {
 		return roots;
 	}
 
-	public static <K, R extends TreeNodeData<K>> List<TreeNode<K, R>> buildTreeFromData(List<R> nodes) {
+	public static <K, R extends TreeNodeData<K>> Treex<K, R> buildTreexFromData(Collection<R> datas) {
+		Treex<K, R> treex = new Treex<>();
+
+		List<TreeNode<K, R>> nodes = buildTreeFromData(datas);
+		treex.getRoot().addChildren(nodes);
+		return treex;
+	}
+
+	public static <K, R extends TreeNodeData<K>> List<TreeNode<K, R>> buildTreeFromData(Collection<R> nodes) {
 		Map<K, TreeNode<K, R>> nodeMap = new HashMap<>();
 		List<TreeNode<K, R>> roots = new ArrayList<>();
 

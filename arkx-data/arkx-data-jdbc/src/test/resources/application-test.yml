@@ -5,9 +5,9 @@ spring:
 #    username: sa
 #    password: ""  # ?????????????????? password:?
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&rewriteBatchedStatements=true
+    url: jdbc:mysql://127.0.0.1:3308/arkxos?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&rewriteBatchedStatements=true
     username: root
-    password: 123456
+    password: root
   h2:
     console:
       enabled: true

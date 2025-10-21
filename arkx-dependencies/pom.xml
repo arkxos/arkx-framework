@@ -136,7 +136,7 @@
 		<pf4j.version>0.13.1</pf4j.version>
 		<logback.version>1.2.3</logback.version>
 		<bitwalker.version>1.19</bitwalker.version>
-		<jjwt.version>0.11.1</jjwt.version>
+		<jjwt.version>0.12.6</jjwt.version>
 		<kaptcha.version>2.3.2</kaptcha.version>
 
 		<oshi.version>6.8.2</oshi.version>

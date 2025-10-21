@@ -291,7 +291,10 @@ public class TreeNode<K, T> implements Serializable {
 	 * 根据ID查找节点（深度优先搜索）
 	 */
 	public TreeNode<K, T> findNodeById(K targetId) {
-		if (this.id.equals(targetId)) return this;
+		if (targetId == null) {
+			return null;
+		}
+		if (targetId.equals(this.id)) return this;
 		for (TreeNode<K, T> child : children) {
 			TreeNode<K, T> found = child.findNodeById(targetId);
 			if (found != null) return found;

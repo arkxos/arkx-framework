@@ -202,4 +202,7 @@ public class Treex<K, T> implements Iterable<TreeNode<K, T>>, Serializable {
 		}
 	}
 
+	public TreeNode<K, T> findNodeById(K nodeId) {
+		return getRoot().findNodeById(nodeId);
+	}
 }
