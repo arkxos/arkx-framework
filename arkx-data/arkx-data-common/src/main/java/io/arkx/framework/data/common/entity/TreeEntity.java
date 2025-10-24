@@ -27,7 +27,7 @@ public class TreeEntity<ID> extends BaseEntity<ID> implements TreeNodeData<ID> {
 	private int isLeaf = 1;
 
 	@Column(name = "sort_order")
-	private long sortOrder = 0;// 排序号
+	private int sortOrder = 0;// 排序号
 
 	/**
 	 * 是否是顶级节点

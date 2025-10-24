@@ -48,6 +48,9 @@ public class TreeUtil {
 
 		List<TreeNode<K, R>> nodes = buildTreeFromData(datas);
 		treex.getRoot().addChildren(nodes);
+
+		treex.sort();
+
 		return treex;
 	}
 
@@ -78,6 +81,7 @@ public class TreeUtil {
 				}
 			}
 		}
+
 		return roots;
 	}
 

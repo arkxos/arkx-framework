@@ -14,6 +14,8 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -204,5 +206,34 @@ public class Treex<K, T> implements Iterable<TreeNode<K, T>>, Serializable {
 
 	public TreeNode<K, T> findNodeById(K nodeId) {
 		return getRoot().findNodeById(nodeId);
+	}
+
+	public void sort() {
+		sort(this.getRoot().getChildren());
+	}
+
+	private void sort(ArrayList<TreeNode<K,T>> children) {
+		Collections.sort(children);
+
+		for (TreeNode<K, T> child : children) {
+			sort(child.getChildren());
+		}
+	}
+
+	public void reverseSort() {
+		reverseSort(this.getRoot().getChildren());
+	}
+
+	public void reverseSort(ArrayList<TreeNode<K,T>> children) {
+		Collections.sort(children, new Comparator<TreeNode<K, T>>() {
+			@Override
+			public int compare(TreeNode<K, T> o1, TreeNode<K, T> o2) {
+				return o2.getSortOrder() - o1.getSortOrder();
+			}
+		});
+
+		for (TreeNode<K, T> child : children) {
+			reverseSort(child.getChildren());
+		}
 	}
 }

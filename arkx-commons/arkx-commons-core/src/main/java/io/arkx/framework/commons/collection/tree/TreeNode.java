@@ -1,7 +1,5 @@
 package io.arkx.framework.commons.collection.tree;
 
-
-
 import io.arkx.framework.commons.collection.tree.jackson.TreeNodeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
@@ -56,7 +54,7 @@ import java.util.*;
 @JsonSerialize(using = TreeNodeSerializer.class)
 @Getter
 @Setter
-public class TreeNode<K, T> implements Serializable {
+public class TreeNode<K, T> implements Serializable, Comparable<TreeNode<K, T>> {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -112,6 +110,8 @@ public class TreeNode<K, T> implements Serializable {
 	 */
 	private int position;
 
+	private int sortOrder;
+
 	// ----------------- 核心构造方法 -----------------
 
 	public TreeNode() {
@@ -136,6 +136,7 @@ public class TreeNode<K, T> implements Serializable {
 			this.id = tn.getId();
 			this.parentId = tn.getParentId();
 			this.name = tn.getName();
+			this.sortOrder = tn.getSortOrder();
 //			this.path = tn.getPath();
 		}
 	}
@@ -398,4 +399,14 @@ public class TreeNode<K, T> implements Serializable {
 			this.addChild(child);
 		}
 	}
+
+	@Override
+	public int compareTo(TreeNode<K, T> o) {
+		int value = sortOrder - o.sortOrder;
+		if (value == 0) {
+			value = position - o.position;
+		}
+		return value;
+	}
+
 }

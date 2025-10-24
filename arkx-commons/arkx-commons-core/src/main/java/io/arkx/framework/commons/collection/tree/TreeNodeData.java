@@ -15,4 +15,8 @@ public interface TreeNodeData<K> {
 
 //	String getPath();
 
+	default int getSortOrder() {
+		return 0;
+	}
+
 }
