@@ -29,4 +29,11 @@ public class RawDictInfo implements TreeNodeData<Integer> {
     private String incrSyncStatus;        // 增量同步状态
     private String owers;                 // 所有者
 
+    @Override
+    public int getSortOrder() {
+        if (sortValue == null) {
+            return 0;
+        }
+        return sortValue;
+    }
 }

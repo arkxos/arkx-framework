@@ -95,9 +95,8 @@ public class TestApp {
         rawRoot.setName("Root");
         rawDictInfos.addFirst(rawRoot);
         Treex<Integer, RawDictInfo> rawTree = TreeUtil.buildTreexFromData(rawDictInfos);
-
+        rawTree.reverseSort();
         {
-
 //            System.out.println(tree);
 //            System.out.println(tree.getRoot());
             System.out.println(newTree.getRoot().getChildren().getFirst());
@@ -129,6 +128,7 @@ public class TestApp {
                 if (existDictMappingInfoMap.get(fromDict.getId()) != null) {
                     Integer rawDictId = existDictMappingInfo.getRawId();
                     TreeNode<Integer, RawDictInfo> rawTreeNode = rawTree.findNodeById(rawDictId);
+
                     rawIdMap = saveRawDictInfo2DictData(rawTreeNode.getChildren(), "", dictionary, 1);
                 }
 
@@ -225,7 +225,8 @@ public class TestApp {
 
             newIdMap.put(raw.getId(), dictionaryData.getId());
 
-            saveRawDictInfo2DictData(node.getChildren(), dictionaryData.getId(), dictionary, version);
+            Map<Integer, String> childNewIdMap = saveRawDictInfo2DictData(node.getChildren(), dictionaryData.getId(), dictionary, version);
+            newIdMap.putAll(childNewIdMap);
         }
         return newIdMap;
     }

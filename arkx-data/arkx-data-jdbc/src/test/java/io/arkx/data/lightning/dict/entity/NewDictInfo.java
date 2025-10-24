@@ -19,4 +19,8 @@ public class NewDictInfo implements TreeNodeData<Integer> {
     private String name;
     private int sortValue;
 
+    @Override
+    public int getSortOrder() {
+        return sortValue;
+    }
 }

@@ -207,7 +207,7 @@ public class TreeTableIntegrateTest {
 					dept.setId(rs.getString("id"));
 					dept.setParentId(rs.getString("parent_id"));
 					dept.setIsLeaf(rs.getInt("is_leaf"));
-					dept.setSortOrder(rs.getLong("sort_order"));
+					dept.setSortOrder(rs.getInt("sort_order"));
 					dept.setName(rs.getString("name"));
 					return dept;
 				},
