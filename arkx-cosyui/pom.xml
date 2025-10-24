@@ -25,6 +25,11 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>io.arkx.framework</groupId>
+			<artifactId>arkx-commons-security</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>

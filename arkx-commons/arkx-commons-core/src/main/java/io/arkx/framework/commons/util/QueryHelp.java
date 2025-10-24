@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import io.arkx.framework.commons.ArkSecurityService;
 import io.arkx.framework.commons.utils2.StringUtil;
 import io.arkx.framework.commons.annotation.DataPermission;
 import io.arkx.framework.commons.annotation.Query;
@@ -53,7 +54,8 @@ public class QueryHelp {
         DataPermission permission = query.getClass().getAnnotation(DataPermission.class);
         if(permission != null){
             // 获取数据权限
-            List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
+            ArkSecurityService arkSecurityService = ArkSpringContextHolder.getBean(ArkSecurityService.class);
+            List<Long> dataScopes = arkSecurityService.getCurrentUserDataScope();
             if(CollectionUtil.isNotEmpty(dataScopes)){
                 if(StringUtil.isNotBlank(permission.joinName()) && StringUtil.isNotBlank(permission.fieldName())) {
                     Join join = root.join(permission.joinName(), JoinType.LEFT);
@@ -145,7 +147,9 @@ public class QueryHelp {
         DataPermission permission = query.getClass().getAnnotation(DataPermission.class);
         if(permission != null){
             // 获取数据权限
-            List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
+            ArkSecurityService arkSecurityService = ArkSpringContextHolder.getBean(ArkSecurityService.class);
+
+            List<Long> dataScopes = arkSecurityService.getCurrentUserDataScope();
             if(CollectionUtil.isNotEmpty(dataScopes)){
                 if(StringUtil.isNotBlank(permission.joinName()) && StringUtil.isNotBlank(permission.fieldName())) {
                     Join join = root.join(permission.joinName(), JoinType.LEFT);

@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.arkx.framework.Member.MemberData;
+import io.arkx.framework.commons.ArkSecurityService;
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
 import io.arkx.framework.commons.util.SecurityUtils;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.i18n.LangMapping;
@@ -51,7 +53,8 @@ public class Account {
 	 */
 	public static String getUserName() {
 		try {
-			return SecurityUtils.getCurrentUsername();
+			ArkSecurityService arkSecurityService = ArkSpringContextHolder.getBean(ArkSecurityService.class);
+			return arkSecurityService.getCurrentUsername();
 		} catch (Exception e) {
 			// ingore
 			// 系统任务没有用户

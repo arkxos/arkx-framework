@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.arkx.framework</groupId>
+            <artifactId>arkx-commons-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
         </dependency>
