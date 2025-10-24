@@ -1,6 +1,5 @@
 package io.arkx.framework.data.db.core.schema;
 
-import io.arkx.framework.data.common.entity.BaseEntity;
 import io.arkx.framework.data.common.entity.StringIdEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,13 +18,15 @@ import org.springframework.data.relational.core.mapping.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("ark_meta_column_foreign_key")
-public class ColumnForeignKey extends StringIdEntity {
+@Table("ark_meta_column")
+public class MetaColumn extends StringIdEntity {
 
     private Long connectionConfigId;
     private String schemaName;
     private String tableName;
     private String fieldName;
+    private String categoryId;
+    private Integer categoryLevel;
     private String referencedTableName;
     private String referencedFieldName;
 
