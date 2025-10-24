@@ -26,7 +26,9 @@ import io.arkx.framework.data.db.core.schema.SchemaTableData;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class DefaultTableDataQueryProvider
@@ -110,6 +112,65 @@ public class DefaultTableDataQueryProvider
             log.error("查询数据异常", sql);
             throw new RuntimeException(t);
         }
+    }
+
+    @Override
+    public List<Map<String, Object>> executeQueryBySql(Connection connection, String schema, String sql) {
+        if (log.isDebugEnabled()) {
+            log.debug("Execute sql :{}", sql);
+        }
+        try (Statement st = connection.createStatement()) {
+            ResultSet rs = st.executeQuery(sql);
+            List<Map<String, Object>> result = convertResultSetToMap(rs);
+            rs.close();
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int executeSql(Connection connection, String schema, String sql) {
+        if (log.isDebugEnabled()) {
+            log.debug("Execute sql :{}", sql);
+        }
+        try (Statement st = connection.createStatement()) {
+            int result = st.executeUpdate(sql);
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public List<Map<String, Object>> convertResultSetToMap(ResultSet rs) throws SQLException {
+        // 假设已获得ResultSet rs
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+        // 获取结果集的元数据，用于查询列的信息
+        ResultSetMetaData metaData = rs.getMetaData();
+        // 获取结果集中的列数
+        int columnCount = metaData.getColumnCount();
+
+        // 遍历每一行数据
+        while (rs.next()) {
+            // 每一行数据用一个Map表示
+            Map<String, Object> rowMap = new HashMap<>();
+
+            // 遍历每一列
+            for (int i = 1; i <= columnCount; i++) {
+                // 获取列名
+                String columnName = metaData.getColumnName(i);
+                // 获取列值
+                Object columnValue = rs.getObject(i);
+                // 将列名和列值放入Map中
+                rowMap.put(columnName, columnValue);
+            }
+            // 将代表一行的Map添加到List中
+            resultList.add(rowMap);
+        }
+
+        return resultList;
     }
 
     @Override

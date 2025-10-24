@@ -10,6 +10,7 @@
 package io.arkx.framework.data.db.core.service;
 
 import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
 
 import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
@@ -173,4 +174,11 @@ public interface MetadataService {
     List<String> getDDLCreateTableSQL(MetadataProvider provider, List<ColumnDescription> fieldNames,
                                       List<String> primaryKeys, String schemaName, String tableName, String tableRemarks,
                                       boolean autoIncr, SourceProperties tblProperties, String dbSyncMode, String slaveDbCode);
+
+    String quoteSchemaTableName(String schemaName, String tableName);
+
+    List<Map<String, Object>> executeQueryBySql(String schema, String sql);
+
+    int executeSql(String schema, String sql);
+
 }

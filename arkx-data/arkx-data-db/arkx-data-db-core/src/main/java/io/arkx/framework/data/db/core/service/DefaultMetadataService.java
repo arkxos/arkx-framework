@@ -15,6 +15,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
@@ -210,6 +211,24 @@ public class DefaultMetadataService implements MetadataService {
     }
 
     @Override
+    public List<Map<String, Object>> executeQueryBySql(String schema, String sql) {
+        try (Connection connection = dataSource.getConnection()) {
+            return dataQueryProvider.executeQueryBySql(connection, schema, sql);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
+    public int executeSql(String schema, String sql) {
+        try (Connection connection = dataSource.getConnection()) {
+            return dataQueryProvider.executeSql(connection, schema, sql);
+        } catch (SQLException se) {
+            throw new RuntimeException(se);
+        }
+    }
+
+    @Override
     public ColumnValue queryIncrementPoint(String schemaName, String tableName, String filedName) {
         try (Connection connection = dataSource.getConnection()) {
             return dataQueryProvider.queryFieldMaxValue(connection, schemaName, tableName, filedName);
@@ -250,6 +269,11 @@ public class DefaultMetadataService implements MetadataService {
         }
         return GenerateSqlUtils.getDDLCreateTableSQL(
                 provider, targetTableColumnDescriptions, targetTablePrimaryKeys, schemaName, tableName, tableRemarks, autoIncr, tblProperties);
+    }
+
+    @Override
+    public String quoteSchemaTableName(String schemaName, String tableName) {
+        return dataQueryProvider.quoteSchemaTableName(schemaName, tableName);
     }
 
 }

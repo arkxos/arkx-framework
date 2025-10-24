@@ -225,4 +225,5 @@ public interface MetadataProvider {
       String schemaName, String tableName, String tableRemarks, boolean autoIncr, SourceProperties tblProperties) {
     throw new UnsupportedOperationException("Unsupported function!");
   }
+
 }

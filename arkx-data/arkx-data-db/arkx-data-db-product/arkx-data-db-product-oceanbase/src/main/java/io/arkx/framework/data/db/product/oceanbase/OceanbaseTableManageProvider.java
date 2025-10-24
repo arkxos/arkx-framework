@@ -36,7 +36,7 @@ public class OceanbaseTableManageProvider extends DefaultTableManageProvider {
   }
 
   @Override
-  protected String quoteSchemaTableName(String schemaName, String tableName) {
+  public String quoteSchemaTableName(String schemaName, String tableName) {
     return this.dialect.quoteSchemaTableName(schemaName, tableName);
   }
 

@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ElasticsearchTableDataQueryProvider implements TableDataQueryProvider {
 
@@ -35,6 +36,11 @@ public class ElasticsearchTableDataQueryProvider implements TableDataQueryProvid
   @Override
   public ProductTypeEnum getProductType() {
     return this.factoryProvider.getProductType();
+  }
+
+  @Override
+  public String quoteSchemaTableName(String schemaName, String tableName) {
+    return "";
   }
 
   @Override
@@ -98,5 +104,15 @@ public class ElasticsearchTableDataQueryProvider implements TableDataQueryProvid
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public List<Map<String, Object>> executeQueryBySql(Connection connection, String schema, String sql) {
+    return List.of();
+  }
+
+  @Override
+  public int executeSql(Connection connection, String schema, String sql) {
+    return 0;
   }
 }

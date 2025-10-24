@@ -37,7 +37,7 @@ public class OceanbaseTableDataWriteProvider extends DefaultTableDataWriteProvid
   }
 
   @Override
-  protected String quoteSchemaTableName(String schemaName, String tableName) {
+  public String quoteSchemaTableName(String schemaName, String tableName) {
     return this.dialect.quoteSchemaTableName(schemaName, tableName);
   }
 

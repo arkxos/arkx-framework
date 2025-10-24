@@ -54,7 +54,7 @@ public abstract class AbstractCommonProvider {
     return getProductType().quoteName(name);
   }
 
-  protected String quoteSchemaTableName(String schemaName, String tableName) {
+  public String quoteSchemaTableName(String schemaName, String tableName) {
     return getProductType().quoteSchemaTableName(schemaName, tableName);
   }
 

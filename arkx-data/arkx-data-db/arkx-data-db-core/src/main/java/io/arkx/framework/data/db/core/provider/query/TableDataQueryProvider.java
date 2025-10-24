@@ -18,6 +18,7 @@ import io.arkx.framework.data.db.core.schema.SchemaTableData;
 import java.sql.Connection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 表数据查询
@@ -30,6 +31,8 @@ public interface TableDataQueryProvider {
    * @return ProductTypeEnum
    */
   ProductTypeEnum getProductType();
+
+  String quoteSchemaTableName(String schemaName, String tableName);
 
   /**
    * 获取读取(fetch)数据的批次大小
@@ -112,6 +115,10 @@ public interface TableDataQueryProvider {
    * @return 数据内容
    */
   SchemaTableData queryTableData(Connection connection, String schemaName, String tableName, int rowCount);
+
+  List<Map<String, Object>> executeQueryBySql(Connection connection, String schema, String sql);
+
+  int executeSql(Connection connection, String schema, String sql);
 
   /**
    * 查询增量字段数据的最大值

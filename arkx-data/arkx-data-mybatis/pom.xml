@@ -23,6 +23,11 @@
 <!--			<artifactId>mybatis-plus-spring</artifactId>-->
 <!--		</dependency>-->
 		<dependency>
+			<groupId>io.arkx.framework</groupId>
+			<artifactId>arkx-commons-security</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
 		</dependency>
