@@ -4,17 +4,25 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.arkx.framework.commons.collection.tree.TreeNodeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * @author Nobody
+ * @version 1.0
+ * @date 2025-10-20 17:16
+ * @since 1.0
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName(value = "new_dict_info", autoResultMap = true)
-public class NewDictInfoEntity {
+public class NewDictInfoEntity implements TreeNodeData<Integer> {
 
     /**
      * 主键ID，自动递增
@@ -54,5 +62,27 @@ public class NewDictInfoEntity {
     @TableField(exist = false)
     private boolean hasMapped;
 
+    @Override
+    public Integer getId() {
+        return this.newDictId;
+    }
+
+    @Override
+    public Integer getParentId() {
+        return this.parentNewDictId;
+    }
+
+    @Override
+    public String getName() {
+        return this.dictName;
+    }
+
+    @Override
+    public int getSortOrder() {
+        if (this.sortValue == null) {
+            return 0;
+        }
+        return this.sortValue;
+    }
 }
 

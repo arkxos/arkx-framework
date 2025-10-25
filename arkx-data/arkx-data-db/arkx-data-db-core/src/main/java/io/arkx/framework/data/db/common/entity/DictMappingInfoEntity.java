@@ -9,6 +9,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * @author Nobody
+ * @version 1.0
+ * @date 2025-10-20 18:12
+ * @since 1.0
+ */
 @Data
 @Builder
 @NoArgsConstructor

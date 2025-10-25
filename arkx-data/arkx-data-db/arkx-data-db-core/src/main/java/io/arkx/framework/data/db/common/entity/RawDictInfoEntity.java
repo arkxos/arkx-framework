@@ -10,6 +10,7 @@
 package io.arkx.framework.data.db.common.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.arkx.framework.commons.collection.tree.TreeNodeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,11 +21,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName(value = "raw_dict_info", autoResultMap = true)
-public class RawDictInfoEntity {
+public class RawDictInfoEntity implements TreeNodeData<Integer> {
 
     @TableId(value = "ID", type = IdType.AUTO)
     private Integer id;
-
+    /**
+     * 父级Id
+     */
+    @TableField("PARENT_ID")
+    private Integer parentId;
     /**
      * 字典类型
      */
@@ -35,11 +40,7 @@ public class RawDictInfoEntity {
      */
     @TableField("DICT_NAME")
     private String dictName;
-    /**
-     * 父级Id
-     */
-    @TableField("PARENT_ID")
-    private Integer parentId;
+
     /**
      * 状态 0：无效  1：有效
      */
@@ -96,5 +97,18 @@ public class RawDictInfoEntity {
      */
     @TableField(exist = false)
     private boolean hasMapped;
+
+    @Override
+    public String getName() {
+        return this.dictName;
+    }
+
+    @Override
+    public int getSortOrder() {
+        if (sortValue == null) {
+            return 0;
+        }
+        return sortValue;
+    }
 
 }
