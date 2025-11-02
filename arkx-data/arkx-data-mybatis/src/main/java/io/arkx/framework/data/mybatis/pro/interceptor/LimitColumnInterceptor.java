@@ -81,6 +81,9 @@ public class LimitColumnInterceptor implements Interceptor, ApplicationListener<
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
+        if (configuration == null) {
+            return invocation.proceed();
+        }
         StatementHandler sh = (StatementHandler) ProxyUtil.getOriginObj(invocation.getTarget());
         MetaObject mo = configuration.newMetaObject(sh);
 

@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  autoconfiguration.io.arkx.framework.data.mybatis.pro.MyBatisProAutoConfiguration, \
-  interceptor.io.arkx.framework.data.mybatis.pro.LimitColumnInterceptor
