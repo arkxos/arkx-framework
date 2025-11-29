@@ -22,6 +22,9 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.arkx.framework.datasource.dynamic.enums.DsConfTypeEnum;
+import io.arkx.framework.datasource.dynamic.enums.DsJdbcUrlEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 
 import io.arkx.framework.datasource.dynamic.support.DataSourceConstants;
@@ -35,6 +38,7 @@ import com.baomidou.dynamic.datasource.provider.AbstractJdbcDataSourceProvider;
  * <p>
  * 从数据源中获取 配置信息
  */
+@Slf4j
 public class JdbcDynamicDataSourceProvider extends AbstractJdbcDataSourceProvider {
 
 	private final DataSourceProperties properties;
@@ -57,29 +61,43 @@ public class JdbcDynamicDataSourceProvider extends AbstractJdbcDataSourceProvide
 	 */
 	@Override
 	protected Map<String, DataSourceProperty> executeStmt(Statement statement) throws SQLException {
-		ResultSet rs = statement.executeQuery(properties.getQueryDsSql());
 
 		Map<String, DataSourceProperty> map = new HashMap<>(8);
-		while (rs.next()) {
-			String name = rs.getString(DataSourceConstants.DS_NAME);
-			String username = rs.getString(DataSourceConstants.DS_USER_NAME);
-			String password = rs.getString(DataSourceConstants.DS_USER_PWD);
-			String url = rs.getString(DataSourceConstants.DS_JDBC_URL);
-			DataSourceProperty property = new DataSourceProperty();
-			property.setUsername(username);
-			property.setLazy(true);
-			property.setPassword(stringEncryptor.decrypt(password));
-			property.setUrl(url);
-			map.put(name, property);
+
+		try {
+			ResultSet rs = statement.executeQuery(properties.getQueryDsSql());
+
+			while (rs.next()) {
+				String name = rs.getString(DataSourceConstants.NAME);
+				String username = rs.getString(DataSourceConstants.DS_USER_NAME);
+				String password = rs.getString(DataSourceConstants.DS_USER_PWD);
+				Integer confType = rs.getInt(DataSourceConstants.DS_CONFIG_TYPE);
+				String dsType = rs.getString(DataSourceConstants.DS_TYPE);
+
+				DataSourceProperty property = new DataSourceProperty();
+				property.setUsername(username);
+				property.setPassword(stringEncryptor.decrypt(password));
+
+				String url;
+				// JDBC 配置形式
+				DsJdbcUrlEnum urlEnum = DsJdbcUrlEnum.get(dsType);
+				if (DsConfTypeEnum.JDBC.getType().equals(confType)) {
+					url = rs.getString(DataSourceConstants.DS_JDBC_URL);
+				}
+				else {
+					String host = rs.getString(DataSourceConstants.DS_HOST);
+					String port = rs.getString(DataSourceConstants.DS_PORT);
+					String dsName = rs.getString(DataSourceConstants.DS_NAME);
+					url = String.format(urlEnum.getUrl(), host, port, dsName);
+				}
+				property.setUrl(url);
+				map.put(name, property);
+			}
+
+		} catch (Exception e) {
+			log.warn("动态数据源配置表异常:{}", e.getMessage());
 		}
 
-		// 添加默认主数据源
-		DataSourceProperty property = new DataSourceProperty();
-		property.setUsername(properties.getUsername());
-		property.setPassword(properties.getPassword());
-		property.setUrl(properties.getUrl());
-		property.setLazy(true);
-		map.put(DataSourceConstants.DS_MASTER, property);
 		return map;
 	}
 

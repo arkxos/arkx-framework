@@ -19,6 +19,8 @@ package io.arkx.framework.datasource.dynamic;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.arkx.framework.datasource.dynamic.config.*;
+import lombok.RequiredArgsConstructor;
 import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -28,10 +30,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.expression.BeanFactoryResolver;
 
-import io.arkx.framework.datasource.dynamic.config.ClearTtlDataSourceFilter;
-import io.arkx.framework.datasource.dynamic.config.DataSourceProperties;
-import io.arkx.framework.datasource.dynamic.config.JdbcDynamicDataSourceProvider;
-import io.arkx.framework.datasource.dynamic.config.LastParamDsProcessor;
 import com.baomidou.dynamic.datasource.creator.DataSourceCreator;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
@@ -47,7 +45,8 @@ import com.baomidou.dynamic.datasource.provider.DynamicDataSourceProvider;
  * <p>
  * 动态数据源切换配置
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
+@RequiredArgsConstructor
 @AutoConfigureAfter(DataSourceAutoConfiguration.class)
 @EnableConfigurationProperties(DataSourceProperties.class)
 public class DynamicDataSourceAutoConfiguration {
@@ -80,6 +79,18 @@ public class DynamicDataSourceAutoConfiguration {
 		headerProcessor.setNextProcessor(sessionProcessor);
 		sessionProcessor.setNextProcessor(spelExpressionProcessor);
 		return lastParamDsProcessor;
+	}
+
+	/**
+	 * 主数据源提供程序
+	 * @param defaultDataSourceCreator 默认数据源创建者
+	 * @param properties 性能
+	 * @return {@link DynamicDataSourceProvider }
+	 */
+	@Bean
+	public DynamicDataSourceProvider masterDataSourceProvider(DefaultDataSourceCreator defaultDataSourceCreator,
+															  DataSourceProperties properties) {
+		return new MasterDataSourceProvider(defaultDataSourceCreator, properties);
 	}
 
 	/**
