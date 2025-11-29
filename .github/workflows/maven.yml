@@ -24,7 +24,30 @@ jobs:
           distribution: 'zulu'
 
       - name: mvn spring-javaformat:validate
+        id: validate
         run: mvn spring-javaformat:validate
+        continue-on-error: true
+
+      - name: Auto format code if validation fails
+        if: steps.validate.outcome == 'failure'
+        run: mvn spring-javaformat:apply
+
+      - name: Create Pull Request for formatting changes
+        if: steps.validate.outcome == 'failure'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Auto-format code with spring-javaformat'
+          title: 'Auto-format: Fix code formatting issues'
+          body: |
+            This PR was automatically created because the spring-javaformat validation failed.
+            
+            The following changes have been applied:
+            - Applied spring-javaformat:apply to fix formatting issues
+            
+            Please review and merge if the changes look correct.
+          branch: auto-format-${{ github.run_number }}
+          delete-branch: true
 
       - name: mvn clean install
         run: mvn clean install -Pboot
@@ -33,13 +56,13 @@ jobs:
         run: mvn clean install
 
       - name:  failure
-        if: failure() && github.repository == 'arkxos-mesh/pig'
+        if: failure() && github.repository == 'pig-mesh/pig'
         uses: chf007/action-wechat-work@master
         env:
           WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
         with:
           msgtype: markdown
           content: |
-            # 💤🤷‍♀️ failure 🙅‍♂️💣 [arkxos-mesh/pig](https://github.com/arkxos-mesh/pig)
-            > Github Action: https://github.com/arkxos-mesh/pig failure
+            # 💤🤷‍♀️ failure 🙅‍♂️💣 [pig-mesh/pig](https://github.com/pig-mesh/pig)
+            > Github Action: https://github.com/pig-mesh/pig failure
             > (⋟﹏⋞)   from github action message
