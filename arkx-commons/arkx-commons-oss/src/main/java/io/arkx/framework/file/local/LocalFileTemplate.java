@@ -47,7 +47,7 @@ public class LocalFileTemplate implements FileTemplate {
 		return Arrays.stream(FileUtil.ls(properties.getLocal().getBasePath()))
 			.filter(FileUtil::isDirectory)
 			.map(dir -> new Bucket(dir.getName()))
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class LocalFileTemplate implements FileTemplate {
 			S3ObjectSummary summary = new S3ObjectSummary();
 			summary.setKey(file.getName());
 			return summary;
-		}).collect(Collectors.toList());
+		}).toList();
 	}
 
 }
