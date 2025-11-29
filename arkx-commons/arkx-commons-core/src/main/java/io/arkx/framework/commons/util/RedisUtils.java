@@ -15,11 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.RedisConnectionUtils;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.util.CollectionUtils;
@@ -142,6 +138,19 @@ public class RedisUtils<T> {
             log.error(e.getMessage(), e);
         }
         return result;
+    }
+
+    /**
+     * 查找匹配key (使用KEYS命令)
+     * @param pattern key模式，支持通配符 * ? [] 等
+     * @return 匹配的key列表
+     * @apiNote 注意：KEYS命令会阻塞Redis服务器，生产环境建议使用scan方法
+     */
+    public Set<String> keys(String pattern) {
+        RedisTemplate<String, Object> redisTemplate = ArkSpringContextHolder.getBean(RedisTemplate.class);
+        return Optional.ofNullable(redisTemplate)
+                .map(template -> template.keys(pattern))
+                .orElse(Collections.emptySet());
     }
 
     /**
@@ -354,6 +363,18 @@ public class RedisUtils<T> {
         }
         return redisTemplate.opsForValue().increment(key, -delta);
     }
+
+    /**
+     * 执行 Redis 命令回调
+     * @param callback Redis回调函数
+     * @return 执行结果
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T execute(RedisCallback<T> callback) {
+        RedisTemplate<String, Object> redisTemplate = ArkSpringContextHolder.getBean(RedisTemplate.class);
+        return (T) redisTemplate.execute(callback);
+    }
+
     // ================================Map=================================
 
     /**
