@@ -488,10 +488,10 @@
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
 			</dependency>
-			<!--  阿里云短信下发 -->
+			<!--  短信工具：https://sms4j.com -->
 			<dependency>
-				<groupId>io.springboot.sms</groupId>
-				<artifactId>aliyun-sms-spring-boot-starter</artifactId>
+				<groupId>org.dromara.sms4j</groupId>
+				<artifactId>sms4j-spring-boot-starter</artifactId>
 				<version>${sms.version}</version>
 			</dependency>
 			<!-- excel 导入导出 -->
