@@ -44,7 +44,7 @@
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 		<spring-cloud-alibaba.version>2023.0.3.4</spring-cloud-alibaba.version>
 		<spring-security.version>5.8.15</spring-security.version>
-		<spring-boot-admin.version>3.4.5</spring-boot-admin.version>
+		<spring-boot-admin.version>3.5.0</spring-boot-admin.version>
 
 		<git.commit.plugin>9.0.1</git.commit.plugin>
 
