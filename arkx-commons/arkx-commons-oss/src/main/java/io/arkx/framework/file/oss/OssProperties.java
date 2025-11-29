@@ -32,7 +32,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * bucket 设置公共读权限
  */
 @Data
-@ConfigurationProperties(prefix = "oss")
 public class OssProperties {
 
 	/**

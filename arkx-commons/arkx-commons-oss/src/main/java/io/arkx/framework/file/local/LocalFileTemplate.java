@@ -1,9 +1,6 @@
 package io.arkx.framework.file.local;
 
 import cn.hutool.core.io.FileUtil;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import io.arkx.framework.file.core.FileProperties;
 import io.arkx.framework.file.core.FileTemplate;
 
@@ -28,6 +25,20 @@ public class LocalFileTemplate implements FileTemplate {
 	private final FileProperties properties;
 
 	/**
+	 * 简单的 Bucket 数据对象
+	 */
+	public record SimpleBucket(String name) {
+
+	}
+
+	/**
+	 * 简单的 ObjectSummary 数据对象
+	 */
+	public record SimpleObjectSummary(String key) {
+
+	}
+
+	/**
 	 * 创建bucket
 	 * @param bucketName bucket名称
 	 */
@@ -43,10 +54,10 @@ public class LocalFileTemplate implements FileTemplate {
 	 * API Documentation</a>
 	 */
 	@Override
-	public List<Bucket> getAllBuckets() {
+	public List<SimpleBucket> getAllBuckets() {
 		return Arrays.stream(FileUtil.ls(properties.getLocal().getBasePath()))
 			.filter(FileUtil::isDirectory)
-			.map(dir -> new Bucket(dir.getName()))
+			.map(dir -> new SimpleBucket(dir.getName()))
 			.toList();
 	}
 
@@ -87,11 +98,9 @@ public class LocalFileTemplate implements FileTemplate {
 	 */
 	@Override
 	@SneakyThrows
-	public S3Object getObject(String bucketName, String objectName) {
+	public InputStream getObject(String bucketName, String objectName) {
 		String dir = properties.getLocal().getBasePath() + FileUtil.FILE_SEPARATOR + bucketName;
-		S3Object s3Object = new S3Object();
-		s3Object.setObjectContent(FileUtil.getInputStream(dir + FileUtil.FILE_SEPARATOR + objectName));
-		return s3Object;
+		return FileUtil.getInputStream(dir + FileUtil.FILE_SEPARATOR + objectName);
 	}
 
 	/**
@@ -127,14 +136,10 @@ public class LocalFileTemplate implements FileTemplate {
 	 * API Documentation</a>
 	 */
 	@Override
-	public List<S3ObjectSummary> getAllObjectsByPrefix(String bucketName, String prefix, boolean recursive) {
+	public List<SimpleObjectSummary> getAllObjectsByPrefix(String bucketName, String prefix, boolean recursive) {
 		String dir = properties.getLocal().getBasePath() + FileUtil.FILE_SEPARATOR + bucketName;
 
-		return Arrays.stream(FileUtil.ls(dir)).filter(file -> file.getName().startsWith(prefix)).map(file -> {
-			S3ObjectSummary summary = new S3ObjectSummary();
-			summary.setKey(file.getName());
-			return summary;
-		}).toList();
+		return Arrays.stream(FileUtil.ls(dir)).filter(file -> file.getName().startsWith(prefix)).map(file -> new SimpleObjectSummary(file.getName())).toList();
 	}
 
 }

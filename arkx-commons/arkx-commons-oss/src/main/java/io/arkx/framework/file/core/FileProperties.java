@@ -22,6 +22,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import io.arkx.framework.file.local.LocalFileProperties;
 import io.arkx.framework.file.oss.OssProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
  * 文件 配置信息
@@ -42,11 +43,13 @@ public class FileProperties {
 	/**
 	 * 本地文件配置信息
 	 */
+	@NestedConfigurationProperty
 	private LocalFileProperties local;
 
 	/**
 	 * oss 文件配置信息
 	 */
+	@NestedConfigurationProperty
 	private OssProperties oss;
 
 }

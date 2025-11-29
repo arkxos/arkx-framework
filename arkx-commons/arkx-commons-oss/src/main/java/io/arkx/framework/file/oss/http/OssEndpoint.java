@@ -17,9 +17,6 @@
 
 package io.arkx.framework.file.oss.http;
 
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import io.arkx.framework.file.oss.service.OssTemplate;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +26,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.services.s3.model.Bucket;
+import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -87,29 +86,39 @@ public class OssEndpoint {
 	 */
 	@SneakyThrows
 	@PostMapping("/object/{bucketName}")
-	public S3Object createObject(@RequestBody MultipartFile object, @PathVariable String bucketName) {
+	public Map<String, Object> createObject(@RequestBody MultipartFile object, @PathVariable String bucketName) {
 		String name = object.getOriginalFilename();
 		@Cleanup
 		InputStream inputStream = object.getInputStream();
 		template.putObject(bucketName, name, inputStream, object.getSize(), object.getContentType());
-		return template.getObjectInfo(bucketName, name);
 
+		Map<String, Object> result = new HashMap<>();
+		result.put("bucket", bucketName);
+		result.put("object", name);
+		result.put("size", object.getSize());
+		result.put("contentType", object.getContentType());
+		return result;
 	}
 
 	@SneakyThrows
 	@PostMapping("/object/{bucketName}/{objectName}")
-	public S3Object createObject(@RequestBody MultipartFile object, @PathVariable String bucketName,
+	public Map<String, Object> createObject(@RequestBody MultipartFile object, @PathVariable String bucketName,
 			@PathVariable String objectName) {
 		@Cleanup
 		InputStream inputStream = object.getInputStream();
 		template.putObject(bucketName, objectName, inputStream, object.getSize(), object.getContentType());
-		return template.getObjectInfo(bucketName, objectName);
 
+		Map<String, Object> result = new HashMap<>();
+		result.put("bucket", bucketName);
+		result.put("object", objectName);
+		result.put("size", object.getSize());
+		result.put("contentType", object.getContentType());
+		return result;
 	}
 
 	@SneakyThrows
 	@GetMapping("/object/{bucketName}/{objectName}")
-	public List<S3ObjectSummary> filterObject(@PathVariable String bucketName, @PathVariable String objectName) {
+	public List<S3Object> filterObject(@PathVariable String bucketName, @PathVariable String objectName) {
 
 		return template.getAllObjectsByPrefix(bucketName, objectName, true);
 
