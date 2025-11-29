@@ -42,9 +42,11 @@
 
 		<spring-boot.version>3.5.8</spring-boot.version>
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
-		<spring-cloud-alibaba.version>2023.0.3.4</spring-cloud-alibaba.version>
+		<spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
 		<spring-security.version>5.8.15</spring-security.version>
 		<spring-boot-admin.version>3.5.2</spring-boot-admin.version>
+
+		<nacos.client.version>3.1.0</nacos.client.version>
 
 		<git.commit.plugin>9.0.1</git.commit.plugin>
 
@@ -208,6 +210,13 @@
 				<version>${spring-cloud-alibaba.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+
+			<!--Nacos fix: https://gitee.com/log4j/pig/issues/ID2OA3-->
+			<dependency>
+				<groupId>com.alibaba.nacos</groupId>
+				<artifactId>nacos-client</artifactId>
+				<version>${nacos.client.version}</version>
 			</dependency>
 
 			<dependency>
