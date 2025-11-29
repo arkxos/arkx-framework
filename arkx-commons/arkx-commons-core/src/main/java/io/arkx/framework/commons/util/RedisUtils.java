@@ -127,12 +127,13 @@ public class RedisUtils<T> {
         ScanOptions options = ScanOptions.scanOptions().match(pattern).build();
         RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
         RedisConnection rc = Objects.requireNonNull(factory).getConnection();
-        Cursor<byte[]> cursor = rc.scan(options);
+        Cursor<byte[]> cursor = rc.keyCommands().scan(options);
         List<String> result = new ArrayList<>();
         while (cursor.hasNext()) {
             result.add(new String(cursor.next()));
         }
         try {
+            cursor.close();
             RedisConnectionUtils.releaseConnection(rc, factory);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -165,7 +166,7 @@ public class RedisUtils<T> {
         ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
         RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
         RedisConnection rc = Objects.requireNonNull(factory).getConnection();
-        Cursor<byte[]> cursor = rc.scan(options);
+        Cursor<byte[]> cursor = rc.keyCommands().scan(options);
         List<String> result = new ArrayList<>(size);
         int tmpIndex = 0;
         int fromIndex = page * size;
@@ -184,6 +185,7 @@ public class RedisUtils<T> {
             cursor.next();
         }
         try {
+            cursor.close();
             RedisConnectionUtils.releaseConnection(rc, factory);
         } catch (Exception e) {
             log.error(e.getMessage(), e);

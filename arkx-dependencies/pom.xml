@@ -44,7 +44,7 @@
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 		<spring-cloud-alibaba.version>2023.0.3.4</spring-cloud-alibaba.version>
 		<spring-security.version>5.8.15</spring-security.version>
-		<spring-boot-admin.version>3.5.0</spring-boot-admin.version>
+		<spring-boot-admin.version>3.5.2</spring-boot-admin.version>
 
 		<git.commit.plugin>9.0.1</git.commit.plugin>
 
@@ -116,7 +116,7 @@
 		<!-- 工具 -->
 		<commons.fileupload.version>1.4</commons.fileupload.version>
 		<commons-beanutils.version>1.9.2</commons-beanutils.version>
-		<apache.commons-lang3.version>3.9</apache.commons-lang3.version>
+		<apache.commons-lang3.version>3.18.0</apache.commons-lang3.version>
 		<apache.commons-text.version>1.10.0</apache.commons-text.version>
 		<apache.commons-io.version>2.18.0</apache.commons-io.version>
 		<apache.commons.beanutils>1.9.4</apache.commons.beanutils>
