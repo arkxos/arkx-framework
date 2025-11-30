@@ -32,7 +32,8 @@
 		<module>arkx-commons-xss</module>
 		<module>arkx-commons-uid-generator</module>
 
-        <module>arkx-commons-webmvc</module>
+		<module>arkx-commons-webmvc</module>
+		<module>arkx-commons-websocket</module>
 	</modules>
 
     <dependencies>
