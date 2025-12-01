@@ -1,0 +1,368 @@
+name: China Repository Deploy
+
+on:
+  push:
+    tags:
+      - 'v*'
+  push:
+    branches: [ main, dev ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 0.3.0)'
+        required: true
+        default: '0.3.0'
+      release_type:
+        description: 'Release type'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+          - release
+          - snapshot
+      repositories:
+        description: 'Target repositories'
+        required: true
+        default: 'aliyun,tencent'
+        type: choice
+        options:
+          - aliyun
+          - tencent
+          - huawei
+          - gitee
+          - all
+          - aliyun,tencent
+          - aliyun,huawei
+
+env:
+  MAVEN_OPTS: -Xmx1024m
+
+jobs:
+  detect-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      release_type: ${{ steps.version.outputs.release_type }}
+      is_snapshot: ${{ steps.version.outputs.is_snapshot }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Get version from tag or input
+      id: version
+      run: |
+        if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/v}
+          RELEASE_TYPE="release"
+        elif [[ "${{ github.event_name }}" == "push" ]]; then
+          VERSION="0.3.1-SNAPSHOT"
+          RELEASE_TYPE="snapshot"
+        else
+          VERSION="${{ github.event.inputs.version }}"
+          RELEASE_TYPE="${{ github.event.inputs.release_type }}"
+        fi
+        
+        IS_SNAPSHOT="false"
+        if [[ "$VERSION" == *"-SNAPSHOT" ]]; then
+          IS_SNAPSHOT="true"
+        fi
+        
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "release_type=$RELEASE_TYPE" >> $GITHUB_OUTPUT
+        echo "is_snapshot=$IS_SNAPSHOT" >> $GITHUB_OUTPUT
+        
+    - name: Update version in pom.xml
+      run: |
+        mvn versions:set -DnewVersion=${{ steps.version.outputs.version }} -DgenerateBackupPoms=false
+
+  deploy-aliyun:
+    runs-on: ubuntu-latest
+    needs: detect-version
+    if: contains(github.event.inputs.repositories, 'aliyun') || github.event.inputs.repositories == 'all'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 25
+      uses: actions/setup-java@v4
+      with:
+        java-version: '25'
+        distribution: 'temurin'
+        server-id: aliyun-cloud
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Update version
+      run: |
+        mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
+        
+    - name: Build and test
+      run: |
+        mvn clean test -B
+        
+    - name: Deploy to Aliyun Cloud
+      run: |
+        mvn clean deploy \
+          -P aliyun-cloud \
+          -DskipTests \
+          -Dmaven.wagon.http.retryHandler.count=3
+      env:
+        MAVEN_USERNAME: ${{ secrets.ALIYUN_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.ALIYUN_PASSWORD }}
+        
+    - name: Notify Aliyun deployment
+      run: |
+        echo "🚀 Aliyun Cloud deployment completed!"
+        echo "📦 Version: ${{ needs.detect-version.outputs.version }}"
+        echo "🔗 Repository: https://packages.aliyun.com/maven/repository/126334-release-hl3JHL"
+
+  deploy-tencent:
+    runs-on: ubuntu-latest
+    needs: detect-version
+    if: contains(github.event.inputs.repositories, 'tencent') || github.event.inputs.repositories == 'all'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 25
+      uses: actions/setup-java@v4
+      with:
+        java-version: '25'
+        distribution: 'temurin'
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Update version
+      run: |
+        mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
+        
+    - name: Build and test
+      run: |
+        mvn clean test -B
+        
+    - name: Deploy to Tencent Cloud
+      run: |
+        mvn clean deploy \
+          -P tencent-cloud \
+          -DskipTests \
+          -Dmaven.wagon.http.retryHandler.count=3
+        
+    - name: Notify Tencent deployment
+      run: |
+        echo "🚀 Tencent Cloud deployment completed!"
+        echo "📦 Version: ${{ needs.detect-version.outputs.version }}"
+        echo "🔗 Repository: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/"
+
+  deploy-huawei:
+    runs-on: ubuntu-latest
+    needs: detect-version
+    if: contains(github.event.inputs.repositories, 'huawei') || github.event.inputs.repositories == 'all'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 25
+      uses: actions/setup-java@v4
+      with:
+        java-version: '25'
+        distribution: 'temurin'
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Update version
+      run: |
+        mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
+        
+    - name: Build and test
+      run: |
+        mvn clean test -B
+        
+    - name: Deploy to Huawei Cloud
+      run: |
+        mvn clean deploy \
+          -P huawei-cloud \
+          -DskipTests \
+          -Dmaven.wagon.http.retryHandler.count=3
+        
+    - name: Notify Huawei deployment
+      run: |
+        echo "🚀 Huawei Cloud deployment completed!"
+        echo "📦 Version: ${{ needs.detect-version.outputs.version }}"
+        echo "🔗 Repository: https://repo.huaweicloud.com/repository/maven/"
+
+  deploy-gitee:
+    runs-on: ubuntu-latest
+    needs: detect-version
+    if: contains(github.event.inputs.repositories, 'gitee') || github.event.inputs.repositories == 'all'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 25
+      uses: actions/setup-java@v4
+      with:
+        java-version: '25'
+        distribution: 'temurin'
+        server-id: gitee-go
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Update version
+      run: |
+        mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
+        
+    - name: Build and test
+      run: |
+        mvn clean test -B
+        
+    - name: Deploy to Gitee Go
+      run: |
+        mvn clean deploy \
+          -P gitee-go \
+          -DskipTests \
+          -Dmaven.wagon.http.retryHandler.count=3
+      env:
+        MAVEN_USERNAME: ${{ secrets.GITEE_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.GITEE_PASSWORD }}
+        
+    - name: Notify Gitee deployment
+      run: |
+        echo "🚀 Gitee Go deployment completed!"
+        echo "📦 Version: ${{ needs.detect-version.outputs.version }}"
+        echo "🔗 Repository: https://packages.gitee.com/arkxos/arkx-framework/maven"
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: [detect-version, deploy-aliyun, deploy-tencent, deploy-huawei, deploy-gitee]
+    if: needs.detect-version.outputs.is_snapshot == 'false' && github.event_name == 'push' && github.ref == 'refs/tags/*'
+    steps:
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ needs.detect-version.outputs.version }}
+        release_name: Release ${{ needs.detect-version.outputs.version }}
+        body: |
+          ## 🚀 Release ${{ needs.detect-version.outputs.version }}
+          
+          ### 📦 国内可用仓库（实时同步）
+          
+          **阿里云效仓库（推荐）：**
+          ```xml
+          <repositories>
+              <repository>
+                  <id>aliyun-cloud-releases</id>
+                  <url>https://packages.aliyun.com/maven/repository/126334-release-hl3JHL</url>
+              </repository>
+              <repository>
+                  <id>aliyun-cloud-snapshots</id>
+                  <url>https://packages.aliyun.com/maven/repository/126334-snapshot-k0fTE8</url>
+              </repository>
+          </repositories>
+          ```
+          
+          **腾讯云开发者仓库：**
+          ```xml
+          <repositories>
+              <repository>
+                  <id>tencent-maven</id>
+                  <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+              </repository>
+          </repositories>
+          ```
+          
+          **华为云开发者仓库：**
+          ```xml
+          <repositories>
+              <repository>
+                  <id>huawei-maven</id>
+                  <url>https://repo.huaweicloud.com/repository/maven/</url>
+              </repository>
+          </repositories>
+          ```
+          
+          **Gitee Go 仓库：**
+          ```xml
+          <repositories>
+              <repository>
+                  <id>gitee-maven</id>
+                  <url>https://packages.gitee.com/arkxos/arkx-framework/maven</url>
+              </repository>
+          </repositories>
+          ```
+          
+          ### 🔧 使用方法
+          
+          **国内用户推荐配置：**
+          ```xml
+          <repositories>
+              <!-- 阿里云效（推荐，速度快） -->
+              <repository>
+                  <id>aliyun-cloud-releases</id>
+                  <url>https://packages.aliyun.com/maven/repository/126334-release-hl3JHL</url>
+              </repository>
+              <repository>
+                  <id>aliyun-cloud-snapshots</id>
+                  <url>https://packages.aliyun.com/maven/repository/126334-snapshot-k0fTE8</url>
+              </repository>
+          </repositories>
+          
+          <dependency>
+              <groupId>io.arkx.framework</groupId>
+              <artifactId>arkx-framework</artifactId>
+              <version>${{ needs.detect-version.outputs.version }}</version>
+          </dependency>
+          ```
+        draft: false
+        prerelease: false
+
+  notify-completion:
+    runs-on: ubuntu-latest
+    needs: [detect-version, deploy-aliyun, deploy-tencent, deploy-huawei, deploy-gitee]
+    if: always()
+    steps:
+    - name: China Repository Deployment Summary
+      run: |
+        echo "🇨🇳 国内仓库部署总结"
+        echo "=================="
+        echo "📦 版本: ${{ needs.detect-version.outputs.version }}"
+        echo "📋 类型: ${{ needs.detect-version.outputs.release_type }}"
+        echo ""
+        echo "📊 部署状态:"
+        echo "🟢 阿里云效: ${{ needs.deploy-aliyun.result == 'success' && '成功' || '失败' }}"
+        echo "🟢 腾讯云: ${{ needs.deploy-tencent.result == 'success' && '成功' || '失败' }}"
+        echo "🟢 华为云: ${{ needs.deploy-huawei.result == 'success' && '成功' || '失败' }}"
+        echo "🟢 Gitee: ${{ needs.deploy-gitee.result == 'success' && '成功' || '失败' }}"
+        echo ""
+        echo "🔗 快速访问链接:"
+        echo "📦 阿里云效: https://packages.aliyun.com/maven/repository/126334-release-hl3JHL"
+        echo "📦 腾讯云: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/"
+        echo "📦 华为云: https://repo.huaweicloud.com/repository/maven/"
+        echo "📦 Gitee: https://packages.gitee.com/arkxos/arkx-framework/maven"
+        echo ""
+        echo "💡 推荐国内用户使用阿里云效仓库，速度最快！"

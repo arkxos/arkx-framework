@@ -1,0 +1,116 @@
+<!-- 
+快速配置片段 - 复制到您的 pom.xml 中
+用于立即使用 ArkX Framework（无需等待 Maven Central 同步）
+-->
+
+<!-- 方案1: 阿里云效（国内推荐，速度最快，立即可用） -->
+<repositories>
+    <!-- 正式版本 -->
+    <repository>
+        <id>aliyun-cloud-releases</id>
+        <url>https://packages.aliyun.com/maven/repository/126334-release-hl3JHL</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+    
+    <!-- 快照版本 -->
+    <repository>
+        <id>aliyun-cloud-snapshots</id>
+        <url>https://packages.aliyun.com/maven/repository/126334-snapshot-k0fTE8</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+
+<!-- 方案2: 腾讯云（国内推荐，无需认证，立即可用） -->
+<!--
+<repositories>
+    <repository>
+        <id>tencent-maven</id>
+        <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+-->
+
+<!-- 方案3: GitHub Packages（国外推荐，立即可用） -->
+<!--
+<repositories>
+    <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/arkxos/arkx-framework</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+-->
+
+<!-- 方案2: Sonatype Snapshots（仅快照版本，立即可用） -->
+<!--
+<repositories>
+    <repository>
+        <id>sonatype-snapshots</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+-->
+
+<!-- 方案3: Maven Central（生产环境，2-4小时同步延迟） -->
+<!--
+无需额外仓库配置，使用默认的 Maven Central 即可
+-->
+
+<!-- 依赖示例 -->
+<dependencies>
+    <!-- 开发版本（立即可用） -->
+    <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-framework</artifactId>
+        <version>0.3.1-SNAPSHOT</version>
+    </dependency>
+    
+    <!-- 正式版本（GitHub Packages 立即可用，Maven Central 需要等待） -->
+    <!--
+    <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-framework</artifactId>
+        <version>0.3.0</version>
+    </dependency>
+    -->
+</dependencies>
+
+<!-- 认证配置（仅 GitHub Packages 需要，添加到 settings.xml） -->
+<!--
+<settings>
+    <servers>
+        <server>
+            <id>github</id>
+            <username>YOUR_GITHUB_USERNAME</username>
+            <password>YOUR_GITHUB_TOKEN</password>
+        </server>
+    </servers>
+</settings>
+-->

@@ -26,6 +26,35 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <url>https://www.arkx.io</url>
+    
+    <!-- Maven Central 仓库要求的信息 -->
+    <description>ArkX Framework - A modern Java framework for microservices</description>
+    <inceptionYear>2020</inceptionYear>
+    
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <developers>
+        <developer>
+            <id>arkx-team</id>
+            <name>ArkX Team</name>
+            <email>team@arkx.io</email>
+            <organization>ArkX OS</organization>
+            <organizationUrl>https://www.arkx.io</organizationUrl>
+        </developer>
+    </developers>
+    
+    <scm>
+        <connection>scm:git:git://github.com/arkxos/arkx-framework.git</connection>
+        <developerConnection>scm:git:ssh://github.com:arkxos/arkx-framework.git</developerConnection>
+        <url>https://github.com/arkxos/arkx-framework/tree/main</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <!-- 项目版本号，revision属性用于子模块版本控制 -->
@@ -36,6 +65,12 @@
 		<maven.compiler.source>25</maven.compiler.source>
 		<maven.compiler.target>25</maven.compiler.target>
         <maven.compiler.release>25</maven.compiler.release>
+        
+        <!-- Maven Repository 发布配置 -->
+        <maven.repository.url></maven.repository.url>
+        <maven.snapshot.repository.url></maven.snapshot.repository.url>
+        <maven.repository.id></maven.repository.id>
+        <maven.snapshot.repository.id></maven.snapshot.repository.id>
 	</properties>
 
 	<modules>
@@ -60,31 +95,84 @@
         <!--		<module>arkx-data/arkx-data-jdbc</module>-->
 	</modules>
 
+    <!-- 构建插件配置 -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Maven Compiler 插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                
+                <!-- Maven Source 插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+                
+                <!-- Maven Javadoc 插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.6.3</version>
+                </plugin>
+                
+                <!-- Maven Deploy 插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                
+                <!-- Maven GPG 插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                
+                <!-- Nexus Staging 插件 -->
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.13</version>
+                </plugin>
+                
+                <!-- Maven Release 插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <useReleaseProfile>false</useReleaseProfile>
+                        <releaseProfiles>release</releaseProfiles>
+                        <goals>deploy</goals>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-
-	<!--nexus 私有仓库发布地址-->
-	<!--<distributionManagement>
+	<!-- Maven Repository 发布配置 -->
+	<distributionManagement>
 		<repository>
-			<id>maven-releases</id>
-			<url>http://192.168.7.245:8081/repository/maven-releases/</url>
+			<id>${maven.repository.id}</id>
+			<url>${maven.repository.url}</url>
 		</repository>
 		<snapshotRepository>
-			<id>maven-snapshots</id>
-			<url>http://192.168.7.245:8081/repository/maven-snapshots/</url>
+			<id>${maven.snapshot.repository.id}</id>
+			<url>${maven.snapshot.repository.url}</url>
 		</snapshotRepository>
-	</distributionManagement>-->
-	<!--云效私有仓库发布地址-->
-<!--	<distributionManagement>-->
-<!--		&lt;!&ndash;maven的settings.xml文件中设置<server>标签&ndash;&gt;-->
-<!--		<repository>-->
-<!--			<id>rdc-releases</id>-->
-<!--			<url>https://repo.rdc.aliyun.com/repository/126334-release-hl3JHL/</url>-->
-<!--		</repository>-->
-<!--		<snapshotRepository>-->
-<!--			<id>rdc-snapshots</id>-->
-<!--			<url>https://repo.rdc.aliyun.com/repository/126334-snapshot-k0fTE8/</url>-->
-<!--		</snapshotRepository>-->
-<!--	</distributionManagement>-->
+	</distributionManagement>
 <!--	<repositories>-->
 <!--		<repository>-->
 <!--			<id>spring-milestones</id>-->
@@ -123,6 +211,306 @@
             <modules>
 <!--                <module>arkxos-boot</module>-->
             </modules>
+        </profile>
+        
+        <!-- Maven Repository 发布 Profiles -->
+        <!-- Nexus 私有仓库发布 -->
+        <profile>
+            <id>nexus-release</id>
+            <properties>
+                <maven.repository.id>nexus-releases</maven.repository.id>
+                <maven.repository.url>http://192.168.7.245:8081/repository/maven-releases/</maven.repository.url>
+                <maven.snapshot.repository.id>nexus-snapshots</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>http://192.168.7.245:8081/repository/maven-snapshots/</maven.snapshot.repository.url>
+            </properties>
+        </profile>
+        
+        <!-- 云效私有仓库发布 -->
+        <profile>
+            <id>aliyun-rdc-release</id>
+            <properties>
+                <maven.repository.id>rdc-releases</maven.repository.id>
+                <maven.repository.url>https://repo.rdc.aliyun.com/repository/126334-release-hl3JHL/</maven.repository.url>
+                <maven.snapshot.repository.id>rdc-snapshots</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://repo.rdc.aliyun.com/repository/126334-snapshot-k0fTE8/</maven.snapshot.repository.url>
+            </properties>
+        </profile>
+        
+        <!-- Maven Central 仓库发布 -->
+        <profile>
+            <id>central-release</id>
+            <properties>
+                <maven.repository.id>ossrh</maven.repository.id>
+                <maven.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</maven.repository.url>
+                <maven.snapshot.repository.id>ossrh</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://oss.sonatype.org/content/repositories/snapshots</maven.snapshot.repository.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <!-- Sonatype Central 实时仓库 -->
+                <repository>
+                    <id>sonatype-central</id>
+                    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        
+        <!-- GitHub Packages 实时仓库 -->
+        <profile>
+            <id>github-packages</id>
+            <properties>
+                <maven.repository.id>github</maven.repository.id>
+                <maven.repository.url>https://maven.pkg.github.com/arkxos/arkx-framework</maven.repository.url>
+                <maven.snapshot.repository.id>github</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://maven.pkg.github.com/arkxos/arkx-framework</maven.snapshot.repository.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/arkxos/arkx-framework</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        
+        <!-- JitPack 实时仓库 -->
+        <profile>
+            <id>jitpack</id>
+            <properties>
+                <maven.repository.id>jitpack</maven.repository.id>
+                <maven.repository.url>https://jitpack.io</maven.repository.url>
+                <maven.snapshot.repository.id>jitpack</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://jitpack.io</maven.snapshot.repository.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>jitpack.io</id>
+                    <url>https://jitpack.io</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        
+        <!-- 阿里云效仓库（国内实时可用） -->
+        <profile>
+            <id>aliyun-cloud</id>
+            <properties>
+                <maven.repository.id>aliyun-cloud</maven.repository.id>
+                <maven.repository.url>https://packages.aliyun.com/maven/repository/126334-release-hl3JHL</maven.repository.url>
+                <maven.snapshot.repository.id>aliyun-cloud</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://packages.aliyun.com/maven/repository/126334-snapshot-k0fTE8</maven.snapshot.repository.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>aliyun-cloud-releases</id>
+                    <url>https://packages.aliyun.com/maven/repository/126334-release-hl3JHL</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>aliyun-cloud-snapshots</id>
+                    <url>https://packages.aliyun.com/maven/repository/126334-snapshot-k0fTE8</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        
+        <!-- 腾讯云开发者仓库（国内实时可用） -->
+        <profile>
+            <id>tencent-cloud</id>
+            <properties>
+                <maven.repository.id>tencent-cloud</maven.repository.id>
+                <maven.repository.url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</maven.repository.url>
+                <maven.snapshot.repository.id>tencent-cloud</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://mirrors.cloud.tencent.com/nexus/repository/maven-snapshots/</maven.snapshot.repository.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>tencent-maven</id>
+                    <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        
+        <!-- 华为云开发者仓库（国内实时可用） -->
+        <profile>
+            <id>huawei-cloud</id>
+            <properties>
+                <maven.repository.id>huawei-cloud</maven.repository.id>
+                <maven.repository.url>https://repo.huaweicloud.com/repository/maven/</maven.repository.url>
+                <maven.snapshot.repository.id>huawei-cloud</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://repo.huaweicloud.com/repository/maven-snapshots/</maven.snapshot.repository.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>huawei-maven</id>
+                    <url>https://repo.huaweicloud.com/repository/maven/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        
+        <!-- Gitee Go 仓库（国内实时可用） -->
+        <profile>
+            <id>gitee-go</id>
+            <properties>
+                <maven.repository.id>gitee-go</maven.repository.id>
+                <maven.repository.url>https://packages.gitee.com/arkxos/arkx-framework/maven</maven.repository.url>
+                <maven.snapshot.repository.id>gitee-go</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://packages.gitee.com/arkxos/arkx-framework/maven</maven.snapshot.repository.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>gitee-maven</id>
+                    <url>https://packages.gitee.com/arkxos/arkx-framework/maven</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        
+        <!-- 发布构建 Profile -->
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- 源码打包插件 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <!-- Javadoc 文档生成插件 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.6.3</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <doclint>none</doclint>
+                                    <encoding>UTF-8</encoding>
+                                    <charset>UTF-8</charset>
+                                    <docencoding>UTF-8</docencoding>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <!-- GPG 签名插件 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- 使用默认的 gpg 密钥，可以通过 -Dgpg.passphrase 参数指定密码 -->
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                        <arg>--batch</arg>
+                                        <arg>--yes</arg>
+                                    </gpgArguments>
+                                    <skip>false</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <!-- Nexus Staging 插件 - 用于 Maven Central 发布 -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.13</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
+                        </configuration>
+                    </plugin>
+                    
+                    <!-- Maven Deploy 插件 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <configuration>
+                            <deployAtEnd>true</deployAtEnd>
+                            <updateReleaseInfo>true</updateReleaseInfo>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
