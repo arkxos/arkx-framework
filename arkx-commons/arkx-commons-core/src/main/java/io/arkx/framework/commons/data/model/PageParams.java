@@ -1,20 +1,18 @@
 package io.arkx.framework.commons.data.model;
 
 
-import java.io.Serializable;
-import java.util.Map;
-
-import io.arkx.framework.commons.util.BeanConvertUtils;
-import io.arkx.framework.commons.utils2.StringUtil;
-import io.arkx.framework.commons.util.StringUtils;
+import com.google.common.collect.Maps;
 import io.arkx.framework.commons.constants.CommonConstants;
+import io.arkx.framework.commons.util.BeanConvertUtils;
+import io.arkx.framework.commons.util.StringUtils;
+import io.arkx.framework.commons.utils2.StringUtil;
+import lombok.Data;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.google.common.collect.Maps;
-
-import lombok.Data;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 分页参数

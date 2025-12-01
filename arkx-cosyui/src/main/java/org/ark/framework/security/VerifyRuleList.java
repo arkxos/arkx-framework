@@ -1,9 +1,9 @@
 package org.ark.framework.security;
 
-import java.util.ArrayList;
-
 import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.cosyui.web.ResponseData;
+
+import java.util.ArrayList;
 
 
 /**

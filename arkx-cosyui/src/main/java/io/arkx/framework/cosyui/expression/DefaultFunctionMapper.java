@@ -1,31 +1,7 @@
 package io.arkx.framework.cosyui.expression;
 
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
-import io.arkx.framework.cosyui.expression.function.CharWidth;
-import io.arkx.framework.cosyui.expression.function.ClearHtmlTag;
-import io.arkx.framework.cosyui.expression.function.Contains;
-import io.arkx.framework.cosyui.expression.function.ContainsIgnoreCase;
-import io.arkx.framework.cosyui.expression.function.EndsWith;
-import io.arkx.framework.cosyui.expression.function.EscapeXml;
-import io.arkx.framework.cosyui.expression.function.Eval;
-import io.arkx.framework.cosyui.expression.function.Format;
-import io.arkx.framework.cosyui.expression.function.IndexOf;
-import io.arkx.framework.cosyui.expression.function.JavaEncode;
-import io.arkx.framework.cosyui.expression.function.Join;
-import io.arkx.framework.cosyui.expression.function.LastIndexOf;
-import io.arkx.framework.cosyui.expression.function.Length;
-import io.arkx.framework.cosyui.expression.function.Match;
-import io.arkx.framework.cosyui.expression.function.Now;
-import io.arkx.framework.cosyui.expression.function.Replace;
-import io.arkx.framework.cosyui.expression.function.Split;
-import io.arkx.framework.cosyui.expression.function.StartsWith;
-import io.arkx.framework.cosyui.expression.function.Substring;
-import io.arkx.framework.cosyui.expression.function.SubstringAfter;
-import io.arkx.framework.cosyui.expression.function.SubstringBefore;
-import io.arkx.framework.cosyui.expression.function.ToLowerCase;
-import io.arkx.framework.cosyui.expression.function.ToUpperCase;
-import io.arkx.framework.cosyui.expression.function.Trim;
-import io.arkx.framework.cosyui.expression.function.UrlEncode;
+import io.arkx.framework.cosyui.expression.function.*;
 
 /**
  * 默认函数查找器，不区分函数名大小写，已经内置了常用函数

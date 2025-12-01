@@ -1,10 +1,9 @@
 package io.arkx.framework.data.fasttable;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import io.arkx.framework.data.fasttable.annotation.FastColumn;
 import io.arkx.framework.data.fasttable.annotation.Serialize;
 import io.arkx.framework.data.fasttable.util.RecordConverterGenerator;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 

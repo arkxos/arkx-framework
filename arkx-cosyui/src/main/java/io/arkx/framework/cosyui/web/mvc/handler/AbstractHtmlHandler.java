@@ -1,12 +1,11 @@
 package io.arkx.framework.cosyui.web.mvc.handler;
 
-import java.io.IOException;
-
 import io.arkx.framework.cosyui.web.mvc.IURLHandler;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 /**
  * Html处理者虚拟类，输出html的处理者可以继承本类

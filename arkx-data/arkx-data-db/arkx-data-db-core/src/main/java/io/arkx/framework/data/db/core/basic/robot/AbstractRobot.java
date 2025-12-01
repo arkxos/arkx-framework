@@ -11,6 +11,7 @@ package io.arkx.framework.data.db.core.basic.robot;
 
 import io.arkx.framework.data.db.core.basic.exchange.MemChannel;
 import io.arkx.framework.data.db.core.basic.task.TaskResult;
+
 import java.util.Optional;
 
 public abstract class AbstractRobot<R extends TaskResult> implements Robot {

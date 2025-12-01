@@ -10,6 +10,7 @@ import io.arkx.data.lightning.plugin.treetable.closure.DatabaseFeatureDetector;
 import io.arkx.data.lightning.plugin.treetable.closure.sql.ClosureTableSqlProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

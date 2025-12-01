@@ -5,8 +5,12 @@ package io.arkx.framework.data.common.util;
  * @date 2025-07-26 22:46
  * @since 1.0
  */
-import java.lang.reflect.*;
-import java.util.*;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 泛型类型工具类（支持获取类的泛型父类/接口的实际类型参数）

@@ -1,18 +1,15 @@
 package io.arkx.framework.media;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.io.IOException;
-
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.Primitives;
+import io.arkx.framework.commons.util.StringUtil;
 import org.im4java.core.CompositeCmd;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
 
-import io.arkx.framework.commons.util.FileUtil;
-import io.arkx.framework.commons.util.Primitives;
-import io.arkx.framework.commons.util.StringUtil;
+import java.awt.*;
+import java.io.IOException;
 
 public class ImageMagickUtil
 {

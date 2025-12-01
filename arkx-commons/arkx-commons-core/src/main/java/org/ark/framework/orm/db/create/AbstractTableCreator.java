@@ -1,8 +1,7 @@
 package org.ark.framework.orm.db.create;
 
-import org.ark.framework.orm.SchemaColumn;
-
 import io.arkx.framework.commons.util.ObjectUtil;
+import org.ark.framework.orm.SchemaColumn;
 import org.ark.framework.orm.db.util.ColumnTypeConverter;
 
 /**

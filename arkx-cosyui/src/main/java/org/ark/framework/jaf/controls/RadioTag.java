@@ -1,8 +1,7 @@
 package org.ark.framework.jaf.controls;
 
-import org.ark.framework.jaf.tag.CheckboxTag;
-
 import jakarta.servlet.jsp.PageContext;
+import org.ark.framework.jaf.tag.CheckboxTag;
 
 
 /**

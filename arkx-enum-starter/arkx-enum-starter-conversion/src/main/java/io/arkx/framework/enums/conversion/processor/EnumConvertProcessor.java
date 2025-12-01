@@ -1,10 +1,9 @@
 package io.arkx.framework.enums.conversion.processor;
 
-import io.arkx.framework.enums.conversion.annotation.EnumAutoConverter;
-import io.arkx.framework.enums.conversion.converter.AbstractEnumConverter;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.*;
-
+import io.arkx.framework.enums.conversion.annotation.EnumAutoConverter;
+import io.arkx.framework.enums.conversion.converter.AbstractEnumConverter;
 import jakarta.persistence.Converter;
 
 import javax.annotation.processing.*;

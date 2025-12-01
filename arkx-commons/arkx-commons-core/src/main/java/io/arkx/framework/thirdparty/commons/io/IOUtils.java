@@ -15,11 +15,7 @@
  */
 package io.arkx.framework.thirdparty.commons.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 
 /**
  * General IO stream manipulation utilities.

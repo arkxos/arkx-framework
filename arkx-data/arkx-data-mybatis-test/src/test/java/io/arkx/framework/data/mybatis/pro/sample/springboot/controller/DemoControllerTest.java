@@ -1,12 +1,11 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.controller;
 
 import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Demo;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-
-import jakarta.annotation.Resource;
 
 import static io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Gender.FEMALE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;

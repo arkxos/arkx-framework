@@ -1,6 +1,6 @@
 package io.arkx.framework.commons.util;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.Random;
 
 public class ColorUtil {

@@ -1,5 +1,14 @@
 package io.arkx.framework.util.task;
 
+import io.arkx.framework.util.task.callback.Progress;
+import io.arkx.framework.util.task.callback.TaskCompletedListener;
+import io.arkx.framework.util.task.callback.TaskListener;
+import io.arkx.framework.util.task.exception.TaskException;
+import io.arkx.framework.util.task.util.Assert;
+import io.arkx.framework.util.task.util.Utils;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -7,16 +16,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
-
-import io.arkx.framework.util.task.callback.Progress;
-import io.arkx.framework.util.task.callback.TaskCompletedListener;
-import io.arkx.framework.util.task.callback.TaskListener;
-import io.arkx.framework.util.task.exception.TaskException;
-import io.arkx.framework.util.task.util.Assert;
-import io.arkx.framework.util.task.util.Utils;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Setter
 @Getter

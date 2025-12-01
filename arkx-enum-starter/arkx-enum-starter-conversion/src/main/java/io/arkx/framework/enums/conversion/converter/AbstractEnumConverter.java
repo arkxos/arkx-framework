@@ -1,12 +1,11 @@
 package io.arkx.framework.enums.conversion.converter;
 
 
+import io.arkx.framework.enums.core.enums.CodeEnum;
 import jakarta.persistence.AttributeConverter;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
-import io.arkx.framework.enums.core.enums.CodeEnum;
 
 /**
  * 本类 为code为数字类型的枚举类的转换基类 ,继承此类可以在jpa持久化时和实体类对象与数值字段 时 类型互相转换

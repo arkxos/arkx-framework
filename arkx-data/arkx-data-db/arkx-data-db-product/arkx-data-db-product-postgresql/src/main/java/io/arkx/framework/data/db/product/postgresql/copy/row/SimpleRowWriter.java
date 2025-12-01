@@ -5,6 +5,9 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.PgBinaryWriter;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.ValueHandlerProvider;
 import io.arkx.framework.data.db.product.postgresql.copy.util.PostgreSqlUtils;
 import io.arkx.framework.data.db.product.postgresql.copy.util.StringUtils;
+import org.postgresql.PGConnection;
+import org.postgresql.copy.PGCopyOutputStream;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,8 +15,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.postgresql.PGConnection;
-import org.postgresql.copy.PGCopyOutputStream;
 
 public class SimpleRowWriter implements AutoCloseable {
 

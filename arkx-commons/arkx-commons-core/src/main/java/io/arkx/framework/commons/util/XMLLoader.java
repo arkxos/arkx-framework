@@ -1,14 +1,9 @@
 package io.arkx.framework.commons.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
+import io.arkx.framework.commons.collection.CaseIgnoreMapx;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.tree.TreeNode;
+import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.data.xml.XMLParser;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -18,10 +13,9 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.arkx.framework.commons.collection.CaseIgnoreMapx;
-import io.arkx.framework.commons.collection.Mapx;
-import io.arkx.framework.commons.collection.tree.Treex;
-import io.arkx.framework.commons.collection.tree.TreeNode;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

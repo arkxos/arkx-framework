@@ -1,12 +1,12 @@
 package org.ark.framework.json.fastjson;
 
 
+import org.ark.framework.json.JSONException;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import org.ark.framework.json.JSONException;
 
 public class JSONScanner implements JSONLexer {
 	

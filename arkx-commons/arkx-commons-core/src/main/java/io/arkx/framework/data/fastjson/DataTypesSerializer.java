@@ -1,12 +1,12 @@
 package io.arkx.framework.data.fastjson;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import io.arkx.framework.commons.collection.DataTypes;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
 
 public class DataTypesSerializer implements ObjectSerializer {
 

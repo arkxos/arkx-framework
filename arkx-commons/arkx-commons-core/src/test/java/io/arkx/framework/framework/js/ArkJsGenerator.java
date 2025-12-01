@@ -1,9 +1,9 @@
 package io.arkx.framework.framework.js;
 
+import io.arkx.framework.commons.util.FileUtil;
+
 import java.io.File;
 import java.io.IOException;
-
-import io.arkx.framework.commons.util.FileUtil;
 
 /**
  *  

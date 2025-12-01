@@ -1,7 +1,5 @@
 package io.arkx.framework.cosyui.control;
 
-import java.util.Map.Entry;
-
 import io.arkx.framework.Constant;
 import io.arkx.framework.WebCurrent;
 import io.arkx.framework.annotation.Priv;
@@ -13,6 +11,8 @@ import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.security.PrivCheck;
 import io.arkx.framework.security.VerifyCheck;
+
+import java.util.Map.Entry;
 
 /**
  * 上传控件服务器端响应UI类

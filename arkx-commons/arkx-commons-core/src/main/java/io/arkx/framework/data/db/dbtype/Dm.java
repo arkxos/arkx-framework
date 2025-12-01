@@ -1,14 +1,14 @@
 package io.arkx.framework.data.db.dbtype;
 
-import java.sql.SQLException;
-
+import com.sun.star.uno.RuntimeException;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.db.command.DropTableCommand;
 import io.arkx.framework.data.db.command.RenameTableCommand;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
-import com.sun.star.uno.RuntimeException;
+
+import java.sql.SQLException;
 
 /**
  * 达梦数据库，从7.1开始支持

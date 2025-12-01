@@ -1,8 +1,8 @@
 package io.arkx.framework.core.castor;
 
-import java.util.Collection;
-
 import io.arkx.framework.commons.util.StringUtil;
+
+import java.util.Collection;
 
 /**
  * 双字节浮点数组类型转换器

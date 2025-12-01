@@ -1,14 +1,13 @@
 package io.arkx.framework.classweaver;
 
+import io.arkx.framework.preloader.Util;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.tree.ClassNode;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
-
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.tree.ClassNode;
-
-import io.arkx.framework.preloader.Util;
 
 public class WeaverScanner {
 	static HashSet<String> set = null;

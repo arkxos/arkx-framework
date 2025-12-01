@@ -1,12 +1,12 @@
 package io.arkx.framework.cosyui.template;
 
+import io.arkx.framework.thirdparty.fastjson.IOUtils;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.thirdparty.fastjson.IOUtils;
 
 /**
  * 模板输出，能够通过getResult()得到写入的字符串。

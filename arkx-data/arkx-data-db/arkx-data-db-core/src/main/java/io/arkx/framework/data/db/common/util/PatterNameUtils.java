@@ -10,9 +10,10 @@
 package io.arkx.framework.data.db.common.util;
 
 import io.arkx.framework.data.db.common.entity.PatternMapper;
+import lombok.experimental.UtilityClass;
+
 import java.util.Arrays;
 import java.util.List;
-import lombok.experimental.UtilityClass;
 
 /**
  * 基于正则的名称替换工具类

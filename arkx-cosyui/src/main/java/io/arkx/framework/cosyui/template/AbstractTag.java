@@ -1,11 +1,5 @@
 package io.arkx.framework.cosyui.template;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.concurrent.locks.ReentrantLock;
-
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
@@ -18,6 +12,12 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.extend.IExtendItem;
 import io.arkx.framework.i18n.Lang;
 import io.arkx.framework.i18n.LangUtil;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 标签虚拟类，所有标签都必须继承这个类。

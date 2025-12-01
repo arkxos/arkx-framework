@@ -1,12 +1,12 @@
 package io.arkx.framework.data.db.dbtype;
 
+import com.sun.star.uno.RuntimeException;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.db.command.DropIndexCommand;
 import io.arkx.framework.data.db.command.DropTableCommand;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
-import com.sun.star.uno.RuntimeException;
 
 /**
  * SQLServer 2000数据库

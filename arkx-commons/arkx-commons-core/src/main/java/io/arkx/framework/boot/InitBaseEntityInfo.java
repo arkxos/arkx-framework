@@ -1,12 +1,10 @@
 package io.arkx.framework.boot;
 
-import java.util.Date;
-
-import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
-
-import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.data.jdbc.BaseEntity;
 import io.arkx.framework.data.jdbc.Entity;
+import org.ark.framework.infrastructure.repositories.extend.EntitySaveExtendAction;
+
+import java.util.Date;
 
 
 /**   

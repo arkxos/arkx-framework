@@ -1,16 +1,12 @@
 package io.arkx.framework.cosyui.resource;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.cosyui.template.exception.TemplateNotFoundException;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 表示一个UI资源，可能处于.ui.jar中，也可能直接在应用目录下

@@ -1,23 +1,21 @@
 package io.arkx.framework.commons.domain.entity;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.arkx.framework.commons.annotation.Excel;
 import io.arkx.framework.commons.annotation.Excel.ColumnType;
 import io.arkx.framework.commons.annotation.Excel.Type;
 import io.arkx.framework.commons.annotation.Excels;
 import io.arkx.framework.commons.domain.BaseEntity;
 import io.arkx.framework.commons.util.StringUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象 sys_user

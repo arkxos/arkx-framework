@@ -1,10 +1,6 @@
 package io.arkx.framework.commons.collection;
 
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 只读的、线程安全的Map，调用涉及到修改Map的方法时会抛出异常。

@@ -1,14 +1,13 @@
 package io.arkx.framework.data.fasttable;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import io.arkx.framework.data.fasttable.annotation.Complexity;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
-
-import io.arkx.framework.data.fasttable.annotation.Complexity;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * 

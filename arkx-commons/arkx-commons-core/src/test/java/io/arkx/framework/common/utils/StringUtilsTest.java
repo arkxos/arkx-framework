@@ -1,19 +1,19 @@
 package io.arkx.framework.common.utils;
 
-import static io.arkx.framework.commons.util.StringHelper.toCapitalizeCamelCase;
-import static io.arkx.framework.commons.utils2.StringUtil.getIp;
-import static io.arkx.framework.commons.utils2.StringUtil.getWeekDay;
-import static io.arkx.framework.commons.util.StringUtils.toCamelCase;
-import static io.arkx.framework.commons.util.StringUtils.toUnderScoreCase;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import io.arkx.framework.commons.utils2.StringUtil;
+import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.arkx.framework.commons.utils2.StringUtil;
-import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
+import static io.arkx.framework.commons.util.StringHelper.toCapitalizeCamelCase;
+import static io.arkx.framework.commons.util.StringUtils.toCamelCase;
+import static io.arkx.framework.commons.util.StringUtils.toUnderScoreCase;
+import static io.arkx.framework.commons.utils2.StringUtil.getIp;
+import static io.arkx.framework.commons.utils2.StringUtil.getWeekDay;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class StringUtilsTest {
 

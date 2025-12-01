@@ -1,10 +1,5 @@
 package io.arkx.framework.cosyui.tag;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
@@ -14,6 +9,11 @@ import io.arkx.framework.core.bean.BeanUtil;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.json.JSON;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 变量定义/置值标签，用于在模板中定义和修改变量。<br>

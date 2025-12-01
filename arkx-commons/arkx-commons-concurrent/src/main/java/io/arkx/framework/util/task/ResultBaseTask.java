@@ -1,10 +1,10 @@
 package io.arkx.framework.util.task;
 
+import io.arkx.framework.util.task.exception.TaskException;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import io.arkx.framework.util.task.exception.TaskException;
 
 public class ResultBaseTask<T> extends AbstractTask implements ResultTask<T> {
 

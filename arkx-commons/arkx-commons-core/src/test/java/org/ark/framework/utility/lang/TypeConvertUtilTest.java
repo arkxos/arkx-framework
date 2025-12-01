@@ -1,15 +1,14 @@
 package org.ark.framework.utility.lang;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.arkx.framework.commons.util.TypeConvertUtil;
+import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.junit.jupiter.api.Test;
-
-import io.arkx.framework.commons.util.TypeConvertUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 

@@ -1,11 +1,12 @@
 package io.arkx.framework.data.db.core.util;
 
 
-import io.arkx.framework.data.db.common.entity.RawDictInfoEntity;
 import io.arkx.framework.data.db.common.entity.NewDictInfoEntity;
+import io.arkx.framework.data.db.common.entity.RawDictInfoEntity;
 import io.arkx.framework.data.db.common.util.DataDumpCenter;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DictMappingUtils {

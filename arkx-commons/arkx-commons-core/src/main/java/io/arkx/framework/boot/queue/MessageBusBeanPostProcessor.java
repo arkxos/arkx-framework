@@ -1,11 +1,10 @@
 package io.arkx.framework.boot.queue;
 
+import io.arkx.framework.queue2.Consumer;
+import io.arkx.framework.queue2.MessageBus;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
-
-import io.arkx.framework.queue2.Consumer;
-import io.arkx.framework.queue2.MessageBus;
 
 /**   
  * 

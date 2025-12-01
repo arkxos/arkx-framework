@@ -10,10 +10,10 @@
 package io.arkx.framework.data.db.product.oceanbase;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
-import io.arkx.framework.data.db.product.oracle.OracleTableManageProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.manage.DefaultTableManageProvider;
 import io.arkx.framework.data.db.core.provider.manage.TableManageProvider;
+import io.arkx.framework.data.db.product.oracle.OracleTableManageProvider;
 
 public class OceanbaseTableManageProvider extends DefaultTableManageProvider {
 

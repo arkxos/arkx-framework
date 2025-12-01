@@ -8,9 +8,9 @@ package org.ark.framework.orm.sync.metadata;
  * @since 1.0
  */
 
-import java.util.Date;
-
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * 同步元数据

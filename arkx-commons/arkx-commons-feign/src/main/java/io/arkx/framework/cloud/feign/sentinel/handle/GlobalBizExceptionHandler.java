@@ -16,8 +16,8 @@
 
 package io.arkx.framework.cloud.feign.sentinel.handle;
 
-import java.util.List;
-
+import io.arkx.framework.commons.web.ResponseResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -31,9 +31,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import io.arkx.framework.commons.web.ResponseResult;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 /**
  * <p>

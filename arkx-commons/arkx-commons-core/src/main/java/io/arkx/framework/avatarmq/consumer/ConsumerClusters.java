@@ -1,18 +1,16 @@
 package io.arkx.framework.avatarmq.consumer;
 
+import io.arkx.framework.avatarmq.model.RemoteChannelData;
+import io.arkx.framework.avatarmq.model.SubscriptionData;
+import io.arkx.framework.avatarmq.netty.NettyUtil;
+import io.netty.channel.Channel;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
-import io.arkx.framework.avatarmq.model.RemoteChannelData;
-import io.arkx.framework.avatarmq.model.SubscriptionData;
-import io.arkx.framework.avatarmq.netty.NettyUtil;
-
-import io.netty.channel.Channel;
 
 /**
  * 负责定义消费者集群的行为，以及负责消息的路由

@@ -1,7 +1,5 @@
 package io.arkx.framework.misc;
 
-import java.util.HashMap;
-
 import io.arkx.framework.Constant;
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.util.LogUtil;
@@ -10,6 +8,8 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.data.db.DataCollection;
+
+import java.util.HashMap;
 
 /**
  * @class org.ark.framework.FrameworkUI

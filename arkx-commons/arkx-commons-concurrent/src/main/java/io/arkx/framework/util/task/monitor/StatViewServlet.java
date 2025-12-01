@@ -1,5 +1,6 @@
 package io.arkx.framework.util.task.monitor;
 
+import io.arkx.framework.util.task.util.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -9,8 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
-import io.arkx.framework.util.task.util.Utils;
 
 public class StatViewServlet extends HttpServlet {
 

@@ -18,7 +18,6 @@
 package io.arkx.framework.file.oss;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * aws 配置信息

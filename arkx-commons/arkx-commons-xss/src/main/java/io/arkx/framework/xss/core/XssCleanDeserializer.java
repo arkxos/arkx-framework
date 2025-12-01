@@ -16,10 +16,9 @@
 
 package io.arkx.framework.xss.core;
 
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
 import io.arkx.framework.xss.config.ArkXssProperties;
 import io.arkx.framework.xss.utils.XssUtil;
-import io.arkx.framework.commons.util.ArkSpringContextHolder;
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

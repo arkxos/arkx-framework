@@ -10,6 +10,7 @@
 package io.arkx.framework.data.db.common.event;
 
 import com.google.common.eventbus.Subscribe;
+
 import java.util.function.Consumer;
 
 public class EventSubscriber {

@@ -1,17 +1,16 @@
 package io.arkx.framework.data.orm;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-
-import org.aspectj.lang.annotation.After;
-import org.junit.jupiter.api.Test;
-
+import io.arkx.framework.XTest;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import io.arkx.framework.XTest;
+import org.aspectj.lang.annotation.After;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 

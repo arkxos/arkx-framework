@@ -3,7 +3,6 @@ package io.arkx.framework.performance.monitor;
 import io.arkx.framework.performance.monitor.config.MonitorConfig;
 import io.arkx.framework.performance.monitor.model.TraceNode;
 import io.arkx.framework.performance.monitor.repository.TraceRepository;
-import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

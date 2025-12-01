@@ -1,9 +1,10 @@
 package io.arkx.framework.data.db.product.postgresql.copy.util;
 
 import io.arkx.framework.data.db.product.postgresql.copy.exceptions.PgConnectionException;
+import org.postgresql.PGConnection;
+
 import java.sql.Connection;
 import java.util.Optional;
-import org.postgresql.PGConnection;
 
 public final class PostgreSqlUtils {
 

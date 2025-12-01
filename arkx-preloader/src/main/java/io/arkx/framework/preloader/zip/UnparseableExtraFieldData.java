@@ -18,6 +18,8 @@
  */
 package io.arkx.framework.preloader.zip;
 
+import java.util.zip.ZipException;
+
 /**
  * Wrapper for extra field data that doesn't conform to the recommended format of header-tag + size + data.
  *

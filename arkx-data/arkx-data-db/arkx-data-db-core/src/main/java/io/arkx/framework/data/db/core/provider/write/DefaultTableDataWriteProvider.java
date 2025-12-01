@@ -11,16 +11,15 @@ package io.arkx.framework.data.db.core.provider.write;
 
 import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-
-import java.util.*;
-
+import io.arkx.framework.data.db.core.util.SyncUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import io.arkx.framework.data.db.core.util.SyncUtil;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+
+import java.util.*;
 
 @Slf4j
 public class DefaultTableDataWriteProvider

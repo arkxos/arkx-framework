@@ -1,11 +1,11 @@
 package io.arkx.framework.data.xml;
 
+import io.arkx.framework.commons.util.FileUtil;
+
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.commons.util.FileUtil;
 
 /**
  * 一个简单而快速的 XML解析器，需要将整个XML文档先载入内存并且不支持DTD/XSD校验。

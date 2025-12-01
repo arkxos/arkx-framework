@@ -16,9 +16,8 @@
 
 package io.arkx.framework.datasource.dynamic.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author lengleng

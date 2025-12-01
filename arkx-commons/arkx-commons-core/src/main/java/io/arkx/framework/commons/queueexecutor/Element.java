@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.queueexecutor;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * 

@@ -9,10 +9,6 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.oceanbase;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import javax.sql.DataSource;
-import lombok.extern.slf4j.Slf4j;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.DefaultProductFeatures;
@@ -32,6 +28,11 @@ import io.arkx.framework.data.db.product.oracle.OracleMetadataQueryProvider;
 import io.arkx.framework.data.db.product.oracle.OracleTableDataSynchronizer;
 import io.arkx.framework.data.db.product.oracle.OracleTableDataWriteProvider;
 import io.arkx.framework.data.db.product.oracle.OracleTableManageProvider;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @Slf4j
 @Product(ProductTypeEnum.OCEANBASE)

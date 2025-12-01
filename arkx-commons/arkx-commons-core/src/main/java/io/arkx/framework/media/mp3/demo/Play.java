@@ -1,8 +1,8 @@
 package io.arkx.framework.media.mp3.demo;
 
-import java.io.IOException;
-
 import io.arkx.framework.media.mp3.output.Audio;
+
+import java.io.IOException;
 
 /**
  * 控制台命令行播放器。演示解码器调用方法。

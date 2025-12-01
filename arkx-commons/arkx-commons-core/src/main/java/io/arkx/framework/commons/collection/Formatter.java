@@ -1,8 +1,8 @@
 package io.arkx.framework.commons.collection;
 
-import java.lang.reflect.Array;
-
 import io.arkx.framework.commons.lang.FastStringBuilder;
+
+import java.lang.reflect.Array;
 
 /**
  * @class org.ark.framework.collection.Formatter

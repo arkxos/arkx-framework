@@ -8,22 +8,20 @@ package org.ark.framework.orm.sync.source;
  * @since 1.0
  */
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.data.db.connection.ConnectionConfig;
+import io.arkx.framework.data.jdbc.Query;
+import io.arkx.framework.data.jdbc.Session;
+import io.arkx.framework.data.jdbc.SessionFactory;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.ark.framework.orm.Schema;
 import org.ark.framework.orm.sync.SyncException;
 import org.ark.framework.orm.sync.TableSyncConfig;
 
-import io.arkx.framework.data.jdbc.Query;
-import io.arkx.framework.data.jdbc.Session;
-import io.arkx.framework.data.jdbc.SessionFactory;
-
-import lombok.extern.slf4j.Slf4j;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 数据库数据源

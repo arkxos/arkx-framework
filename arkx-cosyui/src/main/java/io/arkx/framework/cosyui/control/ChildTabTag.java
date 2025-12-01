@@ -1,10 +1,5 @@
 package io.arkx.framework.cosyui.control;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
@@ -14,6 +9,11 @@ import io.arkx.framework.cosyui.template.TemplateCompiler;
 import io.arkx.framework.cosyui.template.TemplateExecutor;
 import io.arkx.framework.cosyui.template.command.TagCommand;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 子选项卡标签类

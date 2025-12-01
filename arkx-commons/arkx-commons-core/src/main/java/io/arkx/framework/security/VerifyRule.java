@@ -1,10 +1,10 @@
 package io.arkx.framework.security;
 
+import io.arkx.framework.commons.util.DateUtil;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import io.arkx.framework.commons.util.DateUtil;
 
 /**
  * 数据检验规则类

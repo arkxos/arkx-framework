@@ -1,8 +1,8 @@
 package org.ark.framework.infrastructure.repositoryframework;
 
-import java.util.List;
-
 import io.arkx.framework.data.jdbc.Entity;
+
+import java.util.List;
 
 
 /**

@@ -9,8 +9,9 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.entity;
 
-import java.util.Objects;
 import org.slf4j.MDC;
+
+import java.util.Objects;
 
 public abstract class AbstractLogging {
 

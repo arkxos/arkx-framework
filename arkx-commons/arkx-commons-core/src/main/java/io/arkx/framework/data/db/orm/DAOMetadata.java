@@ -1,10 +1,5 @@
 package io.arkx.framework.data.db.orm;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.annotation.dao.Column;
 import io.arkx.framework.annotation.dao.Indexes;
 import io.arkx.framework.annotation.dao.Table;
@@ -14,6 +9,11 @@ import io.arkx.framework.core.bean.BeanDescription;
 import io.arkx.framework.core.bean.BeanManager;
 import io.arkx.framework.core.bean.BeanProperty;
 import io.arkx.framework.data.db.dbtype.IDBType;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DAO元数据

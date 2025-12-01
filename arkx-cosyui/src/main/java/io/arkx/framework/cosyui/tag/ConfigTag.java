@@ -1,12 +1,12 @@
 package io.arkx.framework.cosyui.tag;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 模板配置标签。<br>

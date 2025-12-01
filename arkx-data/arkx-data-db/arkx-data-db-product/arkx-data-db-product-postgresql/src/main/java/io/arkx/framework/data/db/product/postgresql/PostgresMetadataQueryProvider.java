@@ -16,6 +16,10 @@ import io.arkx.framework.data.db.core.provider.meta.AbstractMetadataProvider;
 import io.arkx.framework.data.db.core.schema.ColumnDescription;
 import io.arkx.framework.data.db.core.schema.ColumnMetaData;
 import io.arkx.framework.data.db.core.schema.TableDescription;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +29,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 
 @Slf4j
 public class PostgresMetadataQueryProvider extends AbstractMetadataProvider {

@@ -1,12 +1,6 @@
 package io.arkx.framework.data.excel;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;  
+import java.util.*;
   
 public class IdCardGenerator {  
   

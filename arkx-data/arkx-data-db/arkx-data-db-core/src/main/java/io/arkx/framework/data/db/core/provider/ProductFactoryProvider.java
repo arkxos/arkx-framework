@@ -22,6 +22,7 @@ import io.arkx.framework.data.db.core.provider.transform.MappedTransformProvider
 import io.arkx.framework.data.db.core.provider.transform.RecordTransformProvider;
 import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
+
 import javax.sql.DataSource;
 
 public interface ProductFactoryProvider {

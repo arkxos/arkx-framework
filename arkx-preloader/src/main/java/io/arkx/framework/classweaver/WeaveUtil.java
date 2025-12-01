@@ -1,10 +1,10 @@
 package io.arkx.framework.classweaver;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 public class WeaveUtil extends ClassLoader {
 	public static void invokeStaticMethod(String weaverClass, String targetMethod, Object[] args) throws Exception {

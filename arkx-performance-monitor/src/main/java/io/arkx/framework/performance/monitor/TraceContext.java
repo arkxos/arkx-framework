@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.LinkedList;
 import java.util.Stack;
 import java.util.UUID;
 

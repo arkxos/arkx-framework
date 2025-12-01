@@ -1,12 +1,8 @@
 package io.arkx.framework.cosyui.control;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import io.arkx.framework.Config;
-import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
@@ -34,6 +30,10 @@ import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.data.db.DataCollection;
 import io.arkx.framework.i18n.LangUtil;
 import io.arkx.framework.security.PrivCheck;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 下拉框标签

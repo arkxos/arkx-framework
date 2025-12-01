@@ -1,13 +1,5 @@
 package org.ark.framework.orm.schema;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicLong;
-
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
@@ -15,9 +7,16 @@ import com.google.common.util.concurrent.MoreExecutors;
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.ExportProgressTracker;
 import io.arkx.framework.commons.util.FileUtil;
-
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**   
  * @class org.ark.framework.orm.schema.SchemaGenerator

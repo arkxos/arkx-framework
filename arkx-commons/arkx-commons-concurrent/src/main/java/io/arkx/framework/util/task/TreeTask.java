@@ -1,5 +1,9 @@
 package io.arkx.framework.util.task;
 
+import ch.qos.logback.core.util.StringUtil;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -7,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
-
-import ch.qos.logback.core.util.StringUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter

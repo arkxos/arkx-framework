@@ -9,27 +9,23 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.register;
 
-import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.common.consts.Constants;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
+import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.ProductProviderFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ServiceConfigurationError;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.*;
 
 @AutoConfiguration
 @Slf4j

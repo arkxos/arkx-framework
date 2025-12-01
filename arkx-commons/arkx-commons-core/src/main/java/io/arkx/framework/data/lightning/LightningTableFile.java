@@ -1,11 +1,11 @@
 package io.arkx.framework.data.lightning;
 
+import io.arkx.framework.data.fasttable.MappedFile;
+
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-
-import io.arkx.framework.data.fasttable.MappedFile;
 
 /**
  *  

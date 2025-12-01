@@ -5,39 +5,20 @@
 
 package io.arkx.framework.media;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.imageio.ImageIO;
-
 import com.alibaba.simpleimage.ImageFormat;
 import com.alibaba.simpleimage.ImageRender;
 import com.alibaba.simpleimage.ImageWrapper;
 import com.alibaba.simpleimage.SimpleImageException;
-import com.alibaba.simpleimage.render.CropParameter;
-import com.alibaba.simpleimage.render.CropRender;
-import com.alibaba.simpleimage.render.DrawTextItem;
-import com.alibaba.simpleimage.render.DrawTextParameter;
-import com.alibaba.simpleimage.render.DrawTextRender;
-import com.alibaba.simpleimage.render.ReadRender;
-import com.alibaba.simpleimage.render.ScaleParameter;
-import com.alibaba.simpleimage.render.ScaleRender;
-import com.alibaba.simpleimage.render.WatermarkParameter;
-import com.alibaba.simpleimage.render.WatermarkRender;
-import com.alibaba.simpleimage.render.WriteRender;
+import com.alibaba.simpleimage.render.*;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.NumberUtil;
 import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.media.render.ZDrawTextItem;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.*;
 
 public class SimpleImageUtil {
 

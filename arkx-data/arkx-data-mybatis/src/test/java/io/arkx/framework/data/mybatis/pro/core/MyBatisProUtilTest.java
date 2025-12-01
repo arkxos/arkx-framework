@@ -10,9 +10,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.getFieldAliasMap;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author w.dehai

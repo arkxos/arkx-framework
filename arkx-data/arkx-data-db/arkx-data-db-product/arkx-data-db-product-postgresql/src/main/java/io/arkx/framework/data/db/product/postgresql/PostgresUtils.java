@@ -12,6 +12,7 @@ package io.arkx.framework.data.db.product.postgresql;
 import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
 import io.arkx.framework.data.db.core.schema.ColumnDescription;
 import io.arkx.framework.data.db.core.util.GenerateSqlUtils;
+
 import java.sql.Connection;
 import java.util.List;
 

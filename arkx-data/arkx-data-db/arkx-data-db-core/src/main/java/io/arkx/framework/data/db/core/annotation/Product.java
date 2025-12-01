@@ -1,6 +1,7 @@
 package io.arkx.framework.data.db.core.annotation;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

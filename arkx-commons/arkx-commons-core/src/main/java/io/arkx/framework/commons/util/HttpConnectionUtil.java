@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.util;
 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 /**
  *  

@@ -1,7 +1,5 @@
 package io.arkx.framework.cosyui;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.LogUtil;
@@ -11,6 +9,8 @@ import io.arkx.framework.core.method.IMethodLocator;
 import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.security.PrivCheck;
+
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 下拉框代码UI类，响应前端JS中的下拉框loadData请求

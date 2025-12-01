@@ -1,14 +1,13 @@
 package io.arkx.framework.swagger.config;
 
-import java.util.Map;
-import java.util.Objects;
-
+import io.arkx.framework.swagger.annotation.EnableArkDoc;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
 
-import io.arkx.framework.swagger.annotation.EnableArkDoc;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * openapi 配置类

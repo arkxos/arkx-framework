@@ -16,20 +16,14 @@
 
 package io.arkx.framework.swagger.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
+import io.arkx.framework.core.YamlPropertySourceFactory;
+import io.arkx.framework.swagger.config.OpenAPIDefinitionImportSelector;
+import io.arkx.framework.swagger.support.SwaggerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 
-import io.arkx.framework.swagger.config.OpenAPIDefinitionImportSelector;
-import io.arkx.framework.swagger.support.SwaggerProperties;
-import io.arkx.framework.core.YamlPropertySourceFactory;
+import java.lang.annotation.*;
 
 /**
  * 开启 pig spring doc

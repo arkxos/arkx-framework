@@ -1,10 +1,10 @@
 package io.arkx.framework.cosyui.expression.function;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import io.arkx.framework.cosyui.expression.AbstractFunction;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 清除字符串中的HTMl标签

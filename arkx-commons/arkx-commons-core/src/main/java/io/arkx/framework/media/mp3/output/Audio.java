@@ -20,12 +20,12 @@
  */
 package io.arkx.framework.media.mp3.output;
 
+import io.arkx.framework.media.mp3.decoder.IAudio;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
-
-import io.arkx.framework.media.mp3.decoder.IAudio;
 
 /**
  * 将解码得到的PCM数据写入音频设备（播放）。

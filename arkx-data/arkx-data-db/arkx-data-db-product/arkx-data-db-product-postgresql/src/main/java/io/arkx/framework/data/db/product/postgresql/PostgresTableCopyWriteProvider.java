@@ -10,11 +10,13 @@
 package io.arkx.framework.data.db.product.postgresql;
 
 import io.arkx.framework.data.db.common.util.ObjectCastUtils;
-import io.arkx.framework.data.db.product.postgresql.copy.row.SimpleRow;
-import io.arkx.framework.data.db.product.postgresql.copy.row.SimpleRowWriter;
-import io.arkx.framework.data.db.product.postgresql.copy.util.PostgreSqlUtils;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
+import io.arkx.framework.data.db.product.postgresql.copy.row.SimpleRow;
+import io.arkx.framework.data.db.product.postgresql.copy.row.SimpleRowWriter;
+import io.arkx.framework.data.db.product.postgresql.copy.row.SimpleRowWriter.Table;
+import io.arkx.framework.data.db.product.postgresql.copy.util.PostgreSqlUtils;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -25,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
-import io.arkx.framework.data.db.product.postgresql.copy.row.SimpleRowWriter.Table;
 
 public class PostgresTableCopyWriteProvider extends DefaultTableDataWriteProvider {
 

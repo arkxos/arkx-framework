@@ -1,11 +1,9 @@
 package io.arkx.framework.encrypt.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import io.arkx.framework.encrypt.enumd.AlgorithmType;
 import io.arkx.framework.encrypt.enumd.EncodeType;
-
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 加解密属性配置类

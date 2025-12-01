@@ -1,12 +1,7 @@
 package io.arkx.framework.ssi;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 
 public class SSIMediator
 {

@@ -1,11 +1,11 @@
 package io.arkx.framework.commons.crawl;
 
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.jsoup.nodes.Document;
 
 /**
  * 

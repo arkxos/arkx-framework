@@ -1,14 +1,14 @@
 package io.arkx.framework.i18n;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.template.AbstractTag;
 import io.arkx.framework.cosyui.template.TagAttr;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 国际化字段按钮，用于在zhtml中为一个文本框/文本域添加国际化数据填写按钮。

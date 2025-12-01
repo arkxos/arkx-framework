@@ -1,7 +1,7 @@
 package io.arkx.framework.enums.scanner.model;
 
-import io.arkx.framework.enums.core.enums.CodeEnum;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.arkx.framework.enums.core.enums.CodeEnum;
 
 /**
  * @author: zhuCan

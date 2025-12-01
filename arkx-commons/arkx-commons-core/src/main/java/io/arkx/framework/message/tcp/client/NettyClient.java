@@ -1,13 +1,5 @@
 package io.arkx.framework.message.tcp.client;
 
-import java.net.SocketAddress;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import io.arkx.framework.commons.util.SystemInfo;
 import io.arkx.framework.message.tcp.MessageProcessor;
 import io.arkx.framework.message.tcp.TcpNode;
@@ -18,17 +10,19 @@ import io.arkx.framework.message.tcp.extend.LoginAuthRequestHandler;
 import io.arkx.framework.message.tcp.struct.NettyMessage;
 import io.arkx.framework.message.tcp.util.PortScan;
 import io.arkx.framework.message.tcp.util.TcpUtil;
-
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.SocketAddress;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 客户端

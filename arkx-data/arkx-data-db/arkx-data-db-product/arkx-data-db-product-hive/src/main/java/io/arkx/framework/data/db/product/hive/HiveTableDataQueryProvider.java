@@ -11,6 +11,7 @@ package io.arkx.framework.data.db.product.hive;
 
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.query.DefaultTableDataQueryProvider;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 

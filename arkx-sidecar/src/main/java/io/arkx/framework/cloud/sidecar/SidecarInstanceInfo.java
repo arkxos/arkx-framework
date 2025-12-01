@@ -16,10 +16,10 @@
 
 package io.arkx.framework.cloud.sidecar;
 
-import java.util.Objects;
-
 import lombok.Data;
 import org.springframework.boot.actuate.health.Status;
+
+import java.util.Objects;
 
 /**
  * @author yuhuangbin

@@ -1,10 +1,10 @@
 package io.arkx.framework.avatarmq.core;
 
+import io.arkx.framework.avatarmq.model.MessageDispatchTask;
+
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import io.arkx.framework.avatarmq.model.MessageDispatchTask;
 
 /**
  * @filename:MessageTaskQueue.java

@@ -1,23 +1,18 @@
 package org.ark.framework.media;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
+import io.arkx.framework.Config;
+import io.arkx.framework.commons.util.NumberUtil;
+import org.w3c.dom.NodeList;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
-
-import org.w3c.dom.NodeList;
-
-import io.arkx.framework.Config;
-import io.arkx.framework.commons.util.NumberUtil;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 
 public class ImageUtil {
 	public static final int NorthWest = 1;

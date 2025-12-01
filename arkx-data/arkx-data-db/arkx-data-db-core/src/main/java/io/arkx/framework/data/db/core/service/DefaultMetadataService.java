@@ -9,6 +9,16 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.service;
 
+import io.arkx.framework.data.db.common.type.ProductTypeEnum;
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.provider.ProductProviderFactory;
+import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
+import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
+import io.arkx.framework.data.db.core.schema.*;
+import io.arkx.framework.data.db.core.util.GenerateSqlUtils;
+import io.arkx.framework.data.db.core.util.SyncUtil;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -16,22 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import javax.sql.DataSource;
-
-import io.arkx.framework.data.db.common.type.ProductTypeEnum;
-import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.provider.ProductProviderFactory;
-import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
-import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
-import io.arkx.framework.data.db.core.schema.ColumnDescription;
-import io.arkx.framework.data.db.core.schema.ColumnValue;
-import io.arkx.framework.data.db.core.schema.IndexDescription;
-import io.arkx.framework.data.db.core.schema.SchemaTableData;
-import io.arkx.framework.data.db.core.schema.SchemaTableMeta;
-import io.arkx.framework.data.db.core.schema.SourceProperties;
-import io.arkx.framework.data.db.core.schema.TableDescription;
-import io.arkx.framework.data.db.core.util.GenerateSqlUtils;
-import io.arkx.framework.data.db.core.util.SyncUtil;
 
 /**
  * 用DataSource对象的元数据获取服务

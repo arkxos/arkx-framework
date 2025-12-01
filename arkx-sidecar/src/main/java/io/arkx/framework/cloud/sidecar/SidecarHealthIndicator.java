@@ -16,15 +16,15 @@
 
 package io.arkx.framework.cloud.sidecar;
 
-import java.net.URI;
-import java.util.Map;
-
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
+import java.util.Map;
 
 /**
  * @author www.itmuch.com

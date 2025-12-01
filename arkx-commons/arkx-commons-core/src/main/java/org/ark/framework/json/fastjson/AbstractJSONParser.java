@@ -1,13 +1,13 @@
 package org.ark.framework.json.fastjson;
 
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
-
 import org.ark.framework.json.JSONArray;
 import org.ark.framework.json.JSONException;
 import org.ark.framework.json.JSONObject;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
 
 public abstract class AbstractJSONParser {
 	

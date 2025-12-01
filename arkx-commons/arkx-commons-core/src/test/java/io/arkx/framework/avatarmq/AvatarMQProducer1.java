@@ -1,10 +1,9 @@
 package io.arkx.framework.avatarmq;
 
-import org.apache.commons.lang3.StringUtils;
-
 import io.arkx.framework.avatarmq.msg.Message;
 import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
 import io.arkx.framework.avatarmq.producer.AvatarMQProducer;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @filename:AvatarMQProducer1.java

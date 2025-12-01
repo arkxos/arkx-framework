@@ -1,19 +1,15 @@
 package io.arkx.framework.data.db.dbtype;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.sun.star.uno.RuntimeException;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringFormat;
-import io.arkx.framework.data.db.command.AdvanceChangeColumnCommand;
-import io.arkx.framework.data.db.command.ChangeColumnLengthCommand;
-import io.arkx.framework.data.db.command.ChangeColumnMandatoryCommand;
-import io.arkx.framework.data.db.command.RenameColumnCommand;
-import io.arkx.framework.data.db.command.RenameTableCommand;
+import io.arkx.framework.data.db.command.*;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
-import com.sun.star.uno.RuntimeException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * IBM DB2 UDB数据库

@@ -1,18 +1,17 @@
 package io.arkx.framework.commons.crawl;
 
+import io.arkx.framework.commons.crawl.scheduler.QueueScheduler;
+import io.arkx.framework.commons.util.CountableThreadPool;
+import io.arkx.framework.commons.util.LongTimeTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import io.arkx.framework.commons.crawl.scheduler.QueueScheduler;
-import io.arkx.framework.commons.util.CountableThreadPool;
-import io.arkx.framework.commons.util.LongTimeTask;
 
 /**
  * 

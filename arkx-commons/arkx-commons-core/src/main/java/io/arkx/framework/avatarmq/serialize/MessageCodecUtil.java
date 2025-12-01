@@ -1,8 +1,8 @@
 package io.arkx.framework.avatarmq.serialize;
 
-import java.io.IOException;
-
 import io.netty.buffer.ByteBuf;
+
+import java.io.IOException;
 
 /**
  * @filename:MessageCodecUtil.java

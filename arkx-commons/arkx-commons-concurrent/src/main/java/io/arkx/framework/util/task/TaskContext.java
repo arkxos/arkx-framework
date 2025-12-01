@@ -1,8 +1,8 @@
 package io.arkx.framework.util.task;
 
+import com.tuples.Tuple;
 import io.arkx.framework.util.task.callback.TaskListener;
 import io.arkx.framework.util.task.exception.ExecutionException;
-import com.tuples.Tuple;
 
 public final class TaskContext {
 

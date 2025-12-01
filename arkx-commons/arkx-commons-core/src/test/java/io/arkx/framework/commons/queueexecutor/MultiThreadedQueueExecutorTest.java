@@ -1,7 +1,8 @@
 package io.arkx.framework.commons.queueexecutor;
 
-import java.util.Arrays;
 import io.arkx.framework.commons.queueexecutor.processor.ElementProcessor;
+
+import java.util.Arrays;
 
 /**
  * @author Darkness

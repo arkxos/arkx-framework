@@ -1,10 +1,9 @@
 package io.arkx.framework.enums.conversion.processor;
 
-import io.arkx.framework.enums.conversion.annotation.JsonAutoConverter;
-import io.arkx.framework.enums.conversion.converter.AbstractJsonConverter;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.*;
-
+import io.arkx.framework.enums.conversion.annotation.JsonAutoConverter;
+import io.arkx.framework.enums.conversion.converter.AbstractJsonConverter;
 import jakarta.persistence.Converter;
 
 import javax.annotation.processing.*;
@@ -14,7 +13,6 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
-
 import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.util.List;

@@ -1,12 +1,12 @@
 package io.arkx.framework.commons.download;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 

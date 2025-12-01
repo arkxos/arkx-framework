@@ -1,8 +1,8 @@
 package org.ark.framework.orm.sql;
 
-import java.util.ArrayList;
-
 import io.arkx.framework.commons.util.StringUtil;
+
+import java.util.ArrayList;
 
 
 /**

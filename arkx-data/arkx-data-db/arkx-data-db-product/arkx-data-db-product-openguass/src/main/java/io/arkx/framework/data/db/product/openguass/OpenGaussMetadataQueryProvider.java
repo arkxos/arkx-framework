@@ -9,8 +9,9 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.openguass;
 
-import io.arkx.framework.data.db.product.postgresql.PostgresMetadataQueryProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.product.postgresql.PostgresMetadataQueryProvider;
+
 import java.sql.Connection;
 import java.util.HashSet;
 import java.util.List;

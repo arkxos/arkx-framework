@@ -1,13 +1,13 @@
 package io.arkx.framework.data.fasttable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.arkx.framework.commons.util.SystemInfo;
+import io.arkx.framework.commons.util.TimeWatch;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.arkx.framework.commons.util.SystemInfo;
-import io.arkx.framework.commons.util.TimeWatch;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FastDbTest {
 

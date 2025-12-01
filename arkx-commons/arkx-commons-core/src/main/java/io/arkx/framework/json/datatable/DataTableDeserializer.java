@@ -1,7 +1,5 @@
 package io.arkx.framework.json.datatable;
 
-import java.lang.reflect.Type;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
@@ -9,6 +7,8 @@ import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
+
+import java.lang.reflect.Type;
 
 /**
  * 

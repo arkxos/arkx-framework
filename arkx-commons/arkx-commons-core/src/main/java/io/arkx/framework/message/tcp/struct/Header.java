@@ -1,9 +1,9 @@
 package io.arkx.framework.message.tcp.struct;
 
+import io.arkx.framework.message.tcp.MessageType;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import io.arkx.framework.message.tcp.MessageType;
 
 /**
  * 消息头

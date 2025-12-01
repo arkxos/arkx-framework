@@ -1,10 +1,5 @@
 package io.arkx.framework.security;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
@@ -12,6 +7,11 @@ import io.arkx.framework.commons.util.ZipUtil;
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONObject;
 import io.arkx.framework.thirdparty.commons.ArrayUtils;
+
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * 权限集合。每一个用户会话中都有一个本类的实例。

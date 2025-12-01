@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.lang.text;
 
+import io.arkx.framework.commons.util.StringUtils;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
-import io.arkx.framework.commons.util.StringUtils;
 
 /**
  * 字符集工具类

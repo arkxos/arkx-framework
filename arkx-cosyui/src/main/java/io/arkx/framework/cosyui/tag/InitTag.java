@@ -1,11 +1,7 @@
 package io.arkx.framework.cosyui.tag;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.core.JsonResult;
@@ -14,6 +10,10 @@ import io.arkx.framework.core.method.MethodLocatorUtil;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.security.PrivCheck;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 变量初始化标签，用于为<ark:init>包围的区域中的表达式提供变量

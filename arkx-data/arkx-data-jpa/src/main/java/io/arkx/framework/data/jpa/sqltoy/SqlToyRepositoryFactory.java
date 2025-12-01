@@ -1,9 +1,6 @@
 package io.arkx.framework.data.jpa.sqltoy;
 
-import java.util.Optional;
-
 import jakarta.persistence.EntityManager;
-
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jpa.provider.PersistenceProvider;
 import org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory;
@@ -13,6 +10,8 @@ import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.ValueExpressionDelegate;
 import org.springframework.lang.Nullable;
+
+import java.util.Optional;
 
 /**
  * @author Darkness

@@ -1,6 +1,5 @@
 package io.arkx.framework;
 
-import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.Errorx;
 import io.arkx.framework.core.method.IMethodLocator;
 import io.arkx.framework.cosyui.template.AbstractExecuteContext;

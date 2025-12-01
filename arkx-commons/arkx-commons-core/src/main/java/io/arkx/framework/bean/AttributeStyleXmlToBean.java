@@ -1,13 +1,13 @@
 package io.arkx.framework.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.lang.ClassUtil;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.data.xml.XMLMultiLoader;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 根据xml的attribute转换成bean

@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.plugin;
 
-import java.util.List;
-
 import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
+
+import java.util.List;
 
 public class PluginContainer {
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
-import org.springframework.util.Assert;
 
 /**
  * This is a workaround for @Autowired annotations in cron job classes.

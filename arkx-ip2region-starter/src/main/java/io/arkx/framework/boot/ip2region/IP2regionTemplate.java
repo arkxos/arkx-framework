@@ -18,12 +18,11 @@ package io.arkx.framework.boot.ip2region;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.DisposableBean;
-
 import io.arkx.framework.boot.ip2region.ext.RegionAddress;
 import io.arkx.framework.boot.ip2region.ext.RegionEnum;
 import io.arkx.framework.boot.ip2region.ext.XdbSearcher;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.DisposableBean;
 
 import java.io.IOException;
 import java.util.Objects;

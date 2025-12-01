@@ -1,11 +1,11 @@
 package io.arkx.framework.data.lightning;
 
+import io.arkx.framework.data.fasttable.BufferReader;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.arkx.framework.data.fasttable.BufferReader;
 
 /**
  *  

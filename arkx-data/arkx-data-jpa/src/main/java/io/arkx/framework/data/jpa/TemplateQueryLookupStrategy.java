@@ -1,9 +1,9 @@
 package io.arkx.framework.data.jpa;
 
-import java.lang.reflect.Method;
-
+import io.arkx.framework.data.jpa.annotation.TemplateQuery;
+import io.arkx.framework.data.jpa.sqltemplate.freemarker.FreemarkerTemplateQuery;
+import io.arkx.framework.data.jpa.sqltoy.SqlToyQueryLookupStrategy;
 import jakarta.persistence.EntityManager;
-
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jpa.provider.QueryExtractor;
 import org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory;
@@ -15,11 +15,9 @@ import org.springframework.data.repository.core.NamedQueries;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.RepositoryQuery;
-
-import io.arkx.framework.data.jpa.annotation.TemplateQuery;
-import io.arkx.framework.data.jpa.sqltemplate.freemarker.FreemarkerTemplateQuery;
-import io.arkx.framework.data.jpa.sqltoy.SqlToyQueryLookupStrategy;
 import org.springframework.data.repository.query.ValueExpressionDelegate;
+
+import java.lang.reflect.Method;
 
 /**
  * <p>模板查询策略</p>

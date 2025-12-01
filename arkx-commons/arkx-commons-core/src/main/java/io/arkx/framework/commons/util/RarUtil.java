@@ -5,12 +5,12 @@
 
 package io.arkx.framework.commons.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
-import io.arkx.framework.commons.collection.Mapx;
 import com.github.junrar.Archive;
 import com.github.junrar.rarfile.FileHeader;
+import io.arkx.framework.commons.collection.Mapx;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class RarUtil {
 

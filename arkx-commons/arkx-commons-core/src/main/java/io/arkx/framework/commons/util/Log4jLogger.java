@@ -1,8 +1,7 @@
 package io.arkx.framework.commons.util;
 
-import org.apache.commons.logging.Log;
-
 import io.arkx.framework.commons.util.log.ILogger;
+import org.apache.commons.logging.Log;
 
 public class Log4jLogger
   implements ILogger

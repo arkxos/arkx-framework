@@ -23,9 +23,7 @@ import java.util.stream.Stream;
 
 import static cn.hutool.core.annotation.AnnotationUtil.getAnnotationValue;
 import static cn.hutool.core.util.ClassUtil.getTypeArgument;
-import static io.arkx.framework.data.mybatis.pro.core.util.ClassUtil.getAllParentInterface;
-import static io.arkx.framework.data.mybatis.pro.core.util.ClassUtil.getIdField;
-import static io.arkx.framework.data.mybatis.pro.core.util.ClassUtil.isJavaBeanProp;
+import static io.arkx.framework.data.mybatis.pro.core.util.ClassUtil.*;
 import static io.arkx.framework.data.mybatis.pro.core.util.DocumentUtil.createDocumentFromResource;
 import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.FIELDS_ALIAS_CACHE;
 import static io.arkx.framework.data.mybatis.pro.core.util.SqlUtil.toLine;

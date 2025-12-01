@@ -1,10 +1,8 @@
 package io.arkx.framework.preloader;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
+import io.arkx.framework.classweaver.WeaverScanner;
+
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -15,8 +13,6 @@ import java.util.List;
 import java.util.Vector;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
-
-import io.arkx.framework.classweaver.WeaverScanner;
 
 public class PreClassLoader extends URLClassLoader {
 	private List<JarClassLoader> loaders = null;

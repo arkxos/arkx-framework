@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.util;
 
-import java.nio.ByteBuffer;
-import java.util.UUID;
-
 import io.arkx.framework.common.utils.Base58;
 import org.apache.commons.codec.binary.Base64;
+
+import java.nio.ByteBuffer;
+import java.util.UUID;
 
 /**
  * @author Darkness

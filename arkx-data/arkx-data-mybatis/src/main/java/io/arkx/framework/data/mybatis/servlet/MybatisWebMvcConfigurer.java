@@ -1,11 +1,10 @@
 package io.arkx.framework.data.mybatis.servlet;
 
+import io.arkx.framework.data.mybatis.resolver.SqlFilterArgumentResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import io.arkx.framework.data.mybatis.resolver.SqlFilterArgumentResolver;
 
 import java.util.List;
 

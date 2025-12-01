@@ -9,11 +9,12 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.sr;
 
-import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import io.arkx.framework.data.db.common.entity.CloseableDataSource;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvider;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Slf4j
 public class StarrocksTableDataWriteProvider extends AutoCastTableDataWriteProvider {

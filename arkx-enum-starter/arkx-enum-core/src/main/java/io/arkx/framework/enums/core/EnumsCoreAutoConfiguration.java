@@ -1,9 +1,8 @@
 package io.arkx.framework.enums.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.arkx.framework.enums.core.mvc.JsonEnumConverter;
 import io.arkx.framework.enums.core.mvc.MvcConfiguration;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

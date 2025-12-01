@@ -1,13 +1,12 @@
 package io.arkx.framework.data.jpa.util;
 
+import io.arkx.framework.commons.collection.tree.TreeNode;
+import io.arkx.framework.commons.collection.tree.Treex;
+import io.arkx.framework.data.common.entity.TreeEntity;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.arkx.framework.commons.collection.tree.Treex;
-import io.arkx.framework.commons.collection.tree.TreeNode;
-import io.arkx.framework.commons.exception.ServiceException;
-import io.arkx.framework.data.common.entity.TreeEntity;
 
 /**
  * @author Darkness

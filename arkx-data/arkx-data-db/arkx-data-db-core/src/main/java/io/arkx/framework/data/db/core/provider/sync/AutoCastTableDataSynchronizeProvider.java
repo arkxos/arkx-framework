@@ -1,6 +1,7 @@
 package io.arkx.framework.data.db.core.provider.sync;
 
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+
 import java.util.List;
 
 public class AutoCastTableDataSynchronizeProvider extends DefaultTableDataSynchronizeProvider {

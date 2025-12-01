@@ -1,15 +1,10 @@
 package io.arkx.framework.cosyui.template;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
-import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.commons.collection.tree.TreeNode;
+import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.cosyui.html.HtmlElement;
@@ -19,6 +14,11 @@ import io.arkx.framework.cosyui.resource.UIResourceFile;
 import io.arkx.framework.cosyui.template.exception.TemplateCompileException;
 import io.arkx.framework.data.xml.XMLParser;
 import io.arkx.framework.data.xml.XMLParser.ElementAttribute;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 模板解析器

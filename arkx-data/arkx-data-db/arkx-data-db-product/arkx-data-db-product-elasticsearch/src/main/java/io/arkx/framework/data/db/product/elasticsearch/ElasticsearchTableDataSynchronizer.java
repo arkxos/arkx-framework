@@ -11,6 +11,7 @@ package io.arkx.framework.data.db.product.elasticsearch;
 
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.sync.DefaultTableDataSynchronizeProvider;
+
 import java.util.List;
 
 public class ElasticsearchTableDataSynchronizer extends DefaultTableDataSynchronizeProvider {

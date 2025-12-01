@@ -17,14 +17,13 @@
 package io.arkx.framework.xss.core;
 
 import cn.hutool.core.util.ArrayUtil;
+import io.arkx.framework.xss.config.ArkXssProperties;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
-
-import io.arkx.framework.xss.config.ArkXssProperties;
 
 /**
  * xss 处理拦截器

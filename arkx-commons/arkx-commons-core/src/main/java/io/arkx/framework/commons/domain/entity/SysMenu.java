@@ -1,15 +1,13 @@
 package io.arkx.framework.commons.domain.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.arkx.framework.commons.domain.BaseEntity;
+import io.arkx.framework.commons.util.StringUtils;
+import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import io.arkx.framework.commons.domain.BaseEntity;
-import io.arkx.framework.commons.util.StringUtils;
-
-import jakarta.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 菜单权限表 sys_menu

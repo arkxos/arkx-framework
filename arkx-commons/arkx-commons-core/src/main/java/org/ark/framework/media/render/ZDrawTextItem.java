@@ -1,18 +1,12 @@
 package org.ark.framework.media.render;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import com.alibaba.simpleimage.render.DrawTextItem;
+import org.apache.commons.lang3.StringUtils;
+
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.alibaba.simpleimage.render.DrawTextItem;
 
 public class ZDrawTextItem extends DrawTextItem {
 	protected float x;

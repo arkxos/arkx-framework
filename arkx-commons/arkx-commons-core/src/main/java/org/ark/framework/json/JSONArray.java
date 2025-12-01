@@ -1,9 +1,9 @@
 package org.ark.framework.json;
 
-import java.util.ArrayList;
-
 import org.ark.framework.core.castor.IntCastor;
 import org.ark.framework.core.castor.LongCastor;
+
+import java.util.ArrayList;
 
 
 /**

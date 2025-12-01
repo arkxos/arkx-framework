@@ -1,6 +1,7 @@
 package io.arkx.framework.data.db.product.postgresql.copy.model;
 
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.PgBinaryWriter;
+
 import java.util.function.BiConsumer;
 
 public class ColumnDefinition<TEntity> {

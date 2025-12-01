@@ -1,7 +1,6 @@
 package io.arkx.framework.avatarmq.broker;
 
 import io.arkx.framework.avatarmq.msg.Message;
-
 import io.netty.channel.Channel;
 
 /**

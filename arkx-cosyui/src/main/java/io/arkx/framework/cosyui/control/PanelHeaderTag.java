@@ -1,10 +1,5 @@
 package io.arkx.framework.cosyui.control;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.cosyui.tag.ArkTag;
@@ -12,6 +7,11 @@ import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.cosyui.util.TagUtil;
 import io.arkx.framework.i18n.LangUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 可折叠面板标签

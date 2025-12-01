@@ -1,6 +1,5 @@
 package io.arkx.framework.performance.monitor;
 
-import io.arkx.framework.performance.monitor.config.MonitorConfig;
 import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;

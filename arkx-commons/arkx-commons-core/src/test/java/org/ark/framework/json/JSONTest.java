@@ -1,15 +1,14 @@
 package org.ark.framework.json;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.arkx.framework.XTest;
+import io.arkx.framework.commons.util.DateUtil;
+import org.ark.common.Person;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ark.common.Person;
-import org.junit.jupiter.api.Test;
-
-import io.arkx.framework.commons.util.DateUtil;
-import io.arkx.framework.XTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 

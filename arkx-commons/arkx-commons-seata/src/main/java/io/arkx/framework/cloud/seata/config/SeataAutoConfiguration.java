@@ -1,9 +1,8 @@
 package io.arkx.framework.cloud.seata.config;
 
+import io.arkx.framework.core.YamlPropertySourceFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-
-import io.arkx.framework.core.YamlPropertySourceFactory;
 
 /**
  * Seata 配置类

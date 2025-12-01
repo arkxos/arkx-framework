@@ -1,8 +1,8 @@
 package io.arkx.framework.enums.scanner.handler;
 
-import java.util.List;
-
 import io.arkx.framework.enums.scanner.model.CodeTable;
+
+import java.util.List;
 
 /**
  * @author: zhuCan

@@ -1,8 +1,8 @@
 package io.arkx.framework.enums.scanner.model;
 
-import java.util.List;
-
 import io.arkx.framework.enums.core.enums.CodeEnum;
+
+import java.util.List;
 
 /**
  * @author: zhuCan

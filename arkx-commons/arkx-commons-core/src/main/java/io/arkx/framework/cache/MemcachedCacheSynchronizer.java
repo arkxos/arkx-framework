@@ -1,19 +1,18 @@
 package io.arkx.framework.cache;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeoutException;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.extend.ExtendManager;
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONObject;
-
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.exception.MemcachedException;
+
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeoutException;
 
 public class MemcachedCacheSynchronizer implements ICacheSynchronizer {
 	

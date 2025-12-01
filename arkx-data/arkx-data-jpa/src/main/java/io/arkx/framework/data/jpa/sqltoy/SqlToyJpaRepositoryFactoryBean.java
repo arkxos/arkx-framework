@@ -1,10 +1,7 @@
 package io.arkx.framework.data.jpa.sqltoy;
 
-import java.io.Serializable;
-
 import io.arkx.framework.data.common.ContextHolder;
 import jakarta.persistence.EntityManager;
-
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +9,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+
+import java.io.Serializable;
 
 /**
  * @author Darkness

@@ -1,9 +1,9 @@
 package io.arkx.framework.data.db.sql;
 
-import java.util.ArrayList;
-
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
+
+import java.util.ArrayList;
 
 /**
  * 将一个Select SQL语句分解成各组成部分，但该SQL语句不能包含Union

@@ -1,9 +1,9 @@
 package org.ark.framework.orm.xtable;
 
-import java.util.Hashtable;
-
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
+
+import java.util.Hashtable;
 
 
 	/// 本类为Categoryvalue类的静态集合类，即：通过本类提供(依主键)对Categoryvalue表的各行数据的实例化Categoryvalue对象的快速索引。

@@ -9,26 +9,19 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.mysql;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import io.arkx.framework.data.db.common.consts.Constants;
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.provider.meta.AbstractMetadataProvider;
+import io.arkx.framework.data.db.core.schema.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import io.arkx.framework.data.db.common.consts.Constants;
-import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.provider.meta.AbstractMetadataProvider;
-import io.arkx.framework.data.db.core.schema.ColumnDescription;
-import io.arkx.framework.data.db.core.schema.ColumnMetaData;
-import io.arkx.framework.data.db.core.schema.IndexDescription;
-import io.arkx.framework.data.db.core.schema.SourceProperties;
-import io.arkx.framework.data.db.core.schema.TableDescription;
 
 @Slf4j
 public class MysqlMetadataQueryProvider extends AbstractMetadataProvider {

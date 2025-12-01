@@ -9,13 +9,14 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.greenplum;
 
-import io.arkx.framework.data.db.product.postgresql.PostgresMetadataQueryProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.schema.SourceProperties;
-import java.util.HashSet;
-import java.util.List;
+import io.arkx.framework.data.db.product.postgresql.PostgresMetadataQueryProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
+
+import java.util.HashSet;
+import java.util.List;
 
 @Slf4j
 public class GreenplumMetadataQueryProvider extends PostgresMetadataQueryProvider {

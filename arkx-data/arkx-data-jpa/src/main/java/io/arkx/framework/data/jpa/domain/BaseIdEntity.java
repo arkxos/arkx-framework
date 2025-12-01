@@ -1,18 +1,16 @@
 package io.arkx.framework.data.jpa.domain;
 
-import java.io.Serializable;
-
+import io.arkx.framework.data.jpa.util.SnowflakeGenerator;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.util.ClassUtils;
 
-import io.arkx.framework.data.jpa.util.SnowflakeGenerator;
+import java.io.Serializable;
 
 /**
  * 基础实体

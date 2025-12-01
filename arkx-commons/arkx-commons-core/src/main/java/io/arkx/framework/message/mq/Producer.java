@@ -1,16 +1,15 @@
 package io.arkx.framework.message.mq;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSON;
 import io.arkx.framework.commons.util.UuidUtil;
 import io.arkx.framework.message.tcp.client.NettyClient;
 import io.arkx.framework.message.tcp.struct.NettyMessage;
 import io.arkx.framework.message.tcp.struct.RequestMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Producer extends NettyClient {
 

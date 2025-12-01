@@ -1,15 +1,11 @@
 package io.arkx.framework.data.fasttable;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.StringUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  *  

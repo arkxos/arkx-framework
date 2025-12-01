@@ -1,14 +1,13 @@
 package io.arkx.framework.message.mq;
 
-import java.util.Collection;
-
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import io.arkx.framework.commons.util.UuidUtil;
 import io.arkx.framework.message.tcp.server.NettyServer;
 import io.arkx.framework.message.tcp.struct.RequestMessage;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
 import io.netty.channel.Channel;
+
+import java.util.Collection;
 
 public class Broker extends NettyServer {
 

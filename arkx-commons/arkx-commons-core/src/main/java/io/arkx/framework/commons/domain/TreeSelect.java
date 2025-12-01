@@ -1,12 +1,12 @@
 package io.arkx.framework.commons.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.arkx.framework.commons.domain.entity.SysDept;
+import io.arkx.framework.commons.domain.entity.SysMenu;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import io.arkx.framework.commons.domain.entity.SysDept;
-import io.arkx.framework.commons.domain.entity.SysMenu;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Treeselect树结构实体类

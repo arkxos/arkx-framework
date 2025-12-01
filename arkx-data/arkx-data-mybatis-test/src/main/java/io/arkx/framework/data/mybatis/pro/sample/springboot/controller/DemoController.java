@@ -3,13 +3,13 @@ package io.arkx.framework.data.mybatis.pro.sample.springboot.controller;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Demo;
 import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Gender;
+import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

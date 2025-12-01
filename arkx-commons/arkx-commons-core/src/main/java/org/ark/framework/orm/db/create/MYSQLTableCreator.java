@@ -1,9 +1,8 @@
 package org.ark.framework.orm.db.create;
 
+import io.arkx.framework.commons.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ark.framework.orm.SchemaColumn;
-
-import io.arkx.framework.commons.util.ObjectUtil;
 
 import java.util.*;
 

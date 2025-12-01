@@ -9,11 +9,7 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.provider.transform;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * Schema/Table/Column三元组定义

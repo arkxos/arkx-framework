@@ -9,7 +9,10 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.arkx.framework.commons.collection.tree.TreeNodeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

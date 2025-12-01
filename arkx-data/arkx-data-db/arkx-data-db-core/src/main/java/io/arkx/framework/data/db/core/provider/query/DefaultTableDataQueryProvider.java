@@ -10,9 +10,6 @@
 package io.arkx.framework.data.db.core.provider.query;
 
 import cn.hutool.core.util.HexUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import io.arkx.framework.data.db.common.consts.Constants;
 import io.arkx.framework.data.db.common.entity.IncrementPoint;
 import io.arkx.framework.data.db.common.entity.ResultSetWrapper;
@@ -23,6 +20,9 @@ import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.schema.ColumnValue;
 import io.arkx.framework.data.db.core.schema.SchemaTableData;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.*;
 import java.util.ArrayList;

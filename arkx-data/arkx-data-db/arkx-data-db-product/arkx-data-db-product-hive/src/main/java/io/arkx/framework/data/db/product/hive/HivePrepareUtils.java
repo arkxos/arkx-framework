@@ -9,12 +9,13 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.hive;
 
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public final class HivePrepareUtils {

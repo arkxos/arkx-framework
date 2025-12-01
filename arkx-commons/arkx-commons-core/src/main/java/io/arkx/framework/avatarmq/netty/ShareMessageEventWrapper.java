@@ -1,7 +1,6 @@
 package io.arkx.framework.avatarmq.netty;
 
 import io.arkx.framework.avatarmq.core.HookMessageEvent;
-
 import io.netty.channel.ChannelHandler;
 
 /**

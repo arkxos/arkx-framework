@@ -15,27 +15,21 @@
  */
 package io.arkx.framework.commons.util;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
+import io.arkx.framework.commons.ArkSecurityService;
+import io.arkx.framework.commons.annotation.DataPermission;
+import io.arkx.framework.commons.annotation.Query;
+import io.arkx.framework.commons.utils2.StringUtil;
+import jakarta.persistence.criteria.*;
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import io.arkx.framework.commons.ArkSecurityService;
-import io.arkx.framework.commons.utils2.StringUtil;
-import io.arkx.framework.commons.annotation.DataPermission;
-import io.arkx.framework.commons.annotation.Query;
-
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ObjectUtil;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Expression;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Zheng Jie

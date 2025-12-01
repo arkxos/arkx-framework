@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.simplequeue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Object storing extracted result and urls to fetch.<br>

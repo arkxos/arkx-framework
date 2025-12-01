@@ -9,13 +9,14 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.entity;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * JDBC连接及结果集实体参数定义类

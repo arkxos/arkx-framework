@@ -1,8 +1,7 @@
 package io.arkx.framework.avatarmq.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-
 import io.netty.channel.Channel;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  * @filename:RemoteChannelData.java

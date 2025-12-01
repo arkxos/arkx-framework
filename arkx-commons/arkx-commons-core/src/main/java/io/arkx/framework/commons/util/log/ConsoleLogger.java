@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.util.log;
 
-import java.io.PrintStream;
-
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.LogUtil;
+
+import java.io.PrintStream;
 
 /**
  */

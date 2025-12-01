@@ -1,10 +1,10 @@
 package io.arkx.framework.bean;
 
+import io.arkx.framework.data.xml.XMLMultiLoader;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.arkx.framework.data.xml.XMLMultiLoader;
 
 /**
  * 

@@ -1,7 +1,6 @@
 package io.arkx.framework.ssi;
 
 import io.arkx.framework.commons.util.StringUtil;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 public class SSIServletRequestUtil

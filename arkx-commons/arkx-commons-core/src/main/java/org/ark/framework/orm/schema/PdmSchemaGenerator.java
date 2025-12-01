@@ -1,20 +1,14 @@
 package org.ark.framework.orm.schema;
 
+import io.arkx.framework.Config;
+import io.arkx.framework.commons.util.FileUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.dom4j.*;
+import org.dom4j.io.SAXReader;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-import org.dom4j.io.SAXReader;
-
-import io.arkx.framework.Config;
-import io.arkx.framework.commons.util.FileUtil;
-
-import lombok.extern.slf4j.Slf4j;
 
 
 /**

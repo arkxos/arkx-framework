@@ -1,12 +1,11 @@
 package org.ark.framework.collection;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import io.arkx.framework.commons.collection.Queuex;
 import org.apache.commons.lang.math.RandomUtils;
 import org.ark.common.Person;
 import org.junit.jupiter.api.Test;
 
-import io.arkx.framework.commons.collection.Queuex;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**   
  * 

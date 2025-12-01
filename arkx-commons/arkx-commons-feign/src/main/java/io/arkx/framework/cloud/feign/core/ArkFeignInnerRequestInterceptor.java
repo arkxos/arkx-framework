@@ -1,13 +1,11 @@
 package io.arkx.framework.cloud.feign.core;
 
-import java.lang.reflect.Method;
-
-import org.springframework.core.Ordered;
-
-import io.arkx.framework.cloud.feign.annotation.NoToken;
-
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import io.arkx.framework.cloud.feign.annotation.NoToken;
+import org.springframework.core.Ordered;
+
+import java.lang.reflect.Method;
 
 /**
  * @author lengleng

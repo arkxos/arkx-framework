@@ -1,11 +1,10 @@
 package io.arkx.framework.security;
 
-import java.security.NoSuchAlgorithmException;
+import io.arkx.framework.commons.util.StringUtil;
 
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-
-import io.arkx.framework.commons.util.StringUtil;
+import java.security.NoSuchAlgorithmException;
 
 public class EncryptUtil {
 	public static final String DEFAULT_KEY = "27jrWz3sxrVbR+pnyg6j";

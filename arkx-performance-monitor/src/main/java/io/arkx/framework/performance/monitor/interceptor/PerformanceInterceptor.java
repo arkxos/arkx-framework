@@ -2,17 +2,15 @@ package io.arkx.framework.performance.monitor.interceptor;
 
 import io.arkx.framework.performance.monitor.TraceContext;
 import io.arkx.framework.performance.monitor.TraceRecorder;
+import io.arkx.framework.performance.monitor.annotation.IngorePerformanceLog;
 import io.arkx.framework.performance.monitor.config.MonitorConfig;
 import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 import io.arkx.framework.performance.monitor.model.TraceNode;
 import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 import io.arkx.framework.performance.monitor.util.SignatureBuilder;
-import io.arkx.framework.performance.monitor.annotation.IngorePerformanceLog;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;

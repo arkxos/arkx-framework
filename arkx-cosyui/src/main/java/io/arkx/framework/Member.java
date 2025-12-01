@@ -1,10 +1,10 @@
 package io.arkx.framework;
 
-import java.io.Serializable;
-import java.util.Map;
-
 import io.arkx.framework.Account.UserData;
 import io.arkx.framework.commons.collection.Mapx;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 存取前台会员用户的会话信息，实际数据存储在User对象中。

@@ -1,10 +1,9 @@
 package io.arkx.framework.data.mybatis.service;
 
-import io.arkx.framework.data.mybatis.model.EntityMap;
-import io.arkx.framework.data.mybatis.query.CriteriaQuery;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-
+import io.arkx.framework.data.mybatis.model.EntityMap;
+import io.arkx.framework.data.mybatis.query.CriteriaQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

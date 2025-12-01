@@ -1,14 +1,13 @@
 package io.arkx.framework.data.orm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.arkx.framework.XTest;
+import io.arkx.framework.data.db.connection.Connection;
+import io.arkx.framework.data.db.connection.ConnectionPoolManager;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.Test;
-
-import io.arkx.framework.data.db.connection.Connection;
-import io.arkx.framework.data.db.connection.ConnectionPoolManager;
-import io.arkx.framework.XTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 

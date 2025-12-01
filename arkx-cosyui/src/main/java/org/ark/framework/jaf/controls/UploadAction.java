@@ -1,10 +1,9 @@
 package org.ark.framework.jaf.controls;
 
-import java.util.ArrayList;
-
+import io.arkx.framework.commons.util.ObjectUtil;
 import org.apache.commons.fileupload2.core.FileItem;
 
-import io.arkx.framework.commons.util.ObjectUtil;
+import java.util.ArrayList;
 
 
 /**

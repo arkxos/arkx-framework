@@ -1,9 +1,9 @@
 package org.ark.framework.jaf.html;
 
+import io.arkx.framework.commons.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
-
-import io.arkx.framework.commons.util.StringUtil;
 
 
 /**

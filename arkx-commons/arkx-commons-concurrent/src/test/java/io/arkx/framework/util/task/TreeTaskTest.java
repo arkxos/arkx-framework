@@ -1,15 +1,14 @@
 package io.arkx.framework.util.task;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.arkx.framework.util.task.callback.Progress;
+import io.arkx.framework.util.task.callback.TaskCompletedListener;
+import io.arkx.framework.util.task.callback.TaskListener;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.arkx.framework.util.task.callback.Progress;
-import io.arkx.framework.util.task.callback.TaskCompletedListener;
-import io.arkx.framework.util.task.callback.TaskListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TreeTaskTest {
 

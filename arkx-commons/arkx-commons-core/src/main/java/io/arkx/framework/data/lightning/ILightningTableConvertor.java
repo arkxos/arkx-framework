@@ -1,10 +1,10 @@
 package io.arkx.framework.data.lightning;
 
+import io.arkx.framework.commons.collection.TwoTuple;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
-
-import io.arkx.framework.commons.collection.TwoTuple;
 
 /**
  * 

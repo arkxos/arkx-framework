@@ -1,14 +1,14 @@
 package io.arkx.framework.data.db.command;
 
-import java.util.HashMap;
-import java.util.List;
-
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 复杂字段修改指令（不包含重命名）

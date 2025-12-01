@@ -1,10 +1,10 @@
 package org.ark.framework.infrastructure.repositories;
 
-import java.util.Date;
-
 import io.arkx.framework.annotation.Entity;
 import io.arkx.framework.annotation.Ingore;
 import io.arkx.framework.data.jdbc.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 

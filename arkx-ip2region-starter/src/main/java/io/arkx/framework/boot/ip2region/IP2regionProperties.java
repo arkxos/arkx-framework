@@ -1,9 +1,8 @@
 package io.arkx.framework.boot.ip2region;
 
+import io.arkx.framework.boot.ip2region.ext.XdbSearcher;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import io.arkx.framework.boot.ip2region.ext.XdbSearcher;
 
 @ConfigurationProperties(IP2regionProperties.PREFIX)
 @Data

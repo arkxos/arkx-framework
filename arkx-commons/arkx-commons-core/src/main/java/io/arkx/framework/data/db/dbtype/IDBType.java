@@ -1,25 +1,14 @@
 package io.arkx.framework.data.db.dbtype;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import io.arkx.framework.commons.collection.DataTypes;
-import io.arkx.framework.data.db.command.AddColumnCommand;
-import io.arkx.framework.data.db.command.AdvanceChangeColumnCommand;
-import io.arkx.framework.data.db.command.AlterKeyCommand;
-import io.arkx.framework.data.db.command.ChangeColumnLengthCommand;
-import io.arkx.framework.data.db.command.ChangeColumnMandatoryCommand;
-import io.arkx.framework.data.db.command.CreateIndexCommand;
-import io.arkx.framework.data.db.command.CreateTableCommand;
-import io.arkx.framework.data.db.command.DropColumnCommand;
-import io.arkx.framework.data.db.command.DropIndexCommand;
-import io.arkx.framework.data.db.command.DropTableCommand;
-import io.arkx.framework.data.db.command.RenameColumnCommand;
-import io.arkx.framework.data.db.command.RenameTableCommand;
+import io.arkx.framework.data.db.command.*;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import io.arkx.framework.extend.IExtendItem;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * 数据库类型接口

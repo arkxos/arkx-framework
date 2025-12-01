@@ -1,13 +1,12 @@
 package org.ark.framework.orm;
 
+import io.arkx.framework.commons.util.*;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
-
-import io.arkx.framework.commons.util.*;
-
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 从导出的数据库文件中读取SchemaSet数据，支持读取后直接处理，无需导入数据库

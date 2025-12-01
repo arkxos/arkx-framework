@@ -1,15 +1,14 @@
 package io.arkx.framework.annotation.util;
 
-import java.lang.annotation.Annotation;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import org.objectweb.asm.tree.ClassNode;
-
 import io.arkx.framework.core.scanner.AsmUtil;
 import io.arkx.framework.core.scanner.BuiltResource;
 import io.arkx.framework.core.scanner.BuiltResourceScanner;
 import io.arkx.framework.core.scanner.IBuiltResourceVisitor;
+import org.objectweb.asm.tree.ClassNode;
+
+import java.lang.annotation.Annotation;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 遍历所有类中的注解

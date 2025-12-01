@@ -10,18 +10,15 @@
 package io.arkx.framework.data.db.product.mongodb;
 
 import com.google.common.collect.Lists;
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
+import java.util.*;
 
 @Slf4j
 public class MongodbTableDataWriteProvider extends DefaultTableDataWriteProvider {

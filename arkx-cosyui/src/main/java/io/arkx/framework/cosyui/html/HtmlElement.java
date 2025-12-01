@@ -1,9 +1,5 @@
 package io.arkx.framework.cosyui.html;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
@@ -11,6 +7,10 @@ import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.data.xml.XMLParser;
 import io.arkx.framework.data.xml.XMLParser.ElementAttribute;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * HTML元素

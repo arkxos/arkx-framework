@@ -18,7 +18,6 @@
 package io.arkx.framework.file.local;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 本地文件 配置信息

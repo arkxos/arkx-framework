@@ -3,12 +3,13 @@ package io.arkx.framework.data.db.product.hive;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.common.util.ExamineUtils;
 import io.arkx.framework.data.db.core.schema.SourceProperties;
+import lombok.experimental.UtilityClass;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class HiveTblUtils {

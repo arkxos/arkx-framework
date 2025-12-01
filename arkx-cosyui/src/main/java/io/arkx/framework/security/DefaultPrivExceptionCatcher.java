@@ -1,10 +1,7 @@
 package io.arkx.framework.security;
 
-import java.io.IOException;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.Current;
 import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
@@ -15,9 +12,10 @@ import io.arkx.framework.cosyui.web.mvc.handler.AjaxHandler;
 import io.arkx.framework.security.exception.MemberNotLoginException;
 import io.arkx.framework.security.exception.PrivException;
 import io.arkx.framework.security.exception.UserNotLoginException;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 /**
  * 权限异常捕获器，捕获权限异常并决定跳转到哪个页面

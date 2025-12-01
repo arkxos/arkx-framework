@@ -1,9 +1,9 @@
 package io.arkx.framework.data.jdbc;
 
-import java.io.Serializable;
-
 import io.arkx.framework.annotation.Ingore;
 import io.arkx.framework.commons.util.UuidUtil;
+
+import java.io.Serializable;
 
 
 /**

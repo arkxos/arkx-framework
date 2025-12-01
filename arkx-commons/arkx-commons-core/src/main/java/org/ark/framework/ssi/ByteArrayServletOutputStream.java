@@ -1,9 +1,9 @@
 package org.ark.framework.ssi;
 
-import java.io.ByteArrayOutputStream;
-
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.WriteListener;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * @class org.ark.framework.ssi.ByteArrayServletOutputStream

@@ -1,10 +1,10 @@
 package io.arkx.framework.cosyui.tag;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.cosyui.template.TagAttr;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <ark:choose>标签,用于实现Choose/When支持

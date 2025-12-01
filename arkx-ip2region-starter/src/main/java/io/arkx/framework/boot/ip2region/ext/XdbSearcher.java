@@ -1,5 +1,6 @@
 package io.arkx.framework.boot.ip2region.ext;
 
+import io.arkx.framework.boot.ip2region.util.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.springframework.beans.factory.DisposableBean;
@@ -8,8 +9,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
-
-import io.arkx.framework.boot.ip2region.util.Util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

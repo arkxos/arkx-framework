@@ -1,13 +1,13 @@
 package io.arkx.framework.commons.util;
 
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.stereotype.Service;
 
 /**
  * 随机生成工具类

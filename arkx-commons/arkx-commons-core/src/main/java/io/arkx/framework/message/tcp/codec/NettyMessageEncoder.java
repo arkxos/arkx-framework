@@ -1,13 +1,12 @@
 package io.arkx.framework.message.tcp.codec;
 
-import java.io.IOException;
-import java.util.Map;
-
 import io.arkx.framework.message.tcp.struct.NettyMessage;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * 消息编码

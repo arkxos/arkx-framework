@@ -1,20 +1,15 @@
 package io.arkx.framework.media;
 
-import java.awt.AWTException;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Iterator;
+import io.arkx.framework.commons.util.NumberUtil;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
-
-import io.arkx.framework.commons.util.NumberUtil;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.Iterator;
 
 public class GifUtil
 {

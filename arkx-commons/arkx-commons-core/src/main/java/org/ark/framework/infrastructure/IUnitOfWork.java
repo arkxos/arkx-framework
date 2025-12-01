@@ -1,8 +1,7 @@
 package org.ark.framework.infrastructure;
 
-import org.ark.framework.infrastructure.repositoryframework.IUnitOfWorkRepository;
-
 import io.arkx.framework.data.jdbc.Entity;
+import org.ark.framework.infrastructure.repositoryframework.IUnitOfWorkRepository;
 
 /**
  * @class org.ark.framework.infrastructure.IUnitOfWork

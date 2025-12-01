@@ -2,7 +2,6 @@ package io.arkx.framework.data.mybatis.pro.service.adaptor.validator.impl;
 
 
 import io.arkx.framework.data.mybatis.pro.service.adaptor.validator.ElementNotEmpty;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

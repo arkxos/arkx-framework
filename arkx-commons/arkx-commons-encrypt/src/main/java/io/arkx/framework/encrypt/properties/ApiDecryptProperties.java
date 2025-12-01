@@ -1,8 +1,7 @@
 package io.arkx.framework.encrypt.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * api解密属性配置类

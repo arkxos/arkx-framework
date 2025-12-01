@@ -1,12 +1,12 @@
 package io.arkx.framework.media;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.commons.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FfmpegCommandBuilder
 {

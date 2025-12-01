@@ -1,8 +1,8 @@
 package io.arkx.framework.avatarmq.core;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import io.netty.channel.Channel;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @filename:ChannelCache.java

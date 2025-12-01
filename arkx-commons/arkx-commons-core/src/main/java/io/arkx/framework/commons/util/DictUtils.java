@@ -1,11 +1,11 @@
 package io.arkx.framework.commons.util;
 
-import java.util.Collection;
-import java.util.List;
-
+import io.arkx.framework.boot.spring.IocBeanRegister;
 import io.arkx.framework.commons.constants.Constants;
 import io.arkx.framework.commons.domain.entity.SysDictData;
-import io.arkx.framework.boot.spring.IocBeanRegister;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 字典工具类

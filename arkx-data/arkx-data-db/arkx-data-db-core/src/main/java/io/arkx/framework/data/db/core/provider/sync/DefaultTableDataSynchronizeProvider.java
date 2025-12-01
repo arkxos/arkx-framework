@@ -12,18 +12,18 @@ package io.arkx.framework.data.db.core.provider.sync;
 import com.alibaba.fastjson2.JSON;
 import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-
-import java.util.*;
-import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import io.arkx.framework.data.db.core.util.MyArgumentTypePreparedStatementSetter;
 import io.arkx.framework.data.db.core.util.SyncUtil;
 import io.arkx.framework.data.db.core.util.TablePrinter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 数据同步抽象基类

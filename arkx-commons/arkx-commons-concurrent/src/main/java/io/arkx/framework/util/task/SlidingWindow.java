@@ -1,5 +1,7 @@
 package io.arkx.framework.util.task;
 
+import io.arkx.framework.util.task.util.TypeReference;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -9,8 +11,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.LongFunction;
 import java.util.stream.LongStream;
-
-import io.arkx.framework.util.task.util.TypeReference;
 
 /**
  * 并发工具类，类似滑动窗口(单步步进)

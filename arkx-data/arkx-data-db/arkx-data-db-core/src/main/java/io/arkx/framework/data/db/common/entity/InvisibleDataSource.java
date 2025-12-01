@@ -9,17 +9,14 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.entity;
 
+import lombok.Getter;
+
+import javax.sql.DataSource;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
+import java.sql.*;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
-import javax.sql.DataSource;
-import lombok.Getter;
 
 @Getter
 public class InvisibleDataSource implements DataSource {

@@ -1,11 +1,9 @@
 package io.arkx.framework.data.fasttable;
 
-import static io.arkx.framework.data.fasttable.BufferReader.BYTE_LENGTH;
-import static io.arkx.framework.data.fasttable.BufferReader.INT_LENGTH;
-import static io.arkx.framework.data.fasttable.BufferReader.LONG_LENGTH;
-
 import java.nio.ByteBuffer;
 import java.util.List;
+
+import static io.arkx.framework.data.fasttable.BufferReader.*;
 
 /**
  * @author Darkness

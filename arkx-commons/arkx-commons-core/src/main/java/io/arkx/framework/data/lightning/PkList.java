@@ -1,12 +1,12 @@
 package io.arkx.framework.data.lightning;
 
+import io.arkx.framework.commons.collection.DataRow;
+
 import java.nio.ByteBuffer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import io.arkx.framework.commons.collection.DataRow;
 
 public class PkList {
 

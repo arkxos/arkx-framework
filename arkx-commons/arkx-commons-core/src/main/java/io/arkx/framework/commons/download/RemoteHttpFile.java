@@ -1,5 +1,7 @@
 package io.arkx.framework.commons.download;
 
+import io.arkx.framework.commons.util.FileUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +9,6 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import io.arkx.framework.commons.util.FileUtil;
 
 public class RemoteHttpFile {
 

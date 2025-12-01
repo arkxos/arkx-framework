@@ -22,7 +22,6 @@ import com.alibaba.cloud.nacos.discovery.NacosDiscoveryAutoConfiguration;
 import io.arkx.framework.cloud.sidecar.SidecarAutoConfiguration;
 import io.arkx.framework.cloud.sidecar.SidecarDiscoveryClient;
 import io.arkx.framework.cloud.sidecar.SidecarProperties;
-
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

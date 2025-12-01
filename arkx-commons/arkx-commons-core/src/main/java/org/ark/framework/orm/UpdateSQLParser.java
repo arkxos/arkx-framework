@@ -1,14 +1,14 @@
 package org.ark.framework.orm;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.CharsetConvert;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.data.db.dbtype.IDBType;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 
 /**   

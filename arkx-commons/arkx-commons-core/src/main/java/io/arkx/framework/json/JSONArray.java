@@ -1,9 +1,9 @@
 package io.arkx.framework.json;
 
-import java.util.ArrayList;
-
 import com.alibaba.fastjson.JSONAware;
 import io.arkx.framework.core.castor.LongCastor;
+
+import java.util.ArrayList;
 
 /**
  * JSON数组,继承ArrayList<Object>

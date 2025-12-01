@@ -1,11 +1,10 @@
 package io.arkx.framework.commons.util;
 
+import io.arkx.framework.commons.annotation.Query;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.commons.annotation.Query;
-
-import lombok.Data;
 
 /**
  * @author darkness

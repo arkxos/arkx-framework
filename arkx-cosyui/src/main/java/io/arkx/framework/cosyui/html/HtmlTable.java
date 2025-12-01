@@ -1,9 +1,9 @@
 package io.arkx.framework.cosyui.html;
 
+import io.arkx.framework.commons.lang.FastStringBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * Html中的table元素

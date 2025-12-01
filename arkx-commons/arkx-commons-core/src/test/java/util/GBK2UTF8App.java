@@ -1,9 +1,9 @@
 package util;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.util.Collection;
-
-import org.apache.commons.io.FileUtils;
 
 public class GBK2UTF8App {
 

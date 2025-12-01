@@ -1,9 +1,9 @@
 package io.arkx.framework.data.xml;
 
-import java.util.ArrayList;
-
 import io.arkx.framework.commons.lang.FastStringBuilder;
 import io.arkx.framework.commons.util.StringUtil;
+
+import java.util.ArrayList;
 
 /**
  * 表示一个XML节点的虚拟类

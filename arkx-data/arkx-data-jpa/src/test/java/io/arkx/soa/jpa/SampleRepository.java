@@ -1,14 +1,13 @@
 package io.arkx.soa.jpa;
 
-import java.util.List;
-import java.util.Map;
-
+import io.arkx.framework.data.jpa.annotation.TemplateQuery;
 import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
-import io.arkx.framework.data.jpa.annotation.TemplateQuery;
+import java.util.List;
+import java.util.Map;
 
 /**
  * .

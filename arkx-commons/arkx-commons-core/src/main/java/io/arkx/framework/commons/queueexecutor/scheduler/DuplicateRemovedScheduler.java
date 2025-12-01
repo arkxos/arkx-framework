@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.queueexecutor.scheduler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import io.arkx.framework.commons.queueexecutor.Element;
 import io.arkx.framework.commons.queueexecutor.scheduler.component.DuplicateRemover;
 import io.arkx.framework.commons.queueexecutor.scheduler.component.HashSetDuplicateRemover;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Remove duplicate urls and only push urls which are not duplicate.<br></br>

@@ -13,31 +13,15 @@ import cn.hutool.core.text.StrPool;
 import io.arkx.framework.data.db.common.type.TableIndexEnum;
 import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.schema.ColumnDescription;
-import io.arkx.framework.data.db.core.schema.ColumnMetaData;
-import io.arkx.framework.data.db.core.schema.IndexDescription;
-import io.arkx.framework.data.db.core.schema.IndexFieldMeta;
-import io.arkx.framework.data.db.core.schema.SourceProperties;
-import io.arkx.framework.data.db.core.schema.TableDescription;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
+import io.arkx.framework.data.db.core.schema.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import java.sql.*;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * 数据库元信息抽象基类

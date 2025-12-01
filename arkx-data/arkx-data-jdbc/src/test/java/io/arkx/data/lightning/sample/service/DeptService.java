@@ -5,10 +5,12 @@ package io.arkx.data.lightning.sample.service;
  * @date 2025-07-28 2:02
  * @since 1.0
  */
+
 import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
 import io.arkx.data.lightning.sample.model.Dept;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service

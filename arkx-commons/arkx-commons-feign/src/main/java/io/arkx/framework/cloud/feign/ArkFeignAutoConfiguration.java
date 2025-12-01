@@ -16,13 +16,12 @@
 
 package io.arkx.framework.cloud.feign;
 
+import io.arkx.framework.cloud.feign.core.ArkFeignInnerRequestInterceptor;
+import io.arkx.framework.cloud.feign.core.ArkFeignRequestCloseInterceptor;
 import org.springframework.cloud.openfeign.ArkFeignClientsRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-import io.arkx.framework.cloud.feign.core.ArkFeignInnerRequestInterceptor;
-import io.arkx.framework.cloud.feign.core.ArkFeignRequestCloseInterceptor;
 
 /**
  * sentinel 配置

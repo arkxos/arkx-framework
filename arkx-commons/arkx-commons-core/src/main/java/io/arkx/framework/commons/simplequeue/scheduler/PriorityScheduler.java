@@ -1,15 +1,14 @@
 package io.arkx.framework.commons.simplequeue.scheduler;
 
+import io.arkx.framework.commons.simplequeue.ElementWarpper;
+import io.arkx.framework.commons.simplequeue.Task;
+import io.arkx.framework.commons.simplequeue.utils.NumberUtils;
+import org.apache.http.annotation.ThreadSafe;
+
 import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
-
-import org.apache.http.annotation.ThreadSafe;
-
-import io.arkx.framework.commons.simplequeue.ElementWarpper;
-import io.arkx.framework.commons.simplequeue.Task;
-import io.arkx.framework.commons.simplequeue.utils.NumberUtils;
 
 /**
  * Priority scheduler. Request with higher priority will poll earlier. <br>

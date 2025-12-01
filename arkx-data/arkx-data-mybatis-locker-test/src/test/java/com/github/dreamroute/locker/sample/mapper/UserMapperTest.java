@@ -24,9 +24,7 @@ import static com.github.dreamroute.locker.sample.mapper.AppenderUtil.create;
 import static com.github.dreamroute.locker.sample.mapper.AppenderUtil.getMessage;
 import static com.ninja_squad.dbsetup.Operations.insertInto;
 import static com.ninja_squad.dbsetup.Operations.truncate;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @EnableLocker
 @SpringBootTest

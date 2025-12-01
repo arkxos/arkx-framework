@@ -1,22 +1,8 @@
 package io.arkx.framework.data.jpa.hibernate;
 
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.StringReader;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.sql.Clob;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Objects;
-import java.util.Properties;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import jakarta.persistence.Column;
-
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -28,8 +14,16 @@ import org.hibernate.usertype.UserType;
 import org.jboss.logging.Logger;
 import org.springframework.util.ReflectionUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.StringReader;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.sql.*;
+import java.util.Objects;
+import java.util.Properties;
 
 public class JSONType implements UserType, DynamicParameterizedType, Serializable {
     private static final long serialVersionUID = 352044032843534075L;

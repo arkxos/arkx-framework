@@ -1,7 +1,5 @@
 package io.arkx.framework;
 
-import org.ark.framework.orm.MaxNo;
-
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringUtil;
@@ -13,6 +11,7 @@ import io.arkx.framework.data.db.dbtype.MsSql2000;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
 import io.arkx.framework.data.jdbc.SimpleQuery;
+import org.ark.framework.orm.MaxNo;
 
 /**
  * @class org.ark.framework.orm.NoUtil

@@ -1,14 +1,13 @@
 package org.ark.framework.extend;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import io.arkx.framework.XTest;
+import io.arkx.framework.extend.plugin.PluginConfig;
+import io.arkx.framework.extend.plugin.PluginManager;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import io.arkx.framework.extend.plugin.PluginConfig;
-import io.arkx.framework.extend.plugin.PluginManager;
-import io.arkx.framework.XTest;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**   
  * 

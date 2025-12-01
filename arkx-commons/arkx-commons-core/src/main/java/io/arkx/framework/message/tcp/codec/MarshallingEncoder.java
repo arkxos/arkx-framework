@@ -1,11 +1,10 @@
 package io.arkx.framework.message.tcp.codec;
 
-import java.io.IOException;
-
-import org.jboss.marshalling.Marshaller;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
+import org.jboss.marshalling.Marshaller;
+
+import java.io.IOException;
 
 /**
  * 

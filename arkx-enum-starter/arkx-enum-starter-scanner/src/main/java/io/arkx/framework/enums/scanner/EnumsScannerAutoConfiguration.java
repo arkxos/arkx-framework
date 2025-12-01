@@ -1,12 +1,5 @@
 package io.arkx.framework.enums.scanner;
 
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
-
 import io.arkx.framework.enums.scanner.annotation.EnumScan;
 import io.arkx.framework.enums.scanner.cached.EnumCache;
 import io.arkx.framework.enums.scanner.context.EnumScanProperties;
@@ -15,6 +8,12 @@ import io.arkx.framework.enums.scanner.context.ResourcesScanner;
 import io.arkx.framework.enums.scanner.context.TypeFilterProvider;
 import io.arkx.framework.enums.scanner.handler.EnumScanHandler;
 import io.arkx.framework.enums.scanner.handler.EnumScanHandlerImpl;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import java.util.List;
 

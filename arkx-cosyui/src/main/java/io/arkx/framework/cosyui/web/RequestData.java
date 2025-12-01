@@ -1,12 +1,11 @@
 package io.arkx.framework.cosyui.web;
 
-import java.util.Enumeration;
-
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.data.db.DataCollection;
-
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Enumeration;
 
 /**
  * 封装一次http请求中的数据，可以在JAVA代码中直接创建实例。

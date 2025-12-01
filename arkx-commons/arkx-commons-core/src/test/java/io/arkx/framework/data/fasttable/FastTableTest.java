@@ -1,9 +1,9 @@
 package io.arkx.framework.data.fasttable;
 
-import java.io.File;
-
 import io.arkx.framework.commons.util.SystemInfo;
 import io.arkx.framework.commons.util.UuidUtil;
+
+import java.io.File;
 
 /**
  * @author Darkness

@@ -1,7 +1,7 @@
 package io.arkx.framework.data.db.core.util;
 
-import org.apache.commons.lang3.StringUtils;
 import io.arkx.framework.data.db.core.schema.ColumnDescription;
+import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

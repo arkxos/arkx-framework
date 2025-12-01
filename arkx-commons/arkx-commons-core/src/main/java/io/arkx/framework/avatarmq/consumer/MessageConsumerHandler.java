@@ -8,7 +8,6 @@ import io.arkx.framework.avatarmq.model.ResponseMessage;
 import io.arkx.framework.avatarmq.msg.ConsumerAckMessage;
 import io.arkx.framework.avatarmq.netty.MessageEventWrapper;
 import io.arkx.framework.avatarmq.netty.MessageProcessor;
-
 import io.netty.channel.ChannelHandlerContext;
 
 /**

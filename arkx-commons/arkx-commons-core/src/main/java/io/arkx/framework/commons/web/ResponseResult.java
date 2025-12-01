@@ -16,29 +16,23 @@
 
 package io.arkx.framework.commons.web;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Maps;
+import io.arkx.framework.commons.constants.CommonConstants1;
+import io.arkx.framework.commons.constants.ErrorCode;
+import io.arkx.framework.commons.model.PageResult;
+import io.arkx.framework.commons.util.StringUtil;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
+import org.springframework.data.domain.Page;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import io.arkx.framework.commons.constants.ErrorCode;
-import io.arkx.framework.commons.model.PageResult;
-import io.arkx.framework.commons.util.StringUtil;
-import org.springframework.data.domain.Page;
-
-import com.alibaba.fastjson.annotation.JSONField;
-import io.arkx.framework.commons.constants.CommonConstants1;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.Maps;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldNameConstants;
 
 /**
  * 所有接口调用返回的统一包装结果类

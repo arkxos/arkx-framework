@@ -1,10 +1,10 @@
 package io.arkx.framework.data.xml;
 
+import io.arkx.framework.commons.util.FileUtil;
+
 import java.io.File;
 import java.io.OutputStream;
 import java.io.Writer;
-
-import io.arkx.framework.commons.util.FileUtil;
 
 /**
  * XML写入工具类

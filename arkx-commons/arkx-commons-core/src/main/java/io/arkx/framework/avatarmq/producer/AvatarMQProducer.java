@@ -1,7 +1,5 @@
 package io.arkx.framework.avatarmq.producer;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import io.arkx.framework.avatarmq.core.AvatarMQAction;
 import io.arkx.framework.avatarmq.model.MessageSource;
 import io.arkx.framework.avatarmq.model.MessageType;
@@ -10,6 +8,8 @@ import io.arkx.framework.avatarmq.model.ResponseMessage;
 import io.arkx.framework.avatarmq.msg.Message;
 import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
 import io.arkx.framework.avatarmq.netty.MessageProcessor;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 消息的生产者

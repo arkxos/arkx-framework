@@ -1,10 +1,9 @@
 package io.arkx.framework.message.tcp.codec;
 
-import java.io.IOException;
-
+import io.netty.buffer.ByteBuf;
 import org.jboss.marshalling.ByteInput;
 
-import io.netty.buffer.ByteBuf;
+import java.io.IOException;
 
 /**
  * {@link ByteInput} implementation which reads its data from a {@link ByteBuf}

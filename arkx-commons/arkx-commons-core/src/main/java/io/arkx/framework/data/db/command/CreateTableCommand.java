@@ -1,9 +1,5 @@
 package io.arkx.framework.data.db.command;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
@@ -12,6 +8,10 @@ import io.arkx.framework.data.db.orm.DAOColumn;
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONArray;
 import io.arkx.framework.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 创建数据表指令

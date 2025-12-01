@@ -9,18 +9,12 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.service;
 
+import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
+import io.arkx.framework.data.db.core.schema.*;
+
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
-import javax.sql.DataSource;
-
-import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
-import io.arkx.framework.data.db.core.schema.ColumnDescription;
-import io.arkx.framework.data.db.core.schema.ColumnValue;
-import io.arkx.framework.data.db.core.schema.IndexDescription;
-import io.arkx.framework.data.db.core.schema.SchemaTableData;
-import io.arkx.framework.data.db.core.schema.SchemaTableMeta;
-import io.arkx.framework.data.db.core.schema.SourceProperties;
-import io.arkx.framework.data.db.core.schema.TableDescription;
 
 public interface MetadataService {
 

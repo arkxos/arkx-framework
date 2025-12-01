@@ -1,25 +1,5 @@
 package io.arkx.framework.commons.simplequeue;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
-
-import io.arkx.framework.commons.util.CountableThreadPool;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.SerializationUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import io.arkx.framework.commons.crawl.PageProcessor;
 import io.arkx.framework.commons.simplequeue.pipeline.CollectorPipeline;
 import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
@@ -28,7 +8,22 @@ import io.arkx.framework.commons.simplequeue.scheduler.MonitorableScheduler;
 import io.arkx.framework.commons.simplequeue.scheduler.QueueScheduler;
 import io.arkx.framework.commons.simplequeue.scheduler.Scheduler;
 import io.arkx.framework.commons.simplequeue.utils.WMCollections;
+import io.arkx.framework.commons.util.CountableThreadPool;
 import io.arkx.framework.commons.util.NumberUtil;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.SerializationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Entrance of a crawler.<br>

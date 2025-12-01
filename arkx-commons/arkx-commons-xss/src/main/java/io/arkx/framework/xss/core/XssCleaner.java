@@ -16,9 +16,8 @@
 
 package io.arkx.framework.xss.core;
 
-import org.jsoup.Jsoup;
-
 import io.arkx.framework.xss.utils.XssUtil;
+import org.jsoup.Jsoup;
 
 /**
  * xss 清理器

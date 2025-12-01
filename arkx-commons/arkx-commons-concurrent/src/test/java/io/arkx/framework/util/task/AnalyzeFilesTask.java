@@ -1,10 +1,9 @@
 package io.arkx.framework.util.task;
 
-import java.util.List;
-
 import io.arkx.framework.util.task.util.RandomUtil;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Slf4j
 public class AnalyzeFilesTask extends TreeTask {

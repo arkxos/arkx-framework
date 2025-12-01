@@ -1,6 +1,7 @@
 package io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers;
 
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.range.Range;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 

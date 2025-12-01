@@ -9,12 +9,13 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.hive;
 
-import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
+import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.ProductFeatures;
 import io.arkx.framework.data.db.core.provider.AbstractFactoryProvider;
 import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
 import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
+
 import javax.sql.DataSource;
 
 @Product(ProductTypeEnum.HIVE)

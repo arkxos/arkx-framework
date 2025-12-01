@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.download;
 
+import io.arkx.framework.commons.util.TimeWatch;
+
 import java.io.File;
 import java.io.IOException;
-
-import io.arkx.framework.commons.util.TimeWatch;
 
 public class Test {
 

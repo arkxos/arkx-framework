@@ -9,6 +9,7 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.mongodb;
 
+import com.google.common.collect.Sets;
 import io.arkx.framework.data.db.common.consts.Constants;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.meta.AbstractMetadataProvider;
@@ -16,18 +17,13 @@ import io.arkx.framework.data.db.core.schema.ColumnDescription;
 import io.arkx.framework.data.db.core.schema.ColumnMetaData;
 import io.arkx.framework.data.db.core.schema.IndexDescription;
 import io.arkx.framework.data.db.core.schema.TableDescription;
-import com.google.common.collect.Sets;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
+import lombok.extern.slf4j.Slf4j;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MongodbMetadataQueryProvider extends AbstractMetadataProvider {

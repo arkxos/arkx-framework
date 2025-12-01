@@ -1,9 +1,5 @@
 package io.arkx.framework.extend.plugin;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.xml.XMLElement;
@@ -13,6 +9,10 @@ import io.arkx.framework.extend.ExtendItemConfig;
 import io.arkx.framework.extend.ExtendPointConfig;
 import io.arkx.framework.extend.ExtendServiceConfig;
 import io.arkx.framework.i18n.LangUtil;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 插件配置信息，对应一个.plugin文件

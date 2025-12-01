@@ -1,11 +1,8 @@
 package io.arkx.framework.data.jpa.sqltoy;
 
-import java.lang.reflect.Method;
-
 import io.arkx.framework.data.common.sqltoy.SqlToyQuery;
 import io.arkx.framework.data.common.sqltoy.SqlToyTemplateQuery;
 import jakarta.persistence.EntityManager;
-
 import jakarta.validation.constraints.NotNull;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jpa.provider.PersistenceProvider;
@@ -14,7 +11,11 @@ import org.springframework.data.jpa.repository.query.*;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.repository.core.NamedQueries;
 import org.springframework.data.repository.core.RepositoryMetadata;
-import org.springframework.data.repository.query.*;
+import org.springframework.data.repository.query.QueryLookupStrategy;
+import org.springframework.data.repository.query.RepositoryQuery;
+import org.springframework.data.repository.query.ValueExpressionDelegate;
+
+import java.lang.reflect.Method;
 
 /**
  * <p>模板查询策略</p>

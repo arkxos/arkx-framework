@@ -1,11 +1,11 @@
 package io.arkx.framework.cosyui.expression.function;
 
-import java.text.DecimalFormat;
-import java.util.Date;
-
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.cosyui.expression.AbstractFunction;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
+
+import java.text.DecimalFormat;
+import java.util.Date;
 
 /**
  * 按第二个参数指定的格式格式化第一个参数<br>

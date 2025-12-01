@@ -1,12 +1,9 @@
 package io.arkx.framework.annotation.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import io.arkx.framework.annotation.Plugin;
 import io.arkx.framework.annotation.PluginAnnotationScanner;
-import io.arkx.framework.annotation.util.AnnotationVisitor;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -16,8 +13,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Darkness

@@ -9,9 +9,9 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.schema;
 
+import io.arkx.framework.data.db.common.consts.Constants;
 import lombok.Getter;
 import lombok.Setter;
-import io.arkx.framework.data.db.common.consts.Constants;
 
 /**
  * 数据库表列的元信息

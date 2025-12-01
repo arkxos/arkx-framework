@@ -1,12 +1,11 @@
 package io.arkx.framework.message.tcp.codec;
 
-import java.io.IOException;
-import java.io.StreamCorruptedException;
-
+import io.netty.buffer.ByteBuf;
 import org.jboss.marshalling.ByteInput;
 import org.jboss.marshalling.Unmarshaller;
 
-import io.netty.buffer.ByteBuf;
+import java.io.IOException;
+import java.io.StreamCorruptedException;
 
 /**
  * 

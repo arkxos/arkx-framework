@@ -1,10 +1,9 @@
 package io.arkx.framework.message.tcp.codec;
 
-import java.io.IOException;
-
+import io.netty.buffer.ByteBuf;
 import org.jboss.marshalling.ByteOutput;
 
-import io.netty.buffer.ByteBuf;
+import java.io.IOException;
 
 /**
  * {@link ByteOutput} implementation which writes the data to a {@link ByteBuf}

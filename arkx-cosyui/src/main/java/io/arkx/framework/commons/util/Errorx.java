@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.util;
 
-import java.util.ArrayList;
-
 import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.lang.FastStringBuilder;
+
+import java.util.ArrayList;
 
 /**
  * @class org.ark.framework.collection.Errorx

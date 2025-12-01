@@ -1,12 +1,5 @@
 package io.arkx.framework.data.jdbc;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
-import org.ark.framework.orm.sql.SelectSQLParser;
-
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.PageDataTable;
 import io.arkx.framework.data.db.QueryException;
@@ -14,8 +7,13 @@ import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
+import org.ark.framework.orm.sql.SelectSQLParser;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @class org.ark.framework.orm.query.QueryBuilder

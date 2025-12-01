@@ -1,5 +1,13 @@
 package io.arkx.framework.data.db.dbtype;
 
+import io.arkx.framework.Config;
+import io.arkx.framework.commons.collection.DataTypes;
+import io.arkx.framework.commons.util.StringUtil;
+import io.arkx.framework.data.db.DBUtil;
+import io.arkx.framework.data.db.command.*;
+import io.arkx.framework.data.db.connection.Connection;
+import io.arkx.framework.data.db.connection.ConnectionConfig;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.DriverManager;
@@ -7,26 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-
-import io.arkx.framework.Config;
-import io.arkx.framework.commons.collection.DataTypes;
-import io.arkx.framework.commons.util.StringUtil;
-import io.arkx.framework.data.db.DBUtil;
-import io.arkx.framework.data.db.command.AddColumnCommand;
-import io.arkx.framework.data.db.command.AdvanceChangeColumnCommand;
-import io.arkx.framework.data.db.command.AlterKeyCommand;
-import io.arkx.framework.data.db.command.ChangeColumnLengthCommand;
-import io.arkx.framework.data.db.command.ChangeColumnMandatoryCommand;
-import io.arkx.framework.data.db.command.CreateIndexCommand;
-import io.arkx.framework.data.db.command.CreateTableCommand;
-import io.arkx.framework.data.db.command.DropColumnCommand;
-import io.arkx.framework.data.db.command.DropIndexCommand;
-import io.arkx.framework.data.db.command.DropTableCommand;
-import io.arkx.framework.data.db.command.IDBCommand;
-import io.arkx.framework.data.db.command.RenameColumnCommand;
-import io.arkx.framework.data.db.command.RenameTableCommand;
-import io.arkx.framework.data.db.connection.Connection;
-import io.arkx.framework.data.db.connection.ConnectionConfig;
 
 /**
  * 数据库类型虚拟类。<br>

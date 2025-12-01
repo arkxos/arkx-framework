@@ -1,5 +1,8 @@
 package io.arkx.framework.core.bean;
 
+import io.arkx.framework.commons.collection.ConcurrentMapx;
+import io.arkx.framework.commons.util.LogUtil;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -9,9 +12,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
-
-import io.arkx.framework.commons.collection.ConcurrentMapx;
-import io.arkx.framework.commons.util.LogUtil;
 
 /**
  * Bean描述信息，用于缓存指定Bean的反射信息

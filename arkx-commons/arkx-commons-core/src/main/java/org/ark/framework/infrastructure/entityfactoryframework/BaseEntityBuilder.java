@@ -1,13 +1,13 @@
 package org.ark.framework.infrastructure.entityfactoryframework;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 import io.arkx.framework.annotation.Column;
 import io.arkx.framework.annotation.Ingore;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.util.lang.ReflectionUtil;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 
 /**

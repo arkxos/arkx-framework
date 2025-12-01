@@ -10,10 +10,10 @@
 package io.arkx.framework.data.db.common.util;
 
 import com.google.common.base.Preconditions;
-import java.util.Collection;
+import jakarta.annotation.Nullable;
 import lombok.experimental.UtilityClass;
 
-import jakarta.annotation.Nullable;
+import java.util.Collection;
 
 @UtilityClass
 public final class ExamineUtils {

@@ -7,21 +7,12 @@ import io.arkx.framework.data.db.product.postgresql.copy.model.TableDefinition;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.PgBinaryWriter;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.constants.DataType;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.constants.ObjectIdentifier;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.CollectionValueHandler;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.IValueHandler;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.IValueHandlerProvider;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.RangeValueHandler;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.ValueHandlerProvider;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Box;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Circle;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Line;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.LineSegment;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Path;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Point;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Polygon;
+import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.*;
+import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.*;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.network.MacAddress;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.range.Range;
 import io.arkx.framework.data.db.product.postgresql.copy.util.PostgreSqlUtils;
+
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.time.LocalDate;
@@ -29,11 +20,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 public abstract class AbstractMapping<TEntity> {

@@ -1,15 +1,14 @@
 package io.arkx.framework.message.tcp.codec;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import io.arkx.framework.message.tcp.MessageType;
 import io.arkx.framework.message.tcp.struct.NettyMessage;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 消息解码

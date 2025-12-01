@@ -1,18 +1,12 @@
 package io.arkx.framework.data.db.dbtype;
 
+import com.sun.star.uno.RuntimeException;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
-import io.arkx.framework.data.db.command.AddColumnCommand;
-import io.arkx.framework.data.db.command.ChangeColumnLengthCommand;
-import io.arkx.framework.data.db.command.ChangeColumnMandatoryCommand;
-import io.arkx.framework.data.db.command.DropIndexCommand;
-import io.arkx.framework.data.db.command.DropTableCommand;
-import io.arkx.framework.data.db.command.RenameColumnCommand;
-import io.arkx.framework.data.db.command.RenameTableCommand;
+import io.arkx.framework.data.db.command.*;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import io.arkx.framework.data.db.sql.SelectSQLParser;
-import com.sun.star.uno.RuntimeException;
 
 /**
  * SQLServer数据库(2005以上)

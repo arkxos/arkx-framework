@@ -1,7 +1,7 @@
 package io.arkx.framework.data.mybatis.model;
 
-import io.arkx.framework.data.mybatis.interceptor.EnumConvertInterceptor;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import io.arkx.framework.data.mybatis.interceptor.EnumConvertInterceptor;
 
 import java.util.HashMap;
 

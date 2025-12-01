@@ -10,17 +10,14 @@
 package io.arkx.framework.data.db.product.tdengine;
 
 import cn.hutool.core.util.HexUtil;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import io.arkx.framework.data.db.common.util.ObjectCastUtils;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.query.DefaultTableDataQueryProvider;
 import io.arkx.framework.data.db.core.schema.SchemaTableData;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TdengineTableDataQueryProvider extends DefaultTableDataQueryProvider {
 

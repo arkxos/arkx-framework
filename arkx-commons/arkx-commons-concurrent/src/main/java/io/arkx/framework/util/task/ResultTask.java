@@ -1,10 +1,10 @@
 package io.arkx.framework.util.task;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import io.arkx.framework.util.task.callback.Progress;
 import io.arkx.framework.util.task.util.Assert;
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public interface ResultTask<T> extends Task {
 

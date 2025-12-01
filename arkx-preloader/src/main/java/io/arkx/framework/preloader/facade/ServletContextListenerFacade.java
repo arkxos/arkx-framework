@@ -1,13 +1,12 @@
 package io.arkx.framework.preloader.facade;
 
-import java.util.ArrayList;
-
 import io.arkx.framework.preloader.PreClassLoader;
-
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.ServletException;
+
+import java.util.ArrayList;
 
 public class ServletContextListenerFacade implements ServletContextListener {
 	private String param;

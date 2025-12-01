@@ -1,9 +1,6 @@
 package io.arkx.framework.performance.monitor.config;
 
-import io.arkx.framework.performance.monitor.SystemInfoService;
-import io.arkx.framework.performance.monitor.TraceRecorder;
 import io.arkx.framework.performance.monitor.interceptor.PerformanceInterceptor;
-import io.arkx.framework.performance.monitor.repository.TraceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;

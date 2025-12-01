@@ -15,23 +15,13 @@
  */
 package io.arkx.framework.thirdparty.fastjson;
 
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.COLON;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.COMMA;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.EOF;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.ERROR;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LBRACE;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LBRACKET;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LITERAL_STRING;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LPAREN;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.RBRACE;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.RBRACKET;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.RPAREN;
+import io.arkx.framework.json.JSONException;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 
-import io.arkx.framework.json.JSONException;
+import static io.arkx.framework.thirdparty.fastjson.JSONToken.*;
 
 //这个类，为了性能优化做了很多特别处理，一切都是为了性能！！！
 

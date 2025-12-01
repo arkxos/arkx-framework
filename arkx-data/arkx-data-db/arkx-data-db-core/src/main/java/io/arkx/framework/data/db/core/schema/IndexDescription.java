@@ -9,9 +9,9 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.schema;
 
+import io.arkx.framework.data.db.common.type.TableIndexEnum;
 import lombok.Getter;
 import lombok.Setter;
-import io.arkx.framework.data.db.common.type.TableIndexEnum;
 
 import java.util.List;
 

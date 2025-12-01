@@ -1,15 +1,14 @@
 package io.arkx.framework.annotation;
 
-import java.lang.annotation.Annotation;
-import java.util.Set;
-
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-import lombok.Setter;
+import java.lang.annotation.Annotation;
+import java.util.Set;
 
 /**
  * @author Darkness

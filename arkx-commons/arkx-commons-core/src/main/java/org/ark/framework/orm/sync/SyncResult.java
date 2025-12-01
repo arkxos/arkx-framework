@@ -8,9 +8,8 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import org.ark.framework.orm.sync.metadata.SyncStatus;
-
 import lombok.Data;
+import org.ark.framework.orm.sync.metadata.SyncStatus;
 
 /**
  * 同步结果

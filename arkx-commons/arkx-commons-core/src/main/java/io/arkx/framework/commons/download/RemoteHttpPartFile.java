@@ -1,5 +1,10 @@
 package io.arkx.framework.commons.download;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -7,11 +12,6 @@ import java.io.RandomAccessFile;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.MessageFormat;
-
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Downloading")
 @XmlAccessorType(XmlAccessType.NONE)

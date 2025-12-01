@@ -7,8 +7,10 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.Collecti
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.IValueHandler;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.RangeValueHandler;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.ValueHandlerProvider;
+import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.*;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.network.MacAddress;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.range.Range;
+
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.time.LocalDate;
@@ -19,13 +21,6 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Box;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Circle;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Line;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.LineSegment;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Path;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Point;
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Polygon;
 
 public class SimpleRow {
 

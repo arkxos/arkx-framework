@@ -2,6 +2,7 @@ package io.arkx.framework.data.db.core.provider.write;
 
 import io.arkx.framework.data.db.common.util.ObjectCastUtils;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+
 import java.util.List;
 
 public class AutoCastTableDataWriteProvider extends DefaultTableDataWriteProvider {

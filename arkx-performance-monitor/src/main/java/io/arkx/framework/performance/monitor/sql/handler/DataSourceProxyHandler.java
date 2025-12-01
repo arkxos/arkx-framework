@@ -1,7 +1,6 @@
 package io.arkx.framework.performance.monitor.sql.handler;
 
 import io.arkx.framework.performance.monitor.TraceRecorder;
-import io.arkx.framework.performance.monitor.config.MonitorConfig;
 import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 
 import javax.sql.DataSource;

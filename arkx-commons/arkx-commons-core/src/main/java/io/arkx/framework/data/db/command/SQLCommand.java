@@ -1,9 +1,9 @@
 package io.arkx.framework.data.db.command;
 
-import java.util.HashMap;
-
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * 自由SQL指令

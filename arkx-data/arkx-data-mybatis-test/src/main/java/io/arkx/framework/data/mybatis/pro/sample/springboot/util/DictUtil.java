@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static io.arkx.framework.data.mybatis.pro.sample.springboot.util.DictFieldCache.findForClass;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 /**
  * 字典工具类

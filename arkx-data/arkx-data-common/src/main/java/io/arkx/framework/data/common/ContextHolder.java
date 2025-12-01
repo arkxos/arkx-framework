@@ -1,8 +1,8 @@
 package io.arkx.framework.data.common;
 
-import java.util.Collection;
-
 import org.springframework.context.ApplicationContext;
+
+import java.util.Collection;
 
 /**
  * @author Darkness

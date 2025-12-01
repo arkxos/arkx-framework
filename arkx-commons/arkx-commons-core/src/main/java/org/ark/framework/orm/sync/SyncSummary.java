@@ -8,14 +8,13 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
+import lombok.Data;
+import org.ark.framework.orm.sync.metadata.SyncStatus;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.ark.framework.orm.sync.metadata.SyncStatus;
-
-import lombok.Data;
 
 /**
  * 同步汇总

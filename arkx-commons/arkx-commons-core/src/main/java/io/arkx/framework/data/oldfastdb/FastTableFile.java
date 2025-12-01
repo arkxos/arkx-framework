@@ -1,16 +1,12 @@
 package io.arkx.framework.data.oldfastdb;
 
+import io.arkx.framework.data.fasttable.*;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-
-import io.arkx.framework.data.fasttable.FastColumn;
-import io.arkx.framework.data.fasttable.FastTableHeader;
-import io.arkx.framework.data.fasttable.FastTableHeaderDecoder;
-import io.arkx.framework.data.fasttable.FastTableHeaderEncoder;
-import io.arkx.framework.data.fasttable.MappedFile;
 
 /**
  *  

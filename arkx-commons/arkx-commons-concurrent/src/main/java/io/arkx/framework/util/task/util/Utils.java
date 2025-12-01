@@ -1,12 +1,11 @@
 package io.arkx.framework.util.task.util;
 
+import io.arkx.framework.util.task.exception.TaskException;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-
-import io.arkx.framework.util.task.exception.TaskException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

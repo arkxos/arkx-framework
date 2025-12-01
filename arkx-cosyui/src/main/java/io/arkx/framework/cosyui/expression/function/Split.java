@@ -1,9 +1,9 @@
 package io.arkx.framework.cosyui.expression.function;
 
-import java.util.StringTokenizer;
-
 import io.arkx.framework.cosyui.expression.AbstractFunction;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
+
+import java.util.StringTokenizer;
 
 /**
  * 将第一个参数按第二个参数分隔成数组。

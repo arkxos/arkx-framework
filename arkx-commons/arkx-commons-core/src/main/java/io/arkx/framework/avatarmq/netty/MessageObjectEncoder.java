@@ -1,7 +1,6 @@
 package io.arkx.framework.avatarmq.netty;
 
 import io.arkx.framework.avatarmq.serialize.MessageCodecUtil;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;

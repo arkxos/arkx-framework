@@ -1,8 +1,8 @@
 package io.arkx.framework.data.lightning;
 
-import java.io.IOException;
-
 import io.arkx.framework.data.fasttable.BufferReader;
+
+import java.io.IOException;
 
 public class RecordFilter extends BufferReader {
 

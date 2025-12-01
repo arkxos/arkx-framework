@@ -1,8 +1,7 @@
 package io.arkx.framework.cloud.feign.core;
 
-import org.springframework.http.HttpHeaders;
-
 import feign.RequestInterceptor;
+import org.springframework.http.HttpHeaders;
 
 /**
  * @author lengleng

@@ -1,14 +1,12 @@
 package io.arkx.framework.util.task;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicLong;
-
+import io.arkx.framework.util.task.util.RandomUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.arkx.framework.util.task.util.RandomUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
 public class SlidingWindowTest {

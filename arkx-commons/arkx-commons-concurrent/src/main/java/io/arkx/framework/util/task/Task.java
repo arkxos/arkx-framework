@@ -1,12 +1,12 @@
 package io.arkx.framework.util.task;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import io.arkx.framework.util.task.callback.Progress;
 import io.arkx.framework.util.task.callback.TaskListener;
 import io.arkx.framework.util.task.util.Assert;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public interface Task {
 

@@ -16,8 +16,9 @@
 
 package io.arkx.framework.xss;
 
-import java.util.List;
-
+import io.arkx.framework.xss.config.ArkXssProperties;
+import io.arkx.framework.xss.core.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -29,14 +30,7 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import io.arkx.framework.xss.config.ArkXssProperties;
-import io.arkx.framework.xss.core.DefaultXssCleaner;
-import io.arkx.framework.xss.core.FormXssClean;
-import io.arkx.framework.xss.core.JacksonXssClean;
-import io.arkx.framework.xss.core.XssCleanInterceptor;
-import io.arkx.framework.xss.core.XssCleaner;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 /**
  * jackson xss 配置

@@ -1,17 +1,7 @@
 package io.arkx.framework.commons.util;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
+import io.arkx.framework.data.xml.XMLDocument;
+import io.arkx.framework.data.xml.XMLParser;
 import org.apache.xpath.XPathAPI;
 import org.cyberneko.html.parsers.DOMParser;
 import org.dom4j.io.SAXReader;
@@ -21,8 +11,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.arkx.framework.data.xml.XMLDocument;
-import io.arkx.framework.data.xml.XMLParser;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 /**
  * @class org.ark.framework.utility.XMLUtil
  * xml处理工具类

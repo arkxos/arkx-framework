@@ -9,11 +9,12 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.provider;
 
-import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.common.util.ExamineUtils;
-import java.util.Objects;
+import io.arkx.framework.data.db.core.annotation.Product;
+
 import javax.sql.DataSource;
+import java.util.Objects;
 
 public abstract class AbstractFactoryProvider implements ProductFactoryProvider {
 

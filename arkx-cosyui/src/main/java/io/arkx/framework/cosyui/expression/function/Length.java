@@ -1,14 +1,14 @@
 package io.arkx.framework.cosyui.expression.function;
 
+import io.arkx.framework.cosyui.expression.AbstractFunction;
+import io.arkx.framework.cosyui.expression.ExpressionException;
+import io.arkx.framework.cosyui.expression.IVariableResolver;
+
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
-
-import io.arkx.framework.cosyui.expression.AbstractFunction;
-import io.arkx.framework.cosyui.expression.ExpressionException;
-import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * 返回对象的长度。<br>

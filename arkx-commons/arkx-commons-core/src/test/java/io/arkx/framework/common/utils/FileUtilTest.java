@@ -1,13 +1,10 @@
 package io.arkx.framework.common.utils;
 
-import static io.arkx.framework.commons.utils3.FileUtil.getExtensionName;
-import static io.arkx.framework.commons.utils3.FileUtil.getFileNameNoEx;
-import static io.arkx.framework.commons.utils3.FileUtil.getSize;
-import static io.arkx.framework.commons.utils3.FileUtil.toFile;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
+
+import static io.arkx.framework.commons.utils3.FileUtil.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileUtilTest {
 

@@ -1,14 +1,14 @@
 package io.arkx.framework.security;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.annotation.Priv.LoginType;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.tag.ArkTag;
 import io.arkx.framework.cosyui.template.TagAttr;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 权限声明标签 ，用于在zhtml页面中声明需要的权限，如果当前用户不满声明的权限要求，则会重定向到权限不足页面。

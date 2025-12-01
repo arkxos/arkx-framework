@@ -16,19 +16,7 @@
  */
 package io.arkx.framework.swagger.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springdoc.core.utils.SpringDocUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.http.HttpHeaders;
-
 import io.arkx.framework.swagger.support.SwaggerProperties;
-
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.OAuthFlow;
@@ -38,6 +26,16 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springdoc.core.utils.SpringDocUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.http.HttpHeaders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * swagger配置

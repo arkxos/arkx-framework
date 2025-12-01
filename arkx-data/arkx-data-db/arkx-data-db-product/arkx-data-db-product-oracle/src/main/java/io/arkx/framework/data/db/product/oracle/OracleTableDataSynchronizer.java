@@ -11,6 +11,7 @@ package io.arkx.framework.data.db.product.oracle;
 
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.sync.DefaultTableDataSynchronizeProvider;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;

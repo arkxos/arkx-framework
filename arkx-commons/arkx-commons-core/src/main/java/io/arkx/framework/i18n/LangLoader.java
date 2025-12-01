@@ -1,9 +1,5 @@
 package io.arkx.framework.i18n;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.CacheMapx;
 import io.arkx.framework.commons.collection.Mapx;
@@ -13,6 +9,10 @@ import io.arkx.framework.commons.util.PropertiesUtil;
 import io.arkx.framework.config.DefaultLanguage;
 import io.arkx.framework.extend.plugin.PluginConfig;
 import io.arkx.framework.extend.plugin.PluginManager;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * 语言文件加载器

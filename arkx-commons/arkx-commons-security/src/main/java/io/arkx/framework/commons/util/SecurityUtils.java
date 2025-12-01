@@ -15,21 +15,19 @@
  */
 package io.arkx.framework.commons.util;
 
-import java.util.List;
-
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import io.arkx.framework.commons.exception.BadRequestException;
+import io.arkx.framework.commons.util.enums.DataScopeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import io.arkx.framework.commons.util.enums.DataScopeEnum;
-
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 /**
  * 获取当前登录的用户

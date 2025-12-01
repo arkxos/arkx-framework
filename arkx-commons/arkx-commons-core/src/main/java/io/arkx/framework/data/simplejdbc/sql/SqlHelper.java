@@ -1,11 +1,11 @@
 package io.arkx.framework.data.simplejdbc.sql;
 
+import io.arkx.framework.data.simplejdbc.connection.ConnectionManager;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import io.arkx.framework.data.simplejdbc.connection.ConnectionManager;
 
 
 /**

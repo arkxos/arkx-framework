@@ -1,12 +1,6 @@
 package io.arkx.framework.avatarmq.broker.server;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.util.concurrent.ThreadFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.arkx.framework.avatarmq.broker.ConsumerMessageHook;
 import io.arkx.framework.avatarmq.broker.MessageBrokerHandler;
 import io.arkx.framework.avatarmq.broker.ProducerMessageHook;
@@ -16,8 +10,6 @@ import io.arkx.framework.avatarmq.netty.MessageObjectEncoder;
 import io.arkx.framework.avatarmq.netty.NettyClustersConfig;
 import io.arkx.framework.avatarmq.netty.NettyUtil;
 import io.arkx.framework.avatarmq.serialize.KryoCodecUtil;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -29,6 +21,13 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.concurrent.ThreadFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @filename:AvatarMQBrokerServer.java

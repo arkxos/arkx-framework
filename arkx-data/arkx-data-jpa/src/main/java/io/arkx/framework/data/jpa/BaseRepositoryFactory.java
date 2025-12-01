@@ -1,11 +1,9 @@
 package io.arkx.framework.data.jpa;
 
-import java.io.Serializable;
-import java.util.Optional;
-
+import io.arkx.framework.data.common.entity.BaseEntity;
 import io.arkx.framework.data.jpa.repository.BaseJpaRepositoryImpl;
+import io.arkx.framework.data.jpa.sqltoy.SqlToyRepositoryFactory;
 import jakarta.persistence.EntityManager;
-
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory;
 import org.springframework.data.jpa.repository.query.EscapeCharacter;
@@ -19,8 +17,8 @@ import org.springframework.data.repository.query.ValueExpressionDelegate;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
-import io.arkx.framework.data.common.entity.BaseEntity;
-import io.arkx.framework.data.jpa.sqltoy.SqlToyRepositoryFactory;
+import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * .<p>通用Jpa仓库构造工厂</p>

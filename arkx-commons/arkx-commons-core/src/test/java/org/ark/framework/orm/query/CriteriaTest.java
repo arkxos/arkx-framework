@@ -1,21 +1,16 @@
 package org.ark.framework.orm.query;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.Date;
-import java.util.List;
-
+import io.arkx.framework.commons.util.DateUtil;
+import io.arkx.framework.data.jdbc.*;
 import org.ark.framework.infrastructure.repositories.Person;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 
-import io.arkx.framework.commons.util.DateUtil;
-import io.arkx.framework.data.jdbc.Criteria;
-import io.arkx.framework.data.jdbc.Query;
-import io.arkx.framework.data.jdbc.Restrictions;
-import io.arkx.framework.data.jdbc.Session;
-import io.arkx.framework.data.jdbc.SessionFactory;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**   

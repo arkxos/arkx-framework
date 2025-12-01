@@ -1,22 +1,17 @@
 package io.arkx.framework.framework.common.collection;
 
-import static io.arkx.framework.commons.collection.DataColumn.dateColumn;
-import static io.arkx.framework.commons.collection.DataColumn.doubleColumn;
-import static io.arkx.framework.commons.collection.DataColumn.floatColumn;
-import static io.arkx.framework.commons.collection.DataColumn.intColumn;
-import static io.arkx.framework.commons.collection.DataColumn.stringColumn;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.DataTableUtil;
+import io.arkx.framework.framework.common.Person;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import io.arkx.framework.commons.collection.DataColumn;
-import io.arkx.framework.commons.collection.DataTable;
-import io.arkx.framework.commons.collection.DataTableUtil;
-import io.arkx.framework.framework.common.Person;
+import static io.arkx.framework.commons.collection.DataColumn.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 

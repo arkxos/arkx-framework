@@ -1,22 +1,18 @@
 package io.arkx.framework.data.db.dbtype;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import com.sun.star.uno.RuntimeException;
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
-import io.arkx.framework.data.db.command.AdvanceChangeColumnCommand;
-import io.arkx.framework.data.db.command.CreateTableCommand;
-import io.arkx.framework.data.db.command.DropIndexCommand;
-import io.arkx.framework.data.db.command.DropTableCommand;
-import io.arkx.framework.data.db.command.RenameColumnCommand;
+import io.arkx.framework.data.db.command.*;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
-import com.sun.star.uno.RuntimeException;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * MySQL数据库

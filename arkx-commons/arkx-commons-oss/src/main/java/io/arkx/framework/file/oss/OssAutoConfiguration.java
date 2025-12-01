@@ -17,16 +17,15 @@
 
 package io.arkx.framework.file.oss;
 
+import io.arkx.framework.file.core.FileProperties;
+import io.arkx.framework.file.core.FileTemplate;
+import io.arkx.framework.file.oss.http.OssEndpoint;
+import io.arkx.framework.file.oss.service.OssTemplate;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
-
-import io.arkx.framework.file.core.FileProperties;
-import io.arkx.framework.file.core.FileTemplate;
-import io.arkx.framework.file.oss.http.OssEndpoint;
-import io.arkx.framework.file.oss.service.OssTemplate;
 
 /**
  * aws 自动配置类

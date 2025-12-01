@@ -15,14 +15,14 @@
  */
 package io.arkx.framework.thirdparty.fastjson;
 
-import static io.arkx.framework.thirdparty.fastjson.JSONScanner.EOI;
-
-import java.util.Map;
-
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONArray;
 import io.arkx.framework.json.JSONException;
 import io.arkx.framework.json.JSONObject;
+
+import java.util.Map;
+
+import static io.arkx.framework.thirdparty.fastjson.JSONScanner.EOI;
 
 /**
  * @author wenshao<szujobs@hotmail.com>

@@ -1,10 +1,5 @@
 package io.arkx.framework.cosyui.control;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.ark.framework.jaf.IPageEnableAction;
-
 import io.arkx.framework.Constant;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -18,6 +13,10 @@ import io.arkx.framework.cosyui.tag.ListAction;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.i18n.LangMapping;
+import org.ark.framework.jaf.IPageEnableAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 分页条标签　

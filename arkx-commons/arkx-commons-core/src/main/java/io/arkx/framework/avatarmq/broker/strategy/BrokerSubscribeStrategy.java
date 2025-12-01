@@ -7,7 +7,6 @@ import io.arkx.framework.avatarmq.model.RemoteChannelData;
 import io.arkx.framework.avatarmq.model.RequestMessage;
 import io.arkx.framework.avatarmq.model.ResponseMessage;
 import io.arkx.framework.avatarmq.msg.SubscribeMessage;
-
 import io.netty.channel.ChannelHandlerContext;
 
 /**

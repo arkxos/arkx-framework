@@ -1,12 +1,12 @@
 package io.arkx.framework.cosyui.expression.function;
 
-import java.util.Collection;
-
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.cosyui.expression.AbstractFunction;
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
+
+import java.util.Collection;
 
 /**
  * 将数组和集合按第二个参数指定的分隔符拼接成一个字符串。

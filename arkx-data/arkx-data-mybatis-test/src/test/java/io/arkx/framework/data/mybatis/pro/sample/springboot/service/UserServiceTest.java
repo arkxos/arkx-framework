@@ -1,8 +1,8 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.service;
 
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

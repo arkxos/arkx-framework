@@ -1,14 +1,10 @@
 package org.ark.framework.media;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
-
-import javax.imageio.ImageIO;
 
 public class WaterMark {
 	private String imageFile;

@@ -1,29 +1,23 @@
 package io.arkx.framework.data.jpa.sqltemplate.freemarker;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import io.arkx.framework.boot.spring.IocBeanRegister;
+import io.arkx.framework.data.jpa.AopTargetUtils;
+import io.arkx.framework.data.jpa.QueryBuilder;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
-
 import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
-import org.springframework.data.jpa.repository.query.JpaParameters;
-import org.springframework.data.jpa.repository.query.JpaParametersParameterAccessor;
-import org.springframework.data.jpa.repository.query.JpaQueryMethod;
-import org.springframework.data.jpa.repository.query.QueryUtils;
+import org.springframework.data.jpa.repository.query.*;
 import org.springframework.data.repository.query.Parameter;
 import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 import org.springframework.util.CollectionUtils;
 
-import io.arkx.framework.boot.spring.IocBeanRegister;
-import io.arkx.framework.data.jpa.AopTargetUtils;
-import io.arkx.framework.data.jpa.QueryBuilder;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>Freemarker模板查询</p>

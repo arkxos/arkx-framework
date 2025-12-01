@@ -1,15 +1,12 @@
 package org.ark.framework.core.castor;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import io.arkx.framework.XTest;
+import io.arkx.framework.commons.util.DateUtil;
+import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import org.junit.jupiter.api.Test;
-
-import io.arkx.framework.commons.util.DateUtil;
-import io.arkx.framework.XTest;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 

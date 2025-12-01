@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.util;
 
-import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import io.arkx.framework.commons.collection.CaseIgnoreMapx;
 import io.arkx.framework.commons.collection.Mapx;
+
+import java.util.ArrayList;
+import java.util.Map.Entry;
 
 /**
  * ${A}格式的简易正则表达式解析器，避免了常规正则表达式需要转义太多字符的毛病<br>

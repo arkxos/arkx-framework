@@ -1,7 +1,7 @@
 package io.arkx.framework.message.mq;
 
-import io.arkx.framework.message.tcp.struct.NettyMessage;
 import io.arkx.framework.message.tcp.Config;
+import io.arkx.framework.message.tcp.struct.NettyMessage;
 
 public class Consumer1 {
 

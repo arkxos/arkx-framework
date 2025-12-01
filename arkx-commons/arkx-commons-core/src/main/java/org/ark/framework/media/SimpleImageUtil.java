@@ -1,26 +1,17 @@
 package org.ark.framework.media;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import com.alibaba.simpleimage.ImageFormat;
+import com.alibaba.simpleimage.ImageRender;
+import com.alibaba.simpleimage.render.*;
+import io.arkx.framework.commons.util.FileUtil;
+import org.apache.commons.io.IOUtils;
+import org.ark.framework.media.render.ZDrawTextItem;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
-import org.ark.framework.media.render.ZDrawTextItem;
-
-import com.alibaba.simpleimage.ImageFormat;
-import com.alibaba.simpleimage.ImageRender;
-import com.alibaba.simpleimage.render.DrawTextItem;
-import com.alibaba.simpleimage.render.DrawTextParameter;
-import com.alibaba.simpleimage.render.DrawTextRender;
-import com.alibaba.simpleimage.render.ReadRender;
-import com.alibaba.simpleimage.render.ScaleParameter;
-import com.alibaba.simpleimage.render.ScaleRender;
-import com.alibaba.simpleimage.render.WriteRender;
-import io.arkx.framework.commons.util.FileUtil;
 
 public class SimpleImageUtil {
 	public static void pressText(String filePath, String txt, Font font, Color fontColor, float opicty, int x, int y) throws Exception {

@@ -10,16 +10,12 @@
 package io.arkx.framework.data.db.common.event;
 
 import com.google.common.collect.Lists;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
-import jakarta.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.*;
 
 public class TaskEventHub {
 

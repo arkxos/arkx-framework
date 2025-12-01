@@ -9,6 +9,7 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.util;
 
+import com.google.common.collect.Lists;
 import io.arkx.framework.data.db.common.consts.Constants;
 import io.arkx.framework.data.db.common.type.ProductTableEnum;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
@@ -16,16 +17,16 @@ import io.arkx.framework.data.db.common.util.DDLFormatterUtils;
 import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
 import io.arkx.framework.data.db.core.schema.ColumnDescription;
 import io.arkx.framework.data.db.core.schema.ColumnMetaData;
-import io.arkx.framework.data.db.core.schema.TableDescription;
 import io.arkx.framework.data.db.core.schema.SourceProperties;
-import com.google.common.collect.Lists;
+import io.arkx.framework.data.db.core.schema.TableDescription;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * 拼接SQL工具类

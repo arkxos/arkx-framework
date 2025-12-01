@@ -17,12 +17,11 @@
 
 package io.arkx.framework.file;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Import;
-
 import io.arkx.framework.file.core.FileProperties;
 import io.arkx.framework.file.local.LocalFileAutoConfiguration;
 import io.arkx.framework.file.oss.OssAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Import;
 
 /**
  * aws 自动配置类

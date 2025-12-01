@@ -1,8 +1,5 @@
 package io.arkx.framework.data.jpa.sqltemplate;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.xml.DefaultDocumentLoader;
@@ -18,6 +15,9 @@ import org.w3c.dom.Element;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * .

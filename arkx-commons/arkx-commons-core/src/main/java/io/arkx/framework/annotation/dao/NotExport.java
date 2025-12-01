@@ -1,10 +1,6 @@
 package io.arkx.framework.annotation.dao;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 用于标识在导出数据库时是否导出相应的DAO类对应的数据表的数据

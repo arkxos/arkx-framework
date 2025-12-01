@@ -1,18 +1,17 @@
 package io.arkx.framework.cloud.feign.interceptor;
 
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+import io.arkx.framework.commons.util.UuidUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import io.arkx.framework.commons.util.UuidUtil;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 微服务之间feign调用请求头丢失的问题

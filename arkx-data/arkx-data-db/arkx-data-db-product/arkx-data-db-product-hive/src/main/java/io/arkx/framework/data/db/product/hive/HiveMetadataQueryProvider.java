@@ -14,26 +14,14 @@ import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.common.util.UuidUtils;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.meta.AbstractMetadataProvider;
-import io.arkx.framework.data.db.core.schema.ColumnDescription;
-import io.arkx.framework.data.db.core.schema.ColumnMetaData;
-import io.arkx.framework.data.db.core.schema.IndexDescription;
-import io.arkx.framework.data.db.core.schema.TableDescription;
-import io.arkx.framework.data.db.core.schema.SourceProperties;
+import io.arkx.framework.data.db.core.schema.*;
 import io.arkx.framework.data.db.core.util.GenerateSqlUtils;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+
+import java.sql.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class HiveMetadataQueryProvider extends AbstractMetadataProvider {

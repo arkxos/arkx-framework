@@ -2,10 +2,11 @@ package io.arkx.framework.data.db.product.postgresql.copy.bulkprocessor.handler;
 
 import io.arkx.framework.data.db.product.postgresql.copy.IPgBulkInsert;
 import io.arkx.framework.data.db.product.postgresql.copy.util.PostgreSqlUtils;
+import org.postgresql.PGConnection;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.function.Supplier;
-import org.postgresql.PGConnection;
 
 public class BulkWriteHandler<TEntity> implements IBulkWriteHandler<TEntity> {
 

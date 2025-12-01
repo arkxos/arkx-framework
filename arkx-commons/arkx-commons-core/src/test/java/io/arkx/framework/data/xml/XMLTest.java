@@ -1,15 +1,14 @@
 package io.arkx.framework.data.xml;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import io.arkx.framework.commons.util.FileUtil;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import io.arkx.framework.commons.util.FileUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class XMLTest {
 

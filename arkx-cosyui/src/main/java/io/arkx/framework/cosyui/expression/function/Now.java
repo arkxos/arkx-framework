@@ -1,10 +1,10 @@
 package io.arkx.framework.cosyui.expression.function;
 
-import java.util.Date;
-
 import io.arkx.framework.cosyui.expression.AbstractFunction;
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
+
+import java.util.Date;
 
 /**
  * 返回表示当前时间的Date对象。

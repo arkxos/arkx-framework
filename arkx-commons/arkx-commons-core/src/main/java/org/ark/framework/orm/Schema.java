@@ -1,14 +1,5 @@
 package org.ark.framework.orm;
 
-import java.io.Serializable;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
 import io.arkx.framework.commons.collection.*;
 import io.arkx.framework.commons.util.DateUtil;
 import io.arkx.framework.commons.util.LogUtil;
@@ -16,12 +7,16 @@ import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.data.db.DataCollection;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.jdbc.*;
+import lombok.extern.slf4j.Slf4j;
 import org.ark.framework.orm.sql.ClobUtils;
 import org.ark.framework.orm.sql.LobUtil;
-
-import lombok.extern.slf4j.Slf4j;
-
 import org.ark.framework.orm.util.SqlKeywordEscaper;
+
+import java.io.Serializable;
+import java.sql.*;
+import java.util.*;
+import java.util.Date;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @class org.ark.framework.orm.Schema

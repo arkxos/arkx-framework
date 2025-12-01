@@ -1,10 +1,10 @@
 package io.arkx.framework.data.jdbc;
 
-import java.sql.SQLException;
-import java.util.concurrent.locks.ReentrantLock;
-
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionPoolManager;
+
+import java.sql.SQLException;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class TransactionFactory {
 

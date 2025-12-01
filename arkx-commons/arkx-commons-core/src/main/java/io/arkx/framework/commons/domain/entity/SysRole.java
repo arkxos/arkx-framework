@@ -1,14 +1,12 @@
 package io.arkx.framework.commons.domain.entity;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import io.arkx.framework.commons.annotation.Excel;
 import io.arkx.framework.commons.annotation.Excel.ColumnType;
 import io.arkx.framework.commons.domain.BaseEntity;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 角色表 sys_role

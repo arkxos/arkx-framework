@@ -1,10 +1,9 @@
 package org.ark.framework.utility;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import io.arkx.framework.commons.util.MD5Util;
 import org.junit.jupiter.api.Test;
 
-import io.arkx.framework.commons.util.MD5Util;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**   
  * 

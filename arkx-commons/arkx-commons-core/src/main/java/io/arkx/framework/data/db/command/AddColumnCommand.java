@@ -1,13 +1,13 @@
 package io.arkx.framework.data.db.command;
 
-import java.util.HashMap;
-
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
 import io.arkx.framework.data.db.dbtype.Sybase;
 import io.arkx.framework.json.JSON;
 import io.arkx.framework.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * 添加字段指令

@@ -1,12 +1,12 @@
 package org.ark.framework.messages;
 
-import java.util.ArrayList;
-
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.i18n.LangMapping;
+
+import java.util.ArrayList;
 
 
 /**

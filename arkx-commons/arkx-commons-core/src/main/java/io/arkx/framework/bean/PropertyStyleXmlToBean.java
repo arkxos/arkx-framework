@@ -1,17 +1,12 @@
 package io.arkx.framework.bean;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.lang.ReflectionUtil;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.data.xml.XMLMultiLoader;
+
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * 

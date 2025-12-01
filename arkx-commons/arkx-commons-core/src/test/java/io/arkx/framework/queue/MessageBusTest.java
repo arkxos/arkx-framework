@@ -1,10 +1,9 @@
 package io.arkx.framework.queue;
 
+import io.arkx.framework.queue2.MessageBus;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import io.arkx.framework.queue2.MessageBus;
 
 public class MessageBusTest {
 

@@ -1,18 +1,16 @@
 package org.ark.framework.jaf.tag;
 
-import java.io.IOException;
-
+import io.arkx.framework.commons.util.StringUtil;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.BodyTagSupport;
+import jakarta.servlet.jsp.tagext.Tag;
 import org.ark.framework.jaf.PlaceHolder;
 import org.ark.framework.jaf.PlaceHolderContext;
 import org.ark.framework.jaf.expression.Operators;
 import org.ark.framework.jaf.expression.Primitives;
 
-import io.arkx.framework.commons.util.StringUtil;
-
-import jakarta.servlet.jsp.JspException;
-import jakarta.servlet.jsp.PageContext;
-import jakarta.servlet.jsp.tagext.BodyTagSupport;
-import jakarta.servlet.jsp.tagext.Tag;
+import java.io.IOException;
 
 
 /**

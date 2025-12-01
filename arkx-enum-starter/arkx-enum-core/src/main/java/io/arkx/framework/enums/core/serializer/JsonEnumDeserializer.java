@@ -1,12 +1,11 @@
 package io.arkx.framework.enums.core.serializer;
 
-import io.arkx.framework.enums.core.enums.CodeEnum;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-
+import io.arkx.framework.enums.core.enums.CodeEnum;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;

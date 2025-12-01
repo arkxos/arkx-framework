@@ -1,10 +1,10 @@
 package io.arkx.framework.media.mp3.demo;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-
 import io.arkx.framework.media.mp3.decoder.AbstractDecoder;
 import io.arkx.framework.media.mp3.decoder.IAudio;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * 演示解码器调用方法。一个最简的迷你播放器：

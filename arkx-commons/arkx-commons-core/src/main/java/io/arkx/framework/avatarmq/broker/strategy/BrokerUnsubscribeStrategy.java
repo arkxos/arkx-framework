@@ -6,7 +6,6 @@ import io.arkx.framework.avatarmq.consumer.ConsumerContext;
 import io.arkx.framework.avatarmq.model.RequestMessage;
 import io.arkx.framework.avatarmq.model.ResponseMessage;
 import io.arkx.framework.avatarmq.msg.UnSubscribeMessage;
-
 import io.netty.channel.ChannelHandlerContext;
 
 /**

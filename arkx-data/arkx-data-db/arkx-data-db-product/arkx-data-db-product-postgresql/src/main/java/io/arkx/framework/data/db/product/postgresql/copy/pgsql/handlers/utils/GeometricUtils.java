@@ -1,6 +1,7 @@
 package io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.utils;
 
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.Point;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 

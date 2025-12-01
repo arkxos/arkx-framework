@@ -11,6 +11,7 @@ package io.arkx.framework.data.db.product.mongodb;
 
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.sync.DefaultTableDataSynchronizeProvider;
+
 import java.util.List;
 
 public class MongodbTableDataSynchronizer extends DefaultTableDataSynchronizeProvider {

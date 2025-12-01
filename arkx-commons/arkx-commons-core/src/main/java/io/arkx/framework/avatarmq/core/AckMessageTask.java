@@ -1,11 +1,11 @@
 package io.arkx.framework.avatarmq.core;
 
+import com.google.common.base.Splitter;
+import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicLong;
-
-import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
-import com.google.common.base.Splitter;
 
 /**
  * @filename:AckMessageTask.java

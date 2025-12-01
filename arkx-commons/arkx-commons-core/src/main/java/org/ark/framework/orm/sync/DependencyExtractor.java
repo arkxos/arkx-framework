@@ -8,6 +8,10 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodNode;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,11 +20,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
 
 /**
  * 自动依赖提取工具

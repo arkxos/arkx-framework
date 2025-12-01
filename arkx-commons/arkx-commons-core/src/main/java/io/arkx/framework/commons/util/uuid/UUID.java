@@ -1,12 +1,12 @@
 package io.arkx.framework.commons.util.uuid;
 
+import io.arkx.framework.commons.exception.UtilException;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
-import io.arkx.framework.commons.exception.UtilException;
 
 /**
  * 提供通用唯一识别码（universally unique identifier）（UUID）实现

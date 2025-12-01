@@ -16,18 +16,15 @@ import io.arkx.framework.data.db.core.schema.ColumnDescription;
 import io.arkx.framework.data.db.core.schema.ColumnMetaData;
 import io.arkx.framework.data.db.core.schema.SourceProperties;
 import io.arkx.framework.data.db.core.schema.TableDescription;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 @SuppressWarnings("ALL")
 @Slf4j

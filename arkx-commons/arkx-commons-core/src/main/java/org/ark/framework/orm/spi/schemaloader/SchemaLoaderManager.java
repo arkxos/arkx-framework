@@ -1,9 +1,9 @@
 package org.ark.framework.orm.spi.schemaloader;
 
+import io.arkx.framework.Config;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.Config;
 
 
 /**   

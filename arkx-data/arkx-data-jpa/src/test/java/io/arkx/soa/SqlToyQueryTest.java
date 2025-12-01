@@ -1,10 +1,7 @@
 package io.arkx.soa;
 
-import java.util.HashMap;
-
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSON;
+import io.arkx.soa.entity.StaffEntity;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +10,9 @@ import org.sagacity.sqltoy.model.Page;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.alibaba.fastjson.JSON;
-import io.arkx.soa.entity.StaffEntity;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 

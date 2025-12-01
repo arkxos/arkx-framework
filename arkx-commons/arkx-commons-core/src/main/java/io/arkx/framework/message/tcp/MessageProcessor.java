@@ -1,13 +1,12 @@
 package io.arkx.framework.message.tcp;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import io.arkx.framework.commons.util.UuidUtil;
 import io.arkx.framework.message.tcp.client.NettyClient;
 import io.arkx.framework.message.tcp.struct.NettyMessage;
-
 import io.netty.channel.Channel;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MessageProcessor {
 

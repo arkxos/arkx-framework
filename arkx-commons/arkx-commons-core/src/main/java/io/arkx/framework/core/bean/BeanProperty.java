@@ -55,13 +55,13 @@
 
 package io.arkx.framework.core.bean;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 import io.arkx.framework.core.castor.CastorService;
 import io.arkx.framework.core.exception.BeanException;
 import io.arkx.framework.core.exception.BeanGetPropertyException;
 import io.arkx.framework.core.exception.BeanSetPropertyException;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * Bean属性，表示bean中的一对getter/setter，或者一个public字段

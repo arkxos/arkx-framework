@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.arkx.framework.commons.constants.HttpStatus1;
 import io.arkx.framework.commons.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 操作消息提醒

@@ -1,10 +1,11 @@
 package io.arkx.framework.data.db.product.gbase;
 
-import io.arkx.framework.data.db.product.mysql.MysqlMetadataQueryProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.schema.SourceProperties;
-import java.util.List;
+import io.arkx.framework.data.db.product.mysql.MysqlMetadataQueryProvider;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 public class GbaseMetadataQueryProvider extends MysqlMetadataQueryProvider {
 

@@ -1,9 +1,9 @@
 package io.arkx.framework.ssi;
 
-import java.io.ByteArrayOutputStream;
-
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.WriteListener;
+
+import java.io.ByteArrayOutputStream;
 
 public class ByteArrayServletOutputStream extends ServletOutputStream {
 	protected ByteArrayOutputStream buf = null;

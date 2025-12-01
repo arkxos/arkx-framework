@@ -9,9 +9,9 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.schema;
 
+import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
-import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 
 /**
  * 数据库列描述符信息定义(Column Description)

@@ -1,13 +1,13 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.interceptor;
 
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.operation.Insert;
 import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict;
 import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
 import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.DictMapper;
 import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
 import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper.FindByIdLTDto;
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import com.ninja_squad.dbsetup.operation.Insert;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,10 +17,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import java.util.List;
 
-import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.FIELDS_ALIAS_CACHE;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.ninja_squad.dbsetup.Operations.insertInto;
 import static com.ninja_squad.dbsetup.Operations.truncate;
+import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.FIELDS_ALIAS_CACHE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**

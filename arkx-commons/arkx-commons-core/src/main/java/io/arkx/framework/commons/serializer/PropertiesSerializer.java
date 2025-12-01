@@ -1,8 +1,8 @@
 package io.arkx.framework.commons.serializer;
 
-import java.util.Properties;
-
 import com.google.gson.JsonObject;
+
+import java.util.Properties;
 
 /**
  * 属性序列化处理器

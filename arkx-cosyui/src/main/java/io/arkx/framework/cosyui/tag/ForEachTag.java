@@ -1,12 +1,5 @@
 package io.arkx.framework.cosyui.tag;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -14,6 +7,9 @@ import io.arkx.framework.commons.util.Primitives;
 import io.arkx.framework.core.bean.BeanUtil;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
+
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * ForEach标签，用于循环输出集合及JavaBean

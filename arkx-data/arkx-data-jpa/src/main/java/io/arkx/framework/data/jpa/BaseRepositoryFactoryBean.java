@@ -1,18 +1,16 @@
 package io.arkx.framework.data.jpa;
 
-import java.io.Serializable;
-
+import io.arkx.framework.data.common.ContextHolder;
+import io.arkx.framework.data.common.entity.BaseEntity;
+import io.arkx.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
 import jakarta.persistence.EntityManager;
-
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
-import io.arkx.framework.data.common.entity.BaseEntity;
-import io.arkx.framework.data.common.ContextHolder;
-import io.arkx.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
+import java.io.Serializable;
 
 /**
  * 基础Repostory简单实现 factory bean

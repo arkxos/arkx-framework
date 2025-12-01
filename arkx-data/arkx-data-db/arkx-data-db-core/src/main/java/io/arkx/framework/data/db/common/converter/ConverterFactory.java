@@ -9,10 +9,11 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.converter;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public final class ConverterFactory {

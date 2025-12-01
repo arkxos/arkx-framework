@@ -1,9 +1,8 @@
 package io.arkx.framework.commons.util;
 
-import org.ark.framework.security.LicenseInfo;
-
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
+import org.ark.framework.security.LicenseInfo;
 
 /**
  * @class org.ark.framework.util.ChartUtil

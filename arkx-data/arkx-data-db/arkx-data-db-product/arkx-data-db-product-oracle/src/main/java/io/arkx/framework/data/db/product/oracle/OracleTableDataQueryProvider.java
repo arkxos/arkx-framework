@@ -9,11 +9,12 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.oracle;
 
-import java.sql.Types;
 import io.arkx.framework.data.db.common.entity.IncrementPoint;
 import io.arkx.framework.data.db.common.util.JdbcTypesUtils;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.query.DefaultTableDataQueryProvider;
+
+import java.sql.Types;
 
 public class OracleTableDataQueryProvider extends DefaultTableDataQueryProvider {
 

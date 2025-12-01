@@ -18,10 +18,10 @@ package io.arkx.framework.cloud.sidecar.nacos;
 
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import com.alibaba.nacos.api.common.Constants;
-import com.alibaba.nacos.api.naming.pojo.Instance;
-import io.arkx.framework.cloud.sidecar.SidecarDiscoveryClient;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
+import com.alibaba.nacos.api.naming.pojo.Instance;
+import io.arkx.framework.cloud.sidecar.SidecarDiscoveryClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

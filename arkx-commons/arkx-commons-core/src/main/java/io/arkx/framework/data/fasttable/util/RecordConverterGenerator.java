@@ -1,13 +1,13 @@
 package io.arkx.framework.data.fasttable.util;
 
+import com.google.common.base.Joiner;
+import io.arkx.framework.commons.util.lang.ReflectionUtil;
+import io.arkx.framework.data.fasttable.annotation.FastColumn;
+
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.commons.util.lang.ReflectionUtil;
-import com.google.common.base.Joiner;
-import io.arkx.framework.data.fasttable.annotation.FastColumn;
 
 
 /**

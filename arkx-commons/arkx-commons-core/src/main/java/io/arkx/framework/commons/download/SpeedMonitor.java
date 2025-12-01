@@ -1,11 +1,11 @@
 package io.arkx.framework.commons.download;
 
-import java.util.TimerTask;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import java.util.TimerTask;
 
 /**
  * 

@@ -9,9 +9,9 @@ package org.ark.framework.orm.sql;
  */
 
 import java.io.IOException;
+import java.io.Reader;
 import java.sql.Clob;
 import java.sql.SQLException;
-import java.io.Reader;
 
 /**
  * @author: Zhoulanzhen

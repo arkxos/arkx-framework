@@ -1,30 +1,20 @@
 package io.arkx.framework.data.db.dbtype;
 
-import java.io.OutputStream;
-import java.io.Writer;
-import java.lang.reflect.Method;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
-
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.commons.util.StringUtil;
-import io.arkx.framework.data.db.command.AddColumnCommand;
-import io.arkx.framework.data.db.command.ChangeColumnLengthCommand;
-import io.arkx.framework.data.db.command.ChangeColumnMandatoryCommand;
-import io.arkx.framework.data.db.command.DropTableCommand;
-import io.arkx.framework.data.db.command.RenameTableCommand;
+import io.arkx.framework.data.db.command.*;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import io.arkx.framework.data.jdbc.Session;
 import io.arkx.framework.data.jdbc.SessionFactory;
+
+import java.io.OutputStream;
+import java.io.Writer;
+import java.lang.reflect.Method;
+import java.sql.*;
+import java.util.Properties;
 
 /**
  * Oracle数据库

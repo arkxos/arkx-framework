@@ -1,7 +1,7 @@
 package io.arkx.framework.commons.collection.tree;
 
-import io.arkx.framework.commons.collection.tree.jackson.TreeNodeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.arkx.framework.commons.collection.tree.jackson.TreeNodeSerializer;
 import lombok.Getter;
 import lombok.Setter;
 

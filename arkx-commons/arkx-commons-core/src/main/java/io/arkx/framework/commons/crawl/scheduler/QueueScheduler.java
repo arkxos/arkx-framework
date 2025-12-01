@@ -1,11 +1,10 @@
 package io.arkx.framework.commons.crawl.scheduler;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
+import io.arkx.framework.commons.crawl.Request;
 import org.apache.http.annotation.ThreadSafe;
 
-import io.arkx.framework.commons.crawl.Request;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**   
  * 

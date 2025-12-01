@@ -1,22 +1,15 @@
 package io.arkx.framework.data.jpa.sqltemplate.freemarker;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
+import cn.hutool.core.collection.ConcurrentHashSet;
+import freemarker.cache.StringTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import io.arkx.framework.data.jpa.sqltemplate.NamedTemplateResolver;
+import io.arkx.framework.data.jpa.sqltemplate.SftlNamedTemplateResolver;
+import io.arkx.framework.data.jpa.sqltemplate.XmlNamedTemplateResolver;
+import io.arkx.framework.data.jpa.util.JpaConstants;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +22,13 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
-import io.arkx.framework.data.jpa.sqltemplate.NamedTemplateResolver;
-import io.arkx.framework.data.jpa.sqltemplate.SftlNamedTemplateResolver;
-import io.arkx.framework.data.jpa.sqltemplate.XmlNamedTemplateResolver;
-import io.arkx.framework.data.jpa.util.JpaConstants;
-
-import cn.hutool.core.collection.ConcurrentHashSet;
-import freemarker.cache.StringTemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * <p>

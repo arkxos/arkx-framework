@@ -17,11 +17,10 @@
 
 package io.arkx.framework.file.core;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import io.arkx.framework.file.local.LocalFileProperties;
 import io.arkx.framework.file.oss.OssProperties;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**

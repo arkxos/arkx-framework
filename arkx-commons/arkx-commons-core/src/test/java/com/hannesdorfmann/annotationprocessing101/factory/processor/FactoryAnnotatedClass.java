@@ -15,13 +15,12 @@
  */
 package com.hannesdorfmann.annotationprocessing101.factory.processor;
 
+import com.hannesdorfmann.annotationprocessing101.factory.annotation.Factory;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.hannesdorfmann.annotationprocessing101.factory.annotation.Factory;
 
 /**
  * Holds the information about a class annotated with @Factory

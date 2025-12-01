@@ -1,23 +1,5 @@
 package io.arkx.framework.data.db.connection;
 
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.DatabaseMetaData;
-import java.sql.NClob;
-import java.sql.PreparedStatement;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.SQLXML;
-import java.sql.Savepoint;
-import java.sql.Statement;
-import java.sql.Struct;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.Executor;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
 import io.arkx.framework.data.db.nativejdbc.CommonsDbcpNativeJdbcExtractor;
@@ -25,6 +7,11 @@ import io.arkx.framework.data.db.nativejdbc.JBossNativeJdbcExtractor;
 import io.arkx.framework.data.db.nativejdbc.WebLogicNativeJdbcExtractor;
 import io.arkx.framework.data.db.nativejdbc.WebSphereNativeJdbcExtractor;
 import io.arkx.framework.thirdparty.commons.ArrayUtils;
+
+import java.sql.*;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
 
 /**
  * 数据库连接，调用本类的close()方法时不实际关闭连接，仅将连接释放回连接池。

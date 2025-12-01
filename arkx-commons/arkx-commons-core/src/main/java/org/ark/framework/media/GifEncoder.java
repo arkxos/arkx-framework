@@ -1,7 +1,6 @@
 package org.ark.framework.media;
 
-import java.awt.AWTException;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.PixelGrabber;
 import java.io.IOException;
 import java.io.OutputStream;

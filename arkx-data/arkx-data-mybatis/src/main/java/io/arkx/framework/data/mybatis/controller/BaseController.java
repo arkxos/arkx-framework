@@ -1,11 +1,9 @@
 package io.arkx.framework.data.mybatis.controller;
 
 import cn.hutool.core.util.ObjectUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import io.arkx.framework.data.mybatis.query.CriteriaQuery;
 import io.arkx.framework.data.mybatis.service.IBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;

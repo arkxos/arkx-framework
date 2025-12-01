@@ -1,11 +1,11 @@
 package io.arkx.framework.data.lightning;
 
+import io.arkx.framework.data.fasttable.BufferReader;
+import io.arkx.framework.data.fasttable.ByteBufferUtil;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
-import io.arkx.framework.data.fasttable.BufferReader;
-import io.arkx.framework.data.fasttable.ByteBufferUtil;
 
 public class TableInfoReader extends BufferReader {
 

@@ -9,8 +9,6 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.calculate;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import io.arkx.framework.data.db.common.consts.Constants;
 import io.arkx.framework.data.db.common.entity.ResultSetWrapper;
 import io.arkx.framework.data.db.common.util.ExamineUtils;
@@ -22,6 +20,8 @@ import io.arkx.framework.data.db.core.provider.transform.RecordTransformProvider
 import io.arkx.framework.data.db.core.service.DefaultMetadataService;
 import io.arkx.framework.data.db.core.service.MetadataService;
 import io.arkx.framework.data.db.core.util.SyncUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

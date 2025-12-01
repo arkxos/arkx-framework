@@ -8,13 +8,13 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
-
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 表同步配置

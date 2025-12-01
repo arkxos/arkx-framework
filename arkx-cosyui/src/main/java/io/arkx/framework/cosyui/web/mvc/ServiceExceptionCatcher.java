@@ -3,7 +3,6 @@ package io.arkx.framework.cosyui.web.mvc;
 import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.exception.ServiceException;
 import io.arkx.framework.core.IExceptionCatcher;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

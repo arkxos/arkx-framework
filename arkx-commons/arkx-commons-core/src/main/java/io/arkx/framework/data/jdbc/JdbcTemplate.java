@@ -1,19 +1,5 @@
 package io.arkx.framework.data.jdbc;
 
-import java.io.UnsupportedEncodingException;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.ark.framework.orm.sql.LobUtil;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.DateUtil;
@@ -26,16 +12,15 @@ import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
-import io.arkx.framework.data.db.exception.AlterException;
-import io.arkx.framework.data.db.exception.CreateException;
-import io.arkx.framework.data.db.exception.DatabaseException;
-import io.arkx.framework.data.db.exception.DeleteException;
-import io.arkx.framework.data.db.exception.DropException;
-import io.arkx.framework.data.db.exception.InsertException;
-//import io.arkx.framework.extend.ExtendManager;
-//import io.arkx.framework.extend.action.AfterSQLExecutedAction;
-
+import io.arkx.framework.data.db.exception.*;
 import lombok.extern.slf4j.Slf4j;
+import org.ark.framework.orm.sql.LobUtil;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 数据库存取器，是对数据库连接的简单封装。

@@ -1,12 +1,12 @@
 package io.arkx.framework.data.xml;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.lang.FastStringBuilder;
 import io.arkx.framework.commons.util.ObjectUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 表示一个XML元素

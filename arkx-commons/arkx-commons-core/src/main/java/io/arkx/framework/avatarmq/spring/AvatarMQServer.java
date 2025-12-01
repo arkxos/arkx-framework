@@ -1,11 +1,10 @@
 package io.arkx.framework.avatarmq.spring;
 
+import io.arkx.framework.avatarmq.broker.server.AvatarMQBrokerServer;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import io.arkx.framework.avatarmq.broker.server.AvatarMQBrokerServer;
 
 /**
  * @filename:AvatarMQServer.java

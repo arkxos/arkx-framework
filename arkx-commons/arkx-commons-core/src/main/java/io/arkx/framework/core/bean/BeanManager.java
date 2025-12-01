@@ -1,9 +1,9 @@
 package io.arkx.framework.core.bean;
 
+import io.arkx.framework.commons.collection.ConcurrentMapx;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-
-import io.arkx.framework.commons.collection.ConcurrentMapx;
 
 /**
  * Bean描述信息管理类

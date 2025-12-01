@@ -1,17 +1,16 @@
 package io.arkx.framework.commons.util;
 
-import java.io.InputStream;
-import java.util.Map;
-import java.util.Properties;
-
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.PropertyConfigurator;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.log.ILogManager;
 import io.arkx.framework.commons.util.log.ILogger;
 import io.arkx.framework.core.FrameworkException;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.PropertyConfigurator;
+
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
 
 public class Log4jManager implements ILogManager {
 	ILogger console = null;

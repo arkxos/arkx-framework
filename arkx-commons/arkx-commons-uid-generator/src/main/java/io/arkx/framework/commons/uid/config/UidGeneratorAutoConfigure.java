@@ -4,7 +4,6 @@ import io.arkx.framework.commons.uid.UidGenerator;
 import io.arkx.framework.commons.uid.buffer.RingBuffer;
 import io.arkx.framework.commons.uid.component.CachedUidGenerator;
 import io.arkx.framework.commons.uid.component.DefaultUidGenerator;
-//import io.arkx.framework.commons.uid.component.JpaIdentityGenerator;
 import io.arkx.framework.commons.uid.constant.Mode;
 import io.arkx.framework.commons.uid.properties.UidGeneratorProperties;
 import io.arkx.framework.commons.uid.worker.DefaultWorkerIdAssigner;

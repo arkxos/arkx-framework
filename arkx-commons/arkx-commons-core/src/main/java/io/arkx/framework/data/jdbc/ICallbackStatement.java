@@ -1,10 +1,10 @@
 package io.arkx.framework.data.jdbc;
 
+import io.arkx.framework.data.db.connection.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import io.arkx.framework.data.db.connection.Connection;
 
 
 /**

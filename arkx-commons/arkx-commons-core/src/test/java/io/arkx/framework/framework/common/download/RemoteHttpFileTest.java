@@ -1,11 +1,11 @@
 package io.arkx.framework.framework.common.download;
 
-import java.io.File;
-import java.io.IOException;
-
 import io.arkx.framework.commons.download.RemoteHttpFile;
 import io.arkx.framework.commons.util.SystemInfo;
 import io.arkx.framework.commons.util.TimeWatch;
+
+import java.io.File;
+import java.io.IOException;
 
 public class RemoteHttpFileTest {
 	

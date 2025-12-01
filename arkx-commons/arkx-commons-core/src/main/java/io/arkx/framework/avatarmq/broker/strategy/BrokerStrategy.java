@@ -4,7 +4,6 @@ import io.arkx.framework.avatarmq.broker.ConsumerMessageListener;
 import io.arkx.framework.avatarmq.broker.ProducerMessageListener;
 import io.arkx.framework.avatarmq.model.RequestMessage;
 import io.arkx.framework.avatarmq.model.ResponseMessage;
-
 import io.netty.channel.ChannelHandlerContext;
 
 /**

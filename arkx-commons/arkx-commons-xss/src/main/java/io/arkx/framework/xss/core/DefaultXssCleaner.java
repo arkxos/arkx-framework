@@ -17,15 +17,13 @@
 package io.arkx.framework.xss.core;
 
 import cn.hutool.core.util.CharsetUtil;
-
+import io.arkx.framework.xss.config.ArkXssProperties;
+import io.arkx.framework.xss.utils.XssUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.internal.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Entities;
 import org.springframework.web.util.HtmlUtils;
-
-import io.arkx.framework.xss.config.ArkXssProperties;
-import io.arkx.framework.xss.utils.XssUtil;
 
 /**
  * 默认的 xss 清理器

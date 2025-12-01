@@ -1,19 +1,17 @@
 package io.arkx.framework.commons.filter;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
 import io.arkx.framework.commons.util.StringUtils;
 import io.arkx.framework.commons.util.html.EscapeUtil;
-
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 /**
  * XSS过滤处理

@@ -8,13 +8,12 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import java.util.Date;
-import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
 import org.ark.framework.orm.sync.metadata.SyncMetadata;
 import org.ark.framework.orm.sync.metadata.SyncStatus;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 同步元数据服务

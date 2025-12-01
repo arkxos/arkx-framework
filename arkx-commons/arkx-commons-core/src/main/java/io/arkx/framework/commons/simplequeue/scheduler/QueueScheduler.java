@@ -1,12 +1,11 @@
 package io.arkx.framework.commons.simplequeue.scheduler;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import org.apache.http.annotation.ThreadSafe;
-
 import io.arkx.framework.commons.simplequeue.ElementWarpper;
 import io.arkx.framework.commons.simplequeue.Task;
+import org.apache.http.annotation.ThreadSafe;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 /**

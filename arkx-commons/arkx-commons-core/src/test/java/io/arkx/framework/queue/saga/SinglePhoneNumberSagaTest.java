@@ -1,15 +1,14 @@
 package io.arkx.framework.queue.saga;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.util.UUID;
-
+import io.arkx.framework.queue2.MessageBus;
+import io.arkx.framework.queue2.Subscribe;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 
-import io.arkx.framework.queue2.MessageBus;
-import io.arkx.framework.queue2.Subscribe;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SinglePhoneNumberSagaTest {
 

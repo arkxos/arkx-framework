@@ -1,12 +1,11 @@
 package org.ark.framework.i18n;
 
-import org.ark.framework.jaf.tag.ListAction;
-
 import io.arkx.framework.annotation.Priv;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.i18n.LangUtil;
+import org.ark.framework.jaf.tag.ListAction;
 
 public class LangButtonUI extends UIFacade {
 	@Priv(login = false)

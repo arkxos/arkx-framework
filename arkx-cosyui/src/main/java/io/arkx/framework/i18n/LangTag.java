@@ -1,14 +1,14 @@
 package io.arkx.framework.i18n;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.cosyui.tag.ArkTag;
 import io.arkx.framework.cosyui.template.TagAttr;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 国际化标签 ，用于在zhtml中根据当前语言显示一个国际化字符串

@@ -1,6 +1,11 @@
 package io.arkx.framework.commons.util;
 
 
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.lang.FastStringBuilder;
+import io.arkx.framework.thirdparty.commons.ArrayUtils;
+import io.arkx.framework.thirdparty.commons.StringEscapeUtils;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
@@ -15,11 +20,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import io.arkx.framework.commons.collection.Mapx;
-import io.arkx.framework.commons.lang.FastStringBuilder;
-import io.arkx.framework.thirdparty.commons.ArrayUtils;
-import io.arkx.framework.thirdparty.commons.StringEscapeUtils;
 
 /**
  * 字符串工具类

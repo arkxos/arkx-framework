@@ -11,10 +11,11 @@ package io.arkx.framework.data.db.core.provider.manage;
 
 import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DefaultTableManageProvider

@@ -1,10 +1,10 @@
 package io.arkx.framework.common.utils;
 
+import org.junit.jupiter.api.Test;
+
 import static io.arkx.framework.commons.utils3.EncryptUtils.desDecrypt;
 import static io.arkx.framework.commons.utils3.EncryptUtils.desEncrypt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
 
 public class EncryptUtilsTest {
 

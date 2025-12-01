@@ -1,22 +1,16 @@
 package io.arkx.framework.data.simplejdbc;
 
-import java.io.File;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import io.arkx.framework.commons.util.PropertiesUtil;
+import io.arkx.framework.data.simplejdbc.query.Criterion;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import io.arkx.framework.commons.util.PropertiesUtil;
-import io.arkx.framework.data.simplejdbc.query.Criterion;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Darkness

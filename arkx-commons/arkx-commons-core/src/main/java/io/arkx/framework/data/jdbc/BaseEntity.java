@@ -1,9 +1,9 @@
 package io.arkx.framework.data.jdbc;
 
-import java.util.Date;
-
 import io.arkx.framework.annotation.Column;
 import io.arkx.framework.annotation.Ingore;
+
+import java.util.Date;
 
 
 /**

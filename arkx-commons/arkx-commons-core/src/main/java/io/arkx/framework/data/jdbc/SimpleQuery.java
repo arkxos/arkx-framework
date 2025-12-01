@@ -1,12 +1,12 @@
 package io.arkx.framework.data.jdbc;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import io.arkx.framework.commons.util.NumberUtil;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.db.QueryException;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 使用QueryBuilder的快捷方式，并封装有一系列的参数化方法，以便更好地防止SQL注入。

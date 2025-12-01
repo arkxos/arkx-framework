@@ -1,11 +1,10 @@
 package io.arkx.framework.encrypt.core.encryptor;
 
-import org.apache.commons.lang3.StringUtils;
-
 import io.arkx.framework.encrypt.core.EncryptContext;
 import io.arkx.framework.encrypt.enumd.AlgorithmType;
 import io.arkx.framework.encrypt.enumd.EncodeType;
 import io.arkx.framework.encrypt.utils.EncryptUtils;
+import org.apache.commons.lang3.StringUtils;
 
 
 /**

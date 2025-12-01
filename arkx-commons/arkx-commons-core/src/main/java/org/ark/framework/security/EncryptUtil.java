@@ -1,8 +1,8 @@
 package org.ark.framework.security;
 
-import javax.crypto.spec.SecretKeySpec;
-
 import io.arkx.framework.commons.util.StringUtil;
+
+import javax.crypto.spec.SecretKeySpec;
 
 
 /**

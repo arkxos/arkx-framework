@@ -5,7 +5,6 @@ import io.arkx.framework.avatarmq.core.HookMessageEvent;
 import io.arkx.framework.avatarmq.model.ResponseMessage;
 import io.arkx.framework.avatarmq.netty.MessageEventWrapper;
 import io.arkx.framework.avatarmq.netty.MessageProcessor;
-
 import io.netty.channel.ChannelHandlerContext;
 
 /**

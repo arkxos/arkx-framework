@@ -11,20 +11,17 @@ package io.arkx.framework.data.db.product.oceanbase;
 
 import cn.hutool.core.text.StrPool;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
-import io.arkx.framework.data.db.product.mysql.MysqlMetadataQueryProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.meta.AbstractMetadataProvider;
 import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
-import io.arkx.framework.data.db.core.schema.ColumnDescription;
-import io.arkx.framework.data.db.core.schema.ColumnMetaData;
-import io.arkx.framework.data.db.core.schema.IndexDescription;
-import io.arkx.framework.data.db.core.schema.SourceProperties;
-import io.arkx.framework.data.db.core.schema.TableDescription;
+import io.arkx.framework.data.db.core.schema.*;
+import io.arkx.framework.data.db.product.mysql.MysqlMetadataQueryProvider;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 public class OceanbaseMetadataQueryProvider extends AbstractMetadataProvider {
 

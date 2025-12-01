@@ -15,10 +15,9 @@
  */
 package io.arkx.framework.commons.util;
 
+import cn.hutool.core.util.ObjectUtil;
 import io.arkx.framework.commons.exception.BadRequestException;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
-
-import cn.hutool.core.util.ObjectUtil;
 
 /**
  * 验证工具

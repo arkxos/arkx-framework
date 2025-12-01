@@ -1,9 +1,9 @@
 package io.arkx.framework.data.xml;
 
+import io.arkx.framework.commons.lang.FastStringBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.commons.lang.FastStringBuilder;
 
 /**
  * 内存中的的XML文档。<br>

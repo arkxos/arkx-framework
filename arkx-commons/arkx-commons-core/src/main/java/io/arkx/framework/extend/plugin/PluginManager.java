@@ -1,13 +1,5 @@
 package io.arkx.framework.extend.plugin;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.annotation.util.PluginAnnotationScannerParser;
 import io.arkx.framework.commons.collection.ConcurrentMapx;
@@ -17,8 +9,15 @@ import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.PropertiesUtil;
 import io.arkx.framework.commons.util.StringUtil;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @class org.ark.framework.extend.plugin.PluginManager

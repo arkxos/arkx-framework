@@ -1,5 +1,6 @@
 package io.arkx.framework.avatarmq.consumer;
 
+import com.google.common.base.Joiner;
 import io.arkx.framework.avatarmq.core.AvatarMQAction;
 import io.arkx.framework.avatarmq.core.MessageIdGenerator;
 import io.arkx.framework.avatarmq.core.MessageSystemConfig;
@@ -8,7 +9,6 @@ import io.arkx.framework.avatarmq.model.RequestMessage;
 import io.arkx.framework.avatarmq.msg.SubscribeMessage;
 import io.arkx.framework.avatarmq.msg.UnSubscribeMessage;
 import io.arkx.framework.avatarmq.netty.MessageProcessor;
-import com.google.common.base.Joiner;
 
 /**
  * 消息消费者

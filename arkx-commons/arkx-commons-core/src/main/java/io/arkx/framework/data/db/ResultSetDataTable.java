@@ -1,10 +1,5 @@
 package io.arkx.framework.data.db;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Types;
-
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
@@ -12,6 +7,11 @@ import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
+
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  *  数据表格，主要用来封装ResultSet。

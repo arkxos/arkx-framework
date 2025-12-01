@@ -23,11 +23,7 @@
  */
 package io.arkx.framework.queen;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * MUTABLE Event (or message) object that passed from publisher to consumer.

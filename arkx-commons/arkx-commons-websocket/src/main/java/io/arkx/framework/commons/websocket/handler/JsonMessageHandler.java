@@ -1,5 +1,6 @@
 package io.arkx.framework.commons.websocket.handler;
 
+import io.arkx.framework.commons.websocket.holder.JsonMessageHandlerHolder;
 import io.arkx.framework.commons.websocket.message.JsonWebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 

@@ -1,16 +1,15 @@
 package io.arkx.framework.avatarmq.consumer;
 
+import io.arkx.framework.avatarmq.model.RemoteChannelData;
+import io.arkx.framework.avatarmq.model.SubscriptionData;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.iterators.FilterIterator;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.iterators.FilterIterator;
-
-import io.arkx.framework.avatarmq.model.RemoteChannelData;
-import io.arkx.framework.avatarmq.model.SubscriptionData;
 
 /**
  * 负责管理消费者集群

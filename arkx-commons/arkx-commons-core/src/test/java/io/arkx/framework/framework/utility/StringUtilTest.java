@@ -1,10 +1,9 @@
 package io.arkx.framework.framework.utility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import io.arkx.framework.commons.util.StringUtil;
 import org.junit.jupiter.api.Test;
 
-import io.arkx.framework.commons.util.StringUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 

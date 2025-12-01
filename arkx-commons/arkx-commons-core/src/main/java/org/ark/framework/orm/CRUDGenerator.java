@@ -1,8 +1,7 @@
 package org.ark.framework.orm;
 
-import java.io.File;
-import java.util.List;
-
+import io.arkx.framework.Config;
+import io.arkx.framework.commons.util.FileUtil;
 import org.ark.framework.orm.schema.PdmSchemaGenerator;
 import org.ark.framework.orm.schema.SchemaGenerator;
 import org.dom4j.Document;
@@ -11,8 +10,8 @@ import org.dom4j.Namespace;
 import org.dom4j.QName;
 import org.dom4j.io.SAXReader;
 
-import io.arkx.framework.Config;
-import io.arkx.framework.commons.util.FileUtil;
+import java.io.File;
+import java.util.List;
 
 /**   
  * @class org.ark.framework.orm.CRUDGenerator

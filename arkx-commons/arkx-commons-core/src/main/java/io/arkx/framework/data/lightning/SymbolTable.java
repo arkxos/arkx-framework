@@ -1,11 +1,11 @@
 package io.arkx.framework.data.lightning;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  

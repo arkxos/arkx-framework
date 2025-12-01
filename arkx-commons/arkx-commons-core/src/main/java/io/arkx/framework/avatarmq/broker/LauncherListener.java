@@ -1,7 +1,6 @@
 package io.arkx.framework.avatarmq.broker;
 
 import io.arkx.framework.avatarmq.core.CallBackInvoker;
-
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 

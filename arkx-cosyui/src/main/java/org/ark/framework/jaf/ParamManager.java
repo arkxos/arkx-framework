@@ -1,12 +1,12 @@
 package org.ark.framework.jaf;
 
+import io.arkx.framework.Constant;
+import io.arkx.framework.commons.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-
-import io.arkx.framework.Constant;
-import io.arkx.framework.commons.util.StringUtil;
 
 
 /**   

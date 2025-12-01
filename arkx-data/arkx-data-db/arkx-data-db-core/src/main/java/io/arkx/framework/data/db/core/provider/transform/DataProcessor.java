@@ -1,13 +1,10 @@
 package io.arkx.framework.data.db.core.provider.transform;
 
 import io.arkx.framework.commons.util.ArkSpringContextHolder;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import io.arkx.framework.data.db.common.entity.ColumnMappingEntity;
 import io.arkx.framework.data.db.common.entity.ColumnPlusEntity;
-import io.arkx.framework.data.db.common.entity.RawDictInfoEntity;
 import io.arkx.framework.data.db.common.entity.NewDictInfoEntity;
+import io.arkx.framework.data.db.common.entity.RawDictInfoEntity;
 import io.arkx.framework.data.db.core.provider.transform.handlers.HandlerMap;
 import io.arkx.framework.data.db.core.schema.ColumnDescription;
 import io.arkx.framework.data.db.core.util.ColumHandler;
@@ -15,9 +12,15 @@ import io.arkx.framework.data.db.core.util.ColumnMappingUtils;
 import io.arkx.framework.data.db.core.util.DictMappingUtils;
 import io.arkx.framework.data.db.core.util.TypeHandler;
 import io.arkx.framework.data.db.sdk.api.ColumnValueTransformer;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ObjectUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j

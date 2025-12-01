@@ -1,15 +1,14 @@
 package io.arkx.framework.message.tcp.codec;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import io.arkx.framework.commons.util.UuidUtil;
 import io.arkx.framework.message.tcp.MessageType;
 import io.arkx.framework.message.tcp.struct.NettyMessage;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Darkness

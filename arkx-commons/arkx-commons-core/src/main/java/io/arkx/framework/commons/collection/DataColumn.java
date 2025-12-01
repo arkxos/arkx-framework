@@ -1,11 +1,11 @@
 package io.arkx.framework.commons.collection;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONAware;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONAware;
 
 /**
  * @class org.ark.framework.collection.DataColumn

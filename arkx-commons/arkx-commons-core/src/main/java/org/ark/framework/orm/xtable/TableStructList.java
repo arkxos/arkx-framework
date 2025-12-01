@@ -1,10 +1,10 @@
 package org.ark.framework.orm.xtable;
 
-import java.util.Date;
-import java.util.Hashtable;
-
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.StringUtil;
+
+import java.util.Date;
+import java.util.Hashtable;
 
 
 /// TableStructList，提供对所有数据库的非系统表的基本属性访问。

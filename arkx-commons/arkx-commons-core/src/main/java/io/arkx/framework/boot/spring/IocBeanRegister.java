@@ -1,10 +1,10 @@
 package io.arkx.framework.boot.spring;
 
-import java.util.Collection;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 /**
  * spring bean holder

@@ -9,8 +9,8 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.schema;
 
-import lombok.Data;
 import io.arkx.framework.data.db.common.type.ProductTableEnum;
+import lombok.Data;
 
 /**
  * 数据库表描述符信息定义(Table Description)

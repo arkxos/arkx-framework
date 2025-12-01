@@ -17,13 +17,12 @@
 
 package io.arkx.framework.file.local;
 
+import io.arkx.framework.file.core.FileProperties;
+import io.arkx.framework.file.core.FileTemplate;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-
-import io.arkx.framework.file.core.FileProperties;
-import io.arkx.framework.file.core.FileTemplate;
 
 /**
  * aws 自动配置类

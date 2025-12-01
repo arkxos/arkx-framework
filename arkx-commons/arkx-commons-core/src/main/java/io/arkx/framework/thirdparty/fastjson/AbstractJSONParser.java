@@ -1,24 +1,14 @@
 package io.arkx.framework.thirdparty.fastjson;
 
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.EOF;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.FALSE;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LBRACE;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LBRACKET;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LITERAL_FLOAT;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LITERAL_INT;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.LITERAL_STRING;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.NEW;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.NULL;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.RBRACKET;
-import static io.arkx.framework.thirdparty.fastjson.JSONToken.TRUE;
+import io.arkx.framework.json.JSONArray;
+import io.arkx.framework.json.JSONException;
+import io.arkx.framework.json.JSONObject;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-import io.arkx.framework.json.JSONArray;
-import io.arkx.framework.json.JSONException;
-import io.arkx.framework.json.JSONObject;
+import static io.arkx.framework.thirdparty.fastjson.JSONToken.*;
 
 public abstract class AbstractJSONParser {
 

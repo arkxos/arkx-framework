@@ -1,10 +1,9 @@
 package io.arkx.framework.boot.spring.axon;
 
-import java.time.LocalDateTime;
-
 import io.arkx.framework.Current;
-
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @author Darkness

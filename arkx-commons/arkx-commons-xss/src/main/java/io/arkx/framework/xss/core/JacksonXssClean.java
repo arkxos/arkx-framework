@@ -17,14 +17,13 @@
 package io.arkx.framework.xss.core;
 
 import cn.hutool.core.util.ArrayUtil;
+import io.arkx.framework.xss.config.ArkXssProperties;
+import io.arkx.framework.xss.utils.XssUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.Objects;
-
-import io.arkx.framework.xss.config.ArkXssProperties;
-import io.arkx.framework.xss.utils.XssUtil;
 
 /**
  * jackson xss 处理

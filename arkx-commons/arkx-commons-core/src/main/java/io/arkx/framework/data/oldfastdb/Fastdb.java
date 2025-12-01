@@ -1,10 +1,10 @@
 package io.arkx.framework.data.oldfastdb;
 
+import io.arkx.framework.commons.util.SystemInfo;
+
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import io.arkx.framework.commons.util.SystemInfo;
 
 /**
  *  

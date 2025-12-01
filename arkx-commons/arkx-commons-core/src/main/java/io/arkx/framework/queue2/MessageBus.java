@@ -1,15 +1,11 @@
 package io.arkx.framework.queue2;
 
+import io.arkx.framework.commons.util.lang.ReflectionUtil;
+
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import io.arkx.framework.commons.util.lang.ReflectionUtil;
 
 /**
  * 事件处理相关操作工具类

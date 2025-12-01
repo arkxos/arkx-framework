@@ -1,38 +1,22 @@
 package org.ark.framework.media;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Toolkit;
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.util.FileUtil;
+import io.arkx.framework.commons.util.LogUtil;
+import io.arkx.framework.commons.util.NumberUtil;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
-import java.awt.image.CropImageFilter;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
+import java.awt.image.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import io.arkx.framework.commons.collection.Mapx;
-import io.arkx.framework.commons.util.FileUtil;
-import io.arkx.framework.commons.util.LogUtil;
-import io.arkx.framework.commons.util.NumberUtil;
 
 public class ImageJDKUtil {
 	public static BufferedImage scaleRate(BufferedImage srcImage, double rate) {

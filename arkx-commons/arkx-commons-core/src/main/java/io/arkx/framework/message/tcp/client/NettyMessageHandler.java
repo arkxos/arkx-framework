@@ -1,14 +1,12 @@
 package io.arkx.framework.message.tcp.client;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import io.arkx.framework.message.tcp.struct.NettyMessage;
-
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 握手认证客户端

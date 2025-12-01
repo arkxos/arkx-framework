@@ -2,6 +2,7 @@ package io.arkx.framework.data.db.product.postgresql.copy.pgsql;
 
 import io.arkx.framework.data.db.product.postgresql.copy.exceptions.BinaryWriteFailedException;
 import io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers.IValueHandler;
+
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

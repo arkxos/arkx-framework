@@ -1,8 +1,8 @@
 package io.arkx.framework.commons.download;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SuppressWarnings("restriction")
 public class AtomicIntegerAdapter extends XmlAdapter<Integer, AtomicInteger> {

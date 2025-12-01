@@ -1,9 +1,9 @@
 package io.arkx.framework.message.tcp;
 
-import java.io.File;
-
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.PropertiesUtil;
+
+import java.io.File;
 
 /**
  * @author Darkness

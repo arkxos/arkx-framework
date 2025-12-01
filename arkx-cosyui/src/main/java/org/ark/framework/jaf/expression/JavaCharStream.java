@@ -1,10 +1,6 @@
 package org.ark.framework.jaf.expression;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 /**
  * @class org.ark.framework.jaf.expression.JavaCharStream

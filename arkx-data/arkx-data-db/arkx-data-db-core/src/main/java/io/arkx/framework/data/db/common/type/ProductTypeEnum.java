@@ -9,10 +9,11 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.type;
 
-import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
 
 /**
  * 数据库产品类型的枚举定义

@@ -3,7 +3,6 @@ package io.arkx.framework.cosyui.template;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.core.IExceptionCatcher;
 import io.arkx.framework.cosyui.template.exception.TemplateException;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

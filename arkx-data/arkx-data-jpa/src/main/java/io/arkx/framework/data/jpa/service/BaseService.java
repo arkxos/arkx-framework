@@ -1,10 +1,11 @@
 package io.arkx.framework.data.jpa.service;
 
+import io.arkx.framework.commons.model.PageResult;
 import io.arkx.framework.commons.util.CriteriaQueryWrapper;
 import io.arkx.framework.commons.util.QueryHelp;
-import io.arkx.framework.commons.model.PageResult;
-
 import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.hibernate.query.sql.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,10 @@ import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import java.io.Serializable;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @Description 父业务类，提供基础数据库操作方法

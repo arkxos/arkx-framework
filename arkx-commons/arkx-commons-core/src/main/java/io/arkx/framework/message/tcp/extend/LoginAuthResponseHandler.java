@@ -1,18 +1,17 @@
 package io.arkx.framework.message.tcp.extend;
 
-import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import io.arkx.framework.message.tcp.MessageType;
 import io.arkx.framework.message.tcp.NettyBusinessType;
 import io.arkx.framework.message.tcp.struct.NettyMessage;
 import io.arkx.framework.message.tcp.struct.ResponseMessage;
-
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
+
+import java.net.InetSocketAddress;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 握手接入和安全认证

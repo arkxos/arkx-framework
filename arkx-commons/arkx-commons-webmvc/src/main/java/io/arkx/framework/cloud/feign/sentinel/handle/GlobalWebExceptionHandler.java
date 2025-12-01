@@ -1,15 +1,13 @@
 package io.arkx.framework.cloud.feign.sentinel.handle;
 
+import io.arkx.framework.commons.web.ResponseResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
-import io.arkx.framework.commons.web.ResponseResult;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Order(10000)

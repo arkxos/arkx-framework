@@ -1,21 +1,15 @@
 package io.arkx.framework.data.oldfastdb;
 
-import static io.arkx.framework.commons.collection.DataColumn.dateIndexColumn;
-import static io.arkx.framework.commons.collection.DataColumn.doubleColumn;
-import static io.arkx.framework.commons.collection.DataColumn.fixedIndexStringColumn;
-import static io.arkx.framework.commons.collection.DataColumn.floatColumn;
-import static io.arkx.framework.commons.collection.DataColumn.intColumn;
-import static io.arkx.framework.commons.collection.DataColumn.longColumn;
-import static io.arkx.framework.commons.collection.DataColumn.stringColumn;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.time.LocalDate;
-
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.TimeWatch;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
+
+import java.time.LocalDate;
+
+import static io.arkx.framework.commons.collection.DataColumn.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *  

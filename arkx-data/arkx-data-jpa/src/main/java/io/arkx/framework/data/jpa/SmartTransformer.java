@@ -1,8 +1,5 @@
 package io.arkx.framework.data.jpa;
 
-import java.util.List;
-
-//import org.hibernate.transform.BasicTransformerAdapter;
 import org.hibernate.transform.ResultTransformer;
 import org.springframework.core.convert.support.DefaultConversionService;
 

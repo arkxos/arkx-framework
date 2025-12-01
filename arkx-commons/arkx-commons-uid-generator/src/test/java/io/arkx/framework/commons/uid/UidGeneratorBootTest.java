@@ -1,12 +1,8 @@
 package io.arkx.framework.commons.uid;
 
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.sql.Time;
 
 /**
  *

@@ -1,7 +1,5 @@
 package io.arkx.framework.cosyui.control;
 
-import org.ark.framework.jaf.IPageEnableAction;
-
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
@@ -15,6 +13,7 @@ import io.arkx.framework.cosyui.zhtml.ZhtmlManagerContext;
 import io.arkx.framework.data.db.DBUtil;
 import io.arkx.framework.data.jdbc.Query;
 import io.arkx.framework.i18n.LangUtil;
+import org.ark.framework.jaf.IPageEnableAction;
 
 /**
  * DataList绑定行为类

@@ -16,10 +16,9 @@
 
 package io.arkx.framework.datasource.dynamic.config;
 
-import org.aopalliance.intercept.MethodInvocation;
-
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author lengleng

@@ -1,12 +1,9 @@
 package io.arkx.framework.cosyui.control;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
-import io.arkx.framework.WebCurrent;
 import io.arkx.framework.FrameworkPlugin;
+import io.arkx.framework.WebCurrent;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.collection.Mapx;
@@ -25,6 +22,9 @@ import io.arkx.framework.cosyui.template.command.TagCommand;
 import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
 import io.arkx.framework.cosyui.web.RequestData;
 import io.arkx.framework.security.PrivCheck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DataList标签

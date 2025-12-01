@@ -1,15 +1,13 @@
 package io.arkx.framework.encrypt.config;
 
+import io.arkx.framework.encrypt.filter.CryptoFilter;
+import io.arkx.framework.encrypt.properties.ApiDecryptProperties;
+import jakarta.servlet.DispatcherType;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-
-import io.arkx.framework.encrypt.filter.CryptoFilter;
-import io.arkx.framework.encrypt.properties.ApiDecryptProperties;
-
-import jakarta.servlet.DispatcherType;
 
 /**
  * api 解密自动配置

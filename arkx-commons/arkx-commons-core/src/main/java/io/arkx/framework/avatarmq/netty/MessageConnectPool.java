@@ -1,10 +1,10 @@
 package io.arkx.framework.avatarmq.netty;
 
+import org.apache.commons.pool.impl.GenericObjectPool;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import org.apache.commons.pool.impl.GenericObjectPool;
 
 /**
  * @filename:MessageConnectPool.java

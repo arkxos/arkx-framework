@@ -9,7 +9,6 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.sr;
 
-import javax.sql.DataSource;
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.ProductFeatures;
@@ -17,6 +16,8 @@ import io.arkx.framework.data.db.core.provider.AbstractFactoryProvider;
 import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
 import io.arkx.framework.data.db.core.provider.sync.TableDataSynchronizeProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
+
+import javax.sql.DataSource;
 
 @Product(ProductTypeEnum.STARROCKS)
 public class StarrocksFactoryProvider extends AbstractFactoryProvider {

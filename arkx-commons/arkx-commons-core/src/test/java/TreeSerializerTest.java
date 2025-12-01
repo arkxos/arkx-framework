@@ -1,11 +1,10 @@
-import io.arkx.framework.commons.collection.tree.TreeNode;
-import org.ark.common.Person;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
+import io.arkx.framework.commons.collection.tree.TreeNode;
 import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.data.fastjson.TreexObjectSerializer;
+import org.ark.common.Person;
 
 public class TreeSerializerTest {
     public static void main(String[] args) {

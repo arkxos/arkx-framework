@@ -17,15 +17,14 @@
 package io.arkx.framework.xss.core;
 
 import cn.hutool.core.util.StrUtil;
+import io.arkx.framework.xss.config.ArkXssProperties;
+import io.arkx.framework.xss.utils.XssUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
-
-import io.arkx.framework.xss.config.ArkXssProperties;
-import io.arkx.framework.xss.utils.XssUtil;
 
 import java.beans.PropertyEditorSupport;
 

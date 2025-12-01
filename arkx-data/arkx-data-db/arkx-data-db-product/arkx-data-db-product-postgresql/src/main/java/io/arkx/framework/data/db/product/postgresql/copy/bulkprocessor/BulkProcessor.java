@@ -1,6 +1,7 @@
 package io.arkx.framework.data.db.product.postgresql.copy.bulkprocessor;
 
 import io.arkx.framework.data.db.product.postgresql.copy.bulkprocessor.handler.IBulkWriteHandler;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;

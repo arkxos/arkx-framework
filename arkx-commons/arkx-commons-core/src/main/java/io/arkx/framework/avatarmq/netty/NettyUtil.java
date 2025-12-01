@@ -1,23 +1,16 @@
 package io.arkx.framework.avatarmq.netty;
 
+import com.google.common.base.Preconditions;
+import io.netty.channel.Channel;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.NetworkInterface;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.SelectorProvider;
 import java.util.ArrayList;
 import java.util.Enumeration;
-
-import com.google.common.base.Preconditions;
-
-import io.netty.channel.Channel;
 
 /**
  * @filename:NettyUtil.java

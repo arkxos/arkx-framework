@@ -1,5 +1,8 @@
 package io.arkx.framework.data.fasttable;
 
+import io.arkx.framework.commons.collection.FourTuple;
+import io.arkx.framework.commons.util.TimeWatch;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -8,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import io.arkx.framework.commons.collection.FourTuple;
-import io.arkx.framework.commons.util.TimeWatch;
 
 /**
  *  

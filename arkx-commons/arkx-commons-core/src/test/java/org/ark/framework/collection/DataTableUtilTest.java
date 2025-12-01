@@ -1,19 +1,18 @@
 package org.ark.framework.collection;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.ark.common.Person;
-import org.junit.jupiter.api.Test;
-
 import com.alibaba.fastjson.JSON;
 import io.arkx.framework.commons.collection.DataColumn;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.collection.DataTableUtil;
 import io.arkx.framework.commons.collection.DataTypes;
+import org.ark.common.Person;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 

@@ -10,10 +10,11 @@
 package io.arkx.framework.data.db.product.oceanbase;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
-import io.arkx.framework.data.db.product.oracle.OracleTableDataWriteProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
+import io.arkx.framework.data.db.product.oracle.OracleTableDataWriteProvider;
+
 import java.util.List;
 
 public class OceanbaseTableDataWriteProvider extends DefaultTableDataWriteProvider {

@@ -1,10 +1,10 @@
 package io.arkx.framework.data.fasttable;
 
+import io.arkx.framework.commons.util.TimeWatch;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.arkx.framework.commons.util.TimeWatch;
 
 /**
  *  

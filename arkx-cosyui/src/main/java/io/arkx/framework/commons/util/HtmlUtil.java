@@ -1,7 +1,5 @@
 package io.arkx.framework.commons.util;
 
-import java.util.Map;
-
 import io.arkx.framework.cache.CacheManager;
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
@@ -13,6 +11,8 @@ import io.arkx.framework.cosyui.html.HtmlTR;
 import io.arkx.framework.cosyui.html.HtmlTable;
 import io.arkx.framework.cosyui.util.PlaceHolderUtil;
 import io.arkx.framework.i18n.LangUtil;
+
+import java.util.Map;
 
 /**
  * @class org.ark.framework.utility.HtmlUtil

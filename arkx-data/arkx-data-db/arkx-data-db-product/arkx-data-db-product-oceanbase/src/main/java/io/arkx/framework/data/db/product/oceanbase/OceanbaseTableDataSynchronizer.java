@@ -10,10 +10,11 @@
 package io.arkx.framework.data.db.product.oceanbase;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
-import io.arkx.framework.data.db.product.oracle.OracleTableDataSynchronizer;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.sync.DefaultTableDataSynchronizeProvider;
 import io.arkx.framework.data.db.core.provider.sync.TableDataSynchronizeProvider;
+import io.arkx.framework.data.db.product.oracle.OracleTableDataSynchronizer;
+
 import java.util.List;
 
 public class OceanbaseTableDataSynchronizer extends DefaultTableDataSynchronizeProvider {

@@ -11,10 +11,11 @@ package io.arkx.framework.data.db.core.provider;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.common.util.ExamineUtils;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.sql.DataSource;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.sql.DataSource;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ProductProviderFactory {

@@ -1,12 +1,16 @@
 package io.arkx.framework.annotation.util;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
+import io.arkx.framework.Config;
+import io.arkx.framework.annotation.Alias;
+import io.arkx.framework.annotation.Priv;
+import io.arkx.framework.commons.util.ObjectUtil;
+import io.arkx.framework.commons.util.StringUtil;
+import io.arkx.framework.core.scanner.AsmUtil;
+import io.arkx.framework.core.scanner.BuiltResource;
+import io.arkx.framework.core.scanner.BuiltResourceScanner;
+import io.arkx.framework.core.scanner.IBuiltResourceVisitor;
+import io.arkx.framework.data.xml.XMLElement;
+import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
@@ -14,21 +18,12 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.LocalVariableNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import io.arkx.framework.Config;
-import io.arkx.framework.annotation.Alias;
-import io.arkx.framework.annotation.Priv;
-import io.arkx.framework.commons.util.ObjectUtil;
-import io.arkx.framework.commons.util.StringUtil;
-//import io.arkx.framework.boot.BaseUIFacade;
-//import io.arkx.framework.core.method.UIMethod;
-//import io.arkx.framework.cosyui.web.UIFacade;
-import io.arkx.framework.core.scanner.AsmUtil;
-import io.arkx.framework.core.scanner.BuiltResource;
-import io.arkx.framework.core.scanner.BuiltResourceScanner;
-import io.arkx.framework.core.scanner.IBuiltResourceVisitor;
-import io.arkx.framework.data.xml.XMLElement;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 遍历所有类中ARK相关的注解

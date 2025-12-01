@@ -1,16 +1,11 @@
 package org.ark.framework.media;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.ark.framework.jaf.controls.UploadUI;
-
 import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.LogUtil;
+import org.ark.framework.jaf.controls.UploadUI;
+
+import java.io.*;
 
 public class VideoUtil {
 	public static final String _ConvertAvi2Flv = " -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:mbd=2:mv0:trell:v4mv:cbp:last_pred=3:dia=4:cmp=6:vb_strategy=1 -vf scale=512:-3 -ofps 12\t -srate 22050";

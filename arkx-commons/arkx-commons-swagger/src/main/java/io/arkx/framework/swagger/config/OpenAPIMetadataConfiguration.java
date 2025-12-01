@@ -1,12 +1,11 @@
 package io.arkx.framework.swagger.config;
 
+import lombok.Setter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import lombok.Setter;
 
 /**
  * @author lengleng

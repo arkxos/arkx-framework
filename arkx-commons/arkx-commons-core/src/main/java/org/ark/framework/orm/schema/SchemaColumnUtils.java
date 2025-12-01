@@ -8,13 +8,9 @@ package org.ark.framework.orm.schema;
  * @since 1.0
  */
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
+
+import java.util.*;
 
 
 /**

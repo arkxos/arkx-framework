@@ -8,12 +8,12 @@ package org.ark.framework.orm.sync.source;
  * @since 1.0
  */
 
-import java.sql.Timestamp;
-import java.util.List;
-
 import io.arkx.framework.data.jdbc.Session;
 import org.ark.framework.orm.Schema;
 import org.ark.framework.orm.sync.TableSyncConfig;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 数据源接口

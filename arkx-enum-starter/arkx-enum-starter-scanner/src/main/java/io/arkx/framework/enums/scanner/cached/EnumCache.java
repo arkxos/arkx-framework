@@ -1,11 +1,11 @@
 package io.arkx.framework.enums.scanner.cached;
 
 
+import io.arkx.framework.enums.scanner.model.CodeTable;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import io.arkx.framework.enums.scanner.model.CodeTable;
 
 /**
  * @author: zhuCan

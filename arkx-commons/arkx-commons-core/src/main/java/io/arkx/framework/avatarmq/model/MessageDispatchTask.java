@@ -1,10 +1,9 @@
 package io.arkx.framework.avatarmq.model;
 
-import java.io.Serializable;
-
+import io.arkx.framework.avatarmq.msg.Message;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-import io.arkx.framework.avatarmq.msg.Message;
+import java.io.Serializable;
 
 /**
  * @filename:MessageDispatchTask.java

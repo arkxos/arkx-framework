@@ -1,12 +1,10 @@
 package io.arkx.framework.avatarmq.serialize;
 
+import io.netty.buffer.ByteBuf;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-//import com.esotericsoftware.kryo.pool.KryoPool;
-
-import io.netty.buffer.ByteBuf;
 
 /**
  * @filename:KryoCodecUtil.java

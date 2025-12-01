@@ -10,11 +10,12 @@
 package io.arkx.framework.data.db.common.util;
 
 import cn.hutool.core.convert.Convert;
+import lombok.experimental.UtilityClass;
+
 import java.lang.reflect.Field;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.experimental.UtilityClass;
 
 /**
  * JDBC的数据类型相关工具类

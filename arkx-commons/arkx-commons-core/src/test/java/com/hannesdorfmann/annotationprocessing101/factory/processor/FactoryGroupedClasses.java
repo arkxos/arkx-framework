@@ -16,21 +16,20 @@
 
 package com.hannesdorfmann.annotationprocessing101.factory.processor;
 
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.hannesdorfmann.annotationprocessing101.factory.annotation.Factory;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
-
-import com.hannesdorfmann.annotationprocessing101.factory.annotation.Factory;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * This class holds all {@link FactoryAnnotatedClass}s that belongs to one factory. In other words,

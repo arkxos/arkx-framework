@@ -1,9 +1,9 @@
 package io.arkx.framework.datasource.dynamic.enums;
 
-import java.util.Arrays;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.Arrays;
 
 /**
  * @author lengleng

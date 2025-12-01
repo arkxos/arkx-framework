@@ -12,6 +12,7 @@ package io.arkx.framework.data.db.product.dm;
 import io.arkx.framework.data.db.common.util.ObjectCastUtils;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
+
 import java.util.List;
 
 public class DmTableDataWriteProvider extends DefaultTableDataWriteProvider {

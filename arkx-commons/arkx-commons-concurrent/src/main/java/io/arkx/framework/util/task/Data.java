@@ -1,12 +1,12 @@
 package io.arkx.framework.util.task;
 
+import com.tuples.Action;
+import com.tuples.Tuple;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import com.tuples.Action;
-import com.tuples.Tuple;
 
 public class Data extends Tuple {
 

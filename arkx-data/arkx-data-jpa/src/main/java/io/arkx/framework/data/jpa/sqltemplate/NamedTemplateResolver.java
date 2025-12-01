@@ -1,8 +1,8 @@
 package io.arkx.framework.data.jpa.sqltemplate;
 
-import java.util.Iterator;
-
 import org.springframework.core.io.Resource;
+
+import java.util.Iterator;
 
 /**
  * 
