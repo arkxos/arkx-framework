@@ -49,6 +49,6 @@ public @interface EnableArkFeignClients {
 	 * @return the array of 'basePackages'.
 	 */
 	@AliasFor(annotation = EnableFeignClients.class, attribute = "basePackages")
-	String[] basePackages() default { "com.arkxos.cloud.platform" };
+	String[] basePackages() default { "io.arkx.cloud.platform" };
 
 }

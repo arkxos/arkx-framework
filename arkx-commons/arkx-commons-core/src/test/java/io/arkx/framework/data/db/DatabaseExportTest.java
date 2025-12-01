@@ -23,7 +23,7 @@ public class DatabaseExportTest {
 	//	@Test
 	public void generateMysql() {
 
-		new MySqlDataBaseSchemaGenerator("rapidark").generate();
+		new MySqlDataBaseSchemaGenerator("arkx").generate();
 	}
 
 	private String getDbFileName()  {
@@ -35,7 +35,7 @@ public class DatabaseExportTest {
 
 		FileUtil.mkdir(dbFilePath);
 
-		return dbFilePath + "/rapidark.db";
+		return dbFilePath + "/arkx.db";
 	}
 
 //	@Test
@@ -282,7 +282,7 @@ public class DatabaseExportTest {
 //			}
 //
 //			// 指定.db文件路径
-//			String dbFilePath = "E:\\db-data\\rapidark.db";
+//			String dbFilePath = "E:\\db-data\\arkx.db";
 //
 //			// SchemaSet数据源模式 - 使用真实的数据文件
 ////			schemaSetSourceDemo(dbFilePath);

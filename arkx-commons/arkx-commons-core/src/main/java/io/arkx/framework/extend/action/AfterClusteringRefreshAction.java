@@ -10,7 +10,7 @@ import io.arkx.framework.json.JSONObject;
  * 
  */
 public abstract class AfterClusteringRefreshAction implements IExtendAction {
-	public static final String ExtendPointID = "com.arkxos.framework.AfterClusteringRefresh";
+	public static final String ExtendPointID = "io.arkx.framework.AfterClusteringRefresh";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

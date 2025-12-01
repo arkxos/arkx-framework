@@ -285,7 +285,7 @@ public class SchemaSetImporter {
 
         // 示例用法
         SchemaSetImporter importer = new SchemaSetImporter();
-        ImportResult result = importer.importFromFile("E:\\db-data\\rapidark.db");
+        ImportResult result = importer.importFromFile("E:\\db-data\\arkx.db");
 
         System.out.println("共导入 " + result.getTotalTables() + " 个表，包含 " + result.getTotalRecords() + " 条记录");
 

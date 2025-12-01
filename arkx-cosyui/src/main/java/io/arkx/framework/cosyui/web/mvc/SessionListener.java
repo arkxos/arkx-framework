@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
-import com.rapidark.preloader.facade.HttpSessionListenerFacade;
  * Session监听器，监听用户的增减情况，并提供用户相关的数据。
  * 
  */

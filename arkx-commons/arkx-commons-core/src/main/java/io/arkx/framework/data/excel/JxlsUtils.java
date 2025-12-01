@@ -59,7 +59,7 @@ public class JxlsUtils {
 	}
 	
 	private static String getConfigPath() {
-		String pluginPath = JxlsUtils.class.getResource("/rapidark.license").getPath();
+		String pluginPath = JxlsUtils.class.getResource("/arkx.license").getPath();
 		if (System.getProperty("os.name").toLowerCase().indexOf("windows") >= 0) {
 			if (pluginPath.startsWith("/")) {
 				pluginPath = pluginPath.substring(1);

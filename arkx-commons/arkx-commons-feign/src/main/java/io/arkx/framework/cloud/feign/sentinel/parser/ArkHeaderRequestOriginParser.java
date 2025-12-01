@@ -14,7 +14,7 @@
 // * limitations under the License.
 // */
 //
-//package com.rapidark.cloud.platform.commons.feign.sentinel.parser;
+//package io.arkx.cloud.platform.commons.feign.sentinel.parser;
 //
 ////import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.RequestOriginParser;
 //import jakarta.servlet.http.HttpServletRequest;

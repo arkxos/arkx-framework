@@ -525,11 +525,11 @@
 <!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
 <!--				<config.server-addr>127.0.0.1:8848</config.server-addr>-->
 <!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
-<!--				<config.namespace>rapidark_cloud_local</config.namespace>-->
+<!--				<config.namespace>arkx_cloud_local</config.namespace>-->
 <!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
 <!--				<discovery.server-addr>127.0.0.1:8848</discovery.server-addr>-->
 <!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
-<!--				<discovery.namespace>rapidark_cloud_local</discovery.namespace>-->
+<!--				<discovery.namespace>arkx_cloud_local</discovery.namespace>-->
 <!--			</properties>-->
 <!--		</profile>-->
 <!--		&lt;!&ndash; 开发 本地中间件&ndash;&gt;-->
@@ -543,13 +543,13 @@
 <!--				&lt;!&ndash;当前环境&ndash;&gt;-->
 <!--				<profile.name>dev-local</profile.name>-->
 <!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
-<!--				<config.server-addr>http://nacos.example.rapidark.com:8848</config.server-addr>-->
+<!--				<config.server-addr>http://nacos.example.arkx.io:8848</config.server-addr>-->
 <!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
-<!--				<config.namespace>rapidark_cloud_local</config.namespace>-->
+<!--				<config.namespace>arkx_cloud_local</config.namespace>-->
 <!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
-<!--				<discovery.server-addr>http://nacos.example.rapidark.com:8848</discovery.server-addr>-->
+<!--				<discovery.server-addr>http://nacos.example.arkx.io:8848</discovery.server-addr>-->
 <!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
-<!--				<discovery.namespace>rapidark_cloud_local</discovery.namespace>-->
+<!--				<discovery.namespace>arkx_cloud_local</discovery.namespace>-->
 <!--			</properties>-->
 <!--		</profile>-->
 <!--		&lt;!&ndash; 开发-外网中间件 &ndash;&gt;-->
@@ -563,13 +563,13 @@
 <!--				&lt;!&ndash;当前环境&ndash;&gt;-->
 <!--				<profile.name>dev</profile.name>-->
 <!--				&lt;!&ndash;Nacos配置中心地址&ndash;&gt;-->
-<!--				<config.server-addr>http://nacos.example.rapidark.com:8848</config.server-addr>-->
+<!--				<config.server-addr>http://nacos.example.arkx.io:8848</config.server-addr>-->
 <!--				&lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
-<!--				<config.namespace>rapidark_cloud_local</config.namespace>-->
+<!--				<config.namespace>arkx_cloud_local</config.namespace>-->
 <!--				&lt;!&ndash;Nacos服务发现地址&ndash;&gt;-->
-<!--				<discovery.server-addr>http://nacos.example.rapidark.com:8848</discovery.server-addr>-->
+<!--				<discovery.server-addr>http://nacos.example.arkx.io:8848</discovery.server-addr>-->
 <!--				&lt;!&ndash;Nacos服务发现命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
-<!--				<discovery.namespace>rapidark_cloud_local</discovery.namespace>-->
+<!--				<discovery.namespace>arkx_cloud_local</discovery.namespace>-->
 <!--			</properties>-->
 <!--		</profile>-->
 <!--		&lt;!&ndash; 测试 &ndash;&gt;-->

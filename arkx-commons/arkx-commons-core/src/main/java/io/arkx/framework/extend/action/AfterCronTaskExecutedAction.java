@@ -11,7 +11,7 @@ import io.arkx.framework.extend.IExtendAction;
  * @version V1.0
  */
 public abstract class AfterCronTaskExecutedAction implements IExtendAction {
-	public static final String ID = "com.arkxos.framework.AfterCronTaskExecutedAction";
+	public static final String ID = "io.arkx.framework.AfterCronTaskExecutedAction";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

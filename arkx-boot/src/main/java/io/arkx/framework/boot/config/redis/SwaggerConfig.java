@@ -13,7 +13,6 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // */
-//package com.rapidark.last.config;
 //
 //import com.fasterxml.classmate.TypeResolver;
 //import lombok.Data;
@@ -70,7 +69,7 @@
 //    private ApiInfo apiInfo() {
 //        return new ApiInfoBuilder()
 //                .description("一个简单且易上手的 Spring boot 后台管理框架")
-//                .title("RapidArk 接口文档")
+//                .title("arkx 接口文档")
 //                .version("9.0")
 //                .build();
 //    }

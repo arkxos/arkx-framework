@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2021 RapidArk
+ *  Copyright 2019-2021 arkx
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  *   应该是 @DataPermission(joinName = "dept", fieldName = "id")
  * </p>
  * @author Zheng Jie
- * @website http://rapidark.com
+ * @website http://arkx.com
  * @date 2020-05-07
  **/
 @Target(ElementType.TYPE)

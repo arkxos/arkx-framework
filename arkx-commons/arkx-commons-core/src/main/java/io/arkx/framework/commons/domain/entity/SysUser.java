@@ -21,7 +21,7 @@ import java.util.List;
  * 用户对象 sys_user
  * 
  * @author Darkness
- * @see com.rapidark.system.model.AccountEntity
+ * @see io.arkx.system.model.AccountEntity
  */
 @Deprecated
 public class SysUser extends BaseEntity

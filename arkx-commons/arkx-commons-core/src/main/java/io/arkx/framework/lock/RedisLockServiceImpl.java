@@ -1,4 +1,4 @@
-//package com.rapidark.boot.service;
+//package io.arkx.boot.service;
 //
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;

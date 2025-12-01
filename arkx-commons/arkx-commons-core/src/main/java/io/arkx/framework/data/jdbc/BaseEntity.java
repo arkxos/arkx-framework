@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Darkness
  * @date 2012-5-18 下午4:38:36
  * @version V1.0
- * @see com.arkxos.framework.data.jpa.entity.BaseEntity
+ * @see io.arkx.framework.data.jpa.entity.BaseEntity
  */
 // @MappedSuperclass
 @Deprecated

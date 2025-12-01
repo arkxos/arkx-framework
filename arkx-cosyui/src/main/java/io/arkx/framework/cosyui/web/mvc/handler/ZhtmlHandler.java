@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 
  */
 public class ZhtmlHandler extends AbstractHtmlHandler {
-	public static final String ID = "com.arkxos.framework.core.ZhtmlHandler";
+	public static final String ID = "io.arkx.framework.core.ZhtmlHandler";
 
 	@Override
 	public String getExtendItemID() {

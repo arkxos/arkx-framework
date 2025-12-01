@@ -10,7 +10,7 @@ import io.arkx.framework.extend.IExtendAction;
  * @version V1.0
  */
 public abstract class AfterAllPluginStartedAction implements IExtendAction {
-	public static final String ExtendPointID = "com.arkxos.framework.AfterAllPluginStarted";
+	public static final String ExtendPointID = "io.arkx.framework.AfterAllPluginStarted";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

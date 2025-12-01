@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes("com.arkxos.enums.conversion.annotation.JsonAutoConverter")
+@SupportedAnnotationTypes("io.arkx.enums.conversion.annotation.JsonAutoConverter")
 public class JsonConvertProcessor extends AbstractProcessor {
 
     private Filer filer;

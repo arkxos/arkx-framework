@@ -76,7 +76,7 @@ public class PluginManager {
 		
 		List<String> pluginIds = PluginAnnotationScannerParser.getPluginIds();
 		if (pluginIds.isEmpty()) {
-			pluginIds = Arrays.asList("com.arkxos.framework");
+			pluginIds = Arrays.asList("io.arkx.framework");
 		}
 		configList = loadAllConfig(pluginIds);
 	}

@@ -71,7 +71,7 @@ public class RedisConfig implements CachingConfigurer {
         // 全局开启AutoType，这里方便开发，使用全局的方式
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         // 建议使用这种方式，小范围指定白名单
-        // ParserConfig.getGlobalInstance().addAccept("com.arkxos.last.domain");
+        // ParserConfig.getGlobalInstance().addAccept("io.arkx.last.domain");
         // key的序列化采用StringRedisSerializer
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());

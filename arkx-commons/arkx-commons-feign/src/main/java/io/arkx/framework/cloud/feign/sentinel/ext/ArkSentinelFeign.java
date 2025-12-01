@@ -14,7 +14,7 @@
 // * limitations under the License.
 // */
 //
-//package com.rapidark.cloud.platform.commons.feign.sentinel.ext;
+//package io.arkx.cloud.platform.commons.feign.sentinel.ext;
 //
 ////import com.alibaba.cloud.sentinel.feign.SentinelContractHolder;
 //import feign.Contract;

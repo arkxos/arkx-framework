@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
-	<id>com.arkxos.framework</id>
+	<id>io.arkx.framework</id>
 	<name>Framework</name>
 	<class>io.arkx.framework.FrameworkPlugin</class>
-	<author>RapidArk Software</author>
-	<provider>RapidArk Software</provider>
+	<author>arkx Software</author>
+	<provider>arkx Software</provider>
 	<version>2.0</version>
 	<description>@{Framework.Plugin.Description}</description>
-	<updateSite>http://www.RapidArk.com/update/</updateSite>
+	<updateSite>http://www.arkx.com/update/</updateSite>
 	<UIAsJar>true</UIAsJar>
 	<resourceAsJar>true</resourceAsJar>
 	<required />
@@ -36,85 +36,85 @@
 	    <UIFlag>false</UIFlag>
 	  </extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.PrivCheck</id>
+		<id>io.arkx.framework.PrivCheck</id>
 		<class>action.io.arkx.framework.extend.PrivExtendAction</class>
 		<description>@{Framework.Plugin.PrivCheck}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterSessionCreate</id>
+		<id>io.arkx.framework.AfterSessionCreate</id>
 		<class>action.io.arkx.framework.extend.AfterSessionCreateAction</class>
 		<description>@{Framework.Plugin.AfterSessionCreate}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterCronTaskExecutedAction</id>
+		<id>io.arkx.framework.AfterCronTaskExecutedAction</id>
 		<class>action.io.arkx.framework.extend.AfterCronTaskExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.BeforeCronTaskExecutedAction</id>
+		<id>io.arkx.framework.BeforeCronTaskExecutedAction</id>
 		<class>action.io.arkx.framework.extend.BeforeCronTaskExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.BeforeUIMethodInvoke</id>
+		<id>io.arkx.framework.BeforeUIMethodInvoke</id>
 		<class>action.io.arkx.framework.extend.BeforeUIMethodInvokeAction</class>
 		<description>@{Framework.Plugin.BeforeUIMethodInvoke}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterUIMethodInvoke</id>
+		<id>io.arkx.framework.AfterUIMethodInvoke</id>
 		<class>action.io.arkx.framework.extend.AfterUIMethodInvokeAction</class>
 		<description>@{Framework.Plugin.AfterUIMethodInvoke}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.BeforeSessionDestory</id>
+		<id>io.arkx.framework.BeforeSessionDestory</id>
 		<class>action.io.arkx.framework.extend.BeforeSessionDestroyAction</class>
 		<description>@{Framework.Plugin.BeforeSessionDestory}</description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterSQLExecutedAction</id>
+		<id>io.arkx.framework.AfterSQLExecutedAction</id>
 		<class>action.io.arkx.framework.extend.AfterSQLExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterCronTaskExecutedAction</id>
+		<id>io.arkx.framework.AfterCronTaskExecutedAction</id>
 		<class>action.io.arkx.framework.extend.AfterCronTaskExecutedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterPrivCheckFailedAction</id>
+		<id>io.arkx.framework.AfterPrivCheckFailedAction</id>
 		<class>action.io.arkx.framework.extend.AfterPrivCheckFailedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterVerifyFailedAction</id>
+		<id>io.arkx.framework.AfterVerifyFailedAction</id>
 		<class>action.io.arkx.framework.extend.AfterVerifyFailedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterAllPluginStarted</id>
+		<id>io.arkx.framework.AfterAllPluginStarted</id>
 		<class>action.io.arkx.framework.extend.AfterAllPluginStartedAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterClusteringRefresh</id>
+		<id>io.arkx.framework.AfterClusteringRefresh</id>
 		<class>action.io.arkx.framework.extend.AfterClusteringRefreshAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
 	</extendPoint>
 	<extendPoint>
-		<id>com.arkxos.framework.AfterZhtmlExecuteAction</id>
+		<id>io.arkx.framework.AfterZhtmlExecuteAction</id>
 		<class>action.io.arkx.framework.extend.AfterZhtmlExecuteAction</class>
 		<description></description>
 		<UIFlag>false</UIFlag>
@@ -262,31 +262,31 @@
 	</extendItem>
 	
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.web.mvc.ZhtmlHandler</id>
+		<id>io.arkx.framework.cosyui.web.mvc.ZhtmlHandler</id>
 		<class>handler.mvc.web.io.arkx.framework.cosyui.ZhtmlHandler</class>
 		<description></description>
 		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.web.mvc.AjaxHandler</id>
+		<id>io.arkx.framework.cosyui.web.mvc.AjaxHandler</id>
 		<class>handler.mvc.web.io.arkx.framework.cosyui.AjaxHandler</class>
 		<description></description>
 		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.web.mvc.ActionHandler</id>
+		<id>io.arkx.framework.cosyui.web.mvc.ActionHandler</id>
 		<class>handler.mvc.web.io.arkx.framework.cosyui.ActionHandler</class>
 		<description></description>
 		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.web.mvc.UploadHandler</id>
+		<id>io.arkx.framework.cosyui.web.mvc.UploadHandler</id>
 		<class>handler.mvc.web.io.arkx.framework.cosyui.UploadHandler</class>
 		<description></description>
 		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
 	</extendItem>
 	<extendItem>
-		<id>com.arkxos.framework.cosyui.web.mvc.ResourceHandler</id>
+		<id>io.arkx.framework.cosyui.web.mvc.ResourceHandler</id>
 		<class>handler.mvc.web.io.arkx.framework.cosyui.ResourceHandler</class>
 		<description></description>
 		<extendService>mvc.web.io.arkx.framework.cosyui.URLHandlerService</extendService>
@@ -358,16 +358,16 @@
 		<directory>JAVA/com/arkxos/framework/cosyui</directory>
 		<directory>JAVA/com/arkxos/framework</directory>
 		<directory>JAVA/com/arkxos/framework/boot</directory>
-		<directory>UI/WEB-INF/plugins/required/com.arkxos.framework</directory>
+		<directory>UI/WEB-INF/plugins/required/io.arkx.framework</directory>
 		<directory>UI/framework</directory>
-		<file>JAVA/plugins/com.arkxos.framework.plugin</file>
+		<file>JAVA/plugins/io.arkx.framework.plugin</file>
 		<file>JAVA/lang/lang.i18n</file>
 		<file>JAVA/framework.xml</file>
 		<file>JAVA/database.xml</file>
 		<file>JAVA/charset.config</file>
 		<file>JAVA/clustering.xml</file>
-		<file>JAVA/rapidark.license</file>
+		<file>JAVA/arkx.license</file>
 		<file>JAVA/log4j.config</file>
-		<directory>JAVA/lang/com.arkxos.framework/</directory>
+		<directory>JAVA/lang/io.arkx.framework/</directory>
 	</files>
 </plugin>

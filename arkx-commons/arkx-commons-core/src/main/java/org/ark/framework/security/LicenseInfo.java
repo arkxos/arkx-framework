@@ -38,7 +38,7 @@ public class LicenseInfo {
 			if(true) {
 				return;
 			}
-			byte[] code = StringUtil.hexDecode(FileUtil.readText(Config.getPluginPath() + "classes/rapidark.license").replaceAll("\\s+", "").trim());
+			byte[] code = StringUtil.hexDecode(FileUtil.readText(Config.getPluginPath() + "classes/arkx.license").replaceAll("\\s+", "").trim());
 //			JDKX509CertificateFactory certificatefactory = new JDKX509CertificateFactory();
 //			X509Certificate cer = (X509Certificate) certificatefactory.engineGenerateCertificate(new ByteArrayInputStream(StringUtil.base64Decode(cert)));
 			PublicKey pubKey = null;//cer.getPublicKey();

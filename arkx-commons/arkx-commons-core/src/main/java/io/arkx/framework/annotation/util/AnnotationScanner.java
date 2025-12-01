@@ -49,7 +49,7 @@ public class AnnotationScanner implements IBuiltResourceVisitor {
 
 	@Override
 	public String getExtendItemID() {
-		return "com.arkxos.framework.annotation.AnnotationScanner";
+		return "io.arkx.framework.annotation.AnnotationScanner";
 	}
 
 	@Override

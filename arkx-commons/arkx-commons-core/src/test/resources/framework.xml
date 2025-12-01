@@ -2,10 +2,10 @@
 <framework>
 	<application>
 		<!-- 应用代码 -->
-		<config name="Code">RapidArk</config>
+		<config name="Code">arkx</config>
 
 		<!-- 应用名称 -->
-		<config name="Name">RapidArk内容管理系统</config>
+		<config name="Name">arkx内容管理系统</config>
 
 		<!-- 是否是开发模式，开发模式下自动加载修改后的类、缓存session数据，以及输出更多的日志信息 -->
 		<config name="DebugMode">true</config>
@@ -20,7 +20,7 @@
 		<config name="Log.SQL">true</config>
 
 		<!-- 登录方法，此方法执行后会变换sessionID，以提高安全性 -->
-		<config name="LoginMethod">com.rapidark.platform.ui.LoginUI.submit</config>
+		<config name="LoginMethod">io.arkx.platform.ui.LoginUI.submit</config>
 
 		<!-- 登录页面，应用发现需要后台用户登录时会重定向到此页面 -->
 		<config name="LoginPage">login.zhtml</config>
@@ -29,7 +29,7 @@
 		<config name="MemberLoginPage">member/login</config>
 
 		<!-- 代码来源，控件通过此类获得代码数据 -->
-		<config name="CodeSource">com.rapidark.platform.util.PlatformCodeSource
+		<config name="CodeSource">io.arkx.platform.util.PlatformCodeSource
 		</config>
 
 		<!-- 默认语言 -->

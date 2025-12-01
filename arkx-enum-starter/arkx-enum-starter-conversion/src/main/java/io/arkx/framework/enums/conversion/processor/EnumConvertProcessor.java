@@ -24,7 +24,7 @@ import java.util.Set;
  */
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes("com.arkxos.enums.conversion.annotation.EnumAutoConverter")
+@SupportedAnnotationTypes("io.arkx.enums.conversion.annotation.EnumAutoConverter")
 public class EnumConvertProcessor extends AbstractProcessor {
 
     private Filer filer;

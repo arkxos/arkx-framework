@@ -4,7 +4,7 @@ spring:
   data:
     redis:
       host: 127.0.0.1  # Redis地址
-      password: rapidark # Redis密码，没有留空
+      password: arkx # Redis密码，没有留空
       port: 6379  # Redis端口
     redisson:
       enabled: true

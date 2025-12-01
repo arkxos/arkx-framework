@@ -12,7 +12,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Timer;
 
-@XmlRootElement(namespace = "com.arkxos.commons.download")
+@XmlRootElement(namespace = "io.arkx.commons.download")
 @XmlAccessorType(XmlAccessType.NONE)
 public class DownloadMission {
 

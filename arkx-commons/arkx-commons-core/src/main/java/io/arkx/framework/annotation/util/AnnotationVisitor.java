@@ -61,7 +61,7 @@ public class AnnotationVisitor implements IBuiltResourceVisitor {
 	
 	public static void load() {
 		if (isNeedLoad()) {// 开发模式下3秒扫描一次
-			log.info("[start]load rapidark Alias Priv Class");
+			log.info("[start]load arkx Alias Priv Class");
 			lock.lock();
 			try {
 				if (isNeedLoad()) {
@@ -85,14 +85,14 @@ public class AnnotationVisitor implements IBuiltResourceVisitor {
 			} finally {
 				lock.unlock();
 
-				log.info("[end]load rapidark Alias Priv Class");
+				log.info("[end]load arkx Alias Priv Class");
 			}
 		}
 	}
 
 	@Override
 	public String getExtendItemID() {
-		return "com.arkxos.framework.annotation.AnnotationVisitor";
+		return "io.arkx.framework.annotation.AnnotationVisitor";
 	}
 
 	@Override

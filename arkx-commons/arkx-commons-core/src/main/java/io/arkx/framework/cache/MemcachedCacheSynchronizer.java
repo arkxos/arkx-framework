@@ -120,7 +120,7 @@ public class MemcachedCacheSynchronizer implements ICacheSynchronizer {
 								}
 							}
 						}
-						ExtendManager.invoke("com.arkxos.framework.AfterClusteringRefresh", new Object[] { sj });
+						ExtendManager.invoke("io.arkx.framework.AfterClusteringRefresh", new Object[] { sj });
 					}
 				}
 			}

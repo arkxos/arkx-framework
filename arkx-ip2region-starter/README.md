@@ -39,8 +39,8 @@ import java.io.IOException;
 
 import jakarta.annotation.PostConstruct;
 
-import ext.com.arkxos.framework.boot.ip2region.RegionAddress;
-import ext.com.arkxos.framework.boot.ip2region.RegionEnum;
+import ext.io.arkx.framework.boot.ip2region.RegionAddress;
+import ext.io.arkx.framework.boot.ip2region.RegionEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

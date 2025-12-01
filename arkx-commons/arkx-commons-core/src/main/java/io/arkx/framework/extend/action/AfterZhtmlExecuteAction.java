@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 
  */
 public abstract class AfterZhtmlExecuteAction implements IExtendAction {
-	public static final String ExtendPointID = "com.arkxos.framework.AfterZhtmlExecuteAction";
+	public static final String ExtendPointID = "io.arkx.framework.AfterZhtmlExecuteAction";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

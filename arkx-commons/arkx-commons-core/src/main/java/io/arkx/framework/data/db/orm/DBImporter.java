@@ -175,7 +175,7 @@ public class DBImporter {
 		if (ObjectUtil.empty(args)) {
 			return;
 		}
-//		ConfigLoader.load("F:/ZWorkspace/rapidark2/JAVA/");
+//		ConfigLoader.load("F:/ZWorkspace/arkx2/JAVA/");
 		long t1 = System.currentTimeMillis();
 		new DBImporter().importDB(args[0]);
 		long t2 = System.currentTimeMillis();

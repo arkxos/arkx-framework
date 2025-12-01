@@ -15,9 +15,9 @@ import java.util.zip.*;
 
 /**
  * ZIP压缩工具类，
-import com.rapidark.preloader.zip.ZipEntry;
-import com.rapidark.preloader.zip.ZipFile;
-import com.rapidark.preloader.zip.ZipOutputStream;也可以解压gzip文件
+import io.arkx.preloader.zip.ZipEntry;
+import io.arkx.preloader.zip.ZipFile;
+import io.arkx.preloader.zip.ZipOutputStream;也可以解压gzip文件
  * 
  */
 /**

@@ -11,7 +11,7 @@ import io.arkx.framework.annotation.Ingore;
  * @author Darkness
  * @date 2012-12-2 下午04:43:18 
  * @version V1.0 
- * @see com.arkxos.framework.data.jpa.entity.TreeEntity
+ * @see io.arkx.framework.data.jpa.entity.TreeEntity
  */
 @Deprecated
 public class TreeEntity extends BaseEntity {

@@ -7,7 +7,7 @@ import java.util.Hashtable;
 	/// 提供对某表的某字段的属性的读取
 	/// </summary>
 	/// <remarks>
-	/// CopyRight：Rapidark Skyinsoft. Co. Ltd.
+	/// CopyRight：arkx Skyinsoft. Co. Ltd.
 	/// 王周文 于 2006-2-28
 	///		初次完成
 	/// 陈涛 于 2006-4-17

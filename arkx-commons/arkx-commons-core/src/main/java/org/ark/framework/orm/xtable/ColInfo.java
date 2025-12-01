@@ -4,7 +4,7 @@ package org.ark.framework.orm.xtable;
 /// 存储Sql Server数据库中的表的一列的信息(每一列作为一个实例)
 /// </summary>
 /// <remarks>
-/// CopyRight：Rapidark Skyinsoft. Co. Ltd.
+/// CopyRight：arkx Skyinsoft. Co. Ltd.
 /// 王周文 于 2006-2-28
 ///		初次完成
 /// 陈涛 于 2006-4-17

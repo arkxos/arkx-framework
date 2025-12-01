@@ -19,7 +19,7 @@ arkx:
       store-to-database: true
 
       # 包含规则
-#      include-packages: io.arkx.**, com.arkxos.**
+#      include-packages: io.arkx.**, io.arkx.**
 #      include-classes:
 #        - ".*Controller"       # 匹配所有Controller结尾的类
 #        - ".*Service.*"        # 匹配包含Service的类

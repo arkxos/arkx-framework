@@ -26,7 +26,7 @@ package io.arkx.framework.data.db;
 // * <br>
 // * 注意：在阻塞式事务中不使用读写分离，所有操作都在主数据库上进行。
 // * 
-// * @see com.arkxos.framework.data.db.Transaction
+// * @see io.arkx.framework.data.db.Transaction
 // */
 //public class BlockingTransaction extends Transaction {
 //

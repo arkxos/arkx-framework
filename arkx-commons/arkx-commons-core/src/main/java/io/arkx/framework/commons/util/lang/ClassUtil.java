@@ -98,9 +98,9 @@ public class ClassUtil {
 
 		ClassPool pool = ClassPool.getDefault();
 
-		URL licenseResource = clazz.getClassLoader().getResource("rapidark.license");
+		URL licenseResource = clazz.getClassLoader().getResource("arkx.license");
 		if (licenseResource != null) {
-			String classesPath = licenseResource.getPath().replace("/rapidark.license", "");
+			String classesPath = licenseResource.getPath().replace("/arkx.license", "");
 			pool.appendClassPath(classesPath);
 
 			String libPath = classesPath.replace("classes", "lib");

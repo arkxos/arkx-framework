@@ -7,7 +7,6 @@ import java.sql.SQLException;
 /**
  * mysql分页处理器
  * @author Darkness
- * @website www.rapidark.com
  * @date 2013-4-15 下午04:33:55
  * @version V1.0
  */

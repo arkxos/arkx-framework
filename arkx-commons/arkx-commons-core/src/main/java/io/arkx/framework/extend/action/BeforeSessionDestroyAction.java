@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
  * @version V1.0
  */
 public abstract class BeforeSessionDestroyAction implements IExtendAction {
-	public static final String ExtendPointID = "com.arkxos.framework.BeforeSessionDestory";
+	public static final String ExtendPointID = "io.arkx.framework.BeforeSessionDestory";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

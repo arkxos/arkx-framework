@@ -1,7 +1,7 @@
 package io.arkx.framework.commons.util.ip;
 
 import com.alibaba.fastjson.JSONObject;
-import io.arkx.framework.commons.config.RapidArkConfig;
+import io.arkx.framework.commons.config.ArkxConfig;
 import io.arkx.framework.commons.constants.Constants;
 import io.arkx.framework.commons.util.StringUtils;
 import io.arkx.framework.commons.util.http.HttpUtils;
@@ -31,7 +31,7 @@ public class AddressUtils
         {
             return "内网IP";
         }
-        if (RapidArkConfig.isAddressEnabled())
+        if (ArkxConfig.isAddressEnabled())
         {
             try
             {

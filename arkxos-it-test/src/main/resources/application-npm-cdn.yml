@@ -5,6 +5,6 @@ npm:
   home-directory: E:\arkpack-repository\arkxos-npm-repository
   download-directory: E:\arkpack-repository\arkxos-npm-repository\download
   install-directory: E:\arkpack-repository\arkxos-npm-repository\install
-  username: rapidark
-  password: rapidark@123
+  username: arkx
+  password: arkx@123
   use-cache: true

@@ -31,7 +31,7 @@ import java.util.List;
  * ZAction处理者
  */
 public class ActionHandler implements IURLHandler {
-	public static final String ID = "com.arkxos.framework.core.ActionHandler";
+	public static final String ID = "io.arkx.framework.core.ActionHandler";
 
 	@Override
 	public String getExtendItemID() {

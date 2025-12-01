@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <sqls xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.rapidark.com/schema/templatequery"
-      xsi:schemaLocation="http://www.rapidark.com/schema/templatequery http://www.rapidark.com/schema/templatequery.xsd">
+      xmlns="http://www.arkx.com/schema/templatequery"
+      xsi:schemaLocation="http://www.arkx.com/schema/templatequery http://www.arkx.com/schema/templatequery.xsd">
 
     <sql name="findByContent">
         <![CDATA[

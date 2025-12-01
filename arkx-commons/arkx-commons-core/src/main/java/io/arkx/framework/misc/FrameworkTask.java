@@ -13,7 +13,7 @@ import java.io.File;
  * @version V1.0
  */
 public class FrameworkTask extends SystemTask {
-	public static final String ID = "com.arkxos.framework.FrameworkTask";
+	public static final String ID = "io.arkx.framework.FrameworkTask";
 
 	@Override
 	public void execute() {

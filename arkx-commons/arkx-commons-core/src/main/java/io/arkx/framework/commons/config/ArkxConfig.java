@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
  * @author Darkness
  */
 @Component
-@ConfigurationProperties(prefix = "rapidark")
-public class RapidArkConfig
+@ConfigurationProperties(prefix = "arkx")
+public class ArkxConfig
 {
     /** 项目名称 */
     private String name;
@@ -77,7 +77,7 @@ public class RapidArkConfig
 
     public void setProfile(String profile)
     {
-    	RapidArkConfig.profile = profile;
+    	ArkxConfig.profile = profile;
     }
 
     public static boolean isAddressEnabled()
@@ -87,7 +87,7 @@ public class RapidArkConfig
 
     public void setAddressEnabled(boolean addressEnabled)
     {
-    	RapidArkConfig.addressEnabled = addressEnabled;
+    	ArkxConfig.addressEnabled = addressEnabled;
     }
 
     /**

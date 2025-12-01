@@ -31,7 +31,7 @@
 
     <dependencies>
 <!--        <dependency>-->
-<!--            <groupId>com.arkx</groupId>-->
+<!--            <groupId>io.arkx</groupId>-->
 <!--            <artifactId>arkx-platform-support-commons-biz</artifactId>-->
 <!--        </dependency>-->
 		<dependency>

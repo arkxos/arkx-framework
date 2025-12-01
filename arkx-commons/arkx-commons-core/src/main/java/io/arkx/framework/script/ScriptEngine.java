@@ -203,14 +203,14 @@ public class ScriptEngine {
 	public static void main(String[] args) {
 		ScriptEngine se = new ScriptEngine(1);
 		se.setNeedCheck(false);
-		se.importPackage("com.arkxos.framework.cache");
-		se.importPackage("com.arkxos.framework.data");
-		se.importPackage("com.arkxos.framework.utility");
-		se.importPackage("com.arkxos.framework.statical");
-		se.importPackage("com.arkxos.framework.cms.template");
-		se.importPackage("com.arkxos.framework.cms.pub");
-		se.importPackage("com.arkxos.framework.cms.site");
-		se.importPackage("com.arkxos.framework.cms.document");
+		se.importPackage("io.arkx.framework.cache");
+		se.importPackage("io.arkx.framework.data");
+		se.importPackage("io.arkx.framework.utility");
+		se.importPackage("io.arkx.framework.statical");
+		se.importPackage("io.arkx.framework.cms.template");
+		se.importPackage("io.arkx.framework.cms.pub");
+		se.importPackage("io.arkx.framework.cms.site");
+		se.importPackage("io.arkx.framework.cms.document");
 		String script = FileUtil.readText("H:/Script.txt");
 		try {
 			se.compileFunction("a", script);

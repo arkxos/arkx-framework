@@ -14,7 +14,7 @@ import java.util.List;
  * 部门表 sys_dept
  * 
  * @author Darkness
- * @see com.rapidark.platform.crud.model.BranchEntity
+ * @see io.arkx.platform.crud.model.BranchEntity
  */
 @Deprecated
 public class SysDept extends BaseEntity

@@ -165,7 +165,7 @@ public class PdmSchemaGenerator extends SchemaGenerator {
 
 	public static void main(String[] args) throws Exception {
 
-		String packageStr = "com.arkxos.schema";
+		String packageStr = "io.arkx.schema";
 		String str = Config.getValue("App.PDM");
 		String[] files = str.split("\\,");
 

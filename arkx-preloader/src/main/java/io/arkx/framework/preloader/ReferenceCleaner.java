@@ -68,7 +68,7 @@ public class ReferenceCleaner {
 				}
 			}
 
-			Class lpClass = loader.defineClassEx("com.arkxos.preloader.JdbcLeakPrevention", classBytes, 0, offset, getClass().getProtectionDomain());
+			Class lpClass = loader.defineClassEx("io.arkx.preloader.JdbcLeakPrevention", classBytes, 0, offset, getClass().getProtectionDomain());
 			Object obj = lpClass.newInstance();
 			List driverNames = (List) obj.getClass().getMethod("clearJdbcDriverRegistrations", new Class[0]).invoke(obj, new Object[0]);
 			String name;

@@ -28,7 +28,7 @@ import java.util.Properties;
 public class JSONType implements UserType, DynamicParameterizedType, Serializable {
     private static final long serialVersionUID = 352044032843534075L;
     private static final CoreMessageLogger LOG = Logger.getMessageLogger(CoreMessageLogger.class, JSONType.class.getName());
-    public static final String TYPE = "hibernate.com.arkxos.data.jpa.JSONType";
+    public static final String TYPE = "io.arkx.data.jpa.JSONType";
     public static final String CLASS_NAME = "class";
     private int sqlType = Types.VARCHAR;
     private Type type = Object.class;

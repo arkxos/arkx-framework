@@ -26,7 +26,7 @@
 //
 //		ConnectionConfig connectionInfo = new ConnectionConfig();
 //		connectionInfo.setDatabaseName("bbs");
-//		connectionInfo.setUserName("rapidark");
+//		connectionInfo.setUserName("arkx");
 //		connectionInfo.setPassword("password");
 //		connectionInfo.setDatabaseType("mysql");
 //		connectionInfo.setHost("localhost");

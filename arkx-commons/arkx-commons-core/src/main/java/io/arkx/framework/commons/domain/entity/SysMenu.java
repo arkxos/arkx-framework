@@ -13,7 +13,7 @@ import java.util.List;
  * 菜单权限表 sys_menu
  * 
  * @author Darkness
- * @see com.rapidark.system.model.MenuEntity
+ * @see io.arkx.system.model.MenuEntity
  */
 @Deprecated
 public class SysMenu extends BaseEntity

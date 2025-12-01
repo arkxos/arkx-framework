@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2021 RapidArk
+ *  Copyright 2019-2021 arkx
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import lombok.Getter;
 
 /**
  * @author Zheng Jie
- * @website http://rapidark.com
+ * @website http://arkx.com
  * @description
  * @date 2020-06-10
  **/

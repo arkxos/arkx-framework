@@ -19,7 +19,7 @@ arkx:
       store-to-database: true
 
       # 包含规则
-      include-packages: io.arkx.**, com.arkxos.**
+      include-packages: io.arkx.**, io.arkx.**
       include-classes: '*Controller, *Service*, *Repository'
       include-methods: process.*, execute.*
 

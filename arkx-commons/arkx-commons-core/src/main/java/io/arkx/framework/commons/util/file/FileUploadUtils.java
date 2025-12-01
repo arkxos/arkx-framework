@@ -1,6 +1,6 @@
 package io.arkx.framework.commons.util.file;
 
-import io.arkx.framework.commons.config.RapidArkConfig;
+import io.arkx.framework.commons.config.ArkxConfig;
 import io.arkx.framework.commons.constants.Constants;
 import io.arkx.framework.commons.exception.file.FileNameLengthLimitExceededException;
 import io.arkx.framework.commons.exception.file.FileSizeLimitExceededException;
@@ -34,7 +34,7 @@ public class FileUploadUtils
     /**
      * 默认上传的地址
      */
-    private static String defaultBaseDir = RapidArkConfig.getProfile();
+    private static String defaultBaseDir = ArkxConfig.getProfile();
 
     public static void setDefaultBaseDir(String defaultBaseDir)
     {
@@ -145,7 +145,7 @@ public class FileUploadUtils
 
     private static final String getPathFileName(String uploadDir, String fileName) throws IOException
     {
-        int dirLastIndex = RapidArkConfig.getProfile().length() + 1;
+        int dirLastIndex = ArkxConfig.getProfile().length() + 1;
         String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
         String pathFileName = Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
         return pathFileName;

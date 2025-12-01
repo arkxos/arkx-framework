@@ -43,7 +43,7 @@ public class BreakTag extends ArkTag {
 	}
 
 	public String getPluginID() {
-		return "com.arkxos.framework";
+		return "io.arkx.framework";
 	}
 
 	public String getDescription() {

@@ -13,7 +13,7 @@ import io.arkx.framework.extend.IExtendAction;
  * 
  */
 public abstract class PrivExtendAction implements IExtendAction {
-	public static String ExtendPointID = "com.arkxos.framework.PrivCheck";
+	public static String ExtendPointID = "io.arkx.framework.PrivCheck";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

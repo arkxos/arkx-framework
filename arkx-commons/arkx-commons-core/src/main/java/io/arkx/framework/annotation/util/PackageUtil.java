@@ -219,7 +219,7 @@ public class PackageUtil {
 	}
 
     public static void main(String[] args) {
-        String packages = "com.arkxos";//,com.ab,com.c,com.as.t,com.as,com.as.ta,com.at.ja,com.at.jc,com.at.";
+        String packages = "io.arkx";//,com.ab,com.c,com.as.t,com.as,com.as.ta,com.at.ja,com.at.jc,com.at.";
         System.out.println("检测前的package: " + packages);
         System.out.println("检测后的package: " + StringUtils.join(checkPackage(packages), ","));
         List<String> classes = findPackageClass(packages);

@@ -658,7 +658,7 @@ public class FileUtil {
 	 */
 	public static String readText(String fileName) {
 		//CX控制license文件的读取位置
-//		if (fileName.endsWith("classes/rapidark.license")) {
+//		if (fileName.endsWith("classes/arkx.license")) {
 //			String licensePath = LicensePath.getReadValue();
 //			if (licensePath != null) {
 //				fileName = licensePath;

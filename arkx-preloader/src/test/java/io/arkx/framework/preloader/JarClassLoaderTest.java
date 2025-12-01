@@ -1,4 +1,4 @@
-package com.rapidark.preloader;
+package io.arkx.framework.preloader;
 
 import java.io.File;
 import java.util.jar.JarFile;

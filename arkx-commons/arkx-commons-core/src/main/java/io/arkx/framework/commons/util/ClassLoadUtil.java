@@ -31,8 +31,8 @@ public class ClassLoadUtil {
 		// true);
 		URLClassLoader clazzLoader = getClassLoad("E:\\Projects\\MyEclipse9_32\\JAVA.NET_B_ORM\\schema_jar\\bbs_schema.jar", true);
 		try {
-			// System.out.println(clazzLoader.loadClass("com.arkxos.java.net.connection.DBConfig"));
-			System.out.println(clazzLoader.loadClass("com.arkxos.orm.db.bbs.schema.ArticleSchema"));
+			// System.out.println(clazzLoader.loadClass("io.arkx.java.net.connection.DBConfig"));
+			System.out.println(clazzLoader.loadClass("io.arkx.orm.db.bbs.schema.ArticleSchema"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -43,7 +43,7 @@ public class ClassLoadUtil {
 	 * addURLs("lib");
 
 	 try {
-	 Class<?> c = Class.forName("com.arkxos.orm.db.permission.schema.UserSet");
+	 Class<?> c = Class.forName("io.arkx.orm.db.permission.schema.UserSet");
 	 System.out.println(c + " loaded successfully");
 	 } catch (ClassNotFoundException e) {
 	 e.printStackTrace();
@@ -756,7 +756,7 @@ public class ClassLoadUtil {
 	/**
 	 * URLClassLoader classLoader = ClassLoadUtil.loadClass("E:\\Projects\\MyEclipse9_32\\JAVA.NET_B_ORM\\schema_jar\\permission_schema.jar", true);
 
-	 Class<?> clazz = classLoader.loadClass("com.arkxos.orm.db.permission.schema.UserSet");
+	 Class<?> clazz = classLoader.loadClass("io.arkx.orm.db.permission.schema.UserSet");
 	 System.out.println(clazz);
 	 * @author Darkness
 	 * @date 2011-12-7 下午02:27:06
@@ -2010,7 +2010,7 @@ public class ClassLoadUtil {
 			// 默认添加一些常见的框架包前缀
 			if (delegatePackages != null && delegatePackages.isEmpty()) {
 				this.delegatePackages.add("org.ark.framework.orm");
-				this.delegatePackages.add("com.arkxos.framework");
+				this.delegatePackages.add("io.arkx.framework");
 				this.delegatePackages.add("org.springframework");
 				this.delegatePackages.add("org.hibernate");
 				this.delegatePackages.add("javax.");
@@ -2162,8 +2162,8 @@ public class ClassLoadUtil {
 				return className.substring(patternIndex);
 			}
 
-			// 查找com.arkxos模式
-			pattern = "com.arkxos";
+			// 查找io.arkx模式
+			pattern = "io.arkx";
 			patternIndex = className.indexOf(pattern);
 			if (patternIndex >= 0) {
 				return className.substring(patternIndex);
@@ -2266,7 +2266,7 @@ public class ClassLoadUtil {
 			// 构建需要委托的包列表
 			List<String> delegatePackages = new ArrayList<>();
 			delegatePackages.add("org.ark.framework.orm");
-			delegatePackages.add("com.arkxos.framework");
+			delegatePackages.add("io.arkx.framework");
 
 			// 创建桥接类加载器
 			ClassLoader bridgeLoader = createBridgeClassLoader(absoluteJarPath, delegatePackages);
@@ -2392,7 +2392,7 @@ public class ClassLoadUtil {
 			// 构建需要委托的包列表
 			List<String> delegatePackages = new ArrayList<>();
 			delegatePackages.add("org.ark.framework.orm");
-			delegatePackages.add("com.arkxos.framework");
+			delegatePackages.add("io.arkx.framework");
 
 			// 创建桥接类加载器
 			ClassLoader bridgeLoader = createBridgeClassLoader(jarPath, delegatePackages);

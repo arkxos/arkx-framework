@@ -11,7 +11,7 @@ import io.arkx.framework.extend.IExtendAction;
  * @version V1.0
  */
 public abstract class AfterSQLExecutedAction implements IExtendAction {
-	public static final String ID = "com.arkxos.framework.AfterSQLExecutedAction";
+	public static final String ID = "io.arkx.framework.AfterSQLExecutedAction";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

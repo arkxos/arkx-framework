@@ -6,7 +6,6 @@ import java.sql.SQLException;
 /**   
  * 查询结果的回调处理操作类
  * @author Darkness
- * @website www.rapidark.com
  * @date 2013-4-14 上午10:50:13 
  * @version V1.0   
  */

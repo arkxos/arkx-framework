@@ -10,7 +10,7 @@ import io.arkx.framework.commons.collection.DataTable;
 	/// 最后修改于:2007-10-16 13:23:04 
 	/// </summary>
 	/// <remarks>
-	/// CopyRight：Rapidark SinoSoft. Co. Ltd.
+	/// CopyRight：arkx SinoSoft. Co. Ltd.
 	/// 此类由代码生成器根据表结构生成 2007-10-16 13:23:04
 	/// XXX 于 2007-10-16
 	///	添加注释

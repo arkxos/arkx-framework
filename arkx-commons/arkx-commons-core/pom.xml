@@ -1475,7 +1475,7 @@
             <artifactId>javassist</artifactId>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.arkx</groupId>-->
+<!--            <groupId>io.arkx</groupId>-->
 <!--            <artifactId>arkx-data-jpa-sqltoy</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--        </dependency>-->

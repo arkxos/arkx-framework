@@ -14,9 +14,6 @@ import java.io.*;
 import java.util.HashMap;
 
 /**
-import com.rapidark.preloader.PreClassLoader;
- * @class org.ark.framework.jaf.zhtml.ZhtmlManager
- * 
  * @author Darkness
  * @date 2013-1-31 下午12:55:19 
  * @version V1.0

@@ -21,7 +21,7 @@ import javax.sql.DataSource;
  * @version V1.0, 16/3/15.
  */
 //@Configuration
-//@ComponentScan("com.arkxos")
+//@ComponentScan("io.arkx")
 //@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class, repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 class AppConfig {
 
@@ -48,7 +48,7 @@ class AppConfig {
 		LocalContainerEntityManagerFactoryBean lemfb = new LocalContainerEntityManagerFactoryBean();
 		lemfb.setDataSource(dataSource());
 		lemfb.setJpaVendorAdapter(jpaVendorAdapter());
-		lemfb.setPackagesToScan("com.arkxos.spring.jpa");
+		lemfb.setPackagesToScan("io.arkx.spring.jpa");
 		return lemfb;
 	}
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2021 RapidArk
+ *  Copyright 2019-2021 arkx
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Data
 @Component
-@ConfigurationProperties(prefix = "rapidark.rsa")
+@ConfigurationProperties(prefix = "arkx.rsa")
 public class RsaProperties {
 
     //    @Value("${opencloud.rsa.private-key}")

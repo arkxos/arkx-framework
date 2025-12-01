@@ -201,7 +201,7 @@ public class DispatchServlet extends HttpServlet {
 		}
 
 		// 初始化路径，需要考虑集群的情况，需要考虑内外网路径不一致的情况
-		// 注意如果遇到以下情况的时候cookie设值得到的path会有所不同：本地访问路径是http://IP/rapidark，而外网访问路径是:http://域名
+		// 注意如果遇到以下情况的时候cookie设值得到的path会有所不同：本地访问路径是http://IP/arkx，而外网访问路径是:http://域名
 		if (Config.isComplexDepolyMode() || initFlag) {
 			if (context.length() == 0 || context.charAt(context.length() - 1) != '/') {
 				context = context + "/";

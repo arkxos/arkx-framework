@@ -37,23 +37,23 @@
 		</dependency>
 		<!--必备：认证中心模块-->
 <!--		<dependency>-->
-<!--			<groupId>com.arkxos</groupId>-->
+<!--			<groupId>io.arkx</groupId>-->
 <!--			<artifactId>arkxos-auth</artifactId>-->
 <!--			<version>${arkxos.version}</version>-->
 <!--		</dependency>-->
 		<!--必备：用户管理模块-->
 <!--		<dependency>-->
-<!--			<groupId>com.arkxos</groupId>-->
+<!--			<groupId>io.arkx</groupId>-->
 <!--			<artifactId>arkxos-system</artifactId>-->
 <!--			<version>${arkxos.version}</version>-->
 <!--		</dependency>-->
 <!--		<dependency>-->
-<!--			<groupId>com.arkxos.arkpack</groupId>-->
+<!--			<groupId>io.arkx.arkpack</groupId>-->
 <!--			<artifactId>arkpack-npm</artifactId>-->
 <!--			<version>1.0-SNAPSHOT</version>-->
 <!--		</dependency>-->
 <!--		<dependency>-->
-<!--			<groupId>com.arkxos.arkpack</groupId>-->
+<!--			<groupId>io.arkx.arkpack</groupId>-->
 <!--			<artifactId>arkpack-web-core</artifactId>-->
 <!--			<version>1.0-SNAPSHOT</version>-->
 <!--			<exclusions>-->
@@ -73,7 +73,7 @@
 <!--		</dependency>-->
 		<!--可选：代码生成模块-->
 <!--		<dependency>-->
-<!--			<groupId>com.arkxos</groupId>-->
+<!--			<groupId>io.arkx</groupId>-->
 <!--			<artifactId>arkxos-codegen</artifactId>-->
 <!--			<version>${arkxos.version}</version>-->
 <!--			<exclusions>-->
@@ -85,13 +85,13 @@
 <!--		</dependency>-->
 		<!--可选：定时任务模块-->
 <!--		<dependency>-->
-<!--			<groupId>com.arkxos</groupId>-->
+<!--			<groupId>io.arkx</groupId>-->
 <!--			<artifactId>arkxos-quartz</artifactId>-->
 <!--			<version>${arkxos.version}</version>-->
 <!--		</dependency>-->
 		<!--安全模块-->
 <!--		<dependency>-->
-<!--			<groupId>com.arkxos</groupId>-->
+<!--			<groupId>io.arkx</groupId>-->
 <!--			<artifactId>arkxos-platform-support-security</artifactId>-->
 <!--			<version>${arkxos.version}</version>-->
 <!--		</dependency>-->

@@ -10,6 +10,6 @@
 
 	<!-- 启用event自动注册 -->
 	<bean id="eventRegister"
-		class="com.arkxos.framework.queue.EventBeanPostProcessor" />
+		class="io.arkx.framework.queue.EventBeanPostProcessor" />
 
 </beans>

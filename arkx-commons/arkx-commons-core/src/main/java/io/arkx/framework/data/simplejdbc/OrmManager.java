@@ -14,7 +14,6 @@ import java.util.List;
  * Orm管理器
  * 
  * @author Darkness
- * @website www.rapidark.com
  * @date 2013-4-14 下午08:13:51
  * @version V1.0
  */

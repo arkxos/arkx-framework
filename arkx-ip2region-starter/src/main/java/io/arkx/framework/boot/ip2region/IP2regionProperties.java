@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class IP2regionProperties {
 
-	public static final String PREFIX = "rapidark.boot.ip2region";
+	public static final String PREFIX = "arkx.boot.ip2region";
 
 	/**
 	 * 是否使用外部的IP数据文件.

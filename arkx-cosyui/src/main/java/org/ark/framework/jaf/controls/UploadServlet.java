@@ -32,9 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
-import com.rapidark.preloader.facade.HttpSessionListenerFacade;
- * @class org.ark.framework.jaf.controls.UploadServlet
- * 
  * @author Darkness
  * @date 2013-1-31 下午12:45:41 
  * @version V1.0

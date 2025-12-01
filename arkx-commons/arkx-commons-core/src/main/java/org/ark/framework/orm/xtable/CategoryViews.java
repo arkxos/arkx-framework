@@ -12,7 +12,7 @@ import java.util.Hashtable;
 	/// 最后修改于:2007-10-16 13:18:59 
 	/// </summary>
 	/// <remarks>
-	/// CopyRight：Rapidark Skyinsoft. Co. Ltd.
+	/// CopyRight：arkx Skyinsoft. Co. Ltd.
 	/// XXX 于 2007-10-16
 	///	初次完成
 	/// XXX 于 2007-10-16

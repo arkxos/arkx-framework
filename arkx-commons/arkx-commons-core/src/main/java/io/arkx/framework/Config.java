@@ -17,7 +17,6 @@ import java.net.URLDecoder;
 import java.util.List;
 
 /**
-import com.rapidark.preloader.facade.HttpSessionListenerFacade;
  * 全局配置信息类。<br>
  *  @singleton
  * @author Darkness
@@ -300,7 +299,7 @@ public class Config {
 	 */
 	public static String getClassesPath() {
 		if (classesPath == null) {
-			URL url = Config.class.getClassLoader().getResource("rapidark.license");
+			URL url = Config.class.getClassLoader().getResource("arkx.license");
 			if (url == null) {
 				System.err.println("Config.getClassesPath() failed!");
 				return "";

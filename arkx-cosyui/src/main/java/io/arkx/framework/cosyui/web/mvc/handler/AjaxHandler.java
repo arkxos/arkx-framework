@@ -42,7 +42,7 @@ public class AjaxHandler extends AbstractHtmlHandler {
 	
 	private Logger logger = LoggerFactory.getLogger(AjaxHandler.class);
 	
-	public static final String ID = "com.arkxos.framework.core.AjaxHandler";
+	public static final String ID = "io.arkx.framework.core.AjaxHandler";
 
 	@Override
 	public String getExtendItemID() {

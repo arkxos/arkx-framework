@@ -12,7 +12,6 @@ import java.sql.SQLException;
  * 数据库操作帮助类
  * 
  * @author Darkness
- * @website www.rapidark.com
  * @date 2013-4-12 下午02:50:51
  * @version V1.0
  */

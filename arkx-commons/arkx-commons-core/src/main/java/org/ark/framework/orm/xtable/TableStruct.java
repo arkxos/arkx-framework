@@ -4,7 +4,7 @@ package org.ark.framework.orm.xtable;
 /// 数据库的一个表的简单结构属性索引。
 /// </summary>
 /// <remarks>
-/// CopyRight：Rapidark Skyinsoft. Co. Ltd.
+/// CopyRight：arkx Skyinsoft. Co. Ltd.
 /// 王周文 于 2006-3-3
 ///		初次完成
 /// 陈涛 于 2006-4-17

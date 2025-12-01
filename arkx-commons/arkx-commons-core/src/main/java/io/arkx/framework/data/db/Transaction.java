@@ -28,7 +28,7 @@ package io.arkx.framework.data.db;
 // * 则需要使用阻塞型事务处理。 <br>
 // * 5、若要使用JDBC原生事务处理，请使用DataAccess类，一般情况下不推荐使用。<br>
 // * 
-// * @see com.arkxos.framework.data.db.BlockingTransaction
+// * @see io.arkx.framework.data.db.BlockingTransaction
 // */
 //public class Transaction {
 //	/**

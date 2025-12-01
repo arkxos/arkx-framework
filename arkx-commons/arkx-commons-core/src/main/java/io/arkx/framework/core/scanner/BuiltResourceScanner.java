@@ -44,7 +44,7 @@ public class BuiltResourceScanner {
 	}
 	
 	public void scan(long lastTime, Class<? extends Annotation> annotationClass) {
-		scan(lastTime, annotationClass, Arrays.asList("com.arkxos","com.xdreamaker"));
+		scan(lastTime, annotationClass, Arrays.asList("io.arkx","io.arkx"));
 	}
 	
 	public void scan(long lastTime, Class<? extends Annotation> annotationClass, List<String> pageList) {

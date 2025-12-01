@@ -72,7 +72,7 @@
             <scope>provided</scope>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.arkx</groupId>-->
+<!--            <groupId>io.arkx</groupId>-->
 <!--            <artifactId>arkx-platform-support-commons-biz</artifactId>-->
 <!--        </dependency>-->
     </dependencies>

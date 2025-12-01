@@ -3,7 +3,7 @@ package io.arkx.framework.message.tcp;
 import io.arkx.framework.message.tcp.server.NettyServer;
 
 /**
- * com.xdreamaker.lighting.LightingServer
+ * io.arkx.lighting.LightingServer
  * @author Darkness
  * @date 2017年4月11日 下午4:33:28
  * @version 1.0

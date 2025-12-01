@@ -69,7 +69,7 @@ import java.util.ResourceBundle;
  **/
 
 public class Constants {
-	static ResourceBundle sResources = ResourceBundle.getBundle("com.arkxos.framework.thirdparty.el.Resources", Locale.ENGLISH);
+	static ResourceBundle sResources = ResourceBundle.getBundle("io.arkx.framework.thirdparty.el.Resources", Locale.ENGLISH);
 
 	public static final String EXCEPTION_GETTING_BEANINFO = getStringResource("EXCEPTION_GETTING_BEANINFO");
 
@@ -127,7 +127,7 @@ public class Constants {
 			if (ret == null) {
 				String str = "ERROR: Unable to load resource " + pResourceName;
 				System.err.println(str);
-				throw new MissingResourceException(str, "com.arkxos.framework.cosyui.expression.Constants", pResourceName);
+				throw new MissingResourceException(str, "io.arkx.framework.cosyui.expression.Constants", pResourceName);
 			} else {
 				return ret;
 			}

@@ -8,7 +8,7 @@ import io.arkx.framework.extend.IExtendAction;
  * 
  */
 public abstract class BeforeCronTaskExecutedAction implements IExtendAction {
-	public static final String ID = "com.arkxos.framework.BeforeCronTaskExecutedAction";
+	public static final String ID = "io.arkx.framework.BeforeCronTaskExecutedAction";
 
 	@Override
 	public Object execute(Object[] args) throws ExtendException {

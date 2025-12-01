@@ -131,7 +131,7 @@ public class WaterMark
     waterMark.openFile("f:/test.jpg");
     try
     {
-      waterMark.draw("RapidArk软件", 5, 8);
+      waterMark.draw("arkx软件", 5, 8);
     }
     catch (Exception e)
     {

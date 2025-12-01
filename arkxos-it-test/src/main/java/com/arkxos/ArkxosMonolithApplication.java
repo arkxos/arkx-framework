@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.arkxos;
+package io.arkx;
 
-import com.arkxos.npm.cdn.CDNServlet;
-import com.arkxos.security.annotation.EnableArkResourceServer;
+import io.arkx.npm.cdn.CDNServlet;
+import io.arkx.security.annotation.EnableArkResourceServer;
 import io.arkx.framework.boot.ArkApplication;
 import io.arkx.framework.swagger.annotation.EnableArkDoc;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,7 +34,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableArkDoc(value = "admin", isMicro = false)
 @EnableArkResourceServer
 @SpringBootApplication(
-	scanBasePackages = {"io.arkx", "com.arkxos"},
+	scanBasePackages = {"io.arkx", "io.arkx"},
 	exclude = {
 //		DataSourceAutoConfiguration.class,
 //		DataSourceTransactionManagerAutoConfiguration.class,
@@ -43,7 +43,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 	}
 )
 //@EnableConfigurationProperties(MonitorConfig.class)
-@ServletComponentScan(basePackages = "com.arkxos.npm.cdn", basePackageClasses = { CDNServlet.class })
+@ServletComponentScan(basePackages = "io.arkx.npm.cdn", basePackageClasses = { CDNServlet.class })
 public class ArkxosMonolithApplication {
 
 	public static void main(String[] args) {

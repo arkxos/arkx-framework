@@ -4,7 +4,7 @@ import io.arkx.framework.commons.annotation.Excel;
 import io.arkx.framework.commons.annotation.Excel.ColumnType;
 import io.arkx.framework.commons.annotation.Excel.Type;
 import io.arkx.framework.commons.annotation.Excels;
-import io.arkx.framework.commons.config.RapidArkConfig;
+import io.arkx.framework.commons.config.ArkxConfig;
 import io.arkx.framework.commons.domain.AjaxResult;
 import io.arkx.framework.commons.exception.CustomException;
 import io.arkx.framework.commons.lang.text.Convert;
@@ -715,7 +715,7 @@ public class ExcelUtil<T>
      */
     public String getAbsoluteFile(String filename)
     {
-        String downloadPath = RapidArkConfig.getDownloadPath() + filename;
+        String downloadPath = ArkxConfig.getDownloadPath() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists())
         {

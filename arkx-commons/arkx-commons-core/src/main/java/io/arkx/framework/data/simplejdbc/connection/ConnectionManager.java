@@ -15,7 +15,6 @@ import java.util.Properties;
 /**   
  * 连接管理类
  * @author Darkness
- * @website www.rapidark.com
  * @date 2013-4-11 下午08:20:05 
  * @version V1.0   
  */

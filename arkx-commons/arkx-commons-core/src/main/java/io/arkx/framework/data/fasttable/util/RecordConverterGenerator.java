@@ -65,9 +65,9 @@ public class RecordConverterGenerator {
 		String result = "import java.nio.ByteBuffer;\r\n" + 
 				"import java.time.LocalDate;\r\n" + 
 				"\r\n" + 
-				"import com.rapidark.infinity.persistence.fastdb.FastColumn;\r\n" + 
-				"import com.rapidark.infinity.persistence.fastdb.FastColumnType;\r\n" + 
-				"import com.rapidark.infinity.persistence.fastdb.RecordConverter;\r\n" + 
+				"import io.arkx.infinity.persistence.fastdb.FastColumn;\r\n" +
+				"import io.arkx.infinity.persistence.fastdb.FastColumnType;\r\n" +
+				"import io.arkx.infinity.persistence.fastdb.RecordConverter;\r\n" +
 		"\r\n" + 
 		"public class "+classSimpleName+"RecordConverter extends RecordConverter<"+classSimpleName+"> {\r\n" + 
 		"\r\n";

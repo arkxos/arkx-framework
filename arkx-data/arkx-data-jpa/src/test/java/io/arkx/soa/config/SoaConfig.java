@@ -12,10 +12,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @Configuration
 @EnableJpaRepositories(
-		basePackages = { "com.xdreamaker","com.arkxos" },
+		basePackages = { "io.arkx","io.arkx" },
 		repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 @EntityScan({
-	"com.arkxos.soa.entity"
+	"io.arkx.soa.entity"
 })
 public class SoaConfig {
 

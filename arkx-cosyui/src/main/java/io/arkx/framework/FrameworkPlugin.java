@@ -16,10 +16,10 @@ import io.arkx.framework.i18n.LangMapping;
  * @version V1.0
  */
 @Comment
-@Plugin("com.arkxos.framework")
+@Plugin("io.arkx.framework")
 public class FrameworkPlugin extends AbstractPlugin {
 	
-	public static final String ID = "com.arkxos.framework";
+	public static final String ID = "io.arkx.framework";
 
 	@Override
 	public void install() throws PluginException {

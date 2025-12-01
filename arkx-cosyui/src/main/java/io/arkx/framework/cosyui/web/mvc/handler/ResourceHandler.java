@@ -24,7 +24,7 @@ import java.util.Date;
  * 
  */
 public class ResourceHandler implements IURLHandler {
-	public static final String ID = "com.arkxos.framework.core.ResourceURLHandler";
+	public static final String ID = "io.arkx.framework.core.ResourceURLHandler";
 
 	private static final String[] extensions = new String[] { ".gif", ".jpg", ".png", ".js", ".css", ".ico", ".swf", ".htm", ".html",
 			".shtml", ".xml", ".txt", ".properties", ".jpeg", ".cur", ".htc" };

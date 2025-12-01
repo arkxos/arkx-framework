@@ -370,7 +370,7 @@ public class SchemaUtil {
 		Class<?> c = null;
 		ArrayList<String> list = new ArrayList<String>();
 		try {
-			c = Class.forName("com.arkxos.schema.ZDCodeSchema");
+			c = Class.forName("io.arkx.schema.ZDCodeSchema");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}

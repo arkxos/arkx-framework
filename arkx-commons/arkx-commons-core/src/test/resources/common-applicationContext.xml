@@ -10,23 +10,23 @@
 
 	<context:annotation-config />
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	<context:component-scan base-package="com.arkxos.framework.*" />
+	<context:component-scan base-package="io.arkx.framework.*" />
 
 	<!-- PerformanceMonitorInterceptor -->
 	<bean id="performanceInterceptor"
-		class="com.arkxos.framework.common.monitor.PerformanceInterceptor" />
+		class="io.arkx.framework.common.monitor.PerformanceInterceptor" />
 
 	<aop:config>
 
-		<!-- <aop:pointcut id="allServiceMethods" expression="execution(* com.rapidark..*Service.*(..))"/> 
-			<aop:pointcut id="allServiceMethods" expression="execution(* com.rapidark.icequeen..*(..))"/> -->
+		<!-- <aop:pointcut id="allServiceMethods" expression="execution(* io.arkx..*Service.*(..))"/>
+			<aop:pointcut id="allServiceMethods" expression="execution(* io.arkx.icequeen..*(..))"/> -->
 		<aop:pointcut id="allMethods"
-			expression="execution(* com.rapidark.icequeen..*(..))" />
+			expression="execution(* io.arkx.icequeen..*(..))" />
 		<aop:advisor pointcut-ref="allMethods" advice-ref="performanceInterceptor"
 			order="2" />
 	</aop:config>
 	<!-- <aop:config> <aop:pointcut id="allQueryMethods" expression="execution(* 
-		com.rapidark.icequeen..*Query.*(..))"/> <aop:advisor pointcut-ref="allQueryMethods" 
+		io.arkx.icequeen..*Query.*(..))"/> <aop:advisor pointcut-ref="allQueryMethods"
 		advice-ref="performanceInterceptor" order="2"/> </aop:config> -->
 	<!-- 启用event自动注册 -->
 

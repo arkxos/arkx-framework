@@ -4,7 +4,7 @@ import io.arkx.framework.Config;
 import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
- * 配置日志管理器的实现类，此类必须实现com.arkxos.framework.utility.ILogManager接口。
+ * 配置日志管理器的实现类，此类必须实现io.arkx.framework.utility.ILogManager接口。
  * 
  */
 public class LogManagerClass implements IApplicationConfigItem {
@@ -18,7 +18,7 @@ public class LogManagerClass implements IApplicationConfigItem {
 
 	@Override
 	public String getExtendItemName() {
-		return "Class name which implements com.arkxos.framework.utility.log.ILogManager";
+		return "Class name which implements io.arkx.framework.utility.log.ILogManager";
 	}
 
 	public static String getValue() {

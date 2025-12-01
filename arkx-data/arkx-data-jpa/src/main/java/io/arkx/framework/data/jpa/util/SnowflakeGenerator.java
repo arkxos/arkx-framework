@@ -7,7 +7,7 @@ import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
 
 public class SnowflakeGenerator implements IdentifierGenerator {
-    public static final String TYPE = "com.arkxos.spring.jpa.util.SnowflakeGenerator";
+    public static final String TYPE = "io.arkx.spring.jpa.util.SnowflakeGenerator";
 
     private static final IdWorker idWorker = new IdWorker();
 
