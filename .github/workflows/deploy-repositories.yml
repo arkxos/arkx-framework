@@ -49,15 +49,13 @@ jobs:
           echo "release_type=release" >> $GITHUB_OUTPUT
           echo "is_snapshot=false" >> $GITHUB_OUTPUT
         elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/heads/dev ]]; then
-          # dev 分支推送 - 从 pom.xml 读取版本号
-          VERSION=$(mvn help:evaluate -Dexpression=revision -q -DforceStdout)
-          if [[ -z "$VERSION" ]]; then
-            VERSION="0.1.0-SNAPSHOT"
+          # dev 分支推送 - 从 pom.xml 读取版本号并添加 -SNAPSHOT
+          BASE_VERSION=$(mvn help:evaluate -Dexpression=revision -q -DforceStdout)
+          if [[ -z "$BASE_VERSION" ]]; then
+            BASE_VERSION="0.1.0"
           fi
-          # 如果不是 SNAPSHOT 版本，自动添加 -SNAPSHOT
-          if [[ ! "$VERSION" =~ .*-SNAPSHOT$ ]]; then
-            VERSION="${VERSION}-SNAPSHOT"
-          fi
+          # 强制添加 -SNAPSHOT 后缀
+          VERSION="${BASE_VERSION}-SNAPSHOT"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "release_type=snapshot" >> $GITHUB_OUTPUT
           echo "is_snapshot=true" >> $GITHUB_OUTPUT
