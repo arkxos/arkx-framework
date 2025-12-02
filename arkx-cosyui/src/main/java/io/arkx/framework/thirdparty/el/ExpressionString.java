@@ -61,8 +61,7 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * <p>
- * Represents an expression String consisting of a mixture of Strings and
- * Expressions.
+ * Represents an expression String consisting of a mixture of Strings and Expressions.
  *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
@@ -70,68 +69,72 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  **/
 
 public class ExpressionString {
-    // -------------------------------------
-    // Properties
-    // -------------------------------------
-    // property elements
 
-    Object[] mElements;
+	// -------------------------------------
+	// Properties
+	// -------------------------------------
+	// property elements
 
-    public Object[] getElements() {
-        return mElements;
-    }
+	Object[] mElements;
 
-    public void setElements(Object[] pElements) {
-        mElements = pElements;
-    }
+	public Object[] getElements() {
+		return mElements;
+	}
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public ExpressionString(Object[] pElements) {
-        mElements = pElements;
-    }
+	public void setElements(Object[] pElements) {
+		mElements = pElements;
+	}
 
-    // -------------------------------------
-    /**
-     * Evaluates the expression string by evaluating each element, converting it to
-     * a String (using toString, or "" for null values) and concatenating the
-     * results into a single String.
-     **/
-    public String evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-            throws ExpressionException {
-        StringBuffer buf = new StringBuffer();
-        for (Object elem : mElements) {
-            if (elem instanceof String) {
-                buf.append((String) elem);
-            } else if (elem instanceof Expression) {
-                Object val = ((Expression) elem).evaluate(pResolver, functions, pLogger);
-                if (val != null) {
-                    buf.append(val.toString());
-                }
-            }
-        }
-        return buf.toString();
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public ExpressionString(Object[] pElements) {
+		mElements = pElements;
+	}
 
-    // -------------------------------------
-    /**
-     * Returns the expression in the expression language syntax
-     **/
-    public String getExpressionString() {
-        StringBuffer buf = new StringBuffer();
-        for (Object elem : mElements) {
-            if (elem instanceof String) {
-                buf.append((String) elem);
-            } else if (elem instanceof Expression) {
-                buf.append("${");
-                buf.append(((Expression) elem).getExpressionString());
-                buf.append("}");
-            }
-        }
-        return buf.toString();
-    }
+	// -------------------------------------
+	/**
+	 * Evaluates the expression string by evaluating each element, converting it to a
+	 * String (using toString, or "" for null values) and concatenating the results into a
+	 * single String.
+	 **/
+	public String evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+			throws ExpressionException {
+		StringBuffer buf = new StringBuffer();
+		for (Object elem : mElements) {
+			if (elem instanceof String) {
+				buf.append((String) elem);
+			}
+			else if (elem instanceof Expression) {
+				Object val = ((Expression) elem).evaluate(pResolver, functions, pLogger);
+				if (val != null) {
+					buf.append(val.toString());
+				}
+			}
+		}
+		return buf.toString();
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Returns the expression in the expression language syntax
+	 **/
+	public String getExpressionString() {
+		StringBuffer buf = new StringBuffer();
+		for (Object elem : mElements) {
+			if (elem instanceof String) {
+				buf.append((String) elem);
+			}
+			else if (elem instanceof Expression) {
+				buf.append("${");
+				buf.append(((Expression) elem).getExpressionString());
+				buf.append("}");
+			}
+		}
+		return buf.toString();
+	}
+
+	// -------------------------------------
+
 }

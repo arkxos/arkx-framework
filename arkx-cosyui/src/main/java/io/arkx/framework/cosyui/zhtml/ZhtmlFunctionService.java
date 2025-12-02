@@ -12,38 +12,44 @@ import io.arkx.framework.extend.AbstractExtendService;
  *
  */
 public class ZhtmlFunctionService extends AbstractExtendService<IFunction> {
-    private static ZhtmlFunctionService instance;
-    private static IFunctionMapper mapper;
-    private static ReentrantLock lock = new ReentrantLock();
 
-    public static ZhtmlFunctionService getInstance() {
-        if (instance == null) {
-            lock.lock();
-            try {
-                if (instance == null) {
-                    instance = AbstractExtendService.findInstance(ZhtmlFunctionService.class);
-                }
-            } finally {
-                lock.unlock();
-            }
-        }
-        return instance;
-    }
+	private static ZhtmlFunctionService instance;
 
-    public static IFunctionMapper getFunctionMappper() {
-        if (mapper == null) {
-            lock.lock();
-            try {
-                if (mapper == null) {
-                    mapper = DefaultFunctionMapper.getInstance();
-                    for (IFunction f : getInstance().getAll()) {
-                        mapper.registerFunction(f);
-                    }
-                }
-            } finally {
-                lock.unlock();
-            }
-        }
-        return mapper;
-    }
+	private static IFunctionMapper mapper;
+
+	private static ReentrantLock lock = new ReentrantLock();
+
+	public static ZhtmlFunctionService getInstance() {
+		if (instance == null) {
+			lock.lock();
+			try {
+				if (instance == null) {
+					instance = AbstractExtendService.findInstance(ZhtmlFunctionService.class);
+				}
+			}
+			finally {
+				lock.unlock();
+			}
+		}
+		return instance;
+	}
+
+	public static IFunctionMapper getFunctionMappper() {
+		if (mapper == null) {
+			lock.lock();
+			try {
+				if (mapper == null) {
+					mapper = DefaultFunctionMapper.getInstance();
+					for (IFunction f : getInstance().getAll()) {
+						mapper.registerFunction(f);
+					}
+				}
+			}
+			finally {
+				lock.unlock();
+			}
+		}
+		return mapper;
+	}
+
 }

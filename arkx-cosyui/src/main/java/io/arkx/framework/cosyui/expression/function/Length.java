@@ -20,59 +20,60 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  */
 public class Length extends AbstractFunction {
 
-    @Override
-    public Object execute(IVariableResolver resolver, Object... args) throws ExpressionException {
-        Object obj = args[0];
-        if (obj == null) {
-            return 0;
-        }
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) throws ExpressionException {
+		Object obj = args[0];
+		if (obj == null) {
+			return 0;
+		}
 
-        if (obj instanceof String) {
-            return ((String) obj).length();
-        }
-        if (obj.getClass().isArray()) {
-            return Array.getLength(obj);
-        }
-        if (obj instanceof Collection) {
-            return ((Collection<?>) obj).size();
-        }
-        if (obj instanceof Map) {
-            return ((Map<?, ?>) obj).size();
-        }
-        int count = 0;
-        if (obj instanceof Iterator) {
-            Iterator<?> iter = (Iterator<?>) obj;
-            count = 0;
-            while (iter.hasNext()) {
-                count++;
-                iter.next();
-            }
-            return count;
-        }
-        if (obj instanceof Enumeration) {
-            Enumeration<?> enum_ = (Enumeration<?>) obj;
-            count = 0;
-            while (enum_.hasMoreElements()) {
-                count++;
-                enum_.nextElement();
-            }
-            return count;
-        }
-        throw new ExpressionException("Invalid length property");
-    }
+		if (obj instanceof String) {
+			return ((String) obj).length();
+		}
+		if (obj.getClass().isArray()) {
+			return Array.getLength(obj);
+		}
+		if (obj instanceof Collection) {
+			return ((Collection<?>) obj).size();
+		}
+		if (obj instanceof Map) {
+			return ((Map<?, ?>) obj).size();
+		}
+		int count = 0;
+		if (obj instanceof Iterator) {
+			Iterator<?> iter = (Iterator<?>) obj;
+			count = 0;
+			while (iter.hasNext()) {
+				count++;
+				iter.next();
+			}
+			return count;
+		}
+		if (obj instanceof Enumeration) {
+			Enumeration<?> enum_ = (Enumeration<?>) obj;
+			count = 0;
+			while (enum_.hasMoreElements()) {
+				count++;
+				enum_.nextElement();
+			}
+			return count;
+		}
+		throw new ExpressionException("Invalid length property");
+	}
 
-    @Override
-    public String getFunctionPrefix() {
-        return "";
-    }
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
 
-    @Override
-    public Class<?>[] getArgumentTypes() {
-        return AbstractFunction.Arg_Object;
-    }
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return AbstractFunction.Arg_Object;
+	}
 
-    @Override
-    public String getFunctionName() {
-        return "length";
-    }
+	@Override
+	public String getFunctionName() {
+		return "length";
+	}
+
 }

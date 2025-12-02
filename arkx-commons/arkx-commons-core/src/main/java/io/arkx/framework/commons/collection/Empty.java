@@ -6,4 +6,5 @@ package io.arkx.framework.commons.collection;
  * @date 2021/6/16 11:24
  */
 public class Empty {
+
 }

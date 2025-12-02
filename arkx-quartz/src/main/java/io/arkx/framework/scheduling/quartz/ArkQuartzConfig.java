@@ -32,99 +32,98 @@ import io.arkx.framework.core.YamlPropertySourceFactory;
 @EnableAsync
 @Configuration
 @PropertySource(value = "classpath:quartz-config.yml", factory = YamlPropertySourceFactory.class)
-@ConditionalOnClass({Scheduler.class, SchedulerFactoryBean.class})
-@EnableConfigurationProperties({QuartzProperties.class})
+@ConditionalOnClass({ Scheduler.class, SchedulerFactoryBean.class })
+@EnableConfigurationProperties({ QuartzProperties.class })
 public class ArkQuartzConfig {
 
-    private final QuartzProperties properties;
+	private final QuartzProperties properties;
 
-    private final List<SchedulerFactoryBeanCustomizer> customizers;
+	private final List<SchedulerFactoryBeanCustomizer> customizers;
 
-    private final JobDetail[] jobDetails;
+	private final JobDetail[] jobDetails;
 
-    private final Map<String, Calendar> calendars;
+	private final Map<String, Calendar> calendars;
 
-    private final Trigger[] triggers;
+	private final Trigger[] triggers;
 
-    private final ApplicationContext applicationContext;
+	private final ApplicationContext applicationContext;
 
-    public ArkQuartzConfig(QuartzProperties properties,
-            ObjectProvider<List<SchedulerFactoryBeanCustomizer>> customizers, ObjectProvider<JobDetail[]> jobDetails,
-            ObjectProvider<Map<String, Calendar>> calendars, ObjectProvider<Trigger[]> triggers,
-            ApplicationContext applicationContext) {
-        this.properties = properties;
-        this.customizers = customizers.getIfAvailable();
-        this.jobDetails = jobDetails.getIfAvailable();
-        this.calendars = calendars.getIfAvailable();
-        this.triggers = triggers.getIfAvailable();
-        this.applicationContext = applicationContext;
-    }
+	public ArkQuartzConfig(QuartzProperties properties,
+			ObjectProvider<List<SchedulerFactoryBeanCustomizer>> customizers, ObjectProvider<JobDetail[]> jobDetails,
+			ObjectProvider<Map<String, Calendar>> calendars, ObjectProvider<Trigger[]> triggers,
+			ApplicationContext applicationContext) {
+		this.properties = properties;
+		this.customizers = customizers.getIfAvailable();
+		this.jobDetails = jobDetails.getIfAvailable();
+		this.calendars = calendars.getIfAvailable();
+		this.triggers = triggers.getIfAvailable();
+		this.applicationContext = applicationContext;
+	}
 
-    @Bean
-    public SpringBeanJobFactory springBeanJobFactory() {
-        AutowiringSpringBeanJobFactory autowiringSpringBeanJobFactory = new AutowiringSpringBeanJobFactory();
-        autowiringSpringBeanJobFactory.setApplicationContext(this.applicationContext);
+	@Bean
+	public SpringBeanJobFactory springBeanJobFactory() {
+		AutowiringSpringBeanJobFactory autowiringSpringBeanJobFactory = new AutowiringSpringBeanJobFactory();
+		autowiringSpringBeanJobFactory.setApplicationContext(this.applicationContext);
 
-        return autowiringSpringBeanJobFactory;
-    }
+		return autowiringSpringBeanJobFactory;
+	}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public SchedulerFactoryBean quartzScheduler(SpringBeanJobFactory springBeanJobFactory) {
-        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-        schedulerFactoryBean.setJobFactory(springBeanJobFactory);
+	@Bean
+	@ConditionalOnMissingBean
+	public SchedulerFactoryBean quartzScheduler(SpringBeanJobFactory springBeanJobFactory) {
+		SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+		schedulerFactoryBean.setJobFactory(springBeanJobFactory);
 
-        if (!this.properties.getProperties().isEmpty()) {
-            schedulerFactoryBean.setQuartzProperties(this.asProperties(this.properties.getProperties()));
-        }
+		if (!this.properties.getProperties().isEmpty()) {
+			schedulerFactoryBean.setQuartzProperties(this.asProperties(this.properties.getProperties()));
+		}
 
-        if (this.jobDetails != null && this.jobDetails.length > 0) {
-            schedulerFactoryBean.setJobDetails(this.jobDetails);
-        }
+		if (this.jobDetails != null && this.jobDetails.length > 0) {
+			schedulerFactoryBean.setJobDetails(this.jobDetails);
+		}
 
-        if (this.calendars != null && !this.calendars.isEmpty()) {
-            schedulerFactoryBean.setCalendars(this.calendars);
-        }
+		if (this.calendars != null && !this.calendars.isEmpty()) {
+			schedulerFactoryBean.setCalendars(this.calendars);
+		}
 
-        if (this.triggers != null && this.triggers.length > 0) {
-            schedulerFactoryBean.setTriggers(this.triggers);
-        }
+		if (this.triggers != null && this.triggers.length > 0) {
+			schedulerFactoryBean.setTriggers(this.triggers);
+		}
 
-        // todo 参照arkpack，需要处理
-        // schedulerFactoryBean.setTaskExecutor(cronJobTaskExecutor());
+		// todo 参照arkpack，需要处理
+		// schedulerFactoryBean.setTaskExecutor(cronJobTaskExecutor());
 
-        this.customize(schedulerFactoryBean);
-        return schedulerFactoryBean;
-    }
+		this.customize(schedulerFactoryBean);
+		return schedulerFactoryBean;
+	}
 
-    // @Bean
-    // public Executor cronJobTaskExecutor() {
-    // return new CronTaskExecutor(10, 10, 10, TimeUnit.SECONDS, new
-    // LinkedBlockingQueue<>());
-    // }
+	// @Bean
+	// public Executor cronJobTaskExecutor() {
+	// return new CronTaskExecutor(10, 10, 10, TimeUnit.SECONDS, new
+	// LinkedBlockingQueue<>());
+	// }
 
-    private Properties asProperties(Map<String, String> source) {
-        Properties properties = new Properties();
-        properties.putAll(source);
-        return properties;
-    }
+	private Properties asProperties(Map<String, String> source) {
+		Properties properties = new Properties();
+		properties.putAll(source);
+		return properties;
+	}
 
-    private void customize(SchedulerFactoryBean schedulerFactoryBean) {
-        if (this.customizers != null) {
-            for (SchedulerFactoryBeanCustomizer customizer : this.customizers) {
-                customizer.customize(schedulerFactoryBean);
-            }
-        }
-    }
+	private void customize(SchedulerFactoryBean schedulerFactoryBean) {
+		if (this.customizers != null) {
+			for (SchedulerFactoryBeanCustomizer customizer : this.customizers) {
+				customizer.customize(schedulerFactoryBean);
+			}
+		}
+	}
 
-    /**
-     * 通过SchedulerFactoryBean获取Scheduler的实例
-     *
-     * @return
-     */
-    @Bean
-    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) {
-        return schedulerFactoryBean.getScheduler();
-    }
+	/**
+	 * 通过SchedulerFactoryBean获取Scheduler的实例
+	 * @return
+	 */
+	@Bean
+	public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) {
+		return schedulerFactoryBean.getScheduler();
+	}
 
 }

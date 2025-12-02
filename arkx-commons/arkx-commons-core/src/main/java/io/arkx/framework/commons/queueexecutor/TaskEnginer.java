@@ -17,209 +17,214 @@ import io.arkx.framework.commons.util.Handler;
 import com.alibaba.fastjson.JSON;
 
 /**
- *
  * @author Darkness
  * @date 2016年11月11日 下午5:23:12
  * @version V1.0
  */
 public class TaskEnginer {
 
-    private String dataRootPath;
-    private MultiThreadedQueueExecutor executor;
-    private Map<String, QueueInfo> tasks = new LinkedHashMap<>();
-    private ScheduledExecutorService flushThreadPool;
-    private ScheduledExecutorService watchThreadPool;
+	private String dataRootPath;
 
-    public TaskEnginer(String dataRootPath) {
-        this.dataRootPath = dataRootPath;
-        FileUtil.mkdir(dataRootPath);
-        init();
-    }
+	private MultiThreadedQueueExecutor executor;
 
-    @SuppressWarnings("rawtypes")
-    private void init() {
-        System.out.println("init task enginer");
-        executor = new MultiThreadedQueueExecutor("task-enginer", "任务引擎", new ElementProcessor<Object>() {
+	private Map<String, QueueInfo> tasks = new LinkedHashMap<>();
 
-            @Override
-            public void process(Element<Object> element, MultiThreadedQueueExecutor<Object> executor) {
-                Object todo = element.getSource();
-                try {
-                    Task taskProcessor = null;// findProcessor(todo.getTask());
-                    boolean isSuccess = taskProcessor.executeTodo(taskProcessor.getId(), todo);
-                    if (isSuccess) {
-                        // todo.finished();
-                    } else {
-                        // todo.error();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    // todo.error();
-                }
+	private ScheduledExecutorService flushThreadPool;
 
-                // if(todo.isError()) {
-                // executor.addElement(new Element<Object>(todo.getId() + "-" +
-                // todo.getStatus(), todo));// 重试
-                // }
-            }
+	private ScheduledExecutorService watchThreadPool;
 
-        }).thread(5).onFinish(() -> {
-            onFinished();
-        });
-    }
+	public TaskEnginer(String dataRootPath) {
+		this.dataRootPath = dataRootPath;
+		FileUtil.mkdir(dataRootPath);
+		init();
+	}
 
-    private Handler finishedHandler;
+	@SuppressWarnings("rawtypes")
+	private void init() {
+		System.out.println("init task enginer");
+		executor = new MultiThreadedQueueExecutor("task-enginer", "任务引擎", new ElementProcessor<Object>() {
 
-    private Task findProcessor(QueueInfo task) {
-        Task taskProcessor = taskProcessors.get(task.getId());
-        return taskProcessor;
-    }
+			@Override
+			public void process(Element<Object> element, MultiThreadedQueueExecutor<Object> executor) {
+				Object todo = element.getSource();
+				try {
+					Task taskProcessor = null;// findProcessor(todo.getTask());
+					boolean isSuccess = taskProcessor.executeTodo(taskProcessor.getId(), todo);
+					if (isSuccess) {
+						// todo.finished();
+					}
+					else {
+						// todo.error();
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					// todo.error();
+				}
 
-    private void onFinished() {
-        flush();
-        flushThreadPool.shutdown();
-        if (watchThreadPool != null) {
-            watchThreadPool.shutdown();
-        }
-        if (finishedHandler != null) {
-            finishedHandler.execute();
-        }
-    }
+				// if(todo.isError()) {
+				// executor.addElement(new Element<Object>(todo.getId() + "-" +
+				// todo.getStatus(), todo));// 重试
+				// }
+			}
 
-    public void onFinished(Handler finishedHandler) {
-        this.finishedHandler = finishedHandler;
-    }
+		}).thread(5).onFinish(() -> {
+			onFinished();
+		});
+	}
 
-    @SuppressWarnings("rawtypes")
-    private void startTask(String taskId) {
-        QueueInfo task = tasks.get(taskId);
-        if (task.isFinished()) {
-            return;
-        }
-        if (!task.inited()) {
-            Task taskProcessor = taskProcessors.get(taskId);
-            List<Object> todos = taskProcessor.preparedTodoList(taskId);
-            for (Object todo : todos) {
-                // task.addTodo(new Todo(DigestUtils.md5Hex(todo.toString()), todo));
-            }
-            task.changeStatusInited();
-        }
-        List<Object> todoList = task.getTodoList();
-        for (Object todo : todoList) {
-            // if(!todo.isFinished()) {
-            // executor.addElement(new Element<Object>(todo.getId(), todo));
-            // }
-        }
-        executor.startAsync();
-    }
+	private Handler finishedHandler;
 
-    public Map<String, QueueInfo> getTasks() {
-        return tasks;
-    }
+	private Task findProcessor(QueueInfo task) {
+		Task taskProcessor = taskProcessors.get(task.getId());
+		return taskProcessor;
+	}
 
-    private Map<String, Task> taskProcessors = new HashMap<>();
+	private void onFinished() {
+		flush();
+		flushThreadPool.shutdown();
+		if (watchThreadPool != null) {
+			watchThreadPool.shutdown();
+		}
+		if (finishedHandler != null) {
+			finishedHandler.execute();
+		}
+	}
 
-    public boolean addTask(Task taskProcessor) {
-        if (tasks.containsKey(taskProcessor.getId())) {
-            return false;
-        }
-        QueueInfo task = new QueueInfo<>();
-        task.setId(taskProcessor.getId());
-        tasks.put(task.getId(), task);
-        taskProcessors.put(taskProcessor.getId(), taskProcessor);
-        return true;
-    }
+	public void onFinished(Handler finishedHandler) {
+		this.finishedHandler = finishedHandler;
+	}
 
-    private void addTask(QueueInfo task) {
-        tasks.put(task.getId(), task);
-    }
+	@SuppressWarnings("rawtypes")
+	private void startTask(String taskId) {
+		QueueInfo task = tasks.get(taskId);
+		if (task.isFinished()) {
+			return;
+		}
+		if (!task.inited()) {
+			Task taskProcessor = taskProcessors.get(taskId);
+			List<Object> todos = taskProcessor.preparedTodoList(taskId);
+			for (Object todo : todos) {
+				// task.addTodo(new Todo(DigestUtils.md5Hex(todo.toString()), todo));
+			}
+			task.changeStatusInited();
+		}
+		List<Object> todoList = task.getTodoList();
+		for (Object todo : todoList) {
+			// if(!todo.isFinished()) {
+			// executor.addElement(new Element<Object>(todo.getId(), todo));
+			// }
+		}
+		executor.startAsync();
+	}
 
-    public void deleteTask(String taskId) {
-        tasks.remove(taskId);
-        FileUtil.delete(taskInfoFilePath(taskId));
-    }
+	public Map<String, QueueInfo> getTasks() {
+		return tasks;
+	}
 
-    public boolean containsTask(String id) {
-        return tasks.containsKey(id);
-    }
+	private Map<String, Task> taskProcessors = new HashMap<>();
 
-    public QueueInfo getTask(String id) {
-        return tasks.get(id);
-    }
+	public boolean addTask(Task taskProcessor) {
+		if (tasks.containsKey(taskProcessor.getId())) {
+			return false;
+		}
+		QueueInfo task = new QueueInfo<>();
+		task.setId(taskProcessor.getId());
+		tasks.put(task.getId(), task);
+		taskProcessors.put(taskProcessor.getId(), taskProcessor);
+		return true;
+	}
 
-    public void start() {
-        initFlushThread();
-        initTasks();
-    }
+	private void addTask(QueueInfo task) {
+		tasks.put(task.getId(), task);
+	}
 
-    public void startAndWatch() {
-        initWatchThread();
-        start();
-    }
+	public void deleteTask(String taskId) {
+		tasks.remove(taskId);
+		FileUtil.delete(taskInfoFilePath(taskId));
+	}
 
-    private void initTasks() {
-        File folder = new File(dataRootPath);
-        String[] taskFiles = folder.list();
-        if (taskFiles != null) {
-            for (String taskFile : taskFiles) {
-                if (!taskFile.endsWith(".json")) {
-                    continue;
-                }
-                QueueInfo task = JSON.parseObject(FileUtil.readText(dataRootPath + File.separator + taskFile),
-                        QueueInfo.class);
-                addTask(task);
-            }
-        }
-    }
+	public boolean containsTask(String id) {
+		return tasks.containsKey(id);
+	}
 
-    public void run() {
-        boolean allFinished = true;
-        for (QueueInfo task : tasks.values()) {
-            if (!task.isFinished()) {
-                allFinished = false;
-                startTask(task.getId());
-            }
-        }
-        if (allFinished) {
-            onFinished();
-        }
-    }
+	public QueueInfo getTask(String id) {
+		return tasks.get(id);
+	}
 
-    private void initFlushThread() {
-        flushThreadPool = Executors.newScheduledThreadPool(1);
-        flushThreadPool.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                flush();
-            }
+	public void start() {
+		initFlushThread();
+		initTasks();
+	}
 
-        }, 5, 5, TimeUnit.SECONDS);
-    }
+	public void startAndWatch() {
+		initWatchThread();
+		start();
+	}
 
-    private void initWatchThread() {
-        watchThreadPool = Executors.newScheduledThreadPool(1);
-        watchThreadPool.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                watch();
-            }
-        }, 5, 5, TimeUnit.SECONDS);
-    }
+	private void initTasks() {
+		File folder = new File(dataRootPath);
+		String[] taskFiles = folder.list();
+		if (taskFiles != null) {
+			for (String taskFile : taskFiles) {
+				if (!taskFile.endsWith(".json")) {
+					continue;
+				}
+				QueueInfo task = JSON.parseObject(FileUtil.readText(dataRootPath + File.separator + taskFile),
+						QueueInfo.class);
+				addTask(task);
+			}
+		}
+	}
 
-    private void watch() {
-        for (QueueInfo task : tasks.values()) {
-            System.out.println(LocalDateTime.now() + "  " + task);
-        }
-    }
+	public void run() {
+		boolean allFinished = true;
+		for (QueueInfo task : tasks.values()) {
+			if (!task.isFinished()) {
+				allFinished = false;
+				startTask(task.getId());
+			}
+		}
+		if (allFinished) {
+			onFinished();
+		}
+	}
 
-    private void flush() {
-        for (QueueInfo task : tasks.values()) {
-            FileUtil.writeText(taskInfoFilePath(task.getId()), JSON.toJSONString(task, true));
-        }
-    }
+	private void initFlushThread() {
+		flushThreadPool = Executors.newScheduledThreadPool(1);
+		flushThreadPool.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				flush();
+			}
 
-    private String taskInfoFilePath(String taskId) {
-        return dataRootPath + File.separator + taskId + ".json";
-    }
+		}, 5, 5, TimeUnit.SECONDS);
+	}
+
+	private void initWatchThread() {
+		watchThreadPool = Executors.newScheduledThreadPool(1);
+		watchThreadPool.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				watch();
+			}
+		}, 5, 5, TimeUnit.SECONDS);
+	}
+
+	private void watch() {
+		for (QueueInfo task : tasks.values()) {
+			System.out.println(LocalDateTime.now() + "  " + task);
+		}
+	}
+
+	private void flush() {
+		for (QueueInfo task : tasks.values()) {
+			FileUtil.writeText(taskInfoFilePath(task.getId()), JSON.toJSONString(task, true));
+		}
+	}
+
+	private String taskInfoFilePath(String taskId) {
+		return dataRootPath + File.separator + taskId + ".json";
+	}
 
 }

@@ -13,9 +13,10 @@ import io.netty.buffer.ByteBuf;
  */
 public interface MessageCodecUtil {
 
-    final public static int MESSAGE_LENGTH = 4;
+	final public static int MESSAGE_LENGTH = 4;
 
-    void encode(final ByteBuf out, final Object message) throws IOException;
+	void encode(final ByteBuf out, final Object message) throws IOException;
 
-    Object decode(byte[] body) throws IOException;
+	Object decode(byte[] body) throws IOException;
+
 }

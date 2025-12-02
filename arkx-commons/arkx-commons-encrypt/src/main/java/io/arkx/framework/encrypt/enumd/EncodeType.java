@@ -8,19 +8,19 @@ package io.arkx.framework.encrypt.enumd;
  */
 public enum EncodeType {
 
-    /**
-     * 默认使用yml配置
-     */
-    DEFAULT,
+	/**
+	 * 默认使用yml配置
+	 */
+	DEFAULT,
 
-    /**
-     * base64编码
-     */
-    BASE64,
+	/**
+	 * base64编码
+	 */
+	BASE64,
 
-    /**
-     * 16进制编码
-     */
-    HEX;
+	/**
+	 * 16进制编码
+	 */
+	HEX;
 
 }

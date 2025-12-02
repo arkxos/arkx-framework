@@ -5,32 +5,36 @@ package io.arkx.framework.data.xml;
  *
  */
 public class XMLQName {
-    String name;
-    XMLNamespace namespace;
 
-    public XMLQName(String name, XMLNamespace ns) {
-        namespace = ns;
-        this.name = name;
-    }
+	String name;
 
-    public String getName() {
-        return name;
-    }
+	XMLNamespace namespace;
 
-    public XMLNamespace getNamespace() {
-        return namespace;
-    }
+	public XMLQName(String name, XMLNamespace ns) {
+		namespace = ns;
+		this.name = name;
+	}
 
-    public String getQualifiedName() {
-        if (namespace == null) {
-            return name;
-        } else {
-            return namespace.getPrefix() + ":" + name;
-        }
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String toString() {
-        return getQualifiedName();
-    }
+	public XMLNamespace getNamespace() {
+		return namespace;
+	}
+
+	public String getQualifiedName() {
+		if (namespace == null) {
+			return name;
+		}
+		else {
+			return namespace.getPrefix() + ":" + name;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return getQualifiedName();
+	}
+
 }

@@ -6,84 +6,93 @@ import java.text.DecimalFormat;
 
 /**
  * @class org.ark.framework.ssi.SSIFsize
- *
  * @author Darkness
  * @date 2013-1-31 下午12:35:24
  * @version V1.0
  */
 public final class SSIFsize implements SSICommand {
-    protected static final int ONE_KILOBYTE = 1024;
-    protected static final int ONE_MEGABYTE = 1048576;
 
-    public long process(SSIMediator ssiMediator, String commandName, String[] paramNames, String[] paramValues,
-            PrintWriter writer) {
-        long lastModified = 0L;
-        String configErrMsg = ssiMediator.getConfigErrMsg();
-        for (int i = 0; i < paramNames.length; i++) {
-            String paramName = paramNames[i];
-            String paramValue = paramValues[i];
-            String substitutedValue = ssiMediator.substituteVariables(paramValue);
-            try {
-                if ((paramName.equalsIgnoreCase("file")) || (paramName.equalsIgnoreCase("virtual"))) {
-                    boolean virtual = paramName.equalsIgnoreCase("virtual");
-                    lastModified = ssiMediator.getFileLastModified(substitutedValue, virtual);
-                    long size = ssiMediator.getFileSize(substitutedValue, virtual);
-                    String configSizeFmt = ssiMediator.getConfigSizeFmt();
-                    writer.write(formatSize(size, configSizeFmt));
-                } else {
-                    ssiMediator.log("#fsize--Invalid attribute: " + paramName);
-                    writer.write(configErrMsg);
-                }
-            } catch (IOException e) {
-                ssiMediator.log("#fsize--Couldn't get size for file: " + substitutedValue, e);
-                writer.write(configErrMsg);
-            }
-        }
-        return lastModified;
-    }
+	protected static final int ONE_KILOBYTE = 1024;
 
-    public String repeat(char aChar, int numChars) {
-        if (numChars < 0) {
-            throw new IllegalArgumentException("Num chars can't be negative");
-        }
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < numChars; i++) {
-            buf.append(aChar);
-        }
-        return buf.toString();
-    }
+	protected static final int ONE_MEGABYTE = 1048576;
 
-    public String padLeft(String str, int maxChars) {
-        String result = str;
-        int charsToAdd = maxChars - str.length();
-        if (charsToAdd > 0) {
-            result = repeat(' ', charsToAdd) + str;
-        }
-        return result;
-    }
+	public long process(SSIMediator ssiMediator, String commandName, String[] paramNames, String[] paramValues,
+			PrintWriter writer) {
+		long lastModified = 0L;
+		String configErrMsg = ssiMediator.getConfigErrMsg();
+		for (int i = 0; i < paramNames.length; i++) {
+			String paramName = paramNames[i];
+			String paramValue = paramValues[i];
+			String substitutedValue = ssiMediator.substituteVariables(paramValue);
+			try {
+				if ((paramName.equalsIgnoreCase("file")) || (paramName.equalsIgnoreCase("virtual"))) {
+					boolean virtual = paramName.equalsIgnoreCase("virtual");
+					lastModified = ssiMediator.getFileLastModified(substitutedValue, virtual);
+					long size = ssiMediator.getFileSize(substitutedValue, virtual);
+					String configSizeFmt = ssiMediator.getConfigSizeFmt();
+					writer.write(formatSize(size, configSizeFmt));
+				}
+				else {
+					ssiMediator.log("#fsize--Invalid attribute: " + paramName);
+					writer.write(configErrMsg);
+				}
+			}
+			catch (IOException e) {
+				ssiMediator.log("#fsize--Couldn't get size for file: " + substitutedValue, e);
+				writer.write(configErrMsg);
+			}
+		}
+		return lastModified;
+	}
 
-    protected String formatSize(long size, String format) {
-        String retString = "";
-        if (format.equalsIgnoreCase("bytes")) {
-            DecimalFormat decimalFormat = new DecimalFormat("#,##0");
-            retString = decimalFormat.format(size);
-        } else {
-            if (size == 0L) {
-                retString = "0k";
-            } else if (size < 1024L) {
-                retString = "1k";
-            } else if (size < 1048576L) {
-                retString = Long.toString((size + 512L) / 1024L);
-                retString = retString + "k";
-            } else if (size < 103809024L) {
-                DecimalFormat decimalFormat = new DecimalFormat("0.0M");
-                retString = decimalFormat.format(size / 1048576.0D);
-            } else {
-                retString = Long.toString((size + 541696L) / 1048576L);
-                retString = retString + "M";
-            }
-            retString = padLeft(retString, 5);
-        }
-        return retString;
-    }
+	public String repeat(char aChar, int numChars) {
+		if (numChars < 0) {
+			throw new IllegalArgumentException("Num chars can't be negative");
+		}
+		StringBuffer buf = new StringBuffer();
+		for (int i = 0; i < numChars; i++) {
+			buf.append(aChar);
+		}
+		return buf.toString();
+	}
+
+	public String padLeft(String str, int maxChars) {
+		String result = str;
+		int charsToAdd = maxChars - str.length();
+		if (charsToAdd > 0) {
+			result = repeat(' ', charsToAdd) + str;
+		}
+		return result;
+	}
+
+	protected String formatSize(long size, String format) {
+		String retString = "";
+		if (format.equalsIgnoreCase("bytes")) {
+			DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+			retString = decimalFormat.format(size);
+		}
+		else {
+			if (size == 0L) {
+				retString = "0k";
+			}
+			else if (size < 1024L) {
+				retString = "1k";
+			}
+			else if (size < 1048576L) {
+				retString = Long.toString((size + 512L) / 1024L);
+				retString = retString + "k";
+			}
+			else if (size < 103809024L) {
+				DecimalFormat decimalFormat = new DecimalFormat("0.0M");
+				retString = decimalFormat.format(size / 1048576.0D);
+			}
+			else {
+				retString = Long.toString((size + 541696L) / 1048576L);
+				retString = retString + "M";
+			}
+			retString = padLeft(retString, 5);
+		}
+		return retString;
+	}
+
 }

@@ -15,99 +15,102 @@ import com.alibaba.fastjson.JSON;
  */
 public class JsonResult2<T> {
 
-    public static <T> JsonResult2<T> createErrorResult(String message) {
-        return new JsonResult2<T>(false, message, null);
-    }
+	public static <T> JsonResult2<T> createErrorResult(String message) {
+		return new JsonResult2<T>(false, message, null);
+	}
 
-    public static <T> JsonResult2<T> createSuccessResult(String message) {
-        return new JsonResult2<T>(message, null);
-    }
+	public static <T> JsonResult2<T> createSuccessResult(String message) {
+		return new JsonResult2<T>(message, null);
+	}
 
-    public static <T> JsonResult2<T> createSuccessResult(String message, T data) {
-        return new JsonResult2<T>(message, data);
-    }
+	public static <T> JsonResult2<T> createSuccessResult(String message, T data) {
+		return new JsonResult2<T>(message, data);
+	}
 
-    public static <T> JsonResult2<T> createErrorResult(String message, T data) {
-        return new JsonResult2<T>(false, message, data);
-    }
+	public static <T> JsonResult2<T> createErrorResult(String message, T data) {
+		return new JsonResult2<T>(false, message, data);
+	}
 
-    private boolean success = true;
-    private String statusCode;
-    private String message;
+	private boolean success = true;
 
-    private T data;
-    private Mapx<String, Object> extraData = new Mapx<>();
+	private String statusCode;
 
-    public JsonResult2() {
-    }
+	private String message;
 
-    public JsonResult2(String message) {
-        this(true, message, null);
-    }
+	private T data;
 
-    public JsonResult2(String message, T data) {
-        this(true, message, data);
-    }
+	private Mapx<String, Object> extraData = new Mapx<>();
 
-    private JsonResult2(boolean success, String message, T data) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
-    }
+	public JsonResult2() {
+	}
 
-    public boolean isSuccess() {
-        return success;
-    }
+	public JsonResult2(String message) {
+		this(true, message, null);
+	}
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+	public JsonResult2(String message, T data) {
+		this(true, message, data);
+	}
 
-    public T getData() {
-        return data;
-    }
+	private JsonResult2(boolean success, String message, T data) {
+		this.success = success;
+		this.message = message;
+		this.data = data;
+	}
 
-    public JsonResult2<T> setData(T data) {
-        this.data = data;
-        return this;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public T getData() {
+		return data;
+	}
 
-    public Mapx<String, Object> getExtraData() {
-        return extraData;
-    }
+	public JsonResult2<T> setData(T data) {
+		this.data = data;
+		return this;
+	}
 
-    public void setExtraData(Mapx<String, Object> extraData) {
-        this.extraData = extraData;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void putExtraData(String key, Object value) {
-        this.extraData.put(key, value);
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public void setErrorMessage(String message) {
-        this.message = message;
-        this.success = false;
-    }
+	public Mapx<String, Object> getExtraData() {
+		return extraData;
+	}
 
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
+	public void setExtraData(Mapx<String, Object> extraData) {
+		this.extraData = extraData;
+	}
 
-    public String getStatusCode() {
-        return statusCode;
-    }
+	public void putExtraData(String key, Object value) {
+		this.extraData.put(key, value);
+	}
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
+	public void setErrorMessage(String message) {
+		this.message = message;
+		this.success = false;
+	}
+
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
 
 }

@@ -18,93 +18,98 @@ import io.arkx.framework.json.JSONObject;
  *
  */
 public class CreateTableCommand implements IDBCommand {
-    /**
-     * 要创建的数据表
-     */
-    public String Table;
-    /**
-     * 表中包含的字段
-     */
-    public List<DAOColumn> Columns;
 
-    public static final String Prefix = "CreateTable:";
+	/**
+	 * 要创建的数据表
+	 */
+	public String Table;
 
-    @Override
-    public String getPrefix() {
-        return Prefix;
-    }
+	/**
+	 * 表中包含的字段
+	 */
+	public List<DAOColumn> Columns;
 
-    @Override
-    public void parse(String ddl) {
-        ddl = ddl.substring(Prefix.length());
-        JSONObject map = (JSONObject) JSON.parse(ddl);
-        Table = map.getString("Table");
-        JSONArray cs = (JSONArray) map.get("Columns");
-        Columns = new ArrayList<DAOColumn>();
-        for (Object obj : cs) {
-            JSONArray arr = (JSONArray) obj;
-            DAOColumn sc = new DAOColumn(arr.get(0).toString(), Integer.parseInt(arr.get(1).toString()),
-                    Integer.parseInt(arr.get(2).toString()), Integer.parseInt(arr.get(3).toString()),
-                    "true".equals(arr.get(4).toString()), "true".equals(arr.get(5).toString()));
-            Columns.add(sc);
-        }
-    }
+	public static final String Prefix = "CreateTable:";
 
-    @Override
-    public String toJSON() {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("Table", Table);
-        Object[][] columns = new Object[Columns.size()][6];
-        int i = 0;
-        for (DAOColumn sc : Columns) {
-            Object[] arr = new Object[]{sc.getColumnName(), sc.getColumnType(), sc.getLength(), sc.getPrecision(),
-                    sc.isMandatory(), sc.isPrimaryKey()};
-            columns[i++] = arr;
-        }
-        map.put("Columns", columns);
-        return Prefix + JSON.toJSONString(map);
-    }
+	@Override
+	public String getPrefix() {
+		return Prefix;
+	}
 
-    @Override
-    public String[] getDefaultSQLArray(String dbType) {
-        IDBType db = DBTypeService.getInstance().get(dbType);
-        StringBuilder sb = new StringBuilder();
-        sb.append("create table " + Table + "(\n");
-        StringBuilder ksb = new StringBuilder();
-        IDBType t = DBTypeService.getInstance().get(dbType);
-        for (int i = 0; i < Columns.size(); i++) {
-            DAOColumn sc = Columns.get(i);
-            if (i != 0) {
-                sb.append(",\n");
-            }
-            sb.append("\t" + db.maskColumnName(sc.getColumnName()) + " ");
-            String sqlType = t.toSQLType(DataTypes.valueOf(sc.getColumnType()), sc.getLength(), sc.getPrecision());
-            sb.append(sqlType);
-            if (sc.isMandatory()) {
-                sb.append(" not null");
-            } else {
-                if (dbType.equalsIgnoreCase(Sybase.ID)) {
-                    sb.append(" null");// 必须写明，不写明的话sybase默认为非空
-                }
-            }
-            if (sc.isPrimaryKey()) {
-                if (ksb.length() == 0) {
-                    String pkName = Table;
-                    if (pkName.length() > 15) {
-                        pkName = pkName.substring(0, 15);
-                    }
-                    ksb.append("\t" + t.getPKNameFragment(Table) + " (");
-                } else {
-                    ksb.append(",");
-                }
-                ksb.append(sc.getColumnName());
-            }
-        }
-        if (ksb.length() != 0) {
-            ksb.append(")");
-            sb.append(",\n" + ksb);
-        }
-        sb.append("\n)");
-        return new String[]{sb.toString()};
-    }
+	@Override
+	public void parse(String ddl) {
+		ddl = ddl.substring(Prefix.length());
+		JSONObject map = (JSONObject) JSON.parse(ddl);
+		Table = map.getString("Table");
+		JSONArray cs = (JSONArray) map.get("Columns");
+		Columns = new ArrayList<DAOColumn>();
+		for (Object obj : cs) {
+			JSONArray arr = (JSONArray) obj;
+			DAOColumn sc = new DAOColumn(arr.get(0).toString(), Integer.parseInt(arr.get(1).toString()),
+					Integer.parseInt(arr.get(2).toString()), Integer.parseInt(arr.get(3).toString()),
+					"true".equals(arr.get(4).toString()), "true".equals(arr.get(5).toString()));
+			Columns.add(sc);
+		}
+	}
+
+	@Override
+	public String toJSON() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("Table", Table);
+		Object[][] columns = new Object[Columns.size()][6];
+		int i = 0;
+		for (DAOColumn sc : Columns) {
+			Object[] arr = new Object[] { sc.getColumnName(), sc.getColumnType(), sc.getLength(), sc.getPrecision(),
+					sc.isMandatory(), sc.isPrimaryKey() };
+			columns[i++] = arr;
+		}
+		map.put("Columns", columns);
+		return Prefix + JSON.toJSONString(map);
+	}
+
+	@Override
+	public String[] getDefaultSQLArray(String dbType) {
+		IDBType db = DBTypeService.getInstance().get(dbType);
+		StringBuilder sb = new StringBuilder();
+		sb.append("create table " + Table + "(\n");
+		StringBuilder ksb = new StringBuilder();
+		IDBType t = DBTypeService.getInstance().get(dbType);
+		for (int i = 0; i < Columns.size(); i++) {
+			DAOColumn sc = Columns.get(i);
+			if (i != 0) {
+				sb.append(",\n");
+			}
+			sb.append("\t" + db.maskColumnName(sc.getColumnName()) + " ");
+			String sqlType = t.toSQLType(DataTypes.valueOf(sc.getColumnType()), sc.getLength(), sc.getPrecision());
+			sb.append(sqlType);
+			if (sc.isMandatory()) {
+				sb.append(" not null");
+			}
+			else {
+				if (dbType.equalsIgnoreCase(Sybase.ID)) {
+					sb.append(" null");// 必须写明，不写明的话sybase默认为非空
+				}
+			}
+			if (sc.isPrimaryKey()) {
+				if (ksb.length() == 0) {
+					String pkName = Table;
+					if (pkName.length() > 15) {
+						pkName = pkName.substring(0, 15);
+					}
+					ksb.append("\t" + t.getPKNameFragment(Table) + " (");
+				}
+				else {
+					ksb.append(",");
+				}
+				ksb.append(sc.getColumnName());
+			}
+		}
+		if (ksb.length() != 0) {
+			ksb.append(")");
+			sb.append(",\n" + ksb);
+		}
+		sb.append("\n)");
+		return new String[] { sb.toString() };
+	}
+
 }

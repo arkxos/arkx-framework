@@ -72,83 +72,90 @@ import io.arkx.framework.thirdparty.el.PrimitiveObjects;
  **/
 
 public class ModulusOperator extends BinaryOperator {
-    // -------------------------------------
-    // Singleton
-    // -------------------------------------
 
-    public static final ModulusOperator SINGLETON = new ModulusOperator();
+	// -------------------------------------
+	// Singleton
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public ModulusOperator() {
-    }
+	public static final ModulusOperator SINGLETON = new ModulusOperator();
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the symbol representing the operator
-     **/
-    @Override
-    public String getOperatorSymbol() {
-        return "%";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public ModulusOperator() {
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given value
-     **/
-    @Override
-    public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
-        if (pLeft == null && pRight == null) {
-            if (pLogger.isLoggingWarning()) {
-                pLogger.logWarning(Constants.ARITH_OP_NULL, getOperatorSymbol());
-            }
-            return PrimitiveObjects.getInteger(0);
-        }
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the symbol representing the operator
+	 **/
+	@Override
+	public String getOperatorSymbol() {
+		return "%";
+	}
 
-        if (pLeft != null && (Coercions.isFloatingPointType(pLeft) || Coercions.isFloatingPointString(pLeft))
-                || Coercions.isBigDecimal(pLeft) || pRight != null && (Coercions.isFloatingPointType(pRight)
-                        || Coercions.isFloatingPointString(pRight) || Coercions.isBigDecimal(pRight))) {
-            double left = Coercions.coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
-            double right = Coercions.coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given value
+	 **/
+	@Override
+	public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
+		if (pLeft == null && pRight == null) {
+			if (pLogger.isLoggingWarning()) {
+				pLogger.logWarning(Constants.ARITH_OP_NULL, getOperatorSymbol());
+			}
+			return PrimitiveObjects.getInteger(0);
+		}
 
-            try {
-                return PrimitiveObjects.getDouble(left % right);
-            } catch (Exception exc) {
-                if (pLogger.isLoggingError()) {
-                    pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
-                }
-                return PrimitiveObjects.getInteger(0);
-            }
-        } else if (Coercions.isBigInteger(pLeft) || Coercions.isBigInteger(pRight)) {
-            BigInteger left = (BigInteger) Coercions.coerceToPrimitiveNumber(pLeft, BigInteger.class, pLogger);
-            BigInteger right = (BigInteger) Coercions.coerceToPrimitiveNumber(pRight, BigInteger.class, pLogger);
+		if (pLeft != null && (Coercions.isFloatingPointType(pLeft) || Coercions.isFloatingPointString(pLeft))
+				|| Coercions.isBigDecimal(pLeft) || pRight != null && (Coercions.isFloatingPointType(pRight)
+						|| Coercions.isFloatingPointString(pRight) || Coercions.isBigDecimal(pRight))) {
+			double left = Coercions.coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
+			double right = Coercions.coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
 
-            try {
-                return left.remainder(right);
-            } catch (Exception exc) {
-                if (pLogger.isLoggingError()) {
-                    pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
-                }
-                return PrimitiveObjects.getInteger(0);
-            }
-        } else {
-            long left = Coercions.coerceToPrimitiveNumber(pLeft, Long.class, pLogger).longValue();
-            long right = Coercions.coerceToPrimitiveNumber(pRight, Long.class, pLogger).longValue();
+			try {
+				return PrimitiveObjects.getDouble(left % right);
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingError()) {
+					pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
+				}
+				return PrimitiveObjects.getInteger(0);
+			}
+		}
+		else if (Coercions.isBigInteger(pLeft) || Coercions.isBigInteger(pRight)) {
+			BigInteger left = (BigInteger) Coercions.coerceToPrimitiveNumber(pLeft, BigInteger.class, pLogger);
+			BigInteger right = (BigInteger) Coercions.coerceToPrimitiveNumber(pRight, BigInteger.class, pLogger);
 
-            try {
-                return PrimitiveObjects.getLong(left % right);
-            } catch (Exception exc) {
-                if (pLogger.isLoggingError()) {
-                    pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
-                }
-                return PrimitiveObjects.getInteger(0);
-            }
-        }
-    }
+			try {
+				return left.remainder(right);
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingError()) {
+					pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
+				}
+				return PrimitiveObjects.getInteger(0);
+			}
+		}
+		else {
+			long left = Coercions.coerceToPrimitiveNumber(pLeft, Long.class, pLogger).longValue();
+			long right = Coercions.coerceToPrimitiveNumber(pRight, Long.class, pLogger).longValue();
 
-    // -------------------------------------
+			try {
+				return PrimitiveObjects.getLong(left % right);
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingError()) {
+					pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
+				}
+				return PrimitiveObjects.getInteger(0);
+			}
+		}
+	}
+
+	// -------------------------------------
+
 }

@@ -32,10 +32,10 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "arkx.rsa")
 public class RsaProperties {
 
-    // @Value("${opencloud.rsa.private-key}")
-    private String privateKey;
+	// @Value("${opencloud.rsa.private-key}")
+	private String privateKey;
 
-    // @Value("${opencloud.rsa.public-key}")
-    private String publicKey;
+	// @Value("${opencloud.rsa.public-key}")
+	private String publicKey;
 
 }

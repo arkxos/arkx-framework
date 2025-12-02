@@ -16,18 +16,19 @@ import io.arkx.framework.avatarmq.broker.server.AvatarMQBrokerServer;
  */
 public class AvatarMQServer extends AvatarMQBrokerServer implements ApplicationContextAware, InitializingBean {
 
-    public AvatarMQServer(String serverAddress) {
-        super(serverAddress);
-    }
+	public AvatarMQServer(String serverAddress) {
+		super(serverAddress);
+	}
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        System.out.printf("AvatarMQ Server Start Success![author tangjie]\n");
-    }
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		System.out.printf("AvatarMQ Server Start Success![author tangjie]\n");
+	}
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        init();
-        start();
-    }
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		init();
+		start();
+	}
+
 }

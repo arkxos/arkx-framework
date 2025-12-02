@@ -10,5 +10,6 @@ import io.arkx.framework.commons.collection.IPageInfo;
  */
 public interface IPageEnableAction extends IPageInfo {
 
-    // void setTotal(QueryBuilder paramQueryBuilder);
+	// void setTotal(QueryBuilder paramQueryBuilder);
+
 }

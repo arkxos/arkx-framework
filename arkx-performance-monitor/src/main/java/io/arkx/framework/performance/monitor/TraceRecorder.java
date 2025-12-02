@@ -24,113 +24,122 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class TraceRecorder {
 
-    // 性能参数
-    private static final int QUEUE_CAPACITY = 100_000;
-    private static final int MIN_BATCH_SIZE = 10;
+	// 性能参数
+	private static final int QUEUE_CAPACITY = 100_000;
 
-    // 运行时状态
-    private final BlockingQueue<TraceNode> queue;
-    private volatile boolean running = true;
-    private final ExecutorService writerThread = Executors.newSingleThreadExecutor();
+	private static final int MIN_BATCH_SIZE = 10;
 
-    // 依赖组件
-    private final TraceRepository repository;
+	// 运行时状态
+	private final BlockingQueue<TraceNode> queue;
 
-    private final MonitorConfig monitorConfig;
+	private volatile boolean running = true;
 
-    public TraceRecorder(MonitorConfig monitorConfig, TraceRepository repository) {
-        this.monitorConfig = monitorConfig;
-        this.queue = new LinkedBlockingQueue<>(Math.max(monitorConfig.getQueueCapacity(), 10_000));
-        this.repository = repository;
-        this.writerThread.execute(this::runBatchWriter);
-    }
+	private final ExecutorService writerThread = Executors.newSingleThreadExecutor();
 
-    // 获取队列当前大小
-    public int queueSize() {
-        return queue.size();
-    }
+	// 依赖组件
+	private final TraceRepository repository;
 
-    // 获取队列容量
-    public int getQueueCapacity() {
-        return queue.remainingCapacity() + queue.size();
-    }
+	private final MonitorConfig monitorConfig;
 
-    // 记录跟踪节点（非阻塞）
-    public void record(TraceNode node) {
-        if (!queue.offer(node)) {
-            log.debug("Trace recorder queue overflow, node dropped");
-        }
-    }
+	public TraceRecorder(MonitorConfig monitorConfig, TraceRepository repository) {
+		this.monitorConfig = monitorConfig;
+		this.queue = new LinkedBlockingQueue<>(Math.max(monitorConfig.getQueueCapacity(), 10_000));
+		this.repository = repository;
+		this.writerThread.execute(this::runBatchWriter);
+	}
 
-    // 核心写逻辑
-    private void runBatchWriter() {
-        List<TraceNode> batch = new ArrayList<>(monitorConfig.getWriteBatchSize());
+	// 获取队列当前大小
+	public int queueSize() {
+		return queue.size();
+	}
 
-        while (running || !queue.isEmpty()) {
-            try {
-                // 获取第一个节点
-                TraceNode node = queue.poll(100, TimeUnit.MILLISECONDS);
-                if (node == null)
-                    continue;
+	// 获取队列容量
+	public int getQueueCapacity() {
+		return queue.remainingCapacity() + queue.size();
+	}
 
-                batch.add(node);
+	// 记录跟踪节点（非阻塞）
+	public void record(TraceNode node) {
+		if (!queue.offer(node)) {
+			log.debug("Trace recorder queue overflow, node dropped");
+		}
+	}
 
-                // 批量获取更多节点
-                queue.drainTo(batch, monitorConfig.getWriteBatchSize() - 1);
+	// 核心写逻辑
+	private void runBatchWriter() {
+		List<TraceNode> batch = new ArrayList<>(monitorConfig.getWriteBatchSize());
 
-                // 时间或数量触发写入
-                processBatch(batch);
-                batch.clear();
+		while (running || !queue.isEmpty()) {
+			try {
+				// 获取第一个节点
+				TraceNode node = queue.poll(100, TimeUnit.MILLISECONDS);
+				if (node == null)
+					continue;
 
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            } catch (Exception e) {
-                log.error("Error in trace writer thread", e);
-            }
-        }
+				batch.add(node);
 
-        // 最终写入剩余节点
-        if (!batch.isEmpty()) {
-            processBatch(batch);
-        }
-    }
+				// 批量获取更多节点
+				queue.drainTo(batch, monitorConfig.getWriteBatchSize() - 1);
 
-    // 处理批次写入
-    private void processBatch(List<TraceNode> batch) {
-        long startTime = System.currentTimeMillis();
+				// 时间或数量触发写入
+				processBatch(batch);
+				batch.clear();
 
-        // 过滤掉无效节点
-        List<TraceNode> validNodes = batch.stream().filter(n -> n != null && n.getTraceId() != null)
-                .collect(Collectors.toList());
+			}
+			catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+			catch (Exception e) {
+				log.error("Error in trace writer thread", e);
+			}
+		}
 
-        if (validNodes.isEmpty())
-            return;
+		// 最终写入剩余节点
+		if (!batch.isEmpty()) {
+			processBatch(batch);
+		}
+	}
 
-        try {
-            // 批量存储
-            if (monitorConfig.isStoreToDatabase()) {
-                repository.saveBatch(validNodes);
-            }
-        } catch (Exception e) {
-            log.error("Failed to save batch of {} trace nodes", validNodes.size(), e);
-        }
+	// 处理批次写入
+	private void processBatch(List<TraceNode> batch) {
+		long startTime = System.currentTimeMillis();
 
-        long processingTime = System.currentTimeMillis() - startTime;
-        // systemMonitor.onQueueItemProcessed(queue.size(), processingTime);
-    }
+		// 过滤掉无效节点
+		List<TraceNode> validNodes = batch.stream()
+			.filter(n -> n != null && n.getTraceId() != null)
+			.collect(Collectors.toList());
 
-    // 关闭清理
-    @PreDestroy
-    public void shutdown() {
-        running = false;
-        writerThread.shutdown();
-        try {
-            if (!writerThread.awaitTermination(5, TimeUnit.SECONDS)) {
-                writerThread.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            writerThread.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
-    }
+		if (validNodes.isEmpty())
+			return;
+
+		try {
+			// 批量存储
+			if (monitorConfig.isStoreToDatabase()) {
+				repository.saveBatch(validNodes);
+			}
+		}
+		catch (Exception e) {
+			log.error("Failed to save batch of {} trace nodes", validNodes.size(), e);
+		}
+
+		long processingTime = System.currentTimeMillis() - startTime;
+		// systemMonitor.onQueueItemProcessed(queue.size(), processingTime);
+	}
+
+	// 关闭清理
+	@PreDestroy
+	public void shutdown() {
+		running = false;
+		writerThread.shutdown();
+		try {
+			if (!writerThread.awaitTermination(5, TimeUnit.SECONDS)) {
+				writerThread.shutdownNow();
+			}
+		}
+		catch (InterruptedException e) {
+			writerThread.shutdownNow();
+			Thread.currentThread().interrupt();
+		}
+	}
+
 }

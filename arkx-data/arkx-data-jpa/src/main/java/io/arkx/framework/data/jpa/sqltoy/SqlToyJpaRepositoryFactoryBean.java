@@ -20,24 +20,21 @@ import jakarta.persistence.EntityManager;
  * @version V1.0
  */
 public class SqlToyJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
-        extends
-            JpaRepositoryFactoryBean<R, T, I>
-        implements
-            ApplicationContextAware {
+		extends JpaRepositoryFactoryBean<R, T, I> implements ApplicationContextAware {
 
-    public SqlToyJpaRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
-        super(repositoryInterface);
-    }
+	public SqlToyJpaRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
+		super(repositoryInterface);
+	}
 
-    @Override
-    protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
-        SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
-        return new SqlToyRepositoryFactory(sqlToyLazyDao, em);
-    }
+	@Override
+	protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
+		SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
+		return new SqlToyRepositoryFactory(sqlToyLazyDao, em);
+	}
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        ContextHolder.appContext = applicationContext;
-    }
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		ContextHolder.appContext = applicationContext;
+	}
 
 }

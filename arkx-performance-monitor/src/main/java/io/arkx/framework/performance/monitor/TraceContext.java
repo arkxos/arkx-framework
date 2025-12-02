@@ -23,118 +23,120 @@ import jakarta.servlet.http.HttpServletRequest;
 @Component
 public class TraceContext {
 
-    // 当前请求ID
-    private static final ThreadLocal<String> requestIdLocal = new InheritableThreadLocal<>();
+	// 当前请求ID
+	private static final ThreadLocal<String> requestIdLocal = new InheritableThreadLocal<>();
 
-    // 上下文栈
-    private static final ThreadLocal<Stack<TraceNode>> callStack = new ThreadLocal<>();
-    // 流上下文管理器
-    private static final ThreadLocal<TraceNode> streamParentHolder = new ThreadLocal<>();
+	// 上下文栈
+	private static final ThreadLocal<Stack<TraceNode>> callStack = new ThreadLocal<>();
 
-    private MonitorConfig config;
+	// 流上下文管理器
+	private static final ThreadLocal<TraceNode> streamParentHolder = new ThreadLocal<>();
 
-    private MonitorConfig config() {
-        if (config != null) {
-            return config;
-        }
+	private MonitorConfig config;
 
-        this.config = ApplicationContextHolder.getBean(MonitorConfig.class);
-        return config;
-    }
+	private MonitorConfig config() {
+		if (config != null) {
+			return config;
+		}
 
-    public TraceContext() {
-        // this.maxDepth = config.getMaxTraceDepth();
-    }
+		this.config = ApplicationContextHolder.getBean(MonitorConfig.class);
+		return config;
+	}
 
-    // 开始流处理上下文
-    public void startStreamProcessing() {
-        TraceNode current = current();
-        if (current != null) {
-            streamParentHolder.set(current);
-        }
-    }
+	public TraceContext() {
+		// this.maxDepth = config.getMaxTraceDepth();
+	}
 
-    // 结束流处理上下文
-    public void endStreamProcessing() {
-        streamParentHolder.remove();
-    }
+	// 开始流处理上下文
+	public void startStreamProcessing() {
+		TraceNode current = current();
+		if (current != null) {
+			streamParentHolder.set(current);
+		}
+	}
 
-    // 获取流父节点
-    public TraceNode getStreamParent() {
-        return streamParentHolder.get();
-    }
+	// 结束流处理上下文
+	public void endStreamProcessing() {
+		streamParentHolder.remove();
+	}
 
-    // 开始新请求
-    public void startRequest(String requestId) {
-        requestIdLocal.set(requestId);
-        callStack.set(new Stack<>());
-    }
+	// 获取流父节点
+	public TraceNode getStreamParent() {
+		return streamParentHolder.get();
+	}
 
-    public String currentRequestId() {
-        String requestId = requestIdLocal.get();
-        if (requestId == null) {
-            requestId = "SYS_" + UUID.randomUUID();
-            requestIdLocal.set(requestId);
-        }
-        return requestId;
-    }
+	// 开始新请求
+	public void startRequest(String requestId) {
+		requestIdLocal.set(requestId);
+		callStack.set(new Stack<>());
+	}
 
-    // 结束请求
-    public void endRequest() {
-        requestIdLocal.remove();
-        callStack.remove();
-    }
+	public String currentRequestId() {
+		String requestId = requestIdLocal.get();
+		if (requestId == null) {
+			requestId = "SYS_" + UUID.randomUUID();
+			requestIdLocal.set(requestId);
+		}
+		return requestId;
+	}
 
-    // 推入新节点
-    public TraceNode pushNode(TraceNode node) {
-        Stack<TraceNode> currentStack = callStack.get();
+	// 结束请求
+	public void endRequest() {
+		requestIdLocal.remove();
+		callStack.remove();
+	}
 
-        if (currentStack == null) {
-            callStack.set(new Stack<>());
-            currentStack = callStack.get();
-        }
+	// 推入新节点
+	public TraceNode pushNode(TraceNode node) {
+		Stack<TraceNode> currentStack = callStack.get();
 
-        // 设置父节点（如果存在）
-        // 优先使用流父节点
-        TraceNode streamParent = getStreamParent();
-        if (streamParent != null) {
-            node.setParentId(streamParent.getTraceId());
-        }
-        // 其次使用栈顶节点
-        else if (!currentStack.isEmpty()) {
-            node.setParentId(currentStack.peek().getTraceId());
-        } else {// 当前调用根节点
-            // currentStack.push(node);
-            // return null;
-        }
+		if (currentStack == null) {
+			callStack.set(new Stack<>());
+			currentStack = callStack.get();
+		}
 
-        // 设置调用深度
-        node.setDepth(currentStack.size());
+		// 设置父节点（如果存在）
+		// 优先使用流父节点
+		TraceNode streamParent = getStreamParent();
+		if (streamParent != null) {
+			node.setParentId(streamParent.getTraceId());
+		}
+		// 其次使用栈顶节点
+		else if (!currentStack.isEmpty()) {
+			node.setParentId(currentStack.peek().getTraceId());
+		}
+		else {// 当前调用根节点
+			// currentStack.push(node);
+			// return null;
+		}
 
-        // 设置请求ID
-        node.setRequestId(currentRequestId());
+		// 设置调用深度
+		node.setDepth(currentStack.size());
 
-        // 记录Web端点信息
-        if (node.getDepth() == 0 && RequestContextHolder.getRequestAttributes() != null) {
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                    .getRequest();
-            node.setEndpoint(request.getMethod() + " " + request.getRequestURI());
-        }
+		// 设置请求ID
+		node.setRequestId(currentRequestId());
 
-        currentStack.push(node);
-        return node;
-    }
+		// 记录Web端点信息
+		if (node.getDepth() == 0 && RequestContextHolder.getRequestAttributes() != null) {
+			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest();
+			node.setEndpoint(request.getMethod() + " " + request.getRequestURI());
+		}
 
-    // 弹出节点
-    public TraceNode popNode() {
-        Stack<TraceNode> stack = callStack.get();
-        return (stack != null && !stack.isEmpty()) ? stack.pop() : null;
-    }
+		currentStack.push(node);
+		return node;
+	}
 
-    // 获取当前节点
-    public TraceNode current() {
-        Stack<TraceNode> stack = callStack.get();
-        return stack != null && !stack.isEmpty() ? stack.peek() : null;
-    }
+	// 弹出节点
+	public TraceNode popNode() {
+		Stack<TraceNode> stack = callStack.get();
+		return (stack != null && !stack.isEmpty()) ? stack.pop() : null;
+	}
+
+	// 获取当前节点
+	public TraceNode current() {
+		Stack<TraceNode> stack = callStack.get();
+		return stack != null && !stack.isEmpty() ? stack.peek() : null;
+	}
 
 }

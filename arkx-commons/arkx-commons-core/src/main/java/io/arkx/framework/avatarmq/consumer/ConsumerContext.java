@@ -22,111 +22,118 @@ import io.arkx.framework.avatarmq.model.SubscriptionData;
  * @since 2016-8-11
  */
 public class ConsumerContext {
-    // 消费者集群关系定义
-    private static final CopyOnWriteArrayList<ClustersRelation> relationArray = new CopyOnWriteArrayList<>();
-    // 消费者集群状态
-    private static final CopyOnWriteArrayList<ClustersState> stateArray = new CopyOnWriteArrayList<>();
 
-    public static void setClustersStat(String clusters, int stat) {
-        stateArray.add(new ClustersState(clusters, stat));
-    }
+	// 消费者集群关系定义
+	private static final CopyOnWriteArrayList<ClustersRelation> relationArray = new CopyOnWriteArrayList<>();
 
-    // 根据消费者集群编码cluster_id获取一个消费者集群的状态
-    public static int getClustersStat(String clusters) {
+	// 消费者集群状态
+	private static final CopyOnWriteArrayList<ClustersState> stateArray = new CopyOnWriteArrayList<>();
 
-        Predicate predicate = new Predicate() {
-            public boolean evaluate(Object object) {
-                String clustersId = ((ClustersState) object).getClusters();
-                return clustersId.compareTo(clusters) == 0;
-            }
-        };
+	public static void setClustersStat(String clusters, int stat) {
+		stateArray.add(new ClustersState(clusters, stat));
+	}
 
-        Iterator iterator = new FilterIterator(stateArray.iterator(), predicate);
+	// 根据消费者集群编码cluster_id获取一个消费者集群的状态
+	public static int getClustersStat(String clusters) {
 
-        ClustersState state = null;
-        while (iterator.hasNext()) {
-            state = (ClustersState) iterator.next();
-            break;
+		Predicate predicate = new Predicate() {
+			public boolean evaluate(Object object) {
+				String clustersId = ((ClustersState) object).getClusters();
+				return clustersId.compareTo(clusters) == 0;
+			}
+		};
 
-        }
-        return (state != null) ? state.getState() : 0;
-    }
+		Iterator iterator = new FilterIterator(stateArray.iterator(), predicate);
 
-    // 根据消费者集群编码cluster_id查找一个消费者集群
-    public static ConsumerClusters selectByClusters(String clusters) {
-        Predicate predicate = new Predicate() {
-            public boolean evaluate(Object object) {
-                String id = ((ClustersRelation) object).getId();
-                return id.compareTo(clusters) == 0;
-            }
-        };
+		ClustersState state = null;
+		while (iterator.hasNext()) {
+			state = (ClustersState) iterator.next();
+			break;
 
-        Iterator iterator = new FilterIterator(relationArray.iterator(), predicate);
+		}
+		return (state != null) ? state.getState() : 0;
+	}
 
-        ClustersRelation relation = null;
-        while (iterator.hasNext()) {
-            relation = (ClustersRelation) iterator.next();
-            break;
-        }
+	// 根据消费者集群编码cluster_id查找一个消费者集群
+	public static ConsumerClusters selectByClusters(String clusters) {
+		Predicate predicate = new Predicate() {
+			public boolean evaluate(Object object) {
+				String id = ((ClustersRelation) object).getId();
+				return id.compareTo(clusters) == 0;
+			}
+		};
 
-        return (relation != null) ? relation.getClusters() : null;
-    }
+		Iterator iterator = new FilterIterator(relationArray.iterator(), predicate);
 
-    // 查找一下关注这个主题的消费者集群集合
-    public static List<ConsumerClusters> selectByTopic(String topic) {
+		ClustersRelation relation = null;
+		while (iterator.hasNext()) {
+			relation = (ClustersRelation) iterator.next();
+			break;
+		}
 
-        List<ConsumerClusters> clusters = new ArrayList<ConsumerClusters>();
+		return (relation != null) ? relation.getClusters() : null;
+	}
 
-        for (int i = 0; i < relationArray.size(); i++) {
-            ConcurrentHashMap<String, SubscriptionData> subscriptionTable = relationArray.get(i).getClusters()
-                    .getSubMap();
-            if (subscriptionTable.containsKey(topic)) {
-                clusters.add(relationArray.get(i).getClusters());
-            }
-        }
+	// 查找一下关注这个主题的消费者集群集合
+	public static List<ConsumerClusters> selectByTopic(String topic) {
 
-        return clusters;
-    }
+		List<ConsumerClusters> clusters = new ArrayList<ConsumerClusters>();
 
-    // 添加消费者集群
-    public static void addClusters(String clusters, RemoteChannelData channelinfo) {
-        ConsumerClusters manage = selectByClusters(clusters);
-        if (manage == null) {
-            ConsumerClusters newClusters = new ConsumerClusters(clusters);
-            newClusters.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
-            relationArray.add(new ClustersRelation(clusters, newClusters));
-        } else if (manage.findRemoteChannelData(channelinfo.getClientId()) != null) {
-            manage.detachRemoteChannelData(channelinfo.getClientId());
-            manage.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
-        } else {
-            String topic = channelinfo.getSubcript().getTopic();
-            boolean touchChannel = manage.getSubMap().containsKey(topic);
-            if (touchChannel) {
-                manage.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
-            } else {
-                manage.getSubMap().clear();
-                manage.getChannelMap().clear();
-                manage.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
-            }
-        }
-    }
+		for (int i = 0; i < relationArray.size(); i++) {
+			ConcurrentHashMap<String, SubscriptionData> subscriptionTable = relationArray.get(i)
+				.getClusters()
+				.getSubMap();
+			if (subscriptionTable.containsKey(topic)) {
+				clusters.add(relationArray.get(i).getClusters());
+			}
+		}
 
-    // 从一个消费者集群中删除一个消费者
-    public static void unLoad(String clientId) {
+		return clusters;
+	}
 
-        for (int i = 0; i < relationArray.size(); i++) {
-            String id = relationArray.get(i).getId();
-            ConsumerClusters manage = relationArray.get(i).getClusters();
+	// 添加消费者集群
+	public static void addClusters(String clusters, RemoteChannelData channelinfo) {
+		ConsumerClusters manage = selectByClusters(clusters);
+		if (manage == null) {
+			ConsumerClusters newClusters = new ConsumerClusters(clusters);
+			newClusters.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
+			relationArray.add(new ClustersRelation(clusters, newClusters));
+		}
+		else if (manage.findRemoteChannelData(channelinfo.getClientId()) != null) {
+			manage.detachRemoteChannelData(channelinfo.getClientId());
+			manage.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
+		}
+		else {
+			String topic = channelinfo.getSubcript().getTopic();
+			boolean touchChannel = manage.getSubMap().containsKey(topic);
+			if (touchChannel) {
+				manage.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
+			}
+			else {
+				manage.getSubMap().clear();
+				manage.getChannelMap().clear();
+				manage.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
+			}
+		}
+	}
 
-            if (manage.findRemoteChannelData(clientId) != null) {
-                manage.detachRemoteChannelData(clientId);
-            }
+	// 从一个消费者集群中删除一个消费者
+	public static void unLoad(String clientId) {
 
-            if (manage.getChannelMap().size() == 0) {
-                ClustersRelation relation = new ClustersRelation();
-                relation.setId(id);
-                relationArray.remove(id);
-            }
-        }
-    }
+		for (int i = 0; i < relationArray.size(); i++) {
+			String id = relationArray.get(i).getId();
+			ConsumerClusters manage = relationArray.get(i).getClusters();
+
+			if (manage.findRemoteChannelData(clientId) != null) {
+				manage.detachRemoteChannelData(clientId);
+			}
+
+			if (manage.getChannelMap().size() == 0) {
+				ClustersRelation relation = new ClustersRelation();
+				relation.setId(id);
+				relationArray.remove(id);
+			}
+		}
+	}
+
 }

@@ -18,88 +18,95 @@ import io.arkx.framework.data.db.core.schema.SchemaTableData;
 
 public class MongodbTableDataQueryProvider implements TableDataQueryProvider {
 
-    private ProductFactoryProvider factoryProvider;
-    private DataSource dataSource;
+	private ProductFactoryProvider factoryProvider;
 
-    public MongodbTableDataQueryProvider(ProductFactoryProvider factoryProvider) {
-        this.factoryProvider = factoryProvider;
-        this.dataSource = factoryProvider.getDataSource();
-    }
+	private DataSource dataSource;
 
-    @Override
-    public ProductTypeEnum getProductType() {
-        return this.factoryProvider.getProductType();
-    }
+	public MongodbTableDataQueryProvider(ProductFactoryProvider factoryProvider) {
+		this.factoryProvider = factoryProvider;
+		this.dataSource = factoryProvider.getDataSource();
+	}
 
-    @Override
-    public String quoteSchemaTableName(String schemaName, String tableName) {
-        return "";
-    }
+	@Override
+	public ProductTypeEnum getProductType() {
+		return this.factoryProvider.getProductType();
+	}
 
-    @Override
-    public int getQueryFetchSize() {
-        return 0;
-    }
+	@Override
+	public String quoteSchemaTableName(String schemaName, String tableName) {
+		return "";
+	}
 
-    @Override
-    public void setQueryFetchSize(int size) {
-    }
+	@Override
+	public int getQueryFetchSize() {
+		return 0;
+	}
 
-    @Override
-    public ResultSetWrapper queryTableData(String schemaName, String tableName, String slaveDbCode, List<String> fields,
-            IncrementPoint point, List<String> orders) {
-        String sql = "%s.getCollection('%s').find().sort({ %s })".formatted(schemaName, tableName,
-                orders.stream().map(s -> "'%s' : 1".formatted(s)).collect(Collectors.joining(",")));
-        try {
-            Connection connection = this.dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(Constants.DEFAULT_QUERY_TIMEOUT_SECONDS);
-            return ResultSetWrapper.builder().connection(connection).statement(statement)
-                    .resultSet(statement.executeQuery(sql)).build();
-        } catch (Throwable t) {
-            throw new RuntimeException(t);
-        }
-    }
+	@Override
+	public void setQueryFetchSize(int size) {
+	}
 
-    @Override
-    public SchemaTableData queryTableData(Connection connection, String schemaName, String tableName, int rowCount) {
-        String querySQL = "%s.getCollection('%s').find({}).limit(%d);".formatted(schemaName, tableName, rowCount);
-        SchemaTableData data = new SchemaTableData();
-        data.setSchemaName(schemaName);
-        data.setTableName(tableName);
-        data.setColumns(new ArrayList<>());
-        data.setRows(new ArrayList<>());
-        try (Statement st = connection.createStatement()) {
-            try (ResultSet rs = st.executeQuery(querySQL)) {
-                ResultSetMetaData m = rs.getMetaData();
-                int count = m.getColumnCount();
-                for (int i = 1; i <= count; i++) {
-                    data.getColumns().add(m.getColumnLabel(i));
-                }
+	@Override
+	public ResultSetWrapper queryTableData(String schemaName, String tableName, String slaveDbCode, List<String> fields,
+			IncrementPoint point, List<String> orders) {
+		String sql = "%s.getCollection('%s').find().sort({ %s })".formatted(schemaName, tableName,
+				orders.stream().map(s -> "'%s' : 1".formatted(s)).collect(Collectors.joining(",")));
+		try {
+			Connection connection = this.dataSource.getConnection();
+			Statement statement = connection.createStatement();
+			statement.setQueryTimeout(Constants.DEFAULT_QUERY_TIMEOUT_SECONDS);
+			return ResultSetWrapper.builder()
+				.connection(connection)
+				.statement(statement)
+				.resultSet(statement.executeQuery(sql))
+				.build();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
 
-                while (rs.next()) {
-                    List<Object> row = new ArrayList<>(count);
-                    for (int i = 1; i <= count; i++) {
-                        Object value = rs.getObject(i);
-                        row.add(value);
-                    }
-                    data.getRows().add(row);
-                }
+	@Override
+	public SchemaTableData queryTableData(Connection connection, String schemaName, String tableName, int rowCount) {
+		String querySQL = "%s.getCollection('%s').find({}).limit(%d);".formatted(schemaName, tableName, rowCount);
+		SchemaTableData data = new SchemaTableData();
+		data.setSchemaName(schemaName);
+		data.setTableName(tableName);
+		data.setColumns(new ArrayList<>());
+		data.setRows(new ArrayList<>());
+		try (Statement st = connection.createStatement()) {
+			try (ResultSet rs = st.executeQuery(querySQL)) {
+				ResultSetMetaData m = rs.getMetaData();
+				int count = m.getColumnCount();
+				for (int i = 1; i <= count; i++) {
+					data.getColumns().add(m.getColumnLabel(i));
+				}
 
-                return data;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+				while (rs.next()) {
+					List<Object> row = new ArrayList<>(count);
+					for (int i = 1; i <= count; i++) {
+						Object value = rs.getObject(i);
+						row.add(value);
+					}
+					data.getRows().add(row);
+				}
 
-    @Override
-    public List<Map<String, Object>> executeQueryBySql(Connection connection, String schema, String sql) {
-        return List.of();
-    }
+				return data;
+			}
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    @Override
-    public int executeSql(Connection connection, String schema, String sql) {
-        return 0;
-    }
+	@Override
+	public List<Map<String, Object>> executeQueryBySql(Connection connection, String schema, String sql) {
+		return List.of();
+	}
+
+	@Override
+	public int executeSql(Connection connection, String schema, String sql) {
+		return 0;
+	}
+
 }

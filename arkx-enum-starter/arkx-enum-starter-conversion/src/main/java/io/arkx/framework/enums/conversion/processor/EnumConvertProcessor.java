@@ -30,57 +30,59 @@ import jakarta.persistence.Converter;
 @SupportedAnnotationTypes("io.arkx.enums.conversion.annotation.EnumAutoConverter")
 public class EnumConvertProcessor extends AbstractProcessor {
 
-    private Filer filer;
-    private Messager messager;
-    private Elements elementUtils;
-    public static final String doc = "\n This codes are generated automatically. Do not modify! \n -.- \n created by zhuCan \n";
+	private Filer filer;
 
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnvironment) {
-        super.init(processingEnvironment);
-        filer = processingEnv.getFiler();
-        messager = processingEnvironment.getMessager();
-        elementUtils = processingEnvironment.getElementUtils();
-    }
+	private Messager messager;
 
-    @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        messager.printMessage(Diagnostic.Kind.NOTE, "Processor : " + getClass().getSimpleName());
-        Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(EnumAutoConverter.class);
-        messager.printMessage(Diagnostic.Kind.NOTE, "annotations: " + annotations);
-        messager.printMessage(Diagnostic.Kind.NOTE, "roundEnv: " + roundEnv);
+	private Elements elementUtils;
 
-        elements.forEach(x -> {
-            // 被扫描的类的包路径
-            PackageElement packageElement = elementUtils.getPackageOf(x);
-            String packageName = packageElement.getQualifiedName().toString();
+	public static final String doc = "\n This codes are generated automatically. Do not modify! \n -.- \n created by zhuCan \n";
 
-            // 类上注解
-            EnumAutoConverter annotation = x.getAnnotation(EnumAutoConverter.class);
+	@Override
+	public synchronized void init(ProcessingEnvironment processingEnvironment) {
+		super.init(processingEnvironment);
+		filer = processingEnv.getFiler();
+		messager = processingEnvironment.getMessager();
+		elementUtils = processingEnvironment.getElementUtils();
+	}
 
-            // 构建类
-            TypeSpec clazz = TypeSpec.classBuilder(x.getSimpleName() + "Converter")
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addAnnotation(
-                            AnnotationSpec.builder(Converter.class)
-                                    .addMember("autoApply",
-                                            CodeBlock.builder().add("$L", annotation.autoApply()).build())
-                                    .build())
-                    .addJavadoc(" generator for enum converter " + doc)
-                    .superclass(ParameterizedTypeName.get(ClassName.get(AbstractEnumConverter.class),
-                            ClassName.get((TypeElement) x), ClassName.get(Integer.class)))
-                    .build();
-            try {
-                // 创建java文件
-                JavaFile javaFile = JavaFile.builder(packageName, clazz).build();
-                // 写入
-                javaFile.writeTo(filer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+	@Override
+	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+		messager.printMessage(Diagnostic.Kind.NOTE, "Processor : " + getClass().getSimpleName());
+		Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(EnumAutoConverter.class);
+		messager.printMessage(Diagnostic.Kind.NOTE, "annotations: " + annotations);
+		messager.printMessage(Diagnostic.Kind.NOTE, "roundEnv: " + roundEnv);
 
-        });
-        return false;
-    }
+		elements.forEach(x -> {
+			// 被扫描的类的包路径
+			PackageElement packageElement = elementUtils.getPackageOf(x);
+			String packageName = packageElement.getQualifiedName().toString();
+
+			// 类上注解
+			EnumAutoConverter annotation = x.getAnnotation(EnumAutoConverter.class);
+
+			// 构建类
+			TypeSpec clazz = TypeSpec.classBuilder(x.getSimpleName() + "Converter")
+				.addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+				.addAnnotation(AnnotationSpec.builder(Converter.class)
+					.addMember("autoApply", CodeBlock.builder().add("$L", annotation.autoApply()).build())
+					.build())
+				.addJavadoc(" generator for enum converter " + doc)
+				.superclass(ParameterizedTypeName.get(ClassName.get(AbstractEnumConverter.class),
+						ClassName.get((TypeElement) x), ClassName.get(Integer.class)))
+				.build();
+			try {
+				// 创建java文件
+				JavaFile javaFile = JavaFile.builder(packageName, clazz).build();
+				// 写入
+				javaFile.writeTo(filer);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		});
+		return false;
+	}
 
 }

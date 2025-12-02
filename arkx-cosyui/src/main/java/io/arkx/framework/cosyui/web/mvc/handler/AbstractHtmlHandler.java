@@ -14,24 +14,25 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public abstract class AbstractHtmlHandler implements IURLHandler {
 
-    @Override
-    public boolean handle(String url, HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        response.setHeader("Pragma", "No-Cache");
-        response.setHeader("Cache-Control", "No-Cache");
-        response.setDateHeader("Expires", 0);
-        response.setContentType("text/html");
-        return execute(url, request, response);
-    }
+	@Override
+	public boolean handle(String url, HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		response.setHeader("Pragma", "No-Cache");
+		response.setHeader("Cache-Control", "No-Cache");
+		response.setDateHeader("Expires", 0);
+		response.setContentType("text/html");
+		return execute(url, request, response);
+	}
 
-    public abstract boolean execute(String url, HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException;
+	public abstract boolean execute(String url, HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException;
 
-    @Override
-    public void init() {
-    }
+	@Override
+	public void init() {
+	}
 
-    @Override
-    public void destroy() {
-    }
+	@Override
+	public void destroy() {
+	}
+
 }

@@ -16,19 +16,20 @@ import io.arkx.framework.performance.monitor.util.ApplicationContextHolder;
 @Component
 public class MonitoringInitializer {
 
-    private final TraceContext traceContext;
-    private final TraceRecorder recorder;
+	private final TraceContext traceContext;
 
-    @Autowired
-    public MonitoringInitializer(TraceContext traceContext, TraceRecorder recorder) {
-        this.traceContext = traceContext;
-        this.recorder = recorder;
-    }
+	private final TraceRecorder recorder;
 
-    // 周期性刷新配置缓存
-    @Scheduled(fixedRate = 10_000)
-    public void refreshConfigCache() {
-        ApplicationContextHolder.getBean(MonitorConfigService.class).refreshCache();
-    }
+	@Autowired
+	public MonitoringInitializer(TraceContext traceContext, TraceRecorder recorder) {
+		this.traceContext = traceContext;
+		this.recorder = recorder;
+	}
+
+	// 周期性刷新配置缓存
+	@Scheduled(fixedRate = 10_000)
+	public void refreshConfigCache() {
+		ApplicationContextHolder.getBean(MonitorConfigService.class).refreshCache();
+	}
 
 }

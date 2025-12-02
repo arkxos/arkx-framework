@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Darkness
  * @date 2015年12月19日 下午8:39:47
  * @version V1.0
@@ -12,31 +11,31 @@ import java.util.List;
  */
 public class PersonTable implements ILightningTable {
 
-    private List<Person> data = new ArrayList<>();
+	private List<Person> data = new ArrayList<>();
 
-    public PersonTable(List<Person> data) {
-        this.data = data;
-    }
+	public PersonTable(List<Person> data) {
+		this.data = data;
+	}
 
-    @Override
-    public String getTableName() {
-        return "Person";
-    }
+	@Override
+	public String getTableName() {
+		return "Person";
+	}
 
-    @Override
-    public LightningColumn[] getLightningColumns() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public LightningColumn[] getLightningColumns() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public int getRowCount() {
-        return data.size();
-    }
+	@Override
+	public int getRowCount() {
+		return data.size();
+	}
 
-    @Override
-    public int getColumnCount() {
-        return getLightningColumns().length;
-    }
+	@Override
+	public int getColumnCount() {
+		return getLightningColumns().length;
+	}
 
 }

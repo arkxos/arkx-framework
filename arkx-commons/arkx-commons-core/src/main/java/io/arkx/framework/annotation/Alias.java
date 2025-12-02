@@ -11,15 +11,17 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 public @interface Alias {
-    /**
-     * 用于标注一个方法或者内部是否是一个独立的别名，即不继承UIFacade的别名设定
-     */
-    boolean alone() default false;
 
-    /**
-     * 方法的别名，可以使用'.'分隔路径，也可以使用'/'分隔路径
-     */
-    String value();
+	/**
+	 * 用于标注一个方法或者内部是否是一个独立的别名，即不继承UIFacade的别名设定
+	 */
+	boolean alone() default false;
+
+	/**
+	 * 方法的别名，可以使用'.'分隔路径，也可以使用'/'分隔路径
+	 */
+	String value();
+
 }

@@ -12,21 +12,23 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class MessageEventAdvisor implements MethodInterceptor {
 
-    private MessageEventProxy proxy;
-    private Object msg;
+	private MessageEventProxy proxy;
 
-    public MessageEventAdvisor(MessageEventProxy proxy, Object msg) {
-        this.proxy = proxy;
-        this.msg = msg;
-    }
+	private Object msg;
 
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        proxy.beforeMessage(msg);
+	public MessageEventAdvisor(MessageEventProxy proxy, Object msg) {
+		this.proxy = proxy;
+		this.msg = msg;
+	}
 
-        Object obj = invocation.proceed();
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		proxy.beforeMessage(msg);
 
-        proxy.afterMessage(msg);
+		Object obj = invocation.proceed();
 
-        return obj;
-    }
+		proxy.afterMessage(msg);
+
+		return obj;
+	}
+
 }

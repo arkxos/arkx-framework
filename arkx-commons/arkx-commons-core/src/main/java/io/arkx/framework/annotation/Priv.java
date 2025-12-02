@@ -11,39 +11,42 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 public @interface Priv {
-    /*
-     * Manager表示后台用户，Member表示前台用户
-     */
-    public enum LoginType {
-        User, Member;
-    }
 
-    /**
-     * 当前操作是否要求己登录，默认要求己登录。
-     */
-    boolean login() default true;
+	/*
+	 * Manager表示后台用户，Member表示前台用户
+	 */
+	public enum LoginType {
 
-    /**
-     * 忽略权限校验
-     *
-     * @return
-     */
-    boolean ingore() default false;
+		User, Member;
 
-    /**
-     * 当前操作要求的用户类型，默认是后台用户
-     */
-    LoginType loginType() default LoginType.User;
+	}
 
-    /**
-     * 当前操作要求用户属性中具有某些值，便如RealName=Test
-     */
-    String userType() default "";
+	/**
+	 * 当前操作是否要求己登录，默认要求己登录。
+	 */
+	boolean login() default true;
 
-    /**
-     * 权限类型，由业务系统通过扩展机制来处理
-     */
-    String value() default "";
+	/**
+	 * 忽略权限校验
+	 * @return
+	 */
+	boolean ingore() default false;
+
+	/**
+	 * 当前操作要求的用户类型，默认是后台用户
+	 */
+	LoginType loginType() default LoginType.User;
+
+	/**
+	 * 当前操作要求用户属性中具有某些值，便如RealName=Test
+	 */
+	String userType() default "";
+
+	/**
+	 * 权限类型，由业务系统通过扩展机制来处理
+	 */
+	String value() default "";
+
 }

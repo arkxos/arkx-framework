@@ -72,89 +72,92 @@ import io.arkx.framework.thirdparty.el.operator.BinaryOperator;
  **/
 
 public class BinaryOperatorExpression extends Expression {
-    Expression mExpression;
-    List<Expression> mExpressions;
 
-    public Expression getExpression() {
-        return mExpression;
-    }
+	Expression mExpression;
 
-    public void setExpression(Expression pExpression) {
-        mExpression = pExpression;
-    }
+	List<Expression> mExpressions;
 
-    List<BinaryOperator> mOperators;
+	public Expression getExpression() {
+		return mExpression;
+	}
 
-    public List<BinaryOperator> getOperators() {
-        return mOperators;
-    }
+	public void setExpression(Expression pExpression) {
+		mExpression = pExpression;
+	}
 
-    public void setOperators(List<BinaryOperator> pOperators) {
-        mOperators = pOperators;
-    }
+	List<BinaryOperator> mOperators;
 
-    public List<Expression> getExpressions() {
-        return mExpressions;
-    }
+	public List<BinaryOperator> getOperators() {
+		return mOperators;
+	}
 
-    public void setExpressions(List<Expression> pExpressions) {
-        mExpressions = pExpressions;
-    }
+	public void setOperators(List<BinaryOperator> pOperators) {
+		mOperators = pOperators;
+	}
 
-    /**
-     * Constructor
-     **/
-    public BinaryOperatorExpression(Expression pExpression, List<BinaryOperator> pOperators,
-            List<Expression> pExpressions) {
-        mExpression = pExpression;
-        mOperators = pOperators;
-        mExpressions = pExpressions;
-    }
+	public List<Expression> getExpressions() {
+		return mExpressions;
+	}
 
-    /**
-     * Returns the expression in the expression language syntax
-     **/
-    @Override
-    public String getExpressionString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("(");
-        buf.append(mExpression.getExpressionString());
-        for (int i = 0; i < mOperators.size(); i++) {
-            BinaryOperator operator = mOperators.get(i);
-            Expression expression = mExpressions.get(i);
-            buf.append(" ");
-            buf.append(operator.getOperatorSymbol());
-            buf.append(" ");
-            buf.append(expression.getExpressionString());
-        }
-        buf.append(")");
+	public void setExpressions(List<Expression> pExpressions) {
+		mExpressions = pExpressions;
+	}
 
-        return buf.toString();
-    }
+	/**
+	 * Constructor
+	 **/
+	public BinaryOperatorExpression(Expression pExpression, List<BinaryOperator> pOperators,
+			List<Expression> pExpressions) {
+		mExpression = pExpression;
+		mOperators = pOperators;
+		mExpressions = pExpressions;
+	}
 
-    /**
-     * Evaluates to the literal value
-     **/
-    @Override
-    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-            throws ExpressionException {
-        Object value = mExpression.evaluate(pResolver, functions, pLogger);
-        for (int i = 0; i < mOperators.size(); i++) {
-            BinaryOperator operator = mOperators.get(i);
+	/**
+	 * Returns the expression in the expression language syntax
+	 **/
+	@Override
+	public String getExpressionString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append("(");
+		buf.append(mExpression.getExpressionString());
+		for (int i = 0; i < mOperators.size(); i++) {
+			BinaryOperator operator = mOperators.get(i);
+			Expression expression = mExpressions.get(i);
+			buf.append(" ");
+			buf.append(operator.getOperatorSymbol());
+			buf.append(" ");
+			buf.append(expression.getExpressionString());
+		}
+		buf.append(")");
 
-            // For the And/Or operators, we need to coerce to a boolean
-            // before testing if we shouldEvaluate
-            if (operator.shouldCoerceToBoolean()) {
-                value = Coercions.coerceToBoolean(value, pLogger);
-            }
+		return buf.toString();
+	}
 
-            if (operator.shouldEvaluate(value)) {
-                Expression expression = mExpressions.get(i);
-                Object nextValue = expression.evaluate(pResolver, functions, pLogger);
+	/**
+	 * Evaluates to the literal value
+	 **/
+	@Override
+	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+			throws ExpressionException {
+		Object value = mExpression.evaluate(pResolver, functions, pLogger);
+		for (int i = 0; i < mOperators.size(); i++) {
+			BinaryOperator operator = mOperators.get(i);
 
-                value = operator.apply(value, nextValue, pLogger);
-            }
-        }
-        return value;
-    }
+			// For the And/Or operators, we need to coerce to a boolean
+			// before testing if we shouldEvaluate
+			if (operator.shouldCoerceToBoolean()) {
+				value = Coercions.coerceToBoolean(value, pLogger);
+			}
+
+			if (operator.shouldEvaluate(value)) {
+				Expression expression = mExpressions.get(i);
+				Object nextValue = expression.evaluate(pResolver, functions, pLogger);
+
+				value = operator.apply(value, nextValue, pLogger);
+			}
+		}
+		return value;
+	}
+
 }

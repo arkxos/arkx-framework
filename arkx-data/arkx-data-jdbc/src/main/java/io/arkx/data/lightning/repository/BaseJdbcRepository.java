@@ -11,11 +11,7 @@ import io.arkx.framework.data.common.repository.ExtBaseRepository;
  * @date 2025-07-26 16:47
  * @since 1.0
  */
-public interface BaseJdbcRepository<T, ID>
-        extends
-            ListCrudRepository<T, ID>,
-            ListPagingAndSortingRepository<T, ID>,
-            ListQueryByExampleExecutor<T>,
-            ExtBaseRepository<T, ID> {
+public interface BaseJdbcRepository<T, ID> extends ListCrudRepository<T, ID>, ListPagingAndSortingRepository<T, ID>,
+		ListQueryByExampleExecutor<T>, ExtBaseRepository<T, ID> {
 
 }

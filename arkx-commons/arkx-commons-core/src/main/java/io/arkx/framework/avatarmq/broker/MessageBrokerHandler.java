@@ -18,40 +18,42 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class MessageBrokerHandler extends ShareMessageEventWrapper<Object> {
 
-    private AtomicReference<ProducerMessageListener> hookProducer;
-    private AtomicReference<ConsumerMessageListener> hookConsumer;
-    private AtomicReference<RequestMessage> message = new AtomicReference<>();
+	private AtomicReference<ProducerMessageListener> hookProducer;
 
-    public MessageBrokerHandler() {
-        super.setWrapper(this);
-    }
+	private AtomicReference<ConsumerMessageListener> hookConsumer;
 
-    public MessageBrokerHandler buildProducerHook(ProducerMessageListener hookProducer) {
-        this.hookProducer = new AtomicReference<>(hookProducer);
-        return this;
-    }
+	private AtomicReference<RequestMessage> message = new AtomicReference<>();
 
-    public MessageBrokerHandler buildConsumerHook(ConsumerMessageListener hookConsumer) {
-        this.hookConsumer = new AtomicReference<>(hookConsumer);
-        return this;
-    }
+	public MessageBrokerHandler() {
+		super.setWrapper(this);
+	}
 
-    @Override
-    public void beforeMessage(Object msg) {
-        message.set((RequestMessage) msg);
-    }
+	public MessageBrokerHandler buildProducerHook(ProducerMessageListener hookProducer) {
+		this.hookProducer = new AtomicReference<>(hookProducer);
+		return this;
+	}
 
-    @Override
-    public void handleMessage(ChannelHandlerContext ctx, Object msg) {
-        RequestMessage request = message.get();
-        ResponseMessage response = new ResponseMessage();
-        response.setMsgId(request.getMsgId());
-        response.setMsgSource(MessageSource.AvatarMQBroker);
+	public MessageBrokerHandler buildConsumerHook(ConsumerMessageListener hookConsumer) {
+		this.hookConsumer = new AtomicReference<>(hookConsumer);
+		return this;
+	}
 
-        BrokerStrategyContext strategy = new BrokerStrategyContext(request, response, ctx);
-        strategy.setHookConsumer(hookConsumer.get());
-        strategy.setHookProducer(hookProducer.get());
-        strategy.invoke();
-    }
+	@Override
+	public void beforeMessage(Object msg) {
+		message.set((RequestMessage) msg);
+	}
+
+	@Override
+	public void handleMessage(ChannelHandlerContext ctx, Object msg) {
+		RequestMessage request = message.get();
+		ResponseMessage response = new ResponseMessage();
+		response.setMsgId(request.getMsgId());
+		response.setMsgSource(MessageSource.AvatarMQBroker);
+
+		BrokerStrategyContext strategy = new BrokerStrategyContext(request, response, ctx);
+		strategy.setHookConsumer(hookConsumer.get());
+		strategy.setHookProducer(hookProducer.get());
+		strategy.invoke();
+	}
 
 }

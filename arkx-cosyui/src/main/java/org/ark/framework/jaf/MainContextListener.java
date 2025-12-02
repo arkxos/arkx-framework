@@ -11,45 +11,46 @@ import jakarta.servlet.ServletContextListener;
 
 /**
  * @class org.ark.framework.MainContextListener 系统启动上下文监听器
- *
  * @author Darkness
  * @date 2012-11-23 下午01:36:59
  * @version V1.0
  */
 public class MainContextListener implements ServletContextListener {
 
-    private CronManager manager;
+	private CronManager manager;
 
-    public void contextDestroyed(ServletContextEvent arg0) {
-        try {
-            if (this.manager != null)
-                this.manager.destory();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-    }
+	public void contextDestroyed(ServletContextEvent arg0) {
+		try {
+			if (this.manager != null)
+				this.manager.destory();
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+		}
+	}
 
-    public void contextInitialized(ServletContextEvent event) {
+	public void contextInitialized(ServletContextEvent event) {
 
-        ServletContext sc = event.getServletContext();
+		ServletContext sc = event.getServletContext();
 
-        Config.setValue("System.ContainerInfo", sc.getServerInfo());
+		Config.setValue("System.ContainerInfo", sc.getServerInfo());
 
-        Config.getJBossInfo();
+		Config.getJBossInfo();
 
-        try {
-            Config.loadConfig();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+		try {
+			Config.loadConfig();
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+		}
 
-        Config.setPluginContext(true);
+		Config.setPluginContext(true);
 
-        PluginManager.initWebPlugin();
+		PluginManager.initWebPlugin();
 
-        this.manager = CronManager.getInstance();
+		this.manager = CronManager.getInstance();
 
-        // ExtendManager.start();
-    }
+		// ExtendManager.start();
+	}
 
 }

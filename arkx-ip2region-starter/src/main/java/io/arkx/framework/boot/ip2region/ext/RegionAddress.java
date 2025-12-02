@@ -7,92 +7,89 @@ package io.arkx.framework.boot.ip2region.ext;
  */
 public class RegionAddress {
 
-    private String country;
-    private String province;
-    private String city;
-    private String area;
-    private String ISP;
+	private String country;
 
-    public RegionAddress() {
-    }
+	private String province;
 
-    /**
-     *
-     * Translate this string "中国|华东|江苏省|南京市|电信" or "印度尼西亚|0|大雅加达|雅加达|Telin" to
-     * location fields.
-     *
-     * @param region
-     *            location region address info array
-     */
-    public RegionAddress(String[] region) {
-        this(region[0], region[2], region[3], region[1], region[4]);
-    }
+	private String city;
 
-    /**
-     * Basic constructor method
-     *
-     * @param country
-     *            Country name
-     * @param province
-     *            province name
-     * @param city
-     *            city name
-     * @param area
-     *            area name
-     * @param ISP
-     *            ISP name
-     */
-    public RegionAddress(String country, String province, String city, String area, String ISP) {
-        this.country = country;
-        this.province = province;
-        this.city = city;
-        this.area = area;
-        this.ISP = ISP;
-    }
+	private String area;
 
-    public String getCountry() {
-        return country;
-    }
+	private String ISP;
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+	public RegionAddress() {
+	}
 
-    public String getProvince() {
-        return province;
-    }
+	/**
+	 *
+	 * Translate this string "中国|华东|江苏省|南京市|电信" or "印度尼西亚|0|大雅加达|雅加达|Telin" to location
+	 * fields.
+	 * @param region location region address info array
+	 */
+	public RegionAddress(String[] region) {
+		this(region[0], region[2], region[3], region[1], region[4]);
+	}
 
-    public void setProvince(String province) {
-        this.province = province;
-    }
+	/**
+	 * Basic constructor method
+	 * @param country Country name
+	 * @param province province name
+	 * @param city city name
+	 * @param area area name
+	 * @param ISP ISP name
+	 */
+	public RegionAddress(String country, String province, String city, String area, String ISP) {
+		this.country = country;
+		this.province = province;
+		this.city = city;
+		this.area = area;
+		this.ISP = ISP;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getCountry() {
+		return country;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-    public String getArea() {
-        return area;
-    }
+	public String getProvince() {
+		return province;
+	}
 
-    public void setArea(String area) {
-        this.area = area;
-    }
+	public void setProvince(String province) {
+		this.province = province;
+	}
 
-    public String getISP() {
-        return ISP;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public void setISP(String ISP) {
-        this.ISP = ISP;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    @Override
-    public String toString() {
-        return "RegionAddress{" + "country='" + country + '\'' + ", province='" + province + '\'' + ", city='" + city
-                + '\'' + ", area='" + area + '\'' + ", ISP='" + ISP + '\'' + '}';
-    }
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getISP() {
+		return ISP;
+	}
+
+	public void setISP(String ISP) {
+		this.ISP = ISP;
+	}
+
+	@Override
+	public String toString() {
+		return "RegionAddress{" + "country='" + country + '\'' + ", province='" + province + '\'' + ", city='" + city
+				+ '\'' + ", area='" + area + '\'' + ", ISP='" + ISP + '\'' + '}';
+	}
+
 }

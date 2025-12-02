@@ -11,40 +11,42 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class ClustersRelation {
 
-    private String id;
-    private ConsumerClusters clusters;
+	private String id;
 
-    ClustersRelation() {
+	private ConsumerClusters clusters;
 
-    }
+	ClustersRelation() {
 
-    ClustersRelation(String id, ConsumerClusters clusters) {
-        this.clusters = clusters;
-        this.id = id;
-    }
+	}
 
-    public ConsumerClusters getClusters() {
-        return clusters;
-    }
+	ClustersRelation(String id, ConsumerClusters clusters) {
+		this.clusters = clusters;
+		this.id = id;
+	}
 
-    public void setClusters(ConsumerClusters clusters) {
-        this.clusters = clusters;
-    }
+	public ConsumerClusters getClusters() {
+		return clusters;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setClusters(ConsumerClusters clusters) {
+		this.clusters = clusters;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj != null && ClustersRelation.class.isAssignableFrom(obj.getClass())) {
-            ClustersRelation clusters = (ClustersRelation) obj;
-            result = new EqualsBuilder().append(id, clusters.getId()).isEquals();
-        }
-        return result;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj != null && ClustersRelation.class.isAssignableFrom(obj.getClass())) {
+			ClustersRelation clusters = (ClustersRelation) obj;
+			result = new EqualsBuilder().append(id, clusters.getId()).isEquals();
+		}
+		return result;
+	}
+
 }

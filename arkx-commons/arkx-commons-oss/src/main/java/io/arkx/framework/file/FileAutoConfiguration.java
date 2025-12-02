@@ -30,8 +30,8 @@ import io.arkx.framework.file.oss.OssAutoConfiguration;
  * @author lengleng
  * @author 858695266
  */
-@Import({LocalFileAutoConfiguration.class, OssAutoConfiguration.class})
-@EnableConfigurationProperties({FileProperties.class})
+@Import({ LocalFileAutoConfiguration.class, OssAutoConfiguration.class })
+@EnableConfigurationProperties({ FileProperties.class })
 public class FileAutoConfiguration {
 
 }

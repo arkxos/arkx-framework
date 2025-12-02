@@ -19,67 +19,69 @@ package io.arkx.framework.thirdparty.fastjson;
  * @author wenshao<szujobs@hotmail.com>
  */
 public enum Feature {
-    /**
-     *
-     */
-    AutoCloseSource,
-    /**
-     *
-     */
-    AllowComment,
-    /**
-     *
-     */
-    AllowUnQuotedFieldNames,
-    /**
-     *
-     */
-    AllowSingleQuotes,
-    /**
-     *
-     */
-    InternFieldNames,
-    /**
-     *
-     */
-    AllowISO8601DateFormat,
 
-    /**
-     * {"a":1,,,"b":2}
-     */
-    AllowArbitraryCommas,
+	/**
+	 *
+	 */
+	AutoCloseSource,
+	/**
+	 *
+	 */
+	AllowComment,
+	/**
+	 *
+	 */
+	AllowUnQuotedFieldNames,
+	/**
+	 *
+	 */
+	AllowSingleQuotes,
+	/**
+	 *
+	 */
+	InternFieldNames,
+	/**
+	 *
+	 */
+	AllowISO8601DateFormat,
 
-    /**
-     *
-     */
-    UseBigDecimal,
+	/**
+	 * {"a":1,,,"b":2}
+	 */
+	AllowArbitraryCommas,
 
-    /**
-     * @since 1.1.2
-     */
-    IgnoreNotMatch,
+	/**
+	 *
+	 */
+	UseBigDecimal,
 
-    /**
-     *
-     */
-    SortFeidFastMatch,
+	/**
+	 * @since 1.1.2
+	 */
+	IgnoreNotMatch,
 
-    /**
-     *
-     */
-    DisableASM;
+	/**
+	 *
+	 */
+	SortFeidFastMatch,
 
-    private Feature() {
-        mask = 1 << ordinal();
-    }
+	/**
+	 *
+	 */
+	DisableASM;
 
-    private final int mask;
+	private Feature() {
+		mask = 1 << ordinal();
+	}
 
-    public final int getMask() {
-        return mask;
-    }
+	private final int mask;
 
-    public static boolean isEnabled(int features, Feature feature) {
-        return (features & feature.getMask()) != 0;
-    }
+	public final int getMask() {
+		return mask;
+	}
+
+	public static boolean isEnabled(int features, Feature feature) {
+		return (features & feature.getMask()) != 0;
+	}
+
 }

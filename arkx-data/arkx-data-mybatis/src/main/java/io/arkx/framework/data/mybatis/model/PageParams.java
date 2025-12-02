@@ -19,115 +19,119 @@ import com.google.common.collect.Maps;
  */
 public class PageParams extends Page implements Serializable {
 
-    private static final long serialVersionUID = -1710273706052960025L;
+	private static final long serialVersionUID = -1710273706052960025L;
 
-    private int page = CommonConstants.DEFAULT_PAGE;
-    private int limit = CommonConstants.DEFAULT_LIMIT;
-    private String sort;
-    private String order;
-    private Map<String, Object> requestMap = Maps.newHashMap();
+	private int page = CommonConstants.DEFAULT_PAGE;
 
-    /**
-     * 排序
-     */
-    private String orderBy;
+	private int limit = CommonConstants.DEFAULT_LIMIT;
 
-    public PageParams() {
-        requestMap = Maps.newHashMap();
-    }
+	private String sort;
 
-    public PageParams(Map map) {
-        if (map == null) {
-            map = Maps.newHashMap();
-        }
-        this.page = Integer
-                .parseInt(map.getOrDefault(CommonConstants.PAGE_KEY, CommonConstants.DEFAULT_PAGE).toString());
-        this.limit = Integer
-                .parseInt(map.getOrDefault(CommonConstants.PAGE_LIMIT_KEY, CommonConstants.DEFAULT_LIMIT).toString());
-        this.sort = (String) map.getOrDefault(CommonConstants.PAGE_SORT_KEY, "");
-        this.order = (String) map.getOrDefault(CommonConstants.PAGE_ORDER_KEY, "");
-        super.setCurrent(page - 1);
-        super.setSize(limit);
-        map.remove(CommonConstants.PAGE_KEY);
-        map.remove(CommonConstants.PAGE_LIMIT_KEY);
-        map.remove(CommonConstants.PAGE_SORT_KEY);
-        map.remove(CommonConstants.PAGE_ORDER_KEY);
-        requestMap.putAll(map);
-    }
+	private String order;
 
-    public PageParams(int page, int limit) {
-        this(page, limit, "", "");
-    }
+	private Map<String, Object> requestMap = Maps.newHashMap();
 
-    public PageParams(int page, int limit, String sort, String order) {
-        this.page = page;
-        this.limit = limit;
-        this.sort = sort;
-        this.order = order;
-    }
+	/**
+	 * 排序
+	 */
+	private String orderBy;
 
-    public int getPage() {
-        if (page <= CommonConstants.MIN_PAGE) {
-            page = 1;
-        }
-        return page;
-    }
+	public PageParams() {
+		requestMap = Maps.newHashMap();
+	}
 
-    public void setPage(int page) {
-        this.page = page;
-    }
+	public PageParams(Map map) {
+		if (map == null) {
+			map = Maps.newHashMap();
+		}
+		this.page = Integer
+			.parseInt(map.getOrDefault(CommonConstants.PAGE_KEY, CommonConstants.DEFAULT_PAGE).toString());
+		this.limit = Integer
+			.parseInt(map.getOrDefault(CommonConstants.PAGE_LIMIT_KEY, CommonConstants.DEFAULT_LIMIT).toString());
+		this.sort = (String) map.getOrDefault(CommonConstants.PAGE_SORT_KEY, "");
+		this.order = (String) map.getOrDefault(CommonConstants.PAGE_ORDER_KEY, "");
+		super.setCurrent(page - 1);
+		super.setSize(limit);
+		map.remove(CommonConstants.PAGE_KEY);
+		map.remove(CommonConstants.PAGE_LIMIT_KEY);
+		map.remove(CommonConstants.PAGE_SORT_KEY);
+		map.remove(CommonConstants.PAGE_ORDER_KEY);
+		requestMap.putAll(map);
+	}
 
-    public int getLimit() {
-        if (limit > CommonConstants.MAX_LIMIT) {
-            limit = CommonConstants.MAX_LIMIT;
-        }
-        return limit;
-    }
+	public PageParams(int page, int limit) {
+		this(page, limit, "", "");
+	}
 
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
+	public PageParams(int page, int limit, String sort, String order) {
+		this.page = page;
+		this.limit = limit;
+		this.sort = sort;
+		this.order = order;
+	}
 
-    public String getSort() {
-        return sort;
-    }
+	public int getPage() {
+		if (page <= CommonConstants.MIN_PAGE) {
+			page = 1;
+		}
+		return page;
+	}
 
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
+	public void setPage(int page) {
+		this.page = page;
+	}
 
-    public String getOrder() {
-        return order;
-    }
+	public int getLimit() {
+		if (limit > CommonConstants.MAX_LIMIT) {
+			limit = CommonConstants.MAX_LIMIT;
+		}
+		return limit;
+	}
 
-    public void setOrder(String order) {
-        this.order = order;
-    }
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
 
-    public String getOrderBy() {
-        if (StringUtils.isBlank(order)) {
-            order = "asc";
-        }
-        if (StringUtils.isNotBlank(sort)) {
-            this.setOrderBy(String.format("%s %s", StringUtil.camelToUnderline(sort), order));
-        }
-        return orderBy;
-    }
+	public String getSort() {
+		return sort;
+	}
 
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
-    }
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 
-    public <T> T mapToObject(Class<T> t) {
-        return BeanConvertUtils.mapToObject(this.requestMap, t);
-    }
+	public String getOrder() {
+		return order;
+	}
 
-    public Map<String, Object> getRequestMap() {
-        return requestMap;
-    }
+	public void setOrder(String order) {
+		this.order = order;
+	}
 
-    public void setRequestMap(Map<String, Object> requestMap) {
-        this.requestMap = requestMap;
-    }
+	public String getOrderBy() {
+		if (StringUtils.isBlank(order)) {
+			order = "asc";
+		}
+		if (StringUtils.isNotBlank(sort)) {
+			this.setOrderBy(String.format("%s %s", StringUtil.camelToUnderline(sort), order));
+		}
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+
+	public <T> T mapToObject(Class<T> t) {
+		return BeanConvertUtils.mapToObject(this.requestMap, t);
+	}
+
+	public Map<String, Object> getRequestMap() {
+		return requestMap;
+	}
+
+	public void setRequestMap(Map<String, Object> requestMap) {
+		this.requestMap = requestMap;
+	}
 
 }

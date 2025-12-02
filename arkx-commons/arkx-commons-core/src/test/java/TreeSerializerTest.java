@@ -9,20 +9,22 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 
 public class TreeSerializerTest {
-    public static void main(String[] args) {
-        Treex<String, Person> tree = new Treex<>();
-        TreeNode<String, Person> rootNode = tree.getRoot();
-        rootNode.setId("0");
-        rootNode.setValue(new Person());
-        rootNode.addChildByValue(new Person());
-        rootNode.addChildByValue(new Person());
 
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
-                SerializerFeature.WriteDateUseDateFormat, SerializerFeature.DisableCircularReferenceDetect);
-        fastJsonConfig.getSerializeConfig().put(Treex.class, new TreexObjectSerializer());
+	public static void main(String[] args) {
+		Treex<String, Person> tree = new Treex<>();
+		TreeNode<String, Person> rootNode = tree.getRoot();
+		rootNode.setId("0");
+		rootNode.setValue(new Person());
+		rootNode.addChildByValue(new Person());
+		rootNode.addChildByValue(new Person());
 
-        String jsonString = JSON.toJSONString(tree, fastJsonConfig.getSerializeConfig());
-        System.out.println(jsonString);
-    }
+		FastJsonConfig fastJsonConfig = new FastJsonConfig();
+		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+				SerializerFeature.WriteDateUseDateFormat, SerializerFeature.DisableCircularReferenceDetect);
+		fastJsonConfig.getSerializeConfig().put(Treex.class, new TreexObjectSerializer());
+
+		String jsonString = JSON.toJSONString(tree, fastJsonConfig.getSerializeConfig());
+		System.out.println(jsonString);
+	}
+
 }

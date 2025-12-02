@@ -20,18 +20,21 @@ import cn.hutool.core.util.ReflectUtil;
  *
  */
 public class DictFieldCache {
-    private DictFieldCache() {
-    }
 
-    /** 缓存带有@Dict的对象属性 **/
-    private static final ConcurrentMap<Class<?>, List<Field>> DICT_MAP = new ConcurrentHashMap<>();
+	private DictFieldCache() {
+	}
 
-    public static List<Field> findForClass(Class<?> cls) {
-        return DICT_MAP.computeIfAbsent(cls, c -> {
-            Field[] fields = ReflectUtil.getFields(c);
-            return stream(ofNullable(fields).orElseGet(() -> new Field[0]))
-                    .filter(field -> field.isAnnotationPresent(Dict.class)).peek(field -> field.setAccessible(true))
-                    .collect(toList());
-        });
-    }
+	/** 缓存带有@Dict的对象属性 **/
+	private static final ConcurrentMap<Class<?>, List<Field>> DICT_MAP = new ConcurrentHashMap<>();
+
+	public static List<Field> findForClass(Class<?> cls) {
+		return DICT_MAP.computeIfAbsent(cls, c -> {
+			Field[] fields = ReflectUtil.getFields(c);
+			return stream(ofNullable(fields).orElseGet(() -> new Field[0]))
+				.filter(field -> field.isAnnotationPresent(Dict.class))
+				.peek(field -> field.setAccessible(true))
+				.collect(toList());
+		});
+	}
+
 }

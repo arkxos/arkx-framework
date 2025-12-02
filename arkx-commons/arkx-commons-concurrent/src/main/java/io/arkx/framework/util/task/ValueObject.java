@@ -5,13 +5,14 @@ import lombok.Data;
 @Data
 public class ValueObject<T> {
 
-    private T value;
+	private T value;
 
-    public ValueObject(T value) {
-        this.value = value;
-    }
+	public ValueObject(T value) {
+		this.value = value;
+	}
 
-    public static <T> ValueObject<T> of(T value) {
-        return new ValueObject<>(value);
-    }
+	public static <T> ValueObject<T> of(T value) {
+		return new ValueObject<>(value);
+	}
+
 }

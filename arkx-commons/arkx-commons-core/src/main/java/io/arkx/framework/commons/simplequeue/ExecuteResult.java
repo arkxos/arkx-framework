@@ -14,10 +14,9 @@ import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
  * {@link #getUrl()} get url of current page <br>
  * {@link #getHtml()} get content of current page <br>
  * {@link #putField(String, Object)} save extracted result <br>
- * {@link #getResultItems()} get extract results to be used in
- * {@link Pipeline}<br>
- * {@link #addTargetRequests(java.util.List)} {@link #addTargetRequest(String)}
- * add urls to fetch <br>
+ * {@link #getResultItems()} get extract results to be used in {@link Pipeline}<br>
+ * {@link #addTargetRequests(java.util.List)} {@link #addTargetRequest(String)} add urls
+ * to fetch <br>
  *
  * @author code4crafter@gmail.com <br>
  * @see ElementProcessor
@@ -26,135 +25,123 @@ import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
  */
 public class ExecuteResult {
 
-    private ElementWarpper request;
+	private ElementWarpper request;
 
-    private ResultItems resultItems = new ResultItems();
+	private ResultItems resultItems = new ResultItems();
 
-    private boolean downloadSuccess = true;
+	private boolean downloadSuccess = true;
 
-    private List<ElementWarpper> targetRequests = new ArrayList<>();
+	private List<ElementWarpper> targetRequests = new ArrayList<>();
 
-    public ExecuteResult() {
-    }
+	public ExecuteResult() {
+	}
 
-    public static ExecuteResult fail() {
-        ExecuteResult page = new ExecuteResult();
-        page.setExecuteSuccess(false);
-        return page;
-    }
+	public static ExecuteResult fail() {
+		ExecuteResult page = new ExecuteResult();
+		page.setExecuteSuccess(false);
+		return page;
+	}
 
-    public static ExecuteResult success() {
-        ExecuteResult page = new ExecuteResult();
-        page.setExecuteSuccess(true);
-        return page;
-    }
+	public static ExecuteResult success() {
+		ExecuteResult page = new ExecuteResult();
+		page.setExecuteSuccess(true);
+		return page;
+	}
 
-    public ExecuteResult setSkip(boolean skip) {
-        resultItems.setSkip(skip);
-        return this;
+	public ExecuteResult setSkip(boolean skip) {
+		resultItems.setSkip(skip);
+		return this;
 
-    }
+	}
 
-    /**
-     * store extract results
-     *
-     * @param key
-     *            key
-     * @param field
-     *            field
-     */
-    public void putField(String key, Object field) {
-        resultItems.put(key, field);
-    }
+	/**
+	 * store extract results
+	 * @param key key
+	 * @param field field
+	 */
+	public void putField(String key, Object field) {
+		resultItems.put(key, field);
+	}
 
-    public List<ElementWarpper> getTargetRequests() {
-        return targetRequests;
-    }
+	public List<ElementWarpper> getTargetRequests() {
+		return targetRequests;
+	}
 
-    /**
-     * add urls to fetch
-     *
-     * @param requests
-     *            requests
-     */
-    public void addTargetRequests(List<String> requests) {
-        for (String s : requests) {
-            if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
-                continue;
-            }
-            targetRequests.add(new ElementWarpper(s));
-        }
-    }
+	/**
+	 * add urls to fetch
+	 * @param requests requests
+	 */
+	public void addTargetRequests(List<String> requests) {
+		for (String s : requests) {
+			if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
+				continue;
+			}
+			targetRequests.add(new ElementWarpper(s));
+		}
+	}
 
-    /**
-     * add urls to fetch
-     *
-     * @param requests
-     *            requests
-     * @param priority
-     *            priority
-     */
-    public void addTargetRequests(List<String> requests, long priority) {
-        for (String s : requests) {
-            if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
-                continue;
-            }
-            targetRequests.add(new ElementWarpper(s).setPriority(priority));
-        }
-    }
+	/**
+	 * add urls to fetch
+	 * @param requests requests
+	 * @param priority priority
+	 */
+	public void addTargetRequests(List<String> requests, long priority) {
+		for (String s : requests) {
+			if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
+				continue;
+			}
+			targetRequests.add(new ElementWarpper(s).setPriority(priority));
+		}
+	}
 
-    /**
-     * add url to fetch
-     *
-     * @param requestString
-     *            requestString
-     */
-    public void addTargetRequest(String requestString) {
-        if (StringUtils.isBlank(requestString) || requestString.equals("#")) {
-            return;
-        }
-        targetRequests.add(new ElementWarpper(requestString));
-    }
+	/**
+	 * add url to fetch
+	 * @param requestString requestString
+	 */
+	public void addTargetRequest(String requestString) {
+		if (StringUtils.isBlank(requestString) || requestString.equals("#")) {
+			return;
+		}
+		targetRequests.add(new ElementWarpper(requestString));
+	}
 
-    /**
-     * add requests to fetch
-     *
-     * @param request
-     *            request
-     */
-    public void addTargetRequest(ElementWarpper request) {
-        targetRequests.add(request);
-    }
+	/**
+	 * add requests to fetch
+	 * @param request request
+	 */
+	public void addTargetRequest(ElementWarpper request) {
+		targetRequests.add(request);
+	}
 
-    /**
-     * get request of current page
-     *
-     * @return request
-     */
-    public ElementWarpper getRequest() {
-        return request;
-    }
+	/**
+	 * get request of current page
+	 * @return request
+	 */
+	public ElementWarpper getRequest() {
+		return request;
+	}
 
-    public void setRequest(ElementWarpper request) {
-        this.request = request;
-        this.resultItems.setRequest(request);
-    }
+	public void setRequest(ElementWarpper request) {
+		this.request = request;
+		this.resultItems.setRequest(request);
+	}
 
-    public ResultItems getResultItems() {
-        return resultItems;
-    }
+	public ResultItems getResultItems() {
+		return resultItems;
+	}
 
-    public boolean isExecuteSuccess() {
-        return downloadSuccess;
-    }
+	public boolean isExecuteSuccess() {
+		return downloadSuccess;
+	}
 
-    public void setExecuteSuccess(boolean downloadSuccess) {
-        this.downloadSuccess = downloadSuccess;
-    }
+	public void setExecuteSuccess(boolean downloadSuccess) {
+		this.downloadSuccess = downloadSuccess;
+	}
 
-    @Override
-    public String toString() {
-        return "Page{" + ", resultItems=" + resultItems + ", success=" + downloadSuccess + ", targetRequests="
-                + targetRequests + '}';
-    }
+	@Override
+	public String toString() {
+		return "Page{" + ", resultItems=" + resultItems + ", success=" + downloadSuccess + ", targetRequests="
+				+ targetRequests + '}';
+	}
+
 }

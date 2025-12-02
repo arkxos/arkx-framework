@@ -10,8 +10,8 @@ import io.arkx.framework.commons.simplequeue.Task;
  */
 public interface MonitorableScheduler extends Scheduler {
 
-    int getLeftElementsCount(Task task);
+	int getLeftElementsCount(Task task);
 
-    int getTotalElementsCount(Task task);
+	int getTotalElementsCount(Task task);
 
 }

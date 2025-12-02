@@ -5,13 +5,15 @@ package io.arkx.framework.data.xml;
  *
  */
 public class XMLNamespace {
-    String prefix;
 
-    public XMLNamespace(String prefix) {
-        this.prefix = prefix;
-    }
+	String prefix;
 
-    public String getPrefix() {
-        return prefix;
-    }
+	public XMLNamespace(String prefix) {
+		this.prefix = prefix;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
 }

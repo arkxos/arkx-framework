@@ -23,23 +23,26 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class ExistByTest {
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private UserMapper userMapper;
 
-    @BeforeEach
-    void init() {
-        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "status")
-                .values("w.dehai", "123456", "1306006", 1).values("Jaedong", "123", "1306006", 1).build();
-        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-    }
+	@Autowired
+	private DataSource dataSource;
 
-    @Test
-    void existByNameOrPasswordTest() {
-        boolean exist = userMapper.existByNameOrPassword("w.dehai", "1306006");
-        assertTrue(exist);
-    }
+	@BeforeEach
+	void init() {
+		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+		Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "status")
+			.values("w.dehai", "123456", "1306006", 1)
+			.values("Jaedong", "123", "1306006", 1)
+			.build();
+		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+	}
+
+	@Test
+	void existByNameOrPasswordTest() {
+		boolean exist = userMapper.existByNameOrPassword("w.dehai", "1306006");
+		assertTrue(exist);
+	}
 
 }

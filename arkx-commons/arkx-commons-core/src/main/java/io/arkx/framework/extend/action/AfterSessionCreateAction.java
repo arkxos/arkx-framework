@@ -13,14 +13,16 @@ import jakarta.servlet.http.HttpSession;
  * @version V1.0
  */
 public abstract class AfterSessionCreateAction implements IExtendAction {
-    public static final String ExtendPointID = "io.arkx.framework.AfterSessionCreate";
 
-    @Override
-    public Object execute(Object[] args) throws ExtendException {
-        HttpSession session = (HttpSession) args[0];
-        execute(session);
-        return null;
-    }
+	public static final String ExtendPointID = "io.arkx.framework.AfterSessionCreate";
 
-    public abstract void execute(HttpSession session) throws ExtendException;
+	@Override
+	public Object execute(Object[] args) throws ExtendException {
+		HttpSession session = (HttpSession) args[0];
+		execute(session);
+		return null;
+	}
+
+	public abstract void execute(HttpSession session) throws ExtendException;
+
 }

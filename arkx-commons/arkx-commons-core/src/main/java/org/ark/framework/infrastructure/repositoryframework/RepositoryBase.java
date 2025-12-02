@@ -12,43 +12,45 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public abstract class RepositoryBase<T extends Entity> implements IRepository<T>, IUnitOfWorkRepository<T> {
 
-    private IUnitOfWork unitOfWork;
+	private IUnitOfWork unitOfWork;
 
-    protected RepositoryBase() {
-    }
+	protected RepositoryBase() {
+	}
 
-    protected RepositoryBase(IUnitOfWork unitOfWork) {
-        this.unitOfWork = unitOfWork;
-    }
+	protected RepositoryBase(IUnitOfWork unitOfWork) {
+		this.unitOfWork = unitOfWork;
+	}
 
-    // #region IRepository<T> Members
+	// #region IRepository<T> Members
 
-    public abstract T findBy(Object key);
+	public abstract T findBy(Object key);
 
-    public void add(T item) {
-        if (this.unitOfWork != null) {
-            this.unitOfWork.registerAdded(item, this);
-        }
-    }
+	public void add(T item) {
+		if (this.unitOfWork != null) {
+			this.unitOfWork.registerAdded(item, this);
+		}
+	}
 
-    public void remove(T item) {
-        if (this.unitOfWork != null) {
-            this.unitOfWork.registerRemoved(item, this);
-        }
-    }
+	public void remove(T item) {
+		if (this.unitOfWork != null) {
+			this.unitOfWork.registerRemoved(item, this);
+		}
+	}
 
-    public T get(Object key) {
-        return this.findBy(key);
-    }
+	public T get(Object key) {
+		return this.findBy(key);
+	}
 
-    public T set(Object key, T value) {
-        if (this.findBy(key) == null) {
-            this.add(value);
-        } else {
-            this.unitOfWork.registerChanged(value, this);
-        }
-        return value;
-    }
+	public T set(Object key, T value) {
+		if (this.findBy(key) == null) {
+			this.add(value);
+		}
+		else {
+			this.unitOfWork.registerChanged(value, this);
+		}
+		return value;
+	}
 
-    // #endregion
+	// #endregion
+
 }

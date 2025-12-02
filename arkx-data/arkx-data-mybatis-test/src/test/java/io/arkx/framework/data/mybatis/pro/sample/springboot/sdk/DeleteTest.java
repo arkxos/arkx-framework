@@ -25,28 +25,29 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class DeleteTest {
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private UserMapper userMapper;
 
-    @BeforeEach
-    void init() {
-        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert insert = insertInto("smart_user").columns("name").values("w.dehai").values("Jaedong").build();
-        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-    }
+	@Autowired
+	private DataSource dataSource;
 
-    @Test
-    void deleteByIdTest() {
-        int result = userMapper.deleteById(1L);
-        assertEquals(1, result);
-    }
+	@BeforeEach
+	void init() {
+		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+		Insert insert = insertInto("smart_user").columns("name").values("w.dehai").values("Jaedong").build();
+		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+	}
 
-    @Test
-    void deleteByIdsTest() {
-        int result = userMapper.deleteByIds(Arrays.asList(1L, 2L));
-        assertEquals(2, result);
-    }
+	@Test
+	void deleteByIdTest() {
+		int result = userMapper.deleteById(1L);
+		assertEquals(1, result);
+	}
+
+	@Test
+	void deleteByIdsTest() {
+		int result = userMapper.deleteByIds(Arrays.asList(1L, 2L));
+		assertEquals(2, result);
+	}
 
 }

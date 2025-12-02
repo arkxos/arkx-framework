@@ -31,76 +31,79 @@ import jakarta.persistence.Converter;
 @SupportedAnnotationTypes("io.arkx.enums.conversion.annotation.JsonAutoConverter")
 public class JsonConvertProcessor extends AbstractProcessor {
 
-    private Filer filer;
-    private Messager messager;
-    private Elements elementUtils;
-    public static final String doc = "\n This codes are generated automatically. Do not modify! \n -.- \n created by zhuCan \n";
+	private Filer filer;
 
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnvironment) {
-        super.init(processingEnvironment);
-        filer = processingEnv.getFiler();
-        messager = processingEnvironment.getMessager();
-        elementUtils = processingEnvironment.getElementUtils();
-    }
+	private Messager messager;
 
-    @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+	private Elements elementUtils;
 
-        messager.printMessage(Diagnostic.Kind.NOTE, "Processor : " + getClass().getSimpleName());
+	public static final String doc = "\n This codes are generated automatically. Do not modify! \n -.- \n created by zhuCan \n";
 
-        Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(JsonAutoConverter.class);
+	@Override
+	public synchronized void init(ProcessingEnvironment processingEnvironment) {
+		super.init(processingEnvironment);
+		filer = processingEnv.getFiler();
+		messager = processingEnvironment.getMessager();
+		elementUtils = processingEnvironment.getElementUtils();
+	}
 
-        elements.forEach(x -> {
-            // 被扫描的类的包路径
-            PackageElement packageElement = elementUtils.getPackageOf(x);
-            String packageName = packageElement.getQualifiedName().toString();
+	@Override
+	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
-            // 获取类上面的注解
-            JsonAutoConverter annotation = x.getAnnotation(JsonAutoConverter.class);
+		messager.printMessage(Diagnostic.Kind.NOTE, "Processor : " + getClass().getSimpleName());
 
-            // 构建类
-            TypeSpec clazz = TypeSpec.classBuilder(x.getSimpleName() + "Converter")
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addAnnotation(
-                            AnnotationSpec.builder(Converter.class)
-                                    .addMember("autoApply",
-                                            CodeBlock.builder().add("$L", annotation.autoApply()).build())
-                                    .build())
-                    .addJavadoc(" generator for Json converter " + doc).superclass(ParameterizedTypeName
-                            .get(ClassName.get(AbstractJsonConverter.class), ClassName.get((TypeElement) x)))
-                    .build();
-            try {
-                // 创建java文件
-                JavaFile javaFile = JavaFile.builder(packageName, clazz).build();
-                // 写入
-                javaFile.writeTo(filer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+		Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(JsonAutoConverter.class);
 
-            // 构建集合转换类
-            TypeSpec listClazz = TypeSpec.classBuilder(x.getSimpleName() + "ListConverter")
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addAnnotation(
-                            AnnotationSpec.builder(Converter.class)
-                                    .addMember("autoApply",
-                                            CodeBlock.builder().add("$L", annotation.autoApply()).build())
-                                    .build())
-                    .addJavadoc(" generator for Json converter " + doc)
-                    .superclass(ParameterizedTypeName.get(ClassName.get(AbstractJsonConverter.class),
-                            ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get((TypeElement) x))))
-                    .build();
-            try {
-                // 创建java文件
-                JavaFile javaFile = JavaFile.builder(packageName, listClazz).build();
-                // 写入
-                javaFile.writeTo(filer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+		elements.forEach(x -> {
+			// 被扫描的类的包路径
+			PackageElement packageElement = elementUtils.getPackageOf(x);
+			String packageName = packageElement.getQualifiedName().toString();
 
-        });
-        return false;
-    }
+			// 获取类上面的注解
+			JsonAutoConverter annotation = x.getAnnotation(JsonAutoConverter.class);
+
+			// 构建类
+			TypeSpec clazz = TypeSpec.classBuilder(x.getSimpleName() + "Converter")
+				.addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+				.addAnnotation(AnnotationSpec.builder(Converter.class)
+					.addMember("autoApply", CodeBlock.builder().add("$L", annotation.autoApply()).build())
+					.build())
+				.addJavadoc(" generator for Json converter " + doc)
+				.superclass(ParameterizedTypeName.get(ClassName.get(AbstractJsonConverter.class),
+						ClassName.get((TypeElement) x)))
+				.build();
+			try {
+				// 创建java文件
+				JavaFile javaFile = JavaFile.builder(packageName, clazz).build();
+				// 写入
+				javaFile.writeTo(filer);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// 构建集合转换类
+			TypeSpec listClazz = TypeSpec.classBuilder(x.getSimpleName() + "ListConverter")
+				.addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+				.addAnnotation(AnnotationSpec.builder(Converter.class)
+					.addMember("autoApply", CodeBlock.builder().add("$L", annotation.autoApply()).build())
+					.build())
+				.addJavadoc(" generator for Json converter " + doc)
+				.superclass(ParameterizedTypeName.get(ClassName.get(AbstractJsonConverter.class),
+						ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get((TypeElement) x))))
+				.build();
+			try {
+				// 创建java文件
+				JavaFile javaFile = JavaFile.builder(packageName, listClazz).build();
+				// 写入
+				javaFile.writeTo(filer);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		});
+		return false;
+	}
+
 }

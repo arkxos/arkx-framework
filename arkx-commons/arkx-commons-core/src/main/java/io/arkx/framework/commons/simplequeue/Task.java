@@ -13,18 +13,16 @@ import io.arkx.framework.commons.simplequeue.scheduler.Scheduler;
  */
 public interface Task {
 
-    /**
-     * unique id for a task.
-     *
-     * @return uuid
-     */
-    String getUUID();
+	/**
+	 * unique id for a task.
+	 * @return uuid
+	 */
+	String getUUID();
 
-    /**
-     * site of a task
-     *
-     * @return site
-     */
-    Config getSite();
+	/**
+	 * site of a task
+	 * @return site
+	 */
+	Config getSite();
 
 }

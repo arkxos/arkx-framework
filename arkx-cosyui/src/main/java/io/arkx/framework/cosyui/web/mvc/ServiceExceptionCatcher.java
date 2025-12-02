@@ -15,28 +15,28 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class ServiceExceptionCatcher implements IExceptionCatcher {
 
-    @Override
-    public String getExtendItemID() {
-        return "ServiceExceptionCatcher";
-    }
+	@Override
+	public String getExtendItemID() {
+		return "ServiceExceptionCatcher";
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "ServiceExceptionCatcher";
-    }
+	@Override
+	public String getExtendItemName() {
+		return "ServiceExceptionCatcher";
+	}
 
-    @Override
-    public Class<?>[] getTargetExceptionClass() {
-        return new Class<?>[]{ServiceException.class};
-    }
+	@Override
+	public Class<?>[] getTargetExceptionClass() {
+		return new Class<?>[] { ServiceException.class };
+	}
 
-    @Override
-    public void doCatch(RuntimeException e, HttpServletRequest request, HttpServletResponse response) {
-        if (e instanceof ServiceException) {
-            ServiceException serviceException = (ServiceException) e;
-            WebCurrent.getResponse().setFailedMessage(serviceException.getMessage());
-            WebCurrent.getResponse().put("serviceExceptionCode", serviceException.getCode());
-        }
-    }
+	@Override
+	public void doCatch(RuntimeException e, HttpServletRequest request, HttpServletResponse response) {
+		if (e instanceof ServiceException) {
+			ServiceException serviceException = (ServiceException) e;
+			WebCurrent.getResponse().setFailedMessage(serviceException.getMessage());
+			WebCurrent.getResponse().put("serviceExceptionCode", serviceException.getCode());
+		}
+	}
 
 }

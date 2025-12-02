@@ -15,15 +15,15 @@ import com.google.common.eventbus.Subscribe;
 
 public class EventSubscriber {
 
-    private Consumer<ListenedEvent> handler;
+	private Consumer<ListenedEvent> handler;
 
-    public EventSubscriber(Consumer<ListenedEvent> handler) {
-        this.handler = handler;
-    }
+	public EventSubscriber(Consumer<ListenedEvent> handler) {
+		this.handler = handler;
+	}
 
-    @Subscribe
-    public void handleEvent(ListenedEvent event) {
-        handler.accept(event);
-    }
+	@Subscribe
+	public void handleEvent(ListenedEvent event) {
+		handler.accept(event);
+	}
 
 }

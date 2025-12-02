@@ -7,20 +7,21 @@ import io.arkx.framework.Config;
  *
  */
 public class CacheSyncEnable implements IApplicationConfigItem {
-    public static final String ID = "CacheSyncEnable";
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "CacheSyncEnable";
 
-    @Override
-    public String getExtendItemName() {
-        return "Cache sync enabled";
-    }
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
 
-    public static String getValue() {
-        return Config.getValue("App." + ID);
-    }
+	@Override
+	public String getExtendItemName() {
+		return "Cache sync enabled";
+	}
+
+	public static String getValue() {
+		return Config.getValue("App." + ID);
+	}
 
 }

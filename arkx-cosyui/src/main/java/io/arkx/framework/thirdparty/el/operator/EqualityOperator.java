@@ -68,20 +68,22 @@ import io.arkx.framework.thirdparty.el.Logger;
  **/
 
 public abstract class EqualityOperator extends BinaryOperator {
-    // -------------------------------------
-    /**
-     * Applies the operator to the given value
-     **/
-    @Override
-    public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
-        return Coercions.applyEqualityOperator(pLeft, pRight, this, pLogger);
-    }
 
-    // -------------------------------------
-    /**
-     * Applies the operator given the fact that the two elements are equal.
-     **/
-    public abstract boolean apply(boolean pAreEqual, Logger pLogger);
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given value
+	 **/
+	@Override
+	public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
+		return Coercions.applyEqualityOperator(pLeft, pRight, this, pLogger);
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Applies the operator given the fact that the two elements are equal.
+	 **/
+	public abstract boolean apply(boolean pAreEqual, Logger pLogger);
+
+	// -------------------------------------
+
 }

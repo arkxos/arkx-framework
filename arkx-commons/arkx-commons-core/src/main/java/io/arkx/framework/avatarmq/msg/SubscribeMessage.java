@@ -11,35 +11,38 @@ import java.io.Serializable;
  */
 public class SubscribeMessage extends BaseMessage implements Serializable {
 
-    private String clusterId;
-    private String topic;
-    private String consumerId;
+	private String clusterId;
 
-    public SubscribeMessage() {
-        super();
-    }
+	private String topic;
 
-    public String getClusterId() {
-        return clusterId;
-    }
+	private String consumerId;
 
-    public void setClusterId(String clusterId) {
-        this.clusterId = clusterId;
-    }
+	public SubscribeMessage() {
+		super();
+	}
 
-    public String getTopic() {
-        return topic;
-    }
+	public String getClusterId() {
+		return clusterId;
+	}
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+	public void setClusterId(String clusterId) {
+		this.clusterId = clusterId;
+	}
 
-    public String getConsumerId() {
-        return consumerId;
-    }
+	public String getTopic() {
+		return topic;
+	}
 
-    public void setConsumerId(String consumerId) {
-        this.consumerId = consumerId;
-    }
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
+	public String getConsumerId() {
+		return consumerId;
+	}
+
+	public void setConsumerId(String consumerId) {
+		this.consumerId = consumerId;
+	}
+
 }

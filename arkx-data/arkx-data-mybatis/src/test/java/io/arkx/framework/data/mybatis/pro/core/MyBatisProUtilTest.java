@@ -19,32 +19,39 @@ import lombok.EqualsAndHashCode;
  */
 public class MyBatisProUtilTest {
 
-    @Test
-    public void getFieldAliasMapTest() {
-        Map<String, String> map = getFieldAliasMap(Demo.class);
-        assertTrue(map.containsKey("id"));
-        assertTrue(map.containsKey("name"));
-        assertTrue(map.containsKey("phoneNo"));
-        assertEquals("phone_no", map.get("phoneNo"));
-        assertFalse(map.containsKey("serialVersionUID"));
-        assertFalse(map.containsKey("tx"));
+	@Test
+	public void getFieldAliasMapTest() {
+		Map<String, String> map = getFieldAliasMap(Demo.class);
+		assertTrue(map.containsKey("id"));
+		assertTrue(map.containsKey("name"));
+		assertTrue(map.containsKey("phoneNo"));
+		assertEquals("phone_no", map.get("phoneNo"));
+		assertFalse(map.containsKey("serialVersionUID"));
+		assertFalse(map.containsKey("tx"));
 
-    }
+	}
 
-    @Data
-    public static class BaseDomain {
-        private Long id;
-    }
+	@Data
+	public static class BaseDomain {
 
-    @Data
-    @EqualsAndHashCode(callSuper = true)
-    public static class Demo extends BaseDomain implements Serializable {
-        private static final long serialVersionUID = -1L;
-        private String name;
-        @Column("phone_no")
-        private String phoneNo;
-        @Transient
-        private String tx;
-    }
+		private Long id;
+
+	}
+
+	@Data
+	@EqualsAndHashCode(callSuper = true)
+	public static class Demo extends BaseDomain implements Serializable {
+
+		private static final long serialVersionUID = -1L;
+
+		private String name;
+
+		@Column("phone_no")
+		private String phoneNo;
+
+		@Transient
+		private String tx;
+
+	}
 
 }

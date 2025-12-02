@@ -15,81 +15,84 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * @since 2016-8-11
  */
 public class MessageEventWrapper<T> extends ChannelInboundHandlerAdapter
-        implements
-            MessageEventHandler,
-            MessageEventProxy {
+		implements MessageEventHandler, MessageEventProxy {
 
-    public final static String proxyMappedName = "handleMessage";
+	public final static String proxyMappedName = "handleMessage";
 
-    protected MessageProcessor processor;
-    protected Throwable cause;
-    protected HookMessageEvent<T> hook;
-    protected MessageConnectFactory factory;
-    private MessageEventWrapper<T> wrapper;
+	protected MessageProcessor processor;
 
-    public MessageEventWrapper() {
-    }
+	protected Throwable cause;
 
-    public MessageEventWrapper(MessageProcessor processor) {
-        this(processor, null);
-    }
+	protected HookMessageEvent<T> hook;
 
-    public MessageEventWrapper(MessageProcessor processor, HookMessageEvent<T> hook) {
-        this.processor = processor;
-        this.hook = hook;
-        this.factory = processor.getMessageConnectFactory();
-    }
+	protected MessageConnectFactory factory;
 
-    @Override
-    public void handleMessage(ChannelHandlerContext ctx, Object msg) {
-        return;
-    }
+	private MessageEventWrapper<T> wrapper;
 
-    @Override
-    public void beforeMessage(Object msg) {
-    }
+	public MessageEventWrapper() {
+	}
 
-    @Override
-    public void afterMessage(Object msg) {
-    }
+	public MessageEventWrapper(MessageProcessor processor) {
+		this(processor, null);
+	}
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
-    }
+	public MessageEventWrapper(MessageProcessor processor, HookMessageEvent<T> hook) {
+		this.processor = processor;
+		this.hook = hook;
+		this.factory = processor.getMessageConnectFactory();
+	}
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        super.channelRead(ctx, msg);
+	@Override
+	public void handleMessage(ChannelHandlerContext ctx, Object msg) {
+		return;
+	}
 
-        ProxyFactory weaver = new ProxyFactory(wrapper);
-        NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor();
-        advisor.setMappedName(MessageEventWrapper.proxyMappedName);
-        advisor.setAdvice(new MessageEventAdvisor(wrapper, msg));
-        weaver.addAdvisor(advisor);
+	@Override
+	public void beforeMessage(Object msg) {
+	}
 
-        MessageEventHandler proxyObject = (MessageEventHandler) weaver.getProxy();
-        proxyObject.handleMessage(ctx, msg);
-    }
+	@Override
+	public void afterMessage(Object msg) {
+	}
 
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        this.cause = cause;
-        cause.printStackTrace();
-    }
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		super.channelActive(ctx);
+	}
 
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        super.channelInactive(ctx);
-    }
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		super.channelRead(ctx, msg);
 
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        super.channelReadComplete(ctx);
-    }
+		ProxyFactory weaver = new ProxyFactory(wrapper);
+		NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor();
+		advisor.setMappedName(MessageEventWrapper.proxyMappedName);
+		advisor.setAdvice(new MessageEventAdvisor(wrapper, msg));
+		weaver.addAdvisor(advisor);
 
-    public Throwable getCause() {
-        return cause;
-    }
+		MessageEventHandler proxyObject = (MessageEventHandler) weaver.getProxy();
+		proxyObject.handleMessage(ctx, msg);
+	}
 
-    public void setWrapper(MessageEventWrapper<T> wrapper) {
-        this.wrapper = wrapper;
-    }
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		this.cause = cause;
+		cause.printStackTrace();
+	}
+
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		super.channelInactive(ctx);
+	}
+
+	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+		super.channelReadComplete(ctx);
+	}
+
+	public Throwable getCause() {
+		return cause;
+	}
+
+	public void setWrapper(MessageEventWrapper<T> wrapper) {
+		this.wrapper = wrapper;
+	}
+
 }

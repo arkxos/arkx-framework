@@ -3,7 +3,6 @@ package io.arkx.framework.commons;
 import java.util.List;
 
 /**
- *
  * @author Nobody
  * @version 1.0
  * @date 2025-10-21 15:41
@@ -11,7 +10,8 @@ import java.util.List;
  */
 public interface ArkSecurityService {
 
-    List<Long> getCurrentUserDataScope();
+	List<Long> getCurrentUserDataScope();
 
-    String getCurrentUsername();
+	String getCurrentUsername();
+
 }

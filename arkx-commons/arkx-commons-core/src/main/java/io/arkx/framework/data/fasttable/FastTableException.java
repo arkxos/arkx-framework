@@ -8,14 +8,14 @@ package io.arkx.framework.data.fasttable;
  */
 public class FastTableException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public FastTableException(String message) {
-        super(message);
-    }
+	public FastTableException(String message) {
+		super(message);
+	}
 
-    public FastTableException(Throwable throwable) {
-        super(throwable);
-    }
+	public FastTableException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

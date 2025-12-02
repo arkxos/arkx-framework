@@ -10,67 +10,72 @@ import jakarta.servlet.jsp.PageContext;
 
 /**
  * @class org.ark.framework.jaf.zhtml.ZhtmlPage
- *
  * @author Darkness
  * @date 2013-1-31 下午12:55:31
  * @version V1.0
  */
 public class ZhtmlPage {
-    private String fileName;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private PageContext pageContext;
-    private ZhtmlTag currentTag;
 
-    public ZhtmlPage(String fileName) {
-        this.fileName = fileName;
-    }
+	private String fileName;
 
-    public HttpServletRequest getRequest() {
-        return this.request;
-    }
+	private HttpServletRequest request;
 
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
-    }
+	private HttpServletResponse response;
 
-    public HttpServletResponse getResponse() {
-        return this.response;
-    }
+	private PageContext pageContext;
 
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
+	private ZhtmlTag currentTag;
 
-    public PageContext getPageContext() {
-        return this.pageContext;
-    }
+	public ZhtmlPage(String fileName) {
+		this.fileName = fileName;
+	}
 
-    public void setPageContext(PageContext pageContext) {
-        this.pageContext = pageContext;
-    }
+	public HttpServletRequest getRequest() {
+		return this.request;
+	}
 
-    public PlaceHolderContext getContext() {
-        return PlaceHolderContext.getInstance(this.currentTag == null ? null : this.currentTag.getTagSupport(),
-                this.pageContext);
-    }
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
 
-    public Writer getWriter() {
-        if (this.currentTag != null) {
-            return this.currentTag.getOut();
-        }
-        return this.pageContext.getOut();
-    }
+	public HttpServletResponse getResponse() {
+		return this.response;
+	}
 
-    public ZhtmlTag getCurrentTag() {
-        return this.currentTag;
-    }
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
 
-    public void setCurrentTag(ZhtmlTag tag) {
-        this.currentTag = tag;
-    }
+	public PageContext getPageContext() {
+		return this.pageContext;
+	}
 
-    public String getFileName() {
-        return this.fileName;
-    }
+	public void setPageContext(PageContext pageContext) {
+		this.pageContext = pageContext;
+	}
+
+	public PlaceHolderContext getContext() {
+		return PlaceHolderContext.getInstance(this.currentTag == null ? null : this.currentTag.getTagSupport(),
+				this.pageContext);
+	}
+
+	public Writer getWriter() {
+		if (this.currentTag != null) {
+			return this.currentTag.getOut();
+		}
+		return this.pageContext.getOut();
+	}
+
+	public ZhtmlTag getCurrentTag() {
+		return this.currentTag;
+	}
+
+	public void setCurrentTag(ZhtmlTag tag) {
+		this.currentTag = tag;
+	}
+
+	public String getFileName() {
+		return this.fileName;
+	}
+
 }

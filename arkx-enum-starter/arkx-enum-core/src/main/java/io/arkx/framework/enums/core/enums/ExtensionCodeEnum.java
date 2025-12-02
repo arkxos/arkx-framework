@@ -7,30 +7,28 @@ package io.arkx.framework.enums.core.enums;
  **/
 public interface ExtensionCodeEnum extends CodeEnum {
 
-    default Integer code() {
-        return getCode();
-    }
+	default Integer code() {
+		return getCode();
+	}
 
-    /**
-     * 枚举的属性
-     *
-     * @return 枚举的值
-     */
-    default String value() {
-        return getName();
-    }
+	/**
+	 * 枚举的属性
+	 * @return 枚举的值
+	 */
+	default String value() {
+		return getName();
+	}
 
-    /**
-     * 获取code值
-     *
-     * @return code
-     */
-    Integer getCode();
+	/**
+	 * 获取code值
+	 * @return code
+	 */
+	Integer getCode();
 
-    /**
-     * 获取value值
-     *
-     * @return name
-     */
-    String getName();
+	/**
+	 * 获取value值
+	 * @return name
+	 */
+	String getName();
+
 }

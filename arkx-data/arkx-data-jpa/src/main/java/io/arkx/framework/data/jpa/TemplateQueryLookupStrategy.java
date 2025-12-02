@@ -32,30 +32,32 @@ import jakarta.persistence.EntityManager;
  */
 public class TemplateQueryLookupStrategy extends SqlToyQueryLookupStrategy {
 
-    public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
-            EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
-            ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
-            EscapeCharacter escapeCharacter) {
-        return new TemplateQueryLookupStrategy(defaultStrategy, sqlToyLazyDao, entityManager, key, extractor,
-                queryMethodFactory, valueExpressionDelegate, queryRewriterProvider, escapeCharacter);
-    }
+	public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+			EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
+			ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
+			EscapeCharacter escapeCharacter) {
+		return new TemplateQueryLookupStrategy(defaultStrategy, sqlToyLazyDao, entityManager, key, extractor,
+				queryMethodFactory, valueExpressionDelegate, queryRewriterProvider, escapeCharacter);
+	}
 
-    public TemplateQueryLookupStrategy(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
-            EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
-            ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
-            EscapeCharacter escapeCharacter) {
-        super(defaultStrategy, sqlToyLazyDao, entityManager, key, extractor, queryMethodFactory,
-                valueExpressionDelegate, queryRewriterProvider, escapeCharacter);
-    }
+	public TemplateQueryLookupStrategy(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+			EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
+			ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
+			EscapeCharacter escapeCharacter) {
+		super(defaultStrategy, sqlToyLazyDao, entityManager, key, extractor, queryMethodFactory,
+				valueExpressionDelegate, queryRewriterProvider, escapeCharacter);
+	}
 
-    @Override
-    public RepositoryQuery resolveQuery(Method method, RepositoryMetadata metadata, ProjectionFactory factory,
-            NamedQueries namedQueries) {
-        if (method.getAnnotation(TemplateQuery.class) != null) {
-            return new FreemarkerTemplateQuery(
-                    new DefaultJpaQueryMethodFactory(extractor).build(method, metadata, factory), entityManager);
-        } else {
-            return super.resolveQuery(method, metadata, factory, namedQueries);
-        }
-    }
+	@Override
+	public RepositoryQuery resolveQuery(Method method, RepositoryMetadata metadata, ProjectionFactory factory,
+			NamedQueries namedQueries) {
+		if (method.getAnnotation(TemplateQuery.class) != null) {
+			return new FreemarkerTemplateQuery(
+					new DefaultJpaQueryMethodFactory(extractor).build(method, metadata, factory), entityManager);
+		}
+		else {
+			return super.resolveQuery(method, metadata, factory, namedQueries);
+		}
+	}
+
 }

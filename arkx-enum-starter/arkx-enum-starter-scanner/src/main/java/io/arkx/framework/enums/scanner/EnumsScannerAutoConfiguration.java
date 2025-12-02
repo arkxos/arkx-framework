@@ -27,56 +27,51 @@ import io.arkx.framework.enums.scanner.handler.EnumScanHandlerImpl;
 @AutoConfiguration
 public class EnumsScannerAutoConfiguration {
 
-    @Bean
-    public EnumScanHandler enumTable(EnumCache cache, ResourcesScanner<Class<?>> scanner) {
-        return new EnumScanHandlerImpl(cache, scanner);
-    }
+	@Bean
+	public EnumScanHandler enumTable(EnumCache cache, ResourcesScanner<Class<?>> scanner) {
+		return new EnumScanHandlerImpl(cache, scanner);
+	}
 
-    /**
-     * 默认的内存缓存,当用户重写了一个enumCache并注册为容器时,可覆盖本默认缓存
-     *
-     * @return 枚举缓存
-     */
-    @Bean
-    @ConditionalOnMissingBean(EnumCache.class)
-    public EnumCache enumCache() {
-        return new EnumCache.DefaultMemoryEnumCache();
-    }
+	/**
+	 * 默认的内存缓存,当用户重写了一个enumCache并注册为容器时,可覆盖本默认缓存
+	 * @return 枚举缓存
+	 */
+	@Bean
+	@ConditionalOnMissingBean(EnumCache.class)
+	public EnumCache enumCache() {
+		return new EnumCache.DefaultMemoryEnumCache();
+	}
 
-    /**
-     * 资料扫描器
-     *
-     * @param properties
-     *            配置
-     * @param typeFilterProviders
-     *            扩展扫描器过滤条件提供者
-     * @return scanner
-     */
-    @Bean
-    @ConditionalOnMissingBean(ResourcesScanner.class)
-    public ResourcesScanner<Class<?>> resourcesScanner(EnumScanProperties properties,
-            List<TypeFilterProvider> typeFilterProviders, ApplicationContext context) {
+	/**
+	 * 资料扫描器
+	 * @param properties 配置
+	 * @param typeFilterProviders 扩展扫描器过滤条件提供者
+	 * @return scanner
+	 */
+	@Bean
+	@ConditionalOnMissingBean(ResourcesScanner.class)
+	public ResourcesScanner<Class<?>> resourcesScanner(EnumScanProperties properties,
+			List<TypeFilterProvider> typeFilterProviders, ApplicationContext context) {
 
-        return new ExtensionClassPathScanningCandidateComponentProvider(false, x -> {
+		return new ExtensionClassPathScanningCandidateComponentProvider(false, x -> {
 
-            if (typeFilterProviders != null) {
-                // 增加扫描过滤器
-                typeFilterProviders.stream().map(TypeFilterProvider::filter).forEach(x::addIncludeFilter);
-            }
+			if (typeFilterProviders != null) {
+				// 增加扫描过滤器
+				typeFilterProviders.stream().map(TypeFilterProvider::filter).forEach(x::addIncludeFilter);
+			}
 
-        }, properties, context);
-    }
+		}, properties, context);
+	}
 
-    /**
-     * 扫描器过滤条件提供者
-     *
-     * @return 扫描器过滤条件提供者
-     */
-    @Bean
-    @ConditionalOnMissingBean(TypeFilterProvider.class)
-    public TypeFilterProvider typeFilterProvider() {
-        // 设置默认的 filter
-        return () -> new AnnotationTypeFilter(EnumScan.class);
-    }
+	/**
+	 * 扫描器过滤条件提供者
+	 * @return 扫描器过滤条件提供者
+	 */
+	@Bean
+	@ConditionalOnMissingBean(TypeFilterProvider.class)
+	public TypeFilterProvider typeFilterProvider() {
+		// 设置默认的 filter
+		return () -> new AnnotationTypeFilter(EnumScan.class);
+	}
 
 }

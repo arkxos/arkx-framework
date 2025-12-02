@@ -9,13 +9,14 @@ package io.arkx.framework.avatarmq.model;
  */
 public class SubscriptionData {
 
-    private String topic;
+	private String topic;
 
-    public String getTopic() {
-        return topic;
-    }
+	public String getTopic() {
+		return topic;
+	}
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
 }

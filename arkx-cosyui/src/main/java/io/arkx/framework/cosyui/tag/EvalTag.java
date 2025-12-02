@@ -12,48 +12,51 @@ import io.arkx.framework.i18n.LangUtil;
  *
  */
 public class EvalTag extends ParamTag {
-    String expression;
 
-    @Override
-    public String getTagName() {
-        return "eval";
-    }
+	String expression;
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        try {
-            Object value = expression;// 表达式已经改为自动求值
-            if (value != null) {
-                String v = String.valueOf(value);
-                v = LangUtil.get(v);
-                pageContext.getOut().write(v);
-            } else {
-                pageContext.getOut().write("null");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return SKIP_BODY;
-    }
+	@Override
+	public String getTagName() {
+		return "eval";
+	}
 
-    public String getExpression() {
-        return expression;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		try {
+			Object value = expression;// 表达式已经改为自动求值
+			if (value != null) {
+				String v = String.valueOf(value);
+				v = LangUtil.get(v);
+				pageContext.getOut().write(v);
+			}
+			else {
+				pageContext.getOut().write("null");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SKIP_BODY;
+	}
 
-    public void setExpression(String expression) {
-        this.expression = expression;
-    }
+	public String getExpression() {
+		return expression;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("expression"));
-        return list;
-    }
+	public void setExpression(String expression) {
+		this.expression = expression;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.Tag.EvalTagName}";
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("expression"));
+		return list;
+	}
+
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.Tag.EvalTagName}";
+	}
 
 }

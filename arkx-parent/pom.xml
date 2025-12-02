@@ -1,213 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>io.arkx.framework</groupId>
-		<artifactId>arkx-dependencies</artifactId>
-		<version>${revision}</version>
-		<relativePath>../arkx-dependencies/pom.xml</relativePath>
-	</parent>
+  <parent>
+    <groupId>io.arkx.framework</groupId>
+    <artifactId>arkx-dependencies</artifactId>
+    <version>${revision}</version>
+    <relativePath>../arkx-dependencies/pom.xml</relativePath>
+  </parent>
 
-	<artifactId>arkx-parent</artifactId>
-	<packaging>pom</packaging>
+  <artifactId>arkx-parent</artifactId>
+  <packaging>pom</packaging>
 
-	<properties>
-		<maven.compiler.source>25</maven.compiler.source>
-		<maven.compiler.target>25</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+  <properties>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
-	<!-- 以下依赖 全局所有的模块都会引入  -->
-	<dependencies>
-		<!--Lombok-->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+  <!-- 以下依赖 全局所有的模块都会引入  -->
+  <dependencies>
+    <!--Lombok-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<finalName>${project.name}</finalName>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<!-- 引入所有 匹配文件进行过滤 -->
-				<!--				<includes>-->
-				<!--					<include>application*</include>-->
-				<!--					<include>bootstrap*</include>-->
-				<!--					<include>logback*</include>-->
-				<!--				</includes>-->
-				<excludes>
-					<exclude>**/*.xlsx</exclude>
-					<exclude>**/*.xls</exclude>
-				</excludes>
-				<!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
-				<filtering>true</filtering>
-				<!-- 关闭过滤 -->
-				<!--				<filtering>false</filtering>-->
-			</resource>
-		</resources>
+  <build>
+    <finalName>${project.name}</finalName>
+    <resources>
+      <resource>
+        <!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+        <!-- 引入所有 匹配文件进行过滤 -->
+        <!--				<includes>-->
+        <!--					<include>application*</include>-->
+        <!--					<include>bootstrap*</include>-->
+        <!--					<include>logback*</include>-->
+        <!--				</includes>-->
+        <excludes>
+          <exclude>**/*.xlsx</exclude>
+          <exclude>**/*.xls</exclude>
+        </excludes>
+        <!-- 关闭过滤 -->
+        <!--				<filtering>false</filtering>-->
+      </resource>
+    </resources>
 
-		<plugins>
-			<!-- 统一 revision 版本 -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<version>${flatten-maven-plugin.version}</version>
-				<configuration>
-					<!-- 改为支持版本变量替换的模式 -->
-					<flattenMode>oss</flattenMode>
-					<updatePomFile>true</updatePomFile>
-				</configuration>
-				<executions>
-					<execution>
-						<id>flatten</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>flatten</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>flatten.clean</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-					<parameters>true</parameters>
-					<!--					<compilerArgs>-->
-					<!--						<arg>-parameters</arg>-->
-					<!--					</compilerArgs>-->
-					<annotationProcessorPaths>
-						<path>
-							<groupId>com.github.therapi</groupId>
-							<artifactId>therapi-runtime-javadoc-scribe</artifactId>
-							<version>0.15.0</version>
-						</path>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<version>${lombok.version}</version>
-						</path>
-						<path>
-							<groupId>org.springframework.boot</groupId>
-							<artifactId>spring-boot-configuration-processor</artifactId>
-							<version>${spring-boot.version}</version>
-						</path>
-						<path>
-							<groupId>io.github.linpeilie</groupId>
-							<artifactId>mapstruct-plus-processor</artifactId>
-							<version>${mapstruct-plus.version}</version>
-						</path>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok-mapstruct-binding</artifactId>
-							<version>${mapstruct-plus.lombok.version}</version>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<!--打包jar 与git commit 关联插件-->
-			<plugin>
-				<groupId>io.github.git-commit-id</groupId>
-				<artifactId>git-commit-id-maven-plugin</artifactId>
-				<version>${git.commit.plugin}</version>
-				<executions>
-					<execution>
-						<id>get-the-git-infos</id>
-						<phase>initialize</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<failOnNoGitDirectory>false</failOnNoGitDirectory>
-					<generateGitPropertiesFile>true</generateGitPropertiesFile>
-					<!--因为项目定制了jackson的日期时间序列化/反序列化格式，因此这里要进行配置,不然通过management.info.git.mode=full进行完整git信息监控时会存在问题-->
-					<dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
-					<includeOnlyProperties>
-						<includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
-						<includeOnlyProperty>^git.commit.(id|message|time).*$</includeOnlyProperty>
-					</includeOnlyProperties>
-				</configuration>
-			</plugin>
-			<!-- Google Java Format 插件 -->
-			<plugin>
-				<groupId>com.github.ekryd.sortpom</groupId>
-				<artifactId>sortpom-maven-plugin</artifactId>
-				<version>3.3.0</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>sort</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<createBackupFile>false</createBackupFile>
-					<lineSeparator>
-</lineSeparator>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.1.2</version>
-			</plugin>
-			<!--
+    <plugins>
+      <!-- 统一 revision 版本 -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>${flatten-maven-plugin.version}</version>
+        <configuration>
+          <!-- 改为支持版本变量替换的模式 -->
+          <flattenMode>oss</flattenMode>
+          <updatePomFile>true</updatePomFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+            <phase>process-resources</phase>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+            <phase>clean</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <parameters>true</parameters>
+          <!--					<compilerArgs>-->
+          <!--						<arg>-parameters</arg>-->
+          <!--					</compilerArgs>-->
+          <annotationProcessorPaths>
+            <path>
+              <groupId>com.github.therapi</groupId>
+              <artifactId>therapi-runtime-javadoc-scribe</artifactId>
+              <version>0.15.0</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <path>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-configuration-processor</artifactId>
+              <version>${spring-boot.version}</version>
+            </path>
+            <path>
+              <groupId>io.github.linpeilie</groupId>
+              <artifactId>mapstruct-plus-processor</artifactId>
+              <version>${mapstruct-plus.version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>${mapstruct-plus.lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <!--打包jar 与git commit 关联插件-->
+      <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>${git.commit.plugin}</version>
+        <configuration>
+          <failOnNoGitDirectory>false</failOnNoGitDirectory>
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+          <!--因为项目定制了jackson的日期时间序列化/反序列化格式，因此这里要进行配置,不然通过management.info.git.mode=full进行完整git信息监控时会存在问题-->
+          <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+          <includeOnlyProperties>
+            <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+            <includeOnlyProperty>^git.commit.(id|message|time).*$</includeOnlyProperty>
+          </includeOnlyProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <id>get-the-git-infos</id>
+            <phase>initialize</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Google Java Format 插件 -->
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <createBackupFile>false</createBackupFile>
+          <lineSeparator></lineSeparator>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>sort</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.1.2</version>
+      </plugin>
+      <!--
 				代码格式插件，默认使用spring 规则，可运行命令进行项目格式化：./mvnw spring-javaformat:apply 或 mvn spring-javaformat:apply，可在IDEA中安装插件以下插件进行自动格式化：
 				https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin
 			-->
-			<plugin>
-				<groupId>io.spring.javaformat</groupId>
-				<artifactId>spring-javaformat-maven-plugin</artifactId>
-				<version>${spring.checkstyle.plugin}</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<inherited>true</inherited>
-						<goals>
-							<goal>apply</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-<!--					<failOnFormatErrors>true</failOnFormatErrors> &lt;!&ndash; 如果存在格式错误，是否中断构建 &ndash;&gt;-->
-					<includes>
-						<include>**/*.java</include> <!-- 指定要格式化的文件 -->
-					</includes>
-					<style>GOOGLE</style> <!-- 使用 Google 风格 -->
-					<indentSize>4</indentSize> <!-- 缩进大小为 4 个空格 -->
-					<columnLimit>120</columnLimit> <!-- 行宽限制为 120 个字符 -->
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+      <plugin>
+        <groupId>io.spring.javaformat</groupId>
+        <artifactId>spring-javaformat-maven-plugin</artifactId>
+        <version>${spring.checkstyle.plugin}</version>
+        <configuration>
+          <!--					<failOnFormatErrors>true</failOnFormatErrors> &lt;!&ndash; 如果存在格式错误，是否中断构建 &ndash;&gt;-->
+          <includes>
+            <include>**/*.java</include>
+            <!-- 指定要格式化的文件 -->
+          </includes>
+          <style>GOOGLE</style>
+          <!-- 使用 Google 风格 -->
+          <indentSize>4</indentSize>
+          <!-- 缩进大小为 4 个空格 -->
+          <columnLimit>120</columnLimit>
+          <!-- 行宽限制为 120 个字符 -->
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>apply</goal>
+            </goals>
+            <phase>validate</phase>
+            <inherited>true</inherited>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

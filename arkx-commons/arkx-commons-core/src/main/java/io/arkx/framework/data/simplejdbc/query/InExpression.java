@@ -4,35 +4,37 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class InExpression implements Criterion {
-    private String columnName;
 
-    private Object[] values;
+	private String columnName;
 
-    protected InExpression(String columnName, Object[] values) {
-        this.columnName = columnName;
-        this.values = values;
-    }
+	private Object[] values;
 
-    public String toSqlString() {
-        StringBuilder params = new StringBuilder();
+	protected InExpression(String columnName, Object[] values) {
+		this.columnName = columnName;
+		this.values = values;
+	}
 
-        for (int i = 0; i < values.length; i++) {
-            if (i > 0) {
-                params.append(',');
-                params.append(' ');
-            }
+	public String toSqlString() {
+		StringBuilder params = new StringBuilder();
 
-            params.append('?');
-        }
+		for (int i = 0; i < values.length; i++) {
+			if (i > 0) {
+				params.append(',');
+				params.append(' ');
+			}
 
-        return columnName + " in (" + params + ')';
-    }
+			params.append('?');
+		}
 
-    public Object getValue() {
-        return null;
-    }
+		return columnName + " in (" + params + ')';
+	}
 
-    public Collection<?> getValues() {
-        return values.length > 0 ? Arrays.asList(values) : null;
-    }
+	public Object getValue() {
+		return null;
+	}
+
+	public Collection<?> getValues() {
+		return values.length > 0 ? Arrays.asList(values) : null;
+	}
+
 }

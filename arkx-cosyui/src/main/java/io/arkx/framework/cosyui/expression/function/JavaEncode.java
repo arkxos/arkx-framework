@@ -9,27 +9,29 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  *
  */
 public class JavaEncode extends AbstractFunction {
-    @Override
-    public String getFunctionName() {
-        return "javaEncode";
-    }
 
-    @Override
-    public Object execute(IVariableResolver resolver, Object... args) {
-        String input = (String) args[0];
-        if (input == null) {
-            return "";
-        }
-        return StringUtil.javaEncode(input);
-    }
+	@Override
+	public String getFunctionName() {
+		return "javaEncode";
+	}
 
-    @Override
-    public String getFunctionPrefix() {
-        return "";
-    }
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) {
+		String input = (String) args[0];
+		if (input == null) {
+			return "";
+		}
+		return StringUtil.javaEncode(input);
+	}
 
-    @Override
-    public Class<?>[] getArgumentTypes() {
-        return AbstractFunction.Arg_String;
-    }
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
+
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return AbstractFunction.Arg_String;
+	}
+
 }

@@ -15,18 +15,20 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Verify {
-    /**
-     * 所有键值都不校验
-     */
-    boolean ignoreAll() default false;
 
-    /**
-     * 指定哪些键值不需要校验
-     */
-    String ignoredKeys() default "";
+	/**
+	 * 所有键值都不校验
+	 */
+	boolean ignoreAll() default false;
 
-    /**
-     * 指定校验规则
-     */
-    String[] value() default {};
+	/**
+	 * 指定哪些键值不需要校验
+	 */
+	String ignoredKeys() default "";
+
+	/**
+	 * 指定校验规则
+	 */
+	String[] value() default {};
+
 }

@@ -11,37 +11,40 @@ import java.io.Serializable;
  */
 public class ProducerAckMessage extends BaseMessage implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String ack;
-    private int status;
-    private String msgId;
+	private String ack;
 
-    public String getAck() {
-        return ack;
-    }
+	private int status;
 
-    public void setAck(String ack) {
-        this.ack = ack;
-    }
+	private String msgId;
 
-    public int getStatus() {
-        return status;
-    }
+	public String getAck() {
+		return ack;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public void setAck(String ack) {
+		this.ack = ack;
+	}
 
-    public String getMsgId() {
-        return msgId;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public boolean isSuccess() {
-        return getStatus() == SUCCESS;
-    }
+	public String getMsgId() {
+		return msgId;
+	}
+
+	public void setMsgId(String msgId) {
+		this.msgId = msgId;
+	}
+
+	public boolean isSuccess() {
+		return getStatus() == SUCCESS;
+	}
+
 }

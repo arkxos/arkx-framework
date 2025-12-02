@@ -18,101 +18,106 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
  * @author liuyadu
  */
 public class XssServletRequestWrapper extends HttpServletRequestWrapper {
-    private HttpServletRequest request;
-    private final byte[] body;
-    private Map<String, String> headers = new HashMap<>();
 
-    public XssServletRequestWrapper(HttpServletRequest request) throws IOException {
-        super(request);
-        this.request = request;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        IOUtils.copy(request.getInputStream(), baos);
-        this.body = baos.toByteArray();
-    }
+	private HttpServletRequest request;
 
-    @Override
-    public BufferedReader getReader() {
-        return new BufferedReader(new InputStreamReader(getInputStream()));
-    }
+	private final byte[] body;
 
-    @Override
-    public ServletInputStream getInputStream() {
-        final ByteArrayInputStream bais = new ByteArrayInputStream(body);
-        return new ServletInputStream() {
-            @Override
-            public int read() {
-                return bais.read();
-            }
+	private Map<String, String> headers = new HashMap<>();
 
-            @Override
-            public boolean isFinished() {
-                return false;
-            }
+	public XssServletRequestWrapper(HttpServletRequest request) throws IOException {
+		super(request);
+		this.request = request;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		IOUtils.copy(request.getInputStream(), baos);
+		this.body = baos.toByteArray();
+	}
 
-            @Override
-            public boolean isReady() {
-                return false;
-            }
+	@Override
+	public BufferedReader getReader() {
+		return new BufferedReader(new InputStreamReader(getInputStream()));
+	}
 
-            @Override
-            public void setReadListener(ReadListener readListener) {
+	@Override
+	public ServletInputStream getInputStream() {
+		final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+		return new ServletInputStream() {
+			@Override
+			public int read() {
+				return bais.read();
+			}
 
-            }
-        };
-    }
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
 
-    @Override
-    public String getParameter(String name) {
-        name = StringUtil.stripXss(name);
-        String value = request.getParameter(name);
-        if (!StringUtil.isEmpty(value)) {
-            value = StringUtil.stripXss(value).trim();
-        }
-        return value;
-    }
+			@Override
+			public boolean isReady() {
+				return false;
+			}
 
-    @Override
-    public String getHeader(String name) {
-        name = StringUtil.trim(name);
-        String value;
-        if (headers.containsKey(name)) {
-            value = headers.get(name);
-        } else {
-            value = super.getHeader(name);
-            this.headers.put(name, value);
-        }
-        if (StringUtil.isNotBlank(value)) {
-            value = StringUtil.trim(value);
-        }
-        return value;
-    }
+			@Override
+			public void setReadListener(ReadListener readListener) {
 
-    public void putHeader(String name, String value) {
-        this.headers.put(name, value);
-    }
+			}
+		};
+	}
 
-    @Override
-    public Enumeration<String> getHeaderNames() {
-        Set<String> set = new HashSet<>(headers.keySet());
-        Enumeration<String> enumeration = request.getHeaderNames();
-        while (enumeration.hasMoreElements()) {
-            String name = enumeration.nextElement();
-            set.add(name);
-        }
-        return Collections.enumeration(set);
-    }
+	@Override
+	public String getParameter(String name) {
+		name = StringUtil.stripXss(name);
+		String value = request.getParameter(name);
+		if (!StringUtil.isEmpty(value)) {
+			value = StringUtil.stripXss(value).trim();
+		}
+		return value;
+	}
 
-    @Override
-    public String[] getParameterValues(String name) {
-        name = StringUtil.stripXss(name);
-        String[] parameterValues = super.getParameterValues(name);
-        if (parameterValues == null) {
-            return null;
-        }
-        for (int i = 0; i < parameterValues.length; i++) {
-            String value = parameterValues[i];
-            parameterValues[i] = StringUtil.stripXss(value).trim();
-        }
-        return parameterValues;
-    }
+	@Override
+	public String getHeader(String name) {
+		name = StringUtil.trim(name);
+		String value;
+		if (headers.containsKey(name)) {
+			value = headers.get(name);
+		}
+		else {
+			value = super.getHeader(name);
+			this.headers.put(name, value);
+		}
+		if (StringUtil.isNotBlank(value)) {
+			value = StringUtil.trim(value);
+		}
+		return value;
+	}
+
+	public void putHeader(String name, String value) {
+		this.headers.put(name, value);
+	}
+
+	@Override
+	public Enumeration<String> getHeaderNames() {
+		Set<String> set = new HashSet<>(headers.keySet());
+		Enumeration<String> enumeration = request.getHeaderNames();
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
+			set.add(name);
+		}
+		return Collections.enumeration(set);
+	}
+
+	@Override
+	public String[] getParameterValues(String name) {
+		name = StringUtil.stripXss(name);
+		String[] parameterValues = super.getParameterValues(name);
+		if (parameterValues == null) {
+			return null;
+		}
+		for (int i = 0; i < parameterValues.length; i++) {
+			String value = parameterValues[i];
+			parameterValues[i] = StringUtil.stripXss(value).trim();
+		}
+		return parameterValues;
+	}
+
 }

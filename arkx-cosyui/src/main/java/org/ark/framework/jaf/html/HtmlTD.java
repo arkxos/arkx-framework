@@ -6,166 +6,168 @@ import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * @class org.ark.framework.jaf.html.HtmlTD
- *
  * @author Darkness
  * @date 2013-1-31 下午12:50:43
  * @version V1.0
  */
 public class HtmlTD extends HtmlElement {
-    protected HtmlTR parent;
 
-    public HtmlTD() {
-        this(null);
-    }
+	protected HtmlTR parent;
 
-    public HtmlTD(HtmlTR parent) {
-        this.parent = parent;
-        this.ElementType = "TD";
-        this.TagName = "td";
-    }
+	public HtmlTD() {
+		this(null);
+	}
 
-    public void setWidth(int width) {
-        this.Attributes.put("width", Integer.valueOf(width));
-    }
+	public HtmlTD(HtmlTR parent) {
+		this.parent = parent;
+		this.ElementType = "TD";
+		this.TagName = "td";
+	}
 
-    public int getWidth() {
-        return ((Integer) this.Attributes.get("width")).intValue();
-    }
+	public void setWidth(int width) {
+		this.Attributes.put("width", Integer.valueOf(width));
+	}
 
-    public void setHeight(int height) {
-        this.Attributes.put("height", Integer.valueOf(height));
-    }
+	public int getWidth() {
+		return ((Integer) this.Attributes.get("width")).intValue();
+	}
 
-    public int getHeight() {
-        return ((Integer) this.Attributes.get("height")).intValue();
-    }
+	public void setHeight(int height) {
+		this.Attributes.put("height", Integer.valueOf(height));
+	}
 
-    public void setAlign(String align) {
-        this.Attributes.put("align", align);
-    }
+	public int getHeight() {
+		return ((Integer) this.Attributes.get("height")).intValue();
+	}
 
-    public String getAlign() {
-        return (String) this.Attributes.get("align");
-    }
+	public void setAlign(String align) {
+		this.Attributes.put("align", align);
+	}
 
-    public void setBgColor(String bgColor) {
-        this.Attributes.put("bgColor", bgColor);
-    }
+	public String getAlign() {
+		return (String) this.Attributes.get("align");
+	}
 
-    public String getBgColor() {
-        return (String) this.Attributes.get("bgColor");
-    }
+	public void setBgColor(String bgColor) {
+		this.Attributes.put("bgColor", bgColor);
+	}
 
-    public void setBackgroud(String backgroud) {
-        this.Attributes.put("backgroud", backgroud);
-    }
+	public String getBgColor() {
+		return (String) this.Attributes.get("bgColor");
+	}
 
-    public String getBackgroud() {
-        return (String) this.Attributes.get("backgroud");
-    }
+	public void setBackgroud(String backgroud) {
+		this.Attributes.put("backgroud", backgroud);
+	}
 
-    public String getVAlign() {
-        return (String) this.Attributes.get("vAlign");
-    }
+	public String getBackgroud() {
+		return (String) this.Attributes.get("backgroud");
+	}
 
-    public void setVAlign(String vAlign) {
-        this.Attributes.put("vAlign", vAlign);
-    }
+	public String getVAlign() {
+		return (String) this.Attributes.get("vAlign");
+	}
 
-    public void setColSpan(String colSpan) {
-        setAttribute("colSpan", colSpan);
-    }
+	public void setVAlign(String vAlign) {
+		this.Attributes.put("vAlign", vAlign);
+	}
 
-    public String getColSpan() {
-        return getAttribute("colSpan");
-    }
+	public void setColSpan(String colSpan) {
+		setAttribute("colSpan", colSpan);
+	}
 
-    public void setRowSpan(String rowSpan) {
-        setAttribute("rowSpan", rowSpan);
-    }
+	public String getColSpan() {
+		return getAttribute("colSpan");
+	}
 
-    public String getRowSpan() {
-        return getAttribute("rowSpan");
-    }
+	public void setRowSpan(String rowSpan) {
+		setAttribute("rowSpan", rowSpan);
+	}
 
-    public int getCellIndex() {
-        for (int i = 0; i < this.ParentElement.Children.size(); i++) {
-            if (((HtmlElement) this.ParentElement.Children.get(i)).equals(this)) {
-                return i;
-            }
-        }
-        throw new RuntimeException("getCellIndex() failed");
-    }
+	public String getRowSpan() {
+		return getAttribute("rowSpan");
+	}
 
-    public void parseHtml(String html) throws Exception {
-        Matcher m = HtmlTable.PTD.matcher(html);
-        if (!m.find()) {
-            throw new Exception("Parse td failed:" + html);
-        }
-        this.TagName = m.group(1);
-        String attrs = m.group(2);
+	public int getCellIndex() {
+		for (int i = 0; i < this.ParentElement.Children.size(); i++) {
+			if (((HtmlElement) this.ParentElement.Children.get(i)).equals(this)) {
+				return i;
+			}
+		}
+		throw new RuntimeException("getCellIndex() failed");
+	}
 
-        this.Attributes.clear();
-        this.Children.clear();
+	public void parseHtml(String html) throws Exception {
+		Matcher m = HtmlTable.PTD.matcher(html);
+		if (!m.find()) {
+			throw new Exception("Parse td failed:" + html);
+		}
+		this.TagName = m.group(1);
+		String attrs = m.group(2);
 
-        this.Attributes = parseAttr(attrs);
-        this.InnerHTML = m.group(3).trim();
+		this.Attributes.clear();
+		this.Children.clear();
 
-        if (this.parent != null) {
-            String newHtml = this.parent.restoreInnerTable(this.InnerHTML);
-            if (newHtml.equals(this.InnerHTML)) {
-                if (this.parent.getParent() != null)
-                    setInnerHTML(this.parent.getParent().restoreInnerTable(this.InnerHTML));
-            } else
-                setInnerHTML(newHtml);
-        }
-    }
+		this.Attributes = parseAttr(attrs);
+		this.InnerHTML = m.group(3).trim();
 
-    public HtmlTR getParent() {
-        return this.parent;
-    }
+		if (this.parent != null) {
+			String newHtml = this.parent.restoreInnerTable(this.InnerHTML);
+			if (newHtml.equals(this.InnerHTML)) {
+				if (this.parent.getParent() != null)
+					setInnerHTML(this.parent.getParent().restoreInnerTable(this.InnerHTML));
+			}
+			else
+				setInnerHTML(newHtml);
+		}
+	}
 
-    public boolean isHead() {
-        return this.TagName.equalsIgnoreCase("th");
-    }
+	public HtmlTR getParent() {
+		return this.parent;
+	}
 
-    public void setHead(boolean isHead) {
-        if (isHead)
-            this.TagName = "th";
-        else
-            this.TagName = "tr";
-    }
+	public boolean isHead() {
+		return this.TagName.equalsIgnoreCase("th");
+	}
 
-    public String getOuterHtml(String prefix) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(prefix);
-        sb.append("<");
-        sb.append(this.TagName);
-        for (String k : this.Attributes.keySet()) {
-            Object v = this.Attributes.get(k);
-            if (v != null) {
-                sb.append(" ");
-                sb.append(k);
-                sb.append("=\"");
-                sb.append(v);
-                sb.append("\"");
-            }
-        }
-        sb.append(">");
-        if (!ObjectUtil.empty(this.InnerHTML))
-            sb.append(this.InnerHTML);
-        else {
-            for (int i = 0; i < this.Children.size(); i++) {
-                if (ObjectUtil.in(new Object[]{((HtmlElement) this.Children.get(i)).getTagName().toLowerCase(), "table",
-                        "div", "script", "select"})) {
-                    sb.append("\n");
-                }
-                sb.append(((HtmlElement) this.Children.get(i)).getOuterHtml(prefix + "\t"));
-            }
-        }
-        sb.append("</");
-        sb.append(this.TagName);
-        sb.append(">");
-        return sb.toString();
-    }
+	public void setHead(boolean isHead) {
+		if (isHead)
+			this.TagName = "th";
+		else
+			this.TagName = "tr";
+	}
+
+	public String getOuterHtml(String prefix) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(prefix);
+		sb.append("<");
+		sb.append(this.TagName);
+		for (String k : this.Attributes.keySet()) {
+			Object v = this.Attributes.get(k);
+			if (v != null) {
+				sb.append(" ");
+				sb.append(k);
+				sb.append("=\"");
+				sb.append(v);
+				sb.append("\"");
+			}
+		}
+		sb.append(">");
+		if (!ObjectUtil.empty(this.InnerHTML))
+			sb.append(this.InnerHTML);
+		else {
+			for (int i = 0; i < this.Children.size(); i++) {
+				if (ObjectUtil.in(new Object[] { ((HtmlElement) this.Children.get(i)).getTagName().toLowerCase(),
+						"table", "div", "script", "select" })) {
+					sb.append("\n");
+				}
+				sb.append(((HtmlElement) this.Children.get(i)).getOuterHtml(prefix + "\t"));
+			}
+		}
+		sb.append("</");
+		sb.append(this.TagName);
+		sb.append(">");
+		return sb.toString();
+	}
+
 }

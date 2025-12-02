@@ -1,7 +1,6 @@
 package io.arkx.framework.data.lightning;
 
 /**
- *
  * @author Darkness
  * @date 2015年12月19日 下午5:12:47
  * @version V1.0
@@ -9,11 +8,12 @@ package io.arkx.framework.data.lightning;
  */
 public interface ILightningTable {
 
-    String getTableName();
+	String getTableName();
 
-    LightningColumn[] getLightningColumns();
+	LightningColumn[] getLightningColumns();
 
-    int getRowCount();
+	int getRowCount();
 
-    int getColumnCount();
+	int getColumnCount();
+
 }

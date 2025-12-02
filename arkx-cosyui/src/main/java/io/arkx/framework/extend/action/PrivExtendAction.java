@@ -13,12 +13,14 @@ import io.arkx.framework.extend.IExtendAction;
  *
  */
 public abstract class PrivExtendAction implements IExtendAction {
-    public static String ExtendPointID = "io.arkx.framework.PrivCheck";
 
-    @Override
-    public Object execute(Object[] args) throws ExtendException {
-        return getPrivFlag((String) args[0]);
-    }
+	public static String ExtendPointID = "io.arkx.framework.PrivCheck";
 
-    public abstract int getPrivFlag(String priv) throws ExtendException;
+	@Override
+	public Object execute(Object[] args) throws ExtendException {
+		return getPrivFlag((String) args[0]);
+	}
+
+	public abstract int getPrivFlag(String priv) throws ExtendException;
+
 }

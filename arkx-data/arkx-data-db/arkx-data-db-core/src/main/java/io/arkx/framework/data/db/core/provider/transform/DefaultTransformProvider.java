@@ -18,24 +18,24 @@ import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
  */
 public class DefaultTransformProvider implements RecordTransformProvider {
 
-    private ProductFactoryProvider factoryProvider;
+	private ProductFactoryProvider factoryProvider;
 
-    public DefaultTransformProvider(ProductFactoryProvider factoryProvider) {
-        this.factoryProvider = factoryProvider;
-    }
+	public DefaultTransformProvider(ProductFactoryProvider factoryProvider) {
+		this.factoryProvider = factoryProvider;
+	}
 
-    protected ProductFactoryProvider getFactoryProvider() {
-        return this.factoryProvider;
-    }
+	protected ProductFactoryProvider getFactoryProvider() {
+		return this.factoryProvider;
+	}
 
-    @Override
-    public String getTransformerName() {
-        return this.getClass().getSimpleName();
-    }
+	@Override
+	public String getTransformerName() {
+		return this.getClass().getSimpleName();
+	}
 
-    @Override
-    public Object[] doTransform(String schema, String table, List<String> fieldNames, Object[] recordValue) {
-        return recordValue;
-    }
+	@Override
+	public Object[] doTransform(String schema, String table, List<String> fieldNames, Object[] recordValue) {
+		return recordValue;
+	}
 
 }

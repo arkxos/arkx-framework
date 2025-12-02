@@ -6,41 +6,43 @@ import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @class org.ark.framework.ssi.SSIServletRequestUtil
- *
  * @author Darkness
  * @date 2013-1-31 下午12:36:28
  * @version V1.0
  */
 public class SSIServletRequestUtil {
-    public static String getRelativePath(HttpServletRequest request) {
-        if (request.getAttribute("javax.servlet.include.request_uri") != null) {
-            String result = (String) request.getAttribute("javax.servlet.include.path_info");
-            if (result == null)
-                result = (String) request.getAttribute("javax.servlet.include.servlet_path");
-            if ((result == null) || (result.equals("")))
-                result = "/";
-            return result;
-        }
 
-        String result1 = request.getServletPath();
-        String result2 = request.getPathInfo();
-        String result = null;
+	public static String getRelativePath(HttpServletRequest request) {
+		if (request.getAttribute("javax.servlet.include.request_uri") != null) {
+			String result = (String) request.getAttribute("javax.servlet.include.path_info");
+			if (result == null)
+				result = (String) request.getAttribute("javax.servlet.include.servlet_path");
+			if ((result == null) || (result.equals("")))
+				result = "/";
+			return result;
+		}
 
-        if (StringUtil.isEmpty(result1))
-            result = result2;
-        else if (StringUtil.isEmpty(result2))
-            result = result1;
-        else {
-            result = result1.length() > result2.length() ? result1 : result2;
-        }
-        if ((result == null) || (result.equals(""))) {
-            result = "/";
-        }
-        return RequestUtil.normalize(result);
-    }
+		String result1 = request.getServletPath();
+		String result2 = request.getPathInfo();
+		String result = null;
 
-    /** @deprecated */
-    public static String normalize(String path) {
-        return RequestUtil.normalize(path);
-    }
+		if (StringUtil.isEmpty(result1))
+			result = result2;
+		else if (StringUtil.isEmpty(result2))
+			result = result1;
+		else {
+			result = result1.length() > result2.length() ? result1 : result2;
+		}
+		if ((result == null) || (result.equals(""))) {
+			result = "/";
+		}
+		return RequestUtil.normalize(result);
+	}
+
+	/**
+	 * @deprecated */
+	public static String normalize(String path) {
+		return RequestUtil.normalize(path);
+	}
+
 }

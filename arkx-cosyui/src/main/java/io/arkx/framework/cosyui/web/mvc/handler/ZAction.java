@@ -16,197 +16,211 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 public class ZAction {
-    private StringBuilder sb;
-    private boolean binaryMode;
-    private boolean closeStringBuilder = false;
-    private CookieData cookies;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private String contentType;
 
-    public CookieData getCookies() {
-        return cookies;
-    }
+	private StringBuilder sb;
 
-    public void setCookies(CookieData cookies) {
-        this.cookies = cookies;
-    }
+	private boolean binaryMode;
 
-    public void forward(String forwardURL) {// NO_UCD
-        Dispatcher.forward(forwardURL);
-    }
+	private boolean closeStringBuilder = false;
 
-    public void redirect(String redirectURL) {
-        Dispatcher.redirect(redirectURL);
-    }
+	private CookieData cookies;
 
-    public boolean isBinaryMode() {
-        return binaryMode;
-    }
+	private HttpServletRequest request;
 
-    public void setBinaryMode(boolean flag) {
-        binaryMode = flag;
-    }
+	private HttpServletResponse response;
 
-    public void writeHTML(String html) {
-        if (!binaryMode) {
-            contentType = "text/html";
-            write(html);
-        } else {
-            throw new RuntimeException("Can't invoke writeHTML in binary mode!");
-        }
-    }
+	private String contentType;
 
-    private void write(String str) {
-        if (sb == null) {
-            sb = new StringBuilder();
-        }
-        if (sb.length() == 0) {
-            closeStringBuilder = false;
-        }
-        if (closeStringBuilder && sb.length() > 0) {
-            throw new RuntimeException("Can't append string before clear StringBuilder!");
-        }
-        sb.append(str);
-    }
+	public CookieData getCookies() {
+		return cookies;
+	}
 
-    public void writeJS(String js) {
-        if (!binaryMode) {
-            setContentType("text/javascript");
-            write(js);
-        } else {
-            throw new RuntimeException("Can't invoke writeJS in binary mode!");
-        }
-    }
+	public void setCookies(CookieData cookies) {
+		this.cookies = cookies;
+	}
 
-    // 根据请求返回四种格式的数据，并且禁止再向sb写入内容
-    // resultDataFormat可能为以下几个值之一
-    // json,jsonp,html,xml,text,script,setWindowName,postWindowMessage
-    public void end(String str) {
-        if (sb == null) {
-            sb = new StringBuilder();
-        }
-        String method = request.getMethod();
-        String resultDataFormat = request.getParameter(Constant.DataFormat);
-        String callback = request.getParameter("callback");
-        // 返回简单JSONP
-        if (method.equals("GET") && StringUtil.isNotEmpty(callback)) {
-            if (StringUtil.checkForVarName(callback)) {
-                contentType = "text/javascript";
-                sb.append(callback);
-                sb.append("(");
-                sb.append(str);
-                sb.append(");");
-            } else {
-                this.contentType = "text/plain";
-                this.sb.append("Parameter Error: callback is Invalid");
-            }
-        }
-        // 返回修改window.name的html片断
-        else if (resultDataFormat != null) {
-            if (resultDataFormat.equalsIgnoreCase("setWindowName")) {
-                contentType = "text/html";
-                sb.append("<html><head>");
-                sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=");
-                sb.append(Config.getGlobalCharset());
-                sb.append("\">");
-                sb.append("</head><body>");
-                sb.append("<script id=\"jsonData\" type=\"text/json\">");
-                sb.append(str);
-                sb.append("</script>");
-                sb.append("<script>window.name=document.getElementById('jsonData').innerHTML;</script>");
-                sb.append("</body></html>");
-            }
-            // JSON数据
-            else if (resultDataFormat.equals("json")) {
-                contentType = "application/json";
-                sb.append(str);
-            }
-            // 普通HTML片断
-            else {
-                contentType = "text/html";
-                sb.append(str);
-            }
-        } else {
-            contentType = "application/json";
-            sb.append(str);
-        }
-        closeStringBuilder = true;
-    }
+	public void forward(String forwardURL) {// NO_UCD
+		Dispatcher.forward(forwardURL);
+	}
 
-    /**
-     * 跨域返回
-     *
-     * @param json
-     */
-    public void jsonp(String json) {
-        if (sb == null) {
-            sb = new StringBuilder();
-        }
-        String callback = request.getParameter("callback");
-        if (StringUtil.isNotEmpty(callback)) {
-            if (StringUtil.checkForVarName(callback)) {
-                this.contentType = "text/javascript";
-                this.sb.delete(0, this.sb.length());
-                this.sb.append(callback);
-                this.sb.append("(");
-                this.sb.append(json);
-                this.sb.append(");");
-            } else {
-                this.contentType = "text/plain";
-                this.sb.append("Parameter Error: callback is Invalid");
-            }
-        }
-    }
+	public void redirect(String redirectURL) {
+		Dispatcher.redirect(redirectURL);
+	}
 
-    @Deprecated
-    public String getHTML() {
-        return getContent();
-    }
+	public boolean isBinaryMode() {
+		return binaryMode;
+	}
 
-    public String getContent() {
-        return sb == null ? "" : sb.toString();
-    }
+	public void setBinaryMode(boolean flag) {
+		binaryMode = flag;
+	}
 
-    public void writeByte(byte[] arr) {
-        if (binaryMode) {
-            try {
-                response.getOutputStream().write(arr);
-                response.getOutputStream().flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new RuntimeException("Can't invoke writeByte in html mode!");
-        }
-    }
+	public void writeHTML(String html) {
+		if (!binaryMode) {
+			contentType = "text/html";
+			write(html);
+		}
+		else {
+			throw new RuntimeException("Can't invoke writeHTML in binary mode!");
+		}
+	}
 
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
-    }
+	private void write(String str) {
+		if (sb == null) {
+			sb = new StringBuilder();
+		}
+		if (sb.length() == 0) {
+			closeStringBuilder = false;
+		}
+		if (closeStringBuilder && sb.length() > 0) {
+			throw new RuntimeException("Can't append string before clear StringBuilder!");
+		}
+		sb.append(str);
+	}
 
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
+	public void writeJS(String js) {
+		if (!binaryMode) {
+			setContentType("text/javascript");
+			write(js);
+		}
+		else {
+			throw new RuntimeException("Can't invoke writeJS in binary mode!");
+		}
+	}
 
-    public HttpServletRequest getRequest() {
-        return request;
-    }
+	// 根据请求返回四种格式的数据，并且禁止再向sb写入内容
+	// resultDataFormat可能为以下几个值之一
+	// json,jsonp,html,xml,text,script,setWindowName,postWindowMessage
+	public void end(String str) {
+		if (sb == null) {
+			sb = new StringBuilder();
+		}
+		String method = request.getMethod();
+		String resultDataFormat = request.getParameter(Constant.DataFormat);
+		String callback = request.getParameter("callback");
+		// 返回简单JSONP
+		if (method.equals("GET") && StringUtil.isNotEmpty(callback)) {
+			if (StringUtil.checkForVarName(callback)) {
+				contentType = "text/javascript";
+				sb.append(callback);
+				sb.append("(");
+				sb.append(str);
+				sb.append(");");
+			}
+			else {
+				this.contentType = "text/plain";
+				this.sb.append("Parameter Error: callback is Invalid");
+			}
+		}
+		// 返回修改window.name的html片断
+		else if (resultDataFormat != null) {
+			if (resultDataFormat.equalsIgnoreCase("setWindowName")) {
+				contentType = "text/html";
+				sb.append("<html><head>");
+				sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=");
+				sb.append(Config.getGlobalCharset());
+				sb.append("\">");
+				sb.append("</head><body>");
+				sb.append("<script id=\"jsonData\" type=\"text/json\">");
+				sb.append(str);
+				sb.append("</script>");
+				sb.append("<script>window.name=document.getElementById('jsonData').innerHTML;</script>");
+				sb.append("</body></html>");
+			}
+			// JSON数据
+			else if (resultDataFormat.equals("json")) {
+				contentType = "application/json";
+				sb.append(str);
+			}
+			// 普通HTML片断
+			else {
+				contentType = "text/html";
+				sb.append(str);
+			}
+		}
+		else {
+			contentType = "application/json";
+			sb.append(str);
+		}
+		closeStringBuilder = true;
+	}
 
-    public HttpServletResponse getResponse() {
-        return response;
-    }
+	/**
+	 * 跨域返回
+	 * @param json
+	 */
+	public void jsonp(String json) {
+		if (sb == null) {
+			sb = new StringBuilder();
+		}
+		String callback = request.getParameter("callback");
+		if (StringUtil.isNotEmpty(callback)) {
+			if (StringUtil.checkForVarName(callback)) {
+				this.contentType = "text/javascript";
+				this.sb.delete(0, this.sb.length());
+				this.sb.append(callback);
+				this.sb.append("(");
+				this.sb.append(json);
+				this.sb.append(");");
+			}
+			else {
+				this.contentType = "text/plain";
+				this.sb.append("Parameter Error: callback is Invalid");
+			}
+		}
+	}
 
-    public void setSkipPage(boolean skip) {
-        request.setAttribute("ZACTION_SKIPPAGE", String.valueOf(skip));
-    }
+	@Deprecated
+	public String getHTML() {
+		return getContent();
+	}
 
-    public String getContentType() {
-        return contentType;
-    }
+	public String getContent() {
+		return sb == null ? "" : sb.toString();
+	}
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-        this.response.setContentType(contentType);
-    }
+	public void writeByte(byte[] arr) {
+		if (binaryMode) {
+			try {
+				response.getOutputStream().write(arr);
+				response.getOutputStream().flush();
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			throw new RuntimeException("Can't invoke writeByte in html mode!");
+		}
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setSkipPage(boolean skip) {
+		request.setAttribute("ZACTION_SKIPPAGE", String.valueOf(skip));
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+		this.response.setContentType(contentType);
+	}
+
 }

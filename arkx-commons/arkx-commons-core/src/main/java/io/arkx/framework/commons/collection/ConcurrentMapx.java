@@ -5,13 +5,15 @@ package io.arkx.framework.commons.collection;
  *
  */
 public class ConcurrentMapx<K, V> extends Mapx<K, V> {
-    private static final long serialVersionUID = 201404182133L;
 
-    public ConcurrentMapx() {
-        super(true);
-    }
+	private static final long serialVersionUID = 201404182133L;
 
-    public ConcurrentMapx(int initCapacity) {
-        super(initCapacity, true);
-    }
+	public ConcurrentMapx() {
+		super(true);
+	}
+
+	public ConcurrentMapx(int initCapacity) {
+		super(initCapacity, true);
+	}
+
 }

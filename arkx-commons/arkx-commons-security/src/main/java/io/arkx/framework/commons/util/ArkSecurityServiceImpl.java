@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import io.arkx.framework.commons.ArkSecurityService;
 
 /**
- *
  * @author Nobody
  * @version 1.0
  * @date 2025-10-21 15:42
@@ -15,13 +14,15 @@ import io.arkx.framework.commons.ArkSecurityService;
  */
 @Service
 public class ArkSecurityServiceImpl implements ArkSecurityService {
-    @Override
-    public List<Long> getCurrentUserDataScope() {
-        return SecurityUtils.getCurrentUserDataScope();
-    }
 
-    @Override
-    public String getCurrentUsername() {
-        return SecurityUtils.getCurrentUsername();
-    }
+	@Override
+	public List<Long> getCurrentUserDataScope() {
+		return SecurityUtils.getCurrentUserDataScope();
+	}
+
+	@Override
+	public String getCurrentUsername() {
+		return SecurityUtils.getCurrentUsername();
+	}
+
 }

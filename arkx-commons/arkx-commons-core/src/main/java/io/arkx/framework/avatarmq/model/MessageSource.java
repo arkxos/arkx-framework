@@ -9,15 +9,16 @@ package io.arkx.framework.avatarmq.model;
  */
 public enum MessageSource {
 
-    AvatarMQConsumer(1), AvatarMQBroker(2), AvatarMQProducer(3);
+	AvatarMQConsumer(1), AvatarMQBroker(2), AvatarMQProducer(3);
 
-    private int source;
+	private int source;
 
-    private MessageSource(int source) {
-        this.source = source;
-    }
+	private MessageSource(int source) {
+		this.source = source;
+	}
 
-    public int getSource() {
-        return source;
-    }
+	public int getSource() {
+		return source;
+	}
+
 }

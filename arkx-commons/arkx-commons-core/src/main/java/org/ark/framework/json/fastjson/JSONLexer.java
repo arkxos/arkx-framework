@@ -4,61 +4,63 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 
 public abstract interface JSONLexer {
-    public abstract void nextToken();
 
-    public abstract void nextToken(int paramInt);
+	public abstract void nextToken();
 
-    public abstract int token();
+	public abstract void nextToken(int paramInt);
 
-    public abstract int pos();
+	public abstract int token();
 
-    public abstract String stringVal();
+	public abstract int pos();
 
-    public abstract Number integerValue();
+	public abstract String stringVal();
 
-    public abstract void nextTokenWithColon(int paramInt);
+	public abstract Number integerValue();
 
-    public abstract BigDecimal decimalValue();
+	public abstract void nextTokenWithColon(int paramInt);
 
-    public abstract double doubleValue();
+	public abstract BigDecimal decimalValue();
 
-    public abstract float floatValue();
+	public abstract double doubleValue();
 
-    public abstract void config(Feature paramFeature, boolean paramBoolean);
+	public abstract float floatValue();
 
-    public abstract boolean isEnabled(Feature paramFeature);
+	public abstract void config(Feature paramFeature, boolean paramBoolean);
 
-    public abstract String numberString();
+	public abstract boolean isEnabled(Feature paramFeature);
 
-    public abstract boolean isEOF();
+	public abstract String numberString();
 
-    public abstract String symbol(SymbolTable paramSymbolTable);
+	public abstract boolean isEOF();
 
-    public abstract boolean isBlankInput();
+	public abstract String symbol(SymbolTable paramSymbolTable);
 
-    public abstract char getCurrent();
+	public abstract boolean isBlankInput();
 
-    public abstract void skipWhitespace();
+	public abstract char getCurrent();
 
-    public abstract void incrementBufferPosition();
+	public abstract void skipWhitespace();
 
-    public abstract String scanSymbol(SymbolTable paramSymbolTable);
+	public abstract void incrementBufferPosition();
 
-    public abstract String scanSymbol(SymbolTable paramSymbolTable, char paramChar);
+	public abstract String scanSymbol(SymbolTable paramSymbolTable);
 
-    public abstract void resetStringPosition();
+	public abstract String scanSymbol(SymbolTable paramSymbolTable, char paramChar);
 
-    public abstract String scanSymbolUnQuoted(SymbolTable paramSymbolTable);
+	public abstract void resetStringPosition();
 
-    public abstract void scanString();
+	public abstract String scanSymbolUnQuoted(SymbolTable paramSymbolTable);
 
-    public abstract void scanNumber();
+	public abstract void scanString();
 
-    public abstract boolean scanISO8601DateIfMatch();
+	public abstract void scanNumber();
 
-    public abstract Calendar getCalendar();
+	public abstract boolean scanISO8601DateIfMatch();
 
-    public abstract int intValue() throws NumberFormatException;
+	public abstract Calendar getCalendar();
 
-    public abstract long longValue() throws NumberFormatException;
+	public abstract int intValue() throws NumberFormatException;
+
+	public abstract long longValue() throws NumberFormatException;
+
 }

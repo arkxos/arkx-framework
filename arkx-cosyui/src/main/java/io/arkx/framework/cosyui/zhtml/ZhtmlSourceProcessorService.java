@@ -10,20 +10,24 @@ import io.arkx.framework.extend.AbstractExtendService;
  *
  */
 public class ZhtmlSourceProcessorService extends AbstractExtendService<ITemplateSourceProcessor> {
-    private static ZhtmlSourceProcessorService instance;
-    private static ReentrantLock lock = new ReentrantLock();
 
-    public static ZhtmlSourceProcessorService getInstance() {
-        if (instance == null) {
-            lock.lock();
-            try {
-                if (instance == null) {
-                    instance = AbstractExtendService.findInstance(ZhtmlSourceProcessorService.class);
-                }
-            } finally {
-                lock.unlock();
-            }
-        }
-        return instance;
-    }
+	private static ZhtmlSourceProcessorService instance;
+
+	private static ReentrantLock lock = new ReentrantLock();
+
+	public static ZhtmlSourceProcessorService getInstance() {
+		if (instance == null) {
+			lock.lock();
+			try {
+				if (instance == null) {
+					instance = AbstractExtendService.findInstance(ZhtmlSourceProcessorService.class);
+				}
+			}
+			finally {
+				lock.unlock();
+			}
+		}
+		return instance;
+	}
+
 }

@@ -18,51 +18,52 @@ import io.arkx.framework.data.xml.XMLMultiLoader;
  */
 public class AttributeStyleXmlToBean extends AbstractXmlToBean {
 
-    public AttributeStyleXmlToBean(boolean ingoreRoot) {
-        super(ingoreRoot);
-    }
+	public AttributeStyleXmlToBean(boolean ingoreRoot) {
+		super(ingoreRoot);
+	}
 
-    public List<Object> toBean(XMLMultiLoader xmlLoader) {
-        XMLElement xmlElement = xmlLoader.getRoot();
+	public List<Object> toBean(XMLMultiLoader xmlLoader) {
+		XMLElement xmlElement = xmlLoader.getRoot();
 
-        List<XMLElement> elements = xmlElement.getElements();
-        List<Object> beans = dealChildren(elements.get(0), new Mapx<String, Object>());
+		List<XMLElement> elements = xmlElement.getElements();
+		List<Object> beans = dealChildren(elements.get(0), new Mapx<String, Object>());
 
-        return beans;
-    }
+		return beans;
+	}
 
-    public static String generatePk() {
-        return UUID.randomUUID().toString();
-    }
+	public static String generatePk() {
+		return UUID.randomUUID().toString();
+	}
 
-    private List<Object> dealChildren(XMLElement element, Mapx<String, Object> parentParams) {
-        List<Object> result = new ArrayList<Object>();
+	private List<Object> dealChildren(XMLElement element, Mapx<String, Object> parentParams) {
+		List<Object> result = new ArrayList<Object>();
 
-        Mapx<String, Object> paramToChildren = null;
+		Mapx<String, Object> paramToChildren = null;
 
-        String CHILDREN_MARK = "children-";
-        Object bean = null;
-        if (element.getQName().startsWith(CHILDREN_MARK)) {
-            paramToChildren = parentParams;
-        } else {// 非子节点，转换成bean
-            parentParams.put("id", generatePk());
-            parentParams.putAll(element.getAttributes());
-            bean = buildBean(element.getQName(), parentParams);
+		String CHILDREN_MARK = "children-";
+		Object bean = null;
+		if (element.getQName().startsWith(CHILDREN_MARK)) {
+			paramToChildren = parentParams;
+		}
+		else {// 非子节点，转换成bean
+			parentParams.put("id", generatePk());
+			parentParams.putAll(element.getAttributes());
+			bean = buildBean(element.getQName(), parentParams);
 
-            paramToChildren = new Mapx<String, Object>();
-            Mapx<String, Object> parentProperties = ClassUtil.getPropertyValues(bean);
+			paramToChildren = new Mapx<String, Object>();
+			Mapx<String, Object> parentProperties = ClassUtil.getPropertyValues(bean);
 
-            paramToChildren.putAll(parentProperties, "parent.");
+			paramToChildren.putAll(parentProperties, "parent.");
 
-            result.add(bean);
-        }
+			result.add(bean);
+		}
 
-        for (XMLElement childElement : element.getElements()) {
-            List<Object> childBeans = dealChildren(childElement, paramToChildren);
-            result.addAll(childBeans);
-        }
+		for (XMLElement childElement : element.getElements()) {
+			List<Object> childBeans = dealChildren(childElement, paramToChildren);
+			result.addAll(childBeans);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

@@ -2,26 +2,28 @@ package io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric;
 
 public class Line {
 
-    private double a;
-    private double b;
-    private double c;
+	private double a;
 
-    public Line(double a, double b, double c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-    }
+	private double b;
 
-    public double getA() {
-        return a;
-    }
+	private double c;
 
-    public double getB() {
-        return b;
-    }
+	public Line(double a, double b, double c) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
+	}
 
-    public double getC() {
-        return c;
-    }
+	public double getA() {
+		return a;
+	}
+
+	public double getB() {
+		return b;
+	}
+
+	public double getC() {
+		return c;
+	}
 
 }

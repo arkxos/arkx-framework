@@ -10,20 +10,20 @@ import ch.qos.logback.core.read.ListAppender;
  * 描述：logback assert console util
  *
  * @see https://stackoverflow.com/questions/1827677/how-to-do-a-junit-assert-on-a-message-in-a-logger/50268580
- *
  * @author w.dehi.2022-02-23
  */
 public class AppenderUtil {
 
-    public static ListAppender<ILoggingEvent> create(Class<?> c) {
-        Logger logger = (Logger) LoggerFactory.getLogger(c);
-        ListAppender<ILoggingEvent> appender = new ListAppender<>();
-        appender.start();
-        logger.addAppender(appender);
-        return appender;
-    }
+	public static ListAppender<ILoggingEvent> create(Class<?> c) {
+		Logger logger = (Logger) LoggerFactory.getLogger(c);
+		ListAppender<ILoggingEvent> appender = new ListAppender<>();
+		appender.start();
+		logger.addAppender(appender);
+		return appender;
+	}
 
-    public static String getMessage(ListAppender<ILoggingEvent> appender, int index) {
-        return appender.list.get(index).getFormattedMessage();
-    }
+	public static String getMessage(ListAppender<ILoggingEvent> appender, int index) {
+		return appender.list.get(index).getFormattedMessage();
+	}
+
 }

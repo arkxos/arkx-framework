@@ -17,7 +17,7 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class BaseSortEntity<PK extends Serializable> extends BaseEntity<PK> {
 
-    @Column(name = "SORT_ORDER")
-    private long sortOrder = 0;// 排序号
+	@Column(name = "SORT_ORDER")
+	private long sortOrder = 0;// 排序号
 
 }

@@ -11,11 +11,11 @@ package io.arkx.framework.commons.websocket.message;
  */
 public class PongJsonWebSocketMessage extends AbstractJsonWebSocketMessage {
 
-    /**
-     * 构造函数，创建一个 Pong 类型的 JSON WebSocket 消息。
-     */
-    public PongJsonWebSocketMessage() {
-        super(WebSocketMessageTypeEnum.PONG.getValue());
-    }
+	/**
+	 * 构造函数，创建一个 Pong 类型的 JSON WebSocket 消息。
+	 */
+	public PongJsonWebSocketMessage() {
+		super(WebSocketMessageTypeEnum.PONG.getValue());
+	}
 
 }

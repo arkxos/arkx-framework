@@ -16,152 +16,159 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  */
 public class LangTag extends ArkTag {
 
-    private String id;
+	private String id;
 
-    private String Default;
+	private String Default;
 
-    private String language;
+	private String language;
 
-    private String oldLanguage;
+	private String oldLanguage;
 
-    private Object arg0;
-    private Object arg1;
-    private Object arg2;
-    private Object arg3;
-    private Object arg4;
+	private Object arg0;
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        try {
-            if (id != null) {
-                String str = getValue();
-                if (ObjectUtil.empty(str)) {
-                    str = Default;
-                }
-                if (str == null) {
-                    str = "@{" + id + "}";
-                }
-                pageContext.getOut().write(str);
-                return SKIP_BODY;
-            }
-            if (language != null) {
-                oldLanguage = context.getLanguage();
-                context.setLanguage(language);
-                return EVAL_BODY_INCLUDE;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return SKIP_BODY;
-    }
+	private Object arg1;
 
-    private String getValue() {
-        if (arg0 != null || arg1 != null || arg2 != null || arg3 != null || arg4 != null) {
-            return LangMapping.get(id, new Object[]{arg0, arg1, arg2, arg3, arg4});
-        } else {
-            return LangMapping.get(id);
-        }
-    }
+	private Object arg2;
 
-    @Override
-    public int doAfterBody() throws TemplateRuntimeException {
-        if (oldLanguage != null) {
-            context.setLanguage(oldLanguage);
-        }
-        return EVAL_PAGE;
-    }
+	private Object arg3;
 
-    public void setId(String var) {
-        id = var;
-    }
+	private Object arg4;
 
-    public String getDefault() {
-        return Default;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		try {
+			if (id != null) {
+				String str = getValue();
+				if (ObjectUtil.empty(str)) {
+					str = Default;
+				}
+				if (str == null) {
+					str = "@{" + id + "}";
+				}
+				pageContext.getOut().write(str);
+				return SKIP_BODY;
+			}
+			if (language != null) {
+				oldLanguage = context.getLanguage();
+				context.setLanguage(language);
+				return EVAL_BODY_INCLUDE;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SKIP_BODY;
+	}
 
-    public void setDefault(String default1) {
-        Default = default1;
-    }
+	private String getValue() {
+		if (arg0 != null || arg1 != null || arg2 != null || arg3 != null || arg4 != null) {
+			return LangMapping.get(id, new Object[] { arg0, arg1, arg2, arg3, arg4 });
+		}
+		else {
+			return LangMapping.get(id);
+		}
+	}
 
-    public String getLanguage() {
-        return language;
-    }
+	@Override
+	public int doAfterBody() throws TemplateRuntimeException {
+		if (oldLanguage != null) {
+			context.setLanguage(oldLanguage);
+		}
+		return EVAL_PAGE;
+	}
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+	public void setId(String var) {
+		id = var;
+	}
 
-    @Override
-    public String getTagName() {
-        return "lang";
-    }
+	public String getDefault() {
+		return Default;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("id", DataTypes.STRING.code(), "@{Framework.LangTag.ID}"));
-        list.add(new TagAttr("language", DataTypes.STRING.code(), "@{Framework.LangTag.Language}"));
-        list.add(new TagAttr("default", DataTypes.STRING.code(), "@{Framework.LangTag.Default}"));
-        list.add(new TagAttr("arg0", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
-        list.add(new TagAttr("arg1", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
-        list.add(new TagAttr("arg2", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
-        list.add(new TagAttr("arg3", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
-        list.add(new TagAttr("arg4", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
-        return list;
-    }
+	public void setDefault(String default1) {
+		Default = default1;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.LangTag.Name}";
-    }
+	public String getLanguage() {
+		return language;
+	}
 
-    @Override
-    public String getDescription() {
-        return "@{Framework.LangTag.Desc}";
-    }
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public String getTagName() {
+		return "lang";
+	}
 
-    public Object getArg0() {
-        return arg0;
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("id", DataTypes.STRING.code(), "@{Framework.LangTag.ID}"));
+		list.add(new TagAttr("language", DataTypes.STRING.code(), "@{Framework.LangTag.Language}"));
+		list.add(new TagAttr("default", DataTypes.STRING.code(), "@{Framework.LangTag.Default}"));
+		list.add(new TagAttr("arg0", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
+		list.add(new TagAttr("arg1", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
+		list.add(new TagAttr("arg2", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
+		list.add(new TagAttr("arg3", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
+		list.add(new TagAttr("arg4", DataTypes.STRING.code(), "@{Framework.LangTag.Arg}"));
+		return list;
+	}
 
-    public void setArg0(Object arg0) {
-        this.arg0 = arg0;
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.LangTag.Name}";
+	}
 
-    public Object getArg1() {
-        return arg1;
-    }
+	@Override
+	public String getDescription() {
+		return "@{Framework.LangTag.Desc}";
+	}
 
-    public void setArg1(Object arg1) {
-        this.arg1 = arg1;
-    }
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
-    public Object getArg2() {
-        return arg2;
-    }
+	public Object getArg0() {
+		return arg0;
+	}
 
-    public void setArg2(Object arg2) {
-        this.arg2 = arg2;
-    }
+	public void setArg0(Object arg0) {
+		this.arg0 = arg0;
+	}
 
-    public Object getArg3() {
-        return arg3;
-    }
+	public Object getArg1() {
+		return arg1;
+	}
 
-    public void setArg3(Object arg3) {
-        this.arg3 = arg3;
-    }
+	public void setArg1(Object arg1) {
+		this.arg1 = arg1;
+	}
 
-    public Object getArg4() {
-        return arg4;
-    }
+	public Object getArg2() {
+		return arg2;
+	}
 
-    public void setArg4(Object arg4) {
-        this.arg4 = arg4;
-    }
+	public void setArg2(Object arg2) {
+		this.arg2 = arg2;
+	}
+
+	public Object getArg3() {
+		return arg3;
+	}
+
+	public void setArg3(Object arg3) {
+		this.arg3 = arg3;
+	}
+
+	public Object getArg4() {
+		return arg4;
+	}
+
+	public void setArg4(Object arg4) {
+		this.arg4 = arg4;
+	}
+
 }

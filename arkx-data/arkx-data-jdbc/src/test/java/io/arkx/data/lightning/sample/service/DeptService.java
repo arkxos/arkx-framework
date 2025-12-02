@@ -17,19 +17,20 @@ import io.arkx.data.lightning.sample.model.Dept;
 @Service
 public class DeptService {
 
-    private final ClosureTableServiceImpl closureService;
+	private final ClosureTableServiceImpl closureService;
 
-    public DeptService(ClosureTableServiceImpl closureService) {
-        this.closureService = closureService;
-    }
+	public DeptService(ClosureTableServiceImpl closureService) {
+		this.closureService = closureService;
+	}
 
-    @Transactional
-    public void addDept(Dept dept) {
-        // closureService.insertNode(dept, "dept");
-    }
+	@Transactional
+	public void addDept(Dept dept) {
+		// closureService.insertNode(dept, "dept");
+	}
 
-    public List<Dept> getDeptDescendants(Long deptId) {
-        // return closureService.findDescendants("dept", deptId, Dept.class);
-        return null;
-    }
+	public List<Dept> getDeptDescendants(Long deptId) {
+		// return closureService.findDescendants("dept", deptId, Dept.class);
+		return null;
+	}
+
 }

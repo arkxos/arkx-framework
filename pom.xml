@@ -297,6 +297,16 @@
                 <maven.snapshot.repository.id>central</maven.snapshot.repository.id>
                 <maven.snapshot.repository.url>https://central.sonatype.com/repository/maven-snapshots/</maven.snapshot.repository.url>
             </properties>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>central</id>
+                    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>central</id>
+                    <url>https://central.sonatype.com/repository/maven-releases/</url>
+                </repository>
+            </distributionManagement>
             <repositories>
                 <repository>
                     <id>central</id>

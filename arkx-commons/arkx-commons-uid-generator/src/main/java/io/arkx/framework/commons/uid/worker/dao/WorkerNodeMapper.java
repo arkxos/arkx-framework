@@ -29,52 +29,47 @@ import io.arkx.framework.commons.uid.worker.entity.WorkerNodeEntity;
 @Mapper
 @ConditionalOnBean(name = "sqlSessionFactory")
 public interface WorkerNodeMapper {
-    /**
-     * Get {@link WorkerNodeEntity} by node host
-     *
-     * @param hostName
-     *            host
-     * @param port
-     *            port
-     * @return WorkerNodeEntity
-     */
-    WorkerNodeEntity getWorkerNodeByHostPort(@Param("hostName") String hostName, @Param("port") String port);
 
-    /**
-     * Add {@link WorkerNodeEntity}
-     *
-     * @param workerNodeEntity
-     *            worker
-     * @return Id
-     */
-    int addWorkerNode(WorkerNodeEntity workerNodeEntity);
+	/**
+	 * Get {@link WorkerNodeEntity} by node host
+	 * @param hostName host
+	 * @param port port
+	 * @return WorkerNodeEntity
+	 */
+	WorkerNodeEntity getWorkerNodeByHostPort(@Param("hostName") String hostName, @Param("port") String port);
 
-    /**
-     * update {@link WorkerNodeEntity}
-     *
-     * @param workerNodeEntity
-     *            worker
-     * @return Id
-     */
-    int updateWorkerNode(WorkerNodeEntity workerNodeEntity);
+	/**
+	 * Add {@link WorkerNodeEntity}
+	 * @param workerNodeEntity worker
+	 * @return Id
+	 */
+	int addWorkerNode(WorkerNodeEntity workerNodeEntity);
 
-    /**
-     * 查询数据库是否存在
-     */
-    // int queryDatabaseExist();
+	/**
+	 * update {@link WorkerNodeEntity}
+	 * @param workerNodeEntity worker
+	 * @return Id
+	 */
+	int updateWorkerNode(WorkerNodeEntity workerNodeEntity);
 
-    /**
-     * 查询数据表是否存在
-     */
-    // int queryTableExist();
+	/**
+	 * 查询数据库是否存在
+	 */
+	// int queryDatabaseExist();
 
-    /**
-     * 创建表
-     */
-    // int createTable();
+	/**
+	 * 查询数据表是否存在
+	 */
+	// int queryTableExist();
 
-    /**
-     * 创建库
-     */
-    // int createDatabase();
+	/**
+	 * 创建表
+	 */
+	// int createTable();
+
+	/**
+	 * 创建库
+	 */
+	// int createDatabase();
+
 }

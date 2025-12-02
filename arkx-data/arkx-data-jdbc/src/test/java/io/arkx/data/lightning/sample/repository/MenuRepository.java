@@ -7,4 +7,5 @@ import io.arkx.data.lightning.sample.model.Menu;
 
 @Repository
 public interface MenuRepository extends BaseJdbcRepository<Menu, String> {
+
 }

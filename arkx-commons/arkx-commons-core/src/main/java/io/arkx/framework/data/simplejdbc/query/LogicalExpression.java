@@ -5,41 +5,45 @@ import java.util.Collection;
 import java.util.List;
 
 public class LogicalExpression implements Criterion {
-    private Criterion lhs;
 
-    private Criterion rhs;
+	private Criterion lhs;
 
-    private String op;
+	private Criterion rhs;
 
-    public LogicalExpression(Criterion lhs, Criterion rhs, String op) {
-        this.lhs = lhs;
-        this.rhs = rhs;
-        this.op = op;
-    }
+	private String op;
 
-    public String toSqlString() {
-        return '(' + lhs.toSqlString() + ' ' + op + ' ' + rhs.toSqlString() + ')';
-    }
+	public LogicalExpression(Criterion lhs, Criterion rhs, String op) {
+		this.lhs = lhs;
+		this.rhs = rhs;
+		this.op = op;
+	}
 
-    public Object getValue() {
-        return null;
-    }
+	public String toSqlString() {
+		return '(' + lhs.toSqlString() + ' ' + op + ' ' + rhs.toSqlString() + ')';
+	}
 
-    public Collection<?> getValues() {
-        List<Object> values = new ArrayList<Object>();
+	public Object getValue() {
+		return null;
+	}
 
-        if (lhs.getValue() != null) {
-            values.add(lhs.getValue());
-        } else if (lhs.getValues() != null) {
-            values.addAll(lhs.getValues());
-        }
+	public Collection<?> getValues() {
+		List<Object> values = new ArrayList<Object>();
 
-        if (rhs.getValue() != null) {
-            values.add(rhs.getValue());
-        } else if (rhs.getValues() != null) {
-            values.addAll(rhs.getValues());
-        }
+		if (lhs.getValue() != null) {
+			values.add(lhs.getValue());
+		}
+		else if (lhs.getValues() != null) {
+			values.addAll(lhs.getValues());
+		}
 
-        return values.isEmpty() ? null : values;
-    }
+		if (rhs.getValue() != null) {
+			values.add(rhs.getValue());
+		}
+		else if (rhs.getValues() != null) {
+			values.addAll(rhs.getValues());
+		}
+
+		return values.isEmpty() ? null : values;
+	}
+
 }

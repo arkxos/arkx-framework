@@ -64,30 +64,32 @@ package io.arkx.framework.thirdparty.el;
  **/
 
 public class NullLiteral extends Literal {
-    // -------------------------------------
-    // Member variables
-    // -------------------------------------
 
-    public static final NullLiteral SINGLETON = new NullLiteral();
+	// -------------------------------------
+	// Member variables
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public NullLiteral() {
-        super(null);
-    }
+	public static final NullLiteral SINGLETON = new NullLiteral();
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the expression in the expression language syntax
-     **/
-    @Override
-    public String getExpressionString() {
-        return "null";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public NullLiteral() {
+		super(null);
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the expression in the expression language syntax
+	 **/
+	@Override
+	public String getExpressionString() {
+		return "null";
+	}
+
+	// -------------------------------------
+
 }

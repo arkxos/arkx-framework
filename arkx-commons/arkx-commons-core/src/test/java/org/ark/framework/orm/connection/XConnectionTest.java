@@ -9,18 +9,18 @@ import io.arkx.framework.data.db.dbtype.DBTypeService;
 import io.arkx.framework.data.db.dbtype.IDBType;
 
 /**
- *
  * @author Darkness
  * @date 2013-1-28 下午03:22:33
  * @version V1.0
  */
 public class XConnectionTest {
 
-    @Test
-    public void checkDefaultConfigDatabaseType() {
+	@Test
+	public void checkDefaultConfigDatabaseType() {
 
-        IDBType database = DBTypeService.getInstance().get(ConnectionPoolManager.getDBConnConfig().getDatabaseType());
+		IDBType database = DBTypeService.getInstance().get(ConnectionPoolManager.getDBConnConfig().getDatabaseType());
 
-        assertNotNull(database);
-    }
+		assertNotNull(database);
+	}
+
 }

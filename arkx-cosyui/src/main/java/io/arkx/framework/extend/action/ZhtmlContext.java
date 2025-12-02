@@ -9,37 +9,41 @@ import io.arkx.framework.cosyui.web.RequestData;
  *
  */
 public class ZhtmlContext {
-    StringBuilder sb = new StringBuilder();
-    ArrayList<String> includes = new ArrayList<String>();
-    RequestData request = null;
 
-    public ZhtmlContext(RequestData request) {
-        this.request = request;
-    }
+	StringBuilder sb = new StringBuilder();
 
-    public RequestData getRequest() {
-        return request;
-    }
+	ArrayList<String> includes = new ArrayList<String>();
 
-    protected String getOut() {
-        return sb.toString();
-    }
+	RequestData request = null;
 
-    protected ArrayList<String> getIncludes() {
-        return includes;
-    }
+	public ZhtmlContext(RequestData request) {
+		this.request = request;
+	}
 
-    /**
-     * 输出字符中到页面
-     */
-    public void write(Object obj) {
-        sb.append(obj);
-    }
+	public RequestData getRequest() {
+		return request;
+	}
 
-    /**
-     * 包含一个页面到当前页面
-     */
-    public void include(String file) {
-        includes.add(file);
-    }
+	protected String getOut() {
+		return sb.toString();
+	}
+
+	protected ArrayList<String> getIncludes() {
+		return includes;
+	}
+
+	/**
+	 * 输出字符中到页面
+	 */
+	public void write(Object obj) {
+		sb.append(obj);
+	}
+
+	/**
+	 * 包含一个页面到当前页面
+	 */
+	public void include(String file) {
+		includes.add(file);
+	}
+
 }

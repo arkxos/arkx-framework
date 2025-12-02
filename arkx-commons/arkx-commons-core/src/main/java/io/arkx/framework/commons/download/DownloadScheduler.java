@@ -1,4 +1,5 @@
 package io.arkx.framework.commons.download;
+
 // package io.arkx.infinity.commons.download;
 //
 // import java.util.concurrent.BlockingQueue;

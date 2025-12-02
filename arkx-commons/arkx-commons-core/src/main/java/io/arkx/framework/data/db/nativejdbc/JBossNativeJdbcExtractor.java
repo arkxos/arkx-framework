@@ -23,16 +23,15 @@ import java.sql.SQLException;
 
 /**
  * 移植自Spring：<br>
- * Implementation of the {@link NativeJdbcExtractor} interface for JBoss,
- * supporting JBoss Application Server 3.2.4+.
+ * Implementation of the {@link NativeJdbcExtractor} interface for JBoss, supporting JBoss
+ * Application Server 3.2.4+.
  * <p>
- * Returns the underlying native Connection, Statement, etc to application code
- * instead of JBoss' wrapper implementations. The returned JDBC classes can then
- * safely be cast, e.g. to <code>oracle.jdbc.OracleConnection</code>.
+ * Returns the underlying native Connection, Statement, etc to application code instead of
+ * JBoss' wrapper implementations. The returned JDBC classes can then safely be cast, e.g.
+ * to <code>oracle.jdbc.OracleConnection</code>.
  * <p>
  * This NativeJdbcExtractor can be set just to <i>allow</i> working with a JBoss
- * connection pool: If a given object is not a JBoss wrapper, it will be
- * returned as-is.
+ * connection pool: If a given object is not a JBoss wrapper, it will be returned as-is.
  *
  * @author Juergen Hoeller
  * @since 03.01.2004
@@ -42,45 +41,49 @@ import java.sql.SQLException;
  */
 public class JBossNativeJdbcExtractor {
 
-    private static final String WRAPPED_CONNECTION_NAME = "org.jboss.resource.adapter.jdbc.WrappedConnection";
+	private static final String WRAPPED_CONNECTION_NAME = "org.jboss.resource.adapter.jdbc.WrappedConnection";
 
-    private static Class<?> wrappedConnectionClass;
+	private static Class<?> wrappedConnectionClass;
 
-    private static Method getUnderlyingConnectionMethod;
+	private static Method getUnderlyingConnectionMethod;
 
-    /**
-     * This constructor retrieves JBoss JDBC wrapper classes, so we can get the
-     * underlying vendor connection using reflection.
-     */
-    public static void init() {
-        try {
-            wrappedConnectionClass = JBossNativeJdbcExtractor.class.getClassLoader().loadClass(WRAPPED_CONNECTION_NAME);
-            getUnderlyingConnectionMethod = wrappedConnectionClass.getMethod("getUnderlyingConnection", (Class[]) null);
-        } catch (Exception ex) {
-            throw new IllegalStateException(
-                    "Could not initialize JBossNativeJdbcExtractor because JBoss API classes are not available: " + ex);
-        }
-    }
+	/**
+	 * This constructor retrieves JBoss JDBC wrapper classes, so we can get the underlying
+	 * vendor connection using reflection.
+	 */
+	public static void init() {
+		try {
+			wrappedConnectionClass = JBossNativeJdbcExtractor.class.getClassLoader().loadClass(WRAPPED_CONNECTION_NAME);
+			getUnderlyingConnectionMethod = wrappedConnectionClass.getMethod("getUnderlyingConnection", (Class[]) null);
+		}
+		catch (Exception ex) {
+			throw new IllegalStateException(
+					"Could not initialize JBossNativeJdbcExtractor because JBoss API classes are not available: " + ex);
+		}
+	}
 
-    /**
-     * Retrieve the Connection via JBoss' <code>getUnderlyingConnection</code>
-     * method.
-     */
-    public static Connection doGetNativeConnection(Connection con) throws SQLException {
-        if (wrappedConnectionClass == null) {
-            init();
-        }
-        if (wrappedConnectionClass.isAssignableFrom(con.getClass())) {
-            try {
-                return (Connection) getUnderlyingConnectionMethod.invoke(con, new Object[0]);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-        return con;
-    }
+	/**
+	 * Retrieve the Connection via JBoss' <code>getUnderlyingConnection</code> method.
+	 */
+	public static Connection doGetNativeConnection(Connection con) throws SQLException {
+		if (wrappedConnectionClass == null) {
+			init();
+		}
+		if (wrappedConnectionClass.isAssignableFrom(con.getClass())) {
+			try {
+				return (Connection) getUnderlyingConnectionMethod.invoke(con, new Object[0]);
+			}
+			catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			}
+			catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+			catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}
+		return con;
+	}
+
 }

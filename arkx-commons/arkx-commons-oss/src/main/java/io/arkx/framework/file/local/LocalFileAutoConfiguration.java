@@ -35,13 +35,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class LocalFileAutoConfiguration {
 
-    private final FileProperties properties;
+	private final FileProperties properties;
 
-    @Bean
-    @ConditionalOnMissingBean(LocalFileTemplate.class)
-    @ConditionalOnProperty(name = "file.local.enable", havingValue = "true", matchIfMissing = true)
-    public FileTemplate localFileTemplate() {
-        return new LocalFileTemplate(properties);
-    }
+	@Bean
+	@ConditionalOnMissingBean(LocalFileTemplate.class)
+	@ConditionalOnProperty(name = "file.local.enable", havingValue = "true", matchIfMissing = true)
+	public FileTemplate localFileTemplate() {
+		return new LocalFileTemplate(properties);
+	}
 
 }

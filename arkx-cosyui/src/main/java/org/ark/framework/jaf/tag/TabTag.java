@@ -9,71 +9,73 @@ import jakarta.servlet.jsp.tagext.BodyTagSupport;
 /**
  * @class org.ark.framework.jaf.tag.TabTag
  *
- *        <h2>Tab标签</h2> <br/>
- *        <h2>{@link org.ark.framework.jaf.tag.ChildTabTag 子选项卡}
- *        <h2><br/>
- *        <img src="images/TabTag_1.png"/> <br/>
- *        &lt;ark:tab> <br/>
- *        &nbsp;&nbsp;&nbsp;&nbsp; &lt;ark:childtab id="ApplicationInfo"
- *        src="ApplicationInfo.zhtml" selected="true" afterClick="check()">
- *        <br/>
- *        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;img
- *        src='../../Icons/icon018a1.png' /> <br/>
- *        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;b>基本信息&lt;/b>
- *        <br/>
- *        &nbsp;&nbsp;&nbsp;&nbsp; &lt;/ark:childtab> <br/>
- *        &lt;/ark:tab> <br/>
- *        <br/>
- *        TabPage.setSrc("ApplicationInfo", "AppModuleInfo.zhtml?id=" + id);
+ * <h2>Tab标签</h2> <br/>
+ * <h2>{@link org.ark.framework.jaf.tag.ChildTabTag 子选项卡}
+ * <h2><br/>
+ * <img src="images/TabTag_1.png"/> <br/>
+ * &lt;ark:tab> <br/>
+ * &nbsp;&nbsp;&nbsp;&nbsp; &lt;ark:childtab id="ApplicationInfo"
+ * src="ApplicationInfo.zhtml" selected="true" afterClick="check()"> <br/>
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;img
+ * src='../../Icons/icon018a1.png' /> <br/>
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;b>基本信息&lt;/b> <br/>
+ * &nbsp;&nbsp;&nbsp;&nbsp; &lt;/ark:childtab> <br/>
+ * &lt;/ark:tab> <br/>
+ * <br/>
+ * TabPage.setSrc("ApplicationInfo", "AppModuleInfo.zhtml?id=" + id);
  * @author Darkness
  * @date 2012-11-19 下午03:08:18
  * @version V1.0
  */
 public class TabTag extends BodyTagSupport {
 
-    private static final long serialVersionUID = 1L;
-    private boolean lazy;
-    private String height;
+	private static final long serialVersionUID = 1L;
 
-    public void setPageContext(PageContext pc) {
-        super.setPageContext(pc);
+	private boolean lazy;
 
-        Tab.init();
+	private String height;
 
-        this.lazy = true;
-        height = null;
-    }
+	public void setPageContext(PageContext pc) {
+		super.setPageContext(pc);
 
-    public int doAfterBody() throws JspException {
+		Tab.init();
 
-        String content = getBodyContent().getString();
+		this.lazy = true;
+		height = null;
+	}
 
-        Tab tab = new Tab(content);
-        tab.setLazy(lazy);
-        tab.setHeight(height);
-        String html = tab.getHtml();
+	public int doAfterBody() throws JspException {
 
-        try {
-            getPreviousOut().print(html);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 6;
-    }
+		String content = getBodyContent().getString();
 
-    public boolean isLazy() {
-        return this.lazy;
-    }
+		Tab tab = new Tab(content);
+		tab.setLazy(lazy);
+		tab.setHeight(height);
+		String html = tab.getHtml();
 
-    public void setLazy(boolean lazy) {
-        this.lazy = lazy;
-    }
+		try {
+			getPreviousOut().print(html);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 6;
+	}
 
-    public String getHeight() {
-        return height;
-    }
+	public boolean isLazy() {
+		return this.lazy;
+	}
 
-    public void setHeight(String height) {
-        this.height = height;
-    }
+	public void setLazy(boolean lazy) {
+		this.lazy = lazy;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
 }

@@ -11,13 +11,15 @@ import io.arkx.framework.extend.IExtendAction;
  * @version V1.0
  */
 public abstract class AfterAllPluginStartedAction implements IExtendAction {
-    public static final String ExtendPointID = "io.arkx.framework.AfterAllPluginStarted";
 
-    @Override
-    public Object execute(Object[] args) throws ExtendException {
-        execute();
-        return null;
-    }
+	public static final String ExtendPointID = "io.arkx.framework.AfterAllPluginStarted";
 
-    public abstract void execute();
+	@Override
+	public Object execute(Object[] args) throws ExtendException {
+		execute();
+		return null;
+	}
+
+	public abstract void execute();
+
 }

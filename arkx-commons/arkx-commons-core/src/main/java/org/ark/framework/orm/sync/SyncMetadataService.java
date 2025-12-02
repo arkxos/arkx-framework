@@ -22,185 +22,179 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SyncMetadataService {
 
-    // 元数据表名
-    private static final String SYNC_METADATA_TABLE = "SYNC_METADATA";
-    private static final String SYNC_HISTORY_TABLE = "SYNC_HISTORY";
+	// 元数据表名
+	private static final String SYNC_METADATA_TABLE = "SYNC_METADATA";
 
-    /**
-     * 获取最近一次同步的元数据
-     *
-     * @param sourceDb
-     *            源数据库
-     * @param targetDb
-     *            目标数据库
-     * @param tableCode
-     *            表编码
-     * @return 同步元数据，如果没有则返回null
-     */
-    public SyncMetadata getLastSyncMetadata(String sourceDb, String targetDb, String tableCode) {
-        log.debug("获取表 {} 从 {} 到 {} 的最近同步元数据", tableCode, sourceDb, targetDb);
+	private static final String SYNC_HISTORY_TABLE = "SYNC_HISTORY";
 
-        try {
-            // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-            // 示例：查询最近一次同步记录
-            /*
-             * String query = "SELECT * FROM " + SYNC_METADATA_TABLE +
-             * " WHERE SOURCE_DB = ? AND TARGET_DB = ? AND TABLE_CODE = ? " +
-             * " ORDER BY SYNC_TIME DESC LIMIT 1";
-             */
+	/**
+	 * 获取最近一次同步的元数据
+	 * @param sourceDb 源数据库
+	 * @param targetDb 目标数据库
+	 * @param tableCode 表编码
+	 * @return 同步元数据，如果没有则返回null
+	 */
+	public SyncMetadata getLastSyncMetadata(String sourceDb, String targetDb, String tableCode) {
+		log.debug("获取表 {} 从 {} 到 {} 的最近同步元数据", tableCode, sourceDb, targetDb);
 
-            // 示例代码占位，实际实现由用户提供
-            // 这里应返回查询结果转换为SyncMetadata对象
+		try {
+			// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+			// 示例：查询最近一次同步记录
+			/*
+			 * String query = "SELECT * FROM " + SYNC_METADATA_TABLE +
+			 * " WHERE SOURCE_DB = ? AND TARGET_DB = ? AND TABLE_CODE = ? " +
+			 * " ORDER BY SYNC_TIME DESC LIMIT 1";
+			 */
 
-            // 为避免返回null，这里创建一个空的元数据对象
-            SyncMetadata metadata = new SyncMetadata();
-            metadata.setSourceDb(sourceDb);
-            metadata.setTargetDb(targetDb);
-            metadata.setTableCode(tableCode);
-            metadata.setSyncTime(new Date(0)); // 1970年
-            metadata.setStatus(SyncStatus.INITIAL);
+			// 示例代码占位，实际实现由用户提供
+			// 这里应返回查询结果转换为SyncMetadata对象
 
-            return metadata;
+			// 为避免返回null，这里创建一个空的元数据对象
+			SyncMetadata metadata = new SyncMetadata();
+			metadata.setSourceDb(sourceDb);
+			metadata.setTargetDb(targetDb);
+			metadata.setTableCode(tableCode);
+			metadata.setSyncTime(new Date(0)); // 1970年
+			metadata.setStatus(SyncStatus.INITIAL);
 
-        } catch (Exception e) {
-            log.error("获取同步元数据时发生错误", e);
-            return null;
-        }
-    }
+			return metadata;
 
-    /**
-     * 保存同步元数据
-     *
-     * @param metadata
-     *            同步元数据
-     */
-    public void saveSyncMetadata(SyncMetadata metadata) {
-        if (metadata == null) {
-            return;
-        }
+		}
+		catch (Exception e) {
+			log.error("获取同步元数据时发生错误", e);
+			return null;
+		}
+	}
 
-        log.debug("保存表 {} 从 {} 到 {} 的同步元数据", metadata.getTableCode(), metadata.getSourceDb(), metadata.getTargetDb());
+	/**
+	 * 保存同步元数据
+	 * @param metadata 同步元数据
+	 */
+	public void saveSyncMetadata(SyncMetadata metadata) {
+		if (metadata == null) {
+			return;
+		}
 
-        try {
-            // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-            // 示例：更新当前同步状态和添加历史记录
+		log.debug("保存表 {} 从 {} 到 {} 的同步元数据", metadata.getTableCode(), metadata.getSourceDb(), metadata.getTargetDb());
 
-            // 1. 更新元数据表中的当前状态
-            updateCurrentSyncStatus(metadata);
+		try {
+			// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+			// 示例：更新当前同步状态和添加历史记录
 
-            // 2. 添加到历史记录表
-            addSyncHistoryRecord(metadata);
+			// 1. 更新元数据表中的当前状态
+			updateCurrentSyncStatus(metadata);
 
-        } catch (Exception e) {
-            log.error("保存同步元数据时发生错误", e);
-        }
-    }
+			// 2. 添加到历史记录表
+			addSyncHistoryRecord(metadata);
 
-    /**
-     * 更新当前同步状态
-     */
-    private void updateCurrentSyncStatus(SyncMetadata metadata) {
-        // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-        // 示例：更新或插入同步状态记录
-        /*
-         * String upsertQuery = "INSERT INTO " + SYNC_METADATA_TABLE +
-         * " (SOURCE_DB, TARGET_DB, TABLE_CODE, SYNC_TIME, RECORD_COUNT, STATUS, MESSAGE, DURATION_MS) "
-         * + " VALUES (?, ?, ?, ?, ?, ?, ?, ?) " + " ON DUPLICATE KEY UPDATE " +
-         * " SYNC_TIME = VALUES(SYNC_TIME), " + " RECORD_COUNT = VALUES(RECORD_COUNT), "
-         * + " STATUS = VALUES(STATUS), " + " MESSAGE = VALUES(MESSAGE), " +
-         * " DURATION_MS = VALUES(DURATION_MS)";
-         */
-    }
+		}
+		catch (Exception e) {
+			log.error("保存同步元数据时发生错误", e);
+		}
+	}
 
-    /**
-     * 添加同步历史记录
-     */
-    private void addSyncHistoryRecord(SyncMetadata metadata) {
-        // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-        // 示例：插入同步历史记录
-        /*
-         * String insertQuery = "INSERT INTO " + SYNC_HISTORY_TABLE +
-         * " (SOURCE_DB, TARGET_DB, TABLE_CODE, SYNC_TIME, RECORD_COUNT, STATUS, MESSAGE, DURATION_MS) "
-         * + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-         */
-    }
+	/**
+	 * 更新当前同步状态
+	 */
+	private void updateCurrentSyncStatus(SyncMetadata metadata) {
+		// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+		// 示例：更新或插入同步状态记录
+		/*
+		 * String upsertQuery = "INSERT INTO " + SYNC_METADATA_TABLE +
+		 * " (SOURCE_DB, TARGET_DB, TABLE_CODE, SYNC_TIME, RECORD_COUNT, STATUS, MESSAGE, DURATION_MS) "
+		 * + " VALUES (?, ?, ?, ?, ?, ?, ?, ?) " + " ON DUPLICATE KEY UPDATE " +
+		 * " SYNC_TIME = VALUES(SYNC_TIME), " + " RECORD_COUNT = VALUES(RECORD_COUNT), " +
+		 * " STATUS = VALUES(STATUS), " + " MESSAGE = VALUES(MESSAGE), " +
+		 * " DURATION_MS = VALUES(DURATION_MS)";
+		 */
+	}
 
-    /**
-     * 获取同步历史记录
-     *
-     * @param sourceDb
-     *            源数据库
-     * @param targetDb
-     *            目标数据库
-     * @param tableCode
-     *            表编码
-     * @param limit
-     *            限制返回记录数
-     * @return 同步历史记录列表
-     */
-    public List<SyncMetadata> getSyncHistory(String sourceDb, String targetDb, String tableCode, int limit) {
-        log.debug("获取表 {} 从 {} 到 {} 的同步历史", tableCode, sourceDb, targetDb);
+	/**
+	 * 添加同步历史记录
+	 */
+	private void addSyncHistoryRecord(SyncMetadata metadata) {
+		// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+		// 示例：插入同步历史记录
+		/*
+		 * String insertQuery = "INSERT INTO " + SYNC_HISTORY_TABLE +
+		 * " (SOURCE_DB, TARGET_DB, TABLE_CODE, SYNC_TIME, RECORD_COUNT, STATUS, MESSAGE, DURATION_MS) "
+		 * + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		 */
+	}
 
-        // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-        // 示例：查询同步历史记录
-        /*
-         * String query = "SELECT * FROM " + SYNC_HISTORY_TABLE +
-         * " WHERE SOURCE_DB = ? AND TARGET_DB = ? AND TABLE_CODE = ? " +
-         * " ORDER BY SYNC_TIME DESC LIMIT ?";
-         */
+	/**
+	 * 获取同步历史记录
+	 * @param sourceDb 源数据库
+	 * @param targetDb 目标数据库
+	 * @param tableCode 表编码
+	 * @param limit 限制返回记录数
+	 * @return 同步历史记录列表
+	 */
+	public List<SyncMetadata> getSyncHistory(String sourceDb, String targetDb, String tableCode, int limit) {
+		log.debug("获取表 {} 从 {} 到 {} 的同步历史", tableCode, sourceDb, targetDb);
 
-        // 示例代码占位，实际实现由用户提供
-        return List.of();
-    }
+		// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+		// 示例：查询同步历史记录
+		/*
+		 * String query = "SELECT * FROM " + SYNC_HISTORY_TABLE +
+		 * " WHERE SOURCE_DB = ? AND TARGET_DB = ? AND TABLE_CODE = ? " +
+		 * " ORDER BY SYNC_TIME DESC LIMIT ?";
+		 */
 
-    /**
-     * 初始化元数据表 如果表不存在则创建
-     */
-    public void initMetadataTables() {
-        log.info("初始化同步元数据表");
+		// 示例代码占位，实际实现由用户提供
+		return List.of();
+	}
 
-        try {
-            // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-            // 示例：创建元数据表和历史记录表
-            createMetadataTableIfNotExists();
-            createHistoryTableIfNotExists();
+	/**
+	 * 初始化元数据表 如果表不存在则创建
+	 */
+	public void initMetadataTables() {
+		log.info("初始化同步元数据表");
 
-        } catch (Exception e) {
-            log.error("初始化元数据表时发生错误", e);
-        }
-    }
+		try {
+			// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+			// 示例：创建元数据表和历史记录表
+			createMetadataTableIfNotExists();
+			createHistoryTableIfNotExists();
 
-    /**
-     * 创建元数据表（如果不存在）
-     */
-    private void createMetadataTableIfNotExists() {
-        // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-        // 示例：创建同步元数据表
-        /*
-         * String createTable = "CREATE TABLE IF NOT EXISTS " + SYNC_METADATA_TABLE +
-         * " (" + "ID BIGINT PRIMARY KEY AUTO_INCREMENT, " +
-         * "SOURCE_DB VARCHAR(100) NOT NULL, " + "TARGET_DB VARCHAR(100) NOT NULL, " +
-         * "TABLE_CODE VARCHAR(100) NOT NULL, " + "SYNC_TIME TIMESTAMP NOT NULL, " +
-         * "RECORD_COUNT INT NOT NULL, " + "STATUS VARCHAR(20) NOT NULL, " +
-         * "MESSAGE TEXT, " + "DURATION_MS BIGINT NOT NULL, " +
-         * "UNIQUE KEY UK_SYNC_TABLE (SOURCE_DB, TARGET_DB, TABLE_CODE)" + ")";
-         */
-    }
+		}
+		catch (Exception e) {
+			log.error("初始化元数据表时发生错误", e);
+		}
+	}
 
-    /**
-     * 创建历史记录表（如果不存在）
-     */
-    private void createHistoryTableIfNotExists() {
-        // TODO: 实际实现将由用户根据自己的数据库访问方式填充
-        // 示例：创建同步历史记录表
-        /*
-         * String createTable = "CREATE TABLE IF NOT EXISTS " + SYNC_HISTORY_TABLE +
-         * " (" + "ID BIGINT PRIMARY KEY AUTO_INCREMENT, " +
-         * "SOURCE_DB VARCHAR(100) NOT NULL, " + "TARGET_DB VARCHAR(100) NOT NULL, " +
-         * "TABLE_CODE VARCHAR(100) NOT NULL, " + "SYNC_TIME TIMESTAMP NOT NULL, " +
-         * "RECORD_COUNT INT NOT NULL, " + "STATUS VARCHAR(20) NOT NULL, " +
-         * "MESSAGE TEXT, " + "DURATION_MS BIGINT NOT NULL, " +
-         * "INDEX IDX_SYNC_HISTORY (SOURCE_DB, TARGET_DB, TABLE_CODE, SYNC_TIME)" + ")";
-         */
-    }
+	/**
+	 * 创建元数据表（如果不存在）
+	 */
+	private void createMetadataTableIfNotExists() {
+		// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+		// 示例：创建同步元数据表
+		/*
+		 * String createTable = "CREATE TABLE IF NOT EXISTS " + SYNC_METADATA_TABLE + " ("
+		 * + "ID BIGINT PRIMARY KEY AUTO_INCREMENT, " +
+		 * "SOURCE_DB VARCHAR(100) NOT NULL, " + "TARGET_DB VARCHAR(100) NOT NULL, " +
+		 * "TABLE_CODE VARCHAR(100) NOT NULL, " + "SYNC_TIME TIMESTAMP NOT NULL, " +
+		 * "RECORD_COUNT INT NOT NULL, " + "STATUS VARCHAR(20) NOT NULL, " +
+		 * "MESSAGE TEXT, " + "DURATION_MS BIGINT NOT NULL, " +
+		 * "UNIQUE KEY UK_SYNC_TABLE (SOURCE_DB, TARGET_DB, TABLE_CODE)" + ")";
+		 */
+	}
+
+	/**
+	 * 创建历史记录表（如果不存在）
+	 */
+	private void createHistoryTableIfNotExists() {
+		// TODO: 实际实现将由用户根据自己的数据库访问方式填充
+		// 示例：创建同步历史记录表
+		/*
+		 * String createTable = "CREATE TABLE IF NOT EXISTS " + SYNC_HISTORY_TABLE + " ("
+		 * + "ID BIGINT PRIMARY KEY AUTO_INCREMENT, " +
+		 * "SOURCE_DB VARCHAR(100) NOT NULL, " + "TARGET_DB VARCHAR(100) NOT NULL, " +
+		 * "TABLE_CODE VARCHAR(100) NOT NULL, " + "SYNC_TIME TIMESTAMP NOT NULL, " +
+		 * "RECORD_COUNT INT NOT NULL, " + "STATUS VARCHAR(20) NOT NULL, " +
+		 * "MESSAGE TEXT, " + "DURATION_MS BIGINT NOT NULL, " +
+		 * "INDEX IDX_SYNC_HISTORY (SOURCE_DB, TARGET_DB, TABLE_CODE, SYNC_TIME)" + ")";
+		 */
+	}
+
 }

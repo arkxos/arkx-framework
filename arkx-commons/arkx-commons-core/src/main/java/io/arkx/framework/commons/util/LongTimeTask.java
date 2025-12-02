@@ -5,208 +5,219 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author Darkness
  * @date 2014-12-26 上午9:37:33
  * @version V1.0
  */
 public abstract class LongTimeTask extends Thread {
 
-    private static Map<Long, LongTimeTask> map = new HashMap<>();
+	private static Map<Long, LongTimeTask> map = new HashMap<>();
 
-    private static long IDBase = System.currentTimeMillis();
-    private static final int MaxListSize = 1000;
+	private static long IDBase = System.currentTimeMillis();
 
-    public static LongTimeTask createEmptyInstance() {
-        return new LongTimeTask(false) {
-            public void execute() {
-            }
-        };
-    }
+	private static final int MaxListSize = 1000;
 
-    public static Map<Long, LongTimeTask> getAllTasks() {
-        clearStopedTask();
-        return map;
-    }
+	public static LongTimeTask createEmptyInstance() {
+		return new LongTimeTask(false) {
+			public void execute() {
+			}
+		};
+	}
 
-    public static LongTimeTask getInstanceById(long id) {
-        return map.get(id);
-    }
+	public static Map<Long, LongTimeTask> getAllTasks() {
+		clearStopedTask();
+		return map;
+	}
 
-    public static void removeInstanceById(long id) {
-        synchronized (LongTimeTask.class) {
-            map.remove(id);
-        }
-    }
+	public static LongTimeTask getInstanceById(long id) {
+		return map.get(id);
+	}
 
-    public static String cancelByType(String type) {
-        String message = "该任务不存在:" + type;
-        LongTimeTask ltt = getInstanceByType(type);
-        if (ltt != null) {
-            ltt.stopTask();
-            message = "任务终止中,请稍等片刻！";
-        }
-        return message;
-    }
+	public static void removeInstanceById(long id) {
+		synchronized (LongTimeTask.class) {
+			map.remove(id);
+		}
+	}
 
-    public static LongTimeTask getInstanceByType(String type) {
-        if (StringUtil.isNotEmpty(type)) {
-            long current = System.currentTimeMillis();
-            for (Long key : map.keySet()) {
-                LongTimeTask ltt = map.get(key);
-                if (type.equals(ltt.getType())) {
-                    if (current - ltt.stopTime > 60000L) {
-                        map.remove(key);
-                        return null;
-                    }
-                    return ltt;
-                }
-            }
-        }
-        return null;
-    }
+	public static String cancelByType(String type) {
+		String message = "该任务不存在:" + type;
+		LongTimeTask ltt = getInstanceByType(type);
+		if (ltt != null) {
+			ltt.stopTask();
+			message = "任务终止中,请稍等片刻！";
+		}
+		return message;
+	}
 
-    private long id;
-    private ArrayList<String> list = new ArrayList<>();
-    protected int percent;
-    protected String currentInfo;
-    private String finishedInfo;
-    protected ArrayList<String> errors = new ArrayList<>();
-    private boolean stopFlag;
-    private String type;
-    private long stopTime = System.currentTimeMillis() + (24 * 60 * 1000L);
+	public static LongTimeTask getInstanceByType(String type) {
+		if (StringUtil.isNotEmpty(type)) {
+			long current = System.currentTimeMillis();
+			for (Long key : map.keySet()) {
+				LongTimeTask ltt = map.get(key);
+				if (type.equals(ltt.getType())) {
+					if (current - ltt.stopTime > 60000L) {
+						map.remove(key);
+						return null;
+					}
+					return ltt;
+				}
+			}
+		}
+		return null;
+	}
 
-    public LongTimeTask() {
-        this(true);
-    }
+	private long id;
 
-    private LongTimeTask(boolean flag) {
-        if (flag) {
-            setName("LongTimeTask Thread");
-            synchronized (LongTimeTask.class) {
-                this.id = (IDBase++);
-                map.put(this.id, this);
-                clearStopedTask();
-            }
-        }
-    }
+	private ArrayList<String> list = new ArrayList<>();
 
-    private static void clearStopedTask() {
-        synchronized (LongTimeTask.class) {
-            long current = System.currentTimeMillis();
-            Map<Long, LongTimeTask> tempMap = new HashMap<>(map);
-            for (Long k : tempMap.keySet()) {
-                LongTimeTask ltt = tempMap.get(k);
-                if (current - ltt.stopTime > 5000L) {
-                    map.remove(k);
-                }
-            }
-        }
-    }
+	protected int percent;
 
-    public long getTaskID() {
-        return this.id;
-    }
+	protected String currentInfo;
 
-    public void info(String message) {
+	private String finishedInfo;
 
-        this.list.add(message);
-        if (this.list.size() > MaxListSize)
-            this.list.remove(0);
-    }
+	protected ArrayList<String> errors = new ArrayList<>();
 
-    public String[] getMessages() {
-        String[] arr = new String[this.list.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = this.list.get(i);
-        }
-        this.list.clear();
-        return arr;
-    }
+	private boolean stopFlag;
 
-    @Override
-    public void run() {
-        if (StringUtil.isNotEmpty(this.type)) {
-            LongTimeTask ltt = getInstanceByType(this.type);
-            if ((ltt != null) && (ltt != this)) {
-                return;
-            }
-        }
-        try {
-            execute();
-        } catch (Exception ie) {
-            interrupt();
-            addError(ie.getMessage());
-        } finally {
-            this.stopTime = System.currentTimeMillis();
-        }
-    }
+	private String type;
 
-    protected abstract void execute();
+	private long stopTime = System.currentTimeMillis() + (24 * 60 * 1000L);
 
-    public boolean checkStop() {
-        return this.stopFlag;
-    }
+	public LongTimeTask() {
+		this(true);
+	}
 
-    public void stopTask() {
-        clearStopedTask();
-        this.stopFlag = true;
-    }
+	private LongTimeTask(boolean flag) {
+		if (flag) {
+			setName("LongTimeTask Thread");
+			synchronized (LongTimeTask.class) {
+				this.id = (IDBase++);
+				map.put(this.id, this);
+				clearStopedTask();
+			}
+		}
+	}
 
-    public int getPercent() {
-        return this.percent;
-    }
+	private static void clearStopedTask() {
+		synchronized (LongTimeTask.class) {
+			long current = System.currentTimeMillis();
+			Map<Long, LongTimeTask> tempMap = new HashMap<>(map);
+			for (Long k : tempMap.keySet()) {
+				LongTimeTask ltt = tempMap.get(k);
+				if (current - ltt.stopTime > 5000L) {
+					map.remove(k);
+				}
+			}
+		}
+	}
 
-    public void setPercent(int percent) {
-        this.percent = percent;
-    }
+	public long getTaskID() {
+		return this.id;
+	}
 
-    public void setCurrentInfo(String currentInfo) {
-        this.currentInfo = currentInfo;
-    }
+	public void info(String message) {
 
-    public String getCurrentInfo() {
-        return this.currentInfo;
-    }
+		this.list.add(message);
+		if (this.list.size() > MaxListSize)
+			this.list.remove(0);
+	}
 
-    public void setFinishedInfo(String finishedInfo) {
-        this.finishedInfo = finishedInfo;
-    }
+	public String[] getMessages() {
+		String[] arr = new String[this.list.size()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = this.list.get(i);
+		}
+		this.list.clear();
+		return arr;
+	}
 
-    public String getFinishedInfo() {
-        return this.finishedInfo;
-    }
+	@Override
+	public void run() {
+		if (StringUtil.isNotEmpty(this.type)) {
+			LongTimeTask ltt = getInstanceByType(this.type);
+			if ((ltt != null) && (ltt != this)) {
+				return;
+			}
+		}
+		try {
+			execute();
+		}
+		catch (Exception ie) {
+			interrupt();
+			addError(ie.getMessage());
+		}
+		finally {
+			this.stopTime = System.currentTimeMillis();
+		}
+	}
 
-    public void addError(String error) {
-        this.errors.add(error);
-    }
+	protected abstract void execute();
 
-    public void addError(String[] errorArr) {
-        for (int i = 0; i < errorArr.length; i++)
-            this.errors.add(errorArr[i]);
-    }
+	public boolean checkStop() {
+		return this.stopFlag;
+	}
 
-    public String getAllErrors() {
-        if (this.errors.isEmpty()) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder();
-        StringFormat sf = new StringFormat("总计 ? 个错误", this.errors.size());
-        sb.append(sf.toString() + ":<br>");
-        for (int i = 0; i < this.errors.size(); i++) {
-            sb.append(i + 1);
-            sb.append(": ");
-            sb.append(this.errors.get(i));
-            sb.append("<br>");
-        }
-        return sb.toString();
-    }
+	public void stopTask() {
+		clearStopedTask();
+		this.stopFlag = true;
+	}
 
-    public String getType() {
-        return this.type;
-    }
+	public int getPercent() {
+		return this.percent;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setPercent(int percent) {
+		this.percent = percent;
+	}
+
+	public void setCurrentInfo(String currentInfo) {
+		this.currentInfo = currentInfo;
+	}
+
+	public String getCurrentInfo() {
+		return this.currentInfo;
+	}
+
+	public void setFinishedInfo(String finishedInfo) {
+		this.finishedInfo = finishedInfo;
+	}
+
+	public String getFinishedInfo() {
+		return this.finishedInfo;
+	}
+
+	public void addError(String error) {
+		this.errors.add(error);
+	}
+
+	public void addError(String[] errorArr) {
+		for (int i = 0; i < errorArr.length; i++)
+			this.errors.add(errorArr[i]);
+	}
+
+	public String getAllErrors() {
+		if (this.errors.isEmpty()) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder();
+		StringFormat sf = new StringFormat("总计 ? 个错误", this.errors.size());
+		sb.append(sf.toString() + ":<br>");
+		for (int i = 0; i < this.errors.size(); i++) {
+			sb.append(i + 1);
+			sb.append(": ");
+			sb.append(this.errors.get(i));
+			sb.append("<br>");
+		}
+		return sb.toString();
+	}
+
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 }

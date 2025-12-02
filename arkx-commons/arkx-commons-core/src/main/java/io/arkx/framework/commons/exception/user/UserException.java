@@ -8,9 +8,11 @@ import io.arkx.framework.commons.exception.BaseException;
  * @author Darkness
  */
 public class UserException extends BaseException {
-    private static final long serialVersionUID = 1L;
 
-    public UserException(String code, Object[] args) {
-        super("user", code, args, null);
-    }
+	private static final long serialVersionUID = 1L;
+
+	public UserException(String code, Object[] args) {
+		super("user", code, args, null);
+	}
+
 }

@@ -26,8 +26,7 @@ import cn.hutool.core.lang.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * spring工具类 以静态变量保存Spring ApplicationContext,
- * 可在任何代码任何地方任何时候中取出ApplicaitonContext.
+ * spring工具类 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
  *
  * @author Darkness
  */
@@ -35,333 +34,323 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, ApplicationContextAware, DisposableBean {
 
-    /** Spring应用上下文环境 */
-    private static ConfigurableListableBeanFactory beanFactory;
-    private static ApplicationContext applicationContext;
-    private static final List<CallBack> CALL_BACKS = new ArrayList<>();
-    private static boolean addCallback = true;
+	/** Spring应用上下文环境 */
+	private static ConfigurableListableBeanFactory beanFactory;
 
-    /**
-     * 如果BeanFactory包含一个与所给名称匹配的bean定义，则返回true
-     *
-     * @param name
-     * @return boolean
-     */
-    public static boolean containsBean(String name) {
-        return getBeanFactory().containsBean(name);
-    }
+	private static ApplicationContext applicationContext;
 
-    /**
-     * 判断以给定名字注册的bean定义是一个singleton还是一个prototype。
-     * 如果与给定名字相应的bean定义没有被找到，将会抛出一个异常（NoSuchBeanDefinitionException）
-     *
-     * @param name
-     * @return boolean
-     * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
-     */
-    public static boolean isSingleton(String name) throws NoSuchBeanDefinitionException {
-        return getBeanFactory().isSingleton(name);
-    }
+	private static final List<CallBack> CALL_BACKS = new ArrayList<>();
 
-    /**
-     * @param name
-     * @return Class 注册对象的类型
-     * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
-     */
-    public static Class<?> getType(String name) throws NoSuchBeanDefinitionException {
-        return getBeanFactory().getType(name);
-    }
+	private static boolean addCallback = true;
 
-    /**
-     * 如果给定的bean名字在bean定义中有别名，则返回这些别名
-     *
-     * @param name
-     * @return
-     * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
-     */
-    public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
-        return getBeanFactory().getAliases(name);
-    }
+	/**
+	 * 如果BeanFactory包含一个与所给名称匹配的bean定义，则返回true
+	 * @param name
+	 * @return boolean
+	 */
+	public static boolean containsBean(String name) {
+		return getBeanFactory().containsBean(name);
+	}
 
-    /**
-     * 获取aop代理对象
-     *
-     * @param invoker
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T getAopProxy(T invoker) {
-        return (T) getBean(invoker.getClass());
-        // return (T) AopContext.currentProxy();
-    }
+	/**
+	 * 判断以给定名字注册的bean定义是一个singleton还是一个prototype。
+	 * 如果与给定名字相应的bean定义没有被找到，将会抛出一个异常（NoSuchBeanDefinitionException）
+	 * @param name
+	 * @return boolean
+	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
+	 */
+	public static boolean isSingleton(String name) throws NoSuchBeanDefinitionException {
+		return getBeanFactory().isSingleton(name);
+	}
 
-    /**
-     * 获取spring上下文
-     */
-    public static ApplicationContext context() {
-        return getApplicationContext();
-    }
+	/**
+	 * @param name
+	 * @return Class 注册对象的类型
+	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
+	 */
+	public static Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+		return getBeanFactory().getType(name);
+	}
 
-    // public static boolean isVirtual() {
-    // return Threading.VIRTUAL.isActive(getBean(Environment.class));
-    // }
+	/**
+	 * 如果给定的bean名字在bean定义中有别名，则返回这些别名
+	 * @param name
+	 * @return
+	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
+	 */
+	public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
+		return getBeanFactory().getAliases(name);
+	}
 
-    public ArkSpringContextHolder() {
-    }
+	/**
+	 * 获取aop代理对象
+	 * @param invoker
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T getAopProxy(T invoker) {
+		return (T) getBean(invoker.getClass());
+		// return (T) AopContext.currentProxy();
+	}
 
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        ArkSpringContextHolder.beanFactory = beanFactory;
-    }
+	/**
+	 * 获取spring上下文
+	 */
+	public static ApplicationContext context() {
+		return getApplicationContext();
+	}
 
-    /**
-     * 实现ApplicationContextAware接口的context注入函数, 将其存入静态变量.
-     */
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        if (ArkSpringContextHolder.applicationContext != null) {
-            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:"
-                    + ArkSpringContextHolder.applicationContext);
-        }
-        ArkSpringContextHolder.applicationContext = applicationContext;
-        if (addCallback) {
-            for (CallBack callBack : ArkSpringContextHolder.CALL_BACKS) {
-                callBack.executor();
-            }
-            CALL_BACKS.clear();
-        }
-        ArkSpringContextHolder.addCallback = false;
-    }
+	// public static boolean isVirtual() {
+	// return Threading.VIRTUAL.isActive(getBean(Environment.class));
+	// }
 
-    /**
-     * 取得存储在静态变量中的ApplicationContext.
-     */
-    public static ApplicationContext getApplicationContext() {
-        // assertContextInjected();
-        return applicationContext;
-    }
+	public ArkSpringContextHolder() {
+	}
 
-    @Override
-    public void destroy() {
-        ArkSpringContextHolder.clearHolder();
-    }
+	@Override
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+		ArkSpringContextHolder.beanFactory = beanFactory;
+	}
 
-    /**
-     * 清除applicationContext静态变量.
-     */
-    public static void cleanApplicationContext() {
-        clearHolder();
-    }
-    /**
-     * 清除SpringContextHolder中的ApplicationContext为Null.
-     */
-    private static void clearHolder() {
-        log.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
-        applicationContext = null;
-    }
-    /**
-     * 检查ApplicationContext不为空.
-     */
-    // private static void assertContextInjected() {
-    // if (applicationContext == null) {
-    // throw new IllegalStateException("applicaitonContext属性未注入,
-    // 请在applicationContext" +
-    // ".xml中定义SpringContextHolder或在SpringBoot启动类中注册SpringContextHolder.");
-    // }
-    // }
+	/**
+	 * 实现ApplicationContextAware接口的context注入函数, 将其存入静态变量.
+	 */
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		if (ArkSpringContextHolder.applicationContext != null) {
+			log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:"
+					+ ArkSpringContextHolder.applicationContext);
+		}
+		ArkSpringContextHolder.applicationContext = applicationContext;
+		if (addCallback) {
+			for (CallBack callBack : ArkSpringContextHolder.CALL_BACKS) {
+				callBack.executor();
+			}
+			CALL_BACKS.clear();
+		}
+		ArkSpringContextHolder.addCallback = false;
+	}
 
-    public static ListableBeanFactory getBeanFactory() {
-        ListableBeanFactory factory = beanFactory == null ? applicationContext : beanFactory;
-        if (factory == null) {
-            throw new UtilException(
-                    "No ConfigurableListableBeanFactory or ApplicationContext injected, maybe not in the Spring environment?");
-        } else {
-            return factory;
-        }
-    }
+	/**
+	 * 取得存储在静态变量中的ApplicationContext.
+	 */
+	public static ApplicationContext getApplicationContext() {
+		// assertContextInjected();
+		return applicationContext;
+	}
 
-    /**
-     * 针对 某些初始化方法，在SpringContextHolder 未初始化时 提交回调方法。 在SpringContextHolder
-     * 初始化后，进行回调使用
-     *
-     * @param callBack
-     *            回调函数
-     */
-    public synchronized static void addCallBacks(CallBack callBack) {
-        if (addCallback) {
-            ArkSpringContextHolder.CALL_BACKS.add(callBack);
-        } else {
-            log.info("Spring上下文已启动完毕，延迟调用任务：{} 立即执行", callBack.getCallBackName());
-            callBack.executor();
-        }
-    }
+	@Override
+	public void destroy() {
+		ArkSpringContextHolder.clearHolder();
+	}
 
-    public static ConfigurableListableBeanFactory getConfigurableBeanFactory() throws UtilException {
-        ConfigurableListableBeanFactory factory;
-        if (null != beanFactory) {
-            factory = beanFactory;
-        } else {
-            if (!(applicationContext instanceof ConfigurableApplicationContext)) {
-                throw new UtilException("No ConfigurableListableBeanFactory from context!");
-            }
+	/**
+	 * 清除applicationContext静态变量.
+	 */
+	public static void cleanApplicationContext() {
+		clearHolder();
+	}
 
-            factory = ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
-        }
+	/**
+	 * 清除SpringContextHolder中的ApplicationContext为Null.
+	 */
+	private static void clearHolder() {
+		log.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
+		applicationContext = null;
+	}
 
-        return factory;
-    }
+	/**
+	 * 检查ApplicationContext不为空.
+	 */
+	// private static void assertContextInjected() {
+	// if (applicationContext == null) {
+	// throw new IllegalStateException("applicaitonContext属性未注入,
+	// 请在applicationContext" +
+	// ".xml中定义SpringContextHolder或在SpringBoot启动类中注册SpringContextHolder.");
+	// }
+	// }
 
-    /**
-     * 获取对象
-     *
-     * @param name
-     * @return Object 一个以所给名字注册的bean的实例
-     * @throws org.springframework.beans.BeansException
-     */
-    public static <T> T getBean(String name) {
-        return (T) getBeanFactory().getBean(name);
-    }
+	public static ListableBeanFactory getBeanFactory() {
+		ListableBeanFactory factory = beanFactory == null ? applicationContext : beanFactory;
+		if (factory == null) {
+			throw new UtilException(
+					"No ConfigurableListableBeanFactory or ApplicationContext injected, maybe not in the Spring environment?");
+		}
+		else {
+			return factory;
+		}
+	}
 
-    /**
-     * 获取类型为requiredType的对象
-     *
-     * @param clazz
-     * @return
-     * @throws org.springframework.beans.BeansException
-     *
-     */
-    public static <T> T getBean(Class<T> clazz) {
-        return getBeanFactory().getBean(clazz);
-    }
+	/**
+	 * 针对 某些初始化方法，在SpringContextHolder 未初始化时 提交回调方法。 在SpringContextHolder 初始化后，进行回调使用
+	 * @param callBack 回调函数
+	 */
+	public synchronized static void addCallBacks(CallBack callBack) {
+		if (addCallback) {
+			ArkSpringContextHolder.CALL_BACKS.add(callBack);
+		}
+		else {
+			log.info("Spring上下文已启动完毕，延迟调用任务：{} 立即执行", callBack.getCallBackName());
+			callBack.executor();
+		}
+	}
 
-    public static <T> T getBean(String name, Class<T> clazz) {
-        return getBeanFactory().getBean(name, clazz);
-    }
+	public static ConfigurableListableBeanFactory getConfigurableBeanFactory() throws UtilException {
+		ConfigurableListableBeanFactory factory;
+		if (null != beanFactory) {
+			factory = beanFactory;
+		}
+		else {
+			if (!(applicationContext instanceof ConfigurableApplicationContext)) {
+				throw new UtilException("No ConfigurableListableBeanFactory from context!");
+			}
 
-    public static <T> T getBean(TypeReference<T> reference) {
-        ParameterizedType parameterizedType = (ParameterizedType) reference.getType();
-        Class<T> rawType = (Class) parameterizedType.getRawType();
-        Class<?>[] genericTypes = (Class[]) Arrays.stream(parameterizedType.getActualTypeArguments()).map((type) -> {
-            return (Class) type;
-        }).toArray((x$0) -> {
-            return new Class[x$0];
-        });
-        String[] beanNames = getBeanFactory()
-                .getBeanNamesForType(ResolvableType.forClassWithGenerics(rawType, genericTypes));
-        return getBean(beanNames[0], rawType);
-    }
+			factory = ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
+		}
 
-    public static <T> Map<String, T> getBeansOfType(Class<T> type) {
-        return getBeanFactory().getBeansOfType(type);
-    }
+		return factory;
+	}
 
-    public static String[] getBeanNamesForType(Class<?> type) {
-        return getBeanFactory().getBeanNamesForType(type);
-    }
+	/**
+	 * 获取对象
+	 * @param name
+	 * @return Object 一个以所给名字注册的bean的实例
+	 * @throws org.springframework.beans.BeansException
+	 */
+	public static <T> T getBean(String name) {
+		return (T) getBeanFactory().getBean(name);
+	}
 
-    public static String getProperty(String key) {
-        return null == applicationContext ? null : applicationContext.getEnvironment().getProperty(key);
-    }
+	/**
+	 * 获取类型为requiredType的对象
+	 * @param clazz
+	 * @return
+	 * @throws org.springframework.beans.BeansException
+	 *
+	 */
+	public static <T> T getBean(Class<T> clazz) {
+		return getBeanFactory().getBean(clazz);
+	}
 
-    public static String getApplicationName() {
-        return getProperty("spring.application.name");
-    }
+	public static <T> T getBean(String name, Class<T> clazz) {
+		return getBeanFactory().getBean(name, clazz);
+	}
 
-    /**
-     * 获取当前的环境配置，无配置返回null
-     *
-     * @return 当前的环境配置
-     */
-    public static String[] getActiveProfiles() {
-        return null == applicationContext ? null : applicationContext.getEnvironment().getActiveProfiles();
-    }
+	public static <T> T getBean(TypeReference<T> reference) {
+		ParameterizedType parameterizedType = (ParameterizedType) reference.getType();
+		Class<T> rawType = (Class) parameterizedType.getRawType();
+		Class<?>[] genericTypes = (Class[]) Arrays.stream(parameterizedType.getActualTypeArguments()).map((type) -> {
+			return (Class) type;
+		}).toArray((x$0) -> {
+			return new Class[x$0];
+		});
+		String[] beanNames = getBeanFactory()
+			.getBeanNamesForType(ResolvableType.forClassWithGenerics(rawType, genericTypes));
+		return getBean(beanNames[0], rawType);
+	}
 
-    /**
-     * 获取当前的环境配置，当有多个环境配置时，只获取第一个
-     *
-     * @return 当前的环境配置
-     */
-    public static String getActiveProfile() {
-        String[] activeProfiles = getActiveProfiles();
-        return StringUtils.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
-    }
+	public static <T> Map<String, T> getBeansOfType(Class<T> type) {
+		return getBeanFactory().getBeansOfType(type);
+	}
 
-    public static <T> void registerBean(String beanName, T bean) {
-        ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
-        factory.autowireBean(bean);
-        factory.registerSingleton(beanName, bean);
-    }
+	public static String[] getBeanNamesForType(Class<?> type) {
+		return getBeanFactory().getBeanNamesForType(type);
+	}
 
-    public static void unregisterBean(String beanName) {
-        ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
-        if (factory instanceof DefaultSingletonBeanRegistry) {
-            DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry) factory;
-            registry.destroySingleton(beanName);
-        } else {
-            throw new UtilException("Can not unregister bean, the factory is not a DefaultSingletonBeanRegistry!");
-        }
-    }
+	public static String getProperty(String key) {
+		return null == applicationContext ? null : applicationContext.getEnvironment().getProperty(key);
+	}
 
-    /**
-     * 获取SpringBoot 配置信息
-     *
-     * @param property
-     *            属性key
-     * @param defaultValue
-     *            默认值
-     * @param requiredType
-     *            返回类型
-     * @return /
-     */
-    public static <T> T getProperties(String property, T defaultValue, Class<T> requiredType) {
-        T result = defaultValue;
-        try {
-            Environment environment = getBean(Environment.class);
-            T envValue = environment.getProperty(property, requiredType);
-            if (envValue != null) {
-                result = envValue;
-            }
-        } catch (Exception ignored) {
-        }
-        return result;
-    }
+	public static String getApplicationName() {
+		return getProperty("spring.application.name");
+	}
 
-    /**
-     * 获取SpringBoot 配置信息
-     *
-     * @param property
-     *            属性key
-     * @return /
-     */
-    public static String getProperties(String property) {
-        return getProperties(property, null, String.class);
-    }
+	/**
+	 * 获取当前的环境配置，无配置返回null
+	 * @return 当前的环境配置
+	 */
+	public static String[] getActiveProfiles() {
+		return null == applicationContext ? null : applicationContext.getEnvironment().getActiveProfiles();
+	}
 
-    /**
-     * 获取SpringBoot 配置信息
-     *
-     * @param property
-     *            属性key
-     * @param requiredType
-     *            返回类型
-     * @return /
-     */
-    public static <T> T getProperties(String property, Class<T> requiredType) {
-        return getProperties(property, null, requiredType);
-    }
+	/**
+	 * 获取当前的环境配置，当有多个环境配置时，只获取第一个
+	 * @return 当前的环境配置
+	 */
+	public static String getActiveProfile() {
+		String[] activeProfiles = getActiveProfiles();
+		return StringUtils.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+	}
 
-    public static void publishEvent(ApplicationEvent event) {
-        if (null != applicationContext) {
-            applicationContext.publishEvent(event);
-        }
+	public static <T> void registerBean(String beanName, T bean) {
+		ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
+		factory.autowireBean(bean);
+		factory.registerSingleton(beanName, bean);
+	}
 
-    }
+	public static void unregisterBean(String beanName) {
+		ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
+		if (factory instanceof DefaultSingletonBeanRegistry) {
+			DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry) factory;
+			registry.destroySingleton(beanName);
+		}
+		else {
+			throw new UtilException("Can not unregister bean, the factory is not a DefaultSingletonBeanRegistry!");
+		}
+	}
 
-    public static void publishEvent(Object event) {
-        if (null != applicationContext) {
-            applicationContext.publishEvent(event);
-        }
+	/**
+	 * 获取SpringBoot 配置信息
+	 * @param property 属性key
+	 * @param defaultValue 默认值
+	 * @param requiredType 返回类型
+	 * @return /
+	 */
+	public static <T> T getProperties(String property, T defaultValue, Class<T> requiredType) {
+		T result = defaultValue;
+		try {
+			Environment environment = getBean(Environment.class);
+			T envValue = environment.getProperty(property, requiredType);
+			if (envValue != null) {
+				result = envValue;
+			}
+		}
+		catch (Exception ignored) {
+		}
+		return result;
+	}
 
-    }
+	/**
+	 * 获取SpringBoot 配置信息
+	 * @param property 属性key
+	 * @return /
+	 */
+	public static String getProperties(String property) {
+		return getProperties(property, null, String.class);
+	}
+
+	/**
+	 * 获取SpringBoot 配置信息
+	 * @param property 属性key
+	 * @param requiredType 返回类型
+	 * @return /
+	 */
+	public static <T> T getProperties(String property, Class<T> requiredType) {
+		return getProperties(property, null, requiredType);
+	}
+
+	public static void publishEvent(ApplicationEvent event) {
+		if (null != applicationContext) {
+			applicationContext.publishEvent(event);
+		}
+
+	}
+
+	public static void publishEvent(Object event) {
+		if (null != applicationContext) {
+			applicationContext.publishEvent(event);
+		}
+
+	}
 
 }

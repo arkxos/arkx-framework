@@ -8,27 +8,29 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  *
  */
 public class Trim extends AbstractFunction {
-    @Override
-    public String getFunctionName() {
-        return "trim";
-    }
 
-    @Override
-    public Object execute(IVariableResolver resolver, Object... args) {
-        String input = (String) args[0];
-        if (input == null) {
-            return "";
-        }
-        return input.trim();
-    }
+	@Override
+	public String getFunctionName() {
+		return "trim";
+	}
 
-    @Override
-    public String getFunctionPrefix() {
-        return "";
-    }
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) {
+		String input = (String) args[0];
+		if (input == null) {
+			return "";
+		}
+		return input.trim();
+	}
 
-    @Override
-    public Class<?>[] getArgumentTypes() {
-        return AbstractFunction.Arg_String;
-    }
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
+
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return AbstractFunction.Arg_String;
+	}
+
 }

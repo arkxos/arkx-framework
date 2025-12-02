@@ -9,305 +9,324 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class AnimatedGifEncoder {
-    protected int width;
-    protected int height;
-    protected Color transparent = null;
-    protected int transIndex;
-    protected int repeat = -1;
 
-    protected int delay = 0;
+	protected int width;
 
-    protected boolean started = false;
-    protected OutputStream out;
-    protected BufferedImage image;
-    protected byte[] pixels;
-    protected byte[] indexedPixels;
-    protected int colorDepth;
-    protected byte[] colorTab;
-    protected boolean[] usedEntry = new boolean[256];
+	protected int height;
 
-    protected int palSize = 7;
+	protected Color transparent = null;
 
-    protected int dispose = -1;
+	protected int transIndex;
 
-    protected boolean closeStream = false;
+	protected int repeat = -1;
 
-    protected boolean firstFrame = true;
+	protected int delay = 0;
 
-    protected boolean sizeSet = false;
+	protected boolean started = false;
 
-    protected int sample = 10;
+	protected OutputStream out;
 
-    public void setDelay(int ms) {
-        this.delay = Math.round(ms / 10.0F);
-    }
+	protected BufferedImage image;
 
-    public void setDispose(int code) {
-        if (code >= 0)
-            this.dispose = code;
-    }
+	protected byte[] pixels;
 
-    public void setRepeat(int iter) {
-        if (iter >= 0)
-            this.repeat = iter;
-    }
+	protected byte[] indexedPixels;
 
-    public void setTransparent(Color c) {
-        this.transparent = c;
-    }
+	protected int colorDepth;
 
-    public boolean addFrame(BufferedImage im) {
-        if ((im == null) || (!this.started)) {
-            return false;
-        }
-        boolean ok = true;
-        try {
-            if (!this.sizeSet) {
-                setSize(im.getWidth(), im.getHeight());
-            }
-            this.image = im;
-            getImagePixels();
-            analyzePixels();
-            if (this.firstFrame) {
-                writeLSD();
-                writePalette();
-                if (this.repeat >= 0) {
-                    writeNetscapeExt();
-                }
-            }
-            writeGraphicCtrlExt();
-            writeImageDesc();
-            if (!this.firstFrame) {
-                writePalette();
-            }
-            writePixels();
-            this.firstFrame = false;
-        } catch (IOException e) {
-            ok = false;
-        }
+	protected byte[] colorTab;
 
-        return ok;
-    }
+	protected boolean[] usedEntry = new boolean[256];
 
-    public boolean finish() {
-        if (!this.started)
-            return false;
-        boolean ok = true;
-        this.started = false;
-        try {
-            this.out.write(59);
-            this.out.flush();
-            if (this.closeStream)
-                this.out.close();
-        } catch (IOException e) {
-            ok = false;
-        }
+	protected int palSize = 7;
 
-        this.transIndex = 0;
-        this.out = null;
-        this.image = null;
-        this.pixels = null;
-        this.indexedPixels = null;
-        this.colorTab = null;
-        this.closeStream = false;
-        this.firstFrame = true;
+	protected int dispose = -1;
 
-        return ok;
-    }
+	protected boolean closeStream = false;
 
-    public void setFrameRate(float fps) {
-        if (fps != 0.0F)
-            this.delay = Math.round(100.0F / fps);
-    }
+	protected boolean firstFrame = true;
 
-    public void setQuality(int quality) {
-        if (quality < 1)
-            quality = 1;
-        this.sample = quality;
-    }
+	protected boolean sizeSet = false;
 
-    public void setSize(int w, int h) {
-        if ((this.started) && (!this.firstFrame))
-            return;
-        this.width = w;
-        this.height = h;
-        if (this.width < 1)
-            this.width = 320;
-        if (this.height < 1)
-            this.height = 240;
-        this.sizeSet = true;
-    }
+	protected int sample = 10;
 
-    public boolean start(OutputStream os) {
-        if (os == null)
-            return false;
-        boolean ok = true;
-        this.closeStream = false;
-        this.out = os;
-        try {
-            writeString("GIF89a");
-        } catch (IOException e) {
-            ok = false;
-        }
-        return this.started = ok;
-    }
+	public void setDelay(int ms) {
+		this.delay = Math.round(ms / 10.0F);
+	}
 
-    public boolean start(String file) {
-        boolean ok = true;
-        try {
-            this.out = new BufferedOutputStream(new FileOutputStream(file));
-            ok = start(this.out);
-            this.closeStream = true;
-        } catch (IOException e) {
-            ok = false;
-        }
-        return this.started = ok;
-    }
+	public void setDispose(int code) {
+		if (code >= 0)
+			this.dispose = code;
+	}
 
-    protected void analyzePixels() {
-        int len = this.pixels.length;
-        int nPix = len / 3;
-        this.indexedPixels = new byte[nPix];
-        NeuQuant nq = new NeuQuant(this.pixels, len, this.sample);
+	public void setRepeat(int iter) {
+		if (iter >= 0)
+			this.repeat = iter;
+	}
 
-        this.colorTab = nq.process();
+	public void setTransparent(Color c) {
+		this.transparent = c;
+	}
 
-        for (int i = 0; i < this.colorTab.length; i += 3) {
-            byte temp = this.colorTab[i];
-            this.colorTab[i] = this.colorTab[(i + 2)];
-            this.colorTab[(i + 2)] = temp;
-            this.usedEntry[(i / 3)] = false;
-        }
+	public boolean addFrame(BufferedImage im) {
+		if ((im == null) || (!this.started)) {
+			return false;
+		}
+		boolean ok = true;
+		try {
+			if (!this.sizeSet) {
+				setSize(im.getWidth(), im.getHeight());
+			}
+			this.image = im;
+			getImagePixels();
+			analyzePixels();
+			if (this.firstFrame) {
+				writeLSD();
+				writePalette();
+				if (this.repeat >= 0) {
+					writeNetscapeExt();
+				}
+			}
+			writeGraphicCtrlExt();
+			writeImageDesc();
+			if (!this.firstFrame) {
+				writePalette();
+			}
+			writePixels();
+			this.firstFrame = false;
+		}
+		catch (IOException e) {
+			ok = false;
+		}
 
-        int k = 0;
-        for (int i = 0; i < nPix; i++) {
-            int index = nq.map(this.pixels[(k++)] & 0xFF, this.pixels[(k++)] & 0xFF, this.pixels[(k++)] & 0xFF);
-            this.usedEntry[index] = true;
-            this.indexedPixels[i] = (byte) index;
-        }
-        this.pixels = null;
-        this.colorDepth = 8;
-        this.palSize = 7;
+		return ok;
+	}
 
-        if (this.transparent != null)
-            this.transIndex = findClosest(this.transparent);
-    }
+	public boolean finish() {
+		if (!this.started)
+			return false;
+		boolean ok = true;
+		this.started = false;
+		try {
+			this.out.write(59);
+			this.out.flush();
+			if (this.closeStream)
+				this.out.close();
+		}
+		catch (IOException e) {
+			ok = false;
+		}
 
-    protected int findClosest(Color c) {
-        if (this.colorTab == null)
-            return -1;
-        int r = c.getRed();
-        int g = c.getGreen();
-        int b = c.getBlue();
-        int minpos = 0;
-        int dmin = 16777216;
-        int len = this.colorTab.length;
-        for (int i = 0; i < len;) {
-            int dr = r - (this.colorTab[(i++)] & 0xFF);
-            int dg = g - (this.colorTab[(i++)] & 0xFF);
-            int db = b - (this.colorTab[i] & 0xFF);
-            int d = dr * dr + dg * dg + db * db;
-            int index = i / 3;
-            if ((this.usedEntry[index]) && (d < dmin)) {
-                dmin = d;
-                minpos = index;
-            }
-            i++;
-        }
-        return minpos;
-    }
+		this.transIndex = 0;
+		this.out = null;
+		this.image = null;
+		this.pixels = null;
+		this.indexedPixels = null;
+		this.colorTab = null;
+		this.closeStream = false;
+		this.firstFrame = true;
 
-    protected void getImagePixels() {
-        int w = this.image.getWidth();
-        int h = this.image.getHeight();
-        int type = this.image.getType();
-        if ((w != this.width) || (h != this.height) || (type != 5)) {
-            BufferedImage temp = new BufferedImage(this.width, this.height, 5);
-            Graphics2D g = temp.createGraphics();
-            g.drawImage(this.image, 0, 0, null);
-            this.image = temp;
-        }
-        this.pixels = ((DataBufferByte) this.image.getRaster().getDataBuffer()).getData();
-    }
+		return ok;
+	}
 
-    protected void writeGraphicCtrlExt() throws IOException {
-        this.out.write(33);
-        this.out.write(249);
-        this.out.write(4);
-        int disp;
-        int transp;
-        if (this.transparent == null) {
-            transp = 0;
-            disp = 0;
-        } else {
-            transp = 1;
-            disp = 2;
-        }
-        if (this.dispose >= 0) {
-            disp = this.dispose & 0x7;
-        }
-        disp <<= 2;
+	public void setFrameRate(float fps) {
+		if (fps != 0.0F)
+			this.delay = Math.round(100.0F / fps);
+	}
 
-        this.out.write(disp | transp);
+	public void setQuality(int quality) {
+		if (quality < 1)
+			quality = 1;
+		this.sample = quality;
+	}
 
-        writeShort(this.delay);
-        this.out.write(this.transIndex);
-        this.out.write(0);
-    }
+	public void setSize(int w, int h) {
+		if ((this.started) && (!this.firstFrame))
+			return;
+		this.width = w;
+		this.height = h;
+		if (this.width < 1)
+			this.width = 320;
+		if (this.height < 1)
+			this.height = 240;
+		this.sizeSet = true;
+	}
 
-    protected void writeImageDesc() throws IOException {
-        this.out.write(44);
-        writeShort(0);
-        writeShort(0);
-        writeShort(this.width);
-        writeShort(this.height);
+	public boolean start(OutputStream os) {
+		if (os == null)
+			return false;
+		boolean ok = true;
+		this.closeStream = false;
+		this.out = os;
+		try {
+			writeString("GIF89a");
+		}
+		catch (IOException e) {
+			ok = false;
+		}
+		return this.started = ok;
+	}
 
-        if (this.firstFrame) {
-            this.out.write(0);
-        } else
-            this.out.write(0x80 | this.palSize);
-    }
+	public boolean start(String file) {
+		boolean ok = true;
+		try {
+			this.out = new BufferedOutputStream(new FileOutputStream(file));
+			ok = start(this.out);
+			this.closeStream = true;
+		}
+		catch (IOException e) {
+			ok = false;
+		}
+		return this.started = ok;
+	}
 
-    protected void writeLSD() throws IOException {
-        writeShort(this.width);
-        writeShort(this.height);
+	protected void analyzePixels() {
+		int len = this.pixels.length;
+		int nPix = len / 3;
+		this.indexedPixels = new byte[nPix];
+		NeuQuant nq = new NeuQuant(this.pixels, len, this.sample);
 
-        this.out.write(0xF0 | this.palSize);
+		this.colorTab = nq.process();
 
-        this.out.write(0);
-        this.out.write(0);
-    }
+		for (int i = 0; i < this.colorTab.length; i += 3) {
+			byte temp = this.colorTab[i];
+			this.colorTab[i] = this.colorTab[(i + 2)];
+			this.colorTab[(i + 2)] = temp;
+			this.usedEntry[(i / 3)] = false;
+		}
 
-    protected void writeNetscapeExt() throws IOException {
-        this.out.write(33);
-        this.out.write(255);
-        this.out.write(11);
-        writeString("NETSCAPE2.0");
-        this.out.write(3);
-        this.out.write(1);
-        writeShort(this.repeat);
-        this.out.write(0);
-    }
+		int k = 0;
+		for (int i = 0; i < nPix; i++) {
+			int index = nq.map(this.pixels[(k++)] & 0xFF, this.pixels[(k++)] & 0xFF, this.pixels[(k++)] & 0xFF);
+			this.usedEntry[index] = true;
+			this.indexedPixels[i] = (byte) index;
+		}
+		this.pixels = null;
+		this.colorDepth = 8;
+		this.palSize = 7;
 
-    protected void writePalette() throws IOException {
-        this.out.write(this.colorTab, 0, this.colorTab.length);
-        int n = 768 - this.colorTab.length;
-        for (int i = 0; i < n; i++)
-            this.out.write(0);
-    }
+		if (this.transparent != null)
+			this.transIndex = findClosest(this.transparent);
+	}
 
-    protected void writePixels() throws IOException {
-        LZWEncoder encoder = new LZWEncoder(this.width, this.height, this.indexedPixels, this.colorDepth);
-        encoder.encode(this.out);
-    }
+	protected int findClosest(Color c) {
+		if (this.colorTab == null)
+			return -1;
+		int r = c.getRed();
+		int g = c.getGreen();
+		int b = c.getBlue();
+		int minpos = 0;
+		int dmin = 16777216;
+		int len = this.colorTab.length;
+		for (int i = 0; i < len;) {
+			int dr = r - (this.colorTab[(i++)] & 0xFF);
+			int dg = g - (this.colorTab[(i++)] & 0xFF);
+			int db = b - (this.colorTab[i] & 0xFF);
+			int d = dr * dr + dg * dg + db * db;
+			int index = i / 3;
+			if ((this.usedEntry[index]) && (d < dmin)) {
+				dmin = d;
+				minpos = index;
+			}
+			i++;
+		}
+		return minpos;
+	}
 
-    protected void writeShort(int value) throws IOException {
-        this.out.write(value & 0xFF);
-        this.out.write(value >> 8 & 0xFF);
-    }
+	protected void getImagePixels() {
+		int w = this.image.getWidth();
+		int h = this.image.getHeight();
+		int type = this.image.getType();
+		if ((w != this.width) || (h != this.height) || (type != 5)) {
+			BufferedImage temp = new BufferedImage(this.width, this.height, 5);
+			Graphics2D g = temp.createGraphics();
+			g.drawImage(this.image, 0, 0, null);
+			this.image = temp;
+		}
+		this.pixels = ((DataBufferByte) this.image.getRaster().getDataBuffer()).getData();
+	}
 
-    protected void writeString(String s) throws IOException {
-        for (int i = 0; i < s.length(); i++)
-            this.out.write((byte) s.charAt(i));
-    }
+	protected void writeGraphicCtrlExt() throws IOException {
+		this.out.write(33);
+		this.out.write(249);
+		this.out.write(4);
+		int disp;
+		int transp;
+		if (this.transparent == null) {
+			transp = 0;
+			disp = 0;
+		}
+		else {
+			transp = 1;
+			disp = 2;
+		}
+		if (this.dispose >= 0) {
+			disp = this.dispose & 0x7;
+		}
+		disp <<= 2;
+
+		this.out.write(disp | transp);
+
+		writeShort(this.delay);
+		this.out.write(this.transIndex);
+		this.out.write(0);
+	}
+
+	protected void writeImageDesc() throws IOException {
+		this.out.write(44);
+		writeShort(0);
+		writeShort(0);
+		writeShort(this.width);
+		writeShort(this.height);
+
+		if (this.firstFrame) {
+			this.out.write(0);
+		}
+		else
+			this.out.write(0x80 | this.palSize);
+	}
+
+	protected void writeLSD() throws IOException {
+		writeShort(this.width);
+		writeShort(this.height);
+
+		this.out.write(0xF0 | this.palSize);
+
+		this.out.write(0);
+		this.out.write(0);
+	}
+
+	protected void writeNetscapeExt() throws IOException {
+		this.out.write(33);
+		this.out.write(255);
+		this.out.write(11);
+		writeString("NETSCAPE2.0");
+		this.out.write(3);
+		this.out.write(1);
+		writeShort(this.repeat);
+		this.out.write(0);
+	}
+
+	protected void writePalette() throws IOException {
+		this.out.write(this.colorTab, 0, this.colorTab.length);
+		int n = 768 - this.colorTab.length;
+		for (int i = 0; i < n; i++)
+			this.out.write(0);
+	}
+
+	protected void writePixels() throws IOException {
+		LZWEncoder encoder = new LZWEncoder(this.width, this.height, this.indexedPixels, this.colorDepth);
+		encoder.encode(this.out);
+	}
+
+	protected void writeShort(int value) throws IOException {
+		this.out.write(value & 0xFF);
+		this.out.write(value >> 8 & 0xFF);
+	}
+
+	protected void writeString(String s) throws IOException {
+		for (int i = 0; i < s.length(); i++)
+			this.out.write((byte) s.charAt(i));
+	}
+
 }

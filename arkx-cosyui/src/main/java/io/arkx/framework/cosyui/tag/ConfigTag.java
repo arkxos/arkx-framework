@@ -14,117 +14,118 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  *
  */
 public class ConfigTag extends ArkTag {
-    public static final String PREFIX = "ark";
 
-    public static final String TAGNAME = "config";
+	public static final String PREFIX = "ark";
 
-    private String type;
+	public static final String TAGNAME = "config";
 
-    private String name;
+	private String type;
 
-    private String author;
+	private String name;
 
-    private double version;
+	private String author;
 
-    private String description;
+	private double version;
 
-    private String scriptStart;
+	private String description;
 
-    private String scriptEnd;
+	private String scriptStart;
 
-    @Override
-    public String getTagName() {
-        return TAGNAME;
-    }
+	private String scriptEnd;
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        return SKIP_BODY;// 什么都不干
-    }
+	@Override
+	public String getTagName() {
+		return TAGNAME;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("type", DataTypes.STRING.code(), "@{Framework.ConfigTag.Type}"));
-        list.add(new TagAttr("name", DataTypes.STRING.code(), "@{Framework.ConfigTag.Name}"));
-        list.add(new TagAttr("author", DataTypes.STRING.code(), "@{Framework.ConfigTag.Author}"));
-        list.add(new TagAttr("description", DataTypes.STRING.code(), "@{Framework.ConfigTag.Description}"));
-        list.add(new TagAttr("version", DataTypes.DOUBLE.code(), "@{Framework.ConfigTag.Version}"));
-        list.add(new TagAttr("scriptStart", DataTypes.STRING.code(), "@{Framework.ConfigTag.ScriptStart}"));
-        list.add(new TagAttr("scriptEnd", DataTypes.STRING.code(), "@{Framework.ConfigTag.ScriptEnd}"));
-        return list;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		return SKIP_BODY;// 什么都不干
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("type", DataTypes.STRING.code(), "@{Framework.ConfigTag.Type}"));
+		list.add(new TagAttr("name", DataTypes.STRING.code(), "@{Framework.ConfigTag.Name}"));
+		list.add(new TagAttr("author", DataTypes.STRING.code(), "@{Framework.ConfigTag.Author}"));
+		list.add(new TagAttr("description", DataTypes.STRING.code(), "@{Framework.ConfigTag.Description}"));
+		list.add(new TagAttr("version", DataTypes.DOUBLE.code(), "@{Framework.ConfigTag.Version}"));
+		list.add(new TagAttr("scriptStart", DataTypes.STRING.code(), "@{Framework.ConfigTag.ScriptStart}"));
+		list.add(new TagAttr("scriptEnd", DataTypes.STRING.code(), "@{Framework.ConfigTag.ScriptEnd}"));
+		return list;
+	}
 
-    /**
-     * 注意本方法有两种应用场景： 1、作为IExtendItem.getName()被插件机制调用 2、在模板中要求返回name属性时调用
-     * 两种场景下返回的值会有所不同。
-     */
-    @Override
-    public String getDescription() {
-        if (context != null) {
-            return description;
-        }
-        return "@{Framework.ZVarTagDescription}";
-    }
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        if (context != null) {
-            return name;
-        }
-        return "@{Framework.ZVarTagName}";
-    }
+	/**
+	 * 注意本方法有两种应用场景： 1、作为IExtendItem.getName()被插件机制调用 2、在模板中要求返回name属性时调用 两种场景下返回的值会有所不同。
+	 */
+	@Override
+	public String getDescription() {
+		if (context != null) {
+			return description;
+		}
+		return "@{Framework.ZVarTagDescription}";
+	}
 
-    public String getType() {
-        return type;
-    }
+	@Override
+	public String getExtendItemName() {
+		if (context != null) {
+			return name;
+		}
+		return "@{Framework.ZVarTagName}";
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+	public String getAuthor() {
+		return author;
+	}
 
-    public double getVersion() {
-        return version;
-    }
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 
-    public void setVersion(double version) {
-        this.version = version;
-    }
+	public double getVersion() {
+		return version;
+	}
 
-    public String getScriptStart() {
-        return scriptStart;
-    }
+	public void setVersion(double version) {
+		this.version = version;
+	}
 
-    public void setScriptStart(String scriptStart) {
-        this.scriptStart = scriptStart;
-    }
+	public String getScriptStart() {
+		return scriptStart;
+	}
 
-    public String getScriptEnd() {
-        return scriptEnd;
-    }
+	public void setScriptStart(String scriptStart) {
+		this.scriptStart = scriptStart;
+	}
 
-    public void setScriptEnd(String scriptEnd) {
-        this.scriptEnd = scriptEnd;
-    }
+	public String getScriptEnd() {
+		return scriptEnd;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setScriptEnd(String scriptEnd) {
+		this.scriptEnd = scriptEnd;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

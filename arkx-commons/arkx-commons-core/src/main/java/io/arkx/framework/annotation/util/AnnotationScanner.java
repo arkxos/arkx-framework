@@ -19,64 +19,67 @@ import io.arkx.framework.core.scanner.IBuiltResourceVisitor;
  */
 public class AnnotationScanner implements IBuiltResourceVisitor {
 
-    private static Lock lock = new ReentrantLock();
-    private static Map<String, List<String>> annotationClassesMap = new HashMap<>();
+	private static Lock lock = new ReentrantLock();
 
-    public static List<String> find(Class<?> annotationClass) {
-        if (annotationClassesMap.get(annotationClass.getName()) != null) {
-            return annotationClassesMap.get(annotationClass.getName());
-        }
+	private static Map<String, List<String>> annotationClassesMap = new HashMap<>();
 
-        lock.lock();
-        try {
-            AnnotationScanner annotationScanner = new AnnotationScanner(annotationClass.getName());
-            BuiltResourceScanner scanner = new BuiltResourceScanner(annotationScanner, null);
-            scanner.scan(0);
+	public static List<String> find(Class<?> annotationClass) {
+		if (annotationClassesMap.get(annotationClass.getName()) != null) {
+			return annotationClassesMap.get(annotationClass.getName());
+		}
 
-            annotationClassesMap.put(annotationClass.getName(), annotationScanner.classNames);
-        } finally {
-            lock.unlock();
-        }
+		lock.lock();
+		try {
+			AnnotationScanner annotationScanner = new AnnotationScanner(annotationClass.getName());
+			BuiltResourceScanner scanner = new BuiltResourceScanner(annotationScanner, null);
+			scanner.scan(0);
 
-        return annotationClassesMap.get(annotationClass.getName());
-    }
+			annotationClassesMap.put(annotationClass.getName(), annotationScanner.classNames);
+		}
+		finally {
+			lock.unlock();
+		}
 
-    private String ALIAS;
-    private List<String> classNames = new ArrayList<>();
+		return annotationClassesMap.get(annotationClass.getName());
+	}
 
-    public AnnotationScanner(String annotationClassName) {
-        ALIAS = annotationClassName.replace('.', '/');
-    }
+	private String ALIAS;
 
-    @Override
-    public String getExtendItemID() {
-        return "io.arkx.framework.annotation.AnnotationScanner";
-    }
+	private List<String> classNames = new ArrayList<>();
 
-    @Override
-    public String getExtendItemName() {
-        return "AnnotationScanner";
-    }
+	public AnnotationScanner(String annotationClassName) {
+		ALIAS = annotationClassName.replace('.', '/');
+	}
 
-    @Override
-    public boolean match(BuiltResource br) {
-        String fullName = br.getFullName();
-        return fullName.endsWith(".class");
-    }
+	@Override
+	public String getExtendItemID() {
+		return "io.arkx.framework.annotation.AnnotationScanner";
+	}
 
-    @Override
-    public void visitClass(BuiltResource br, ClassNode classNode) {
-        if (AsmUtil.isAnnotationPresent(classNode, ALIAS)) {
-            classNames.add(classNode.name);
-        }
-    }
+	@Override
+	public String getExtendItemName() {
+		return "AnnotationScanner";
+	}
 
-    @Override
-    public void visitResource(BuiltResource br) {
-    }
+	@Override
+	public boolean match(BuiltResource br) {
+		String fullName = br.getFullName();
+		return fullName.endsWith(".class");
+	}
 
-    @Override
-    public void visitInnerClass(BuiltResource br, ClassNode cn, ClassNode icn) {
-    }
+	@Override
+	public void visitClass(BuiltResource br, ClassNode classNode) {
+		if (AsmUtil.isAnnotationPresent(classNode, ALIAS)) {
+			classNames.add(classNode.name);
+		}
+	}
+
+	@Override
+	public void visitResource(BuiltResource br) {
+	}
+
+	@Override
+	public void visitInnerClass(BuiltResource br, ClassNode cn, ClassNode icn) {
+	}
 
 }

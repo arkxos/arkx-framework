@@ -7,141 +7,151 @@ import java.util.Properties;
 import java.util.TimeZone;
 
 public class Strftime {
-    protected static Properties translate = new Properties();
-    protected SimpleDateFormat simpleDateFormat;
 
-    static {
-        translate.put("a", "EEE");
-        translate.put("A", "EEEE");
-        translate.put("b", "MMM");
-        translate.put("B", "MMMM");
-        translate.put("c", "EEE MMM d HH:mm:ss yyyy");
+	protected static Properties translate = new Properties();
 
-        translate.put("d", "dd");
-        translate.put("D", "MM/dd/yy");
-        translate.put("e", "dd");
-        translate.put("F", "yyyy-MM-dd");
-        translate.put("g", "yy");
-        translate.put("G", "yyyy");
-        translate.put("H", "HH");
-        translate.put("h", "MMM");
-        translate.put("I", "hh");
-        translate.put("j", "DDD");
-        translate.put("k", "HH");
-        translate.put("l", "hh");
-        translate.put("m", "MM");
-        translate.put("M", "mm");
-        translate.put("n", "\n");
-        translate.put("p", "a");
-        translate.put("P", "a");
-        translate.put("r", "hh:mm:ss a");
-        translate.put("R", "HH:mm");
+	protected SimpleDateFormat simpleDateFormat;
 
-        translate.put("S", "ss");
-        translate.put("t", "\t");
-        translate.put("T", "HH:mm:ss");
+	static {
+		translate.put("a", "EEE");
+		translate.put("A", "EEEE");
+		translate.put("b", "MMM");
+		translate.put("B", "MMMM");
+		translate.put("c", "EEE MMM d HH:mm:ss yyyy");
 
-        translate.put("V", "ww");
+		translate.put("d", "dd");
+		translate.put("D", "MM/dd/yy");
+		translate.put("e", "dd");
+		translate.put("F", "yyyy-MM-dd");
+		translate.put("g", "yy");
+		translate.put("G", "yyyy");
+		translate.put("H", "HH");
+		translate.put("h", "MMM");
+		translate.put("I", "hh");
+		translate.put("j", "DDD");
+		translate.put("k", "HH");
+		translate.put("l", "hh");
+		translate.put("m", "MM");
+		translate.put("M", "mm");
+		translate.put("n", "\n");
+		translate.put("p", "a");
+		translate.put("P", "a");
+		translate.put("r", "hh:mm:ss a");
+		translate.put("R", "HH:mm");
 
-        translate.put("X", "HH:mm:ss");
-        translate.put("x", "MM/dd/yy");
-        translate.put("y", "yy");
-        translate.put("Y", "yyyy");
-        translate.put("Z", "z");
-        translate.put("z", "Z");
-        translate.put("%", "%");
-    }
+		translate.put("S", "ss");
+		translate.put("t", "\t");
+		translate.put("T", "HH:mm:ss");
 
-    public Strftime(String origFormat) {
-        String convertedFormat = convertDateFormat(origFormat);
-        this.simpleDateFormat = new SimpleDateFormat(convertedFormat);
-    }
+		translate.put("V", "ww");
 
-    public Strftime(String origFormat, Locale locale) {
-        String convertedFormat = convertDateFormat(origFormat);
-        this.simpleDateFormat = new SimpleDateFormat(convertedFormat, locale);
-    }
+		translate.put("X", "HH:mm:ss");
+		translate.put("x", "MM/dd/yy");
+		translate.put("y", "yy");
+		translate.put("Y", "yyyy");
+		translate.put("Z", "z");
+		translate.put("z", "Z");
+		translate.put("%", "%");
+	}
 
-    public String format(Date date) {
-        return this.simpleDateFormat.format(date);
-    }
+	public Strftime(String origFormat) {
+		String convertedFormat = convertDateFormat(origFormat);
+		this.simpleDateFormat = new SimpleDateFormat(convertedFormat);
+	}
 
-    public TimeZone getTimeZone() {
-        return this.simpleDateFormat.getTimeZone();
-    }
+	public Strftime(String origFormat, Locale locale) {
+		String convertedFormat = convertDateFormat(origFormat);
+		this.simpleDateFormat = new SimpleDateFormat(convertedFormat, locale);
+	}
 
-    public void setTimeZone(TimeZone timeZone) {
-        this.simpleDateFormat.setTimeZone(timeZone);
-    }
+	public String format(Date date) {
+		return this.simpleDateFormat.format(date);
+	}
 
-    protected String convertDateFormat(String pattern) {
-        boolean inside = false;
-        boolean mark = false;
-        boolean modifiedCommand = false;
+	public TimeZone getTimeZone() {
+		return this.simpleDateFormat.getTimeZone();
+	}
 
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < pattern.length(); i++) {
-            char c = pattern.charAt(i);
-            if ((c == '%') && (!mark)) {
-                mark = true;
-            } else if (mark) {
-                if (modifiedCommand) {
-                    modifiedCommand = false;
-                    mark = false;
-                } else {
-                    inside = translateCommand(buf, pattern, i, inside);
-                    if ((c == 'O') || (c == 'E')) {
-                        modifiedCommand = true;
-                    } else {
-                        mark = false;
-                    }
-                }
-            } else {
-                if ((!inside) && (c != ' ')) {
-                    buf.append("'");
-                    inside = true;
-                }
-                buf.append(c);
-            }
-        }
-        if (buf.length() > 0) {
-            char lastChar = buf.charAt(buf.length() - 1);
-            if ((lastChar != '\'') && (inside)) {
-                buf.append('\'');
-            }
-        }
-        return buf.toString();
-    }
+	public void setTimeZone(TimeZone timeZone) {
+		this.simpleDateFormat.setTimeZone(timeZone);
+	}
 
-    protected String quote(String str, boolean insideQuotes) {
-        String retVal = str;
-        if (!insideQuotes) {
-            retVal = '\'' + retVal + '\'';
-        }
-        return retVal;
-    }
+	protected String convertDateFormat(String pattern) {
+		boolean inside = false;
+		boolean mark = false;
+		boolean modifiedCommand = false;
 
-    protected boolean translateCommand(StringBuffer buf, String pattern, int index, boolean oldInside) {
-        char firstChar = pattern.charAt(index);
-        boolean newInside = oldInside;
-        if ((firstChar == 'O') || (firstChar == 'E')) {
-            if (index + 1 < pattern.length()) {
-                newInside = translateCommand(buf, pattern, index + 1, oldInside);
-            } else {
-                buf.append(quote("%" + firstChar, oldInside));
-            }
-        } else {
-            String command = translate.getProperty(String.valueOf(firstChar));
-            if (command == null) {
-                buf.append(quote("%" + firstChar, oldInside));
-            } else {
-                if (oldInside) {
-                    buf.append('\'');
-                }
-                buf.append(command);
-                newInside = false;
-            }
-        }
-        return newInside;
-    }
+		StringBuffer buf = new StringBuffer();
+		for (int i = 0; i < pattern.length(); i++) {
+			char c = pattern.charAt(i);
+			if ((c == '%') && (!mark)) {
+				mark = true;
+			}
+			else if (mark) {
+				if (modifiedCommand) {
+					modifiedCommand = false;
+					mark = false;
+				}
+				else {
+					inside = translateCommand(buf, pattern, i, inside);
+					if ((c == 'O') || (c == 'E')) {
+						modifiedCommand = true;
+					}
+					else {
+						mark = false;
+					}
+				}
+			}
+			else {
+				if ((!inside) && (c != ' ')) {
+					buf.append("'");
+					inside = true;
+				}
+				buf.append(c);
+			}
+		}
+		if (buf.length() > 0) {
+			char lastChar = buf.charAt(buf.length() - 1);
+			if ((lastChar != '\'') && (inside)) {
+				buf.append('\'');
+			}
+		}
+		return buf.toString();
+	}
+
+	protected String quote(String str, boolean insideQuotes) {
+		String retVal = str;
+		if (!insideQuotes) {
+			retVal = '\'' + retVal + '\'';
+		}
+		return retVal;
+	}
+
+	protected boolean translateCommand(StringBuffer buf, String pattern, int index, boolean oldInside) {
+		char firstChar = pattern.charAt(index);
+		boolean newInside = oldInside;
+		if ((firstChar == 'O') || (firstChar == 'E')) {
+			if (index + 1 < pattern.length()) {
+				newInside = translateCommand(buf, pattern, index + 1, oldInside);
+			}
+			else {
+				buf.append(quote("%" + firstChar, oldInside));
+			}
+		}
+		else {
+			String command = translate.getProperty(String.valueOf(firstChar));
+			if (command == null) {
+				buf.append(quote("%" + firstChar, oldInside));
+			}
+			else {
+				if (oldInside) {
+					buf.append('\'');
+				}
+				buf.append(command);
+				newInside = false;
+			}
+		}
+		return newInside;
+	}
+
 }

@@ -29,58 +29,57 @@ import io.arkx.framework.commons.collection.tree.Treex;
 @NoRepositoryBean
 public interface ExtBaseRepository<T, ID> {
 
-    <S extends T> S insert(S instance);
+	<S extends T> S insert(S instance);
 
-    <S extends T> void batchInsert(List<S> entities);
+	<S extends T> void batchInsert(List<S> entities);
 
-    <S extends T> S update(S instance);
+	<S extends T> S update(S instance);
 
-    boolean support(String modelType);
+	boolean support(String modelType);
 
-    /**
-     * 获取对象属性描述
-     *
-     * @param target
-     * @param fieldClass
-     * @return
-     */
-    default PropertyDescriptor findFieldPropertyDescriptor(Class<?> target, Class<?> fieldClass) {
-        PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(target);
-        for (PropertyDescriptor pd : propertyDescriptors) {
-            if (pd.getPropertyType() == fieldClass) {
-                return pd;
-            }
-        }
-        return null;
-    }
+	/**
+	 * 获取对象属性描述
+	 * @param target
+	 * @param fieldClass
+	 * @return
+	 */
+	default PropertyDescriptor findFieldPropertyDescriptor(Class<?> target, Class<?> fieldClass) {
+		PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(target);
+		for (PropertyDescriptor pd : propertyDescriptors) {
+			if (pd.getPropertyType() == fieldClass) {
+				return pd;
+			}
+		}
+		return null;
+	}
 
-    Map<ID, T> mget(Collection<ID> ids);
+	Map<ID, T> mget(Collection<ID> ids);
 
-    // for cache
-    Map<ID, T> mgetOneByOne(Collection<ID> ids);
+	// for cache
+	Map<ID, T> mgetOneByOne(Collection<ID> ids);
 
-    // for cache
-    List<T> findAllOneByOne(Collection<ID> ids);
+	// for cache
+	List<T> findAllOneByOne(Collection<ID> ids);
 
-    void toggleStatus(ID id);
+	void toggleStatus(ID id);
 
-    @SuppressWarnings("unchecked")
-    void fakeDelete(ID... ids);
+	@SuppressWarnings("unchecked")
+	void fakeDelete(ID... ids);
 
-    DataTable queryDataTable(String sql, Object... params);
+	DataTable queryDataTable(String sql, Object... params);
 
-    List<Map<String, Object>> queryMap(String sql, Object... params);
+	List<Map<String, Object>> queryMap(String sql, Object... params);
 
-    List<T> queryList(String sql, Object... params);
+	List<T> queryList(String sql, Object... params);
 
-    long queryForLong(String sql, Object... params);
+	long queryForLong(String sql, Object... params);
 
-    int executeSql(String sql, Object... params);
+	int executeSql(String sql, Object... params);
 
-    Treex<String, T> findAllTree();
+	Treex<String, T> findAllTree();
 
-    Treex<String, T> queryTreeByParentId(String parentId);
+	Treex<String, T> queryTreeByParentId(String parentId);
 
-    List<T> findChildrenByParentId(ID parentId);
+	List<T> findChildrenByParentId(ID parentId);
 
 }

@@ -23,13 +23,12 @@ import io.arkx.framework.thirdparty.commons.fileupload.disk.DiskFileItem;
  * <p>
  * The default implementation of the {@link FileItem FileItem} interface.
  * <p>
- * After retrieving an instance of this class from a {@link DiskFileUpload
- * DiskFileUpload} instance (see {@link DiskFileUpload
- * #parseRequest(javax.servlet.http.HttpServletRequest)} ), you may either
- * request all contents of file at once using {@link #get()} or request an
- * {@link java.io.InputStream InputStream} with {@link #getInputStream()} and
- * process the file without attempting to load it into memory, which may come
- * handy with large files.
+ * After retrieving an instance of this class from a {@link DiskFileUpload DiskFileUpload}
+ * instance (see {@link DiskFileUpload
+ * #parseRequest(javax.servlet.http.HttpServletRequest)} ), you may either request all
+ * contents of file at once using {@link #get()} or request an {@link java.io.InputStream
+ * InputStream} with {@link #getInputStream()} and process the file without attempting to
+ * load it into memory, which may come handy with large files.
  *
  * @author <a href="mailto:Rafal.Krzewski@e-point.pl">Rafal Krzewski</a>
  * @author <a href="mailto:sean@informage.net">Sean Legassick</a>
@@ -41,33 +40,27 @@ import io.arkx.framework.thirdparty.commons.fileupload.disk.DiskFileItem;
  * @deprecated Use <code>DiskFileItem</code> instead.
  */
 public class DefaultFileItem extends DiskFileItem {
-    private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructs a new <code>DefaultFileItem</code> instance.
-     *
-     * @param fieldName
-     *            The name of the form field.
-     * @param contentType
-     *            The content type passed by the browser or <code>null</code> if not
-     *            specified.
-     * @param isFormField
-     *            Whether or not this item is a plain form field, as opposed to a
-     *            file upload.
-     * @param fileName
-     *            The original filename in the user's filesystem, or
-     *            <code>null</code> if not specified.
-     * @param sizeThreshold
-     *            The threshold, in bytes, below which items will be retained in
-     *            memory and above which they will be stored as a file.
-     * @param repository
-     *            The data repository, which is the directory in which files will be
-     *            created, should the item size exceed the threshold.
-     * @deprecated Use <code>DiskFileItem</code> instead.
-     */
-    public DefaultFileItem(String fieldName, String contentType, boolean isFormField, String fileName,
-            int sizeThreshold, File repository) {
-        super(fieldName, contentType, isFormField, fileName, sizeThreshold, repository);
-    }
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Constructs a new <code>DefaultFileItem</code> instance.
+	 * @param fieldName The name of the form field.
+	 * @param contentType The content type passed by the browser or <code>null</code> if
+	 * not specified.
+	 * @param isFormField Whether or not this item is a plain form field, as opposed to a
+	 * file upload.
+	 * @param fileName The original filename in the user's filesystem, or
+	 * <code>null</code> if not specified.
+	 * @param sizeThreshold The threshold, in bytes, below which items will be retained in
+	 * memory and above which they will be stored as a file.
+	 * @param repository The data repository, which is the directory in which files will
+	 * be created, should the item size exceed the threshold.
+	 * @deprecated Use <code>DiskFileItem</code> instead.
+	 */
+	public DefaultFileItem(String fieldName, String contentType, boolean isFormField, String fileName,
+			int sizeThreshold, File repository) {
+		super(fieldName, contentType, isFormField, fileName, sizeThreshold, repository);
+	}
 
 }

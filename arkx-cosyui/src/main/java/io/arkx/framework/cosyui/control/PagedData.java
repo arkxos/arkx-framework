@@ -6,42 +6,43 @@ import io.arkx.framework.json.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
- *
  * @author Darkness
  * @date 2016年12月21日 下午5:02:42
  * @version V1.0
  */
 public class PagedData {
 
-    int total;
-    String data;
+	int total;
 
-    public PagedData() {
-    }
+	String data;
 
-    public PagedData(int total, DataTable dataTable) {
-        this.total = total;
-        this.data = JSON.toJSONString(dataTable);
-    }
+	public PagedData() {
+	}
 
-    public int getTotal() {
-        return total;
-    }
+	public PagedData(int total, DataTable dataTable) {
+		this.total = total;
+		this.data = JSON.toJSONString(dataTable);
+	}
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
+	public int getTotal() {
+		return total;
+	}
 
-    @JSONField(serialize = false)
-    public DataTable getDataTable() {
-        return JSON.parseBean(this.data, DataTable.class);
-    }
+	public void setTotal(int total) {
+		this.total = total;
+	}
 
-    public String getData() {
-        return data;
-    }
+	@JSONField(serialize = false)
+	public DataTable getDataTable() {
+		return JSON.parseBean(this.data, DataTable.class);
+	}
 
-    public void setData(String data) {
-        this.data = data;
-    }
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
 }

@@ -21,29 +21,30 @@ import jakarta.persistence.EntityManager;
  */
 public class SqlToyRepositoryFactory extends JpaRepositoryFactory {
 
-    protected SqlToyLazyDao sqlToyLazyDao;
-    protected final EntityManager entityManager;
+	protected SqlToyLazyDao sqlToyLazyDao;
 
-    protected final PersistenceProvider extractor;
+	protected final EntityManager entityManager;
 
-    public SqlToyRepositoryFactory(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager) {
-        super(entityManager);
-        this.sqlToyLazyDao = sqlToyLazyDao;
-        this.entityManager = entityManager;
-        this.extractor = PersistenceProvider.fromEntityManager(entityManager);
-    }
+	protected final PersistenceProvider extractor;
 
-    @Override
-    protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
-            ValueExpressionDelegate valueExpressionDelegate) {
-        // 获取默认策略
-        QueryLookupStrategy defaultStrategy = super.getQueryLookupStrategy(key, valueExpressionDelegate)
-                .orElseThrow(() -> new IllegalStateException("No default query strategy found"));
+	public SqlToyRepositoryFactory(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager) {
+		super(entityManager);
+		this.sqlToyLazyDao = sqlToyLazyDao;
+		this.entityManager = entityManager;
+		this.extractor = PersistenceProvider.fromEntityManager(entityManager);
+	}
 
-        QueryLookupStrategy queryLookupStrategy = SqlToyQueryLookupStrategy.create(defaultStrategy, sqlToyLazyDao,
-                entityManager, key, extractor, new DefaultJpaQueryMethodFactory(extractor), valueExpressionDelegate,
-                QueryRewriterProvider.simple(), EscapeCharacter.DEFAULT);
-        return Optional.of(queryLookupStrategy);
-    }
+	@Override
+	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
+			ValueExpressionDelegate valueExpressionDelegate) {
+		// 获取默认策略
+		QueryLookupStrategy defaultStrategy = super.getQueryLookupStrategy(key, valueExpressionDelegate)
+			.orElseThrow(() -> new IllegalStateException("No default query strategy found"));
+
+		QueryLookupStrategy queryLookupStrategy = SqlToyQueryLookupStrategy.create(defaultStrategy, sqlToyLazyDao,
+				entityManager, key, extractor, new DefaultJpaQueryMethodFactory(extractor), valueExpressionDelegate,
+				QueryRewriterProvider.simple(), EscapeCharacter.DEFAULT);
+		return Optional.of(queryLookupStrategy);
+	}
 
 }

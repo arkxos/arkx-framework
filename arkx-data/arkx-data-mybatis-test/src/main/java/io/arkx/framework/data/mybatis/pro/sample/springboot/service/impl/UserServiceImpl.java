@@ -11,4 +11,5 @@ import io.arkx.framework.data.mybatis.pro.service.service.AbstractServiceImpl;
  */
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User, Long> implements UserService {
+
 }

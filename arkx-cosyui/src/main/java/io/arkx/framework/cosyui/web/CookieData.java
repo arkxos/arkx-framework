@@ -22,384 +22,370 @@ import jakarta.servlet.http.HttpServletResponse;
  * @version V1.0
  */
 public class CookieData extends ArrayList<CookieObject> {
-    private static final long serialVersionUID = 1L;
 
-    public static final String CookieCharset = "UTF-8";
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 构造一个空的Cookie对象
-     */
-    public CookieData() {
-    }
+	public static final String CookieCharset = "UTF-8";
 
-    /**
-     * 从HttpServletRequest中建立一个Cookie对象
-     */
-    public CookieData(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            return;
-        }
-        for (Cookie cookie : cookies) {
-            CookieObject c = new CookieObject();
-            c.name = cookie.getName();
-            try {
-                c.value = URLDecoder.decode(cookie.getValue(), CookieCharset);
-            } catch (Exception e) {
-                e.printStackTrace();
-                LogUtil.warn("Invalide cookie value:" + cookie.getValue());
-            }
-            c.domain = cookie.getDomain();
-            c.maxAge = cookie.getMaxAge();
-            c.path = cookie.getPath();
-            c.path = normalizePath(c.path);
-            c.secure = cookie.getSecure();
-            c.comment = cookie.getComment();
-            c.version = cookie.getVersion();
-            add(c);
-        }
-    }
+	/**
+	 * 构造一个空的Cookie对象
+	 */
+	public CookieData() {
+	}
 
-    /**
-     * 设置Cookie的值
-     *
-     * @param name
-     *            Cookie名称
-     * @param value
-     *            Cookie值
-     * @param domain
-     *            所属域
-     * @param maxAge
-     *            最大存活时长
-     * @param path
-     *            所属路径
-     * @param secure
-     *            是否是https才能存取
-     * @param comment
-     *            Cookie注释
-     */
-    public void setCookie(String name, String value, String domain, int maxAge, String path, boolean secure,
-            String comment) {
-        path = normalizePath(path);
-        for (int i = 0; i < size(); i++) {
-            CookieObject c = get(i);
-            if (c.name.equals(name) && (c.domain == null || c.domain.equals(domain))
-                    && (c.path == null || c.path.equals(path)) && c.secure == secure) {
-                if (c.value != null && !c.value.equals(value)) {
-                    c.changed = true;
-                    c.value = value;
-                    c.comment = comment;
-                    c.maxAge = maxAge;
-                    write();
-                    return;
-                }
-            }
-        }
-        CookieObject c = new CookieObject();
-        c.name = name;
-        c.value = value;
-        c.comment = comment;
-        c.domain = domain;
-        c.maxAge = maxAge;
-        c.path = path;
-        c.secure = secure;
-        c.version = 0;
-        c.changed = true;
-        add(c);
-        write();
-    }
+	/**
+	 * 从HttpServletRequest中建立一个Cookie对象
+	 */
+	public CookieData(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies == null) {
+			return;
+		}
+		for (Cookie cookie : cookies) {
+			CookieObject c = new CookieObject();
+			c.name = cookie.getName();
+			try {
+				c.value = URLDecoder.decode(cookie.getValue(), CookieCharset);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				LogUtil.warn("Invalide cookie value:" + cookie.getValue());
+			}
+			c.domain = cookie.getDomain();
+			c.maxAge = cookie.getMaxAge();
+			c.path = cookie.getPath();
+			c.path = normalizePath(c.path);
+			c.secure = cookie.getSecure();
+			c.comment = cookie.getComment();
+			c.version = cookie.getVersion();
+			add(c);
+		}
+	}
 
-    /**
-     * @return 所有的Cookie，如果多级路径下存在同名Cookie，则会返回两个实例
-     */
-    public CookieObject[] getArray() {
-        CookieObject[] cos = new CookieObject[size()];
-        for (int i = 0; i < cos.length; i++) {
-            cos[i] = get(i);
-        }
-        return cos;
-    }
+	/**
+	 * 设置Cookie的值
+	 * @param name Cookie名称
+	 * @param value Cookie值
+	 * @param domain 所属域
+	 * @param maxAge 最大存活时长
+	 * @param path 所属路径
+	 * @param secure 是否是https才能存取
+	 * @param comment Cookie注释
+	 */
+	public void setCookie(String name, String value, String domain, int maxAge, String path, boolean secure,
+			String comment) {
+		path = normalizePath(path);
+		for (int i = 0; i < size(); i++) {
+			CookieObject c = get(i);
+			if (c.name.equals(name) && (c.domain == null || c.domain.equals(domain))
+					&& (c.path == null || c.path.equals(path)) && c.secure == secure) {
+				if (c.value != null && !c.value.equals(value)) {
+					c.changed = true;
+					c.value = value;
+					c.comment = comment;
+					c.maxAge = maxAge;
+					write();
+					return;
+				}
+			}
+		}
+		CookieObject c = new CookieObject();
+		c.name = name;
+		c.value = value;
+		c.comment = comment;
+		c.domain = domain;
+		c.maxAge = maxAge;
+		c.path = path;
+		c.secure = secure;
+		c.version = 0;
+		c.changed = true;
+		add(c);
+		write();
+	}
 
-    /**
-     * 设置Cookie的值
-     *
-     * @param name
-     *            Cookie名称
-     * @param value
-     *            Cookie值
-     * @param maxAge
-     *            最大存活时长
-     */
-    public void setCookie(String name, String value, int maxAge) {
-        setCookie(name, value, null, maxAge, getDefaultPath(), false, null);
-    }
+	/**
+	 * @return 所有的Cookie，如果多级路径下存在同名Cookie，则会返回两个实例
+	 */
+	public CookieObject[] getArray() {
+		CookieObject[] cos = new CookieObject[size()];
+		for (int i = 0; i < cos.length; i++) {
+			cos[i] = get(i);
+		}
+		return cos;
+	}
 
-    /**
-     * 设置Cookie的值
-     *
-     * @param name
-     *            Cookie名称
-     * @param value
-     *            Cookie值
-     */
-    public void setCookie(String name, String value) {
-        setCookie(name, value, null, Integer.MAX_VALUE, getDefaultPath(), false, null);
-    }
+	/**
+	 * 设置Cookie的值
+	 * @param name Cookie名称
+	 * @param value Cookie值
+	 * @param maxAge 最大存活时长
+	 */
+	public void setCookie(String name, String value, int maxAge) {
+		setCookie(name, value, null, maxAge, getDefaultPath(), false, null);
+	}
 
-    /**
-     * 设置Cookie的值
-     *
-     * @param name
-     *            Cookie名称
-     * @param value
-     *            Cookie值
-     * @param path
-     *            所属路径
-     */
-    public void setCookie(String name, String value, String path) {
-        setCookie(name, value, null, Integer.MAX_VALUE, path, false, null);
-    }
+	/**
+	 * 设置Cookie的值
+	 * @param name Cookie名称
+	 * @param value Cookie值
+	 */
+	public void setCookie(String name, String value) {
+		setCookie(name, value, null, Integer.MAX_VALUE, getDefaultPath(), false, null);
+	}
 
-    /**
-     * @param name
-     *            Cookie名称
-     * @return Cookie的值
-     */
-    public String getCookie(String name) {
-        return getCookie(name, null);
-    }
+	/**
+	 * 设置Cookie的值
+	 * @param name Cookie名称
+	 * @param value Cookie值
+	 * @param path 所属路径
+	 */
+	public void setCookie(String name, String value, String path) {
+		setCookie(name, value, null, Integer.MAX_VALUE, path, false, null);
+	}
 
-    /**
-     * @return Cookie默认所属路径
-     */
-    private static String getDefaultPath() {
-        String path = Config.getContextPath();
-        return normalizePath(path);
-    }
+	/**
+	 * @param name Cookie名称
+	 * @return Cookie的值
+	 */
+	public String getCookie(String name) {
+		return getCookie(name, null);
+	}
 
-    /**
-     * 重整Cookie中的path，修正双重斜杠之类的不规范的写法
-     */
-    private static String normalizePath(String path) {
-        if (path == null) {
-            path = "/";
-        }
-        if (!path.endsWith("/")) {
-            path += "/";
-        }
-        return path;
-    }
+	/**
+	 * @return Cookie默认所属路径
+	 */
+	private static String getDefaultPath() {
+		String path = Config.getContextPath();
+		return normalizePath(path);
+	}
 
-    /**
-     * @param name
-     *            Cookie名称
-     * @param path
-     *            所属路径
-     * @return Cookie值
-     */
-    public String getCookie(String name, String path) {
-        path = normalizePath(path);
-        ArrayList<String> arr = new ArrayList<>();
-        for (int i = 0; i < size(); i++) {
-            CookieObject c = get(i);
-            if (c.name.equals(name)) {
-                if (path != null) {
-                    if (c.path.equals(path)) {
-                        arr.add(c.value);
-                    }
-                } else {
-                    arr.add(c.value);
-                }
-            }
-        }
-        if (arr.size() == 0) {
-            return null;
-        }
-        if (arr.size() == 1) {
-            return arr.get(0) == null ? null : String.valueOf(arr.get(0));
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < arr.size(); i++) {
-            if (i != 0) {
-                sb.append(",");
-            }
-            if (arr.get(i) == null) {
-                sb.append("");
-            } else {
-                sb.append(arr.get(i));
-            }
-        }
-        return sb.toString();
-    }
+	/**
+	 * 重整Cookie中的path，修正双重斜杠之类的不规范的写法
+	 */
+	private static String normalizePath(String path) {
+		if (path == null) {
+			path = "/";
+		}
+		if (!path.endsWith("/")) {
+			path += "/";
+		}
+		return path;
+	}
 
-    /**
-     * 将有改动的Cookie的值写入到当前的HttpServletResponse
-     */
-    public void write() {
-        HttpServletResponse response = null;
-        if (WebCurrent.getResponse() != null) {
-            response = WebCurrent.getResponse().servletResponse;
-        }
-        if (response == null) {
-            return;
-        }
-        try {
-            for (int j = 0; j < size(); j++) {
-                CookieObject co = get(j);
-                if (!co.changed) {
-                    continue;
-                }
-                String v = "";
-                if (co.value != null) {
-                    v = URLEncoder.encode(co.value, CookieCharset);
-                }
-                Cookie cookie = new Cookie(co.name, v);
-                cookie.setMaxAge(co.maxAge);
-                cookie.setPath(co.path);
-                if (co.domain != null) {
-                    cookie.setDomain(co.domain);
-                }
-                cookie.setSecure(co.secure);
-                response.addCookie(cookie);
-            }
+	/**
+	 * @param name Cookie名称
+	 * @param path 所属路径
+	 * @return Cookie值
+	 */
+	public String getCookie(String name, String path) {
+		path = normalizePath(path);
+		ArrayList<String> arr = new ArrayList<>();
+		for (int i = 0; i < size(); i++) {
+			CookieObject c = get(i);
+			if (c.name.equals(name)) {
+				if (path != null) {
+					if (c.path.equals(path)) {
+						arr.add(c.value);
+					}
+				}
+				else {
+					arr.add(c.value);
+				}
+			}
+		}
+		if (arr.size() == 0) {
+			return null;
+		}
+		if (arr.size() == 1) {
+			return arr.get(0) == null ? null : String.valueOf(arr.get(0));
+		}
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < arr.size(); i++) {
+			if (i != 0) {
+				sb.append(",");
+			}
+			if (arr.get(i) == null) {
+				sb.append("");
+			}
+			else {
+				sb.append(arr.get(i));
+			}
+		}
+		return sb.toString();
+	}
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * 将有改动的Cookie的值写入到当前的HttpServletResponse
+	 */
+	public void write() {
+		HttpServletResponse response = null;
+		if (WebCurrent.getResponse() != null) {
+			response = WebCurrent.getResponse().servletResponse;
+		}
+		if (response == null) {
+			return;
+		}
+		try {
+			for (int j = 0; j < size(); j++) {
+				CookieObject co = get(j);
+				if (!co.changed) {
+					continue;
+				}
+				String v = "";
+				if (co.value != null) {
+					v = URLEncoder.encode(co.value, CookieCharset);
+				}
+				Cookie cookie = new Cookie(co.name, v);
+				cookie.setMaxAge(co.maxAge);
+				cookie.setPath(co.path);
+				if (co.domain != null) {
+					cookie.setDomain(co.domain);
+				}
+				cookie.setSecure(co.secure);
+				response.addCookie(cookie);
+			}
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (CookieObject c : this) {
-            sb.append(c.name);
-            sb.append("=");
-            sb.append(c.value);
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
+		}
+		catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * 表示一个Cookie名值对
-     *
-     */
-    public static class CookieObject {
-        /**
-         * Cookie名称
-         */
-        public String name;
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (CookieObject c : this) {
+			sb.append(c.name);
+			sb.append("=");
+			sb.append(c.value);
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 
-        /**
-         * Cookie值
-         */
-        public String value;
+	/**
+	 * 表示一个Cookie名值对
+	 *
+	 */
+	public static class CookieObject {
 
-        /**
-         * Cookie备注
-         */
-        public String comment;
+		/**
+		 * Cookie名称
+		 */
+		public String name;
 
-        /**
-         * Cookie所在域
-         */
-        public String domain;
+		/**
+		 * Cookie值
+		 */
+		public String value;
 
-        /**
-         * Cookie存活时长
-         */
-        public int maxAge = -1;
+		/**
+		 * Cookie备注
+		 */
+		public String comment;
 
-        /**
-         * Cookie路径
-         */
-        public String path;
+		/**
+		 * Cookie所在域
+		 */
+		public String domain;
 
-        /**
-         * 是不是SSL下的Cookie
-         */
-        public boolean secure;
+		/**
+		 * Cookie存活时长
+		 */
+		public int maxAge = -1;
 
-        /**
-         * Cookie版本
-         */
-        public int version = 0;
+		/**
+		 * Cookie路径
+		 */
+		public String path;
 
-        /**
-         * 是否修改过
-         */
-        public boolean changed = false;
+		/**
+		 * 是不是SSL下的Cookie
+		 */
+		public boolean secure;
 
-        public String getName() {
-            return name;
-        }
+		/**
+		 * Cookie版本
+		 */
+		public int version = 0;
 
-        public void setName(String name) {
-            this.name = name;
-        }
+		/**
+		 * 是否修改过
+		 */
+		public boolean changed = false;
 
-        public String getValue() {
-            return value;
-        }
+		public String getName() {
+			return name;
+		}
 
-        public void setValue(String value) {
-            this.value = value;
-        }
+		public void setName(String name) {
+			this.name = name;
+		}
 
-        public String getComment() {
-            return comment;
-        }
+		public String getValue() {
+			return value;
+		}
 
-        public void setComment(String comment) {
-            this.comment = comment;
-        }
+		public void setValue(String value) {
+			this.value = value;
+		}
 
-        public String getDomain() {
-            return domain;
-        }
+		public String getComment() {
+			return comment;
+		}
 
-        public void setDomain(String domain) {
-            this.domain = domain;
-        }
+		public void setComment(String comment) {
+			this.comment = comment;
+		}
 
-        public int getMaxAge() {
-            return maxAge;
-        }
+		public String getDomain() {
+			return domain;
+		}
 
-        public void setMaxAge(int maxAge) {
-            this.maxAge = maxAge;
-        }
+		public void setDomain(String domain) {
+			this.domain = domain;
+		}
 
-        public String getPath() {
-            return path;
-        }
+		public int getMaxAge() {
+			return maxAge;
+		}
 
-        public void setPath(String path) {
-            this.path = path;
-        }
+		public void setMaxAge(int maxAge) {
+			this.maxAge = maxAge;
+		}
 
-        public boolean isSecure() {
-            return secure;
-        }
+		public String getPath() {
+			return path;
+		}
 
-        public void setSecure(boolean secure) {
-            this.secure = secure;
-        }
+		public void setPath(String path) {
+			this.path = path;
+		}
 
-        public int getVersion() {
-            return version;
-        }
+		public boolean isSecure() {
+			return secure;
+		}
 
-        public void setVersion(int version) {
-            this.version = version;
-        }
+		public void setSecure(boolean secure) {
+			this.secure = secure;
+		}
 
-        public boolean isChanged() {
-            return changed;
-        }
+		public int getVersion() {
+			return version;
+		}
 
-        public void setChanged(boolean changed) {
-            this.changed = changed;
-        }
-    }
+		public void setVersion(int version) {
+			this.version = version;
+		}
+
+		public boolean isChanged() {
+			return changed;
+		}
+
+		public void setChanged(boolean changed) {
+			this.changed = changed;
+		}
+
+	}
+
 }

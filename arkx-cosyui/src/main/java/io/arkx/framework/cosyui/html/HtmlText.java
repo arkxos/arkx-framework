@@ -7,47 +7,48 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  *
  */
 public final class HtmlText extends HtmlNode {
-    String text;
 
-    public HtmlText(String text) {
-        this.text = text;
-    }
+	String text;
 
-    @Override
-    public String getText() {
-        return text;
-    }
+	public HtmlText(String text) {
+		this.text = text;
+	}
 
-    @Override
-    public int getType() {
-        return HtmlNode.TEXT;
-    }
+	@Override
+	public String getText() {
+		return text;
+	}
 
-    @Override
-    void repack() {
-        if (text.indexOf('<') >= 0) {
-            text = text.replace("<", "&lt;");
-        }
-        if (text.indexOf('>') >= 0) {
-            text = text.replace(">", "&gt;");
-        }
-        text = new String(text.toCharArray());
-    }
+	@Override
+	public int getType() {
+		return HtmlNode.TEXT;
+	}
 
-    @Override
-    public void format(FastStringBuilder sb, String prefix) {
-        if (text != null) {
-            sb.append(prefix == null ? text : text.trim());
-        }
-    }
+	@Override
+	void repack() {
+		if (text.indexOf('<') >= 0) {
+			text = text.replace("<", "&lt;");
+		}
+		if (text.indexOf('>') >= 0) {
+			text = text.replace(">", "&gt;");
+		}
+		text = new String(text.toCharArray());
+	}
 
-    @Override
-    public HtmlNode clone() {
-        return new HtmlText(text);
-    }
+	@Override
+	public void format(FastStringBuilder sb, String prefix) {
+		if (text != null) {
+			sb.append(prefix == null ? text : text.trim());
+		}
+	}
 
-    public void setText(String text) {
-        this.text = text;
-    }
+	@Override
+	public HtmlNode clone() {
+		return new HtmlText(text);
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 
 }

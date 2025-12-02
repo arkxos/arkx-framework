@@ -22,115 +22,123 @@ import com.google.common.base.Joiner;
  */
 public class AvatarMQConsumer extends MessageProcessor implements AvatarMQAction {
 
-    private ProducerMessageHook hook;
-    private String brokerServerAddress;
-    private String topic;
-    private boolean subscribeMessage = false;
-    private boolean running = false;
-    private String defaultClusterId = "AvatarMQConsumerClusters";
-    private String clusterId = "";
-    private String consumerId = "";
+	private ProducerMessageHook hook;
 
-    // 连接的消息服务器broker的ip地址以及关注的生产过来的消息钩子
-    public AvatarMQConsumer(String brokerServerAddress, String topic, ProducerMessageHook hook) {
-        super(brokerServerAddress);
-        this.hook = hook;
-        this.brokerServerAddress = brokerServerAddress;
-        this.topic = topic;
-    }
+	private String brokerServerAddress;
 
-    // 向消息服务器broker发送取消订阅消息
-    private void unRegister() {
-        RequestMessage request = new RequestMessage();
-        request.setMsgType(MessageType.AvatarMQUnsubscribe);
-        request.setMsgId(new MessageIdGenerator().generate());
-        request.setMsgParams(new UnSubscribeMessage(consumerId));
-        sendSyncMessage(request);
-        super.getMessageConnectFactory().close();
-        super.closeMessageConnectFactory();
-        running = false;
-    }
+	private String topic;
 
-    // 向消息服务器broker发送订阅消息
-    private void register() {
-        RequestMessage request = new RequestMessage();
-        request.setMsgType(MessageType.AvatarMQSubscribe);
-        request.setMsgId(new MessageIdGenerator().generate());
+	private boolean subscribeMessage = false;
 
-        SubscribeMessage subscript = new SubscribeMessage();
-        subscript.setClusterId((clusterId.equals("") ? defaultClusterId : clusterId));
-        subscript.setTopic(topic);
-        subscript.setConsumerId(consumerId);
+	private boolean running = false;
 
-        request.setMsgParams(subscript);
+	private String defaultClusterId = "AvatarMQConsumerClusters";
 
-        sendAsynMessage(request);
-    }
+	private String clusterId = "";
 
-    public void init() {
-        super.getMessageConnectFactory()
-                .setMessageHandle(new MessageConsumerHandler(this, new ConsumerHookMessageEvent(hook)));
-        Joiner joiner = Joiner.on(MessageSystemConfig.MessageDelimiter).skipNulls();
-        consumerId = joiner.join((clusterId.equals("") ? defaultClusterId : clusterId), topic,
-                new MessageIdGenerator().generate());
-    }
+	private String consumerId = "";
 
-    // 连接消息服务器broker
-    public void start() {
-        if (isSubscribeMessage()) {
-            super.getMessageConnectFactory().connect();
-            register();
-            running = true;
-        }
-    }
+	// 连接的消息服务器broker的ip地址以及关注的生产过来的消息钩子
+	public AvatarMQConsumer(String brokerServerAddress, String topic, ProducerMessageHook hook) {
+		super(brokerServerAddress);
+		this.hook = hook;
+		this.brokerServerAddress = brokerServerAddress;
+		this.topic = topic;
+	}
 
-    public void receiveMode() {
-        setSubscribeMessage(true);
-    }
+	// 向消息服务器broker发送取消订阅消息
+	private void unRegister() {
+		RequestMessage request = new RequestMessage();
+		request.setMsgType(MessageType.AvatarMQUnsubscribe);
+		request.setMsgId(new MessageIdGenerator().generate());
+		request.setMsgParams(new UnSubscribeMessage(consumerId));
+		sendSyncMessage(request);
+		super.getMessageConnectFactory().close();
+		super.closeMessageConnectFactory();
+		running = false;
+	}
 
-    public void shutdown() {
-        if (running) {
-            unRegister();
-        }
-    }
+	// 向消息服务器broker发送订阅消息
+	private void register() {
+		RequestMessage request = new RequestMessage();
+		request.setMsgType(MessageType.AvatarMQSubscribe);
+		request.setMsgId(new MessageIdGenerator().generate());
 
-    public String getBrokerServerAddress() {
-        return brokerServerAddress;
-    }
+		SubscribeMessage subscript = new SubscribeMessage();
+		subscript.setClusterId((clusterId.equals("") ? defaultClusterId : clusterId));
+		subscript.setTopic(topic);
+		subscript.setConsumerId(consumerId);
 
-    public void setBrokerServerAddress(String brokerServerAddress) {
-        this.brokerServerAddress = brokerServerAddress;
-    }
+		request.setMsgParams(subscript);
 
-    public String getTopic() {
-        return topic;
-    }
+		sendAsynMessage(request);
+	}
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+	public void init() {
+		super.getMessageConnectFactory()
+			.setMessageHandle(new MessageConsumerHandler(this, new ConsumerHookMessageEvent(hook)));
+		Joiner joiner = Joiner.on(MessageSystemConfig.MessageDelimiter).skipNulls();
+		consumerId = joiner.join((clusterId.equals("") ? defaultClusterId : clusterId), topic,
+				new MessageIdGenerator().generate());
+	}
 
-    public boolean isSubscribeMessage() {
-        return subscribeMessage;
-    }
+	// 连接消息服务器broker
+	public void start() {
+		if (isSubscribeMessage()) {
+			super.getMessageConnectFactory().connect();
+			register();
+			running = true;
+		}
+	}
 
-    public void setSubscribeMessage(boolean subscribeMessage) {
-        this.subscribeMessage = subscribeMessage;
-    }
+	public void receiveMode() {
+		setSubscribeMessage(true);
+	}
 
-    public String getDefaultClusterId() {
-        return defaultClusterId;
-    }
+	public void shutdown() {
+		if (running) {
+			unRegister();
+		}
+	}
 
-    public void setDefaultClusterId(String defaultClusterId) {
-        this.defaultClusterId = defaultClusterId;
-    }
+	public String getBrokerServerAddress() {
+		return brokerServerAddress;
+	}
 
-    public String getClusterId() {
-        return clusterId;
-    }
+	public void setBrokerServerAddress(String brokerServerAddress) {
+		this.brokerServerAddress = brokerServerAddress;
+	}
 
-    public void setClusterId(String clusterId) {
-        this.clusterId = clusterId;
-    }
+	public String getTopic() {
+		return topic;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
+	public boolean isSubscribeMessage() {
+		return subscribeMessage;
+	}
+
+	public void setSubscribeMessage(boolean subscribeMessage) {
+		this.subscribeMessage = subscribeMessage;
+	}
+
+	public String getDefaultClusterId() {
+		return defaultClusterId;
+	}
+
+	public void setDefaultClusterId(String defaultClusterId) {
+		this.defaultClusterId = defaultClusterId;
+	}
+
+	public String getClusterId() {
+		return clusterId;
+	}
+
+	public void setClusterId(String clusterId) {
+		this.clusterId = clusterId;
+	}
+
 }

@@ -15,201 +15,216 @@ import io.arkx.framework.commons.util.CountableThreadPool;
 import io.arkx.framework.commons.util.LongTimeTask;
 
 /**
- *
  * @author Darkness
  * @date 2015-1-9 下午3:58:21
  * @version V1.0
  */
 public class Spider extends LongTimeTask {
 
-    public static Spider create(String taskName, String spiderName, PageProcessor pageProcessor) {
-        return new Spider(taskName, spiderName, pageProcessor);
-    }
+	public static Spider create(String taskName, String spiderName, PageProcessor pageProcessor) {
+		return new Spider(taskName, spiderName, pageProcessor);
+	}
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    private ReentrantLock newUrlLock = new ReentrantLock();
-    private Condition newUrlCondition = newUrlLock.newCondition();
-    private int emptySleepTime = 30000;
+	private ReentrantLock newUrlLock = new ReentrantLock();
 
-    private Site site;
-    private PageProcessor pageProcessor;
-    private Pipeline pipeline;
-    private DownloadFinishHandler downloadFinishHandler;
-    private HttpClientDownloader downloader = new HttpClientDownloader();
+	private Condition newUrlCondition = newUrlLock.newCondition();
 
-    protected CountableThreadPool threadPool;
+	private int emptySleepTime = 30000;
 
-    private QueueScheduler scheduler;
+	private Site site;
 
-    private String spiderName;
+	private PageProcessor pageProcessor;
 
-    Spider(String taskName, String spiderName, PageProcessor pageProcessor) {
-        this.setType(spiderName);
-        this.spiderName = spiderName;// "抓取数据 "
-        this.pageProcessor = pageProcessor;
-        this.site = pageProcessor.getSite();
-        this.scheduler = new QueueScheduler();
+	private Pipeline pipeline;
 
-        for (String url : this.site.startUrls()) {
-            this.scheduler.push(new Request(url));
-        }
-    }
+	private DownloadFinishHandler downloadFinishHandler;
 
-    // public Spider login(String loginUrl, String usernameField, String username,
-    // String passwordField, String password) {
-    // this.downloader.login(loginUrl, usernameField, username, passwordField,
-    // password);
-    // return this;
-    // }
+	private HttpClientDownloader downloader = new HttpClientDownloader();
 
-    public Spider headers(Map<String, String> headers) {
-        this.downloader.headers(headers);
-        return this;
-    }
+	protected CountableThreadPool threadPool;
 
-    public Spider setTypeJson() {
-        this.downloader.setTypeJson();
-        return this;
-    }
+	private QueueScheduler scheduler;
 
-    public Spider pipeline(Pipeline pipeline) {
-        this.pipeline = pipeline;
-        return this;
-    }
+	private String spiderName;
 
-    public Spider thread(int threadNum) {
-        threadPool = new CountableThreadPool(threadNum);
-        return this;
-    }
+	Spider(String taskName, String spiderName, PageProcessor pageProcessor) {
+		this.setType(spiderName);
+		this.spiderName = spiderName;// "抓取数据 "
+		this.pageProcessor = pageProcessor;
+		this.site = pageProcessor.getSite();
+		this.scheduler = new QueueScheduler();
 
-    public Spider finish(DownloadFinishHandler downloadFinishHandler) {
-        this.downloadFinishHandler = downloadFinishHandler;
-        return this;
-    }
+		for (String url : this.site.startUrls()) {
+			this.scheduler.push(new Request(url));
+		}
+	}
 
-    private void signalNewUrl() {
-        try {
-            newUrlLock.lock();
-            newUrlCondition.signalAll();
-        } finally {
-            newUrlLock.unlock();
-        }
-    }
+	// public Spider login(String loginUrl, String usernameField, String username,
+	// String passwordField, String password) {
+	// this.downloader.login(loginUrl, usernameField, username, passwordField,
+	// password);
+	// return this;
+	// }
 
-    protected void processRequest(Request request) {
-        Page page = downloader.download(request, this.site);
-        this.pageProcessor.process(page);
+	public Spider headers(Map<String, String> headers) {
+		this.downloader.headers(headers);
+		return this;
+	}
 
-        if (this.pipeline != null) {
-            this.pipeline.handle(page);
-        }
+	public Spider setTypeJson() {
+		this.downloader.setTypeJson();
+		return this;
+	}
 
-        List<Request> links = page.getTargetRequests();
-        for (Request link : links) {
-            this.scheduler.push(link);
-        }
+	public Spider pipeline(Pipeline pipeline) {
+		this.pipeline = pipeline;
+		return this;
+	}
 
-    }
+	public Spider thread(int threadNum) {
+		threadPool = new CountableThreadPool(threadNum);
+		return this;
+	}
 
-    private void waitNewUrl() {
-        newUrlLock.lock();
-        try {
-            // double check
-            if (threadPool.getThreadAlive() == 0) {
-                return;
-            }
-            newUrlCondition.await(emptySleepTime, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            logger.warn("waitNewUrl - interrupted, error {}", e);
-        } finally {
-            newUrlLock.unlock();
-        }
-    }
+	public Spider finish(DownloadFinishHandler downloadFinishHandler) {
+		this.downloadFinishHandler = downloadFinishHandler;
+		return this;
+	}
 
-    public void start() {
-        runAsync();
-    }
+	private void signalNewUrl() {
+		try {
+			newUrlLock.lock();
+			newUrlCondition.signalAll();
+		}
+		finally {
+			newUrlLock.unlock();
+		}
+	}
 
-    public void runAsync() {
-        Thread thread = new Thread(this);
-        thread.setDaemon(false);
-        thread.start();
-    }
+	protected void processRequest(Request request) {
+		Page page = downloader.download(request, this.site);
+		this.pageProcessor.process(page);
 
-    public Spider addStartUrls(List<String> startUrls) {
-        if (startUrls != null) {
-            for (String startUrl : startUrls) {
-                this.scheduler.push(new Request(startUrl));
-            }
-        }
-        return this;
-    }
+		if (this.pipeline != null) {
+			this.pipeline.handle(page);
+		}
 
-    @Override
-    protected void execute() {
-        while (!Thread.currentThread().isInterrupted()) {
-            Request request = scheduler.poll();
-            if (request == null) {
-                if (threadPool.getThreadAlive() == 0) {
-                    break;
-                }
-                waitNewUrl();
-            } else {
-                int total = scheduler.getTotalRequestsCount();
-                int left = scheduler.getLeftRequestsCount();
-                int already = total - left;
-                this.setPercent(Double.valueOf((already) * 100.0D / total).intValue());
-                this.setCurrentInfo(this.spiderName + already + "/" + total);
-                // System.out.println("总数："+scheduler.getTotalRequestsCount()+"，剩余："+scheduler.getLeftRequestsCount()+"，剩余百分比："+((scheduler.getLeftRequestsCount()-0.0)/scheduler.getTotalRequestsCount())+"%");
-                final Request requestFinal = request;
-                threadPool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            processRequest(requestFinal);
-                        } catch (Exception e) {
-                            logger.error("process request " + requestFinal + " error", e);
-                        } finally {
-                            signalNewUrl();
-                        }
-                    }
-                });
-            }
-        }
+		List<Request> links = page.getTargetRequests();
+		for (Request link : links) {
+			this.scheduler.push(link);
+		}
 
-        if (this.downloadFinishHandler != null) {
-            this.downloadFinishHandler.handle();
-        }
+	}
 
-        this.setPercent(100);
+	private void waitNewUrl() {
+		newUrlLock.lock();
+		try {
+			// double check
+			if (threadPool.getThreadAlive() == 0) {
+				return;
+			}
+			newUrlCondition.await(emptySleepTime, TimeUnit.MILLISECONDS);
+		}
+		catch (InterruptedException e) {
+			logger.warn("waitNewUrl - interrupted, error {}", e);
+		}
+		finally {
+			newUrlLock.unlock();
+		}
+	}
 
-        close();
-    }
+	public void start() {
+		runAsync();
+	}
 
-    public void close() {
-        threadPool.shutdown();
-    }
+	public void runAsync() {
+		Thread thread = new Thread(this);
+		thread.setDaemon(false);
+		thread.start();
+	}
 
-    public static void main(String[] args) {
-        Spider.create("AllSymbolsEastMoneyDownloader", "抓取东方财富股票代码", new PageProcessor() {
+	public Spider addStartUrls(List<String> startUrls) {
+		if (startUrls != null) {
+			for (String startUrl : startUrls) {
+				this.scheduler.push(new Request(startUrl));
+			}
+		}
+		return this;
+	}
 
-            @Override
-            public void process(Page page) {
-                System.out.println("ddd");
-            }
+	@Override
+	protected void execute() {
+		while (!Thread.currentThread().isInterrupted()) {
+			Request request = scheduler.poll();
+			if (request == null) {
+				if (threadPool.getThreadAlive() == 0) {
+					break;
+				}
+				waitNewUrl();
+			}
+			else {
+				int total = scheduler.getTotalRequestsCount();
+				int left = scheduler.getLeftRequestsCount();
+				int already = total - left;
+				this.setPercent(Double.valueOf((already) * 100.0D / total).intValue());
+				this.setCurrentInfo(this.spiderName + already + "/" + total);
+				// System.out.println("总数："+scheduler.getTotalRequestsCount()+"，剩余："+scheduler.getLeftRequestsCount()+"，剩余百分比："+((scheduler.getLeftRequestsCount()-0.0)/scheduler.getTotalRequestsCount())+"%");
+				final Request requestFinal = request;
+				threadPool.execute(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							processRequest(requestFinal);
+						}
+						catch (Exception e) {
+							logger.error("process request " + requestFinal + " error", e);
+						}
+						finally {
+							signalNewUrl();
+						}
+					}
+				});
+			}
+		}
 
-            @Override
-            public Site getSite() {
-                Site site = new Site("http://quote.eastmoney.com");
-                return site;
-            }
-        }).thread(1).addStartUrls(Arrays.asList("http://quote.eastmoney.com/stocklist.html"))
-                .finish(new DownloadFinishHandler() {
-                    @Override
-                    public void handle() {
-                        System.out.println("finished");
-                    }
-                }).start();
-    }
+		if (this.downloadFinishHandler != null) {
+			this.downloadFinishHandler.handle();
+		}
+
+		this.setPercent(100);
+
+		close();
+	}
+
+	public void close() {
+		threadPool.shutdown();
+	}
+
+	public static void main(String[] args) {
+		Spider.create("AllSymbolsEastMoneyDownloader", "抓取东方财富股票代码", new PageProcessor() {
+
+			@Override
+			public void process(Page page) {
+				System.out.println("ddd");
+			}
+
+			@Override
+			public Site getSite() {
+				Site site = new Site("http://quote.eastmoney.com");
+				return site;
+			}
+		})
+			.thread(1)
+			.addStartUrls(Arrays.asList("http://quote.eastmoney.com/stocklist.html"))
+			.finish(new DownloadFinishHandler() {
+				@Override
+				public void handle() {
+					System.out.println("finished");
+				}
+			})
+			.start();
+	}
+
 }

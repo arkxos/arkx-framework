@@ -29,43 +29,43 @@ import jakarta.annotation.PostConstruct;
 @SpringBootApplication
 public class Application {
 
-    @Autowired
-    IP2regionTemplate template;
+	@Autowired
+	IP2regionTemplate template;
 
-    @PostConstruct
-    public void test() throws IOException {
+	@PostConstruct
+	public void test() throws IOException {
 
-        // 根据IP进行搜索(默认使用内存算法)
-        System.out.println(template.memorySearch("127.0.0.1"));
-        System.out.println(template.memorySearch("61.94.43.82"));
+		// 根据IP进行搜索(默认使用内存算法)
+		System.out.println(template.memorySearch("127.0.0.1"));
+		System.out.println(template.memorySearch("61.94.43.82"));
 
-        // 根据IP获取对应地区
-        System.out.println(template.getRegion("127.0.0.1"));
-        System.out.println(template.getRegion("114.124.146.103"));
+		// 根据IP获取对应地区
+		System.out.println(template.getRegion("127.0.0.1"));
+		System.out.println(template.getRegion("114.124.146.103"));
 
-        // 根据IP获取对应地区详细信息对象
-        RegionAddress adress1 = template.getRegionAddress("113.210.53.80");
-        System.out.println(adress1);
-        System.out.println(RegionEnum.getByRegionAddress(adress1));
+		// 根据IP获取对应地区详细信息对象
+		RegionAddress adress1 = template.getRegionAddress("113.210.53.80");
+		System.out.println(adress1);
+		System.out.println(RegionEnum.getByRegionAddress(adress1));
 
-        RegionAddress adress2 = template.getRegionAddress("127.0.0.1");
-        System.out.println(adress2);
-        System.out.println(RegionEnum.getByRegionAddress(adress2));
+		RegionAddress adress2 = template.getRegionAddress("127.0.0.1");
+		System.out.println(adress2);
+		System.out.println(RegionEnum.getByRegionAddress(adress2));
 
-        // 根据IP获取对应国家
-        RegionEnum regionEnum1 = template.getRegionByIp("127.0.0.1");
-        System.out.println(regionEnum1);
-        RegionEnum regionEnum2 = template.getRegionByIp("102.42.140.162");
-        System.out.println(regionEnum2);
+		// 根据IP获取对应国家
+		RegionEnum regionEnum1 = template.getRegionByIp("127.0.0.1");
+		System.out.println(regionEnum1);
+		RegionEnum regionEnum2 = template.getRegionByIp("102.42.140.162");
+		System.out.println(regionEnum2);
 
-        // 根据IP获取对应地区枚举
-        System.out.println(template.getCountryByIp("127.0.0.1"));
-        System.out.println(template.getCountryByIp("114.124.146.103"));
+		// 根据IP获取对应地区枚举
+		System.out.println(template.getCountryByIp("127.0.0.1"));
+		System.out.println(template.getCountryByIp("114.124.146.103"));
 
-    }
+	}
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
-    }
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(Application.class, args);
+	}
 
 }

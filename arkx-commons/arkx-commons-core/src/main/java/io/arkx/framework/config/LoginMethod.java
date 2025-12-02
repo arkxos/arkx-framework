@@ -7,34 +7,37 @@ import io.arkx.framework.Config;
  *
  */
 public class LoginMethod implements IApplicationConfigItem {
-    public static final String ID = "LoginMethod";
-    private static String[] methods;
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "LoginMethod";
 
-    @Override
-    public String getExtendItemName() {
-        return "Backend login method";
-    }
+	private static String[] methods;
 
-    public static String getValue() {
-        return Config.getValue("App." + ID);
-    }
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
 
-    public static boolean isLoginMethod(String method) {
-        if (methods == null && getValue() != null) {
-            methods = getValue().split("\\,");
-        }
-        if (methods != null && methods.length > 0) {
-            for (String method2 : methods) {
-                if (method.equals(method2)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+	@Override
+	public String getExtendItemName() {
+		return "Backend login method";
+	}
+
+	public static String getValue() {
+		return Config.getValue("App." + ID);
+	}
+
+	public static boolean isLoginMethod(String method) {
+		if (methods == null && getValue() != null) {
+			methods = getValue().split("\\,");
+		}
+		if (methods != null && methods.length > 0) {
+			for (String method2 : methods) {
+				if (method.equals(method2)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }

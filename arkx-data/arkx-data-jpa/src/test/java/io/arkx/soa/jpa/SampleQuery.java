@@ -9,15 +9,16 @@ package io.arkx.soa.jpa;
  */
 public class SampleQuery {
 
-    private String content;
+	private String content;
 
-    public String getContent() {
-        return content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent(String content) {
-        if (content != null) {
-            this.content = "%" + content + "%";
-        }
-    }
+	public void setContent(String content) {
+		if (content != null) {
+			this.content = "%" + content + "%";
+		}
+	}
+
 }

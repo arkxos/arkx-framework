@@ -6,13 +6,15 @@ package io.arkx.framework.commons.enums;
  * @author Darkness
  */
 public enum DataSourceType {
-    /**
-     * 主库
-     */
-    MASTER,
 
-    /**
-     * 从库
-     */
-    SLAVE
+	/**
+	 * 主库
+	 */
+	MASTER,
+
+	/**
+	 * 从库
+	 */
+	SLAVE
+
 }

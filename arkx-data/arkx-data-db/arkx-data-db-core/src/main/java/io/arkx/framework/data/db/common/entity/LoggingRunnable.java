@@ -11,21 +11,22 @@ package io.arkx.framework.data.db.common.entity;
 
 public class LoggingRunnable extends AbstractLogging implements Runnable {
 
-    private final Runnable command;
+	private final Runnable command;
 
-    public LoggingRunnable(Runnable command, MdcKeyValue mdc) {
-        super(mdc);
-        this.command = command;
-    }
+	public LoggingRunnable(Runnable command, MdcKeyValue mdc) {
+		super(mdc);
+		this.command = command;
+	}
 
-    @Override
-    public void run() {
-        try {
-            setupMdc();
-            command.run();
-        } finally {
-            cleanMdc();
-        }
-    }
+	@Override
+	public void run() {
+		try {
+			setupMdc();
+			command.run();
+		}
+		finally {
+			cleanMdc();
+		}
+	}
 
 }

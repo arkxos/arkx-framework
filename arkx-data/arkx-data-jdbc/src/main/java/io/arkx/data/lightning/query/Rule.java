@@ -12,30 +12,32 @@ import lombok.ToString;
 @Data
 @ToString
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "ruleType")
-@JsonSubTypes(value = {@JsonSubTypes.Type(value = DynamicFieldRule.class, name = "DynamicFieldRule"),
-        @JsonSubTypes.Type(value = DynamicGroupRule.class, name = "DynamicGroupRule")})
+@JsonSubTypes(value = { @JsonSubTypes.Type(value = DynamicFieldRule.class, name = "DynamicFieldRule"),
+		@JsonSubTypes.Type(value = DynamicGroupRule.class, name = "DynamicGroupRule") })
 public abstract class Rule {
 
-    private String ruleType;
-    protected List<Rule> children;
+	private String ruleType;
 
-    public List<Rule> getChildren() {
-        if (children == null) {
-            return new ArrayList<>();
-        }
-        return children;
-    }
+	protected List<Rule> children;
 
-    public abstract String toSql();
+	public List<Rule> getChildren() {
+		if (children == null) {
+			return new ArrayList<>();
+		}
+		return children;
+	}
 
-    @Override
-    public String toString() {
-        String result = "";
-        result += "[" + ruleType + "]";
-        for (Rule rule : getChildren()) {
-            result += "\t" + rule.toString() + "\n";
-        }
+	public abstract String toSql();
 
-        return result;
-    }
+	@Override
+	public String toString() {
+		String result = "";
+		result += "[" + ruleType + "]";
+		for (Rule rule : getChildren()) {
+			result += "\t" + rule.toString() + "\n";
+		}
+
+		return result;
+	}
+
 }

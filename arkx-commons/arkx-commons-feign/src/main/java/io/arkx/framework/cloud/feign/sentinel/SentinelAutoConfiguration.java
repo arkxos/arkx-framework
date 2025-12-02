@@ -22,32 +22,32 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author lengleng
  * @date 2020-02-12
- *       <p>
- *       sentinel 配置
+ * <p>
+ * sentinel 配置
  */
 @Configuration(proxyBeanMethods = false)
 // @AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
 public class SentinelAutoConfiguration {
 
-    // @Bean
-    // @Scope("prototype")
-    // @ConditionalOnMissingBean
-    // @ConditionalOnProperty(name = "spring.cloud.openfeign.sentinel.enabled")
-    // public Feign.Builder feignSentinelBuilder() {
-    // return ArkSentinelFeign.builder();
-    // }
-    //
-    // @Bean
-    // @ConditionalOnMissingBean
-    // public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper)
-    // {
-    // return new ArkUrlBlockHandler(objectMapper);
-    // }
-    //
-    // @Bean
-    // @ConditionalOnMissingBean
-    // public RequestOriginParser requestOriginParser() {
-    // return new ArkHeaderRequestOriginParser();
-    // }
+	// @Bean
+	// @Scope("prototype")
+	// @ConditionalOnMissingBean
+	// @ConditionalOnProperty(name = "spring.cloud.openfeign.sentinel.enabled")
+	// public Feign.Builder feignSentinelBuilder() {
+	// return ArkSentinelFeign.builder();
+	// }
+	//
+	// @Bean
+	// @ConditionalOnMissingBean
+	// public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper)
+	// {
+	// return new ArkUrlBlockHandler(objectMapper);
+	// }
+	//
+	// @Bean
+	// @ConditionalOnMissingBean
+	// public RequestOriginParser requestOriginParser() {
+	// return new ArkHeaderRequestOriginParser();
+	// }
 
 }

@@ -13,125 +13,127 @@ import java.util.List;
  */
 public class FastTableHeaderEncoder {
 
-    public static final byte[] FILE_TYPE = new byte[]{'A', 'F', 'T'};
-    public static final int VERSION = 1;
+	public static final byte[] FILE_TYPE = new byte[] { 'A', 'F', 'T' };
 
-    /**
-     * [headerLength][AFT][version][自定义备注，128
-     * byte][rowSize][tableNameLength][tableName][columnSize]([columnNameLength][columnName][columnType][columnLength]...)
-     *
-     * @author Darkness
-     * @date 2015年12月5日 上午11:38:28
-     * @version V1.0
-     * @since infinity 1.0
-     */
-    public static ByteBuffer encode(FastTableHeader header) {
+	public static final int VERSION = 1;
 
-        String tableName = header.getTableName();
-        List<FastColumn> columns = header.columns();
-        long rowCount = header.getRowSize();
+	/**
+	 * [headerLength][AFT][version][自定义备注，128
+	 * byte][rowSize][tableNameLength][tableName][columnSize]([columnNameLength][columnName][columnType][columnLength]...)
+	 *
+	 * @author Darkness
+	 * @date 2015年12月5日 上午11:38:28
+	 * @version V1.0
+	 * @since infinity 1.0
+	 */
+	public static ByteBuffer encode(FastTableHeader header) {
 
-        int headerLength = caculateHeaderLength(tableName, columns);
+		String tableName = header.getTableName();
+		List<FastColumn> columns = header.columns();
+		long rowCount = header.getRowSize();
 
-        ByteBuffer buffer = ByteBuffer.allocate(INT_LENGTH + headerLength);
-        // [headerLength]
-        // buffer.putInt(headerLength);
+		int headerLength = caculateHeaderLength(tableName, columns);
 
-        // [AFT]
-        buffer.put(FILE_TYPE);
+		ByteBuffer buffer = ByteBuffer.allocate(INT_LENGTH + headerLength);
+		// [headerLength]
+		// buffer.putInt(headerLength);
 
-        // [version]
-        buffer.putInt(VERSION);
+		// [AFT]
+		buffer.put(FILE_TYPE);
 
-        // [自定义数据区域，128 byte]
-        byte[] customData = new byte[128];
-        buffer.put(customData);
+		// [version]
+		buffer.putInt(VERSION);
 
-        // [rowSize]
-        buffer.putLong(rowCount);
+		// [自定义数据区域，128 byte]
+		byte[] customData = new byte[128];
+		buffer.put(customData);
 
-        // [tableNameLength][tableName]
-        buffer.putInt(tableName.length());
-        buffer.put(tableName.getBytes());
+		// [rowSize]
+		buffer.putLong(rowCount);
 
-        // [columnSize]
-        buffer.putInt(columns.size());
+		// [tableNameLength][tableName]
+		buffer.putInt(tableName.length());
+		buffer.put(tableName.getBytes());
 
-        for (FastColumn column : columns) {
-            /**
-             * [columnNameLength][columnName][columnType][columnLength][columnIndexType]...)
-             */
-            String columnName = column.getName();
+		// [columnSize]
+		buffer.putInt(columns.size());
 
-            // [columnNameLength][columnName]
-            buffer.putInt(columnName.length());
-            buffer.put(columnName.getBytes());
+		for (FastColumn column : columns) {
+			/**
+			 * [columnNameLength][columnName][columnType][columnLength][columnIndexType]...)
+			 */
+			String columnName = column.getName();
 
-            // [columnType]
-            buffer.put(column.getType().code());
-            if (column.getType() == FastColumnType.String || column.getType() == FastColumnType.FixedString) {
-                buffer.putInt(column.getLength());
-            }
+			// [columnNameLength][columnName]
+			buffer.putInt(columnName.length());
+			buffer.put(columnName.getBytes());
 
-            // [columnIndexType]
-            buffer.put(column.getIndexType().getValue());
-        }
+			// [columnType]
+			buffer.put(column.getType().code());
+			if (column.getType() == FastColumnType.String || column.getType() == FastColumnType.FixedString) {
+				buffer.putInt(column.getLength());
+			}
 
-        buffer.position(0);
-        return buffer;
-    }
+			// [columnIndexType]
+			buffer.put(column.getIndexType().getValue());
+		}
 
-    // 自定义数据区域，128字节
-    private static int CUSTOM_DATA_LENGTH = 128;
+		buffer.position(0);
+		return buffer;
+	}
 
-    /**
-     * 计算文件头长度
-     *
-     * @author Darkness
-     * @date 2015年12月5日 下午12:04:21
-     * @version V1.0
-     * @since infinity 1.0
-     */
-    private static int caculateHeaderLength(String tableName, List<FastColumn> columns) {
-        int headerLength = 0;
+	// 自定义数据区域，128字节
+	private static int CUSTOM_DATA_LENGTH = 128;
 
-        // [AFT]
-        headerLength += FILE_TYPE.length;
+	/**
+	 * 计算文件头长度
+	 *
+	 * @author Darkness
+	 * @date 2015年12月5日 下午12:04:21
+	 * @version V1.0
+	 * @since infinity 1.0
+	 */
+	private static int caculateHeaderLength(String tableName, List<FastColumn> columns) {
+		int headerLength = 0;
 
-        // [version]
-        headerLength += INT_LENGTH;
+		// [AFT]
+		headerLength += FILE_TYPE.length;
 
-        // [自定义数据区域，128 byte]
-        headerLength += CUSTOM_DATA_LENGTH;
+		// [version]
+		headerLength += INT_LENGTH;
 
-        // [rowSize]
-        headerLength += LONG_LENGTH;
+		// [自定义数据区域，128 byte]
+		headerLength += CUSTOM_DATA_LENGTH;
 
-        // [tableNameLength][tableName]
-        headerLength += INT_LENGTH + tableName.length();
+		// [rowSize]
+		headerLength += LONG_LENGTH;
 
-        // [columnSize]
-        headerLength += INT_LENGTH;
+		// [tableNameLength][tableName]
+		headerLength += INT_LENGTH + tableName.length();
 
-        for (FastColumn column : columns) {
-            /**
-             * [columnNameLength][columnName][columnType][columnLength][columnIndexType]...)
-             */
-            String columnName = column.getName();
+		// [columnSize]
+		headerLength += INT_LENGTH;
 
-            // [columnNameLength][columnName]
-            headerLength += INT_LENGTH + columnName.length();
+		for (FastColumn column : columns) {
+			/**
+			 * [columnNameLength][columnName][columnType][columnLength][columnIndexType]...)
+			 */
+			String columnName = column.getName();
 
-            // [columnType]
-            headerLength += BYTE_LENGTH;
-            if (column.getType() == FastColumnType.String || column.getType() == FastColumnType.FixedString) {
-                headerLength += INT_LENGTH;
-            }
+			// [columnNameLength][columnName]
+			headerLength += INT_LENGTH + columnName.length();
 
-            // [columnIndexType]
-            headerLength += BYTE_LENGTH;
-        }
+			// [columnType]
+			headerLength += BYTE_LENGTH;
+			if (column.getType() == FastColumnType.String || column.getType() == FastColumnType.FixedString) {
+				headerLength += INT_LENGTH;
+			}
 
-        return headerLength;
-    }
+			// [columnIndexType]
+			headerLength += BYTE_LENGTH;
+		}
+
+		return headerLength;
+	}
+
 }

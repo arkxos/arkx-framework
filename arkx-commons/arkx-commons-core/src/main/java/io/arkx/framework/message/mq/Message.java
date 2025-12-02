@@ -1,4 +1,5 @@
 package io.arkx.framework.message.mq;
+
 // package io.arkx.message.mq;
 //
 // public class Message {

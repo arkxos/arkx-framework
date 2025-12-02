@@ -7,265 +7,284 @@ import java.util.*;
  *
  */
 public class ReadOnlyMapx<K, V> extends Mapx<K, V> {
-    private static final long serialVersionUID = 1L;
-    Map<K, V> data;
-    transient volatile Set<K> keySet = null;
-    transient volatile Collection<V> values = null;
-    transient EntrySet entrySet = null;
 
-    public ReadOnlyMapx(Map<K, V> data) {
-        if (data == null) {
-            throw new NullPointerException();
-        }
-        this.data = data;
-    }
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    public int size() {
-        return data.size();
-    }
+	Map<K, V> data;
 
-    @Override
-    public boolean isEmpty() {
-        return data.isEmpty();
-    }
+	transient volatile Set<K> keySet = null;
 
-    @Override
-    public boolean containsKey(Object key) {
-        return data.containsKey(key);
-    }
+	transient volatile Collection<V> values = null;
 
-    @Override
-    public boolean containsValue(Object value) {
-        return data.containsValue(value);
-    }
+	transient EntrySet entrySet = null;
 
-    @Override
-    public V get(Object key) {
-        return data.get(key);
-    }
+	public ReadOnlyMapx(Map<K, V> data) {
+		if (data == null) {
+			throw new NullPointerException();
+		}
+		this.data = data;
+	}
 
-    @Override
-    public V put(K key, V value) {
-        // throw new MapReadOnlyException();
-        return super.put(key, value);
-    }
+	@Override
+	public int size() {
+		return data.size();
+	}
 
-    @Override
-    public V remove(Object key) {
-        throw new MapReadOnlyException();
-    }
+	@Override
+	public boolean isEmpty() {
+		return data.isEmpty();
+	}
 
-    @Override
-    public void putAll(Map<? extends K, ? extends V> t) {
-        throw new MapReadOnlyException();
-    }
+	@Override
+	public boolean containsKey(Object key) {
+		return data.containsKey(key);
+	}
 
-    @Override
-    public void clear() {
-        throw new MapReadOnlyException();
-    }
+	@Override
+	public boolean containsValue(Object value) {
+		return data.containsValue(value);
+	}
 
-    @Override
-    public Set<K> keySet() {
-        return keySet == null ? keySet = new KeySet(data.keySet()) : keySet;
-    }
+	@Override
+	public V get(Object key) {
+		return data.get(key);
+	}
 
-    @Override
-    public Collection<V> values() {
-        return values == null ? values = new Values(data.values()) : values;
-    }
+	@Override
+	public V put(K key, V value) {
+		// throw new MapReadOnlyException();
+		return super.put(key, value);
+	}
 
-    @Override
-    public Set<java.util.Map.Entry<K, V>> entrySet() {
-        return entrySet == null ? entrySet = new EntrySet(data.entrySet()) : entrySet;
-    }
+	@Override
+	public V remove(Object key) {
+		throw new MapReadOnlyException();
+	}
 
-    private class KeySet extends AbstractSet<K> {
-        Set<K> data;
+	@Override
+	public void putAll(Map<? extends K, ? extends V> t) {
+		throw new MapReadOnlyException();
+	}
 
-        public KeySet(Set<K> data) {
-            this.data = data;
-        }
+	@Override
+	public void clear() {
+		throw new MapReadOnlyException();
+	}
 
-        @Override
-        public Iterator<K> iterator() {
-            return new KeyIterator(data.iterator());
-        }
+	@Override
+	public Set<K> keySet() {
+		return keySet == null ? keySet = new KeySet(data.keySet()) : keySet;
+	}
 
-        @Override
-        public int size() {
-            return data.size();
-        }
-    }
+	@Override
+	public Collection<V> values() {
+		return values == null ? values = new Values(data.values()) : values;
+	}
 
-    private class Values implements Collection<V> {
-        Collection<V> data;
+	@Override
+	public Set<java.util.Map.Entry<K, V>> entrySet() {
+		return entrySet == null ? entrySet = new EntrySet(data.entrySet()) : entrySet;
+	}
 
-        public Values(Collection<V> data) {
-            this.data = data;
-        }
+	private class KeySet extends AbstractSet<K> {
 
-        @Override
-        public Iterator<V> iterator() {
-            return new ValueIterator(data.iterator());
-        }
+		Set<K> data;
 
-        @Override
-        public int size() {
-            return data.size();
-        }
+		public KeySet(Set<K> data) {
+			this.data = data;
+		}
 
-        @Override
-        public boolean isEmpty() {
-            return data.isEmpty();
-        }
+		@Override
+		public Iterator<K> iterator() {
+			return new KeyIterator(data.iterator());
+		}
 
-        @Override
-        public boolean contains(Object o) {
-            return data.contains(o);
-        }
+		@Override
+		public int size() {
+			return data.size();
+		}
 
-        @Override
-        public Object[] toArray() {
-            return data.toArray();
-        }
+	}
 
-        @Override
-        public <T> T[] toArray(T[] a) {
-            return data.toArray(a);
-        }
+	private class Values implements Collection<V> {
 
-        @Override
-        public boolean add(V o) {
-            throw new MapReadOnlyException();
-        }
+		Collection<V> data;
 
-        @Override
-        public boolean remove(Object o) {
-            throw new MapReadOnlyException();
-        }
+		public Values(Collection<V> data) {
+			this.data = data;
+		}
 
-        @Override
-        public boolean containsAll(Collection<?> c) {
-            return data.containsAll(c);
-        }
+		@Override
+		public Iterator<V> iterator() {
+			return new ValueIterator(data.iterator());
+		}
 
-        @Override
-        public boolean addAll(Collection<? extends V> c) {
-            throw new MapReadOnlyException();
-        }
+		@Override
+		public int size() {
+			return data.size();
+		}
 
-        @Override
-        public boolean removeAll(Collection<?> c) {
-            throw new MapReadOnlyException();
-        }
+		@Override
+		public boolean isEmpty() {
+			return data.isEmpty();
+		}
 
-        @Override
-        public boolean retainAll(Collection<?> c) {
-            throw new MapReadOnlyException();
-        }
+		@Override
+		public boolean contains(Object o) {
+			return data.contains(o);
+		}
 
-        @Override
-        public void clear() {
-            throw new MapReadOnlyException();
+		@Override
+		public Object[] toArray() {
+			return data.toArray();
+		}
 
-        }
-    }
+		@Override
+		public <T> T[] toArray(T[] a) {
+			return data.toArray(a);
+		}
 
-    private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
-        Set<Map.Entry<K, V>> data;
+		@Override
+		public boolean add(V o) {
+			throw new MapReadOnlyException();
+		}
 
-        public EntrySet(Set<Map.Entry<K, V>> data) {
-            this.data = data;
-        }
+		@Override
+		public boolean remove(Object o) {
+			throw new MapReadOnlyException();
+		}
 
-        @Override
-        public Iterator<Map.Entry<K, V>> iterator() {
-            return new EntryIterator(data.iterator());
-        }
+		@Override
+		public boolean containsAll(Collection<?> c) {
+			return data.containsAll(c);
+		}
 
-        @Override
-        public int size() {
-            return data.size();
-        }
-    }
+		@Override
+		public boolean addAll(Collection<? extends V> c) {
+			throw new MapReadOnlyException();
+		}
 
-    private class ValueIterator implements Iterator<V> {
-        Iterator<V> data;
+		@Override
+		public boolean removeAll(Collection<?> c) {
+			throw new MapReadOnlyException();
+		}
 
-        public ValueIterator(Iterator<V> data) {
-            this.data = data;
-        }
+		@Override
+		public boolean retainAll(Collection<?> c) {
+			throw new MapReadOnlyException();
+		}
 
-        @Override
-        public V next() {
-            return data.next();
-        }
+		@Override
+		public void clear() {
+			throw new MapReadOnlyException();
 
-        @Override
-        public boolean hasNext() {
-            return data.hasNext();
-        }
+		}
 
-        @Override
-        public void remove() {
-            throw new MapReadOnlyException();
-        }
-    }
+	}
 
-    private class KeyIterator implements Iterator<K> {
-        Iterator<K> data;
+	private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
-        public KeyIterator(Iterator<K> data) {
-            this.data = data;
-        }
+		Set<Map.Entry<K, V>> data;
 
-        @Override
-        public K next() {
-            return data.next();
-        }
+		public EntrySet(Set<Map.Entry<K, V>> data) {
+			this.data = data;
+		}
 
-        @Override
-        public boolean hasNext() {
-            return data.hasNext();
-        }
+		@Override
+		public Iterator<Map.Entry<K, V>> iterator() {
+			return new EntryIterator(data.iterator());
+		}
 
-        @Override
-        public void remove() {
-            throw new MapReadOnlyException();
-        }
-    }
+		@Override
+		public int size() {
+			return data.size();
+		}
 
-    private class EntryIterator implements Iterator<Map.Entry<K, V>> {
-        Iterator<Map.Entry<K, V>> data;
+	}
 
-        public EntryIterator(Iterator<Map.Entry<K, V>> data) {
-            this.data = data;
-        }
+	private class ValueIterator implements Iterator<V> {
 
-        @Override
-        public Map.Entry<K, V> next() {
-            return data.next();
-        }
+		Iterator<V> data;
 
-        @Override
-        public boolean hasNext() {
-            return data.hasNext();
-        }
+		public ValueIterator(Iterator<V> data) {
+			this.data = data;
+		}
 
-        @Override
-        public void remove() {
-            throw new MapReadOnlyException();
-        }
-    }
+		@Override
+		public V next() {
+			return data.next();
+		}
 
-    public static class MapReadOnlyException extends RuntimeException {
-        private static final long serialVersionUID = 1L;
+		@Override
+		public boolean hasNext() {
+			return data.hasNext();
+		}
 
-        public MapReadOnlyException() {
-            super("Can't modify a ReadOnlyMap!");
-        }
-    }
+		@Override
+		public void remove() {
+			throw new MapReadOnlyException();
+		}
+
+	}
+
+	private class KeyIterator implements Iterator<K> {
+
+		Iterator<K> data;
+
+		public KeyIterator(Iterator<K> data) {
+			this.data = data;
+		}
+
+		@Override
+		public K next() {
+			return data.next();
+		}
+
+		@Override
+		public boolean hasNext() {
+			return data.hasNext();
+		}
+
+		@Override
+		public void remove() {
+			throw new MapReadOnlyException();
+		}
+
+	}
+
+	private class EntryIterator implements Iterator<Map.Entry<K, V>> {
+
+		Iterator<Map.Entry<K, V>> data;
+
+		public EntryIterator(Iterator<Map.Entry<K, V>> data) {
+			this.data = data;
+		}
+
+		@Override
+		public Map.Entry<K, V> next() {
+			return data.next();
+		}
+
+		@Override
+		public boolean hasNext() {
+			return data.hasNext();
+		}
+
+		@Override
+		public void remove() {
+			throw new MapReadOnlyException();
+		}
+
+	}
+
+	public static class MapReadOnlyException extends RuntimeException {
+
+		private static final long serialVersionUID = 1L;
+
+		public MapReadOnlyException() {
+			super("Can't modify a ReadOnlyMap!");
+		}
+
+	}
 
 }

@@ -20,26 +20,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RedisMessageDistributor implements MessageDistributor {
 
-    private final StringRedisTemplate stringRedisTemplate;
+	private final StringRedisTemplate stringRedisTemplate;
 
-    /**
-     * 将消息发布到 Redis 频道。
-     * <p>
-     * 此方法首先将消息对象序列化为 JSON 字符串，然后通过 Redis 发布/订阅机制 将其发送到
-     * {@link RedisWebsocketMessageListener#CHANNEL} 频道。
-     * </p>
-     *
-     * @param messageDO
-     *            待发送的消息对象，包含消息内容和目标会话信息。
-     */
-    @Override
-    public void distribute(MessageDO messageDO) {
-        // 包装 sessionKey 适配分布式多环境
-        List<Object> sessionKeyList = new ArrayList<>(messageDO.getSessionKeys());
-        messageDO.setSessionKeys(sessionKeyList);
+	/**
+	 * 将消息发布到 Redis 频道。
+	 * <p>
+	 * 此方法首先将消息对象序列化为 JSON 字符串，然后通过 Redis 发布/订阅机制 将其发送到
+	 * {@link RedisWebsocketMessageListener#CHANNEL} 频道。
+	 * </p>
+	 * @param messageDO 待发送的消息对象，包含消息内容和目标会话信息。
+	 */
+	@Override
+	public void distribute(MessageDO messageDO) {
+		// 包装 sessionKey 适配分布式多环境
+		List<Object> sessionKeyList = new ArrayList<>(messageDO.getSessionKeys());
+		messageDO.setSessionKeys(sessionKeyList);
 
-        String str = JSONUtil.toJsonStr(messageDO);
-        stringRedisTemplate.convertAndSend(RedisWebsocketMessageListener.CHANNEL, str);
-    }
+		String str = JSONUtil.toJsonStr(messageDO);
+		stringRedisTemplate.convertAndSend(RedisWebsocketMessageListener.CHANNEL, str);
+	}
 
 }

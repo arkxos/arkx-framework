@@ -35,74 +35,79 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
  */
 public class SidecarNacosDiscoveryClient implements SidecarDiscoveryClient {
 
-    private static final Logger log = LoggerFactory.getLogger(SidecarNacosDiscoveryClient.class);
+	private static final Logger log = LoggerFactory.getLogger(SidecarNacosDiscoveryClient.class);
 
-    private NacosServiceManager nacosServiceManager;
+	private NacosServiceManager nacosServiceManager;
 
-    private final SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties;
+	private final SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties;
 
-    public SidecarNacosDiscoveryClient(NacosServiceManager nacosServiceManager,
-            SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties) {
-        this.nacosServiceManager = nacosServiceManager;
-        this.sidecarNacosDiscoveryProperties = sidecarNacosDiscoveryProperties;
-    }
+	public SidecarNacosDiscoveryClient(NacosServiceManager nacosServiceManager,
+			SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties) {
+		this.nacosServiceManager = nacosServiceManager;
+		this.sidecarNacosDiscoveryProperties = sidecarNacosDiscoveryProperties;
+	}
 
-    @Override
-    public void registerInstance(String applicationName, String ip, Integer port) {
-        try {
-            Instance instance = new Instance();
-            instance.setIp(ip);
-            instance.setPort(port);
-            instance.setWeight(1.0);
-            instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
-            // registerInstance(serviceName, groupName, instance);
-            // this.namingService().batchRegisterInstance().registerInstance(applicationName,
-            // sidecarNacosDiscoveryProperties.getGroup(), ip, port);
-            this.namingService().batchRegisterInstance(applicationName, sidecarNacosDiscoveryProperties.getGroup(),
-                    Arrays.asList(instance));
-            log.debug("register instance[" + applicationName + "," + ip + "," + port + "] success");
-        } catch (NacosException e) {
-            log.warn("nacos exception happens", e);
-        }
-    }
+	@Override
+	public void registerInstance(String applicationName, String ip, Integer port) {
+		try {
+			Instance instance = new Instance();
+			instance.setIp(ip);
+			instance.setPort(port);
+			instance.setWeight(1.0);
+			instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
+			// registerInstance(serviceName, groupName, instance);
+			// this.namingService().batchRegisterInstance().registerInstance(applicationName,
+			// sidecarNacosDiscoveryProperties.getGroup(), ip, port);
+			this.namingService()
+				.batchRegisterInstance(applicationName, sidecarNacosDiscoveryProperties.getGroup(),
+						Arrays.asList(instance));
+			log.debug("register instance[" + applicationName + "," + ip + "," + port + "] success");
+		}
+		catch (NacosException e) {
+			log.warn("nacos exception happens", e);
+		}
+	}
 
-    @Override
-    public void deregisterInstance(String applicationName, String ip, Integer port) {
-        try {
-            this.namingService().deregisterInstance(applicationName, sidecarNacosDiscoveryProperties.getGroup(), ip,
-                    port);
-            log.debug("deregister instance[" + applicationName + "," + ip + "," + port + "] success");
-        } catch (NacosException e) {
-            log.warn("nacos exception happens", e);
-        }
-    }
+	@Override
+	public void deregisterInstance(String applicationName, String ip, Integer port) {
+		try {
+			this.namingService()
+				.deregisterInstance(applicationName, sidecarNacosDiscoveryProperties.getGroup(), ip, port);
+			log.debug("deregister instance[" + applicationName + "," + ip + "," + port + "] success");
+		}
+		catch (NacosException e) {
+			log.warn("nacos exception happens", e);
+		}
+	}
 
-    @Override
-    public void batchRegisterInstance(String applicationName, String groupName, List<Instance> instances) {
-        try {
-            this.namingService().batchRegisterInstance(applicationName, groupName, instances);
-            // log.debug("register instance["+applicationName+","+ip+","+port+"] success");
-        } catch (NacosException e) {
-            log.warn("nacos exception happens", e);
-        }
-    }
+	@Override
+	public void batchRegisterInstance(String applicationName, String groupName, List<Instance> instances) {
+		try {
+			this.namingService().batchRegisterInstance(applicationName, groupName, instances);
+			// log.debug("register instance["+applicationName+","+ip+","+port+"]
+			// success");
+		}
+		catch (NacosException e) {
+			log.warn("nacos exception happens", e);
+		}
+	}
 
-    // @Override
-    // public void deregisterInstance(String applicationName, String ip, Integer
-    // port) {
-    // try {
-    // this.namingService().deregisterInstance(applicationName,
-    // sidecarNacosDiscoveryProperties.getGroup(), ip, port);
-    // log.debug("deregister instance["+applicationName+","+ip+","+port+"]
-    // success");
-    // }
-    // catch (NacosException e) {
-    // log.warn("nacos exception happens", e);
-    // }
-    // }
+	// @Override
+	// public void deregisterInstance(String applicationName, String ip, Integer
+	// port) {
+	// try {
+	// this.namingService().deregisterInstance(applicationName,
+	// sidecarNacosDiscoveryProperties.getGroup(), ip, port);
+	// log.debug("deregister instance["+applicationName+","+ip+","+port+"]
+	// success");
+	// }
+	// catch (NacosException e) {
+	// log.warn("nacos exception happens", e);
+	// }
+	// }
 
-    private NamingService namingService() {
-        return nacosServiceManager.getNamingService();
-    }
+	private NamingService namingService() {
+		return nacosServiceManager.getNamingService();
+	}
 
 }

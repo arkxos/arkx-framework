@@ -4,4 +4,5 @@ import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.EnumTypeHandl
 import io.arkx.framework.data.mybatis.pro.service.mapper.BaseMapper;
 
 public interface EnumTypeHandlerMapper extends BaseMapper<EnumTypeHandler, Long> {
+
 }

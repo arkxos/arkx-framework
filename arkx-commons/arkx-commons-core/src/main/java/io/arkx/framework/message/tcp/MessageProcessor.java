@@ -10,47 +10,51 @@ import io.netty.channel.Channel;
 
 public class MessageProcessor {
 
-    private Map<String, MessageSender> sendersMap = new ConcurrentHashMap<>();
-    private long lastRecivedServerMessageTime = System.nanoTime();
-    private Channel channel;
-    private NettyClient client;
+	private Map<String, MessageSender> sendersMap = new ConcurrentHashMap<>();
 
-    public MessageProcessor(NettyClient client, Channel channel) {
-        this.client = client;
-        this.channel = channel;
-    }
+	private long lastRecivedServerMessageTime = System.nanoTime();
 
-    public NettyMessage send(NettyMessage message) {
-        MessageSender sender = new MessageSender(channel);
-        if (message.getId() == null) {
-            message.setId(UuidUtil.base58Uuid());
-        }
-        sendersMap.put(message.getId(), sender);
-        return sender.send(message);
-    }
+	private Channel channel;
 
-    public void setResponseMessage(NettyMessage message) {
-        String id = message.getId();
-        MessageSender sender = sendersMap.get(id);
-        if (sender != null) {
-            sender.setMessageResult(message);
-            sendersMap.remove(id);
-        }
-    }
+	private NettyClient client;
 
-    public void onMessage(NettyMessage message) {
-        lastRecivedServerMessageTime = System.nanoTime();
+	public MessageProcessor(NettyClient client, Channel channel) {
+		this.client = client;
+		this.channel = channel;
+	}
 
-        if (message.getType() == MessageType.RESPONSE) {
-            setResponseMessage(message);
-        }
+	public NettyMessage send(NettyMessage message) {
+		MessageSender sender = new MessageSender(channel);
+		if (message.getId() == null) {
+			message.setId(UuidUtil.base58Uuid());
+		}
+		sendersMap.put(message.getId(), sender);
+		return sender.send(message);
+	}
 
-        // for (ClientMessageHandler messageHandler : client.getMessageHandlers()) {
-        // messageHandler.handle(message);
-        // }
-    }
+	public void setResponseMessage(NettyMessage message) {
+		String id = message.getId();
+		MessageSender sender = sendersMap.get(id);
+		if (sender != null) {
+			sender.setMessageResult(message);
+			sendersMap.remove(id);
+		}
+	}
 
-    public long getLastRecivedServerMessageTime() {
-        return lastRecivedServerMessageTime;
-    }
+	public void onMessage(NettyMessage message) {
+		lastRecivedServerMessageTime = System.nanoTime();
+
+		if (message.getType() == MessageType.RESPONSE) {
+			setResponseMessage(message);
+		}
+
+		// for (ClientMessageHandler messageHandler : client.getMessageHandlers()) {
+		// messageHandler.handle(message);
+		// }
+	}
+
+	public long getLastRecivedServerMessageTime() {
+		return lastRecivedServerMessageTime;
+	}
+
 }

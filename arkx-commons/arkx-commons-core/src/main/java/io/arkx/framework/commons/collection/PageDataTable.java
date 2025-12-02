@@ -8,51 +8,56 @@ package io.arkx.framework.commons.collection;
  */
 public class PageDataTable implements IPageData {
 
-    private boolean pageEnable = true;
-    private int pageSize;
-    private int pageIndex;
-    private int total;
-    private DataTable dataTable;
+	private boolean pageEnable = true;
 
-    public int getPageSize() {
-        return pageSize;
-    }
+	private int pageSize;
 
-    public int getPageIndex() {
-        return pageIndex;
-    }
+	private int pageIndex;
 
-    public int getTotal() {
-        if (pageEnable)
-            return total;
-        return dataTable.getRowCount();
-    }
+	private int total;
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
+	private DataTable dataTable;
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
-    }
+	public int getPageSize() {
+		return pageSize;
+	}
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
+	public int getPageIndex() {
+		return pageIndex;
+	}
 
-    public void setData(Object data) {
-        dataTable = (DataTable) data;
-    }
+	public int getTotal() {
+		if (pageEnable)
+			return total;
+		return dataTable.getRowCount();
+	}
 
-    public DataTable getData() {
-        return dataTable;
-    }
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 
-    public void setPageEnabled(boolean pageEnable) {
-        this.pageEnable = pageEnable;
-    }
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
 
-    public boolean isPageEnabled() {
-        return this.pageEnable;
-    }
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public void setData(Object data) {
+		dataTable = (DataTable) data;
+	}
+
+	public DataTable getData() {
+		return dataTable;
+	}
+
+	public void setPageEnabled(boolean pageEnable) {
+		this.pageEnable = pageEnable;
+	}
+
+	public boolean isPageEnabled() {
+		return this.pageEnable;
+	}
+
 }

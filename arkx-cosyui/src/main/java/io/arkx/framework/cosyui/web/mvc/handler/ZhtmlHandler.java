@@ -19,75 +19,80 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 public class ZhtmlHandler extends AbstractHtmlHandler {
-    public static final String ID = "io.arkx.framework.core.ZhtmlHandler";
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "io.arkx.framework.core.ZhtmlHandler";
 
-    @Override
-    public boolean match(String url) {
-        int i = url.indexOf("?");
-        if (i > 0) {
-            url = url.substring(0, i);
-        }
-        return url.endsWith(".zhtml");
-    }
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "Zhtml URL Processor";
-    }
+	@Override
+	public boolean match(String url) {
+		int i = url.indexOf("?");
+		if (i > 0) {
+			url = url.substring(0, i);
+		}
+		return url.endsWith(".zhtml");
+	}
 
-    @Override
-    public boolean execute(String url, HttpServletRequest request, HttpServletResponse response) {
-        int i = url.indexOf("?");
-        if (i > 0) {
-            url = url.substring(0, i);
-        }
-        if (!Config.isInstalled() && url.indexOf("install.zhtml") < 0 && url.indexOf("ajax/invoke") < 0) {
-            Dispatcher.forward("/install.zhtml");
-            return true;
-        }
-        if (url.indexOf("/ajax/invoke") > 0 && !url.equals("/ajax/invoke")) {// 页面初始化时会有这种情况
-            Dispatcher.forward("/ajax/invoke");
-            return true;
-        }
-        ZhtmlExecuteContext context = new ZhtmlExecuteContext(ZhtmlManagerContext.getInstance(), request, response);
-        WebCurrent.setExecuteContext(context);
+	@Override
+	public String getExtendItemName() {
+		return "Zhtml URL Processor";
+	}
 
-        Session session = null;
-        try {
-            session = SessionFactory.openSessionInThread();
-            session.beginTransaction();
+	@Override
+	public boolean execute(String url, HttpServletRequest request, HttpServletResponse response) {
+		int i = url.indexOf("?");
+		if (i > 0) {
+			url = url.substring(0, i);
+		}
+		if (!Config.isInstalled() && url.indexOf("install.zhtml") < 0 && url.indexOf("ajax/invoke") < 0) {
+			Dispatcher.forward("/install.zhtml");
+			return true;
+		}
+		if (url.indexOf("/ajax/invoke") > 0 && !url.equals("/ajax/invoke")) {// 页面初始化时会有这种情况
+			Dispatcher.forward("/ajax/invoke");
+			return true;
+		}
+		ZhtmlExecuteContext context = new ZhtmlExecuteContext(ZhtmlManagerContext.getInstance(), request, response);
+		WebCurrent.setExecuteContext(context);
 
-            if (!context.execute(url)) {
-                return false;
-            }
+		Session session = null;
+		try {
+			session = SessionFactory.openSessionInThread();
+			session.beginTransaction();
 
-            session.commit();
-        } catch (TemplateNotFoundException e) {
-            e.printStackTrace();
+			if (!context.execute(url)) {
+				return false;
+			}
 
-            session.rollback();
-            session.close();
+			session.commit();
+		}
+		catch (TemplateNotFoundException e) {
+			e.printStackTrace();
 
-            return false;
-        } catch (Exception e) {
-            session.rollback();
-            session.close();
-            throw e;
-        } finally {
-            SessionFactory.clearCurrentSession();
-            // BlockingTransaction.clearTransactionBinding();// 检测是否有未被关闭的阻塞型事务连接
-        }
-        ExtendManager.invoke(AfterZhtmlExecuteAction.ExtendPointID, new Object[]{request, response});
-        return true;
-    }
+			session.rollback();
+			session.close();
 
-    @Override
-    public int getOrder() {
-        return 9999;
-    }
+			return false;
+		}
+		catch (Exception e) {
+			session.rollback();
+			session.close();
+			throw e;
+		}
+		finally {
+			SessionFactory.clearCurrentSession();
+			// BlockingTransaction.clearTransactionBinding();// 检测是否有未被关闭的阻塞型事务连接
+		}
+		ExtendManager.invoke(AfterZhtmlExecuteAction.ExtendPointID, new Object[] { request, response });
+		return true;
+	}
+
+	@Override
+	public int getOrder() {
+		return 9999;
+	}
+
 }

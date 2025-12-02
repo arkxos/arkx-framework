@@ -6,25 +6,26 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.PgBinaryWriter;
 
 public class ColumnDefinition<TEntity> {
 
-    private final String columnName;
+	private final String columnName;
 
-    private final BiConsumer<PgBinaryWriter, TEntity> write;
+	private final BiConsumer<PgBinaryWriter, TEntity> write;
 
-    public ColumnDefinition(String columnName, BiConsumer<PgBinaryWriter, TEntity> write) {
-        this.columnName = columnName;
-        this.write = write;
-    }
+	public ColumnDefinition(String columnName, BiConsumer<PgBinaryWriter, TEntity> write) {
+		this.columnName = columnName;
+		this.write = write;
+	}
 
-    public String getColumnName() {
-        return columnName;
-    }
+	public String getColumnName() {
+		return columnName;
+	}
 
-    public BiConsumer<PgBinaryWriter, TEntity> getWrite() {
-        return write;
-    }
+	public BiConsumer<PgBinaryWriter, TEntity> getWrite() {
+		return write;
+	}
 
-    @Override
-    public String toString() {
-        return "ColumnDefinition (ColumnName = {%1$s}, Serialize = {%2$s})".formatted(columnName, write);
-    }
+	@Override
+	public String toString() {
+		return "ColumnDefinition (ColumnName = {%1$s}, Serialize = {%2$s})".formatted(columnName, write);
+	}
+
 }

@@ -7,4 +7,5 @@ import io.arkx.data.lightning.sample.model.Dept;
 
 @Repository
 public interface DeptRepository extends BaseJdbcRepository<Dept, String> {
+
 }

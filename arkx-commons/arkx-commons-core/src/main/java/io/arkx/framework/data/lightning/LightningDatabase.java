@@ -21,318 +21,329 @@ import com.google.common.io.Files;
 
 public class LightningDatabase {
 
-    private static boolean inited = false;
-    private static Object syncObject = new Object();
-    private static String dbPath = System.getProperty("user.home") + File.separator + "LightningDb";
+	private static boolean inited = false;
 
-    private static final String DEFAULT_SECTION = "defaultSection";
+	private static Object syncObject = new Object();
 
-    private static Multimap<String, String> tableMap = HashMultimap.create();
-    // private static Table<String, String, PkList> pkIndexTable =
-    // HashBasedTable.create();
-    private static Map<String, TableInfo> tableInfoMap = new HashMap<>();
+	private static String dbPath = System.getProperty("user.home") + File.separator + "LightningDb";
 
-    private static String tableFolder(String tableName) {
-        return dbPath + File.separator + tableName;
-    }
+	private static final String DEFAULT_SECTION = "defaultSection";
 
-    private static String tableFile(String tableName) {
-        return dbPath + File.separator + tableName + ".lt";
-    }
+	private static Multimap<String, String> tableMap = HashMultimap.create();
 
-    private static String tableSectionRecordFile(String tableName, String section) {
-        return dbPath + File.separator + tableName + File.separator + section + ".ltr";
-    }
+	// private static Table<String, String, PkList> pkIndexTable =
+	// HashBasedTable.create();
+	private static Map<String, TableInfo> tableInfoMap = new HashMap<>();
 
-    private static String tableSectionPkIndexFile(String tableName, String section) {
-        return dbPath + File.separator + tableName + File.separator + section + ".pk.lti";
-    }
+	private static String tableFolder(String tableName) {
+		return dbPath + File.separator + tableName;
+	}
 
-    public static void insert(LightningDataTable dataTable) {
-        insert(dataTable, DEFAULT_SECTION);
-    }
+	private static String tableFile(String tableName) {
+		return dbPath + File.separator + tableName + ".lt";
+	}
 
-    public static void insert(LightningDataTable dataTable, String section) {
-        if (dataTable.getRowCount() == 0) {
-            return;
-        }
+	private static String tableSectionRecordFile(String tableName, String section) {
+		return dbPath + File.separator + tableName + File.separator + section + ".ltr";
+	}
 
-        init();
+	private static String tableSectionPkIndexFile(String tableName, String section) {
+		return dbPath + File.separator + tableName + File.separator + section + ".pk.lti";
+	}
 
-        String tableName = dataTable.getTableName();
+	public static void insert(LightningDataTable dataTable) {
+		insert(dataTable, DEFAULT_SECTION);
+	}
 
-        tableMap.put(tableName, section);
+	public static void insert(LightningDataTable dataTable, String section) {
+		if (dataTable.getRowCount() == 0) {
+			return;
+		}
 
-        LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
-        tableFile.save(dataTable);
+		init();
 
-        LightningTableRecordFile dataTableFile = new LightningTableRecordFile(
-                tableSectionRecordFile(tableName, section));
-        PkList pksBuffer = dataTableFile.save(dataTable);
+		String tableName = dataTable.getTableName();
 
-        // PkList pkSnapshort = pkIndexTable.get(tableName, section);
-        // if(pkSnapshort == null) {
-        // pkIndexTable.put(tableName, section, pksBuffer);
-        // } else {
-        // pkSnapshort.union(pksBuffer);
-        // }
+		tableMap.put(tableName, section);
 
-        updatePkIndex(tableSectionPkIndexFile(tableName, section), pksBuffer);
-    }
+		LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
+		tableFile.save(dataTable);
 
-    private static void updatePkIndex(String tableFilePath, PkList pkBuffer) {
+		LightningTableRecordFile dataTableFile = new LightningTableRecordFile(
+				tableSectionRecordFile(tableName, section));
+		PkList pksBuffer = dataTableFile.save(dataTable);
 
-        if (pkBuffer == null || pkBuffer.values == null) {
-            return;
-        }
+		// PkList pkSnapshort = pkIndexTable.get(tableName, section);
+		// if(pkSnapshort == null) {
+		// pkIndexTable.put(tableName, section, pksBuffer);
+		// } else {
+		// pkSnapshort.union(pksBuffer);
+		// }
 
-        try {
-            RandomAccessFile raf = new RandomAccessFile(tableFilePath, "rw");
-            FileChannel fileChannel = raf.getChannel();
+		updatePkIndex(tableSectionPkIndexFile(tableName, section), pksBuffer);
+	}
 
-            long fileLength = raf.length();
-            if (fileLength == 0) {// 文件不存在，写入文件头
-                int rowCount = pkBuffer.values.size();
-                MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 0, 8);
-                mappedByteBuffer.putLong(rowCount);
+	private static void updatePkIndex(String tableFilePath, PkList pkBuffer) {
 
-                fileLength = 8;
-            } else {// 文件存在，修改记录数
-                int rowCount = pkBuffer.values.size();
-                MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 0, 8);
-                long existRowCount = mappedByteBuffer.getLong();
-                mappedByteBuffer.position(0);
-                mappedByteBuffer.putLong(existRowCount + rowCount);
-            }
+		if (pkBuffer == null || pkBuffer.values == null) {
+			return;
+		}
 
-            ByteBuffer Buffer = pkBuffer.pkbuffer;
-            int pkLength = Buffer.limit();
-            MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, fileLength, pkLength);
-            mappedByteBuffer.put(Buffer);
+		try {
+			RandomAccessFile raf = new RandomAccessFile(tableFilePath, "rw");
+			FileChannel fileChannel = raf.getChannel();
 
-            fileChannel.close();
-            raf.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			long fileLength = raf.length();
+			if (fileLength == 0) {// 文件不存在，写入文件头
+				int rowCount = pkBuffer.values.size();
+				MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 0, 8);
+				mappedByteBuffer.putLong(rowCount);
 
-    public static LightningDataTable load(String tableName) {
-        return load(tableName, DEFAULT_SECTION, LightningDataTable.class);
-    }
+				fileLength = 8;
+			}
+			else {// 文件存在，修改记录数
+				int rowCount = pkBuffer.values.size();
+				MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 0, 8);
+				long existRowCount = mappedByteBuffer.getLong();
+				mappedByteBuffer.position(0);
+				mappedByteBuffer.putLong(existRowCount + rowCount);
+			}
 
-    public static <T extends ILightningTable> T load(String tableName, Class<T> tableClass) {
-        return load(tableName, DEFAULT_SECTION, tableClass);
-    }
+			ByteBuffer Buffer = pkBuffer.pkbuffer;
+			int pkLength = Buffer.limit();
+			MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, fileLength, pkLength);
+			mappedByteBuffer.put(Buffer);
 
-    public static LightningDataTable load(String tableName, String section) {
-        return load(tableName, section, LightningDataTable.class);
-    }
+			fileChannel.close();
+			raf.close();
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public static <T extends ILightningTable> T load(String tableName, String section, Class<T> tableClass) {
-        init();
+	public static LightningDataTable load(String tableName) {
+		return load(tableName, DEFAULT_SECTION, LightningDataTable.class);
+	}
 
-        if (!tableMap.containsEntry(tableName, section)) {
-            try {
-                return tableClass.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
+	public static <T extends ILightningTable> T load(String tableName, Class<T> tableClass) {
+		return load(tableName, DEFAULT_SECTION, tableClass);
+	}
 
-        LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
-        TableInfo tableInfo = tableFile.readTableInfo();
+	public static LightningDataTable load(String tableName, String section) {
+		return load(tableName, section, LightningDataTable.class);
+	}
 
-        LightningTableRecordFile dataTableFile = new LightningTableRecordFile(
-                tableSectionRecordFile(tableName, section));
-        T dataTable = dataTableFile.readDataTable(tableInfo, tableClass);
-        return dataTable;
-    }
+	public static <T extends ILightningTable> T load(String tableName, String section, Class<T> tableClass) {
+		init();
 
-    public static long queryRowSize(String tableName) {
-        return queryRowSize(tableName, DEFAULT_SECTION);
-    }
+		if (!tableMap.containsEntry(tableName, section)) {
+			try {
+				return tableClass.newInstance();
+			}
+			catch (InstantiationException e) {
+				e.printStackTrace();
+			}
+			catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
 
-    public static long queryRowSize(String tableName, String section) {
-        init();
+		LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
+		TableInfo tableInfo = tableFile.readTableInfo();
 
-        if (!tableMap.containsEntry(tableName, section)) {
-            return 0L;
-        }
+		LightningTableRecordFile dataTableFile = new LightningTableRecordFile(
+				tableSectionRecordFile(tableName, section));
+		T dataTable = dataTableFile.readDataTable(tableInfo, tableClass);
+		return dataTable;
+	}
 
-        LightningTableFile dataTableFile = new LightningTableFile(tableFile(tableName));
-        return dataTableFile.readRowSize();
-    }
+	public static long queryRowSize(String tableName) {
+		return queryRowSize(tableName, DEFAULT_SECTION);
+	}
 
-    public static void setPath(String path) {
-        dbPath = path;
-    }
+	public static long queryRowSize(String tableName, String section) {
+		init();
 
-    public static void init() {
-        if (inited) {
-            return;
-        }
+		if (!tableMap.containsEntry(tableName, section)) {
+			return 0L;
+		}
 
-        synchronized (syncObject) {
-            if (inited) {
-                return;
-            }
+		LightningTableFile dataTableFile = new LightningTableFile(tableFile(tableName));
+		return dataTableFile.readRowSize();
+	}
 
-            File dbRootFile = new File(dbPath);
-            if (!dbRootFile.exists()) {
-                dbRootFile.mkdirs();
-            }
+	public static void setPath(String path) {
+		dbPath = path;
+	}
 
-            File[] tableFolders = dbRootFile.listFiles();
-            if (tableFolders != null) {
-                for (File tableFolder : tableFolders) {
-                    if (!tableFolder.isDirectory()) {
-                        continue;
-                    } else {// read table info
+	public static void init() {
+		if (inited) {
+			return;
+		}
 
-                    }
-                    String tableName = tableFolder.getName();
+		synchronized (syncObject) {
+			if (inited) {
+				return;
+			}
 
-                    LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
-                    TableInfo tableInfo = tableFile.readTableInfo();
-                    tableInfoMap.put(tableName, tableInfo);
+			File dbRootFile = new File(dbPath);
+			if (!dbRootFile.exists()) {
+				dbRootFile.mkdirs();
+			}
 
-                    File[] sectionFiles = tableFolder.listFiles();
-                    if (sectionFiles != null) {
-                        for (File sectionFile : sectionFiles) {
-                            String extension = Files.getFileExtension(sectionFile.getName());
-                            if ("ltr".equals(extension)) {
-                                String section = sectionFile.getName().replace(".ltr", "");
-                                tableMap.put(tableName, section);
-                            }
-                            if ("pk.lti".equals(extension)) {
-                                String section = sectionFile.getName().replace(".pk.lti", "");
+			File[] tableFolders = dbRootFile.listFiles();
+			if (tableFolders != null) {
+				for (File tableFolder : tableFolders) {
+					if (!tableFolder.isDirectory()) {
+						continue;
+					}
+					else {// read table info
 
-                                LightningColumn pkColumn = tableInfo.getPkColumn();
-                                PkList pkList = null;
+					}
+					String tableName = tableFolder.getName();
 
-                                try {
-                                    RandomAccessFile raf = new RandomAccessFile(sectionFile.getPath(), "rw");
-                                    FileChannel fileChannel = raf.getChannel();
-                                    long length = raf.length();
-                                    MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE,
-                                            0, length);
+					LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
+					TableInfo tableInfo = tableFile.readTableInfo();
+					tableInfoMap.put(tableName, tableInfo);
 
-                                    long existRowCount = mappedByteBuffer.getLong();
+					File[] sectionFiles = tableFolder.listFiles();
+					if (sectionFiles != null) {
+						for (File sectionFile : sectionFiles) {
+							String extension = Files.getFileExtension(sectionFile.getName());
+							if ("ltr".equals(extension)) {
+								String section = sectionFile.getName().replace(".ltr", "");
+								tableMap.put(tableName, section);
+							}
+							if ("pk.lti".equals(extension)) {
+								String section = sectionFile.getName().replace(".pk.lti", "");
 
-                                    pkList = new PkList(pkColumn, pkColumn.getColumnType().length(),
-                                            (int) existRowCount);
+								LightningColumn pkColumn = tableInfo.getPkColumn();
+								PkList pkList = null;
 
-                                    for (int i = 0; i < existRowCount; i++) {
-                                        if (pkColumn.getColumnType() == LightningColumnType.INT) {
-                                            int value = mappedByteBuffer.getInt();
-                                            pkList.add(value);
-                                        } else if (pkColumn.getColumnType() == LightningColumnType.DATE) {
-                                            long value = mappedByteBuffer.getLong();
-                                            pkList.add(value);
-                                        }
-                                    }
+								try {
+									RandomAccessFile raf = new RandomAccessFile(sectionFile.getPath(), "rw");
+									FileChannel fileChannel = raf.getChannel();
+									long length = raf.length();
+									MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE,
+											0, length);
 
-                                    fileChannel.close();
-                                    raf.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+									long existRowCount = mappedByteBuffer.getLong();
 
-                                // pkIndexTable.put(tableName, section, pkList);
-                            }
+									pkList = new PkList(pkColumn, pkColumn.getColumnType().length(),
+											(int) existRowCount);
 
-                        }
-                    }
-                }
-            }
+									for (int i = 0; i < existRowCount; i++) {
+										if (pkColumn.getColumnType() == LightningColumnType.INT) {
+											int value = mappedByteBuffer.getInt();
+											pkList.add(value);
+										}
+										else if (pkColumn.getColumnType() == LightningColumnType.DATE) {
+											long value = mappedByteBuffer.getLong();
+											pkList.add(value);
+										}
+									}
 
-            inited = true;
-        }
-    }
+									fileChannel.close();
+									raf.close();
+								}
+								catch (IOException e) {
+									e.printStackTrace();
+								}
 
-    public static boolean isTableExist(String tableName, String section) {
-        init();
+								// pkIndexTable.put(tableName, section, pkList);
+							}
 
-        return tableMap.containsEntry(tableName, section);
-    }
+						}
+					}
+				}
+			}
 
-    public static void dropTable(String tableName) {
-        init();
+			inited = true;
+		}
+	}
 
-        if (tableMap.containsKey(tableName)) {
-            File tableFile = new File(tableFile(tableName));
-            if (tableFile.exists()) {
-                tableFile.delete();
-            }
+	public static boolean isTableExist(String tableName, String section) {
+		init();
 
-            File tableFolderFile = new File(tableFolder(tableName));
-            if (tableFolderFile.exists()) {
-                FileUtil.delete(tableFolderFile);
-            }
+		return tableMap.containsEntry(tableName, section);
+	}
 
-            tableMap.removeAll(tableName);
-        }
-    }
+	public static void dropTable(String tableName) {
+		init();
 
-    public static void dropTable(String tableName, String section) {
-        init();
+		if (tableMap.containsKey(tableName)) {
+			File tableFile = new File(tableFile(tableName));
+			if (tableFile.exists()) {
+				tableFile.delete();
+			}
 
-        if (tableMap.containsEntry(tableName, section)) {
-            File tableFile = new File(tableSectionRecordFile(tableName, section));
-            if (tableFile.exists()) {
-                tableFile.delete();
-            }
-            File tableIndexFile = new File(tableSectionPkIndexFile(tableName, section));
-            if (tableIndexFile.exists()) {
-                tableIndexFile.delete();
-            }
+			File tableFolderFile = new File(tableFolder(tableName));
+			if (tableFolderFile.exists()) {
+				FileUtil.delete(tableFolderFile);
+			}
 
-            tableMap.remove(tableName, section);
-        }
-    }
+			tableMap.removeAll(tableName);
+		}
+	}
 
-    public static LightningDataTable select(String tableName, String filter) {
-        return select(tableName, DEFAULT_SECTION, filter);
-    }
+	public static void dropTable(String tableName, String section) {
+		init();
 
-    public static LightningDataTable select(String tableName, String section, String filter) {
-        return select(tableName, section, filter, LightningDataTable.class);
-    }
+		if (tableMap.containsEntry(tableName, section)) {
+			File tableFile = new File(tableSectionRecordFile(tableName, section));
+			if (tableFile.exists()) {
+				tableFile.delete();
+			}
+			File tableIndexFile = new File(tableSectionPkIndexFile(tableName, section));
+			if (tableIndexFile.exists()) {
+				tableIndexFile.delete();
+			}
 
-    public static <T extends ILightningTable> T select(String tableName, String section, String filter,
-            Class<T> tableType) {
-        init();
+			tableMap.remove(tableName, section);
+		}
+	}
 
-        if (!tableMap.containsEntry(tableName, section)) {
-            return null;
-        }
-        long start = System.currentTimeMillis();
-        LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
-        TableInfo tableInfo = tableFile.readTableInfo();
-        System.out.println("load table file:" + (System.currentTimeMillis() - start) + "ms");
-        FilterInfo filterInfo = null;
-        if (!StringUtil.isEmpty(filter)) {
-            filterInfo = new FilterInfo(filter);
-        }
-        start = System.currentTimeMillis();
-        // PkList pkList = pkIndexTable.get(tableName, section);
-        List<Integer> loadRecords = new ArrayList<>();
-        // if(filterInfo != null) {
-        // loadRecords = filterInfo.filter(pkList);
-        // }
-        System.out.println("filter table [" + loadRecords.size() + "]:" + (System.currentTimeMillis() - start) + "ms");
-        start = System.currentTimeMillis();
-        LightningTableRecordFile dataTableFile = new LightningTableRecordFile(
-                tableSectionRecordFile(tableName, section));
-        T data = dataTableFile.readDataTable(tableInfo, tableType, filterInfo, loadRecords);
-        System.out.println(
-                "load filtered table [" + loadRecords.size() + "]:" + (System.currentTimeMillis() - start) + "ms");
-        return data;
-    }
+	public static LightningDataTable select(String tableName, String filter) {
+		return select(tableName, DEFAULT_SECTION, filter);
+	}
+
+	public static LightningDataTable select(String tableName, String section, String filter) {
+		return select(tableName, section, filter, LightningDataTable.class);
+	}
+
+	public static <T extends ILightningTable> T select(String tableName, String section, String filter,
+			Class<T> tableType) {
+		init();
+
+		if (!tableMap.containsEntry(tableName, section)) {
+			return null;
+		}
+		long start = System.currentTimeMillis();
+		LightningTableFile tableFile = new LightningTableFile(tableFile(tableName));
+		TableInfo tableInfo = tableFile.readTableInfo();
+		System.out.println("load table file:" + (System.currentTimeMillis() - start) + "ms");
+		FilterInfo filterInfo = null;
+		if (!StringUtil.isEmpty(filter)) {
+			filterInfo = new FilterInfo(filter);
+		}
+		start = System.currentTimeMillis();
+		// PkList pkList = pkIndexTable.get(tableName, section);
+		List<Integer> loadRecords = new ArrayList<>();
+		// if(filterInfo != null) {
+		// loadRecords = filterInfo.filter(pkList);
+		// }
+		System.out.println("filter table [" + loadRecords.size() + "]:" + (System.currentTimeMillis() - start) + "ms");
+		start = System.currentTimeMillis();
+		LightningTableRecordFile dataTableFile = new LightningTableRecordFile(
+				tableSectionRecordFile(tableName, section));
+		T data = dataTableFile.readDataTable(tableInfo, tableType, filterInfo, loadRecords);
+		System.out
+			.println("load filtered table [" + loadRecords.size() + "]:" + (System.currentTimeMillis() - start) + "ms");
+		return data;
+	}
 
 }

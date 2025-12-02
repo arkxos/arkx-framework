@@ -11,27 +11,29 @@ package io.arkx.framework.data.db.common.entity;
 
 public class MdcKeyValue {
 
-    private String mdcKey;
-    private String mdcValue;
+	private String mdcKey;
 
-    public MdcKeyValue(String mdcKey, String mdcValue) {
-        this.mdcKey = mdcKey;
-        this.mdcValue = mdcValue;
-    }
+	private String mdcValue;
 
-    public String getMdcKey() {
-        return mdcKey;
-    }
+	public MdcKeyValue(String mdcKey, String mdcValue) {
+		this.mdcKey = mdcKey;
+		this.mdcValue = mdcValue;
+	}
 
-    public void setMdcKey(String mdcKey) {
-        this.mdcKey = mdcKey;
-    }
+	public String getMdcKey() {
+		return mdcKey;
+	}
 
-    public String getMdcValue() {
-        return mdcValue;
-    }
+	public void setMdcKey(String mdcKey) {
+		this.mdcKey = mdcKey;
+	}
 
-    public void setMdcValue(String mdcValue) {
-        this.mdcValue = mdcValue;
-    }
+	public String getMdcValue() {
+		return mdcValue;
+	}
+
+	public void setMdcValue(String mdcValue) {
+		this.mdcValue = mdcValue;
+	}
+
 }

@@ -9,12 +9,12 @@ import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.github.dreamroute.sqlprinter.starter.anno.EnableSQLPrinter;
 
 @EnableSQLPrinter
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MybatisPlusAutoConfiguration.class})
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, MybatisPlusAutoConfiguration.class })
 @MapperScan("io.arkx.framework.data.mybatis.pro.sample.springboot.mapper")
 public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 
 }

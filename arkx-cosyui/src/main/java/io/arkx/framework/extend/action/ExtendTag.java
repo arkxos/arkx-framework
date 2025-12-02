@@ -14,42 +14,43 @@ import io.arkx.framework.extend.ExtendManager;
  */
 public class ExtendTag extends ArkTag {
 
-    private String id;
+	private String id;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @Override
-    public int doStartTag() {
-        ExtendManager.invoke(id, new Object[]{pageContext});
-        return SKIP_BODY;
-    }
+	@Override
+	public int doStartTag() {
+		ExtendManager.invoke(id, new Object[] { pageContext });
+		return SKIP_BODY;
+	}
 
-    @Override
-    public String getTagName() {
-        return "extend";
-    }
+	@Override
+	public String getTagName() {
+		return "extend";
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<>();
-        list.add(new TagAttr("id", true));
-        return list;
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<>();
+		list.add(new TagAttr("id", true));
+		return list;
+	}
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
+	@Override
+	public String getDescription() {
+		return "";
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.ExtendTag.Name}";
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.ExtendTag.Name}";
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
+
 }

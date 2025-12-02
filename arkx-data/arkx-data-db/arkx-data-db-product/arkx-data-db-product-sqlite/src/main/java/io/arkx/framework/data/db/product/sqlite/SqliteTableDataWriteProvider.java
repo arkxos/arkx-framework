@@ -17,16 +17,16 @@ import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvi
 
 public class SqliteTableDataWriteProvider extends AutoCastTableDataWriteProvider {
 
-    public SqliteTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-    }
+	public SqliteTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+	}
 
-    @Override
-    protected TransactionDefinition getDefaultTransactionDefinition() {
-        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-        definition.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
-        definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        return definition;
-    }
+	@Override
+	protected TransactionDefinition getDefaultTransactionDefinition() {
+		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+		definition.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
+		definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		return definition;
+	}
 
 }

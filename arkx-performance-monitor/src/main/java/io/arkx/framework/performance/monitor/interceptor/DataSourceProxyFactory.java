@@ -18,17 +18,19 @@ import io.arkx.framework.performance.monitor.sql.handler.DataSourceProxyHandler;
  */
 public class DataSourceProxyFactory {
 
-    private MonitorConfigService monitorConfigService;
-    private TraceRecorder traceRecorder;
+	private MonitorConfigService monitorConfigService;
 
-    @Autowired
-    public void setDependencies(@Lazy MonitorConfigService monitorConfigService, @Lazy TraceRecorder traceRecorder) {
-        this.monitorConfigService = monitorConfigService;
-        this.traceRecorder = traceRecorder;
-    }
+	private TraceRecorder traceRecorder;
 
-    public DataSource createMonitoredDataSource(DataSource realDataSource) {
-        return (DataSource) Proxy.newProxyInstance(DataSource.class.getClassLoader(), new Class[]{DataSource.class},
-                new DataSourceProxyHandler(realDataSource, monitorConfigService, traceRecorder));
-    }
+	@Autowired
+	public void setDependencies(@Lazy MonitorConfigService monitorConfigService, @Lazy TraceRecorder traceRecorder) {
+		this.monitorConfigService = monitorConfigService;
+		this.traceRecorder = traceRecorder;
+	}
+
+	public DataSource createMonitoredDataSource(DataSource realDataSource) {
+		return (DataSource) Proxy.newProxyInstance(DataSource.class.getClassLoader(), new Class[] { DataSource.class },
+				new DataSourceProxyHandler(realDataSource, monitorConfigService, traceRecorder));
+	}
+
 }

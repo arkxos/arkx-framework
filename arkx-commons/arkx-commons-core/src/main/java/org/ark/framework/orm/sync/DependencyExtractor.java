@@ -26,148 +26,154 @@ import org.objectweb.asm.tree.MethodNode;
  */
 public class DependencyExtractor {
 
-    private final String sourceProjectPath;
-    private final String targetProjectPath;
-    private final String baseClassName;
-    private final Set<String> processedClasses = new HashSet<>();
+	private final String sourceProjectPath;
 
-    public DependencyExtractor(String sourceProjectPath, String targetProjectPath, String baseClassName) {
-        this.sourceProjectPath = sourceProjectPath;
-        this.targetProjectPath = targetProjectPath;
-        this.baseClassName = baseClassName;
-    }
+	private final String targetProjectPath;
 
-    public void extract() throws IOException {
-        // 创建目标目录
-        new File(targetProjectPath + "/src/main/java").mkdirs();
+	private final String baseClassName;
 
-        // 开始递归分析依赖
-        analyzeDependencies(baseClassName);
+	private final Set<String> processedClasses = new HashSet<>();
 
-        System.out.println("依赖提取完成！共处理 " + processedClasses.size() + " 个类。");
-    }
+	public DependencyExtractor(String sourceProjectPath, String targetProjectPath, String baseClassName) {
+		this.sourceProjectPath = sourceProjectPath;
+		this.targetProjectPath = targetProjectPath;
+		this.baseClassName = baseClassName;
+	}
 
-    private void analyzeDependencies(String className) throws IOException {
-        // 避免重复处理
-        if (processedClasses.contains(className)) {
-            return;
-        }
+	public void extract() throws IOException {
+		// 创建目标目录
+		new File(targetProjectPath + "/src/main/java").mkdirs();
 
-        processedClasses.add(className);
-        System.out.println("处理类: " + className);
+		// 开始递归分析依赖
+		analyzeDependencies(baseClassName);
 
-        // 将类名转换为文件路径
-        String classFilePath = sourceProjectPath + "/target/classes/" + className.replace('.', '/') + ".class";
-        String sourceFilePath = sourceProjectPath + "/src/main/java/" + className.replace('.', '/') + ".java";
+		System.out.println("依赖提取完成！共处理 " + processedClasses.size() + " 个类。");
+	}
 
-        File classFile = new File(classFilePath);
-        File sourceFile = new File(sourceFilePath);
+	private void analyzeDependencies(String className) throws IOException {
+		// 避免重复处理
+		if (processedClasses.contains(className)) {
+			return;
+		}
 
-        // 复制源文件到目标项目
-        if (sourceFile.exists()) {
-            copyFile(sourceFile);
-        }
+		processedClasses.add(className);
+		System.out.println("处理类: " + className);
 
-        // 如果编译后的类文件存在，分析其依赖
-        if (classFile.exists()) {
-            Set<String> dependencies = findDependencies(classFile);
+		// 将类名转换为文件路径
+		String classFilePath = sourceProjectPath + "/target/classes/" + className.replace('.', '/') + ".class";
+		String sourceFilePath = sourceProjectPath + "/src/main/java/" + className.replace('.', '/') + ".java";
 
-            // 递归处理所有项目内部依赖
-            for (String dependency : dependencies) {
-                // 跟项目包名相同的依赖才处理
-                if (dependency.startsWith(getBasePackage(className)) && !dependency.startsWith("java.")
-                        && !dependency.startsWith("javax.")) {
-                    analyzeDependencies(dependency);
-                }
-            }
-        }
-    }
+		File classFile = new File(classFilePath);
+		File sourceFile = new File(sourceFilePath);
 
-    private String getBasePackage(String className) {
-        // 获取基础包名（通常是前两个包名部分）
-        String[] parts = className.split("\\.");
-        if (parts.length >= 2) {
-            return parts[0] + "." + parts[1];
-        }
-        return parts[0];
-    }
+		// 复制源文件到目标项目
+		if (sourceFile.exists()) {
+			copyFile(sourceFile);
+		}
 
-    private Set<String> findDependencies(File classFile) throws IOException {
-        Set<String> dependencies = new HashSet<>();
+		// 如果编译后的类文件存在，分析其依赖
+		if (classFile.exists()) {
+			Set<String> dependencies = findDependencies(classFile);
 
-        try {
-            // 使用ASM读取类文件
-            ClassReader reader = new ClassReader(Files.readAllBytes(classFile.toPath()));
-            ClassNode classNode = new ClassNode();
-            reader.accept(classNode, 0);
+			// 递归处理所有项目内部依赖
+			for (String dependency : dependencies) {
+				// 跟项目包名相同的依赖才处理
+				if (dependency.startsWith(getBasePackage(className)) && !dependency.startsWith("java.")
+						&& !dependency.startsWith("javax.")) {
+					analyzeDependencies(dependency);
+				}
+			}
+		}
+	}
 
-            // 添加父类
-            if (classNode.superName != null) {
-                dependencies.add(classNode.superName.replace('/', '.'));
-            }
+	private String getBasePackage(String className) {
+		// 获取基础包名（通常是前两个包名部分）
+		String[] parts = className.split("\\.");
+		if (parts.length >= 2) {
+			return parts[0] + "." + parts[1];
+		}
+		return parts[0];
+	}
 
-            // 添加接口
-            for (String iface : classNode.interfaces) {
-                dependencies.add(iface.replace('/', '.'));
-            }
+	private Set<String> findDependencies(File classFile) throws IOException {
+		Set<String> dependencies = new HashSet<>();
 
-            // 添加字段类型
-            classNode.fields.forEach(field -> {
-                String desc = field.desc;
-                extractClassNamesFromDesc(desc, dependencies);
-            });
+		try {
+			// 使用ASM读取类文件
+			ClassReader reader = new ClassReader(Files.readAllBytes(classFile.toPath()));
+			ClassNode classNode = new ClassNode();
+			reader.accept(classNode, 0);
 
-            // 添加方法参数和返回类型
-            for (MethodNode method : classNode.methods) {
-                extractClassNamesFromDesc(method.desc, dependencies);
-                // 处理方法中的局部变量和方法调用需要更复杂的分析
-            }
+			// 添加父类
+			if (classNode.superName != null) {
+				dependencies.add(classNode.superName.replace('/', '.'));
+			}
 
-        } catch (Exception e) {
-            System.err.println("分析类 " + classFile.getName() + " 时出错: " + e.getMessage());
-        }
+			// 添加接口
+			for (String iface : classNode.interfaces) {
+				dependencies.add(iface.replace('/', '.'));
+			}
 
-        return dependencies;
-    }
+			// 添加字段类型
+			classNode.fields.forEach(field -> {
+				String desc = field.desc;
+				extractClassNamesFromDesc(desc, dependencies);
+			});
 
-    private void extractClassNamesFromDesc(String desc, Set<String> dependencies) {
-        // 处理数组类型
-        while (desc.startsWith("[")) {
-            desc = desc.substring(1);
-        }
+			// 添加方法参数和返回类型
+			for (MethodNode method : classNode.methods) {
+				extractClassNamesFromDesc(method.desc, dependencies);
+				// 处理方法中的局部变量和方法调用需要更复杂的分析
+			}
 
-        // 处理对象类型
-        if (desc.startsWith("L") && desc.endsWith(";")) {
-            String className = desc.substring(1, desc.length() - 1).replace('/', '.');
-            dependencies.add(className);
-        }
-    }
+		}
+		catch (Exception e) {
+			System.err.println("分析类 " + classFile.getName() + " 时出错: " + e.getMessage());
+		}
 
-    private void copyFile(File sourceFile) throws IOException {
-        String relativePath = sourceFile.getPath().substring(sourceProjectPath.length());
-        String targetFilePath = targetProjectPath + relativePath;
+		return dependencies;
+	}
 
-        // 确保目标目录存在
-        Path targetDir = Paths.get(targetFilePath).getParent();
-        if (targetDir != null) {
-            Files.createDirectories(targetDir);
-        }
+	private void extractClassNamesFromDesc(String desc, Set<String> dependencies) {
+		// 处理数组类型
+		while (desc.startsWith("[")) {
+			desc = desc.substring(1);
+		}
 
-        // 复制文件
-        Files.copy(sourceFile.toPath(), Paths.get(targetFilePath), StandardCopyOption.REPLACE_EXISTING);
+		// 处理对象类型
+		if (desc.startsWith("L") && desc.endsWith(";")) {
+			String className = desc.substring(1, desc.length() - 1).replace('/', '.');
+			dependencies.add(className);
+		}
+	}
 
-        System.out.println("已复制: " + relativePath);
-    }
+	private void copyFile(File sourceFile) throws IOException {
+		String relativePath = sourceFile.getPath().substring(sourceProjectPath.length());
+		String targetFilePath = targetProjectPath + relativePath;
 
-    public static void main(String[] args) {
-        try {
+		// 确保目标目录存在
+		Path targetDir = Paths.get(targetFilePath).getParent();
+		if (targetDir != null) {
+			Files.createDirectories(targetDir);
+		}
 
-            DependencyExtractor extractor = new DependencyExtractor("org.ark.framework.orm.sync",
-                    "com.ark.data.sync.old.lib", "org.ark.framework.orm.sync.Demo");
-            extractor.extract();
+		// 复制文件
+		Files.copy(sourceFile.toPath(), Paths.get(targetFilePath), StandardCopyOption.REPLACE_EXISTING);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		System.out.println("已复制: " + relativePath);
+	}
+
+	public static void main(String[] args) {
+		try {
+
+			DependencyExtractor extractor = new DependencyExtractor("org.ark.framework.orm.sync",
+					"com.ark.data.sync.old.lib", "org.ark.framework.orm.sync.Demo");
+			extractor.extract();
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

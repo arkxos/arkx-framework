@@ -22,20 +22,23 @@ import cn.hutool.core.text.CharSequenceUtil;
  * @author w.dehi.2021-12-19
  */
 public class DateDeserializer extends JsonDeserializer<Date> {
-    @Override
-    public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        String name = PropertyAliasCache.getFieldAliasMap(p);
-        Class<?> propertyType = BeanUtils.findPropertyType(name, p.getCurrentValue().getClass());
-        if (Date.class.isAssignableFrom(propertyType)) {
-            String dateStr = p.getValueAsString();
-            if (CharSequenceUtil.isNotBlank(dateStr)) {
-                try {
-                    return DateUtil.parse(dateStr, FORMAT);
-                } catch (Exception e) {
-                    throw new IllegalArgumentException("日期格式错误, 当前日期为: " + dateStr + ", 需要yyyy-MM-dd HH:mm:ss格式");
-                }
-            }
-        }
-        return null;
-    }
+
+	@Override
+	public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+		String name = PropertyAliasCache.getFieldAliasMap(p);
+		Class<?> propertyType = BeanUtils.findPropertyType(name, p.getCurrentValue().getClass());
+		if (Date.class.isAssignableFrom(propertyType)) {
+			String dateStr = p.getValueAsString();
+			if (CharSequenceUtil.isNotBlank(dateStr)) {
+				try {
+					return DateUtil.parse(dateStr, FORMAT);
+				}
+				catch (Exception e) {
+					throw new IllegalArgumentException("日期格式错误, 当前日期为: " + dateStr + ", 需要yyyy-MM-dd HH:mm:ss格式");
+				}
+			}
+		}
+		return null;
+	}
+
 }

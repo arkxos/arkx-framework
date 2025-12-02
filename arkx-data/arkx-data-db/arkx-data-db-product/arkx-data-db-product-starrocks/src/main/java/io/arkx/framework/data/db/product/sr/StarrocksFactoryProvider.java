@@ -22,28 +22,28 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.STARROCKS)
 public class StarrocksFactoryProvider extends AbstractFactoryProvider {
 
-    public StarrocksFactoryProvider(DataSource dataSource) {
-        super(dataSource);
-    }
+	public StarrocksFactoryProvider(DataSource dataSource) {
+		super(dataSource);
+	}
 
-    @Override
-    public ProductFeatures getProductFeatures() {
-        return new StarrocksFeatures();
-    }
+	@Override
+	public ProductFeatures getProductFeatures() {
+		return new StarrocksFeatures();
+	}
 
-    @Override
-    public MetadataProvider createMetadataQueryProvider() {
-        return new StarrocksMetadataQueryProvider(this);
-    }
+	@Override
+	public MetadataProvider createMetadataQueryProvider() {
+		return new StarrocksMetadataQueryProvider(this);
+	}
 
-    @Override
-    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-        return new StarrocksTableDataWriteProvider(this);
-    }
+	@Override
+	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+		return new StarrocksTableDataWriteProvider(this);
+	}
 
-    @Override
-    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-        return new StarrocksTableDataSynchronizer(this);
-    }
+	@Override
+	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+		return new StarrocksTableDataSynchronizer(this);
+	}
 
 }

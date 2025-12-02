@@ -10,13 +10,15 @@ import java.util.List;
  * @version V1.0
  */
 public interface IExtendService<T extends IExtendItem> {
-    void register(IExtendItem item);
 
-    T get(String id);
+	void register(IExtendItem item);
 
-    T remove(String id);
+	T get(String id);
 
-    List<T> getAll();
+	T remove(String id);
 
-    void destory();
+	List<T> getAll();
+
+	void destory();
+
 }

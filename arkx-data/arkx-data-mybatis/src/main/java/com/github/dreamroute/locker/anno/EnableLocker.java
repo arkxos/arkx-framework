@@ -18,14 +18,14 @@ import org.springframework.context.annotation.Import;
 @Import(LockerConfig.class)
 public @interface EnableLocker {
 
-    /**
-     * 乐观锁列名，默认version
-     */
-    String versionColumn() default "version";
+	/**
+	 * 乐观锁列名，默认version
+	 */
+	String versionColumn() default "version";
 
-    /**
-     * 并发修改失败时是否抛出异常，默认：是，如果false：那么返回更新条数
-     */
-    boolean failThrowException() default true;
+	/**
+	 * 并发修改失败时是否抛出异常，默认：是，如果false：那么返回更新条数
+	 */
+	boolean failThrowException() default true;
 
 }

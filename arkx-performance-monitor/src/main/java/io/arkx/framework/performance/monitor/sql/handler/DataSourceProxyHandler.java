@@ -18,39 +18,44 @@ import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 // 数据源代理处理器
 public class DataSourceProxyHandler implements InvocationHandler {
 
-    private final DataSource realDataSource;
-    private final MonitorConfigService config;
-    private final TraceRecorder recorder;
+	private final DataSource realDataSource;
 
-    public DataSourceProxyHandler(DataSource realDataSource, MonitorConfigService config, TraceRecorder recorder) {
-        this.realDataSource = realDataSource;
-        this.config = config;
-        this.recorder = recorder;
-    }
+	private final MonitorConfigService config;
 
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (method.getDeclaringClass() == Object.class) {
-            return method.invoke(realDataSource, args);
-        }
+	private final TraceRecorder recorder;
 
-        if ("getConnection".equals(method.getName())) {
-            try {
-                // 拦截获取连接操作
-                Connection realConn = (Connection) method.invoke(realDataSource, args);
-                return Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[]{Connection.class},
-                        new ConnectionProxyHandler(realConn, config, recorder));
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
-        }
+	public DataSourceProxyHandler(DataSource realDataSource, MonitorConfigService config, TraceRecorder recorder) {
+		this.realDataSource = realDataSource;
+		this.config = config;
+		this.recorder = recorder;
+	}
 
-        try {
-            return method.invoke(realDataSource, args);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
+	@Override
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		if (method.getDeclaringClass() == Object.class) {
+			return method.invoke(realDataSource, args);
+		}
+
+		if ("getConnection".equals(method.getName())) {
+			try {
+				// 拦截获取连接操作
+				Connection realConn = (Connection) method.invoke(realDataSource, args);
+				return Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[] { Connection.class },
+						new ConnectionProxyHandler(realConn, config, recorder));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}
+
+		try {
+			return method.invoke(realDataSource, args);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 }

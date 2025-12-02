@@ -8,60 +8,61 @@ import java.util.Map;
 import org.jsoup.nodes.Document;
 
 /**
- *
  * @author Darkness
  * @date 2015-1-9 下午2:34:37
  * @version V1.0
  */
 public class Page {
 
-    private Map<String, Object> fieldDatas = new HashMap<String, Object>();
-    private List<Request> targetRequests = new ArrayList<>();
-    Request request;
+	private Map<String, Object> fieldDatas = new HashMap<String, Object>();
 
-    public Page() {
-    }
+	private List<Request> targetRequests = new ArrayList<>();
 
-    public Page(Document html) {
-        this.setHtml(html);
-    }
+	Request request;
 
-    public Page(Request request) {
-        this.request = request;
-    }
+	public Page() {
+	}
 
-    public Request getRequest() {
-        return this.request;
-    }
+	public Page(Document html) {
+		this.setHtml(html);
+	}
 
-    public void setHtml(Document html) {
-        this.html = html;
-    }
+	public Page(Request request) {
+		this.request = request;
+	}
 
-    private Document html;
+	public Request getRequest() {
+		return this.request;
+	}
 
-    public Document html() {
-        return html;
-    }
+	public void setHtml(Document html) {
+		this.html = html;
+	}
 
-    public void putField(String fieldName, Object fieldValue) {
-        fieldDatas.put(fieldName, fieldValue);
-    }
+	private Document html;
 
-    public Object getField(String fieldName) {
-        return fieldDatas.get(fieldName);
-    }
+	public Document html() {
+		return html;
+	}
 
-    public void addTargetRequests(List<Request> links) {
-        targetRequests.addAll(links);
-    }
+	public void putField(String fieldName, Object fieldValue) {
+		fieldDatas.put(fieldName, fieldValue);
+	}
 
-    public List<Request> getTargetRequests() {
-        return this.targetRequests;
-    }
+	public Object getField(String fieldName) {
+		return fieldDatas.get(fieldName);
+	}
 
-    public void addTargetRequest(Request request) {
-        this.targetRequests.add(request);
-    }
+	public void addTargetRequests(List<Request> links) {
+		targetRequests.addAll(links);
+	}
+
+	public List<Request> getTargetRequests() {
+		return this.targetRequests;
+	}
+
+	public void addTargetRequest(Request request) {
+		this.targetRequests.add(request);
+	}
 
 }

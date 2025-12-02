@@ -1,40 +1,43 @@
 package io.arkx.framework.commons.download;
 
 /**
- *
  * @author Darkness
  * @date 2016年11月1日 下午6:48:26
  * @version V1.0
  */
 public class RecoveryWorkerInfo {
 
-    private int startPosition;
-    private int endPosition;
-    private int currentPosition;
+	private int startPosition;
 
-    public RecoveryWorkerInfo(int start, int current, int end) {
-        if (end > start && current > start) {
-            startPosition = start;
-            endPosition = end;
-            currentPosition = current;
-        } else {
-            throw new RuntimeException("position logical error");
-        }
-    }
+	private int endPosition;
 
-    public int getStartPosition() {
-        return startPosition;
-    }
+	private int currentPosition;
 
-    public int getEndPosition() {
-        return endPosition;
-    }
+	public RecoveryWorkerInfo(int start, int current, int end) {
+		if (end > start && current > start) {
+			startPosition = start;
+			endPosition = end;
+			currentPosition = current;
+		}
+		else {
+			throw new RuntimeException("position logical error");
+		}
+	}
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
+	public int getStartPosition() {
+		return startPosition;
+	}
 
-    public boolean isFinished() {
-        return currentPosition >= endPosition;
-    }
+	public int getEndPosition() {
+		return endPosition;
+	}
+
+	public int getCurrentPosition() {
+		return currentPosition;
+	}
+
+	public boolean isFinished() {
+		return currentPosition >= endPosition;
+	}
+
 }

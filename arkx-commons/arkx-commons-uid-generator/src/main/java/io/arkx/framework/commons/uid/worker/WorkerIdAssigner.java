@@ -24,11 +24,10 @@ import io.arkx.framework.commons.uid.component.DefaultUidGenerator;
  */
 public interface WorkerIdAssigner {
 
-    /**
-     * Assign worker id for {@link DefaultUidGenerator}
-     *
-     * @return assigned worker id
-     */
-    long assignWorkerId();
+	/**
+	 * Assign worker id for {@link DefaultUidGenerator}
+	 * @return assigned worker id
+	 */
+	long assignWorkerId();
 
 }

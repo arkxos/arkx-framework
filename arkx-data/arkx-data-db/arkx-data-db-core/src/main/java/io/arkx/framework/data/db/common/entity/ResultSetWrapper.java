@@ -26,48 +26,57 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ResultSetWrapper implements AutoCloseable {
 
-    private boolean isAutoCommit;
-    @Getter
-    private Connection connection;
-    @Getter
-    private Statement statement;
-    @Getter
-    private ResultSet resultSet;
+	private boolean isAutoCommit;
 
-    @Builder
-    public ResultSetWrapper(ResultSet resultSet, Statement statement, Connection connection) {
-        this.resultSet = resultSet;
-        this.statement = statement;
-        this.connection = connection;
-        try {
-            this.isAutoCommit = connection.getAutoCommit();
-        } catch (SQLException e) {
-            log.warn("Jdbc Connection getAutoCommit() failed, set default true, error: {}", e.getMessage());
-            this.isAutoCommit = false;
-        }
-    }
+	@Getter
+	private Connection connection;
 
-    @Override
-    public void close() {
-        try {
-            connection.setAutoCommit(isAutoCommit);
-        } catch (SQLException e) {
-            log.warn("Jdbc Connection setAutoCommit() failed, error: {}", e.getMessage());
-        }
-        try {
-            resultSet.close();
-        } catch (SQLException e) {
-            log.warn("Jdbc ResultSet close() failed, error: {}", e.getMessage());
-        }
-        try {
-            statement.close();
-        } catch (SQLException e) {
-            log.warn("Jdbc Statement close() failed, error: {}", e.getMessage());
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            log.warn("Jdbc Connection close() failed, error: {}", e.getMessage());
-        }
-    }
+	@Getter
+	private Statement statement;
+
+	@Getter
+	private ResultSet resultSet;
+
+	@Builder
+	public ResultSetWrapper(ResultSet resultSet, Statement statement, Connection connection) {
+		this.resultSet = resultSet;
+		this.statement = statement;
+		this.connection = connection;
+		try {
+			this.isAutoCommit = connection.getAutoCommit();
+		}
+		catch (SQLException e) {
+			log.warn("Jdbc Connection getAutoCommit() failed, set default true, error: {}", e.getMessage());
+			this.isAutoCommit = false;
+		}
+	}
+
+	@Override
+	public void close() {
+		try {
+			connection.setAutoCommit(isAutoCommit);
+		}
+		catch (SQLException e) {
+			log.warn("Jdbc Connection setAutoCommit() failed, error: {}", e.getMessage());
+		}
+		try {
+			resultSet.close();
+		}
+		catch (SQLException e) {
+			log.warn("Jdbc ResultSet close() failed, error: {}", e.getMessage());
+		}
+		try {
+			statement.close();
+		}
+		catch (SQLException e) {
+			log.warn("Jdbc Statement close() failed, error: {}", e.getMessage());
+		}
+		try {
+			connection.close();
+		}
+		catch (SQLException e) {
+			log.warn("Jdbc Connection close() failed, error: {}", e.getMessage());
+		}
+	}
+
 }

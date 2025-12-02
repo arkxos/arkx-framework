@@ -7,17 +7,20 @@ package io.arkx.framework.lock;
  */
 public interface LockService {
 
-    void unLock(String key);
+	void unLock(String key);
 
-    boolean isLock(String key, int seconds);
+	boolean isLock(String key, int seconds);
 
-    void unLock(String key, String value);
+	void unLock(String key, String value);
 
-    <T> T lockExecute(String key, LockExecute<T> lockExecute);
+	<T> T lockExecute(String key, LockExecute<T> lockExecute);
 
-    interface LockExecute<T> {
-        T execute();
+	interface LockExecute<T> {
 
-        T waitTimeOut();
-    }
+		T execute();
+
+		T waitTimeOut();
+
+	}
+
 }

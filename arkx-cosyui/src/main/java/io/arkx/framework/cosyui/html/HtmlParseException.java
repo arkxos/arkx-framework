@@ -8,9 +8,10 @@ import io.arkx.framework.core.FrameworkException;
  */
 public class HtmlParseException extends FrameworkException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public HtmlParseException(String message) {
-        super(message);
-    }
+	public HtmlParseException(String message) {
+		super(message);
+	}
+
 }

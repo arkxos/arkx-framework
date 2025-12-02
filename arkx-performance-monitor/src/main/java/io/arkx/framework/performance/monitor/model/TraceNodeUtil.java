@@ -6,4 +6,5 @@ package io.arkx.framework.performance.monitor.model;
  * @since 1.0
  */
 public class TraceNodeUtil {
+
 }

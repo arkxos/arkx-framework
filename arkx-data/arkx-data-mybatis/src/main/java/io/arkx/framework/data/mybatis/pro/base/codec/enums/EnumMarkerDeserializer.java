@@ -16,18 +16,20 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
  * @author w.dehi.2021-12-19
  */
 public class EnumMarkerDeserializer extends JsonDeserializer<Enum<? extends EnumMarker>> {
-    @Override
-    public Enum<? extends EnumMarker> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        String name = PropertyAliasCache.getFieldAliasMap(p);
-        Class<?> propertyType = BeanUtils.findPropertyType(name, p.getCurrentValue().getClass());
 
-        int intValue = p.getIntValue();
-        @SuppressWarnings("unchecked")
-        Class<EnumMarker> c = (Class<EnumMarker>) propertyType;
-        EnumMarker enumMarker = EnumMarker.valueOf(c, intValue);
+	@Override
+	public Enum<? extends EnumMarker> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+		String name = PropertyAliasCache.getFieldAliasMap(p);
+		Class<?> propertyType = BeanUtils.findPropertyType(name, p.getCurrentValue().getClass());
 
-        @SuppressWarnings("unchecked")
-        Enum<? extends EnumMarker> resp = (Enum<? extends EnumMarker>) enumMarker;
-        return resp;
-    }
+		int intValue = p.getIntValue();
+		@SuppressWarnings("unchecked")
+		Class<EnumMarker> c = (Class<EnumMarker>) propertyType;
+		EnumMarker enumMarker = EnumMarker.valueOf(c, intValue);
+
+		@SuppressWarnings("unchecked")
+		Enum<? extends EnumMarker> resp = (Enum<? extends EnumMarker>) enumMarker;
+		return resp;
+	}
+
 }

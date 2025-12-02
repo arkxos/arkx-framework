@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Documented
 @Component
-@Target(value = {ElementType.TYPE})
+@Target(value = { ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JpaDto {
 

@@ -7,38 +7,39 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  *
  */
 public class XMLInstruction extends XMLNode {
-    String instruction;
 
-    public XMLInstruction(String instruction) {
-        this.instruction = instruction;
-    }
+	String instruction;
 
-    @Override
-    public void toString(String prefix, FastStringBuilder sb) {
-        sb.append(prefix).append("<?").append(instruction).append(" ?>");
-    }
+	public XMLInstruction(String instruction) {
+		this.instruction = instruction;
+	}
 
-    @Override
-    public String getText() {
-        return "";
-    }
+	@Override
+	public void toString(String prefix, FastStringBuilder sb) {
+		sb.append(prefix).append("<?").append(instruction).append(" ?>");
+	}
 
-    @Override
-    public int getType() {
-        return XMLNode.INSTRUCTION;
-    }
+	@Override
+	public String getText() {
+		return "";
+	}
 
-    @Override
-    void repack() {
-        instruction = new String(instruction.toCharArray());
-    }
+	@Override
+	public int getType() {
+		return XMLNode.INSTRUCTION;
+	}
 
-    public String getInstruction() {
-        return instruction;
-    }
+	@Override
+	void repack() {
+		instruction = new String(instruction.toCharArray());
+	}
 
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
-    }
+	public String getInstruction() {
+		return instruction;
+	}
+
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
+	}
 
 }

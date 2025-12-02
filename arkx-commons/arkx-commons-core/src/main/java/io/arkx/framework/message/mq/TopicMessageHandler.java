@@ -25,42 +25,45 @@ import com.alibaba.fastjson.TypeReference;
 @Sharable
 public class TopicMessageHandler extends SimpleChannelInboundHandler<NettyMessage> {
 
-    private Logger logger = LoggerFactory.getLogger(TopicMessageHandler.class);
+	private Logger logger = LoggerFactory.getLogger(TopicMessageHandler.class);
 
-    Broker broker;
+	Broker broker;
 
-    public TopicMessageHandler(Broker broker) {
-        this.broker = broker;
-    }
+	public TopicMessageHandler(Broker broker) {
+		this.broker = broker;
+	}
 
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
-        if (message == null) {
-            ctx.fireChannelRead(message);
-            return;
-        }
-        logger.debug("on recived message, type: " + message.getType() + ", body:" + message.getBody());
-        if (message.getBusinessType() == MqBusinessType.RegisterConsumer.value()) {
-            String text = new String(message.getBody());
-            Map<String, String> msg = JSON.parseObject(text, new TypeReference<Map<String, String>>() {
-            });
-            broker.registerConsumer(msg.get("topic"), ctx.channel());
-        } else if (message.getBusinessType() == MqBusinessType.RegisterProducer.value()) {
-            String text = new String(message.getBody());
-            Map<String, String> msg = JSON.parseObject(text, new TypeReference<Map<String, String>>() {
-            });
-            broker.registerProducer(msg.get("topic"), ctx.channel());
-        } else if (message.getType() == MessageType.REQUEST
-                && message.getBusinessType() == MqBusinessType.TopicMessage.value()) {
-            String text = new String(message.getBody());
-            Map<String, String> msg = JSON.parseObject(text, new TypeReference<Map<String, String>>() {
-            });
-            String topic = msg.get("topic");
-            String data = msg.get("msg");
-            broker.publish(topic, data);
-        } else {
-            ctx.fireChannelRead(message);
-        }
-    }
+	@Override
+	public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
+		if (message == null) {
+			ctx.fireChannelRead(message);
+			return;
+		}
+		logger.debug("on recived message, type: " + message.getType() + ", body:" + message.getBody());
+		if (message.getBusinessType() == MqBusinessType.RegisterConsumer.value()) {
+			String text = new String(message.getBody());
+			Map<String, String> msg = JSON.parseObject(text, new TypeReference<Map<String, String>>() {
+			});
+			broker.registerConsumer(msg.get("topic"), ctx.channel());
+		}
+		else if (message.getBusinessType() == MqBusinessType.RegisterProducer.value()) {
+			String text = new String(message.getBody());
+			Map<String, String> msg = JSON.parseObject(text, new TypeReference<Map<String, String>>() {
+			});
+			broker.registerProducer(msg.get("topic"), ctx.channel());
+		}
+		else if (message.getType() == MessageType.REQUEST
+				&& message.getBusinessType() == MqBusinessType.TopicMessage.value()) {
+			String text = new String(message.getBody());
+			Map<String, String> msg = JSON.parseObject(text, new TypeReference<Map<String, String>>() {
+			});
+			String topic = msg.get("topic");
+			String data = msg.get("msg");
+			broker.publish(topic, data);
+		}
+		else {
+			ctx.fireChannelRead(message);
+		}
+	}
 
 }

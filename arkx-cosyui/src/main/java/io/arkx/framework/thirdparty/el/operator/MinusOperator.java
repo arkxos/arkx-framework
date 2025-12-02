@@ -67,67 +67,69 @@ import java.math.BigInteger;
  **/
 
 public class MinusOperator extends ArithmeticOperator {
-    // -------------------------------------
-    // Singleton
-    // -------------------------------------
 
-    public static final MinusOperator SINGLETON = new MinusOperator();
+	// -------------------------------------
+	// Singleton
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public MinusOperator() {
-    }
+	public static final MinusOperator SINGLETON = new MinusOperator();
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the symbol representing the operator
-     **/
-    @Override
-    public String getOperatorSymbol() {
-        return "-";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public MinusOperator() {
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given double values, returning a double
-     **/
-    @Override
-    public double apply(double pLeft, double pRight) {
-        return pLeft - pRight;
-    }
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the symbol representing the operator
+	 **/
+	@Override
+	public String getOperatorSymbol() {
+		return "-";
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given double values, returning a double
-     **/
-    @Override
-    public long apply(long pLeft, long pRight) {
-        return pLeft - pRight;
-    }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given double values, returning a double
+	 **/
+	@Override
+	public double apply(double pLeft, double pRight) {
+		return pLeft - pRight;
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given double values, returning a double
+	 **/
+	@Override
+	public long apply(long pLeft, long pRight) {
+		return pLeft - pRight;
+	}
 
-    /**
-     * Applies the operator to the given BigDecimal values, returning a BigDecimal.
-     **/
-    @Override
-    public BigDecimal apply(BigDecimal pLeft, BigDecimal pRight) {
-        return pLeft.subtract(pRight);
-    }
+	// -------------------------------------
 
-    // -------------------------------------
+	/**
+	 * Applies the operator to the given BigDecimal values, returning a BigDecimal.
+	 **/
+	@Override
+	public BigDecimal apply(BigDecimal pLeft, BigDecimal pRight) {
+		return pLeft.subtract(pRight);
+	}
 
-    /**
-     * Applies the operator to the given BigInteger values, returning a BigInteger.
-     **/
-    @Override
-    public BigInteger apply(BigInteger pLeft, BigInteger pRight) {
-        return pLeft.subtract(pRight);
-    }
+	// -------------------------------------
 
-    // -------------------------------------
+	/**
+	 * Applies the operator to the given BigInteger values, returning a BigInteger.
+	 **/
+	@Override
+	public BigInteger apply(BigInteger pLeft, BigInteger pRight) {
+		return pLeft.subtract(pRight);
+	}
+
+	// -------------------------------------
+
 }

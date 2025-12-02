@@ -7,7 +7,9 @@ import io.arkx.framework.extend.AbstractExtendService;
  *
  */
 public class ExceptionCatcherService extends AbstractExtendService<IExceptionCatcher> {
-    public static ExceptionCatcherService getInstance() {
-        return AbstractExtendService.findInstance(ExceptionCatcherService.class);
-    }
+
+	public static ExceptionCatcherService getInstance() {
+		return AbstractExtendService.findInstance(ExceptionCatcherService.class);
+	}
+
 }

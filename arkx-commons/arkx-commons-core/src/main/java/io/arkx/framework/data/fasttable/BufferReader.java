@@ -6,81 +6,91 @@ import java.nio.channels.FileChannel;
 
 public class BufferReader {
 
-    public static int BYTE_LENGTH = 1;
-    public static int INT_LENGTH = 4;
-    public static int FLOAT_LENGTH = 4;
-    public static int LONG_LENGTH = 8;
-    public static int DOUBLE_LENGTH = 8;
+	public static int BYTE_LENGTH = 1;
 
-    private ByteBuffer longBuffer = ByteBuffer.allocate(LONG_LENGTH);
-    private ByteBuffer doubleBuffer = ByteBuffer.allocate(DOUBLE_LENGTH);
-    private ByteBuffer intBuffer = ByteBuffer.allocate(INT_LENGTH);
-    private ByteBuffer floatBuffer = ByteBuffer.allocate(FLOAT_LENGTH);
+	public static int INT_LENGTH = 4;
 
-    private ByteBuffer longRBuffer = ByteBuffer.allocate(LONG_LENGTH);
-    private ByteBuffer doubleRBuffer = ByteBuffer.allocate(DOUBLE_LENGTH);
-    private ByteBuffer intRBuffer = ByteBuffer.allocate(INT_LENGTH);
-    private ByteBuffer floatRBuffer = ByteBuffer.allocate(FLOAT_LENGTH);
+	public static int FLOAT_LENGTH = 4;
 
-    public void writeInt(FileChannel fileChannel, int value) throws IOException {
-        intRBuffer.clear();
-        intRBuffer.putInt(value);
-        intRBuffer.position(0);
+	public static int LONG_LENGTH = 8;
 
-        fileChannel.write(intRBuffer);
-    }
+	public static int DOUBLE_LENGTH = 8;
 
-    public void writeLong(FileChannel fileChannel, long value) throws IOException {
-        longRBuffer.clear();
-        longRBuffer.putLong(value);
-        longRBuffer.position(0);
+	private ByteBuffer longBuffer = ByteBuffer.allocate(LONG_LENGTH);
 
-        fileChannel.write(longRBuffer);
-    }
+	private ByteBuffer doubleBuffer = ByteBuffer.allocate(DOUBLE_LENGTH);
 
-    public long readLong(FileChannel fileChannel) throws IOException {
-        longBuffer.clear();
+	private ByteBuffer intBuffer = ByteBuffer.allocate(INT_LENGTH);
 
-        fileChannel.read(longBuffer);
-        longBuffer.position(0);
+	private ByteBuffer floatBuffer = ByteBuffer.allocate(FLOAT_LENGTH);
 
-        return longBuffer.getLong();
-    }
+	private ByteBuffer longRBuffer = ByteBuffer.allocate(LONG_LENGTH);
 
-    public int readInt(FileChannel fileChannel) throws IOException {
-        intBuffer.clear();
+	private ByteBuffer doubleRBuffer = ByteBuffer.allocate(DOUBLE_LENGTH);
 
-        fileChannel.read(intBuffer);
-        intBuffer.position(0);
+	private ByteBuffer intRBuffer = ByteBuffer.allocate(INT_LENGTH);
 
-        return intBuffer.getInt();
-    }
+	private ByteBuffer floatRBuffer = ByteBuffer.allocate(FLOAT_LENGTH);
 
-    public float readFloat(FileChannel fileChannel) throws IOException {
-        floatBuffer.clear();
+	public void writeInt(FileChannel fileChannel, int value) throws IOException {
+		intRBuffer.clear();
+		intRBuffer.putInt(value);
+		intRBuffer.position(0);
 
-        fileChannel.read(floatBuffer);
-        floatBuffer.position(0);
+		fileChannel.write(intRBuffer);
+	}
 
-        return floatBuffer.getFloat();
-    }
+	public void writeLong(FileChannel fileChannel, long value) throws IOException {
+		longRBuffer.clear();
+		longRBuffer.putLong(value);
+		longRBuffer.position(0);
 
-    public double readDouble(FileChannel fileChannel) throws IOException {
-        doubleBuffer.clear();
+		fileChannel.write(longRBuffer);
+	}
 
-        fileChannel.read(doubleBuffer);
-        doubleBuffer.position(0);
+	public long readLong(FileChannel fileChannel) throws IOException {
+		longBuffer.clear();
 
-        return doubleBuffer.getDouble();
-    }
+		fileChannel.read(longBuffer);
+		longBuffer.position(0);
 
-    public String readString(FileChannel fileChannel, int length) throws IOException {
-        ByteBuffer stringBuffer = ByteBuffer.allocate(length);
+		return longBuffer.getLong();
+	}
 
-        fileChannel.read(stringBuffer);
-        stringBuffer.position(0);
+	public int readInt(FileChannel fileChannel) throws IOException {
+		intBuffer.clear();
 
-        return ByteBufferUtil.readString(stringBuffer, length);
-    }
+		fileChannel.read(intBuffer);
+		intBuffer.position(0);
+
+		return intBuffer.getInt();
+	}
+
+	public float readFloat(FileChannel fileChannel) throws IOException {
+		floatBuffer.clear();
+
+		fileChannel.read(floatBuffer);
+		floatBuffer.position(0);
+
+		return floatBuffer.getFloat();
+	}
+
+	public double readDouble(FileChannel fileChannel) throws IOException {
+		doubleBuffer.clear();
+
+		fileChannel.read(doubleBuffer);
+		doubleBuffer.position(0);
+
+		return doubleBuffer.getDouble();
+	}
+
+	public String readString(FileChannel fileChannel, int length) throws IOException {
+		ByteBuffer stringBuffer = ByteBuffer.allocate(length);
+
+		fileChannel.read(stringBuffer);
+		stringBuffer.position(0);
+
+		return ByteBufferUtil.readString(stringBuffer, length);
+	}
 
 }

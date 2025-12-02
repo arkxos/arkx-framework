@@ -21,24 +21,29 @@ import lombok.Data;
 @Data
 public class TableDescription {
 
-    private String tableName;
-    private String schemaName;
-    private String remarks;
-    private Boolean isMapping = false;
-    private ProductTableEnum tableType;
+	private String tableName;
 
-    public String getTableTypeName() {
-        return tableType.name();
-    }
+	private String schemaName;
 
-    public void setTableType(String tableType) {
-        if ("PARTITIONED TABLE".equals(tableType)) {
-            tableType = "TABLE";
-        }
-        this.tableType = ProductTableEnum.valueOf(tableType.toUpperCase());
-    }
+	private String remarks;
 
-    public boolean isViewTable() {
-        return ProductTableEnum.VIEW == tableType;
-    }
+	private Boolean isMapping = false;
+
+	private ProductTableEnum tableType;
+
+	public String getTableTypeName() {
+		return tableType.name();
+	}
+
+	public void setTableType(String tableType) {
+		if ("PARTITIONED TABLE".equals(tableType)) {
+			tableType = "TABLE";
+		}
+		this.tableType = ProductTableEnum.valueOf(tableType.toUpperCase());
+	}
+
+	public boolean isViewTable() {
+		return ProductTableEnum.VIEW == tableType;
+	}
+
 }

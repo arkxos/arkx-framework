@@ -17,14 +17,14 @@ import io.arkx.framework.data.db.core.provider.sync.AutoCastTableDataSynchronize
 
 public class TdengineTableSynchronizer extends AutoCastTableDataSynchronizeProvider {
 
-    public TdengineTableSynchronizer(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-    }
+	public TdengineTableSynchronizer(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+	}
 
-    @Override
-    protected TransactionDefinition getDefaultTransactionDefinition() {
-        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-        return definition;
-    }
+	@Override
+	protected TransactionDefinition getDefaultTransactionDefinition() {
+		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+		return definition;
+	}
 
 }

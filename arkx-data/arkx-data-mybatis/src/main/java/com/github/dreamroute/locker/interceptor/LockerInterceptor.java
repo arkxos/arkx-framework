@@ -52,140 +52,152 @@ import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.update.Update;
 
 /**
- * 原理： 1. 拦截被@Locker标记的方法，执行更新操作； 2. 上一步骤中的update方法如果返回值是0，那么查询一次被更新的数据； 3.
- * 如果version > 当前值，那么就抛出异常（如果需要抛出异常的话）；
+ * 原理： 1. 拦截被@Locker标记的方法，执行更新操作； 2. 上一步骤中的update方法如果返回值是0，那么查询一次被更新的数据； 3. 如果version >
+ * 当前值，那么就抛出异常（如果需要抛出异常的话）；
  *
  * @author w.dehi
  */
 @Slf4j
-@Intercepts({@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})})
+@Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }) })
 public class LockerInterceptor implements Interceptor, ApplicationListener<ContextRefreshedEvent> {
 
-    private final String versionColumn;
-    private final boolean failThrowException;
+	private final String versionColumn;
 
-    private List<String> ids = new ArrayList<>();
-    private final Map<String, String> selectMap = new ConcurrentHashMap<>();
-    private Configuration config;
+	private final boolean failThrowException;
 
-    private static final Integer UPDATE_FAILD = 0;
+	private List<String> ids = new ArrayList<>();
 
-    public LockerInterceptor(String versionColumn, boolean failThrowException) {
-        this.versionColumn = versionColumn;
-        this.failThrowException = failThrowException;
-    }
+	private final Map<String, String> selectMap = new ConcurrentHashMap<>();
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        SqlSessionFactory sqlSessionFactory = event.getApplicationContext().getBean(SqlSessionFactory.class);
-        this.config = sqlSessionFactory.getConfiguration();
-        Collection<Class<?>> mappers = this.config.getMapperRegistry().getMappers();
-        this.ids = ofNullable(mappers).orElseGet(ArrayList::new).stream()
-                .flatMap(mapper -> stream(getAllMethods(mapper)).filter(method -> hasAnnotation(method, Locker.class))
-                        .map(m -> mapper.getName() + "." + m.getName()))
-                .collect(toList());
-    }
+	private Configuration config;
 
-    @Override
-    public Object intercept(Invocation invocation) throws Throwable {
-        Object[] args = invocation.getArgs();
-        MappedStatement ms = (MappedStatement) args[0];
-        Object param = args[1];
-        String id = ms.getId();
+	private static final Integer UPDATE_FAILD = 0;
 
-        // 不需要乐观锁的方法，直接pass
-        if (!ids.contains(id)) {
-            return invocation.proceed();
-        }
+	public LockerInterceptor(String versionColumn, boolean failThrowException) {
+		this.versionColumn = versionColumn;
+		this.failThrowException = failThrowException;
+	}
 
-        // 1. 执行更新操作
-        MetaObject pmmo = config.newMetaObject(param);
-        Long versionValue = (Long) pmmo.getValue(versionColumn);
-        pmmo.setValue(versionColumn, versionValue + 1);
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
+		SqlSessionFactory sqlSessionFactory = event.getApplicationContext().getBean(SqlSessionFactory.class);
+		this.config = sqlSessionFactory.getConfiguration();
+		Collection<Class<?>> mappers = this.config.getMapperRegistry().getMappers();
+		this.ids = ofNullable(mappers).orElseGet(ArrayList::new)
+			.stream()
+			.flatMap(mapper -> stream(getAllMethods(mapper)).filter(method -> hasAnnotation(method, Locker.class))
+				.map(m -> mapper.getName() + "." + m.getName()))
+			.collect(toList());
+	}
 
-        Executor executor = (Executor) PluginUtil.processTarget(invocation.getTarget());
-        BoundSql boundSql = ms.getBoundSql(param);
-        ParameterMapping vpm = new ParameterMapping.Builder(config, versionColumn + "_v", Object.class).build();
-        List<ParameterMapping> pms = newArrayList(boundSql.getParameterMappings());
-        pms.add(vpm);
-        String old = boundSql.getSql();
+	@Override
+	public Object intercept(Invocation invocation) throws Throwable {
+		Object[] args = invocation.getArgs();
+		MappedStatement ms = (MappedStatement) args[0];
+		Object param = args[1];
+		String id = ms.getId();
 
-        // 获取新的sql
-        Update update = (Update) CCJSqlParserUtil.parse(old);
-        Expression where = update.getWhere();
-        ParenthesedExpressionList p = new ParenthesedExpressionList(where);
-        EqualsTo lock = new EqualsTo(new Column(versionColumn), new JdbcParameter());
-        AndExpression newWhere = new AndExpression().withLeftExpression(p).withRightExpression(lock);
-        update.setWhere(newWhere);
-        String newSql = update.toString();
+		// 不需要乐观锁的方法，直接pass
+		if (!ids.contains(id)) {
+			return invocation.proceed();
+		}
 
-        BoundSql newBoundSql = new BoundSql(config, newSql, pms, param);
-        newBoundSql.setAdditionalParameter(versionColumn + "_v", versionValue);
+		// 1. 执行更新操作
+		MetaObject pmmo = config.newMetaObject(param);
+		Long versionValue = (Long) pmmo.getValue(versionColumn);
+		pmmo.setValue(versionColumn, versionValue + 1);
 
-        MappedStatement m = new Builder(config, "com.[plugin]optimistic_locker_update_with_locker._inner_update",
-                new StaticSqlSource(config, newSql), SqlCommandType.UPDATE).build();
-        StatementHandler sh = config.newStatementHandler(executor, m, param, RowBounds.DEFAULT, null, newBoundSql);
-        Statement updateStmt = prepareStatement(executor.getTransaction(), sh);
-        ((PreparedStatement) updateStmt).execute();
-        int result = updateStmt.getUpdateCount();
-        updateStmt.close();
-        pmmo.setValue(versionColumn, versionValue);
+		Executor executor = (Executor) PluginUtil.processTarget(invocation.getTarget());
+		BoundSql boundSql = ms.getBoundSql(param);
+		ParameterMapping vpm = new ParameterMapping.Builder(config, versionColumn + "_v", Object.class).build();
+		List<ParameterMapping> pms = newArrayList(boundSql.getParameterMappings());
+		pms.add(vpm);
+		String old = boundSql.getSql();
 
-        // 2. 如果返回值是0，说明没更新成功，那么判断是否是因为并发修改造成的，如果是并发修改，那么抛异常
-        if (Objects.equals(result, UPDATE_FAILD) && failThrowException) {
+		// 获取新的sql
+		Update update = (Update) CCJSqlParserUtil.parse(old);
+		Expression where = update.getWhere();
+		ParenthesedExpressionList p = new ParenthesedExpressionList(where);
+		EqualsTo lock = new EqualsTo(new Column(versionColumn), new JdbcParameter());
+		AndExpression newWhere = new AndExpression().withLeftExpression(p).withRightExpression(lock);
+		update.setWhere(newWhere);
+		String newSql = update.toString();
 
-            String selectSql = selectMap.get(id);
-            if (StringUtils.isEmpty(selectSql)) {
-                selectSql = createSelect(ms, param);
-                selectMap.put(id, selectSql);
-            }
-            String[] split = selectSql.split(":");
-            String idName = split[1];
-            String sql = split[0];
+		BoundSql newBoundSql = new BoundSql(config, newSql, pms, param);
+		newBoundSql.setAdditionalParameter(versionColumn + "_v", versionValue);
 
-            ParameterMapping pm = new ParameterMapping.Builder(config, idName, Object.class).build();
-            List<ParameterMapping> parameterMappings = newArrayList(pm);
+		MappedStatement m = new Builder(config, "com.[plugin]optimistic_locker_update_with_locker._inner_update",
+				new StaticSqlSource(config, newSql), SqlCommandType.UPDATE)
+			.build();
+		StatementHandler sh = config.newStatementHandler(executor, m, param, RowBounds.DEFAULT, null, newBoundSql);
+		Statement updateStmt = prepareStatement(executor.getTransaction(), sh);
+		((PreparedStatement) updateStmt).execute();
+		int result = updateStmt.getUpdateCount();
+		updateStmt.close();
+		pmmo.setValue(versionColumn, versionValue);
 
-            Object value = ReflectUtil.getFieldValue(param, idName);
-            BoundSql select = new BoundSql(config, sql, parameterMappings, value);
-            MappedStatement selectMs = new Builder(config, "com.[plugin]optimistic_locker_update_faild._inner_select",
-                    new StaticSqlSource(config, sql), SqlCommandType.SELECT).build();
-            StatementHandler selectSh = config.newStatementHandler(executor, selectMs, value, RowBounds.DEFAULT, null,
-                    select);
-            Statement selectStmt = prepareStatement(executor.getTransaction(), selectSh);
-            ((PreparedStatement) selectStmt).execute();
-            ResultSet rs = selectStmt.getResultSet();
-            Long v = null;
-            while (rs.next()) {
-                v = rs.getLong(versionColumn);
-            }
-            updateStmt.close();
+		// 2. 如果返回值是0，说明没更新成功，那么判断是否是因为并发修改造成的，如果是并发修改，那么抛异常
+		if (Objects.equals(result, UPDATE_FAILD) && failThrowException) {
 
-            long currentVersion = (long) ReflectUtil.getFieldValue(param, versionColumn);
-            if (v != null && v > currentVersion) {
-                throw new DataHasBeenModifyException("data has been modify");
-            }
-        }
-        return result;
-    }
+			String selectSql = selectMap.get(id);
+			if (StringUtils.isEmpty(selectSql)) {
+				selectSql = createSelect(ms, param);
+				selectMap.put(id, selectSql);
+			}
+			String[] split = selectSql.split(":");
+			String idName = split[1];
+			String sql = split[0];
 
-    private Statement prepareStatement(Transaction transaction, StatementHandler handler) throws SQLException {
-        Statement stmt = handler.prepare(transaction.getConnection(), transaction.getTimeout());
-        handler.parameterize(stmt);
-        return stmt;
-    }
+			ParameterMapping pm = new ParameterMapping.Builder(config, idName, Object.class).build();
+			List<ParameterMapping> parameterMappings = newArrayList(pm);
 
-    private String createSelect(MappedStatement ms, Object arg) throws JSQLParserException {
-        String sql = ms.getSqlSource().getBoundSql(arg).getSql();
-        Update update = (Update) CCJSqlParserUtil.parse(sql);
-        String tableName = update.getTable().getName();
-        EqualsTo et = (EqualsTo) update.getWhere();
-        String id = et.getLeftExpression().toString();
+			Object value = ReflectUtil.getFieldValue(param, idName);
+			BoundSql select = new BoundSql(config, sql, parameterMappings, value);
+			MappedStatement selectMs = new Builder(config, "com.[plugin]optimistic_locker_update_faild._inner_select",
+					new StaticSqlSource(config, sql), SqlCommandType.SELECT)
+				.build();
+			StatementHandler selectSh = config.newStatementHandler(executor, selectMs, value, RowBounds.DEFAULT, null,
+					select);
+			Statement selectStmt = prepareStatement(executor.getTransaction(), selectSh);
+			((PreparedStatement) selectStmt).execute();
+			ResultSet rs = selectStmt.getResultSet();
+			Long v = null;
+			while (rs.next()) {
+				v = rs.getLong(versionColumn);
+			}
+			updateStmt.close();
 
-        StringJoiner joiner = new StringJoiner(" ");
-        String selectSql = joiner.add("SELECT").add(versionColumn).add("FROM").add(tableName).add("WHERE")
-                .add(et.toString()).toString();
+			long currentVersion = (long) ReflectUtil.getFieldValue(param, versionColumn);
+			if (v != null && v > currentVersion) {
+				throw new DataHasBeenModifyException("data has been modify");
+			}
+		}
+		return result;
+	}
 
-        return selectSql + ":" + id;
-    }
+	private Statement prepareStatement(Transaction transaction, StatementHandler handler) throws SQLException {
+		Statement stmt = handler.prepare(transaction.getConnection(), transaction.getTimeout());
+		handler.parameterize(stmt);
+		return stmt;
+	}
+
+	private String createSelect(MappedStatement ms, Object arg) throws JSQLParserException {
+		String sql = ms.getSqlSource().getBoundSql(arg).getSql();
+		Update update = (Update) CCJSqlParserUtil.parse(sql);
+		String tableName = update.getTable().getName();
+		EqualsTo et = (EqualsTo) update.getWhere();
+		String id = et.getLeftExpression().toString();
+
+		StringJoiner joiner = new StringJoiner(" ");
+		String selectSql = joiner.add("SELECT")
+			.add(versionColumn)
+			.add("FROM")
+			.add(tableName)
+			.add("WHERE")
+			.add(et.toString())
+			.toString();
+
+		return selectSql + ":" + id;
+	}
+
 }

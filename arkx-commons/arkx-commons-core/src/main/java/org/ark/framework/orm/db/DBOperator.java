@@ -34,105 +34,108 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DBOperator {
 
-    // private static Logger logger = log.getLogger(DBOperator.class);
+	// private static Logger logger = log.getLogger(DBOperator.class);
 
-    private static String defaultPaht;
+	private static String defaultPaht;
 
-    public static String getDefaultPath() {
+	public static String getDefaultPath() {
 
-        if (defaultPaht == null) {
-            String prefix = Config.getClassesPath();
-            prefix = prefix.substring(0, prefix.length() - 1);
-            prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
+		if (defaultPaht == null) {
+			String prefix = Config.getClassesPath();
+			prefix = prefix.substring(0, prefix.length() - 1);
+			prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
 
-            defaultPaht = prefix;
-        }
+			defaultPaht = prefix;
+		}
 
-        return defaultPaht;
-    }
+		return defaultPaht;
+	}
 
-    public static String getSchemaJarPath() {
-        return getDefaultPath() + "/schema_jar";
-    }
+	public static String getSchemaJarPath() {
+		return getDefaultPath() + "/schema_jar";
+	}
 
-    // String db = "carbon";"d:/test2.db"
-    public static void exportDB(ConnectionConfig config, String exportFilePath) throws Exception {
-        Session session = SessionFactory.openSessionInThread();
-        session.beginTransaction();
-        // DBContext.setCurrentContext(db);
+	// String db = "carbon";"d:/test2.db"
+	public static void exportDB(ConnectionConfig config, String exportFilePath) throws Exception {
+		Session session = SessionFactory.openSessionInThread();
+		session.beginTransaction();
+		// DBContext.setCurrentContext(db);
 
-        String db = config.DBName.toLowerCase();
+		String db = config.DBName.toLowerCase();
 
-        String packageStr = SchemaGenerator.PACKAGE + "." + db + ".schema";
+		String packageStr = SchemaGenerator.PACKAGE + "." + db + ".schema";
 
-        String javapath = getDefaultPath() + db + "_schema/src/" + packageStr.replaceAll("\\.", "/");
-        FileUtil.mkdir(javapath);
-        FileUtil.deleteEx(javapath + "/.+java");
+		String javapath = getDefaultPath() + db + "_schema/src/" + packageStr.replaceAll("\\.", "/");
+		FileUtil.mkdir(javapath);
+		FileUtil.deleteEx(javapath + "/.+java");
 
-        SchemaGenerator schemaGenerator = null;
-        if (config.isOracle()) {
-            schemaGenerator = new OracleDataBaseSchemaGenerator(packageStr, javapath);
-        } else if (config.isMysql()) {
-            schemaGenerator = new MySqlDataBaseSchemaGenerator(config.DBName, packageStr, javapath);
-        } else if (config.isSQLServer()) {
-            schemaGenerator = new SqlServerDataBaseSchemaGenerator(config.DBName, packageStr, javapath);
-        }
-        schemaGenerator.generate();
+		SchemaGenerator schemaGenerator = null;
+		if (config.isOracle()) {
+			schemaGenerator = new OracleDataBaseSchemaGenerator(packageStr, javapath);
+		}
+		else if (config.isMysql()) {
+			schemaGenerator = new MySqlDataBaseSchemaGenerator(config.DBName, packageStr, javapath);
+		}
+		else if (config.isSQLServer()) {
+			schemaGenerator = new SqlServerDataBaseSchemaGenerator(config.DBName, packageStr, javapath);
+		}
+		schemaGenerator.generate();
 
-        String[] schemas = new File(javapath).list();
+		String[] schemas = new File(javapath).list();
 
-        FileUtil.mkdir(getDefaultPath() + db + "_schema/classes");
+		FileUtil.mkdir(getDefaultPath() + db + "_schema/classes");
 
-        List<String> schemaNameList = new ArrayList<String>();
+		List<String> schemaNameList = new ArrayList<String>();
 
-        for (String schema : schemas) {
+		for (String schema : schemas) {
 
-            if (schema.endsWith("Schema.java")) {
-                schemaNameList.add(packageStr + "." + schema.replace(".java", ""));
-            }
+			if (schema.endsWith("Schema.java")) {
+				schemaNameList.add(packageStr + "." + schema.replace(".java", ""));
+			}
 
-            if (schema.endsWith("Set.java")) {
-                continue;
-            }
-            String[] javacArgs = new String[]{"-sourcepath", javapath, "-d", getDefaultPath() + db + "_schema/classes",
-                    javapath + "/" + schema.replace("Schema", "Set"), javapath + "/" + schema, "-encoding", "UTF-8",};
-            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-            compiler.run(null, null, null, javacArgs);
-            // Main.compile(javacArgs);
-        }
+			if (schema.endsWith("Set.java")) {
+				continue;
+			}
+			String[] javacArgs = new String[] { "-sourcepath", javapath, "-d",
+					getDefaultPath() + db + "_schema/classes", javapath + "/" + schema.replace("Schema", "Set"),
+					javapath + "/" + schema, "-encoding", "UTF-8", };
+			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+			compiler.run(null, null, null, javacArgs);
+			// Main.compile(javacArgs);
+		}
 
-        FileUtil.mkdir(getSchemaJarPath());
+		FileUtil.mkdir(getSchemaJarPath());
 
-        String jarFile = getSchemaJarPath() + "/" + db + "_schema.jar";
-        JarUtil.writeJar((getDefaultPath() + db + "_schema\\classes").replace("/", "\\"), jarFile);
+		String jarFile = getSchemaJarPath() + "/" + db + "_schema.jar";
+		JarUtil.writeJar((getDefaultPath() + db + "_schema\\classes").replace("/", "\\"), jarFile);
 
-        // FileUtil.delete(getDefaultPath() + db + "_schema");
+		// FileUtil.delete(getDefaultPath() + db + "_schema");
 
-        log.info("导出数据库生成schema jar 文件地址：" + jarFile);
+		log.info("导出数据库生成schema jar 文件地址：" + jarFile);
 
-        ClassLoader classLoader = ClassLoadUtil.getClassLoad(jarFile, true);
+		ClassLoader classLoader = ClassLoadUtil.getClassLoad(jarFile, true);
 
-        new DBExporter().exportDB(exportFilePath, schemaNameList.toArray(new String[0]), classLoader);
+		new DBExporter().exportDB(exportFilePath, schemaNameList.toArray(new String[0]), classLoader);
 
-        SessionFactory.clearCurrentSession();
-    }
+		SessionFactory.clearCurrentSession();
+	}
 
-    // "d:/test2.db", "carbon"
-    public static void importDB(String db, String exportFilePath) throws Exception {
+	// "d:/test2.db", "carbon"
+	public static void importDB(String db, String exportFilePath) throws Exception {
 
-        DBContext.setCurrentContext(db);
+		DBContext.setCurrentContext(db);
 
-        log.info("导入数据库所需schema jar 文件目录：" + getSchemaJarPath());
+		log.info("导入数据库所需schema jar 文件目录：" + getSchemaJarPath());
 
-        ClassLoadUtil.addJarPath(getSchemaJarPath());
+		ClassLoadUtil.addJarPath(getSchemaJarPath());
 
-        new DBImporter().importDB(exportFilePath, db);
-    }
+		new DBImporter().importDB(exportFilePath, db);
+	}
 
-    public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 
-        // importDB("carbon", "d:/test2.db");
-        System.out.println(Config.getContextRealPath());
-    }
+		// importDB("carbon", "d:/test2.db");
+		System.out.println(Config.getContextRealPath());
+	}
 
 }

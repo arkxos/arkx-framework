@@ -4,31 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Darkness
  * @date 2015-1-9 下午3:04:41
  * @version V1.0
  */
 public class Site {
 
-    private String domain;
-    private List<String> startUrls;
+	private String domain;
 
-    public Site(String domain) {
-        this.domain = domain;
-        this.startUrls = new ArrayList<>();
-    }
+	private List<String> startUrls;
 
-    public String domain() {
-        return domain;
-    }
+	public Site(String domain) {
+		this.domain = domain;
+		this.startUrls = new ArrayList<>();
+	}
 
-    public void addStartUrl(String startUrl) {
-        this.startUrls.add(startUrl);
-    }
+	public String domain() {
+		return domain;
+	}
 
-    public List<String> startUrls() {
-        return this.startUrls;
-    }
+	public void addStartUrl(String startUrl) {
+		this.startUrls.add(startUrl);
+	}
+
+	public List<String> startUrls() {
+		return this.startUrls;
+	}
 
 }

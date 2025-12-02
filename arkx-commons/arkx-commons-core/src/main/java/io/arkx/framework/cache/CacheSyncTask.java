@@ -7,36 +7,36 @@ import io.arkx.framework.schedule.SystemTask;
  */
 public class CacheSyncTask extends SystemTask {
 
-    public static final String ID = "io.arkx.framework.cache.ClusteringSyncTask";
+	public static final String ID = "io.arkx.framework.cache.ClusteringSyncTask";
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Platform.ClusteringSyncTask}";
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Platform.ClusteringSyncTask}";
+	}
 
-    @Override
-    public void execute() {
-        // CacheSyncUtil.sync();
-    }
+	@Override
+	public void execute() {
+		// CacheSyncUtil.sync();
+	}
 
-    @Override
-    public String getDefaultCronExpression() {
-        return "* * * * * *";
-    }
+	@Override
+	public String getDefaultCronExpression() {
+		return "* * * * * *";
+	}
 
-    @Override
-    public boolean isDisabled() {
-        return !CacheSyncUtil.enabled();
-    }
+	@Override
+	public boolean isDisabled() {
+		return !CacheSyncUtil.enabled();
+	}
 
-    @Override
-    public boolean enable4Front() {
-        return true;
-    }
+	@Override
+	public boolean enable4Front() {
+		return true;
+	}
 
 }

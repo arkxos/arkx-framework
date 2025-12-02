@@ -12,39 +12,40 @@ import com.google.common.collect.Multimap;
 
 public class Broker extends NettyServer {
 
-    private Multimap<String, Channel> producers = ArrayListMultimap.create();
-    private Multimap<String, Channel> consumers = ArrayListMultimap.create();
+	private Multimap<String, Channel> producers = ArrayListMultimap.create();
 
-    public Broker(String serverAddress) {
-        super(serverAddress);
-    }
+	private Multimap<String, Channel> consumers = ArrayListMultimap.create();
 
-    @Override
-    public void start() throws Exception {
-        registerChannelHandler(new TopicMessageHandler(this));
-        super.start();
-    }
+	public Broker(String serverAddress) {
+		super(serverAddress);
+	}
 
-    public void registerProducer(String topic, Channel channel) {
-        synchronized (this) {
-            producers.put(topic, channel);
-        }
-    }
+	@Override
+	public void start() throws Exception {
+		registerChannelHandler(new TopicMessageHandler(this));
+		super.start();
+	}
 
-    public void registerConsumer(String topic, Channel channel) {
-        synchronized (this) {
-            consumers.put(topic, channel);
-        }
-    }
+	public void registerProducer(String topic, Channel channel) {
+		synchronized (this) {
+			producers.put(topic, channel);
+		}
+	}
 
-    public void publish(String topic, String data) {
-        Collection<Channel> topicConsumers = consumers.get(topic);
-        for (Channel channel : topicConsumers) {
-            RequestMessage message = new RequestMessage(UuidUtil.base58Uuid());
-            message.setBusinessType(MqBusinessType.TopicMessage.value());
-            message.setBody(data.getBytes());
-            channel.writeAndFlush(message);
-        }
-    }
+	public void registerConsumer(String topic, Channel channel) {
+		synchronized (this) {
+			consumers.put(topic, channel);
+		}
+	}
+
+	public void publish(String topic, String data) {
+		Collection<Channel> topicConsumers = consumers.get(topic);
+		for (Channel channel : topicConsumers) {
+			RequestMessage message = new RequestMessage(UuidUtil.base58Uuid());
+			message.setBusinessType(MqBusinessType.TopicMessage.value());
+			message.setBody(data.getBytes());
+			channel.writeAndFlush(message);
+		}
+	}
 
 }

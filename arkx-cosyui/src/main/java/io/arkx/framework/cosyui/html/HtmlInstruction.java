@@ -7,43 +7,44 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  *
  */
 public class HtmlInstruction extends HtmlNode {
-    String instruction;
 
-    public HtmlInstruction(String instruction) {
-        this.instruction = instruction;
-    }
+	String instruction;
 
-    @Override
-    public String getText() {
-        return "";
-    }
+	public HtmlInstruction(String instruction) {
+		this.instruction = instruction;
+	}
 
-    @Override
-    public int getType() {
-        return HtmlNode.INSTRUCTION;
-    }
+	@Override
+	public String getText() {
+		return "";
+	}
 
-    @Override
-    void repack() {
-        instruction = new String(instruction.toCharArray());
-    }
+	@Override
+	public int getType() {
+		return HtmlNode.INSTRUCTION;
+	}
 
-    @Override
-    public void format(FastStringBuilder sb, String prefix) {
-        sb.append(instruction);
-    }
+	@Override
+	void repack() {
+		instruction = new String(instruction.toCharArray());
+	}
 
-    @Override
-    public HtmlNode clone() {
-        return new HtmlInstruction(instruction);
-    }
+	@Override
+	public void format(FastStringBuilder sb, String prefix) {
+		sb.append(instruction);
+	}
 
-    public String getInstruction() {
-        return instruction;
-    }
+	@Override
+	public HtmlNode clone() {
+		return new HtmlInstruction(instruction);
+	}
 
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
-    }
+	public String getInstruction() {
+		return instruction;
+	}
+
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
+	}
 
 }

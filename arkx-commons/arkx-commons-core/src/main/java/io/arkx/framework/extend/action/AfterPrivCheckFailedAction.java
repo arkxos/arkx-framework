@@ -11,15 +11,16 @@ import io.arkx.framework.extend.IExtendAction;
  * @version V1.0
  */
 public abstract class AfterPrivCheckFailedAction implements IExtendAction {
-    public static final String ID = "io.arkx.framework.AfterPrivCheckFailedAction";
 
-    @Override
-    public Object execute(Object[] args) throws ExtendException {
-        String message = (String) args[0];
-        execute(message);
-        return null;
-    }
+	public static final String ID = "io.arkx.framework.AfterPrivCheckFailedAction";
 
-    public abstract void execute(String message);
+	@Override
+	public Object execute(Object[] args) throws ExtendException {
+		String message = (String) args[0];
+		execute(message);
+		return null;
+	}
+
+	public abstract void execute(String message);
 
 }

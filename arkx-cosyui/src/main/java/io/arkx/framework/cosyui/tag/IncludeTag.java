@@ -14,48 +14,49 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  *
  */
 public class IncludeTag extends ArkTag {
-    String file;
 
-    @Override
-    public String getTagName() {
-        return "include";
-    }
+	String file;
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        AbstractExecuteContext includeContext = pageContext.getIncludeContext();
-        includeContext.getManagerContext().getTemplateManager().execute(file, includeContext);
-        return SKIP_BODY;
-    }
+	@Override
+	public String getTagName() {
+		return "include";
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("file", DataTypes.STRING.code(), "@{Framework.IncludeTag.File}"));
-        return list;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		AbstractExecuteContext includeContext = pageContext.getIncludeContext();
+		includeContext.getManagerContext().getTemplateManager().execute(file, includeContext);
+		return SKIP_BODY;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("file", DataTypes.STRING.code(), "@{Framework.IncludeTag.File}"));
+		return list;
+	}
 
-    @Override
-    public String getDescription() {
-        return "@{Framework.IncludeTag.Desc}";
-    }
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.IncludeTag.Name}";
-    }
+	@Override
+	public String getDescription() {
+		return "@{Framework.IncludeTag.Desc}";
+	}
 
-    public String getFile() {
-        return file;
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.IncludeTag.Name}";
+	}
 
-    public void setFile(String file) {
-        this.file = file;
-    }
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
 
 }

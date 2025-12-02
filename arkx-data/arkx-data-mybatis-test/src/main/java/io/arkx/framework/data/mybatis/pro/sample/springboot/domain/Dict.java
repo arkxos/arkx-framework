@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- *
  * @author w.dehai
  *
  */
@@ -21,10 +20,17 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Table("smart_dict")
 public class Dict extends IdEntity {
-    private Integer value;
-    private String labelValue;
-    private String enName;
-    private String cnName;
-    private Integer sort;
-    private Integer status;
+
+	private Integer value;
+
+	private String labelValue;
+
+	private String enName;
+
+	private String cnName;
+
+	private Integer sort;
+
+	private Integer status;
+
 }

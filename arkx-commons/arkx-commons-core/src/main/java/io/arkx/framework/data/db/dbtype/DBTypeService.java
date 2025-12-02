@@ -10,12 +10,14 @@ import io.arkx.framework.extend.AbstractExtendService;
  * @version V1.0
  */
 public class DBTypeService extends AbstractExtendService<IDBType> {
-    private static DBTypeService instance = null;
 
-    public static DBTypeService getInstance() {
-        if (instance == null) {
-            instance = findInstance(DBTypeService.class);
-        }
-        return instance;
-    }
+	private static DBTypeService instance = null;
+
+	public static DBTypeService getInstance() {
+		if (instance == null) {
+			instance = findInstance(DBTypeService.class);
+		}
+		return instance;
+	}
+
 }

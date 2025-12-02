@@ -20,31 +20,33 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class HeartBeatResponseHandler extends SimpleChannelInboundHandler<NettyMessage> {
 
-    private Logger logger = LoggerFactory.getLogger(HeartBeatResponseHandler.class);
+	private Logger logger = LoggerFactory.getLogger(HeartBeatResponseHandler.class);
 
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
-        // 返回心跳应答消息
-        if (message.getType() == MessageType.REQUEST
-                && message.getBusinessType() == NettyBusinessType.HEARTBEAT.value()) {
-            logger.debug("Receive client heart beat message : ---> " + message);
-            NettyMessage heartBeat = buildHeatBeat(message.getId());
-            logger.debug("Send heart beat response message to client : ---> " + heartBeat);
-            ctx.writeAndFlush(heartBeat);
-        } else {
-            ctx.fireChannelRead(message);
-        }
-    }
+	@Override
+	public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
+		// 返回心跳应答消息
+		if (message.getType() == MessageType.REQUEST
+				&& message.getBusinessType() == NettyBusinessType.HEARTBEAT.value()) {
+			logger.debug("Receive client heart beat message : ---> " + message);
+			NettyMessage heartBeat = buildHeatBeat(message.getId());
+			logger.debug("Send heart beat response message to client : ---> " + heartBeat);
+			ctx.writeAndFlush(heartBeat);
+		}
+		else {
+			ctx.fireChannelRead(message);
+		}
+	}
 
-    private NettyMessage buildHeatBeat(String id) {
-        ResponseMessage message = new ResponseMessage(id);
-        message.setBusinessType(NettyBusinessType.HEARTBEAT.value());
-        return message;
-    }
+	private NettyMessage buildHeatBeat(String id) {
+		ResponseMessage message = new ResponseMessage(id);
+		message.setBusinessType(NettyBusinessType.HEARTBEAT.value());
+		return message;
+	}
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
-        ctx.fireExceptionCaught(cause);
-    }
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		cause.printStackTrace();
+		ctx.fireExceptionCaught(cause);
+	}
+
 }

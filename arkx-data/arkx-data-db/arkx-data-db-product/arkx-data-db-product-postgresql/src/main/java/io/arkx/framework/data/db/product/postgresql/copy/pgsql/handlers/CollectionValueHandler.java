@@ -6,40 +6,42 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class CollectionValueHandler<TElementType, TCollectionType extends Collection<TElementType>>
-        extends
-            BaseValueHandler<TCollectionType> {
+		extends BaseValueHandler<TCollectionType> {
 
-    private final int oid;
-    private final IValueHandler<TElementType> valueHandler;
+	private final int oid;
 
-    public CollectionValueHandler(int oid, IValueHandler<TElementType> valueHandler) {
-        this.oid = oid;
-        this.valueHandler = valueHandler;
-    }
+	private final IValueHandler<TElementType> valueHandler;
 
-    @Override
-    protected void internalHandle(DataOutputStream buffer, TCollectionType value) throws IOException {
+	public CollectionValueHandler(int oid, IValueHandler<TElementType> valueHandler) {
+		this.oid = oid;
+		this.valueHandler = valueHandler;
+	}
 
-        ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream();
-        DataOutputStream arrayOutput = new DataOutputStream(byteArrayOutput);
+	@Override
+	protected void internalHandle(DataOutputStream buffer, TCollectionType value) throws IOException {
 
-        arrayOutput.writeInt(1); // Dimensions, use 1 for one-dimensional arrays at the moment
-        arrayOutput.writeInt(1); // The Array can contain Null Values
-        arrayOutput.writeInt(oid); // Write the Values using the OID
-        arrayOutput.writeInt(value.size()); // Write the number of elements
-        arrayOutput.writeInt(1); // Ignore Lower Bound. Use PG Default for now
+		ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream();
+		DataOutputStream arrayOutput = new DataOutputStream(byteArrayOutput);
 
-        // Now write the actual Collection elements using the inner handler:
-        for (TElementType element : value) {
-            valueHandler.handle(arrayOutput, element);
-        }
+		arrayOutput.writeInt(1); // Dimensions, use 1 for one-dimensional arrays at the
+									// moment
+		arrayOutput.writeInt(1); // The Array can contain Null Values
+		arrayOutput.writeInt(oid); // Write the Values using the OID
+		arrayOutput.writeInt(value.size()); // Write the number of elements
+		arrayOutput.writeInt(1); // Ignore Lower Bound. Use PG Default for now
 
-        buffer.writeInt(byteArrayOutput.size());
-        buffer.write(byteArrayOutput.toByteArray());
-    }
+		// Now write the actual Collection elements using the inner handler:
+		for (TElementType element : value) {
+			valueHandler.handle(arrayOutput, element);
+		}
 
-    @Override
-    public int getLength(TCollectionType value) {
-        throw new UnsupportedOperationException();
-    }
+		buffer.writeInt(byteArrayOutput.size());
+		buffer.write(byteArrayOutput.toByteArray());
+	}
+
+	@Override
+	public int getLength(TCollectionType value) {
+		throw new UnsupportedOperationException();
+	}
+
 }

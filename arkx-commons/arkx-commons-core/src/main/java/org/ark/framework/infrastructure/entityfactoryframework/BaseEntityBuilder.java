@@ -17,54 +17,55 @@ import io.arkx.framework.commons.util.lang.ReflectionUtil;
  */
 public class BaseEntityBuilder<T> implements IEntityFactory<T> {
 
-    private Class<T> genericClass;
+	private Class<T> genericClass;
 
-    public BaseEntityBuilder(Class<T> genericClass) {
-        this.genericClass = genericClass;
-    }
+	public BaseEntityBuilder(Class<T> genericClass) {
+		this.genericClass = genericClass;
+	}
 
-    @SuppressWarnings("unchecked")
-    protected Class<T> getGenericClass() {
+	@SuppressWarnings("unchecked")
+	protected Class<T> getGenericClass() {
 
-        if (genericClass == null) {
-            Type type = getClass().getGenericSuperclass();
-            Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
-            genericClass = (Class<T>) trueType;
-        }
-        return genericClass;
-    }
+		if (genericClass == null) {
+			Type type = getClass().getGenericSuperclass();
+			Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+			genericClass = (Class<T>) trueType;
+		}
+		return genericClass;
+	}
 
-    @Override
-    public T BuildEntity(DataRow dataRow) {
+	@Override
+	public T BuildEntity(DataRow dataRow) {
 
-        // convert result to entity.
-        T t = null;
-        try {
-            t = getGenericClass().newInstance();
+		// convert result to entity.
+		T t = null;
+		try {
+			t = getGenericClass().newInstance();
 
-            Field[] fields = ReflectionUtil.getDeclaredFields(getGenericClass());
+			Field[] fields = ReflectionUtil.getDeclaredFields(getGenericClass());
 
-            for (Field f : fields) {
+			for (Field f : fields) {
 
-                Ingore ingore = f.getAnnotation(Ingore.class);
-                if (ingore != null) {
-                    continue;
-                }
+				Ingore ingore = f.getAnnotation(Ingore.class);
+				if (ingore != null) {
+					continue;
+				}
 
-                String columnName = f.getName();
+				String columnName = f.getName();
 
-                Column column = f.getAnnotation(Column.class);
-                if (column != null) {
-                    columnName = column.name();
-                }
+				Column column = f.getAnnotation(Column.class);
+				if (column != null) {
+					columnName = column.name();
+				}
 
-                ReflectionUtil.setFieldValue(t, f.getName(), dataRow.get(columnName));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+				ReflectionUtil.setFieldValue(t, f.getName(), dataRow.get(columnName));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        return t;
-    }
+		return t;
+	}
 
 }

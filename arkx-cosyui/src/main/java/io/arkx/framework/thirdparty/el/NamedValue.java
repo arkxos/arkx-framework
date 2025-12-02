@@ -69,53 +69,56 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  **/
 
 public class NamedValue extends Expression {
-    // -------------------------------------
-    // Constants
-    // -------------------------------------
 
-    // -------------------------------------
-    // Properties
-    // -------------------------------------
-    // property name
+	// -------------------------------------
+	// Constants
+	// -------------------------------------
 
-    String mName;
+	// -------------------------------------
+	// Properties
+	// -------------------------------------
+	// property name
 
-    public String getName() {
-        return mName;
-    }
+	String mName;
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public NamedValue(String pName) {
-        mName = pName;
-    }
+	public String getName() {
+		return mName;
+	}
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the expression in the expression language syntax
-     **/
-    @Override
-    public String getExpressionString() {
-        return StringLiteral.toIdentifierToken(mName);
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public NamedValue(String pName) {
+		mName = pName;
+	}
 
-    // -------------------------------------
-    /**
-     * Evaluates by looking up the name in the VariableResolver
-     **/
-    @Override
-    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-            throws ExpressionException {
-        if (pResolver == null) {
-            return null;
-        } else {
-            return pResolver.resolveVariable(mName);
-        }
-    }
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the expression in the expression language syntax
+	 **/
+	@Override
+	public String getExpressionString() {
+		return StringLiteral.toIdentifierToken(mName);
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Evaluates by looking up the name in the VariableResolver
+	 **/
+	@Override
+	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+			throws ExpressionException {
+		if (pResolver == null) {
+			return null;
+		}
+		else {
+			return pResolver.resolveVariable(mName);
+		}
+	}
+
+	// -------------------------------------
+
 }

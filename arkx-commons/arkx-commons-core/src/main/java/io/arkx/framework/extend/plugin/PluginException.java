@@ -8,16 +8,18 @@ package io.arkx.framework.extend.plugin;
  * @version V1.0
  */
 public class PluginException extends Exception {
-    private static final long serialVersionUID = 1L;
 
-    private String message;
+	private static final long serialVersionUID = 1L;
 
-    public PluginException(String message) {
-        this.message = message;
-    }
+	private String message;
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
+	public PluginException(String message) {
+		this.message = message;
+	}
+
+	@Override
+	public String getMessage() {
+		return message;
+	}
+
 }

@@ -5,27 +5,30 @@ package io.arkx.framework.cosyui.expression;
  *
  */
 public class ExpressionException extends Exception {
-    private static final long serialVersionUID = 1L;
-    private Throwable mRootCause;
 
-    public ExpressionException() {
-    }
+	private static final long serialVersionUID = 1L;
 
-    public ExpressionException(String pMessage) {
-        super(pMessage);
-    }
+	private Throwable mRootCause;
 
-    public ExpressionException(Throwable pRootCause) {
-        super(pRootCause.getLocalizedMessage());
-        mRootCause = pRootCause;
-    }
+	public ExpressionException() {
+	}
 
-    public ExpressionException(String pMessage, Throwable pRootCause) {
-        super(pMessage);
-        mRootCause = pRootCause;
-    }
+	public ExpressionException(String pMessage) {
+		super(pMessage);
+	}
 
-    public Throwable getRootCause() {
-        return mRootCause;
-    }
+	public ExpressionException(Throwable pRootCause) {
+		super(pRootCause.getLocalizedMessage());
+		mRootCause = pRootCause;
+	}
+
+	public ExpressionException(String pMessage, Throwable pRootCause) {
+		super(pMessage);
+		mRootCause = pRootCause;
+	}
+
+	public Throwable getRootCause() {
+		return mRootCause;
+	}
+
 }

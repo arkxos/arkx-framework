@@ -11,22 +11,24 @@ import org.springframework.lang.Nullable;
  * @author Darkness
  */
 public enum HttpMethod {
-    GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;
 
-    private static final Map<String, HttpMethod> mappings = new HashMap<>(16);
+	GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;
 
-    static {
-        for (HttpMethod httpMethod : values()) {
-            mappings.put(httpMethod.name(), httpMethod);
-        }
-    }
+	private static final Map<String, HttpMethod> mappings = new HashMap<>(16);
 
-    @Nullable
-    public static HttpMethod resolve(@Nullable String method) {
-        return (method != null ? mappings.get(method) : null);
-    }
+	static {
+		for (HttpMethod httpMethod : values()) {
+			mappings.put(httpMethod.name(), httpMethod);
+		}
+	}
 
-    public boolean matches(String method) {
-        return (this == resolve(method));
-    }
+	@Nullable
+	public static HttpMethod resolve(@Nullable String method) {
+		return (method != null ? mappings.get(method) : null);
+	}
+
+	public boolean matches(String method) {
+		return (this == resolve(method));
+	}
+
 }

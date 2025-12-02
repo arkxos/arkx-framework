@@ -19,31 +19,32 @@ import jakarta.validation.ConstraintValidatorContext;
  */
 public class TimeValidator implements ConstraintValidator<Time, String> {
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+	@Override
+	public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        // 如果为空，不做处理
-        if (value == null || value.length() == 0) {
-            return true;
-        }
+		// 如果为空，不做处理
+		if (value == null || value.length() == 0) {
+			return true;
+		}
 
-        // 如果不是数字，报错
-        if (!NumberUtils.isCreatable(value)) {
-            return false;
-        }
+		// 如果不是数字，报错
+		if (!NumberUtils.isCreatable(value)) {
+			return false;
+		}
 
-        // 处理数字情况
-        try {
-            long from = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1972-01-01 00:00:00").getTime();
-            long to = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2037-12-31 00:00:00").getTime();
-            long time = Long.parseLong(value);
-            if (time < from || time > to) {
-                return false;
-            }
-        } catch (ParseException e) {
-            return false;
-        }
-        return true;
-    }
+		// 处理数字情况
+		try {
+			long from = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1972-01-01 00:00:00").getTime();
+			long to = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2037-12-31 00:00:00").getTime();
+			long time = Long.parseLong(value);
+			if (time < from || time > to) {
+				return false;
+			}
+		}
+		catch (ParseException e) {
+			return false;
+		}
+		return true;
+	}
 
 }

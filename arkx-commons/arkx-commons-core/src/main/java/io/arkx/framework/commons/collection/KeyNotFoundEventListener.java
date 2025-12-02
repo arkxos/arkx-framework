@@ -10,5 +10,7 @@ package io.arkx.framework.commons.collection;
  * @version V1.0
  */
 public interface KeyNotFoundEventListener<K, V> {
-    public V onKeyNotFound(K key);
+
+	public V onKeyNotFound(K key);
+
 }

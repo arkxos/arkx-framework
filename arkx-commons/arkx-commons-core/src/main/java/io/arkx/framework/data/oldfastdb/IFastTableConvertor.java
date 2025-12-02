@@ -12,7 +12,6 @@ import io.arkx.framework.data.fasttable.FastColumn;
 import com.google.common.collect.Multimap;
 
 /**
- *
  * @author Darkness
  * @date 2015年12月19日 下午7:11:17
  * @version V1.0
@@ -20,11 +19,11 @@ import com.google.common.collect.Multimap;
  */
 public interface IFastTableConvertor<T extends IFastTable> {
 
-    T createTable(Class<T> clazz, String tableName, FastColumn[] columns);
+	T createTable(Class<T> clazz, String tableName, FastColumn[] columns);
 
-    void onRecordReaded(List<FastColumn> columns, T dt, RecordUnit rowBuffer) throws IOException;
+	void onRecordReaded(List<FastColumn> columns, T dt, RecordUnit rowBuffer) throws IOException;
 
-    ThreeTuple<PkList, List<ByteBuffer>, Map<String, Multimap<Object, Integer>>> buildRowByteBuffers(int existRowCount,
-            List<FastColumn> columns, DataRow[] rows, int typeLength);
+	ThreeTuple<PkList, List<ByteBuffer>, Map<String, Multimap<Object, Integer>>> buildRowByteBuffers(int existRowCount,
+			List<FastColumn> columns, DataRow[] rows, int typeLength);
 
 }

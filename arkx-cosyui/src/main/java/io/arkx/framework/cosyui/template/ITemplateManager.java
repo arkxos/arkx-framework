@@ -5,7 +5,8 @@ package io.arkx.framework.cosyui.template;
  */
 public interface ITemplateManager {
 
-    TemplateExecutor getExecutor(String file);
+	TemplateExecutor getExecutor(String file);
 
-    boolean execute(String file, AbstractExecuteContext context);
+	boolean execute(String file, AbstractExecuteContext context);
+
 }

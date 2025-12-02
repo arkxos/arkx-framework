@@ -10,8 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  **/
 public class MvcConfiguration implements WebMvcConfigurer {
 
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverterFactory(new EnumConverterFactory());
-    }
+	@Override
+	public void addFormatters(FormatterRegistry registry) {
+		registry.addConverterFactory(new EnumConverterFactory());
+	}
+
 }

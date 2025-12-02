@@ -8,8 +8,12 @@ import lombok.Data;
 @Data
 @Table("smart_typehandler")
 public class EnumTypeHandler {
-    @Id
-    private Long id;
-    private Gender gender;
-    private Integer status;
+
+	@Id
+	private Long id;
+
+	private Gender gender;
+
+	private Integer status;
+
 }

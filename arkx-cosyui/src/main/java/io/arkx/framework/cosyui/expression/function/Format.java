@@ -14,37 +14,40 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  */
 public class Format extends AbstractFunction {
 
-    @Override
-    public Object execute(IVariableResolver resolver, Object... args) {
-        Object value = args[0];
-        String format = null;
-        if (args.length > 1) {
-            format = (String) args[1];
-        }
-        if (format != null) {
-            if (value instanceof Date) {
-                return DateUtil.toString((Date) value, format);
-            } else if (value instanceof String && DateUtil.isDateTime((String) value)) {
-                return DateUtil.toString(DateUtil.parseDateTime((String) value), format);
-            } else if (value instanceof Number) {
-                return new DecimalFormat(format).format(value);
-            }
-        }
-        return value;
-    }
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) {
+		Object value = args[0];
+		String format = null;
+		if (args.length > 1) {
+			format = (String) args[1];
+		}
+		if (format != null) {
+			if (value instanceof Date) {
+				return DateUtil.toString((Date) value, format);
+			}
+			else if (value instanceof String && DateUtil.isDateTime((String) value)) {
+				return DateUtil.toString(DateUtil.parseDateTime((String) value), format);
+			}
+			else if (value instanceof Number) {
+				return new DecimalFormat(format).format(value);
+			}
+		}
+		return value;
+	}
 
-    @Override
-    public Class<?>[] getArgumentTypes() {
-        return new Class<?>[]{Object.class, String.class};
-    }
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return new Class<?>[] { Object.class, String.class };
+	}
 
-    @Override
-    public String getFunctionPrefix() {
-        return "";
-    }
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
 
-    @Override
-    public String getFunctionName() {
-        return "format";
-    }
+	@Override
+	public String getFunctionName() {
+		return "format";
+	}
+
 }

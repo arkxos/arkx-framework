@@ -8,24 +8,25 @@ import io.arkx.framework.commons.util.ObjectUtil;
  *
  */
 public class MemberLoginPage implements IApplicationConfigItem {
-    public static final String ID = "MemberLoginPage";
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "MemberLoginPage";
 
-    @Override
-    public String getExtendItemName() {
-        return "Member login URL";
-    }
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
 
-    public static String getValue() {
-        String v = Config.getValue("App." + ID);
-        if (ObjectUtil.empty(v)) {
-            v = "member/login";
-        }
-        return v;
-    }
+	@Override
+	public String getExtendItemName() {
+		return "Member login URL";
+	}
+
+	public static String getValue() {
+		String v = Config.getValue("App." + ID);
+		if (ObjectUtil.empty(v)) {
+			v = "member/login";
+		}
+		return v;
+	}
 
 }

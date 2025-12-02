@@ -16,77 +16,85 @@ import io.arkx.framework.data.simplejdbc.connection.ConnectionManager;
  */
 public class SqlHelper {
 
-    /**
-     * 执行查询
-     *
-     * @author Darkness
-     * @date 2013-4-14 上午10:50:40
-     * @version V1.0
-     * @return
-     */
-    public static Object executeQuery(String sql, IExecuteQueryCallback executeQueryCallback) {
-        Connection conn = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionManager.getConnection();
+	/**
+	 * 执行查询
+	 *
+	 * @author Darkness
+	 * @date 2013-4-14 上午10:50:40
+	 * @version V1.0
+	 * @return
+	 */
+	public static Object executeQuery(String sql, IExecuteQueryCallback executeQueryCallback) {
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionManager.getConnection();
 
-            // statement用来执行SQL语句
-            PreparedStatement statement = conn.prepareStatement(sql);
+			// statement用来执行SQL语句
+			PreparedStatement statement = conn.prepareStatement(sql);
 
-            System.out.println("sql:" + sql);
-            // 结果集
-            rs = statement.executeQuery();
+			System.out.println("sql:" + sql);
+			// 结果集
+			rs = statement.executeQuery();
 
-            return executeQueryCallback.execute(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            ConnectionManager.closeConnection(conn);
-        }
+			return executeQueryCallback.execute(rs);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ConnectionManager.closeConnection(conn);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * 分页查询
-     *
-     * @author Darkness
-     * @date 2013-4-15 下午03:56:33
-     * @version V1.0
-     */
-    public static Object executeQuery(String sql, int start, int limit, IExecuteQueryCallback executeQueryCallback) {
-        Connection conn = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionManager.getConnection();
+	/**
+	 * 分页查询
+	 *
+	 * @author Darkness
+	 * @date 2013-4-15 下午03:56:33
+	 * @version V1.0
+	 */
+	public static Object executeQuery(String sql, int start, int limit, IExecuteQueryCallback executeQueryCallback) {
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionManager.getConnection();
 
-            PreparedStatement statement = PagedService.createPagedStatement(conn, sql, start, limit);
+			PreparedStatement statement = PagedService.createPagedStatement(conn, sql, start, limit);
 
-            // 结果集
-            rs = statement.executeQuery();
+			// 结果集
+			rs = statement.executeQuery();
 
-            return executeQueryCallback.execute(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            ConnectionManager.closeConnection(conn);
-        }
+			return executeQueryCallback.execute(rs);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ConnectionManager.closeConnection(conn);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 }

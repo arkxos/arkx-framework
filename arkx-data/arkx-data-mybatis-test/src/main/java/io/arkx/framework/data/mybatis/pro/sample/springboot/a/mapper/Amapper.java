@@ -8,4 +8,5 @@ import io.arkx.framework.data.mybatis.pro.service.mapper.BaseMapper;
  * @author w.dehi.2022-02-28
  */
 public interface Amapper extends BaseMapper<Object, Object> {
+
 }

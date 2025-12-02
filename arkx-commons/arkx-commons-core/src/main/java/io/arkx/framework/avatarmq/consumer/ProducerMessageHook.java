@@ -12,5 +12,6 @@ import io.arkx.framework.avatarmq.msg.Message;
  */
 public interface ProducerMessageHook {
 
-    ConsumerAckMessage hookMessage(Message paramMessage);
+	ConsumerAckMessage hookMessage(Message paramMessage);
+
 }

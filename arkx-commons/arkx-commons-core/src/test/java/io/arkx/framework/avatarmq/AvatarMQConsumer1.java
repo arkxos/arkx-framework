@@ -14,20 +14,21 @@ import io.arkx.framework.avatarmq.msg.Message;
  */
 public class AvatarMQConsumer1 {
 
-    private static ProducerMessageHook hook = new ProducerMessageHook() {
-        @Override
-        public ConsumerAckMessage hookMessage(Message message) {
-            System.out.printf("AvatarMQConsumer1 收到消息编号:%s,消息内容:%s\n", message.getMsgId(),
-                    new String(message.getBody()));
-            return ConsumerAckMessage.createSuccessAckMessage();
-        }
-    };
+	private static ProducerMessageHook hook = new ProducerMessageHook() {
+		@Override
+		public ConsumerAckMessage hookMessage(Message message) {
+			System.out.printf("AvatarMQConsumer1 收到消息编号:%s,消息内容:%s\n", message.getMsgId(),
+					new String(message.getBody()));
+			return ConsumerAckMessage.createSuccessAckMessage();
+		}
+	};
 
-    public static void main(String[] args) {
-        AvatarMQConsumer consumer = new AvatarMQConsumer("127.0.0.1:18888", "AvatarMQ-Topic-1", hook);
-        consumer.init();
-        consumer.setClusterId("AvatarMQCluster");
-        consumer.receiveMode();
-        consumer.start();
-    }
+	public static void main(String[] args) {
+		AvatarMQConsumer consumer = new AvatarMQConsumer("127.0.0.1:18888", "AvatarMQ-Topic-1", hook);
+		consumer.init();
+		consumer.setClusterId("AvatarMQCluster");
+		consumer.receiveMode();
+		consumer.start();
+	}
+
 }

@@ -9,33 +9,34 @@ package io.arkx.framework.extend.plugin;
  */
 public interface IPlugin {
 
-    /**
-     * 插件安装
-     */
-    void install() throws PluginException;// NO_UCD
+	/**
+	 * 插件安装
+	 */
+	void install() throws PluginException;// NO_UCD
 
-    /**
-     * 插件卸载
-     */
-    void uninstall() throws PluginException;// NO_UCD
+	/**
+	 * 插件卸载
+	 */
+	void uninstall() throws PluginException;// NO_UCD
 
-    /**
-     * 插件启动
-     */
-    void start() throws PluginException;
+	/**
+	 * 插件启动
+	 */
+	void start() throws PluginException;
 
-    /**
-     * 插件停用
-     */
-    void stop() throws PluginException;
+	/**
+	 * 插件停用
+	 */
+	void stop() throws PluginException;
 
-    /**
-     * 应用停止时调用本方法
-     */
-    void destory();
+	/**
+	 * 应用停止时调用本方法
+	 */
+	void destory();
 
-    /**
-     * 获得插件配置
-     */
-    PluginConfig getConfig();
+	/**
+	 * 获得插件配置
+	 */
+	PluginConfig getConfig();
+
 }

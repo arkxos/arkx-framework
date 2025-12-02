@@ -23,39 +23,42 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class CountByTest {
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private UserMapper userMapper;
 
-    @BeforeEach
-    void init() {
-        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "status")
-                .values("w.dehai", "123456", "1306006", 1).values("Jaedong", "123", "1306006", 1)
-                .values("Jaedong", "123", "1352332", 1).build();
-        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-    }
+	@Autowired
+	private DataSource dataSource;
 
-    @Test
-    void countByNameTest() {
-        int result = userMapper.countByName("w.dehai");
-        assertEquals(1, result);
-    }
+	@BeforeEach
+	void init() {
+		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+		Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "status")
+			.values("w.dehai", "123456", "1306006", 1)
+			.values("Jaedong", "123", "1306006", 1)
+			.values("Jaedong", "123", "1352332", 1)
+			.build();
+		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+	}
 
-    @Test
-    void countByNameAndPhoneNo() {
-        int result = userMapper.countByNameAndPhoneNo("w.dehai", "1306006");
-        assertEquals(1, result);
-    }
+	@Test
+	void countByNameTest() {
+		int result = userMapper.countByName("w.dehai");
+		assertEquals(1, result);
+	}
 
-    @Test
-    void countByNameAndPhoneNoOptTest() {
-        assertEquals(2, userMapper.countByNameAndPhoneNoOpt("", "1306006"));
-        assertEquals(2, userMapper.countByNameAndPhoneNoOpt(null, "1306006"));
-        assertEquals(3, userMapper.countByNameAndPhoneNoOpt("", ""));
-        assertEquals(3, userMapper.countByNameAndPhoneNoOpt(null, null));
-        assertEquals(3, userMapper.countByNameAndPhoneNoOpt(null, ""));
-    }
+	@Test
+	void countByNameAndPhoneNo() {
+		int result = userMapper.countByNameAndPhoneNo("w.dehai", "1306006");
+		assertEquals(1, result);
+	}
+
+	@Test
+	void countByNameAndPhoneNoOptTest() {
+		assertEquals(2, userMapper.countByNameAndPhoneNoOpt("", "1306006"));
+		assertEquals(2, userMapper.countByNameAndPhoneNoOpt(null, "1306006"));
+		assertEquals(3, userMapper.countByNameAndPhoneNoOpt("", ""));
+		assertEquals(3, userMapper.countByNameAndPhoneNoOpt(null, null));
+		assertEquals(3, userMapper.countByNameAndPhoneNoOpt(null, ""));
+	}
 
 }

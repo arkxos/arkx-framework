@@ -9,44 +9,45 @@ import io.arkx.framework.commons.collection.DataTypes;
 
 public class LightningDataTable extends DataTable implements ILightningTable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String tableName;
+	private String tableName;
 
-    public LightningDataTable() {
-    }
+	public LightningDataTable() {
+	}
 
-    public LightningDataTable(String tableName, DataColumn... dataColumns) {
-        this.init(tableName, dataColumns);
-    }
+	public LightningDataTable(String tableName, DataColumn... dataColumns) {
+		this.init(tableName, dataColumns);
+	}
 
-    public void init(String tableName, DataColumn... dataColumns) {
-        this.tableName = tableName;
-        this.setDataColumns(dataColumns);
-    }
+	public void init(String tableName, DataColumn... dataColumns) {
+		this.tableName = tableName;
+		this.setDataColumns(dataColumns);
+	}
 
-    @Override
-    public String getTableName() {
-        return tableName;
-    }
+	@Override
+	public String getTableName() {
+		return tableName;
+	}
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
 
-    @Override
-    public LightningColumn[] getLightningColumns() {
-        List<LightningColumn> lightningColumns = new ArrayList<>();
+	@Override
+	public LightningColumn[] getLightningColumns() {
+		List<LightningColumn> lightningColumns = new ArrayList<>();
 
-        for (DataColumn dataColumn : columns) {
-            DataTypes dataColumnType = dataColumn.getColumnType();
-            LightningColumnType lightningColumnType = LightningColumnType.valueOf(dataColumnType.code());
+		for (DataColumn dataColumn : columns) {
+			DataTypes dataColumnType = dataColumn.getColumnType();
+			LightningColumnType lightningColumnType = LightningColumnType.valueOf(dataColumnType.code());
 
-            LightningColumn lightningColumn = new LightningColumn(dataColumn.getColumnName(), lightningColumnType,
-                    dataColumn.length);
-            lightningColumns.add(lightningColumn);
-        }
+			LightningColumn lightningColumn = new LightningColumn(dataColumn.getColumnName(), lightningColumnType,
+					dataColumn.length);
+			lightningColumns.add(lightningColumn);
+		}
 
-        return lightningColumns.toArray(new LightningColumn[0]);
-    }
+		return lightningColumns.toArray(new LightningColumn[0]);
+	}
+
 }

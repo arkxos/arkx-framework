@@ -16,20 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomPlanTextMessageHandler implements PlanTextMessageHandler {
 
-    /**
-     * 处理纯文本 WebSocket 消息。
-     * <p>
-     * 默认实现仅将接收到的消息内容和会话 ID 记录到日志中。
-     * </p>
-     *
-     * @param session
-     *            当前接收消息的 WebSocket 会话。
-     * @param message
-     *            接收到的文本消息。
-     */
-    @Override
-    public void handle(WebSocketSession session, String message) {
-        log.info("sessionId {} ,msg {}", session.getId(), message);
-    }
+	/**
+	 * 处理纯文本 WebSocket 消息。
+	 * <p>
+	 * 默认实现仅将接收到的消息内容和会话 ID 记录到日志中。
+	 * </p>
+	 * @param session 当前接收消息的 WebSocket 会话。
+	 * @param message 接收到的文本消息。
+	 */
+	@Override
+	public void handle(WebSocketSession session, String message) {
+		log.info("sessionId {} ,msg {}", session.getId(), message);
+	}
 
 }

@@ -7,9 +7,9 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.geometric.P
 
 public class GeometricUtils {
 
-    public static void writePoint(DataOutputStream buffer, final Point value) throws IOException {
-        buffer.writeDouble(value.getX());
-        buffer.writeDouble(value.getY());
-    }
+	public static void writePoint(DataOutputStream buffer, final Point value) throws IOException {
+		buffer.writeDouble(value.getX());
+		buffer.writeDouble(value.getY());
+	}
 
 }

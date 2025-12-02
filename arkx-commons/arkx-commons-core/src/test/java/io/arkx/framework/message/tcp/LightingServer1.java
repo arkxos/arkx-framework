@@ -12,14 +12,14 @@ import io.arkx.framework.message.tcp.server.NettyServer;
  */
 public class LightingServer1 extends NettyServer {
 
-    public LightingServer1(String Address) {
-        super(Address);
-    }
+	public LightingServer1(String Address) {
+		super(Address);
+	}
 
-    public static void main(String[] args) throws Exception {
-        String serverAddress = Config.get("serverAddress");
+	public static void main(String[] args) throws Exception {
+		String serverAddress = Config.get("serverAddress");
 
-        new LightingServer1(serverAddress).start();
-    }
+		new LightingServer1(serverAddress).start();
+	}
 
 }

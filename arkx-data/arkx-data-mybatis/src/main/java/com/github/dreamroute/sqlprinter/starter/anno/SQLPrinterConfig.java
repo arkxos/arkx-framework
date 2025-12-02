@@ -26,25 +26,25 @@ import cn.hutool.core.util.ReflectUtil;
 @EnableConfigurationProperties(SqlprinterProperties.class)
 public class SQLPrinterConfig implements ApplicationContextAware {
 
-    private final List<ValueConverter> convs = new ArrayList<>();
+	private final List<ValueConverter> convs = new ArrayList<>();
 
-    @Override
-    public void setApplicationContext(@NonNull ApplicationContext context) throws BeansException {
-        Collection<Object> values = context.getBeansWithAnnotation(EnableSQLPrinter.class).values();
-        values.forEach(e -> {
-            EnableSQLPrinter annotation = AnnotationUtils.findAnnotation(e.getClass(), EnableSQLPrinter.class);
+	@Override
+	public void setApplicationContext(@NonNull ApplicationContext context) throws BeansException {
+		Collection<Object> values = context.getBeansWithAnnotation(EnableSQLPrinter.class).values();
+		values.forEach(e -> {
+			EnableSQLPrinter annotation = AnnotationUtils.findAnnotation(e.getClass(), EnableSQLPrinter.class);
 
-            // 转换器
-            Class<? extends ValueConverter>[] converters = annotation.converters();
-            for (Class<? extends ValueConverter> converter : converters) {
-                convs.add(ReflectUtil.newInstance(converter));
-            }
-        });
-    }
+			// 转换器
+			Class<? extends ValueConverter>[] converters = annotation.converters();
+			for (Class<? extends ValueConverter> converter : converters) {
+				convs.add(ReflectUtil.newInstance(converter));
+			}
+		});
+	}
 
-    @Bean
-    public SqlPrinter sqlPrinter(SqlprinterProperties sqlprinterProperties) {
-        return new SqlPrinter(sqlprinterProperties, convs);
-    }
+	@Bean
+	public SqlPrinter sqlPrinter(SqlprinterProperties sqlprinterProperties) {
+		return new SqlPrinter(sqlprinterProperties, convs);
+	}
 
 }

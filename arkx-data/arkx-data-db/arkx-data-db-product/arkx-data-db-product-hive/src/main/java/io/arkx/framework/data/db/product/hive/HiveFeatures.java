@@ -13,12 +13,12 @@ import io.arkx.framework.data.db.core.features.DefaultProductFeatures;
 
 public class HiveFeatures extends DefaultProductFeatures {
 
-    /**
-     * 是否使用CreateTableAs方式建表
-     *
-     * @return boolean
-     */
-    public boolean useCTAS() {
-        return false;
-    }
+	/**
+	 * 是否使用CreateTableAs方式建表
+	 * @return boolean
+	 */
+	public boolean useCTAS() {
+		return false;
+	}
+
 }

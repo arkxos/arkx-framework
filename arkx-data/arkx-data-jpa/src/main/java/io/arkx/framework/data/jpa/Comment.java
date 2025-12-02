@@ -6,7 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})
+@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
 public @interface Comment {
-    String value() default "";
+
+	String value() default "";
+
 }

@@ -23,9 +23,11 @@ package io.arkx.framework.commons.aspect;
  * @version 1.0
  */
 public enum LimitType {
-    // 默认
-    CUSTOMER,
 
-    // by ip addr
-    IP
+	// 默认
+	CUSTOMER,
+
+	// by ip addr
+	IP
+
 }

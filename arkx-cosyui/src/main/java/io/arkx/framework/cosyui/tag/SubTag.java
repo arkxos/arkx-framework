@@ -16,59 +16,61 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  *
  */
 public class SubTag extends ArkTag {
-    public static final String KEY = "_ARK_SUBTAG_MAP";
 
-    private String name;
+	public static final String KEY = "_ARK_SUBTAG_MAP";
 
-    @Override
-    public String getTagName() {
-        return "sub";
-    }
+	private String name;
 
-    @Override
-    public void afterCompile(TagCommand command, TemplateExecutor executor) {
-        @SuppressWarnings("unchecked")
-        Mapx<String, TagCommand> subtagMap = (Mapx<String, TagCommand>) executor.getAttributes().get(KEY);
-        if (subtagMap == null) {
-            subtagMap = new Mapx<String, TagCommand>();
-            executor.getAttributes().put(KEY, subtagMap);
-        }
-        subtagMap.put(name, command);
-    }
+	@Override
+	public String getTagName() {
+		return "sub";
+	}
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        return SKIP_BODY;
-    }
+	@Override
+	public void afterCompile(TagCommand command, TemplateExecutor executor) {
+		@SuppressWarnings("unchecked")
+		Mapx<String, TagCommand> subtagMap = (Mapx<String, TagCommand>) executor.getAttributes().get(KEY);
+		if (subtagMap == null) {
+			subtagMap = new Mapx<String, TagCommand>();
+			executor.getAttributes().put(KEY, subtagMap);
+		}
+		subtagMap.put(name, command);
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("name", true, DataTypes.STRING.code(), "@{Framework.ZSubTag.Name}"));
-        return list;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		return SKIP_BODY;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("name", true, DataTypes.STRING.code(), "@{Framework.ZSubTag.Name}"));
+		return list;
+	}
 
-    @Override
-    public String getDescription() {
-        return "@{Framework.ZSubTag.Desc}";
-    }
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        if (pageContext == null) {
-            return "@{Framework.ZSubTagName}";
-        } else {
-            return name;
-        }
-    }
+	@Override
+	public String getDescription() {
+		return "@{Framework.ZSubTag.Desc}";
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Override
+	public String getExtendItemName() {
+		if (pageContext == null) {
+			return "@{Framework.ZSubTagName}";
+		}
+		else {
+			return name;
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

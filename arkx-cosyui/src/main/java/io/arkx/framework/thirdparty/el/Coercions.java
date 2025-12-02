@@ -86,219 +86,92 @@ import io.arkx.framework.thirdparty.el.operator.RelationalOperator;
  *     if A and B are null
  *       return 0
  *     if A or B is a BigDecimal or BigInteger, coerce both to BigDecimal and
- *      return <code>A.divide(B, BigDecimal.ROUND_HALF_UP)</code>
- *     otherwise
- *       coerce both A and B to Double
- *       apply operator
- *     if operator results in exception (such as divide by 0), error
+ *      return <code>A.divide(B, BigDecimal.ROUND_HALF_UP)</code> otherwise coerce both A
+ * and B to Double apply operator if operator results in exception (such as divide by 0),
+ * error
  *
- *   Binary operator - A {%,mod} B
- *     if A and B are null
- *       return 0
- *     if A or B is BigDecimal, Float, Double, or String containing ".", "e" or "E"
- *       coerce both to Double
- *       apply operator
- *     if A or B is BigInteger, coerce both to BigInteger and return
- *      <code>A.remainder(B)</code>
- *     otherwise
- *       coerce both A and B to Long
- *       apply operator
- *     if operator results in exception (such as divide by 0), error
+ * Binary operator - A {%,mod} B if A and B are null return 0 if A or B is BigDecimal,
+ * Float, Double, or String containing ".", "e" or "E" coerce both to Double apply
+ * operator if A or B is BigInteger, coerce both to BigInteger and return
+ * <code>A.remainder(B)</code> otherwise coerce both A and B to Long apply operator if
+ * operator results in exception (such as divide by 0), error
  *
- *   Unary minus operator - -A
- *     if A is null
- *       return 0
- *     if A is BigInteger or BigDecimal, return <code>A.negate()</code>
- *     if A is String
- *       if A contains ".", "e", or "E"
- *         coerce to Double, apply operator
- *       otherwise
- *         coerce to a Long and apply operator
- *     if A is Byte,Short,Integer,Long,Float,Double
- *       retain type, apply operator
- *     if operator results in exception, error
- *     otherwise
- *       error
+ * Unary minus operator - -A if A is null return 0 if A is BigInteger or BigDecimal,
+ * return <code>A.negate()</code> if A is String if A contains ".", "e", or "E" coerce to
+ * Double, apply operator otherwise coerce to a Long and apply operator if A is
+ * Byte,Short,Integer,Long,Float,Double retain type, apply operator if operator results in
+ * exception, error otherwise error
  *
- * Applying "empty" operator - empty A
- *   if A is null
- *     return true
- *   if A is zero-length String
- *     return true
- *   if A is zero-length array
- *     return true
- *   if A is List and ((List) A).isEmpty()
- *     return true
- *   if A is Map and ((Map) A).isEmpty()
- *     return true
- *   if A is Collection an ((Collection) A).isEmpty()
- *     return true
- *   otherwise
- *     return false
+ * Applying "empty" operator - empty A if A is null return true if A is zero-length String
+ * return true if A is zero-length array return true if A is List and ((List) A).isEmpty()
+ * return true if A is Map and ((Map) A).isEmpty() return true if A is Collection an
+ * ((Collection) A).isEmpty() return true otherwise return false
  *
- * Applying logical operators
- *   Binary operator - A {and,or} B
- *     coerce both A and B to Boolean, apply operator
- *   NOTE - operator stops as soon as expression can be determined, i.e.,
- *     A and B and C and D - if B is false, then only A and B is evaluated
- *   Unary not operator - not A
- *     coerce A to Boolean, apply operator
+ * Applying logical operators Binary operator - A {and,or} B coerce both A and B to
+ * Boolean, apply operator NOTE - operator stops as soon as expression can be determined,
+ * i.e., A and B and C and D - if B is false, then only A and B is evaluated Unary not
+ * operator - not A coerce A to Boolean, apply operator
  *
- * Applying relational operator
- *   A {<,>,<=,>=,lt,gt,lte,gte} B
- *     if A==B
- *       if operator is >= or <=
- *         return true
- *       otherwise
- *         return false
- *     if A or B is null
- *       return false
- *     if A or B is BigDecimal, coerce both A and B to BigDecimal and use the
- *      return value of <code>A.compareTo(B)</code>
- *     if A or B is Float or Double
- *       coerce both A and B to Double
- *       apply operator
- *     if A or B is BigInteger, coerce both A and B to BigInteger and use the
- *      return value of <code>A.compareTo(B)</code>
- *     if A or B is Byte,Short,Character,Integer,Long
- *       coerce both A and B to Long
- *       apply operator
- *     if A or B is String
- *       coerce both A and B to String, compare lexically
- *     if A is Comparable
- *       if A.compareTo (B) throws exception
- *         error
- *       otherwise
- *         use result of A.compareTo(B)
- *     if B is Comparable
- *       if B.compareTo (A) throws exception
- *         error
- *       otherwise
- *         use result of B.compareTo(A)
- *     otherwise
- *       error
+ * Applying relational operator A {<,>,<=,>=,lt,gt,lte,gte} B if A==B if operator is >= or
+ * <= return true otherwise return false if A or B is null return false if A or B is
+ * BigDecimal, coerce both A and B to BigDecimal and use the return value of
+ * <code>A.compareTo(B)</code> if A or B is Float or Double coerce both A and B to Double
+ * apply operator if A or B is BigInteger, coerce both A and B to BigInteger and use the
+ * return value of <code>A.compareTo(B)</code> if A or B is
+ * Byte,Short,Character,Integer,Long coerce both A and B to Long apply operator if A or B
+ * is String coerce both A and B to String, compare lexically if A is Comparable if
+ * A.compareTo (B) throws exception error otherwise use result of A.compareTo(B) if B is
+ * Comparable if B.compareTo (A) throws exception error otherwise use result of
+ * B.compareTo(A) otherwise error
  *
- * Applying equality operator
- *   A {==,!=} B
- *     if A==B
- *       apply operator
- *     if A or B is null
- *       return false for ==, true for !=
- *     if A or B is BigDecimal, coerce both A and B to BigDecimal and then:
- *       if operator is == or eq, return <code>A.equals(B)</code>
- *       if operator is != or ne, return <code>!A.equals(B)</code>
- *     if A or B is Float or Double
- *       coerce both A and B to Double
- *       apply operator
- *     if A or B is BigInteger, coerce both A and B to BigInteger and then:
- *       if operator is == or eq, return <code>A.equals(B)</code>
- *       if operator is != or ne, return <code>!A.equals(B)</code>
- *     if A or B is Byte,Short,Character,Integer,Long
- *       coerce both A and B to Long
- *       apply operator
- *     if A or B is Boolean
- *       coerce both A and B to Boolean
- *       apply operator
- *     if A or B is String
- *       coerce both A and B to String, compare lexically
- *     otherwise
- *       if an error occurs while calling A.equals(B)
- *         error
- *       apply operator to result of A.equals(B)
+ * Applying equality operator A {==,!=} B if A==B apply operator if A or B is null return
+ * false for ==, true for != if A or B is BigDecimal, coerce both A and B to BigDecimal
+ * and then: if operator is == or eq, return <code>A.equals(B)</code> if operator is != or
+ * ne, return <code>!A.equals(B)</code> if A or B is Float or Double coerce both A and B
+ * to Double apply operator if A or B is BigInteger, coerce both A and B to BigInteger and
+ * then: if operator is == or eq, return <code>A.equals(B)</code> if operator is != or ne,
+ * return <code>!A.equals(B)</code> if A or B is Byte,Short,Character,Integer,Long coerce
+ * both A and B to Long apply operator if A or B is Boolean coerce both A and B to Boolean
+ * apply operator if A or B is String coerce both A and B to String, compare lexically
+ * otherwise if an error occurs while calling A.equals(B) error apply operator to result
+ * of A.equals(B)
  *
  * coercions
  *
- *   coerce A to String
- *     A is String
- *       return A
- *     A is null
- *       return ""
- *     A.toString throws exception
- *       error
- *     otherwise
- *       return A.toString
+ * coerce A to String A is String return A A is null return "" A.toString throws exception
+ * error otherwise return A.toString
  *
- *   coerce A to Number type N
- *     A is null or ""
- *       return 0
- *     A is Character
- *       convert to short, apply following rules
- *     A is Boolean
- *       error
- *     A is Number type N
- *       return A
- *     A is Number, coerce quietly to type N using the following algorithm
- *         If N is BigInteger
- *             If A is BigDecimal, return <code>A.toBigInteger()</code>
- *             Otherwise, return <code>BigInteger.valueOf(A.longValue())</code>
- *        if N is BigDecimal
- *             If A is a BigInteger, return <code>new BigDecimal(A)</code>
- *             Otherwise, return <code>new BigDecimal(A.doubleValue())</code>
- *        If N is Byte, return <code>Byte.valueOf(A.byteValue())</code>
- *        If N is Short, return <code>Short.valueOf(A.shortValue())</code>
- *        If N is Integer, return <code>Integer.valueOf(A.integerValue())</code>
- *        If N is Long, return <code>Long.valueOf(A.longValue())</code>
- *        If N is Float, return <code>Float.valueOf(A.floatValue())</code>
- *        If N is Double, return <code>Double.valueOf(A.doubleValue())</code>
- *        otherwise ERROR
- *     A is String
- *       If N is BigDecimal then:
- *            If <code>new BigDecimal(A)</code> throws an exception then ERROR
- *            Otherwise, return <code>new BigDecimal(A)</code>
- *       If N is BigInteger then:
- *            If <code>new BigInteger(A)</code> throws an exception, then ERROR
- *            Otherwise, return <code>new BigInteger(A)</code>
- *       new <code>N.valueOf(A)</code> throws exception
- *         error
- *       return <code>N.valueOf(A)</code>
- *     otherwise
- *       error
+ * coerce A to Number type N A is null or "" return 0 A is Character convert to short,
+ * apply following rules A is Boolean error A is Number type N return A A is Number,
+ * coerce quietly to type N using the following algorithm If N is BigInteger If A is
+ * BigDecimal, return <code>A.toBigInteger()</code> Otherwise, return
+ * <code>BigInteger.valueOf(A.longValue())</code> if N is BigDecimal If A is a BigInteger,
+ * return <code>new BigDecimal(A)</code> Otherwise, return
+ * <code>new BigDecimal(A.doubleValue())</code> If N is Byte, return
+ * <code>Byte.valueOf(A.byteValue())</code> If N is Short, return
+ * <code>Short.valueOf(A.shortValue())</code> If N is Integer, return
+ * <code>Integer.valueOf(A.integerValue())</code> If N is Long, return
+ * <code>Long.valueOf(A.longValue())</code> If N is Float, return
+ * <code>Float.valueOf(A.floatValue())</code> If N is Double, return
+ * <code>Double.valueOf(A.doubleValue())</code> otherwise ERROR A is String If N is
+ * BigDecimal then: If <code>new BigDecimal(A)</code> throws an exception then ERROR
+ * Otherwise, return <code>new BigDecimal(A)</code> If N is BigInteger then: If
+ * <code>new BigInteger(A)</code> throws an exception, then ERROR Otherwise, return
+ * <code>new BigInteger(A)</code> new <code>N.valueOf(A)</code> throws exception error
+ * return <code>N.valueOf(A)</code> otherwise error
  *
- *   coerce A to Character should be
- *     A is null or ""
- *       return (char) 0
- *     A is Character
- *       return A
- *     A is Boolean
- *       error
- *     A is Number with less precision than short
- *       coerce quietly - return (char) A
- *     A is Number with greater precision than short
- *       coerce quietly - return (char) A
- *     A is String
- *       return A.charAt (0)
- *     otherwise
- *       error
+ * coerce A to Character should be A is null or "" return (char) 0 A is Character return A
+ * A is Boolean error A is Number with less precision than short coerce quietly - return
+ * (char) A A is Number with greater precision than short coerce quietly - return (char) A
+ * A is String return A.charAt (0) otherwise error
  *
- *   coerce A to Boolean
- *     A is null or ""
- *       return false
- *     A is Boolean
- *       return A
- *     A is String
- *       Boolean.valueOf(A) throws exception
- *         error
- *       return Boolean.valueOf(A)
- *     otherwise
- *       error
+ * coerce A to Boolean A is null or "" return false A is Boolean return A A is String
+ * Boolean.valueOf(A) throws exception error return Boolean.valueOf(A) otherwise error
  *
- *   coerce A to any other type T
- *     A is null
- *       return null
- *     A is assignable to T
- *       coerce quietly
- *     A is String
- *       T has no PropertyEditor
- *         if A is "", return null
- *         otherwise error
- *       T's PropertyEditor throws exception
- *         if A is "", return null
- *         otherwise error
- *       otherwise
- *         apply T's PropertyEditor
- *     otherwise
- *       error
- * </pre>
+ * coerce A to any other type T A is null return null A is assignable to T coerce quietly
+ * A is String T has no PropertyEditor if A is "", return null otherwise error T's
+ * PropertyEditor throws exception if A is "", return null otherwise error otherwise apply
+ * T's PropertyEditor otherwise error </pre>
  *
  * </ul>
  *
@@ -307,480 +180,538 @@ import io.arkx.framework.thirdparty.el.operator.RelationalOperator;
  **/
 
 public class Coercions {
-    private static final Number ZERO = Integer.valueOf(0);
 
-    /**
-     * Coerces the given value to the specified class.
-     **/
-    public static Object coerce(Object pValue, Class<?> pClass, Logger pLogger) throws ExpressionException {
-        if (pClass == String.class) {
-            return coerceToString(pValue, pLogger);
-        } else if (isNumberClass(pClass)) {
-            return coerceToPrimitiveNumber(pValue, pClass, pLogger);
-        } else if (pClass == Character.class || pClass == Character.TYPE) {
-            return coerceToCharacter(pValue, pLogger);
-        } else if (pClass == Boolean.class || pClass == Boolean.TYPE) {
-            return coerceToBoolean(pValue, pLogger);
-        } else {
-            return coerceToObject(pValue, pClass, pLogger);
-        }
-    }
+	private static final Number ZERO = Integer.valueOf(0);
 
-    /**
-     * Returns true if the given class is Byte, Short, Integer, Long, Float, Double,
-     * BigInteger, or BigDecimal
-     **/
-    static boolean isNumberClass(Class<?> pClass) {
-        return pClass == Byte.class || pClass == Byte.TYPE || pClass == Short.class || pClass == Short.TYPE
-                || pClass == Integer.class || pClass == Integer.TYPE || pClass == Long.class || pClass == Long.TYPE
-                || pClass == Float.class || pClass == Float.TYPE || pClass == Double.class || pClass == Double.TYPE
-                || pClass == BigInteger.class || pClass == BigDecimal.class;
-    }
+	/**
+	 * Coerces the given value to the specified class.
+	 **/
+	public static Object coerce(Object pValue, Class<?> pClass, Logger pLogger) throws ExpressionException {
+		if (pClass == String.class) {
+			return coerceToString(pValue, pLogger);
+		}
+		else if (isNumberClass(pClass)) {
+			return coerceToPrimitiveNumber(pValue, pClass, pLogger);
+		}
+		else if (pClass == Character.class || pClass == Character.TYPE) {
+			return coerceToCharacter(pValue, pLogger);
+		}
+		else if (pClass == Boolean.class || pClass == Boolean.TYPE) {
+			return coerceToBoolean(pValue, pLogger);
+		}
+		else {
+			return coerceToObject(pValue, pClass, pLogger);
+		}
+	}
 
-    /**
-     * Coerces the specified value to a String
-     **/
-    public static String coerceToString(Object pValue, Logger pLogger) throws ExpressionException {
-        if (pValue == null) {
-            return "";
-        } else if (pValue instanceof String) {
-            return (String) pValue;
-        } else {
-            try {
-                return pValue.toString();
-            } catch (Exception exc) {
-                if (pLogger.isLoggingError()) {
-                    pLogger.logError(Constants.TOSTRING_EXCEPTION, exc, pValue.getClass().getName());
-                }
-                return "";
-            }
-        }
-    }
+	/**
+	 * Returns true if the given class is Byte, Short, Integer, Long, Float, Double,
+	 * BigInteger, or BigDecimal
+	 **/
+	static boolean isNumberClass(Class<?> pClass) {
+		return pClass == Byte.class || pClass == Byte.TYPE || pClass == Short.class || pClass == Short.TYPE
+				|| pClass == Integer.class || pClass == Integer.TYPE || pClass == Long.class || pClass == Long.TYPE
+				|| pClass == Float.class || pClass == Float.TYPE || pClass == Double.class || pClass == Double.TYPE
+				|| pClass == BigInteger.class || pClass == BigDecimal.class;
+	}
 
-    /**
-     * Coerces a value to the given primitive number class
-     **/
-    public static Number coerceToPrimitiveNumber(Object pValue, Class<?> pClass, Logger pLogger)
-            throws ExpressionException {
-        if (pValue == null || "".equals(pValue)) {
-            return coerceToPrimitiveNumber(ZERO, pClass);
-        } else if (pValue instanceof Character) {
-            char val = ((Character) pValue).charValue();
-            return coerceToPrimitiveNumber(Short.valueOf((short) val), pClass);
-        } else if (pValue instanceof Boolean) {
-            if (pLogger.isLoggingError()) {
-                pLogger.logError(Constants.BOOLEAN_TO_NUMBER, pValue, pClass.getName());
-            }
-            return coerceToPrimitiveNumber(ZERO, pClass);
-        } else if (pValue.getClass() == pClass) {
-            return (Number) pValue;
-        } else if (pValue instanceof Number) {
-            return coerceToPrimitiveNumber((Number) pValue, pClass);
-        } else if (pValue instanceof String) {
-            try {
-                return coerceToPrimitiveNumber((String) pValue, pClass);
-            } catch (Exception exc) {
-                if (pLogger.isLoggingError()) {
-                    pLogger.logError(Constants.STRING_TO_NUMBER_EXCEPTION, pValue, pClass.getName());
-                }
-                return coerceToPrimitiveNumber(ZERO, pClass);
-            }
-        } else {
-            if (pLogger.isLoggingError()) {
-                pLogger.logError(Constants.COERCE_TO_NUMBER, pValue.getClass().getName(), pClass.getName());
-            }
-            return coerceToPrimitiveNumber(0, pClass);
-        }
-    }
+	/**
+	 * Coerces the specified value to a String
+	 **/
+	public static String coerceToString(Object pValue, Logger pLogger) throws ExpressionException {
+		if (pValue == null) {
+			return "";
+		}
+		else if (pValue instanceof String) {
+			return (String) pValue;
+		}
+		else {
+			try {
+				return pValue.toString();
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingError()) {
+					pLogger.logError(Constants.TOSTRING_EXCEPTION, exc, pValue.getClass().getName());
+				}
+				return "";
+			}
+		}
+	}
 
-    /**
-     * Coerces a value to an Integer, returning null if the coercion isn't possible.
-     **/
-    public static Integer coerceToInteger(Object pValue, Logger pLogger) throws ExpressionException {
-        if (pValue == null) {
-            return null;
-        } else if (pValue instanceof Character) {
-            return PrimitiveObjects.getInteger(((Character) pValue).charValue());
-        } else if (pValue instanceof Boolean) {
-            if (pLogger.isLoggingWarning()) {
-                pLogger.logWarning(Constants.BOOLEAN_TO_NUMBER, pValue, Integer.class.getName());
-            }
-            return PrimitiveObjects.getInteger(((Boolean) pValue).booleanValue() ? 1 : 0);
-        } else if (pValue instanceof Integer) {
-            return (Integer) pValue;
-        } else if (pValue instanceof Number) {
-            return PrimitiveObjects.getInteger(((Number) pValue).intValue());
-        } else if (pValue instanceof String) {
-            try {
-                return Integer.valueOf((String) pValue);
-            } catch (Exception exc) {
-                if (pLogger.isLoggingWarning()) {
-                    pLogger.logWarning(Constants.STRING_TO_NUMBER_EXCEPTION, pValue, Integer.class.getName());
-                }
-                return null;
-            }
-        } else {
-            if (pLogger.isLoggingWarning()) {
-                pLogger.logWarning(Constants.COERCE_TO_NUMBER, pValue.getClass().getName(), Integer.class.getName());
-            }
-            return null;
-        }
-    }
+	/**
+	 * Coerces a value to the given primitive number class
+	 **/
+	public static Number coerceToPrimitiveNumber(Object pValue, Class<?> pClass, Logger pLogger)
+			throws ExpressionException {
+		if (pValue == null || "".equals(pValue)) {
+			return coerceToPrimitiveNumber(ZERO, pClass);
+		}
+		else if (pValue instanceof Character) {
+			char val = ((Character) pValue).charValue();
+			return coerceToPrimitiveNumber(Short.valueOf((short) val), pClass);
+		}
+		else if (pValue instanceof Boolean) {
+			if (pLogger.isLoggingError()) {
+				pLogger.logError(Constants.BOOLEAN_TO_NUMBER, pValue, pClass.getName());
+			}
+			return coerceToPrimitiveNumber(ZERO, pClass);
+		}
+		else if (pValue.getClass() == pClass) {
+			return (Number) pValue;
+		}
+		else if (pValue instanceof Number) {
+			return coerceToPrimitiveNumber((Number) pValue, pClass);
+		}
+		else if (pValue instanceof String) {
+			try {
+				return coerceToPrimitiveNumber((String) pValue, pClass);
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingError()) {
+					pLogger.logError(Constants.STRING_TO_NUMBER_EXCEPTION, pValue, pClass.getName());
+				}
+				return coerceToPrimitiveNumber(ZERO, pClass);
+			}
+		}
+		else {
+			if (pLogger.isLoggingError()) {
+				pLogger.logError(Constants.COERCE_TO_NUMBER, pValue.getClass().getName(), pClass.getName());
+			}
+			return coerceToPrimitiveNumber(0, pClass);
+		}
+	}
 
-    /**
-     * Coerces a long to the given primitive number class
-     **/
-    static Number coerceToPrimitiveNumber(long pValue, Class<?> pClass) throws ExpressionException {
-        if (pClass == Byte.class || pClass == Byte.TYPE) {
-            return PrimitiveObjects.getByte((byte) pValue);
-        } else if (pClass == Short.class || pClass == Short.TYPE) {
-            return PrimitiveObjects.getShort((short) pValue);
-        } else if (pClass == Integer.class || pClass == Integer.TYPE) {
-            return PrimitiveObjects.getInteger((int) pValue);
-        } else if (pClass == Long.class || pClass == Long.TYPE) {
-            return PrimitiveObjects.getLong(pValue);
-        } else if (pClass == Float.class || pClass == Float.TYPE) {
-            return PrimitiveObjects.getFloat(pValue);
-        } else if (pClass == Double.class || pClass == Double.TYPE) {
-            return PrimitiveObjects.getDouble(pValue);
-        } else {
-            return PrimitiveObjects.getInteger(0);
-        }
-    }
+	/**
+	 * Coerces a value to an Integer, returning null if the coercion isn't possible.
+	 **/
+	public static Integer coerceToInteger(Object pValue, Logger pLogger) throws ExpressionException {
+		if (pValue == null) {
+			return null;
+		}
+		else if (pValue instanceof Character) {
+			return PrimitiveObjects.getInteger(((Character) pValue).charValue());
+		}
+		else if (pValue instanceof Boolean) {
+			if (pLogger.isLoggingWarning()) {
+				pLogger.logWarning(Constants.BOOLEAN_TO_NUMBER, pValue, Integer.class.getName());
+			}
+			return PrimitiveObjects.getInteger(((Boolean) pValue).booleanValue() ? 1 : 0);
+		}
+		else if (pValue instanceof Integer) {
+			return (Integer) pValue;
+		}
+		else if (pValue instanceof Number) {
+			return PrimitiveObjects.getInteger(((Number) pValue).intValue());
+		}
+		else if (pValue instanceof String) {
+			try {
+				return Integer.valueOf((String) pValue);
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingWarning()) {
+					pLogger.logWarning(Constants.STRING_TO_NUMBER_EXCEPTION, pValue, Integer.class.getName());
+				}
+				return null;
+			}
+		}
+		else {
+			if (pLogger.isLoggingWarning()) {
+				pLogger.logWarning(Constants.COERCE_TO_NUMBER, pValue.getClass().getName(), Integer.class.getName());
+			}
+			return null;
+		}
+	}
 
-    /**
-     * Coerces a Number to the given primitive number class
-     **/
-    static Number coerceToPrimitiveNumber(Number pValue, Class<?> pClass) throws ExpressionException {
-        if (pClass == Byte.class || pClass == Byte.TYPE) {
-            return PrimitiveObjects.getByte(pValue.byteValue());
-        } else if (pClass == Short.class || pClass == Short.TYPE) {
-            return PrimitiveObjects.getShort(pValue.shortValue());
-        } else if (pClass == Integer.class || pClass == Integer.TYPE) {
-            return PrimitiveObjects.getInteger(pValue.intValue());
-        } else if (pClass == Long.class || pClass == Long.TYPE) {
-            return PrimitiveObjects.getLong(pValue.longValue());
-        } else if (pClass == Float.class || pClass == Float.TYPE) {
-            return PrimitiveObjects.getFloat(pValue.floatValue());
-        } else if (pClass == Double.class || pClass == Double.TYPE) {
-            return PrimitiveObjects.getDouble(pValue.doubleValue());
-        } else if (pClass == BigInteger.class) {
-            if (pValue instanceof BigDecimal) {
-                return ((BigDecimal) pValue).toBigInteger();
-            } else {
-                return BigInteger.valueOf(pValue.longValue());
-            }
-        } else if (pClass == BigDecimal.class) {
-            if (pValue instanceof BigInteger) {
-                return new BigDecimal((BigInteger) pValue);
-            } else {
-                return new BigDecimal(pValue.doubleValue());
-            }
-        } else {
-            return PrimitiveObjects.getInteger(0);
-        }
-    }
+	/**
+	 * Coerces a long to the given primitive number class
+	 **/
+	static Number coerceToPrimitiveNumber(long pValue, Class<?> pClass) throws ExpressionException {
+		if (pClass == Byte.class || pClass == Byte.TYPE) {
+			return PrimitiveObjects.getByte((byte) pValue);
+		}
+		else if (pClass == Short.class || pClass == Short.TYPE) {
+			return PrimitiveObjects.getShort((short) pValue);
+		}
+		else if (pClass == Integer.class || pClass == Integer.TYPE) {
+			return PrimitiveObjects.getInteger((int) pValue);
+		}
+		else if (pClass == Long.class || pClass == Long.TYPE) {
+			return PrimitiveObjects.getLong(pValue);
+		}
+		else if (pClass == Float.class || pClass == Float.TYPE) {
+			return PrimitiveObjects.getFloat(pValue);
+		}
+		else if (pClass == Double.class || pClass == Double.TYPE) {
+			return PrimitiveObjects.getDouble(pValue);
+		}
+		else {
+			return PrimitiveObjects.getInteger(0);
+		}
+	}
 
-    /**
-     * Coerces a String to the given primitive number class
-     **/
-    static Number coerceToPrimitiveNumber(String pValue, Class<?> pClass) throws ExpressionException {
-        if (pClass == Byte.class || pClass == Byte.TYPE) {
-            return Byte.valueOf(pValue);
-        } else if (pClass == Short.class || pClass == Short.TYPE) {
-            return Short.valueOf(pValue);
-        } else if (pClass == Integer.class || pClass == Integer.TYPE) {
-            return Integer.valueOf(pValue);
-        } else if (pClass == Long.class || pClass == Long.TYPE) {
-            return Long.valueOf(pValue);
-        } else if (pClass == Float.class || pClass == Float.TYPE) {
-            return Float.valueOf(pValue);
-        } else if (pClass == Double.class || pClass == Double.TYPE) {
-            return Double.valueOf(pValue);
-        } else if (pClass == BigInteger.class) {
-            return new BigInteger(pValue);
-        } else if (pClass == BigDecimal.class) {
-            return new BigDecimal(pValue);
-        } else {
-            return PrimitiveObjects.getInteger(0);
-        }
-    }
+	/**
+	 * Coerces a Number to the given primitive number class
+	 **/
+	static Number coerceToPrimitiveNumber(Number pValue, Class<?> pClass) throws ExpressionException {
+		if (pClass == Byte.class || pClass == Byte.TYPE) {
+			return PrimitiveObjects.getByte(pValue.byteValue());
+		}
+		else if (pClass == Short.class || pClass == Short.TYPE) {
+			return PrimitiveObjects.getShort(pValue.shortValue());
+		}
+		else if (pClass == Integer.class || pClass == Integer.TYPE) {
+			return PrimitiveObjects.getInteger(pValue.intValue());
+		}
+		else if (pClass == Long.class || pClass == Long.TYPE) {
+			return PrimitiveObjects.getLong(pValue.longValue());
+		}
+		else if (pClass == Float.class || pClass == Float.TYPE) {
+			return PrimitiveObjects.getFloat(pValue.floatValue());
+		}
+		else if (pClass == Double.class || pClass == Double.TYPE) {
+			return PrimitiveObjects.getDouble(pValue.doubleValue());
+		}
+		else if (pClass == BigInteger.class) {
+			if (pValue instanceof BigDecimal) {
+				return ((BigDecimal) pValue).toBigInteger();
+			}
+			else {
+				return BigInteger.valueOf(pValue.longValue());
+			}
+		}
+		else if (pClass == BigDecimal.class) {
+			if (pValue instanceof BigInteger) {
+				return new BigDecimal((BigInteger) pValue);
+			}
+			else {
+				return new BigDecimal(pValue.doubleValue());
+			}
+		}
+		else {
+			return PrimitiveObjects.getInteger(0);
+		}
+	}
 
-    /**
-     * Coerces a value to a Character
-     **/
-    public static Character coerceToCharacter(Object pValue, Logger pLogger) throws ExpressionException {
-        if (pValue == null || "".equals(pValue)) {
-            return PrimitiveObjects.getCharacter((char) 0);
-        } else if (pValue instanceof Character) {
-            return (Character) pValue;
-        } else if (pValue instanceof Boolean) {
-            if (pLogger.isLoggingError()) {
-                pLogger.logError(Constants.BOOLEAN_TO_CHARACTER, pValue);
-            }
-            return PrimitiveObjects.getCharacter((char) 0);
-        } else if (pValue instanceof Number) {
-            return PrimitiveObjects.getCharacter((char) ((Number) pValue).shortValue());
-        } else if (pValue instanceof String) {
-            String str = (String) pValue;
-            return PrimitiveObjects.getCharacter(str.charAt(0));
-        } else {
-            if (pLogger.isLoggingError()) {
-                pLogger.logError(Constants.COERCE_TO_CHARACTER, pValue.getClass().getName());
-            }
-            return PrimitiveObjects.getCharacter((char) 0);
-        }
-    }
+	/**
+	 * Coerces a String to the given primitive number class
+	 **/
+	static Number coerceToPrimitiveNumber(String pValue, Class<?> pClass) throws ExpressionException {
+		if (pClass == Byte.class || pClass == Byte.TYPE) {
+			return Byte.valueOf(pValue);
+		}
+		else if (pClass == Short.class || pClass == Short.TYPE) {
+			return Short.valueOf(pValue);
+		}
+		else if (pClass == Integer.class || pClass == Integer.TYPE) {
+			return Integer.valueOf(pValue);
+		}
+		else if (pClass == Long.class || pClass == Long.TYPE) {
+			return Long.valueOf(pValue);
+		}
+		else if (pClass == Float.class || pClass == Float.TYPE) {
+			return Float.valueOf(pValue);
+		}
+		else if (pClass == Double.class || pClass == Double.TYPE) {
+			return Double.valueOf(pValue);
+		}
+		else if (pClass == BigInteger.class) {
+			return new BigInteger(pValue);
+		}
+		else if (pClass == BigDecimal.class) {
+			return new BigDecimal(pValue);
+		}
+		else {
+			return PrimitiveObjects.getInteger(0);
+		}
+	}
 
-    /**
-     * Coerces a value to a Boolean
-     **/
-    public static Boolean coerceToBoolean(Object pValue, Logger pLogger) throws ExpressionException {
-        return Primitives.getBoolean(pValue);
-    }
+	/**
+	 * Coerces a value to a Character
+	 **/
+	public static Character coerceToCharacter(Object pValue, Logger pLogger) throws ExpressionException {
+		if (pValue == null || "".equals(pValue)) {
+			return PrimitiveObjects.getCharacter((char) 0);
+		}
+		else if (pValue instanceof Character) {
+			return (Character) pValue;
+		}
+		else if (pValue instanceof Boolean) {
+			if (pLogger.isLoggingError()) {
+				pLogger.logError(Constants.BOOLEAN_TO_CHARACTER, pValue);
+			}
+			return PrimitiveObjects.getCharacter((char) 0);
+		}
+		else if (pValue instanceof Number) {
+			return PrimitiveObjects.getCharacter((char) ((Number) pValue).shortValue());
+		}
+		else if (pValue instanceof String) {
+			String str = (String) pValue;
+			return PrimitiveObjects.getCharacter(str.charAt(0));
+		}
+		else {
+			if (pLogger.isLoggingError()) {
+				pLogger.logError(Constants.COERCE_TO_CHARACTER, pValue.getClass().getName());
+			}
+			return PrimitiveObjects.getCharacter((char) 0);
+		}
+	}
 
-    /**
-     * Coerces a value to the specified Class that is not covered by any of the
-     * above cases
-     **/
-    public static Object coerceToObject(Object pValue, Class<?> pClass, Logger pLogger) throws ExpressionException {
-        if (pValue == null) {
-            return null;
-        } else if (pClass.isAssignableFrom(pValue.getClass())) {
-            return pValue;
-        } else if (pValue instanceof String) {
-            String str = (String) pValue;
-            PropertyEditor pe = PropertyEditorManager.findEditor(pClass);
-            if (pe == null) {
-                if ("".equals(str)) {
-                    return null;
-                } else {
-                    if (pLogger.isLoggingError()) {
-                        pLogger.logError(Constants.NO_PROPERTY_EDITOR, str, pClass.getName());
-                    }
-                    return null;
-                }
-            }
-            try {
-                pe.setAsText(str);
-                return pe.getValue();
-            } catch (IllegalArgumentException exc) {
-                if ("".equals(str)) {
-                    return null;
-                } else {
-                    if (pLogger.isLoggingError()) {
-                        pLogger.logError(Constants.PROPERTY_EDITOR_ERROR, exc, pValue, pClass.getName());
-                    }
-                    return null;
-                }
-            }
-        } else {
-            if (pLogger.isLoggingError()) {
-                pLogger.logError(Constants.COERCE_TO_OBJECT, pValue.getClass().getName(), pClass.getName());
-            }
-            return null;
-        }
-    }
+	/**
+	 * Coerces a value to a Boolean
+	 **/
+	public static Boolean coerceToBoolean(Object pValue, Logger pLogger) throws ExpressionException {
+		return Primitives.getBoolean(pValue);
+	}
 
-    // Applying operators
+	/**
+	 * Coerces a value to the specified Class that is not covered by any of the above
+	 * cases
+	 **/
+	public static Object coerceToObject(Object pValue, Class<?> pClass, Logger pLogger) throws ExpressionException {
+		if (pValue == null) {
+			return null;
+		}
+		else if (pClass.isAssignableFrom(pValue.getClass())) {
+			return pValue;
+		}
+		else if (pValue instanceof String) {
+			String str = (String) pValue;
+			PropertyEditor pe = PropertyEditorManager.findEditor(pClass);
+			if (pe == null) {
+				if ("".equals(str)) {
+					return null;
+				}
+				else {
+					if (pLogger.isLoggingError()) {
+						pLogger.logError(Constants.NO_PROPERTY_EDITOR, str, pClass.getName());
+					}
+					return null;
+				}
+			}
+			try {
+				pe.setAsText(str);
+				return pe.getValue();
+			}
+			catch (IllegalArgumentException exc) {
+				if ("".equals(str)) {
+					return null;
+				}
+				else {
+					if (pLogger.isLoggingError()) {
+						pLogger.logError(Constants.PROPERTY_EDITOR_ERROR, exc, pValue, pClass.getName());
+					}
+					return null;
+				}
+			}
+		}
+		else {
+			if (pLogger.isLoggingError()) {
+				pLogger.logError(Constants.COERCE_TO_OBJECT, pValue.getClass().getName(), pClass.getName());
+			}
+			return null;
+		}
+	}
 
-    /**
-     * Performs all of the necessary type conversions, then calls on the appropriate
-     * operator.
-     **/
-    public static Object applyArithmeticOperator(Object pLeft, Object pRight, ArithmeticOperator pOperator,
-            Logger pLogger) throws ExpressionException {
-        if (pLeft == null && pRight == null) {
-            if (pLogger.isLoggingWarning()) {
-                pLogger.logWarning(Constants.ARITH_OP_NULL, pOperator.getOperatorSymbol());
-            }
-            return PrimitiveObjects.getInteger(0);
-        }
+	// Applying operators
 
-        else if (isBigDecimal(pLeft) || isBigDecimal(pRight)) {
-            BigDecimal left = (BigDecimal) coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
-            BigDecimal right = (BigDecimal) coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
-            return pOperator.apply(left, right);
-        }
+	/**
+	 * Performs all of the necessary type conversions, then calls on the appropriate
+	 * operator.
+	 **/
+	public static Object applyArithmeticOperator(Object pLeft, Object pRight, ArithmeticOperator pOperator,
+			Logger pLogger) throws ExpressionException {
+		if (pLeft == null && pRight == null) {
+			if (pLogger.isLoggingWarning()) {
+				pLogger.logWarning(Constants.ARITH_OP_NULL, pOperator.getOperatorSymbol());
+			}
+			return PrimitiveObjects.getInteger(0);
+		}
 
-        else if (isFloatingPointType(pLeft) || isFloatingPointType(pRight) || isFloatingPointString(pLeft)
-                || isFloatingPointString(pRight)) {
-            if (isBigInteger(pLeft) || isBigInteger(pRight)) {
-                BigDecimal left = (BigDecimal) coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
-                BigDecimal right = (BigDecimal) coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
-                return pOperator.apply(left, right);
-            } else {
-                double left = coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
-                double right = coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
-                return PrimitiveObjects.getDouble(pOperator.apply(left, right));
-            }
-        }
+		else if (isBigDecimal(pLeft) || isBigDecimal(pRight)) {
+			BigDecimal left = (BigDecimal) coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
+			BigDecimal right = (BigDecimal) coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
+			return pOperator.apply(left, right);
+		}
 
-        else if (isBigInteger(pLeft) || isBigInteger(pRight)) {
-            BigInteger left = (BigInteger) coerceToPrimitiveNumber(pLeft, BigInteger.class, pLogger);
-            BigInteger right = (BigInteger) coerceToPrimitiveNumber(pRight, BigInteger.class, pLogger);
-            return pOperator.apply(left, right);
-        }
+		else if (isFloatingPointType(pLeft) || isFloatingPointType(pRight) || isFloatingPointString(pLeft)
+				|| isFloatingPointString(pRight)) {
+			if (isBigInteger(pLeft) || isBigInteger(pRight)) {
+				BigDecimal left = (BigDecimal) coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
+				BigDecimal right = (BigDecimal) coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
+				return pOperator.apply(left, right);
+			}
+			else {
+				double left = coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
+				double right = coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
+				return PrimitiveObjects.getDouble(pOperator.apply(left, right));
+			}
+		}
 
-        else {
-            long left = coerceToPrimitiveNumber(pLeft, Long.class, pLogger).longValue();
-            long right = coerceToPrimitiveNumber(pRight, Long.class, pLogger).longValue();
-            return PrimitiveObjects.getLong(pOperator.apply(left, right));
-        }
-    }
+		else if (isBigInteger(pLeft) || isBigInteger(pRight)) {
+			BigInteger left = (BigInteger) coerceToPrimitiveNumber(pLeft, BigInteger.class, pLogger);
+			BigInteger right = (BigInteger) coerceToPrimitiveNumber(pRight, BigInteger.class, pLogger);
+			return pOperator.apply(left, right);
+		}
 
-    /**
-     * Performs all of the necessary type conversions, then calls on the appropriate
-     * operator.
-     **/
-    public static Object applyRelationalOperator(Object pLeft, Object pRight, RelationalOperator pOperator,
-            Logger pLogger) throws ExpressionException {
-        if (isBigDecimal(pLeft) || isBigDecimal(pRight)) {
-            BigDecimal left = (BigDecimal) coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
-            BigDecimal right = (BigDecimal) coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
-            return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
-        }
+		else {
+			long left = coerceToPrimitiveNumber(pLeft, Long.class, pLogger).longValue();
+			long right = coerceToPrimitiveNumber(pRight, Long.class, pLogger).longValue();
+			return PrimitiveObjects.getLong(pOperator.apply(left, right));
+		}
+	}
 
-        else if (isFloatingPointType(pLeft) || isFloatingPointType(pRight)) {
-            double left = coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
-            double right = coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
-            return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
-        }
+	/**
+	 * Performs all of the necessary type conversions, then calls on the appropriate
+	 * operator.
+	 **/
+	public static Object applyRelationalOperator(Object pLeft, Object pRight, RelationalOperator pOperator,
+			Logger pLogger) throws ExpressionException {
+		if (isBigDecimal(pLeft) || isBigDecimal(pRight)) {
+			BigDecimal left = (BigDecimal) coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
+			BigDecimal right = (BigDecimal) coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
+			return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
+		}
 
-        else if (isBigInteger(pLeft) || isBigInteger(pRight)) {
-            BigInteger left = (BigInteger) coerceToPrimitiveNumber(pLeft, BigInteger.class, pLogger);
-            BigInteger right = (BigInteger) coerceToPrimitiveNumber(pRight, BigInteger.class, pLogger);
-            return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
-        }
+		else if (isFloatingPointType(pLeft) || isFloatingPointType(pRight)) {
+			double left = coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
+			double right = coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
+			return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
+		}
 
-        else if (isIntegerType(pLeft) || isIntegerType(pRight)) {
-            long left = coerceToPrimitiveNumber(pLeft, Long.class, pLogger).longValue();
-            long right = coerceToPrimitiveNumber(pRight, Long.class, pLogger).longValue();
-            return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
-        }
+		else if (isBigInteger(pLeft) || isBigInteger(pRight)) {
+			BigInteger left = (BigInteger) coerceToPrimitiveNumber(pLeft, BigInteger.class, pLogger);
+			BigInteger right = (BigInteger) coerceToPrimitiveNumber(pRight, BigInteger.class, pLogger);
+			return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
+		}
 
-        else if (pLeft instanceof String || pRight instanceof String) {
-            String left = coerceToString(pLeft, pLogger);
-            String right = coerceToString(pRight, pLogger);
-            return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
-        }
+		else if (isIntegerType(pLeft) || isIntegerType(pRight)) {
+			long left = coerceToPrimitiveNumber(pLeft, Long.class, pLogger).longValue();
+			long right = coerceToPrimitiveNumber(pRight, Long.class, pLogger).longValue();
+			return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
+		}
 
-        else if (pLeft instanceof Comparable) {
-            try {
-                @SuppressWarnings("unchecked")
-                int result = ((Comparable<Object>) pLeft).compareTo(pRight);
-                return PrimitiveObjects.getBoolean(pOperator.apply(result, -result));
-            } catch (Exception exc) {
-                if (pLogger.isLoggingError()) {
-                    pLogger.logError(Constants.COMPARABLE_ERROR, exc, pLeft.getClass().getName(),
-                            pRight == null ? "null" : pRight.getClass().getName(), pOperator.getOperatorSymbol());
-                }
-                return Boolean.FALSE;
-            }
-        }
+		else if (pLeft instanceof String || pRight instanceof String) {
+			String left = coerceToString(pLeft, pLogger);
+			String right = coerceToString(pRight, pLogger);
+			return PrimitiveObjects.getBoolean(pOperator.apply(left, right));
+		}
 
-        else if (pRight instanceof Comparable) {
-            try {
-                @SuppressWarnings("unchecked")
-                int result = ((Comparable<Object>) pRight).compareTo(pLeft);
-                return PrimitiveObjects.getBoolean(pOperator.apply(-result, result));
-            } catch (Exception exc) {
-                if (pLogger.isLoggingError()) {
-                    pLogger.logError(Constants.COMPARABLE_ERROR, exc, pRight.getClass().getName(),
-                            pLeft == null ? "null" : pLeft.getClass().getName(), pOperator.getOperatorSymbol());
-                }
-                return Boolean.FALSE;
-            }
-        }
+		else if (pLeft instanceof Comparable) {
+			try {
+				@SuppressWarnings("unchecked")
+				int result = ((Comparable<Object>) pLeft).compareTo(pRight);
+				return PrimitiveObjects.getBoolean(pOperator.apply(result, -result));
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingError()) {
+					pLogger.logError(Constants.COMPARABLE_ERROR, exc, pLeft.getClass().getName(),
+							pRight == null ? "null" : pRight.getClass().getName(), pOperator.getOperatorSymbol());
+				}
+				return Boolean.FALSE;
+			}
+		}
 
-        else {
-            if (pLogger.isLoggingError()) {
-                pLogger.logError(Constants.ARITH_OP_BAD_TYPE, pOperator.getOperatorSymbol(), pLeft.getClass().getName(),
-                        pRight.getClass().getName());
-            }
-            return Boolean.FALSE;
-        }
-    }
+		else if (pRight instanceof Comparable) {
+			try {
+				@SuppressWarnings("unchecked")
+				int result = ((Comparable<Object>) pRight).compareTo(pLeft);
+				return PrimitiveObjects.getBoolean(pOperator.apply(-result, result));
+			}
+			catch (Exception exc) {
+				if (pLogger.isLoggingError()) {
+					pLogger.logError(Constants.COMPARABLE_ERROR, exc, pRight.getClass().getName(),
+							pLeft == null ? "null" : pLeft.getClass().getName(), pOperator.getOperatorSymbol());
+				}
+				return Boolean.FALSE;
+			}
+		}
 
-    /**
-     * Performs all of the necessary type conversions, then calls on the appropriate
-     * operator.
-     **/
-    public static Object applyEqualityOperator(Object pLeft, Object pRight, EqualityOperator pOperator, Logger pLogger)
-            throws ExpressionException {
-        return PrimitiveObjects
-                .getBoolean(pOperator.apply(Primitives.getBoolean(Operators.eq(pLeft, pRight)), pLogger));
-    }
+		else {
+			if (pLogger.isLoggingError()) {
+				pLogger.logError(Constants.ARITH_OP_BAD_TYPE, pOperator.getOperatorSymbol(), pLeft.getClass().getName(),
+						pRight.getClass().getName());
+			}
+			return Boolean.FALSE;
+		}
+	}
 
-    /**
-     * Returns true if the given Object is of a floating point type
-     **/
-    public static boolean isFloatingPointType(Object pObject) {
-        return pObject != null && isFloatingPointType(pObject.getClass());
-    }
+	/**
+	 * Performs all of the necessary type conversions, then calls on the appropriate
+	 * operator.
+	 **/
+	public static Object applyEqualityOperator(Object pLeft, Object pRight, EqualityOperator pOperator, Logger pLogger)
+			throws ExpressionException {
+		return PrimitiveObjects
+			.getBoolean(pOperator.apply(Primitives.getBoolean(Operators.eq(pLeft, pRight)), pLogger));
+	}
 
-    /**
-     * Returns true if the given class is of a floating point type
-     **/
-    public static boolean isFloatingPointType(Class<?> pClass) {
-        return pClass == Float.class || pClass == Float.TYPE || pClass == Double.class || pClass == Double.TYPE;
-    }
+	/**
+	 * Returns true if the given Object is of a floating point type
+	 **/
+	public static boolean isFloatingPointType(Object pObject) {
+		return pObject != null && isFloatingPointType(pObject.getClass());
+	}
 
-    /**
-     * Returns true if the given string might contain a floating point number -
-     * i.e., it contains ".", "e", or "E"
-     **/
-    public static boolean isFloatingPointString(Object pObject) {
-        if (pObject instanceof String) {
-            String str = (String) pObject;
-            int len = str.length();
-            for (int i = 0; i < len; i++) {
-                char ch = str.charAt(i);
-                if (ch == '.' || ch == 'e' || ch == 'E') {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * Returns true if the given class is of a floating point type
+	 **/
+	public static boolean isFloatingPointType(Class<?> pClass) {
+		return pClass == Float.class || pClass == Float.TYPE || pClass == Double.class || pClass == Double.TYPE;
+	}
 
-    /**
-     * Returns true if the given Object is of an integer type
-     **/
-    public static boolean isIntegerType(Object pObject) {
-        return pObject != null && isIntegerType(pObject.getClass());
-    }
+	/**
+	 * Returns true if the given string might contain a floating point number - i.e., it
+	 * contains ".", "e", or "E"
+	 **/
+	public static boolean isFloatingPointString(Object pObject) {
+		if (pObject instanceof String) {
+			String str = (String) pObject;
+			int len = str.length();
+			for (int i = 0; i < len; i++) {
+				char ch = str.charAt(i);
+				if (ch == '.' || ch == 'e' || ch == 'E') {
+					return true;
+				}
+			}
+			return false;
+		}
+		else {
+			return false;
+		}
+	}
 
-    /**
-     * Returns true if the given class is of an integer type
-     **/
-    public static boolean isIntegerType(Class<?> pClass) {
-        return pClass == Byte.class || pClass == Byte.TYPE || pClass == Short.class || pClass == Short.TYPE
-                || pClass == Character.class || pClass == Character.TYPE || pClass == Integer.class
-                || pClass == Integer.TYPE || pClass == Long.class || pClass == Long.TYPE;
-    }
+	/**
+	 * Returns true if the given Object is of an integer type
+	 **/
+	public static boolean isIntegerType(Object pObject) {
+		return pObject != null && isIntegerType(pObject.getClass());
+	}
 
-    /**
-     * Returns true if the given object is BigInteger.
-     *
-     * @param pObject
-     *            - Object to evaluate
-     * @return - true if the given object is BigInteger
-     */
-    public static boolean isBigInteger(Object pObject) {
-        return pObject != null && pObject instanceof BigInteger;
-    }
+	/**
+	 * Returns true if the given class is of an integer type
+	 **/
+	public static boolean isIntegerType(Class<?> pClass) {
+		return pClass == Byte.class || pClass == Byte.TYPE || pClass == Short.class || pClass == Short.TYPE
+				|| pClass == Character.class || pClass == Character.TYPE || pClass == Integer.class
+				|| pClass == Integer.TYPE || pClass == Long.class || pClass == Long.TYPE;
+	}
 
-    /**
-     * Returns true if the given object is BigDecimal.
-     *
-     * @param pObject
-     *            - Object to evaluate
-     * @return - true if the given object is BigDecimal
-     */
-    public static boolean isBigDecimal(Object pObject) {
-        return pObject != null && pObject instanceof BigDecimal;
-    }
+	/**
+	 * Returns true if the given object is BigInteger.
+	 * @param pObject - Object to evaluate
+	 * @return - true if the given object is BigInteger
+	 */
+	public static boolean isBigInteger(Object pObject) {
+		return pObject != null && pObject instanceof BigInteger;
+	}
+
+	/**
+	 * Returns true if the given object is BigDecimal.
+	 * @param pObject - Object to evaluate
+	 * @return - true if the given object is BigDecimal
+	 */
+	public static boolean isBigDecimal(Object pObject) {
+		return pObject != null && pObject instanceof BigDecimal;
+	}
+
 }

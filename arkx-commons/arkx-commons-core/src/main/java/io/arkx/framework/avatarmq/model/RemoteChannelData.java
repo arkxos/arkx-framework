@@ -13,39 +13,40 @@ import io.netty.channel.Channel;
  */
 public class RemoteChannelData {
 
-    private Channel channel;
-    private String clientId;
+	private Channel channel;
 
-    private SubscriptionData subcript;
+	private String clientId;
 
-    public SubscriptionData getSubcript() {
-        return subcript;
-    }
+	private SubscriptionData subcript;
 
-    public void setSubcript(SubscriptionData subcript) {
-        this.subcript = subcript;
-    }
+	public SubscriptionData getSubcript() {
+		return subcript;
+	}
 
-    public Channel getChannel() {
-        return channel;
-    }
+	public void setSubcript(SubscriptionData subcript) {
+		this.subcript = subcript;
+	}
 
-    public String getClientId() {
-        return clientId;
-    }
+	public Channel getChannel() {
+		return channel;
+	}
 
-    public RemoteChannelData(Channel channel, String clientId) {
-        this.channel = channel;
-        this.clientId = clientId;
-    }
+	public String getClientId() {
+		return clientId;
+	}
 
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj != null && RemoteChannelData.class.isAssignableFrom(obj.getClass())) {
-            RemoteChannelData info = (RemoteChannelData) obj;
-            result = new EqualsBuilder().append(clientId, info.getClientId()).isEquals();
-        }
-        return result;
-    }
+	public RemoteChannelData(Channel channel, String clientId) {
+		this.channel = channel;
+		this.clientId = clientId;
+	}
+
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj != null && RemoteChannelData.class.isAssignableFrom(obj.getClass())) {
+			RemoteChannelData info = (RemoteChannelData) obj;
+			result = new EqualsBuilder().append(clientId, info.getClientId()).isEquals();
+		}
+		return result;
+	}
 
 }

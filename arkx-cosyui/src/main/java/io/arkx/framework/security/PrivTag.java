@@ -15,100 +15,105 @@ import io.arkx.framework.cosyui.template.TagAttr;
  *
  */
 public class PrivTag extends ArkTag {
-    private boolean login;
-    private String loginType;
-    private String userType;
-    private String priv;
 
-    @Override
-    public void init() throws ExpressionException {
-        login = true;
-        loginType = "User";
-        userType = "";
-        priv = "";
-        super.init();
-    }
+	private boolean login;
 
-    @Override
-    public int doStartTag() {
-        LoginType lt = null;
-        if ("User".equals(loginType)) {
-            lt = LoginType.User;
-        } else {
-            lt = LoginType.Member;
-        }
-        PrivCheck.check(login, lt, userType, priv, pageContext);
-        return SKIP_BODY;
-    }
+	private String loginType;
 
-    @Override
-    public int doEndTag() {
-        return EVAL_PAGE;
-    }
+	private String userType;
 
-    public boolean isLogin() {
-        return login;
-    }
+	private String priv;
 
-    public void setLogin(boolean login) {
-        this.login = login;
-    }
+	@Override
+	public void init() throws ExpressionException {
+		login = true;
+		loginType = "User";
+		userType = "";
+		priv = "";
+		super.init();
+	}
 
-    public String getLoginType() {
-        return loginType;
-    }
+	@Override
+	public int doStartTag() {
+		LoginType lt = null;
+		if ("User".equals(loginType)) {
+			lt = LoginType.User;
+		}
+		else {
+			lt = LoginType.Member;
+		}
+		PrivCheck.check(login, lt, userType, priv, pageContext);
+		return SKIP_BODY;
+	}
 
-    public void setLoginType(String loginType) {
-        this.loginType = loginType;
-    }
+	@Override
+	public int doEndTag() {
+		return EVAL_PAGE;
+	}
 
-    public String getUserType() {
-        return userType;
-    }
+	public boolean isLogin() {
+		return login;
+	}
 
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
+	public void setLogin(boolean login) {
+		this.login = login;
+	}
 
-    public String getPriv() {
-        return priv;
-    }
+	public String getLoginType() {
+		return loginType;
+	}
 
-    public void setPriv(String priv) {
-        this.priv = priv;
-    }
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
 
-    @Override
-    public String getTagName() {
-        return "priv";
-    }
+	public String getUserType() {
+		return userType;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<>();
-        list.add(new TagAttr("login", TagAttr.BOOL_OPTIONS));
-        Mapx<String, String> loginTypes = new Mapx<>();
-        loginTypes.put("Member", "Member");
-        loginTypes.put("User", "User");
-        list.add(new TagAttr("loginType", loginTypes));
-        list.add(new TagAttr("priv"));
-        list.add(new TagAttr("userType"));
-        return list;
-    }
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.PrivTag.Name}";
-    }
+	public String getPriv() {
+		return priv;
+	}
 
-    @Override
-    public String getDescription() {
-        return "@{Framework.PrivTag.Desc}";
-    }
+	public void setPriv(String priv) {
+		this.priv = priv;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public String getTagName() {
+		return "priv";
+	}
+
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<>();
+		list.add(new TagAttr("login", TagAttr.BOOL_OPTIONS));
+		Mapx<String, String> loginTypes = new Mapx<>();
+		loginTypes.put("Member", "Member");
+		loginTypes.put("User", "User");
+		list.add(new TagAttr("loginType", loginTypes));
+		list.add(new TagAttr("priv"));
+		list.add(new TagAttr("userType"));
+		return list;
+	}
+
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.PrivTag.Name}";
+	}
+
+	@Override
+	public String getDescription() {
+		return "@{Framework.PrivTag.Desc}";
+	}
+
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
 }

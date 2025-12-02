@@ -2,19 +2,19 @@ package io.arkx.framework.util.task;
 
 public class BaseTask extends AbstractTask {
 
-    private TaskRunner taskRunner;
+	private TaskRunner taskRunner;
 
-    protected BaseTask(TaskRunner taskRunner) {
-        this(null, null, taskRunner);
-    }
+	protected BaseTask(TaskRunner taskRunner) {
+		this(null, null, taskRunner);
+	}
 
-    protected BaseTask(String type, String id, TaskRunner taskRunner) {
-        super(type, id);
-        this.taskRunner = taskRunner;
-    }
+	protected BaseTask(String type, String id, TaskRunner taskRunner) {
+		super(type, id);
+		this.taskRunner = taskRunner;
+	}
 
-    public TaskRunner getRunner() {
-        return taskRunner;
-    }
+	public TaskRunner getRunner() {
+		return taskRunner;
+	}
 
 }

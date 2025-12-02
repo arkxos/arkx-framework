@@ -10,15 +10,16 @@ package io.arkx.framework.queue.saga;
  */
 public class PhoneNumbersMatched extends PhoneNumberProcessEvent {
 
-    private String matchedPhoneNumbers;// 匹配的号码
+	private String matchedPhoneNumbers;// 匹配的号码
 
-    public PhoneNumbersMatched(String aProcessId, String aMatchedPhoneNumbers) {
-        super(aProcessId);
+	public PhoneNumbersMatched(String aProcessId, String aMatchedPhoneNumbers) {
+		super(aProcessId);
 
-        this.matchedPhoneNumbers = aMatchedPhoneNumbers;
-    }
+		this.matchedPhoneNumbers = aMatchedPhoneNumbers;
+	}
 
-    public String matchedPhoneNumbers() {
-        return this.matchedPhoneNumbers;
-    }
+	public String matchedPhoneNumbers() {
+		return this.matchedPhoneNumbers;
+	}
+
 }

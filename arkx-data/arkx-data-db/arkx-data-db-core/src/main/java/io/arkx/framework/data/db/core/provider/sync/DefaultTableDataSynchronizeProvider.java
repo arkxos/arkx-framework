@@ -35,308 +35,320 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DefaultTableDataSynchronizeProvider extends AbstractCommonProvider
-        implements
-            TableDataSynchronizeProvider {
+		implements TableDataSynchronizeProvider {
 
-    private JdbcTemplate jdbcTemplate;
-    private PlatformTransactionManager tx;
+	private JdbcTemplate jdbcTemplate;
 
-    protected String dbSyncMode;
-    protected String slaveDbCode;
-    protected String schemaName;
-    protected String tableName;
+	private PlatformTransactionManager tx;
 
-    protected Map<String, Integer> columnType;
-    protected Map<String, String> columnTypeNames;
-    protected List<String> fieldOrders;
-    protected List<String> pksOrders;
-    protected List<String> rawFieldOrders;
-    protected List<String> rawPksOrders;
-    protected String insertStatementSql;
-    protected String updateStatementSql;
-    protected String deleteStatementSql;
-    protected int[] insertArgsType;
-    protected int[] updateArgsType;
-    protected int[] deleteArgsType;
+	protected String dbSyncMode;
 
-    public DefaultTableDataSynchronizeProvider(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-        this.jdbcTemplate = new JdbcTemplate(factoryProvider.getDataSource());
-        this.tx = new DataSourceTransactionManager(factoryProvider.getDataSource());
-        this.columnType = new HashMap<>();
-    }
+	protected String slaveDbCode;
 
-    @Override
-    public void prepare(String schemaName, String tableName, List<String> fieldNames, List<String> pks,
-            String dbSyncMode, String slaveDbCode) {
-        // if (fieldNames.isEmpty() || pks.isEmpty() || fieldNames.size() < pks.size())
-        // {
-        // throw new IllegalArgumentException("字段列表和主键列表不能为空，或者字段总个数应不小于主键总个数");
-        // }
-        if (!fieldNames.containsAll(pks)) {
-            throw new IllegalArgumentException("字段列表必须包含主键列表");
-        }
+	protected String schemaName;
 
-        if (pks.isEmpty()) {
-            if (fieldNames.contains("ark_shard_db_code") && fieldNames.contains("ark_sync_raw_id")) {
-                pks.add("ark_shard_db_code");
-                pks.add("ark_sync_raw_id");
-            }
-        }
+	protected String tableName;
 
-        this.dbSyncMode = dbSyncMode;
-        this.slaveDbCode = slaveDbCode;
+	protected Map<String, Integer> columnType;
 
-        this.schemaName = schemaName;
-        this.tableName = tableName;
+	protected Map<String, String> columnTypeNames;
 
-        this.rawPksOrders = new ArrayList<>(pks);
-        this.rawFieldOrders = new ArrayList<>(fieldNames);
+	protected List<String> fieldOrders;
 
-        if (SyncUtil.isShardDbSync(dbSyncMode)) {
-            fieldNames.addFirst("ark_shard_db_code");
-            pks.addFirst("ark_shard_db_code");
-        }
+	protected List<String> pksOrders;
 
-        this.columnType = getTableColumnMetaData(schemaName, tableName, fieldNames);
-        this.columnTypeNames = getTableColumnTypeNames(schemaName, tableName, fieldNames);
+	protected List<String> rawFieldOrders;
 
-        this.fieldOrders = new ArrayList<>(fieldNames);
-        this.pksOrders = new ArrayList<>(pks);
+	protected List<String> rawPksOrders;
 
-        this.insertStatementSql = getInsertPrepareStatementSql(schemaName, tableName, fieldNames);
-        this.updateStatementSql = getUpdatePrepareStatementSql(schemaName, tableName, fieldNames, pks);
-        this.deleteStatementSql = getDeletePrepareStatementSql(schemaName, tableName, pks);
+	protected String insertStatementSql;
 
-        insertArgsType = new int[fieldNames.size()];
-        for (int k = 0; k < fieldNames.size(); ++k) {
-            String field = fieldNames.get(k);
-            insertArgsType[k] = this.columnType.get(field);
-        }
+	protected String updateStatementSql;
 
-        updateArgsType = new int[fieldNames.size()];
-        int idx = 0;
-        for (int i = 0; i < fieldNames.size(); ++i) {
-            String field = fieldNames.get(i);
-            if (!pks.contains(field)) {
-                updateArgsType[idx++] = this.columnType.get(field);
-            }
-        }
-        for (String pk : pks) {
-            updateArgsType[idx++] = this.columnType.get(pk);
-        }
+	protected String deleteStatementSql;
 
-        deleteArgsType = new int[pks.size()];
-        for (int j = 0; j < pks.size(); ++j) {
-            String pk = pks.get(j);
-            deleteArgsType[j] = this.columnType.get(pk);
-        }
-    }
+	protected int[] insertArgsType;
 
-    @Override
-    public long executeInsert(List<Object[]> rawRecords) {
-        TransactionStatus status = tx.getTransaction(getDefaultTransactionDefinition());
-        if (log.isDebugEnabled()) {
-            log.debug("Execute Insert SQL : {}", this.insertStatementSql);
-        }
+	protected int[] updateArgsType;
 
-        List<Object[]> records = rawRecords;
-        try {
-            try {
-                if (SyncUtil.isShardDbSync(dbSyncMode)) {
-                    records = new ArrayList<>(rawRecords.size());
-                    for (Object[] rawRecord : rawRecords) {
-                        List<Object> newRecord = new ArrayList<>(rawRecord.length + 1);
-                        newRecord.add(this.slaveDbCode);
-                        for (int i = 0; i < rawRecord.length; i++) {
-                            newRecord.add(rawRecord[i]);
-                        }
-                        records.add(newRecord.toArray());
-                    }
-                }
+	protected int[] deleteArgsType;
 
-                TablePrinter.printTable(tableName, fieldOrders, columnTypeNames, records);
+	public DefaultTableDataSynchronizeProvider(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+		this.jdbcTemplate = new JdbcTemplate(factoryProvider.getDataSource());
+		this.tx = new DataSourceTransactionManager(factoryProvider.getDataSource());
+		this.columnType = new HashMap<>();
+	}
 
-                jdbcTemplate.batchUpdate(this.insertStatementSql, records, this.insertArgsType);
-            } catch (Exception e) {
-                // if (e instanceof java.sql.BatchUpdateException) {
-                int i = 0;
-                for (Object[] dataList : records) {
-                    try {
-                        i++;
-                        jdbcTemplate.update(this.insertStatementSql, new MyArgumentTypePreparedStatementSetter(
-                                fieldOrders, columnTypeNames, dataList, this.insertArgsType));
-                    } catch (Exception ex) {
-                        System.err.println("[" + i + "]Failed to insert by SQL: " + this.insertStatementSql
-                                + ", value: +" + JSON.toJSONString(dataList));
-                        List<Object[]> oneRecord = new ArrayList<>(1);
-                        oneRecord.add(records.get(i - 1));
-                        TablePrinter.printTable(tableName, fieldOrders, columnTypeNames, oneRecord);
-                        throw ex;
-                    }
-                }
-                // } else {
-                // throw e;
-                // }
-            }
+	@Override
+	public void prepare(String schemaName, String tableName, List<String> fieldNames, List<String> pks,
+			String dbSyncMode, String slaveDbCode) {
+		// if (fieldNames.isEmpty() || pks.isEmpty() || fieldNames.size() < pks.size())
+		// {
+		// throw new IllegalArgumentException("字段列表和主键列表不能为空，或者字段总个数应不小于主键总个数");
+		// }
+		if (!fieldNames.containsAll(pks)) {
+			throw new IllegalArgumentException("字段列表必须包含主键列表");
+		}
 
-            tx.commit(status);
-            return rawRecords.size();
-        } catch (Exception e) {
-            tx.rollback(status);
-            throw e;
-        }
-    }
+		if (pks.isEmpty()) {
+			if (fieldNames.contains("ark_shard_db_code") && fieldNames.contains("ark_sync_raw_id")) {
+				pks.add("ark_shard_db_code");
+				pks.add("ark_sync_raw_id");
+			}
+		}
 
-    @Override
-    public long executeUpdate(List<Object[]> records) {
-        List<Object[]> dataLists = new LinkedList<>();
-        for (Object[] r : records) {
-            Object[] nr = new Object[this.rawFieldOrders.size()];
-            if (SyncUtil.isShardDbSync(dbSyncMode)) {
-                nr = new Object[this.rawFieldOrders.size() + 1];
-            }
-            int idx = 0;
-            for (int i = 0; i < this.rawFieldOrders.size(); ++i) {
-                String field = this.rawFieldOrders.get(i);
-                if (!this.rawPksOrders.contains(field)) {
-                    int index = this.rawFieldOrders.indexOf(field);
-                    nr[idx++] = r[index];
-                }
-            }
-            if (SyncUtil.isShardDbSync(dbSyncMode)) {
-                nr[idx++] = this.slaveDbCode;
-            }
-            for (int j = 0; j < this.rawPksOrders.size(); ++j) {
-                String pk = this.rawPksOrders.get(j);
-                int index = this.rawFieldOrders.indexOf(pk);
-                nr[idx++] = r[index];
-            }
-            dataLists.add(nr);
-        }
+		this.dbSyncMode = dbSyncMode;
+		this.slaveDbCode = slaveDbCode;
 
-        TransactionStatus status = tx.getTransaction(getDefaultTransactionDefinition());
-        if (log.isDebugEnabled()) {
-            log.debug("Execute Update SQL : {}", this.updateStatementSql);
-        }
+		this.schemaName = schemaName;
+		this.tableName = tableName;
 
-        try {
-            try {
-                jdbcTemplate.batchUpdate(this.updateStatementSql, dataLists, this.updateArgsType);
-            } catch (Exception e) {
-                if (e instanceof java.sql.BatchUpdateException) {
-                    for (Object[] dataList : dataLists) {
-                        try {
-                            jdbcTemplate.update(this.updateStatementSql, dataList, this.updateArgsType);
-                        } catch (Exception ex) {
-                            log.error("Failed to update by SQL: {}, value: {}", this.updateStatementSql,
-                                    JSON.toJSONString(dataList));
-                            throw ex;
-                        }
-                    }
-                } else {
-                    throw e;
-                }
-            }
+		this.rawPksOrders = new ArrayList<>(pks);
+		this.rawFieldOrders = new ArrayList<>(fieldNames);
 
-            tx.commit(status);
-            return dataLists.size();
-        } catch (Exception e) {
-            tx.rollback(status);
-            throw e;
-        }
-    }
+		if (SyncUtil.isShardDbSync(dbSyncMode)) {
+			fieldNames.addFirst("ark_shard_db_code");
+			pks.addFirst("ark_shard_db_code");
+		}
 
-    @Override
-    public long executeDelete(List<Object[]> records) {
-        List<Object[]> dataLists = new LinkedList<>();
-        for (Object[] r : records) {
-            Object[] nr = new Object[this.pksOrders.size()];
-            int startIndex = 0;
-            if (SyncUtil.isShardDbSync(dbSyncMode)) {
-                nr[startIndex++] = this.slaveDbCode;
-            }
-            for (int i = 0; i < this.rawPksOrders.size(); ++i) {
-                String pk = this.rawPksOrders.get(i);
-                int index = this.rawFieldOrders.indexOf(pk);
-                nr[startIndex + i] = r[index];
-            }
-            dataLists.add(nr);
-        }
+		this.columnType = getTableColumnMetaData(schemaName, tableName, fieldNames);
+		this.columnTypeNames = getTableColumnTypeNames(schemaName, tableName, fieldNames);
 
-        TransactionStatus status = tx.getTransaction(getDefaultTransactionDefinition());
-        if (log.isDebugEnabled()) {
-            log.debug("Execute Delete SQL : {}", this.deleteStatementSql);
-        }
+		this.fieldOrders = new ArrayList<>(fieldNames);
+		this.pksOrders = new ArrayList<>(pks);
 
-        try {
-            jdbcTemplate.batchUpdate(this.deleteStatementSql, dataLists, this.deleteArgsType);
-            tx.commit(status);
-            return dataLists.size();
-        } catch (Exception e) {
-            tx.rollback(status);
-            throw e;
-        } finally {
-            dataLists.clear();
-        }
-    }
+		this.insertStatementSql = getInsertPrepareStatementSql(schemaName, tableName, fieldNames);
+		this.updateStatementSql = getUpdatePrepareStatementSql(schemaName, tableName, fieldNames, pks);
+		this.deleteStatementSql = getDeletePrepareStatementSql(schemaName, tableName, pks);
 
-    /**
-     * 生成Insert操作的SQL语句
-     *
-     * @param schemaName
-     *            模式名称
-     * @param tableName
-     *            表名称
-     * @param fieldNames
-     *            字段列表
-     * @return Insert操作的SQL语句
-     */
-    protected String getInsertPrepareStatementSql(String schemaName, String tableName, List<String> fieldNames) {
-        List<String> placeHolders = Collections.nCopies(fieldNames.size(), "?");
-        String fullTableName = quoteSchemaTableName(schemaName, tableName);
-        return "INSERT INTO %s ( %s ) VALUES ( %s )".formatted(fullTableName,
-                quoteName(StringUtils.join(fieldNames, quoteName(","))), StringUtils.join(placeHolders, ","));
-    }
+		insertArgsType = new int[fieldNames.size()];
+		for (int k = 0; k < fieldNames.size(); ++k) {
+			String field = fieldNames.get(k);
+			insertArgsType[k] = this.columnType.get(field);
+		}
 
-    /**
-     * 生成Update操作的SQL语句
-     *
-     * @param schemaName
-     *            模式名称
-     * @param tableName
-     *            表名称
-     * @param fieldNames
-     *            字段列表
-     * @param pks
-     *            主键列表
-     * @return Update操作的SQL语句
-     */
-    protected String getUpdatePrepareStatementSql(String schemaName, String tableName, List<String> fieldNames,
-            List<String> pks) {
-        String fullTableName = quoteSchemaTableName(schemaName, tableName);
-        List<String> uf = fieldNames.stream().filter(field -> !pks.contains(field))
-                .map(field -> "%s=?".formatted(quoteName(field))).collect(Collectors.toList());
-        List<String> uw = pks.stream().map(pk -> "%s=?".formatted(quoteName(pk))).collect(Collectors.toList());
-        return "UPDATE %s SET %s WHERE %s".formatted(fullTableName, StringUtils.join(uf, " , "),
-                StringUtils.join(uw, " AND "));
-    }
+		updateArgsType = new int[fieldNames.size()];
+		int idx = 0;
+		for (int i = 0; i < fieldNames.size(); ++i) {
+			String field = fieldNames.get(i);
+			if (!pks.contains(field)) {
+				updateArgsType[idx++] = this.columnType.get(field);
+			}
+		}
+		for (String pk : pks) {
+			updateArgsType[idx++] = this.columnType.get(pk);
+		}
 
-    /**
-     * 生成Delete操作的SQL语句
-     *
-     * @param schemaName
-     *            模式名称
-     * @param tableName
-     *            表名称
-     * @param pks
-     *            主键列表
-     * @return Delete操作的SQL语句
-     */
-    protected String getDeletePrepareStatementSql(String schemaName, String tableName, List<String> pks) {
-        String fullTableName = quoteSchemaTableName(schemaName, tableName);
-        List<String> uw = pks.stream().map(pk -> "%s=?".formatted(quoteName(pk))).collect(Collectors.toList());
-        return "DELETE FROM %s WHERE %s ".formatted(fullTableName, StringUtils.join(uw, "  AND  "));
-    }
+		deleteArgsType = new int[pks.size()];
+		for (int j = 0; j < pks.size(); ++j) {
+			String pk = pks.get(j);
+			deleteArgsType[j] = this.columnType.get(pk);
+		}
+	}
+
+	@Override
+	public long executeInsert(List<Object[]> rawRecords) {
+		TransactionStatus status = tx.getTransaction(getDefaultTransactionDefinition());
+		if (log.isDebugEnabled()) {
+			log.debug("Execute Insert SQL : {}", this.insertStatementSql);
+		}
+
+		List<Object[]> records = rawRecords;
+		try {
+			try {
+				if (SyncUtil.isShardDbSync(dbSyncMode)) {
+					records = new ArrayList<>(rawRecords.size());
+					for (Object[] rawRecord : rawRecords) {
+						List<Object> newRecord = new ArrayList<>(rawRecord.length + 1);
+						newRecord.add(this.slaveDbCode);
+						for (int i = 0; i < rawRecord.length; i++) {
+							newRecord.add(rawRecord[i]);
+						}
+						records.add(newRecord.toArray());
+					}
+				}
+
+				TablePrinter.printTable(tableName, fieldOrders, columnTypeNames, records);
+
+				jdbcTemplate.batchUpdate(this.insertStatementSql, records, this.insertArgsType);
+			}
+			catch (Exception e) {
+				// if (e instanceof java.sql.BatchUpdateException) {
+				int i = 0;
+				for (Object[] dataList : records) {
+					try {
+						i++;
+						jdbcTemplate.update(this.insertStatementSql, new MyArgumentTypePreparedStatementSetter(
+								fieldOrders, columnTypeNames, dataList, this.insertArgsType));
+					}
+					catch (Exception ex) {
+						System.err.println("[" + i + "]Failed to insert by SQL: " + this.insertStatementSql
+								+ ", value: +" + JSON.toJSONString(dataList));
+						List<Object[]> oneRecord = new ArrayList<>(1);
+						oneRecord.add(records.get(i - 1));
+						TablePrinter.printTable(tableName, fieldOrders, columnTypeNames, oneRecord);
+						throw ex;
+					}
+				}
+				// } else {
+				// throw e;
+				// }
+			}
+
+			tx.commit(status);
+			return rawRecords.size();
+		}
+		catch (Exception e) {
+			tx.rollback(status);
+			throw e;
+		}
+	}
+
+	@Override
+	public long executeUpdate(List<Object[]> records) {
+		List<Object[]> dataLists = new LinkedList<>();
+		for (Object[] r : records) {
+			Object[] nr = new Object[this.rawFieldOrders.size()];
+			if (SyncUtil.isShardDbSync(dbSyncMode)) {
+				nr = new Object[this.rawFieldOrders.size() + 1];
+			}
+			int idx = 0;
+			for (int i = 0; i < this.rawFieldOrders.size(); ++i) {
+				String field = this.rawFieldOrders.get(i);
+				if (!this.rawPksOrders.contains(field)) {
+					int index = this.rawFieldOrders.indexOf(field);
+					nr[idx++] = r[index];
+				}
+			}
+			if (SyncUtil.isShardDbSync(dbSyncMode)) {
+				nr[idx++] = this.slaveDbCode;
+			}
+			for (int j = 0; j < this.rawPksOrders.size(); ++j) {
+				String pk = this.rawPksOrders.get(j);
+				int index = this.rawFieldOrders.indexOf(pk);
+				nr[idx++] = r[index];
+			}
+			dataLists.add(nr);
+		}
+
+		TransactionStatus status = tx.getTransaction(getDefaultTransactionDefinition());
+		if (log.isDebugEnabled()) {
+			log.debug("Execute Update SQL : {}", this.updateStatementSql);
+		}
+
+		try {
+			try {
+				jdbcTemplate.batchUpdate(this.updateStatementSql, dataLists, this.updateArgsType);
+			}
+			catch (Exception e) {
+				if (e instanceof java.sql.BatchUpdateException) {
+					for (Object[] dataList : dataLists) {
+						try {
+							jdbcTemplate.update(this.updateStatementSql, dataList, this.updateArgsType);
+						}
+						catch (Exception ex) {
+							log.error("Failed to update by SQL: {}, value: {}", this.updateStatementSql,
+									JSON.toJSONString(dataList));
+							throw ex;
+						}
+					}
+				}
+				else {
+					throw e;
+				}
+			}
+
+			tx.commit(status);
+			return dataLists.size();
+		}
+		catch (Exception e) {
+			tx.rollback(status);
+			throw e;
+		}
+	}
+
+	@Override
+	public long executeDelete(List<Object[]> records) {
+		List<Object[]> dataLists = new LinkedList<>();
+		for (Object[] r : records) {
+			Object[] nr = new Object[this.pksOrders.size()];
+			int startIndex = 0;
+			if (SyncUtil.isShardDbSync(dbSyncMode)) {
+				nr[startIndex++] = this.slaveDbCode;
+			}
+			for (int i = 0; i < this.rawPksOrders.size(); ++i) {
+				String pk = this.rawPksOrders.get(i);
+				int index = this.rawFieldOrders.indexOf(pk);
+				nr[startIndex + i] = r[index];
+			}
+			dataLists.add(nr);
+		}
+
+		TransactionStatus status = tx.getTransaction(getDefaultTransactionDefinition());
+		if (log.isDebugEnabled()) {
+			log.debug("Execute Delete SQL : {}", this.deleteStatementSql);
+		}
+
+		try {
+			jdbcTemplate.batchUpdate(this.deleteStatementSql, dataLists, this.deleteArgsType);
+			tx.commit(status);
+			return dataLists.size();
+		}
+		catch (Exception e) {
+			tx.rollback(status);
+			throw e;
+		}
+		finally {
+			dataLists.clear();
+		}
+	}
+
+	/**
+	 * 生成Insert操作的SQL语句
+	 * @param schemaName 模式名称
+	 * @param tableName 表名称
+	 * @param fieldNames 字段列表
+	 * @return Insert操作的SQL语句
+	 */
+	protected String getInsertPrepareStatementSql(String schemaName, String tableName, List<String> fieldNames) {
+		List<String> placeHolders = Collections.nCopies(fieldNames.size(), "?");
+		String fullTableName = quoteSchemaTableName(schemaName, tableName);
+		return "INSERT INTO %s ( %s ) VALUES ( %s )".formatted(fullTableName,
+				quoteName(StringUtils.join(fieldNames, quoteName(","))), StringUtils.join(placeHolders, ","));
+	}
+
+	/**
+	 * 生成Update操作的SQL语句
+	 * @param schemaName 模式名称
+	 * @param tableName 表名称
+	 * @param fieldNames 字段列表
+	 * @param pks 主键列表
+	 * @return Update操作的SQL语句
+	 */
+	protected String getUpdatePrepareStatementSql(String schemaName, String tableName, List<String> fieldNames,
+			List<String> pks) {
+		String fullTableName = quoteSchemaTableName(schemaName, tableName);
+		List<String> uf = fieldNames.stream()
+			.filter(field -> !pks.contains(field))
+			.map(field -> "%s=?".formatted(quoteName(field)))
+			.collect(Collectors.toList());
+		List<String> uw = pks.stream().map(pk -> "%s=?".formatted(quoteName(pk))).collect(Collectors.toList());
+		return "UPDATE %s SET %s WHERE %s".formatted(fullTableName, StringUtils.join(uf, " , "),
+				StringUtils.join(uw, " AND "));
+	}
+
+	/**
+	 * 生成Delete操作的SQL语句
+	 * @param schemaName 模式名称
+	 * @param tableName 表名称
+	 * @param pks 主键列表
+	 * @return Delete操作的SQL语句
+	 */
+	protected String getDeletePrepareStatementSql(String schemaName, String tableName, List<String> pks) {
+		String fullTableName = quoteSchemaTableName(schemaName, tableName);
+		List<String> uw = pks.stream().map(pk -> "%s=?".formatted(quoteName(pk))).collect(Collectors.toList());
+		return "DELETE FROM %s WHERE %s ".formatted(fullTableName, StringUtils.join(uw, "  AND  "));
+	}
 
 }

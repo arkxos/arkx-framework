@@ -72,78 +72,83 @@ import io.arkx.framework.thirdparty.el.operator.UnaryOperator;
  **/
 
 public class UnaryOperatorExpression extends Expression {
-    List<UnaryOperator> mOperators;
-    UnaryOperator mOperator;
 
-    public UnaryOperator getOperator() {
-        return mOperator;
-    }
+	List<UnaryOperator> mOperators;
 
-    public void setOperator(UnaryOperator pOperator) {
-        mOperator = pOperator;
-    }
+	UnaryOperator mOperator;
 
-    public List<UnaryOperator> getOperators() {
-        return mOperators;
-    }
+	public UnaryOperator getOperator() {
+		return mOperator;
+	}
 
-    public void setOperators(List<UnaryOperator> pOperators) {
-        mOperators = pOperators;
-    }
+	public void setOperator(UnaryOperator pOperator) {
+		mOperator = pOperator;
+	}
 
-    Expression mExpression;
+	public List<UnaryOperator> getOperators() {
+		return mOperators;
+	}
 
-    public Expression getExpression() {
-        return mExpression;
-    }
+	public void setOperators(List<UnaryOperator> pOperators) {
+		mOperators = pOperators;
+	}
 
-    public void setExpression(Expression pExpression) {
-        mExpression = pExpression;
-    }
+	Expression mExpression;
 
-    public UnaryOperatorExpression(UnaryOperator pOperator, List<UnaryOperator> pOperators, Expression pExpression) {
-        mOperator = pOperator;
-        mOperators = pOperators;
-        mExpression = pExpression;
-    }
+	public Expression getExpression() {
+		return mExpression;
+	}
 
-    /**
-     * Returns the expression in the expression language syntax
-     **/
-    @Override
-    public String getExpressionString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("(");
-        if (mOperator != null) {
-            buf.append(mOperator.getOperatorSymbol());
-            buf.append(" ");
-        } else {
-            for (int i = 0; i < mOperators.size(); i++) {
-                UnaryOperator operator = mOperators.get(i);
-                buf.append(operator.getOperatorSymbol());
-                buf.append(" ");
-            }
-        }
-        buf.append(mExpression.getExpressionString());
-        buf.append(")");
-        return buf.toString();
-    }
+	public void setExpression(Expression pExpression) {
+		mExpression = pExpression;
+	}
 
-    /**
-     * Evaluates to the literal value
-     **/
-    @Override
-    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-            throws ExpressionException {
-        Object value = mExpression.evaluate(pResolver, functions, pLogger);
-        if (mOperator != null) {
-            value = mOperator.apply(value, pLogger);
-        } else {
-            for (int i = mOperators.size() - 1; i >= 0; i--) {
-                UnaryOperator operator = mOperators.get(i);
-                value = operator.apply(value, pLogger);
-            }
-        }
-        return value;
-    }
+	public UnaryOperatorExpression(UnaryOperator pOperator, List<UnaryOperator> pOperators, Expression pExpression) {
+		mOperator = pOperator;
+		mOperators = pOperators;
+		mExpression = pExpression;
+	}
+
+	/**
+	 * Returns the expression in the expression language syntax
+	 **/
+	@Override
+	public String getExpressionString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append("(");
+		if (mOperator != null) {
+			buf.append(mOperator.getOperatorSymbol());
+			buf.append(" ");
+		}
+		else {
+			for (int i = 0; i < mOperators.size(); i++) {
+				UnaryOperator operator = mOperators.get(i);
+				buf.append(operator.getOperatorSymbol());
+				buf.append(" ");
+			}
+		}
+		buf.append(mExpression.getExpressionString());
+		buf.append(")");
+		return buf.toString();
+	}
+
+	/**
+	 * Evaluates to the literal value
+	 **/
+	@Override
+	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+			throws ExpressionException {
+		Object value = mExpression.evaluate(pResolver, functions, pLogger);
+		if (mOperator != null) {
+			value = mOperator.apply(value, pLogger);
+		}
+		else {
+			for (int i = mOperators.size() - 1; i >= 0; i--) {
+				UnaryOperator operator = mOperators.get(i);
+				value = operator.apply(value, pLogger);
+			}
+		}
+		return value;
+	}
+
 }

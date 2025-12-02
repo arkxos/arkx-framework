@@ -20,13 +20,16 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 @SuppressWarnings("rawtypes")
 public class EnumMarkerSerializer extends JsonSerializer<Enum> {
-    @Override
-    public void serialize(Enum value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        if (value instanceof EnumMarker) {
-            EnumMarker v = (EnumMarker) value;
-            gen.writeObject(v.getValue());
-        } else {
-            gen.writeObject(value.toString());
-        }
-    }
+
+	@Override
+	public void serialize(Enum value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+		if (value instanceof EnumMarker) {
+			EnumMarker v = (EnumMarker) value;
+			gen.writeObject(v.getValue());
+		}
+		else {
+			gen.writeObject(value.toString());
+		}
+	}
+
 }

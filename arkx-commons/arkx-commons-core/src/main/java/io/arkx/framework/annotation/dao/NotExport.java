@@ -7,11 +7,12 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 public @interface NotExport {
-    /**
-     * @return 是否导出
-     */
-    boolean value() default true;
+
+	/**
+	 * @return 是否导出
+	 */
+	boolean value() default true;
 
 }

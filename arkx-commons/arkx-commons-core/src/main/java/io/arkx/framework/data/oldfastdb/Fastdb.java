@@ -7,166 +7,169 @@ import java.util.concurrent.ConcurrentHashMap;
 import io.arkx.framework.commons.util.SystemInfo;
 
 /**
- *
  * @author Darkness
  * @date 2016年6月17日 下午2:09:10
  * @version V1.0
  */
 public class Fastdb {
 
-    private static Fastdb instance = new Fastdb();
+	private static Fastdb instance = new Fastdb();
 
-    public static Fastdb instance() {
-        return instance;
-    }
+	public static Fastdb instance() {
+		return instance;
+	}
 
-    private String dbPath = SystemInfo.userHome() + File.separator + "fastdb";
+	private String dbPath = SystemInfo.userHome() + File.separator + "fastdb";
 
-    private Map<String, FastTable> tableMap = new ConcurrentHashMap<>();
+	private Map<String, FastTable> tableMap = new ConcurrentHashMap<>();
 
-    private boolean inited = false;
-    private Object syncObject = new Object();
+	private boolean inited = false;
 
-    public void start() {
-        init();
-    }
+	private Object syncObject = new Object();
 
-    public Fastdb setPath(String path) {
-        dbPath = path;
-        return this;
-    }
+	public void start() {
+		init();
+	}
 
-    public void insert(FastDataTable dataTable) {
-        init();
+	public Fastdb setPath(String path) {
+		dbPath = path;
+		return this;
+	}
 
-        String tableName = dataTable.getTableName();
-        FastTable table = tableMap.get(tableName);
-        if (table == null) {// table not exist
-            FastTableFile tableFile = new FastTableFile(tableFile(tableName));
-            tableFile.save(dataTable);
+	public void insert(FastDataTable dataTable) {
+		init();
 
-            table = new FastTable(tableFile(tableName));
-            tableMap.put(tableName, table);
-        }
+		String tableName = dataTable.getTableName();
+		FastTable table = tableMap.get(tableName);
+		if (table == null) {// table not exist
+			FastTableFile tableFile = new FastTableFile(tableFile(tableName));
+			tableFile.save(dataTable);
 
-        table.insert(dataTable);
-    }
+			table = new FastTable(tableFile(tableName));
+			tableMap.put(tableName, table);
+		}
 
-    public FastDataTable load(String tableName) {
-        return load(tableName, FastDataTable.class);
-    }
+		table.insert(dataTable);
+	}
 
-    public <T extends IFastTable> T load(String tableName, Class<T> tableClass) {
-        init();
+	public FastDataTable load(String tableName) {
+		return load(tableName, FastDataTable.class);
+	}
 
-        if (!tableMap.containsKey(tableName)) {
-            try {
-                return tableClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // throw new RuntimeException("table["+tableName+"] not exist");
-        }
+	public <T extends IFastTable> T load(String tableName, Class<T> tableClass) {
+		init();
 
-        FastTable table = tableMap.get(tableName);
-        return table.load(tableClass);
-    }
+		if (!tableMap.containsKey(tableName)) {
+			try {
+				return tableClass.newInstance();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			// throw new RuntimeException("table["+tableName+"] not exist");
+		}
 
-    public FastTable getTable(String tableName) {
-        init();
+		FastTable table = tableMap.get(tableName);
+		return table.load(tableClass);
+	}
 
-        return tableMap.get(tableName);
-    }
+	public FastTable getTable(String tableName) {
+		init();
 
-    public long queryRowSize(String tableName) {
-        init();
+		return tableMap.get(tableName);
+	}
 
-        if (!tableMap.containsKey(tableName)) {
-            try {
-                return 0;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+	public long queryRowSize(String tableName) {
+		init();
 
-        FastTable table = tableMap.get(tableName);
-        return table.queryRowSize();
+		if (!tableMap.containsKey(tableName)) {
+			try {
+				return 0;
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
-    }
+		FastTable table = tableMap.get(tableName);
+		return table.queryRowSize();
 
-    public boolean isTableExist(String tableName) {
-        init();
+	}
 
-        return tableMap.containsKey(tableName);
-    }
+	public boolean isTableExist(String tableName) {
+		init();
 
-    public void dropTable(String tableName) {
-        init();
+		return tableMap.containsKey(tableName);
+	}
 
-        FastTable table = tableMap.get(tableName);
-        if (table == null) {
-            return;
-        }
-        table.drop();
+	public void dropTable(String tableName) {
+		init();
 
-        tableMap.remove(tableName);
-    }
+		FastTable table = tableMap.get(tableName);
+		if (table == null) {
+			return;
+		}
+		table.drop();
 
-    public FastDataTable select(String tableName, String filter) {
-        return select(tableName, filter, FastDataTable.class);
-    }
+		tableMap.remove(tableName);
+	}
 
-    public <T extends IFastTable> T select(String tableName, String filter, Class<T> tableType) {
-        init();
+	public FastDataTable select(String tableName, String filter) {
+		return select(tableName, filter, FastDataTable.class);
+	}
 
-        if (!tableMap.containsKey(tableName)) {
-            try {
-                return tableType.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+	public <T extends IFastTable> T select(String tableName, String filter, Class<T> tableType) {
+		init();
 
-        FastTable table = tableMap.get(tableName);
-        return table.select(filter, tableType);
-    }
+		if (!tableMap.containsKey(tableName)) {
+			try {
+				return tableType.newInstance();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
-    public void init() {
-        if (inited) {
-            return;
-        }
+		FastTable table = tableMap.get(tableName);
+		return table.select(filter, tableType);
+	}
 
-        synchronized (syncObject) {
-            if (inited) {
-                return;
-            }
+	public void init() {
+		if (inited) {
+			return;
+		}
 
-            File dbRootFile = new File(dbPath);
-            if (!dbRootFile.exists()) {
-                dbRootFile.mkdirs();
-            }
+		synchronized (syncObject) {
+			if (inited) {
+				return;
+			}
 
-            File[] tableFolders = dbRootFile.listFiles();
-            if (tableFolders != null) {
-                for (File tableFolder : tableFolders) {
-                    if (tableFolder.isDirectory()) {
-                        continue;
-                    }
-                    if (!FastTable.isTableFile(tableFolder.getName())) {
-                        continue;
-                    }
+			File dbRootFile = new File(dbPath);
+			if (!dbRootFile.exists()) {
+				dbRootFile.mkdirs();
+			}
 
-                    FastTable table = new FastTable(tableFolder);
-                    tableMap.put(table.getTableName(), table);
-                }
-            }
+			File[] tableFolders = dbRootFile.listFiles();
+			if (tableFolders != null) {
+				for (File tableFolder : tableFolders) {
+					if (tableFolder.isDirectory()) {
+						continue;
+					}
+					if (!FastTable.isTableFile(tableFolder.getName())) {
+						continue;
+					}
 
-            inited = true;
-        }
-    }
+					FastTable table = new FastTable(tableFolder);
+					tableMap.put(table.getTableName(), table);
+				}
+			}
 
-    private String tableFile(String tableName) {
-        return dbPath + File.separator + tableName + "." + FastTable.TABLE_EXT;
-    }
+			inited = true;
+		}
+	}
+
+	private String tableFile(String tableName) {
+		return dbPath + File.separator + tableName + "." + FastTable.TABLE_EXT;
+	}
 
 }

@@ -14,160 +14,164 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @class org.ark.framework.jaf.zhtml.ZhtmlTesterResponse
- *
  * @author Darkness
  * @date 2013-1-31 下午12:56:38
  * @version V1.0
  */
 public class ZhtmlTesterResponse implements HttpServletResponse {
-    private ZhtmlTester tester;
-    private String charset;
-    private PrintWriter writer = new PrintWriter(new StringWriter());
-    private ZhtmlPage page;
 
-    public ZhtmlTesterResponse(ZhtmlPage page) {
-        this.page = page;
-    }
+	private ZhtmlTester tester;
 
-    public void flushBuffer() throws IOException {
-    }
+	private String charset;
 
-    public int getBufferSize() {
-        return 0;
-    }
+	private PrintWriter writer = new PrintWriter(new StringWriter());
 
-    public String getCharacterEncoding() {
-        if (this.charset == null) {
-            this.charset = Config.getGlobalCharset();
-        }
-        return this.charset;
-    }
+	private ZhtmlPage page;
 
-    public String getContentType() {
-        return "text/html";
-    }
+	public ZhtmlTesterResponse(ZhtmlPage page) {
+		this.page = page;
+	}
 
-    public Locale getLocale() {
-        return Locale.CHINA;
-    }
+	public void flushBuffer() throws IOException {
+	}
 
-    public ServletOutputStream getOutputStream() throws IOException {
-        return null;
-    }
+	public int getBufferSize() {
+		return 0;
+	}
 
-    public PrintWriter getWriter() throws IOException {
-        return this.writer;
-    }
+	public String getCharacterEncoding() {
+		if (this.charset == null) {
+			this.charset = Config.getGlobalCharset();
+		}
+		return this.charset;
+	}
 
-    public boolean isCommitted() {
-        return false;
-    }
+	public String getContentType() {
+		return "text/html";
+	}
 
-    public void reset() {
-    }
+	public Locale getLocale() {
+		return Locale.CHINA;
+	}
 
-    public void resetBuffer() {
-    }
+	public ServletOutputStream getOutputStream() throws IOException {
+		return null;
+	}
 
-    public void setBufferSize(int arg0) {
-    }
+	public PrintWriter getWriter() throws IOException {
+		return this.writer;
+	}
 
-    public void setCharacterEncoding(String charset) {
-        this.charset = charset;
-    }
+	public boolean isCommitted() {
+		return false;
+	}
 
-    public void setContentLength(int arg0) {
-    }
+	public void reset() {
+	}
 
-    public void setContentType(String arg0) {
-    }
+	public void resetBuffer() {
+	}
 
-    public void setLocale(Locale arg0) {
-    }
+	public void setBufferSize(int arg0) {
+	}
 
-    public void addCookie(Cookie arg0) {
-    }
+	public void setCharacterEncoding(String charset) {
+		this.charset = charset;
+	}
 
-    public void addDateHeader(String arg0, long arg1) {
-    }
+	public void setContentLength(int arg0) {
+	}
 
-    public void addHeader(String arg0, String arg1) {
-    }
+	public void setContentType(String arg0) {
+	}
 
-    public void addIntHeader(String arg0, int arg1) {
-    }
+	public void setLocale(Locale arg0) {
+	}
 
-    public boolean containsHeader(String arg0) {
-        return false;
-    }
+	public void addCookie(Cookie arg0) {
+	}
 
-    public String encodeRedirectURL(String arg0) {
-        return null;
-    }
+	public void addDateHeader(String arg0, long arg1) {
+	}
 
-    public String encodeRedirectUrl(String arg0) {
-        return null;
-    }
+	public void addHeader(String arg0, String arg1) {
+	}
 
-    public String encodeURL(String arg0) {
-        return null;
-    }
+	public void addIntHeader(String arg0, int arg1) {
+	}
 
-    public String encodeUrl(String arg0) {
-        return null;
-    }
+	public boolean containsHeader(String arg0) {
+		return false;
+	}
 
-    public void sendError(int arg0) throws IOException {
-    }
+	public String encodeRedirectURL(String arg0) {
+		return null;
+	}
 
-    public void sendError(int arg0, String arg1) throws IOException {
-    }
+	public String encodeRedirectUrl(String arg0) {
+		return null;
+	}
 
-    public void sendRedirect(String arg0) throws IOException {
-    }
+	public String encodeURL(String arg0) {
+		return null;
+	}
 
-    public void setDateHeader(String arg0, long arg1) {
-    }
+	public String encodeUrl(String arg0) {
+		return null;
+	}
 
-    public void setHeader(String arg0, String arg1) {
-    }
+	public void sendError(int arg0) throws IOException {
+	}
 
-    public void setIntHeader(String arg0, int arg1) {
-    }
+	public void sendError(int arg0, String arg1) throws IOException {
+	}
 
-    public void setStatus(int arg0) {
-    }
+	public void sendRedirect(String arg0) throws IOException {
+	}
 
-    public void setStatus(int arg0, String arg1) {
-    }
+	public void setDateHeader(String arg0, long arg1) {
+	}
 
-    @Override
-    public void setContentLengthLong(long len) {
-        // TODO Auto-generated method stub
+	public void setHeader(String arg0, String arg1) {
+	}
 
-    }
+	public void setIntHeader(String arg0, int arg1) {
+	}
 
-    @Override
-    public int getStatus() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+	public void setStatus(int arg0) {
+	}
 
-    @Override
-    public String getHeader(String name) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public void setStatus(int arg0, String arg1) {
+	}
 
-    @Override
-    public Collection<String> getHeaders(String name) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public void setContentLengthLong(long len) {
+		// TODO Auto-generated method stub
 
-    @Override
-    public Collection<String> getHeaderNames() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	}
+
+	@Override
+	public int getStatus() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getHeader(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<String> getHeaders(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<String> getHeaderNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

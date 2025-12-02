@@ -1,4 +1,5 @@
 package org.ark.framework.orm.db;
+
 // package org.ark.framework.orm.db;
 //
 // import org.ark.platform.dbkeeper.ClassGenerator;

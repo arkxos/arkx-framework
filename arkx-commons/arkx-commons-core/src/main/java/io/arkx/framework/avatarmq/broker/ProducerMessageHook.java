@@ -28,98 +28,103 @@ import com.google.common.base.Joiner;
  */
 public class ProducerMessageHook implements ProducerMessageListener {
 
-    private List<ConsumerClusters> clustersSet = new ArrayList<ConsumerClusters>();
-    private List<ConsumerClusters> focusTopicGroup = null;
+	private List<ConsumerClusters> clustersSet = new ArrayList<ConsumerClusters>();
 
-    private void filterByTopic(String topic) {
-        Predicate focusAllPredicate = new Predicate() {
-            public boolean evaluate(Object object) {
-                ConsumerClusters clusters = (ConsumerClusters) object;
-                return clusters.findSubscriptionData(topic) != null;
-            }
-        };
+	private List<ConsumerClusters> focusTopicGroup = null;
 
-        AnyPredicate any = new AnyPredicate(new Predicate[]{focusAllPredicate});
+	private void filterByTopic(String topic) {
+		Predicate focusAllPredicate = new Predicate() {
+			public boolean evaluate(Object object) {
+				ConsumerClusters clusters = (ConsumerClusters) object;
+				return clusters.findSubscriptionData(topic) != null;
+			}
+		};
 
-        Closure joinClosure = new Closure() {
-            public void execute(Object input) {
-                if (input instanceof ConsumerClusters) {
-                    ConsumerClusters clusters = (ConsumerClusters) input;
-                    clustersSet.add(clusters);
-                }
-            }
-        };
+		AnyPredicate any = new AnyPredicate(new Predicate[] { focusAllPredicate });
 
-        Closure ignoreClosure = new Closure() {
-            public void execute(Object input) {
-            }
-        };
+		Closure joinClosure = new Closure() {
+			public void execute(Object input) {
+				if (input instanceof ConsumerClusters) {
+					ConsumerClusters clusters = (ConsumerClusters) input;
+					clustersSet.add(clusters);
+				}
+			}
+		};
 
-        Closure ifClosure = ClosureUtils.ifClosure(any, joinClosure, ignoreClosure);
+		Closure ignoreClosure = new Closure() {
+			public void execute(Object input) {
+			}
+		};
 
-        CollectionUtils.forAllDo(focusTopicGroup, ifClosure);
-    }
+		Closure ifClosure = ClosureUtils.ifClosure(any, joinClosure, ignoreClosure);
 
-    private boolean checkClustersSet(Message msg, String requestId) {
-        if (clustersSet.size() == 0) {
-            System.out.println("AvatarMQ don't have match clusters!");
-            ProducerAckMessage ack = new ProducerAckMessage();
-            ack.setMsgId(msg.getMsgId());
-            ack.setAck(requestId);
-            ack.setStatus(ProducerAckMessage.SUCCESS);
-            AckTaskQueue.pushAck(ack);
-            SemaphoreCache.release(MessageSystemConfig.AckTaskSemaphoreValue);
-            return false;
-        } else {
-            return true;
-        }
-    }
+		CollectionUtils.forAllDo(focusTopicGroup, ifClosure);
+	}
 
-    private void dispatchTask(Message msg, String topic) {
-        List<MessageDispatchTask> tasks = new ArrayList<MessageDispatchTask>();
+	private boolean checkClustersSet(Message msg, String requestId) {
+		if (clustersSet.size() == 0) {
+			System.out.println("AvatarMQ don't have match clusters!");
+			ProducerAckMessage ack = new ProducerAckMessage();
+			ack.setMsgId(msg.getMsgId());
+			ack.setAck(requestId);
+			ack.setStatus(ProducerAckMessage.SUCCESS);
+			AckTaskQueue.pushAck(ack);
+			SemaphoreCache.release(MessageSystemConfig.AckTaskSemaphoreValue);
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 
-        for (int i = 0; i < clustersSet.size(); i++) {
-            MessageDispatchTask task = new MessageDispatchTask();
-            task.setClusters(clustersSet.get(i).getClustersId());
-            task.setTopic(topic);
-            task.setMessage(msg);
-            tasks.add(task);
+	private void dispatchTask(Message msg, String topic) {
+		List<MessageDispatchTask> tasks = new ArrayList<MessageDispatchTask>();
 
-        }
+		for (int i = 0; i < clustersSet.size(); i++) {
+			MessageDispatchTask task = new MessageDispatchTask();
+			task.setClusters(clustersSet.get(i).getClustersId());
+			task.setTopic(topic);
+			task.setMessage(msg);
+			tasks.add(task);
 
-        MessageTaskQueue.getInstance().pushTask(tasks);
+		}
 
-        for (int i = 0; i < tasks.size(); i++) {
-            SemaphoreCache.release(MessageSystemConfig.NotifyTaskSemaphoreValue);
-        }
-    }
+		MessageTaskQueue.getInstance().pushTask(tasks);
 
-    private void taskAck(Message msg, String requestId) {
-        try {
-            Joiner joiner = Joiner.on(MessageSystemConfig.MessageDelimiter).skipNulls();
-            String key = joiner.join(requestId, msg.getMsgId());
-            AckMessageCache.getAckMessageCache().appendMessage(key);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		for (int i = 0; i < tasks.size(); i++) {
+			SemaphoreCache.release(MessageSystemConfig.NotifyTaskSemaphoreValue);
+		}
+	}
 
-    public void hookProducerMessage(Message msg, String requestId, Channel channel) {
+	private void taskAck(Message msg, String requestId) {
+		try {
+			Joiner joiner = Joiner.on(MessageSystemConfig.MessageDelimiter).skipNulls();
+			String key = joiner.join(requestId, msg.getMsgId());
+			AckMessageCache.getAckMessageCache().appendMessage(key);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-        ChannelCache.pushRequest(requestId, channel);
+	public void hookProducerMessage(Message msg, String requestId, Channel channel) {
 
-        String topic = msg.getTopic();
+		ChannelCache.pushRequest(requestId, channel);
 
-        focusTopicGroup = ConsumerContext.selectByTopic(topic);
+		String topic = msg.getTopic();
 
-        filterByTopic(topic);
+		focusTopicGroup = ConsumerContext.selectByTopic(topic);
 
-        if (checkClustersSet(msg, requestId)) {
-            dispatchTask(msg, topic);
-            taskAck(msg, requestId);
-            clustersSet.clear();
-        } else {
-            return;
-        }
-    }
+		filterByTopic(topic);
+
+		if (checkClustersSet(msg, requestId)) {
+			dispatchTask(msg, topic);
+			taskAck(msg, requestId);
+			clustersSet.clear();
+		}
+		else {
+			return;
+		}
+	}
+
 }

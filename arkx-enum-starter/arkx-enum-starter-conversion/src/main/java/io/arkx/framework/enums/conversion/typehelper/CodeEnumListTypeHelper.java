@@ -8,4 +8,5 @@ import org.apache.ibatis.type.ArrayTypeHandler;
  * @since 2022-11-10 16:13
  **/
 public class CodeEnumListTypeHelper extends ArrayTypeHandler {
+
 }

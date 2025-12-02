@@ -11,34 +11,36 @@ import io.arkx.framework.avatarmq.core.HookMessageEvent;
  */
 public class ProducerHookMessageEvent extends HookMessageEvent<String> {
 
-    private boolean brokerConnect = false;
-    private boolean running = false;
+	private boolean brokerConnect = false;
 
-    public ProducerHookMessageEvent() {
-        super();
-    }
+	private boolean running = false;
 
-    public void disconnect(String addr) {
-        synchronized (this) {
-            if (isRunning()) {
-                setBrokerConnect(false);
-            }
-        }
-    }
+	public ProducerHookMessageEvent() {
+		super();
+	}
 
-    public boolean isBrokerConnect() {
-        return brokerConnect;
-    }
+	public void disconnect(String addr) {
+		synchronized (this) {
+			if (isRunning()) {
+				setBrokerConnect(false);
+			}
+		}
+	}
 
-    public void setBrokerConnect(boolean brokerConnect) {
-        this.brokerConnect = brokerConnect;
-    }
+	public boolean isBrokerConnect() {
+		return brokerConnect;
+	}
 
-    public boolean isRunning() {
-        return running;
-    }
+	public void setBrokerConnect(boolean brokerConnect) {
+		this.brokerConnect = brokerConnect;
+	}
 
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
 }

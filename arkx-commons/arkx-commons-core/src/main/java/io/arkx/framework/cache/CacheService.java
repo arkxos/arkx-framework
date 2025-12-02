@@ -11,10 +11,11 @@ import io.arkx.framework.extend.AbstractExtendService;
  */
 public class CacheService extends AbstractExtendService<CacheDataProvider> {
 
-    /**
-     * 获取缓存实例
-     */
-    public static CacheService getInstance() {
-        return findInstance(CacheService.class);
-    }
+	/**
+	 * 获取缓存实例
+	 */
+	public static CacheService getInstance() {
+		return findInstance(CacheService.class);
+	}
+
 }

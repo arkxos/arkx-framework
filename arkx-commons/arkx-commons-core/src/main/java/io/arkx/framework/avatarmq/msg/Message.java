@@ -16,58 +16,62 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class Message extends BaseMessage implements Serializable {
 
-    private String msgId;
-    private String topic;
-    private byte[] body;
-    private long timeStamp;
+	private String msgId;
 
-    public String getMsgId() {
-        return msgId;
-    }
+	private String topic;
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
-    }
+	private byte[] body;
 
-    public String getTopic() {
-        return topic;
-    }
+	private long timeStamp;
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+	public String getMsgId() {
+		return msgId;
+	}
 
-    public byte[] getBody() {
-        return body;
-    }
+	public void setMsgId(String msgId) {
+		this.msgId = msgId;
+	}
 
-    public void setBody(byte[] body) {
-        this.body = body;
-    }
+	public String getTopic() {
+		return topic;
+	}
 
-    public long getTimeStamp() {
-        return timeStamp;
-    }
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
 
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
+	public byte[] getBody() {
+		return body;
+	}
 
-    public String toString() {
-        ReflectionToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
-        return ReflectionToStringBuilder.toStringExclude(this, new String[]{"body"});
-    }
+	public void setBody(byte[] body) {
+		this.body = body;
+	}
 
-    public int hashCode() {
-        return new HashCodeBuilder(11, 23).append(msgId).toHashCode();
-    }
+	public long getTimeStamp() {
+		return timeStamp;
+	}
 
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj != null && Message.class.isAssignableFrom(obj.getClass())) {
-            Message msg = (Message) obj;
-            result = new EqualsBuilder().append(topic, msg.getTopic()).append(body, msg.getBody()).isEquals();
-        }
-        return result;
-    }
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public String toString() {
+		ReflectionToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
+		return ReflectionToStringBuilder.toStringExclude(this, new String[] { "body" });
+	}
+
+	public int hashCode() {
+		return new HashCodeBuilder(11, 23).append(msgId).toHashCode();
+	}
+
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj != null && Message.class.isAssignableFrom(obj.getClass())) {
+			Message msg = (Message) obj;
+			result = new EqualsBuilder().append(topic, msg.getTopic()).append(body, msg.getBody()).isEquals();
+		}
+		return result;
+	}
+
 }

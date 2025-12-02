@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *
  * @author Nobody
  * @version 1.0
  * @date 2025-10-12 23:20
@@ -23,13 +22,20 @@ import lombok.NoArgsConstructor;
 @Table("ark_meta_column")
 public class MetaColumn extends StringIdEntity {
 
-    private Long connectionConfigId;
-    private String schemaName;
-    private String tableName;
-    private String fieldName;
-    private String categoryId;
-    private Integer categoryLevel;
-    private String referencedTableName;
-    private String referencedFieldName;
+	private Long connectionConfigId;
+
+	private String schemaName;
+
+	private String tableName;
+
+	private String fieldName;
+
+	private String categoryId;
+
+	private Integer categoryLevel;
+
+	private String referencedTableName;
+
+	private String referencedFieldName;
 
 }

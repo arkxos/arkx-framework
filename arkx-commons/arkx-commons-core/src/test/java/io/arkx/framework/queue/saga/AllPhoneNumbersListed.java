@@ -10,15 +10,16 @@ package io.arkx.framework.queue.saga;
  */
 public class AllPhoneNumbersListed extends PhoneNumberProcessEvent {
 
-    private String allPhoneNumbers;
+	private String allPhoneNumbers;
 
-    public AllPhoneNumbersListed(String aProcessId, String aPhoneNumbersArray) {
-        super(aProcessId);
+	public AllPhoneNumbersListed(String aProcessId, String aPhoneNumbersArray) {
+		super(aProcessId);
 
-        this.allPhoneNumbers = aPhoneNumbersArray;
-    }
+		this.allPhoneNumbers = aPhoneNumbersArray;
+	}
 
-    public String allPhoneNumbers() {
-        return this.allPhoneNumbers;
-    }
+	public String allPhoneNumbers() {
+		return this.allPhoneNumbers;
+	}
+
 }

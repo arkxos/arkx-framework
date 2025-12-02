@@ -15,47 +15,48 @@ package io.arkx.framework.data.db.core.calculate;
  * @author tang
  */
 public enum RowChangeTypeEnum {
-    /**
-     * 未变标识
-     */
-    VALUE_IDENTICAL(0, "identical"),
 
-    /**
-     * 更新标识
-     */
-    VALUE_CHANGED(1, "update"),
+	/**
+	 * 未变标识
+	 */
+	VALUE_IDENTICAL(0, "identical"),
 
-    /**
-     * 插入标识
-     */
-    VALUE_INSERT(2, "insert"),
+	/**
+	 * 更新标识
+	 */
+	VALUE_CHANGED(1, "update"),
 
-    /**
-     * 删除标识
-     */
-    VALUE_DELETED(3, "delete");
+	/**
+	 * 插入标识
+	 */
+	VALUE_INSERT(2, "insert"),
 
-    /**
-     * index
-     */
-    private Integer index;
+	/**
+	 * 删除标识
+	 */
+	VALUE_DELETED(3, "delete");
 
-    /**
-     * 状态标记
-     */
-    private String status;
+	/**
+	 * index
+	 */
+	private Integer index;
 
-    RowChangeTypeEnum(int idx, String flag) {
-        this.index = idx;
-        this.status = flag;
-    }
+	/**
+	 * 状态标记
+	 */
+	private String status;
 
-    public int getIndex() {
-        return index;
-    }
+	RowChangeTypeEnum(int idx, String flag) {
+		this.index = idx;
+		this.status = flag;
+	}
 
-    public String getStatus() {
-        return this.status;
-    }
+	public int getIndex() {
+		return index;
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
 
 }

@@ -15,63 +15,65 @@ import io.arkx.framework.commons.util.CriteriaQueryWrapper;
 import io.arkx.framework.data.common.repository.ExtBaseRepository;
 
 public interface IBaseService<T, ID extends Serializable, R extends ExtBaseRepository<T, ID>> {
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    void save(T t);
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    List<T> saveAll(Iterable<T> ts);
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	void save(T t);
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    void update(T t);
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	List<T> saveAll(Iterable<T> ts);
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    void deleteById(ID id);
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	void update(T t);
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    void delete(T t);
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	void deleteById(ID id);
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    void deleteInBatch(Iterable<T> ts);
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	void delete(T t);
 
-    T findById(ID id);
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	void deleteInBatch(Iterable<T> ts);
 
-    T findOneByCriteria(CriteriaQueryWrapper<T> criteria);
+	T findById(ID id);
 
-    <Q> List<T> findAllByCriteria(Q criteria);
+	T findOneByCriteria(CriteriaQueryWrapper<T> criteria);
 
-    <Q> Page<T> findAllByCriteria(Q criteria, Pageable pageable);
+	<Q> List<T> findAllByCriteria(Q criteria);
 
-    List<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria);
+	<Q> Page<T> findAllByCriteria(Q criteria, Pageable pageable);
 
-    Page<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria, Pageable pageable);
+	List<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria);
 
-    void deleteByCriteria(CriteriaQueryWrapper<T> criteria);
+	Page<T> findAllByCriteria(CriteriaQueryWrapper<T> criteria, Pageable pageable);
 
-    T findOneByExample(T example);
+	void deleteByCriteria(CriteriaQueryWrapper<T> criteria);
 
-    List<T> findAll();
+	T findOneByExample(T example);
 
-    List<T> findAll(T t);
+	List<T> findAll();
 
-    long count();
+	List<T> findAll(T t);
 
-    long count(T t);
+	long count();
 
-    List<T> list(T t);
+	long count(T t);
 
-    List list(T t, String... properties);
+	List<T> list(T t);
 
-    PageResult<T> pageList(T t, int currentPage, int pageSize);
+	List list(T t, String... properties);
 
-    PageResult<T> pageList(T t, int currentPage, int pageSize, String... properties);
+	PageResult<T> pageList(T t, int currentPage, int pageSize);
 
-    PageResult<T> pageList(T t, ExampleMatcher matcher, int currentPage, int pageSize);
+	PageResult<T> pageList(T t, int currentPage, int pageSize, String... properties);
 
-    PageResult pageNativeQuery(String sql, List<Object> params, int currentPage, int pageSize);
+	PageResult<T> pageList(T t, ExampleMatcher matcher, int currentPage, int pageSize);
 
-    List<Map<String, Object>> nativeQuery(String sql, List<Object> params);
+	PageResult pageNativeQuery(String sql, List<Object> params, int currentPage, int pageSize);
 
-    PageResult setPageResult(List<?> list, int currentPage, int pageSize, long totalNum);
+	List<Map<String, Object>> nativeQuery(String sql, List<Object> params);
 
-    Boolean exists(T example);
+	PageResult setPageResult(List<?> list, int currentPage, int pageSize, long totalNum);
+
+	Boolean exists(T example);
+
 }

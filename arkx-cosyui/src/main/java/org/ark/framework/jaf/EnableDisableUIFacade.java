@@ -19,62 +19,61 @@ import io.arkx.framework.i18n.LangMapping;
  */
 public abstract class EnableDisableUIFacade<T extends Entity> extends BaseUIFacade<T> {
 
-    /**
-     * @private
-     */
-    @Override
-    protected void bindGridCriteria(Criteria criteria, Mapx<String, Object> searchParams) {
-        super.bindGridCriteria(criteria, searchParams);
+	/**
+	 * @private
+	 */
+	@Override
+	protected void bindGridCriteria(Criteria criteria, Mapx<String, Object> searchParams) {
+		super.bindGridCriteria(criteria, searchParams);
 
-        criteria.add(
-                Restrictions.or(Restrictions.eq(BaseEntity.UseFlag, "Y"), Restrictions.eq(BaseEntity.UseFlag, "N")));
-    }
+		criteria
+			.add(Restrictions.or(Restrictions.eq(BaseEntity.UseFlag, "Y"), Restrictions.eq(BaseEntity.UseFlag, "N")));
+	}
 
-    /**
-     * 启用Entity，ids格式为："a,b,c..."
-     *
-     * @method enable
-     * @param {String}
-     *            ids
-     * @author Darkness
-     * @date 2012-10-18 下午10:14:33
-     * @version V1.0
-     */
-    public void enable(String ids) {
-        if (ObjectUtil.empty(ids)) {
-            throw new ServiceException(LangMapping.get("Common.InvalidID"));
-        }
+	/**
+	 * 启用Entity，ids格式为："a,b,c..."
+	 *
+	 * @method enable
+	 * @param {String} ids
+	 * @author Darkness
+	 * @date 2012-10-18 下午10:14:33
+	 * @version V1.0
+	 */
+	public void enable(String ids) {
+		if (ObjectUtil.empty(ids)) {
+			throw new ServiceException(LangMapping.get("Common.InvalidID"));
+		}
 
-        // ids: "1, 2, 3",after replace: ids = "1','2','3";
-        ids = ids.replaceAll(",", "','");
+		// ids: "1, 2, 3",after replace: ids = "1','2','3";
+		ids = ids.replaceAll(",", "','");
 
-        // here ids : "'1','2','3'"
-        ids = "'" + ids + "'";
+		// here ids : "'1','2','3'"
+		ids = "'" + ids + "'";
 
-        getEntityRepository().enable(ids);
-    }
+		getEntityRepository().enable(ids);
+	}
 
-    /**
-     * 禁用Entity，ids格式为："a,b,c..."
-     *
-     * @method disable
-     * @param {String}
-     *            ids
-     * @author Darkness
-     * @date 2012-10-18 下午10:14:33
-     * @version V1.0
-     */
-    public void disable(String ids) {
-        if (ObjectUtil.empty(ids)) {
-            throw new ServiceException(LangMapping.get("Common.InvalidID"));
-        }
+	/**
+	 * 禁用Entity，ids格式为："a,b,c..."
+	 *
+	 * @method disable
+	 * @param {String} ids
+	 * @author Darkness
+	 * @date 2012-10-18 下午10:14:33
+	 * @version V1.0
+	 */
+	public void disable(String ids) {
+		if (ObjectUtil.empty(ids)) {
+			throw new ServiceException(LangMapping.get("Common.InvalidID"));
+		}
 
-        // ids: "1, 2, 3",after replace: ids = "1','2','3";
-        ids = ids.replaceAll(",", "','");
+		// ids: "1, 2, 3",after replace: ids = "1','2','3";
+		ids = ids.replaceAll(",", "','");
 
-        // here ids : "'1','2','3'"
-        ids = "'" + ids + "'";
+		// here ids : "'1','2','3'"
+		ids = "'" + ids + "'";
 
-        getEntityRepository().disable(ids);
-    }
+		getEntityRepository().disable(ids);
+	}
+
 }

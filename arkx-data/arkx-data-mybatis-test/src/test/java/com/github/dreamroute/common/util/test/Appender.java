@@ -24,68 +24,61 @@ import ch.qos.logback.core.read.ListAppender;
  */
 public class Appender {
 
-    ListAppender<ILoggingEvent> apd = new ListAppender<>();
+	ListAppender<ILoggingEvent> apd = new ListAppender<>();
 
-    public Appender(Class<?> cls) {
-        Logger logger = (Logger) LoggerFactory.getLogger(cls);
-        apd.start();
-        logger.addAppender(apd);
-    }
+	public Appender(Class<?> cls) {
+		Logger logger = (Logger) LoggerFactory.getLogger(cls);
+		apd.start();
+		logger.addAppender(apd);
+	}
 
-    /**
-     * 打印的第index行信息是否包含相应的字符串
-     *
-     * @param index
-     *            第index行
-     * @param str
-     *            目标字符串
-     * @return true-包含; false-不包含
-     */
-    public boolean contains(int index, String str) {
-        return apd.list.get(index).getFormattedMessage().contains(str);
-    }
+	/**
+	 * 打印的第index行信息是否包含相应的字符串
+	 * @param index 第index行
+	 * @param str 目标字符串
+	 * @return true-包含; false-不包含
+	 */
+	public boolean contains(int index, String str) {
+		return apd.list.get(index).getFormattedMessage().contains(str);
+	}
 
-    /**
-     * 打印的第一行信息是否包含相应的字符串
-     *
-     * @param str
-     *            目标字符串
-     * @return true-包含; false-不包含
-     */
-    public boolean contains(String str) {
-        return contains(0, str);
-    }
+	/**
+	 * 打印的第一行信息是否包含相应的字符串
+	 * @param str 目标字符串
+	 * @return true-包含; false-不包含
+	 */
+	public boolean contains(String str) {
+		return contains(0, str);
+	}
 
-    /**
-     * 获取全部打印信息
-     */
-    public List<String> getMessages() {
-        return ofNullable(apd.list).orElseGet(ArrayList::new).stream().map(ILoggingEvent::getMessage).collect(toList());
-    }
+	/**
+	 * 获取全部打印信息
+	 */
+	public List<String> getMessages() {
+		return ofNullable(apd.list).orElseGet(ArrayList::new).stream().map(ILoggingEvent::getMessage).collect(toList());
+	}
 
-    /**
-     * 获取第一行打印信息，从第0行开始
-     */
-    public String getMessage() {
-        List<String> messages = getMessages();
-        if (isNotEmpty(messages)) {
-            return messages.get(0);
-        }
-        return null;
-    }
+	/**
+	 * 获取第一行打印信息，从第0行开始
+	 */
+	public String getMessage() {
+		List<String> messages = getMessages();
+		if (isNotEmpty(messages)) {
+			return messages.get(0);
+		}
+		return null;
+	}
 
-    /**
-     * 获取第index行打印信息，从第0行开始
-     *
-     * @param index
-     *            第index行打印信息
-     */
-    public String getMessage(int index) {
-        List<String> messages = getMessages();
-        if (isNotEmpty(messages) && messages.size() > index) {
-            return messages.get(index);
-        }
-        return null;
-    }
+	/**
+	 * 获取第index行打印信息，从第0行开始
+	 * @param index 第index行打印信息
+	 */
+	public String getMessage(int index) {
+		List<String> messages = getMessages();
+		if (isNotEmpty(messages) && messages.size() > index) {
+			return messages.get(index);
+		}
+		return null;
+	}
 
 }

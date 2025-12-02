@@ -12,53 +12,55 @@ package org.ark.framework.orm.sync.metadata;
  * 同步状态枚举 表示同步任务的状态
  */
 public enum SyncStatus {
-    /**
-     * 初始状态
-     */
-    INITIAL("初始"),
 
-    /**
-     * 等待处理
-     */
-    PENDING("等待处理"),
+	/**
+	 * 初始状态
+	 */
+	INITIAL("初始"),
 
-    /**
-     * 进行中
-     */
-    IN_PROGRESS("进行中"),
+	/**
+	 * 等待处理
+	 */
+	PENDING("等待处理"),
 
-    /**
-     * 已准备好，等待最终提交
-     */
-    PREPARED("已准备好，等待最终提交"),
+	/**
+	 * 进行中
+	 */
+	IN_PROGRESS("进行中"),
 
-    /**
-     * 成功完成
-     */
-    SUCCESS("成功"),
+	/**
+	 * 已准备好，等待最终提交
+	 */
+	PREPARED("已准备好，等待最终提交"),
 
-    /**
-     * 数据不一致
-     */
-    INCONSISTENT("数据不一致"),
+	/**
+	 * 成功完成
+	 */
+	SUCCESS("成功"),
 
-    /**
-     * 失败
-     */
-    FAILED("失败"),
+	/**
+	 * 数据不一致
+	 */
+	INCONSISTENT("数据不一致"),
 
-    /**
-     * 已取消
-     */
-    CANCELLED("已取消");
+	/**
+	 * 失败
+	 */
+	FAILED("失败"),
 
-    private final String description;
+	/**
+	 * 已取消
+	 */
+	CANCELLED("已取消");
 
-    SyncStatus(String description) {
-        this.description = description;
-    }
+	private final String description;
 
-    public String getDescription() {
-        return description;
-    }
+	SyncStatus(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
 }

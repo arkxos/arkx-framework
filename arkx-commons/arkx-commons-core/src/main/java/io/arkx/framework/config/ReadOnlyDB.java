@@ -13,40 +13,45 @@ import io.arkx.framework.data.jdbc.TransactionFactory;
  *
  */
 public class ReadOnlyDB implements IApplicationConfigItem {
-    public static final String ID = "ReadOnlyDB";
-    private static int i = 0;
-    private static String[] pools;
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "ReadOnlyDB";
 
-    @Override
-    public String getExtendItemName() {
-        return "The readonly database in Read/Write spliting mode";
-    }
+	private static int i = 0;
 
-    public static String getValue() {
-        return Config.getValue("App." + ID);
-    }
+	private static String[] pools;
 
-    public static Connection getReadOnlyDBConn(boolean bLongTimeFlag) {
-        if (TransactionFactory.getCurrentTransaction() != null) {
-            return TransactionFactory.getCurrentTransaction().getConnection();
-        }
-        String str = getValue();
-        if (pools == null) {
-            if (ObjectUtil.notEmpty(str)) {
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
 
-                pools = getValue().split("");
-            } else {
-                pools = new String[0];
-            }
-        }
-        if (pools.length == 0) {
-            throw new DatabaseException("ReadOnlyDB not configured!");
-        }
-        return ConnectionPoolManager.getConnection(pools[i++ % pools.length], bLongTimeFlag);
-    }
+	@Override
+	public String getExtendItemName() {
+		return "The readonly database in Read/Write spliting mode";
+	}
+
+	public static String getValue() {
+		return Config.getValue("App." + ID);
+	}
+
+	public static Connection getReadOnlyDBConn(boolean bLongTimeFlag) {
+		if (TransactionFactory.getCurrentTransaction() != null) {
+			return TransactionFactory.getCurrentTransaction().getConnection();
+		}
+		String str = getValue();
+		if (pools == null) {
+			if (ObjectUtil.notEmpty(str)) {
+
+				pools = getValue().split("");
+			}
+			else {
+				pools = new String[0];
+			}
+		}
+		if (pools.length == 0) {
+			throw new DatabaseException("ReadOnlyDB not configured!");
+		}
+		return ConnectionPoolManager.getConnection(pools[i++ % pools.length], bLongTimeFlag);
+	}
+
 }

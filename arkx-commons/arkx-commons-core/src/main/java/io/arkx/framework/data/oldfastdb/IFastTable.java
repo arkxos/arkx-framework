@@ -3,7 +3,6 @@ package io.arkx.framework.data.oldfastdb;
 import io.arkx.framework.data.fasttable.FastColumn;
 
 /**
- *
  * @author Darkness
  * @date 2015年12月19日 下午5:12:47
  * @version V1.0
@@ -11,13 +10,14 @@ import io.arkx.framework.data.fasttable.FastColumn;
  */
 public interface IFastTable {
 
-    String getTableName();
+	String getTableName();
 
-    int getRowCount();
+	int getRowCount();
 
-    int getColumnCount();
+	int getColumnCount();
 
-    FastColumn[] getLightningColumns();
+	FastColumn[] getLightningColumns();
 
-    FastColumn getFastColumn(String columnName);
+	FastColumn getFastColumn(String columnName);
+
 }

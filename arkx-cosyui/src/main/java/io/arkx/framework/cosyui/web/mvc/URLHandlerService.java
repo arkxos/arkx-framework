@@ -11,19 +11,21 @@ import io.arkx.framework.extend.AbstractExtendService;
  *
  */
 public class URLHandlerService extends AbstractExtendService<IURLHandler> {
-    public static URLHandlerService getInstance() {
-        return AbstractExtendService.findInstance(URLHandlerService.class);
-    }
 
-    @Override
-    protected void prepareItemList() {
-        itemList = ObjectUtil.toList(itemMap.values());
-        itemList = ObjectUtil.sort(itemList, new Comparator<IURLHandler>() {
-            @Override
-            public int compare(IURLHandler o1, IURLHandler o2) {
-                return o1.getOrder() - o2.getOrder();
-            }
-        });
-        itemList = new ReadOnlyList<>(itemList);
-    }
+	public static URLHandlerService getInstance() {
+		return AbstractExtendService.findInstance(URLHandlerService.class);
+	}
+
+	@Override
+	protected void prepareItemList() {
+		itemList = ObjectUtil.toList(itemMap.values());
+		itemList = ObjectUtil.sort(itemList, new Comparator<IURLHandler>() {
+			@Override
+			public int compare(IURLHandler o1, IURLHandler o2) {
+				return o1.getOrder() - o2.getOrder();
+			}
+		});
+		itemList = new ReadOnlyList<>(itemList);
+	}
+
 }

@@ -73,83 +73,91 @@ import io.arkx.framework.thirdparty.el.PrimitiveObjects;
  **/
 
 public class UnaryMinusOperator extends UnaryOperator {
-    // -------------------------------------
-    // Singleton
-    // -------------------------------------
 
-    public static final UnaryMinusOperator SINGLETON = new UnaryMinusOperator();
+	// -------------------------------------
+	// Singleton
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public UnaryMinusOperator() {
-    }
+	public static final UnaryMinusOperator SINGLETON = new UnaryMinusOperator();
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the symbol representing the operator
-     **/
-    @Override
-    public String getOperatorSymbol() {
-        return "-";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public UnaryMinusOperator() {
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given value
-     **/
-    @Override
-    public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
-        if (pValue == null) {
-            /*
-             * if (pLogger.isLoggingWarning ()) { pLogger.logWarning
-             * (Constants.ARITH_OP_NULL, getOperatorSymbol ()); }
-             */
-            return PrimitiveObjects.getInteger(0);
-        }
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the symbol representing the operator
+	 **/
+	@Override
+	public String getOperatorSymbol() {
+		return "-";
+	}
 
-        else if (pValue instanceof BigInteger) {
-            return ((BigInteger) pValue).negate();
-        }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given value
+	 **/
+	@Override
+	public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
+		if (pValue == null) {
+			/*
+			 * if (pLogger.isLoggingWarning ()) { pLogger.logWarning
+			 * (Constants.ARITH_OP_NULL, getOperatorSymbol ()); }
+			 */
+			return PrimitiveObjects.getInteger(0);
+		}
 
-        else if (pValue instanceof BigDecimal) {
-            return ((BigDecimal) pValue).negate();
-        }
+		else if (pValue instanceof BigInteger) {
+			return ((BigInteger) pValue).negate();
+		}
 
-        else if (pValue instanceof String) {
-            if (Coercions.isFloatingPointString(pValue)) {
-                double dval = Coercions.coerceToPrimitiveNumber(pValue, Double.class, pLogger).doubleValue();
-                return PrimitiveObjects.getDouble(-dval);
-            } else {
-                long lval = Coercions.coerceToPrimitiveNumber(pValue, Long.class, pLogger).longValue();
-                return PrimitiveObjects.getLong(-lval);
-            }
-        }
+		else if (pValue instanceof BigDecimal) {
+			return ((BigDecimal) pValue).negate();
+		}
 
-        else if (pValue instanceof Byte) {
-            return PrimitiveObjects.getByte((byte) -((Byte) pValue).byteValue());
-        } else if (pValue instanceof Short) {
-            return PrimitiveObjects.getShort((short) -((Short) pValue).shortValue());
-        } else if (pValue instanceof Integer) {
-            return PrimitiveObjects.getInteger(-((Integer) pValue).intValue());
-        } else if (pValue instanceof Long) {
-            return PrimitiveObjects.getLong(-((Long) pValue).longValue());
-        } else if (pValue instanceof Float) {
-            return PrimitiveObjects.getFloat(-((Float) pValue).floatValue());
-        } else if (pValue instanceof Double) {
-            return PrimitiveObjects.getDouble(-((Double) pValue).doubleValue());
-        }
+		else if (pValue instanceof String) {
+			if (Coercions.isFloatingPointString(pValue)) {
+				double dval = Coercions.coerceToPrimitiveNumber(pValue, Double.class, pLogger).doubleValue();
+				return PrimitiveObjects.getDouble(-dval);
+			}
+			else {
+				long lval = Coercions.coerceToPrimitiveNumber(pValue, Long.class, pLogger).longValue();
+				return PrimitiveObjects.getLong(-lval);
+			}
+		}
 
-        else {
-            if (pLogger.isLoggingError()) {
-                pLogger.logError(Constants.UNARY_OP_BAD_TYPE, getOperatorSymbol(), pValue.getClass().getName());
-            }
-            return PrimitiveObjects.getInteger(0);
-        }
-    }
+		else if (pValue instanceof Byte) {
+			return PrimitiveObjects.getByte((byte) -((Byte) pValue).byteValue());
+		}
+		else if (pValue instanceof Short) {
+			return PrimitiveObjects.getShort((short) -((Short) pValue).shortValue());
+		}
+		else if (pValue instanceof Integer) {
+			return PrimitiveObjects.getInteger(-((Integer) pValue).intValue());
+		}
+		else if (pValue instanceof Long) {
+			return PrimitiveObjects.getLong(-((Long) pValue).longValue());
+		}
+		else if (pValue instanceof Float) {
+			return PrimitiveObjects.getFloat(-((Float) pValue).floatValue());
+		}
+		else if (pValue instanceof Double) {
+			return PrimitiveObjects.getDouble(-((Double) pValue).doubleValue());
+		}
 
-    // -------------------------------------
+		else {
+			if (pLogger.isLoggingError()) {
+				pLogger.logError(Constants.UNARY_OP_BAD_TYPE, getOperatorSymbol(), pValue.getClass().getName());
+			}
+			return PrimitiveObjects.getInteger(0);
+		}
+	}
+
+	// -------------------------------------
+
 }

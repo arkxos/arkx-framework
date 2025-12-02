@@ -23,43 +23,45 @@ import jakarta.validation.constraints.NotNull;
  */
 public class SqlToyQueryLookupStrategy implements QueryLookupStrategy {
 
-    protected SqlToyLazyDao sqlToyLazyDao;
+	protected SqlToyLazyDao sqlToyLazyDao;
 
-    protected QueryLookupStrategy jdbcQueryLookupStrategy;
-    private final RelationalMappingContext context;
+	protected QueryLookupStrategy jdbcQueryLookupStrategy;
 
-    public SqlToyQueryLookupStrategy(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
-            RelationalMappingContext context) {
-        this.context = context;
-        this.sqlToyLazyDao = sqlToyLazyDao;
+	private final RelationalMappingContext context;
 
-        this.jdbcQueryLookupStrategy = defaultStrategy;
+	public SqlToyQueryLookupStrategy(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+			RelationalMappingContext context) {
+		this.context = context;
+		this.sqlToyLazyDao = sqlToyLazyDao;
 
-    }
+		this.jdbcQueryLookupStrategy = defaultStrategy;
 
-    public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
-            RelationalMappingContext context) {
-        return new SqlToyQueryLookupStrategy(defaultStrategy, sqlToyLazyDao, context);
-    }
+	}
 
-    @Override
-    public RepositoryQuery resolveQuery(@NotNull Method method, RepositoryMetadata metadata, ProjectionFactory factory,
-            NamedQueries namedQueries) {
-        if (method.isAnnotationPresent(SqlToyQuery.class)) {
-            return createSqlToyQuery(method, metadata, factory, namedQueries);
-        } else {
-            return jdbcQueryLookupStrategy.resolveQuery(method, metadata, factory, namedQueries);
-        }
-    }
+	public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+			RelationalMappingContext context) {
+		return new SqlToyQueryLookupStrategy(defaultStrategy, sqlToyLazyDao, context);
+	}
 
-    private RepositoryQuery createSqlToyQuery(Method method, RepositoryMetadata repositoryMetadata,
-            ProjectionFactory projectionFactory, NamedQueries namedQueries) {
+	@Override
+	public RepositoryQuery resolveQuery(@NotNull Method method, RepositoryMetadata metadata, ProjectionFactory factory,
+			NamedQueries namedQueries) {
+		if (method.isAnnotationPresent(SqlToyQuery.class)) {
+			return createSqlToyQuery(method, metadata, factory, namedQueries);
+		}
+		else {
+			return jdbcQueryLookupStrategy.resolveQuery(method, metadata, factory, namedQueries);
+		}
+	}
 
-        // 使用Spring的JpaQueryMethodFactory
-        JdbcQueryMethod queryMethod = new JdbcQueryMethod(method, repositoryMetadata, projectionFactory, namedQueries,
-                this.context);
+	private RepositoryQuery createSqlToyQuery(Method method, RepositoryMetadata repositoryMetadata,
+			ProjectionFactory projectionFactory, NamedQueries namedQueries) {
 
-        return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod);
-    }
+		// 使用Spring的JpaQueryMethodFactory
+		JdbcQueryMethod queryMethod = new JdbcQueryMethod(method, repositoryMetadata, projectionFactory, namedQueries,
+				this.context);
+
+		return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod);
+	}
 
 }

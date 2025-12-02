@@ -22,8 +22,7 @@ package io.arkx.framework.preloader.zip;
  * Info-ZIP Unicode Comment Extra Field (0x6375):
  *
  * <p>
- * Stores the UTF-8 version of the file comment as stored in the central
- * directory header.
+ * Stores the UTF-8 version of the file comment as stored in the central directory header.
  * </p>
  *
  * <pre>
@@ -38,44 +37,35 @@ package io.arkx.framework.preloader.zip;
  */
 public class UnicodeCommentExtraField extends AbstractUnicodeExtraField {
 
-    public static final ZipShort UCOM_ID = new ZipShort(0x6375);
+	public static final ZipShort UCOM_ID = new ZipShort(0x6375);
 
-    public UnicodeCommentExtraField() {
-    }
+	public UnicodeCommentExtraField() {
+	}
 
-    /**
-     * Assemble as unicode comment extension from the name given as text as well as
-     * the encoded bytes actually written to the archive.
-     *
-     * @param text
-     *            The file name
-     * @param bytes
-     *            the bytes actually written to the archive
-     * @param off
-     *            The offset of the encoded comment in <code>bytes</code>.
-     * @param len
-     *            The length of the encoded comment or comment in
-     *            <code>bytes</code>.
-     */
-    public UnicodeCommentExtraField(String text, byte[] bytes, int off, int len) {
-        super(text, bytes, off, len);
-    }
+	/**
+	 * Assemble as unicode comment extension from the name given as text as well as the
+	 * encoded bytes actually written to the archive.
+	 * @param text The file name
+	 * @param bytes the bytes actually written to the archive
+	 * @param off The offset of the encoded comment in <code>bytes</code>.
+	 * @param len The length of the encoded comment or comment in <code>bytes</code>.
+	 */
+	public UnicodeCommentExtraField(String text, byte[] bytes, int off, int len) {
+		super(text, bytes, off, len);
+	}
 
-    /**
-     * Assemble as unicode comment extension from the comment given as text as well
-     * as the bytes actually written to the archive.
-     *
-     * @param comment
-     *            The file comment
-     * @param bytes
-     *            the bytes actually written to the archive
-     */
-    public UnicodeCommentExtraField(String comment, byte[] bytes) {
-        super(comment, bytes);
-    }
+	/**
+	 * Assemble as unicode comment extension from the comment given as text as well as the
+	 * bytes actually written to the archive.
+	 * @param comment The file comment
+	 * @param bytes the bytes actually written to the archive
+	 */
+	public UnicodeCommentExtraField(String comment, byte[] bytes) {
+		super(comment, bytes);
+	}
 
-    public ZipShort getHeaderId() {
-        return UCOM_ID;
-    }
+	public ZipShort getHeaderId() {
+		return UCOM_ID;
+	}
 
 }

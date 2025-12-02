@@ -15,358 +15,388 @@ import java.util.zip.ZipEntry;
 import io.arkx.framework.classweaver.WeaverScanner;
 
 public class PreClassLoader extends URLClassLoader {
-    private List<JarClassLoader> loaders = null;
-    private Vector<Class<?>> loadedClass = new Vector<>();
-    private static PreClassLoader instance = null;
-    private ClassModifyScanner scanner = null;
-    static PrintStream out = System.out;
-    static PrintStream err = System.err;
 
-    public static Class<?> load(String className) throws ClassNotFoundException {
-        init();
-        return instance.loadClass(className);
-    }
+	private List<JarClassLoader> loaders = null;
 
-    public static PreClassLoader getInstance() {
-        init();
-        return instance;
-    }
+	private Vector<Class<?>> loadedClass = new Vector<>();
 
-    public static void destory() {
-        if (instance == null) {
-            return;
-        }
-        instance.scanner.destory();
-        instance.scanner = null;
-        if (instance.loaders != null) {
-            for (JarClassLoader jc : instance.loaders) {
-                try {
-                    jc.jf.close();
-                } catch (IOException localIOException) {
-                }
-            }
-            instance.loaders.clear();
-            instance.loaders = null;
-            instance.loadedClass.clear();
-            instance.loadedClass = null;
-        }
-        instance = null;
-    }
+	private static PreClassLoader instance = null;
 
-    private static void init() {
-        if (instance == null) {
-            synchronized (PreClassLoader.class) {
-                if (instance == null) {
-                    Updater.update();
-                    WeaverScanner.scan();
-                    instance = new PreClassLoader();
-                    instance.loadedClass = new Vector<>();
+	private ClassModifyScanner scanner = null;
+	static PrintStream out = System.out;
+	static PrintStream err = System.err;
 
-                    System.out.println("Reloader.newPreClassLoader:" + instance);
-                    instance.scanner = new ClassModifyScanner();
-                    instance.scanner.start();
-                }
-            }
-        }
-    }
+	public static Class<?> load(String className) throws ClassNotFoundException {
+		init();
+		return instance.loadClass(className);
+	}
 
-    protected static void reloadAll() {
-        instance = null;
-        init();
-    }
+	public static PreClassLoader getInstance() {
+		init();
+		return instance;
+	}
 
-    private PreClassLoader() {
-        super(new URL[0], PreClassLoader.class.getClassLoader());
-    }
+	public static void destory() {
+		if (instance == null) {
+			return;
+		}
+		instance.scanner.destory();
+		instance.scanner = null;
+		if (instance.loaders != null) {
+			for (JarClassLoader jc : instance.loaders) {
+				try {
+					jc.jf.close();
+				}
+				catch (IOException localIOException) {
+				}
+			}
+			instance.loaders.clear();
+			instance.loaders = null;
+			instance.loadedClass.clear();
+			instance.loadedClass = null;
+		}
+		instance = null;
+	}
 
-    public Class<?> loadClass(String name) throws ClassNotFoundException {
-        return loadClass(name, false);
-    }
+	private static void init() {
+		if (instance == null) {
+			synchronized (PreClassLoader.class) {
+				if (instance == null) {
+					Updater.update();
+					WeaverScanner.scan();
+					instance = new PreClassLoader();
+					instance.loadedClass = new Vector<>();
 
-    public byte[] loadData(String name) throws ClassNotFoundException {
-        if (name.indexOf("AbstractHttpMessageConverter") != -1) {
-            System.out.println("ddd");
-        }
-        String pathName = name.replace('.', '/');
-        byte[] data = loadClassData(pathName);
-        if (data == null) {
-            data = tryLoadFromJar(name);
-        }
-        if (data == null) {
-            throw new ClassNotFoundException(name);
-        }
-        return data;
-    }
+					System.out.println("Reloader.newPreClassLoader:" + instance);
+					instance.scanner = new ClassModifyScanner();
+					instance.scanner.start();
+				}
+			}
+		}
+	}
 
-    protected Class<?> findClass(String name) throws ClassNotFoundException {
-        if (this.loadedClass == null) {
-            return null;
-        }
-        Class<?> clazz = null;
-        byte[] data = loadData(name);
-        if (WeaverScanner.isWeaved(name)) {
-            String weavedPath = Util.getPluginPath() + "weaved/" + name + ".class";
-            if (new File(weavedPath).exists()) {
-                data = Util.readByte(weavedPath);
-            }
-        }
-        clazz = defineClass(name, data, 0, data.length);
-        this.loadedClass.add(clazz);
-        return clazz;
-    }
+	protected static void reloadAll() {
+		instance = null;
+		init();
+	}
 
-    /* Error */
-    private byte[] loadClassData(String name) {
-        InputStream fis;
-        byte data[];
-        fis = null;
-        data = (byte[]) null;
-        File f = new File((new StringBuilder(String.valueOf(Util.getPluginPath()))).append("classes/").append(name)
-                .append(".class").toString());
-        if (!f.exists()) {
-            try {
-                if (fis != null)
-                    fis.close();
-            } catch (Exception exception1) {
-            }
-            return null;
-        }
-        try {
-            fis = new FileInputStream(f);
-            data = Util.readByte(fis);
-            scanner.addClass(f.getAbsolutePath(), f.lastModified());
-        } catch (IOException ioexception) {
-            try {
-                if (fis != null)
-                    fis.close();
-            } catch (Exception exception2) {
-            }
-        }
-        try {
-            if (fis != null)
-                fis.close();
-        } catch (Exception exception3) {
-        }
-        return data;
-    }
+	private PreClassLoader() {
+		super(new URL[0], PreClassLoader.class.getClassLoader());
+	}
 
-    private void initJarLoaders() {
-        if (this.loaders == null) {
-            synchronized (this) {
-                if (this.loaders == null) {
-                    ArrayList<JarClassLoader> tmp = new ArrayList<>();
-                    addJarLoadersFromDir(new File(Util.getPluginPath() + "lib/"), tmp);
-                    addJarLoadersFromDir(new File(Util.getPluginPath() + "required/"), tmp);
-                    this.loaders = tmp;
-                }
-            }
-        }
-    }
+	public Class<?> loadClass(String name) throws ClassNotFoundException {
+		return loadClass(name, false);
+	}
 
-    private void addJarLoadersFromDir(File f, ArrayList<JarClassLoader> tmp) {
-        if (f.exists()) {
-            File[] arrayOfFile;
-            int j = (arrayOfFile = f.listFiles()).length;
-            for (int i = 0; i < j; i++) {
-                File f2 = arrayOfFile[i];
-                if (f2.isDirectory()) {
-                    addJarLoadersFromDir(f2, tmp);
-                } else if ((f2.getName().endsWith(".jar")) && (!f2.getName().endsWith(".ui.jar"))
-                        && (!f2.getName().endsWith(".resource.jar"))) {
-                    try {
-                        tmp.add(new JarClassLoader(f2.getAbsolutePath()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
+	public byte[] loadData(String name) throws ClassNotFoundException {
+		if (name.indexOf("AbstractHttpMessageConverter") != -1) {
+			System.out.println("ddd");
+		}
+		String pathName = name.replace('.', '/');
+		byte[] data = loadClassData(pathName);
+		if (data == null) {
+			data = tryLoadFromJar(name);
+		}
+		if (data == null) {
+			throw new ClassNotFoundException(name);
+		}
+		return data;
+	}
 
-    private byte[] tryLoadFromJar(String name) {
-        initJarLoaders();
-        if (this.loaders != null) {
-            for (JarClassLoader loader : this.loaders) {
-                try {
-                    byte[] bs = loader.loadClassData(name);
-                    if (bs != null) {
-                        String packageName = null;
-                        int pos = name.lastIndexOf('.');
-                        if (pos != -1) {
-                            packageName = name.substring(0, pos);
-                        }
-                        Package pkg = null;
-                        if (packageName != null) {
-                            pkg = getPackage(packageName);
-                            if (pkg == null) {
-                                try {
-                                    if (loader.jf.getManifest() == null) {
-                                        definePackage(packageName, null, null, null, null, null, null, null);
-                                    } else {
-                                        definePackage(packageName, loader.jf.getManifest(), null);
-                                    }
-                                } catch (IllegalArgumentException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                        return bs;
-                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
+	protected Class<?> findClass(String name) throws ClassNotFoundException {
+		if (this.loadedClass == null) {
+			return null;
+		}
+		Class<?> clazz = null;
+		byte[] data = loadData(name);
+		if (WeaverScanner.isWeaved(name)) {
+			String weavedPath = Util.getPluginPath() + "weaved/" + name + ".class";
+			if (new File(weavedPath).exists()) {
+				data = Util.readByte(weavedPath);
+			}
+		}
+		clazz = defineClass(name, data, 0, data.length);
+		this.loadedClass.add(clazz);
+		return clazz;
+	}
 
-    private URL tryFindResourceFromJar(String name) {
-        initJarLoaders();
-        if (this.loaders != null) {
-            for (JarClassLoader loader : this.loaders) {
-                URL url = loader.findResource(name);
-                if (url != null) {
-                    return url;
-                }
-            }
-        }
-        return null;
-    }
+	/* Error */
+	private byte[] loadClassData(String name) {
+		InputStream fis;
+		byte data[];
+		fis = null;
+		data = (byte[]) null;
+		File f = new File((new StringBuilder(String.valueOf(Util.getPluginPath()))).append("classes/")
+			.append(name)
+			.append(".class")
+			.toString());
+		if (!f.exists()) {
+			try {
+				if (fis != null)
+					fis.close();
+			}
+			catch (Exception exception1) {
+			}
+			return null;
+		}
+		try {
+			fis = new FileInputStream(f);
+			data = Util.readByte(fis);
+			scanner.addClass(f.getAbsolutePath(), f.lastModified());
+		}
+		catch (IOException ioexception) {
+			try {
+				if (fis != null)
+					fis.close();
+			}
+			catch (Exception exception2) {
+			}
+		}
+		try {
+			if (fis != null)
+				fis.close();
+		}
+		catch (Exception exception3) {
+		}
+		return data;
+	}
 
-    private List<URL> tryFindResourcesFromJar(String name) {
-        initJarLoaders();
-        List<URL> list = new ArrayList();
-        if (this.loaders != null) {
-            for (JarClassLoader loader : this.loaders) {
-                URL url = loader.findResource(name);
-                if (url != null) {
-                    list.add(url);
-                }
-            }
-        }
-        return list;
-    }
+	private void initJarLoaders() {
+		if (this.loaders == null) {
+			synchronized (this) {
+				if (this.loaders == null) {
+					ArrayList<JarClassLoader> tmp = new ArrayList<>();
+					addJarLoadersFromDir(new File(Util.getPluginPath() + "lib/"), tmp);
+					addJarLoadersFromDir(new File(Util.getPluginPath() + "required/"), tmp);
+					this.loaders = tmp;
+				}
+			}
+		}
+	}
 
-    public URL findResource(String name) {
-        try {
-            URL url = super.findResource(name);
-            if (url != null) {
-                return url;
-            }
-            String fileName = Util.getPluginPath() + "classes/" + name;
-            File f = new File(fileName);
-            if (!f.exists()) {
-                return tryFindResourceFromJar(name);
-            }
-            return f.toURI().toURL();
-        } catch (MalformedURLException mue) {
-        }
-        return null;
-    }
+	private void addJarLoadersFromDir(File f, ArrayList<JarClassLoader> tmp) {
+		if (f.exists()) {
+			File[] arrayOfFile;
+			int j = (arrayOfFile = f.listFiles()).length;
+			for (int i = 0; i < j; i++) {
+				File f2 = arrayOfFile[i];
+				if (f2.isDirectory()) {
+					addJarLoadersFromDir(f2, tmp);
+				}
+				else if ((f2.getName().endsWith(".jar")) && (!f2.getName().endsWith(".ui.jar"))
+						&& (!f2.getName().endsWith(".resource.jar"))) {
+					try {
+						tmp.add(new JarClassLoader(f2.getAbsolutePath()));
+					}
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
 
-    public Enumeration<URL> findResources(String name) {
-        try {
-            Vector<URL> list = new Vector();
-            String fileName = Util.getPluginPath() + "classes/" + name;
-            File f = new File(fileName);
-            if (!f.exists()) {
-                list.addAll(tryFindResourcesFromJar(name));
-            } else {
-                list.add(f.toURI().toURL());
-            }
-            URL url = super.findResource(name);
-            if (url != null) {
-                list.add(url);
-            }
-            return list.elements();
-        } catch (MalformedURLException mue) {
-        }
-        return null;
-    }
+	private byte[] tryLoadFromJar(String name) {
+		initJarLoaders();
+		if (this.loaders != null) {
+			for (JarClassLoader loader : this.loaders) {
+				try {
+					byte[] bs = loader.loadClassData(name);
+					if (bs != null) {
+						String packageName = null;
+						int pos = name.lastIndexOf('.');
+						if (pos != -1) {
+							packageName = name.substring(0, pos);
+						}
+						Package pkg = null;
+						if (packageName != null) {
+							pkg = getPackage(packageName);
+							if (pkg == null) {
+								try {
+									if (loader.jf.getManifest() == null) {
+										definePackage(packageName, null, null, null, null, null, null, null);
+									}
+									else {
+										definePackage(packageName, loader.jf.getManifest(), null);
+									}
+								}
+								catch (IllegalArgumentException e) {
+									e.printStackTrace();
+								}
+								catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+						return bs;
+					}
+				}
+				catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
 
-    public static class JarClassLoader {
+	private URL tryFindResourceFromJar(String name) {
+		initJarLoaders();
+		if (this.loaders != null) {
+			for (JarClassLoader loader : this.loaders) {
+				URL url = loader.findResource(name);
+				if (url != null) {
+					return url;
+				}
+			}
+		}
+		return null;
+	}
 
-        public byte[] loadClassData(String name) throws ClassNotFoundException {
-            byte data[];
-            InputStream fis = null;
-            data = (byte[]) null;
-            InputStream is;
-            String pathName = name.replace('.', '/') + ".class";
-            ZipEntry ze = jf.getEntry(pathName);
-            if (ze == null)
-                return null;
-            try {
-                is = jf.getInputStream(ze);
-                data = Util.readByte(is);
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (fis != null)
-                    fis.close();
-            } catch (Exception exception2) {
-            }
-            return data;
-        }
+	private List<URL> tryFindResourcesFromJar(String name) {
+		initJarLoaders();
+		List<URL> list = new ArrayList();
+		if (this.loaders != null) {
+			for (JarClassLoader loader : this.loaders) {
+				URL url = loader.findResource(name);
+				if (url != null) {
+					list.add(url);
+				}
+			}
+		}
+		return list;
+	}
 
-        public URL findResource(String name) {
-            URL url;
-            InputStream fis;
-            url = null;
-            fis = null;
-            try {
-                ZipEntry ze = jf.getEntry(name);
-                if (ze != null) {
-                    url = new URL("jar:file:" + (fileName.startsWith("/") ? "" : "/") + fileName + "!/" + name);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-            } catch (Exception exception1) {
-            }
-            return url;
-        }
+	public URL findResource(String name) {
+		try {
+			URL url = super.findResource(name);
+			if (url != null) {
+				return url;
+			}
+			String fileName = Util.getPluginPath() + "classes/" + name;
+			File f = new File(fileName);
+			if (!f.exists()) {
+				return tryFindResourceFromJar(name);
+			}
+			return f.toURI().toURL();
+		}
+		catch (MalformedURLException mue) {
+		}
+		return null;
+	}
 
-        private String fileName;
-        private JarFile jf;
+	public Enumeration<URL> findResources(String name) {
+		try {
+			Vector<URL> list = new Vector();
+			String fileName = Util.getPluginPath() + "classes/" + name;
+			File f = new File(fileName);
+			if (!f.exists()) {
+				list.addAll(tryFindResourcesFromJar(name));
+			}
+			else {
+				list.add(f.toURI().toURL());
+			}
+			URL url = super.findResource(name);
+			if (url != null) {
+				list.add(url);
+			}
+			return list.elements();
+		}
+		catch (MalformedURLException mue) {
+		}
+		return null;
+	}
 
-        public JarClassLoader(String fileName) throws IOException {
-            this.fileName = fileName;
-            jf = new JarFile(fileName);
-        }
+	public static class JarClassLoader {
 
-        @Override
-        public String toString() {
-            return "JarClassLoader:" + this.fileName;
-        }
-    }
+		public byte[] loadClassData(String name) throws ClassNotFoundException {
+			byte data[];
+			InputStream fis = null;
+			data = (byte[]) null;
+			InputStream is;
+			String pathName = name.replace('.', '/') + ".class";
+			ZipEntry ze = jf.getEntry(pathName);
+			if (ze == null)
+				return null;
+			try {
+				is = jf.getInputStream(ze);
+				data = Util.readByte(is);
+				is.close();
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (fis != null)
+					fis.close();
+			}
+			catch (Exception exception2) {
+			}
+			return data;
+		}
 
-    public Class<?> defineClassEx(String name, byte[] bytes, int offset, int len, ProtectionDomain domain) {
-        return defineClass(name, bytes, offset, len, domain);
-    }
+		public URL findResource(String name) {
+			URL url;
+			InputStream fis;
+			url = null;
+			fis = null;
+			try {
+				ZipEntry ze = jf.getEntry(name);
+				if (ze != null) {
+					url = new URL("jar:file:" + (fileName.startsWith("/") ? "" : "/") + fileName + "!/" + name);
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				if (fis != null) {
+					fis.close();
+				}
+			}
+			catch (Exception exception1) {
+			}
+			return url;
+		}
 
-    public class InternalResource {
-        public PreClassLoader.JarClassLoader Loader;
-        public long LastModified;
+		private String fileName;
 
-        public InternalResource(PreClassLoader.JarClassLoader Loader, long LastModified) {
-            this.LastModified = LastModified;
-            this.Loader = Loader;
-        }
-    }
+		private JarFile jf;
 
-    protected Vector<Class<?>> getLoadedClasses() {
-        return this.loadedClass;
-    }
+		public JarClassLoader(String fileName) throws IOException {
+			this.fileName = fileName;
+			jf = new JarFile(fileName);
+		}
 
-    public void addUrl(URL url) {
-        super.addURL(url);
-    }
+		@Override
+		public String toString() {
+			return "JarClassLoader:" + this.fileName;
+		}
+
+	}
+
+	public Class<?> defineClassEx(String name, byte[] bytes, int offset, int len, ProtectionDomain domain) {
+		return defineClass(name, bytes, offset, len, domain);
+	}
+
+	public class InternalResource {
+
+		public PreClassLoader.JarClassLoader Loader;
+
+		public long LastModified;
+
+		public InternalResource(PreClassLoader.JarClassLoader Loader, long LastModified) {
+			this.LastModified = LastModified;
+			this.Loader = Loader;
+		}
+
+	}
+
+	protected Vector<Class<?>> getLoadedClasses() {
+		return this.loadedClass;
+	}
+
+	public void addUrl(URL url) {
+		super.addURL(url);
+	}
+
 }

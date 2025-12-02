@@ -11,4 +11,5 @@ import jakarta.persistence.Converter;
  */
 @Converter(autoApply = true)
 public class StringListConverter extends AbstractJsonConverter<List<String>> {
+
 }

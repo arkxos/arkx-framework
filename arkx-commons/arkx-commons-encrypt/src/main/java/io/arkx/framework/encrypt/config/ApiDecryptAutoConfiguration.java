@@ -21,14 +21,15 @@ import jakarta.servlet.DispatcherType;
 @ConditionalOnProperty(value = "api-decrypt.enabled", havingValue = "true")
 public class ApiDecryptAutoConfiguration {
 
-    @Bean
-    public FilterRegistrationBean<CryptoFilter> cryptoFilterRegistration(ApiDecryptProperties properties) {
-        FilterRegistrationBean<CryptoFilter> registration = new FilterRegistrationBean<>();
-        registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new CryptoFilter(properties));
-        registration.addUrlPatterns("/*");
-        registration.setName("cryptoFilter");
-        registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
-        return registration;
-    }
+	@Bean
+	public FilterRegistrationBean<CryptoFilter> cryptoFilterRegistration(ApiDecryptProperties properties) {
+		FilterRegistrationBean<CryptoFilter> registration = new FilterRegistrationBean<>();
+		registration.setDispatcherTypes(DispatcherType.REQUEST);
+		registration.setFilter(new CryptoFilter(properties));
+		registration.addUrlPatterns("/*");
+		registration.setName("cryptoFilter");
+		registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
+		return registration;
+	}
+
 }

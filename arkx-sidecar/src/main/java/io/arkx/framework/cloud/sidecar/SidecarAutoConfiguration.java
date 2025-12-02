@@ -29,27 +29,27 @@ import org.springframework.web.client.RestTemplate;
 @Configuration(proxyBeanMethods = false)
 public class SidecarAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 
-    @Bean
-    @ConditionalOnEnabledHealthIndicator("sidecar")
-    public SidecarHealthIndicator sidecarHealthIndicator(SidecarProperties sidecarProperties,
-            RestTemplate restTemplate) {
-        return new SidecarHealthIndicator(sidecarProperties, restTemplate);
-    }
+	@Bean
+	@ConditionalOnEnabledHealthIndicator("sidecar")
+	public SidecarHealthIndicator sidecarHealthIndicator(SidecarProperties sidecarProperties,
+			RestTemplate restTemplate) {
+		return new SidecarHealthIndicator(sidecarProperties, restTemplate);
+	}
 
-    @Bean
-    public SidecarHealthChecker sidecarHealthChecker(SidecarDiscoveryClient sidecarDiscoveryClient,
-            SidecarHealthIndicator sidecarHealthIndicator, SidecarProperties sidecarProperties,
-            ConfigurableEnvironment environment) {
-        SidecarHealthChecker cleaner = new SidecarHealthChecker(sidecarDiscoveryClient, sidecarHealthIndicator,
-                sidecarProperties, environment);
-        cleaner.check();
-        return cleaner;
-    }
+	@Bean
+	public SidecarHealthChecker sidecarHealthChecker(SidecarDiscoveryClient sidecarDiscoveryClient,
+			SidecarHealthIndicator sidecarHealthIndicator, SidecarProperties sidecarProperties,
+			ConfigurableEnvironment environment) {
+		SidecarHealthChecker cleaner = new SidecarHealthChecker(sidecarDiscoveryClient, sidecarHealthIndicator,
+				sidecarProperties, environment);
+		cleaner.check();
+		return cleaner;
+	}
 
 }

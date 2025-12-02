@@ -17,58 +17,64 @@ import io.arkx.framework.commons.util.StringUtil;
  *
  */
 public abstract class SystemTask extends AbstractTask {
-    protected String cronExpression;
-    protected boolean disabled;
-    protected boolean needRetry;
-    protected int retryInterval;
-    protected int retryTimes;
 
-    /**
-     * 执行任务
-     */
-    public abstract void execute();
+	protected String cronExpression;
 
-    @Override
-    public String getCronExpression() {
-        if (StringUtil.isEmpty(cronExpression)) {
-            cronExpression = getDefaultCronExpression();
-        }
-        return cronExpression;
-    }
+	protected boolean disabled;
 
-    public String setCronExpression(String expr) {
-        return cronExpression = expr;
-    }
+	protected boolean needRetry;
 
-    public boolean isDisabled() {
-        return disabled;
-    }
+	protected int retryInterval;
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
+	protected int retryTimes;
 
-    public boolean isNeedRetry() {
-        return needRetry;
-    }
+	/**
+	 * 执行任务
+	 */
+	public abstract void execute();
 
-    public void setNeedRetry(boolean needRetry) {
-        this.needRetry = needRetry;
-    }
+	@Override
+	public String getCronExpression() {
+		if (StringUtil.isEmpty(cronExpression)) {
+			cronExpression = getDefaultCronExpression();
+		}
+		return cronExpression;
+	}
 
-    public int getRetryInterval() {
-        return retryInterval;
-    }
+	public String setCronExpression(String expr) {
+		return cronExpression = expr;
+	}
 
-    public void setRetryInterval(int retryInterval) {
-        this.retryInterval = retryInterval;
-    }
+	public boolean isDisabled() {
+		return disabled;
+	}
 
-    public int getRetryTimes() {
-        return retryTimes;
-    }
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
 
-    public void setRetryTimes(int retryTimes) {
-        this.retryTimes = retryTimes;
-    }
+	public boolean isNeedRetry() {
+		return needRetry;
+	}
+
+	public void setNeedRetry(boolean needRetry) {
+		this.needRetry = needRetry;
+	}
+
+	public int getRetryInterval() {
+		return retryInterval;
+	}
+
+	public void setRetryInterval(int retryInterval) {
+		this.retryInterval = retryInterval;
+	}
+
+	public int getRetryTimes() {
+		return retryTimes;
+	}
+
+	public void setRetryTimes(int retryTimes) {
+		this.retryTimes = retryTimes;
+	}
+
 }

@@ -15,100 +15,107 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  *
  */
 public class ForTag extends ArkTag {
-    int from;
-    int to;
-    int step;
-    int pos;
 
-    @Override
-    public String getTagName() {
-        return "for";
-    }
+	int from;
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        if (step == 0) {
-            step = 1;
-        }
-        if (from == to || step > 0 && from > to || step < 0 && from < to) {
-            return SKIP_BODY;
-        } else {
-            pos = from;
-            context.addDataVariable("i", pos);
-            context.addDataVariable("first", true);
-            if (step > 0 && pos + step == to || step < 0 && pos - step == to) {
-                context.addDataVariable("last", true);
-            } else {
-                context.addDataVariable("last", false);
-            }
-            return EVAL_BODY_INCLUDE;
-        }
-    }
+	int to;
 
-    @Override
-    public int doAfterBody() throws TemplateRuntimeException {
-        if (this.variables.containsKey("_ARK_BREAK_TAG")) {
-            return SKIP_BODY;
-        }
-        pos += step;
-        if (step > 0 && pos < to || step < 0 && pos > to) {
-            context.addDataVariable("i", pos);
-            context.addDataVariable("first", false);
-            if (step > 0 && pos + step == to || step < 0 && pos - step == to) {
-                context.addDataVariable("last", true);
-            }
-            return EVAL_BODY_AGAIN;
-        } else {
-            return SKIP_BODY;
-        }
-    }
+	int step;
 
-    public int getFrom() {
-        return from;
-    }
+	int pos;
 
-    public void setFrom(int from) {
-        this.from = from;
-    }
+	@Override
+	public String getTagName() {
+		return "for";
+	}
 
-    public int getTo() {
-        return to;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		if (step == 0) {
+			step = 1;
+		}
+		if (from == to || step > 0 && from > to || step < 0 && from < to) {
+			return SKIP_BODY;
+		}
+		else {
+			pos = from;
+			context.addDataVariable("i", pos);
+			context.addDataVariable("first", true);
+			if (step > 0 && pos + step == to || step < 0 && pos - step == to) {
+				context.addDataVariable("last", true);
+			}
+			else {
+				context.addDataVariable("last", false);
+			}
+			return EVAL_BODY_INCLUDE;
+		}
+	}
 
-    public void setTo(int to) {
-        this.to = to;
-    }
+	@Override
+	public int doAfterBody() throws TemplateRuntimeException {
+		if (this.variables.containsKey("_ARK_BREAK_TAG")) {
+			return SKIP_BODY;
+		}
+		pos += step;
+		if (step > 0 && pos < to || step < 0 && pos > to) {
+			context.addDataVariable("i", pos);
+			context.addDataVariable("first", false);
+			if (step > 0 && pos + step == to || step < 0 && pos - step == to) {
+				context.addDataVariable("last", true);
+			}
+			return EVAL_BODY_AGAIN;
+		}
+		else {
+			return SKIP_BODY;
+		}
+	}
 
-    public int getStep() {
-        return step;
-    }
+	public int getFrom() {
+		return from;
+	}
 
-    public void setStep(int step) {
-        this.step = step;
-    }
+	public void setFrom(int from) {
+		this.from = from;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("from", true, DataTypes.INTEGER.code(), "@{Framework.CycleFrom}"));
-        list.add(new TagAttr("to", true, DataTypes.INTEGER.code(), "@{Framework.CycleEnd}"));
-        list.add(new TagAttr("step", false, DataTypes.INTEGER.code(), "@{Framework.CycleStep}"));
-        return list;
-    }
+	public int getTo() {
+		return to;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	public void setTo(int to) {
+		this.to = to;
+	}
 
-    @Override
-    public String getDescription() {
-        return "@{Framework.ZForTagDescription}";
-    }
+	public int getStep() {
+		return step;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.ZForTagName}";
-    }
+	public void setStep(int step) {
+		this.step = step;
+	}
+
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("from", true, DataTypes.INTEGER.code(), "@{Framework.CycleFrom}"));
+		list.add(new TagAttr("to", true, DataTypes.INTEGER.code(), "@{Framework.CycleEnd}"));
+		list.add(new TagAttr("step", false, DataTypes.INTEGER.code(), "@{Framework.CycleStep}"));
+		return list;
+	}
+
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
+
+	@Override
+	public String getDescription() {
+		return "@{Framework.ZForTagDescription}";
+	}
+
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.ZForTagName}";
+	}
 
 }

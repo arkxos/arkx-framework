@@ -23,16 +23,17 @@ package io.arkx.framework.preloader.zip;
  * @since Ant 1.8.1
  */
 public abstract class ZipUtil {
-    /**
-     * Create a copy of the given array - or return null if the argument is null.
-     */
-    static byte[] copy(byte[] from) {
-        if (from != null) {
-            byte[] to = new byte[from.length];
-            System.arraycopy(from, 0, to, 0, to.length);
-            return to;
-        }
-        return null;
-    }
+
+	/**
+	 * Create a copy of the given array - or return null if the argument is null.
+	 */
+	static byte[] copy(byte[] from) {
+		if (from != null) {
+			byte[] to = new byte[from.length];
+			System.arraycopy(from, 0, to, 0, to.length);
+			return to;
+		}
+		return null;
+	}
 
 }

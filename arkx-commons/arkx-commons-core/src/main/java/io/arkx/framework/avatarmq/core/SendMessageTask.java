@@ -20,48 +20,52 @@ import io.arkx.framework.avatarmq.netty.NettyUtil;
  */
 public class SendMessageTask implements Callable<Void> {
 
-    private MessageDispatchTask[] tasks;
-    private Phaser phaser = null;
-    private SendMessageLauncher launcher = SendMessageLauncher.getInstance();
+	private MessageDispatchTask[] tasks;
 
-    public SendMessageTask(Phaser phaser, MessageDispatchTask[] tasks) {
-        this.phaser = phaser;
-        this.tasks = tasks;
-    }
+	private Phaser phaser = null;
 
-    public Void call() throws Exception {
-        for (MessageDispatchTask task : tasks) {
-            Message msg = task.getMessage();
+	private SendMessageLauncher launcher = SendMessageLauncher.getInstance();
 
-            if (ConsumerContext.selectByClusters(task.getClusters()) != null) {
-                RemoteChannelData channel = ConsumerContext.selectByClusters(task.getClusters())
-                        .nextRemoteChannelData();
+	public SendMessageTask(Phaser phaser, MessageDispatchTask[] tasks) {
+		this.phaser = phaser;
+		this.tasks = tasks;
+	}
 
-                ResponseMessage response = new ResponseMessage();
-                response.setMsgSource(MessageSource.AvatarMQBroker);
-                response.setMsgType(MessageType.AvatarMQMessage);
-                response.setMsgParams(msg);
-                response.setMsgId(new MessageIdGenerator().generate());
+	public Void call() throws Exception {
+		for (MessageDispatchTask task : tasks) {
+			Message msg = task.getMessage();
 
-                try {
-                    if (!NettyUtil.validateChannel(channel.getChannel())) {
-                        ConsumerContext.setClustersStat(task.getClusters(), ClustersState.NETWORKERR);
-                        continue;
-                    }
+			if (ConsumerContext.selectByClusters(task.getClusters()) != null) {
+				RemoteChannelData channel = ConsumerContext.selectByClusters(task.getClusters())
+					.nextRemoteChannelData();
 
-                    RequestMessage request = (RequestMessage) launcher.launcher(channel.getChannel(), response);
+				ResponseMessage response = new ResponseMessage();
+				response.setMsgSource(MessageSource.AvatarMQBroker);
+				response.setMsgType(MessageType.AvatarMQMessage);
+				response.setMsgParams(msg);
+				response.setMsgId(new MessageIdGenerator().generate());
 
-                    ConsumerAckMessage result = (ConsumerAckMessage) request.getMsgParams();
+				try {
+					if (!NettyUtil.validateChannel(channel.getChannel())) {
+						ConsumerContext.setClustersStat(task.getClusters(), ClustersState.NETWORKERR);
+						continue;
+					}
 
-                    if (result.getStatus() == ConsumerAckMessage.SUCCESS) {
-                        ConsumerContext.setClustersStat(task.getClusters(), ClustersState.SUCCESS);
-                    }
-                } catch (Exception e) {
-                    ConsumerContext.setClustersStat(task.getClusters(), ClustersState.ERROR);
-                }
-            }
-        }
-        phaser.arriveAndAwaitAdvance();
-        return null;
-    }
+					RequestMessage request = (RequestMessage) launcher.launcher(channel.getChannel(), response);
+
+					ConsumerAckMessage result = (ConsumerAckMessage) request.getMsgParams();
+
+					if (result.getStatus() == ConsumerAckMessage.SUCCESS) {
+						ConsumerContext.setClustersStat(task.getClusters(), ClustersState.SUCCESS);
+					}
+				}
+				catch (Exception e) {
+					ConsumerContext.setClustersStat(task.getClusters(), ClustersState.ERROR);
+				}
+			}
+		}
+		phaser.arriveAndAwaitAdvance();
+		return null;
+	}
+
 }

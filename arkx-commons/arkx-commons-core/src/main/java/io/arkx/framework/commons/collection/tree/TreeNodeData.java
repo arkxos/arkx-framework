@@ -7,16 +7,16 @@ package io.arkx.framework.commons.collection.tree;
  */
 public interface TreeNodeData<K> {
 
-    K getId();
+	K getId();
 
-    K getParentId();
+	K getParentId();
 
-    String getName();
+	String getName();
 
-    // String getPath();
+	// String getPath();
 
-    default int getSortOrder() {
-        return 0;
-    }
+	default int getSortOrder() {
+		return 0;
+	}
 
 }

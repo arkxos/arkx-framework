@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface QueueTask extends ElementProcessor {
 
-    String taskName();
+	String taskName();
 
-    List<String> initElements();
+	List<String> initElements();
 
 }

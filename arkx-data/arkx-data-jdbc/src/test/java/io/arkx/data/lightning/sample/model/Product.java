@@ -22,12 +22,17 @@ import lombok.NoArgsConstructor;
 @Table("TEST_PRODUCT")
 public class Product {
 
-    @Id
-    private Long id;
-    private String name;
-    private String description;
-    private BigDecimal price = new BigDecimal("0");
-    private String category;
-    private boolean active;
+	@Id
+	private Long id;
+
+	private String name;
+
+	private String description;
+
+	private BigDecimal price = new BigDecimal("0");
+
+	private String category;
+
+	private boolean active;
 
 }

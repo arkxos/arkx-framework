@@ -13,143 +13,152 @@ import jakarta.servlet.jsp.tagext.Tag;
 
 /**
  * @class org.ark.framework.jaf.tag.ListAction
- *
  * @author Darkness
  * @date 2013-1-31 下午12:52:35
  * @version V1.0
  */
 public class ListAction implements IPageEnableAction {
 
-    private DataTable dataSource;
-    private Mapx<String, String> params;
-    private int pageSize;
-    private int pageIndex;
-    private boolean page;
-    private String ID;
-    private String method;
-    private ListTag tag;
-    private int total;
-    private String queryString;
+	private DataTable dataSource;
 
-    public void bindData(Query qb) {
-        if (this.total == 0) {
-            this.total = DBUtil.getCount(qb);
-        }
-        this.dataSource = (DataTable) qb.executePagedDataTable(this.pageSize, this.pageIndex).getData();
-    }
+	private Mapx<String, String> params;
 
-    public void bindData(DataTable dt) {
-        this.dataSource = dt;
-    }
+	private int pageSize;
 
-    public void bindData(SchemaSet<?> set) {
-        bindData(set.toDataTable());
-    }
+	private int pageIndex;
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
+	private boolean page;
 
-    public void setTotal(Query qb) {
-        this.total = DBUtil.getCount(qb);
-    }
+	private String ID;
 
-    public int getTotal() {
-        return this.total;
-    }
+	private String method;
 
-    public DataRow getParentCurrentDataRow() {
-        Tag p = this.tag.getParent();
-        while (p != null) {
-            if (p instanceof ListTag) {
-                return ((ListTag) p).getCurrentDataRow();
-            }
-            p = p.getParent();
-        }
-        return null;
-    }
+	private ListTag tag;
 
-    public DataTable getParentData() {
-        Tag p = this.tag.getParent();
-        if ((p instanceof ListTag)) {
-            return ((ListTag) p).getData();
-        }
-        return null;
-    }
+	private int total;
 
-    public String getParam(String key) {
-        return this.params.getString(key);
-    }
+	private String queryString;
 
-    public DataTable getDataSource() {
-        return this.dataSource;
-    }
+	public void bindData(Query qb) {
+		if (this.total == 0) {
+			this.total = DBUtil.getCount(qb);
+		}
+		this.dataSource = (DataTable) qb.executePagedDataTable(this.pageSize, this.pageIndex).getData();
+	}
 
-    public Mapx<String, String> getParams() {
-        return this.params;
-    }
+	public void bindData(DataTable dt) {
+		this.dataSource = dt;
+	}
 
-    public void setParams(Mapx<String, String> params) {
-        this.params = params;
-    }
+	public void bindData(SchemaSet<?> set) {
+		bindData(set.toDataTable());
+	}
 
-    public int getPageSize() {
-        return this.pageSize;
-    }
+	public void setTotal(int total) {
+		this.total = total;
+	}
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
+	public void setTotal(Query qb) {
+		this.total = DBUtil.getCount(qb);
+	}
 
-    public int getPageIndex() {
-        return this.pageIndex;
-    }
+	public int getTotal() {
+		return this.total;
+	}
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
-    }
+	public DataRow getParentCurrentDataRow() {
+		Tag p = this.tag.getParent();
+		while (p != null) {
+			if (p instanceof ListTag) {
+				return ((ListTag) p).getCurrentDataRow();
+			}
+			p = p.getParent();
+		}
+		return null;
+	}
 
-    public boolean isPage() {
-        return this.page;
-    }
+	public DataTable getParentData() {
+		Tag p = this.tag.getParent();
+		if ((p instanceof ListTag)) {
+			return ((ListTag) p).getData();
+		}
+		return null;
+	}
 
-    public void setPage(boolean pageEnable) {
-        this.page = pageEnable;
-    }
+	public String getParam(String key) {
+		return this.params.getString(key);
+	}
 
-    public String getID() {
-        return this.ID;
-    }
+	public DataTable getDataSource() {
+		return this.dataSource;
+	}
 
-    public void setID(String iD) {
-        this.ID = iD;
-    }
+	public Mapx<String, String> getParams() {
+		return this.params;
+	}
 
-    public String getMethod() {
-        return this.method;
-    }
+	public void setParams(Mapx<String, String> params) {
+		this.params = params;
+	}
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
+	public int getPageSize() {
+		return this.pageSize;
+	}
 
-    public void setTag(ListTag tag) {
-        this.tag = tag;
-    }
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 
-    public String getQueryString() {
-        return this.queryString;
-    }
+	public int getPageIndex() {
+		return this.pageIndex;
+	}
 
-    public void setQueryString(String queryString) {
-        this.queryString = queryString;
-    }
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
 
-    public void setPageEnabled(boolean pageEnable) {
-        this.page = pageEnable;
-    }
+	public boolean isPage() {
+		return this.page;
+	}
 
-    public boolean isPageEnabled() {
-        return this.page;
-    }
+	public void setPage(boolean pageEnable) {
+		this.page = pageEnable;
+	}
+
+	public String getID() {
+		return this.ID;
+	}
+
+	public void setID(String iD) {
+		this.ID = iD;
+	}
+
+	public String getMethod() {
+		return this.method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public void setTag(ListTag tag) {
+		this.tag = tag;
+	}
+
+	public String getQueryString() {
+		return this.queryString;
+	}
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
+	}
+
+	public void setPageEnabled(boolean pageEnable) {
+		this.page = pageEnable;
+	}
+
+	public boolean isPageEnabled() {
+		return this.page;
+	}
+
 }

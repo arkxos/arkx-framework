@@ -26,141 +26,150 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SqliteMetadataQueryProvider extends AbstractMetadataProvider {
 
-    private static final String SHOW_CREATE_TABLE_SQL = "SELECT sql FROM \"sqlite_master\" where type='table' and tbl_name=? ";
-    private static final String SHOW_CREATE_VIEW_SQL = "SELECT sql FROM \"sqlite_master\" where type='view' and tbl_name=? ";
+	private static final String SHOW_CREATE_TABLE_SQL = "SELECT sql FROM \"sqlite_master\" where type='table' and tbl_name=? ";
 
-    public SqliteMetadataQueryProvider(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-    }
+	private static final String SHOW_CREATE_VIEW_SQL = "SELECT sql FROM \"sqlite_master\" where type='view' and tbl_name=? ";
 
-    @Override
-    public List<String> querySchemaList(Connection connection) {
-        return Collections.singletonList("main");
-    }
+	public SqliteMetadataQueryProvider(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+	}
 
-    @Override
-    public String getTableDDL(Connection connection, String schemaName, String tableName) {
-        try (PreparedStatement ps = connection.prepareStatement(SHOW_CREATE_TABLE_SQL)) {
-            ps.setString(1, tableName);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs != null && rs.next()) {
-                    return DDLFormatterUtils.format(rs.getString(1));
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+	@Override
+	public List<String> querySchemaList(Connection connection) {
+		return Collections.singletonList("main");
+	}
 
-        return "";
-    }
+	@Override
+	public String getTableDDL(Connection connection, String schemaName, String tableName) {
+		try (PreparedStatement ps = connection.prepareStatement(SHOW_CREATE_TABLE_SQL)) {
+			ps.setString(1, tableName);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs != null && rs.next()) {
+					return DDLFormatterUtils.format(rs.getString(1));
+				}
+			}
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 
-    @Override
-    public String getViewDDL(Connection connection, String schemaName, String tableName) {
-        try (PreparedStatement ps = connection.prepareStatement(SHOW_CREATE_VIEW_SQL)) {
-            ps.setString(1, tableName);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs != null && rs.next()) {
-                    return DDLFormatterUtils.format(rs.getString(1));
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+		return "";
+	}
 
-        return "";
-    }
+	@Override
+	public String getViewDDL(Connection connection, String schemaName, String tableName) {
+		try (PreparedStatement ps = connection.prepareStatement(SHOW_CREATE_VIEW_SQL)) {
+			ps.setString(1, tableName);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs != null && rs.next()) {
+					return DDLFormatterUtils.format(rs.getString(1));
+				}
+			}
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 
-    @Override
-    public List<ColumnDescription> querySelectSqlColumnMeta(Connection connection, String sql) {
-        String querySQL = " %s LIMIT 0 ".formatted(sql.replace(";", ""));
-        return this.getSelectSqlColumnMeta(connection, querySQL);
-    }
+		return "";
+	}
 
-    @Override
-    protected String getTableFieldsQuerySQL(String schemaName, String tableName) {
-        return "SELECT * FROM \"%s\".\"%s\"  ".formatted(schemaName, tableName);
-    }
+	@Override
+	public List<ColumnDescription> querySelectSqlColumnMeta(Connection connection, String sql) {
+		String querySQL = " %s LIMIT 0 ".formatted(sql.replace(";", ""));
+		return this.getSelectSqlColumnMeta(connection, querySQL);
+	}
 
-    @Override
-    public void testQuerySQL(Connection connection, String sql) {
-        String testQuerySql = "explain %s".formatted(sql.replace(";", ""));
-        if (log.isDebugEnabled()) {
-            log.debug("Execute sql :{}", testQuerySql);
-        }
-        try (Statement st = connection.createStatement()) {
-            st.execute(testQuerySql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	@Override
+	protected String getTableFieldsQuerySQL(String schemaName, String tableName) {
+		return "SELECT * FROM \"%s\".\"%s\"  ".formatted(schemaName, tableName);
+	}
 
-    @Override
-    public String getFieldDefinition(ColumnMetaData v, List<String> pks, boolean useAutoInc, boolean addCr,
-            boolean withRemarks) {
-        String fieldname = v.getName();
-        int length = v.getLength();
-        int precision = v.getPrecision();
-        int type = v.getType();
+	@Override
+	public void testQuerySQL(Connection connection, String sql) {
+		String testQuerySql = "explain %s".formatted(sql.replace(";", ""));
+		if (log.isDebugEnabled()) {
+			log.debug("Execute sql :{}", testQuerySql);
+		}
+		try (Statement st = connection.createStatement()) {
+			st.execute(testQuerySql);
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-        String retval = " \"" + fieldname + "\"   ";
+	@Override
+	public String getFieldDefinition(ColumnMetaData v, List<String> pks, boolean useAutoInc, boolean addCr,
+			boolean withRemarks) {
+		String fieldname = v.getName();
+		int length = v.getLength();
+		int precision = v.getPrecision();
+		int type = v.getType();
 
-        switch (type) {
-            case ColumnMetaData.TYPE_TIMESTAMP :
-            case ColumnMetaData.TYPE_TIME :
-            case ColumnMetaData.TYPE_DATE :
-                // sqlite中没有时间数据类型
-                retval += "DATETIME";
-                break;
-            case ColumnMetaData.TYPE_BOOLEAN :
-                retval += "CHAR(1)";
-                break;
-            case ColumnMetaData.TYPE_NUMBER :
-            case ColumnMetaData.TYPE_INTEGER :
-            case ColumnMetaData.TYPE_BIGNUMBER :
-                if (null != pks && !pks.isEmpty() && pks.contains(fieldname)) {
-                    // 关键字 AUTOINCREMENT 只能⽤于整型（INTEGER）字段。
-                    if (useAutoInc) {
-                        retval += "INTEGER AUTOINCREMENT";
-                    } else {
-                        retval += "BIGINT ";
-                    }
-                } else {
-                    if (precision != 0 || length < 0 || length > 18) {
-                        retval += "NUMERIC";
-                    } else {
-                        retval += "INTEGER";
-                    }
-                }
-                break;
-            case ColumnMetaData.TYPE_STRING :
-                if (length < 1 || length >= Constants.CLOB_LENGTH) {
-                    retval += "TEXT";
-                } else {
-                    if (length <= 2000) {
-                        retval += "VARCHAR(" + length + ")";
-                    } else {
-                        retval += "TEXT";
-                    }
-                }
-                break;
-            case ColumnMetaData.TYPE_BINARY :
-                retval += "BLOB";
-                break;
-            default :
-                retval += "TEXT";
-                break;
-        }
+		String retval = " \"" + fieldname + "\"   ";
 
-        if (addCr) {
-            retval += Constants.CR;
-        }
+		switch (type) {
+			case ColumnMetaData.TYPE_TIMESTAMP:
+			case ColumnMetaData.TYPE_TIME:
+			case ColumnMetaData.TYPE_DATE:
+				// sqlite中没有时间数据类型
+				retval += "DATETIME";
+				break;
+			case ColumnMetaData.TYPE_BOOLEAN:
+				retval += "CHAR(1)";
+				break;
+			case ColumnMetaData.TYPE_NUMBER:
+			case ColumnMetaData.TYPE_INTEGER:
+			case ColumnMetaData.TYPE_BIGNUMBER:
+				if (null != pks && !pks.isEmpty() && pks.contains(fieldname)) {
+					// 关键字 AUTOINCREMENT 只能⽤于整型（INTEGER）字段。
+					if (useAutoInc) {
+						retval += "INTEGER AUTOINCREMENT";
+					}
+					else {
+						retval += "BIGINT ";
+					}
+				}
+				else {
+					if (precision != 0 || length < 0 || length > 18) {
+						retval += "NUMERIC";
+					}
+					else {
+						retval += "INTEGER";
+					}
+				}
+				break;
+			case ColumnMetaData.TYPE_STRING:
+				if (length < 1 || length >= Constants.CLOB_LENGTH) {
+					retval += "TEXT";
+				}
+				else {
+					if (length <= 2000) {
+						retval += "VARCHAR(" + length + ")";
+					}
+					else {
+						retval += "TEXT";
+					}
+				}
+				break;
+			case ColumnMetaData.TYPE_BINARY:
+				retval += "BLOB";
+				break;
+			default:
+				retval += "TEXT";
+				break;
+		}
 
-        return retval;
-    }
+		if (addCr) {
+			retval += Constants.CR;
+		}
 
-    @Override
-    public List<String> getTableColumnCommentDefinition(TableDescription td, List<ColumnDescription> cds) {
-        return Collections.emptyList();
-    }
+		return retval;
+	}
+
+	@Override
+	public List<String> getTableColumnCommentDefinition(TableDescription td, List<ColumnDescription> cds) {
+		return Collections.emptyList();
+	}
 
 }

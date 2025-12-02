@@ -19,22 +19,23 @@ import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
  */
 public interface SampleRepository extends BaseJpaRepository<Sample, Long> {
 
-    @TemplateQuery
-    Page<Sample> findByContent(String content, Pageable pageable);
+	@TemplateQuery
+	Page<Sample> findByContent(String content, Pageable pageable);
 
-    @TemplateQuery
-    List<Sample> findByTemplateQueryObject(SampleQuery sampleQuery, Pageable pageable);
+	@TemplateQuery
+	List<Sample> findByTemplateQueryObject(SampleQuery sampleQuery, Pageable pageable);
 
-    @TemplateQuery
-    Long countContent(String content);
+	@TemplateQuery
+	Long countContent(String content);
 
-    @TemplateQuery
-    List<SampleDTO> findDtos();
+	@TemplateQuery
+	List<SampleDTO> findDtos();
 
-    // #{name?:'and content like :name'}
-    @Query(nativeQuery = true, value = "select * from t_sample where content like ?1")
-    List<Sample> findDtos2(String name);
+	// #{name?:'and content like :name'}
+	@Query(nativeQuery = true, value = "select * from t_sample where content like ?1")
+	List<Sample> findDtos2(String name);
 
-    @TemplateQuery
-    List<Map<String, Object>> findMap();
+	@TemplateQuery
+	List<Map<String, Object>> findMap();
+
 }

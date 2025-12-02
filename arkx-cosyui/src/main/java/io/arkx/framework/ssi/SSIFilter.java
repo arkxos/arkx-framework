@@ -11,95 +11,106 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class SSIFilter implements Filter {
-    protected FilterConfig config = null;
-    protected int debug = 0;
-    protected Long expires = null;
-    protected boolean isVirtualWebappRelative = true;
 
-    public void init(FilterConfig config) throws ServletException {
-        this.config = config;
+	protected FilterConfig config = null;
 
-        String value = null;
-        try {
-            value = config.getInitParameter("debug");
-            this.debug = Integer.parseInt(value);
-        } catch (Throwable localThrowable) {
-        }
-        try {
-            value = config.getInitParameter("expires");
-            if (StringUtil.isEmpty(value)) {
-                value = "0";
-            }
-            this.expires = Long.valueOf(value);
-        } catch (NumberFormatException e) {
-            this.expires = null;
-            config.getServletContext().log("Invalid format for expires initParam; expected integer (seconds)");
-        } catch (Throwable localThrowable1) {
-        }
-        if (this.debug > 0) {
-            config.getServletContext().log("SSIFilter.init() SSI invoker started with 'debug'=" + this.debug);
-        }
-    }
+	protected int debug = 0;
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
-        if ((Config.getServletMajorVersion() == 2) && (Config.getServletMinorVersion() == 3)) {
-            response.setContentType("text/html;charset=" + Config.getGlobalCharset());
-        } else {
-            response.setCharacterEncoding(Config.getGlobalCharset());
-        }
-        request.setCharacterEncoding(Config.getGlobalCharset());
+	protected Long expires = null;
 
-        req.setAttribute("org.apache.catalina.ssi.SSIServlet", "true");
-        req.setAttribute("javax.servlet.include.context_path", "true");
+	protected boolean isVirtualWebappRelative = true;
 
-        ByteArrayServletOutputStream basos = new ByteArrayServletOutputStream();
-        ResponseIncludeWrapper responseIncludeWrapper = new ResponseIncludeWrapper(this.config.getServletContext(), req,
-                res, basos);
+	public void init(FilterConfig config) throws ServletException {
+		this.config = config;
 
-        chain.doFilter(req, responseIncludeWrapper);
+		String value = null;
+		try {
+			value = config.getInitParameter("debug");
+			this.debug = Integer.parseInt(value);
+		}
+		catch (Throwable localThrowable) {
+		}
+		try {
+			value = config.getInitParameter("expires");
+			if (StringUtil.isEmpty(value)) {
+				value = "0";
+			}
+			this.expires = Long.valueOf(value);
+		}
+		catch (NumberFormatException e) {
+			this.expires = null;
+			config.getServletContext().log("Invalid format for expires initParam; expected integer (seconds)");
+		}
+		catch (Throwable localThrowable1) {
+		}
+		if (this.debug > 0) {
+			config.getServletContext().log("SSIFilter.init() SSI invoker started with 'debug'=" + this.debug);
+		}
+	}
 
-        responseIncludeWrapper.flushOutputStreamOrWriter();
-        byte[] bytes = basos.toByteArray();
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		if ((Config.getServletMajorVersion() == 2) && (Config.getServletMinorVersion() == 3)) {
+			response.setContentType("text/html;charset=" + Config.getGlobalCharset());
+		}
+		else {
+			response.setCharacterEncoding(Config.getGlobalCharset());
+		}
+		request.setCharacterEncoding(Config.getGlobalCharset());
 
-        String encoding = res.getCharacterEncoding();
+		req.setAttribute("org.apache.catalina.ssi.SSIServlet", "true");
+		req.setAttribute("javax.servlet.include.context_path", "true");
 
-        SSIExternalResolver ssiExternalResolver = new SSIServletExternalResolver(this.config.getServletContext(), req,
-                res, this.isVirtualWebappRelative, this.debug, encoding);
-        SSIProcessor ssiProcessor = new SSIProcessor(ssiExternalResolver, this.debug);
+		ByteArrayServletOutputStream basos = new ByteArrayServletOutputStream();
+		ResponseIncludeWrapper responseIncludeWrapper = new ResponseIncludeWrapper(this.config.getServletContext(), req,
+				res, basos);
 
-        Reader reader = new InputStreamReader(new ByteArrayInputStream(bytes), encoding);
-        ByteArrayOutputStream ssiout = new ByteArrayOutputStream();
-        PrintWriter writer = new PrintWriter(new OutputStreamWriter(ssiout, encoding));
+		chain.doFilter(req, responseIncludeWrapper);
 
-        long lastModified = ssiProcessor.process(reader, responseIncludeWrapper.getLastModified(), writer);
+		responseIncludeWrapper.flushOutputStreamOrWriter();
+		byte[] bytes = basos.toByteArray();
 
-        writer.flush();
-        bytes = ssiout.toByteArray();
-        if (this.expires != null) {
-            res.setDateHeader("expires", new Date().getTime() + this.expires.longValue() * 1000L);
-        }
-        if (lastModified > 0L) {
-            res.setDateHeader("last-modified", lastModified);
-        }
-        res.setDateHeader("last-modified", System.currentTimeMillis());
-        res.setContentLength(bytes.length);
+		String encoding = res.getCharacterEncoding();
 
-        res.setContentType("text/html;charset=" + Config.getGlobalCharset());
-        try {
-            OutputStream out = res.getOutputStream();
-            out.write(bytes);
-        } catch (Throwable t) {
-            try {
-                Writer out = res.getWriter();
-                out.write(new String(bytes));
-            } catch (Throwable localThrowable1) {
-            }
-        }
-    }
+		SSIExternalResolver ssiExternalResolver = new SSIServletExternalResolver(this.config.getServletContext(), req,
+				res, this.isVirtualWebappRelative, this.debug, encoding);
+		SSIProcessor ssiProcessor = new SSIProcessor(ssiExternalResolver, this.debug);
 
-    public void destroy() {
-    }
+		Reader reader = new InputStreamReader(new ByteArrayInputStream(bytes), encoding);
+		ByteArrayOutputStream ssiout = new ByteArrayOutputStream();
+		PrintWriter writer = new PrintWriter(new OutputStreamWriter(ssiout, encoding));
+
+		long lastModified = ssiProcessor.process(reader, responseIncludeWrapper.getLastModified(), writer);
+
+		writer.flush();
+		bytes = ssiout.toByteArray();
+		if (this.expires != null) {
+			res.setDateHeader("expires", new Date().getTime() + this.expires.longValue() * 1000L);
+		}
+		if (lastModified > 0L) {
+			res.setDateHeader("last-modified", lastModified);
+		}
+		res.setDateHeader("last-modified", System.currentTimeMillis());
+		res.setContentLength(bytes.length);
+
+		res.setContentType("text/html;charset=" + Config.getGlobalCharset());
+		try {
+			OutputStream out = res.getOutputStream();
+			out.write(bytes);
+		}
+		catch (Throwable t) {
+			try {
+				Writer out = res.getWriter();
+				out.write(new String(bytes));
+			}
+			catch (Throwable localThrowable1) {
+			}
+		}
+	}
+
+	public void destroy() {
+	}
+
 }

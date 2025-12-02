@@ -8,7 +8,6 @@ import io.arkx.framework.queue2.Consumer;
 import io.arkx.framework.queue2.MessageBus;
 
 /**
- *
  * @author Darkness
  * @date 2014-12-8 下午12:45:23
  * @version V1.0
@@ -16,18 +15,18 @@ import io.arkx.framework.queue2.MessageBus;
 @Component
 public class MessageBusBeanPostProcessor implements BeanPostProcessor {
 
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean.getClass().isAnnotationPresent(Consumer.class)) {
-            MessageBus.globalInstance().register(bean);
-        }
-        return bean;
-    }
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		if (bean.getClass().isAnnotationPresent(Consumer.class)) {
+			MessageBus.globalInstance().register(bean);
+		}
+		return bean;
+	}
 
-    // @Override
-    // public Object postProcessBeforeInitialization(Object bean, String beanName)
-    // throws BeansException {
-    // return bean;
-    // }
+	// @Override
+	// public Object postProcessBeforeInitialization(Object bean, String beanName)
+	// throws BeansException {
+	// return bean;
+	// }
 
 }

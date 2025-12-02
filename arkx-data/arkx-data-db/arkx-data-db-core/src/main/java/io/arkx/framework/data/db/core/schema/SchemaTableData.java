@@ -23,9 +23,12 @@ import lombok.Setter;
 @Getter
 public class SchemaTableData {
 
-    private String schemaName;
-    private String tableName;
-    private List<String> columns;
-    private List<List<Object>> rows;
+	private String schemaName;
+
+	private String tableName;
+
+	private List<String> columns;
+
+	private List<List<Object>> rows;
 
 }

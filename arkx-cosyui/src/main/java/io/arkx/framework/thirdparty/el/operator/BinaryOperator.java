@@ -67,44 +67,46 @@ import io.arkx.framework.thirdparty.el.Logger;
  **/
 
 public abstract class BinaryOperator {
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public BinaryOperator() {
-    }
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the symbol representing the operator
-     **/
-    public abstract String getOperatorSymbol();
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public BinaryOperator() {
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given pair of values
-     **/
-    public abstract Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException;
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the symbol representing the operator
+	 **/
+	public abstract String getOperatorSymbol();
 
-    // -------------------------------------
-    /**
-     * Returns true if evaluation is necessary given the specified Left value. The
-     * And/OrOperators make use of this
-     **/
-    public boolean shouldEvaluate(Object pLeft) {
-        return true;
-    }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given pair of values
+	 **/
+	public abstract Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException;
 
-    // -------------------------------------
-    /**
-     * Returns true if the operator expects its arguments to be coerced to Booleans.
-     * The And/Or operators set this to true.
-     **/
-    public boolean shouldCoerceToBoolean() {
-        return false;
-    }
+	// -------------------------------------
+	/**
+	 * Returns true if evaluation is necessary given the specified Left value. The
+	 * And/OrOperators make use of this
+	 **/
+	public boolean shouldEvaluate(Object pLeft) {
+		return true;
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Returns true if the operator expects its arguments to be coerced to Booleans. The
+	 * And/Or operators set this to true.
+	 **/
+	public boolean shouldCoerceToBoolean() {
+		return false;
+	}
+
+	// -------------------------------------
+
 }

@@ -6,50 +6,56 @@ import io.arkx.framework.config.CacheSynchronizerClass;
 /**
  */
 public class CacheSyncUtil {
-    private static ICacheSynchronizer synchronizer = null;
-    private static boolean enabled = false;
-    private static boolean loaded = false;
 
-    private static void init() {
-        if (!loaded) {
-            try {
-                enabled = "true".equalsIgnoreCase(CacheSyncEnable.getValue());
-                if (!enabled) {
-                    return;
-                }
-                String className = CacheSynchronizerClass.getValue();
-                synchronizer = (ICacheSynchronizer) Class.forName(className).newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                loaded = true;
-            }
-        }
-    }
+	private static ICacheSynchronizer synchronizer = null;
 
-    public static boolean enabled() {
-        init();
-        return enabled;
-    }
+	private static boolean enabled = false;
 
-    public static void refresh(String providerID, String type) {
-        init();
-        if (enabled && synchronizer != null) {
-            synchronizer.refresh(providerID, type);
-        }
-    }
+	private static boolean loaded = false;
 
-    public static void refresh(String providerID, String type, String key) {
-        init();
-        if (enabled && synchronizer != null) {
-            synchronizer.refresh(providerID, type, key);
-        }
-    }
+	private static void init() {
+		if (!loaded) {
+			try {
+				enabled = "true".equalsIgnoreCase(CacheSyncEnable.getValue());
+				if (!enabled) {
+					return;
+				}
+				String className = CacheSynchronizerClass.getValue();
+				synchronizer = (ICacheSynchronizer) Class.forName(className).newInstance();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				loaded = true;
+			}
+		}
+	}
 
-    public static void sync() {
-        init();
-        if (enabled && synchronizer != null) {
-            synchronizer.sync();
-        }
-    }
+	public static boolean enabled() {
+		init();
+		return enabled;
+	}
+
+	public static void refresh(String providerID, String type) {
+		init();
+		if (enabled && synchronizer != null) {
+			synchronizer.refresh(providerID, type);
+		}
+	}
+
+	public static void refresh(String providerID, String type, String key) {
+		init();
+		if (enabled && synchronizer != null) {
+			synchronizer.refresh(providerID, type, key);
+		}
+	}
+
+	public static void sync() {
+		init();
+		if (enabled && synchronizer != null) {
+			synchronizer.sync();
+		}
+	}
+
 }

@@ -4,37 +4,39 @@ import org.iq80.leveldb.DB;
 
 public abstract class AbstractLevelDBRepository {
 
-    private DB database;
-    private String databasePath;
+	private DB database;
 
-    protected AbstractLevelDBRepository(String aDirectoryPath) {
-        super();
+	private String databasePath;
 
-        this.openDatabase(aDirectoryPath);
-    }
+	protected AbstractLevelDBRepository(String aDirectoryPath) {
+		super();
 
-    protected DB database() {
-        return this.database;
-    }
+		this.openDatabase(aDirectoryPath);
+	}
 
-    protected String databasePath() {
-        return this.databasePath;
-    }
+	protected DB database() {
+		return this.database;
+	}
 
-    private void setDatabase(DB aDatabase) {
-        this.database = aDatabase;
-    }
+	protected String databasePath() {
+		return this.databasePath;
+	}
 
-    private void setDatabasePath(String aDatabasePath) {
-        this.databasePath = aDatabasePath;
-    }
+	private void setDatabase(DB aDatabase) {
+		this.database = aDatabase;
+	}
 
-    private void openDatabase(String aDirectoryPath) {
-        LevelDBProvider levelDBProvider = LevelDBProvider.instance();
+	private void setDatabasePath(String aDatabasePath) {
+		this.databasePath = aDatabasePath;
+	}
 
-        DB db = levelDBProvider.databaseFrom(aDirectoryPath);
+	private void openDatabase(String aDirectoryPath) {
+		LevelDBProvider levelDBProvider = LevelDBProvider.instance();
 
-        this.setDatabase(db);
-        this.setDatabasePath(aDirectoryPath);
-    }
+		DB db = levelDBProvider.databaseFrom(aDirectoryPath);
+
+		this.setDatabase(db);
+		this.setDatabasePath(aDirectoryPath);
+	}
+
 }

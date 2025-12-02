@@ -12,8 +12,8 @@ import jakarta.persistence.AttributeConverter;
  * @description:
  */
 @AutoConfiguration
-@ConditionalOnClass({AttributeConverter.class})
-@Import({ConverterPackageScan.class})
+@ConditionalOnClass({ AttributeConverter.class })
+@Import({ ConverterPackageScan.class })
 public class EnumsConversionAutoConfiguration {
 
 }

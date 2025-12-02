@@ -34,17 +34,15 @@ import lombok.extern.slf4j.Slf4j;
  * <p>
  * The unique id has 64bits (long), default allocated as blow:<br>
  * <li>sign: The highest bit is 0
- * <li>delta seconds: The next 28 bits, represents delta seconds since a
- * customer epoch(2016-05-20 00:00:00.000). Supports about 8.7 years until to
- * 2024-11-20 21:24:16
- * <li>worker id: The next 22 bits, represents the worker's id which assigns
- * based on database, max id is about 420W
- * <li>sequence: The next 13 bits, represents a sequence within the same second,
- * max for 8192/s<br>
+ * <li>delta seconds: The next 28 bits, represents delta seconds since a customer
+ * epoch(2016-05-20 00:00:00.000). Supports about 8.7 years until to 2024-11-20 21:24:16
+ * <li>worker id: The next 22 bits, represents the worker's id which assigns based on
+ * database, max id is about 420W
+ * <li>sequence: The next 13 bits, represents a sequence within the same second, max for
+ * 8192/s<br>
  * <br>
  * <p>
- * The {@link DefaultUidGenerator#parseUID(long)} is a tool method to parse the
- * bits
+ * The {@link DefaultUidGenerator#parseUID(long)} is a tool method to parse the bits
  *
  * <pre>{@code
  * +------+----------------------+----------------+-----------+
@@ -67,183 +65,190 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefaultUidGenerator implements UidGenerator, InitializingBean {
 
-    /**
-     * Bits allocate
-     */
-    protected int timeBits = 31;
-    protected int workerBits = 19;
-    protected int seqBits = 13;
+	/**
+	 * Bits allocate
+	 */
+	protected int timeBits = 31;
 
-    /**
-     * Customer epoch, unit as second. For example 2025-10-01 (ms: 1759248000000)
-     */
-    protected String epochStr = "2025-10-01";
-    protected long epochSeconds = TimeUnit.MILLISECONDS.toSeconds(1759248000000L);
+	protected int workerBits = 19;
 
-    // public static void main(String[] args) {
-    // LocalDate localDate = LocalDate.of(2016, 5, 20);
-    //
-    // // 定义纪元起点和指定日期的开始时刻（UTC时区）
-    // LocalDateTime epochStart = LocalDateTime.of(1970, 1, 1, 0, 0);
-    // LocalDateTime dateStart = localDate.atTime(LocalTime.MAX);
-    //
-    // // 计算两个时间点之间的秒数差
-    // long secondsSinceEpoch = ChronoUnit.SECONDS.between(epochStart, dateStart);
-    // System.out.println("秒数 (Epoch): " + secondsSinceEpoch);
-    //
-    // System.out.println(TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern("2025-10-01").getTime()));
-    // }
+	protected int seqBits = 13;
 
-    /**
-     * Stable fields after spring bean initializing
-     */
-    protected BitsAllocator bitsAllocator;
-    protected long workerId;
+	/**
+	 * Customer epoch, unit as second. For example 2025-10-01 (ms: 1759248000000)
+	 */
+	protected String epochStr = "2025-10-01";
 
-    /**
-     * Volatile fields caused by nextId()
-     */
-    protected long sequence = 0L;
-    protected long lastSecond = -1L;
+	protected long epochSeconds = TimeUnit.MILLISECONDS.toSeconds(1759248000000L);
 
-    /**
-     * Spring property
-     */
-    protected WorkerIdAssigner workerIdAssigner;
+	// public static void main(String[] args) {
+	// LocalDate localDate = LocalDate.of(2016, 5, 20);
+	//
+	// // 定义纪元起点和指定日期的开始时刻（UTC时区）
+	// LocalDateTime epochStart = LocalDateTime.of(1970, 1, 1, 0, 0);
+	// LocalDateTime dateStart = localDate.atTime(LocalTime.MAX);
+	//
+	// // 计算两个时间点之间的秒数差
+	// long secondsSinceEpoch = ChronoUnit.SECONDS.between(epochStart, dateStart);
+	// System.out.println("秒数 (Epoch): " + secondsSinceEpoch);
+	//
+	// System.out.println(TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern("2025-10-01").getTime()));
+	// }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        // initialize bits allocator
-        bitsAllocator = new BitsAllocator(timeBits, workerBits, seqBits);
+	/**
+	 * Stable fields after spring bean initializing
+	 */
+	protected BitsAllocator bitsAllocator;
 
-        // initialize worker id
-        workerId = workerIdAssigner.assignWorkerId();
-        if (workerId > bitsAllocator.getMaxWorkerId()) {
-            throw new UidGenerateException(
-                    "Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
-        }
-        log.info("Initialized bits(1, {}, {}, {}) for workerID:{}", timeBits, workerBits, seqBits, workerId);
-    }
+	protected long workerId;
 
-    @Override
-    public long getUID() throws UidGenerateException {
-        try {
-            return nextId();
-        } catch (Exception e) {
-            log.error("Generate unique id exception. ", e);
-            throw new UidGenerateException(e);
-        }
-    }
+	/**
+	 * Volatile fields caused by nextId()
+	 */
+	protected long sequence = 0L;
 
-    @Override
-    public String parseUID(long uid) {
-        long totalBits = BitsAllocator.TOTAL_BITS;
-        long signBits = bitsAllocator.getSignBits();
-        long timestampBits = bitsAllocator.getTimestampBits();
-        long workerIdBits = bitsAllocator.getWorkerIdBits();
-        long sequenceBits = bitsAllocator.getSequenceBits();
+	protected long lastSecond = -1L;
 
-        // parse UID
-        long sequence = (uid << (totalBits - sequenceBits)) >>> (totalBits - sequenceBits);
-        long workerId = (uid << (timestampBits + signBits)) >>> (totalBits - workerIdBits);
-        long deltaSeconds = uid >>> (workerIdBits + sequenceBits);
+	/**
+	 * Spring property
+	 */
+	protected WorkerIdAssigner workerIdAssigner;
 
-        Date thatTime = new Date(TimeUnit.SECONDS.toMillis(epochSeconds + deltaSeconds));
-        String thatTimeStr = DateUtils.formatByDateTimePattern(thatTime);
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		// initialize bits allocator
+		bitsAllocator = new BitsAllocator(timeBits, workerBits, seqBits);
 
-        // format as string
-        return String.format("{\"UID\":\"%d\",\"timestamp\":\"%s\",\"workerId\":\"%d\",\"sequence\":\"%d\"}", uid,
-                thatTimeStr, workerId, sequence);
-    }
+		// initialize worker id
+		workerId = workerIdAssigner.assignWorkerId();
+		if (workerId > bitsAllocator.getMaxWorkerId()) {
+			throw new UidGenerateException(
+					"Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
+		}
+		log.info("Initialized bits(1, {}, {}, {}) for workerID:{}", timeBits, workerBits, seqBits, workerId);
+	}
 
-    /**
-     * Get UID
-     *
-     * @return UID
-     * @throws UidGenerateException
-     *             in the case: Clock moved backwards; Exceeds the max timestamp
-     */
-    protected synchronized long nextId() {
-        long currentSecond = getCurrentSecond();
+	@Override
+	public long getUID() throws UidGenerateException {
+		try {
+			return nextId();
+		}
+		catch (Exception e) {
+			log.error("Generate unique id exception. ", e);
+			throw new UidGenerateException(e);
+		}
+	}
 
-        // Clock moved backwards, refuse to generate uid
-        if (currentSecond < lastSecond) {
-            long refusedSeconds = lastSecond - currentSecond;
-            throw new UidGenerateException("Clock moved backwards. Refusing for %d seconds", refusedSeconds);
-        }
+	@Override
+	public String parseUID(long uid) {
+		long totalBits = BitsAllocator.TOTAL_BITS;
+		long signBits = bitsAllocator.getSignBits();
+		long timestampBits = bitsAllocator.getTimestampBits();
+		long workerIdBits = bitsAllocator.getWorkerIdBits();
+		long sequenceBits = bitsAllocator.getSequenceBits();
 
-        // At the same second, increase sequence
-        if (currentSecond == lastSecond) {
-            sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
-            // Exceed the max sequence, we wait the next second to generate uid
-            if (sequence == 0) {
-                currentSecond = getNextSecond(lastSecond);
-            }
+		// parse UID
+		long sequence = (uid << (totalBits - sequenceBits)) >>> (totalBits - sequenceBits);
+		long workerId = (uid << (timestampBits + signBits)) >>> (totalBits - workerIdBits);
+		long deltaSeconds = uid >>> (workerIdBits + sequenceBits);
 
-            // At the different second, sequence restart from zero
-        } else {
-            sequence = 0L;
-        }
+		Date thatTime = new Date(TimeUnit.SECONDS.toMillis(epochSeconds + deltaSeconds));
+		String thatTimeStr = DateUtils.formatByDateTimePattern(thatTime);
 
-        lastSecond = currentSecond;
+		// format as string
+		return String.format("{\"UID\":\"%d\",\"timestamp\":\"%s\",\"workerId\":\"%d\",\"sequence\":\"%d\"}", uid,
+				thatTimeStr, workerId, sequence);
+	}
 
-        // Allocate bits for UID
-        return bitsAllocator.allocate(currentSecond - epochSeconds, workerId, sequence);
-    }
+	/**
+	 * Get UID
+	 * @return UID
+	 * @throws UidGenerateException in the case: Clock moved backwards; Exceeds the max
+	 * timestamp
+	 */
+	protected synchronized long nextId() {
+		long currentSecond = getCurrentSecond();
 
-    /**
-     * Get next millisecond
-     */
-    private long getNextSecond(long lastTimestamp) {
-        long timestamp = getCurrentSecond();
-        while (timestamp <= lastTimestamp) {
-            timestamp = getCurrentSecond();
-        }
+		// Clock moved backwards, refuse to generate uid
+		if (currentSecond < lastSecond) {
+			long refusedSeconds = lastSecond - currentSecond;
+			throw new UidGenerateException("Clock moved backwards. Refusing for %d seconds", refusedSeconds);
+		}
 
-        return timestamp;
-    }
+		// At the same second, increase sequence
+		if (currentSecond == lastSecond) {
+			sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
+			// Exceed the max sequence, we wait the next second to generate uid
+			if (sequence == 0) {
+				currentSecond = getNextSecond(lastSecond);
+			}
 
-    /**
-     * Get current second
-     */
-    private long getCurrentSecond() {
-        long currentSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-        if (currentSecond - epochSeconds > bitsAllocator.getMaxDeltaSeconds()) {
-            throw new UidGenerateException("Timestamp bits is exhausted. Refusing UID generate. Now: " + currentSecond);
-        }
+			// At the different second, sequence restart from zero
+		}
+		else {
+			sequence = 0L;
+		}
 
-        return currentSecond;
-    }
+		lastSecond = currentSecond;
 
-    /**
-     * Setters for spring property
-     */
-    public void setWorkerIdAssigner(WorkerIdAssigner workerIdAssigner) {
-        this.workerIdAssigner = workerIdAssigner;
-    }
+		// Allocate bits for UID
+		return bitsAllocator.allocate(currentSecond - epochSeconds, workerId, sequence);
+	}
 
-    public void setTimeBits(int timeBits) {
-        if (timeBits > 0) {
-            this.timeBits = timeBits;
-        }
-    }
+	/**
+	 * Get next millisecond
+	 */
+	private long getNextSecond(long lastTimestamp) {
+		long timestamp = getCurrentSecond();
+		while (timestamp <= lastTimestamp) {
+			timestamp = getCurrentSecond();
+		}
 
-    public void setWorkerBits(int workerBits) {
-        if (workerBits > 0) {
-            this.workerBits = workerBits;
-        }
-    }
+		return timestamp;
+	}
 
-    public void setSeqBits(int seqBits) {
-        if (seqBits > 0) {
-            this.seqBits = seqBits;
-        }
-    }
+	/**
+	 * Get current second
+	 */
+	private long getCurrentSecond() {
+		long currentSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
+		if (currentSecond - epochSeconds > bitsAllocator.getMaxDeltaSeconds()) {
+			throw new UidGenerateException("Timestamp bits is exhausted. Refusing UID generate. Now: " + currentSecond);
+		}
 
-    public void setEpochStr(String epochStr) {
-        if (StringUtils.isNotBlank(epochStr)) {
-            this.epochStr = epochStr;
-            this.epochSeconds = TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern(epochStr).getTime());
-        }
-    }
+		return currentSecond;
+	}
+
+	/**
+	 * Setters for spring property
+	 */
+	public void setWorkerIdAssigner(WorkerIdAssigner workerIdAssigner) {
+		this.workerIdAssigner = workerIdAssigner;
+	}
+
+	public void setTimeBits(int timeBits) {
+		if (timeBits > 0) {
+			this.timeBits = timeBits;
+		}
+	}
+
+	public void setWorkerBits(int workerBits) {
+		if (workerBits > 0) {
+			this.workerBits = workerBits;
+		}
+	}
+
+	public void setSeqBits(int seqBits) {
+		if (seqBits > 0) {
+			this.seqBits = seqBits;
+		}
+	}
+
+	public void setEpochStr(String epochStr) {
+		if (StringUtils.isNotBlank(epochStr)) {
+			this.epochStr = epochStr;
+			this.epochSeconds = TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern(epochStr).getTime());
+		}
+	}
+
 }

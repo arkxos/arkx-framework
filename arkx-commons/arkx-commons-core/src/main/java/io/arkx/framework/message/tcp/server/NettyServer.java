@@ -29,8 +29,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 /**
  * 服务器
  *
- * String serverAddress = "127.0.0.1:8080"; new
- * NettyServer(serverAddress).start();
+ * String serverAddress = "127.0.0.1:8080"; new NettyServer(serverAddress).start();
  *
  * @author Darkness
  * @date 2017年4月11日 下午4:02:12
@@ -39,59 +38,63 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  */
 public class NettyServer implements TcpNode {
 
-    private Logger logger = LoggerFactory.getLogger(NettyServer.class);
+	private Logger logger = LoggerFactory.getLogger(NettyServer.class);
 
-    private SocketAddress address;
+	private SocketAddress address;
 
-    private boolean enableWhiteList;
-    private List<ChannelHandler> channelHandlers;
+	private boolean enableWhiteList;
 
-    public NettyServer(String address) {
-        this(address, false);
-    }
+	private List<ChannelHandler> channelHandlers;
 
-    public NettyServer(String address, boolean enableWhiteList) {
-        this.address = TcpUtil.string2SocketAddress(address);
-        this.enableWhiteList = enableWhiteList;
+	public NettyServer(String address) {
+		this(address, false);
+	}
 
-        this.channelHandlers = new ArrayList<>();
-    }
+	public NettyServer(String address, boolean enableWhiteList) {
+		this.address = TcpUtil.string2SocketAddress(address);
+		this.enableWhiteList = enableWhiteList;
 
-    public NettyServer registerChannelHandler(ChannelHandler handler) {
-        this.channelHandlers.add(handler);
-        return this;
-    }
+		this.channelHandlers = new ArrayList<>();
+	}
 
-    @Override
-    public void start() throws Exception {
-        // 配置服务端的NIO线程组
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-        ServerBootstrap b = new ServerBootstrap();
-        b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 100)
-                .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    public void initChannel(SocketChannel ch) throws IOException {
-                        ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024, 4, 4));
-                        ch.pipeline().addLast(new NettyMessageEncoder());
-                        ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
-                        ch.pipeline().addLast(new LoginAuthResponseHandler(enableWhiteList));
-                        ch.pipeline().addLast("HeartBeatHandler", new HeartBeatResponseHandler());
+	public NettyServer registerChannelHandler(ChannelHandler handler) {
+		this.channelHandlers.add(handler);
+		return this;
+	}
 
-                        for (ChannelHandler channelHandler : channelHandlers) {
-                            ch.pipeline().addLast(channelHandler);
-                        }
-                    }
-                });
+	@Override
+	public void start() throws Exception {
+		// 配置服务端的NIO线程组
+		EventLoopGroup bossGroup = new NioEventLoopGroup();
+		EventLoopGroup workerGroup = new NioEventLoopGroup();
+		ServerBootstrap b = new ServerBootstrap();
+		b.group(bossGroup, workerGroup)
+			.channel(NioServerSocketChannel.class)
+			.option(ChannelOption.SO_BACKLOG, 100)
+			.handler(new LoggingHandler(LogLevel.INFO))
+			.childHandler(new ChannelInitializer<SocketChannel>() {
+				@Override
+				public void initChannel(SocketChannel ch) throws IOException {
+					ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024, 4, 4));
+					ch.pipeline().addLast(new NettyMessageEncoder());
+					ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
+					ch.pipeline().addLast(new LoginAuthResponseHandler(enableWhiteList));
+					ch.pipeline().addLast("HeartBeatHandler", new HeartBeatResponseHandler());
 
-        // 绑定端口，同步等待成功
-        b.bind(address).sync();
+					for (ChannelHandler channelHandler : channelHandlers) {
+						ch.pipeline().addLast(channelHandler);
+					}
+				}
+			});
 
-        logger.info("Netty server start ok : " + address);
-    }
+		// 绑定端口，同步等待成功
+		b.bind(address).sync();
 
-    @Override
-    public void shutdown() {
-    }
+		logger.info("Netty server start ok : " + address);
+	}
+
+	@Override
+	public void shutdown() {
+	}
 
 }

@@ -7,5 +7,6 @@ package io.arkx.framework.data.jpa.sqltemplate;
  */
 public interface NamedTemplateCallback {
 
-    void process(String templateName, String content);
+	void process(String templateName, String content);
+
 }

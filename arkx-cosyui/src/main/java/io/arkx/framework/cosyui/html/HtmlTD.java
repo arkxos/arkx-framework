@@ -8,143 +8,146 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  *
  */
 public class HtmlTD extends HtmlElement {
-    boolean isTH;
 
-    public HtmlTD() {
-        super("td");
-    }
+	boolean isTH;
 
-    public HtmlTD(HtmlElement ele) {
-        super("td");
-        if (!ele.getTagName().equalsIgnoreCase("td") && !ele.getTagName().equalsIgnoreCase("th")) {
-            throw new HtmlParseException("Element can't convert to a td,tag=" + ele.getTagName());
-        }
-        attributes = ele.attributes;
-        children = ele.children;
-        isTH = ele.getTagName().equalsIgnoreCase("th");
-        if (children != null) {
-            for (HtmlNode node : children) {
-                node.parent = this;
-            }
-        }
-    }
+	public HtmlTD() {
+		super("td");
+	}
 
-    public void setWidth(int width) {
-        attributes.put("width", width + "");
-    }
+	public HtmlTD(HtmlElement ele) {
+		super("td");
+		if (!ele.getTagName().equalsIgnoreCase("td") && !ele.getTagName().equalsIgnoreCase("th")) {
+			throw new HtmlParseException("Element can't convert to a td,tag=" + ele.getTagName());
+		}
+		attributes = ele.attributes;
+		children = ele.children;
+		isTH = ele.getTagName().equalsIgnoreCase("th");
+		if (children != null) {
+			for (HtmlNode node : children) {
+				node.parent = this;
+			}
+		}
+	}
 
-    public int getWidth() {
-        return attributes.getInt("width");
-    }
+	public void setWidth(int width) {
+		attributes.put("width", width + "");
+	}
 
-    public void setHeight(int height) {
-        attributes.put("height", height + "");
-    }
+	public int getWidth() {
+		return attributes.getInt("width");
+	}
 
-    public int getHeight() {
-        return attributes.getInt("height");
-    }
+	public void setHeight(int height) {
+		attributes.put("height", height + "");
+	}
 
-    public void setAlign(String align) {
-        attributes.put("align", align);
-    }
+	public int getHeight() {
+		return attributes.getInt("height");
+	}
 
-    public String getAlign() {
-        return attributes.get("align");
-    }
+	public void setAlign(String align) {
+		attributes.put("align", align);
+	}
 
-    public void setBgColor(String bgColor) {
-        attributes.put("bgColor", bgColor);
-    }
+	public String getAlign() {
+		return attributes.get("align");
+	}
 
-    public String getBgColor() {
-        return attributes.get("bgColor");
-    }
+	public void setBgColor(String bgColor) {
+		attributes.put("bgColor", bgColor);
+	}
 
-    public void setBackgroud(String backgroud) {
-        attributes.put("backgroud", backgroud);
-    }
+	public String getBgColor() {
+		return attributes.get("bgColor");
+	}
 
-    public String getBackgroud() {
-        return attributes.get("backgroud");
-    }
+	public void setBackgroud(String backgroud) {
+		attributes.put("backgroud", backgroud);
+	}
 
-    public String getVAlign() {
-        return attributes.get("vAlign");
-    }
+	public String getBackgroud() {
+		return attributes.get("backgroud");
+	}
 
-    public void setVAlign(String vAlign) {
-        attributes.put("vAlign", vAlign);
-    }
+	public String getVAlign() {
+		return attributes.get("vAlign");
+	}
 
-    public void setColSpan(String colSpan) {
-        addAttribute("colspan", colSpan);
-    }
+	public void setVAlign(String vAlign) {
+		attributes.put("vAlign", vAlign);
+	}
 
-    public String getColSpan() {
-        return getAttribute("colspan");
-    }
+	public void setColSpan(String colSpan) {
+		addAttribute("colspan", colSpan);
+	}
 
-    public void setRowSpan(String rowSpan) {
-        addAttribute("rowSpan", rowSpan);
-    }
+	public String getColSpan() {
+		return getAttribute("colspan");
+	}
 
-    public String getRowSpan() {
-        return getAttribute("rowSpan");
-    }
+	public void setRowSpan(String rowSpan) {
+		addAttribute("rowSpan", rowSpan);
+	}
 
-    @Override
-    public HtmlTR getParent() {
-        return (HtmlTR) parent;
-    }
+	public String getRowSpan() {
+		return getAttribute("rowSpan");
+	}
 
-    public boolean isHead() {
-        return tagName.equalsIgnoreCase("th");
-    }
+	@Override
+	public HtmlTR getParent() {
+		return (HtmlTR) parent;
+	}
 
-    public void setHead(boolean isHead) {
-        if (isHead) {
-            tagName = "th";
-        } else {
-            tagName = "tr";
-        }
-    }
+	public boolean isHead() {
+		return tagName.equalsIgnoreCase("th");
+	}
 
-    /**
-     * 返回所属tr。<br>
-     * 本方法和getParent()的返回值有可能不同，是因为有些场合td的父标签不一定是tr。
-     */
-    public HtmlTR getTR() {
-        HtmlElement parent = getParent();
-        while (true) {
-            if (parent == null) {
-                return null;
-            }
-            if (parent instanceof HtmlTR) {
-                return (HtmlTR) parent;
-            }
-            parent = parent.getParent();
-        }
-    }
+	public void setHead(boolean isHead) {
+		if (isHead) {
+			tagName = "th";
+		}
+		else {
+			tagName = "tr";
+		}
+	}
 
-    @Override
-    public HtmlTD clone() {
-        return new HtmlTD(super.clone());
-    }
+	/**
+	 * 返回所属tr。<br>
+	 * 本方法和getParent()的返回值有可能不同，是因为有些场合td的父标签不一定是tr。
+	 */
+	public HtmlTR getTR() {
+		HtmlElement parent = getParent();
+		while (true) {
+			if (parent == null) {
+				return null;
+			}
+			if (parent instanceof HtmlTR) {
+				return (HtmlTR) parent;
+			}
+			parent = parent.getParent();
+		}
+	}
 
-    public boolean isTH() {
-        return isTH;
-    }
+	@Override
+	public HtmlTD clone() {
+		return new HtmlTD(super.clone());
+	}
 
-    public void setTH(boolean isTH) {
-        this.isTH = isTH;
-    }
+	public boolean isTH() {
+		return isTH;
+	}
 
-    @Override
-    void format(FastStringBuilder sb, String prefix) {// 如果prefix为null，则不换行
-        String oldTagName = tagName;
-        tagName = isTH ? "th" : oldTagName;
-        super.format(sb, prefix);
-        tagName = oldTagName;
-    }
+	public void setTH(boolean isTH) {
+		this.isTH = isTH;
+	}
+
+	@Override
+	void format(FastStringBuilder sb, String prefix) {// 如果prefix为null，则不换行
+		String oldTagName = tagName;
+		tagName = isTH ? "th" : oldTagName;
+		super.format(sb, prefix);
+		tagName = oldTagName;
+	}
+
 }

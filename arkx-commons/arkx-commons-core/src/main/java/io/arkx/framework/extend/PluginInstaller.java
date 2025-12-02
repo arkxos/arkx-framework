@@ -11,14 +11,15 @@ import org.apache.commons.fileupload2.core.FileItem;
  */
 public class PluginInstaller {
 
-    public static void verify(FileItem file) {
-    }
+	public static void verify(FileItem file) {
+	}
 
-    public static int install(FileItem file) {
-        return 0;
-    }
+	public static int install(FileItem file) {
+		return 0;
+	}
 
-    public static int uninstall(String pluginID) {
-        return 0;
-    }
+	public static int uninstall(String pluginID) {
+		return 0;
+	}
+
 }

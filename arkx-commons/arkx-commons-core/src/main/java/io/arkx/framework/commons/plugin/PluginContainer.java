@@ -7,40 +7,42 @@ import ro.fortsoft.pf4j.PluginManager;
 
 public class PluginContainer {
 
-    private static PluginContainer instance;
-    private static Object syncObject = new Object();
+	private static PluginContainer instance;
 
-    public static void init() {
-        if (instance == null) {
-            synchronized (syncObject) {
-                if (instance == null) {
-                    // create the plugin manager
-                    final PluginManager pluginManager = new DefaultPluginManager();
+	private static Object syncObject = new Object();
 
-                    // load the plugins
-                    pluginManager.loadPlugins();
+	public static void init() {
+		if (instance == null) {
+			synchronized (syncObject) {
+				if (instance == null) {
+					// create the plugin manager
+					final PluginManager pluginManager = new DefaultPluginManager();
 
-                    // enable a disabled plugin
-                    // pluginManager.enablePlugin("welcome-plugin");
+					// load the plugins
+					pluginManager.loadPlugins();
 
-                    // start (active/resolved) the plugins
-                    pluginManager.startPlugins();
+					// enable a disabled plugin
+					// pluginManager.enablePlugin("welcome-plugin");
 
-                    instance = new PluginContainer(pluginManager);
-                }
-            }
-        }
-    }
+					// start (active/resolved) the plugins
+					pluginManager.startPlugins();
 
-    public static <T> List<T> getExtensions(Class<T> type) {
-        init();
+					instance = new PluginContainer(pluginManager);
+				}
+			}
+		}
+	}
 
-        return instance.pluginManager.getExtensions(type);
-    }
+	public static <T> List<T> getExtensions(Class<T> type) {
+		init();
 
-    PluginManager pluginManager;
+		return instance.pluginManager.getExtensions(type);
+	}
 
-    private PluginContainer(PluginManager pluginManager) {
-        this.pluginManager = pluginManager;
-    }
+	PluginManager pluginManager;
+
+	private PluginContainer(PluginManager pluginManager) {
+		this.pluginManager = pluginManager;
+	}
+
 }

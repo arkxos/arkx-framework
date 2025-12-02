@@ -7,7 +7,6 @@ import java.util.List;
 import io.arkx.framework.commons.collection.TwoTuple;
 
 /**
- *
  * @author Darkness
  * @date 2015年12月19日 下午7:11:17
  * @version V1.0
@@ -15,10 +14,10 @@ import io.arkx.framework.commons.collection.TwoTuple;
  */
 public interface ILightningTableConvertor<T extends ILightningTable> {
 
-    T createTable(Class<T> clazz, String tableName, LightningColumn[] columns);
+	T createTable(Class<T> clazz, String tableName, LightningColumn[] columns);
 
-    void onRecordReaded(List<LightningColumn> columns, T dt, RecordUnit rowBuffer) throws IOException;
+	void onRecordReaded(List<LightningColumn> columns, T dt, RecordUnit rowBuffer) throws IOException;
 
-    TwoTuple<PkList, List<ByteBuffer>> buildRowByteBuffers(LightningColumn[] columns, T dt);
+	TwoTuple<PkList, List<ByteBuffer>> buildRowByteBuffers(LightningColumn[] columns, T dt);
 
 }

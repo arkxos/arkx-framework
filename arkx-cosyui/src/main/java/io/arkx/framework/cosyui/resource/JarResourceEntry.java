@@ -11,69 +11,77 @@ import java.util.zip.ZipEntry;
  *
  */
 public class JarResourceEntry {
-    private String jarFileName;
-    private long lastModified;
-    private String path;
-    private boolean isDirectory = false;;
-    private long length;
 
-    public boolean isDirectory() {
-        return isDirectory;
-    }
+	private String jarFileName;
 
-    public boolean isFile() {
-        return !isDirectory;
-    }
+	private long lastModified;
 
-    public JarResourceEntry(String jarFileName, long lastModified, String path, boolean dirFlag, long length) {
-        this.jarFileName = jarFileName;
-        this.lastModified = lastModified;
-        this.path = path;
-        isDirectory = dirFlag;
-        this.length = length;
-    }
+	private String path;
 
-    public InputStream toStream() throws IOException {
-        JarFile jf = new JarFile(jarFileName);
-        try {
-            ZipEntry ze = jf.getEntry(path);
-            if (ze != null) {
-                return jf.getInputStream(ze);
-            }
-        } finally {
-            // jf.close();
-        }
-        return null;
-    }
+	private boolean isDirectory = false;
 
-    public List<JarResourceEntry> listFiles() {
-        return JarResourceRoot.listFiles(path);
-    }
+	;
+	private long length;
 
-    public String getJarFileName() {
-        return jarFileName;
-    }
+	public boolean isDirectory() {
+		return isDirectory;
+	}
 
-    public void setJarFileName(String jarFileName) {
-        this.jarFileName = jarFileName;
-    }
+	public boolean isFile() {
+		return !isDirectory;
+	}
 
-    public long getLastModified() {
-        return lastModified;
-    }
+	public JarResourceEntry(String jarFileName, long lastModified, String path, boolean dirFlag, long length) {
+		this.jarFileName = jarFileName;
+		this.lastModified = lastModified;
+		this.path = path;
+		isDirectory = dirFlag;
+		this.length = length;
+	}
 
-    public String getFullPath() {
-        return path;
-    }
+	public InputStream toStream() throws IOException {
+		JarFile jf = new JarFile(jarFileName);
+		try {
+			ZipEntry ze = jf.getEntry(path);
+			if (ze != null) {
+				return jf.getInputStream(ze);
+			}
+		}
+		finally {
+			// jf.close();
+		}
+		return null;
+	}
 
-    public long length() {
-        return length;
-    }
+	public List<JarResourceEntry> listFiles() {
+		return JarResourceRoot.listFiles(path);
+	}
 
-    public String getName() {
-        if (path.indexOf("/") >= 0) {
-            return path.substring(path.lastIndexOf("/") + 1);
-        }
-        return path;
-    }
+	public String getJarFileName() {
+		return jarFileName;
+	}
+
+	public void setJarFileName(String jarFileName) {
+		this.jarFileName = jarFileName;
+	}
+
+	public long getLastModified() {
+		return lastModified;
+	}
+
+	public String getFullPath() {
+		return path;
+	}
+
+	public long length() {
+		return length;
+	}
+
+	public String getName() {
+		if (path.indexOf("/") >= 0) {
+			return path.substring(path.lastIndexOf("/") + 1);
+		}
+		return path;
+	}
+
 }

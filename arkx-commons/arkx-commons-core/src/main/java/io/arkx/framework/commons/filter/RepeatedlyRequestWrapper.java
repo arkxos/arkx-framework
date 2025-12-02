@@ -19,47 +19,49 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
  * @author Darkness
  */
 public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
-    private final byte[] body;
 
-    public RepeatedlyRequestWrapper(HttpServletRequest request, ServletResponse response) throws IOException {
-        super(request);
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
+	private final byte[] body;
 
-        body = HttpHelper.getBodyString(request).getBytes("UTF-8");
-    }
+	public RepeatedlyRequestWrapper(HttpServletRequest request, ServletResponse response) throws IOException {
+		super(request);
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 
-    @Override
-    public BufferedReader getReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(getInputStream()));
-    }
+		body = HttpHelper.getBodyString(request).getBytes("UTF-8");
+	}
 
-    @Override
-    public ServletInputStream getInputStream() throws IOException {
+	@Override
+	public BufferedReader getReader() throws IOException {
+		return new BufferedReader(new InputStreamReader(getInputStream()));
+	}
 
-        final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+	@Override
+	public ServletInputStream getInputStream() throws IOException {
 
-        return new ServletInputStream() {
+		final ByteArrayInputStream bais = new ByteArrayInputStream(body);
 
-            @Override
-            public int read() throws IOException {
-                return bais.read();
-            }
+		return new ServletInputStream() {
 
-            @Override
-            public boolean isFinished() {
-                return false;
-            }
+			@Override
+			public int read() throws IOException {
+				return bais.read();
+			}
 
-            @Override
-            public boolean isReady() {
-                return false;
-            }
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
 
-            @Override
-            public void setReadListener(ReadListener readListener) {
+			@Override
+			public boolean isReady() {
+				return false;
+			}
 
-            }
-        };
-    }
+			@Override
+			public void setReadListener(ReadListener readListener) {
+
+			}
+		};
+	}
+
 }

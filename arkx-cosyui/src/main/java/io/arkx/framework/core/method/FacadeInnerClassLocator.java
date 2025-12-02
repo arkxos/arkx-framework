@@ -10,46 +10,51 @@ import io.arkx.framework.cosyui.web.mvc.Dispatcher.DispatchException;
  */
 public class FacadeInnerClassLocator extends MethodClassLocator {
 
-    public FacadeInnerClassLocator(Class<? extends UIMethod> clazz) {
-        super(clazz);
-    }
+	public FacadeInnerClassLocator(Class<? extends UIMethod> clazz) {
+		super(clazz);
+	}
 
-    @Override
-    public Object execute(Object... args) {
-        UIFacade ui = createFacadeInstance();
-        try {
-            UIMethod instance = (UIMethod) clazz.getConstructors()[0].newInstance(ui);
-            UIMethodBinder.bind(instance, args);
-            instance.execute();
-        } catch (Exception e) {
-            if (e.getCause() != null) {
-                if (e.getCause() instanceof DispatchException) {// 需要避免捕获
-                    throw (DispatchException) e.getCause();
-                }
-                if (e.getCause() instanceof RuntimeException) {
-                    throw (RuntimeException) e.getCause();
-                }
-                throw new UIMethodInvokeException(e.getCause());
-            } else {
-                throw new UIMethodInvokeException(e);
-            }
-        }
-        return null;
-    }
+	@Override
+	public Object execute(Object... args) {
+		UIFacade ui = createFacadeInstance();
+		try {
+			UIMethod instance = (UIMethod) clazz.getConstructors()[0].newInstance(ui);
+			UIMethodBinder.bind(instance, args);
+			instance.execute();
+		}
+		catch (Exception e) {
+			if (e.getCause() != null) {
+				if (e.getCause() instanceof DispatchException) {// 需要避免捕获
+					throw (DispatchException) e.getCause();
+				}
+				if (e.getCause() instanceof RuntimeException) {
+					throw (RuntimeException) e.getCause();
+				}
+				throw new UIMethodInvokeException(e.getCause());
+			}
+			else {
+				throw new UIMethodInvokeException(e);
+			}
+		}
+		return null;
+	}
 
-    private UIFacade createFacadeInstance() {
-        Class<?> c = null;
-        c = clazz.getDeclaringClass();
-        if (WebCurrent.getUIFacade() != null && WebCurrent.getUIFacade().getClass() == c) {
-            return WebCurrent.getUIFacade();
-        } else {
-            try {
-                UIFacade facade = (UIFacade) c.newInstance();
-                WebCurrent.setUIFacade(facade);
-                return facade;
-            } catch (Exception e) {
-                throw new UIMethodInvokeException(e);
-            }
-        }
-    }
+	private UIFacade createFacadeInstance() {
+		Class<?> c = null;
+		c = clazz.getDeclaringClass();
+		if (WebCurrent.getUIFacade() != null && WebCurrent.getUIFacade().getClass() == c) {
+			return WebCurrent.getUIFacade();
+		}
+		else {
+			try {
+				UIFacade facade = (UIFacade) c.newInstance();
+				WebCurrent.setUIFacade(facade);
+				return facade;
+			}
+			catch (Exception e) {
+				throw new UIMethodInvokeException(e);
+			}
+		}
+	}
+
 }

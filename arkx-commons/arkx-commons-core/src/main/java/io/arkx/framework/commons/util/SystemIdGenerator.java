@@ -7,8 +7,8 @@ import cn.hutool.core.util.IdUtil;
 @Service
 public class SystemIdGenerator {
 
-    public long generate() {
-        return IdUtil.getSnowflakeNextId();
-    }
+	public long generate() {
+		return IdUtil.getSnowflakeNextId();
+	}
 
 }

@@ -9,7 +9,8 @@ package io.arkx.framework.avatarmq.netty;
  */
 public interface MessageEventProxy {
 
-    void beforeMessage(Object msg);
+	void beforeMessage(Object msg);
 
-    void afterMessage(Object msg);
+	void afterMessage(Object msg);
+
 }

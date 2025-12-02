@@ -30,60 +30,64 @@ import jakarta.validation.constraints.NotNull;
  */
 public class SqlToyQueryLookupStrategy implements QueryLookupStrategy {
 
-    protected SqlToyLazyDao sqlToyLazyDao;
-    protected final EntityManager entityManager;
+	protected SqlToyLazyDao sqlToyLazyDao;
 
-    protected QueryLookupStrategy jpaQueryLookupStrategy;
+	protected final EntityManager entityManager;
 
-    protected QueryExtractor extractor;
+	protected QueryLookupStrategy jpaQueryLookupStrategy;
 
-    public SqlToyQueryLookupStrategy(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
-            EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
-            ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
-            EscapeCharacter escapeCharacter) {
-        this.sqlToyLazyDao = sqlToyLazyDao;
+	protected QueryExtractor extractor;
 
-        this.jpaQueryLookupStrategy = defaultStrategy;
+	public SqlToyQueryLookupStrategy(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+			EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
+			ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
+			EscapeCharacter escapeCharacter) {
+		this.sqlToyLazyDao = sqlToyLazyDao;
 
-        // this.jpaQueryLookupStrategy = JpaQueryLookupStrategy.create(
-        // entityManager,
-        // new DefaultJpaQueryMethodFactory(extractor),
-        // key,
-        // evaluationContextProvider,
-        // queryRewriterProvider,
-        // EscapeCharacter.DEFAULT);
-        this.extractor = extractor;
-        this.entityManager = entityManager;
-    }
+		this.jpaQueryLookupStrategy = defaultStrategy;
 
-    public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
-            EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
-            ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
-            EscapeCharacter escapeCharacter) {
-        return new SqlToyQueryLookupStrategy(defaultStrategy, sqlToyLazyDao, entityManager, key, extractor,
-                queryMethodFactory, valueExpressionDelegate, queryRewriterProvider, escapeCharacter);
-    }
+		// this.jpaQueryLookupStrategy = JpaQueryLookupStrategy.create(
+		// entityManager,
+		// new DefaultJpaQueryMethodFactory(extractor),
+		// key,
+		// evaluationContextProvider,
+		// queryRewriterProvider,
+		// EscapeCharacter.DEFAULT);
+		this.extractor = extractor;
+		this.entityManager = entityManager;
+	}
 
-    @Override
-    public RepositoryQuery resolveQuery(@NotNull Method method, RepositoryMetadata metadata, ProjectionFactory factory,
-            NamedQueries namedQueries) {
-        if (method.isAnnotationPresent(SqlToyQuery.class)) {
-            return createSqlToyQuery(method, metadata, factory);
-            // return new SqlToyTemplateQuery(sqlToyLazyDao,
-            // method,
-            // new DefaultJpaQueryMethodFactory(extractor)
-            // .build(method, metadata, factory), entityManager);
-        } else {
-            return jpaQueryLookupStrategy.resolveQuery(method, metadata, factory, namedQueries);
-        }
-    }
+	public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+			EntityManager entityManager, Key key, QueryExtractor extractor, JpaQueryMethodFactory queryMethodFactory,
+			ValueExpressionDelegate valueExpressionDelegate, QueryRewriterProvider queryRewriterProvider,
+			EscapeCharacter escapeCharacter) {
+		return new SqlToyQueryLookupStrategy(defaultStrategy, sqlToyLazyDao, entityManager, key, extractor,
+				queryMethodFactory, valueExpressionDelegate, queryRewriterProvider, escapeCharacter);
+	}
 
-    private RepositoryQuery createSqlToyQuery(Method method, RepositoryMetadata metadata, ProjectionFactory factory) {
+	@Override
+	public RepositoryQuery resolveQuery(@NotNull Method method, RepositoryMetadata metadata, ProjectionFactory factory,
+			NamedQueries namedQueries) {
+		if (method.isAnnotationPresent(SqlToyQuery.class)) {
+			return createSqlToyQuery(method, metadata, factory);
+			// return new SqlToyTemplateQuery(sqlToyLazyDao,
+			// method,
+			// new DefaultJpaQueryMethodFactory(extractor)
+			// .build(method, metadata, factory), entityManager);
+		}
+		else {
+			return jpaQueryLookupStrategy.resolveQuery(method, metadata, factory, namedQueries);
+		}
+	}
 
-        // 使用Spring的JpaQueryMethodFactory
-        JpaQueryMethod queryMethod = new DefaultJpaQueryMethodFactory(
-                PersistenceProvider.fromEntityManager(entityManager)).build(method, metadata, factory);
+	private RepositoryQuery createSqlToyQuery(Method method, RepositoryMetadata metadata, ProjectionFactory factory) {
 
-        return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod);
-    }
+		// 使用Spring的JpaQueryMethodFactory
+		JpaQueryMethod queryMethod = new DefaultJpaQueryMethodFactory(
+				PersistenceProvider.fromEntityManager(entityManager))
+			.build(method, metadata, factory);
+
+		return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod);
+	}
+
 }

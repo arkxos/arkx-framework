@@ -8,123 +8,125 @@ import io.jsonwebtoken.Claims;
  * @author Darkness
  */
 public class Constants {
-    /**
-     * UTF-8 字符集
-     */
-    public static final String UTF8 = "UTF-8";
 
-    /**
-     * GBK 字符集
-     */
-    public static final String GBK = "GBK";
+	/**
+	 * UTF-8 字符集
+	 */
+	public static final String UTF8 = "UTF-8";
 
-    /**
-     * http请求
-     */
-    public static final String HTTP = "http://";
+	/**
+	 * GBK 字符集
+	 */
+	public static final String GBK = "GBK";
 
-    /**
-     * https请求
-     */
-    public static final String HTTPS = "https://";
+	/**
+	 * http请求
+	 */
+	public static final String HTTP = "http://";
 
-    /**
-     * 通用成功标识
-     */
-    public static final String SUCCESS = "0";
+	/**
+	 * https请求
+	 */
+	public static final String HTTPS = "https://";
 
-    /**
-     * 通用失败标识
-     */
-    public static final String FAIL = "1";
+	/**
+	 * 通用成功标识
+	 */
+	public static final String SUCCESS = "0";
 
-    /**
-     * 登录成功
-     */
-    public static final String LOGIN_SUCCESS = "Success";
+	/**
+	 * 通用失败标识
+	 */
+	public static final String FAIL = "1";
 
-    /**
-     * 注销
-     */
-    public static final String LOGOUT = "Logout";
+	/**
+	 * 登录成功
+	 */
+	public static final String LOGIN_SUCCESS = "Success";
 
-    /**
-     * 登录失败
-     */
-    public static final String LOGIN_FAIL = "Error";
+	/**
+	 * 注销
+	 */
+	public static final String LOGOUT = "Logout";
 
-    /**
-     * 验证码 redis key
-     */
-    public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
+	/**
+	 * 登录失败
+	 */
+	public static final String LOGIN_FAIL = "Error";
 
-    /**
-     * 登录用户 redis key
-     */
-    public static final String LOGIN_TOKEN_KEY = "login_tokens:";
+	/**
+	 * 验证码 redis key
+	 */
+	public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
 
-    /**
-     * 防重提交 redis key
-     */
-    public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
+	/**
+	 * 登录用户 redis key
+	 */
+	public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 
-    /**
-     * 验证码有效期（分钟）
-     */
-    public static final Integer CAPTCHA_EXPIRATION = 2;
+	/**
+	 * 防重提交 redis key
+	 */
+	public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
 
-    /**
-     * 令牌
-     */
-    public static final String TOKEN = "token";
+	/**
+	 * 验证码有效期（分钟）
+	 */
+	public static final Integer CAPTCHA_EXPIRATION = 2;
 
-    /**
-     * 令牌前缀
-     */
-    public static final String TOKEN_PREFIX = "Bearer ";
+	/**
+	 * 令牌
+	 */
+	public static final String TOKEN = "token";
 
-    /**
-     * 令牌前缀
-     */
-    public static final String LOGIN_USER_KEY = "login_user_key";
+	/**
+	 * 令牌前缀
+	 */
+	public static final String TOKEN_PREFIX = "Bearer ";
 
-    /**
-     * 用户ID
-     */
-    public static final String JWT_USERID = "userid";
+	/**
+	 * 令牌前缀
+	 */
+	public static final String LOGIN_USER_KEY = "login_user_key";
 
-    /**
-     * 用户名称
-     */
-    public static final String JWT_USERNAME = Claims.SUBJECT;
+	/**
+	 * 用户ID
+	 */
+	public static final String JWT_USERID = "userid";
 
-    /**
-     * 用户头像
-     */
-    public static final String JWT_AVATAR = "avatar";
+	/**
+	 * 用户名称
+	 */
+	public static final String JWT_USERNAME = Claims.SUBJECT;
 
-    /**
-     * 创建时间
-     */
-    public static final String JWT_CREATED = "created";
+	/**
+	 * 用户头像
+	 */
+	public static final String JWT_AVATAR = "avatar";
 
-    /**
-     * 用户权限
-     */
-    public static final String JWT_AUTHORITIES = "authorities";
+	/**
+	 * 创建时间
+	 */
+	public static final String JWT_CREATED = "created";
 
-    /**
-     * 参数管理 cache key
-     */
-    public static final String SYS_CONFIG_KEY = "sys_config:";
+	/**
+	 * 用户权限
+	 */
+	public static final String JWT_AUTHORITIES = "authorities";
 
-    /**
-     * 字典管理 cache key
-     */
-    public static final String SYS_DICT_KEY = "sys_dict:";
+	/**
+	 * 参数管理 cache key
+	 */
+	public static final String SYS_CONFIG_KEY = "sys_config:";
 
-    /**
-     * 资源映射路径 前缀
-     */
-    public static final String RESOURCE_PREFIX = "/profile";
+	/**
+	 * 字典管理 cache key
+	 */
+	public static final String SYS_DICT_KEY = "sys_dict:";
+
+	/**
+	 * 资源映射路径 前缀
+	 */
+	public static final String RESOURCE_PREFIX = "/profile";
+
 }

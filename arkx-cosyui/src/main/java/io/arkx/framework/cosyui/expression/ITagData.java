@@ -5,20 +5,21 @@ package io.arkx.framework.cosyui.expression;
  *
  */
 public interface ITagData {
-    /**
-     * @return 上级求值上下文
-     */
-    public ITagData getParent();
 
-    /**
-     * @param var
-     *            变量
-     * @return 变量对应的值
-     */
-    public Object getValue(String var);
+	/**
+	 * @return 上级求值上下文
+	 */
+	public ITagData getParent();
 
-    /**
-     * 是否已经找到，在getValue()之后调用此方法来判断是否还要继续往上一级查找。<br>
-     */
-    public boolean isFound();
+	/**
+	 * @param var 变量
+	 * @return 变量对应的值
+	 */
+	public Object getValue(String var);
+
+	/**
+	 * 是否已经找到，在getValue()之后调用此方法来判断是否还要继续往上一级查找。<br>
+	 */
+	public boolean isFound();
+
 }

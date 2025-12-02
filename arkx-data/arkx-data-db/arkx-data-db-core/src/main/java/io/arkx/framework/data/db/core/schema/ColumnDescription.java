@@ -23,61 +23,73 @@ import lombok.Setter;
 @Setter
 public class ColumnDescription {
 
-    private String fieldName;
-    private String labelName;
+	private String fieldName;
 
-    private String fieldTypeName;
-    private String filedTypeClassName;
-    private int fieldType;
-    private int displaySize;
-    private int scaleSize;
-    private int precisionSize;
-    private boolean autoIncrement;
-    private boolean nullable;
-    private String remarks;
-    private boolean signed = false;
-    private ProductTypeEnum productType;
-    private String defaultValue;
+	private String labelName;
 
-    public String getFieldName() {
-        if (null != this.fieldName) {
-            return fieldName;
-        }
+	private String fieldTypeName;
 
-        return this.labelName;
-    }
+	private String filedTypeClassName;
 
-    public String getLabelName() {
-        if (null != labelName) {
-            return labelName;
-        }
+	private int fieldType;
 
-        return this.fieldName;
-    }
+	private int displaySize;
 
-    public ColumnDescription copy() {
-        ColumnDescription description = new ColumnDescription();
-        description.setFieldName(fieldName);
-        description.setLabelName(labelName);
-        description.setFieldTypeName(fieldTypeName);
-        description.setFiledTypeClassName(filedTypeClassName);
-        description.setFieldType(fieldType);
-        description.setDisplaySize(displaySize);
-        description.setScaleSize(scaleSize);
-        description.setPrecisionSize(precisionSize);
-        description.setAutoIncrement(autoIncrement);
-        description.setNullable(nullable);
-        description.setRemarks(remarks);
-        description.setSigned(signed);
-        description.setProductType(productType);
-        description.setDefaultValue(defaultValue);
-        return description;
-    }
+	private int scaleSize;
 
-    /// //////////////////////////////////////////
+	private int precisionSize;
 
-    public ColumnMetaData getMetaData() {
-        return new ColumnMetaData(this);
-    }
+	private boolean autoIncrement;
+
+	private boolean nullable;
+
+	private String remarks;
+
+	private boolean signed = false;
+
+	private ProductTypeEnum productType;
+
+	private String defaultValue;
+
+	public String getFieldName() {
+		if (null != this.fieldName) {
+			return fieldName;
+		}
+
+		return this.labelName;
+	}
+
+	public String getLabelName() {
+		if (null != labelName) {
+			return labelName;
+		}
+
+		return this.fieldName;
+	}
+
+	public ColumnDescription copy() {
+		ColumnDescription description = new ColumnDescription();
+		description.setFieldName(fieldName);
+		description.setLabelName(labelName);
+		description.setFieldTypeName(fieldTypeName);
+		description.setFiledTypeClassName(filedTypeClassName);
+		description.setFieldType(fieldType);
+		description.setDisplaySize(displaySize);
+		description.setScaleSize(scaleSize);
+		description.setPrecisionSize(precisionSize);
+		description.setAutoIncrement(autoIncrement);
+		description.setNullable(nullable);
+		description.setRemarks(remarks);
+		description.setSigned(signed);
+		description.setProductType(productType);
+		description.setDefaultValue(defaultValue);
+		return description;
+	}
+
+	/// //////////////////////////////////////////
+
+	public ColumnMetaData getMetaData() {
+		return new ColumnMetaData(this);
+	}
 
 }

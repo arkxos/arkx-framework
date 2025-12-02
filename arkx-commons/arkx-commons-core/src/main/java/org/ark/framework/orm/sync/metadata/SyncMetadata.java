@@ -18,43 +18,44 @@ import lombok.Data;
 @Data
 public class SyncMetadata {
 
-    /**
-     * 源数据库
-     */
-    private String sourceDb;
+	/**
+	 * 源数据库
+	 */
+	private String sourceDb;
 
-    /**
-     * 目标数据库
-     */
-    private String targetDb;
+	/**
+	 * 目标数据库
+	 */
+	private String targetDb;
 
-    /**
-     * 表编码
-     */
-    private String tableCode;
+	/**
+	 * 表编码
+	 */
+	private String tableCode;
 
-    /**
-     * 同步时间
-     */
-    private Date syncTime;
+	/**
+	 * 同步时间
+	 */
+	private Date syncTime;
 
-    /**
-     * 同步记录数量
-     */
-    private int recordCount;
+	/**
+	 * 同步记录数量
+	 */
+	private int recordCount;
 
-    /**
-     * 同步状态
-     */
-    private SyncStatus status;
+	/**
+	 * 同步状态
+	 */
+	private SyncStatus status;
 
-    /**
-     * 同步消息或错误信息
-     */
-    private String message;
+	/**
+	 * 同步消息或错误信息
+	 */
+	private String message;
 
-    /**
-     * 同步持续时间(毫秒)
-     */
-    private long durationMs;
+	/**
+	 * 同步持续时间(毫秒)
+	 */
+	private long durationMs;
+
 }

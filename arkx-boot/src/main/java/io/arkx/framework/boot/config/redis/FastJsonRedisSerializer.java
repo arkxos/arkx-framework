@@ -15,28 +15,28 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  */
 class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
 
-    private final Class<T> clazz;
+	private final Class<T> clazz;
 
-    FastJsonRedisSerializer(Class<T> clazz) {
-        super();
-        this.clazz = clazz;
-    }
+	FastJsonRedisSerializer(Class<T> clazz) {
+		super();
+		this.clazz = clazz;
+	}
 
-    @Override
-    public byte[] serialize(T t) {
-        if (t == null) {
-            return new byte[0];
-        }
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(StandardCharsets.UTF_8);
-    }
+	@Override
+	public byte[] serialize(T t) {
+		if (t == null) {
+			return new byte[0];
+		}
+		return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(StandardCharsets.UTF_8);
+	}
 
-    @Override
-    public T deserialize(byte[] bytes) {
-        if (bytes == null || bytes.length <= 0) {
-            return null;
-        }
-        String str = new String(bytes, StandardCharsets.UTF_8);
-        return JSON.parseObject(str, clazz);
-    }
+	@Override
+	public T deserialize(byte[] bytes) {
+		if (bytes == null || bytes.length <= 0) {
+			return null;
+		}
+		String str = new String(bytes, StandardCharsets.UTF_8);
+		return JSON.parseObject(str, clazz);
+	}
 
 }

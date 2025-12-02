@@ -15,13 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class SqlInterceptor {
 
-    @Bean
-    public static DataSourcePostProcessor dataSourcePostProcessor() {
-        return new DataSourcePostProcessor();
-    }
+	@Bean
+	public static DataSourcePostProcessor dataSourcePostProcessor() {
+		return new DataSourcePostProcessor();
+	}
 
-    @Bean
-    public DataSourceProxyFactory dataSourceProxyFactory() {
-        return new DataSourceProxyFactory();
-    }
+	@Bean
+	public DataSourceProxyFactory dataSourceProxyFactory() {
+		return new DataSourceProxyFactory();
+	}
+
 }

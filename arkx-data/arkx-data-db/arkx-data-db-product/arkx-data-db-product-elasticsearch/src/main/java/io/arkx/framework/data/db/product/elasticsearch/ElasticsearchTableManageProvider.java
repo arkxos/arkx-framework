@@ -14,21 +14,22 @@ import io.arkx.framework.data.db.core.provider.manage.DefaultTableManageProvider
 
 public class ElasticsearchTableManageProvider extends DefaultTableManageProvider {
 
-    public ElasticsearchTableManageProvider(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-    }
+	public ElasticsearchTableManageProvider(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+	}
 
-    @Override
-    public void truncateTableData(String schemaName, String tableName) {
-        cleanup(schemaName, tableName);
-    }
+	@Override
+	public void truncateTableData(String schemaName, String tableName) {
+		cleanup(schemaName, tableName);
+	}
 
-    @Override
-    public void dropTable(String schemaName, String tableName) {
-        cleanup(schemaName, tableName);
-    }
+	@Override
+	public void dropTable(String schemaName, String tableName) {
+		cleanup(schemaName, tableName);
+	}
 
-    private void cleanup(String schemaName, String tableName) {
-        // this.executeSql(tableName);
-    }
+	private void cleanup(String schemaName, String tableName) {
+		// this.executeSql(tableName);
+	}
+
 }

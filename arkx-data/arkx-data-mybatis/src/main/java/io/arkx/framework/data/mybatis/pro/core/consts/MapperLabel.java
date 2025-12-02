@@ -12,11 +12,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MapperLabel {
 
-    INSERT("insert"), DELETE("delete"), UPDATE("update"), SELECT("select"),
+	INSERT("insert"), DELETE("delete"), UPDATE("update"), SELECT("select"),
 
-    MAPPER("mapper"), NAMESPACE("namespace"), ID("id"), RESULT_TYPE("resultType"),
-    USE_GENERATED_KEYS("useGeneratedKeys"), KEY_PROPERTY("keyProperty");
+	MAPPER("mapper"), NAMESPACE("namespace"), ID("id"), RESULT_TYPE("resultType"),
+	USE_GENERATED_KEYS("useGeneratedKeys"), KEY_PROPERTY("keyProperty");
 
-    private final String code;
+	private final String code;
 
 }

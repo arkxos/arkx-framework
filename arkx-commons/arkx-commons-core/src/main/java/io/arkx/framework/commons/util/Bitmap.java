@@ -3,328 +3,316 @@ package io.arkx.framework.commons.util;
 import java.util.Arrays;
 
 /**
- *
  * @author Darkness
  * @date 2016年10月29日 下午6:29:53
  * @version V1.0
  */
 public class Bitmap {
 
-    public static void main(String[] args) {
-        Bitmap bitmap = new Bitmap(18);
+	public static void main(String[] args) {
+		Bitmap bitmap = new Bitmap(18);
 
-        bitmap.set(5); // 0000 0100 0000 0000 0000 0000
-        bitmap.set(10); // 0000 0100 0000 1000 0100 0000
-        bitmap.set(15); // 0000 0100 0000 0000 0100 0000
-        bitmap.set(17);
-        bitmap.dump();
+		bitmap.set(5); // 0000 0100 0000 0000 0000 0000
+		bitmap.set(10); // 0000 0100 0000 1000 0100 0000
+		bitmap.set(15); // 0000 0100 0000 0000 0100 0000
+		bitmap.set(17);
+		bitmap.dump();
 
-        bitmap.set(12);
-        bitmap.dump();
-        bitmap.clear(12);
-        bitmap.dump();
-        System.out.println(bitmap.get(10));
-        System.out.println(bitmap.get(12));
-        System.out.println(bitmap.get(17));
-    }
+		bitmap.set(12);
+		bitmap.dump();
+		bitmap.clear(12);
+		bitmap.dump();
+		System.out.println(bitmap.get(10));
+		System.out.println(bitmap.get(12));
+		System.out.println(bitmap.get(17));
+	}
 
-    public static final int TRUE = 1;
-    public static final int FALSE = 0;
+	public static final int TRUE = 1;
 
-    /**
-     * Byte-shifted position represents index of the bitmap array
-     */
-    protected final int BYTE_SHIFT = 3;
+	public static final int FALSE = 0;
 
-    /**
-     * Values are stored in a byte array
-     */
-    protected final byte[] bitmap;
+	/**
+	 * Byte-shifted position represents index of the bitmap array
+	 */
+	protected final int BYTE_SHIFT = 3;
 
-    /**
-     * Number of elements in bitmap
-     */
-    protected final int size;
+	/**
+	 * Values are stored in a byte array
+	 */
+	protected final byte[] bitmap;
 
-    public Bitmap() {
-        this(8, FALSE);
-    }
+	/**
+	 * Number of elements in bitmap
+	 */
+	protected final int size;
 
-    public Bitmap(int size) {
-        this(size, FALSE);
-    }
+	public Bitmap() {
+		this(8, FALSE);
+	}
 
-    public Bitmap(byte[] bitmap) {
-        this.bitmap = Arrays.copyOf(bitmap, bitmap.length);
-        size = bitmap.length * 8; // length << BYTE_SHIFT
-    }
+	public Bitmap(int size) {
+		this(size, FALSE);
+	}
 
-    /**
-     * Create a bitmap
-     *
-     * @param size
-     *            number of elements in bitmap
-     * @param value
-     *            TRUE : set all available bits to 1 FALSE : all available bits
-     *            remain 0
-     */
-    public Bitmap(int size, int value) {
-        int bytes = (int) Math.ceil((double) size / 8);// number of bytes
+	public Bitmap(byte[] bitmap) {
+		this.bitmap = Arrays.copyOf(bitmap, bitmap.length);
+		size = bitmap.length * 8; // length << BYTE_SHIFT
+	}
 
-        bitmap = new byte[bytes];
-        this.size = size;
-        if (value == TRUE)
-            for (int i = 0; i < size; i++)
-                set(i);
-    }
+	/**
+	 * Create a bitmap
+	 * @param size number of elements in bitmap
+	 * @param value TRUE : set all available bits to 1 FALSE : all available bits remain 0
+	 */
+	public Bitmap(int size, int value) {
+		int bytes = (int) Math.ceil((double) size / 8);// number of bytes
 
-    /**
-     * Set the position on bitmap to 1
-     *
-     * @param position
-     *            position on bitmap
-     */
-    public synchronized void set(int position) {
-        if (position >= size)
-            return;
+		bitmap = new byte[bytes];
+		this.size = size;
+		if (value == TRUE)
+			for (int i = 0; i < size; i++)
+				set(i);
+	}
 
-        int bitOffset = position % 8;
-        int byteOffset = getByteOffset(position);
+	/**
+	 * Set the position on bitmap to 1
+	 * @param position position on bitmap
+	 */
+	public synchronized void set(int position) {
+		if (position >= size)
+			return;
 
-        bitmap[byteOffset] |= (byte) (1 << bitOffset);
-    }
+		int bitOffset = position % 8;
+		int byteOffset = getByteOffset(position);
 
-    public synchronized void clear(int position) {
-        if (position >= size)
-            return;
+		bitmap[byteOffset] |= (byte) (1 << bitOffset);
+	}
 
-        int bitOffset = position % 8;
-        int byteOffset = getByteOffset(position);
-        byte complement = (byte) ~(1 << bitOffset);
+	public synchronized void clear(int position) {
+		if (position >= size)
+			return;
 
-        bitmap[byteOffset] &= (byte) complement;
-    }
+		int bitOffset = position % 8;
+		int byteOffset = getByteOffset(position);
+		byte complement = (byte) ~(1 << bitOffset);
 
-    /**
-     * Get the value of the position on bitmap
-     *
-     * @param position
-     *            position on bitmap
-     * @return true if the position is 1,false else
-     */
-    public boolean get(int position) {
-        if (position >= size)
-            return false;
+		bitmap[byteOffset] &= (byte) complement;
+	}
 
-        int bitOffset = position % 8;
-        int byteOffset = getByteOffset(position);
+	/**
+	 * Get the value of the position on bitmap
+	 * @param position position on bitmap
+	 * @return true if the position is 1,false else
+	 */
+	public boolean get(int position) {
+		if (position >= size)
+			return false;
 
-        return (byte) (bitmap[byteOffset] & (1 << bitOffset)) != 0;
-        // this value may return -128 if the highest bit is 1(signed)
-    }
+		int bitOffset = position % 8;
+		int byteOffset = getByteOffset(position);
 
-    protected int getByteOffset(int position) {
-        return bitmap.length - 1 - (position >> BYTE_SHIFT);
-    }
+		return (byte) (bitmap[byteOffset] & (1 << bitOffset)) != 0;
+		// this value may return -128 if the highest bit is 1(signed)
+	}
 
-    public Bitmap not() {
-        for (int i = 0; i < bitmap.length; i++)
-            bitmap[i] = (byte) ~bitmap[i];
-        return this;
-    }
+	protected int getByteOffset(int position) {
+		return bitmap.length - 1 - (position >> BYTE_SHIFT);
+	}
 
-    public Bitmap and(Bitmap map) {
-        if (map.getSize() != size)
-            return null;
-        Bitmap result = new Bitmap(map.getBitmap());
-        ;
-        byte[] byteArray = result.getBitmap();
+	public Bitmap not() {
+		for (int i = 0; i < bitmap.length; i++)
+			bitmap[i] = (byte) ~bitmap[i];
+		return this;
+	}
 
-        for (int i = 0; i < byteArray.length; i++)
-            byteArray[i] &= bitmap[i];
+	public Bitmap and(Bitmap map) {
+		if (map.getSize() != size)
+			return null;
+		Bitmap result = new Bitmap(map.getBitmap());
+		;
+		byte[] byteArray = result.getBitmap();
 
-        return result;
-    }
+		for (int i = 0; i < byteArray.length; i++)
+			byteArray[i] &= bitmap[i];
 
-    public Bitmap or(Bitmap map) {
-        if (map.getSize() != size)
-            return null;
-        Bitmap result = new Bitmap(map.getBitmap());
-        byte[] byteArray = result.getBitmap();
+		return result;
+	}
 
-        for (int i = 0; i < byteArray.length; i++)
-            byteArray[i] |= bitmap[i];
+	public Bitmap or(Bitmap map) {
+		if (map.getSize() != size)
+			return null;
+		Bitmap result = new Bitmap(map.getBitmap());
+		byte[] byteArray = result.getBitmap();
 
-        return result;
-    }
+		for (int i = 0; i < byteArray.length; i++)
+			byteArray[i] |= bitmap[i];
 
-    public Bitmap xor(Bitmap map) {
-        if (map.getSize() != size)
-            return null;
-        Bitmap result = new Bitmap(map.getBitmap());
-        ;
-        byte[] byteArray = result.getBitmap();
+		return result;
+	}
 
-        for (int i = 0; i < byteArray.length; i++)
-            byteArray[i] ^= bitmap[i];
+	public Bitmap xor(Bitmap map) {
+		if (map.getSize() != size)
+			return null;
+		Bitmap result = new Bitmap(map.getBitmap());
+		;
+		byte[] byteArray = result.getBitmap();
 
-        return result;
-    }
+		for (int i = 0; i < byteArray.length; i++)
+			byteArray[i] ^= bitmap[i];
 
-    public Bitmap nor(Bitmap map) {
-        if (map.getSize() != size)
-            return null;
-        int size = map.getSize();
-        Bitmap result = new Bitmap(size);
+		return result;
+	}
 
-        for (int i = 0; i < size; i++)
-            if (!get(i) && !map.get(i))
-                result.set(i);
+	public Bitmap nor(Bitmap map) {
+		if (map.getSize() != size)
+			return null;
+		int size = map.getSize();
+		Bitmap result = new Bitmap(size);
 
-        return result;
-    }
+		for (int i = 0; i < size; i++)
+			if (!get(i) && !map.get(i))
+				result.set(i);
 
-    public Bitmap xnor(Bitmap map) {
-        if (map.getSize() != size)
-            return null;
-        int size = map.getSize();
-        Bitmap result = new Bitmap(size);
+		return result;
+	}
 
-        for (int i = 0; i < size; i++)
-            if (get(i) == map.get(i))
-                result.set(i);
+	public Bitmap xnor(Bitmap map) {
+		if (map.getSize() != size)
+			return null;
+		int size = map.getSize();
+		Bitmap result = new Bitmap(size);
 
-        return result;
-    }
+		for (int i = 0; i < size; i++)
+			if (get(i) == map.get(i))
+				result.set(i);
 
-    public Bitmap nand(Bitmap map) {
-        if (map.getSize() != size)
-            return null;
-        int size = map.getSize();
-        Bitmap result = new Bitmap(size);
+		return result;
+	}
 
-        for (int i = 0; i < size; i++) {
-            if (!(get(i) && map.get(i)))
-                result.set(i);
-        }
+	public Bitmap nand(Bitmap map) {
+		if (map.getSize() != size)
+			return null;
+		int size = map.getSize();
+		Bitmap result = new Bitmap(size);
 
-        return result;
-    }
+		for (int i = 0; i < size; i++) {
+			if (!(get(i) && map.get(i)))
+				result.set(i);
+		}
 
-    /**
-     * NOT complement_a[i] := not a[i]
-     *
-     * @param a
-     * @return
-     */
-    public static Bitmap complement(Bitmap a) {
-        int size = a.getSize();
+		return result;
+	}
 
-        for (int i = 0; i < size; i++)
-            if (a.get(i))
-                a.clear(i);
-            else
-                a.set(i);
+	/**
+	 * NOT complement_a[i] := not a[i]
+	 * @param a
+	 * @return
+	 */
+	public static Bitmap complement(Bitmap a) {
+		int size = a.getSize();
 
-        return a;
-    }
+		for (int i = 0; i < size; i++)
+			if (a.get(i))
+				a.clear(i);
+			else
+				a.set(i);
 
-    /**
-     * OR union[i] := a[i] or b[i]
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static Bitmap union(Bitmap a, Bitmap b) {
-        if (a.getSize() != b.getSize())
-            return null;
+		return a;
+	}
 
-        Bitmap map = new Bitmap(a.getSize());
-        int size = a.getSize();
+	/**
+	 * OR union[i] := a[i] or b[i]
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static Bitmap union(Bitmap a, Bitmap b) {
+		if (a.getSize() != b.getSize())
+			return null;
 
-        for (int i = 0; i < size; i++)
-            if (a.get(i) || b.get(i))
-                map.set(i);
+		Bitmap map = new Bitmap(a.getSize());
+		int size = a.getSize();
 
-        return map;
-    }
+		for (int i = 0; i < size; i++)
+			if (a.get(i) || b.get(i))
+				map.set(i);
 
-    /**
-     * AND intersection[i] := a[i] and b[i]
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static Bitmap intersection(Bitmap a, Bitmap b) {
-        if (a.getSize() != b.getSize())
-            return null;
+		return map;
+	}
 
-        Bitmap map = new Bitmap(a.getSize());
-        int size = a.getSize();
+	/**
+	 * AND intersection[i] := a[i] and b[i]
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static Bitmap intersection(Bitmap a, Bitmap b) {
+		if (a.getSize() != b.getSize())
+			return null;
 
-        for (int i = 0; i < size; i++)
-            if (a.get(i) && b.get(i))
-                map.set(i);
+		Bitmap map = new Bitmap(a.getSize());
+		int size = a.getSize();
 
-        return map;
-    }
+		for (int i = 0; i < size; i++)
+			if (a.get(i) && b.get(i))
+				map.set(i);
 
-    /**
-     * XOR difference[i] := a[i] and (not b[i])
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static Bitmap difference(Bitmap a, Bitmap b) {
-        if (a.getSize() != b.getSize())
-            return null;
+		return map;
+	}
 
-        Bitmap map = new Bitmap(a.getSize());
-        int size = a.getSize();
+	/**
+	 * XOR difference[i] := a[i] and (not b[i])
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static Bitmap difference(Bitmap a, Bitmap b) {
+		if (a.getSize() != b.getSize())
+			return null;
 
-        for (int i = 0; i < size; i++)
-            if (a.get(i) != b.get(i))
-                map.set(i);
+		Bitmap map = new Bitmap(a.getSize());
+		int size = a.getSize();
 
-        return map;
-    }
+		for (int i = 0; i < size; i++)
+			if (a.get(i) != b.get(i))
+				map.set(i);
 
-    /**
-     * Returns the binary representation of bitmap.
-     *
-     * @return binary represetation of bitmap as String
-     */
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
+		return map;
+	}
 
-        for (int i = 0; i < size; i++) {
-            if (get(i)) {
-                result.append("1");
-            } else {
-                result.append("0");
-            }
-            if ((i + 1) % 8 == 0) {
-                result.append(" ");
-            }
-        }
+	/**
+	 * Returns the binary representation of bitmap.
+	 * @return binary represetation of bitmap as String
+	 */
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
 
-        return result.toString();
-    }
+		for (int i = 0; i < size; i++) {
+			if (get(i)) {
+				result.append("1");
+			}
+			else {
+				result.append("0");
+			}
+			if ((i + 1) % 8 == 0) {
+				result.append(" ");
+			}
+		}
 
-    public void dump() {
-        System.out.println(toString());
-    }
+		return result.toString();
+	}
 
-    public byte[] getBitmap() {
-        return bitmap;
-    }
+	public void dump() {
+		System.out.println(toString());
+	}
 
-    public int getSize() {
-        return size;
-    }
+	public byte[] getBitmap() {
+		return bitmap;
+	}
+
+	public int getSize() {
+		return size;
+	}
 
 }

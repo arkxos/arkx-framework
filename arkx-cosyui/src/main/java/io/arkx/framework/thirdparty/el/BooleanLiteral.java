@@ -64,39 +64,42 @@ package io.arkx.framework.thirdparty.el;
  **/
 
 public class BooleanLiteral extends Literal {
-    // -------------------------------------
-    // Member variables
-    // -------------------------------------
 
-    public static final BooleanLiteral TRUE = new BooleanLiteral("true");
-    public static final BooleanLiteral FALSE = new BooleanLiteral("false");
+	// -------------------------------------
+	// Member variables
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public BooleanLiteral(String pToken) {
-        super(getValueFromToken(pToken));
-    }
+	public static final BooleanLiteral TRUE = new BooleanLiteral("true");
 
-    // -------------------------------------
-    /**
-     * Parses the given token into the literal value
-     **/
-    static Object getValueFromToken(String pToken) {
-        return "true".equals(pToken) ? Boolean.TRUE : Boolean.FALSE;
-    }
+	public static final BooleanLiteral FALSE = new BooleanLiteral("false");
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the expression in the expression language syntax
-     **/
-    @Override
-    public String getExpressionString() {
-        return getValue() == Boolean.TRUE ? "true" : "false";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public BooleanLiteral(String pToken) {
+		super(getValueFromToken(pToken));
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Parses the given token into the literal value
+	 **/
+	static Object getValueFromToken(String pToken) {
+		return "true".equals(pToken) ? Boolean.TRUE : Boolean.FALSE;
+	}
+
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the expression in the expression language syntax
+	 **/
+	@Override
+	public String getExpressionString() {
+		return getValue() == Boolean.TRUE ? "true" : "false";
+	}
+
+	// -------------------------------------
+
 }

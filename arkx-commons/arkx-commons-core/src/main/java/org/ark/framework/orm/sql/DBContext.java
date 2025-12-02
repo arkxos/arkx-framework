@@ -8,51 +8,51 @@ package org.ark.framework.orm.sql;
  */
 public class DBContext {
 
-    /**
-     * ThreadLocal object for storing object in current thread.
-     */
-    private static ThreadLocal<DBContext> tl = new ThreadLocal<DBContext>();
+	/**
+	 * ThreadLocal object for storing object in current thread.
+	 */
+	private static ThreadLocal<DBContext> tl = new ThreadLocal<DBContext>();
 
-    /**
-     * Set current context
-     */
-    static public void setCurrentContext(String poolName) {
-        DBContext c = getCurrentContext();
-        if (c == null) {
-            c = new DBContext(poolName);
-            tl.set(c);
-        } else {
-            c.poolName = poolName;
-        }
-    }
+	/**
+	 * Set current context
+	 */
+	static public void setCurrentContext(String poolName) {
+		DBContext c = getCurrentContext();
+		if (c == null) {
+			c = new DBContext(poolName);
+			tl.set(c);
+		}
+		else {
+			c.poolName = poolName;
+		}
+	}
 
-    public String getPoolName() {
-        return this.poolName;
-    }
+	public String getPoolName() {
+		return this.poolName;
+	}
 
-    /**
-     * Get current context value
-     *
-     * @return The current context
-     */
-    static public DBContext getCurrentContext() {
-        return (DBContext) tl.get();
-    }
+	/**
+	 * Get current context value
+	 * @return The current context
+	 */
+	static public DBContext getCurrentContext() {
+		return (DBContext) tl.get();
+	}
 
-    // ----------------------------------------------------------
-    //
-    // Class members
-    //
-    // ----------------------------------------------------------
+	// ----------------------------------------------------------
+	//
+	// Class members
+	//
+	// ----------------------------------------------------------
 
-    private String poolName;
+	private String poolName;
 
-    /**
-     * The constructor is private, to get an instance of the Context, please use
-     * getCurrentContext() method.
-     */
-    private DBContext(String poolName) {
-        this.poolName = poolName;
-    }
+	/**
+	 * The constructor is private, to get an instance of the Context, please use
+	 * getCurrentContext() method.
+	 */
+	private DBContext(String poolName) {
+		this.poolName = poolName;
+	}
 
 }

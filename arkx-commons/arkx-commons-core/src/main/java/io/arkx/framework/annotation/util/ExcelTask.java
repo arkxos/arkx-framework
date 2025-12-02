@@ -5,8 +5,8 @@ import io.arkx.framework.commons.thread.LongTimeTask;
 
 public interface ExcelTask {
 
-    void setTask(LongTimeTask longTimeTask);
+	void setTask(LongTimeTask longTimeTask);
 
-    void execute(String fileName, Mapx<String, Object> params);
+	void execute(String fileName, Mapx<String, Object> params);
 
 }

@@ -13,14 +13,15 @@ import io.netty.channel.Channel;
  */
 public class ChannelCache {
 
-    private static ConcurrentHashMap<String, Channel> producerMap = new ConcurrentHashMap<String, Channel>();
+	private static ConcurrentHashMap<String, Channel> producerMap = new ConcurrentHashMap<String, Channel>();
 
-    public static void pushRequest(String requestId, Channel channel) {
-        producerMap.put(requestId, channel);
-    }
+	public static void pushRequest(String requestId, Channel channel) {
+		producerMap.put(requestId, channel);
+	}
 
-    public static Channel findChannel(String requestId) {
-        Channel channel = producerMap.remove(requestId);
-        return channel;
-    }
+	public static Channel findChannel(String requestId) {
+		Channel channel = producerMap.remove(requestId);
+		return channel;
+	}
+
 }

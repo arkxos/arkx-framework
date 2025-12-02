@@ -22,191 +22,205 @@ import lombok.Setter;
 @Getter
 public abstract class AbstractTask implements Task {
 
-    private String id;// 任务的 ID
-    @Setter
-    private String type;// 任务的类型
-    private Progress progress;// 进度回调函数
-    private double progressPercent;
-    @Getter
-    private List<TaskListener> taskListeners = new ArrayList<>();
-    private boolean hasTriggerCompleted = false;
+	private String id;// 任务的 ID
 
-    private List<TaskCompletedListener> taskCompletedListeners = new ArrayList<>();
+	@Setter
+	private String type;// 任务的类型
 
-    private final AtomicReference<TaskStatus> statusReference = new AtomicReference<>(TaskStatus.INIT);// 任务的状态
-    protected Future<?> future;
+	private Progress progress;// 进度回调函数
 
-    private final long createTime;
+	private double progressPercent;
 
-    private int globalExecuteOrder;
-    private boolean waittingForExecute = true;
-    private boolean finished = false;
-    private long startTime;
-    private long endTime;
+	@Getter
+	private List<TaskListener> taskListeners = new ArrayList<>();
 
-    protected AbstractTask(String type, String id) {
-        if (Utils.isEmpty(type)) {
-            this.type = Task.DEFAULT_TYPE_NAME;
-        } else {
-            this.type = type;
-        }
-        if (Utils.isEmpty(id)) {
-            this.id = Utils.generateId();
-        } else {
-            this.id = id;
-        }
-        createTime = System.currentTimeMillis();
-    }
+	private boolean hasTriggerCompleted = false;
 
-    public final boolean setStatus(TaskStatus expect, TaskStatus update) {
-        Assert.notNull(statusReference);
+	private List<TaskCompletedListener> taskCompletedListeners = new ArrayList<>();
 
-        boolean result = this.statusReference.compareAndSet(expect, update);
+	private final AtomicReference<TaskStatus> statusReference = new AtomicReference<>(TaskStatus.INIT);// 任务的状态
 
-        if (update != TaskStatus.INIT) {
-            this.waittingForExecute = false;
-        }
+	protected Future<?> future;
 
-        return result;
-    }
+	private final long createTime;
 
-    private void setStatusToCancel() {
-        this.statusReference.set(TaskStatus.CANCEL);
-    }
+	private int globalExecuteOrder;
 
-    @Override
-    public TaskStatus getStatus() {
-        return this.statusReference.get();
-    }
+	private boolean waittingForExecute = true;
 
-    @Override
-    public boolean cancel(boolean mayInterruptIfRunning) {
-        if (future == null) {
-            setStatusToCancel();
-            return true;
-        }
-        if (future.cancel(mayInterruptIfRunning)) {
-            setStatusToCancel();
-            return true;
-        }
-        return false;
-    }
+	private boolean finished = false;
 
-    @Override
-    public void await() {
-        if (future != null) {
-            try {
-                future.get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new TaskException(e);
-            }
-        }
-    }
+	private long startTime;
 
-    @Override
-    public void await(long timeout, TimeUnit unit) throws TimeoutException {
-        if (future != null) {
-            try {
-                future.get(timeout, unit);
-            } catch (InterruptedException | ExecutionException e) {
-                throw new TaskException(e);
-            }
-        }
-    }
+	private long endTime;
 
-    public void addListener(TaskListener listener) {
-        taskListeners.add(listener);
-    }
+	protected AbstractTask(String type, String id) {
+		if (Utils.isEmpty(type)) {
+			this.type = Task.DEFAULT_TYPE_NAME;
+		}
+		else {
+			this.type = type;
+		}
+		if (Utils.isEmpty(id)) {
+			this.id = Utils.generateId();
+		}
+		else {
+			this.id = id;
+		}
+		createTime = System.currentTimeMillis();
+	}
 
-    public void addCompletedListener(TaskCompletedListener taskCompletedListener) {
-        this.taskCompletedListeners.add(taskCompletedListener);
-    }
+	public final boolean setStatus(TaskStatus expect, TaskStatus update) {
+		Assert.notNull(statusReference);
 
-    @Override
-    public boolean isFinished() {
-        // TaskStatus status = getStatus();
-        // return status != TaskStatus.INIT
-        // && status != TaskStatus.QUEUED
-        // && status != TaskStatus.RUNNING;
-        return this.finished;
-    }
+		boolean result = this.statusReference.compareAndSet(expect, update);
 
-    @Override
-    public void triggerCompleted() {
-        if (!isFinished()) {
-            return;
-        }
-        if (!hasTriggerCompleted) {
-            hasTriggerCompleted = true;
-            for (TaskCompletedListener completedListener : taskCompletedListeners) {
-                completedListener.onCompleteFinish();
-            }
-        }
+		if (update != TaskStatus.INIT) {
+			this.waittingForExecute = false;
+		}
 
-    }
+		return result;
+	}
 
-    public String getCost() {
-        if (endTime == 0) {
-            return "";
-        }
-        return formatTime(endTime - startTime);
-    }
+	private void setStatusToCancel() {
+		this.statusReference.set(TaskStatus.CANCEL);
+	}
 
-    /*
-     * 毫秒转化时分秒毫秒
-     */
-    public static String formatTime(long ms) {
-        // Integer namiao = 1000;
-        long weimiaoUnit = 1000;
-        long haomiaoUnit = weimiaoUnit * 1000;
-        long secondUnit = haomiaoUnit * 1000;
-        long minuteUnit = secondUnit * 60;
-        long hourUnit = minuteUnit * 60;
-        long dayUnit = hourUnit * 24;
+	@Override
+	public TaskStatus getStatus() {
+		return this.statusReference.get();
+	}
 
-        Long day = ms / dayUnit;
-        Long hour = (ms - day * dayUnit) / hourUnit;
-        Long minute = (ms - day * dayUnit - hour * hourUnit) / minuteUnit;
-        Long second = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit) / secondUnit;
-        Long haomiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit) / haomiaoUnit;
-        Long weimiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
-                - haomiao * haomiaoUnit) / weimiaoUnit;
-        Long namiao = ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
-                - haomiao * haomiaoUnit - weimiao * weimiaoUnit;
+	@Override
+	public boolean cancel(boolean mayInterruptIfRunning) {
+		if (future == null) {
+			setStatusToCancel();
+			return true;
+		}
+		if (future.cancel(mayInterruptIfRunning)) {
+			setStatusToCancel();
+			return true;
+		}
+		return false;
+	}
 
-        StringBuffer sb = new StringBuffer();
-        if (day > 0) {
-            sb.append(day + "天");
-        }
-        if (hour > 0) {
-            sb.append(hour + "小时");
-        }
-        if (minute > 0) {
-            sb.append(minute + "分");
-        }
-        if (second > 0) {
-            sb.append(second + "秒");
-        }
-        if (haomiao > 0) {
-            sb.append(haomiao + "毫秒");
-        }
-        if (weimiao > 0) {
-            sb.append(weimiao + "微秒");
-        }
-        if (namiao > 0) {
-            sb.append(namiao + "纳秒");
-        }
+	@Override
+	public void await() {
+		if (future != null) {
+			try {
+				future.get();
+			}
+			catch (InterruptedException | ExecutionException e) {
+				throw new TaskException(e);
+			}
+		}
+	}
 
-        String result = sb.toString();
-        if (result.length() == 0) {
-            result = "0纳秒";
-        }
-        return result;
-    }
+	@Override
+	public void await(long timeout, TimeUnit unit) throws TimeoutException {
+		if (future != null) {
+			try {
+				future.get(timeout, unit);
+			}
+			catch (InterruptedException | ExecutionException e) {
+				throw new TaskException(e);
+			}
+		}
+	}
 
-    public void finish() {
-        this.setEndTime(System.nanoTime());
-        this.finished = true;
-    }
+	public void addListener(TaskListener listener) {
+		taskListeners.add(listener);
+	}
+
+	public void addCompletedListener(TaskCompletedListener taskCompletedListener) {
+		this.taskCompletedListeners.add(taskCompletedListener);
+	}
+
+	@Override
+	public boolean isFinished() {
+		// TaskStatus status = getStatus();
+		// return status != TaskStatus.INIT
+		// && status != TaskStatus.QUEUED
+		// && status != TaskStatus.RUNNING;
+		return this.finished;
+	}
+
+	@Override
+	public void triggerCompleted() {
+		if (!isFinished()) {
+			return;
+		}
+		if (!hasTriggerCompleted) {
+			hasTriggerCompleted = true;
+			for (TaskCompletedListener completedListener : taskCompletedListeners) {
+				completedListener.onCompleteFinish();
+			}
+		}
+
+	}
+
+	public String getCost() {
+		if (endTime == 0) {
+			return "";
+		}
+		return formatTime(endTime - startTime);
+	}
+
+	/*
+	 * 毫秒转化时分秒毫秒
+	 */
+	public static String formatTime(long ms) {
+		// Integer namiao = 1000;
+		long weimiaoUnit = 1000;
+		long haomiaoUnit = weimiaoUnit * 1000;
+		long secondUnit = haomiaoUnit * 1000;
+		long minuteUnit = secondUnit * 60;
+		long hourUnit = minuteUnit * 60;
+		long dayUnit = hourUnit * 24;
+
+		Long day = ms / dayUnit;
+		Long hour = (ms - day * dayUnit) / hourUnit;
+		Long minute = (ms - day * dayUnit - hour * hourUnit) / minuteUnit;
+		Long second = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit) / secondUnit;
+		Long haomiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit) / haomiaoUnit;
+		Long weimiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
+				- haomiao * haomiaoUnit) / weimiaoUnit;
+		Long namiao = ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
+				- haomiao * haomiaoUnit - weimiao * weimiaoUnit;
+
+		StringBuffer sb = new StringBuffer();
+		if (day > 0) {
+			sb.append(day + "天");
+		}
+		if (hour > 0) {
+			sb.append(hour + "小时");
+		}
+		if (minute > 0) {
+			sb.append(minute + "分");
+		}
+		if (second > 0) {
+			sb.append(second + "秒");
+		}
+		if (haomiao > 0) {
+			sb.append(haomiao + "毫秒");
+		}
+		if (weimiao > 0) {
+			sb.append(weimiao + "微秒");
+		}
+		if (namiao > 0) {
+			sb.append(namiao + "纳秒");
+		}
+
+		String result = sb.toString();
+		if (result.length() == 0) {
+			result = "0纳秒";
+		}
+		return result;
+	}
+
+	public void finish() {
+		this.setEndTime(System.nanoTime());
+		this.finished = true;
+	}
 
 }

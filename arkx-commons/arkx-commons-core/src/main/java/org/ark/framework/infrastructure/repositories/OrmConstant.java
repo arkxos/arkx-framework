@@ -1,4 +1,5 @@
 package org.ark.framework.infrastructure.repositories;
+
 /**
  * @class org.ark.framework.infrastructure.repositories.OrmConstant
  * @author Darkness
@@ -6,5 +7,7 @@ package org.ark.framework.infrastructure.repositories;
  * @version V1.0
  */
 public class OrmConstant {
-    public static final String GlobalCharset = "UTF-8";
+
+	public static final String GlobalCharset = "UTF-8";
+
 }

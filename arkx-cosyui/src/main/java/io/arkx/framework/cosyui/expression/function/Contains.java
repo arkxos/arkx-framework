@@ -9,31 +9,32 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  */
 public class Contains extends AbstractFunction {
 
-    @Override
-    public Object execute(IVariableResolver resolver, Object... args) {
-        String input = (String) args[0];
-        String substring = (String) args[1];
-        if (input == null) {
-            input = "";
-        }
-        if (substring == null) {
-            substring = "";
-        }
-        return input.indexOf(substring) >= 0;
-    }
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) {
+		String input = (String) args[0];
+		String substring = (String) args[1];
+		if (input == null) {
+			input = "";
+		}
+		if (substring == null) {
+			substring = "";
+		}
+		return input.indexOf(substring) >= 0;
+	}
 
-    @Override
-    public Class<?>[] getArgumentTypes() {
-        return AbstractFunction.Arg_String_String;
-    }
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return AbstractFunction.Arg_String_String;
+	}
 
-    @Override
-    public String getFunctionPrefix() {
-        return "";
-    }
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
 
-    @Override
-    public String getFunctionName() {
-        return "contains";
-    }
+	@Override
+	public String getFunctionName() {
+		return "contains";
+	}
+
 }

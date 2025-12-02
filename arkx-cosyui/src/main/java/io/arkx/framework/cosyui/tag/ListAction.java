@@ -14,166 +14,168 @@ import io.arkx.framework.data.jdbc.Query;
  *
  */
 public class ListAction implements IPageEnableAction {
-    DataTable dataSource;
 
-    Mapx<String, Object> params;
+	DataTable dataSource;
 
-    int pageSize;
+	Mapx<String, Object> params;
 
-    int pageIndex;
+	int pageSize;
 
-    boolean page;
+	int pageIndex;
 
-    String ID;
+	boolean page;
 
-    String method;
-    String rest;
+	String ID;
 
-    ListTag tag;
+	String method;
 
-    int total;
+	String rest;
 
-    String queryString;// 用于构建分页链接
+	ListTag tag;
 
-    public void bindData(Query qb) {// NO_UCD
-        if (total == 0) {
-            total = qb.getCount();
-        }
-        dataSource = qb.executePagedDataTable(pageSize, pageIndex).getData();
-    }
+	int total;
 
-    public void bindData(DataTable dt) {
-        if (dt == null) {
-            return;
-        }
-        dataSource = dt;
-    }
+	String queryString;// 用于构建分页链接
 
-    @Override
-    public void setTotal(int total) {
-        this.total = total;
-    }
+	public void bindData(Query qb) {// NO_UCD
+		if (total == 0) {
+			total = qb.getCount();
+		}
+		dataSource = qb.executePagedDataTable(pageSize, pageIndex).getData();
+	}
 
-    // @Override
-    // public void setTotal(QueryBuilder qb) {
-    // total = DBUtil.getCount(qb);
-    // }
+	public void bindData(DataTable dt) {
+		if (dt == null) {
+			return;
+		}
+		dataSource = dt;
+	}
 
-    @Override
-    public int getTotal() {
-        return total;
-    }
+	@Override
+	public void setTotal(int total) {
+		this.total = total;
+	}
 
-    /**
-     * 得到上级循环的当前行
-     */
-    public DataRow getParentCurrentDataRow() {
-        AbstractTag p = tag.getParent();
-        if (p instanceof ListTag) {
-            return ((ListTag) p).getCurrentDataRow();
-        }
-        return null;
-    }
+	// @Override
+	// public void setTotal(QueryBuilder qb) {
+	// total = DBUtil.getCount(qb);
+	// }
 
-    public DataTable getParentData() {
-        AbstractTag p = tag.getParent();
-        if (p instanceof ListTag) {
-            return ((ListTag) p).getData();
-        }
-        return null;
-    }
+	@Override
+	public int getTotal() {
+		return total;
+	}
 
-    public String getParam(String key) {
-        return params.getString(key);
-    }
+	/**
+	 * 得到上级循环的当前行
+	 */
+	public DataRow getParentCurrentDataRow() {
+		AbstractTag p = tag.getParent();
+		if (p instanceof ListTag) {
+			return ((ListTag) p).getCurrentDataRow();
+		}
+		return null;
+	}
 
-    public DataTable getDataSource() {
-        return dataSource;
-    }
+	public DataTable getParentData() {
+		AbstractTag p = tag.getParent();
+		if (p instanceof ListTag) {
+			return ((ListTag) p).getData();
+		}
+		return null;
+	}
 
-    public Mapx<String, Object> getParams() {
-        return params;
-    }
+	public String getParam(String key) {
+		return params.getString(key);
+	}
 
-    public void setParams(Mapx<String, Object> params) {
-        this.params = params;
-    }
+	public DataTable getDataSource() {
+		return dataSource;
+	}
 
-    @Override
-    public int getPageSize() {
-        return pageSize;
-    }
+	public Mapx<String, Object> getParams() {
+		return params;
+	}
 
-    @Override
-    public void setPageSize(int pageSize) {
-        if (pageSize > MaxPageSize.getValue()) {
-            pageSize = MaxPageSize.getValue();
-        }
-        this.pageSize = pageSize;
-    }
+	public void setParams(Mapx<String, Object> params) {
+		this.params = params;
+	}
 
-    @Override
-    public int getPageIndex() {
-        return pageIndex;
-    }
+	@Override
+	public int getPageSize() {
+		return pageSize;
+	}
 
-    @Override
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
-    }
+	@Override
+	public void setPageSize(int pageSize) {
+		if (pageSize > MaxPageSize.getValue()) {
+			pageSize = MaxPageSize.getValue();
+		}
+		this.pageSize = pageSize;
+	}
 
-    public boolean isPage() {
-        return page;
-    }
+	@Override
+	public int getPageIndex() {
+		return pageIndex;
+	}
 
-    public void setPage(boolean pageEnable) {
-        page = pageEnable;
-    }
+	@Override
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
 
-    @Override
-    public void setPageEnabled(boolean pageEnabled) {
-        page = pageEnabled;
-    }
+	public boolean isPage() {
+		return page;
+	}
 
-    @Override
-    public boolean isPageEnabled() {
-        return page;
-    }
+	public void setPage(boolean pageEnable) {
+		page = pageEnable;
+	}
 
-    public String getID() {
-        return ID;
-    }
+	@Override
+	public void setPageEnabled(boolean pageEnabled) {
+		page = pageEnabled;
+	}
 
-    public void setID(String iD) {
-        ID = iD;
-    }
+	@Override
+	public boolean isPageEnabled() {
+		return page;
+	}
 
-    public String getMethod() {
-        return method;
-    }
+	public String getID() {
+		return ID;
+	}
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
+	public void setID(String iD) {
+		ID = iD;
+	}
 
-    public void setTag(ListTag tag) {
-        this.tag = tag;
-    }
+	public String getMethod() {
+		return method;
+	}
 
-    public String getQueryString() {
-        return queryString;
-    }
+	public void setMethod(String method) {
+		this.method = method;
+	}
 
-    public void setQueryString(String queryString) {
-        this.queryString = queryString;
-    }
+	public void setTag(ListTag tag) {
+		this.tag = tag;
+	}
 
-    public String getRest() {
-        return rest;
-    }
+	public String getQueryString() {
+		return queryString;
+	}
 
-    public void setRest(String rest) {
-        this.rest = rest;
-    }
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
+	}
+
+	public String getRest() {
+		return rest;
+	}
+
+	public void setRest(String rest) {
+		this.rest = rest;
+	}
 
 }

@@ -15,70 +15,71 @@ import io.arkx.framework.core.FrameworkException;
  * @version V1.0
  */
 public class AbstractExtendService<T extends IExtendItem> implements IExtendService<T> {
-    protected CacheMapx<String, T> itemMap = new CacheMapx<>();
 
-    protected List<T> itemList = new ReadOnlyList<>(new ArrayList<>());
+	protected CacheMapx<String, T> itemMap = new CacheMapx<>();
 
-    /**
-     * 查找扩展服务的实例
-     */
-    @SuppressWarnings("unchecked")
-    protected static <S extends IExtendService<?>> S findInstance(Class<S> clazz) {
-        if (clazz == null) {
-            throw new FrameworkException("ExtendService class can't be empty!");
-        }
-        IExtendService<?> service = ExtendManager.findExtendServiceByClass(clazz.getName());
-        if (service == null) {
-            throw new FrameworkException("ExtendService not found,class is " + clazz.getName());
-        }
-        // @SuppressWarnings("unchecked")
-        // S service = (S) config.getInstance();
-        return (S) service;
-    }
+	protected List<T> itemList = new ReadOnlyList<>(new ArrayList<>());
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void register(IExtendItem item) {
-        itemMap.put(item.getExtendItemID(), (T) item);
-        prepareItemList();
-    }
+	/**
+	 * 查找扩展服务的实例
+	 */
+	@SuppressWarnings("unchecked")
+	protected static <S extends IExtendService<?>> S findInstance(Class<S> clazz) {
+		if (clazz == null) {
+			throw new FrameworkException("ExtendService class can't be empty!");
+		}
+		IExtendService<?> service = ExtendManager.findExtendServiceByClass(clazz.getName());
+		if (service == null) {
+			throw new FrameworkException("ExtendService not found,class is " + clazz.getName());
+		}
+		// @SuppressWarnings("unchecked")
+		// S service = (S) config.getInstance();
+		return (S) service;
+	}
 
-    @Override
-    public T get(String id) {
-        if (id == null) {
-            return null;
-        }
-        return itemMap.get(id);
-    }
+	@Override
+	@SuppressWarnings("unchecked")
+	public void register(IExtendItem item) {
+		itemMap.put(item.getExtendItemID(), (T) item);
+		prepareItemList();
+	}
 
-    @Override
-    public T remove(String id) {
-        T ret = itemMap.remove(id);
-        prepareItemList();
-        return ret;
-    }
+	@Override
+	public T get(String id) {
+		if (id == null) {
+			return null;
+		}
+		return itemMap.get(id);
+	}
 
-    protected void prepareItemList() {
-        itemList = new ReadOnlyList<>(itemMap.values());
-    }
+	@Override
+	public T remove(String id) {
+		T ret = itemMap.remove(id);
+		prepareItemList();
+		return ret;
+	}
 
-    /**
-     * 注意：有可能返回null
-     */
-    @Override
-    public List<T> getAll() {
-        return itemList;
-    }
+	protected void prepareItemList() {
+		itemList = new ReadOnlyList<>(itemMap.values());
+	}
 
-    public int size() {
-        return itemList.size();
-    }
+	/**
+	 * 注意：有可能返回null
+	 */
+	@Override
+	public List<T> getAll() {
+		return itemList;
+	}
 
-    @Override
-    public void destory() {
-        itemMap.clear();
-        itemMap = null;
-        itemList = null;
-    }
+	public int size() {
+		return itemList.size();
+	}
+
+	@Override
+	public void destory() {
+		itemMap.clear();
+		itemMap = null;
+		itemList = null;
+	}
 
 }

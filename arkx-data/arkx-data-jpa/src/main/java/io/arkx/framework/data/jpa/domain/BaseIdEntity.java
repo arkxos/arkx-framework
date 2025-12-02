@@ -22,56 +22,57 @@ import jakarta.persistence.Transient;
 @MappedSuperclass
 public abstract class BaseIdEntity<PK extends Serializable> implements Persistable<PK> {
 
-    @Id
-    @GenericGenerator(name = "snowflake", strategy = SnowflakeGenerator.TYPE)
-    @GeneratedValue(generator = "snowflake")
-    private PK id;
+	@Id
+	@GenericGenerator(name = "snowflake", strategy = SnowflakeGenerator.TYPE)
+	@GeneratedValue(generator = "snowflake")
+	private PK id;
 
-    public PK getId() {
-        return id;
-    }
+	public PK getId() {
+		return id;
+	}
 
-    protected void setId(final PK id) {
-        this.id = id;
-    }
+	protected void setId(final PK id) {
+		this.id = id;
+	}
 
-    @Transient
-    public boolean isNew() {
-        return null == getId();
-    }
+	@Transient
+	public boolean isNew() {
+		return null == getId();
+	}
 
-    @Override
-    public String toString() {
-        return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
-    }
+	@Override
+	public String toString() {
+		return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
+	}
 
-    @Override
-    public boolean equals(Object obj) {
+	@Override
+	public boolean equals(Object obj) {
 
-        if (null == obj) {
-            return false;
-        }
+		if (null == obj) {
+			return false;
+		}
 
-        if (this == obj) {
-            return true;
-        }
+		if (this == obj) {
+			return true;
+		}
 
-        if (!getClass().equals(ClassUtils.getUserClass(obj))) {
-            return false;
-        }
+		if (!getClass().equals(ClassUtils.getUserClass(obj))) {
+			return false;
+		}
 
-        AbstractPersistable<?> that = (AbstractPersistable<?>) obj;
+		AbstractPersistable<?> that = (AbstractPersistable<?>) obj;
 
-        return null != this.getId() && this.getId().equals(that.getId());
-    }
+		return null != this.getId() && this.getId().equals(that.getId());
+	}
 
-    @Override
-    public int hashCode() {
+	@Override
+	public int hashCode() {
 
-        int hashCode = 17;
+		int hashCode = 17;
 
-        hashCode += null == getId() ? 0 : getId().hashCode() * 31;
+		hashCode += null == getId() ? 0 : getId().hashCode() * 31;
 
-        return hashCode;
-    }
+		return hashCode;
+	}
+
 }

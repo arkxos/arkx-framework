@@ -10,75 +10,78 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.constants.DataTyp
 
 public class ValueHandlerProvider implements IValueHandlerProvider {
 
-    private final Map<DataType, IValueHandler> valueHandlers;
+	private final Map<DataType, IValueHandler> valueHandlers;
 
-    public ValueHandlerProvider() {
-        valueHandlers = new EnumMap<>(DataType.class);
+	public ValueHandlerProvider() {
+		valueHandlers = new EnumMap<>(DataType.class);
 
-        add(DataType.Boolean, new BooleanValueHandler());
-        add(DataType.Char, new ByteValueHandler<>());
-        add(DataType.Numeric, new BigDecimalValueHandler<>());
-        add(DataType.DoublePrecision, new DoubleValueHandler<>());
-        add(DataType.SinglePrecision, new FloatValueHandler<>());
-        add(DataType.Date, new LocalDateValueHandler());
-        add(DataType.Time, new LocalTimeValueHandler());
-        add(DataType.Timestamp, new LocalDateTimeValueHandler());
-        add(DataType.TimestampTz, new ZonedDateTimeValueHandler());
-        add(DataType.Int2, new ShortValueHandler<>());
-        add(DataType.Int4, new IntegerValueHandler<>());
-        add(DataType.Int8, new LongValueHandler<>());
-        add(DataType.Text, new StringValueHandler());
-        add(DataType.VarChar, new StringValueHandler());
-        add(DataType.Inet4, new Inet4AddressValueHandler());
-        add(DataType.Inet6, new Inet6AddressValueHandler());
-        add(DataType.Uuid, new UUIDValueHandler());
-        add(DataType.Bytea, new ByteArrayValueHandler());
-        add(DataType.Jsonb, new JsonbValueHandler());
-        add(DataType.Hstore, new HstoreValueHandler());
-        add(DataType.Point, new PointValueHandler());
-        add(DataType.Box, new BoxValueHandler());
-        add(DataType.Line, new LineValueHandler());
-        add(DataType.LineSegment, new LineSegmentValueHandler());
-        add(DataType.Path, new PathValueHandler());
-        add(DataType.Polygon, new PolygonValueHandler());
-        add(DataType.Circle, new CircleValueHandler());
-        add(DataType.MacAddress, new MacAddressValueHandler());
-        add(DataType.TsRange, new RangeValueHandler<>(new LocalDateTimeValueHandler()));
-        add(DataType.TsTzRange, new RangeValueHandler<>(new ZonedDateTimeValueHandler()));
-        add(DataType.Int4Range, new RangeValueHandler<>(new IntegerValueHandler<>()));
-        add(DataType.Int8Range, new RangeValueHandler<>(new LongValueHandler<>()));
-        add(DataType.NumRange, new RangeValueHandler<>(new BigDecimalValueHandler<>()));
-        add(DataType.DateRange, new RangeValueHandler<>(new LocalDateValueHandler()));
-    }
+		add(DataType.Boolean, new BooleanValueHandler());
+		add(DataType.Char, new ByteValueHandler<>());
+		add(DataType.Numeric, new BigDecimalValueHandler<>());
+		add(DataType.DoublePrecision, new DoubleValueHandler<>());
+		add(DataType.SinglePrecision, new FloatValueHandler<>());
+		add(DataType.Date, new LocalDateValueHandler());
+		add(DataType.Time, new LocalTimeValueHandler());
+		add(DataType.Timestamp, new LocalDateTimeValueHandler());
+		add(DataType.TimestampTz, new ZonedDateTimeValueHandler());
+		add(DataType.Int2, new ShortValueHandler<>());
+		add(DataType.Int4, new IntegerValueHandler<>());
+		add(DataType.Int8, new LongValueHandler<>());
+		add(DataType.Text, new StringValueHandler());
+		add(DataType.VarChar, new StringValueHandler());
+		add(DataType.Inet4, new Inet4AddressValueHandler());
+		add(DataType.Inet6, new Inet6AddressValueHandler());
+		add(DataType.Uuid, new UUIDValueHandler());
+		add(DataType.Bytea, new ByteArrayValueHandler());
+		add(DataType.Jsonb, new JsonbValueHandler());
+		add(DataType.Hstore, new HstoreValueHandler());
+		add(DataType.Point, new PointValueHandler());
+		add(DataType.Box, new BoxValueHandler());
+		add(DataType.Line, new LineValueHandler());
+		add(DataType.LineSegment, new LineSegmentValueHandler());
+		add(DataType.Path, new PathValueHandler());
+		add(DataType.Polygon, new PolygonValueHandler());
+		add(DataType.Circle, new CircleValueHandler());
+		add(DataType.MacAddress, new MacAddressValueHandler());
+		add(DataType.TsRange, new RangeValueHandler<>(new LocalDateTimeValueHandler()));
+		add(DataType.TsTzRange, new RangeValueHandler<>(new ZonedDateTimeValueHandler()));
+		add(DataType.Int4Range, new RangeValueHandler<>(new IntegerValueHandler<>()));
+		add(DataType.Int8Range, new RangeValueHandler<>(new LongValueHandler<>()));
+		add(DataType.NumRange, new RangeValueHandler<>(new BigDecimalValueHandler<>()));
+		add(DataType.DateRange, new RangeValueHandler<>(new LocalDateValueHandler()));
+	}
 
-    public <TTargetType> ValueHandlerProvider add(DataType targetType, IValueHandler<TTargetType> valueHandler) {
-        if (valueHandlers.containsKey(targetType)) {
-            throw new ValueHandlerAlreadyRegisteredException(
-                    "TargetType '%s' has already been registered".formatted(targetType));
-        }
+	public <TTargetType> ValueHandlerProvider add(DataType targetType, IValueHandler<TTargetType> valueHandler) {
+		if (valueHandlers.containsKey(targetType)) {
+			throw new ValueHandlerAlreadyRegisteredException(
+					"TargetType '%s' has already been registered".formatted(targetType));
+		}
 
-        valueHandlers.put(targetType, valueHandler);
+		valueHandlers.put(targetType, valueHandler);
 
-        return this;
-    }
+		return this;
+	}
 
-    @Override
-    public <TTargetType> IValueHandler<TTargetType> resolve(DataType dataType) {
+	@Override
+	public <TTargetType> IValueHandler<TTargetType> resolve(DataType dataType) {
 
-        @SuppressWarnings("unchecked")
-        IValueHandler<TTargetType> handler = valueHandlers.get(dataType);
-        if (handler == null) {
-            throw new ValueHandlerNotRegisteredException("DataType '%s' has not been registered".formatted(dataType));
-        }
-        return handler;
-    }
+		@SuppressWarnings("unchecked")
+		IValueHandler<TTargetType> handler = valueHandlers.get(dataType);
+		if (handler == null) {
+			throw new ValueHandlerNotRegisteredException("DataType '%s' has not been registered".formatted(dataType));
+		}
+		return handler;
+	}
 
-    @Override
-    public String toString() {
+	@Override
+	public String toString() {
 
-        String valueHandlersString = valueHandlers.entrySet().stream().map(e -> e.getValue().toString())
-                .collect(Collectors.joining(", "));
+		String valueHandlersString = valueHandlers.entrySet()
+			.stream()
+			.map(e -> e.getValue().toString())
+			.collect(Collectors.joining(", "));
 
-        return "ValueHandlerProvider{" + "valueHandlers=[" + valueHandlersString + "]" + '}';
-    }
+		return "ValueHandlerProvider{" + "valueHandlers=[" + valueHandlersString + "]" + '}';
+	}
+
 }

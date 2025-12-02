@@ -11,5 +11,6 @@ package io.arkx.framework.data.db.common.converter;
 
 public interface Converter<U, V> {
 
-    V convert(U u);
+	V convert(U u);
+
 }

@@ -27,127 +27,145 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  */
 public class MessageConnectFactory {
 
-    private static KryoCodecUtil util = null;// new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
+	private static KryoCodecUtil util = null;// new
+												// KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
 
-    private SocketAddress remoteAddr = null;
-    private ChannelInboundHandlerAdapter messageHandler = null;
-    private Map<String, CallBackInvoker<Object>> callBackMap = new ConcurrentHashMap<>();
-    private Bootstrap bootstrap = null;
-    private long timeout = 10 * 1000;
-    private boolean connected = false;
-    private EventLoopGroup eventLoopGroup = null;
+	private SocketAddress remoteAddr = null;
 
-    private Channel messageChannel = null;
-    private DefaultEventExecutorGroup defaultEventExecutorGroup;
-    private NettyClustersConfig nettyClustersConfig = new NettyClustersConfig();
+	private ChannelInboundHandlerAdapter messageHandler = null;
 
-    private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("MessageConnectFactory-%d")
-            .setDaemon(true).build();
+	private Map<String, CallBackInvoker<Object>> callBackMap = new ConcurrentHashMap<>();
 
-    public MessageConnectFactory(String serverAddress) {
-        String[] ipAddr = serverAddress.split(MessageSystemConfig.IpV4AddressDelimiter);
-        if (ipAddr.length == 2) {
-            remoteAddr = NettyUtil.string2SocketAddress(serverAddress);
-        }
-    }
+	private Bootstrap bootstrap = null;
 
-    public void setMessageHandle(ChannelInboundHandlerAdapter messageHandler) {
-        this.messageHandler = messageHandler;
-    }
+	private long timeout = 10 * 1000;
 
-    public void init() {
-        try {
-            defaultEventExecutorGroup = new DefaultEventExecutorGroup(NettyClustersConfig.getWorkerThreads(),
-                    threadFactory);
-            eventLoopGroup = new NioEventLoopGroup();
-            bootstrap = new Bootstrap();
-            bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
-                    .handler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        public void initChannel(SocketChannel channel) throws Exception {
-                            channel.pipeline().addLast(defaultEventExecutorGroup);
-                            channel.pipeline().addLast(new MessageObjectEncoder(util));
-                            channel.pipeline().addLast(new MessageObjectDecoder(util));
-                            channel.pipeline().addLast(messageHandler);
-                        }
-                    }).option(ChannelOption.SO_SNDBUF, nettyClustersConfig.getClientSocketSndBufSize())
-                    .option(ChannelOption.SO_RCVBUF, nettyClustersConfig.getClientSocketRcvBufSize())
-                    .option(ChannelOption.TCP_NODELAY, true).option(ChannelOption.SO_KEEPALIVE, false);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+	private boolean connected = false;
 
-    public void connect() {
-        Preconditions.checkNotNull(messageHandler, "Message's Handler is Null!");
+	private EventLoopGroup eventLoopGroup = null;
 
-        try {
-            init();
-            ChannelFuture channelFuture = bootstrap.connect(this.remoteAddr).sync();
+	private Channel messageChannel = null;
 
-            channelFuture.addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture future) throws Exception {
-                    Channel channel = future.channel();
-                    messageChannel = channel;
-                }
-            });
+	private DefaultEventExecutorGroup defaultEventExecutorGroup;
 
-            System.out.println("ip address:" + this.remoteAddr.toString());
-            connected = true;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+	private NettyClustersConfig nettyClustersConfig = new NettyClustersConfig();
 
-    public void close() {
-        if (messageChannel != null) {
-            try {
-                messageChannel.close().sync();
-                eventLoopGroup.shutdownGracefully();
-                defaultEventExecutorGroup.shutdownGracefully();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+	private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("MessageConnectFactory-%d")
+		.setDaemon(true)
+		.build();
 
-    public boolean isConnected() {
-        return connected;
-    }
+	public MessageConnectFactory(String serverAddress) {
+		String[] ipAddr = serverAddress.split(MessageSystemConfig.IpV4AddressDelimiter);
+		if (ipAddr.length == 2) {
+			remoteAddr = NettyUtil.string2SocketAddress(serverAddress);
+		}
+	}
 
-    public boolean traceInvoker(String key) {
-        if (key == null) {
-            return false;
-        }
-        return getCallBackMap().containsKey(key);
-    }
+	public void setMessageHandle(ChannelInboundHandlerAdapter messageHandler) {
+		this.messageHandler = messageHandler;
+	}
 
-    public CallBackInvoker<Object> detachInvoker(String key) {
-        if (traceInvoker(key)) {
-            return getCallBackMap().remove(key);
-        } else {
-            return null;
-        }
-    }
+	public void init() {
+		try {
+			defaultEventExecutorGroup = new DefaultEventExecutorGroup(NettyClustersConfig.getWorkerThreads(),
+					threadFactory);
+			eventLoopGroup = new NioEventLoopGroup();
+			bootstrap = new Bootstrap();
+			bootstrap.group(eventLoopGroup)
+				.channel(NioSocketChannel.class)
+				.handler(new ChannelInitializer<SocketChannel>() {
+					@Override
+					public void initChannel(SocketChannel channel) throws Exception {
+						channel.pipeline().addLast(defaultEventExecutorGroup);
+						channel.pipeline().addLast(new MessageObjectEncoder(util));
+						channel.pipeline().addLast(new MessageObjectDecoder(util));
+						channel.pipeline().addLast(messageHandler);
+					}
+				})
+				.option(ChannelOption.SO_SNDBUF, nettyClustersConfig.getClientSocketSndBufSize())
+				.option(ChannelOption.SO_RCVBUF, nettyClustersConfig.getClientSocketRcvBufSize())
+				.option(ChannelOption.TCP_NODELAY, true)
+				.option(ChannelOption.SO_KEEPALIVE, false);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
-    public void setTimeOut(long timeout) {
-        this.timeout = timeout;
-    }
+	public void connect() {
+		Preconditions.checkNotNull(messageHandler, "Message's Handler is Null!");
 
-    public long getTimeOut() {
-        return this.timeout;
-    }
+		try {
+			init();
+			ChannelFuture channelFuture = bootstrap.connect(this.remoteAddr).sync();
 
-    public Channel getMessageChannel() {
-        return messageChannel;
-    }
+			channelFuture.addListener(new ChannelFutureListener() {
+				@Override
+				public void operationComplete(ChannelFuture future) throws Exception {
+					Channel channel = future.channel();
+					messageChannel = channel;
+				}
+			});
 
-    public Map<String, CallBackInvoker<Object>> getCallBackMap() {
-        return callBackMap;
-    }
+			System.out.println("ip address:" + this.remoteAddr.toString());
+			connected = true;
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void setCallBackMap(Map<String, CallBackInvoker<Object>> callBackMap) {
-        this.callBackMap = callBackMap;
-    }
+	public void close() {
+		if (messageChannel != null) {
+			try {
+				messageChannel.close().sync();
+				eventLoopGroup.shutdownGracefully();
+				defaultEventExecutorGroup.shutdownGracefully();
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public boolean traceInvoker(String key) {
+		if (key == null) {
+			return false;
+		}
+		return getCallBackMap().containsKey(key);
+	}
+
+	public CallBackInvoker<Object> detachInvoker(String key) {
+		if (traceInvoker(key)) {
+			return getCallBackMap().remove(key);
+		}
+		else {
+			return null;
+		}
+	}
+
+	public void setTimeOut(long timeout) {
+		this.timeout = timeout;
+	}
+
+	public long getTimeOut() {
+		return this.timeout;
+	}
+
+	public Channel getMessageChannel() {
+		return messageChannel;
+	}
+
+	public Map<String, CallBackInvoker<Object>> getCallBackMap() {
+		return callBackMap;
+	}
+
+	public void setCallBackMap(Map<String, CallBackInvoker<Object>> callBackMap) {
+		this.callBackMap = callBackMap;
+	}
+
 }

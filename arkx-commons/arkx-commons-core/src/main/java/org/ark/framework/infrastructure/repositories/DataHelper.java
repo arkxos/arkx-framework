@@ -15,48 +15,49 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public class DataHelper {
 
-    public static int GetInteger(Object value) {
-        if (value != null) {
-            return Integer.parseInt(value.toString());
-        }
-        return 0;
-    }
+	public static int GetInteger(Object value) {
+		if (value != null) {
+			return Integer.parseInt(value.toString());
+		}
+		return 0;
+	}
 
-    public static BigDecimal GetDecimal(Object value) {
-        if (value != null) {
-            return new BigDecimal(value.toString());
-        }
-        return new BigDecimal(0);
-    }
+	public static BigDecimal GetDecimal(Object value) {
+		if (value != null) {
+			return new BigDecimal(value.toString());
+		}
+		return new BigDecimal(0);
+	}
 
-    public static Date GetNullableDateTime(Object value) {
-        if (value != null) {
-            DateUtil.parse(value.toString());
-        }
-        return new Date("1970-01-01");
-    }
+	public static Date GetNullableDateTime(Object value) {
+		if (value != null) {
+			DateUtil.parse(value.toString());
+		}
+		return new Date("1970-01-01");
+	}
 
-    /**
-     * 将list对象转化成逗号分隔的sql in子句
-     *
-     * @author Darkness
-     * @date 2013-3-17 下午11:04:18
-     * @version V1.0
-     */
-    public static <T extends Entity> String EntityListToDelimited(List<T> entities) {
-        StringBuilder builder = new StringBuilder(20);
-        if (entities != null) {
-            for (int i = 0; i < entities.size(); i++) {
-                if (i > 0) {
-                    builder.append(",");
-                }
-                builder.append(entities.get(i).getId().toString());
-            }
-        }
-        return builder.toString();
-    }
+	/**
+	 * 将list对象转化成逗号分隔的sql in子句
+	 *
+	 * @author Darkness
+	 * @date 2013-3-17 下午11:04:18
+	 * @version V1.0
+	 */
+	public static <T extends Entity> String EntityListToDelimited(List<T> entities) {
+		StringBuilder builder = new StringBuilder(20);
+		if (entities != null) {
+			for (int i = 0; i < entities.size(); i++) {
+				if (i > 0) {
+					builder.append(",");
+				}
+				builder.append(entities.get(i).getId().toString());
+			}
+		}
+		return builder.toString();
+	}
 
-    public static Object GetSqlValue(Object key) {
-        return null;
-    }
+	public static Object GetSqlValue(Object key) {
+		return null;
+	}
+
 }

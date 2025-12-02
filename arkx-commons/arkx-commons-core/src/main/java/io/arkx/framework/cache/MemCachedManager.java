@@ -19,28 +19,30 @@ import net.rubyeye.xmemcached.utils.AddrUtil;
 
 public class MemCachedManager {
 
-    public MemCachedManager() {
-    }
+	public MemCachedManager() {
+	}
 
-    public static MemcachedClient getClient() {
-        if (client != null)
-            return client;
-        lock.lock();
-        try {
-            String cfg = Config.getValue("App.MemcachedHost");
-            if (StringUtil.isNotEmpty(cfg)) {
-                java.util.List hosts = AddrUtil.getAddresses(cfg);
-                MemcachedClientBuilder builder = new XMemcachedClientBuilder(hosts);
-                client = builder.build();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        lock.unlock();
-        return client;
-    }
+	public static MemcachedClient getClient() {
+		if (client != null)
+			return client;
+		lock.lock();
+		try {
+			String cfg = Config.getValue("App.MemcachedHost");
+			if (StringUtil.isNotEmpty(cfg)) {
+				java.util.List hosts = AddrUtil.getAddresses(cfg);
+				MemcachedClientBuilder builder = new XMemcachedClientBuilder(hosts);
+				client = builder.build();
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		lock.unlock();
+		return client;
+	}
 
-    private static MemcachedClient client;
-    private static Lock lock = new ReentrantLock();
+	private static MemcachedClient client;
+
+	private static Lock lock = new ReentrantLock();
 
 }

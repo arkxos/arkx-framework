@@ -8,8 +8,10 @@ import org.apache.commons.lang3.RandomUtils;
  * @author DengJun 2021/5/11
  */
 public class DefaultWorkerIdAssigner implements WorkerIdAssigner {
-    @Override
-    public long assignWorkerId() {
-        return RandomUtils.nextInt(0, 1000);
-    }
+
+	@Override
+	public long assignWorkerId() {
+		return RandomUtils.nextInt(0, 1000);
+	}
+
 }

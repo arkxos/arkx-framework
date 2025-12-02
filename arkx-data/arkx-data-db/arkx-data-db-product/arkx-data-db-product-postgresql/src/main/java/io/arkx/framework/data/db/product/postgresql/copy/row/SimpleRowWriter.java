@@ -19,134 +19,145 @@ import io.arkx.framework.data.db.product.postgresql.copy.util.StringUtils;
 
 public class SimpleRowWriter implements AutoCloseable {
 
-    public static class Table {
+	public static class Table {
 
-        private final String schema;
-        private final String table;
-        private final String[] columns;
+		private final String schema;
 
-        public Table(String table, String... columns) {
-            this(null, table, columns);
-        }
+		private final String table;
 
-        public Table(String schema, String table, String... columns) {
-            this.schema = schema;
-            this.table = table;
-            this.columns = columns;
-        }
+		private final String[] columns;
 
-        public String getSchema() {
-            return schema;
-        }
+		public Table(String table, String... columns) {
+			this(null, table, columns);
+		}
 
-        public String getTable() {
-            return table;
-        }
+		public Table(String schema, String table, String... columns) {
+			this.schema = schema;
+			this.table = table;
+			this.columns = columns;
+		}
 
-        public String[] getColumns() {
-            return columns;
-        }
+		public String getSchema() {
+			return schema;
+		}
 
-        public String getFullyQualifiedTableName(boolean usePostgresQuoting) {
-            return PostgreSqlUtils.getFullyQualifiedTableName(schema, table, usePostgresQuoting);
-        }
+		public String getTable() {
+			return table;
+		}
 
-        public String getCopyCommand(boolean usePostgresQuoting) {
+		public String[] getColumns() {
+			return columns;
+		}
 
-            String commaSeparatedColumns = Arrays.stream(columns)
-                    .map(x -> usePostgresQuoting ? PostgreSqlUtils.quoteIdentifier(x) : x)
-                    .collect(Collectors.joining(", "));
+		public String getFullyQualifiedTableName(boolean usePostgresQuoting) {
+			return PostgreSqlUtils.getFullyQualifiedTableName(schema, table, usePostgresQuoting);
+		}
 
-            return "COPY %1$s(%2$s) FROM STDIN BINARY".formatted(getFullyQualifiedTableName(usePostgresQuoting),
-                    commaSeparatedColumns);
-        }
-    }
+		public String getCopyCommand(boolean usePostgresQuoting) {
 
-    private final Table table;
-    private final PgBinaryWriter writer;
-    private final ValueHandlerProvider provider;
-    private final Map<String, Integer> lookup;
+			String commaSeparatedColumns = Arrays.stream(columns)
+				.map(x -> usePostgresQuoting ? PostgreSqlUtils.quoteIdentifier(x) : x)
+				.collect(Collectors.joining(", "));
 
-    private Function<String, String> nullCharacterHandler;
-    private boolean isOpened;
-    private boolean isClosed;
+			return "COPY %1$s(%2$s) FROM STDIN BINARY".formatted(getFullyQualifiedTableName(usePostgresQuoting),
+					commaSeparatedColumns);
+		}
 
-    public SimpleRowWriter(final Table table, final PGConnection connection) throws SQLException {
-        this(table, connection, false);
-    }
+	}
 
-    public SimpleRowWriter(final Table table, final PGConnection connection, final boolean usePostgresQuoting)
-            throws SQLException {
-        this.table = table;
-        this.isClosed = false;
-        this.isOpened = false;
-        this.nullCharacterHandler = (val) -> val;
+	private final Table table;
 
-        this.provider = new ValueHandlerProvider();
-        this.lookup = new HashMap<>();
+	private final PgBinaryWriter writer;
 
-        for (int ordinal = 0; ordinal < table.columns.length; ordinal++) {
-            lookup.put(table.columns[ordinal], ordinal);
-        }
+	private final ValueHandlerProvider provider;
 
-        this.writer = new PgBinaryWriter(
-                new PGCopyOutputStream(connection, table.getCopyCommand(usePostgresQuoting), 1));
+	private final Map<String, Integer> lookup;
 
-        isClosed = false;
-        isOpened = true;
-    }
+	private Function<String, String> nullCharacterHandler;
 
-    public synchronized void startRow(Consumer<SimpleRow> consumer) {
+	private boolean isOpened;
 
-        // We try to write a Row, but the underlying Stream to PostgreSQL has not
-        // been opened yet. We should not proceed and throw an Exception:
-        if (!isOpened) {
-            throw new BinaryWriteFailedException("The SimpleRowWriter has not been opened");
-        }
+	private boolean isClosed;
 
-        // We try to write a Row, but the underlying Stream to PostgreSQL has already
-        // been closed. We should not proceed and throw an Exception:
-        if (isClosed) {
-            throw new BinaryWriteFailedException("The PGCopyOutputStream has already been closed");
-        }
+	public SimpleRowWriter(final Table table, final PGConnection connection) throws SQLException {
+		this(table, connection, false);
+	}
 
-        try {
+	public SimpleRowWriter(final Table table, final PGConnection connection, final boolean usePostgresQuoting)
+			throws SQLException {
+		this.table = table;
+		this.isClosed = false;
+		this.isOpened = false;
+		this.nullCharacterHandler = (val) -> val;
 
-            writer.startRow(table.columns.length);
+		this.provider = new ValueHandlerProvider();
+		this.lookup = new HashMap<>();
 
-            SimpleRow row = new SimpleRow(provider, lookup, nullCharacterHandler);
+		for (int ordinal = 0; ordinal < table.columns.length; ordinal++) {
+			lookup.put(table.columns[ordinal], ordinal);
+		}
 
-            consumer.accept(row);
+		this.writer = new PgBinaryWriter(
+				new PGCopyOutputStream(connection, table.getCopyCommand(usePostgresQuoting), 1));
 
-            row.writeRow(writer);
+		isClosed = false;
+		isOpened = true;
+	}
 
-        } catch (Exception e) {
+	public synchronized void startRow(Consumer<SimpleRow> consumer) {
 
-            try {
-                close();
-            } catch (Exception ex) {
-                // There is nothing more we can do ...
-            }
+		// We try to write a Row, but the underlying Stream to PostgreSQL has not
+		// been opened yet. We should not proceed and throw an Exception:
+		if (!isOpened) {
+			throw new BinaryWriteFailedException("The SimpleRowWriter has not been opened");
+		}
 
-            throw e;
-        }
-    }
+		// We try to write a Row, but the underlying Stream to PostgreSQL has already
+		// been closed. We should not proceed and throw an Exception:
+		if (isClosed) {
+			throw new BinaryWriteFailedException("The PGCopyOutputStream has already been closed");
+		}
 
-    @Override
-    public void close() {
+		try {
 
-        // This stream shouldn't be reused, so let's store a flag here:
-        isOpened = false;
-        isClosed = true;
+			writer.startRow(table.columns.length);
 
-        writer.close();
-    }
+			SimpleRow row = new SimpleRow(provider, lookup, nullCharacterHandler);
 
-    public void enableNullCharacterHandler() {
-        this.nullCharacterHandler = (val) -> StringUtils.removeNullCharacter(val);
-    }
+			consumer.accept(row);
 
-    public void setNullCharacterHandler(Function<String, String> nullCharacterHandler) {
-        this.nullCharacterHandler = nullCharacterHandler;
-    }
+			row.writeRow(writer);
+
+		}
+		catch (Exception e) {
+
+			try {
+				close();
+			}
+			catch (Exception ex) {
+				// There is nothing more we can do ...
+			}
+
+			throw e;
+		}
+	}
+
+	@Override
+	public void close() {
+
+		// This stream shouldn't be reused, so let's store a flag here:
+		isOpened = false;
+		isClosed = true;
+
+		writer.close();
+	}
+
+	public void enableNullCharacterHandler() {
+		this.nullCharacterHandler = (val) -> StringUtils.removeNullCharacter(val);
+	}
+
+	public void setNullCharacterHandler(Function<String, String> nullCharacterHandler) {
+		this.nullCharacterHandler = nullCharacterHandler;
+	}
+
 }

@@ -20,6 +20,6 @@ import lombok.EqualsAndHashCode;
 // 博客留言实体（独立闭包表）
 public class BlogComment extends TreeEntity<Long> {
 
-    private String content;
+	private String content;
 
 }

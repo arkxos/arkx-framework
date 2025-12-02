@@ -9,11 +9,10 @@ import java.util.List;
  **/
 public interface ResourcesScanner<T> {
 
-    /**
-     * 扫描资源列表
-     *
-     * @return resources
-     */
-    List<T> classScan();
+	/**
+	 * 扫描资源列表
+	 * @return resources
+	 */
+	List<T> classScan();
 
 }

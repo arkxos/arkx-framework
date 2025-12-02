@@ -31,258 +31,263 @@ import io.arkx.framework.security.exception.PrivException;
  *
  */
 public class TreeTag extends ArkTag {
-    private String id;
 
-    private String method;
-    private String rest;
+	private String id;
 
-    private String style;
+	private String method;
 
-    private boolean lazy;
+	private String rest;
 
-    private boolean customscrollbar;
+	private String style;
 
-    private String checkbox;// 可能的值 all/branch/leaf
+	private boolean lazy;
 
-    private boolean cascade = true;// 是否级联
+	private boolean customscrollbar;
 
-    private String radio;
+	private String checkbox;// 可能的值 all/branch/leaf
 
-    private boolean expand; // 延迟加载时全部展开
+	private boolean cascade = true;// 是否级联
 
-    private int level;
+	private String radio;
 
-    private String bodyUID;
+	private boolean expand; // 延迟加载时全部展开
 
-    @Override
-    public String getTagName() {
-        return "tree";
-    }
+	private int level;
 
-    @Override
-    public void init() throws ExpressionException {
-        customscrollbar = true;
-        super.init();
-    }
+	private String bodyUID;
 
-    private TreeAction prepareAction() {
-        TreeAction ta = new TreeAction();
-        ta.setMethod(method);
-        ta.setRest(rest);
+	@Override
+	public String getTagName() {
+		return "tree";
+	}
 
-        ta.setID(id);
-        ta.setLazy(lazy);
-        ta.setCustomscrollbar(customscrollbar);
-        ta.setCheckbox(checkbox);
-        ta.setCascade(cascade);
-        ta.setRadio(radio);
-        ta.setExpand(expand);
-        if (level <= 0) {
-            level = 999;
-        }
-        ta.setLevel(level);
-        ta.setStyle(style);
+	@Override
+	public void init() throws ExpressionException {
+		customscrollbar = true;
+		super.init();
+	}
 
-        String content = getTagSource();
-        ta.setTagBody(TreeBodyManager.get(ta, bodyUID, content));
-        return ta;
-    }
+	private TreeAction prepareAction() {
+		TreeAction ta = new TreeAction();
+		ta.setMethod(method);
+		ta.setRest(rest);
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        try {
-            if (StringUtil.isEmpty(method) && StringUtil.isEmpty(rest)) {
-                throw new UIException("Tree's method or rest can't be empty");
-            }
+		ta.setID(id);
+		ta.setLazy(lazy);
+		ta.setCustomscrollbar(customscrollbar);
+		ta.setCheckbox(checkbox);
+		ta.setCascade(cascade);
+		ta.setRadio(radio);
+		ta.setExpand(expand);
+		if (level <= 0) {
+			level = 999;
+		}
+		ta.setLevel(level);
+		ta.setStyle(style);
 
-            TreeAction ta = prepareAction();
-            ta.setParams(WebCurrent.getRequest());
+		String content = getTagSource();
+		ta.setTagBody(TreeBodyManager.get(ta, bodyUID, content));
+		return ta;
+	}
 
-            if (StringUtil.isNotEmpty(rest)) {
-                JsonResult jsonResult = RestUtil.post(rest, WebCurrent.getRequest(), Tree.class);
-                Tree tree = (Tree) jsonResult.getData();
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		try {
+			if (StringUtil.isEmpty(method) && StringUtil.isEmpty(rest)) {
+				throw new UIException("Tree's method or rest can't be empty");
+			}
 
-                String branchIcon = tree.getBranchIcon();
-                if (!StringUtil.isEmpty(branchIcon)) {
-                    ta.setBranchIcon(branchIcon);
-                }
-                String leafIcon = tree.getLeafIcon();
-                if (!StringUtil.isEmpty(leafIcon)) {
-                    ta.setLeafIcon(leafIcon);
-                }
-                String identifierColumnName = tree.getIdentifierColumnName();
-                if (!StringUtil.isEmpty(identifierColumnName)) {
-                    ta.setIdentifierColumnName(identifierColumnName);
-                }
-                String parentIdentifierColumnName = tree.getParentIdentifierColumnName();
-                if (!StringUtil.isEmpty(parentIdentifierColumnName)) {
-                    ta.setParentIdentifierColumnName(parentIdentifierColumnName);
-                }
-                String rootText = tree.getRootText();
-                if (!StringUtil.isEmpty(rootText)) {
-                    ta.setRootText(rootText);
-                }
-                String rootIcon = tree.getRootIcon();
-                if (!StringUtil.isEmpty(rootIcon)) {
-                    ta.setRootIcon(rootIcon);
-                }
+			TreeAction ta = prepareAction();
+			ta.setParams(WebCurrent.getRequest());
 
-                ta.bindData(tree.getDataTable());
-            } else {
-                IMethodLocator m = MethodLocatorUtil.find(method);
-                PrivCheck.check(m);
-                m.execute(ta);
-            }
+			if (StringUtil.isNotEmpty(rest)) {
+				JsonResult jsonResult = RestUtil.post(rest, WebCurrent.getRequest(), Tree.class);
+				Tree tree = (Tree) jsonResult.getData();
 
-            ta.bindData();
+				String branchIcon = tree.getBranchIcon();
+				if (!StringUtil.isEmpty(branchIcon)) {
+					ta.setBranchIcon(branchIcon);
+				}
+				String leafIcon = tree.getLeafIcon();
+				if (!StringUtil.isEmpty(leafIcon)) {
+					ta.setLeafIcon(leafIcon);
+				}
+				String identifierColumnName = tree.getIdentifierColumnName();
+				if (!StringUtil.isEmpty(identifierColumnName)) {
+					ta.setIdentifierColumnName(identifierColumnName);
+				}
+				String parentIdentifierColumnName = tree.getParentIdentifierColumnName();
+				if (!StringUtil.isEmpty(parentIdentifierColumnName)) {
+					ta.setParentIdentifierColumnName(parentIdentifierColumnName);
+				}
+				String rootText = tree.getRootText();
+				if (!StringUtil.isEmpty(rootText)) {
+					ta.setRootText(rootText);
+				}
+				String rootIcon = tree.getRootIcon();
+				if (!StringUtil.isEmpty(rootIcon)) {
+					ta.setRootIcon(rootIcon);
+				}
 
-            ta.addVariables(context);
-        } catch (PrivException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        return EVAL_BODY_INCLUDE;
-    }
+				ta.bindData(tree.getDataTable());
+			}
+			else {
+				IMethodLocator m = MethodLocatorUtil.find(method);
+				PrivCheck.check(m);
+				m.execute(ta);
+			}
 
-    public boolean isLazy() {
-        return lazy;
-    }
+			ta.bindData();
 
-    public void setLazy(boolean lazy) {
-        this.lazy = lazy;
-    }
+			ta.addVariables(context);
+		}
+		catch (PrivException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return EVAL_BODY_INCLUDE;
+	}
 
-    public boolean isCustomscrollbar() {
-        return customscrollbar;
-    }
+	public boolean isLazy() {
+		return lazy;
+	}
 
-    public void setCustomscrollbar(boolean customscrollbar) {
-        this.customscrollbar = customscrollbar;
-    }
+	public void setLazy(boolean lazy) {
+		this.lazy = lazy;
+	}
 
-    public int getLevel() {
-        return level;
-    }
+	public boolean isCustomscrollbar() {
+		return customscrollbar;
+	}
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
+	public void setCustomscrollbar(boolean customscrollbar) {
+		this.customscrollbar = customscrollbar;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public int getLevel() {
+		return level;
+	}
 
-    public String getMethod() {
-        return method;
-    }
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getStyle() {
-        return style;
-    }
+	public String getMethod() {
+		return method;
+	}
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
+	public void setMethod(String method) {
+		this.method = method;
+	}
 
-    public boolean isExpand() {
-        return expand;
-    }
+	public String getStyle() {
+		return style;
+	}
 
-    public void setExpand(boolean expand) {
-        this.expand = expand;
-    }
+	public void setStyle(String style) {
+		this.style = style;
+	}
 
-    public boolean isCascade() {
-        return cascade;
-    }
+	public boolean isExpand() {
+		return expand;
+	}
 
-    public void setCascade(boolean cascade) {
-        this.cascade = cascade;
-    }
+	public void setExpand(boolean expand) {
+		this.expand = expand;
+	}
 
-    public String getCheckbox() {
-        return checkbox;
-    }
+	public boolean isCascade() {
+		return cascade;
+	}
 
-    public void setCheckbox(String checkbox) {
-        this.checkbox = checkbox;
-    }
+	public void setCascade(boolean cascade) {
+		this.cascade = cascade;
+	}
 
-    public String getRadio() {
-        return radio;
-    }
+	public String getCheckbox() {
+		return checkbox;
+	}
 
-    public void setRadio(String radio) {
-        this.radio = radio;
-    }
+	public void setCheckbox(String checkbox) {
+		this.checkbox = checkbox;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<>();
-        list.add(new TagAttr("id", true));
-        list.add(new TagAttr("customscrollbar", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("checkbox"));
-        list.add(new TagAttr("cascade", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("radio"));
-        list.add(new TagAttr("expand", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("lazy", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("level", DataTypes.INTEGER.code()));
-        list.add(new TagAttr("size", DataTypes.INTEGER.code()));
-        list.add(new TagAttr("style"));
-        list.add(new TagAttr("method"));
-        list.add(new TagAttr("rest"));
-        return list;
-    }
+	public String getRadio() {
+		return radio;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.UIControl.TreeTagName}";
-    }
+	public void setRadio(String radio) {
+		this.radio = radio;
+	}
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<>();
+		list.add(new TagAttr("id", true));
+		list.add(new TagAttr("customscrollbar", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("checkbox"));
+		list.add(new TagAttr("cascade", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("radio"));
+		list.add(new TagAttr("expand", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("lazy", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("level", DataTypes.INTEGER.code()));
+		list.add(new TagAttr("size", DataTypes.INTEGER.code()));
+		list.add(new TagAttr("style"));
+		list.add(new TagAttr("method"));
+		list.add(new TagAttr("rest"));
+		return list;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.UIControl.TreeTagName}";
+	}
 
-    @Override
-    public boolean isKeepTagSource() {
-        return true;// 本标签要求编译后依然持有源代码
-    }
+	@Override
+	public String getDescription() {
+		return "";
+	}
 
-    @Override
-    public void afterCompile(TagCommand tc, TemplateExecutor te) {
-        String fileName = te.getFileName();
-        if (fileName != null && fileName.startsWith(Config.getContextRealPath())) {
-            fileName = fileName.substring(Config.getContextRealPath().length());
-        }
-        bodyUID = fileName + "#" + StringUtil.md5Hex(getTagSource());
-        TreeAction ta = prepareAction();
-        ta.setParams(new Mapx<>());
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
-        TreeBody body = TreeBodyManager.get(ta, bodyUID, getTagSource());
-        if (!tc.isHasBody()) {
-            tc.setHasBody(true);
-        }
-        tc.setCommands(body.getExecutor().getCommands());
-    }
+	@Override
+	public boolean isKeepTagSource() {
+		return true;// 本标签要求编译后依然持有源代码
+	}
 
-    public String getRest() {
-        return rest;
-    }
+	@Override
+	public void afterCompile(TagCommand tc, TemplateExecutor te) {
+		String fileName = te.getFileName();
+		if (fileName != null && fileName.startsWith(Config.getContextRealPath())) {
+			fileName = fileName.substring(Config.getContextRealPath().length());
+		}
+		bodyUID = fileName + "#" + StringUtil.md5Hex(getTagSource());
+		TreeAction ta = prepareAction();
+		ta.setParams(new Mapx<>());
 
-    public void setRest(String rest) {
-        this.rest = rest;
-    }
+		TreeBody body = TreeBodyManager.get(ta, bodyUID, getTagSource());
+		if (!tc.isHasBody()) {
+			tc.setHasBody(true);
+		}
+		tc.setCommands(body.getExecutor().getCommands());
+	}
+
+	public String getRest() {
+		return rest;
+	}
+
+	public void setRest(String rest) {
+		this.rest = rest;
+	}
 
 }

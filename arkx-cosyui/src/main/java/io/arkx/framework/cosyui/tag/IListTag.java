@@ -7,5 +7,7 @@ import io.arkx.framework.commons.collection.DataRow;
  *
  */
 public interface IListTag {
-    DataRow getCurrentDataRow();
+
+	DataRow getCurrentDataRow();
+
 }

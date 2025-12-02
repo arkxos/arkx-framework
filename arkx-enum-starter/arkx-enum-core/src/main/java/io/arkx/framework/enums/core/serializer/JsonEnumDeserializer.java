@@ -20,62 +20,59 @@ import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
  */
 public class JsonEnumDeserializer extends JsonDeserializer<Enum<?>> implements ContextualDeserializer {
 
-    /**
-     * 枚举类的class
-     */
-    private Class clazz;
+	/**
+	 * 枚举类的class
+	 */
+	private Class clazz;
 
-    /**
-     * 执行反序列化
-     *
-     * @param p
-     * @param context
-     * @return
-     * @throws IOException
-     */
-    @Override
-    public Enum<?> deserialize(JsonParser p, DeserializationContext context) throws IOException {
+	/**
+	 * 执行反序列化
+	 * @param p
+	 * @param context
+	 * @return
+	 * @throws IOException
+	 */
+	@Override
+	public Enum<?> deserialize(JsonParser p, DeserializationContext context) throws IOException {
 
-        if (!StringUtils.isEmpty(p.getText()) && CodeEnum.class.isAssignableFrom(clazz) && isInteger(p.getText())) {
-            return (Enum<?>) CodeEnum.valueOf(clazz, Integer.valueOf(p.getText()));
-        }
+		if (!StringUtils.isEmpty(p.getText()) && CodeEnum.class.isAssignableFrom(clazz) && isInteger(p.getText())) {
+			return (Enum<?>) CodeEnum.valueOf(clazz, Integer.valueOf(p.getText()));
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * 获取 需要转的枚举的 class
-     *
-     * @param context
-     * @param property
-     * @return
-     */
-    @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext context, BeanProperty property) {
-        Class<?> rawCls = context.getContextualType().getRawClass();
-        JsonEnumDeserializer clone = new JsonEnumDeserializer();
-        clone.setClazz(rawCls);
-        return clone;
+	/**
+	 * 获取 需要转的枚举的 class
+	 * @param context
+	 * @param property
+	 * @return
+	 */
+	@Override
+	public JsonDeserializer<?> createContextual(DeserializationContext context, BeanProperty property) {
+		Class<?> rawCls = context.getContextualType().getRawClass();
+		JsonEnumDeserializer clone = new JsonEnumDeserializer();
+		clone.setClazz(rawCls);
+		return clone;
 
-    }
+	}
 
-    /**
-     * 判断是否为整数
-     *
-     * @param str
-     *            传入的字符串
-     * @return 是整数返回true, 否则返回false
-     */
-    public static boolean isInteger(String str) {
-        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-        return pattern.matcher(str).matches();
-    }
+	/**
+	 * 判断是否为整数
+	 * @param str 传入的字符串
+	 * @return 是整数返回true, 否则返回false
+	 */
+	public static boolean isInteger(String str) {
+		Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+		return pattern.matcher(str).matches();
+	}
 
-    public Class getClazz() {
-        return clazz;
-    }
+	public Class getClazz() {
+		return clazz;
+	}
 
-    public void setClazz(Class clazz) {
-        this.clazz = clazz;
-    }
+	public void setClazz(Class clazz) {
+		this.clazz = clazz;
+	}
+
 }

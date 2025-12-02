@@ -64,127 +64,135 @@ package io.arkx.framework.thirdparty.el;
  **/
 
 public class StringLiteral extends Literal {
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    StringLiteral(Object pValue) {
-        super(pValue);
-    }
 
-    // -------------------------------------
-    /**
-     * Returns a StringLiteral parsed from the given token (enclosed by single or
-     * double quotes)
-     **/
-    public static StringLiteral fromToken(String pToken) {
-        return new StringLiteral(getValueFromToken(pToken));
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	StringLiteral(Object pValue) {
+		super(pValue);
+	}
 
-    // -------------------------------------
-    /**
-     * Parses the given token into the literal value
-     **/
-    public static String getValueFromToken(String pToken) {
-        StringBuffer buf = new StringBuffer();
-        int len = pToken.length() - 1;
-        boolean escaping = false;
-        for (int i = 1; i < len; i++) {
-            char ch = pToken.charAt(i);
-            if (escaping) {
-                buf.append(ch);
-                escaping = false;
-            } else if (ch == '\\') {
-                escaping = true;
-            } else {
-                buf.append(ch);
-            }
-        }
-        return buf.toString();
-    }
+	// -------------------------------------
+	/**
+	 * Returns a StringLiteral parsed from the given token (enclosed by single or double
+	 * quotes)
+	 **/
+	public static StringLiteral fromToken(String pToken) {
+		return new StringLiteral(getValueFromToken(pToken));
+	}
 
-    // -------------------------------------
-    /**
-     * Converts the specified value to a String token, using " as the enclosing
-     * quotes and escaping any characters that need escaping.
-     **/
-    public static String toStringToken(String pValue) {
-        // See if any escaping is needed
-        if (pValue.indexOf('\"') < 0 && pValue.indexOf('\\') < 0) {
-            return "\"" + pValue + "\"";
-        }
+	// -------------------------------------
+	/**
+	 * Parses the given token into the literal value
+	 **/
+	public static String getValueFromToken(String pToken) {
+		StringBuffer buf = new StringBuffer();
+		int len = pToken.length() - 1;
+		boolean escaping = false;
+		for (int i = 1; i < len; i++) {
+			char ch = pToken.charAt(i);
+			if (escaping) {
+				buf.append(ch);
+				escaping = false;
+			}
+			else if (ch == '\\') {
+				escaping = true;
+			}
+			else {
+				buf.append(ch);
+			}
+		}
+		return buf.toString();
+	}
 
-        // Escaping is needed
-        else {
-            StringBuffer buf = new StringBuffer();
-            buf.append('\"');
-            int len = pValue.length();
-            for (int i = 0; i < len; i++) {
-                char ch = pValue.charAt(i);
-                if (ch == '\\') {
-                    buf.append('\\');
-                    buf.append('\\');
-                } else if (ch == '\"') {
-                    buf.append('\\');
-                    buf.append('\"');
-                } else {
-                    buf.append(ch);
-                }
-            }
-            buf.append('\"');
-            return buf.toString();
-        }
-    }
+	// -------------------------------------
+	/**
+	 * Converts the specified value to a String token, using " as the enclosing quotes and
+	 * escaping any characters that need escaping.
+	 **/
+	public static String toStringToken(String pValue) {
+		// See if any escaping is needed
+		if (pValue.indexOf('\"') < 0 && pValue.indexOf('\\') < 0) {
+			return "\"" + pValue + "\"";
+		}
 
-    // -------------------------------------
-    /**
-     * Converts the specified value to an identifier token, escaping it as a string
-     * literal if necessary.
-     **/
-    public static String toIdentifierToken(String pValue) {
-        // See if it's a valid java identifier
-        if (isJavaIdentifier(pValue)) {
-            return pValue;
-        }
+		// Escaping is needed
+		else {
+			StringBuffer buf = new StringBuffer();
+			buf.append('\"');
+			int len = pValue.length();
+			for (int i = 0; i < len; i++) {
+				char ch = pValue.charAt(i);
+				if (ch == '\\') {
+					buf.append('\\');
+					buf.append('\\');
+				}
+				else if (ch == '\"') {
+					buf.append('\\');
+					buf.append('\"');
+				}
+				else {
+					buf.append(ch);
+				}
+			}
+			buf.append('\"');
+			return buf.toString();
+		}
+	}
 
-        // Return as a String literal
-        else {
-            return toStringToken(pValue);
-        }
-    }
+	// -------------------------------------
+	/**
+	 * Converts the specified value to an identifier token, escaping it as a string
+	 * literal if necessary.
+	 **/
+	public static String toIdentifierToken(String pValue) {
+		// See if it's a valid java identifier
+		if (isJavaIdentifier(pValue)) {
+			return pValue;
+		}
 
-    // -------------------------------------
-    /**
-     * Returns true if the specified value is a legal java identifier
-     **/
-    static boolean isJavaIdentifier(String pValue) {
-        int len = pValue.length();
-        if (len == 0) {
-            return false;
-        } else {
-            if (!Character.isJavaIdentifierStart(pValue.charAt(0))) {
-                return false;
-            } else {
-                for (int i = 1; i < len; i++) {
-                    if (!Character.isJavaIdentifierPart(pValue.charAt(i))) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        }
-    }
+		// Return as a String literal
+		else {
+			return toStringToken(pValue);
+		}
+	}
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the expression in the expression language syntax
-     **/
-    @Override
-    public String getExpressionString() {
-        return toStringToken((String) getValue());
-    }
+	// -------------------------------------
+	/**
+	 * Returns true if the specified value is a legal java identifier
+	 **/
+	static boolean isJavaIdentifier(String pValue) {
+		int len = pValue.length();
+		if (len == 0) {
+			return false;
+		}
+		else {
+			if (!Character.isJavaIdentifierStart(pValue.charAt(0))) {
+				return false;
+			}
+			else {
+				for (int i = 1; i < len; i++) {
+					if (!Character.isJavaIdentifierPart(pValue.charAt(i))) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the expression in the expression language syntax
+	 **/
+	@Override
+	public String getExpressionString() {
+		return toStringToken((String) getValue());
+	}
+
+	// -------------------------------------
+
 }

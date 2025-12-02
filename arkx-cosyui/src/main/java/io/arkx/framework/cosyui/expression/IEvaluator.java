@@ -5,21 +5,17 @@ package io.arkx.framework.cosyui.expression;
  *
  */
 public interface IEvaluator {
-    /**
-     * 执行表达式
-     *
-     * @param expression
-     *            表达式
-     * @param expectedType
-     *            期望的执行结果类型
-     * @param resolver
-     *            变量查找器
-     * @param functionMapper
-     *            函数查找器
-     * @return 表达式执行结果
-     * @throws ExpressionException
-     */
-    public Object evaluate(String expression, Class<?> expectedType, IVariableResolver resolver,
-            IFunctionMapper functionMapper) throws ExpressionException;
+
+	/**
+	 * 执行表达式
+	 * @param expression 表达式
+	 * @param expectedType 期望的执行结果类型
+	 * @param resolver 变量查找器
+	 * @param functionMapper 函数查找器
+	 * @return 表达式执行结果
+	 * @throws ExpressionException
+	 */
+	public Object evaluate(String expression, Class<?> expectedType, IVariableResolver resolver,
+			IFunctionMapper functionMapper) throws ExpressionException;
 
 }

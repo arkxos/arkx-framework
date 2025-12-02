@@ -19,62 +19,70 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class BrokerStrategyContext {
 
-    public final static int AvatarMQProducerMessageStrategy = 1;
-    public final static int AvatarMQConsumerMessageStrategy = 2;
-    public final static int AvatarMQSubscribeStrategy = 3;
-    public final static int AvatarMQUnsubscribeStrategy = 4;
+	public final static int AvatarMQProducerMessageStrategy = 1;
 
-    private RequestMessage request;
-    private ResponseMessage response;
-    private ChannelHandlerContext channelHandler;
-    private ProducerMessageListener hookProducer;
-    private ConsumerMessageListener hookConsumer;
-    private BrokerStrategy strategy;
+	public final static int AvatarMQConsumerMessageStrategy = 2;
 
-    private static Map<Integer, BrokerStrategy> strategyMap = new HashMap<>();
+	public final static int AvatarMQSubscribeStrategy = 3;
 
-    static {
-        strategyMap.put(AvatarMQProducerMessageStrategy, new BrokerProducerMessageStrategy());
-        strategyMap.put(AvatarMQConsumerMessageStrategy, new BrokerConsumerMessageStrategy());
-        strategyMap.put(AvatarMQSubscribeStrategy, new BrokerSubscribeStrategy());
-        strategyMap.put(AvatarMQUnsubscribeStrategy, new BrokerUnsubscribeStrategy());
-    }
+	public final static int AvatarMQUnsubscribeStrategy = 4;
 
-    public BrokerStrategyContext(RequestMessage request, ResponseMessage response,
-            ChannelHandlerContext channelHandler) {
-        this.request = request;
-        this.response = response;
-        this.channelHandler = channelHandler;
-    }
+	private RequestMessage request;
 
-    public void setHookProducer(ProducerMessageListener hookProducer) {
-        this.hookProducer = hookProducer;
-    }
+	private ResponseMessage response;
 
-    public void setHookConsumer(ConsumerMessageListener hookConsumer) {
-        this.hookConsumer = hookConsumer;
-    }
+	private ChannelHandlerContext channelHandler;
 
-    public void invoke() {
-        switch (request.getMsgType()) {
-            case AvatarMQMessage :
-                strategy = strategyMap.get(request.getMsgSource() == MessageSource.AvatarMQProducer
-                        ? AvatarMQProducerMessageStrategy
-                        : AvatarMQConsumerMessageStrategy);
-                break;
-            case AvatarMQSubscribe :
-                strategy = strategyMap.get(AvatarMQSubscribeStrategy);
-                break;
-            case AvatarMQUnsubscribe :
-                strategy = strategyMap.get(AvatarMQUnsubscribeStrategy);
-                break;
-            default :
-                break;
-        }
+	private ProducerMessageListener hookProducer;
 
-        strategy.setChannelHandler(channelHandler);
-        strategy.setHookConsumer(hookConsumer);
-        strategy.setHookProducer(hookProducer);
-        strategy.messageDispatch(request, response);
-    }
+	private ConsumerMessageListener hookConsumer;
+
+	private BrokerStrategy strategy;
+
+	private static Map<Integer, BrokerStrategy> strategyMap = new HashMap<>();
+
+	static {
+		strategyMap.put(AvatarMQProducerMessageStrategy, new BrokerProducerMessageStrategy());
+		strategyMap.put(AvatarMQConsumerMessageStrategy, new BrokerConsumerMessageStrategy());
+		strategyMap.put(AvatarMQSubscribeStrategy, new BrokerSubscribeStrategy());
+		strategyMap.put(AvatarMQUnsubscribeStrategy, new BrokerUnsubscribeStrategy());
+	}
+
+	public BrokerStrategyContext(RequestMessage request, ResponseMessage response,
+			ChannelHandlerContext channelHandler) {
+		this.request = request;
+		this.response = response;
+		this.channelHandler = channelHandler;
+	}
+
+	public void setHookProducer(ProducerMessageListener hookProducer) {
+		this.hookProducer = hookProducer;
+	}
+
+	public void setHookConsumer(ConsumerMessageListener hookConsumer) {
+		this.hookConsumer = hookConsumer;
+	}
+
+	public void invoke() {
+		switch (request.getMsgType()) {
+			case AvatarMQMessage:
+				strategy = strategyMap.get(request.getMsgSource() == MessageSource.AvatarMQProducer
+						? AvatarMQProducerMessageStrategy : AvatarMQConsumerMessageStrategy);
+				break;
+			case AvatarMQSubscribe:
+				strategy = strategyMap.get(AvatarMQSubscribeStrategy);
+				break;
+			case AvatarMQUnsubscribe:
+				strategy = strategyMap.get(AvatarMQUnsubscribeStrategy);
+				break;
+			default:
+				break;
+		}
+
+		strategy.setChannelHandler(channelHandler);
+		strategy.setHookConsumer(hookConsumer);
+		strategy.setHookProducer(hookProducer);
+		strategy.messageDispatch(request, response);
+	}
+
 }

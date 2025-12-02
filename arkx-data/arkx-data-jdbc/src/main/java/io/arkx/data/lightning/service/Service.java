@@ -6,4 +6,5 @@ package io.arkx.data.lightning.service;
  * @since 1.0
  */
 public interface Service<T, ID> {
+
 }

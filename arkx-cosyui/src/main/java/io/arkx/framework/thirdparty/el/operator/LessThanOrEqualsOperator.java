@@ -71,85 +71,87 @@ import io.arkx.framework.thirdparty.el.Logger;
  **/
 
 public class LessThanOrEqualsOperator extends RelationalOperator {
-    // -------------------------------------
-    // Singleton
-    // -------------------------------------
 
-    public static final LessThanOrEqualsOperator SINGLETON = new LessThanOrEqualsOperator();
+	// -------------------------------------
+	// Singleton
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public LessThanOrEqualsOperator() {
-    }
+	public static final LessThanOrEqualsOperator SINGLETON = new LessThanOrEqualsOperator();
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the symbol representing the operator
-     **/
-    @Override
-    public String getOperatorSymbol() {
-        return "<=";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public LessThanOrEqualsOperator() {
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given value
-     **/
-    @Override
-    public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
-        return Operators.le(pLeft, pRight);
-    }
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the symbol representing the operator
+	 **/
+	@Override
+	public String getOperatorSymbol() {
+		return "<=";
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given double values
-     **/
-    @Override
-    public boolean apply(double pLeft, double pRight) {
-        return pLeft <= pRight;
-    }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given value
+	 **/
+	@Override
+	public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
+		return Operators.le(pLeft, pRight);
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given long values
-     **/
-    @Override
-    public boolean apply(long pLeft, long pRight) {
-        return pLeft <= pRight;
-    }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given double values
+	 **/
+	@Override
+	public boolean apply(double pLeft, double pRight) {
+		return pLeft <= pRight;
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given String values
-     **/
-    @Override
-    public boolean apply(String pLeft, String pRight) {
-        return pLeft.compareTo(pRight) <= 0;
-    }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given long values
+	 **/
+	@Override
+	public boolean apply(long pLeft, long pRight) {
+		return pLeft <= pRight;
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given String values
+	 **/
+	@Override
+	public boolean apply(String pLeft, String pRight) {
+		return pLeft.compareTo(pRight) <= 0;
+	}
 
-    /**
-     * Applies the operator to the given BigDecimal values, returning a BigDecimal
-     **/
-    @Override
-    public boolean apply(BigDecimal pLeft, BigDecimal pRight) {
-        return isLess(pLeft.compareTo(pRight)) || isEqual(pLeft.compareTo(pRight));
-    }
+	// -------------------------------------
 
-    // -------------------------------------
+	/**
+	 * Applies the operator to the given BigDecimal values, returning a BigDecimal
+	 **/
+	@Override
+	public boolean apply(BigDecimal pLeft, BigDecimal pRight) {
+		return isLess(pLeft.compareTo(pRight)) || isEqual(pLeft.compareTo(pRight));
+	}
 
-    /**
-     * Applies the operator to the given BigDecimal values, returning a BigDecimal
-     **/
-    @Override
-    public boolean apply(BigInteger pLeft, BigInteger pRight) {
-        return isLess(pLeft.compareTo(pRight)) || isEqual(pLeft.compareTo(pRight));
-    }
+	// -------------------------------------
 
-    // -------------------------------------
+	/**
+	 * Applies the operator to the given BigDecimal values, returning a BigDecimal
+	 **/
+	@Override
+	public boolean apply(BigInteger pLeft, BigInteger pRight) {
+		return isLess(pLeft.compareTo(pRight)) || isEqual(pLeft.compareTo(pRight));
+	}
+
+	// -------------------------------------
+
 }

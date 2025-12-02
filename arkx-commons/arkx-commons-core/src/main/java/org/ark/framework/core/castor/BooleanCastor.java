@@ -11,44 +11,45 @@ import io.arkx.framework.commons.util.NumberUtil;
  */
 public class BooleanCastor extends AbstractInnerCastor {
 
-    private static BooleanCastor singleton = new BooleanCastor();
+	private static BooleanCastor singleton = new BooleanCastor();
 
-    public static BooleanCastor getInstance() {
-        return singleton;
-    }
+	public static BooleanCastor getInstance() {
+		return singleton;
+	}
 
-    @Override
-    public boolean canCast(Class<?> type) {
-        return (Boolean.class == type) || (Boolean.TYPE == type);
-    }
+	@Override
+	public boolean canCast(Class<?> type) {
+		return (Boolean.class == type) || (Boolean.TYPE == type);
+	}
 
-    @Override
-    public Object cast(Object obj, Class<?> type) {
-        if (obj == null) {
-            return false;
-        }
+	@Override
+	public Object cast(Object obj, Class<?> type) {
+		if (obj == null) {
+			return false;
+		}
 
-        if ((obj instanceof Number)) {
-            if (((Number) obj).doubleValue() > 0.0D)
-                return true;
-            return false;
-        }
+		if ((obj instanceof Number)) {
+			if (((Number) obj).doubleValue() > 0.0D)
+				return true;
+			return false;
+		}
 
-        if ((obj instanceof Boolean))
-            return ((Boolean) obj).booleanValue();
+		if ((obj instanceof Boolean))
+			return ((Boolean) obj).booleanValue();
 
-        if ((obj instanceof String)) {
-            if ((obj.equals("")) || (obj.equals("false")) || (obj.equals("null"))) {
-                return false;
-            }
-            if (NumberUtil.isNumber((String) obj)) {
-                if (Double.parseDouble((String) obj) > 0.0D)
-                    return true;
-                return false;
-            }
-            return true;
-        }
+		if ((obj instanceof String)) {
+			if ((obj.equals("")) || (obj.equals("false")) || (obj.equals("null"))) {
+				return false;
+			}
+			if (NumberUtil.isNumber((String) obj)) {
+				if (Double.parseDouble((String) obj) > 0.0D)
+					return true;
+				return false;
+			}
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
+
 }

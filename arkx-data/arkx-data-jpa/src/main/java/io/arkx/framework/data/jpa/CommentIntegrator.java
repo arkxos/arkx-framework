@@ -23,108 +23,100 @@ import jakarta.persistence.Column;
  */
 @Component
 public class CommentIntegrator implements Integrator {
-    public static final CommentIntegrator INSTANCE = new CommentIntegrator();
 
-    public CommentIntegrator() {
-        super();
-    }
+	public static final CommentIntegrator INSTANCE = new CommentIntegrator();
 
-    /**
-     * Perform comment integration.
-     *
-     * @param metadata
-     *            The "compiled" representation of the mapping information
-     * @param sessionFactory
-     *            The session factory being created
-     * @param serviceRegistry
-     *            The session factory's service registry
-     */
-    @Override
-    public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory,
-            SessionFactoryServiceRegistry serviceRegistry) {
-        processComment(metadata);
-    }
+	public CommentIntegrator() {
+		super();
+	}
 
-    /**
-     * Not used.
-     *
-     * @param sessionFactoryImplementor
-     *            The session factory being closed.
-     * @param sessionFactoryServiceRegistry
-     *            That session factory's service registry
-     */
-    @Override
-    public void disintegrate(SessionFactoryImplementor sessionFactoryImplementor,
-            SessionFactoryServiceRegistry sessionFactoryServiceRegistry) {
-    }
+	/**
+	 * Perform comment integration.
+	 * @param metadata The "compiled" representation of the mapping information
+	 * @param sessionFactory The session factory being created
+	 * @param serviceRegistry The session factory's service registry
+	 */
+	@Override
+	public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory,
+			SessionFactoryServiceRegistry serviceRegistry) {
+		processComment(metadata);
+	}
 
-    /**
-     * Process comment annotation.
-     *
-     * @param metadata
-     *            process annotation of this {@code Metadata}.
-     */
-    private void processComment(Metadata metadata) {
-        for (PersistentClass persistentClass : metadata.getEntityBindings()) {
-            // Process the Comment annotation is applied to Class
-            Class<?> clz = persistentClass.getMappedClass();
-            if (clz.isAnnotationPresent(Comment.class)) {
-                Comment comment = clz.getAnnotation(Comment.class);
-                persistentClass.getTable().setComment(comment.value());
-            }
+	/**
+	 * Not used.
+	 * @param sessionFactoryImplementor The session factory being closed.
+	 * @param sessionFactoryServiceRegistry That session factory's service registry
+	 */
+	@Override
+	public void disintegrate(SessionFactoryImplementor sessionFactoryImplementor,
+			SessionFactoryServiceRegistry sessionFactoryServiceRegistry) {
+	}
 
-            // Process Comment annotations of identifier.
-            Property identifierProperty = persistentClass.getIdentifierProperty();
-            if (identifierProperty != null) {
-                fieldComment(persistentClass, identifierProperty.getName());
-            } else {
-                org.hibernate.mapping.Component component = persistentClass.getIdentifierMapper();
-                if (component != null) {
-                    // noinspection unchecked
-                    Iterator<Property> iterator = component.getPropertyIterator();
-                    while (iterator.hasNext()) {
-                        fieldComment(persistentClass, iterator.next().getName());
-                    }
-                }
-            }
-            // Process fields with Comment annotation.
-            // noinspection unchecked
-            List<Property> properties = persistentClass.getDeclaredProperties();// .getPropertyIterator();
-            for (Property property : properties) {
-                fieldComment(persistentClass, property.getName());
-            }
-        }
-    }
+	/**
+	 * Process comment annotation.
+	 * @param metadata process annotation of this {@code Metadata}.
+	 */
+	private void processComment(Metadata metadata) {
+		for (PersistentClass persistentClass : metadata.getEntityBindings()) {
+			// Process the Comment annotation is applied to Class
+			Class<?> clz = persistentClass.getMappedClass();
+			if (clz.isAnnotationPresent(Comment.class)) {
+				Comment comment = clz.getAnnotation(Comment.class);
+				persistentClass.getTable().setComment(comment.value());
+			}
 
-    /**
-     * Process @{code comment} annotation of field.
-     *
-     * @param persistentClass
-     *            Hibernate {@code PersistentClass}
-     * @param columnName
-     *            name of field
-     */
-    private void fieldComment(PersistentClass persistentClass, String columnName) {
-        try {
-            Field field = persistentClass.getMappedClass().getDeclaredField(columnName);
-            if (field.isAnnotationPresent(Comment.class)) {
-                if (field.isAnnotationPresent(Column.class)) {
-                    String annotationName = field.getAnnotation(Column.class).name().trim();
-                    if (!annotationName.isEmpty()) {
-                        columnName = annotationName;
-                    }
-                }
-                String comment = field.getAnnotation(Comment.class).value();
-                // noinspection unchecked
-                Collection<org.hibernate.mapping.Column> columns = persistentClass.getTable().getColumns();
-                for (org.hibernate.mapping.Column column : columns) {
-                    if (columnName.equalsIgnoreCase(column.getName().replace("_", ""))) {
-                        column.setComment(comment);
-                        break;
-                    }
-                }
-            }
-        } catch (NoSuchFieldException | SecurityException ignored) {
-        }
-    }
+			// Process Comment annotations of identifier.
+			Property identifierProperty = persistentClass.getIdentifierProperty();
+			if (identifierProperty != null) {
+				fieldComment(persistentClass, identifierProperty.getName());
+			}
+			else {
+				org.hibernate.mapping.Component component = persistentClass.getIdentifierMapper();
+				if (component != null) {
+					// noinspection unchecked
+					Iterator<Property> iterator = component.getPropertyIterator();
+					while (iterator.hasNext()) {
+						fieldComment(persistentClass, iterator.next().getName());
+					}
+				}
+			}
+			// Process fields with Comment annotation.
+			// noinspection unchecked
+			List<Property> properties = persistentClass.getDeclaredProperties();// .getPropertyIterator();
+			for (Property property : properties) {
+				fieldComment(persistentClass, property.getName());
+			}
+		}
+	}
+
+	/**
+	 * Process @{code comment} annotation of field.
+	 * @param persistentClass Hibernate {@code PersistentClass}
+	 * @param columnName name of field
+	 */
+	private void fieldComment(PersistentClass persistentClass, String columnName) {
+		try {
+			Field field = persistentClass.getMappedClass().getDeclaredField(columnName);
+			if (field.isAnnotationPresent(Comment.class)) {
+				if (field.isAnnotationPresent(Column.class)) {
+					String annotationName = field.getAnnotation(Column.class).name().trim();
+					if (!annotationName.isEmpty()) {
+						columnName = annotationName;
+					}
+				}
+				String comment = field.getAnnotation(Comment.class).value();
+				// noinspection unchecked
+				Collection<org.hibernate.mapping.Column> columns = persistentClass.getTable().getColumns();
+				for (org.hibernate.mapping.Column column : columns) {
+					if (columnName.equalsIgnoreCase(column.getName().replace("_", ""))) {
+						column.setComment(comment);
+						break;
+					}
+				}
+			}
+		}
+		catch (NoSuchFieldException | SecurityException ignored) {
+		}
+	}
+
 }

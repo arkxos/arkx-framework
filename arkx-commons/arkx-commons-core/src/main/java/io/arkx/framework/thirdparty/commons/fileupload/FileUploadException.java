@@ -22,22 +22,21 @@ package io.arkx.framework.thirdparty.commons.fileupload;
  * @version $Id: FileUploadException.java 155417 2005-02-26 13:00:27Z dirkv $
  */
 public class FileUploadException extends Exception {
-    private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructs a new <code>FileUploadException</code> without message.
-     */
-    public FileUploadException() {
-    }
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructs a new <code>FileUploadException</code> with specified detail
-     * message.
-     *
-     * @param msg
-     *            the error message.
-     */
-    public FileUploadException(final String msg) {
-        super(msg);
-    }
+	/**
+	 * Constructs a new <code>FileUploadException</code> without message.
+	 */
+	public FileUploadException() {
+	}
+
+	/**
+	 * Constructs a new <code>FileUploadException</code> with specified detail message.
+	 * @param msg the error message.
+	 */
+	public FileUploadException(final String msg) {
+		super(msg);
+	}
+
 }

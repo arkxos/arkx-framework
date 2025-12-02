@@ -6,25 +6,28 @@ import java.net.Inet6Address;
 
 public class Inet6AddressValueHandler extends BaseValueHandler<Inet6Address> {
 
-    private static final byte IPv6 = 3;
-    private static final int MASK = 128;
-    private static final byte IS_CIDR = 0;
+	private static final byte IPv6 = 3;
 
-    @Override
-    protected void internalHandle(DataOutputStream buffer, final Inet6Address value) throws IOException {
-        buffer.writeInt(20);
+	private static final int MASK = 128;
 
-        buffer.writeByte(IPv6);
-        buffer.writeByte(MASK);
-        buffer.writeByte(IS_CIDR);
+	private static final byte IS_CIDR = 0;
 
-        byte[] inet6AddressBytes = value.getAddress();
-        buffer.writeByte(inet6AddressBytes.length);
-        buffer.write(inet6AddressBytes);
-    }
+	@Override
+	protected void internalHandle(DataOutputStream buffer, final Inet6Address value) throws IOException {
+		buffer.writeInt(20);
 
-    @Override
-    public int getLength(Inet6Address value) {
-        return 20;
-    }
+		buffer.writeByte(IPv6);
+		buffer.writeByte(MASK);
+		buffer.writeByte(IS_CIDR);
+
+		byte[] inet6AddressBytes = value.getAddress();
+		buffer.writeByte(inet6AddressBytes.length);
+		buffer.write(inet6AddressBytes);
+	}
+
+	@Override
+	public int getLength(Inet6Address value) {
+		return 20;
+	}
+
 }

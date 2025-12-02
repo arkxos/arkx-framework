@@ -19,28 +19,28 @@ import lombok.Setter;
 @MappedSuperclass
 public class TreeEntity<ID> extends BaseEntity<ID> implements TreeNodeData<ID> {
 
-    @Column(name = "parent_id")
-    private ID parentId;
+	@Column(name = "parent_id")
+	private ID parentId;
 
-    private String name;
+	private String name;
 
-    @Column(name = "is_leaf")
-    private int isLeaf = 1;
+	@Column(name = "is_leaf")
+	private int isLeaf = 1;
 
-    @Column(name = "sort_order")
-    private int sortOrder = 0;// 排序号
+	@Column(name = "sort_order")
+	private int sortOrder = 0;// 排序号
 
-    /**
-     * 是否是顶级节点
-     *
-     * @method isTop
-     * @return {boolean}
-     * @author Darkness
-     * @date 2012-9-11 下午1:38:55
-     * @version V1.0
-     */
-    public boolean isRoot() {
-        return parentId == null;
-    }
+	/**
+	 * 是否是顶级节点
+	 *
+	 * @method isTop
+	 * @return {boolean}
+	 * @author Darkness
+	 * @date 2012-9-11 下午1:38:55
+	 * @version V1.0
+	 */
+	public boolean isRoot() {
+		return parentId == null;
+	}
 
 }

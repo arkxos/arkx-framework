@@ -9,15 +9,17 @@ import io.arkx.framework.cosyui.web.UIFacade;
 import io.arkx.framework.i18n.LangUtil;
 
 public class LangButtonUI extends UIFacade {
-    @Priv(login = false)
-    public void bindLanguageList(ListAction la) {
-        DataTable dt = new DataTable();
-        dt.insertColumn("Key");
-        dt.insertColumn("Name");
-        Mapx<String, String> all = LangUtil.getSupportedLanguages();
-        for (String key : all.keyArray()) {
-            dt.insertRow(new Object[]{key, all.get(key)});
-        }
-        la.bindData(dt);
-    }
+
+	@Priv(login = false)
+	public void bindLanguageList(ListAction la) {
+		DataTable dt = new DataTable();
+		dt.insertColumn("Key");
+		dt.insertColumn("Name");
+		Mapx<String, String> all = LangUtil.getSupportedLanguages();
+		for (String key : all.keyArray()) {
+			dt.insertRow(new Object[] { key, all.get(key) });
+		}
+		la.bindData(dt);
+	}
+
 }

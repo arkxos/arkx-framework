@@ -16,21 +16,24 @@ import lombok.Setter;
 @Setter
 public class IndexFieldMeta {
 
-    private String fieldName;
-    private Integer ordinalPosition;
-    private Boolean isAscOrder;
+	private String fieldName;
 
-    public IndexFieldMeta(String fieldName, Integer ordinalPosition, Boolean isAscOrder) {
-        this.fieldName = fieldName;
-        this.ordinalPosition = ordinalPosition;
-        this.isAscOrder = isAscOrder;
-    }
+	private Integer ordinalPosition;
 
-    public Boolean getAscOrder() {
-        return isAscOrder;
-    }
+	private Boolean isAscOrder;
 
-    public void setAscOrder(Boolean ascOrder) {
-        isAscOrder = ascOrder;
-    }
+	public IndexFieldMeta(String fieldName, Integer ordinalPosition, Boolean isAscOrder) {
+		this.fieldName = fieldName;
+		this.ordinalPosition = ordinalPosition;
+		this.isAscOrder = isAscOrder;
+	}
+
+	public Boolean getAscOrder() {
+		return isAscOrder;
+	}
+
+	public void setAscOrder(Boolean ascOrder) {
+		isAscOrder = ascOrder;
+	}
+
 }

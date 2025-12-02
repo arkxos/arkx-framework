@@ -9,14 +9,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @date 2020年10月25日 下午3:33:43
  * @version V1.0
  */
-@SpringBootApplication(scanBasePackages = {"io.arkx.soa"})
+@SpringBootApplication(scanBasePackages = { "io.arkx.soa" })
 @EnableTransactionManagement
 public class SqlToyApplication {
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(SqlToyApplication.class, args);
-    }
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		SpringApplication.run(SqlToyApplication.class, args);
+	}
+
 }

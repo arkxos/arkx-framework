@@ -18,137 +18,150 @@ import io.arkx.framework.i18n.LangUtil;
  *
  */
 public class PanelHeaderTag extends ArkTag {
-    private String id;
 
-    private String onClick;
+	private String id;
 
-    private boolean collapsible;
+	private String onClick;
 
-    private boolean collapsed;
+	private boolean collapsible;
 
-    public static final Pattern PImg = Pattern.compile("^<img .*?src\\=.*?>",
-            Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	private boolean collapsed;
 
-    @Override
-    public String getTagName() {
-        return "panelheader";
-    }
+	public static final Pattern PImg = Pattern.compile("^<img .*?src\\=.*?>",
+			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-    @Override
-    public void init() {
-        collapsible = true;
-    }
+	@Override
+	public String getTagName() {
+		return "panelheader";
+	}
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        return EVAL_BODY_BUFFERED;
-    }
+	@Override
+	public void init() {
+		collapsible = true;
+	}
 
-    @Override
-    public int doAfterBody() throws TemplateRuntimeException {
-        String content = getBody().trim();
-        try {
-            Matcher matcher = PImg.matcher(content);
-            String img = null;
-            String text = null;
-            if (ObjectUtil.empty(id)) {
-                id = TagUtil.getTagID(pageContext, "PanelHeader");
-            }
-            if (matcher.find()) {
-                img = content.substring(matcher.start(), matcher.end());
-                text = content.substring(matcher.end());
-                pageContext.getOut().write(getHtml(id, img, text, collapsible, collapsed));
-            } else {
-                text = content;
-                pageContext.getOut().write(getHtml(id, text, collapsible, collapsed));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return EVAL_PAGE;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		return EVAL_BODY_BUFFERED;
+	}
 
-    public static String getHtml(String id, String img, String text, boolean collapsible, boolean collapsed) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div class=\"z-panel-header\" id=\"").append(id).append("\">")
-                .append("<div class=\"z-panel-header-ct\">");
-        if (collapsible != false) {
-            sb.append("<a class=\"z-tool-toggle\" href=\"#;\">&nbsp;</a>");
-        }
-        text = LangUtil.get(text);
-        sb.append("<b class=\"z-panel-header-text\">").append(text).append("</b>");
-        sb.append("</div>").append("</div>");
-        sb.append("<script>$(function(){new PanelHeader({el:'").append(id).append("',collapsed:").append(collapsed)
-                .append("});});</script>");
-        return sb.toString();
-    }
+	@Override
+	public int doAfterBody() throws TemplateRuntimeException {
+		String content = getBody().trim();
+		try {
+			Matcher matcher = PImg.matcher(content);
+			String img = null;
+			String text = null;
+			if (ObjectUtil.empty(id)) {
+				id = TagUtil.getTagID(pageContext, "PanelHeader");
+			}
+			if (matcher.find()) {
+				img = content.substring(matcher.start(), matcher.end());
+				text = content.substring(matcher.end());
+				pageContext.getOut().write(getHtml(id, img, text, collapsible, collapsed));
+			}
+			else {
+				text = content;
+				pageContext.getOut().write(getHtml(id, text, collapsible, collapsed));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return EVAL_PAGE;
+	}
 
-    public static String getHtml(String id, String html, boolean collapsible, boolean collapsed) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div class=\"z-panel-header\" id=\"").append(id).append("\">")
-                .append("<div class=\"z-panel-header-ct\">");
-        if (collapsible != false) {
-            sb.append("<a class=\"z-tool-toggle\" href=\"#;\">&nbsp;</a>");
-        }
-        html = LangUtil.get(html);
-        sb.append("<b class=\"z-panel-header-html\">").append(html).append("</b>");
-        sb.append("</div>").append("</div>");
-        sb.append("<script>$(function(){new PanelHeader({el:'").append(id).append("',collapsed:").append(collapsed)
-                .append("});});</script>");
-        return sb.toString();
-    }
+	public static String getHtml(String id, String img, String text, boolean collapsible, boolean collapsed) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div class=\"z-panel-header\" id=\"")
+			.append(id)
+			.append("\">")
+			.append("<div class=\"z-panel-header-ct\">");
+		if (collapsible != false) {
+			sb.append("<a class=\"z-tool-toggle\" href=\"#;\">&nbsp;</a>");
+		}
+		text = LangUtil.get(text);
+		sb.append("<b class=\"z-panel-header-text\">").append(text).append("</b>");
+		sb.append("</div>").append("</div>");
+		sb.append("<script>$(function(){new PanelHeader({el:'")
+			.append(id)
+			.append("',collapsed:")
+			.append(collapsed)
+			.append("});});</script>");
+		return sb.toString();
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public static String getHtml(String id, String html, boolean collapsible, boolean collapsed) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div class=\"z-panel-header\" id=\"")
+			.append(id)
+			.append("\">")
+			.append("<div class=\"z-panel-header-ct\">");
+		if (collapsible != false) {
+			sb.append("<a class=\"z-tool-toggle\" href=\"#;\">&nbsp;</a>");
+		}
+		html = LangUtil.get(html);
+		sb.append("<b class=\"z-panel-header-html\">").append(html).append("</b>");
+		sb.append("</div>").append("</div>");
+		sb.append("<script>$(function(){new PanelHeader({el:'")
+			.append(id)
+			.append("',collapsed:")
+			.append(collapsed)
+			.append("});});</script>");
+		return sb.toString();
+	}
 
-    public String getOnClick() {
-        return onClick;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setOnClick(String onClick) {
-        this.onClick = onClick;
-    }
+	public String getOnClick() {
+		return onClick;
+	}
 
-    public boolean isCollapsible() {
-        return collapsible;
-    }
+	public void setOnClick(String onClick) {
+		this.onClick = onClick;
+	}
 
-    public void setCollapsible(boolean collapsible) {
-        this.collapsible = collapsible;
-    }
+	public boolean isCollapsible() {
+		return collapsible;
+	}
 
-    public boolean isCollapsed() {
-        return collapsed;
-    }
+	public void setCollapsible(boolean collapsible) {
+		this.collapsible = collapsible;
+	}
 
-    public void setCollapsed(boolean collapsed) {
-        this.collapsed = collapsed;
-    }
+	public boolean isCollapsed() {
+		return collapsed;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("id", true));
-        list.add(new TagAttr("collapsed", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("collapsible", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("onClick"));
-        return list;
-    }
+	public void setCollapsed(boolean collapsed) {
+		this.collapsed = collapsed;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.UIControl.PanelHeaderTagName}";
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("id", true));
+		list.add(new TagAttr("collapsed", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("collapsible", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("onClick"));
+		return list;
+	}
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.UIControl.PanelHeaderTagName}";
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public String getDescription() {
+		return "";
+	}
+
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
 }

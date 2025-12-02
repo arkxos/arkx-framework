@@ -7,4 +7,5 @@ import io.arkx.data.lightning.sample.model.BlogComment;
 
 @Repository
 public interface BlogCommentRepository extends BaseJdbcRepository<BlogComment, Long> {
+
 }

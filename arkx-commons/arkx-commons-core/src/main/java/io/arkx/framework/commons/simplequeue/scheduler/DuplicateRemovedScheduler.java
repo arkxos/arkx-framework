@@ -17,38 +17,39 @@ import io.arkx.framework.commons.simplequeue.scheduler.component.HashSetDuplicat
  */
 public abstract class DuplicateRemovedScheduler implements Scheduler {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    private DuplicateRemover duplicatedRemover = new HashSetDuplicateRemover();
+	private DuplicateRemover duplicatedRemover = new HashSetDuplicateRemover();
 
-    public DuplicateRemover getDuplicateRemover() {
-        return duplicatedRemover;
-    }
+	public DuplicateRemover getDuplicateRemover() {
+		return duplicatedRemover;
+	}
 
-    public DuplicateRemovedScheduler setDuplicateRemover(DuplicateRemover duplicatedRemover) {
-        this.duplicatedRemover = duplicatedRemover;
-        return this;
-    }
+	public DuplicateRemovedScheduler setDuplicateRemover(DuplicateRemover duplicatedRemover) {
+		this.duplicatedRemover = duplicatedRemover;
+		return this;
+	}
 
-    @Override
-    public void push(ElementWarpper request, Task task) {
-        logger.trace("get a candidate url {}", request.get());
-        if (shouldReserved(request) || noNeedToRemoveDuplicate(request)
-                || !duplicatedRemover.isDuplicate(request, task)) {
-            logger.debug("push to queue {}", request.get());
-            pushWhenNoDuplicate(request, task);
-        }
-    }
+	@Override
+	public void push(ElementWarpper request, Task task) {
+		logger.trace("get a candidate url {}", request.get());
+		if (shouldReserved(request) || noNeedToRemoveDuplicate(request)
+				|| !duplicatedRemover.isDuplicate(request, task)) {
+			logger.debug("push to queue {}", request.get());
+			pushWhenNoDuplicate(request, task);
+		}
+	}
 
-    protected boolean shouldReserved(ElementWarpper request) {
-        return request.getExtra(ElementWarpper.CYCLE_TRIED_TIMES) != null;
-    }
+	protected boolean shouldReserved(ElementWarpper request) {
+		return request.getExtra(ElementWarpper.CYCLE_TRIED_TIMES) != null;
+	}
 
-    protected boolean noNeedToRemoveDuplicate(ElementWarpper request) {
-        return false;
-    }
+	protected boolean noNeedToRemoveDuplicate(ElementWarpper request) {
+		return false;
+	}
 
-    protected void pushWhenNoDuplicate(ElementWarpper request, Task task) {
+	protected void pushWhenNoDuplicate(ElementWarpper request, Task task) {
 
-    }
+	}
+
 }

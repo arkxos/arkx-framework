@@ -41,160 +41,166 @@ import com.hannesdorfmann.annotationprocessing101.factory.annotation.Factory;
 // @AutoService(Processor.class)
 public class FactoryProcessor extends AbstractProcessor {
 
-    private Types typeUtils;
-    private Elements elementUtils;
-    private Filer filer;
-    private Messager messager;
-    private Map<String, FactoryGroupedClasses> factoryClasses = new LinkedHashMap<String, FactoryGroupedClasses>();
+	private Types typeUtils;
 
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
-        typeUtils = processingEnv.getTypeUtils();
-        elementUtils = processingEnv.getElementUtils();
-        filer = processingEnv.getFiler();
-        messager = processingEnv.getMessager();
-    }
+	private Elements elementUtils;
 
-    @Override
-    public Set<String> getSupportedAnnotationTypes() {
-        Set<String> annotataions = new LinkedHashSet<String>();
-        annotataions.add(Factory.class.getCanonicalName());
-        return annotataions;
-    }
+	private Filer filer;
 
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
+	private Messager messager;
 
-    /**
-     * Checks if the annotated element observes our rules
-     */
-    private void checkValidClass(FactoryAnnotatedClass item) throws ProcessingException {
+	private Map<String, FactoryGroupedClasses> factoryClasses = new LinkedHashMap<String, FactoryGroupedClasses>();
 
-        // Cast to TypeElement, has more type specific methods
-        TypeElement classElement = item.getTypeElement();
+	@Override
+	public synchronized void init(ProcessingEnvironment processingEnv) {
+		super.init(processingEnv);
+		typeUtils = processingEnv.getTypeUtils();
+		elementUtils = processingEnv.getElementUtils();
+		filer = processingEnv.getFiler();
+		messager = processingEnv.getMessager();
+	}
 
-        if (!classElement.getModifiers().contains(Modifier.PUBLIC)) {
-            throw new ProcessingException(classElement, "The class %s is not public.",
-                    classElement.getQualifiedName().toString());
-        }
+	@Override
+	public Set<String> getSupportedAnnotationTypes() {
+		Set<String> annotataions = new LinkedHashSet<String>();
+		annotataions.add(Factory.class.getCanonicalName());
+		return annotataions;
+	}
 
-        // Check if it's an abstract class
-        if (classElement.getModifiers().contains(Modifier.ABSTRACT)) {
-            throw new ProcessingException(classElement,
-                    "The class %s is abstract. You can't annotate abstract classes with @%",
-                    classElement.getQualifiedName().toString(), Factory.class.getSimpleName());
-        }
+	@Override
+	public SourceVersion getSupportedSourceVersion() {
+		return SourceVersion.latestSupported();
+	}
 
-        // Check inheritance: Class must be childclass as specified in @Factory.type();
-        TypeElement superClassElement = elementUtils.getTypeElement(item.getQualifiedFactoryGroupName());
-        if (superClassElement.getKind() == ElementKind.INTERFACE) {
-            // Check interface implemented
-            if (!classElement.getInterfaces().contains(superClassElement.asType())) {
-                throw new ProcessingException(classElement,
-                        "The class %s annotated with @%s must implement the interface %s",
-                        classElement.getQualifiedName().toString(), Factory.class.getSimpleName(),
-                        item.getQualifiedFactoryGroupName());
-            }
-        } else {
-            // Check subclassing
-            TypeElement currentClass = classElement;
-            while (true) {
-                TypeMirror superClassType = currentClass.getSuperclass();
+	/**
+	 * Checks if the annotated element observes our rules
+	 */
+	private void checkValidClass(FactoryAnnotatedClass item) throws ProcessingException {
 
-                if (superClassType.getKind() == TypeKind.NONE) {
-                    // Basis class (java.lang.Object) reached, so exit
-                    throw new ProcessingException(classElement, "The class %s annotated with @%s must inherit from %s",
-                            classElement.getQualifiedName().toString(), Factory.class.getSimpleName(),
-                            item.getQualifiedFactoryGroupName());
-                }
+		// Cast to TypeElement, has more type specific methods
+		TypeElement classElement = item.getTypeElement();
 
-                if (superClassType.toString().equals(item.getQualifiedFactoryGroupName())) {
-                    // Required super class found
-                    break;
-                }
+		if (!classElement.getModifiers().contains(Modifier.PUBLIC)) {
+			throw new ProcessingException(classElement, "The class %s is not public.",
+					classElement.getQualifiedName().toString());
+		}
 
-                // Moving up in inheritance tree
-                currentClass = (TypeElement) typeUtils.asElement(superClassType);
-            }
-        }
+		// Check if it's an abstract class
+		if (classElement.getModifiers().contains(Modifier.ABSTRACT)) {
+			throw new ProcessingException(classElement,
+					"The class %s is abstract. You can't annotate abstract classes with @%",
+					classElement.getQualifiedName().toString(), Factory.class.getSimpleName());
+		}
 
-        // Check if an empty public constructor is given
-        for (Element enclosed : classElement.getEnclosedElements()) {
-            if (enclosed.getKind() == ElementKind.CONSTRUCTOR) {
-                ExecutableElement constructorElement = (ExecutableElement) enclosed;
-                if (constructorElement.getParameters().size() == 0
-                        && constructorElement.getModifiers().contains(Modifier.PUBLIC)) {
-                    // Found an empty constructor
-                    return;
-                }
-            }
-        }
+		// Check inheritance: Class must be childclass as specified in @Factory.type();
+		TypeElement superClassElement = elementUtils.getTypeElement(item.getQualifiedFactoryGroupName());
+		if (superClassElement.getKind() == ElementKind.INTERFACE) {
+			// Check interface implemented
+			if (!classElement.getInterfaces().contains(superClassElement.asType())) {
+				throw new ProcessingException(classElement,
+						"The class %s annotated with @%s must implement the interface %s",
+						classElement.getQualifiedName().toString(), Factory.class.getSimpleName(),
+						item.getQualifiedFactoryGroupName());
+			}
+		}
+		else {
+			// Check subclassing
+			TypeElement currentClass = classElement;
+			while (true) {
+				TypeMirror superClassType = currentClass.getSuperclass();
 
-        // No empty constructor found
-        throw new ProcessingException(classElement, "The class %s must provide an public empty default constructor",
-                classElement.getQualifiedName().toString());
-    }
+				if (superClassType.getKind() == TypeKind.NONE) {
+					// Basis class (java.lang.Object) reached, so exit
+					throw new ProcessingException(classElement, "The class %s annotated with @%s must inherit from %s",
+							classElement.getQualifiedName().toString(), Factory.class.getSimpleName(),
+							item.getQualifiedFactoryGroupName());
+				}
 
-    @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+				if (superClassType.toString().equals(item.getQualifiedFactoryGroupName())) {
+					// Required super class found
+					break;
+				}
 
-        try {
+				// Moving up in inheritance tree
+				currentClass = (TypeElement) typeUtils.asElement(superClassType);
+			}
+		}
 
-            // Scan classes
-            for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Factory.class)) {
+		// Check if an empty public constructor is given
+		for (Element enclosed : classElement.getEnclosedElements()) {
+			if (enclosed.getKind() == ElementKind.CONSTRUCTOR) {
+				ExecutableElement constructorElement = (ExecutableElement) enclosed;
+				if (constructorElement.getParameters().size() == 0
+						&& constructorElement.getModifiers().contains(Modifier.PUBLIC)) {
+					// Found an empty constructor
+					return;
+				}
+			}
+		}
 
-                // Check if a class has been annotated with @Factory
-                if (annotatedElement.getKind() != ElementKind.CLASS) {
-                    throw new ProcessingException(annotatedElement, "Only classes can be annotated with @%s",
-                            Factory.class.getSimpleName());
-                }
+		// No empty constructor found
+		throw new ProcessingException(classElement, "The class %s must provide an public empty default constructor",
+				classElement.getQualifiedName().toString());
+	}
 
-                // We can cast it, because we know that it of ElementKind.CLASS
-                TypeElement typeElement = (TypeElement) annotatedElement;
+	@Override
+	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
-                FactoryAnnotatedClass annotatedClass = new FactoryAnnotatedClass(typeElement);
+		try {
 
-                checkValidClass(annotatedClass);
+			// Scan classes
+			for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Factory.class)) {
 
-                // Everything is fine, so try to add
-                FactoryGroupedClasses factoryClass = factoryClasses.get(annotatedClass.getQualifiedFactoryGroupName());
-                if (factoryClass == null) {
-                    String qualifiedGroupName = annotatedClass.getQualifiedFactoryGroupName();
-                    factoryClass = new FactoryGroupedClasses(qualifiedGroupName);
-                    factoryClasses.put(qualifiedGroupName, factoryClass);
-                }
+				// Check if a class has been annotated with @Factory
+				if (annotatedElement.getKind() != ElementKind.CLASS) {
+					throw new ProcessingException(annotatedElement, "Only classes can be annotated with @%s",
+							Factory.class.getSimpleName());
+				}
 
-                // Checks if id is conflicting with another @Factory annotated class with the
-                // same id
-                factoryClass.add(annotatedClass);
-            }
+				// We can cast it, because we know that it of ElementKind.CLASS
+				TypeElement typeElement = (TypeElement) annotatedElement;
 
-            // Generate code
-            for (FactoryGroupedClasses factoryClass : factoryClasses.values()) {
-                factoryClass.generateCode(elementUtils, filer);
-            }
-            factoryClasses.clear();
-        } catch (ProcessingException e) {
-            error(e.getElement(), e.getMessage());
-        } catch (IOException e) {
-            error(null, e.getMessage());
-        }
+				FactoryAnnotatedClass annotatedClass = new FactoryAnnotatedClass(typeElement);
 
-        return true;
-    }
+				checkValidClass(annotatedClass);
 
-    /**
-     * Prints an error message
-     *
-     * @param e
-     *            The element which has caused the error. Can be null
-     * @param msg
-     *            The error message
-     */
-    public void error(Element e, String msg) {
-        messager.printMessage(Diagnostic.Kind.ERROR, msg, e);
-    }
+				// Everything is fine, so try to add
+				FactoryGroupedClasses factoryClass = factoryClasses.get(annotatedClass.getQualifiedFactoryGroupName());
+				if (factoryClass == null) {
+					String qualifiedGroupName = annotatedClass.getQualifiedFactoryGroupName();
+					factoryClass = new FactoryGroupedClasses(qualifiedGroupName);
+					factoryClasses.put(qualifiedGroupName, factoryClass);
+				}
+
+				// Checks if id is conflicting with another @Factory annotated class with
+				// the
+				// same id
+				factoryClass.add(annotatedClass);
+			}
+
+			// Generate code
+			for (FactoryGroupedClasses factoryClass : factoryClasses.values()) {
+				factoryClass.generateCode(elementUtils, filer);
+			}
+			factoryClasses.clear();
+		}
+		catch (ProcessingException e) {
+			error(e.getElement(), e.getMessage());
+		}
+		catch (IOException e) {
+			error(null, e.getMessage());
+		}
+
+		return true;
+	}
+
+	/**
+	 * Prints an error message
+	 * @param e The element which has caused the error. Can be null
+	 * @param msg The error message
+	 */
+	public void error(Element e, String msg) {
+		messager.printMessage(Diagnostic.Kind.ERROR, msg, e);
+	}
+
 }

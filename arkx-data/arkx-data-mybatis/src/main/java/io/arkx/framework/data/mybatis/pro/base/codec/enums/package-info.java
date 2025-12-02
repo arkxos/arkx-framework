@@ -11,8 +11,7 @@
  * <p>
  * 事实上也可以使用Fastjson方式的序列化和反序列化方式，但是Fastjson在前些年出过几次比较重大的漏洞时间，加上Fastjson源码不够优秀，并且基本上是个人开发者，而jackson是Spring默认的序列化和反序列化工具包。
  * <p>
- * 使用方式： 1.
- * 可以自定义HttpMessageConverter实现WebMvcConfigurer的configureMessageConverters方法，例如：
+ * 使用方式： 1. 可以自定义HttpMessageConverter实现WebMvcConfigurer的configureMessageConverters方法，例如：
  *
  * <pre>
  * &#64;Configuration

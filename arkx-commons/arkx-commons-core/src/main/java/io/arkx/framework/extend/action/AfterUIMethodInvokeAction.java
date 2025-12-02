@@ -11,13 +11,15 @@ import io.arkx.framework.extend.IExtendAction;
  * @version V1.0
  */
 public abstract class AfterUIMethodInvokeAction implements IExtendAction {
-    public static final String ExtendPointID = "io.arkx.framework.AfterUIMethodInvoke";
 
-    @Override
-    public Object execute(Object[] args) throws ExtendException {
-        execute((String) args[0]);
-        return null;
-    }
+	public static final String ExtendPointID = "io.arkx.framework.AfterUIMethodInvoke";
 
-    public abstract void execute(String method) throws ExtendException;
+	@Override
+	public Object execute(Object[] args) throws ExtendException {
+		execute((String) args[0]);
+		return null;
+	}
+
+	public abstract void execute(String method) throws ExtendException;
+
 }

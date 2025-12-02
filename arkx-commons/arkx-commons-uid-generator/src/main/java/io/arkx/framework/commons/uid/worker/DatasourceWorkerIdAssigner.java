@@ -27,8 +27,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Represents an implementation of {@link WorkerIdAssigner}, the worker id will
- * be discarded after assigned to the UidGenerator 基于数据库获取 workerId（机器节点ID）
+ * Represents an implementation of {@link WorkerIdAssigner}, the worker id will be
+ * discarded after assigned to the UidGenerator 基于数据库获取 workerId（机器节点ID）
  *
  * @author yutianbao
  */
@@ -36,64 +36,65 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class DatasourceWorkerIdAssigner extends AbstractWorkerAssigner implements WorkerIdAssigner {
 
-    private final SqlSessionFactory sqlSessionFactory;
+	private final SqlSessionFactory sqlSessionFactory;
 
-    /**
-     * Assign worker id base on database.
-     * <p>
-     * If there is host name & port in the environment, we considered that the node
-     * runs in Docker container<br>
-     * Otherwise, the node runs on an actual machine.
-     *
-     * @return assigned worker id
-     */
-    @Override
-    @Transactional(rollbackFor = UidGenerateException.class)
-    public long assignWorkerId() {
-        // build worker node entity
-        WorkerNodeEntity workerNodeEntity = buildWorkerNode();
+	/**
+	 * Assign worker id base on database.
+	 * <p>
+	 * If there is host name & port in the environment, we considered that the node runs
+	 * in Docker container<br>
+	 * Otherwise, the node runs on an actual machine.
+	 * @return assigned worker id
+	 */
+	@Override
+	@Transactional(rollbackFor = UidGenerateException.class)
+	public long assignWorkerId() {
+		// build worker node entity
+		WorkerNodeEntity workerNodeEntity = buildWorkerNode();
 
-        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            WorkerNodeMapper workerNodeMapper = sqlSession.getMapper(WorkerNodeMapper.class);
+		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+			WorkerNodeMapper workerNodeMapper = sqlSession.getMapper(WorkerNodeMapper.class);
 
-            // add worker node for new (ignore the same IP + PORT)
-            doCheck(workerNodeMapper);
+			// add worker node for new (ignore the same IP + PORT)
+			doCheck(workerNodeMapper);
 
-            WorkerNodeEntity node = workerNodeMapper.getWorkerNodeByHostPort(workerNodeEntity.getHostName(),
-                    workerNodeEntity.getPort());
-            long workerId;
-            if (node == null) {
-                workerNodeMapper.addWorkerNode(workerNodeEntity);
-                workerId = workerNodeEntity.getId();
-                log.info("Add worker node:" + workerNodeEntity);
-            } else {
-                workerNodeMapper.updateWorkerNode(workerNodeEntity);
-                log.info("Update worker node:" + workerNodeEntity);
-                workerId = node.getId();
-            }
+			WorkerNodeEntity node = workerNodeMapper.getWorkerNodeByHostPort(workerNodeEntity.getHostName(),
+					workerNodeEntity.getPort());
+			long workerId;
+			if (node == null) {
+				workerNodeMapper.addWorkerNode(workerNodeEntity);
+				workerId = workerNodeEntity.getId();
+				log.info("Add worker node:" + workerNodeEntity);
+			}
+			else {
+				workerNodeMapper.updateWorkerNode(workerNodeEntity);
+				log.info("Update worker node:" + workerNodeEntity);
+				workerId = node.getId();
+			}
 
-            log.info("Add worker node:" + workerNodeEntity);
+			log.info("Add worker node:" + workerNodeEntity);
 
-            return workerId;
-        } catch (Exception e) {
-            String s = "No qualifying bean of type 'org.apache.ibatis.session.SqlSessionFactory' available";
-            log.error(s);
-            throw new UidGenerateException(s);
-        }
-    }
+			return workerId;
+		}
+		catch (Exception e) {
+			String s = "No qualifying bean of type 'org.apache.ibatis.session.SqlSessionFactory' available";
+			log.error(s);
+			throw new UidGenerateException(s);
+		}
+	}
 
-    // 检查数据库和表
-    public void doCheck(WorkerNodeMapper workerNodeMapper) {
-        // if (workerNodeMapper.queryDatabaseExist() == 0 &&
-        // workerNodeMapper.createDatabase() > 0) {
-        // log.info("Not found database 'fun_cloud_base',auto created success");
-        // if (workerNodeMapper.createTable() > 0) {
-        // log.info("Not found table 'ark_uid_worker_node',auto created success");
-        // }
-        // } else if (workerNodeMapper.queryTableExist() == 0 &&
-        // workerNodeMapper.createTable() > 0) {
-        // log.info("Not found table 'ark_uid_worker_node',auto created success");
-        // }
-    }
+	// 检查数据库和表
+	public void doCheck(WorkerNodeMapper workerNodeMapper) {
+		// if (workerNodeMapper.queryDatabaseExist() == 0 &&
+		// workerNodeMapper.createDatabase() > 0) {
+		// log.info("Not found database 'fun_cloud_base',auto created success");
+		// if (workerNodeMapper.createTable() > 0) {
+		// log.info("Not found table 'ark_uid_worker_node',auto created success");
+		// }
+		// } else if (workerNodeMapper.queryTableExist() == 0 &&
+		// workerNodeMapper.createTable() > 0) {
+		// log.info("Not found table 'ark_uid_worker_node',auto created success");
+		// }
+	}
 
 }

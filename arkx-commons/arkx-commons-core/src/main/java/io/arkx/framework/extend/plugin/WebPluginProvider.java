@@ -11,19 +11,19 @@ import io.arkx.framework.Config;
  */
 public class WebPluginProvider implements IPluginProvider {
 
-    @Override
-    public String[] getPluginFolders() {
+	@Override
+	public String[] getPluginFolders() {
 
-        String path = Config.getWEBINFPath();
+		String path = Config.getWEBINFPath();
 
-        return new String[]{
-                // 首先读取应用下的插件配置文件
-                path + "/classes/plugins/",
-                // path + "/plugins/classes/plugins/",
-                // 读取jar文件中的资源文件
-                path + "/lib/"
-                // path + "/plugins/lib/"
-        };
-    }
+		return new String[] {
+				// 首先读取应用下的插件配置文件
+				path + "/classes/plugins/",
+				// path + "/plugins/classes/plugins/",
+				// 读取jar文件中的资源文件
+				path + "/lib/"
+				// path + "/plugins/lib/"
+		};
+	}
 
 }

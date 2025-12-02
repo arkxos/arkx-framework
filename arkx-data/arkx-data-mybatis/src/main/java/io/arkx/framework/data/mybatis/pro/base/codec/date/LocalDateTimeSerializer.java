@@ -16,10 +16,11 @@ import cn.hutool.core.date.LocalDateTimeUtil;
  */
 public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
 
-    @Override
-    public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        if (value != null) {
-            gen.writeString(LocalDateTimeUtil.formatNormal(value));
-        }
-    }
+	@Override
+	public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+		if (value != null) {
+			gen.writeString(LocalDateTimeUtil.formatNormal(value));
+		}
+	}
+
 }

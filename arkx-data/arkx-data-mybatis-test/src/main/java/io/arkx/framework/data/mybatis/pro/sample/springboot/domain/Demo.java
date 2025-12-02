@@ -9,6 +9,9 @@ import lombok.Data;
  */
 @Data
 public class Demo {
-    private Gender gender;
-    private Date birthday;
+
+	private Gender gender;
+
+	private Date birthday;
+
 }

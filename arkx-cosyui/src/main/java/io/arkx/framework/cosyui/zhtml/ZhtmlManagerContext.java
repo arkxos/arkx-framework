@@ -17,69 +17,74 @@ import io.arkx.framework.cosyui.template.ITemplateSourceProcessor;
  *
  */
 public class ZhtmlManagerContext implements ITemplateManagerContext {
-    private static ZhtmlManagerContext instance;
-    private static ReentrantLock lock = new ReentrantLock();
-    private ITemplateManager templateManager = new ZhtmlManager();
 
-    public static ZhtmlManagerContext getInstance() {
-        if (instance == null) {
-            lock.lock();
-            try {
-                if (instance == null) {
-                    ZhtmlManagerContext mc = new ZhtmlManagerContext();
-                    instance = mc;
-                }
-            } finally {
-                lock.unlock();
-            }
-        }
-        return instance;
-    }
+	private static ZhtmlManagerContext instance;
 
-    private ZhtmlManagerContext() {
-    }
+	private static ReentrantLock lock = new ReentrantLock();
 
-    @Override
-    public IEvaluator getEvaluator() {
-        return new CachedEvaluator();
-    }
+	private ITemplateManager templateManager = new ZhtmlManager();
 
-    @Override
-    public IFunctionMapper getFunctionMapper() {
-        return ZhtmlFunctionService.getFunctionMappper();
-    }
+	public static ZhtmlManagerContext getInstance() {
+		if (instance == null) {
+			lock.lock();
+			try {
+				if (instance == null) {
+					ZhtmlManagerContext mc = new ZhtmlManagerContext();
+					instance = mc;
+				}
+			}
+			finally {
+				lock.unlock();
+			}
+		}
+		return instance;
+	}
 
-    @Override
-    public List<ITemplateSourceProcessor> getSourceProcessors() {
-        return ZhtmlSourceProcessorService.getInstance().getAll();
-    }
+	private ZhtmlManagerContext() {
+	}
 
-    @Override
-    public List<AbstractTag> getTags() {
-        return ZhtmlTagService.getInstance().getAll();
-    }
+	@Override
+	public IEvaluator getEvaluator() {
+		return new CachedEvaluator();
+	}
 
-    @Override
-    public AbstractTag getTag(String prefix, String tagName) {
-        for (AbstractTag tag : getTags()) {
-            if (tag.getPrefix().equals(prefix) && tag.getTagName().equals(tagName)) {
-                return tag;// 不需要克隆
-            }
-        }
-        return null;
-    }
+	@Override
+	public IFunctionMapper getFunctionMapper() {
+		return ZhtmlFunctionService.getFunctionMappper();
+	}
 
-    @Override
-    public ITemplateManager getTemplateManager() {
-        return templateManager;
-    }
+	@Override
+	public List<ITemplateSourceProcessor> getSourceProcessors() {
+		return ZhtmlSourceProcessorService.getInstance().getAll();
+	}
 
-    @Override
-    public AbstractTag createNewTagInstance(String prefix, String tagName) {
-        AbstractTag tag = getTag(prefix, tagName);
-        if (tag != null) {
-            tag = (AbstractTag) BeanUtil.create(tag.getClass());
-        }
-        return tag;
-    }
+	@Override
+	public List<AbstractTag> getTags() {
+		return ZhtmlTagService.getInstance().getAll();
+	}
+
+	@Override
+	public AbstractTag getTag(String prefix, String tagName) {
+		for (AbstractTag tag : getTags()) {
+			if (tag.getPrefix().equals(prefix) && tag.getTagName().equals(tagName)) {
+				return tag;// 不需要克隆
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ITemplateManager getTemplateManager() {
+		return templateManager;
+	}
+
+	@Override
+	public AbstractTag createNewTagInstance(String prefix, String tagName) {
+		AbstractTag tag = getTag(prefix, tagName);
+		if (tag != null) {
+			tag = (AbstractTag) BeanUtil.create(tag.getClass());
+		}
+		return tag;
+	}
+
 }

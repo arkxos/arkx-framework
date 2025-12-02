@@ -28,27 +28,27 @@ import lombok.Data;
 @Data
 public class SidecarInstanceInfo {
 
-    private String ip;
+	private String ip;
 
-    private Integer port;
+	private Integer port;
 
-    private Status status;
+	private Status status;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        SidecarInstanceInfo that = (SidecarInstanceInfo) o;
-        return Objects.equals(ip, that.ip) && Objects.equals(port, that.port) && Objects.equals(status, that.status);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		SidecarInstanceInfo that = (SidecarInstanceInfo) o;
+		return Objects.equals(ip, that.ip) && Objects.equals(port, that.port) && Objects.equals(status, that.status);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ip, port, status);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(ip, port, status);
+	}
 
 }

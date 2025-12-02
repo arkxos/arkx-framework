@@ -21,40 +21,41 @@ import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
 @Product(ProductTypeEnum.HIVE)
 public class HiveFactoryProvider extends AbstractFactoryProvider {
 
-    public HiveFactoryProvider(DataSource dataSource) {
-        super(dataSource);
-    }
+	public HiveFactoryProvider(DataSource dataSource) {
+		super(dataSource);
+	}
 
-    @Override
-    public ProductFeatures getProductFeatures() {
-        return new HiveFeatures();
-    }
+	@Override
+	public ProductFeatures getProductFeatures() {
+		return new HiveFeatures();
+	}
 
-    @Override
-    public MetadataProvider createMetadataQueryProvider() {
-        return new HiveMetadataQueryProvider(this);
-    }
+	@Override
+	public MetadataProvider createMetadataQueryProvider() {
+		return new HiveMetadataQueryProvider(this);
+	}
 
-    @Override
-    public TableDataQueryProvider createTableDataQueryProvider() {
-        return new HiveTableDataQueryProvider(this);
-    }
+	@Override
+	public TableDataQueryProvider createTableDataQueryProvider() {
+		return new HiveTableDataQueryProvider(this);
+	}
 
-    // @Override
-    // public TableManageProvider createTableManageProvider() {
-    // throw new UnsupportedOperationException("Unsupported hive to manage tale!");
-    // }
-    //
-    // @Override
-    // public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert)
-    // {
-    // throw new UnsupportedOperationException("Unsupported hive to write tale
-    // data!");
-    // }
-    //
-    // @Override
-    // public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    // throw new UnsupportedOperationException("Unsupported hive to sync tale
-    // data!");
-    // }
+	// @Override
+	// public TableManageProvider createTableManageProvider() {
+	// throw new UnsupportedOperationException("Unsupported hive to manage tale!");
+	// }
+	//
+	// @Override
+	// public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert)
+	// {
+	// throw new UnsupportedOperationException("Unsupported hive to write tale
+	// data!");
+	// }
+	//
+	// @Override
+	// public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+	// throw new UnsupportedOperationException("Unsupported hive to sync tale
+	// data!");
+	// }
+
 }

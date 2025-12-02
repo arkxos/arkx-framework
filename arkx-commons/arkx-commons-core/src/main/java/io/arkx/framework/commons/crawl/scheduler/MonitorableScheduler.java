@@ -10,8 +10,8 @@ package io.arkx.framework.commons.crawl.scheduler;
  */
 public interface MonitorableScheduler extends Scheduler {
 
-    int getLeftRequestsCount();
+	int getLeftRequestsCount();
 
-    int getTotalRequestsCount();
+	int getTotalRequestsCount();
 
 }

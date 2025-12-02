@@ -26,33 +26,33 @@ import io.arkx.framework.data.db.product.oracle.OracleTableManageProvider;
 @Product(ProductTypeEnum.DM)
 public class DmFactoryProvider extends AbstractFactoryProvider {
 
-    public DmFactoryProvider(DataSource dataSource) {
-        super(dataSource);
-    }
+	public DmFactoryProvider(DataSource dataSource) {
+		super(dataSource);
+	}
 
-    @Override
-    public ProductFeatures getProductFeatures() {
-        return new DefaultProductFeatures();
-    }
+	@Override
+	public ProductFeatures getProductFeatures() {
+		return new DefaultProductFeatures();
+	}
 
-    @Override
-    public MetadataProvider createMetadataQueryProvider() {
-        return new DmMetadataQueryProvider(this);
-    }
+	@Override
+	public MetadataProvider createMetadataQueryProvider() {
+		return new DmMetadataQueryProvider(this);
+	}
 
-    @Override
-    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-        return new DmTableDataWriteProvider(this);
-    }
+	@Override
+	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+		return new DmTableDataWriteProvider(this);
+	}
 
-    @Override
-    public TableManageProvider createTableManageProvider() {
-        return new OracleTableManageProvider(this);
-    }
+	@Override
+	public TableManageProvider createTableManageProvider() {
+		return new OracleTableManageProvider(this);
+	}
 
-    @Override
-    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-        return new AutoCastTableDataSynchronizeProvider(this);
-    }
+	@Override
+	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+		return new AutoCastTableDataSynchronizeProvider(this);
+	}
 
 }

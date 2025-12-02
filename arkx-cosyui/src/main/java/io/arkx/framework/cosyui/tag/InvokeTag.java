@@ -19,69 +19,71 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  *
  */
 public class InvokeTag extends ArkTag {
-    String sub;
 
-    @Override
-    public String getTagName() {
-        return "invoke";
-    }
+	String sub;
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        @SuppressWarnings("unchecked")
-        Mapx<String, TagCommand> subtagMap = (Mapx<String, TagCommand>) context.getExecutor().getAttributes()
-                .get(SubTag.KEY);
+	@Override
+	public String getTagName() {
+		return "invoke";
+	}
 
-        int i = sub.indexOf('?');
-        if (i > 0) {// 如果有参数，则置为局部变量
-            String params = sub.substring(i + 1);
-            sub = sub.substring(0, i);
-            Mapx<String, String> map = StringUtil.splitToMapx(params, "&", "=");
-            for (Entry<String, String> e : map.entrySet()) {
-                context.addDataVariable(e.getKey(), e.getValue());
-            }
-        }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		@SuppressWarnings("unchecked")
+		Mapx<String, TagCommand> subtagMap = (Mapx<String, TagCommand>) context.getExecutor()
+			.getAttributes()
+			.get(SubTag.KEY);
 
-        if (subtagMap == null || !subtagMap.containsKey(sub)) {
-            throw new TemplateRuntimeException("Template sub invoke failed,sub name " + sub + " not found!");
-        }
-        TagCommand subtagCommand = subtagMap.get(sub);
-        for (ITemplateCommand command : subtagCommand.getCommands()) {
-            if (command.execute(context) == AbstractTag.SKIP_PAGE) {
-                break;
-            }
-        }
-        return SKIP_BODY;
-    }
+		int i = sub.indexOf('?');
+		if (i > 0) {// 如果有参数，则置为局部变量
+			String params = sub.substring(i + 1);
+			sub = sub.substring(0, i);
+			Mapx<String, String> map = StringUtil.splitToMapx(params, "&", "=");
+			for (Entry<String, String> e : map.entrySet()) {
+				context.addDataVariable(e.getKey(), e.getValue());
+			}
+		}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<TagAttr>();
-        list.add(new TagAttr("sub", true, DataTypes.STRING.code(), "@{Framework.ZInvokeTag.Sub}"));
-        return list;
-    }
+		if (subtagMap == null || !subtagMap.containsKey(sub)) {
+			throw new TemplateRuntimeException("Template sub invoke failed,sub name " + sub + " not found!");
+		}
+		TagCommand subtagCommand = subtagMap.get(sub);
+		for (ITemplateCommand command : subtagCommand.getCommands()) {
+			if (command.execute(context) == AbstractTag.SKIP_PAGE) {
+				break;
+			}
+		}
+		return SKIP_BODY;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<TagAttr>();
+		list.add(new TagAttr("sub", true, DataTypes.STRING.code(), "@{Framework.ZInvokeTag.Sub}"));
+		return list;
+	}
 
-    @Override
-    public String getDescription() {
-        return "@{Framework.ZInvokeTag.Desc}";
-    }
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.ZInvokeTagName}";
-    }
+	@Override
+	public String getDescription() {
+		return "@{Framework.ZInvokeTag.Desc}";
+	}
 
-    public String getSub() {
-        return sub;
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.ZInvokeTagName}";
+	}
 
-    public void setSub(String sub) {
-        this.sub = sub;
-    }
+	public String getSub() {
+		return sub;
+	}
+
+	public void setSub(String sub) {
+		this.sub = sub;
+	}
 
 }

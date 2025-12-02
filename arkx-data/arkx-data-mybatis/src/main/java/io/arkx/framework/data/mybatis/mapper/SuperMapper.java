@@ -12,7 +12,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 public interface SuperMapper<T> extends BaseMapper<T> {
-    IPage<T> pageList(Page<T> page, @Param("ew") Wrapper<?> wrapper);
 
-    List<EntityMap> getEntityMap(@Param("ew") Wrapper<?> wrapper);
+	IPage<T> pageList(Page<T> page, @Param("ew") Wrapper<?> wrapper);
+
+	List<EntityMap> getEntityMap(@Param("ew") Wrapper<?> wrapper);
+
 }

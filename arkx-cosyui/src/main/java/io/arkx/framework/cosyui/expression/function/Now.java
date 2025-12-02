@@ -12,23 +12,24 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  */
 public class Now extends AbstractFunction {
 
-    @Override
-    public Object execute(IVariableResolver resolver, Object... args) throws ExpressionException {
-        return new Date();
-    }
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) throws ExpressionException {
+		return new Date();
+	}
 
-    @Override
-    public Class<?>[] getArgumentTypes() {
-        return new Class<?>[]{};
-    }
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return new Class<?>[] {};
+	}
 
-    @Override
-    public String getFunctionPrefix() {
-        return "";
-    }
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
 
-    @Override
-    public String getFunctionName() {
-        return "now";
-    }
+	@Override
+	public String getFunctionName() {
+		return "now";
+	}
+
 }

@@ -69,42 +69,40 @@ import io.arkx.framework.thirdparty.el.parser.TokenMgrError;
 
 /**
  * <p>
- * This is the main class for evaluating expression Strings. An expression
- * String is a String that may contain expressions of the form ${...}. Multiple
- * expressions may appear in the same expression String. In such a case, the
- * expression String's value is computed by concatenating the String values of
- * those evaluated expressions and any intervening non-expression text, then
- * converting the resulting String to the expected type using the PropertyEditor
- * mechanism.
+ * This is the main class for evaluating expression Strings. An expression String is a
+ * String that may contain expressions of the form ${...}. Multiple expressions may appear
+ * in the same expression String. In such a case, the expression String's value is
+ * computed by concatenating the String values of those evaluated expressions and any
+ * intervening non-expression text, then converting the resulting String to the expected
+ * type using the PropertyEditor mechanism.
  * <p>
- * In the special case where the expression String is a single expression, the
- * value of the expression String is determined by evaluating the expression,
- * without any intervening conversion to a String.
+ * In the special case where the expression String is a single expression, the value of
+ * the expression String is determined by evaluating the expression, without any
+ * intervening conversion to a String.
  * <p>
- * The evaluator maintains a cache mapping expression Strings to their parsed
- * results. For expression Strings containing no expression elements, it
- * maintains a cache mapping ExpectedType/ExpressionString to parsed value, so
- * that static expression Strings won't have to go through a conversion step
- * every time they are used. All instances of the evaluator share the same
- * cache. The cache may be bypassed by setting a flag on the evaluator's
- * constructor.
+ * The evaluator maintains a cache mapping expression Strings to their parsed results. For
+ * expression Strings containing no expression elements, it maintains a cache mapping
+ * ExpectedType/ExpressionString to parsed value, so that static expression Strings won't
+ * have to go through a conversion step every time they are used. All instances of the
+ * evaluator share the same cache. The cache may be bypassed by setting a flag on the
+ * evaluator's constructor.
  * <p>
  * The evaluator must be passed a VariableResolver in its constructor. The
- * VariableResolver is used to resolve variable names encountered in
- * expressions, and can also be used to implement "implicit objects" that are
- * always present in the namespace. Different applications will have different
- * policies for variable lookups and implicit objects - these differences can be
- * encapsulated in the VariableResolver passed to the evaluator's constructor.
+ * VariableResolver is used to resolve variable names encountered in expressions, and can
+ * also be used to implement "implicit objects" that are always present in the namespace.
+ * Different applications will have different policies for variable lookups and implicit
+ * objects - these differences can be encapsulated in the VariableResolver passed to the
+ * evaluator's constructor.
  * <p>
- * Most VariableResolvers will need to perform their resolution against some
- * context. For example, a JSP environment needs a PageContext to resolve
- * variables. The evaluate() method takes a generic Object context which is
- * eventually passed to the VariableResolver - the VariableResolver is
- * responsible for casting the context to the proper type.
+ * Most VariableResolvers will need to perform their resolution against some context. For
+ * example, a JSP environment needs a PageContext to resolve variables. The evaluate()
+ * method takes a generic Object context which is eventually passed to the
+ * VariableResolver - the VariableResolver is responsible for casting the context to the
+ * proper type.
  * <p>
- * Once an evaluator instance has been constructed, it may be used multiple
- * times, and may be used by multiple simultaneous Threads. In other words, an
- * evaluator instance is well-suited for use as a singleton.
+ * Once an evaluator instance has been constructed, it may be used multiple times, and may
+ * be used by multiple simultaneous Threads. In other words, an evaluator instance is
+ * well-suited for use as a singleton.
  *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
@@ -114,259 +112,257 @@ import io.arkx.framework.thirdparty.el.parser.TokenMgrError;
 public class CachedEvaluator implements IEvaluator
 
 {
-    /**
-     * The mapping from expression String to its parsed form (String, Expression, or
-     * ExpressionString)
-     **/
-    static ConcurrentMapx<String, Object> cachedExpressionStrings = new ConcurrentMapx<String, Object>(50000);
 
-    /**
-     * The mapping from ExpectedType to Maps mapping literal String to parsed value
-     **/
-    static ConcurrentMapx<Class<?>, ConcurrentMapx<String, Object>> cachedExpectedTypes = new ConcurrentMapx<Class<?>, ConcurrentMapx<String, Object>>();
+	/**
+	 * The mapping from expression String to its parsed form (String, Expression, or
+	 * ExpressionString)
+	 **/
+	static ConcurrentMapx<String, Object> cachedExpressionStrings = new ConcurrentMapx<String, Object>(50000);
 
-    /** The static Logger **/
-    static Logger sLogger = new Logger(System.out);
+	/**
+	 * The mapping from ExpectedType to Maps mapping literal String to parsed value
+	 **/
+	static ConcurrentMapx<Class<?>, ConcurrentMapx<String, Object>> cachedExpectedTypes = new ConcurrentMapx<Class<?>, ConcurrentMapx<String, Object>>();
 
-    /** Flag if the cache should be bypassed **/
-    boolean mBypassCache;
+	/** The static Logger **/
+	static Logger sLogger = new Logger(System.out);
 
-    public CachedEvaluator() {
-    }
+	/** Flag if the cache should be bypassed **/
+	boolean mBypassCache;
 
-    /**
-     * Evaluates the given expression String
-     *
-     * @param pExpressionString
-     *            The expression to be evaluated.
-     * @param pExpectedType
-     *            The expected type of the result of the evaluation
-     * @param pResolver
-     *            A VariableResolver instance that can be used at runtime to resolve
-     *            the name of implicit objects into Objects.
-     * @param functions
-     *            A FunctionMapper to resolve functions found in the expression. It
-     *            can be null, in which case no functions are supported for this
-     *            invocation.
-     * @return the expression String evaluated to the given expected type
-     **/
-    @Override
-    public Object evaluate(String pExpressionString, Class<?> pExpectedType, IVariableResolver pResolver,
-            IFunctionMapper functions) throws ExpressionException {
-        return evaluate(pExpressionString, pExpectedType, pResolver, functions, sLogger);
-    }
+	public CachedEvaluator() {
+	}
 
-    /**
-     * Evaluates the given expression string
-     **/
-    Object evaluate(String pExpressionString, Class<?> pExpectedType, IVariableResolver pResolver,
-            IFunctionMapper functions, Logger pLogger) throws ExpressionException {
-        // Check for null expression strings
-        if (pExpressionString == null) {
-            throw new ExpressionException(Constants.NULL_EXPRESSION_STRING);
-        }
+	/**
+	 * Evaluates the given expression String
+	 * @param pExpressionString The expression to be evaluated.
+	 * @param pExpectedType The expected type of the result of the evaluation
+	 * @param pResolver A VariableResolver instance that can be used at runtime to resolve
+	 * the name of implicit objects into Objects.
+	 * @param functions A FunctionMapper to resolve functions found in the expression. It
+	 * can be null, in which case no functions are supported for this invocation.
+	 * @return the expression String evaluated to the given expected type
+	 **/
+	@Override
+	public Object evaluate(String pExpressionString, Class<?> pExpectedType, IVariableResolver pResolver,
+			IFunctionMapper functions) throws ExpressionException {
+		return evaluate(pExpressionString, pExpectedType, pResolver, functions, sLogger);
+	}
 
-        // Get the parsed version of the expression string
-        Object parsedValue = parseExpressionString(pExpressionString);
+	/**
+	 * Evaluates the given expression string
+	 **/
+	Object evaluate(String pExpressionString, Class<?> pExpectedType, IVariableResolver pResolver,
+			IFunctionMapper functions, Logger pLogger) throws ExpressionException {
+		// Check for null expression strings
+		if (pExpressionString == null) {
+			throw new ExpressionException(Constants.NULL_EXPRESSION_STRING);
+		}
 
-        // Evaluate differently based on the parsed type
-        if (parsedValue instanceof String) {
-            // Convert the String, and cache the conversion
-            String strValue = (String) parsedValue;
-            return convertStaticValueToExpectedType(strValue, pExpectedType, pLogger);
-        }
+		// Get the parsed version of the expression string
+		Object parsedValue = parseExpressionString(pExpressionString);
 
-        else if (parsedValue instanceof Expression) {
-            // Evaluate the expression and convert
-            Object value = ((Expression) parsedValue).evaluate(pResolver, functions, pLogger);
-            return convertToExpectedType(value, pExpectedType, pLogger);
-        }
+		// Evaluate differently based on the parsed type
+		if (parsedValue instanceof String) {
+			// Convert the String, and cache the conversion
+			String strValue = (String) parsedValue;
+			return convertStaticValueToExpectedType(strValue, pExpectedType, pLogger);
+		}
 
-        else if (parsedValue instanceof ExpressionString) {
-            // Evaluate the expression/string list and convert
-            String strValue = ((ExpressionString) parsedValue).evaluate(pResolver, functions, pLogger);
-            return convertToExpectedType(strValue, pExpectedType, pLogger);
-        }
+		else if (parsedValue instanceof Expression) {
+			// Evaluate the expression and convert
+			Object value = ((Expression) parsedValue).evaluate(pResolver, functions, pLogger);
+			return convertToExpectedType(value, pExpectedType, pLogger);
+		}
 
-        else {
-            // This should never be reached
-            return null;
-        }
-    }
+		else if (parsedValue instanceof ExpressionString) {
+			// Evaluate the expression/string list and convert
+			String strValue = ((ExpressionString) parsedValue).evaluate(pResolver, functions, pLogger);
+			return convertToExpectedType(strValue, pExpectedType, pLogger);
+		}
 
-    /**
-     * Gets the parsed form of the given expression string. If the parsed form is
-     * cached (and caching is not bypassed), return the cached form, otherwise parse
-     * and cache the value. Returns either a String, Expression, or
-     * ExpressionString.
-     **/
-    public Object parseExpressionString(String pExpressionString) throws ExpressionException {
-        // See if it's an empty String
-        if (pExpressionString.length() == 0) {
-            return "";
-        }
+		else {
+			// This should never be reached
+			return null;
+		}
+	}
 
-        // See if it's in the cache
-        Object ret = mBypassCache ? null : cachedExpressionStrings.get(pExpressionString);
+	/**
+	 * Gets the parsed form of the given expression string. If the parsed form is cached
+	 * (and caching is not bypassed), return the cached form, otherwise parse and cache
+	 * the value. Returns either a String, Expression, or ExpressionString.
+	 **/
+	public Object parseExpressionString(String pExpressionString) throws ExpressionException {
+		// See if it's an empty String
+		if (pExpressionString.length() == 0) {
+			return "";
+		}
 
-        if (ret == null) {
-            // Parse the expression
-            Reader r = new StringReader(pExpressionString);
-            ELParser parser = new ELParser(r);
-            try {
-                ret = parser.ExpressionString();
-                cachedExpressionStrings.put(pExpressionString, ret);
-            } catch (ELParseException exc) {
-                throw new ExpressionException(formatParseException(pExpressionString, exc));
-            } catch (TokenMgrError exc) {
-                // Note - this should never be reached, since the parser is
-                // constructed to tokenize any input (illegal inputs get
-                // parsed to <BADLY_ESCAPED_STRING_LITERAL> or
-                // <ILLEGAL_CHARACTER>
-                throw new ExpressionException(exc.getMessage());
-            }
-        }
-        return ret;
-    }
+		// See if it's in the cache
+		Object ret = mBypassCache ? null : cachedExpressionStrings.get(pExpressionString);
 
-    /**
-     * Converts the given value to the specified expected type.
-     **/
-    Object convertToExpectedType(Object pValue, Class<?> pExpectedType, Logger pLogger) throws ExpressionException {
-        return Coercions.coerce(pValue, pExpectedType, pLogger);
-    }
+		if (ret == null) {
+			// Parse the expression
+			Reader r = new StringReader(pExpressionString);
+			ELParser parser = new ELParser(r);
+			try {
+				ret = parser.ExpressionString();
+				cachedExpressionStrings.put(pExpressionString, ret);
+			}
+			catch (ELParseException exc) {
+				throw new ExpressionException(formatParseException(pExpressionString, exc));
+			}
+			catch (TokenMgrError exc) {
+				// Note - this should never be reached, since the parser is
+				// constructed to tokenize any input (illegal inputs get
+				// parsed to <BADLY_ESCAPED_STRING_LITERAL> or
+				// <ILLEGAL_CHARACTER>
+				throw new ExpressionException(exc.getMessage());
+			}
+		}
+		return ret;
+	}
 
-    /**
-     * Converts the given String, specified as a static expression string, to the
-     * given expected type. The conversion is cached.
-     **/
-    Object convertStaticValueToExpectedType(String pValue, Class<?> pExpectedType, Logger pLogger)
-            throws ExpressionException {
-        // See if the value is already of the expected type
-        if (pExpectedType == String.class || pExpectedType == Object.class) {
-            return pValue;
-        }
+	/**
+	 * Converts the given value to the specified expected type.
+	 **/
+	Object convertToExpectedType(Object pValue, Class<?> pExpectedType, Logger pLogger) throws ExpressionException {
+		return Coercions.coerce(pValue, pExpectedType, pLogger);
+	}
 
-        // Find the cached value
-        Map<String, Object> valueByString = getOrCreateExpectedTypeMap(pExpectedType);
-        if (!mBypassCache && valueByString.containsKey(pValue)) {
-            return valueByString.get(pValue);
-        } else {
-            // Convert from a String
-            Object ret = Coercions.coerce(pValue, pExpectedType, pLogger);
-            valueByString.put(pValue, ret);
-            return ret;
-        }
-    }
+	/**
+	 * Converts the given String, specified as a static expression string, to the given
+	 * expected type. The conversion is cached.
+	 **/
+	Object convertStaticValueToExpectedType(String pValue, Class<?> pExpectedType, Logger pLogger)
+			throws ExpressionException {
+		// See if the value is already of the expected type
+		if (pExpectedType == String.class || pExpectedType == Object.class) {
+			return pValue;
+		}
 
-    /**
-     * Creates or returns the Map that maps string literals to parsed values for the
-     * specified expected type.
-     **/
-    static Map<String, Object> getOrCreateExpectedTypeMap(Class<?> pExpectedType) {
-        ConcurrentMapx<String, Object> ret = cachedExpectedTypes.get(pExpectedType);
-        if (ret == null) {
-            ret = new ConcurrentMapx<String, Object>();
-            cachedExpectedTypes.put(pExpectedType, ret);
-        }
-        return ret;
-    }
+		// Find the cached value
+		Map<String, Object> valueByString = getOrCreateExpectedTypeMap(pExpectedType);
+		if (!mBypassCache && valueByString.containsKey(pValue)) {
+			return valueByString.get(pValue);
+		}
+		else {
+			// Convert from a String
+			Object ret = Coercions.coerce(pValue, pExpectedType, pLogger);
+			valueByString.put(pValue, ret);
+			return ret;
+		}
+	}
 
-    /**
-     * Formats a ParseException into an error message suitable for displaying on a
-     * web page
-     **/
-    static String formatParseException(String pExpressionString, ELParseException pExc) {
-        // Generate the String of expected tokens
-        StringBuffer expectedBuf = new StringBuffer();
-        int maxSize = 0;
-        boolean printedOne = false;
+	/**
+	 * Creates or returns the Map that maps string literals to parsed values for the
+	 * specified expected type.
+	 **/
+	static Map<String, Object> getOrCreateExpectedTypeMap(Class<?> pExpectedType) {
+		ConcurrentMapx<String, Object> ret = cachedExpectedTypes.get(pExpectedType);
+		if (ret == null) {
+			ret = new ConcurrentMapx<String, Object>();
+			cachedExpectedTypes.put(pExpectedType, ret);
+		}
+		return ret;
+	}
 
-        if (pExc.expectedTokenSequences == null) {
-            return pExc.toString();
-        }
+	/**
+	 * Formats a ParseException into an error message suitable for displaying on a web
+	 * page
+	 **/
+	static String formatParseException(String pExpressionString, ELParseException pExc) {
+		// Generate the String of expected tokens
+		StringBuffer expectedBuf = new StringBuffer();
+		int maxSize = 0;
+		boolean printedOne = false;
 
-        for (int[] expectedTokenSequence : pExc.expectedTokenSequences) {
-            if (maxSize < expectedTokenSequence.length) {
-                maxSize = expectedTokenSequence.length;
-            }
-            for (int element : expectedTokenSequence) {
-                if (printedOne) {
-                    expectedBuf.append(", ");
-                }
-                expectedBuf.append(pExc.tokenImage[element]);
-                printedOne = true;
-            }
-        }
-        String expected = expectedBuf.toString();
+		if (pExc.expectedTokenSequences == null) {
+			return pExc.toString();
+		}
 
-        // Generate the String of encountered tokens
-        StringBuffer encounteredBuf = new StringBuffer();
-        Token tok = pExc.currentToken.next;
-        for (int i = 0; i < maxSize; i++) {
-            if (i != 0) {
-                encounteredBuf.append(" ");
-            }
-            if (tok.kind == 0) {
-                encounteredBuf.append(pExc.tokenImage[0]);
-                break;
-            }
-            encounteredBuf.append(addEscapes(tok.image));
-            tok = tok.next;
-        }
-        String encountered = encounteredBuf.toString();
+		for (int[] expectedTokenSequence : pExc.expectedTokenSequences) {
+			if (maxSize < expectedTokenSequence.length) {
+				maxSize = expectedTokenSequence.length;
+			}
+			for (int element : expectedTokenSequence) {
+				if (printedOne) {
+					expectedBuf.append(", ");
+				}
+				expectedBuf.append(pExc.tokenImage[element]);
+				printedOne = true;
+			}
+		}
+		String expected = expectedBuf.toString();
 
-        // Format the error message
-        return MessageFormat.format(Constants.PARSE_EXCEPTION, new Object[]{expected, encountered,});
-    }
+		// Generate the String of encountered tokens
+		StringBuffer encounteredBuf = new StringBuffer();
+		Token tok = pExc.currentToken.next;
+		for (int i = 0; i < maxSize; i++) {
+			if (i != 0) {
+				encounteredBuf.append(" ");
+			}
+			if (tok.kind == 0) {
+				encounteredBuf.append(pExc.tokenImage[0]);
+				break;
+			}
+			encounteredBuf.append(addEscapes(tok.image));
+			tok = tok.next;
+		}
+		String encountered = encounteredBuf.toString();
 
-    /**
-     * Used to convert raw characters to their escaped version when these raw
-     * version cannot be used as part of an ASCII string literal.
-     **/
-    static String addEscapes(String str) {
-        StringBuffer retval = new StringBuffer();
-        char ch;
-        for (int i = 0; i < str.length(); i++) {
-            switch (str.charAt(i)) {
-                // case 0:
-                // continue;
-                case '\000' :
-                    break;
-                case '\b' :
-                    retval.append("\\b");
-                    continue;
-                case '\t' :
-                    retval.append("\\t");
-                    continue;
-                case '\n' :
-                    retval.append("\\n");
-                    continue;
-                case '\f' :
-                    retval.append("\\f");
-                    continue;
-                case '\r' :
-                    retval.append("\\r");
-                    continue;
-                case '\001' :
-                case '\002' :
-                case '\003' :
-                case '\004' :
-                case '\005' :
-                case '\006' :
-                case '\007' :
-                case '\013' :
-                default :
-                    if ((ch = str.charAt(i)) < 0x20 || ch > 0x7e) {
-                        String s = "0000" + Integer.toString(ch, 16);
-                        retval.append("\\u" + s.substring(s.length() - 4, s.length()));
-                    } else {
-                        retval.append(ch);
-                    }
-                    continue;
-            }
-        }
-        return retval.toString();
-    }
+		// Format the error message
+		return MessageFormat.format(Constants.PARSE_EXCEPTION, new Object[] { expected, encountered, });
+	}
+
+	/**
+	 * Used to convert raw characters to their escaped version when these raw version
+	 * cannot be used as part of an ASCII string literal.
+	 **/
+	static String addEscapes(String str) {
+		StringBuffer retval = new StringBuffer();
+		char ch;
+		for (int i = 0; i < str.length(); i++) {
+			switch (str.charAt(i)) {
+				// case 0:
+				// continue;
+				case '\000':
+					break;
+				case '\b':
+					retval.append("\\b");
+					continue;
+				case '\t':
+					retval.append("\\t");
+					continue;
+				case '\n':
+					retval.append("\\n");
+					continue;
+				case '\f':
+					retval.append("\\f");
+					continue;
+				case '\r':
+					retval.append("\\r");
+					continue;
+				case '\001':
+				case '\002':
+				case '\003':
+				case '\004':
+				case '\005':
+				case '\006':
+				case '\007':
+				case '\013':
+				default:
+					if ((ch = str.charAt(i)) < 0x20 || ch > 0x7e) {
+						String s = "0000" + Integer.toString(ch, 16);
+						retval.append("\\u" + s.substring(s.length() - 4, s.length()));
+					}
+					else {
+						retval.append(ch);
+					}
+					continue;
+			}
+		}
+		return retval.toString();
+	}
 
 }

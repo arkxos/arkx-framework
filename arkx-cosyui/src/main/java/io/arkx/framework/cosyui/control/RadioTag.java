@@ -7,25 +7,26 @@ import io.arkx.framework.cosyui.expression.ExpressionException;
  *
  */
 public class RadioTag extends CheckboxTag {
-    @Override
-    public void init() throws ExpressionException {
-        super.init();
-        type = "radio";
-    }
 
-    @Override
-    public String getTagName() {
-        return "radio";
-    }
+	@Override
+	public void init() throws ExpressionException {
+		super.init();
+		type = "radio";
+	}
 
-    @Override
-    public String getDescription() {
-        return "@{Framework.RadioTag.Desc}";
-    }
+	@Override
+	public String getTagName() {
+		return "radio";
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.RadioTag.Name}";
-    }
+	@Override
+	public String getDescription() {
+		return "@{Framework.RadioTag.Desc}";
+	}
+
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.RadioTag.Name}";
+	}
 
 }

@@ -12,15 +12,16 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public interface IRepository<T extends Entity> {
 
-    T findBy(Object key);
+	T findBy(Object key);
 
-    List<T> findAll();
+	List<T> findAll();
 
-    void add(T item);
+	void add(T item);
 
-    T get(Object key);
+	T get(Object key);
 
-    T set(Object key, T entity);
+	T set(Object key, T entity);
 
-    void remove(T item);
+	void remove(T item);
+
 }

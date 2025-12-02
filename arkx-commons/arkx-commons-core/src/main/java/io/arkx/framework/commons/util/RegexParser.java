@@ -19,155 +19,158 @@ import io.arkx.framework.commons.collection.Mapx;
  *
  */
 public class RegexParser {
-    String regex;
 
-    int currentPos;
+	String regex;
 
-    String orginalText;
+	int currentPos;
 
-    ArrayList<Object> list = new ArrayList<Object>(16);
+	String orginalText;
 
-    ArrayList<String> groups = null;// 本次匹配结果,包括未命名的结果
+	ArrayList<Object> list = new ArrayList<Object>(16);
 
-    Mapx<String, int[]> map = null;// 本次匹配的名值映射
+	ArrayList<String> groups = null;// 本次匹配结果,包括未命名的结果
 
-    RegexMatch rm = null;// 本次匹配的结果
+	Mapx<String, int[]> map = null;// 本次匹配的名值映射
 
-    int startPos = 0;
+	RegexMatch rm = null;// 本次匹配的结果
 
-    boolean caseIngore = true;
+	int startPos = 0;
 
-    char[] cs = null;
+	boolean caseIngore = true;
 
-    public RegexParser(String regex) {
-        this(regex, true);
-    }
+	char[] cs = null;
 
-    /**
-     * caseIngoreFlag表示匹配时不区分大小写。
-     */
-    public RegexParser(String regex, boolean caseIngoreFlag) {
-        regex = regex.replaceAll("\\s*\\n\\s*", "\n").replaceAll("\\s*(\\$\\{A.*?\\})\\s*", "$1").trim();
-        this.regex = caseIngoreFlag ? regex.toLowerCase() : regex;
-        caseIngore = caseIngoreFlag;
-        parse();
-    }
+	public RegexParser(String regex) {
+		this(regex, true);
+	}
 
-    public String getText() {
-        return orginalText;
-    }
+	/**
+	 * caseIngoreFlag表示匹配时不区分大小写。
+	 */
+	public RegexParser(String regex, boolean caseIngoreFlag) {
+		regex = regex.replaceAll("\\s*\\n\\s*", "\n").replaceAll("\\s*(\\$\\{A.*?\\})\\s*", "$1").trim();
+		this.regex = caseIngoreFlag ? regex.toLowerCase() : regex;
+		caseIngore = caseIngoreFlag;
+		parse();
+	}
 
-    public void setText(String text) {
-        orginalText = text;
-        cs = text.toCharArray();
-        if (caseIngore) {
-            for (int i = 0; i < cs.length; i++) {
-                char c = cs[i];
-                if (c >= 65 && c <= 90) {
-                    c += 32;
-                    cs[i] = c;
-                }
-            }
-        }
-        currentPos = 0;// 重新开始匹配
-        startPos = 0;
-    }
+	public String getText() {
+		return orginalText;
+	}
 
-    private void parse() {
-        if (StringUtil.isEmpty(regex)) {
-            throw new RegexMatchFailedException("Simple regex expression can't be emtpy");
-        }
-        int lastIndex = 0;
-        while (true) {
-            int start = regex.indexOf("${", lastIndex);
-            if (start < 0) {
-                break;
-            }
-            int end = regex.indexOf("}", start);
-            if (end < 0) {
-                break;
-            }
-            String previous = regex.substring(lastIndex, start);
-            if (StringUtil.isNotEmpty(previous)) {
-                list.add(previous);
-            }
-            String item = regex.substring(start + 2, end);
-            list.add(new RegexItem(item));
-            lastIndex = end + 1;
-        }
-        if (lastIndex != regex.length()) {
-            String str = regex.substring(lastIndex);
-            list.add(str);
-        }
-    }
+	public void setText(String text) {
+		orginalText = text;
+		cs = text.toCharArray();
+		if (caseIngore) {
+			for (int i = 0; i < cs.length; i++) {
+				char c = cs[i];
+				if (c >= 65 && c <= 90) {
+					c += 32;
+					cs[i] = c;
+				}
+			}
+		}
+		currentPos = 0;// 重新开始匹配
+		startPos = 0;
+	}
 
-    public boolean match() {
-        groups = new ArrayList<String>();
-        map = new Mapx<String, int[]>();
-        RegexMatch rm = new RegexMatch(this, 0, currentPos);
-        try {
-            if (rm.match()) {
-                currentPos = rm.getEnd();
-                startPos = rm.getStart();
-                return true;
-            }
-        } catch (RegexMatchFailedException e) {
-            return false;
-        }
-        return false;
-    }
+	private void parse() {
+		if (StringUtil.isEmpty(regex)) {
+			throw new RegexMatchFailedException("Simple regex expression can't be emtpy");
+		}
+		int lastIndex = 0;
+		while (true) {
+			int start = regex.indexOf("${", lastIndex);
+			if (start < 0) {
+				break;
+			}
+			int end = regex.indexOf("}", start);
+			if (end < 0) {
+				break;
+			}
+			String previous = regex.substring(lastIndex, start);
+			if (StringUtil.isNotEmpty(previous)) {
+				list.add(previous);
+			}
+			String item = regex.substring(start + 2, end);
+			list.add(new RegexItem(item));
+			lastIndex = end + 1;
+		}
+		if (lastIndex != regex.length()) {
+			String str = regex.substring(lastIndex);
+			list.add(str);
+		}
+	}
 
-    /**
-     * 本次匹配开始位置
-     */
-    public int getMatchStart() {
-        return startPos;
-    }
+	public boolean match() {
+		groups = new ArrayList<String>();
+		map = new Mapx<String, int[]>();
+		RegexMatch rm = new RegexMatch(this, 0, currentPos);
+		try {
+			if (rm.match()) {
+				currentPos = rm.getEnd();
+				startPos = rm.getStart();
+				return true;
+			}
+		}
+		catch (RegexMatchFailedException e) {
+			return false;
+		}
+		return false;
+	}
 
-    /**
-     * 本次匹配结束位置
-     */
-    public int getMatchEnd() {
-        return currentPos;
-    }
+	/**
+	 * 本次匹配开始位置
+	 */
+	public int getMatchStart() {
+		return startPos;
+	}
 
-    public String replace(String content, String replacement) {
-        this.setText(content);
-        StringBuilder sb = new StringBuilder();
-        int lastIndex = 0;
-        while (this.match()) {
-            sb.append(this.orginalText.substring(lastIndex, startPos));
-            sb.append(replacement);
-            lastIndex = currentPos;
-        }
-        if (lastIndex < this.orginalText.length()) {
-            sb.append(this.orginalText.substring(lastIndex));
-        }
-        return sb.toString();
-    }
+	/**
+	 * 本次匹配结束位置
+	 */
+	public int getMatchEnd() {
+		return currentPos;
+	}
 
-    public String[] getGroups() {
-        if (groups == null) {
-            return null;
-        }
-        String[] arr = null;
-        return groups.toArray(arr);
-    }
+	public String replace(String content, String replacement) {
+		this.setText(content);
+		StringBuilder sb = new StringBuilder();
+		int lastIndex = 0;
+		while (this.match()) {
+			sb.append(this.orginalText.substring(lastIndex, startPos));
+			sb.append(replacement);
+			lastIndex = currentPos;
+		}
+		if (lastIndex < this.orginalText.length()) {
+			sb.append(this.orginalText.substring(lastIndex));
+		}
+		return sb.toString();
+	}
 
-    public Mapx<String, String> getMapx() {
-        if (map == null) {
-            return null;
-        }
-        CaseIgnoreMapx<String, String> r = new CaseIgnoreMapx<String, String>();
-        for (Entry<String, int[]> e : map.entrySet()) {
-            int[] arr = e.getValue();
-            String v = orginalText.substring(arr[0], arr[1]);
-            r.put(e.getKey(), v);
-        }
-        return r;
-    }
+	public String[] getGroups() {
+		if (groups == null) {
+			return null;
+		}
+		String[] arr = null;
+		return groups.toArray(arr);
+	}
 
-    public String getMacthedText() {
-        return this.orginalText.substring(startPos, currentPos);
-    }
+	public Mapx<String, String> getMapx() {
+		if (map == null) {
+			return null;
+		}
+		CaseIgnoreMapx<String, String> r = new CaseIgnoreMapx<String, String>();
+		for (Entry<String, int[]> e : map.entrySet()) {
+			int[] arr = e.getValue();
+			String v = orginalText.substring(arr[0], arr[1]);
+			r.put(e.getKey(), v);
+		}
+		return r;
+	}
+
+	public String getMacthedText() {
+		return this.orginalText.substring(startPos, currentPos);
+	}
+
 }

@@ -12,20 +12,22 @@ import java.util.Map;
  */
 public class ExcelReader {
 
-    public static final String SIMPLE = "SIMPLE";
-    public static final String MERGE_WITH_VALUE = "MERGE_WITH_VALUE";
+	public static final String SIMPLE = "SIMPLE";
 
-    public static Map<String, List<String[]>> read(String path) {
-        return readExcel(path, MERGE_WITH_VALUE);
-    }
+	public static final String MERGE_WITH_VALUE = "MERGE_WITH_VALUE";
 
-    public static Map<String, List<String[]>> readExcel(String path, String policy) {
-        if (SIMPLE.equals(policy)) {
-            return new SimpleExcelReader(path).getAllData();
-        }
-        if (MERGE_WITH_VALUE.equals(policy)) {
-            return new MergeWithValueExcelReader(path).getAllData();
-        }
-        throw new RuntimeException("policy [" + policy + "] not found, please check your code again...");
-    }
+	public static Map<String, List<String[]>> read(String path) {
+		return readExcel(path, MERGE_WITH_VALUE);
+	}
+
+	public static Map<String, List<String[]>> readExcel(String path, String policy) {
+		if (SIMPLE.equals(policy)) {
+			return new SimpleExcelReader(path).getAllData();
+		}
+		if (MERGE_WITH_VALUE.equals(policy)) {
+			return new MergeWithValueExcelReader(path).getAllData();
+		}
+		throw new RuntimeException("policy [" + policy + "] not found, please check your code again...");
+	}
+
 }

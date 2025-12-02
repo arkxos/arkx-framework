@@ -8,54 +8,56 @@ import io.arkx.framework.commons.util.StringUtils;
  * @author Darkness
  */
 public class PageDomain {
-    /** 当前记录起始索引 */
-    private Integer pageNum;
 
-    /** 每页显示记录数 */
-    private Integer pageSize;
+	/** 当前记录起始索引 */
+	private Integer pageNum;
 
-    /** 排序列 */
-    private String orderByColumn;
+	/** 每页显示记录数 */
+	private Integer pageSize;
 
-    /** 排序的方向 "desc" 或者 "asc". */
-    private String isAsc;
+	/** 排序列 */
+	private String orderByColumn;
 
-    public String getOrderBy() {
-        if (StringUtils.isEmpty(orderByColumn)) {
-            return "";
-        }
-        return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
-    }
+	/** 排序的方向 "desc" 或者 "asc". */
+	private String isAsc;
 
-    public Integer getPageNum() {
-        return pageNum;
-    }
+	public String getOrderBy() {
+		if (StringUtils.isEmpty(orderByColumn)) {
+			return "";
+		}
+		return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
+	}
 
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
+	public Integer getPageNum() {
+		return pageNum;
+	}
 
-    public Integer getPageSize() {
-        return pageSize;
-    }
+	public void setPageNum(Integer pageNum) {
+		this.pageNum = pageNum;
+	}
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
+	public Integer getPageSize() {
+		return pageSize;
+	}
 
-    public String getOrderByColumn() {
-        return orderByColumn;
-    }
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 
-    public void setOrderByColumn(String orderByColumn) {
-        this.orderByColumn = orderByColumn;
-    }
+	public String getOrderByColumn() {
+		return orderByColumn;
+	}
 
-    public String getIsAsc() {
-        return isAsc;
-    }
+	public void setOrderByColumn(String orderByColumn) {
+		this.orderByColumn = orderByColumn;
+	}
 
-    public void setIsAsc(String isAsc) {
-        this.isAsc = isAsc;
-    }
+	public String getIsAsc() {
+		return isAsc;
+	}
+
+	public void setIsAsc(String isAsc) {
+		this.isAsc = isAsc;
+	}
+
 }

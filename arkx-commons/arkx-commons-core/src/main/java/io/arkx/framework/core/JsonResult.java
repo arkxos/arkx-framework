@@ -6,123 +6,126 @@ import io.arkx.framework.commons.collection.Mapx;
 import com.alibaba.fastjson.JSON;
 
 /**
- *
  * @author Darkness
  * @date 2016年12月19日 下午3:21:04
  * @version V1.0
  */
 public class JsonResult {
 
-    public static JsonResult error(String message) {
-        return new JsonResult(false, message, null);
-    }
+	public static JsonResult error(String message) {
+		return new JsonResult(false, message, null);
+	}
 
-    public static JsonResult createErrorResult(String message) {
-        return new JsonResult(false, message, null);
-    }
+	public static JsonResult createErrorResult(String message) {
+		return new JsonResult(false, message, null);
+	}
 
-    public static JsonResult success(String message) {
-        return new JsonResult(message);
-    }
+	public static JsonResult success(String message) {
+		return new JsonResult(message);
+	}
 
-    public static JsonResult success(String message, Object data) {
-        return new JsonResult(message, data);
-    }
+	public static JsonResult success(String message, Object data) {
+		return new JsonResult(message, data);
+	}
 
-    public static JsonResult createSuccessResult(String message) {
-        return new JsonResult(message);
-    }
+	public static JsonResult createSuccessResult(String message) {
+		return new JsonResult(message);
+	}
 
-    public static JsonResult createSuccessResult(String message, Object data) {
-        return new JsonResult(message, data);
-    }
+	public static JsonResult createSuccessResult(String message, Object data) {
+		return new JsonResult(message, data);
+	}
 
-    public static JsonResult createErrorResult(String message, Object data) {
-        return new JsonResult(false, message, data);
-    }
+	public static JsonResult createErrorResult(String message, Object data) {
+		return new JsonResult(false, message, data);
+	}
 
-    private boolean success = true;
-    private String statusCode = "20000";
-    private String message;
+	private boolean success = true;
 
-    private Object data;
-    private Mapx<String, Object> extraData = new Mapx<>();
+	private String statusCode = "20000";
 
-    public JsonResult() {
-    }
+	private String message;
 
-    public JsonResult(String message) {
-        this(true, message, null);
-    }
+	private Object data;
 
-    public JsonResult(String message, Object data) {
-        this(true, message, data);
-    }
+	private Mapx<String, Object> extraData = new Mapx<>();
 
-    private JsonResult(boolean success, String message, Object data) {
-        this.success = success;
-        this.message = message;
+	public JsonResult() {
+	}
 
-        if (data instanceof DataTable) {
-            this.data = io.arkx.framework.json.JSON.toJSONString((DataTable) data);
-        } else {
-            this.data = data;
-        }
-    }
+	public JsonResult(String message) {
+		this(true, message, null);
+	}
 
-    public boolean isSuccess() {
-        return success;
-    }
+	public JsonResult(String message, Object data) {
+		this(true, message, data);
+	}
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+	private JsonResult(boolean success, String message, Object data) {
+		this.success = success;
+		this.message = message;
 
-    public Object getData() {
-        return data;
-    }
+		if (data instanceof DataTable) {
+			this.data = io.arkx.framework.json.JSON.toJSONString((DataTable) data);
+		}
+		else {
+			this.data = data;
+		}
+	}
 
-    public JsonResult setData(Object data) {
-        this.data = data;
-        return this;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public Object getData() {
+		return data;
+	}
 
-    public Mapx<String, Object> getExtraData() {
-        return extraData;
-    }
+	public JsonResult setData(Object data) {
+		this.data = data;
+		return this;
+	}
 
-    public void setExtraData(Mapx<String, Object> extraData) {
-        this.extraData = extraData;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void putExtraData(String key, Object value) {
-        this.extraData.put(key, value);
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public void setErrorMessage(String message) {
-        this.message = message;
-        this.success = false;
-    }
+	public Mapx<String, Object> getExtraData() {
+		return extraData;
+	}
 
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
+	public void setExtraData(Mapx<String, Object> extraData) {
+		this.extraData = extraData;
+	}
 
-    public String getStatusCode() {
-        return statusCode;
-    }
+	public void putExtraData(String key, Object value) {
+		this.extraData.put(key, value);
+	}
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
+	public void setErrorMessage(String message) {
+		this.message = message;
+		this.success = false;
+	}
+
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
 
 }

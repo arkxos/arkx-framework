@@ -67,67 +67,69 @@ import java.math.BigInteger;
  **/
 
 public class MultiplyOperator extends ArithmeticOperator {
-    // -------------------------------------
-    // Singleton
-    // -------------------------------------
 
-    public static final MultiplyOperator SINGLETON = new MultiplyOperator();
+	// -------------------------------------
+	// Singleton
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public MultiplyOperator() {
-    }
+	public static final MultiplyOperator SINGLETON = new MultiplyOperator();
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the symbol representing the operator
-     **/
-    @Override
-    public String getOperatorSymbol() {
-        return "*";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public MultiplyOperator() {
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given double values, returning a double
-     **/
-    @Override
-    public double apply(double pLeft, double pRight) {
-        return pLeft * pRight;
-    }
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the symbol representing the operator
+	 **/
+	@Override
+	public String getOperatorSymbol() {
+		return "*";
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given double values, returning a double
-     **/
-    @Override
-    public long apply(long pLeft, long pRight) {
-        return pLeft * pRight;
-    }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given double values, returning a double
+	 **/
+	@Override
+	public double apply(double pLeft, double pRight) {
+		return pLeft * pRight;
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given double values, returning a double
+	 **/
+	@Override
+	public long apply(long pLeft, long pRight) {
+		return pLeft * pRight;
+	}
 
-    /**
-     * Applies the operator to the given BigDecimal values, returning a BigDecimal.
-     **/
-    @Override
-    public BigDecimal apply(BigDecimal pLeft, BigDecimal pRight) {
-        return pLeft.multiply(pRight);
-    }
+	// -------------------------------------
 
-    // -------------------------------------
+	/**
+	 * Applies the operator to the given BigDecimal values, returning a BigDecimal.
+	 **/
+	@Override
+	public BigDecimal apply(BigDecimal pLeft, BigDecimal pRight) {
+		return pLeft.multiply(pRight);
+	}
 
-    /**
-     * Applies the operator to the given BigInteger values, returning a BigInteger.
-     **/
-    @Override
-    public BigInteger apply(BigInteger pLeft, BigInteger pRight) {
-        return pLeft.multiply(pRight);
-    }
+	// -------------------------------------
 
-    // -------------------------------------
+	/**
+	 * Applies the operator to the given BigInteger values, returning a BigInteger.
+	 **/
+	@Override
+	public BigInteger apply(BigInteger pLeft, BigInteger pRight) {
+		return pLeft.multiply(pRight);
+	}
+
+	// -------------------------------------
+
 }

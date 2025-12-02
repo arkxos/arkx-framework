@@ -69,40 +69,42 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  **/
 
 public abstract class Literal extends Expression {
-    // -------------------------------------
-    // Properties
-    // -------------------------------------
-    // property value
 
-    Object mValue;
+	// -------------------------------------
+	// Properties
+	// -------------------------------------
+	// property value
 
-    public Object getValue() {
-        return mValue;
-    }
+	Object mValue;
 
-    public void setValue(Object pValue) {
-        mValue = pValue;
-    }
+	public Object getValue() {
+		return mValue;
+	}
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public Literal(Object pValue) {
-        mValue = pValue;
-    }
+	public void setValue(Object pValue) {
+		mValue = pValue;
+	}
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Evaluates to the literal value
-     **/
-    @Override
-    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-            throws ExpressionException {
-        return mValue;
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public Literal(Object pValue) {
+		mValue = pValue;
+	}
 
-    // -------------------------------------
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Evaluates to the literal value
+	 **/
+	@Override
+	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+			throws ExpressionException {
+		return mValue;
+	}
+
+	// -------------------------------------
+
 }

@@ -18,36 +18,36 @@ import io.arkx.framework.performance.monitor.SystemMonitor;
 @RequestMapping("/api/monitoring/metrics")
 public class MetricsController {
 
-    private final SystemMonitor systemMonitor;
+	private final SystemMonitor systemMonitor;
 
-    public MetricsController(SystemMonitor systemMonitor) {
-        this.systemMonitor = systemMonitor;
-    }
+	public MetricsController(SystemMonitor systemMonitor) {
+		this.systemMonitor = systemMonitor;
+	}
 
-    @GetMapping("/overview")
-    public Map<String, Object> getSystemOverview() {
-        return Map.of("loadScore", systemMonitor.getSystemLoadScore(), "cpuUsage", systemMonitor.getAverageCpuUsage(),
-                "memoryUsage", systemMonitor.getAverageMemoryUsage(), "requestStats", systemMonitor.getRequestStats(),
-                "queueStats", systemMonitor.getQueueStats(), "isOverloaded", systemMonitor.isSystemOverloaded());
-    }
+	@GetMapping("/overview")
+	public Map<String, Object> getSystemOverview() {
+		return Map.of("loadScore", systemMonitor.getSystemLoadScore(), "cpuUsage", systemMonitor.getAverageCpuUsage(),
+				"memoryUsage", systemMonitor.getAverageMemoryUsage(), "requestStats", systemMonitor.getRequestStats(),
+				"queueStats", systemMonitor.getQueueStats(), "isOverloaded", systemMonitor.isSystemOverloaded());
+	}
 
-    @GetMapping("/detailed")
-    public Map<String, Object> getDetailedMetrics() {
-        Map<String, Object> metrics = new LinkedHashMap<>();
-        metrics.put("concurrentRequests", systemMonitor.getCurrentRequests());
-        metrics.put("maxConcurrentRequests", systemMonitor.getMaxConcurrentRequests());
-        metrics.put("totalRequests", systemMonitor.getTotalRequests());
-        metrics.put("avgRequestLatency", systemMonitor.getRequestStats().get("avgLatency"));
-        metrics.put("maxRequestLatency", systemMonitor.getRequestStats().get("maxLatency"));
-        metrics.put("queueSize", systemMonitor.getQueueStats().get("current"));
-        metrics.put("maxQueueSize", systemMonitor.getQueueStats().get("max"));
-        metrics.put("avgQueueSize", systemMonitor.getQueueStats().get("average"));
-        metrics.put("avgCpuUsage", systemMonitor.getAverageCpuUsage());
-        metrics.put("maxCpuUsage", systemMonitor.getMaxSCpuUsage());
-        metrics.put("avgMemoryUsage", systemMonitor.getAverageMemoryUsage());
-        metrics.put("maxMemoryUsage", systemMonitor.getMaxMemoryUsage());
-        metrics.put("samplingRate", systemMonitor.getSamplingRate());
-        return metrics;
-    }
+	@GetMapping("/detailed")
+	public Map<String, Object> getDetailedMetrics() {
+		Map<String, Object> metrics = new LinkedHashMap<>();
+		metrics.put("concurrentRequests", systemMonitor.getCurrentRequests());
+		metrics.put("maxConcurrentRequests", systemMonitor.getMaxConcurrentRequests());
+		metrics.put("totalRequests", systemMonitor.getTotalRequests());
+		metrics.put("avgRequestLatency", systemMonitor.getRequestStats().get("avgLatency"));
+		metrics.put("maxRequestLatency", systemMonitor.getRequestStats().get("maxLatency"));
+		metrics.put("queueSize", systemMonitor.getQueueStats().get("current"));
+		metrics.put("maxQueueSize", systemMonitor.getQueueStats().get("max"));
+		metrics.put("avgQueueSize", systemMonitor.getQueueStats().get("average"));
+		metrics.put("avgCpuUsage", systemMonitor.getAverageCpuUsage());
+		metrics.put("maxCpuUsage", systemMonitor.getMaxSCpuUsage());
+		metrics.put("avgMemoryUsage", systemMonitor.getAverageMemoryUsage());
+		metrics.put("maxMemoryUsage", systemMonitor.getMaxMemoryUsage());
+		metrics.put("samplingRate", systemMonitor.getSamplingRate());
+		return metrics;
+	}
 
 }

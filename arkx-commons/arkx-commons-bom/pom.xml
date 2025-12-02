@@ -1,105 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.arkx.framework</groupId>
+    <artifactId>arkx-commons</artifactId>
+    <version>${revision}</version>
+  </parent>
 
-	<parent>
-		<groupId>io.arkx.framework</groupId>
-		<artifactId>arkx-commons</artifactId>
-		<version>${revision}</version>
-	</parent>
+  <artifactId>arkx-commons-bom</artifactId>
 
-    <artifactId>arkx-commons-bom</artifactId>
+  <packaging>pom</packaging>
 
-    <packaging>pom</packaging>
+  <name>arkx-commons-bom</name>
+  <description>cloud parent</description>
+  <url>arkx parent</url>
 
-    <name>arkx-commons-bom</name>
-    <url>arkx parent</url>
-    <description>cloud parent</description>
+  <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-commons-datasource</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-data-mybatis</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-commons-oss</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-commons-feign</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-commons-swagger</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.arkx.framework</groupId>
+        <artifactId>arkx-commons-xss</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!--            <dependency>-->
+      <!--                <groupId>io.arkx.framework</groupId>-->
+      <!--                <artifactId>arkx-commons-excel</artifactId>-->
+      <!--                <version>${project.version}</version>-->
+      <!--            </dependency>-->
 
-    <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.arkx.framework</groupId>
-                <artifactId>arkx-commons-datasource</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.arkx.framework</groupId>
-                <artifactId>arkx-data-mybatis</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.arkx.framework</groupId>
-                <artifactId>arkx-commons-oss</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.arkx.framework</groupId>
-                <artifactId>arkx-commons-feign</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.arkx.framework</groupId>
-                <artifactId>arkx-commons-swagger</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.arkx.framework</groupId>
-                <artifactId>arkx-commons-xss</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-<!--            <dependency>-->
-<!--                <groupId>io.arkx.framework</groupId>-->
-<!--                <artifactId>arkx-commons-excel</artifactId>-->
-<!--                <version>${project.version}</version>-->
-<!--            </dependency>-->
+    </dependencies>
+  </dependencyManagement>
 
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
-        <plugins>
-            <!--打包jar 与git commit 关联插件-->
-            <plugin>
-                <groupId>io.github.git-commit-id</groupId>
-                <artifactId>git-commit-id-maven-plugin</artifactId>
-                <version>${git.commit.plugin}</version>
-            </plugin>
-            <!--代码格式插件，默认使用spring 规则-->
-            <plugin>
-                <groupId>io.spring.javaformat</groupId>
-                <artifactId>spring-javaformat-maven-plugin</artifactId>
-                <version>${spring.checkstyle.plugin}</version>
-            </plugin>
-            <!-- 统一 revision 版本 -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven-plugin.version}</version>
-                <configuration>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                    <updatePomFile>true</updatePomFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <!--打包jar 与git commit 关联插件-->
+      <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>${git.commit.plugin}</version>
+      </plugin>
+      <!--代码格式插件，默认使用spring 规则-->
+      <plugin>
+        <groupId>io.spring.javaformat</groupId>
+        <artifactId>spring-javaformat-maven-plugin</artifactId>
+        <version>${spring.checkstyle.plugin}</version>
+      </plugin>
+      <!-- 统一 revision 版本 -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>${flatten-maven-plugin.version}</version>
+        <configuration>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+          <updatePomFile>true</updatePomFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+            <phase>process-resources</phase>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+            <phase>clean</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

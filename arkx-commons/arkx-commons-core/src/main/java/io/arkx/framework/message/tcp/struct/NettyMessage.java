@@ -15,149 +15,144 @@ import io.arkx.framework.message.tcp.MessageType;
  */
 public class NettyMessage {
 
-    private Header header;// 消息头
-    private byte[] body;// 消息体
+	private Header header;// 消息头
 
-    public NettyMessage() {
-        header = new Header();
-    }
+	private byte[] body;// 消息体
 
-    public NettyMessage(String id) {
-        header = new Header(id);
-    }
+	public NettyMessage() {
+		header = new Header();
+	}
 
-    public NettyMessage(MessageType type, String id) {
-        header = new Header(type, id);
-    }
+	public NettyMessage(String id) {
+		header = new Header(id);
+	}
 
-    /**
-     * @return the crcCode
-     */
-    public final int getCrcCode() {
-        return header.getCrcCode();
-    }
+	public NettyMessage(MessageType type, String id) {
+		header = new Header(type, id);
+	}
 
-    /**
-     * @param crcCode
-     *            the crcCode to set
-     */
-    public final void setCrcCode(int crcCode) {
-        this.header.setCrcCode(crcCode);
-    }
+	/**
+	 * @return the crcCode
+	 */
+	public final int getCrcCode() {
+		return header.getCrcCode();
+	}
 
-    /**
-     * @return the length
-     */
-    public final int getLength() {
-        return header.getLength();
-    }
+	/**
+	 * @param crcCode the crcCode to set
+	 */
+	public final void setCrcCode(int crcCode) {
+		this.header.setCrcCode(crcCode);
+	}
 
-    /**
-     * @param length
-     *            the length to set
-     */
-    public final void setLength(int length) {
-        header.setLength(length);
-    }
+	/**
+	 * @return the length
+	 */
+	public final int getLength() {
+		return header.getLength();
+	}
 
-    public String getId() {
-        return header.getId();
-    }
+	/**
+	 * @param length the length to set
+	 */
+	public final void setLength(int length) {
+		header.setLength(length);
+	}
 
-    public void setId(String id) {
-        header.setId(id);
-    }
+	public String getId() {
+		return header.getId();
+	}
 
-    /**
-     * @return the sessionID
-     */
-    public final long getSessionID() {
-        return header.getSessionID();
-    }
+	public void setId(String id) {
+		header.setId(id);
+	}
 
-    /**
-     * @param sessionID
-     *            the sessionID to set
-     */
-    public final void setSessionID(long sessionID) {
-        header.setSessionID(sessionID);
-    }
+	/**
+	 * @return the sessionID
+	 */
+	public final long getSessionID() {
+		return header.getSessionID();
+	}
 
-    /**
-     * @return the type
-     */
-    public final MessageType getType() {
-        return header.getType();
-    }
+	/**
+	 * @param sessionID the sessionID to set
+	 */
+	public final void setSessionID(long sessionID) {
+		header.setSessionID(sessionID);
+	}
 
-    /**
-     * @param type
-     *            the type to set
-     */
-    public final void setType(MessageType type) {
-        header.setType(type);
-    }
+	/**
+	 * @return the type
+	 */
+	public final MessageType getType() {
+		return header.getType();
+	}
 
-    public int getBusinessType() {
-        return header.getBusinessType();
-    }
+	/**
+	 * @param type the type to set
+	 */
+	public final void setType(MessageType type) {
+		header.setType(type);
+	}
 
-    public void setBusinessType(int businessType) {
-        header.setBusinessType(businessType);
-    }
+	public int getBusinessType() {
+		return header.getBusinessType();
+	}
 
-    /**
-     * @return the priority
-     */
-    public final byte getPriority() {
-        return header.getPriority();
-    }
+	public void setBusinessType(int businessType) {
+		header.setBusinessType(businessType);
+	}
 
-    /**
-     * @param priority
-     *            the priority to set
-     */
-    public final void setPriority(byte priority) {
-        header.setPriority(priority);
-    }
+	/**
+	 * @return the priority
+	 */
+	public final byte getPriority() {
+		return header.getPriority();
+	}
 
-    /**
-     * @return the attachment
-     */
-    public final Map<String, Object> getAttachment() {
-        return header.getAttachment();
-    }
+	/**
+	 * @param priority the priority to set
+	 */
+	public final void setPriority(byte priority) {
+		header.setPriority(priority);
+	}
 
-    /**
-     * @param attachment
-     *            the attachment to set
-     */
-    public final void setAttachment(Map<String, Object> attachment) {
-        header.setAttachment(attachment);
-    }
+	/**
+	 * @return the attachment
+	 */
+	public final Map<String, Object> getAttachment() {
+		return header.getAttachment();
+	}
 
-    /**
-     * @return the body
-     */
-    public final byte[] getBody() {
-        return body;
-    }
+	/**
+	 * @param attachment the attachment to set
+	 */
+	public final void setAttachment(Map<String, Object> attachment) {
+		header.setAttachment(attachment);
+	}
 
-    /**
-     * @param body
-     *            the body to set
-     */
-    public final void setBody(byte[] body) {
-        this.body = body;
-    }
+	/**
+	 * @return the body
+	 */
+	public final byte[] getBody() {
+		return body;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "NettyMessage [header=" + header + "]:" + ByteUtil.bytes2HexString(this.body);
-    }
+	/**
+	 * @param body the body to set
+	 */
+	public final void setBody(byte[] body) {
+		this.body = body;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "NettyMessage [header=" + header + "]:" + ByteUtil.bytes2HexString(this.body);
+	}
+
 }

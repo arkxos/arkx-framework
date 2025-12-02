@@ -16,21 +16,21 @@
 package io.arkx.framework.commons.uid.buffer;
 
 /**
- * If tail catches the cursor it means that the ring buffer is full, any more
- * buffer put request will be rejected. Specify the policy to handle the reject.
- * This is a Lambda supported interface 拒绝策略: 当环已满, 无法继续填充时 默认无需指定, 将丢弃Put操作,
- * 仅日志记录. 如有特殊需求, 请实现RejectedPutBufferHandler接口(支持Lambda表达式)
+ * If tail catches the cursor it means that the ring buffer is full, any more buffer put
+ * request will be rejected. Specify the policy to handle the reject. This is a Lambda
+ * supported interface 拒绝策略: 当环已满, 无法继续填充时 默认无需指定, 将丢弃Put操作, 仅日志记录. 如有特殊需求,
+ * 请实现RejectedPutBufferHandler接口(支持Lambda表达式)
  *
  * @author yutianbao
  */
 @FunctionalInterface
 public interface RejectedPutBufferHandler {
 
-    /**
-     * Reject put buffer request
-     *
-     * @param ringBuffer
-     * @param uid
-     */
-    void rejectPutBuffer(RingBuffer ringBuffer, long uid);
+	/**
+	 * Reject put buffer request
+	 * @param ringBuffer
+	 * @param uid
+	 */
+	void rejectPutBuffer(RingBuffer ringBuffer, long uid);
+
 }

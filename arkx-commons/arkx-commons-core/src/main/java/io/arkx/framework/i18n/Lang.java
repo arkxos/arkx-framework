@@ -5,11 +5,13 @@ package io.arkx.framework.i18n;
  *
  */
 public class Lang {
-    public static String get(String key, Object... args) {
-        return LangMapping.get(key, args);
-    }
 
-    public static String get(String lang, String key, Object... args) {
-        return LangMapping.get(lang, key, args);
-    }
+	public static String get(String key, Object... args) {
+		return LangMapping.get(key, args);
+	}
+
+	public static String get(String lang, String key, Object... args) {
+		return LangMapping.get(lang, key, args);
+	}
+
 }

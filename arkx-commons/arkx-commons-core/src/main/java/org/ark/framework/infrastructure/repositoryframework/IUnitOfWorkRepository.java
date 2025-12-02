@@ -10,9 +10,10 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public interface IUnitOfWorkRepository<T extends Entity> {
 
-    void persistNewItem(T item);
+	void persistNewItem(T item);
 
-    void persistUpdatedItem(T item);
+	void persistUpdatedItem(T item);
 
-    void persistDeletedItem(T item);
+	void persistDeletedItem(T item);
+
 }

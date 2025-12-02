@@ -8,13 +8,15 @@ package io.arkx.framework.extend;
  * @version V1.0
  */
 public interface IExtendAction {
-    /**
-     * 扩展逻辑
-     */
-    Object execute(Object[] args) throws ExtendException;
 
-    /**
-     * 是否可用
-     */
-    boolean isUsable();
+	/**
+	 * 扩展逻辑
+	 */
+	Object execute(Object[] args) throws ExtendException;
+
+	/**
+	 * 是否可用
+	 */
+	boolean isUsable();
+
 }

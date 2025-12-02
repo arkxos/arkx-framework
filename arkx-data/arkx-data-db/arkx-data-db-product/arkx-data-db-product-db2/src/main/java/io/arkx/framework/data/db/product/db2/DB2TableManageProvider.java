@@ -14,14 +14,14 @@ import io.arkx.framework.data.db.core.provider.manage.DefaultTableManageProvider
 
 public class DB2TableManageProvider extends DefaultTableManageProvider {
 
-    public DB2TableManageProvider(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-    }
+	public DB2TableManageProvider(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+	}
 
-    @Override
-    public void truncateTableData(String schemaName, String tableName) {
-        String sql = "TRUNCATE TABLE \"%s\".\"%s\" IMMEDIATE ".formatted(schemaName, tableName);
-        this.executeSql(sql);
-    }
+	@Override
+	public void truncateTableData(String schemaName, String tableName) {
+		String sql = "TRUNCATE TABLE \"%s\".\"%s\" IMMEDIATE ".formatted(schemaName, tableName);
+		this.executeSql(sql);
+	}
 
 }

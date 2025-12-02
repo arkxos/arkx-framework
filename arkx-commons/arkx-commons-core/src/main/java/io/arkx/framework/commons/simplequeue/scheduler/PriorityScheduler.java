@@ -20,57 +20,60 @@ import io.arkx.framework.commons.simplequeue.utils.NumberUtils;
 @ThreadSafe
 public class PriorityScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler {
 
-    public static final int INITIAL_CAPACITY = 5;
+	public static final int INITIAL_CAPACITY = 5;
 
-    private BlockingQueue<ElementWarpper> noPriorityQueue = new LinkedBlockingQueue<ElementWarpper>();
+	private BlockingQueue<ElementWarpper> noPriorityQueue = new LinkedBlockingQueue<ElementWarpper>();
 
-    private PriorityBlockingQueue<ElementWarpper> priorityQueuePlus = new PriorityBlockingQueue<ElementWarpper>(
-            INITIAL_CAPACITY, new Comparator<ElementWarpper>() {
-                @Override
-                public int compare(ElementWarpper o1, ElementWarpper o2) {
-                    return -NumberUtils.compareLong(o1.getPriority(), o2.getPriority());
-                }
-            });
+	private PriorityBlockingQueue<ElementWarpper> priorityQueuePlus = new PriorityBlockingQueue<ElementWarpper>(
+			INITIAL_CAPACITY, new Comparator<ElementWarpper>() {
+				@Override
+				public int compare(ElementWarpper o1, ElementWarpper o2) {
+					return -NumberUtils.compareLong(o1.getPriority(), o2.getPriority());
+				}
+			});
 
-    private PriorityBlockingQueue<ElementWarpper> priorityQueueMinus = new PriorityBlockingQueue<ElementWarpper>(
-            INITIAL_CAPACITY, new Comparator<ElementWarpper>() {
-                @Override
-                public int compare(ElementWarpper o1, ElementWarpper o2) {
-                    return -NumberUtils.compareLong(o1.getPriority(), o2.getPriority());
-                }
-            });
+	private PriorityBlockingQueue<ElementWarpper> priorityQueueMinus = new PriorityBlockingQueue<ElementWarpper>(
+			INITIAL_CAPACITY, new Comparator<ElementWarpper>() {
+				@Override
+				public int compare(ElementWarpper o1, ElementWarpper o2) {
+					return -NumberUtils.compareLong(o1.getPriority(), o2.getPriority());
+				}
+			});
 
-    @Override
-    public void pushWhenNoDuplicate(ElementWarpper request, Task task) {
-        if (request.getPriority() == 0) {
-            noPriorityQueue.add(request);
-        } else if (request.getPriority() > 0) {
-            priorityQueuePlus.put(request);
-        } else {
-            priorityQueueMinus.put(request);
-        }
-    }
+	@Override
+	public void pushWhenNoDuplicate(ElementWarpper request, Task task) {
+		if (request.getPriority() == 0) {
+			noPriorityQueue.add(request);
+		}
+		else if (request.getPriority() > 0) {
+			priorityQueuePlus.put(request);
+		}
+		else {
+			priorityQueueMinus.put(request);
+		}
+	}
 
-    @Override
-    public synchronized ElementWarpper poll(Task task) {
-        ElementWarpper poll = priorityQueuePlus.poll();
-        if (poll != null) {
-            return poll;
-        }
-        poll = noPriorityQueue.poll();
-        if (poll != null) {
-            return poll;
-        }
-        return priorityQueueMinus.poll();
-    }
+	@Override
+	public synchronized ElementWarpper poll(Task task) {
+		ElementWarpper poll = priorityQueuePlus.poll();
+		if (poll != null) {
+			return poll;
+		}
+		poll = noPriorityQueue.poll();
+		if (poll != null) {
+			return poll;
+		}
+		return priorityQueueMinus.poll();
+	}
 
-    @Override
-    public int getLeftElementsCount(Task task) {
-        return noPriorityQueue.size();
-    }
+	@Override
+	public int getLeftElementsCount(Task task) {
+		return noPriorityQueue.size();
+	}
 
-    @Override
-    public int getTotalElementsCount(Task task) {
-        return getDuplicateRemover().getTotalRequestsCount(task);
-    }
+	@Override
+	public int getTotalElementsCount(Task task) {
+		return getDuplicateRemover().getTotalRequestsCount(task);
+	}
+
 }

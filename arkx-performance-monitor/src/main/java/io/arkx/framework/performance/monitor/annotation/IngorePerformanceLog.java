@@ -12,8 +12,10 @@ import java.lang.annotation.Target;
  * @date 2013-12-5 下午04:24:57
  * @version V1.0
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IngorePerformanceLog {
-    String value() default "";
+
+	String value() default "";
+
 }

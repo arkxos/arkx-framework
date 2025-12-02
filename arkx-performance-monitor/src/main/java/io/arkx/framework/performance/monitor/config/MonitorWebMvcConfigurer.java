@@ -19,17 +19,18 @@ import io.arkx.framework.performance.monitor.interceptor.RequestMonitoringInterc
 @Order(Ordered.HIGHEST_PRECEDENCE) // 可指定顺序
 public class MonitorWebMvcConfigurer implements WebMvcConfigurer {
 
-    @Autowired
-    private RequestMonitoringInterceptor requestMonitoringInterceptor;
+	@Autowired
+	private RequestMonitoringInterceptor requestMonitoringInterceptor;
 
-    public MonitorWebMvcConfigurer() {
-        System.out.println("----------------");
-    }
+	public MonitorWebMvcConfigurer() {
+		System.out.println("----------------");
+	}
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(requestMonitoringInterceptor).addPathPatterns("/**") // 所有路径
-                .order(Ordered.HIGHEST_PRECEDENCE); // 设置最高优先级
-    }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(requestMonitoringInterceptor)
+			.addPathPatterns("/**") // 所有路径
+			.order(Ordered.HIGHEST_PRECEDENCE); // 设置最高优先级
+	}
 
 }

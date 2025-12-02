@@ -21,190 +21,197 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PdmSchemaGenerator extends SchemaGenerator {
 
-    // private static Logger logger = log.getLogger(PdmSchemaGenerator.class);
+	// private static Logger logger = log.getLogger(PdmSchemaGenerator.class);
 
-    private String fileName;
-    private String aID = "ID";
-    private Namespace nso;
-    private Namespace nsc;
-    private Namespace nsa;
+	private String fileName;
 
-    public PdmSchemaGenerator(String fileName, String namespace, String outputDir) {
-        super(namespace, outputDir);
-        this.fileName = fileName;
-    }
+	private String aID = "ID";
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	private Namespace nso;
 
-    public void setOutputDir(String dir) {
-        this.outputDir = dir;
-    }
+	private Namespace nsc;
 
-    private SchemaColumn[] getSchemaColumns(Element table) {
+	private Namespace nsa;
 
-        String tableCode = table.elementText(new QName("Code", this.nsa));
+	public PdmSchemaGenerator(String fileName, String namespace, String outputDir) {
+		super(namespace, outputDir);
+		this.fileName = fileName;
+	}
 
-        // 获取所有列
-        Element eColumns = table.element(new QName("Columns", this.nsc));
-        if (eColumns == null) {
-            log.error("没有为表" + tableCode + "定义列!");
-            return null;
-        }
-        List<?> columns = eColumns.elements();
-        SchemaColumn[] scs = new SchemaColumn[columns.size()];
-        for (int i = 0; i < columns.size(); i++) {
-            SchemaColumn sc = new SchemaColumn();
-            Element column = (Element) columns.get(i);
-            sc.ID = column.attributeValue(this.aID);
-            sc.Name = column.elementText(new QName("Name", this.nsa));
-            sc.Code = column.elementText(new QName("Code", this.nsa));
-            sc.Comment = column.elementText(new QName("Comment", this.nsa));
-            sc.DataType = column.elementText(new QName("DataType", this.nsa));
-            sc.setLength(column.elementText(new QName("Length", this.nsa)));
-            sc.setPrecision(column.elementText(new QName("Precision", this.nsa)));
-            sc.setMandatory(column.elementText(new QName("Mandatory", this.nsa)));
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-            scs[i] = sc;
-        }
+	public void setOutputDir(String dir) {
+		this.outputDir = dir;
+	}
 
-        Element primaryKey = table.element(new QName("PrimaryKey", this.nsc));
-        String keyRef = null;
-        if (primaryKey != null) {
-            primaryKey = primaryKey.element(new QName("Key", this.nso));
-            if (primaryKey != null) {
-                keyRef = primaryKey.attributeValue("Ref");
-            }
-        }
-        if (keyRef != null) {
-            List<?> keys = table.element(new QName("Keys", this.nsc)).elements();
-            boolean keyFlag = false;
-            for (int i = 0; i < keys.size(); i++) {
-                Element key = (Element) keys.get(i);
-                if (keyRef.equals(key.attributeValue(this.aID))) {
-                    Element eKeyColumn = key.element(new QName("Key.Columns", this.nsc));
-                    if (eKeyColumn != null) {
-                        List<?> keyColumns = eKeyColumn.elements();
-                        for (int j = 0; j < keyColumns.size(); j++) {
-                            String columnID = ((Element) keyColumns.get(j)).attributeValue("Ref");
-                            for (int k = 0; k < scs.length; k++) {
-                                if (scs[k].ID.equals(columnID)) {
-                                    scs[k].isPrimaryKey = true;
-                                }
-                            }
-                        }
-                        keyFlag = true;
-                        break;
-                    }
-                }
-            }
-            if (!keyFlag) {
-                log.error("表" + tableCode + "未找到主键!");
-            }
-        }
+	private SchemaColumn[] getSchemaColumns(Element table) {
 
-        return scs;
-    }
+		String tableCode = table.elementText(new QName("Code", this.nsa));
 
-    @Override
-    public SchemaGenerator.SchemaTable[] getSchemaTables() {
-        File f = new File(this.fileName);
-        if (!f.exists()) {
-            throw new RuntimeException(f.getAbsolutePath() + "文件不存在");
-        }
-        SAXReader reader = new SAXReader(false);
-        Document doc = null;
-        try {
-            doc = reader.read(f);
-        } catch (DocumentException e1) {
-            e1.printStackTrace();
-        }
-        Element root = doc.getRootElement();
+		// 获取所有列
+		Element eColumns = table.element(new QName("Columns", this.nsc));
+		if (eColumns == null) {
+			log.error("没有为表" + tableCode + "定义列!");
+			return null;
+		}
+		List<?> columns = eColumns.elements();
+		SchemaColumn[] scs = new SchemaColumn[columns.size()];
+		for (int i = 0; i < columns.size(); i++) {
+			SchemaColumn sc = new SchemaColumn();
+			Element column = (Element) columns.get(i);
+			sc.ID = column.attributeValue(this.aID);
+			sc.Name = column.elementText(new QName("Name", this.nsa));
+			sc.Code = column.elementText(new QName("Code", this.nsa));
+			sc.Comment = column.elementText(new QName("Comment", this.nsa));
+			sc.DataType = column.elementText(new QName("DataType", this.nsa));
+			sc.setLength(column.elementText(new QName("Length", this.nsa)));
+			sc.setPrecision(column.elementText(new QName("Precision", this.nsa)));
+			sc.setMandatory(column.elementText(new QName("Mandatory", this.nsa)));
 
-        String txt = FileUtil.readText(f);
+			scs[i] = sc;
+		}
 
-        this.isOracle = (txt.toLowerCase().indexOf("target=\"oracle") > 0);
-        this.nso = root.getNamespaceForPrefix("o");
-        this.nsc = root.getNamespaceForPrefix("c");
-        this.nsa = root.getNamespaceForPrefix("a");
-        Element rootObject = root.element(new QName("RootObject", this.nso));
-        Element children = rootObject.element(new QName("Children", this.nsc));
-        Element model = children.element(new QName("Model", this.nso));
-        if (model.attributeValue("ID") == null) {
-            if (model.attributeValue("Id") != null)
-                this.aID = "Id";
-            else {
-                throw new RuntimeException("ID属性名称未定，PDM版本不正确");
-            }
-        }
+		Element primaryKey = table.element(new QName("PrimaryKey", this.nsc));
+		String keyRef = null;
+		if (primaryKey != null) {
+			primaryKey = primaryKey.element(new QName("Key", this.nso));
+			if (primaryKey != null) {
+				keyRef = primaryKey.attributeValue("Ref");
+			}
+		}
+		if (keyRef != null) {
+			List<?> keys = table.element(new QName("Keys", this.nsc)).elements();
+			boolean keyFlag = false;
+			for (int i = 0; i < keys.size(); i++) {
+				Element key = (Element) keys.get(i);
+				if (keyRef.equals(key.attributeValue(this.aID))) {
+					Element eKeyColumn = key.element(new QName("Key.Columns", this.nsc));
+					if (eKeyColumn != null) {
+						List<?> keyColumns = eKeyColumn.elements();
+						for (int j = 0; j < keyColumns.size(); j++) {
+							String columnID = ((Element) keyColumns.get(j)).attributeValue("Ref");
+							for (int k = 0; k < scs.length; k++) {
+								if (scs[k].ID.equals(columnID)) {
+									scs[k].isPrimaryKey = true;
+								}
+							}
+						}
+						keyFlag = true;
+						break;
+					}
+				}
+			}
+			if (!keyFlag) {
+				log.error("表" + tableCode + "未找到主键!");
+			}
+		}
 
-        List<SchemaGenerator.SchemaTable> schemaTables = new ArrayList<SchemaGenerator.SchemaTable>();
+		return scs;
+	}
 
-        List<?> tables = model.element(new QName("Tables", this.nsc)).elements();
-        for (int i = 0; i < tables.size(); i++) {
-            try {
-                Element table = (Element) tables.get(i);
-                String tableComment = table.elementText(new QName("Comment", this.nsa));
-                String tableName = table.elementText(new QName("Name", this.nsa));
-                String tableCode = table.elementText(new QName("Code", this.nsa));
+	@Override
+	public SchemaGenerator.SchemaTable[] getSchemaTables() {
+		File f = new File(this.fileName);
+		if (!f.exists()) {
+			throw new RuntimeException(f.getAbsolutePath() + "文件不存在");
+		}
+		SAXReader reader = new SAXReader(false);
+		Document doc = null;
+		try {
+			doc = reader.read(f);
+		}
+		catch (DocumentException e1) {
+			e1.printStackTrace();
+		}
+		Element root = doc.getRootElement();
 
-                SchemaTable schemaTable = new SchemaTable();
-                schemaTable.tableName = tableName;
-                schemaTable.tableCode = tableCode;
-                schemaTable.tableComment = tableComment;
-                schemaTable.schemaColumns = getSchemaColumns(table);
+		String txt = FileUtil.readText(f);
 
-                schemaTables.add(schemaTable);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+		this.isOracle = (txt.toLowerCase().indexOf("target=\"oracle") > 0);
+		this.nso = root.getNamespaceForPrefix("o");
+		this.nsc = root.getNamespaceForPrefix("c");
+		this.nsa = root.getNamespaceForPrefix("a");
+		Element rootObject = root.element(new QName("RootObject", this.nso));
+		Element children = rootObject.element(new QName("Children", this.nsc));
+		Element model = children.element(new QName("Model", this.nso));
+		if (model.attributeValue("ID") == null) {
+			if (model.attributeValue("Id") != null)
+				this.aID = "Id";
+			else {
+				throw new RuntimeException("ID属性名称未定，PDM版本不正确");
+			}
+		}
 
-        return schemaTables.toArray(new SchemaGenerator.SchemaTable[0]);
-    }
+		List<SchemaGenerator.SchemaTable> schemaTables = new ArrayList<SchemaGenerator.SchemaTable>();
 
-    public static void main(String[] args) throws Exception {
+		List<?> tables = model.element(new QName("Tables", this.nsc)).elements();
+		for (int i = 0; i < tables.size(); i++) {
+			try {
+				Element table = (Element) tables.get(i);
+				String tableComment = table.elementText(new QName("Comment", this.nsa));
+				String tableName = table.elementText(new QName("Name", this.nsa));
+				String tableCode = table.elementText(new QName("Code", this.nsa));
 
-        String packageStr = "io.arkx.schema";
-        String str = Config.getValue("App.PDM");
-        String[] files = str.split("\\,");
+				SchemaTable schemaTable = new SchemaTable();
+				schemaTable.tableName = tableName;
+				schemaTable.tableCode = tableCode;
+				schemaTable.tableComment = tableComment;
+				schemaTable.schemaColumns = getSchemaColumns(table);
 
-        String prefix = Config.getContextRealPath();
-        prefix = prefix.substring(0, prefix.length() - 1);
-        prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
-        // 使用File对象确保路径分隔符一致
-        File javaPathDir = new File(prefix, "Java");
-        String[] packageParts = packageStr.split("\\.");
-        for (String part : packageParts) {
-            javaPathDir = new File(javaPathDir, part);
-        }
-        String javapath = javaPathDir.getPath();
-        FileUtil.mkdir(javapath);
-        FileUtil.deleteEx(javapath + "/.+java");
+				schemaTables.add(schemaTable);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
-        for (int i = 0; i < files.length; i++) {
-            String fileName = "DB/" + files[i] + ".pdm";// pdm file path
-            new PdmSchemaGenerator(fileName, packageStr, javapath).generate();
-        }
+		return schemaTables.toArray(new SchemaGenerator.SchemaTable[0]);
+	}
 
-        // todo pdm backup file
-        // BackupTableGenerator btg = new BackupTableGenerator();
-        // btg.setFileName(fileName);
-        // try {
-        // btg.toBackupTable();
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // }
-        // todo generate backup pdm file schema
-        // og.setFileName(fileName.substring(0, fileName.length() - 4) +
-        // "_B.pdm");
-        // og.setOutputDir(outputDir);
-        // og.setNamespace(namespace);
-        // try {
-        // og.generate();
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // }
-    }
+	public static void main(String[] args) throws Exception {
+
+		String packageStr = "io.arkx.schema";
+		String str = Config.getValue("App.PDM");
+		String[] files = str.split("\\,");
+
+		String prefix = Config.getContextRealPath();
+		prefix = prefix.substring(0, prefix.length() - 1);
+		prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
+		// 使用File对象确保路径分隔符一致
+		File javaPathDir = new File(prefix, "Java");
+		String[] packageParts = packageStr.split("\\.");
+		for (String part : packageParts) {
+			javaPathDir = new File(javaPathDir, part);
+		}
+		String javapath = javaPathDir.getPath();
+		FileUtil.mkdir(javapath);
+		FileUtil.deleteEx(javapath + "/.+java");
+
+		for (int i = 0; i < files.length; i++) {
+			String fileName = "DB/" + files[i] + ".pdm";// pdm file path
+			new PdmSchemaGenerator(fileName, packageStr, javapath).generate();
+		}
+
+		// todo pdm backup file
+		// BackupTableGenerator btg = new BackupTableGenerator();
+		// btg.setFileName(fileName);
+		// try {
+		// btg.toBackupTable();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// todo generate backup pdm file schema
+		// og.setFileName(fileName.substring(0, fileName.length() - 4) +
+		// "_B.pdm");
+		// og.setOutputDir(outputDir);
+		// og.setNamespace(namespace);
+		// try {
+		// og.generate();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+	}
+
 }

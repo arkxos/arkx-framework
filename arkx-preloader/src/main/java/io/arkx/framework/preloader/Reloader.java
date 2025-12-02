@@ -11,59 +11,62 @@ import jakarta.servlet.ServletException;
 
 public class Reloader {
 
-    public static boolean isReloading = false;
-    private static ReentrantLock lock = new ReentrantLock();
+	public static boolean isReloading = false;
 
-    public static void reload() throws ServletException {
-        lock.lock();
-        try {
-            isReloading = true;
-            System.out.println("Preloader reload begin...");
-            for (FilterFacade ff : FilterFacade.getInstances().values()) {
-                ff.unloadClass();
-            }
+	private static ReentrantLock lock = new ReentrantLock();
 
-            for (ServletFacade sf : ServletFacade.getInstances().values()) {
-                sf.unloadClass();
-            }
+	public static void reload() throws ServletException {
+		lock.lock();
+		try {
+			isReloading = true;
+			System.out.println("Preloader reload begin...");
+			for (FilterFacade ff : FilterFacade.getInstances().values()) {
+				ff.unloadClass();
+			}
 
-            if (ServletContextListenerFacade.getInstance() != null) {
-                ServletContextListenerFacade.getInstance().contextDestroyed(null);
-                ServletContextListenerFacade.getInstance().unloadClass();
-            }
-            if (HttpSessionListenerFacade.getInstance() != null) {
-                HttpSessionListenerFacade.getInstance().unloadClass();
-            }
+			for (ServletFacade sf : ServletFacade.getInstances().values()) {
+				sf.unloadClass();
+			}
 
-            System.setErr(PreClassLoader.err);
-            System.setOut(PreClassLoader.out);
+			if (ServletContextListenerFacade.getInstance() != null) {
+				ServletContextListenerFacade.getInstance().contextDestroyed(null);
+				ServletContextListenerFacade.getInstance().unloadClass();
+			}
+			if (HttpSessionListenerFacade.getInstance() != null) {
+				HttpSessionListenerFacade.getInstance().unloadClass();
+			}
 
-            ReferenceCleaner rc = new ReferenceCleaner(PreClassLoader.getInstance());
-            rc.clearReferences();
+			System.setErr(PreClassLoader.err);
+			System.setOut(PreClassLoader.out);
 
-            PreClassLoader.destory();
-            System.gc();
+			ReferenceCleaner rc = new ReferenceCleaner(PreClassLoader.getInstance());
+			rc.clearReferences();
 
-            PreClassLoader.reloadAll();
+			PreClassLoader.destory();
+			System.gc();
 
-            ServletContextListenerFacade.getInstance().loadListener();
-            ServletContextListenerFacade.getInstance().contextInitialized(null);
-            HttpSessionListenerFacade.getInstance().loadListener();
-            for (FilterFacade ff : FilterFacade.getInstances().values()) {
-                ff.loadFilter();
-            }
+			PreClassLoader.reloadAll();
 
-            for (ServletFacade sf : ServletFacade.getInstances().values()) {
-                sf.loadServlet();
-            }
+			ServletContextListenerFacade.getInstance().loadListener();
+			ServletContextListenerFacade.getInstance().contextInitialized(null);
+			HttpSessionListenerFacade.getInstance().loadListener();
+			for (FilterFacade ff : FilterFacade.getInstances().values()) {
+				ff.loadFilter();
+			}
 
-            System.out.println("Preloader reload end...");
-        } catch (Throwable t) {
-            t.printStackTrace();
-        } finally {
-            isReloading = false;
-            lock.unlock();
-        }
-    }
+			for (ServletFacade sf : ServletFacade.getInstances().values()) {
+				sf.loadServlet();
+			}
+
+			System.out.println("Preloader reload end...");
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+		}
+		finally {
+			isReloading = false;
+			lock.unlock();
+		}
+	}
 
 }

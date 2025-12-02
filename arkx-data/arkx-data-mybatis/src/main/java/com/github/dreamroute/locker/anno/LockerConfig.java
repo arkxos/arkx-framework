@@ -16,17 +16,17 @@ import com.github.dreamroute.locker.interceptor.LockerInterceptor;
  */
 public class LockerConfig implements ImportBeanDefinitionRegistrar {
 
-    @Override
-    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata,
-            @NonNull BeanDefinitionRegistry registry) {
-        MergedAnnotation<EnableLocker> anno = importingClassMetadata.getAnnotations().get(EnableLocker.class);
-        String versionColumn = anno.getString("versionColumn");
-        boolean failThrowException = anno.getBoolean("failThrowException");
-        LockerInterceptor lockerInterceptor = new LockerInterceptor(versionColumn, failThrowException);
+	@Override
+	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata,
+			@NonNull BeanDefinitionRegistry registry) {
+		MergedAnnotation<EnableLocker> anno = importingClassMetadata.getAnnotations().get(EnableLocker.class);
+		String versionColumn = anno.getString("versionColumn");
+		boolean failThrowException = anno.getBoolean("failThrowException");
+		LockerInterceptor lockerInterceptor = new LockerInterceptor(versionColumn, failThrowException);
 
-        // 注册locker
-        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) registry;
-        beanFactory.registerSingleton("lockerInterceptor", lockerInterceptor);
-    }
+		// 注册locker
+		DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) registry;
+		beanFactory.registerSingleton("lockerInterceptor", lockerInterceptor);
+	}
 
 }

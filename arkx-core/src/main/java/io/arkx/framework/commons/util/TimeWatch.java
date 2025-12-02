@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *
  * @author Darkness
  * @date 2015年8月29日 下午7:55:08
  * @version V1.0
@@ -13,135 +12,137 @@ import java.util.Map;
  */
 public class TimeWatch {
 
-    private static boolean isEnablePrint = true;
+	private static boolean isEnablePrint = true;
 
-    public static void enablePrint() {
-        isEnablePrint = true;
-    }
+	public static void enablePrint() {
+		isEnablePrint = true;
+	}
 
-    public static void disablePrint() {
-        isEnablePrint = false;
-    }
+	public static void disablePrint() {
+		isEnablePrint = false;
+	}
 
-    public static TimeWatch create() {
-        return new TimeWatch();
-    }
+	public static TimeWatch create() {
+		return new TimeWatch();
+	}
 
-    private long start;
-    private long markStart;
-    private String taskName = "task";
+	private long start;
 
-    Map<String, Long> marks = new LinkedHashMap<>();
+	private long markStart;
 
-    public TimeWatch startWithTaskName(String taskName) {
-        this.taskName = taskName;
-        this.start = System.nanoTime();
-        this.markStart = start;
-        return this;
-    }
+	private String taskName = "task";
 
-    public String stopAndPrint() {
-        String result = "";
+	Map<String, Long> marks = new LinkedHashMap<>();
 
-        if (isEnablePrint) {
-            long end = System.nanoTime();
-            long cost = end - start;
+	public TimeWatch startWithTaskName(String taskName) {
+		this.taskName = taskName;
+		this.start = System.nanoTime();
+		this.markStart = start;
+		return this;
+	}
 
-            result += this.taskName + " 耗时：" + formatTime(cost) + "\n";
+	public String stopAndPrint() {
+		String result = "";
 
-            for (String mark : marks.keySet()) {
-                result += "\t\t" + mark + " 耗时：" + formatTime(marks.get(mark)) + "\n";
-            }
-        }
+		if (isEnablePrint) {
+			long end = System.nanoTime();
+			long cost = end - start;
 
-        System.out.println(result);
+			result += this.taskName + " 耗时：" + formatTime(cost) + "\n";
 
-        return result;
-    }
+			for (String mark : marks.keySet()) {
+				result += "\t\t" + mark + " 耗时：" + formatTime(marks.get(mark)) + "\n";
+			}
+		}
 
-    public long stop() {
-        long end = System.nanoTime();
-        long cost = end - start;
-        return cost;
-    }
+		System.out.println(result);
 
-    public long getCost() {
-        long end = System.nanoTime();
-        long cost = end - start;
-        return cost;
-    }
+		return result;
+	}
 
-    /*
-     * 毫秒转化时分秒毫秒
-     */
-    public static String formatTime(long ms) {
-        // Integer namiao = 1000;
-        long weimiaoUnit = 1000;
-        long haomiaoUnit = weimiaoUnit * 1000;
-        long secondUnit = haomiaoUnit * 1000;
-        long minuteUnit = secondUnit * 60;
-        long hourUnit = minuteUnit * 60;
-        long dayUnit = hourUnit * 24;
+	public long stop() {
+		long end = System.nanoTime();
+		long cost = end - start;
+		return cost;
+	}
 
-        Long day = ms / dayUnit;
-        Long hour = (ms - day * dayUnit) / hourUnit;
-        Long minute = (ms - day * dayUnit - hour * hourUnit) / minuteUnit;
-        Long second = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit) / secondUnit;
-        Long haomiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit) / haomiaoUnit;
-        Long weimiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
-                - haomiao * haomiaoUnit) / weimiaoUnit;
-        Long namiao = ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
-                - haomiao * haomiaoUnit - weimiao * weimiaoUnit;
+	public long getCost() {
+		long end = System.nanoTime();
+		long cost = end - start;
+		return cost;
+	}
 
-        StringBuffer sb = new StringBuffer();
-        if (day > 0) {
-            sb.append(day + "天");
-        }
-        if (hour > 0) {
-            sb.append(hour + "小时");
-        }
-        if (minute > 0) {
-            sb.append(minute + "分");
-        }
-        if (second > 0) {
-            sb.append(second + "秒");
-        }
-        if (haomiao > 0) {
-            sb.append(haomiao + "毫秒");
-        }
-        if (weimiao > 0) {
-            sb.append(weimiao + "微秒");
-        }
-        if (namiao > 0) {
-            sb.append(namiao + "纳秒");
-        }
+	/*
+	 * 毫秒转化时分秒毫秒
+	 */
+	public static String formatTime(long ms) {
+		// Integer namiao = 1000;
+		long weimiaoUnit = 1000;
+		long haomiaoUnit = weimiaoUnit * 1000;
+		long secondUnit = haomiaoUnit * 1000;
+		long minuteUnit = secondUnit * 60;
+		long hourUnit = minuteUnit * 60;
+		long dayUnit = hourUnit * 24;
 
-        String result = sb.toString();
-        if (result.length() == 0) {
-            result = "0纳秒";
-        }
-        return result;
-    }
+		Long day = ms / dayUnit;
+		Long hour = (ms - day * dayUnit) / hourUnit;
+		Long minute = (ms - day * dayUnit - hour * hourUnit) / minuteUnit;
+		Long second = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit) / secondUnit;
+		Long haomiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit) / haomiaoUnit;
+		Long weimiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
+				- haomiao * haomiaoUnit) / weimiaoUnit;
+		Long namiao = ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
+				- haomiao * haomiaoUnit - weimiao * weimiaoUnit;
 
-    String lastMark = "prepare";
+		StringBuffer sb = new StringBuffer();
+		if (day > 0) {
+			sb.append(day + "天");
+		}
+		if (hour > 0) {
+			sb.append(hour + "小时");
+		}
+		if (minute > 0) {
+			sb.append(minute + "分");
+		}
+		if (second > 0) {
+			sb.append(second + "秒");
+		}
+		if (haomiao > 0) {
+			sb.append(haomiao + "毫秒");
+		}
+		if (weimiao > 0) {
+			sb.append(weimiao + "微秒");
+		}
+		if (namiao > 0) {
+			sb.append(namiao + "纳秒");
+		}
 
-    public void mark(String desc) {
-        long end = System.nanoTime();
-        long cost = end - markStart;
+		String result = sb.toString();
+		if (result.length() == 0) {
+			result = "0纳秒";
+		}
+		return result;
+	}
 
-        marks.put(desc, cost);
+	String lastMark = "prepare";
 
-        this.markStart = System.nanoTime();
-    }
+	public void mark(String desc) {
+		long end = System.nanoTime();
+		long cost = end - markStart;
 
-    public static void main(String[] args) {
-        int totalMs = 276399;
-        System.out.println(formatTime(totalMs));
-        System.out.println(LocalTime.ofSecondOfDay(276399 / 1000).withNano(276399 % 1000));
+		marks.put(desc, cost);
 
-        TimeWatch timeWatch = TimeWatch.create().startWithTaskName("abc");
-        System.out.println("ddd");
-        timeWatch.stopAndPrint();
-    }
+		this.markStart = System.nanoTime();
+	}
+
+	public static void main(String[] args) {
+		int totalMs = 276399;
+		System.out.println(formatTime(totalMs));
+		System.out.println(LocalTime.ofSecondOfDay(276399 / 1000).withNano(276399 % 1000));
+
+		TimeWatch timeWatch = TimeWatch.create().startWithTaskName("abc");
+		System.out.println("ddd");
+		timeWatch.stopAndPrint();
+	}
 
 }

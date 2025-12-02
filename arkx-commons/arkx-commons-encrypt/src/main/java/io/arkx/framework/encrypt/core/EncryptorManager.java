@@ -36,135 +36,124 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 public class EncryptorManager {
 
-    /**
-     * 缓存加密器
-     */
-    Map<EncryptContext, IEncryptor> encryptorMap = new ConcurrentHashMap<>();
+	/**
+	 * 缓存加密器
+	 */
+	Map<EncryptContext, IEncryptor> encryptorMap = new ConcurrentHashMap<>();
 
-    /**
-     * 类加密字段缓存
-     */
-    Map<Class<?>, Set<Field>> fieldCache = new ConcurrentHashMap<>();
+	/**
+	 * 类加密字段缓存
+	 */
+	Map<Class<?>, Set<Field>> fieldCache = new ConcurrentHashMap<>();
 
-    /**
-     * 构造方法传入类加密字段缓存
-     *
-     * @param typeAliasesPackage
-     *            实体类包
-     */
-    public EncryptorManager(String typeAliasesPackage) {
-        scanEncryptClasses(typeAliasesPackage);
-    }
+	/**
+	 * 构造方法传入类加密字段缓存
+	 * @param typeAliasesPackage 实体类包
+	 */
+	public EncryptorManager(String typeAliasesPackage) {
+		scanEncryptClasses(typeAliasesPackage);
+	}
 
-    /**
-     * 获取类加密字段缓存
-     */
-    public Set<Field> getFieldCache(Class<?> sourceClazz) {
-        if (ObjectUtil.isNotNull(fieldCache)) {
-            return fieldCache.get(sourceClazz);
-        }
-        return null;
-    }
+	/**
+	 * 获取类加密字段缓存
+	 */
+	public Set<Field> getFieldCache(Class<?> sourceClazz) {
+		if (ObjectUtil.isNotNull(fieldCache)) {
+			return fieldCache.get(sourceClazz);
+		}
+		return null;
+	}
 
-    /**
-     * 注册加密执行者到缓存
-     *
-     * @param encryptContext
-     *            加密执行者需要的相关配置参数
-     */
-    public IEncryptor registAndGetEncryptor(EncryptContext encryptContext) {
-        if (encryptorMap.containsKey(encryptContext)) {
-            return encryptorMap.get(encryptContext);
-        }
-        IEncryptor encryptor = ReflectUtil.newInstance(encryptContext.getAlgorithm().getClazz(), encryptContext);
-        encryptorMap.put(encryptContext, encryptor);
-        return encryptor;
-    }
+	/**
+	 * 注册加密执行者到缓存
+	 * @param encryptContext 加密执行者需要的相关配置参数
+	 */
+	public IEncryptor registAndGetEncryptor(EncryptContext encryptContext) {
+		if (encryptorMap.containsKey(encryptContext)) {
+			return encryptorMap.get(encryptContext);
+		}
+		IEncryptor encryptor = ReflectUtil.newInstance(encryptContext.getAlgorithm().getClazz(), encryptContext);
+		encryptorMap.put(encryptContext, encryptor);
+		return encryptor;
+	}
 
-    /**
-     * 移除缓存中的加密执行者
-     *
-     * @param encryptContext
-     *            加密执行者需要的相关配置参数
-     */
-    public void removeEncryptor(EncryptContext encryptContext) {
-        this.encryptorMap.remove(encryptContext);
-    }
+	/**
+	 * 移除缓存中的加密执行者
+	 * @param encryptContext 加密执行者需要的相关配置参数
+	 */
+	public void removeEncryptor(EncryptContext encryptContext) {
+		this.encryptorMap.remove(encryptContext);
+	}
 
-    /**
-     * 根据配置进行加密。会进行本地缓存对应的算法和对应的秘钥信息。
-     *
-     * @param value
-     *            待加密的值
-     * @param encryptContext
-     *            加密相关的配置信息
-     */
-    public String encrypt(String value, EncryptContext encryptContext) {
-        IEncryptor encryptor = this.registAndGetEncryptor(encryptContext);
-        return encryptor.encrypt(value, encryptContext.getEncode());
-    }
+	/**
+	 * 根据配置进行加密。会进行本地缓存对应的算法和对应的秘钥信息。
+	 * @param value 待加密的值
+	 * @param encryptContext 加密相关的配置信息
+	 */
+	public String encrypt(String value, EncryptContext encryptContext) {
+		IEncryptor encryptor = this.registAndGetEncryptor(encryptContext);
+		return encryptor.encrypt(value, encryptContext.getEncode());
+	}
 
-    /**
-     * 根据配置进行解密
-     *
-     * @param value
-     *            待解密的值
-     * @param encryptContext
-     *            加密相关的配置信息
-     */
-    public String decrypt(String value, EncryptContext encryptContext) {
-        IEncryptor encryptor = this.registAndGetEncryptor(encryptContext);
-        return encryptor.decrypt(value);
-    }
+	/**
+	 * 根据配置进行解密
+	 * @param value 待解密的值
+	 * @param encryptContext 加密相关的配置信息
+	 */
+	public String decrypt(String value, EncryptContext encryptContext) {
+		IEncryptor encryptor = this.registAndGetEncryptor(encryptContext);
+		return encryptor.decrypt(value);
+	}
 
-    /**
-     * 通过 typeAliasesPackage 设置的扫描包 扫描缓存实体
-     */
-    private void scanEncryptClasses(String typeAliasesPackage) {
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        CachingMetadataReaderFactory factory = new CachingMetadataReaderFactory();
-        String[] packagePatternArray = StringUtils.splitPreserveAllTokens(typeAliasesPackage,
-                ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
-        String classpath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
-        try {
-            for (String packagePattern : packagePatternArray) {
-                String path = ClassUtils.convertClassNameToResourcePath(packagePattern);
-                Resource[] resources = resolver.getResources(classpath + path + "/*.class");
-                for (Resource resource : resources) {
-                    ClassMetadata classMetadata = factory.getMetadataReader(resource).getClassMetadata();
-                    Class<?> clazz = Resources.classForName(classMetadata.getClassName());
-                    Set<Field> encryptFieldSet = getEncryptFieldSetFromClazz(clazz);
-                    if (CollUtil.isNotEmpty(encryptFieldSet)) {
-                        fieldCache.put(clazz, encryptFieldSet);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            log.error("初始化数据安全缓存时出错:{}", e.getMessage());
-        }
-    }
+	/**
+	 * 通过 typeAliasesPackage 设置的扫描包 扫描缓存实体
+	 */
+	private void scanEncryptClasses(String typeAliasesPackage) {
+		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+		CachingMetadataReaderFactory factory = new CachingMetadataReaderFactory();
+		String[] packagePatternArray = StringUtils.splitPreserveAllTokens(typeAliasesPackage,
+				ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
+		String classpath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
+		try {
+			for (String packagePattern : packagePatternArray) {
+				String path = ClassUtils.convertClassNameToResourcePath(packagePattern);
+				Resource[] resources = resolver.getResources(classpath + path + "/*.class");
+				for (Resource resource : resources) {
+					ClassMetadata classMetadata = factory.getMetadataReader(resource).getClassMetadata();
+					Class<?> clazz = Resources.classForName(classMetadata.getClassName());
+					Set<Field> encryptFieldSet = getEncryptFieldSetFromClazz(clazz);
+					if (CollUtil.isNotEmpty(encryptFieldSet)) {
+						fieldCache.put(clazz, encryptFieldSet);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			log.error("初始化数据安全缓存时出错:{}", e.getMessage());
+		}
+	}
 
-    /**
-     * 获得一个类的加密字段集合
-     */
-    private Set<Field> getEncryptFieldSetFromClazz(Class<?> clazz) {
-        Set<Field> fieldSet = new HashSet<>();
-        // 判断clazz如果是接口,内部类,匿名类就直接返回
-        if (clazz.isInterface() || clazz.isMemberClass() || clazz.isAnonymousClass()) {
-            return fieldSet;
-        }
-        while (clazz != null) {
-            Field[] fields = clazz.getDeclaredFields();
-            fieldSet.addAll(Arrays.asList(fields));
-            clazz = clazz.getSuperclass();
-        }
-        fieldSet = fieldSet.stream()
-                .filter(field -> field.isAnnotationPresent(EncryptField.class) && field.getType() == String.class)
-                .collect(Collectors.toSet());
-        for (Field field : fieldSet) {
-            field.setAccessible(true);
-        }
-        return fieldSet;
-    }
+	/**
+	 * 获得一个类的加密字段集合
+	 */
+	private Set<Field> getEncryptFieldSetFromClazz(Class<?> clazz) {
+		Set<Field> fieldSet = new HashSet<>();
+		// 判断clazz如果是接口,内部类,匿名类就直接返回
+		if (clazz.isInterface() || clazz.isMemberClass() || clazz.isAnonymousClass()) {
+			return fieldSet;
+		}
+		while (clazz != null) {
+			Field[] fields = clazz.getDeclaredFields();
+			fieldSet.addAll(Arrays.asList(fields));
+			clazz = clazz.getSuperclass();
+		}
+		fieldSet = fieldSet.stream()
+			.filter(field -> field.isAnnotationPresent(EncryptField.class) && field.getType() == String.class)
+			.collect(Collectors.toSet());
+		for (Field field : fieldSet) {
+			field.setAccessible(true);
+		}
+		return fieldSet;
+	}
 
 }

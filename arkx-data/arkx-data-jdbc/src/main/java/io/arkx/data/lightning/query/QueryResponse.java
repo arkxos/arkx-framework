@@ -10,8 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QueryResponse {
-    private boolean success;
-    private String message;
-    private List<QueryResult> results;
-    private QueryStats stats;
+
+	private boolean success;
+
+	private String message;
+
+	private List<QueryResult> results;
+
+	private QueryStats stats;
+
 }

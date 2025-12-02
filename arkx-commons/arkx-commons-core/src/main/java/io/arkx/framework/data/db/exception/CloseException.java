@@ -6,10 +6,10 @@ package io.arkx.framework.data.db.exception;
  */
 public class CloseException extends DatabaseException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public CloseException(Exception e) {
-        super(e);
-    }
+	public CloseException(Exception e) {
+		super(e);
+	}
 
 }

@@ -7,21 +7,23 @@ import io.arkx.framework.Config;
  *
  */
 public class SetResponseEncoding implements IApplicationConfigItem {
-    public static final String ID = "SetResponseEncoding";
-    public static final String KEY = "App." + ID;
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "SetResponseEncoding";
 
-    @Override
-    public String getExtendItemName() {
-        return "Set response encoding switch";
-    }
+	public static final String KEY = "App." + ID;
 
-    public static boolean getValue() {
-        return !"false".equals(Config.getValue(KEY));
-    }
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
+
+	@Override
+	public String getExtendItemName() {
+		return "Set response encoding switch";
+	}
+
+	public static boolean getValue() {
+		return !"false".equals(Config.getValue(KEY));
+	}
 
 }

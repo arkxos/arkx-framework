@@ -6,38 +6,40 @@ import io.arkx.framework.cosyui.web.RequestData;
 
 /**
  * @class org.ark.framework.extend.actions.JSPContext jsp上下文
- *
  * @author Darkness
  * @date 2012-8-7 下午9:33:59
  * @version V1.0
  */
 public class JSPContext {
 
-    private StringBuilder sb = new StringBuilder();
-    private ArrayList<String> includes = new ArrayList<String>();
-    private RequestData request = null;
+	private StringBuilder sb = new StringBuilder();
 
-    public JSPContext(RequestData request) {
-        this.request = request;
-    }
+	private ArrayList<String> includes = new ArrayList<String>();
 
-    public RequestData getRequest() {
-        return this.request;
-    }
+	private RequestData request = null;
 
-    protected String getOut() {
-        return this.sb.toString();
-    }
+	public JSPContext(RequestData request) {
+		this.request = request;
+	}
 
-    protected ArrayList<String> getIncludes() {
-        return this.includes;
-    }
+	public RequestData getRequest() {
+		return this.request;
+	}
 
-    public void write(Object obj) {
-        this.sb.append(obj);
-    }
+	protected String getOut() {
+		return this.sb.toString();
+	}
 
-    public void include(String file) {
-        this.includes.add(file);
-    }
+	protected ArrayList<String> getIncludes() {
+		return this.includes;
+	}
+
+	public void write(Object obj) {
+		this.sb.append(obj);
+	}
+
+	public void include(String file) {
+		this.includes.add(file);
+	}
+
 }

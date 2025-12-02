@@ -28,9 +28,8 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 /**
  * 客户端
  *
- * String serverAddress = "127.0.0.1:8080"; String localAddress =
- * "127.0.0.1:12088"; NettyClient client = new NettyClient(serverAddress,
- * localAddress); client.start();
+ * String serverAddress = "127.0.0.1:8080"; String localAddress = "127.0.0.1:12088";
+ * NettyClient client = new NettyClient(serverAddress, localAddress); client.start();
  *
  * @author Darkness
  * @date 2017年4月11日 下午3:58:45
@@ -39,142 +38,151 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  */
 public class NettyClient implements TcpNode {
 
-    private Logger logger = LoggerFactory.getLogger(NettyClient.class);
+	private Logger logger = LoggerFactory.getLogger(NettyClient.class);
 
-    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-    private EventLoopGroup group = new NioEventLoopGroup();
+	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
-    private SocketAddress serverAddress;
-    private SocketAddress localAddress;
+	private EventLoopGroup group = new NioEventLoopGroup();
 
-    private MessageProcessor messageProcessor;
+	private SocketAddress serverAddress;
 
-    // private List<ClientMessageHandler> messageHandlers = new ArrayList<>();
+	private SocketAddress localAddress;
 
-    public NettyClient(String serverAddress) {
-        this(serverAddress, SystemInfo.ip() + ":" + PortScan.findUnusedPort());
-    }
+	private MessageProcessor messageProcessor;
 
-    public NettyClient(String serverAddress, String localAddress) {
-        this.serverAddress = TcpUtil.string2SocketAddress(serverAddress);
-        this.localAddress = TcpUtil.string2SocketAddress(localAddress);
-    }
+	// private List<ClientMessageHandler> messageHandlers = new ArrayList<>();
 
-    private Channel channel;
+	public NettyClient(String serverAddress) {
+		this(serverAddress, SystemInfo.ip() + ":" + PortScan.findUnusedPort());
+	}
 
-    @Override
-    public void start() throws Exception {
-        logger.debug("prepared for start");
-        // 连接服务器
-        this.connect();
-        // 连接失败，请检查服务器ip、端口号是否正确
-        logger.debug("start success");
-    }
+	public NettyClient(String serverAddress, String localAddress) {
+		this.serverAddress = TcpUtil.string2SocketAddress(serverAddress);
+		this.localAddress = TcpUtil.string2SocketAddress(localAddress);
+	}
 
-    @Override
-    public void shutdown() {
-    }
+	private Channel channel;
 
-    // protected void registerDefaultComp() {
-    // registerMessageHandler(new LoginAuthClientComp(this));
-    // registerMessageHandler(new HeartBeatClientComp(this));
-    // }
+	@Override
+	public void start() throws Exception {
+		logger.debug("prepared for start");
+		// 连接服务器
+		this.connect();
+		// 连接失败，请检查服务器ip、端口号是否正确
+		logger.debug("start success");
+	}
 
-    private void connect() throws Exception {
-        logger.debug("prepared for connection");
-        // 配置客户端NIO线程组
-        try {
+	@Override
+	public void shutdown() {
+	}
 
-            // registerDefaultComp();
+	// protected void registerDefaultComp() {
+	// registerMessageHandler(new LoginAuthClientComp(this));
+	// registerMessageHandler(new HeartBeatClientComp(this));
+	// }
 
-            Bootstrap b = new Bootstrap();
-            final NettyClient client = this;
-            b.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
-                    .handler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024, 4, 4));
-                            ch.pipeline().addLast("MessageEncoder", new NettyMessageEncoder());
-                            ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
-                            ch.pipeline().addLast("MessageHandler", new NettyMessageHandler(client));
-                            ch.pipeline().addLast("HeartBeatHandler", new HeartBeatRequestHandler(client));
-                            ch.pipeline().addLast("LoginAuthHandler", new LoginAuthRequestHandler(client));
+	private void connect() throws Exception {
+		logger.debug("prepared for connection");
+		// 配置客户端NIO线程组
+		try {
 
-                            // ch.pipeline().addLast(new NettyMessageHandler());
-                        }
-                    });
-            // 发起异步连接操作
-            ChannelFuture future = b.connect(serverAddress, localAddress).sync();
+			// registerDefaultComp();
 
-            channel = future.channel();
+			Bootstrap b = new Bootstrap();
+			final NettyClient client = this;
+			b.group(group)
+				.channel(NioSocketChannel.class)
+				.option(ChannelOption.TCP_NODELAY, true)
+				.handler(new ChannelInitializer<SocketChannel>() {
+					@Override
+					public void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024, 4, 4));
+						ch.pipeline().addLast("MessageEncoder", new NettyMessageEncoder());
+						ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
+						ch.pipeline().addLast("MessageHandler", new NettyMessageHandler(client));
+						ch.pipeline().addLast("HeartBeatHandler", new HeartBeatRequestHandler(client));
+						ch.pipeline().addLast("LoginAuthHandler", new LoginAuthRequestHandler(client));
 
-            messageProcessor = new MessageProcessor(this, channel);
+						// ch.pipeline().addLast(new NettyMessageHandler());
+					}
+				});
+			// 发起异步连接操作
+			ChannelFuture future = b.connect(serverAddress, localAddress).sync();
 
-            logger.info("connection success");
+			channel = future.channel();
 
-            reconnectOnClose(future);
-        } catch (Exception e) {
-            this.connect();
-        } finally {
-        }
-    }
+			messageProcessor = new MessageProcessor(this, channel);
 
-    private void reconnectOnClose(final ChannelFuture future) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    future.channel().closeFuture().sync();
-                } catch (InterruptedException e) {
-                    // e.printStackTrace();
-                } finally {
-                    // 所有资源释放完成之后，清空资源，再次发起重连操作
-                    executor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                TimeUnit.SECONDS.sleep(1);
-                                connect();// 发起重连操作
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
-    }
+			logger.info("connection success");
 
-    public MessageProcessor getMessageProcessor() {
-        return messageProcessor;
-    }
+			reconnectOnClose(future);
+		}
+		catch (Exception e) {
+			this.connect();
+		}
+		finally {
+		}
+	}
 
-    public NettyMessage sendMessage(NettyMessage message) {
-        return messageProcessor.send(message);
-    }
+	private void reconnectOnClose(final ChannelFuture future) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					future.channel().closeFuture().sync();
+				}
+				catch (InterruptedException e) {
+					// e.printStackTrace();
+				}
+				finally {
+					// 所有资源释放完成之后，清空资源，再次发起重连操作
+					executor.execute(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								TimeUnit.SECONDS.sleep(1);
+								connect();// 发起重连操作
+							}
+							catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			}
+		}).start();
+	}
 
-    // public void registerMessageHandler(ClientMessageHandler handler) {
-    // messageHandlers.add(handler);
-    // }
+	public MessageProcessor getMessageProcessor() {
+		return messageProcessor;
+	}
 
-    // public void onChannelActive(ChannelHandlerContext ctx) {
-    // for (ClientMessageHandler messageHandler : messageHandlers) {
-    // messageHandler.channelActive(ctx);
-    // }
-    // }
+	public NettyMessage sendMessage(NettyMessage message) {
+		return messageProcessor.send(message);
+	}
 
-    public void onMessage(NettyMessage message) {
-        // getMessageProcessor().onMessage(message);
-    }
+	// public void registerMessageHandler(ClientMessageHandler handler) {
+	// messageHandlers.add(handler);
+	// }
 
-    // public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-    // for (ClientMessageHandler messageHandler : messageHandlers) {
-    // messageHandler.exceptionCaught(ctx, cause);
-    // }
-    // }
+	// public void onChannelActive(ChannelHandlerContext ctx) {
+	// for (ClientMessageHandler messageHandler : messageHandlers) {
+	// messageHandler.channelActive(ctx);
+	// }
+	// }
 
-    // public List<ClientMessageHandler> getMessageHandlers() {
-    // return messageHandlers;
-    // }
+	public void onMessage(NettyMessage message) {
+		// getMessageProcessor().onMessage(message);
+	}
+
+	// public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+	// for (ClientMessageHandler messageHandler : messageHandlers) {
+	// messageHandler.exceptionCaught(ctx, cause);
+	// }
+	// }
+
+	// public List<ClientMessageHandler> getMessageHandlers() {
+	// return messageHandlers;
+	// }
 
 }

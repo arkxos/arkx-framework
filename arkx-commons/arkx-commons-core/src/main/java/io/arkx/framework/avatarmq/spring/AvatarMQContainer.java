@@ -12,24 +12,25 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class AvatarMQContainer implements Container {
 
-    public static final String AvatarMQConfigFilePath = "classpath:com/arkxos/avatarmq/spring/avatarmq-broker.xml";
+	public static final String AvatarMQConfigFilePath = "classpath:com/arkxos/avatarmq/spring/avatarmq-broker.xml";
 
-    private AvatarMQContext springContext;
+	private AvatarMQContext springContext;
 
-    public void start() {
-        AbstractApplicationContext context = new ClassPathXmlApplicationContext(AvatarMQConfigFilePath);
-        springContext = new AvatarMQContext(context);
-        context.start();
-    }
+	public void start() {
+		AbstractApplicationContext context = new ClassPathXmlApplicationContext(AvatarMQConfigFilePath);
+		springContext = new AvatarMQContext(context);
+		context.start();
+	}
 
-    public void stop() {
-        if (null != springContext && null != springContext.get()) {
-            springContext.get().close();
-            springContext = null;
-        }
-    }
+	public void stop() {
+		if (null != springContext && null != springContext.get()) {
+			springContext.get().close();
+			springContext = null;
+		}
+	}
 
-    public AvatarMQContext getContext() {
-        return springContext;
-    }
+	public AvatarMQContext getContext() {
+		return springContext;
+	}
+
 }

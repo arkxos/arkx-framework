@@ -6,53 +6,55 @@ package io.arkx.framework.commons.enums;
  * @author Darkness
  */
 public enum BusinessType {
-    /**
-     * 其它
-     */
-    OTHER,
 
-    /**
-     * 新增
-     */
-    INSERT,
+	/**
+	 * 其它
+	 */
+	OTHER,
 
-    /**
-     * 修改
-     */
-    UPDATE,
+	/**
+	 * 新增
+	 */
+	INSERT,
 
-    /**
-     * 删除
-     */
-    DELETE,
+	/**
+	 * 修改
+	 */
+	UPDATE,
 
-    /**
-     * 授权
-     */
-    GRANT,
+	/**
+	 * 删除
+	 */
+	DELETE,
 
-    /**
-     * 导出
-     */
-    EXPORT,
+	/**
+	 * 授权
+	 */
+	GRANT,
 
-    /**
-     * 导入
-     */
-    IMPORT,
+	/**
+	 * 导出
+	 */
+	EXPORT,
 
-    /**
-     * 强退
-     */
-    FORCE,
+	/**
+	 * 导入
+	 */
+	IMPORT,
 
-    /**
-     * 生成代码
-     */
-    GENCODE,
+	/**
+	 * 强退
+	 */
+	FORCE,
 
-    /**
-     * 清空数据
-     */
-    CLEAN,
+	/**
+	 * 生成代码
+	 */
+	GENCODE,
+
+	/**
+	 * 清空数据
+	 */
+	CLEAN,
+
 }

@@ -7,14 +7,14 @@ package io.arkx.framework.data.mybatis.pro.core.consts;
  */
 public enum LogicalDeleteType {
 
-    /**
-     * 备份方式
-     */
-    BACKUP,
+	/**
+	 * 备份方式
+	 */
+	BACKUP,
 
-    /**
-     * 更新状态方式
-     */
-    UPDATE;
+	/**
+	 * 更新状态方式
+	 */
+	UPDATE;
 
 }

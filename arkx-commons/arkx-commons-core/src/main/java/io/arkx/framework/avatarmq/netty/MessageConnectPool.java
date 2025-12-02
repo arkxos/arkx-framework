@@ -15,85 +15,92 @@ import org.apache.commons.pool.impl.GenericObjectPool;
  */
 public class MessageConnectPool extends GenericObjectPool<MessageConnectFactory> {
 
-    private static MessageConnectPool pool = null;
-    private static Properties messageConnectConfigProperties = null;
-    private static String configPropertiesString = "com/arkxos/avatarmq/netty/avatarmq.messageconnect.properties";
-    private static String serverAddress = "";
+	private static MessageConnectPool pool = null;
 
-    public static MessageConnectPool getMessageConnectPoolInstance() {
-        if (pool == null) {
-            synchronized (MessageConnectPool.class) {
-                if (pool == null) {
-                    pool = new MessageConnectPool();
-                }
-            }
-        }
-        return pool;
-    }
+	private static Properties messageConnectConfigProperties = null;
 
-    private MessageConnectPool() {
-        try {
-            messageConnectConfigProperties = new Properties();
-            InputStream inputStream = MessageConnectPool.class.getClassLoader()
-                    .getResourceAsStream(configPropertiesString);
-            messageConnectConfigProperties.load(inputStream);
-            inputStream.close();
+	private static String configPropertiesString = "com/arkxos/avatarmq/netty/avatarmq.messageconnect.properties";
 
-            this.serverAddress = serverAddress;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	private static String serverAddress = "";
 
-        int maxActive = Integer.parseInt(messageConnectConfigProperties.getProperty("maxActive"));
-        int minIdle = Integer.parseInt(messageConnectConfigProperties.getProperty("minIdle"));
-        int maxIdle = Integer.parseInt(messageConnectConfigProperties.getProperty("maxIdle"));
-        int maxWait = Integer.parseInt(messageConnectConfigProperties.getProperty("maxWait"));
-        int sessionTimeOut = Integer.parseInt(messageConnectConfigProperties.getProperty("sessionTimeOut"));
+	public static MessageConnectPool getMessageConnectPoolInstance() {
+		if (pool == null) {
+			synchronized (MessageConnectPool.class) {
+				if (pool == null) {
+					pool = new MessageConnectPool();
+				}
+			}
+		}
+		return pool;
+	}
 
-        System.out.printf("MessageConnectPool[maxActive=%d,minIdle=%d,maxIdle=%d,maxWait=%d,sessionTimeOut=%d]\n",
-                maxActive, minIdle, maxIdle, maxWait, sessionTimeOut);
+	private MessageConnectPool() {
+		try {
+			messageConnectConfigProperties = new Properties();
+			InputStream inputStream = MessageConnectPool.class.getClassLoader()
+				.getResourceAsStream(configPropertiesString);
+			messageConnectConfigProperties.load(inputStream);
+			inputStream.close();
 
-        this.setMaxActive(maxActive);
-        this.setMaxIdle(maxIdle);
-        this.setMinIdle(minIdle);
-        this.setMaxWait(maxWait);
-        this.setTestOnBorrow(false);
-        this.setTestOnReturn(false);
-        this.setTimeBetweenEvictionRunsMillis(10 * 1000);
-        this.setNumTestsPerEvictionRun(maxActive + maxIdle);
-        this.setMinEvictableIdleTimeMillis(30 * 60 * 1000);
-        this.setTestWhileIdle(true);
+			this.serverAddress = serverAddress;
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        this.setFactory(new MessageConnectPoolableObjectFactory(serverAddress, sessionTimeOut));
-    }
+		int maxActive = Integer.parseInt(messageConnectConfigProperties.getProperty("maxActive"));
+		int minIdle = Integer.parseInt(messageConnectConfigProperties.getProperty("minIdle"));
+		int maxIdle = Integer.parseInt(messageConnectConfigProperties.getProperty("maxIdle"));
+		int maxWait = Integer.parseInt(messageConnectConfigProperties.getProperty("maxWait"));
+		int sessionTimeOut = Integer.parseInt(messageConnectConfigProperties.getProperty("sessionTimeOut"));
 
-    public MessageConnectFactory borrow() {
-        assert pool != null;
-        try {
-            return (MessageConnectFactory) pool.borrowObject();
-        } catch (Exception e) {
-            System.out.printf(
-                    "get message connection throw the error from message connection pool, error message is %s\n",
-                    e.getMessage());
-        }
-        return null;
-    }
+		System.out.printf("MessageConnectPool[maxActive=%d,minIdle=%d,maxIdle=%d,maxWait=%d,sessionTimeOut=%d]\n",
+				maxActive, minIdle, maxIdle, maxWait, sessionTimeOut);
 
-    public void restore() {
-        assert pool != null;
-        try {
-            pool.close();
-        } catch (Exception e) {
-            System.out.printf("throw the error from close message connection pool, error message is %s\n",
-                    e.getMessage());
-        }
-    }
+		this.setMaxActive(maxActive);
+		this.setMaxIdle(maxIdle);
+		this.setMinIdle(minIdle);
+		this.setMaxWait(maxWait);
+		this.setTestOnBorrow(false);
+		this.setTestOnReturn(false);
+		this.setTimeBetweenEvictionRunsMillis(10 * 1000);
+		this.setNumTestsPerEvictionRun(maxActive + maxIdle);
+		this.setMinEvictableIdleTimeMillis(30 * 60 * 1000);
+		this.setTestWhileIdle(true);
 
-    public static String getServerAddress() {
-        return serverAddress;
-    }
+		this.setFactory(new MessageConnectPoolableObjectFactory(serverAddress, sessionTimeOut));
+	}
 
-    public static void setServerAddress(String ipAddress) {
-        serverAddress = ipAddress;
-    }
+	public MessageConnectFactory borrow() {
+		assert pool != null;
+		try {
+			return (MessageConnectFactory) pool.borrowObject();
+		}
+		catch (Exception e) {
+			System.out.printf(
+					"get message connection throw the error from message connection pool, error message is %s\n",
+					e.getMessage());
+		}
+		return null;
+	}
+
+	public void restore() {
+		assert pool != null;
+		try {
+			pool.close();
+		}
+		catch (Exception e) {
+			System.out.printf("throw the error from close message connection pool, error message is %s\n",
+					e.getMessage());
+		}
+	}
+
+	public static String getServerAddress() {
+		return serverAddress;
+	}
+
+	public static void setServerAddress(String ipAddress) {
+		serverAddress = ipAddress;
+	}
+
 }

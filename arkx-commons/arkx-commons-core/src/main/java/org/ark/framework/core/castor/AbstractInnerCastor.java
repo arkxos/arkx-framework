@@ -9,13 +9,14 @@ package org.ark.framework.core.castor;
  */
 public abstract class AbstractInnerCastor implements ICastor {
 
-    @Override
-    public String getExtendItemID() {
-        return getClass().getName();
-    }
+	@Override
+	public String getExtendItemID() {
+		return getClass().getName();
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return getClass().getName();
-    }
+	@Override
+	public String getExtendItemName() {
+		return getClass().getName();
+	}
+
 }

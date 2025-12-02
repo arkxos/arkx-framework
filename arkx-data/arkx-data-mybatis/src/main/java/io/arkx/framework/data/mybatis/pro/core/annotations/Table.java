@@ -14,9 +14,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Table {
 
-    /**
-     * 表名
-     */
-    String value();
+	/**
+	 * 表名
+	 */
+	String value();
 
 }

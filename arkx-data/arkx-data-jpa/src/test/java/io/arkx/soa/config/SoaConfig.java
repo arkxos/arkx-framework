@@ -12,9 +12,9 @@ import io.arkx.framework.data.jpa.BaseRepositoryFactoryBean;
  * @version V1.0
  */
 @Configuration
-@EnableJpaRepositories(basePackages = {"io.arkx", "io.arkx"},
-        repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
-@EntityScan({"io.arkx.soa.entity"})
+@EnableJpaRepositories(basePackages = { "io.arkx", "io.arkx" },
+		repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
+@EntityScan({ "io.arkx.soa.entity" })
 public class SoaConfig {
 
 }

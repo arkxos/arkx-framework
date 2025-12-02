@@ -15,54 +15,60 @@ import java.util.concurrent.TimeUnit;
  */
 public class CallBackInvoker<T> {
 
-    private final CountDownLatch countDownLatch = new CountDownLatch(1);
-    private T messageResult;
-    private List<CallBackListener<T>> listeners = Collections.synchronizedList(new ArrayList<CallBackListener<T>>());
-    private String requestId;
-    private Throwable reason;
+	private final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-    public CallBackInvoker() {
-    }
+	private T messageResult;
 
-    public void setReason(Throwable reason) {
-        this.reason = reason;
-        publish();
-        countDownLatch.countDown();
-    }
+	private List<CallBackListener<T>> listeners = Collections.synchronizedList(new ArrayList<CallBackListener<T>>());
 
-    public void setMessageResult(T messageResult) {
-        this.messageResult = messageResult;
-        publish();
-        countDownLatch.countDown();
-    }
+	private String requestId;
 
-    public Object getMessageResult(long timeout, TimeUnit unit) {
-        try {
-            countDownLatch.await(timeout, unit);
-        } catch (InterruptedException e) {
-            throw new RuntimeException();
-        }
-        if (reason != null) {
-            return null;
-        }
-        return messageResult;
-    }
+	private Throwable reason;
 
-    public void join(CallBackListener<T> listener) {
-        this.listeners.add(listener);
-    }
+	public CallBackInvoker() {
+	}
 
-    private void publish() {
-        for (CallBackListener<T> listener : listeners) {
-            listener.onCallBack(messageResult);
-        }
-    }
+	public void setReason(Throwable reason) {
+		this.reason = reason;
+		publish();
+		countDownLatch.countDown();
+	}
 
-    public String getRequestId() {
-        return requestId;
-    }
+	public void setMessageResult(T messageResult) {
+		this.messageResult = messageResult;
+		publish();
+		countDownLatch.countDown();
+	}
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
+	public Object getMessageResult(long timeout, TimeUnit unit) {
+		try {
+			countDownLatch.await(timeout, unit);
+		}
+		catch (InterruptedException e) {
+			throw new RuntimeException();
+		}
+		if (reason != null) {
+			return null;
+		}
+		return messageResult;
+	}
+
+	public void join(CallBackListener<T> listener) {
+		this.listeners.add(listener);
+	}
+
+	private void publish() {
+		for (CallBackListener<T> listener : listeners) {
+			listener.onCallBack(messageResult);
+		}
+	}
+
+	public String getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
+
 }

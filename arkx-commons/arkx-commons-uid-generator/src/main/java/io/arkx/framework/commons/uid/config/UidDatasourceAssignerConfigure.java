@@ -31,31 +31,32 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-@AutoConfigureAfter({DataSourceAutoConfiguration.class})
+@AutoConfigureAfter({ DataSourceAutoConfiguration.class })
 @EnableConfigurationProperties(MybatisPlusProperties.class)
 @ConditionalOnProperty(value = "arkx.uid.assigner-mode", havingValue = Mode.DB)
 public class UidDatasourceAssignerConfigure {
 
-    @ConditionalOnMissingBean(SqlSessionFactory.class)
-    @Bean(name = "sqlSessionFactory")
-    @ConditionalOnBean(DataSource.class)
-    public SqlSessionFactory sqlSessionFactory(DataSource ds, MybatisPlusProperties properties) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(ds);
-        // 解决 application.properties 中 配置mybatis.mapper-locations 失效的问题
-        sqlSessionFactory.setMapperLocations(ArrayUtils.addAll(properties.resolveMapperLocations(),
-                new PathMatchingResourcePatternResolver().getResources("classpath*:/META-INF/mapper/*.xml")));
-        return sqlSessionFactory.getObject();
-    }
+	@ConditionalOnMissingBean(SqlSessionFactory.class)
+	@Bean(name = "sqlSessionFactory")
+	@ConditionalOnBean(DataSource.class)
+	public SqlSessionFactory sqlSessionFactory(DataSource ds, MybatisPlusProperties properties) throws Exception {
+		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+		sqlSessionFactory.setDataSource(ds);
+		// 解决 application.properties 中 配置mybatis.mapper-locations 失效的问题
+		sqlSessionFactory.setMapperLocations(ArrayUtils.addAll(properties.resolveMapperLocations(),
+				new PathMatchingResourcePatternResolver().getResources("classpath*:/META-INF/mapper/*.xml")));
+		return sqlSessionFactory.getObject();
+	}
 
-    /**
-     * 基于DB生成节点ID（主选）
-     */
-    @Bean
-    @ConditionalOnBean(SqlSessionFactory.class)
-    @ConditionalOnMissingBean(DatasourceWorkerIdAssigner.class)
-    public WorkerIdAssigner disposableWorkerIdAssigner(SqlSessionFactory sqlSessionFactory) {
-        log.info("WorkerIdAssigner turn on datasource");
-        return new DatasourceWorkerIdAssigner(sqlSessionFactory);
-    }
+	/**
+	 * 基于DB生成节点ID（主选）
+	 */
+	@Bean
+	@ConditionalOnBean(SqlSessionFactory.class)
+	@ConditionalOnMissingBean(DatasourceWorkerIdAssigner.class)
+	public WorkerIdAssigner disposableWorkerIdAssigner(SqlSessionFactory sqlSessionFactory) {
+		log.info("WorkerIdAssigner turn on datasource");
+		return new DatasourceWorkerIdAssigner(sqlSessionFactory);
+	}
+
 }

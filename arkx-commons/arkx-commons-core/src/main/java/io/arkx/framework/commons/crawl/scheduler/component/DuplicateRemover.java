@@ -11,28 +11,27 @@ import io.arkx.framework.commons.crawl.Request;
  * @since infinity 1.0
  */
 public interface DuplicateRemover {
-    /**
-     *
-     * Check whether the request is duplicate.
-     *
-     * @param request
-     * @param task
-     * @return
-     */
-    boolean isDuplicate(Request request);
 
-    /**
-     * Reset duplicate check.
-     *
-     * @param task
-     */
-    void resetDuplicateCheck();
+	/**
+	 *
+	 * Check whether the request is duplicate.
+	 * @param request
+	 * @param task
+	 * @return
+	 */
+	boolean isDuplicate(Request request);
 
-    /**
-     * Get TotalRequestsCount for monitor.
-     *
-     * @param task
-     * @return
-     */
-    int getTotalRequestsCount();
+	/**
+	 * Reset duplicate check.
+	 * @param task
+	 */
+	void resetDuplicateCheck();
+
+	/**
+	 * Get TotalRequestsCount for monitor.
+	 * @param task
+	 * @return
+	 */
+	int getTotalRequestsCount();
+
 }

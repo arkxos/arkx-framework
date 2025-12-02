@@ -9,5 +9,6 @@ package io.arkx.framework.data;
  */
 public interface CleanableStore {
 
-    void clean();
+	void clean();
+
 }

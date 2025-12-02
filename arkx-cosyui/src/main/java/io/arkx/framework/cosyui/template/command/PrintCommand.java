@@ -10,21 +10,22 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  *
  */
 public class PrintCommand implements ITemplateCommand {
-    private String str;
 
-    public PrintCommand(String str) {
-        this.str = str;
-    }
+	private String str;
 
-    @Override
-    public int execute(AbstractExecuteContext context) throws TemplateRuntimeException {
-        context.getOut().write(str);
-        return AbstractTag.EVAL_PAGE;
-    }
+	public PrintCommand(String str) {
+		this.str = str;
+	}
 
-    @Override
-    public String toString() {
-        return super.toString() + str;
-    }
+	@Override
+	public int execute(AbstractExecuteContext context) throws TemplateRuntimeException {
+		context.getOut().write(str);
+		return AbstractTag.EVAL_PAGE;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + str;
+	}
 
 }

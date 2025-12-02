@@ -22,12 +22,12 @@ import java.util.Collection;
 import java.util.Vector;
 
 /**
- * Keeps track of files awaiting deletion, and deletes them when an associated
- * marker object is reclaimed by the garbage collector.
+ * Keeps track of files awaiting deletion, and deletes them when an associated marker
+ * object is reclaimed by the garbage collector.
  * <p>
- * This utility creates a background thread to handle file deletion. Each file
- * to be deleted is registered with a handler object. When the handler object is
- * garbage collected, the file is deleted.
+ * This utility creates a background thread to handle file deletion. Each file to be
+ * deleted is registered with a handler object. When the handler object is garbage
+ * collected, the file is deleted.
  *
  * @author Noel Bergman
  * @author Martin Cooper
@@ -35,111 +35,102 @@ import java.util.Vector;
  */
 public class FileCleaner {
 
-    /**
-     * Queue of <code>Tracker</code> instances being watched.
-     */
-    private static ReferenceQueue<? super Object> q = new ReferenceQueue<Object>();
+	/**
+	 * Queue of <code>Tracker</code> instances being watched.
+	 */
+	private static ReferenceQueue<? super Object> q = new ReferenceQueue<Object>();
 
-    /**
-     * Collection of <code>Tracker</code> instances in existence.
-     */
-    private static Collection<Tracker> trackers = new Vector<Tracker>();
+	/**
+	 * Collection of <code>Tracker</code> instances in existence.
+	 */
+	private static Collection<Tracker> trackers = new Vector<Tracker>();
 
-    /**
-     * The thread that will clean up registered files.
-     */
-    private static Thread reaper = new Thread("File Reaper") {
+	/**
+	 * The thread that will clean up registered files.
+	 */
+	private static Thread reaper = new Thread("File Reaper") {
 
-        /**
-         * Run the reaper thread that will delete files as their associated marker
-         * objects are reclaimed by the garbage collector.
-         */
-        public void run() {
-            for (;;) {
-                Tracker tracker = null;
-                try {
-                    // Wait for a tracker to remove.
-                    tracker = (Tracker) q.remove();
-                } catch (Exception e) {
-                    continue;
-                }
+		/**
+		 * Run the reaper thread that will delete files as their associated marker objects
+		 * are reclaimed by the garbage collector.
+		 */
+		public void run() {
+			for (;;) {
+				Tracker tracker = null;
+				try {
+					// Wait for a tracker to remove.
+					tracker = (Tracker) q.remove();
+				}
+				catch (Exception e) {
+					continue;
+				}
 
-                tracker.delete();
-                tracker.clear();
-                trackers.remove(tracker);
-            }
-        }
-    };
+				tracker.delete();
+				tracker.clear();
+				trackers.remove(tracker);
+			}
+		}
+	};
 
-    /**
-     * The static initializer that starts the reaper thread.
-     */
-    static {
-        reaper.setPriority(Thread.MAX_PRIORITY);
-        reaper.setDaemon(true);
-        reaper.start();
-    }
+	/**
+	 * The static initializer that starts the reaper thread.
+	 */
+	static {
+		reaper.setPriority(Thread.MAX_PRIORITY);
+		reaper.setDaemon(true);
+		reaper.start();
+	}
 
-    /**
-     * Track the specified file, using the provided marker, deleting the file when
-     * the marker instance is garbage collected.
-     *
-     * @param file
-     *            The file to be tracked.
-     * @param marker
-     *            The marker object used to track the file.
-     */
-    public static void track(File file, Object marker) {
-        trackers.add(new Tracker(file, marker, q));
-    }
+	/**
+	 * Track the specified file, using the provided marker, deleting the file when the
+	 * marker instance is garbage collected.
+	 * @param file The file to be tracked.
+	 * @param marker The marker object used to track the file.
+	 */
+	public static void track(File file, Object marker) {
+		trackers.add(new Tracker(file, marker, q));
+	}
 
-    /**
-     * Inner class which acts as the reference for a file pending deletion.
-     */
-    private static class Tracker extends PhantomReference<Object> {
+	/**
+	 * Inner class which acts as the reference for a file pending deletion.
+	 */
+	private static class Tracker extends PhantomReference<Object> {
 
-        /**
-         * The full path to the file being tracked.
-         */
-        private String path;
+		/**
+		 * The full path to the file being tracked.
+		 */
+		private String path;
 
-        /**
-         * Constructs an instance of this class from the supplied parameters.
-         *
-         * @param file
-         *            The file to be tracked.
-         * @param marker
-         *            The marker object used to track the file.
-         * @param queue
-         *            The queue on to which the tracker will be pushed.
-         */
-        public Tracker(File file, Object marker, ReferenceQueue<? super Object> queue) {
-            this(file.getPath(), marker, queue);
-        }
+		/**
+		 * Constructs an instance of this class from the supplied parameters.
+		 * @param file The file to be tracked.
+		 * @param marker The marker object used to track the file.
+		 * @param queue The queue on to which the tracker will be pushed.
+		 */
+		public Tracker(File file, Object marker, ReferenceQueue<? super Object> queue) {
+			this(file.getPath(), marker, queue);
+		}
 
-        /**
-         * Constructs an instance of this class from the supplied parameters.
-         *
-         * @param path
-         *            The full path to the file to be tracked.
-         * @param marker
-         *            The marker object used to track the file.
-         * @param queue
-         *            The queue on to which the tracker will be pushed.
-         */
-        public Tracker(String path, Object marker, ReferenceQueue<? super Object> queue) {
-            super(marker, queue);
-            this.path = path;
-        }
+		/**
+		 * Constructs an instance of this class from the supplied parameters.
+		 * @param path The full path to the file to be tracked.
+		 * @param marker The marker object used to track the file.
+		 * @param queue The queue on to which the tracker will be pushed.
+		 */
+		public Tracker(String path, Object marker, ReferenceQueue<? super Object> queue) {
+			super(marker, queue);
+			this.path = path;
+		}
 
-        /**
-         * Deletes the file associated with this tracker instance.
-         *
-         * @return <code>true</code> if the file was deleted successfully;
-         *         <code>false</code> otherwise.
-         */
-        public boolean delete() {
-            return new File(path).delete();
-        }
-    }
+		/**
+		 * Deletes the file associated with this tracker instance.
+		 * @return <code>true</code> if the file was deleted successfully;
+		 * <code>false</code> otherwise.
+		 */
+		public boolean delete() {
+			return new File(path).delete();
+		}
+
+	}
+
 }

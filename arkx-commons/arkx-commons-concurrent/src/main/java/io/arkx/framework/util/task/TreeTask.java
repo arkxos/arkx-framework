@@ -16,291 +16,303 @@ import lombok.Setter;
 @Setter
 public abstract class TreeTask extends AbstractTask implements TaskRunner {
 
-    private boolean isRoot = true;
-    private int level = 1;
-    private TreeTask parent;
-    private List<TreeTask> children = new ArrayList<>();
-    private double totalPercent;
-    private final AtomicInteger childCount = new AtomicInteger();
-    private final AtomicInteger childFinishCount = new AtomicInteger();
+	private boolean isRoot = true;
 
-    protected TreeTask(String type, String id) {
-        super(type, id);
-    }
+	private int level = 1;
 
-    // 默认耗时在子任务上，父任务只是负责拆分子任务
-    // 如果任务自身耗时较大，可调整此参数
-    public int getSelfTaskPercent() {
-        return 1;
-    }
+	private TreeTask parent;
 
-    public int getChildrenTaskPercent() {
-        return 100 - getSelfTaskPercent();
-    }
+	private List<TreeTask> children = new ArrayList<>();
 
-    public void addChild(TreeTask child) {
-        childCount.incrementAndGet();
+	private double totalPercent;
 
-        child.setRoot(false);
-        child.setLevel(level + 1);
+	private final AtomicInteger childCount = new AtomicInteger();
 
-        child.setParent(this);
-        children.add(child);
-    }
+	private final AtomicInteger childFinishCount = new AtomicInteger();
 
-    public TaskRunner getRunner() {
-        return this;
-    }
+	protected TreeTask(String type, String id) {
+		super(type, id);
+	}
 
-    public TreeTask findNeedExecuteTask() {
-        if (this.isWaittingForExecute()) {
-            return this;
-        }
+	// 默认耗时在子任务上，父任务只是负责拆分子任务
+	// 如果任务自身耗时较大，可调整此参数
+	public int getSelfTaskPercent() {
+		return 1;
+	}
 
-        if (this.isFinished()) {
-            return null;
-        }
+	public int getChildrenTaskPercent() {
+		return 100 - getSelfTaskPercent();
+	}
 
-        if (this.getStatus() == TaskStatus.RUNNING) {
-            return null;
-        }
+	public void addChild(TreeTask child) {
+		childCount.incrementAndGet();
 
-        for (TreeTask child : children) {
-            TreeTask needExecuteTask = child.findNeedExecuteTask();
-            if (needExecuteTask != null) {
-                return needExecuteTask;
-            }
-        }
-        return null;
-    }
+		child.setRoot(false);
+		child.setLevel(level + 1);
 
-    // @Override
-    // public boolean isFinished() {
-    //// if(!super.isFinished()) {
-    //// return false;
-    //// }
-    //// for (TreeTask child : this.children) {
-    //// if(!child.isFinished()) {
-    //// return false;
-    //// }
-    //// }
-    //// return true;
-    // return this.isFinished()
-    // }
+		child.setParent(this);
+		children.add(child);
+	}
 
-    public void print() {
-        print(System.out);
-    }
+	public TaskRunner getRunner() {
+		return this;
+	}
 
-    // public String toTreeString(TreeTask treeTask, boolean parentIsLastChild) {
-    // // "│ " "└──" "├──"
-    // String result = "";
-    // String content = treeTask.toString();
-    // if(treeTask.isRoot) {
-    // result += "======================================================\n";
-    // result += content + "\n";
-    // } else {
-    // for (int i = 1; i < treeTask.level; i++) {
-    // result += " ";
-    // }
-    // result += "└──";
-    // result += content + "\n";
-    // }
-    // for (TreeTask child : treeTask.children) {
-    // result += child.toTreeString();
-    // }
-    // return result;
-    // }
+	public TreeTask findNeedExecuteTask() {
+		if (this.isWaittingForExecute()) {
+			return this;
+		}
 
-    public void print(PrintStream os) {
-        os.print(toTreeString());
-    }
+		if (this.isFinished()) {
+			return null;
+		}
 
-    public String toTreeString() {
-        StringBuilder sb = new StringBuilder();
-        traversePreOrder(sb, "", "", this, true);
-        return sb.toString();
-    }
+		if (this.getStatus() == TaskStatus.RUNNING) {
+			return null;
+		}
 
-    public void traversePreOrder(StringBuilder sb, String padding, String pointer, TreeTask node, boolean isLastNode) {
-        sb.append(padding);
-        sb.append(pointer);
-        sb.append(node.toString());
-        sb.append("\n");
+		for (TreeTask child : children) {
+			TreeTask needExecuteTask = child.findNeedExecuteTask();
+			if (needExecuteTask != null) {
+				return needExecuteTask;
+			}
+		}
+		return null;
+	}
 
-        StringBuilder paddingBuilder = new StringBuilder(padding);
-        if (isLastNode) {
-            paddingBuilder.append("   ");
-        } else {
-            paddingBuilder.append("│  ");
-        }
+	// @Override
+	// public boolean isFinished() {
+	//// if(!super.isFinished()) {
+	//// return false;
+	//// }
+	//// for (TreeTask child : this.children) {
+	//// if(!child.isFinished()) {
+	//// return false;
+	//// }
+	//// }
+	//// return true;
+	// return this.isFinished()
+	// }
 
-        String paddingForBoth = paddingBuilder.toString();
-        String pointerForRight = "└──";
+	public void print() {
+		print(System.out);
+	}
 
-        for (int i = 0; i < node.getChildren().size(); i++) {
-            TreeTask child = node.getChildren().get(i);
+	// public String toTreeString(TreeTask treeTask, boolean parentIsLastChild) {
+	// // "│ " "└──" "├──"
+	// String result = "";
+	// String content = treeTask.toString();
+	// if(treeTask.isRoot) {
+	// result += "======================================================\n";
+	// result += content + "\n";
+	// } else {
+	// for (int i = 1; i < treeTask.level; i++) {
+	// result += " ";
+	// }
+	// result += "└──";
+	// result += content + "\n";
+	// }
+	// for (TreeTask child : treeTask.children) {
+	// result += child.toTreeString();
+	// }
+	// return result;
+	// }
 
-            boolean isLastChild = i == node.getChildren().size() - 1;
-            String pointerForLeft = isLastChild ? "└──" : "├──";
-            traversePreOrder(sb, paddingForBoth, pointerForLeft, child, isLastChild);
-        }
-    }
+	public void print(PrintStream os) {
+		os.print(toTreeString());
+	}
 
-    @Override
-    public String toString() {
-        return "[" + getGlobalExecuteOrder() + "][" + this.getProgressPercent() + "%][" + this.getCost() + "]"
-                + this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
-    }
+	public String toTreeString() {
+		StringBuilder sb = new StringBuilder();
+		traversePreOrder(sb, "", "", this, true);
+		return sb.toString();
+	}
 
-    @Override
-    public void triggerCompleted() {
-        super.triggerCompleted();
+	public void traversePreOrder(StringBuilder sb, String padding, String pointer, TreeTask node, boolean isLastNode) {
+		sb.append(padding);
+		sb.append(pointer);
+		sb.append(node.toString());
+		sb.append("\n");
 
-        for (TreeTask child : children) {
-            child.triggerCompleted();
-        }
-    }
+		StringBuilder paddingBuilder = new StringBuilder(padding);
+		if (isLastNode) {
+			paddingBuilder.append("   ");
+		}
+		else {
+			paddingBuilder.append("│  ");
+		}
 
-    @Override
-    public void finish() {
-        if (this.children.isEmpty()) {
-            this.realFinished();
-        }
-    }
+		String paddingForBoth = paddingBuilder.toString();
+		String pointerForRight = "└──";
 
-    public void onChildFinish(TreeTask finishedChildTask) {
-        this.childFinishCount.incrementAndGet();
-        System.out.println("children finish,task id: " + getId() + ",finish child id: " + finishedChildTask.getId()
-                + "," + this.childCount.get() + "," + this.childFinishCount.get());
-        for (TreeTask child : this.children) {
-            if (!child.isFinished()) {
-                return;
-            }
-        }
+		for (int i = 0; i < node.getChildren().size(); i++) {
+			TreeTask child = node.getChildren().get(i);
 
-        this.realFinished();
-    }
+			boolean isLastChild = i == node.getChildren().size() - 1;
+			String pointerForLeft = isLastChild ? "└──" : "├──";
+			traversePreOrder(sb, paddingForBoth, pointerForLeft, child, isLastChild);
+		}
+	}
 
-    private void realFinished() {
-        this.setEndTime(System.nanoTime());
-        this.setFinished(true);
-        this.setProgressPercent(100D);
+	@Override
+	public String toString() {
+		return "[" + getGlobalExecuteOrder() + "][" + this.getProgressPercent() + "%][" + this.getCost() + "]"
+				+ this.getClass().getSimpleName() + "-" + this.getStatus() + "-" + this.getId();
+	}
 
-        this.triggerCompleted();
+	@Override
+	public void triggerCompleted() {
+		super.triggerCompleted();
 
-        this.parent.onChildFinish(this);
-    }
+		for (TreeTask child : children) {
+			child.triggerCompleted();
+		}
+	}
 
-    private void triggerPercentListener() {
-        if (this.getProgress() != null) {
-            this.getProgress().call(this, this.totalPercent);
-        }
-    }
+	@Override
+	public void finish() {
+		if (this.children.isEmpty()) {
+			this.realFinished();
+		}
+	}
 
-    @Override
-    public void setProgressPercent(double progressPercent) {
-        super.setProgressPercent(progressPercent);
+	public void onChildFinish(TreeTask finishedChildTask) {
+		this.childFinishCount.incrementAndGet();
+		System.out.println("children finish,task id: " + getId() + ",finish child id: " + finishedChildTask.getId()
+				+ "," + this.childCount.get() + "," + this.childFinishCount.get());
+		for (TreeTask child : this.children) {
+			if (!child.isFinished()) {
+				return;
+			}
+		}
 
-        this.totalPercent = new BigDecimal(getSelfTaskPercent() + "").multiply(new BigDecimal(progressPercent + ""))
-                .setScale(2, RoundingMode.HALF_UP).doubleValue();
-        triggerPercentListener();
+		this.realFinished();
+	}
 
-        this.parent.onChildProgressPercent();
-    }
+	private void realFinished() {
+		this.setEndTime(System.nanoTime());
+		this.setFinished(true);
+		this.setProgressPercent(100D);
 
-    public void onChildProgressPercent() {
-        int childrenSize = children.size();
-        List<TreeTask> notFinishedChildrens = this.children.stream().filter(item -> !item.isFinished()).toList();
-        long notFinishCount = notFinishedChildrens.size();
-        if (notFinishCount == 0) {
-            this.setTotalPercent(100D);
-        } else {
-            // 默认自身执行占比为 1%，子任务占比为 99%
-            BigDecimal preChildPercent = div(getChildrenTaskPercent(), childrenSize);
+		this.triggerCompleted();
 
-            BigDecimal totalPercent = new BigDecimal("0");
-            for (TreeTask notFinishedTask : notFinishedChildrens) {
-                double myProcessPercent = notFinishedTask.getTotalPercent();
+		this.parent.onChildFinish(this);
+	}
 
-                BigDecimal currentSheetPercent = new BigDecimal("" + myProcessPercent).multiply(preChildPercent);
-                totalPercent = totalPercent.add(currentSheetPercent);
-            }
-            long finishdCount = childrenSize - notFinishCount;
-            totalPercent = totalPercent.add(preChildPercent.multiply(new BigDecimal(finishdCount))).setScale(2,
-                    RoundingMode.HALF_DOWN);
-            // 加上自身耗时占比
-            totalPercent = totalPercent.add(new BigDecimal(getSelfTaskPercent()));
-            double caculatedPercent = totalPercent.doubleValue();
-            // 理论上存在未完成子任务，总进度不会达到 100%，不排除子任务过多的精度问题
-            if (caculatedPercent > 100D) {
-                caculatedPercent = 99D;
-            }
-            this.setTotalPercent(caculatedPercent);
-        }
+	private void triggerPercentListener() {
+		if (this.getProgress() != null) {
+			this.getProgress().call(this, this.totalPercent);
+		}
+	}
 
-        triggerPercentListener();
-    }
+	@Override
+	public void setProgressPercent(double progressPercent) {
+		super.setProgressPercent(progressPercent);
 
-    /**
-     * 求商运算(a/b)
-     * <p>
-     * 默认采用10位浮点精度计算 (用来解决浮点运算时精度丢失,不理想的情况)
-     * </p>
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static BigDecimal div(Number a, Number b) {
-        return getBigDecimal(a).divide(getBigDecimal(b), 4, RoundingMode.HALF_UP);
-    }
+		this.totalPercent = new BigDecimal(getSelfTaskPercent() + "").multiply(new BigDecimal(progressPercent + ""))
+			.setScale(2, RoundingMode.HALF_UP)
+			.doubleValue();
+		triggerPercentListener();
 
-    /**
-     * 将数字或数字字符串封装成BigDecimal
-     *
-     * @param number
-     * @return
-     */
-    public static BigDecimal getBigDecimal(Object number) {
-        if (number == null) {
-            return new BigDecimal("0");
-        }
-        if (number instanceof String && StringUtil.isNullOrEmpty(number + "")) {
-            return new BigDecimal("0");
-        }
-        try {
-            if (number instanceof BigDecimal decimal) {
-                return decimal;
-            } else if (number instanceof Double || number instanceof Float) {
-                return new BigDecimal(number.toString());
-            } else if (number instanceof Integer integer) {
-                return new BigDecimal(integer);
-            } else if (number instanceof Long long1) {
-                return new BigDecimal(long1);
-            } else {
-                String val = number.toString();
-                if (isNumber(val)) {
-                    return new BigDecimal(val);
-                }
-                return new BigDecimal("0");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new BigDecimal("0");
-        }
-    }
+		this.parent.onChildProgressPercent();
+	}
 
-    private static Pattern numberPatter = Pattern.compile("^[\\d\\.E\\,\\+\\-]*$");
+	public void onChildProgressPercent() {
+		int childrenSize = children.size();
+		List<TreeTask> notFinishedChildrens = this.children.stream().filter(item -> !item.isFinished()).toList();
+		long notFinishCount = notFinishedChildrens.size();
+		if (notFinishCount == 0) {
+			this.setTotalPercent(100D);
+		}
+		else {
+			// 默认自身执行占比为 1%，子任务占比为 99%
+			BigDecimal preChildPercent = div(getChildrenTaskPercent(), childrenSize);
 
-    /**
-     * 是否是数字
-     */
-    public static boolean isNumber(String str) {
-        if (StringUtil.isNullOrEmpty(str)) {
-            return false;
-        }
-        return numberPatter.matcher(str).find();
-    }
+			BigDecimal totalPercent = new BigDecimal("0");
+			for (TreeTask notFinishedTask : notFinishedChildrens) {
+				double myProcessPercent = notFinishedTask.getTotalPercent();
+
+				BigDecimal currentSheetPercent = new BigDecimal("" + myProcessPercent).multiply(preChildPercent);
+				totalPercent = totalPercent.add(currentSheetPercent);
+			}
+			long finishdCount = childrenSize - notFinishCount;
+			totalPercent = totalPercent.add(preChildPercent.multiply(new BigDecimal(finishdCount)))
+				.setScale(2, RoundingMode.HALF_DOWN);
+			// 加上自身耗时占比
+			totalPercent = totalPercent.add(new BigDecimal(getSelfTaskPercent()));
+			double caculatedPercent = totalPercent.doubleValue();
+			// 理论上存在未完成子任务，总进度不会达到 100%，不排除子任务过多的精度问题
+			if (caculatedPercent > 100D) {
+				caculatedPercent = 99D;
+			}
+			this.setTotalPercent(caculatedPercent);
+		}
+
+		triggerPercentListener();
+	}
+
+	/**
+	 * 求商运算(a/b)
+	 * <p>
+	 * 默认采用10位浮点精度计算 (用来解决浮点运算时精度丢失,不理想的情况)
+	 * </p>
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static BigDecimal div(Number a, Number b) {
+		return getBigDecimal(a).divide(getBigDecimal(b), 4, RoundingMode.HALF_UP);
+	}
+
+	/**
+	 * 将数字或数字字符串封装成BigDecimal
+	 * @param number
+	 * @return
+	 */
+	public static BigDecimal getBigDecimal(Object number) {
+		if (number == null) {
+			return new BigDecimal("0");
+		}
+		if (number instanceof String && StringUtil.isNullOrEmpty(number + "")) {
+			return new BigDecimal("0");
+		}
+		try {
+			if (number instanceof BigDecimal decimal) {
+				return decimal;
+			}
+			else if (number instanceof Double || number instanceof Float) {
+				return new BigDecimal(number.toString());
+			}
+			else if (number instanceof Integer integer) {
+				return new BigDecimal(integer);
+			}
+			else if (number instanceof Long long1) {
+				return new BigDecimal(long1);
+			}
+			else {
+				String val = number.toString();
+				if (isNumber(val)) {
+					return new BigDecimal(val);
+				}
+				return new BigDecimal("0");
+			}
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			return new BigDecimal("0");
+		}
+	}
+
+	private static Pattern numberPatter = Pattern.compile("^[\\d\\.E\\,\\+\\-]*$");
+
+	/**
+	 * 是否是数字
+	 */
+	public static boolean isNumber(String str) {
+		if (StringUtil.isNullOrEmpty(str)) {
+			return false;
+		}
+		return numberPatter.matcher(str).find();
+	}
 
 }

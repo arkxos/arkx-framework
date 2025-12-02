@@ -12,11 +12,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface EnumScan {
 
-    /**
-     * 默认的枚举值
-     *
-     * @return 默认的枚举值
-     */
-    int defaultEnumCode() default 1;
+	/**
+	 * 默认的枚举值
+	 * @return 默认的枚举值
+	 */
+	int defaultEnumCode() default 1;
 
 }

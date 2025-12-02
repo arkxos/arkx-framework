@@ -6,54 +6,58 @@ import java.util.List;
 
 public class PersonRecordConverter extends RecordConverter<Person> {
 
-    FastColumn nameColumn = new FastColumn("name", FastColumnType.String, 10);
-    FastColumn ageColumn = new FastColumn("age", FastColumnType.Int);
-    FastColumn moneyColumn = new FastColumn("money", FastColumnType.Double);
-    FastColumn salaryColumn = new FastColumn("salary", FastColumnType.Float);
-    FastColumn isMarriedColumn = new FastColumn("isMarried", FastColumnType.Boolean);
+	FastColumn nameColumn = new FastColumn("name", FastColumnType.String, 10);
 
-    FastColumn[] columns = new FastColumn[]{nameColumn, ageColumn, moneyColumn, salaryColumn, isMarriedColumn};
+	FastColumn ageColumn = new FastColumn("age", FastColumnType.Int);
 
-    @Override
-    public Class<Person> acceptEntityClass() {
-        return Person.class;
-    }
+	FastColumn moneyColumn = new FastColumn("money", FastColumnType.Double);
 
-    @Override
-    public List<FastColumn> getColumns() {
-        return Arrays.asList(columns);
-    }
+	FastColumn salaryColumn = new FastColumn("salary", FastColumnType.Float);
 
-    @Override
-    public void writeEntity2Buffer(Person entity, ByteBuffer recordBuffer) {
-        String name = entity.getName();
-        writeString(recordBuffer, name, nameColumn.getLength());
-        recordBuffer.putInt(entity.getAge());// int
-        recordBuffer.putDouble(entity.getMoney());// double
-        recordBuffer.putFloat(entity.getSalary());// float
-        recordBuffer.put((byte) (entity.isMarried() ? 1 : 0));// boolean
-    }
+	FastColumn isMarriedColumn = new FastColumn("isMarried", FastColumnType.Boolean);
 
-    @Override
-    public Person builderObject(ByteBuffer recordBuffer) {
-        Person entity = new Person();
+	FastColumn[] columns = new FastColumn[] { nameColumn, ageColumn, moneyColumn, salaryColumn, isMarriedColumn };
 
-        String name = readString(recordBuffer, nameColumn.getLength());
-        entity.setName(name);
+	@Override
+	public Class<Person> acceptEntityClass() {
+		return Person.class;
+	}
 
-        int age = recordBuffer.getInt();
-        entity.setAge(age);
+	@Override
+	public List<FastColumn> getColumns() {
+		return Arrays.asList(columns);
+	}
 
-        double money = recordBuffer.getDouble();
-        entity.setMoney(money);
+	@Override
+	public void writeEntity2Buffer(Person entity, ByteBuffer recordBuffer) {
+		String name = entity.getName();
+		writeString(recordBuffer, name, nameColumn.getLength());
+		recordBuffer.putInt(entity.getAge());// int
+		recordBuffer.putDouble(entity.getMoney());// double
+		recordBuffer.putFloat(entity.getSalary());// float
+		recordBuffer.put((byte) (entity.isMarried() ? 1 : 0));// boolean
+	}
 
-        float salary = recordBuffer.getFloat();
-        entity.setSalary(salary);
+	@Override
+	public Person builderObject(ByteBuffer recordBuffer) {
+		Person entity = new Person();
 
-        boolean isMarried = recordBuffer.get() == 1;
-        entity.setMarried(isMarried);
+		String name = readString(recordBuffer, nameColumn.getLength());
+		entity.setName(name);
 
-        return entity;
-    }
+		int age = recordBuffer.getInt();
+		entity.setAge(age);
+
+		double money = recordBuffer.getDouble();
+		entity.setMoney(money);
+
+		float salary = recordBuffer.getFloat();
+		entity.setSalary(salary);
+
+		boolean isMarried = recordBuffer.get() == 1;
+		entity.setMarried(isMarried);
+
+		return entity;
+	}
 
 }

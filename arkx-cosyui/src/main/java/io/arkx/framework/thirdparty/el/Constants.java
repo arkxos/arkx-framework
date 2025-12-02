@@ -61,8 +61,8 @@ import java.util.ResourceBundle;
 
 /**
  * <p>
- * This contains all of the non-public constants, including messsage strings
- * read from the resource file.
+ * This contains all of the non-public constants, including messsage strings read from the
+ * resource file.
  *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
@@ -70,72 +70,76 @@ import java.util.ResourceBundle;
  **/
 
 public class Constants {
-    static ResourceBundle sResources = ResourceBundle.getBundle("io.arkx.framework.thirdparty.el.Resources",
-            Locale.ENGLISH);
 
-    public static final String EXCEPTION_GETTING_BEANINFO = getStringResource("EXCEPTION_GETTING_BEANINFO");
+	static ResourceBundle sResources = ResourceBundle.getBundle("io.arkx.framework.thirdparty.el.Resources",
+			Locale.ENGLISH);
 
-    public static final String NULL_EXPRESSION_STRING = getStringResource("NULL_EXPRESSION_STRING");
+	public static final String EXCEPTION_GETTING_BEANINFO = getStringResource("EXCEPTION_GETTING_BEANINFO");
 
-    public static final String PARSE_EXCEPTION = getStringResource("PARSE_EXCEPTION");
+	public static final String NULL_EXPRESSION_STRING = getStringResource("NULL_EXPRESSION_STRING");
 
-    public static final String ERROR_GETTING_PROPERTY = getStringResource("ERROR_GETTING_PROPERTY");
+	public static final String PARSE_EXCEPTION = getStringResource("PARSE_EXCEPTION");
 
-    public static final String CANT_GET_INDEXED_VALUE_OF_NULL = getStringResource("CANT_GET_INDEXED_VALUE_OF_NULL");
+	public static final String ERROR_GETTING_PROPERTY = getStringResource("ERROR_GETTING_PROPERTY");
 
-    public static final String CANT_GET_NULL_INDEX = getStringResource("CANT_GET_NULL_INDEX");
+	public static final String CANT_GET_INDEXED_VALUE_OF_NULL = getStringResource("CANT_GET_INDEXED_VALUE_OF_NULL");
 
-    public static final String BAD_INDEX_VALUE = getStringResource("BAD_INDEX_VALUE");
+	public static final String CANT_GET_NULL_INDEX = getStringResource("CANT_GET_NULL_INDEX");
 
-    public static final String EXCEPTION_ACCESSING_LIST = getStringResource("EXCEPTION_ACCESSING_LIST");
+	public static final String BAD_INDEX_VALUE = getStringResource("BAD_INDEX_VALUE");
 
-    public static final String EXCEPTION_ACCESSING_ARRAY = getStringResource("EXCEPTION_ACCESSING_ARRAY");
+	public static final String EXCEPTION_ACCESSING_LIST = getStringResource("EXCEPTION_ACCESSING_LIST");
 
-    public static final String TOSTRING_EXCEPTION = getStringResource("TOSTRING_EXCEPTION");
+	public static final String EXCEPTION_ACCESSING_ARRAY = getStringResource("EXCEPTION_ACCESSING_ARRAY");
 
-    public static final String BOOLEAN_TO_NUMBER = getStringResource("BOOLEAN_TO_NUMBER");
+	public static final String TOSTRING_EXCEPTION = getStringResource("TOSTRING_EXCEPTION");
 
-    public static final String STRING_TO_NUMBER_EXCEPTION = getStringResource("STRING_TO_NUMBER_EXCEPTION");
+	public static final String BOOLEAN_TO_NUMBER = getStringResource("BOOLEAN_TO_NUMBER");
 
-    public static final String COERCE_TO_NUMBER = getStringResource("COERCE_TO_NUMBER");
+	public static final String STRING_TO_NUMBER_EXCEPTION = getStringResource("STRING_TO_NUMBER_EXCEPTION");
 
-    public static final String BOOLEAN_TO_CHARACTER = getStringResource("BOOLEAN_TO_CHARACTER");
+	public static final String COERCE_TO_NUMBER = getStringResource("COERCE_TO_NUMBER");
 
-    public static final String COERCE_TO_CHARACTER = getStringResource("COERCE_TO_CHARACTER");
+	public static final String BOOLEAN_TO_CHARACTER = getStringResource("BOOLEAN_TO_CHARACTER");
 
-    public static final String COERCE_TO_OBJECT = getStringResource("COERCE_TO_OBJECT");
+	public static final String COERCE_TO_CHARACTER = getStringResource("COERCE_TO_CHARACTER");
 
-    public static final String NO_PROPERTY_EDITOR = getStringResource("NO_PROPERTY_EDITOR");
+	public static final String COERCE_TO_OBJECT = getStringResource("COERCE_TO_OBJECT");
 
-    public static final String PROPERTY_EDITOR_ERROR = getStringResource("PROPERTY_EDITOR_ERROR");
+	public static final String NO_PROPERTY_EDITOR = getStringResource("NO_PROPERTY_EDITOR");
 
-    public static final String ARITH_OP_NULL = getStringResource("ARITH_OP_NULL");
+	public static final String PROPERTY_EDITOR_ERROR = getStringResource("PROPERTY_EDITOR_ERROR");
 
-    public static final String ARITH_OP_BAD_TYPE = getStringResource("ARITH_OP_BAD_TYPE");
+	public static final String ARITH_OP_NULL = getStringResource("ARITH_OP_NULL");
 
-    public static final String ARITH_ERROR = getStringResource("ARITH_ERROR");
+	public static final String ARITH_OP_BAD_TYPE = getStringResource("ARITH_OP_BAD_TYPE");
 
-    public static final String UNARY_OP_BAD_TYPE = getStringResource("UNARY_OP_BAD_TYPE");
+	public static final String ARITH_ERROR = getStringResource("ARITH_ERROR");
 
-    public static final String COMPARABLE_ERROR = getStringResource("COMPARABLE_ERROR");
+	public static final String UNARY_OP_BAD_TYPE = getStringResource("UNARY_OP_BAD_TYPE");
 
-    public static final String UNKNOWN_FUNCTION = getStringResource("UNKNOWN_FUNCTION");
+	public static final String COMPARABLE_ERROR = getStringResource("COMPARABLE_ERROR");
 
-    public static final Object[] NoArgs = new Object[0];
+	public static final String UNKNOWN_FUNCTION = getStringResource("UNKNOWN_FUNCTION");
 
-    public static String getStringResource(String pResourceName) throws MissingResourceException {
-        try {
-            String ret = sResources.getString(pResourceName);
-            if (ret == null) {
-                String str = "ERROR: Unable to load resource " + pResourceName;
-                System.err.println(str);
-                throw new MissingResourceException(str, "io.arkx.framework.cosyui.expression.Constants", pResourceName);
-            } else {
-                return ret;
-            }
-        } catch (MissingResourceException exc) {
-            System.err.println("ERROR: Unable to load resource " + pResourceName + ": " + exc);
-            throw exc;
-        }
-    }
+	public static final Object[] NoArgs = new Object[0];
+
+	public static String getStringResource(String pResourceName) throws MissingResourceException {
+		try {
+			String ret = sResources.getString(pResourceName);
+			if (ret == null) {
+				String str = "ERROR: Unable to load resource " + pResourceName;
+				System.err.println(str);
+				throw new MissingResourceException(str, "io.arkx.framework.cosyui.expression.Constants", pResourceName);
+			}
+			else {
+				return ret;
+			}
+		}
+		catch (MissingResourceException exc) {
+			System.err.println("ERROR: Unable to load resource " + pResourceName + ": " + exc);
+			throw exc;
+		}
+	}
+
 }

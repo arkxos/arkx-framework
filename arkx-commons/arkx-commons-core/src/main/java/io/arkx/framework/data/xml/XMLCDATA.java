@@ -7,34 +7,35 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  *
  */
 public final class XMLCDATA extends XMLNode {
-    String text;
 
-    public XMLCDATA(String text) {
-        this.text = text;
-    }
+	String text;
 
-    @Override
-    public void toString(String prefix, FastStringBuilder sb) {
-        sb.append(prefix).append("<![CDATA[").append(text == null ? "" : text).append("]]>");
-    }
+	public XMLCDATA(String text) {
+		this.text = text;
+	}
 
-    @Override
-    public String getText() {
-        return text;
-    }
+	@Override
+	public void toString(String prefix, FastStringBuilder sb) {
+		sb.append(prefix).append("<![CDATA[").append(text == null ? "" : text).append("]]>");
+	}
 
-    @Override
-    public int getType() {
-        return XMLNode.CDATA;
-    }
+	@Override
+	public String getText() {
+		return text;
+	}
 
-    @Override
-    void repack() {
-        text = new String(text.toCharArray());
-    }
+	@Override
+	public int getType() {
+		return XMLNode.CDATA;
+	}
 
-    public void setText(String text) {
-        this.text = text;
-    }
+	@Override
+	void repack() {
+		text = new String(text.toCharArray());
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 
 }

@@ -22,242 +22,245 @@ import io.arkx.framework.i18n.LangUtil;
  */
 public class DataListAction implements IPageEnableAction {
 
-    DataTable dataSource;
+	DataTable dataSource;
 
-    String ID;
+	String ID;
 
-    DataListBody tagBody;
+	DataListBody tagBody;
 
-    boolean pageEnabled;
+	boolean pageEnabled;
 
-    Mapx<String, Object> params = new Mapx<String, Object>();
+	Mapx<String, Object> params = new Mapx<String, Object>();
 
-    String method;
-    String rest;
+	String method;
 
-    int total;
+	String rest;
 
-    int pageIndex;
+	int total;
 
-    int pageSize;
+	int pageIndex;
 
-    boolean autoFill;
+	int pageSize;
 
-    boolean autoPageSize;
+	boolean autoFill;
 
-    String dragClass;
+	boolean autoPageSize;
 
-    String listNodes;
+	String dragClass;
 
-    String sortEnd;
+	String listNodes;
 
-    boolean totalFlag = false;// 是否需要重新计算记录总数
+	String sortEnd;
 
-    boolean isAjaxRequest;
+	boolean totalFlag = false;// 是否需要重新计算记录总数
 
-    String result = "";
+	boolean isAjaxRequest;
 
-    public String getMethod() {
-        return method;
-    }
+	String result = "";
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
+	public String getMethod() {
+		return method;
+	}
 
-    public Mapx<String, Object> getParams() {
-        return params;
-    }
+	public void setMethod(String method) {
+		this.method = method;
+	}
 
-    public void setParams(Mapx<String, Object> params) {
-        this.params = params;
-    }
+	public Mapx<String, Object> getParams() {
+		return params;
+	}
 
-    public String getParam(String key) {
-        return params.getString(key);
-    }
+	public void setParams(Mapx<String, Object> params) {
+		this.params = params;
+	}
 
-    public void bindData(DataTable dt) {
-        dataSource = dt;
-        try {
-            this.bindData();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public String getParam(String key) {
+		return params.getString(key);
+	}
 
-    void addVariables(AbstractExecuteContext context) {
-        context.addDataVariable(ListTag.ZListDataNameKey, dataSource);
-        context.addDataVariable(ListTag.ZListItemNameKey, "DataRow");
-        context.addDataVariable("_DataListAction", this);
-        LangUtil.decodeDataTable(dataSource, context.getLanguage()); // 检查国际化字符串
-    }
+	public void bindData(DataTable dt) {
+		dataSource = dt;
+		try {
+			this.bindData();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    private void bindData() throws Exception {
-        if (dataSource.getDataColumn("_RowNo") == null) {
-            dataSource.insertColumn(new DataColumn("_RowNo", DataTypes.INTEGER));
-        }
-        for (int j = 0; j < dataSource.getRowCount(); j++) {
-            int rowNo = pageIndex * pageSize + j + 1;
-            dataSource.set(j, "_RowNo", Integer.valueOf(rowNo));
-        }
-        if (isAjaxRequest) {
-            ZhtmlExecuteContext context = new ZhtmlExecuteContext(ZhtmlManagerContext.getInstance(), null, null);
-            addVariables(context);
-            tagBody.getExecutor().execute(context);
-            result = context.getOut().getResult();
-        }
-    }
+	void addVariables(AbstractExecuteContext context) {
+		context.addDataVariable(ListTag.ZListDataNameKey, dataSource);
+		context.addDataVariable(ListTag.ZListItemNameKey, "DataRow");
+		context.addDataVariable("_DataListAction", this);
+		LangUtil.decodeDataTable(dataSource, context.getLanguage()); // 检查国际化字符串
+	}
 
-    public void bindData(Query qb) {// NO_UCD
-        bindData(qb, pageEnabled);
-    }
+	private void bindData() throws Exception {
+		if (dataSource.getDataColumn("_RowNo") == null) {
+			dataSource.insertColumn(new DataColumn("_RowNo", DataTypes.INTEGER));
+		}
+		for (int j = 0; j < dataSource.getRowCount(); j++) {
+			int rowNo = pageIndex * pageSize + j + 1;
+			dataSource.set(j, "_RowNo", Integer.valueOf(rowNo));
+		}
+		if (isAjaxRequest) {
+			ZhtmlExecuteContext context = new ZhtmlExecuteContext(ZhtmlManagerContext.getInstance(), null, null);
+			addVariables(context);
+			tagBody.getExecutor().execute(context);
+			result = context.getOut().getResult();
+		}
+	}
 
-    public void bindData(Query qb, boolean pageFlag) {
-        if (pageFlag) {
-            if (!totalFlag) {// 需要重新计算总数
-                setTotal(DBUtil.getCount(qb));
-            }
-            bindData(qb.executePagedDataTable(pageSize, pageIndex).getData());
-        } else {
-            bindData(qb.executeDataTable());
-        }
-    }
+	public void bindData(Query qb) {// NO_UCD
+		bindData(qb, pageEnabled);
+	}
 
-    public String getResult() {
-        return result;
-    }
+	public void bindData(Query qb, boolean pageFlag) {
+		if (pageFlag) {
+			if (!totalFlag) {// 需要重新计算总数
+				setTotal(DBUtil.getCount(qb));
+			}
+			bindData(qb.executePagedDataTable(pageSize, pageIndex).getData());
+		}
+		else {
+			bindData(qb.executeDataTable());
+		}
+	}
 
-    public DataTable getDataSource() {
-        return dataSource;
-    }
+	public String getResult() {
+		return result;
+	}
 
-    public String getID() {
-        return ID;
-    }
+	public DataTable getDataSource() {
+		return dataSource;
+	}
 
-    public void setID(String id) {
-        ID = id;
-    }
+	public String getID() {
+		return ID;
+	}
 
-    public boolean isPageEnabled() {
-        return pageEnabled;
-    }
+	public void setID(String id) {
+		ID = id;
+	}
 
-    public void setPageEnabled(boolean page) {
-        pageEnabled = page;
-    }
+	public boolean isPageEnabled() {
+		return pageEnabled;
+	}
 
-    @Override
-    public int getTotal() {
-        return total;
-    }
+	public void setPageEnabled(boolean page) {
+		pageEnabled = page;
+	}
 
-    @Override
-    public void setTotal(int total) {
-        if (total < 0) {
-            return;
-        }
-        this.total = total;
-        if (pageIndex > Math.ceil(total * 1.0 / pageSize)) {
-            pageIndex = Double.valueOf(Math.floor(total * 1.0 / pageSize)).intValue();
-        }
-        totalFlag = true;
-    }
+	@Override
+	public int getTotal() {
+		return total;
+	}
 
-    // @Override
-    // public void setTotal(QueryBuilder qb) {
-    // if (pageIndex == 0 || !totalFlag) {
-    // setTotal(DBUtil.getCount(qb));
-    // }
-    // }
+	@Override
+	public void setTotal(int total) {
+		if (total < 0) {
+			return;
+		}
+		this.total = total;
+		if (pageIndex > Math.ceil(total * 1.0 / pageSize)) {
+			pageIndex = Double.valueOf(Math.floor(total * 1.0 / pageSize)).intValue();
+		}
+		totalFlag = true;
+	}
 
-    @Override
-    public int getPageIndex() {
-        return pageIndex;
-    }
+	// @Override
+	// public void setTotal(QueryBuilder qb) {
+	// if (pageIndex == 0 || !totalFlag) {
+	// setTotal(DBUtil.getCount(qb));
+	// }
+	// }
 
-    @Override
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
-        /* ${_ARK_LICENSE_CODE_} */
-    }
+	@Override
+	public int getPageIndex() {
+		return pageIndex;
+	}
 
-    @Override
-    public int getPageSize() {
-        return pageSize;
-    }
+	@Override
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+		/* ${_ARK_LICENSE_CODE_} */
+	}
 
-    @Override
-    public void setPageSize(int pageSize) {
-        if (pageSize > MaxPageSize.getValue()) {
-            pageSize = MaxPageSize.getValue();
-        }
-        this.pageSize = pageSize;
-    }
+	@Override
+	public int getPageSize() {
+		return pageSize;
+	}
 
-    public boolean isAutoFill() {
-        return autoFill;
-    }
+	@Override
+	public void setPageSize(int pageSize) {
+		if (pageSize > MaxPageSize.getValue()) {
+			pageSize = MaxPageSize.getValue();
+		}
+		this.pageSize = pageSize;
+	}
 
-    public void setAutoFill(boolean autoFill) {
-        this.autoFill = autoFill;
-    }
+	public boolean isAutoFill() {
+		return autoFill;
+	}
 
-    public boolean isAutoPageSize() {
-        return autoPageSize;
-    }
+	public void setAutoFill(boolean autoFill) {
+		this.autoFill = autoFill;
+	}
 
-    public void setAutoPageSize(boolean autoPageSize) {
-        this.autoPageSize = autoPageSize;
-    }
+	public boolean isAutoPageSize() {
+		return autoPageSize;
+	}
 
-    public String getDragClass() {
-        return dragClass;
-    }
+	public void setAutoPageSize(boolean autoPageSize) {
+		this.autoPageSize = autoPageSize;
+	}
 
-    public void setDragClass(String dragClass) {
-        this.dragClass = dragClass;
-    }
+	public String getDragClass() {
+		return dragClass;
+	}
 
-    public String getListNodes() {
-        return listNodes;
-    }
+	public void setDragClass(String dragClass) {
+		this.dragClass = dragClass;
+	}
 
-    public void setListNodes(String listNodes) {
-        this.listNodes = listNodes;
-    }
+	public String getListNodes() {
+		return listNodes;
+	}
 
-    public String getSortEnd() {
-        return sortEnd;
-    }
+	public void setListNodes(String listNodes) {
+		this.listNodes = listNodes;
+	}
 
-    public void setSortEnd(String sortEnd) {
-        this.sortEnd = sortEnd;
-    }
+	public String getSortEnd() {
+		return sortEnd;
+	}
 
-    public DataListBody getTagBody() {
-        return tagBody;
-    }
+	public void setSortEnd(String sortEnd) {
+		this.sortEnd = sortEnd;
+	}
 
-    public void setTagBody(DataListBody tagBody) {
-        this.tagBody = tagBody;
-    }
+	public DataListBody getTagBody() {
+		return tagBody;
+	}
 
-    public boolean isAjaxRequest() {
-        return isAjaxRequest;
-    }
+	public void setTagBody(DataListBody tagBody) {
+		this.tagBody = tagBody;
+	}
 
-    public void setAjaxRequest(boolean isAjaxRequest) {
-        this.isAjaxRequest = isAjaxRequest;
-    }
+	public boolean isAjaxRequest() {
+		return isAjaxRequest;
+	}
 
-    public String getRest() {
-        return rest;
-    }
+	public void setAjaxRequest(boolean isAjaxRequest) {
+		this.isAjaxRequest = isAjaxRequest;
+	}
 
-    public void setRest(String rest) {
-        this.rest = rest;
-    }
+	public String getRest() {
+		return rest;
+	}
+
+	public void setRest(String rest) {
+		this.rest = rest;
+	}
 
 }

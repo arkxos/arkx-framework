@@ -16,19 +16,21 @@ import java.io.ObjectInputStream;
  */
 public class ContextClassLoaderObjectInputStream extends ObjectInputStream {
 
-    public ContextClassLoaderObjectInputStream(InputStream in) throws IOException {
-        super(in);
-    }
+	public ContextClassLoaderObjectInputStream(InputStream in) throws IOException {
+		super(in);
+	}
 
-    @Override
-    protected Class<?> resolveClass(java.io.ObjectStreamClass desc) throws IOException, ClassNotFoundException {
-        String name = desc.getName();
-        try {
-            ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            return Class.forName(name, true, cl);
-        } catch (ClassNotFoundException ex) {
-            // 如果上下文类加载器找不到类，则回退到默认行为
-            return super.resolveClass(desc);
-        }
-    }
+	@Override
+	protected Class<?> resolveClass(java.io.ObjectStreamClass desc) throws IOException, ClassNotFoundException {
+		String name = desc.getName();
+		try {
+			ClassLoader cl = Thread.currentThread().getContextClassLoader();
+			return Class.forName(name, true, cl);
+		}
+		catch (ClassNotFoundException ex) {
+			// 如果上下文类加载器找不到类，则回退到默认行为
+			return super.resolveClass(desc);
+		}
+	}
+
 }

@@ -13,7 +13,6 @@ import io.arkx.framework.data.common.sqltoy.SqlToyQuery;
 import io.arkx.soa.entity.StaffEntity;
 
 /**
- *
  * @author Darkness
  * @date 2020年10月25日 下午3:22:46
  * @version V1.0
@@ -21,21 +20,21 @@ import io.arkx.soa.entity.StaffEntity;
 @Repository
 public interface StaffRepository extends JpaRepository<StaffEntity, String> {
 
-    @SqlToyQuery("queryByNameAndAge")
-    List<Map<String, Object>> queryListMapByNameAndAge(@Param("name") String name, @Param("age") int age);
+	@SqlToyQuery("queryByNameAndAge")
+	List<Map<String, Object>> queryListMapByNameAndAge(@Param("name") String name, @Param("age") int age);
 
-    @SqlToyQuery("queryByNameAndAge")
-    List<StaffEntity> queryListEntityByNameAndAge(@Param("name") String name, @Param("age") int age);
+	@SqlToyQuery("queryByNameAndAge")
+	List<StaffEntity> queryListEntityByNameAndAge(@Param("name") String name, @Param("age") int age);
 
-    // 默认名称为：类名简称 + '_' + 方法名，此处为：StaffRepository_queryPageMapByNameAndAge
-    @SqlToyQuery
-    Page<Map<String, Object>> queryPageMapByNameAndAge(@Param("name") String name, @Param("age") int age,
-            Pageable pageable);
+	// 默认名称为：类名简称 + '_' + 方法名，此处为：StaffRepository_queryPageMapByNameAndAge
+	@SqlToyQuery
+	Page<Map<String, Object>> queryPageMapByNameAndAge(@Param("name") String name, @Param("age") int age,
+			Pageable pageable);
 
-    @SqlToyQuery("queryByNameAndAge")
-    Page<StaffEntity> queryPageEntityByNameAndAge(@Param("name") String name, @Param("age") int age, Pageable pageable);
+	@SqlToyQuery("queryByNameAndAge")
+	Page<StaffEntity> queryPageEntityByNameAndAge(@Param("name") String name, @Param("age") int age, Pageable pageable);
 
-    @SqlToyQuery("queryByNameAndAge")
-    Page<StaffEntity> queryPageEntityByMap(Map<String, Object> params, Pageable pageable);
+	@SqlToyQuery("queryByNameAndAge")
+	Page<StaffEntity> queryPageEntityByMap(Map<String, Object> params, Pageable pageable);
 
 }

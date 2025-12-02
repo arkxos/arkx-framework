@@ -14,27 +14,29 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 /**
- *
  * @author w.dehai
  *
  */
-@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Documented
 @Repeatable(ElementNotEmpty.List.class)
-@Constraint(validatedBy = {ElementNotEmptyValidator.class})
+@Constraint(validatedBy = { ElementNotEmptyValidator.class })
 public @interface ElementNotEmpty {
 
-    String message() default "子元素不能为空";
+	String message() default "子元素不能为空";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
-    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
-    @Retention(RUNTIME)
-    @Documented
-    @interface List {
-        ElementNotEmpty[] value();
-    }
+	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+	@Retention(RUNTIME)
+	@Documented
+	@interface List {
+
+		ElementNotEmpty[] value();
+
+	}
+
 }

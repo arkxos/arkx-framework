@@ -20,45 +20,45 @@ import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
  *
  * @author stormning on 16/6/16.
  */
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings({ "unchecked" })
 public abstract class RepoBasedConverter<S, D, ID extends Serializable> extends AbstractConverter<S, D, ID>
-        implements
-            ApplicationContextAware {
+		implements ApplicationContextAware {
 
-    private Repositories repositories;
+	private Repositories repositories;
 
-    private BaseJpaRepository<S, ID> genericJpaRepository;
+	private BaseJpaRepository<S, ID> genericJpaRepository;
 
-    private EntityInformation<S, ID> entityInformation;
+	private EntityInformation<S, ID> entityInformation;
 
-    private boolean useCache = false;
+	private boolean useCache = false;
 
-    @Override
-    protected ID getId(S source) {
-        return entityInformation.getId(source);
-    }
+	@Override
+	protected ID getId(S source) {
+		return entityInformation.getId(source);
+	}
 
-    @Override
-    protected S internalGet(ID id) {
-        Optional<S> optional = genericJpaRepository.findById(id);
-        return optional.orElse(null);
-    }
+	@Override
+	protected S internalGet(ID id) {
+		Optional<S> optional = genericJpaRepository.findById(id);
+		return optional.orElse(null);
+	}
 
-    @Override
-    protected Map<ID, S> internalMGet(Collection<ID> ids) {
-        if (useCache) {
-            return genericJpaRepository.mgetOneByOne(ids);
-        }
-        return genericJpaRepository.mget(ids);
-    }
+	@Override
+	protected Map<ID, S> internalMGet(Collection<ID> ids) {
+		if (useCache) {
+			return genericJpaRepository.mgetOneByOne(ids);
+		}
+		return genericJpaRepository.mget(ids);
+	}
 
-    @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        Class<?>[] classes = GenericTypeResolver.resolveTypeArguments(this.getClass(), RepoBasedConverter.class);
-        Class<?> clazz = classes[0];
-        this.repositories = new Repositories(context);
-        this.entityInformation = repositories.getEntityInformationFor(clazz);
-        this.genericJpaRepository = (BaseJpaRepository<S, ID>) repositories.getRepositoryFor(clazz).orElse(null);
-        this.useCache = genericJpaRepository instanceof CachingJpaRepository;
-    }
+	@Override
+	public void setApplicationContext(ApplicationContext context) throws BeansException {
+		Class<?>[] classes = GenericTypeResolver.resolveTypeArguments(this.getClass(), RepoBasedConverter.class);
+		Class<?> clazz = classes[0];
+		this.repositories = new Repositories(context);
+		this.entityInformation = repositories.getEntityInformationFor(clazz);
+		this.genericJpaRepository = (BaseJpaRepository<S, ID>) repositories.getRepositoryFor(clazz).orElse(null);
+		this.useCache = genericJpaRepository instanceof CachingJpaRepository;
+	}
+
 }

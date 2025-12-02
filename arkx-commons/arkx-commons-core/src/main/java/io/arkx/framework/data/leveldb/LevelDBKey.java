@@ -5,116 +5,122 @@ import java.util.List;
 
 public class LevelDBKey {
 
-    private String cachedKey;
-    private byte[] cachedKeyBytes;
-    private String category;
-    private int numberOfSegments;
-    private LevelDBKey primaryKey;
-    private List<String> segments;
+	private String cachedKey;
 
-    public LevelDBKey(String aCategory, int aNumberOfSegments) {
-        this(null, aCategory, aNumberOfSegments);
-    }
+	private byte[] cachedKeyBytes;
 
-    public LevelDBKey(String aCategory, String... aSegments) {
-        this(null, aCategory, aSegments.length);
+	private String category;
 
-        for (String segment : aSegments) {
-            this.specifyNextSegment(segment);
-        }
-    }
+	private int numberOfSegments;
 
-    public LevelDBKey(LevelDBKey aPrimaryKey, String aCategory, String... aSegments) {
-        this(aPrimaryKey, aCategory, aSegments.length);
+	private LevelDBKey primaryKey;
 
-        for (String segment : aSegments) {
-            this.specifyNextSegment(segment);
-        }
-    }
+	private List<String> segments;
 
-    public LevelDBKey(LevelDBKey aPrimaryKey, String aCategory, int aNumberOfSegments) {
-        super();
+	public LevelDBKey(String aCategory, int aNumberOfSegments) {
+		this(null, aCategory, aNumberOfSegments);
+	}
 
-        this.setCategory(aCategory);
-        this.setNumberOfSegments(aNumberOfSegments);
-        this.setPrimaryKey(aPrimaryKey);
-        this.setSegments(new ArrayList<String>(aNumberOfSegments));
-    }
+	public LevelDBKey(String aCategory, String... aSegments) {
+		this(null, aCategory, aSegments.length);
 
-    public String key() {
-        if (this.cachedKey == null) {
-            StringBuffer buf = new StringBuffer(this.category());
+		for (String segment : aSegments) {
+			this.specifyNextSegment(segment);
+		}
+	}
 
-            for (String segment : this.segments()) {
-                buf.append(':').append(segment);
-            }
+	public LevelDBKey(LevelDBKey aPrimaryKey, String aCategory, String... aSegments) {
+		this(aPrimaryKey, aCategory, aSegments.length);
 
-            this.cachedKey = buf.toString();
-        }
+		for (String segment : aSegments) {
+			this.specifyNextSegment(segment);
+		}
+	}
 
-        return this.cachedKey;
-    }
+	public LevelDBKey(LevelDBKey aPrimaryKey, String aCategory, int aNumberOfSegments) {
+		super();
 
-    public byte[] keyAsBytes() {
-        if (this.cachedKeyBytes == null) {
-            this.cachedKeyBytes = this.key().getBytes();
-        }
+		this.setCategory(aCategory);
+		this.setNumberOfSegments(aNumberOfSegments);
+		this.setPrimaryKey(aPrimaryKey);
+		this.setSegments(new ArrayList<String>(aNumberOfSegments));
+	}
 
-        return this.cachedKeyBytes;
-    }
+	public String key() {
+		if (this.cachedKey == null) {
+			StringBuffer buf = new StringBuffer(this.category());
 
-    public String primaryKeyValue() {
-        if (this.primaryKey() == null) {
-            throw new IllegalStateException("Unknown primary key.");
-        }
+			for (String segment : this.segments()) {
+				buf.append(':').append(segment);
+			}
 
-        return this.primaryKey().key();
-    }
+			this.cachedKey = buf.toString();
+		}
 
-    public void specifyNextSegment(String aSegment) {
-        if (this.segments().size() == this.numberOfSegments()) {
-            throw new IllegalStateException("Specified too many segments.");
-        }
+		return this.cachedKey;
+	}
 
-        this.cachedKey = null;
-        this.cachedKeyBytes = null;
+	public byte[] keyAsBytes() {
+		if (this.cachedKeyBytes == null) {
+			this.cachedKeyBytes = this.key().getBytes();
+		}
 
-        this.segments().add(aSegment);
-    }
+		return this.cachedKeyBytes;
+	}
 
-    private String category() {
-        return this.category;
-    }
+	public String primaryKeyValue() {
+		if (this.primaryKey() == null) {
+			throw new IllegalStateException("Unknown primary key.");
+		}
 
-    private void setCategory(String aCategory) {
-        if (aCategory == null || aCategory.trim().isEmpty()) {
-            throw new IllegalArgumentException("The category must be provided.");
-        }
+		return this.primaryKey().key();
+	}
 
-        this.category = aCategory;
-    }
+	public void specifyNextSegment(String aSegment) {
+		if (this.segments().size() == this.numberOfSegments()) {
+			throw new IllegalStateException("Specified too many segments.");
+		}
 
-    private int numberOfSegments() {
-        return this.numberOfSegments;
-    }
+		this.cachedKey = null;
+		this.cachedKeyBytes = null;
 
-    private void setNumberOfSegments(int aNumberOfSegments) {
-        this.numberOfSegments = aNumberOfSegments;
-    }
+		this.segments().add(aSegment);
+	}
 
-    private LevelDBKey primaryKey() {
-        return this.primaryKey;
-    }
+	private String category() {
+		return this.category;
+	}
 
-    private void setPrimaryKey(LevelDBKey aPrimaryKey) {
-        this.primaryKey = aPrimaryKey;
-    }
+	private void setCategory(String aCategory) {
+		if (aCategory == null || aCategory.trim().isEmpty()) {
+			throw new IllegalArgumentException("The category must be provided.");
+		}
 
-    private List<String> segments() {
-        return this.segments;
-    }
+		this.category = aCategory;
+	}
 
-    private void setSegments(List<String> aSegments) {
-        this.segments = aSegments;
-    }
+	private int numberOfSegments() {
+		return this.numberOfSegments;
+	}
+
+	private void setNumberOfSegments(int aNumberOfSegments) {
+		this.numberOfSegments = aNumberOfSegments;
+	}
+
+	private LevelDBKey primaryKey() {
+		return this.primaryKey;
+	}
+
+	private void setPrimaryKey(LevelDBKey aPrimaryKey) {
+		this.primaryKey = aPrimaryKey;
+	}
+
+	private List<String> segments() {
+		return this.segments;
+	}
+
+	private void setSegments(List<String> aSegments) {
+		this.segments = aSegments;
+	}
+
 }

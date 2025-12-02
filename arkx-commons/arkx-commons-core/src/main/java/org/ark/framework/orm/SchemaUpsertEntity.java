@@ -15,15 +15,15 @@ import lombok.Data;
 @Data
 public class SchemaUpsertEntity {
 
-    private Boolean success;
+	private Boolean success;
 
-    private String type;
+	private String type;
 
-    private String execSql;
+	private String execSql;
 
-    private String errorMessage;
+	private String errorMessage;
 
-    public SchemaUpsertEntity() {
-    }
+	public SchemaUpsertEntity() {
+	}
 
 }

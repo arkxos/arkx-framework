@@ -18,52 +18,56 @@ import io.arkx.framework.data.db.core.provider.sync.DefaultTableDataSynchronizeP
 
 public class OracleTableDataSynchronizer extends DefaultTableDataSynchronizeProvider {
 
-    public OracleTableDataSynchronizer(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-    }
+	public OracleTableDataSynchronizer(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+	}
 
-    @Override
-    public long executeInsert(List<Object[]> records) {
-        List<InputStream> iss = new ArrayList<>();
-        records.parallelStream().forEach((Object[] row) -> {
-            for (int i = 0; i < row.length; ++i) {
-                int jdbcType = this.columnType.get(this.fieldOrders.get(i));
-                row[i] = OracleCastUtils.castByJdbcType(jdbcType, row[i], iss);
-            }
-        });
+	@Override
+	public long executeInsert(List<Object[]> records) {
+		List<InputStream> iss = new ArrayList<>();
+		records.parallelStream().forEach((Object[] row) -> {
+			for (int i = 0; i < row.length; ++i) {
+				int jdbcType = this.columnType.get(this.fieldOrders.get(i));
+				row[i] = OracleCastUtils.castByJdbcType(jdbcType, row[i], iss);
+			}
+		});
 
-        try {
-            return super.executeInsert(records);
-        } finally {
-            iss.forEach(is -> {
-                try {
-                    is.close();
-                } catch (Exception ignore) {
-                }
-            });
-        }
-    }
+		try {
+			return super.executeInsert(records);
+		}
+		finally {
+			iss.forEach(is -> {
+				try {
+					is.close();
+				}
+				catch (Exception ignore) {
+				}
+			});
+		}
+	}
 
-    @Override
-    public long executeUpdate(List<Object[]> records) {
-        List<InputStream> iss = new ArrayList<>();
-        records.parallelStream().forEach((Object[] row) -> {
-            for (int i = 0; i < row.length; ++i) {
-                int jdbcType = this.columnType.get(this.fieldOrders.get(i));
-                row[i] = OracleCastUtils.castByJdbcType(jdbcType, row[i], iss);
-            }
-        });
+	@Override
+	public long executeUpdate(List<Object[]> records) {
+		List<InputStream> iss = new ArrayList<>();
+		records.parallelStream().forEach((Object[] row) -> {
+			for (int i = 0; i < row.length; ++i) {
+				int jdbcType = this.columnType.get(this.fieldOrders.get(i));
+				row[i] = OracleCastUtils.castByJdbcType(jdbcType, row[i], iss);
+			}
+		});
 
-        try {
-            return super.executeUpdate(records);
-        } finally {
-            iss.forEach(is -> {
-                try {
-                    is.close();
-                } catch (Exception ignore) {
-                }
-            });
-        }
-    }
+		try {
+			return super.executeUpdate(records);
+		}
+		finally {
+			iss.forEach(is -> {
+				try {
+					is.close();
+				}
+				catch (Exception ignore) {
+				}
+			});
+		}
+	}
 
 }

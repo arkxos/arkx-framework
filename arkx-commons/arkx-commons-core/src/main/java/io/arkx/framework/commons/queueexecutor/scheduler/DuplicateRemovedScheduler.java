@@ -18,33 +18,34 @@ import io.arkx.framework.commons.queueexecutor.scheduler.component.HashSetDuplic
  */
 public abstract class DuplicateRemovedScheduler<T> implements Scheduler<T> {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    private DuplicateRemover<T> duplicatedRemover = new HashSetDuplicateRemover<T>();
+	private DuplicateRemover<T> duplicatedRemover = new HashSetDuplicateRemover<T>();
 
-    public DuplicateRemover<T> getDuplicateRemover() {
-        return duplicatedRemover;
-    }
+	public DuplicateRemover<T> getDuplicateRemover() {
+		return duplicatedRemover;
+	}
 
-    public DuplicateRemovedScheduler<T> setDuplicateRemover(DuplicateRemover<T> duplicatedRemover) {
-        this.duplicatedRemover = duplicatedRemover;
-        return this;
-    }
+	public DuplicateRemovedScheduler<T> setDuplicateRemover(DuplicateRemover<T> duplicatedRemover) {
+		this.duplicatedRemover = duplicatedRemover;
+		return this;
+	}
 
-    @Override
-    public void push(Element<T> element) {
-        logger.trace("get a candidate element {}", element.getId());
-        if (!duplicatedRemover.isDuplicate(element) || shouldReserved(element)) {
-            logger.debug("push to queue {}", element.getId());
-            pushWhenNoDuplicate(element);
-        }
-    }
+	@Override
+	public void push(Element<T> element) {
+		logger.trace("get a candidate element {}", element.getId());
+		if (!duplicatedRemover.isDuplicate(element) || shouldReserved(element)) {
+			logger.debug("push to queue {}", element.getId());
+			pushWhenNoDuplicate(element);
+		}
+	}
 
-    protected boolean shouldReserved(Element<T> element) {
-        return element.getExtra(Element.CYCLE_TRIED_TIMES) != null;
-    }
+	protected boolean shouldReserved(Element<T> element) {
+		return element.getExtra(Element.CYCLE_TRIED_TIMES) != null;
+	}
 
-    protected void pushWhenNoDuplicate(Element<T> element) {
+	protected void pushWhenNoDuplicate(Element<T> element) {
 
-    }
+	}
+
 }

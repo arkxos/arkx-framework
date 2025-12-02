@@ -6,11 +6,11 @@ package io.arkx.framework.data.db.command;
  */
 public class ChangeColumnLengthCommand extends ChangeColumnMandatoryCommand {
 
-    public static final String Prefix = "ChangeColumnLength:";
+	public static final String Prefix = "ChangeColumnLength:";
 
-    @Override
-    public String getPrefix() {
-        return Prefix;
-    }
+	@Override
+	public String getPrefix() {
+		return Prefix;
+	}
 
 }

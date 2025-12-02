@@ -22,69 +22,70 @@ import io.arkx.framework.data.jdbc.*;
  */
 public class CriteriaTest {
 
-    @Before("")
-    public void before() {
-        Person person1 = new Person();
-        person1.setName("darkness");
-        person1.setAge(10);
-        person1.setBirthday(DateUtil.parseDateTime("2012-03-25 11:25:14"));
+	@Before("")
+	public void before() {
+		Person person1 = new Person();
+		person1.setName("darkness");
+		person1.setAge(10);
+		person1.setBirthday(DateUtil.parseDateTime("2012-03-25 11:25:14"));
 
-        Person person2 = new Person();
-        person2.setName("darkness");
-        person2.setAge(15);
-        person2.setBirthday(DateUtil.parseDateTime("2012-02-25 11:25:14"));
+		Person person2 = new Person();
+		person2.setName("darkness");
+		person2.setAge(15);
+		person2.setBirthday(DateUtil.parseDateTime("2012-02-25 11:25:14"));
 
-        Session session = SessionFactory.openSession();
-        session.beginTransaction();
+		Session session = SessionFactory.openSession();
+		session.beginTransaction();
 
-        session.save(person1);
-        session.save(person2);
+		session.save(person1);
+		session.save(person2);
 
-        session.commit();
-    }
+		session.commit();
+	}
 
-    @Test
-    public void lt() {
-        Criteria criteria = getSession().createCriteria(Person.class);
+	@Test
+	public void lt() {
+		Criteria criteria = getSession().createCriteria(Person.class);
 
-        Date startTime = DateUtil.parseDateTime("2012-10-25 11:25:14");
-        criteria.add(Restrictions.lt(Person.Birthday, startTime));
+		Date startTime = DateUtil.parseDateTime("2012-10-25 11:25:14");
+		criteria.add(Restrictions.lt(Person.Birthday, startTime));
 
-        List<Person> persons = criteria.findEntities();
-        assertEquals(2, persons.size());
-    }
+		List<Person> persons = criteria.findEntities();
+		assertEquals(2, persons.size());
+	}
 
-    @Test
-    public void gt() {
-        Criteria criteria = getSession().createCriteria(Person.class);
+	@Test
+	public void gt() {
+		Criteria criteria = getSession().createCriteria(Person.class);
 
-        Date startTime = DateUtil.parseDateTime("2012-02-28 11:25:14");
-        criteria.add(Restrictions.gt(Person.Birthday, startTime));
+		Date startTime = DateUtil.parseDateTime("2012-02-28 11:25:14");
+		criteria.add(Restrictions.gt(Person.Birthday, startTime));
 
-        List<Person> persons = criteria.findEntities();
-        assertEquals(1, persons.size());
-    }
+		List<Person> persons = criteria.findEntities();
+		assertEquals(1, persons.size());
+	}
 
-    @Test
-    public void between() {
-        Criteria criteria = getSession().createCriteria(Person.class);
+	@Test
+	public void between() {
+		Criteria criteria = getSession().createCriteria(Person.class);
 
-        Date startTime = DateUtil.parseDateTime("2012-02-22 11:25:14");
-        Date endTime = DateUtil.parseDateTime("2012-02-28 11:25:14");
-        criteria.add(Restrictions.gt(Person.Birthday, startTime));
-        criteria.add(Restrictions.lt(Person.Birthday, endTime));
+		Date startTime = DateUtil.parseDateTime("2012-02-22 11:25:14");
+		Date endTime = DateUtil.parseDateTime("2012-02-28 11:25:14");
+		criteria.add(Restrictions.gt(Person.Birthday, startTime));
+		criteria.add(Restrictions.lt(Person.Birthday, endTime));
 
-        List<Person> persons = criteria.findEntities();
-        assertEquals(1, persons.size());
-    }
+		List<Person> persons = criteria.findEntities();
+		assertEquals(1, persons.size());
+	}
 
-    @After("")
-    public void after() {
-        Query queryBuilder = getSession().createQuery("DELETE FROM test__person WHERE NAME='darkness'");
-        queryBuilder.executeNoQuery();
-    }
+	@After("")
+	public void after() {
+		Query queryBuilder = getSession().createQuery("DELETE FROM test__person WHERE NAME='darkness'");
+		queryBuilder.executeNoQuery();
+	}
 
-    public Session getSession() {
-        return SessionFactory.currentSession();
-    }
+	public Session getSession() {
+		return SessionFactory.currentSession();
+	}
+
 }

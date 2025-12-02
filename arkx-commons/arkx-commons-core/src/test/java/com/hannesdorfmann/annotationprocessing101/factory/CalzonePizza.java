@@ -24,8 +24,9 @@ import com.hannesdorfmann.annotationprocessing101.factory.annotation.Factory;
 @Factory(id = "Calzone", type = Meal.class)
 public class CalzonePizza implements Meal {
 
-    @Override
-    public float getPrice() {
-        return 8.5f;
-    }
+	@Override
+	public float getPrice() {
+		return 8.5f;
+	}
+
 }

@@ -5,19 +5,21 @@ import java.util.Collection;
 import java.util.Date;
 
 public abstract interface SSIExternalResolver {
-    public abstract void addVariableNames(Collection<String> paramCollection);
 
-    public abstract String getVariableValue(String paramString);
+	public abstract void addVariableNames(Collection<String> paramCollection);
 
-    public abstract void setVariableValue(String paramString1, String paramString2);
+	public abstract String getVariableValue(String paramString);
 
-    public abstract Date getCurrentDate();
+	public abstract void setVariableValue(String paramString1, String paramString2);
 
-    public abstract long getFileSize(String paramString, boolean paramBoolean) throws IOException;
+	public abstract Date getCurrentDate();
 
-    public abstract long getFileLastModified(String paramString, boolean paramBoolean) throws IOException;
+	public abstract long getFileSize(String paramString, boolean paramBoolean) throws IOException;
 
-    public abstract String getFileText(String paramString, boolean paramBoolean) throws IOException;
+	public abstract long getFileLastModified(String paramString, boolean paramBoolean) throws IOException;
 
-    public abstract void log(String paramString, Throwable paramThrowable);
+	public abstract String getFileText(String paramString, boolean paramBoolean) throws IOException;
+
+	public abstract void log(String paramString, Throwable paramThrowable);
+
 }

@@ -7,58 +7,61 @@ import io.arkx.framework.commons.collection.DataRow;
  *
  */
 public class TreeItem implements Cloneable {
-    private DataRow data;
 
-    private boolean isRoot = false;
+	private DataRow data;
 
-    private TreeAction ta;
+	private boolean isRoot = false;
 
-    private TreeItem parent;
+	private TreeAction ta;
 
-    public TreeItem(TreeAction ta, TreeItem parent, DataRow data, boolean isRoot) {
-        this.ta = ta;
-        this.data = data;
-        this.isRoot = isRoot;
-        this.parent = parent;
-    }
+	private TreeItem parent;
 
-    public void setIcon(String icon) {
-        if (isRoot) {
-            ta.setRootIcon(icon);
-        } else {
-            data.set(ta.getIconColumnName(), icon);
-        }
-    }
+	public TreeItem(TreeAction ta, TreeItem parent, DataRow data, boolean isRoot) {
+		this.ta = ta;
+		this.data = data;
+		this.isRoot = isRoot;
+		this.parent = parent;
+	}
 
-    public TreeItem getParent() {
-        return parent;
-    }
+	public void setIcon(String icon) {
+		if (isRoot) {
+			ta.setRootIcon(icon);
+		}
+		else {
+			data.set(ta.getIconColumnName(), icon);
+		}
+	}
 
-    public void setText(String text) {
-        if (isRoot) {
-            ta.setRootText(text);
-        }
-    }
+	public TreeItem getParent() {
+		return parent;
+	}
 
-    public String getID() {
-        if (data == null) {
-            return null;
-        }
-        return data.getString(ta.getParentIdentifierColumnName());
-    }
+	public void setText(String text) {
+		if (isRoot) {
+			ta.setRootText(text);
+		}
+	}
 
-    public String getParentID() {
-        if (data == null) {
-            return null;
-        }
-        return data.getString(ta.getParentIdentifierColumnName());
-    }
+	public String getID() {
+		if (data == null) {
+			return null;
+		}
+		return data.getString(ta.getParentIdentifierColumnName());
+	}
 
-    public boolean isRoot() {
-        return isRoot;
-    }
+	public String getParentID() {
+		if (data == null) {
+			return null;
+		}
+		return data.getString(ta.getParentIdentifierColumnName());
+	}
 
-    public DataRow getData() {
-        return data;
-    }
+	public boolean isRoot() {
+		return isRoot;
+	}
+
+	public DataRow getData() {
+		return data;
+	}
+
 }

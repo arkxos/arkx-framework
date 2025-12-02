@@ -19,43 +19,44 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class LoginAuthRequestHandler extends SimpleChannelInboundHandler<NettyMessage> {
 
-    private Logger logger = LoggerFactory.getLogger(LoginAuthRequestHandler.class);
+	private Logger logger = LoggerFactory.getLogger(LoginAuthRequestHandler.class);
 
-    private NettyClient client;
+	private NettyClient client;
 
-    public LoginAuthRequestHandler(NettyClient client) {
-        this.client = client;
-    }
+	public LoginAuthRequestHandler(NettyClient client) {
+		this.client = client;
+	}
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        authenticate();
-    }
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		authenticate();
+	}
 
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
-        ctx.fireChannelRead(message);
-    }
+	@Override
+	public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
+		ctx.fireChannelRead(message);
+	}
 
-    private void authenticate() {
-        logger.debug("prepared for authenticate");
-        NettyMessage message = client.getMessageProcessor().send(buildLoginRequest());
-        logger.debug("authenticate success");
-        // 如果是握手应答消息，需要判断是否认证成功
+	private void authenticate() {
+		logger.debug("prepared for authenticate");
+		NettyMessage message = client.getMessageProcessor().send(buildLoginRequest());
+		logger.debug("authenticate success");
+		// 如果是握手应答消息，需要判断是否认证成功
 
-        byte loginResult = message.getBody()[0];
-        if (loginResult != (byte) 0) {
-            // 握手失败，关闭连接
-            client.shutdown();
-        } else {
-            logger.info("Login is ok : " + message);
-        }
-    }
+		byte loginResult = message.getBody()[0];
+		if (loginResult != (byte) 0) {
+			// 握手失败，关闭连接
+			client.shutdown();
+		}
+		else {
+			logger.info("Login is ok : " + message);
+		}
+	}
 
-    private NettyMessage buildLoginRequest() {
-        RequestMessage message = new RequestMessage(UuidUtil.base58Uuid());
-        message.setBusinessType(NettyBusinessType.LOGIN.value());
-        return message;
-    }
+	private NettyMessage buildLoginRequest() {
+		RequestMessage message = new RequestMessage(UuidUtil.base58Uuid());
+		message.setBusinessType(NettyBusinessType.LOGIN.value());
+		return message;
+	}
 
 }

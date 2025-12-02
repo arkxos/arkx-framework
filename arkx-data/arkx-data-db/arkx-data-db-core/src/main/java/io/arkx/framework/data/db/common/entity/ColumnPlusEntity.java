@@ -20,63 +20,64 @@ import lombok.NoArgsConstructor;
 @TableName(value = "DBSWITCH_COLUMN_PLUS", autoResultMap = true)
 public class ColumnPlusEntity {
 
-    /**
-     * 主键ID，自动递增
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+	/**
+	 * 主键ID，自动递增
+	 */
+	@TableId(value = "id", type = IdType.AUTO)
+	private Long id;
 
-    /**
-     * 字段映射ID，关联到字段映射表
-     */
-    @TableField("column_mapping_id")
-    private Long columnMappingId;
+	/**
+	 * 字段映射ID，关联到字段映射表
+	 */
+	@TableField("column_mapping_id")
+	private Long columnMappingId;
 
-    /**
-     * 转换器编码
-     */
-    @TableField("handler_code")
-    private String handlerCode;
+	/**
+	 * 转换器编码
+	 */
+	@TableField("handler_code")
+	private String handlerCode;
 
-    /**
-     * 转换器具体类名称
-     */
-    @TableField("handler_class")
-    private String handlerClass;
+	/**
+	 * 转换器具体类名称
+	 */
+	@TableField("handler_class")
+	private String handlerClass;
 
-    /**
-     * 扩展字段值
-     */
-    @TableField("value")
-    private String value;
+	/**
+	 * 扩展字段值
+	 */
+	@TableField("value")
+	private String value;
 
-    /**
-     * 字典名称
-     */
-    @TableField("raw_dict_name")
-    private String rawDictName;
+	/**
+	 * 字典名称
+	 */
+	@TableField("raw_dict_name")
+	private String rawDictName;
 
-    /**
-     * 字典id信息
-     */
-    @TableField("raw_dict_id")
-    private Integer rawDictId;
+	/**
+	 * 字典id信息
+	 */
+	@TableField("raw_dict_id")
+	private Integer rawDictId;
 
-    /**
-     * 新系统字典名称
-     */
-    @TableField("new_dict_name")
-    private String newDictName;
+	/**
+	 * 新系统字典名称
+	 */
+	@TableField("new_dict_name")
+	private String newDictName;
 
-    /**
-     * 新系统字典信息
-     */
-    @TableField("new_dict_id")
-    private Integer newDictId;
+	/**
+	 * 新系统字典信息
+	 */
+	@TableField("new_dict_id")
+	private Integer newDictId;
 
-    /**
-     * 是否映射
-     */
-    @TableField(exist = false)
-    private boolean isMapping;
+	/**
+	 * 是否映射
+	 */
+	@TableField(exist = false)
+	private boolean isMapping;
+
 }

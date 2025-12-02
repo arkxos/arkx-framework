@@ -5,6 +5,6 @@ import io.arkx.framework.util.task.Task;
 @FunctionalInterface
 public interface Progress {
 
-    void call(Task task, double progress);
+	void call(Task task, double progress);
 
 }

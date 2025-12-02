@@ -28,13 +28,13 @@ import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 
 /**
- * A ZipEncoding, which uses a java.nio {@link java.nio.charset.Charset Charset}
- * to encode names.
+ * A ZipEncoding, which uses a java.nio {@link java.nio.charset.Charset Charset} to encode
+ * names.
  *
  * <p>
- * This implementation works for all cases under java-1.5 or later. However, in
- * java-1.4, some charsets don't have a java.nio implementation, most notably
- * the default ZIP encoding Cp437.
+ * This implementation works for all cases under java-1.5 or later. However, in java-1.4,
+ * some charsets don't have a java.nio implementation, most notably the default ZIP
+ * encoding Cp437.
  * </p>
  *
  * <p>
@@ -42,78 +42,83 @@ import java.nio.charset.CodingErrorAction;
  * </p>
  */
 class NioZipEncoding implements ZipEncoding {
-    private final Charset charset;
 
-    /**
-     * Construct an NIO based zip encoding, which wraps the given charset.
-     *
-     * @param charset
-     *            The NIO charset to wrap.
-     */
-    public NioZipEncoding(Charset charset) {
-        this.charset = charset;
-    }
+	private final Charset charset;
 
-    /**
-     * @see org.apache.tools.zip.ZipEncoding#canEncode(java.lang.String)
-     */
-    public boolean canEncode(String name) {
-        CharsetEncoder enc = this.charset.newEncoder();
-        enc.onMalformedInput(CodingErrorAction.REPORT);
-        enc.onUnmappableCharacter(CodingErrorAction.REPORT);
+	/**
+	 * Construct an NIO based zip encoding, which wraps the given charset.
+	 * @param charset The NIO charset to wrap.
+	 */
+	public NioZipEncoding(Charset charset) {
+		this.charset = charset;
+	}
 
-        return enc.canEncode(name);
-    }
+	/**
+	 * @see org.apache.tools.zip.ZipEncoding#canEncode(java.lang.String)
+	 */
+	public boolean canEncode(String name) {
+		CharsetEncoder enc = this.charset.newEncoder();
+		enc.onMalformedInput(CodingErrorAction.REPORT);
+		enc.onUnmappableCharacter(CodingErrorAction.REPORT);
 
-    /**
-     * @see org.apache.tools.zip.ZipEncoding#encode(java.lang.String)
-     */
-    public ByteBuffer encode(String name) {
-        CharsetEncoder enc = this.charset.newEncoder();
+		return enc.canEncode(name);
+	}
 
-        enc.onMalformedInput(CodingErrorAction.REPORT);
-        enc.onUnmappableCharacter(CodingErrorAction.REPORT);
+	/**
+	 * @see org.apache.tools.zip.ZipEncoding#encode(java.lang.String)
+	 */
+	public ByteBuffer encode(String name) {
+		CharsetEncoder enc = this.charset.newEncoder();
 
-        CharBuffer cb = CharBuffer.wrap(name);
-        ByteBuffer out = ByteBuffer.allocate(name.length() + (name.length() + 1) / 2);
+		enc.onMalformedInput(CodingErrorAction.REPORT);
+		enc.onUnmappableCharacter(CodingErrorAction.REPORT);
 
-        while (cb.remaining() > 0) {
-            CoderResult res = enc.encode(cb, out, true);
+		CharBuffer cb = CharBuffer.wrap(name);
+		ByteBuffer out = ByteBuffer.allocate(name.length() + (name.length() + 1) / 2);
 
-            if (res.isUnmappable() || res.isMalformed()) {
+		while (cb.remaining() > 0) {
+			CoderResult res = enc.encode(cb, out, true);
 
-                // write the unmappable characters in utf-16
-                // pseudo-URL encoding style to ByteBuffer.
-                if (res.length() * 6 > out.remaining()) {
-                    out = ZipEncodingHelper.growBuffer(out, out.position() + res.length() * 6);
-                }
+			if (res.isUnmappable() || res.isMalformed()) {
 
-                for (int i = 0; i < res.length(); ++i) {
-                    ZipEncodingHelper.appendSurrogate(out, cb.get());
-                }
+				// write the unmappable characters in utf-16
+				// pseudo-URL encoding style to ByteBuffer.
+				if (res.length() * 6 > out.remaining()) {
+					out = ZipEncodingHelper.growBuffer(out, out.position() + res.length() * 6);
+				}
 
-            } else if (res.isOverflow()) {
+				for (int i = 0; i < res.length(); ++i) {
+					ZipEncodingHelper.appendSurrogate(out, cb.get());
+				}
 
-                out = ZipEncodingHelper.growBuffer(out, 0);
+			}
+			else if (res.isOverflow()) {
 
-            } else if (res.isUnderflow()) {
+				out = ZipEncodingHelper.growBuffer(out, 0);
 
-                enc.flush(out);
-                break;
+			}
+			else if (res.isUnderflow()) {
 
-            }
-        }
+				enc.flush(out);
+				break;
 
-        out.limit(out.position());
-        out.rewind();
-        return out;
-    }
+			}
+		}
 
-    /**
-     * @see org.apache.tools.zip.ZipEncoding#decode(byte[])
-     */
-    public String decode(byte[] data) throws IOException {
-        return this.charset.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
-                .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(data)).toString();
-    }
+		out.limit(out.position());
+		out.rewind();
+		return out;
+	}
+
+	/**
+	 * @see org.apache.tools.zip.ZipEncoding#decode(byte[])
+	 */
+	public String decode(byte[] data) throws IOException {
+		return this.charset.newDecoder()
+			.onMalformedInput(CodingErrorAction.REPORT)
+			.onUnmappableCharacter(CodingErrorAction.REPORT)
+			.decode(ByteBuffer.wrap(data))
+			.toString();
+	}
+
 }

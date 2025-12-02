@@ -7,9 +7,11 @@ import io.arkx.framework.core.FrameworkException;
  *
  */
 public class BeanSetPropertyException extends FrameworkException {
-    private static final long serialVersionUID = 1L;
 
-    public BeanSetPropertyException(Exception e) {
-        super(e);
-    }
+	private static final long serialVersionUID = 1L;
+
+	public BeanSetPropertyException(Exception e) {
+		super(e);
+	}
+
 }

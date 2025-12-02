@@ -11,19 +11,20 @@ import io.arkx.framework.data.common.entity.IdType;
 @SpringBootTest
 public class DefaultClosureTableSqlProviderTest {
 
-    @Autowired
-    private ClosureTableSqlProvider sqlProvider;
+	@Autowired
+	private ClosureTableSqlProvider sqlProvider;
 
-    @Test
-    public void testRebuildCommonClosureSql() {
-        String sql = sqlProvider.rebuildCommonClosureSql("t_closure", "t_dept", IdType.LONG);
-        assertTrue(sql.contains("TRUNCATE TABLE t_closure"));
-        assertTrue(sql.contains("INSERT INTO t_closure"));
-    }
+	@Test
+	public void testRebuildCommonClosureSql() {
+		String sql = sqlProvider.rebuildCommonClosureSql("t_closure", "t_dept", IdType.LONG);
+		assertTrue(sql.contains("TRUNCATE TABLE t_closure"));
+		assertTrue(sql.contains("INSERT INTO t_closure"));
+	}
 
-    @Test
-    public void testInsertCommonClosureSql() {
-        String sql = sqlProvider.insertCommonClosureSql("t_closure", IdType.LONG);
-        assertTrue(sql.contains("INSERT INTO t_closure"));
-    }
+	@Test
+	public void testInsertCommonClosureSql() {
+		String sql = sqlProvider.insertCommonClosureSql("t_closure", IdType.LONG);
+		assertTrue(sql.contains("INSERT INTO t_closure"));
+	}
+
 }

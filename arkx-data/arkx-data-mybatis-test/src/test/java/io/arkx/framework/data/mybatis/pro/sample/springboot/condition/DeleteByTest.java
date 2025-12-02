@@ -23,29 +23,32 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class DeleteByTest {
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private UserMapper userMapper;
 
-    @BeforeEach
-    void init() {
-        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert insert = insertInto("smart_user").columns("name", "password").values("w.dehai", "123456")
-                .values("Jaedong", "123").build();
-        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-    }
+	@Autowired
+	private DataSource dataSource;
 
-    @Test
-    void deleteByNameOrPasswordTest() {
-        int result = userMapper.deleteByNameOrPassword("w.dehai", "123");
-        assertEquals(2, result);
-    }
+	@BeforeEach
+	void init() {
+		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+		Insert insert = insertInto("smart_user").columns("name", "password")
+			.values("w.dehai", "123456")
+			.values("Jaedong", "123")
+			.build();
+		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+	}
 
-    @Test
-    void deleteByNameOrPasswordOptTest() {
-        int result = userMapper.deleteByNameOrPasswordOpt("w.dehai", null);
-        assertEquals(1, result);
-    }
+	@Test
+	void deleteByNameOrPasswordTest() {
+		int result = userMapper.deleteByNameOrPassword("w.dehai", "123");
+		assertEquals(2, result);
+	}
+
+	@Test
+	void deleteByNameOrPasswordOptTest() {
+		int result = userMapper.deleteByNameOrPasswordOpt("w.dehai", null);
+		assertEquals(1, result);
+	}
 
 }

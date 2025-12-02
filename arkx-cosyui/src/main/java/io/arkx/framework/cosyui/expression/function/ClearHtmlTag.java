@@ -11,53 +11,59 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  *
  */
 public class ClearHtmlTag extends AbstractFunction {
-    public static String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // 定义script的正则表达式
-    public static String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // 定义style的正则表达式
-    public static String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式
 
-    @Override
-    public String getFunctionName() {
-        return "clearHtmlTag";
-    }
+	public static String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // 定义script的正则表达式
 
-    private static String clearHtml(String htmlStr) {
-        Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);
-        Matcher m_script = p_script.matcher(htmlStr);
-        htmlStr = m_script.replaceAll(""); // 过滤script标签
+	public static String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // 定义style的正则表达式
 
-        Pattern p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);
-        Matcher m_style = p_style.matcher(htmlStr);
-        htmlStr = m_style.replaceAll(""); // 过滤style标签
+	public static String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式
 
-        Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
-        Matcher m_html = p_html.matcher(htmlStr);
-        htmlStr = m_html.replaceAll(""); // 过滤html标签
+	@Override
+	public String getFunctionName() {
+		return "clearHtmlTag";
+	}
 
-        htmlStr = htmlStr.replaceAll("[\\s]{2,}", " ");
-        htmlStr = htmlStr.trim();
-        htmlStr = htmlStr.replaceAll("&nbsp;", " ").replaceAll("&quot;", "\"").replaceAll("&lt;", "<")
-                .replaceAll("&gt;", ">").replaceAll("&amp;", "&");
+	private static String clearHtml(String htmlStr) {
+		Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);
+		Matcher m_script = p_script.matcher(htmlStr);
+		htmlStr = m_script.replaceAll(""); // 过滤script标签
 
-        return htmlStr;
-    }
+		Pattern p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);
+		Matcher m_style = p_style.matcher(htmlStr);
+		htmlStr = m_style.replaceAll(""); // 过滤style标签
 
-    @Override
-    public Object execute(IVariableResolver resolver, Object... args) {
-        String htmlStr = (String) args[0];
-        if (htmlStr == null) {
-            return "";
-        }
-        return clearHtml(htmlStr);
-    }
+		Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
+		Matcher m_html = p_html.matcher(htmlStr);
+		htmlStr = m_html.replaceAll(""); // 过滤html标签
 
-    @Override
-    public String getFunctionPrefix() {
-        return "";
-    }
+		htmlStr = htmlStr.replaceAll("[\\s]{2,}", " ");
+		htmlStr = htmlStr.trim();
+		htmlStr = htmlStr.replaceAll("&nbsp;", " ")
+			.replaceAll("&quot;", "\"")
+			.replaceAll("&lt;", "<")
+			.replaceAll("&gt;", ">")
+			.replaceAll("&amp;", "&");
 
-    @Override
-    public Class<?>[] getArgumentTypes() {
-        return AbstractFunction.Arg_String;
-    }
+		return htmlStr;
+	}
+
+	@Override
+	public Object execute(IVariableResolver resolver, Object... args) {
+		String htmlStr = (String) args[0];
+		if (htmlStr == null) {
+			return "";
+		}
+		return clearHtml(htmlStr);
+	}
+
+	@Override
+	public String getFunctionPrefix() {
+		return "";
+	}
+
+	@Override
+	public Class<?>[] getArgumentTypes() {
+		return AbstractFunction.Arg_String;
+	}
 
 }

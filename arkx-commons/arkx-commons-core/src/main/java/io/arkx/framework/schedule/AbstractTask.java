@@ -7,20 +7,22 @@ import io.arkx.framework.extend.IExtendItem;
  *
  */
 public abstract class AbstractTask implements IExtendItem {
-    /**
-     * Cron表达式
-     */
-    public abstract String getCronExpression();
 
-    /**
-     * 默认Cron表达式，未通过配置文件设置Cron表达式时使用此方法返回的Cron表达式
-     */
-    public abstract String getDefaultCronExpression();
+	/**
+	 * Cron表达式
+	 */
+	public abstract String getCronExpression();
 
-    /**
-     * 前端单独部署时是否可用
-     */
-    public boolean enable4Front() {
-        return false;
-    }
+	/**
+	 * 默认Cron表达式，未通过配置文件设置Cron表达式时使用此方法返回的Cron表达式
+	 */
+	public abstract String getDefaultCronExpression();
+
+	/**
+	 * 前端单独部署时是否可用
+	 */
+	public boolean enable4Front() {
+		return false;
+	}
+
 }

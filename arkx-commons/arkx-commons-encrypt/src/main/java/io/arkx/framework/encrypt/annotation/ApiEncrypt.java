@@ -8,13 +8,13 @@ import java.lang.annotation.*;
  * @author Michelle.Chung
  */
 @Documented
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApiEncrypt {
 
-    /**
-     * 响应加密忽略，默认不加密，为 true 时加密
-     */
-    boolean response() default false;
+	/**
+	 * 响应加密忽略，默认不加密，为 true 时加密
+	 */
+	boolean response() default false;
 
 }

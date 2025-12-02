@@ -16,107 +16,110 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class GlobalSetting {
 
-    private static ConcurrentSkipListMap<String, String> settings = new ConcurrentSkipListMap<>();
-    private static final String ROOT = System.getProperty("user.home");
+	private static ConcurrentSkipListMap<String, String> settings = new ConcurrentSkipListMap<>();
 
-    private static String PATH = ROOT + File.separator + "config";
+	private static final String ROOT = System.getProperty("user.home");
 
-    public static void setPath(String path) {
-        PATH = path;
-    }
+	private static String PATH = ROOT + File.separator + "config";
 
-    private static Object syncObject = new Object();
+	public static void setPath(String path) {
+		PATH = path;
+	}
 
-    private static boolean inited = false;
+	private static Object syncObject = new Object();
 
-    private static String filePath() {
-        return PATH + File.separator + "golbalSetting.properties";
-    }
+	private static boolean inited = false;
 
-    private static void init() {
-        if (inited) {
-            return;
-        }
+	private static String filePath() {
+		return PATH + File.separator + "golbalSetting.properties";
+	}
 
-        synchronized (syncObject) {
-            if (inited) {
-                return;
-            }
+	private static void init() {
+		if (inited) {
+			return;
+		}
 
-            File configFolder = new File(PATH);
-            if (!configFolder.exists()) {
-                configFolder.mkdirs();
-            }
-            File settingFile = new File(filePath());
-            if (!settingFile.exists()) {
-                try {
-                    settingFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+		synchronized (syncObject) {
+			if (inited) {
+				return;
+			}
 
-            Map<String, String> map = PropertiesUtil.read(settingFile);
-            settings.putAll(map);
+			File configFolder = new File(PATH);
+			if (!configFolder.exists()) {
+				configFolder.mkdirs();
+			}
+			File settingFile = new File(filePath());
+			if (!settingFile.exists()) {
+				try {
+					settingFile.createNewFile();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
-            inited = true;
-        }
-    }
+			Map<String, String> map = PropertiesUtil.read(settingFile);
+			settings.putAll(map);
 
-    public static String get(String key) {
-        init();
+			inited = true;
+		}
+	}
 
-        return settings.get(key);
-    }
+	public static String get(String key) {
+		init();
 
-    public static boolean getBoolean(String key) {
-        String value = get(key);
-        if (StringUtil.isEmpty(value)) {
-            return false;
-        }
+		return settings.get(key);
+	}
 
-        return Boolean.valueOf(value);
-    }
+	public static boolean getBoolean(String key) {
+		String value = get(key);
+		if (StringUtil.isEmpty(value)) {
+			return false;
+		}
 
-    public static LocalDate getLocalDate(String key) {
-        String value = get(key);
-        if (StringUtil.isEmpty(value)) {
-            return null;
-        }
+		return Boolean.valueOf(value);
+	}
 
-        return LocalDate.parse(value);
-    }
+	public static LocalDate getLocalDate(String key) {
+		String value = get(key);
+		if (StringUtil.isEmpty(value)) {
+			return null;
+		}
 
-    public static LocalDate getLocalDate(String key, LocalDate defaultValue) {
-        init();
+		return LocalDate.parse(value);
+	}
 
-        String value = settings.get(key);
-        if (StringUtil.isEmpty(value)) {
-            return defaultValue;
-        }
+	public static LocalDate getLocalDate(String key, LocalDate defaultValue) {
+		init();
 
-        return LocalDate.parse(value);
-    }
+		String value = settings.get(key);
+		if (StringUtil.isEmpty(value)) {
+			return defaultValue;
+		}
 
-    public static String get(String key, String defaultValue) {
-        init();
+		return LocalDate.parse(value);
+	}
 
-        String value = settings.get(key);
-        if (StringUtil.isEmpty(value)) {
-            value = defaultValue;
-        }
+	public static String get(String key, String defaultValue) {
+		init();
 
-        return value;
-    }
+		String value = settings.get(key);
+		if (StringUtil.isEmpty(value)) {
+			value = defaultValue;
+		}
 
-    public static String set(String key, String value) {
-        init();
+		return value;
+	}
 
-        String oldValue = settings.put(key, value);
+	public static String set(String key, String value) {
+		init();
 
-        File settingFile = new File(filePath());
-        PropertiesUtil.write(settingFile, settings);
+		String oldValue = settings.put(key, value);
 
-        return oldValue;
-    }
+		File settingFile = new File(filePath());
+		PropertiesUtil.write(settingFile, settings);
+
+		return oldValue;
+	}
+
 }

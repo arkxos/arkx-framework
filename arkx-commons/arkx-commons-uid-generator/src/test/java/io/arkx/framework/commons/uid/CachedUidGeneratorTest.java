@@ -22,105 +22,106 @@ import jakarta.annotation.Resource;
  *
  * @author yutianbao
  */
-@SpringJUnitConfig(locations = {"classpath:uid/cached-uid-spring.xml"})
+@SpringJUnitConfig(locations = { "classpath:uid/cached-uid-spring.xml" })
 public class CachedUidGeneratorTest {
-    private static final int SIZE = 7000000; // 700w
-    private static final boolean VERBOSE = false;
-    private static final int THREADS = Runtime.getRuntime().availableProcessors() << 1;
 
-    @Resource
-    private UidGenerator uidGenerator;
+	private static final int SIZE = 7000000; // 700w
 
-    /**
-     * Test for serially generate
-     *
-     * @throws IOException
-     */
-    @Test
-    public void testSerialGenerate() throws IOException {
-        // Generate UID serially
-        Set<Long> uidSet = new HashSet<>(SIZE);
-        for (int i = 0; i < SIZE; i++) {
-            doGenerate(uidSet, i);
-        }
+	private static final boolean VERBOSE = false;
 
-        // Check UIDs are all unique
-        checkUniqueID(uidSet);
-    }
+	private static final int THREADS = Runtime.getRuntime().availableProcessors() << 1;
 
-    /**
-     * Test for parallel generate
-     *
-     * @throws InterruptedException
-     * @throws IOException
-     */
-    @Test
-    public void testParallelGenerate() throws InterruptedException, IOException {
-        AtomicInteger control = new AtomicInteger(-1);
-        Set<Long> uidSet = new ConcurrentSkipListSet<>();
+	@Resource
+	private UidGenerator uidGenerator;
 
-        // Initialize threads
-        List<Thread> threadList = new ArrayList<>(THREADS);
-        for (int i = 0; i < THREADS; i++) {
-            Thread thread = new Thread(() -> workerRun(uidSet, control));
-            thread.setName("UID-generator-" + i);
+	/**
+	 * Test for serially generate
+	 * @throws IOException
+	 */
+	@Test
+	public void testSerialGenerate() throws IOException {
+		// Generate UID serially
+		Set<Long> uidSet = new HashSet<>(SIZE);
+		for (int i = 0; i < SIZE; i++) {
+			doGenerate(uidSet, i);
+		}
 
-            threadList.add(thread);
-            thread.start();
-        }
+		// Check UIDs are all unique
+		checkUniqueID(uidSet);
+	}
 
-        // Wait for worker done
-        for (Thread thread : threadList) {
-            thread.join();
-        }
+	/**
+	 * Test for parallel generate
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test
+	public void testParallelGenerate() throws InterruptedException, IOException {
+		AtomicInteger control = new AtomicInteger(-1);
+		Set<Long> uidSet = new ConcurrentSkipListSet<>();
 
-        // Check generate 700w times
-        Assertions.assertEquals(SIZE, control.get());
+		// Initialize threads
+		List<Thread> threadList = new ArrayList<>(THREADS);
+		for (int i = 0; i < THREADS; i++) {
+			Thread thread = new Thread(() -> workerRun(uidSet, control));
+			thread.setName("UID-generator-" + i);
 
-        // Check UIDs are all unique
-        checkUniqueID(uidSet);
-    }
+			threadList.add(thread);
+			thread.start();
+		}
 
-    /**
-     * Woker run
-     */
-    private void workerRun(Set<Long> uidSet, AtomicInteger control) {
-        for (;;) {
-            int myPosition = control.updateAndGet(old -> (old == SIZE ? SIZE : old + 1));
-            if (myPosition == SIZE) {
-                return;
-            }
+		// Wait for worker done
+		for (Thread thread : threadList) {
+			thread.join();
+		}
 
-            doGenerate(uidSet, myPosition);
-        }
-    }
+		// Check generate 700w times
+		Assertions.assertEquals(SIZE, control.get());
 
-    /**
-     * Do generating
-     */
-    private void doGenerate(Set<Long> uidSet, int index) {
-        long uid = uidGenerator.getUID();
-        String parsedInfo = uidGenerator.parseUID(uid);
-        boolean existed = !uidSet.add(uid);
-        if (existed) {
-            System.out.println("Found duplicate UID " + uid);
-        }
+		// Check UIDs are all unique
+		checkUniqueID(uidSet);
+	}
 
-        // Check UID is positive, and can be parsed
-        Assertions.assertTrue(uid > 0L);
-        Assertions.assertTrue(StringUtils.isNotBlank(parsedInfo));
+	/**
+	 * Woker run
+	 */
+	private void workerRun(Set<Long> uidSet, AtomicInteger control) {
+		for (;;) {
+			int myPosition = control.updateAndGet(old -> (old == SIZE ? SIZE : old + 1));
+			if (myPosition == SIZE) {
+				return;
+			}
 
-        if (VERBOSE) {
-            System.out.println(Thread.currentThread().getName() + " No." + index + " >>> " + parsedInfo);
-        }
-    }
+			doGenerate(uidSet, myPosition);
+		}
+	}
 
-    /**
-     * Check UIDs are all unique
-     */
-    private void checkUniqueID(Set<Long> uidSet) throws IOException {
-        System.out.println(uidSet.size());
-        Assertions.assertEquals(SIZE, uidSet.size());
-    }
+	/**
+	 * Do generating
+	 */
+	private void doGenerate(Set<Long> uidSet, int index) {
+		long uid = uidGenerator.getUID();
+		String parsedInfo = uidGenerator.parseUID(uid);
+		boolean existed = !uidSet.add(uid);
+		if (existed) {
+			System.out.println("Found duplicate UID " + uid);
+		}
+
+		// Check UID is positive, and can be parsed
+		Assertions.assertTrue(uid > 0L);
+		Assertions.assertTrue(StringUtils.isNotBlank(parsedInfo));
+
+		if (VERBOSE) {
+			System.out.println(Thread.currentThread().getName() + " No." + index + " >>> " + parsedInfo);
+		}
+	}
+
+	/**
+	 * Check UIDs are all unique
+	 */
+	private void checkUniqueID(Set<Long> uidSet) throws IOException {
+		System.out.println(uidSet.size());
+		Assertions.assertEquals(SIZE, uidSet.size());
+	}
 
 }

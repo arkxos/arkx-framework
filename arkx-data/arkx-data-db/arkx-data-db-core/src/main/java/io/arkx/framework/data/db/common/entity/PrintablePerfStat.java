@@ -16,5 +16,6 @@ package io.arkx.framework.data.db.common.entity;
  */
 public abstract class PrintablePerfStat {
 
-    public abstract String getPrintableString();
+	public abstract String getPrintableString();
+
 }

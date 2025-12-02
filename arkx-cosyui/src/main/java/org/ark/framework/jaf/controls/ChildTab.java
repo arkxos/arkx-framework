@@ -9,192 +9,210 @@ import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
 
 /**
- *
  * @author Darkness
  * @date 2012-11-19 下午03:18:36
  * @version V1.0
  */
 public class ChildTab {
 
-    private String id;
-    private String onClick;
-    private String afterClick;
-    private String src;
-    private boolean selected;
-    private boolean disabled;
-    private boolean visible;
-    private boolean lazy;
-    private static int No = 0;
-    private String displayType = "iframe";
-    private String img;
-    private String title;
+	private String id;
 
-    private String content;
+	private String onClick;
 
-    public ChildTab(String content) {
-        this.content = content;
-    }
+	private String afterClick;
 
-    @SuppressWarnings("unchecked")
-    public String getHtml() {
+	private String src;
 
-        StringBuilder sb = new StringBuilder();
+	private boolean selected;
 
-        sb.append("<a href='javascript:void(0);' ztype='tab'  hidefocus='true' ");
-        if ("Disabled".equalsIgnoreCase(getType())) {
-            sb.append("id='").append(this.getId()).append("' ").append(getVisiableString()).append(" targetURL='")
-                    .append(Config.getContextPath() + this.getSrc()).append("' class='z-tab z-tab-disabled'");
-        } else {
-            if (this.lazy)
-                this.src = ("src='javascript:void(0);' targetURL=\"" + Config.getContextPath() + this.getSrc() + "\"");
-            else {
-                this.src = ("src=\"" + this.getSrc() + "\" targetURL=\"" + Config.getContextPath() + this.getSrc()
-                        + "\"");
-            }
-            StringFormat sf = new StringFormat(
-                    "id='?' ? class='z-tab?' ? onclick=\"?;Ark.TabPage.onChildTabClick(this);?\">");
-            sf.add(this.getId());
-            sf.add(getVisiableString());
-            sf.add(getType().equals("Current") ? " z-tab-current" : "");
-            sf.add(this.getSrc());
-            sf.add(this.getOnClick());
-            sf.add(this.getAfterClick());
-            sb.append(sf.toString());
-        }
-        if ("iframe".equals(displayType)) {
-            sb.append(content);
-        } else {
-            if (!StringUtil.isEmpty(img)) {
-                sb.append("<img src='" + img + "' />");
-            }
-            sb.append("<b>" + title + "</b>");
-        }
-        sb.append("</a>");
+	private boolean disabled;
 
-        ArrayList<String[]> children = (ArrayList<String[]>) Current.getVariable(Tab.TabTagKey);
-        if (children != null) {
-            children.add(new String[]{this.id, this.src, String.valueOf(this.selected), displayType, content});
-        }
+	private boolean visible;
 
-        return sb.toString();
-    }
+	private boolean lazy;
 
-    private Object getVisiableString() {
+	private static int No = 0;
 
-        if (this.visible) {
-            return "";
-        }
-        return "style='display:none'";
-    }
+	private String displayType = "iframe";
 
-    private String getType() {
-        String type = "";
-        if (this.selected) {
-            type = "Current";
-        } else if (this.disabled) {
-            type = "Disabled";
-        }
-        return type;
-    }
+	private String img;
 
-    public String getId() {
-        if (StringUtil.isEmpty(this.id)) {
-            this.id = (No++) + "";
-        }
-        return this.id;
-    }
+	private String title;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	private String content;
 
-    public String getOnClick() {
-        if (this.onClick == null) {
-            this.onClick = "";
-        }
-        if ((StringUtil.isNotEmpty(this.onClick)) && (!this.onClick.trim().endsWith(";"))) {
-            this.onClick = (this.onClick.trim() + ";");
-        }
-        return this.onClick;
-    }
+	public ChildTab(String content) {
+		this.content = content;
+	}
 
-    public void setOnClick(String onClick) {
-        this.onClick = onClick;
-    }
+	@SuppressWarnings("unchecked")
+	public String getHtml() {
 
-    public String getAfterClick() {
-        if (this.afterClick == null) {
-            this.afterClick = "";
-        }
-        return this.afterClick;
-    }
+		StringBuilder sb = new StringBuilder();
 
-    public void setAfterClick(String afterClick) {
-        this.afterClick = afterClick;
-    }
+		sb.append("<a href='javascript:void(0);' ztype='tab'  hidefocus='true' ");
+		if ("Disabled".equalsIgnoreCase(getType())) {
+			sb.append("id='")
+				.append(this.getId())
+				.append("' ")
+				.append(getVisiableString())
+				.append(" targetURL='")
+				.append(Config.getContextPath() + this.getSrc())
+				.append("' class='z-tab z-tab-disabled'");
+		}
+		else {
+			if (this.lazy)
+				this.src = ("src='javascript:void(0);' targetURL=\"" + Config.getContextPath() + this.getSrc() + "\"");
+			else {
+				this.src = ("src=\"" + this.getSrc() + "\" targetURL=\"" + Config.getContextPath() + this.getSrc()
+						+ "\"");
+			}
+			StringFormat sf = new StringFormat(
+					"id='?' ? class='z-tab?' ? onclick=\"?;Ark.TabPage.onChildTabClick(this);?\">");
+			sf.add(this.getId());
+			sf.add(getVisiableString());
+			sf.add(getType().equals("Current") ? " z-tab-current" : "");
+			sf.add(this.getSrc());
+			sf.add(this.getOnClick());
+			sf.add(this.getAfterClick());
+			sb.append(sf.toString());
+		}
+		if ("iframe".equals(displayType)) {
+			sb.append(content);
+		}
+		else {
+			if (!StringUtil.isEmpty(img)) {
+				sb.append("<img src='" + img + "' />");
+			}
+			sb.append("<b>" + title + "</b>");
+		}
+		sb.append("</a>");
 
-    public boolean isDisabled() {
-        return this.disabled;
-    }
+		ArrayList<String[]> children = (ArrayList<String[]>) Current.getVariable(Tab.TabTagKey);
+		if (children != null) {
+			children.add(new String[] { this.id, this.src, String.valueOf(this.selected), displayType, content });
+		}
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
+		return sb.toString();
+	}
 
-    public boolean isSelected() {
-        return this.selected;
-    }
+	private Object getVisiableString() {
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
+		if (this.visible) {
+			return "";
+		}
+		return "style='display:none'";
+	}
 
-    public String getSrc() {
-        return this.src;
-    }
+	private String getType() {
+		String type = "";
+		if (this.selected) {
+			type = "Current";
+		}
+		else if (this.disabled) {
+			type = "Disabled";
+		}
+		return type;
+	}
 
-    public void setSrc(String src) {
-        this.src = src;
-    }
+	public String getId() {
+		if (StringUtil.isEmpty(this.id)) {
+			this.id = (No++) + "";
+		}
+		return this.id;
+	}
 
-    public boolean isVisible() {
-        return this.visible;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
+	public String getOnClick() {
+		if (this.onClick == null) {
+			this.onClick = "";
+		}
+		if ((StringUtil.isNotEmpty(this.onClick)) && (!this.onClick.trim().endsWith(";"))) {
+			this.onClick = (this.onClick.trim() + ";");
+		}
+		return this.onClick;
+	}
 
-    public boolean isLazy() {
-        return this.lazy;
-    }
+	public void setOnClick(String onClick) {
+		this.onClick = onClick;
+	}
 
-    public void setLazy(boolean lazy) {
-        this.lazy = lazy;
-    }
+	public String getAfterClick() {
+		if (this.afterClick == null) {
+			this.afterClick = "";
+		}
+		return this.afterClick;
+	}
 
-    public String getDisplayType() {
-        return displayType;
-    }
+	public void setAfterClick(String afterClick) {
+		this.afterClick = afterClick;
+	}
 
-    public void setDisplayType(String displayType) {
-        this.displayType = displayType;
-    }
+	public boolean isDisabled() {
+		return this.disabled;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public boolean isSelected() {
+		return this.selected;
+	}
 
-    public String getImg() {
-        return img;
-    }
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 
-    public void setImg(String img) {
-        this.img = img;
-    }
+	public String getSrc() {
+		return this.src;
+	}
+
+	public void setSrc(String src) {
+		this.src = src;
+	}
+
+	public boolean isVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean isLazy() {
+		return this.lazy;
+	}
+
+	public void setLazy(boolean lazy) {
+		this.lazy = lazy;
+	}
+
+	public String getDisplayType() {
+		return displayType;
+	}
+
+	public void setDisplayType(String displayType) {
+		this.displayType = displayType;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 }

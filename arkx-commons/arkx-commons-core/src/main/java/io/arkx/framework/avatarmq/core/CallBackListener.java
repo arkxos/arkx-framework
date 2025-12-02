@@ -9,6 +9,6 @@ package io.arkx.framework.avatarmq.core;
  */
 public interface CallBackListener<T> {
 
-    void onCallBack(T t);
+	void onCallBack(T t);
 
 }

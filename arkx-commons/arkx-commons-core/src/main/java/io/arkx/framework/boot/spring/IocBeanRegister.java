@@ -16,30 +16,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class IocBeanRegister implements ApplicationContextAware {
 
-    private static IocBeanRegister instance;
+	private static IocBeanRegister instance;
 
-    @SuppressWarnings("unchecked")
-    public static <T> T getBean(String id) {
-        return (T) instance.applicationContext.getBean(id);
-    }
+	@SuppressWarnings("unchecked")
+	public static <T> T getBean(String id) {
+		return (T) instance.applicationContext.getBean(id);
+	}
 
-    public static <T> T getBean(Class<T> clazz) {
-        return instance.applicationContext.getBean(clazz);
-    }
+	public static <T> T getBean(Class<T> clazz) {
+		return instance.applicationContext.getBean(clazz);
+	}
 
-    public static <T> Collection<T> getBeansOfType(Class<T> clazz) {
-        return instance.applicationContext.getBeansOfType(clazz).values();
-    }
+	public static <T> Collection<T> getBeansOfType(Class<T> clazz) {
+		return instance.applicationContext.getBeansOfType(clazz).values();
+	}
 
-    private ApplicationContext applicationContext;
+	private ApplicationContext applicationContext;
 
-    private IocBeanRegister() {
-        instance = this;
-    }
+	private IocBeanRegister() {
+		instance = this;
+	}
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 }

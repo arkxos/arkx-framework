@@ -12,17 +12,16 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.SOURCE)
 public @interface EnumAutoConverter {
 
-    /**
-     * 转换的对应类型
-     *
-     * @return
-     */
-    Class<? extends Number> convertType() default Integer.class;
+	/**
+	 * 转换的对应类型
+	 * @return
+	 */
+	Class<? extends Number> convertType() default Integer.class;
 
-    /**
-     * 是否开启自动转换
-     *
-     * @return
-     */
-    boolean autoApply() default true;
+	/**
+	 * 是否开启自动转换
+	 * @return
+	 */
+	boolean autoApply() default true;
+
 }

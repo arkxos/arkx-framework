@@ -25,28 +25,28 @@ import io.arkx.framework.data.db.product.mysql.MysqlFeatures;
 @Product(ProductTypeEnum.GBASE8A)
 public class GbaseFactoryProvider extends AbstractFactoryProvider {
 
-    public GbaseFactoryProvider(DataSource dataSource) {
-        super(dataSource);
-    }
+	public GbaseFactoryProvider(DataSource dataSource) {
+		super(dataSource);
+	}
 
-    @Override
-    public ProductFeatures getProductFeatures() {
-        return new MysqlFeatures();
-    }
+	@Override
+	public ProductFeatures getProductFeatures() {
+		return new MysqlFeatures();
+	}
 
-    @Override
-    public MetadataProvider createMetadataQueryProvider() {
-        return new GbaseMetadataQueryProvider(this);
-    }
+	@Override
+	public MetadataProvider createMetadataQueryProvider() {
+		return new GbaseMetadataQueryProvider(this);
+	}
 
-    @Override
-    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-        return new AutoCastTableDataWriteProvider(this);
-    }
+	@Override
+	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+		return new AutoCastTableDataWriteProvider(this);
+	}
 
-    @Override
-    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-        return new AutoCastTableDataSynchronizeProvider(this);
-    }
+	@Override
+	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+		return new AutoCastTableDataSynchronizeProvider(this);
+	}
 
 }

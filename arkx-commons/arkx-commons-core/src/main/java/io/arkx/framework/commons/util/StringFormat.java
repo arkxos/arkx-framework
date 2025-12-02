@@ -18,103 +18,109 @@ import java.util.Collection;
  * <br>
  */
 public class StringFormat {
-    private String source;
-    private ArrayList<Object> params = new ArrayList<>();
 
-    public StringFormat(String str) {
-        source = str;
-    }
+	private String source;
 
-    public StringFormat(String str, Object... vs) {
-        source = str;
-        add(vs);
-    }
+	private ArrayList<Object> params = new ArrayList<>();
 
-    public static String format(String str, Object... vs) {
-        return new StringFormat(str, vs).toString();
-    }
+	public StringFormat(String str) {
+		source = str;
+	}
 
-    public static String format(String str, Collection<?> c) {// NO_UCD
-        StringFormat sf = new StringFormat(str);
-        sf.params.addAll(c);
-        return sf.toString();
-    }
+	public StringFormat(String str, Object... vs) {
+		source = str;
+		add(vs);
+	}
 
-    public void add(Object obj) {
-        add(new Object[]{obj});
-    }
+	public static String format(String str, Object... vs) {
+		return new StringFormat(str, vs).toString();
+	}
 
-    public void add(Object... vs) {
-        if (vs == null) {
-            return;
-        }
-        for (Object v : vs) {
-            if (v == null) {
-                params.add(null);
-                continue;
-            }
-            params.add(v);
-        }
-    }
+	public static String format(String str, Collection<?> c) {// NO_UCD
+		StringFormat sf = new StringFormat(str);
+		sf.params.addAll(c);
+		return sf.toString();
+	}
 
-    @Override
-    public String toString() {
-        if (params.size() == 0) {
-            return source;
-        }
-        StringBuilder sb = new StringBuilder(source.length() * 2);
-        int lastIndex = 0;
-        for (int i = 0, j = 0; i < source.length(); i++) {
-            char c = source.charAt(i);
-            if (c == '?') {
-                if (i > 0 && source.charAt(i - 1) == '\\') {
-                    sb.append(source.substring(lastIndex, i - 1));
-                    sb.append(c);
-                    lastIndex = i + 1;
-                    continue;
-                }
-                sb.append(source.substring(lastIndex, i));
-                if (params.size() >= j) {
-                    sb.append(params.get(j++));
-                } else {
-                    sb.append("null");
-                }
-                lastIndex = i + 1;
-            } else if (c == '{') {
-                if (i > 0 && source.charAt(i - 1) == '\\') {
-                    sb.append(source.substring(lastIndex, i - 1));
-                    sb.append(c);
-                    lastIndex = i + 1;
-                    continue;
-                }
-                for (int k = i + 1; k < source.length(); k++) {
-                    if (!Character.isDigit(source.charAt(k))) {
-                        if (source.charAt(k) == '}' && k > i + 1) {
-                            sb.append(source.substring(lastIndex, i));
-                            int index = Integer.parseInt(source.substring(i + 1, k));
-                            if (params.size() >= index) {
-                                sb.append(params.get(index));
-                            } else {
-                                sb.append("null");
-                            }
-                            lastIndex = k + 1;
-                        }
-                        i = k;
-                        break;
-                    }
-                }
-            }
-        }
-        sb.append(source.substring(lastIndex));
-        return sb.toString();
-    }
+	public void add(Object obj) {
+		add(new Object[] { obj });
+	}
 
-    public static void main(String[] args) {
-        long t = System.currentTimeMillis();
-        for (int i = 0; i < 100000; i++) {
-            System.out.println(format("c \\?? b ? a ", new Object[]{1, 2, 3}));
-        }
+	public void add(Object... vs) {
+		if (vs == null) {
+			return;
+		}
+		for (Object v : vs) {
+			if (v == null) {
+				params.add(null);
+				continue;
+			}
+			params.add(v);
+		}
+	}
 
-        System.out.println(System.currentTimeMillis() - t);
-    }
+	@Override
+	public String toString() {
+		if (params.size() == 0) {
+			return source;
+		}
+		StringBuilder sb = new StringBuilder(source.length() * 2);
+		int lastIndex = 0;
+		for (int i = 0, j = 0; i < source.length(); i++) {
+			char c = source.charAt(i);
+			if (c == '?') {
+				if (i > 0 && source.charAt(i - 1) == '\\') {
+					sb.append(source.substring(lastIndex, i - 1));
+					sb.append(c);
+					lastIndex = i + 1;
+					continue;
+				}
+				sb.append(source.substring(lastIndex, i));
+				if (params.size() >= j) {
+					sb.append(params.get(j++));
+				}
+				else {
+					sb.append("null");
+				}
+				lastIndex = i + 1;
+			}
+			else if (c == '{') {
+				if (i > 0 && source.charAt(i - 1) == '\\') {
+					sb.append(source.substring(lastIndex, i - 1));
+					sb.append(c);
+					lastIndex = i + 1;
+					continue;
+				}
+				for (int k = i + 1; k < source.length(); k++) {
+					if (!Character.isDigit(source.charAt(k))) {
+						if (source.charAt(k) == '}' && k > i + 1) {
+							sb.append(source.substring(lastIndex, i));
+							int index = Integer.parseInt(source.substring(i + 1, k));
+							if (params.size() >= index) {
+								sb.append(params.get(index));
+							}
+							else {
+								sb.append("null");
+							}
+							lastIndex = k + 1;
+						}
+						i = k;
+						break;
+					}
+				}
+			}
+		}
+		sb.append(source.substring(lastIndex));
+		return sb.toString();
+	}
+
+	public static void main(String[] args) {
+		long t = System.currentTimeMillis();
+		for (int i = 0; i < 100000; i++) {
+			System.out.println(format("c \\?? b ? a ", new Object[] { 1, 2, 3 }));
+		}
+
+		System.out.println(System.currentTimeMillis() - t);
+	}
+
 }

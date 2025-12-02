@@ -15,91 +15,93 @@ import io.arkx.framework.cosyui.util.TagUtil;
  *
  */
 public class ToolBarTag extends ArkTag {
-    private String theme;
 
-    private String fixed = "true";
+	private String theme;
 
-    private String id;
+	private String fixed = "true";
 
-    @Override
-    public String getTagName() {
-        return "toolbar";
-    }
+	private String id;
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        if (ObjectUtil.empty(id)) {
-            id = TagUtil.getTagID(pageContext, "ToolBar");
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div id=\"" + id + "_outer\" class=\"z-toolbar-anchor");
-        if ("flat".equals(theme)) {
-            sb.append(" z-toolbar-flat");
-        }
-        if ("true".equals(fixed)) {
-            sb.append(" z-toolbar-fixed");
-        }
-        sb.append("\">");
-        sb.append("<div class=\"z-toolbar\" id=\"" + id + "\">");
-        sb.append("<div class=\"z-toolbar-ct\">");
-        sb.append("<div class=\"z-toolbar-overflow\">");
-        sb.append("<div class=\"z-toolbar-nowrap\" id=\"" + id + "_body\">");
-        pageContext.getOut().write(sb.toString());
-        return EVAL_BODY_INCLUDE;
-    }
+	@Override
+	public String getTagName() {
+		return "toolbar";
+	}
 
-    @Override
-    public int doAfterBody() throws TemplateRuntimeException {
-        pageContext.getOut().write("</div></div></div></div></div>");
-        pageContext.getOut().write("<script>");
-        pageContext.getOut().write(
-                "Ark.Page.onReady(function(){new Ark.Toolbar({el:Ark.getDom('" + id + "'),fixed:" + fixed + "});});");
-        pageContext.getOut().write("</script>");
-        return EVAL_PAGE;
-    }
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		if (ObjectUtil.empty(id)) {
+			id = TagUtil.getTagID(pageContext, "ToolBar");
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div id=\"" + id + "_outer\" class=\"z-toolbar-anchor");
+		if ("flat".equals(theme)) {
+			sb.append(" z-toolbar-flat");
+		}
+		if ("true".equals(fixed)) {
+			sb.append(" z-toolbar-fixed");
+		}
+		sb.append("\">");
+		sb.append("<div class=\"z-toolbar\" id=\"" + id + "\">");
+		sb.append("<div class=\"z-toolbar-ct\">");
+		sb.append("<div class=\"z-toolbar-overflow\">");
+		sb.append("<div class=\"z-toolbar-nowrap\" id=\"" + id + "_body\">");
+		pageContext.getOut().write(sb.toString());
+		return EVAL_BODY_INCLUDE;
+	}
 
-    public String getTheme() {
-        return theme;
-    }
+	@Override
+	public int doAfterBody() throws TemplateRuntimeException {
+		pageContext.getOut().write("</div></div></div></div></div>");
+		pageContext.getOut().write("<script>");
+		pageContext.getOut()
+			.write("Ark.Page.onReady(function(){new Ark.Toolbar({el:Ark.getDom('" + id + "'),fixed:" + fixed
+					+ "});});");
+		pageContext.getOut().write("</script>");
+		return EVAL_PAGE;
+	}
 
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
+	public String getTheme() {
+		return theme;
+	}
 
-    public String getFixed() {
-        return fixed;
-    }
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
 
-    public void setFixed(String fixed) {
-        this.fixed = fixed;
-    }
+	public String getFixed() {
+		return fixed;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setFixed(String fixed) {
+		this.fixed = fixed;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<>();
-        list.add(new TagAttr("id", true));
-        list.add(new TagAttr("theme"));
-        list.add(new TagAttr("fixed"));
-        return list;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.UIControl.ToolBarTagName}";
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<>();
+		list.add(new TagAttr("id", true));
+		list.add(new TagAttr("theme"));
+		list.add(new TagAttr("fixed"));
+		return list;
+	}
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.UIControl.ToolBarTagName}";
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	@Override
+	public String getDescription() {
+		return "";
+	}
+
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
 
 }

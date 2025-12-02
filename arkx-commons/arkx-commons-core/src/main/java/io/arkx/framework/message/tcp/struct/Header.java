@@ -15,149 +15,149 @@ import io.arkx.framework.message.tcp.MessageType;
  */
 class Header {
 
-    public static void main(String[] args) {
-        System.out.println(new Header().crcCode);
-    }
-    // 0xABEF + 主版本号 + 次版本号
-    private int crcCode = 0xABEF0101;// -1410399999
+	public static void main(String[] args) {
+		System.out.println(new Header().crcCode);
+	}
 
-    private int length;// 消息长度
-    private String id;// base58 uuid, 长度 16，两个 long
-    private long sessionID;// 会话ID
-    private MessageType type;// 消息类型: request/response
-    private int businessType;// 业务消息类型
-    private byte priority;// 消息优先级
+	// 0xABEF + 主版本号 + 次版本号
+	private int crcCode = 0xABEF0101;// -1410399999
 
-    private Map<String, Object> attachment = new HashMap<>(); // 附件
+	private int length;// 消息长度
 
-    public Header() {
-    }
+	private String id;// base58 uuid, 长度 16，两个 long
 
-    public Header(String id) {
-        this.id = id;
-    }
+	private long sessionID;// 会话ID
 
-    public Header(MessageType type, String id) {
-        this.type = type;
-        this.id = id;
-    }
+	private MessageType type;// 消息类型: request/response
 
-    /**
-     * @return the crcCode
-     */
-    public final int getCrcCode() {
-        return crcCode;
-    }
+	private int businessType;// 业务消息类型
 
-    /**
-     * @param crcCode
-     *            the crcCode to set
-     */
-    public final void setCrcCode(int crcCode) {
-        this.crcCode = crcCode;
-    }
+	private byte priority;// 消息优先级
 
-    /**
-     * @return the length
-     */
-    public final int getLength() {
-        return length;
-    }
+	private Map<String, Object> attachment = new HashMap<>(); // 附件
 
-    /**
-     * @param length
-     *            the length to set
-     */
-    public final void setLength(int length) {
-        this.length = length;
-    }
+	public Header() {
+	}
 
-    public String getId() {
-        return id;
-    }
+	public Header(String id) {
+		this.id = id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public Header(MessageType type, String id) {
+		this.type = type;
+		this.id = id;
+	}
 
-    /**
-     * @return the sessionID
-     */
-    public final long getSessionID() {
-        return sessionID;
-    }
+	/**
+	 * @return the crcCode
+	 */
+	public final int getCrcCode() {
+		return crcCode;
+	}
 
-    /**
-     * @param sessionID
-     *            the sessionID to set
-     */
-    public final void setSessionID(long sessionID) {
-        this.sessionID = sessionID;
-    }
+	/**
+	 * @param crcCode the crcCode to set
+	 */
+	public final void setCrcCode(int crcCode) {
+		this.crcCode = crcCode;
+	}
 
-    /**
-     * @return the type
-     */
-    public final MessageType getType() {
-        return type;
-    }
+	/**
+	 * @return the length
+	 */
+	public final int getLength() {
+		return length;
+	}
 
-    /**
-     * @param type
-     *            the type to set
-     */
-    public final void setType(MessageType type) {
-        this.type = type;
-    }
+	/**
+	 * @param length the length to set
+	 */
+	public final void setLength(int length) {
+		this.length = length;
+	}
 
-    public int getBusinessType() {
-        return businessType;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setBusinessType(int businessType) {
-        this.businessType = businessType;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the priority
-     */
-    public final byte getPriority() {
-        return priority;
-    }
+	/**
+	 * @return the sessionID
+	 */
+	public final long getSessionID() {
+		return sessionID;
+	}
 
-    /**
-     * @param priority
-     *            the priority to set
-     */
-    public final void setPriority(byte priority) {
-        this.priority = priority;
-    }
+	/**
+	 * @param sessionID the sessionID to set
+	 */
+	public final void setSessionID(long sessionID) {
+		this.sessionID = sessionID;
+	}
 
-    /**
-     * @return the attachment
-     */
-    public final Map<String, Object> getAttachment() {
-        return attachment;
-    }
+	/**
+	 * @return the type
+	 */
+	public final MessageType getType() {
+		return type;
+	}
 
-    /**
-     * @param attachment
-     *            the attachment to set
-     */
-    public final void setAttachment(Map<String, Object> attachment) {
-        this.attachment = attachment;
-    }
+	/**
+	 * @param type the type to set
+	 */
+	public final void setType(MessageType type) {
+		this.type = type;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "Header [crcCode=" + crcCode + ", id=" + id + ", length=" + length + ", sessionID=" + sessionID
-                + ", type=" + type + ", businessType=" + businessType + ", priority=" + priority + ", attachment="
-                + attachment + "]";
-    }
+	public int getBusinessType() {
+		return businessType;
+	}
+
+	public void setBusinessType(int businessType) {
+		this.businessType = businessType;
+	}
+
+	/**
+	 * @return the priority
+	 */
+	public final byte getPriority() {
+		return priority;
+	}
+
+	/**
+	 * @param priority the priority to set
+	 */
+	public final void setPriority(byte priority) {
+		this.priority = priority;
+	}
+
+	/**
+	 * @return the attachment
+	 */
+	public final Map<String, Object> getAttachment() {
+		return attachment;
+	}
+
+	/**
+	 * @param attachment the attachment to set
+	 */
+	public final void setAttachment(Map<String, Object> attachment) {
+		this.attachment = attachment;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Header [crcCode=" + crcCode + ", id=" + id + ", length=" + length + ", sessionID=" + sessionID
+				+ ", type=" + type + ", businessType=" + businessType + ", priority=" + priority + ", attachment="
+				+ attachment + "]";
+	}
 
 }

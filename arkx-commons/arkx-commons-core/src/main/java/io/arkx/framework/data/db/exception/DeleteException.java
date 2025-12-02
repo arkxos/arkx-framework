@@ -6,18 +6,18 @@ package io.arkx.framework.data.db.exception;
  */
 public class DeleteException extends DatabaseException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public DeleteException(Exception e) {
-        super(e);
-    }
+	public DeleteException(Exception e) {
+		super(e);
+	}
 
-    public DeleteException(String message) {
-        super(message);
-    }
+	public DeleteException(String message) {
+		super(message);
+	}
 
-    public DeleteException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	public DeleteException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }

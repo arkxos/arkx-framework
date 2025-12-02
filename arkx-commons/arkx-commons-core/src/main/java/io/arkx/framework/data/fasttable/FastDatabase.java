@@ -8,141 +8,145 @@ import io.arkx.framework.commons.util.FileUtil;
 import io.arkx.framework.commons.util.StringUtil;
 
 /**
- *
  * @author Darkness
  * @date 2016年11月11日 下午1:24:52
  * @version V1.0
  */
 public class FastDatabase {
 
-    private String path;
-    private Map<Class<?>, RecordConverter<?>> converters = new HashMap<>();
+	private String path;
 
-    public FastDatabase(String path) {
-        this.path = path;
-    }
+	private Map<Class<?>, RecordConverter<?>> converters = new HashMap<>();
 
-    public void registerConverter(RecordConverter<?> converter) {
-        converters.put(converter.acceptEntityClass(), converter);
-    }
+	public FastDatabase(String path) {
+		this.path = path;
+	}
 
-    private String tableFilePath(String partition, String tableName) {
-        return path + File.separator + partition + File.separator + tableName + ".dat";
-    }
+	public void registerConverter(RecordConverter<?> converter) {
+		converters.put(converter.acceptEntityClass(), converter);
+	}
 
-    public boolean isTableExist(String partition, String tableName) {
-        return new File(tableFilePath(partition, tableName)).exists();
-    }
+	private String tableFilePath(String partition, String tableName) {
+		return path + File.separator + partition + File.separator + tableName + ".dat";
+	}
 
-    private static String DefaultPartition = "partition-default";
+	public boolean isTableExist(String partition, String tableName) {
+		return new File(tableFilePath(partition, tableName)).exists();
+	}
 
-    public <T> void save(String tableName, List<T> dataList) {
-        save(DefaultPartition, tableName, dataList);
-    }
+	private static String DefaultPartition = "partition-default";
 
-    @SuppressWarnings("unchecked")
-    public <T> void save(String partition, String tableName, Collection<T> dataList) {
-        if (dataList == null || dataList.isEmpty()) {
-            return;
-        }
+	public <T> void save(String tableName, List<T> dataList) {
+		save(DefaultPartition, tableName, dataList);
+	}
 
-        Class<?> converterClass = dataList.iterator().next().getClass();
-        RecordConverter<T> converter = (RecordConverter<T>) converters.get(converterClass);
+	@SuppressWarnings("unchecked")
+	public <T> void save(String partition, String tableName, Collection<T> dataList) {
+		if (dataList == null || dataList.isEmpty()) {
+			return;
+		}
 
-        if (converter == null) {
-            throw new RuntimeException("fast db can not found converter class for " + converterClass);
-        }
+		Class<?> converterClass = dataList.iterator().next().getClass();
+		RecordConverter<T> converter = (RecordConverter<T>) converters.get(converterClass);
 
-        FastTable fastTable = null;
+		if (converter == null) {
+			throw new RuntimeException("fast db can not found converter class for " + converterClass);
+		}
 
-        String path = tableFilePath(partition, tableName);
-        if (!new File(path).exists()) {
-            fastTable = new FastTableBuilder().tableName(tableName).addColumns(converter.getColumns()).create(path);
-        } else {
-            fastTable = FastTable.load(path);
-        }
+		FastTable fastTable = null;
 
-        try {
-            fastTable.save(dataList, converter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		String path = tableFilePath(partition, tableName);
+		if (!new File(path).exists()) {
+			fastTable = new FastTableBuilder().tableName(tableName).addColumns(converter.getColumns()).create(path);
+		}
+		else {
+			fastTable = FastTable.load(path);
+		}
 
-    public <T> List<T> queryAll(String tableName, Class<T> clazz) {
-        return queryAll(DefaultPartition, tableName, clazz);
-    }
+		try {
+			fastTable.save(dataList, converter);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    @SuppressWarnings("unchecked")
-    public <T> List<T> queryAll(String partition, String tableName, Class<T> clazz) {
-        if (StringUtil.isEmpty(tableName)) {
-            return new ArrayList<>();
-        }
+	public <T> List<T> queryAll(String tableName, Class<T> clazz) {
+		return queryAll(DefaultPartition, tableName, clazz);
+	}
 
-        RecordConverter<T> converter = (RecordConverter<T>) converters.get(clazz);
+	@SuppressWarnings("unchecked")
+	public <T> List<T> queryAll(String partition, String tableName, Class<T> clazz) {
+		if (StringUtil.isEmpty(tableName)) {
+			return new ArrayList<>();
+		}
 
-        String fastTablePath = tableFilePath(partition, tableName);
-        if (!new File(fastTablePath).exists()) {
-            return new ArrayList<>();
-        }
+		RecordConverter<T> converter = (RecordConverter<T>) converters.get(clazz);
 
-        FastTable recordFile = FastTable.load(fastTablePath);
+		String fastTablePath = tableFilePath(partition, tableName);
+		if (!new File(fastTablePath).exists()) {
+			return new ArrayList<>();
+		}
 
-        List<T> result = new ArrayList<>();
+		FastTable recordFile = FastTable.load(fastTablePath);
 
-        try {
-            result = recordFile.queryAll((recordBuffer) -> {
-                return converter.builderObject(recordBuffer);
-            }, converter.recordLength());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		List<T> result = new ArrayList<>();
 
-        return result;
-    }
+		try {
+			result = recordFile.queryAll((recordBuffer) -> {
+				return converter.builderObject(recordBuffer);
+			}, converter.recordLength());
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    public <T, K extends Comparable<? super K>, R> R query(String tableName, Class<T> clazz,
-            ISearcher<T, K, R> searcher) {
-        return query(DefaultPartition, tableName, clazz, searcher);
-    }
+		return result;
+	}
 
-    @SuppressWarnings("unchecked")
-    public <T, K extends Comparable<? super K>, R> R query(String partition, String tableName, Class<T> clazz,
-            ISearcher<T, K, R> searcher) {
-        if (StringUtil.isEmpty(tableName)) {
-            return searcher.defaultResult();
-        }
+	public <T, K extends Comparable<? super K>, R> R query(String tableName, Class<T> clazz,
+			ISearcher<T, K, R> searcher) {
+		return query(DefaultPartition, tableName, clazz, searcher);
+	}
 
-        RecordConverter<T> converter = (RecordConverter<T>) converters.get(clazz);
+	@SuppressWarnings("unchecked")
+	public <T, K extends Comparable<? super K>, R> R query(String partition, String tableName, Class<T> clazz,
+			ISearcher<T, K, R> searcher) {
+		if (StringUtil.isEmpty(tableName)) {
+			return searcher.defaultResult();
+		}
 
-        FastTable recordFile = FastTable.load(tableFilePath(partition, tableName));
+		RecordConverter<T> converter = (RecordConverter<T>) converters.get(clazz);
 
-        if (!recordFile.exists()) {
-            return searcher.defaultResult();
-        }
+		FastTable recordFile = FastTable.load(tableFilePath(partition, tableName));
 
-        try {
-            return recordFile.query(searcher, (recordBuffer) -> {
-                return converter.builderObject(recordBuffer);
-            }, converter.recordLength());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		if (!recordFile.exists()) {
+			return searcher.defaultResult();
+		}
 
-        return searcher.defaultResult();
-    }
+		try {
+			return recordFile.query(searcher, (recordBuffer) -> {
+				return converter.builderObject(recordBuffer);
+			}, converter.recordLength());
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    public boolean dropTable(String tableName) {
-        return dropTable(DefaultPartition, tableName);
-    }
+		return searcher.defaultResult();
+	}
 
-    public boolean dropTable(String partition, String tableName) {
-        String tableFilePath = tableFilePath(partition, tableName);
-        return FileUtil.delete(tableFilePath);
-    }
+	public boolean dropTable(String tableName) {
+		return dropTable(DefaultPartition, tableName);
+	}
 
-    public void clear() {
-        FileUtil.delete(this.path);
-    }
+	public boolean dropTable(String partition, String tableName) {
+		String tableFilePath = tableFilePath(partition, tableName);
+		return FileUtil.delete(tableFilePath);
+	}
+
+	public void clear() {
+		FileUtil.delete(this.path);
+	}
 
 }

@@ -7,43 +7,44 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  *
  */
 public class HtmlComment extends HtmlNode {
-    String comment;
 
-    public HtmlComment(String comment) {
-        this.comment = comment;
-    }
+	String comment;
 
-    @Override
-    public String getText() {
-        return "";
-    }
+	public HtmlComment(String comment) {
+		this.comment = comment;
+	}
 
-    @Override
-    public int getType() {
-        return HtmlNode.COMMENT;
-    }
+	@Override
+	public String getText() {
+		return "";
+	}
 
-    @Override
-    void repack() {
-        comment = new String(comment.toCharArray());
-    }
+	@Override
+	public int getType() {
+		return HtmlNode.COMMENT;
+	}
 
-    @Override
-    public void format(FastStringBuilder sb, String prefix) {
-        sb.append("<!--").append(comment).append("-->");
-    }
+	@Override
+	void repack() {
+		comment = new String(comment.toCharArray());
+	}
 
-    @Override
-    public HtmlNode clone() {
-        return new HtmlComment(comment);
-    }
+	@Override
+	public void format(FastStringBuilder sb, String prefix) {
+		sb.append("<!--").append(comment).append("-->");
+	}
 
-    public String getComment() {
-        return comment;
-    }
+	@Override
+	public HtmlNode clone() {
+		return new HtmlComment(comment);
+	}
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
 }

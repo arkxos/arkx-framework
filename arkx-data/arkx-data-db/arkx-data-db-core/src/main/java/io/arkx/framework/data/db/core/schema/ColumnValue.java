@@ -19,12 +19,13 @@ import lombok.Getter;
 @Getter
 public class ColumnValue {
 
-    private int jdbcType;
-    private Object value;
+	private int jdbcType;
 
-    public ColumnValue(int jdbcType, Object value) {
-        this.jdbcType = jdbcType;
-        this.value = value;
-    }
+	private Object value;
+
+	public ColumnValue(int jdbcType, Object value) {
+		this.jdbcType = jdbcType;
+		this.value = value;
+	}
 
 }

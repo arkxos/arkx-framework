@@ -35,203 +35,216 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefaultTableDataQueryProvider extends AbstractCommonProvider implements TableDataQueryProvider {
 
-    private final int resultSetType = ResultSet.TYPE_FORWARD_ONLY;
-    private final int concurrency = ResultSet.CONCUR_READ_ONLY;
+	private final int resultSetType = ResultSet.TYPE_FORWARD_ONLY;
 
-    private int fetchSize = Constants.DEFAULT_FETCH_SIZE;
+	private final int concurrency = ResultSet.CONCUR_READ_ONLY;
 
-    public DefaultTableDataQueryProvider(ProductFactoryProvider factoryProvider) {
-        super(factoryProvider);
-    }
+	private int fetchSize = Constants.DEFAULT_FETCH_SIZE;
 
-    @Override
-    public int getQueryFetchSize() {
-        return this.fetchSize;
-    }
+	public DefaultTableDataQueryProvider(ProductFactoryProvider factoryProvider) {
+		super(factoryProvider);
+	}
 
-    @Override
-    public void setQueryFetchSize(int size) {
-        if (size < Constants.MINIMUM_FETCH_SIZE) {
-            throw new IllegalArgumentException("设置的批量处理行数的大小fetchSize=" + size + "不得小于" + Constants.MINIMUM_FETCH_SIZE);
-        }
-        this.fetchSize = size;
-    }
+	@Override
+	public int getQueryFetchSize() {
+		return this.fetchSize;
+	}
 
-    public ResultSetWrapper queryTableData(String schemaName, String tableName, String shardDbCode, List<String> fields,
-            IncrementPoint point, List<String> orders) {
-        StringBuilder sb = new StringBuilder("SELECT ");
-        sb.append(quoteName(StringUtils.join(fields, quoteName(","))));
-        sb.append(" FROM ");
-        sb.append(quoteSchemaTableName(schemaName, tableName));
+	@Override
+	public void setQueryFetchSize(int size) {
+		if (size < Constants.MINIMUM_FETCH_SIZE) {
+			throw new IllegalArgumentException("设置的批量处理行数的大小fetchSize=" + size + "不得小于" + Constants.MINIMUM_FETCH_SIZE);
+		}
+		this.fetchSize = size;
+	}
 
-        sb.append(" WHERE 1=1");
-        if (StringUtils.isNotBlank(shardDbCode)) {
-            sb.append(" AND ark_shard_db_code=").append(shardDbCode);
-        }
-        if (IncrementPoint.EMPTY != point && point.isWorkable()) {
-            sb.append(" AND ").append(toGreaterThanCondition(point));
-        }
-        if (CollectionUtils.isNotEmpty(orders)) {
-            sb.append(" ORDER BY ");
-            sb.append(quoteName(StringUtils.join(orders, quoteName(","))));
-        }
-        ProductFeatures features = getProductFeatures();
-        return this.selectTableData(sb.toString(), features.convertFetchSize(this.fetchSize));
-    }
+	public ResultSetWrapper queryTableData(String schemaName, String tableName, String shardDbCode, List<String> fields,
+			IncrementPoint point, List<String> orders) {
+		StringBuilder sb = new StringBuilder("SELECT ");
+		sb.append(quoteName(StringUtils.join(fields, quoteName(","))));
+		sb.append(" FROM ");
+		sb.append(quoteSchemaTableName(schemaName, tableName));
 
-    protected String toGreaterThanCondition(IncrementPoint point) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(quoteName(point.getColumnName()));
-        sb.append(" > ");
-        if (JdbcTypesUtils.isInteger(point.getJdbcType())) {
-            sb.append(point.getMaxValue());
-        } else {
-            sb.append("'").append(point.getMaxValue()).append("'");
-        }
-        return sb.toString();
-    }
+		sb.append(" WHERE 1=1");
+		if (StringUtils.isNotBlank(shardDbCode)) {
+			sb.append(" AND ark_shard_db_code=").append(shardDbCode);
+		}
+		if (IncrementPoint.EMPTY != point && point.isWorkable()) {
+			sb.append(" AND ").append(toGreaterThanCondition(point));
+		}
+		if (CollectionUtils.isNotEmpty(orders)) {
+			sb.append(" ORDER BY ");
+			sb.append(quoteName(StringUtils.join(orders, quoteName(","))));
+		}
+		ProductFeatures features = getProductFeatures();
+		return this.selectTableData(sb.toString(), features.convertFetchSize(this.fetchSize));
+	}
 
-    protected ResultSetWrapper selectTableData(String sql, int fetchSize) {
-        if (log.isDebugEnabled()) {
-            log.debug("Query table data sql :{}", sql);
-        }
+	protected String toGreaterThanCondition(IncrementPoint point) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(quoteName(point.getColumnName()));
+		sb.append(" > ");
+		if (JdbcTypesUtils.isInteger(point.getJdbcType())) {
+			sb.append(point.getMaxValue());
+		}
+		else {
+			sb.append("'").append(point.getMaxValue()).append("'");
+		}
+		return sb.toString();
+	}
 
-        try {
-            Connection connection = getDataSource().getConnection();
-            Statement statement = connection.createStatement(resultSetType, concurrency);
-            statement.setQueryTimeout(Constants.DEFAULT_QUERY_TIMEOUT_SECONDS);
-            statement.setFetchSize(fetchSize);
-            return ResultSetWrapper.builder().connection(connection).statement(statement)
-                    .resultSet(statement.executeQuery(sql)).build();
-        } catch (Throwable t) {
-            log.error("查询数据异常", sql);
-            throw new RuntimeException(t);
-        }
-    }
+	protected ResultSetWrapper selectTableData(String sql, int fetchSize) {
+		if (log.isDebugEnabled()) {
+			log.debug("Query table data sql :{}", sql);
+		}
 
-    @Override
-    public List<Map<String, Object>> executeQueryBySql(Connection connection, String schema, String sql) {
-        if (log.isDebugEnabled()) {
-            log.debug("Execute sql :{}", sql);
-        }
-        try (Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery(sql);
-            List<Map<String, Object>> result = convertResultSetToMap(rs);
-            rs.close();
-            return result;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		try {
+			Connection connection = getDataSource().getConnection();
+			Statement statement = connection.createStatement(resultSetType, concurrency);
+			statement.setQueryTimeout(Constants.DEFAULT_QUERY_TIMEOUT_SECONDS);
+			statement.setFetchSize(fetchSize);
+			return ResultSetWrapper.builder()
+				.connection(connection)
+				.statement(statement)
+				.resultSet(statement.executeQuery(sql))
+				.build();
+		}
+		catch (Throwable t) {
+			log.error("查询数据异常", sql);
+			throw new RuntimeException(t);
+		}
+	}
 
-    @Override
-    public int executeSql(Connection connection, String schema, String sql) {
-        if (log.isDebugEnabled()) {
-            log.debug("Execute sql :{}", sql);
-        }
-        try (Statement st = connection.createStatement()) {
-            int result = st.executeUpdate(sql);
-            return result;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	@Override
+	public List<Map<String, Object>> executeQueryBySql(Connection connection, String schema, String sql) {
+		if (log.isDebugEnabled()) {
+			log.debug("Execute sql :{}", sql);
+		}
+		try (Statement st = connection.createStatement()) {
+			ResultSet rs = st.executeQuery(sql);
+			List<Map<String, Object>> result = convertResultSetToMap(rs);
+			rs.close();
+			return result;
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public List<Map<String, Object>> convertResultSetToMap(ResultSet rs) throws SQLException {
-        // 假设已获得ResultSet rs
-        List<Map<String, Object>> resultList = new ArrayList<>();
+	@Override
+	public int executeSql(Connection connection, String schema, String sql) {
+		if (log.isDebugEnabled()) {
+			log.debug("Execute sql :{}", sql);
+		}
+		try (Statement st = connection.createStatement()) {
+			int result = st.executeUpdate(sql);
+			return result;
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-        // 获取结果集的元数据，用于查询列的信息
-        ResultSetMetaData metaData = rs.getMetaData();
-        // 获取结果集中的列数
-        int columnCount = metaData.getColumnCount();
+	public List<Map<String, Object>> convertResultSetToMap(ResultSet rs) throws SQLException {
+		// 假设已获得ResultSet rs
+		List<Map<String, Object>> resultList = new ArrayList<>();
 
-        // 遍历每一行数据
-        while (rs.next()) {
-            // 每一行数据用一个Map表示
-            Map<String, Object> rowMap = new HashMap<>();
+		// 获取结果集的元数据，用于查询列的信息
+		ResultSetMetaData metaData = rs.getMetaData();
+		// 获取结果集中的列数
+		int columnCount = metaData.getColumnCount();
 
-            // 遍历每一列
-            for (int i = 1; i <= columnCount; i++) {
-                // 获取列名
-                String columnName = metaData.getColumnName(i);
-                // 获取列值
-                Object columnValue = rs.getObject(i);
-                // 将列名和列值放入Map中
-                rowMap.put(columnName, columnValue);
-            }
-            // 将代表一行的Map添加到List中
-            resultList.add(rowMap);
-        }
+		// 遍历每一行数据
+		while (rs.next()) {
+			// 每一行数据用一个Map表示
+			Map<String, Object> rowMap = new HashMap<>();
 
-        return resultList;
-    }
+			// 遍历每一列
+			for (int i = 1; i <= columnCount; i++) {
+				// 获取列名
+				String columnName = metaData.getColumnName(i);
+				// 获取列值
+				Object columnValue = rs.getObject(i);
+				// 将列名和列值放入Map中
+				rowMap.put(columnName, columnValue);
+			}
+			// 将代表一行的Map添加到List中
+			resultList.add(rowMap);
+		}
 
-    @Override
-    public SchemaTableData queryTableData(Connection connection, String schemaName, String tableName, int rowCount) {
-        String fullTableName = quoteSchemaTableName(schemaName, tableName);
-        String querySQL = "SELECT * FROM %s ".formatted(fullTableName);
-        SchemaTableData data = new SchemaTableData();
-        data.setSchemaName(schemaName);
-        data.setTableName(tableName);
-        data.setColumns(new ArrayList<>());
-        data.setRows(new ArrayList<>());
-        try (Statement st = connection.createStatement()) {
-            beforeExecuteQuery(connection, schemaName, tableName);
-            try (ResultSet rs = st.executeQuery(querySQL)) {
-                ResultSetMetaData m = rs.getMetaData();
-                int count = m.getColumnCount();
-                for (int i = 1; i <= count; i++) {
-                    data.getColumns().add(m.getColumnLabel(i));
-                }
+		return resultList;
+	}
 
-                int counter = 0;
-                while (rs.next() && counter++ < rowCount) {
-                    List<Object> row = new ArrayList<>(count);
-                    for (int i = 1; i <= count; i++) {
-                        Object value = rs.getObject(i);
-                        if (value instanceof byte[] bytes) {
-                            row.add(HexUtil.encodeHexStr(bytes));
-                        } else if (value instanceof java.sql.Clob) {
-                            row.add(ObjectCastUtils.castToString(value));
-                        } else if (value instanceof java.sql.Blob) {
-                            byte[] bytes = ObjectCastUtils.castToByteArray(value);
-                            row.add(HexUtil.encodeHexStr(bytes));
-                        } else {
-                            row.add(null == value ? null : value.toString());
-                        }
-                    }
-                    data.getRows().add(row);
-                }
+	@Override
+	public SchemaTableData queryTableData(Connection connection, String schemaName, String tableName, int rowCount) {
+		String fullTableName = quoteSchemaTableName(schemaName, tableName);
+		String querySQL = "SELECT * FROM %s ".formatted(fullTableName);
+		SchemaTableData data = new SchemaTableData();
+		data.setSchemaName(schemaName);
+		data.setTableName(tableName);
+		data.setColumns(new ArrayList<>());
+		data.setRows(new ArrayList<>());
+		try (Statement st = connection.createStatement()) {
+			beforeExecuteQuery(connection, schemaName, tableName);
+			try (ResultSet rs = st.executeQuery(querySQL)) {
+				ResultSetMetaData m = rs.getMetaData();
+				int count = m.getColumnCount();
+				for (int i = 1; i <= count; i++) {
+					data.getColumns().add(m.getColumnLabel(i));
+				}
 
-                return data;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+				int counter = 0;
+				while (rs.next() && counter++ < rowCount) {
+					List<Object> row = new ArrayList<>(count);
+					for (int i = 1; i <= count; i++) {
+						Object value = rs.getObject(i);
+						if (value instanceof byte[] bytes) {
+							row.add(HexUtil.encodeHexStr(bytes));
+						}
+						else if (value instanceof java.sql.Clob) {
+							row.add(ObjectCastUtils.castToString(value));
+						}
+						else if (value instanceof java.sql.Blob) {
+							byte[] bytes = ObjectCastUtils.castToByteArray(value);
+							row.add(HexUtil.encodeHexStr(bytes));
+						}
+						else {
+							row.add(null == value ? null : value.toString());
+						}
+					}
+					data.getRows().add(row);
+				}
 
-    @Override
-    public ColumnValue queryFieldMaxValue(Connection connection, String schemaName, String tableName,
-            String filedName) {
-        String fullTableName = quoteSchemaTableName(schemaName, tableName);
-        String querySQL = "SELECT MAX(%s) FROM %s ".formatted(quoteName(filedName), fullTableName);
-        try (Statement st = connection.createStatement()) {
-            try (ResultSet rs = st.executeQuery(querySQL)) {
-                ResultSetMetaData m = rs.getMetaData();
-                int dataType = m.getColumnType(1);
-                if (rs.next()) {
-                    return new ColumnValue(dataType, rs.getObject(1));
-                }
-                return null;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+				return data;
+			}
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    protected void beforeExecuteQuery(Connection connection, String schema, String table) {
-        // nothing except for hive
-    }
+	@Override
+	public ColumnValue queryFieldMaxValue(Connection connection, String schemaName, String tableName,
+			String filedName) {
+		String fullTableName = quoteSchemaTableName(schemaName, tableName);
+		String querySQL = "SELECT MAX(%s) FROM %s ".formatted(quoteName(filedName), fullTableName);
+		try (Statement st = connection.createStatement()) {
+			try (ResultSet rs = st.executeQuery(querySQL)) {
+				ResultSetMetaData m = rs.getMetaData();
+				int dataType = m.getColumnType(1);
+				if (rs.next()) {
+					return new ColumnValue(dataType, rs.getObject(1));
+				}
+				return null;
+			}
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected void beforeExecuteQuery(Connection connection, String schema, String table) {
+		// nothing except for hive
+	}
 
 }

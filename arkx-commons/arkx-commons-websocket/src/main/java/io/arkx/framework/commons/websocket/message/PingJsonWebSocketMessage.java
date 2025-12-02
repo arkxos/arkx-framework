@@ -11,11 +11,11 @@ package io.arkx.framework.commons.websocket.message;
  */
 public class PingJsonWebSocketMessage extends AbstractJsonWebSocketMessage {
 
-    /**
-     * 构造函数，创建一个 Ping 类型的 JSON WebSocket 消息。
-     */
-    public PingJsonWebSocketMessage() {
-        super(WebSocketMessageTypeEnum.PING.getValue());
-    }
+	/**
+	 * 构造函数，创建一个 Ping 类型的 JSON WebSocket 消息。
+	 */
+	public PingJsonWebSocketMessage() {
+		super(WebSocketMessageTypeEnum.PING.getValue());
+	}
 
 }

@@ -19,54 +19,56 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public class MessageCache<T> {
 
-    private ConcurrentLinkedQueue<T> cache = new ConcurrentLinkedQueue<T>();
+	private ConcurrentLinkedQueue<T> cache = new ConcurrentLinkedQueue<T>();
 
-    private Semaphore semaphore = new Semaphore(0);
+	private Semaphore semaphore = new Semaphore(0);
 
-    public void appendMessage(T id) {
-        cache.add(id);
-        semaphore.release();
-    }
+	public void appendMessage(T id) {
+		cache.add(id);
+		semaphore.release();
+	}
 
-    public void parallelDispatch(LinkedList<T> list) {
+	public void parallelDispatch(LinkedList<T> list) {
 
-    }
+	}
 
-    public void commit(ConcurrentLinkedQueue<T> tasks) {
-        commitMessage(tasks);
-    }
+	public void commit(ConcurrentLinkedQueue<T> tasks) {
+		commitMessage(tasks);
+	}
 
-    public void commit() {
+	public void commit() {
 
-        commitMessage(cache);
-    }
+		commitMessage(cache);
+	}
 
-    private void commitMessage(ConcurrentLinkedQueue<T> messages) {
+	private void commitMessage(ConcurrentLinkedQueue<T> messages) {
 
-        LinkedList<T> list = new LinkedList<T>();
+		LinkedList<T> list = new LinkedList<T>();
 
-        list.addAll(messages);
-        cache.clear();
+		list.addAll(messages);
+		cache.clear();
 
-        if (list != null && list.size() > 0) {
-            parallelDispatch(list);
-            list.clear();
-        }
-    }
+		if (list != null && list.size() > 0) {
+			parallelDispatch(list);
+			list.clear();
+		}
+	}
 
-    public boolean hold(long timeout) {
-        try {
-            return semaphore.tryAcquire(timeout, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MessageCache.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
+	public boolean hold(long timeout) {
+		try {
+			return semaphore.tryAcquire(timeout, TimeUnit.MILLISECONDS);
+		}
+		catch (InterruptedException ex) {
+			Logger.getLogger(MessageCache.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
+	}
 
-    protected Pair<Integer, Integer> calculateBlocks(int parallel, int sizeOfTasks) {
-        int numberOfThreads = parallel > sizeOfTasks ? sizeOfTasks : parallel;
-        Pair<Integer, Integer> pair = new MutablePair<Integer, Integer>(Integer.valueOf(sizeOfTasks / numberOfThreads),
-                Integer.valueOf(numberOfThreads));
-        return pair;
-    }
+	protected Pair<Integer, Integer> calculateBlocks(int parallel, int sizeOfTasks) {
+		int numberOfThreads = parallel > sizeOfTasks ? sizeOfTasks : parallel;
+		Pair<Integer, Integer> pair = new MutablePair<Integer, Integer>(Integer.valueOf(sizeOfTasks / numberOfThreads),
+				Integer.valueOf(numberOfThreads));
+		return pair;
+	}
+
 }

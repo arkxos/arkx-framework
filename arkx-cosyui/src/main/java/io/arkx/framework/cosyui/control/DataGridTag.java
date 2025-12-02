@@ -29,211 +29,230 @@ import io.arkx.framework.security.exception.PrivException;
  *
  */
 public class DataGridTag extends ArkTag {
-    private String method;
-    Object data;
-    private String id;
-    private boolean page = true;
-    private int size;
-    private boolean multiSelect = true;
-    private boolean autoFill = true;
-    private boolean autoPageSize = false;
-    private boolean scroll = true;
-    private boolean lazy = false;// 默认是否加载数据
-    private int cacheSize;
-    private String bodyUID;
 
-    public String getTagName() {
-        return "datagrid";
-    }
+	private String method;
 
-    DataGridAction prepareAction() {
-        DataGridAction dga = new DataGridAction();
-        dga.setMethod(this.method);
-        dga.setID(this.id);
-        dga.setAjaxRequest(false);
-        dga.setPageEnabled(this.page);
-        dga.setMultiSelect(this.multiSelect);
-        dga.setAutoFill(this.autoFill);
-        dga.setAutoPageSize(this.autoPageSize);
-        dga.setScroll(this.scroll);
-        dga.setCacheSize(this.cacheSize);
-        dga.setLazy(this.lazy);
-        if (this.page) {
-            dga.setPageIndex(0);
-            if ((dga.getParams() != null) && (StringUtil.isNotEmpty(dga.getParam(Constant.DataGridPageIndex)))) {
-                dga.setPageIndex(Integer.parseInt(dga.getParam(Constant.DataGridPageIndex)));
-            }
-            if (dga.getPageIndex() < 0) {
-                dga.setPageIndex(0);
-            }
-            if (this.autoPageSize) {
-                this.size = 30;
-            }
-            dga.setPageSize(this.size);
-        }
-        dga.setTagBody(DataGridBodyManager.get(dga, this.bodyUID, getTagSource()));
-        return dga;
-    }
+	Object data;
 
-    public int doStartTag() throws TemplateRuntimeException {
-        try {
-            DataGridAction dga = prepareAction();
-            if (this.lazy) {
-                dga.bindData(new DataTable());// 默认不加载
-            } else if (ObjectUtil.notEmpty(this.method)) {
-                IMethodLocator m = MethodLocatorUtil.find(this.method);
-                PrivCheck.check(m);
-                dga.setParams(WebCurrent.getRequest());
-                m.execute(new Object[]{dga});
-            } else if (this.data != null) {
-                if ((this.data instanceof DataTable)) {
-                    dga.bindData((DataTable) this.data);
-                } else if ("".equals(this.data)) {
-                    dga.bindData(new DataTable());
-                } else {
-                    throw new TemplateRuntimeException("Neither method attribute nor data attribute has been set!",
-                            this);
-                }
-            }
-            this.pageContext.setAttribute(this.id + Constant.ActionInPageContext, dga);
-            dga.addVariables(this.context);
-        } catch (PrivException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        return EVAL_BODY_INCLUDE;
-    }
+	private String id;
 
-    public String getMethod() {
-        return this.method;
-    }
+	private boolean page = true;
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
+	private int size;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	private boolean multiSelect = true;
 
-    public boolean isPage() {
-        return this.page;
-    }
+	private boolean autoFill = true;
 
-    public void setPage(boolean page) {
-        this.page = page;
-    }
+	private boolean autoPageSize = false;
 
-    public int getSize() {
-        return this.size;
-    }
+	private boolean scroll = true;
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+	private boolean lazy = false;// 默认是否加载数据
 
-    public boolean isMultiSelect() {
-        return this.multiSelect;
-    }
+	private int cacheSize;
 
-    public void setMultiSelect(boolean multiSelect) {
-        this.multiSelect = multiSelect;
-    }
+	private String bodyUID;
 
-    public boolean isAutoFill() {
-        return this.autoFill;
-    }
+	public String getTagName() {
+		return "datagrid";
+	}
 
-    public void setAutoFill(boolean autoFill) {
-        this.autoFill = autoFill;
-    }
+	DataGridAction prepareAction() {
+		DataGridAction dga = new DataGridAction();
+		dga.setMethod(this.method);
+		dga.setID(this.id);
+		dga.setAjaxRequest(false);
+		dga.setPageEnabled(this.page);
+		dga.setMultiSelect(this.multiSelect);
+		dga.setAutoFill(this.autoFill);
+		dga.setAutoPageSize(this.autoPageSize);
+		dga.setScroll(this.scroll);
+		dga.setCacheSize(this.cacheSize);
+		dga.setLazy(this.lazy);
+		if (this.page) {
+			dga.setPageIndex(0);
+			if ((dga.getParams() != null) && (StringUtil.isNotEmpty(dga.getParam(Constant.DataGridPageIndex)))) {
+				dga.setPageIndex(Integer.parseInt(dga.getParam(Constant.DataGridPageIndex)));
+			}
+			if (dga.getPageIndex() < 0) {
+				dga.setPageIndex(0);
+			}
+			if (this.autoPageSize) {
+				this.size = 30;
+			}
+			dga.setPageSize(this.size);
+		}
+		dga.setTagBody(DataGridBodyManager.get(dga, this.bodyUID, getTagSource()));
+		return dga;
+	}
 
-    public boolean isAutoPageSize() {
-        return this.autoPageSize;
-    }
+	public int doStartTag() throws TemplateRuntimeException {
+		try {
+			DataGridAction dga = prepareAction();
+			if (this.lazy) {
+				dga.bindData(new DataTable());// 默认不加载
+			}
+			else if (ObjectUtil.notEmpty(this.method)) {
+				IMethodLocator m = MethodLocatorUtil.find(this.method);
+				PrivCheck.check(m);
+				dga.setParams(WebCurrent.getRequest());
+				m.execute(new Object[] { dga });
+			}
+			else if (this.data != null) {
+				if ((this.data instanceof DataTable)) {
+					dga.bindData((DataTable) this.data);
+				}
+				else if ("".equals(this.data)) {
+					dga.bindData(new DataTable());
+				}
+				else {
+					throw new TemplateRuntimeException("Neither method attribute nor data attribute has been set!",
+							this);
+				}
+			}
+			this.pageContext.setAttribute(this.id + Constant.ActionInPageContext, dga);
+			dga.addVariables(this.context);
+		}
+		catch (PrivException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return EVAL_BODY_INCLUDE;
+	}
 
-    public void setAutoPageSize(boolean autoPageSize) {
-        this.autoPageSize = autoPageSize;
-    }
+	public String getMethod() {
+		return this.method;
+	}
 
-    public boolean isScroll() {
-        return this.scroll;
-    }
+	public void setMethod(String method) {
+		this.method = method;
+	}
 
-    public void setScroll(boolean scroll) {
-        this.scroll = scroll;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public int getCacheSize() {
-        return this.cacheSize;
-    }
+	public boolean isPage() {
+		return this.page;
+	}
 
-    public void setCacheSize(int cacheSize) {
-        this.cacheSize = cacheSize;
-    }
+	public void setPage(boolean page) {
+		this.page = page;
+	}
 
-    public boolean isLazy() {
-        return this.lazy;
-    }
+	public int getSize() {
+		return this.size;
+	}
 
-    public void setLazy(boolean lazy) {
-        this.lazy = lazy;
-    }
+	public void setSize(int size) {
+		this.size = size;
+	}
 
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<>();
-        list.add(new TagAttr("id", true));
-        list.add(new TagAttr("autoFill", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("autoPageSize", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("cacheSize", DataTypes.INTEGER.code()));
-        list.add(new TagAttr("lazy", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("method"));
-        list.add(new TagAttr("data"));
-        list.add(new TagAttr("multiSelect", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("page", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("scroll", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("size", DataTypes.INTEGER.code()));
-        return list;
-    }
+	public boolean isMultiSelect() {
+		return this.multiSelect;
+	}
 
-    public String getExtendItemName() {
-        return "@{Framework.UIControl.DataGridTagName}";
-    }
+	public void setMultiSelect(boolean multiSelect) {
+		this.multiSelect = multiSelect;
+	}
 
-    public String getDescription() {
-        return "";
-    }
+	public boolean isAutoFill() {
+		return this.autoFill;
+	}
 
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	public void setAutoFill(boolean autoFill) {
+		this.autoFill = autoFill;
+	}
 
-    public boolean isKeepTagSource() {
-        return true;// 本标签要求编译后依然持有源代码
-    }
+	public boolean isAutoPageSize() {
+		return this.autoPageSize;
+	}
 
-    public void afterCompile(TagCommand tc, TemplateExecutor te) {
-        String fileName = te.getFileName();
-        if ((fileName != null) && (fileName.startsWith(Config.getContextRealPath()))) {
-            fileName = fileName.substring(Config.getContextRealPath().length());
-        }
-        this.bodyUID = (fileName + "#" + StringUtil.md5Hex(getTagSource()));
-        DataGridAction dga = prepareAction();
-        dga.setParams(new Mapx<>());
-        DataGridBody body = DataGridBodyManager.get(dga, this.bodyUID, getTagSource());
-        if (!tc.isHasBody()) {
-            tc.setHasBody(true);
-        }
-        tc.setCommands(body.getExecutor().getCommands());
-    }
+	public void setAutoPageSize(boolean autoPageSize) {
+		this.autoPageSize = autoPageSize;
+	}
 
-    public Object getData() {
-        return this.data;
-    }
+	public boolean isScroll() {
+		return this.scroll;
+	}
 
-    public void setData(Object data) {
-        this.data = data;
-    }
+	public void setScroll(boolean scroll) {
+		this.scroll = scroll;
+	}
+
+	public int getCacheSize() {
+		return this.cacheSize;
+	}
+
+	public void setCacheSize(int cacheSize) {
+		this.cacheSize = cacheSize;
+	}
+
+	public boolean isLazy() {
+		return this.lazy;
+	}
+
+	public void setLazy(boolean lazy) {
+		this.lazy = lazy;
+	}
+
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<>();
+		list.add(new TagAttr("id", true));
+		list.add(new TagAttr("autoFill", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("autoPageSize", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("cacheSize", DataTypes.INTEGER.code()));
+		list.add(new TagAttr("lazy", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("method"));
+		list.add(new TagAttr("data"));
+		list.add(new TagAttr("multiSelect", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("page", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("scroll", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("size", DataTypes.INTEGER.code()));
+		return list;
+	}
+
+	public String getExtendItemName() {
+		return "@{Framework.UIControl.DataGridTagName}";
+	}
+
+	public String getDescription() {
+		return "";
+	}
+
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
+
+	public boolean isKeepTagSource() {
+		return true;// 本标签要求编译后依然持有源代码
+	}
+
+	public void afterCompile(TagCommand tc, TemplateExecutor te) {
+		String fileName = te.getFileName();
+		if ((fileName != null) && (fileName.startsWith(Config.getContextRealPath()))) {
+			fileName = fileName.substring(Config.getContextRealPath().length());
+		}
+		this.bodyUID = (fileName + "#" + StringUtil.md5Hex(getTagSource()));
+		DataGridAction dga = prepareAction();
+		dga.setParams(new Mapx<>());
+		DataGridBody body = DataGridBodyManager.get(dga, this.bodyUID, getTagSource());
+		if (!tc.isHasBody()) {
+			tc.setHasBody(true);
+		}
+		tc.setCommands(body.getExecutor().getCommands());
+	}
+
+	public Object getData() {
+		return this.data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+
 }

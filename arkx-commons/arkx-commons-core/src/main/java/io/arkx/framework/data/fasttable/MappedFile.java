@@ -18,189 +18,198 @@ import java.nio.channels.FileChannel;
  */
 public class MappedFile extends BufferReader {
 
-    public static String PATH_SEPERATOR = File.separator;
+	public static String PATH_SEPERATOR = File.separator;
 
-    private String path;
-    private long fileLength;
-    private long writePosition;
-    private long readPosition;
+	private String path;
 
-    public MappedFile(String path) {
-        this(path, true);
-    }
+	private long fileLength;
 
-    public MappedFile(String path, boolean isAppend) {
-        this.path = path;
+	private long writePosition;
 
-        checkAndMakeParentDirecotry(this.path);
-        File file = new File(this.path);
+	private long readPosition;
 
-        if (!isAppend) {
-            if (file.exists()) {
-                file.delete();
-            }
-        }
+	public MappedFile(String path) {
+		this(path, true);
+	}
 
-        createIfNotExist();
-    }
+	public MappedFile(String path, boolean isAppend) {
+		this.path = path;
 
-    public void createIfNotExist() {
-        File file = new File(this.path);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+		checkAndMakeParentDirecotry(this.path);
+		File file = new File(this.path);
 
-    public String path() {
-        return path;
-    }
+		if (!isAppend) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
 
-    public void checkAndMakeParentDirecotry(String fullName) {
-        int index = fullName.lastIndexOf(PATH_SEPERATOR);
-        if (index > 0) {
-            String path = fullName.substring(0, index);
-            File file = new File(path);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-        }
-    }
+		createIfNotExist();
+	}
 
-    public boolean exists() {
-        File file = new File(path());
-        return file.exists();
-    }
+	public void createIfNotExist() {
+		File file = new File(this.path);
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-    RandomAccessFile braf;
-    protected FileChannel fileChannel;
+	public String path() {
+		return path;
+	}
 
-    protected long getRealFileLength() {
-        try {
-            return braf.length();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
+	public void checkAndMakeParentDirecotry(String fullName) {
+		int index = fullName.lastIndexOf(PATH_SEPERATOR);
+		if (index > 0) {
+			String path = fullName.substring(0, index);
+			File file = new File(path);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+		}
+	}
 
-    public boolean isReadEnd() {
-        return this.readPosition == this.fileLength;
-    }
+	public boolean exists() {
+		File file = new File(path());
+		return file.exists();
+	}
 
-    public long getFileLength() {
-        return fileLength;
-    }
+	RandomAccessFile braf;
 
-    public void openFileChannel() throws IOException {
-        this.braf = new RandomAccessFile(path(), "rw");
-        this.fileChannel = braf.getChannel();
+	protected FileChannel fileChannel;
 
-        this.writePosition = braf.length();
-        this.fileLength = this.braf.length();
-    }
+	protected long getRealFileLength() {
+		try {
+			return braf.length();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
-    // public void openReadFileChannel() throws IOException {
-    //// TimeWatch timeWatch = new TimeWatch();
-    //// timeWatch.startWithTaskName("open file");
-    // this.braf = new RandomAccessFile(path(), "r");
-    // this.fileChannel = braf.getChannel();
-    //
-    // this.readPosition = 0;
-    // this.fileLength = this.braf.length();
-    //
-    //// timeWatch.stopAndPrint();
-    // }
+	public boolean isReadEnd() {
+		return this.readPosition == this.fileLength;
+	}
 
-    public void close() {
-        try {
-            if (fileChannel != null) {
-                fileChannel.close();
-            }
-            if (braf != null) {
-                braf.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public long getFileLength() {
+		return fileLength;
+	}
 
-    public long readLong() throws IOException {
-        this.readPosition += 8;
-        return readLong(fileChannel);
-    }
+	public void openFileChannel() throws IOException {
+		this.braf = new RandomAccessFile(path(), "rw");
+		this.fileChannel = braf.getChannel();
 
-    public String readString(int length) throws IOException {
-        readPosition += length;
-        return readString(fileChannel, length);
-    }
+		this.writePosition = braf.length();
+		this.fileLength = this.braf.length();
+	}
 
-    public long writeInt(int value) throws IOException {
-        long start = this.writePosition;
+	// public void openReadFileChannel() throws IOException {
+	//// TimeWatch timeWatch = new TimeWatch();
+	//// timeWatch.startWithTaskName("open file");
+	// this.braf = new RandomAccessFile(path(), "r");
+	// this.fileChannel = braf.getChannel();
+	//
+	// this.readPosition = 0;
+	// this.fileLength = this.braf.length();
+	//
+	//// timeWatch.stopAndPrint();
+	// }
 
-        writeInt(fileChannel, value);
+	public void close() {
+		try {
+			if (fileChannel != null) {
+				fileChannel.close();
+			}
+			if (braf != null) {
+				braf.close();
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-        return start;
-    }
+	public long readLong() throws IOException {
+		this.readPosition += 8;
+		return readLong(fileChannel);
+	}
 
-    public void writeLong(long value) throws IOException {
-        writeLong(fileChannel, value);
-    }
+	public String readString(int length) throws IOException {
+		readPosition += length;
+		return readString(fileChannel, length);
+	}
 
-    public void write(ByteBuffer buffer) throws IOException {
-        int length = buffer.limit();
-        MappedByteBuffer rowMappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, writePosition, length);
-        buffer.flip();
-        rowMappedByteBuffer.put(buffer);
+	public long writeInt(int value) throws IOException {
+		long start = this.writePosition;
 
-        closeDirectBuffer(rowMappedByteBuffer);
+		writeInt(fileChannel, value);
 
-        writePosition += length;
-    }
+		return start;
+	}
 
-    public MappedByteBuffer readBuffer(int length) throws IOException {
-        if (readPosition >= fileLength) {
-            return null;
-        }
-        long readLength = length;
-        if ((readPosition + length) >= fileLength) {
-            readLength = fileLength - readPosition;
-        }
-        MappedByteBuffer rowBuffer = readBuffer(readPosition, readLength);
-        readPosition += readLength;
-        return rowBuffer;
-    }
+	public void writeLong(long value) throws IOException {
+		writeLong(fileChannel, value);
+	}
 
-    public MappedByteBuffer readBuffer(long position, long length) throws IOException {
-        if (position > this.fileLength - 1) {
-            return null;
-        }
-        if ((position + length) > fileLength) {
-            length = fileLength - position;
-        }
-        MappedByteBuffer rowBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, position, length);
-        return rowBuffer;
-    }
+	public void write(ByteBuffer buffer) throws IOException {
+		int length = buffer.limit();
+		MappedByteBuffer rowMappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, writePosition, length);
+		buffer.flip();
+		rowMappedByteBuffer.put(buffer);
 
-    protected void closeDirectBuffer(ByteBuffer cb) {
-        if (cb == null || !cb.isDirect())
-            return;
+		closeDirectBuffer(rowMappedByteBuffer);
 
-        // we could use this type cast and call functions without reflection code,
-        // but static import from sun.* package is risky for non-SUN virtual machine.
-        // try { ((sun.nio.ch.DirectBuffer)cb).cleaner().clean(); } catch (Exception ex)
-        // { }
-        try {
-            Method cleaner = cb.getClass().getMethod("cleaner");
-            cleaner.setAccessible(true);
-            Method clean = Class.forName("sun.misc.Cleaner").getMethod("clean");
-            clean.setAccessible(true);
-            clean.invoke(cleaner.invoke(cb));
-        } catch (Exception ex) {
-        }
-        cb = null;
-    }
+		writePosition += length;
+	}
+
+	public MappedByteBuffer readBuffer(int length) throws IOException {
+		if (readPosition >= fileLength) {
+			return null;
+		}
+		long readLength = length;
+		if ((readPosition + length) >= fileLength) {
+			readLength = fileLength - readPosition;
+		}
+		MappedByteBuffer rowBuffer = readBuffer(readPosition, readLength);
+		readPosition += readLength;
+		return rowBuffer;
+	}
+
+	public MappedByteBuffer readBuffer(long position, long length) throws IOException {
+		if (position > this.fileLength - 1) {
+			return null;
+		}
+		if ((position + length) > fileLength) {
+			length = fileLength - position;
+		}
+		MappedByteBuffer rowBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, position, length);
+		return rowBuffer;
+	}
+
+	protected void closeDirectBuffer(ByteBuffer cb) {
+		if (cb == null || !cb.isDirect())
+			return;
+
+		// we could use this type cast and call functions without reflection code,
+		// but static import from sun.* package is risky for non-SUN virtual machine.
+		// try { ((sun.nio.ch.DirectBuffer)cb).cleaner().clean(); } catch (Exception ex)
+		// { }
+		try {
+			Method cleaner = cb.getClass().getMethod("cleaner");
+			cleaner.setAccessible(true);
+			Method clean = Class.forName("sun.misc.Cleaner").getMethod("clean");
+			clean.setAccessible(true);
+			clean.invoke(cleaner.invoke(cb));
+		}
+		catch (Exception ex) {
+		}
+		cb = null;
+	}
+
 }

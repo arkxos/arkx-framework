@@ -7,37 +7,40 @@ import io.arkx.framework.Config;
  *
  */
 public class LogSQL implements IApplicationConfigItem {
-    public static final String ID = "Log.SQL";
-    private static ThreadLocal<Boolean> threadEnable = new ThreadLocal<Boolean>();
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "Log.SQL";
 
-    @Override
-    public String getExtendItemName() {
-        return "Show SQL log switch";
-    }
+	private static ThreadLocal<Boolean> threadEnable = new ThreadLocal<Boolean>();
 
-    public static boolean getValue() {
-        if (threadEnable.get() != null && !threadEnable.get()) {
-            return false;
-        }
-        return !"false".equals(Config.getValue("App." + ID));
-    }
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
 
-    /**
-     * 在本线程中启用SQL日志输出
-     */
-    public static void enableInCurrentThread() {
-        threadEnable.set(true);
-    }
+	@Override
+	public String getExtendItemName() {
+		return "Show SQL log switch";
+	}
 
-    /**
-     * 在本线程中停用SQL日志输出
-     */
-    public static void disableInCurrentThread() {
-        threadEnable.set(false);
-    }
+	public static boolean getValue() {
+		if (threadEnable.get() != null && !threadEnable.get()) {
+			return false;
+		}
+		return !"false".equals(Config.getValue("App." + ID));
+	}
+
+	/**
+	 * 在本线程中启用SQL日志输出
+	 */
+	public static void enableInCurrentThread() {
+		threadEnable.set(true);
+	}
+
+	/**
+	 * 在本线程中停用SQL日志输出
+	 */
+	public static void disableInCurrentThread() {
+		threadEnable.set(false);
+	}
+
 }

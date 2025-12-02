@@ -33,143 +33,144 @@ import cn.hutool.core.util.StrUtil;
  */
 public class DMDataBaseSchemaGenerator extends SchemaGenerator {
 
-    public DMDataBaseSchemaGenerator(String databaseName) {
-        super(databaseName);
-        isOracle = false;
-    }
+	public DMDataBaseSchemaGenerator(String databaseName) {
+		super(databaseName);
+		isOracle = false;
+	}
 
-    public DMDataBaseSchemaGenerator(String namespace, String outputDir) {
-        super(namespace, outputDir);
-        isOracle = false;
-    }
+	public DMDataBaseSchemaGenerator(String namespace, String outputDir) {
+		super(namespace, outputDir);
+		isOracle = false;
+	}
 
-    public DMDataBaseSchemaGenerator(String namespace, String outputDir, ConnectionConfig config) {
-        super(namespace, outputDir);
-        isOracle = false;
-        connectionConfig = config;
-    }
+	public DMDataBaseSchemaGenerator(String namespace, String outputDir, ConnectionConfig config) {
+		super(namespace, outputDir);
+		isOracle = false;
+		connectionConfig = config;
+	}
 
-    @Override
-    public SchemaTable[] getSchemaTables() {
+	@Override
+	public SchemaTable[] getSchemaTables() {
 
-        List<SchemaTable> schemaTables = new ArrayList<>();
-        Session dm = SessionFactory.openSessionInThread(connectionConfig.getPoolName());
-        Connection connection = dm.readOnly().getConnection();
+		List<SchemaTable> schemaTables = new ArrayList<>();
+		Session dm = SessionFactory.openSessionInThread(connectionConfig.getPoolName());
+		Connection connection = dm.readOnly().getConnection();
 
-        // 获取指定数据库的所有表
-        String sql = String.format("select t.table_name,c.comments from ALL_TABLES t\n" + "LEFT JOIN\n"
-                + "    ALL_TAB_COMMENTS c ON t.OWNER = c.OWNER AND t.TABLE_NAME = c.TABLE_NAME where t.OWNER = '%s'",
-                connection.getDBConfig().getDatabaseName());
+		// 获取指定数据库的所有表
+		String sql = String.format("select t.table_name,c.comments from ALL_TABLES t\n" + "LEFT JOIN\n"
+				+ "    ALL_TAB_COMMENTS c ON t.OWNER = c.OWNER AND t.TABLE_NAME = c.TABLE_NAME where t.OWNER = '%s'",
+				connection.getDBConfig().getDatabaseName());
 
-        DataTable dataTable = dm.readOnly().createQuery(sql).executeDataTable();
-        DataRow[] dataRows = dataTable.getDataRows();
-        Set<String> excludeTable = new HashSet<>();
-        // excludeTable.add("SYS_JOB_LOG");
-        // excludeTable.add("DS_ORGAN_CODE");
+		DataTable dataTable = dm.readOnly().createQuery(sql).executeDataTable();
+		DataRow[] dataRows = dataTable.getDataRows();
+		Set<String> excludeTable = new HashSet<>();
+		// excludeTable.add("SYS_JOB_LOG");
+		// excludeTable.add("DS_ORGAN_CODE");
 
-        HashSet<String> includeSet = Sets.newHashSet(connectionConfig.getTableList());
+		HashSet<String> includeSet = Sets.newHashSet(connectionConfig.getTableList());
 
-        int i = 0;
-        for (DataRow dataRow : dataRows) {
+		int i = 0;
+		for (DataRow dataRow : dataRows) {
 
-            SchemaTable schemaTable = new SchemaTable();
-            schemaTable.tableName = dataRow.getString(0);
+			SchemaTable schemaTable = new SchemaTable();
+			schemaTable.tableName = dataRow.getString(0);
 
-            if (!includeSet.contains(schemaTable.tableName) && connectionConfig.isExport) {
-                continue;
-            }
-            // if (!excludeTable.contains(schemaTable.tableName)&&
-            // connectionConfig.isExport) {
-            // continue;
-            // }
-            schemaTable.tableCode = dataRow.getString(0);
-            schemaTable.tableComment = dataRow.getString(1);
+			if (!includeSet.contains(schemaTable.tableName) && connectionConfig.isExport) {
+				continue;
+			}
+			// if (!excludeTable.contains(schemaTable.tableName)&&
+			// connectionConfig.isExport) {
+			// continue;
+			// }
+			schemaTable.tableCode = dataRow.getString(0);
+			schemaTable.tableComment = dataRow.getString(1);
 
-            // 获取字段并过滤重复字段
-            SchemaColumn[] originalColumns = getSchemaColumnsInternal(schemaTable.tableName);
-            schemaTable.schemaColumns = SchemaColumnUtils.filterDuplicateColumns(originalColumns,
-                    schemaTable.tableName);
+			// 获取字段并过滤重复字段
+			SchemaColumn[] originalColumns = getSchemaColumnsInternal(schemaTable.tableName);
+			schemaTable.schemaColumns = SchemaColumnUtils.filterDuplicateColumns(originalColumns,
+					schemaTable.tableName);
 
-            // 去除部分影响生成schema的注释
-            for (SchemaColumn schemaColumn : schemaTable.schemaColumns) {
-                if (StrUtil.isNotBlank(schemaColumn.Comment)) {
-                    schemaColumn.Comment = schemaColumn.Comment.replaceAll("\"", "'");
-                }
-            }
+			// 去除部分影响生成schema的注释
+			for (SchemaColumn schemaColumn : schemaTable.schemaColumns) {
+				if (StrUtil.isNotBlank(schemaColumn.Comment)) {
+					schemaColumn.Comment = schemaColumn.Comment.replaceAll("\"", "'");
+				}
+			}
 
-            schemaTables.add(schemaTable);
-            i++;
-        }
+			schemaTables.add(schemaTable);
+			i++;
+		}
 
-        return schemaTables.toArray(new SchemaTable[0]);
-    }
+		return schemaTables.toArray(new SchemaTable[0]);
+	}
 
-    // 重命名原始方法，保持内部实现不变
-    private SchemaColumn[] getSchemaColumnsInternal(String tableName) {
+	// 重命名原始方法，保持内部实现不变
+	private SchemaColumn[] getSchemaColumnsInternal(String tableName) {
 
-        List<SchemaColumn> schemaColumns = new ArrayList<>();
-        // String sql = "select column_name,data_type, max(DATA_LENGTH) as
-        // character_maximum_length, nullable as is_nullable from user_tab_columns where
-        // table_name=? group by column_name, data_type, nullable order by column_id";
-        String sql = """
-                select a.column_name, a.data_type, a.data_length, a.nullable as is_nullable, cc.comments
-                from all_tab_cols a
-                         left join user_col_comments cc on cc.column_name = a.column_name
+		List<SchemaColumn> schemaColumns = new ArrayList<>();
+		// String sql = "select column_name,data_type, max(DATA_LENGTH) as
+		// character_maximum_length, nullable as is_nullable from user_tab_columns where
+		// table_name=? group by column_name, data_type, nullable order by column_id";
+		String sql = """
+				select a.column_name, a.data_type, a.data_length, a.nullable as is_nullable, cc.comments
+				from all_tab_cols a
+				         left join user_col_comments cc on cc.column_name = a.column_name
 
-                where a.OWNER = UPPER(?)
-                  AND a.TABLE_NAME = ?
-                  AND cc.TABLE_NAME = ?
-                """;
+				where a.OWNER = UPPER(?)
+				  AND a.TABLE_NAME = ?
+				  AND cc.TABLE_NAME = ?
+				""";
 
-        Query qb = getSession().createQuery(sql, connectionConfig.getDatabaseName(), tableName, tableName);
-        DataTable dataTable = qb.executeDataTable();
-        DataRow[] dataRows = dataTable.getDataRows();
+		Query qb = getSession().createQuery(sql, connectionConfig.getDatabaseName(), tableName, tableName);
+		DataTable dataTable = qb.executeDataTable();
+		DataRow[] dataRows = dataTable.getDataRows();
 
-        DataTable primaryKeyColumnNames = getSession()
-                .createQuery("select col.column_name " + "from user_constraints con,  user_cons_columns col "
-                        + "where con.constraint_name = col.constraint_name " + "and con.constraint_type='P' "
-                        + "and col.table_name = ?", tableName.toUpperCase())
-                .executeDataTable();
+		DataTable primaryKeyColumnNames = getSession()
+			.createQuery("select col.column_name " + "from user_constraints con,  user_cons_columns col "
+					+ "where con.constraint_name = col.constraint_name " + "and con.constraint_type='P' "
+					+ "and col.table_name = ?", tableName.toUpperCase())
+			.executeDataTable();
 
-        for (DataRow dataRow : dataRows) {
-            SchemaColumn sc = new SchemaColumn();
+		for (DataRow dataRow : dataRows) {
+			SchemaColumn sc = new SchemaColumn();
 
-            sc.ID = dataRow.getString(0);
-            sc.Name = dataRow.getString(0);
-            sc.Code = dataRow.getString(0);
-            sc.Comment = dataRow.getString(4);
-            sc.DataType = dataRow.getString(1);
-            sc.setLength(dataRow.getString(2));
+			sc.ID = dataRow.getString(0);
+			sc.Name = dataRow.getString(0);
+			sc.Code = dataRow.getString(0);
+			sc.Comment = dataRow.getString(4);
+			sc.DataType = dataRow.getString(1);
+			sc.setLength(dataRow.getString(2));
 
-            sc.Mandatory = "N".equals(dataRow.getString("is_nullable"));
+			sc.Mandatory = "N".equals(dataRow.getString("is_nullable"));
 
-            if (primaryKeyColumnNames != null) {
-                for (DataRow dataRow2 : primaryKeyColumnNames.getDataRows()) {
-                    if (sc.Name.equalsIgnoreCase(dataRow2.getString(0))) {
-                        sc.isPrimaryKey = true;
-                        break;
-                    }
-                }
-            }
+			if (primaryKeyColumnNames != null) {
+				for (DataRow dataRow2 : primaryKeyColumnNames.getDataRows()) {
+					if (sc.Name.equalsIgnoreCase(dataRow2.getString(0))) {
+						sc.isPrimaryKey = true;
+						break;
+					}
+				}
+			}
 
-            schemaColumns.add(sc);
-        }
+			schemaColumns.add(sc);
+		}
 
-        return schemaColumns.toArray(new SchemaColumn[0]);
-    }
+		return schemaColumns.toArray(new SchemaColumn[0]);
+	}
 
-    // 公开方法，使用内部实现和过滤器
-    public SchemaColumn[] getSchemaColumns(String tableName) {
-        SchemaColumn[] originalColumns = getSchemaColumnsInternal(tableName);
-        return SchemaColumnUtils.filterDuplicateColumns(originalColumns, tableName);
-    }
+	// 公开方法，使用内部实现和过滤器
+	public SchemaColumn[] getSchemaColumns(String tableName) {
+		SchemaColumn[] originalColumns = getSchemaColumnsInternal(tableName);
+		return SchemaColumnUtils.filterDuplicateColumns(originalColumns, tableName);
+	}
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        new DMDataBaseSchemaGenerator("bbs").generate();
-    }
+		new DMDataBaseSchemaGenerator("bbs").generate();
+	}
 
-    public static Session getSession() {
-        return SessionFactory.currentSession();
-    }
+	public static Session getSession() {
+		return SessionFactory.currentSession();
+	}
+
 }

@@ -25,63 +25,66 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class HeartBeatRequestHandler extends SimpleChannelInboundHandler<NettyMessage> {
 
-    private Logger logger = LoggerFactory.getLogger(LoginAuthRequestHandler.class);
+	private Logger logger = LoggerFactory.getLogger(LoginAuthRequestHandler.class);
 
-    private static int Rate = 5000;
+	private static int Rate = 5000;
 
-    private NettyClient client;
-    private volatile ScheduledFuture<?> heartBeat;
+	private NettyClient client;
 
-    public HeartBeatRequestHandler(NettyClient client) {
-        this.client = client;
-    }
+	private volatile ScheduledFuture<?> heartBeat;
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        // 主动发送心跳消息
-        heartBeat = ctx.executor().scheduleAtFixedRate(new HeartBeatTask(ctx), 0, 5000, TimeUnit.MILLISECONDS);
-    }
+	public HeartBeatRequestHandler(NettyClient client) {
+		this.client = client;
+	}
 
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
-        if (message.getType() == MessageType.RESPONSE
-                && message.getBusinessType() == NettyBusinessType.HEARTBEAT.value()) {
-            logger.debug("Client receive server heart beat message : ---> " + message);
-        }
-        ctx.fireChannelRead(message);
-    }
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		// 主动发送心跳消息
+		heartBeat = ctx.executor().scheduleAtFixedRate(new HeartBeatTask(ctx), 0, 5000, TimeUnit.MILLISECONDS);
+	}
 
-    private class HeartBeatTask implements Runnable {
+	@Override
+	public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
+		if (message.getType() == MessageType.RESPONSE
+				&& message.getBusinessType() == NettyBusinessType.HEARTBEAT.value()) {
+			logger.debug("Client receive server heart beat message : ---> " + message);
+		}
+		ctx.fireChannelRead(message);
+	}
 
-        public HeartBeatTask(final ChannelHandlerContext ctx) {
-        }
+	private class HeartBeatTask implements Runnable {
 
-        @Override
-        public void run() {
-            long currentTime = System.nanoTime();
-            long last = client.getMessageProcessor().getLastRecivedServerMessageTime();
-            long timeMillis = (currentTime - last) / 1000 / 1000;
-            if (timeMillis > Rate) {
-                NettyMessage heatBeat = buildHeatBeat();
-                logger.debug("Client send heart beat messsage to server : ---> " + heatBeat);
-                client.getMessageProcessor().send(heatBeat);
-            }
-        }
+		public HeartBeatTask(final ChannelHandlerContext ctx) {
+		}
 
-        private NettyMessage buildHeatBeat() {
-            RequestMessage message = new RequestMessage(UuidUtil.base58Uuid());
-            message.setBusinessType(NettyBusinessType.HEARTBEAT.value());
-            return message;
-        }
-    }
+		@Override
+		public void run() {
+			long currentTime = System.nanoTime();
+			long last = client.getMessageProcessor().getLastRecivedServerMessageTime();
+			long timeMillis = (currentTime - last) / 1000 / 1000;
+			if (timeMillis > Rate) {
+				NettyMessage heatBeat = buildHeatBeat();
+				logger.debug("Client send heart beat messsage to server : ---> " + heatBeat);
+				client.getMessageProcessor().send(heatBeat);
+			}
+		}
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
-        if (heartBeat != null) {
-            heartBeat.cancel(true);
-            heartBeat = null;
-        }
-        ctx.fireExceptionCaught(cause);
-    }
+		private NettyMessage buildHeatBeat() {
+			RequestMessage message = new RequestMessage(UuidUtil.base58Uuid());
+			message.setBusinessType(NettyBusinessType.HEARTBEAT.value());
+			return message;
+		}
+
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		cause.printStackTrace();
+		if (heartBeat != null) {
+			heartBeat.cancel(true);
+			heartBeat = null;
+		}
+		ctx.fireExceptionCaught(cause);
+	}
+
 }

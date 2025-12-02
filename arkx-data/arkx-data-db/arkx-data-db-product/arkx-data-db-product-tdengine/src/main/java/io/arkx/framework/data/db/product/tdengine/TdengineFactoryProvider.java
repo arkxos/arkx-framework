@@ -25,38 +25,38 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.TDENGINE)
 public class TdengineFactoryProvider extends AbstractFactoryProvider {
 
-    public TdengineFactoryProvider(DataSource dataSource) {
-        super(dataSource);
-    }
+	public TdengineFactoryProvider(DataSource dataSource) {
+		super(dataSource);
+	}
 
-    @Override
-    public ProductFeatures getProductFeatures() {
-        return new DefaultProductFeatures();
-    }
+	@Override
+	public ProductFeatures getProductFeatures() {
+		return new DefaultProductFeatures();
+	}
 
-    @Override
-    public MetadataProvider createMetadataQueryProvider() {
-        return new TdengineMetadataQueryProvider(this);
-    }
+	@Override
+	public MetadataProvider createMetadataQueryProvider() {
+		return new TdengineMetadataQueryProvider(this);
+	}
 
-    @Override
-    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-        return new TDengineTableDataWriteProvider(this);
-    }
+	@Override
+	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+		return new TDengineTableDataWriteProvider(this);
+	}
 
-    @Override
-    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-        return new TdengineTableSynchronizer(this);
-    }
+	@Override
+	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+		return new TdengineTableSynchronizer(this);
+	}
 
-    @Override
-    public TableDataQueryProvider createTableDataQueryProvider() {
-        return new TdengineTableDataQueryProvider(this);
-    }
+	@Override
+	public TableDataQueryProvider createTableDataQueryProvider() {
+		return new TdengineTableDataQueryProvider(this);
+	}
 
-    @Override
-    public TableManageProvider createTableManageProvider() {
-        return new TdengineTableManageProvider(this);
-    }
+	@Override
+	public TableManageProvider createTableManageProvider() {
+		return new TdengineTableManageProvider(this);
+	}
 
 }

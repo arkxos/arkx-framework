@@ -19,36 +19,39 @@ import io.arkx.framework.data.db.product.oracle.OracleTableDataWriteProvider;
 
 public class OceanbaseTableDataWriteProvider extends DefaultTableDataWriteProvider {
 
-    private final TableDataWriteProvider delegate;
-    private final ProductTypeEnum dialect;
+	private final TableDataWriteProvider delegate;
 
-    public OceanbaseTableDataWriteProvider(ProductFactoryProvider factoryProvider, TableDataWriteProvider delegate) {
-        super(factoryProvider);
-        this.delegate = delegate;
-        if (delegate instanceof OracleTableDataWriteProvider) {
-            this.dialect = ProductTypeEnum.ORACLE;
-        } else {
-            this.dialect = ProductTypeEnum.MYSQL;
-        }
-    }
+	private final ProductTypeEnum dialect;
 
-    @Override
-    protected String quoteName(String name) {
-        return this.dialect.quoteName(name);
-    }
+	public OceanbaseTableDataWriteProvider(ProductFactoryProvider factoryProvider, TableDataWriteProvider delegate) {
+		super(factoryProvider);
+		this.delegate = delegate;
+		if (delegate instanceof OracleTableDataWriteProvider) {
+			this.dialect = ProductTypeEnum.ORACLE;
+		}
+		else {
+			this.dialect = ProductTypeEnum.MYSQL;
+		}
+	}
 
-    @Override
-    public String quoteSchemaTableName(String schemaName, String tableName) {
-        return this.dialect.quoteSchemaTableName(schemaName, tableName);
-    }
+	@Override
+	protected String quoteName(String name) {
+		return this.dialect.quoteName(name);
+	}
 
-    @Override
-    public void prepareWrite(String schemaName, String tableName, List<String> fieldNames) {
-        this.delegate.prepareWrite(schemaName, tableName, fieldNames);
-    }
+	@Override
+	public String quoteSchemaTableName(String schemaName, String tableName) {
+		return this.dialect.quoteSchemaTableName(schemaName, tableName);
+	}
 
-    @Override
-    public long write(List<String> fieldNames, List<Object[]> recordValues) {
-        return this.delegate.write(fieldNames, recordValues);
-    }
+	@Override
+	public void prepareWrite(String schemaName, String tableName, List<String> fieldNames) {
+		this.delegate.prepareWrite(schemaName, tableName, fieldNames);
+	}
+
+	@Override
+	public long write(List<String> fieldNames, List<Object[]> recordValues) {
+		return this.delegate.write(fieldNames, recordValues);
+	}
+
 }

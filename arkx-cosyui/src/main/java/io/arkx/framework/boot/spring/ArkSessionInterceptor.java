@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- *
  * @author darkness
  * @date 2018-08-26 14:59:28
  * @version 1.0
@@ -25,94 +24,94 @@ import lombok.extern.slf4j.Slf4j;
 @Conditional(RawArkFrameworkCondition.class)
 public class ArkSessionInterceptor implements HandlerInterceptor {
 
-    LongAdder preCounter = new LongAdder();
-    LongAdder postCounter = new LongAdder();
-    LongAdder finishCounter = new LongAdder();
+	LongAdder preCounter = new LongAdder();
 
-    public ArkSessionInterceptor() {
-        System.out.println("init ArkSessionInterceptor：" + this.toString());
-    }
+	LongAdder postCounter = new LongAdder();
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.
-     * http.HttpServletRequest, javax.servlet.http.HttpServletResponse,
-     * java.lang.Object)
-     */
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-        // option预检查，直接通过请求
-        if ("OPTIONS".equals(request.getMethod())) {
-            return true;
-        }
+	LongAdder finishCounter = new LongAdder();
 
-        preCounter.increment();
+	public ArkSessionInterceptor() {
+		System.out.println("init ArkSessionInterceptor：" + this.toString());
+	}
 
-        WebCurrent.prepare(request, response);
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.
+	 * http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
+	 */
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
+		// option预检查，直接通过请求
+		if ("OPTIONS".equals(request.getMethod())) {
+			return true;
+		}
 
-        Session session = SessionFactory.openSessionInThread();
-        session.beginTransaction();
+		preCounter.increment();
 
-        log.debug("preHandle:[" + preCounter.longValue() + "(" + session.getConnection().connID + ")] "
-                + request.getRequestURI());
+		WebCurrent.prepare(request, response);
 
-        return true;
-    }
+		Session session = SessionFactory.openSessionInThread();
+		session.beginTransaction();
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.
-     * http.HttpServletRequest, javax.servlet.http.HttpServletResponse,
-     * java.lang.Object, org.springframework.web.servlet.ModelAndView)
-     */
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
-            throws Exception {
-        postCounter.increment();
-        Session session = SessionFactory.currentSession();
-        if (session != null) {
-            log.debug("postHandle:[" + postCounter.longValue() + "(" + session.getConnection().connID + ")] "
-                    + request.getRequestURI());
+		log.debug("preHandle:[" + preCounter.longValue() + "(" + session.getConnection().connID + ")] "
+				+ request.getRequestURI());
 
-            session.commit();
-            SessionFactory.clearCurrentSession();
-        }
-    }
+		return true;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.springframework.web.servlet.HandlerInterceptor#afterCompletion(javax.
-     * servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse,
-     * java.lang.Object, java.lang.Exception)
-     */
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse arg1, Object arg2, Exception exception)
-            throws Exception {
-        finishCounter.increment();
-        // Session session = SessionFactory.currentSession();
-        // if(session != null) {
-        // session.commit();
-        // SessionFactory.clearCurrentSession();
-        // }
-        Session session = SessionFactory.currentSession();
-        if (session != null && session.getConnection() != null) {
-            log.debug("afterCompletion:[" + finishCounter.longValue() + "(" + session.getConnection().connID + ")] "
-                    + request.getRequestURI());
-        } else {
-            log.debug("afterCompletion:[" + finishCounter.longValue() + "] " + request.getRequestURI());
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.
+	 * http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object,
+	 * org.springframework.web.servlet.ModelAndView)
+	 */
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
+			throws Exception {
+		postCounter.increment();
+		Session session = SessionFactory.currentSession();
+		if (session != null) {
+			log.debug("postHandle:[" + postCounter.longValue() + "(" + session.getConnection().connID + ")] "
+					+ request.getRequestURI());
 
-        }
-        if (exception != null) {
-            if (session != null) {
-                session.rollback();
-                SessionFactory.clearCurrentSession();
-            }
-        }
-    }
+			session.commit();
+			SessionFactory.clearCurrentSession();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.springframework.web.servlet.HandlerInterceptor#afterCompletion(javax.
+	 * servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse,
+	 * java.lang.Object, java.lang.Exception)
+	 */
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse arg1, Object arg2, Exception exception)
+			throws Exception {
+		finishCounter.increment();
+		// Session session = SessionFactory.currentSession();
+		// if(session != null) {
+		// session.commit();
+		// SessionFactory.clearCurrentSession();
+		// }
+		Session session = SessionFactory.currentSession();
+		if (session != null && session.getConnection() != null) {
+			log.debug("afterCompletion:[" + finishCounter.longValue() + "(" + session.getConnection().connID + ")] "
+					+ request.getRequestURI());
+		}
+		else {
+			log.debug("afterCompletion:[" + finishCounter.longValue() + "] " + request.getRequestURI());
+
+		}
+		if (exception != null) {
+			if (session != null) {
+				session.rollback();
+				SessionFactory.clearCurrentSession();
+			}
+		}
+	}
+
 }

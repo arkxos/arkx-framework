@@ -6,4 +6,5 @@ package io.arkx.framework.data.mybatis.pro.sample.springboot.c.e.x;
  * @author w.dehai.2023/6/15.17:01
  */
 public class XX {
+
 }

@@ -7,4 +7,5 @@ import io.arkx.framework.extend.IExtendItem;
  *
  */
 public interface IApplicationConfigItem extends IExtendItem {
+
 }

@@ -7,8 +7,8 @@ package io.arkx.framework.performance.monitor.util;
  */
 public class SignatureBuilder {
 
-    public static String build(String className, String methodName) {
-        return className + "#" + methodName;
-    }
+	public static String build(String className, String methodName) {
+		return className + "#" + methodName;
+	}
 
 }

@@ -10,133 +10,135 @@ import jakarta.servlet.jsp.PageContext;
 
 /**
  * @class org.ark.framework.jaf.zhtml.ZhtmlTesterPageContext
- *
  * @author Darkness
  * @date 2013-1-31 下午12:56:18
  * @version V1.0
  */
 public class ZhtmlTesterPageContext extends PageContext {
-    private ZhtmlPage page;
-    private ServletContext servletContext = new ZhtmlTesterServletContext(this.page);
 
-    public ZhtmlTesterPageContext(ZhtmlPage page) {
-        this.page = page;
-    }
+	private ZhtmlPage page;
 
-    public void initialize(Servlet servlet, ServletRequest request, ServletResponse response, String errorPageURL,
-            boolean needsSession, int bufferSize, boolean autoFlush)
-            throws IOException, IllegalStateException, IllegalArgumentException {
-    }
+	private ServletContext servletContext = new ZhtmlTesterServletContext(this.page);
 
-    public void release() {
-    }
+	public ZhtmlTesterPageContext(ZhtmlPage page) {
+		this.page = page;
+	}
 
-    public HttpSession getSession() {
-        return null;
-    }
+	public void initialize(Servlet servlet, ServletRequest request, ServletResponse response, String errorPageURL,
+			boolean needsSession, int bufferSize, boolean autoFlush)
+			throws IOException, IllegalStateException, IllegalArgumentException {
+	}
 
-    public Object getPage() {
-        return null;
-    }
+	public void release() {
+	}
 
-    public ServletRequest getRequest() {
-        return this.page.getRequest();
-    }
+	public HttpSession getSession() {
+		return null;
+	}
 
-    public ServletResponse getResponse() {
-        return this.page.getResponse();
-    }
+	public Object getPage() {
+		return null;
+	}
 
-    public Exception getException() {
-        return null;
-    }
+	public ServletRequest getRequest() {
+		return this.page.getRequest();
+	}
 
-    public ServletConfig getServletConfig() {
-        return new ServletConfig() {
-            public String getInitParameter(String arg0) {
-                return null;
-            }
+	public ServletResponse getResponse() {
+		return this.page.getResponse();
+	}
 
-            public Enumeration<String> getInitParameterNames() {
-                return null;
-            }
+	public Exception getException() {
+		return null;
+	}
 
-            public ServletContext getServletContext() {
-                return getServletContext();
-            }
+	public ServletConfig getServletConfig() {
+		return new ServletConfig() {
+			public String getInitParameter(String arg0) {
+				return null;
+			}
 
-            public String getServletName() {
-                return ZhtmlTesterPageContext.this.page.getRequest().getServletPath();
-            }
-        };
-    }
+			public Enumeration<String> getInitParameterNames() {
+				return null;
+			}
 
-    public ServletContext getServletContext() {
-        return this.servletContext;
-    }
+			public ServletContext getServletContext() {
+				return getServletContext();
+			}
 
-    public void forward(String relativeUrlPath) throws ServletException, IOException {
-    }
+			public String getServletName() {
+				return ZhtmlTesterPageContext.this.page.getRequest().getServletPath();
+			}
+		};
+	}
 
-    public void include(String relativeUrlPath) throws ServletException, IOException {
-    }
+	public ServletContext getServletContext() {
+		return this.servletContext;
+	}
 
-    public void include(String relativeUrlPath, boolean flush) throws ServletException, IOException {
-    }
+	public void forward(String relativeUrlPath) throws ServletException, IOException {
+	}
 
-    public void handlePageException(Exception e) throws ServletException, IOException {
-    }
+	public void include(String relativeUrlPath) throws ServletException, IOException {
+	}
 
-    public void handlePageException(Throwable t) throws ServletException, IOException {
-    }
+	public void include(String relativeUrlPath, boolean flush) throws ServletException, IOException {
+	}
 
-    public void setAttribute(String name, Object value) {
-    }
+	public void handlePageException(Exception e) throws ServletException, IOException {
+	}
 
-    public void setAttribute(String name, Object value, int scope) {
-    }
+	public void handlePageException(Throwable t) throws ServletException, IOException {
+	}
 
-    public Object getAttribute(String name) {
-        return null;
-    }
+	public void setAttribute(String name, Object value) {
+	}
 
-    public Object getAttribute(String name, int scope) {
-        return null;
-    }
+	public void setAttribute(String name, Object value, int scope) {
+	}
 
-    public Object findAttribute(String name) {
-        return null;
-    }
+	public Object getAttribute(String name) {
+		return null;
+	}
 
-    public void removeAttribute(String name) {
-    }
+	public Object getAttribute(String name, int scope) {
+		return null;
+	}
 
-    public void removeAttribute(String name, int scope) {
-    }
+	public Object findAttribute(String name) {
+		return null;
+	}
 
-    public int getAttributesScope(String name) {
-        return 0;
-    }
+	public void removeAttribute(String name) {
+	}
 
-    public Enumeration<String> getAttributeNamesInScope(int scope) {
-        return null;
-    }
+	public void removeAttribute(String name, int scope) {
+	}
 
-    public JspWriter getOut() {
-        return null;
-    }
+	public int getAttributesScope(String name) {
+		return 0;
+	}
 
-    @Override
-    public jakarta.el.ELContext getELContext() {
-        return null;
-    }
+	public Enumeration<String> getAttributeNamesInScope(int scope) {
+		return null;
+	}
 
-    //
-    // public ExpressionEvaluator getExpressionEvaluator() {
-    // return null;
-    // }
-    //
-    // public VariableResolver getVariableResolver() {
-    // return null;
-    // }
+	public JspWriter getOut() {
+		return null;
+	}
+
+	@Override
+	public jakarta.el.ELContext getELContext() {
+		return null;
+	}
+
+	//
+	// public ExpressionEvaluator getExpressionEvaluator() {
+	// return null;
+	// }
+	//
+	// public VariableResolver getVariableResolver() {
+	// return null;
+	// }
+
 }

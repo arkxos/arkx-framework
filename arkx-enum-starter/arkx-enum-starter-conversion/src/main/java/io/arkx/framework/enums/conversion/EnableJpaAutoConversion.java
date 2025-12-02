@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@Import({EnumsConversionAutoConfiguration.class})
+@Import({ EnumsConversionAutoConfiguration.class })
 public @interface EnableJpaAutoConversion {
+
 }

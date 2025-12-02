@@ -11,67 +11,67 @@ import org.junit.jupiter.api.Test;
 import io.arkx.framework.XTest;
 
 /**
- *
  * @author Darkness
  * @date 2012-9-27 上午9:29:24
  * @version V1.0
  */
 public class SqlRepositoryTest extends XTest {
 
-    PersonRepository personRepository;
+	PersonRepository personRepository;
 
-    @Override
-    public void init() {
-        personRepository = RepositoryFactory.getRepository(PersonRepository.class);
+	@Override
+	public void init() {
+		personRepository = RepositoryFactory.getRepository(PersonRepository.class);
 
-        Person person = new Person();
-        person.setId("3");
-        person.setName("darkness1");
-        person.setSex("male1");
-        person.setAge(28);
+		Person person = new Person();
+		person.setId("3");
+		person.setName("darkness1");
+		person.setSex("male1");
+		person.setAge(28);
 
-        personRepository.save(person);
+		personRepository.save(person);
 
-        assertNotNull(person.getId());
-    }
+		assertNotNull(person.getId());
+	}
 
-    @Test
-    public void findById() {
+	@Test
+	public void findById() {
 
-        String id = "3";
+		String id = "3";
 
-        Person person = personRepository.findById(id);
+		Person person = personRepository.findById(id);
 
-        assertEquals(person.getId(), id);
-    }
+		assertEquals(person.getId(), id);
+	}
 
-    @Test
-    public void findAll() {
+	@Test
+	public void findAll() {
 
-        List<Person> persons = personRepository.findAll();
+		List<Person> persons = personRepository.findAll();
 
-        assertTrue(persons.size() > 0);
-    }
+		assertTrue(persons.size() > 0);
+	}
 
-    @Test
-    public void update() {
+	@Test
+	public void update() {
 
-        String id = "3";
+		String id = "3";
 
-        Person person = personRepository.findById(id);
+		Person person = personRepository.findById(id);
 
-        person.setName("darkness_update");
-        person.setSex("male_update");
-        person.setAge(28);
+		person.setName("darkness_update");
+		person.setSex("male_update");
+		person.setAge(28);
 
-        personRepository.update(person);
+		personRepository.update(person);
 
-        assertNotNull(person.getId());
-    }
+		assertNotNull(person.getId());
+	}
 
-    @After("")
-    public void delete() {
+	@After("")
+	public void delete() {
 
-        assertEquals(personRepository.delete("3"), 1);
-    }
+		assertEquals(personRepository.delete("3"), 1);
+	}
+
 }

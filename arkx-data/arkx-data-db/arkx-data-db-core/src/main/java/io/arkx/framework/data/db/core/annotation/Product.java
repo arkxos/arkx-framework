@@ -7,9 +7,10 @@ import java.lang.annotation.Target;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Product {
 
-    ProductTypeEnum value();
+	ProductTypeEnum value();
+
 }

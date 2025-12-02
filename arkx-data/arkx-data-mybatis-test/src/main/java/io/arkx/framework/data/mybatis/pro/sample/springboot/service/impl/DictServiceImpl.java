@@ -7,10 +7,10 @@ import io.arkx.framework.data.mybatis.pro.sample.springboot.service.DictService;
 import io.arkx.framework.data.mybatis.pro.service.service.AbstractServiceImpl;
 
 /**
- *
  * @author w.dehai
  *
  */
 @Service
 public class DictServiceImpl extends AbstractServiceImpl<Dict, Long> implements DictService {
+
 }

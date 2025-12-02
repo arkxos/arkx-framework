@@ -26,33 +26,33 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.OSCAR)
 public class OscarFactoryProvider extends AbstractFactoryProvider {
 
-    public OscarFactoryProvider(DataSource dataSource) {
-        super(dataSource);
-    }
+	public OscarFactoryProvider(DataSource dataSource) {
+		super(dataSource);
+	}
 
-    @Override
-    public ProductFeatures getProductFeatures() {
-        return new DefaultProductFeatures();
-    }
+	@Override
+	public ProductFeatures getProductFeatures() {
+		return new DefaultProductFeatures();
+	}
 
-    @Override
-    public MetadataProvider createMetadataQueryProvider() {
-        return new OscarMetadataQueryProvider(this);
-    }
+	@Override
+	public MetadataProvider createMetadataQueryProvider() {
+		return new OscarMetadataQueryProvider(this);
+	}
 
-    @Override
-    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-        return new AutoCastTableDataWriteProvider(this);
-    }
+	@Override
+	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+		return new AutoCastTableDataWriteProvider(this);
+	}
 
-    @Override
-    public TableManageProvider createTableManageProvider() {
-        return new OscarTableManageProvider(this);
-    }
+	@Override
+	public TableManageProvider createTableManageProvider() {
+		return new OscarTableManageProvider(this);
+	}
 
-    @Override
-    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-        return new AutoCastTableDataSynchronizeProvider(this);
-    }
+	@Override
+	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+		return new AutoCastTableDataSynchronizeProvider(this);
+	}
 
 }

@@ -10,301 +10,315 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ExpressionParseTree {
-    private final class AndNode extends OppNode {
 
-        public boolean evaluate() {
-            if (!left.evaluate())
-                return false;
-            else
-                return right.evaluate();
-        }
+	private final class AndNode extends OppNode {
 
-        public int getPrecedence() {
-            return 1;
-        }
+		public boolean evaluate() {
+			if (!left.evaluate())
+				return false;
+			else
+				return right.evaluate();
+		}
 
-        public String toString() {
-            return (new StringBuilder()).append(left).append(" ").append(right).append(" AND").toString();
-        }
+		public int getPrecedence() {
+			return 1;
+		}
 
-        private AndNode() {
-        }
+		public String toString() {
+			return (new StringBuilder()).append(left).append(" ").append(right).append(" AND").toString();
+		}
 
-        AndNode(AndNode andnode) {
-            this();
-        }
-    }
+		private AndNode() {
+		}
 
-    private abstract class CompareNode extends OppNode {
+		AndNode(AndNode andnode) {
+			this();
+		}
 
-        protected int compareBranches() {
-            String val1 = ((StringNode) left).getValue();
-            String val2 = ((StringNode) right).getValue();
-            return val1.compareTo(val2);
-        }
+	}
 
-    }
+	private abstract class CompareNode extends OppNode {
 
-    private final class EqualNode extends CompareNode {
+		protected int compareBranches() {
+			String val1 = ((StringNode) left).getValue();
+			String val2 = ((StringNode) right).getValue();
+			return val1.compareTo(val2);
+		}
 
-        public boolean evaluate() {
-            return compareBranches() == 0;
-        }
+	}
 
-        public int getPrecedence() {
-            return 4;
-        }
+	private final class EqualNode extends CompareNode {
 
-        public String toString() {
-            return (new StringBuilder()).append(left).append(" ").append(right).append(" EQ").toString();
-        }
+		public boolean evaluate() {
+			return compareBranches() == 0;
+		}
 
-    }
+		public int getPrecedence() {
+			return 4;
+		}
 
-    private final class GreaterThanNode extends CompareNode {
+		public String toString() {
+			return (new StringBuilder()).append(left).append(" ").append(right).append(" EQ").toString();
+		}
 
-        public boolean evaluate() {
-            return compareBranches() > 0;
-        }
+	}
 
-        public int getPrecedence() {
-            return 4;
-        }
+	private final class GreaterThanNode extends CompareNode {
 
-        public String toString() {
-            return (new StringBuilder()).append(left).append(" ").append(right).append(" GT").toString();
-        }
+		public boolean evaluate() {
+			return compareBranches() > 0;
+		}
 
-    }
+		public int getPrecedence() {
+			return 4;
+		}
 
-    private final class LessThanNode extends CompareNode {
+		public String toString() {
+			return (new StringBuilder()).append(left).append(" ").append(right).append(" GT").toString();
+		}
 
-        public boolean evaluate() {
-            return compareBranches() < 0;
-        }
+	}
 
-        public int getPrecedence() {
-            return 4;
-        }
+	private final class LessThanNode extends CompareNode {
 
-        public String toString() {
-            return (new StringBuilder()).append(left).append(" ").append(right).append(" LT").toString();
-        }
+		public boolean evaluate() {
+			return compareBranches() < 0;
+		}
 
-    }
+		public int getPrecedence() {
+			return 4;
+		}
 
-    private abstract class Node {
+		public String toString() {
+			return (new StringBuilder()).append(left).append(" ").append(right).append(" LT").toString();
+		}
 
-        public abstract boolean evaluate();
+	}
 
-    }
+	private abstract class Node {
 
-    private final class NotNode extends OppNode {
+		public abstract boolean evaluate();
 
-        public boolean evaluate() {
-            return !left.evaluate();
-        }
+	}
 
-        public int getPrecedence() {
-            return 5;
-        }
+	private final class NotNode extends OppNode {
 
-        public void popValues(List values) {
-            left = (Node) values.remove(0);
-        }
-
-        public String toString() {
-            return (new StringBuilder()).append(left).append(" NOT").toString();
-        }
-
-    }
-
-    private abstract class OppNode extends Node {
-
-        public abstract int getPrecedence();
-
-        public void popValues(List values) {
-            right = (Node) values.remove(0);
-            left = (Node) values.remove(0);
-        }
-
-        Node left;
-        Node right;
-
-    }
-
-    private final class OrNode extends OppNode {
-
-        public boolean evaluate() {
-            if (left.evaluate())
-                return true;
-            else
-                return right.evaluate();
-        }
-
-        public int getPrecedence() {
-            return 1;
-        }
-
-        public String toString() {
-            return (new StringBuilder()).append(left).append(" ").append(right).append(" OR").toString();
-        }
-
-    }
-
-    private class StringNode extends Node {
-
-        public String getValue() {
-            if (resolved == null)
-                resolved = ssiMediator.substituteVariables(value.toString());
-            return resolved;
-        }
-
-        public boolean evaluate() {
-            return getValue().length() != 0;
-        }
-
-        public String toString() {
-            return value.toString();
-        }
-
-        StringBuffer value;
-        String resolved;
-
-        public StringNode(String value) {
-            resolved = null;
-            this.value = new StringBuffer(value);
-        }
-    }
-
-    public ExpressionParseTree(String expr, SSIMediator ssiMediator) throws ParseException {
-        nodeStack = new LinkedList();
-        oppStack = new LinkedList();
-        this.ssiMediator = ssiMediator;
-        parseExpression(expr);
-    }
-
-    public boolean evaluateTree() {
-        return root.evaluate();
-    }
-
-    private void pushOpp(OppNode node) {
-        if (node == null) {
-            oppStack.add(0, node);
-            return;
-        }
-        do {
-            if (oppStack.size() == 0)
-                break;
-            OppNode top = (OppNode) oppStack.get(0);
-            if (top == null || top.getPrecedence() < node.getPrecedence())
-                break;
-            oppStack.remove(0);
-            top.popValues(nodeStack);
-            nodeStack.add(0, top);
-        } while (true);
-        oppStack.add(0, node);
-    }
-
-    private void resolveGroup() {
-        for (OppNode top = null; (top = (OppNode) oppStack.remove(0)) != null;) {
-            top.popValues(nodeStack);
-            nodeStack.add(0, top);
-        }
-
-    }
-
-    private void parseExpression(String expr) throws ParseException {
-        StringNode currStringNode = null;
-        pushOpp(null);
-        ExpressionTokenizer et;
-        for (et = new ExpressionTokenizer(expr); et.hasMoreTokens();) {
-            int token = et.nextToken();
-            if (token != 0)
-                currStringNode = null;
-            switch (token) {
-                case 12 : // '\f'
-                default :
-                    break;
-
-                case 0 : // '\0'
-                    if (currStringNode == null) {
-                        currStringNode = new StringNode(et.getTokenValue());
-                        nodeStack.add(0, currStringNode);
-                    } else {
-                        currStringNode.value.append(" ");
-                        currStringNode.value.append(et.getTokenValue());
-                    }
-                    break;
-
-                case 1 : // '\001'
-                    pushOpp(new AndNode());
-                    break;
-
-                case 2 : // '\002'
-                    pushOpp(new OrNode());
-                    break;
-
-                case 3 : // '\003'
-                    pushOpp(new NotNode());
-                    break;
-
-                case 4 : // '\004'
-                    pushOpp(new EqualNode());
-                    break;
-
-                case 5 : // '\005'
-                    pushOpp(new NotNode());
-                    oppStack.add(0, new EqualNode());
-                    break;
-
-                case 6 : // '\006'
-                    resolveGroup();
-                    break;
-
-                case 7 : // '\007'
-                    pushOpp(null);
-                    break;
-
-                case 8 : // '\b'
-                    pushOpp(new NotNode());
-                    oppStack.add(0, new LessThanNode());
-                    break;
-
-                case 9 : // '\t'
-                    pushOpp(new NotNode());
-                    oppStack.add(0, new GreaterThanNode());
-                    break;
-
-                case 10 : // '\n'
-                    pushOpp(new GreaterThanNode());
-                    break;
-
-                case 11 : // '\013'
-                    pushOpp(new LessThanNode());
-                    break;
-            }
-        }
-
-        resolveGroup();
-        if (nodeStack.size() == 0)
-            throw new ParseException("No nodes created.", et.getIndex());
-        if (nodeStack.size() > 1)
-            throw new ParseException("Extra nodes created.", et.getIndex());
-        if (oppStack.size() != 0) {
-            throw new ParseException("Unused opp nodes exist.", et.getIndex());
-        } else {
-            root = (Node) nodeStack.get(0);
-            return;
-        }
-    }
-
-    private LinkedList nodeStack;
-    private LinkedList oppStack;
-    private Node root;
-    private SSIMediator ssiMediator;
-    private static final int PRECEDENCE_NOT = 5;
-    private static final int PRECEDENCE_COMPARE = 4;
-    private static final int PRECEDENCE_LOGICAL = 1;
+		public boolean evaluate() {
+			return !left.evaluate();
+		}
+
+		public int getPrecedence() {
+			return 5;
+		}
+
+		public void popValues(List values) {
+			left = (Node) values.remove(0);
+		}
+
+		public String toString() {
+			return (new StringBuilder()).append(left).append(" NOT").toString();
+		}
+
+	}
+
+	private abstract class OppNode extends Node {
+
+		public abstract int getPrecedence();
+
+		public void popValues(List values) {
+			right = (Node) values.remove(0);
+			left = (Node) values.remove(0);
+		}
+
+		Node left;
+
+		Node right;
+
+	}
+
+	private final class OrNode extends OppNode {
+
+		public boolean evaluate() {
+			if (left.evaluate())
+				return true;
+			else
+				return right.evaluate();
+		}
+
+		public int getPrecedence() {
+			return 1;
+		}
+
+		public String toString() {
+			return (new StringBuilder()).append(left).append(" ").append(right).append(" OR").toString();
+		}
+
+	}
+
+	private class StringNode extends Node {
+
+		public String getValue() {
+			if (resolved == null)
+				resolved = ssiMediator.substituteVariables(value.toString());
+			return resolved;
+		}
+
+		public boolean evaluate() {
+			return getValue().length() != 0;
+		}
+
+		public String toString() {
+			return value.toString();
+		}
+
+		StringBuffer value;
+
+		String resolved;
+
+		public StringNode(String value) {
+			resolved = null;
+			this.value = new StringBuffer(value);
+		}
+
+	}
+
+	public ExpressionParseTree(String expr, SSIMediator ssiMediator) throws ParseException {
+		nodeStack = new LinkedList();
+		oppStack = new LinkedList();
+		this.ssiMediator = ssiMediator;
+		parseExpression(expr);
+	}
+
+	public boolean evaluateTree() {
+		return root.evaluate();
+	}
+
+	private void pushOpp(OppNode node) {
+		if (node == null) {
+			oppStack.add(0, node);
+			return;
+		}
+		do {
+			if (oppStack.size() == 0)
+				break;
+			OppNode top = (OppNode) oppStack.get(0);
+			if (top == null || top.getPrecedence() < node.getPrecedence())
+				break;
+			oppStack.remove(0);
+			top.popValues(nodeStack);
+			nodeStack.add(0, top);
+		}
+		while (true);
+		oppStack.add(0, node);
+	}
+
+	private void resolveGroup() {
+		for (OppNode top = null; (top = (OppNode) oppStack.remove(0)) != null;) {
+			top.popValues(nodeStack);
+			nodeStack.add(0, top);
+		}
+
+	}
+
+	private void parseExpression(String expr) throws ParseException {
+		StringNode currStringNode = null;
+		pushOpp(null);
+		ExpressionTokenizer et;
+		for (et = new ExpressionTokenizer(expr); et.hasMoreTokens();) {
+			int token = et.nextToken();
+			if (token != 0)
+				currStringNode = null;
+			switch (token) {
+				case 12: // '\f'
+				default:
+					break;
+
+				case 0: // '\0'
+					if (currStringNode == null) {
+						currStringNode = new StringNode(et.getTokenValue());
+						nodeStack.add(0, currStringNode);
+					}
+					else {
+						currStringNode.value.append(" ");
+						currStringNode.value.append(et.getTokenValue());
+					}
+					break;
+
+				case 1: // '\001'
+					pushOpp(new AndNode());
+					break;
+
+				case 2: // '\002'
+					pushOpp(new OrNode());
+					break;
+
+				case 3: // '\003'
+					pushOpp(new NotNode());
+					break;
+
+				case 4: // '\004'
+					pushOpp(new EqualNode());
+					break;
+
+				case 5: // '\005'
+					pushOpp(new NotNode());
+					oppStack.add(0, new EqualNode());
+					break;
+
+				case 6: // '\006'
+					resolveGroup();
+					break;
+
+				case 7: // '\007'
+					pushOpp(null);
+					break;
+
+				case 8: // '\b'
+					pushOpp(new NotNode());
+					oppStack.add(0, new LessThanNode());
+					break;
+
+				case 9: // '\t'
+					pushOpp(new NotNode());
+					oppStack.add(0, new GreaterThanNode());
+					break;
+
+				case 10: // '\n'
+					pushOpp(new GreaterThanNode());
+					break;
+
+				case 11: // '\013'
+					pushOpp(new LessThanNode());
+					break;
+			}
+		}
+
+		resolveGroup();
+		if (nodeStack.size() == 0)
+			throw new ParseException("No nodes created.", et.getIndex());
+		if (nodeStack.size() > 1)
+			throw new ParseException("Extra nodes created.", et.getIndex());
+		if (oppStack.size() != 0) {
+			throw new ParseException("Unused opp nodes exist.", et.getIndex());
+		}
+		else {
+			root = (Node) nodeStack.get(0);
+			return;
+		}
+	}
+
+	private LinkedList nodeStack;
+
+	private LinkedList oppStack;
+
+	private Node root;
+
+	private SSIMediator ssiMediator;
+
+	private static final int PRECEDENCE_NOT = 5;
+
+	private static final int PRECEDENCE_COMPARE = 4;
+
+	private static final int PRECEDENCE_LOGICAL = 1;
 
 }

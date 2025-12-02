@@ -34,40 +34,41 @@ import jakarta.persistence.EntityManager;
  */
 public class BaseRepositoryFactory<T extends BaseEntity, I extends Serializable> extends SqlToyRepositoryFactory {
 
-    public BaseRepositoryFactory(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager) {
-        super(sqlToyLazyDao, entityManager);
+	public BaseRepositoryFactory(SqlToyLazyDao sqlToyLazyDao, EntityManager entityManager) {
+		super(sqlToyLazyDao, entityManager);
 
-        final AssemblerInterceptor assemblerInterceptor = new AssemblerInterceptor();
-        addRepositoryProxyPostProcessor((factory, repositoryInformation) -> factory.addAdvice(assemblerInterceptor));
-    }
+		final AssemblerInterceptor assemblerInterceptor = new AssemblerInterceptor();
+		addRepositoryProxyPostProcessor((factory, repositoryInformation) -> factory.addAdvice(assemblerInterceptor));
+	}
 
-    @Override
-    protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
-            ValueExpressionDelegate valueExpressionDelegate) {
-        // 获取默认策略
-        QueryLookupStrategy defaultStrategy = super.getQueryLookupStrategy(key, valueExpressionDelegate)
-                .orElseThrow(() -> new IllegalStateException("No default query strategy found"));
+	@Override
+	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
+			ValueExpressionDelegate valueExpressionDelegate) {
+		// 获取默认策略
+		QueryLookupStrategy defaultStrategy = super.getQueryLookupStrategy(key, valueExpressionDelegate)
+			.orElseThrow(() -> new IllegalStateException("No default query strategy found"));
 
-        return Optional.of(TemplateQueryLookupStrategy.create(defaultStrategy, sqlToyLazyDao, entityManager, key,
-                extractor, new DefaultJpaQueryMethodFactory(extractor), valueExpressionDelegate,
-                QueryRewriterProvider.simple(), EscapeCharacter.DEFAULT));
-    }
+		return Optional.of(TemplateQueryLookupStrategy.create(defaultStrategy, sqlToyLazyDao, entityManager, key,
+				extractor, new DefaultJpaQueryMethodFactory(extractor), valueExpressionDelegate,
+				QueryRewriterProvider.simple(), EscapeCharacter.DEFAULT));
+	}
 
-    // 设置=实现类是BaseRepositoryImpl
-    @Override
-    protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information,
-            EntityManager entityManager) {
-        JpaEntityInformation<?, Serializable> entityInformation = this
-                .getEntityInformation(information.getDomainType());
-        Object repository = this.getTargetRepositoryViaReflection(information,
-                new Object[]{entityInformation, entityManager});
-        Assert.isInstanceOf(BaseJpaRepositoryImpl.class, repository);
-        return (JpaRepositoryImplementation<?, ?>) repository;
-    }
+	// 设置=实现类是BaseRepositoryImpl
+	@Override
+	protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information,
+			EntityManager entityManager) {
+		JpaEntityInformation<?, Serializable> entityInformation = this
+			.getEntityInformation(information.getDomainType());
+		Object repository = this.getTargetRepositoryViaReflection(information,
+				new Object[] { entityInformation, entityManager });
+		Assert.isInstanceOf(BaseJpaRepositoryImpl.class, repository);
+		return (JpaRepositoryImplementation<?, ?>) repository;
+	}
 
-    // 设置自定义实现类class
-    @Override
-    protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-        return BaseJpaRepositoryImpl.class;
-    }
+	// 设置自定义实现类class
+	@Override
+	protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
+		return BaseJpaRepositoryImpl.class;
+	}
+
 }

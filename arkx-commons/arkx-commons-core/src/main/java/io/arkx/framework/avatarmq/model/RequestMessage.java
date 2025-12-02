@@ -9,7 +9,8 @@ package io.arkx.framework.avatarmq.model;
  */
 public class RequestMessage extends BusinessMessage {
 
-    public RequestMessage() {
-        super();
-    }
+	public RequestMessage() {
+		super();
+	}
+
 }

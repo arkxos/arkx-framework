@@ -11,34 +11,36 @@ import io.arkx.framework.commons.util.ObjectUtil;
  */
 public class LongCastor extends AbstractInnerCastor {
 
-    private static LongCastor singleton = new LongCastor();
+	private static LongCastor singleton = new LongCastor();
 
-    public static LongCastor getInstance() {
-        return singleton;
-    }
+	public static LongCastor getInstance() {
+		return singleton;
+	}
 
-    @Override
-    public boolean canCast(Class<?> type) {
-        return (Long.class == type) || (Long.TYPE == type);
-    }
+	@Override
+	public boolean canCast(Class<?> type) {
+		return (Long.class == type) || (Long.TYPE == type);
+	}
 
-    @Override
-    public Object cast(Object obj, Class<?> type) {
-        if (obj == null) {
-            return 0;
-        }
-        if ((obj instanceof Number))
-            return ((Number) obj).longValue();
-        try {
-            String str = obj.toString();
-            if (ObjectUtil.empty(str)) {
-                return 0;
-            }
-            return Long.parseLong(obj.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	@Override
+	public Object cast(Object obj, Class<?> type) {
+		if (obj == null) {
+			return 0;
+		}
+		if ((obj instanceof Number))
+			return ((Number) obj).longValue();
+		try {
+			String str = obj.toString();
+			if (ObjectUtil.empty(str)) {
+				return 0;
+			}
+			return Long.parseLong(obj.toString());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        return 0;
-    }
+		return 0;
+	}
+
 }

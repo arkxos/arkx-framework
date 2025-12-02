@@ -6,7 +6,6 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 
 /**
- *
  * @author darkness
  * @date 2018-10-09 22:43:52
  * @version 1.0
@@ -14,10 +13,10 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
  */
 public class DataTableFastjsonConfig {
 
-    public static void init() {
-        SerializeConfig.getGlobalInstance().put(DataTable.class, new DataTableSerializer());
+	public static void init() {
+		SerializeConfig.getGlobalInstance().put(DataTable.class, new DataTableSerializer());
 
-        ParserConfig.getGlobalInstance().putDeserializer(DataTable.class, new DataTableDeserializer());
-    }
+		ParserConfig.getGlobalInstance().putDeserializer(DataTable.class, new DataTableDeserializer());
+	}
 
 }

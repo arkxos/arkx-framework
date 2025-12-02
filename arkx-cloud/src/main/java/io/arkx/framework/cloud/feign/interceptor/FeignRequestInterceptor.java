@@ -22,49 +22,52 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class FeignRequestInterceptor implements RequestInterceptor {
-    /**
-     * 微服务之间传递的唯一标识
-     */
-    public static final String X_REQUEST_ID = "X-Request-Id";
 
-    @Override
-    public void apply(RequestTemplate template) {
-        HttpServletRequest httpServletRequest = getHttpServletRequest();
-        if (httpServletRequest != null) {
-            Map<String, String> headers = getHeaders(httpServletRequest);
-            // 传递所有请求头,防止部分丢失
-            Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                template.header(entry.getKey(), entry.getValue());
-            }
-            // 微服务之间传递的唯一标识
-            if (httpServletRequest.getHeader(X_REQUEST_ID) == null) {
-                String sid = UuidUtil.base58Uuid();
-                template.header(X_REQUEST_ID, sid);
-            }
-            log.debug("FeignRequestInterceptor:{}", template.toString());
-        }
-    }
+	/**
+	 * 微服务之间传递的唯一标识
+	 */
+	public static final String X_REQUEST_ID = "X-Request-Id";
 
-    private HttpServletRequest getHttpServletRequest() {
-        try {
-            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+	@Override
+	public void apply(RequestTemplate template) {
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		if (httpServletRequest != null) {
+			Map<String, String> headers = getHeaders(httpServletRequest);
+			// 传递所有请求头,防止部分丢失
+			Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, String> entry = iterator.next();
+				template.header(entry.getKey(), entry.getValue());
+			}
+			// 微服务之间传递的唯一标识
+			if (httpServletRequest.getHeader(X_REQUEST_ID) == null) {
+				String sid = UuidUtil.base58Uuid();
+				template.header(X_REQUEST_ID, sid);
+			}
+			log.debug("FeignRequestInterceptor:{}", template.toString());
+		}
+	}
 
-    private Map<String, String> getHeaders(HttpServletRequest request) {
-        Map<String, String> map = new LinkedHashMap<>();
-        Enumeration<String> enumeration = request.getHeaderNames();
-        if (enumeration != null) {
-            while (enumeration.hasMoreElements()) {
-                String key = enumeration.nextElement();
-                String value = request.getHeader(key);
-                map.put(key, value);
-            }
-        }
-        return map;
-    }
+	private HttpServletRequest getHttpServletRequest() {
+		try {
+			return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	private Map<String, String> getHeaders(HttpServletRequest request) {
+		Map<String, String> map = new LinkedHashMap<>();
+		Enumeration<String> enumeration = request.getHeaderNames();
+		if (enumeration != null) {
+			while (enumeration.hasMoreElements()) {
+				String key = enumeration.nextElement();
+				String value = request.getHeader(key);
+				map.put(key, value);
+			}
+		}
+		return map;
+	}
+
 }

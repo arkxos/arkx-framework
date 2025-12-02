@@ -13,46 +13,49 @@ import org.apache.commons.lang3.StringUtils;
 
 public class IncrementPoint {
 
-    public static IncrementPoint EMPTY = new IncrementPoint();
+	public static IncrementPoint EMPTY = new IncrementPoint();
 
-    private String columnName;
-    private Object maxValue;
-    private int jdbcType;
+	private String columnName;
 
-    private IncrementPoint() {
-    }
+	private Object maxValue;
 
-    public IncrementPoint(String columnName, Object maxValue, int jdbcType) {
-        this.columnName = columnName;
-        this.maxValue = maxValue;
-        this.jdbcType = jdbcType;
-    }
+	private int jdbcType;
 
-    public boolean isWorkable() {
-        return StringUtils.isNotBlank(columnName) && null != maxValue;
-    }
+	private IncrementPoint() {
+	}
 
-    public String getColumnName() {
-        return columnName;
-    }
+	public IncrementPoint(String columnName, Object maxValue, int jdbcType) {
+		this.columnName = columnName;
+		this.maxValue = maxValue;
+		this.jdbcType = jdbcType;
+	}
 
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
-    }
+	public boolean isWorkable() {
+		return StringUtils.isNotBlank(columnName) && null != maxValue;
+	}
 
-    public Object getMaxValue() {
-        return maxValue;
-    }
+	public String getColumnName() {
+		return columnName;
+	}
 
-    public void setMaxValue(Object maxValue) {
-        this.maxValue = maxValue;
-    }
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
 
-    public int getJdbcType() {
-        return jdbcType;
-    }
+	public Object getMaxValue() {
+		return maxValue;
+	}
 
-    public void setJdbcType(int jdbcType) {
-        this.jdbcType = jdbcType;
-    }
+	public void setMaxValue(Object maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public int getJdbcType() {
+		return jdbcType;
+	}
+
+	public void setJdbcType(int jdbcType) {
+		this.jdbcType = jdbcType;
+	}
+
 }

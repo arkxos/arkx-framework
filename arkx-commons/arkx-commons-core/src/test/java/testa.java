@@ -7,11 +7,12 @@ import io.arkx.framework.commons.util.FileUtil;
  */
 public class testa {
 
-    public static void main(String[] args) throws ClassNotFoundException {
-        String textString = FileUtil.readText("C:\\Users\\Administrator\\Desktop\\test.txt");
-        String[] lines = textString.split("\r\n");
-        for (String string : lines) {
-            System.out.println("\"" + string + "\",");
-        }
-    }
+	public static void main(String[] args) throws ClassNotFoundException {
+		String textString = FileUtil.readText("C:\\Users\\Administrator\\Desktop\\test.txt");
+		String[] lines = textString.split("\r\n");
+		for (String string : lines) {
+			System.out.println("\"" + string + "\",");
+		}
+	}
+
 }

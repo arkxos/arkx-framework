@@ -13,42 +13,48 @@ import io.arkx.framework.avatarmq.msg.BaseMessage;
  */
 public abstract class BusinessMessage implements Serializable {
 
-    public final static int SUCCESS = 0;
-    public final static int FAIL = 1;
-    protected String msgId;
-    protected BaseMessage msgParams;
-    protected MessageSource msgSource;
-    protected MessageType msgType;
+	public final static int SUCCESS = 0;
 
-    public String getMsgId() {
-        return msgId;
-    }
+	public final static int FAIL = 1;
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
-    }
+	protected String msgId;
 
-    public BaseMessage getMsgParams() {
-        return msgParams;
-    }
+	protected BaseMessage msgParams;
 
-    public void setMsgParams(BaseMessage msgParams) {
-        this.msgParams = msgParams;
-    }
+	protected MessageSource msgSource;
 
-    public MessageSource getMsgSource() {
-        return msgSource;
-    }
+	protected MessageType msgType;
 
-    public void setMsgSource(MessageSource msgSource) {
-        this.msgSource = msgSource;
-    }
+	public String getMsgId() {
+		return msgId;
+	}
 
-    public MessageType getMsgType() {
-        return msgType;
-    }
+	public void setMsgId(String msgId) {
+		this.msgId = msgId;
+	}
 
-    public void setMsgType(MessageType msgType) {
-        this.msgType = msgType;
-    }
+	public BaseMessage getMsgParams() {
+		return msgParams;
+	}
+
+	public void setMsgParams(BaseMessage msgParams) {
+		this.msgParams = msgParams;
+	}
+
+	public MessageSource getMsgSource() {
+		return msgSource;
+	}
+
+	public void setMsgSource(MessageSource msgSource) {
+		this.msgSource = msgSource;
+	}
+
+	public MessageType getMsgType() {
+		return msgType;
+	}
+
+	public void setMsgType(MessageType msgType) {
+		this.msgType = msgType;
+	}
+
 }

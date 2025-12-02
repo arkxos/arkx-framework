@@ -14,26 +14,27 @@ import lombok.Getter;
 
 class EnumTest {
 
-    @Getter
-    @AllArgsConstructor
-    enum Gender implements EnumMarker {
+	@Getter
+	@AllArgsConstructor
+	enum Gender implements EnumMarker {
 
-        MALE(1, "男"), FEMALE(2, "女");
+		MALE(1, "男"), FEMALE(2, "女");
 
-        private final Integer value;
-        private final String desc;
+		private final Integer value;
 
-    }
+		private final String desc;
 
-    @Test
-    void createEnumTest() {
-        Gender male = EnumMarker.valueOf(Gender.class, 1);
-        assertEquals(MALE, male);
-        Gender female = EnumMarker.valueOf(Gender.class, 2);
-        assertEquals(FEMALE, female);
+	}
 
-        // 抛异常
-        assertThrows(IllegalArgumentException.class, () -> EnumMarker.valueOf(Gender.class, 3));
-    }
+	@Test
+	void createEnumTest() {
+		Gender male = EnumMarker.valueOf(Gender.class, 1);
+		assertEquals(MALE, male);
+		Gender female = EnumMarker.valueOf(Gender.class, 2);
+		assertEquals(FEMALE, female);
+
+		// 抛异常
+		assertThrows(IllegalArgumentException.class, () -> EnumMarker.valueOf(Gender.class, 3));
+	}
 
 }

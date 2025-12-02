@@ -8,29 +8,34 @@ import io.arkx.framework.commons.util.NumberUtil;
  *
  */
 public class UploadMaxSize implements IApplicationConfigItem {
-    public static final String ID = "UploadMaxSize";
-    public static final int DEFAULT = 2 * 1024 * 1024 * 1024;
-    private static int max = -1;
 
-    @Override
-    public String getExtendItemID() {
-        return ID;
-    }
+	public static final String ID = "UploadMaxSize";
 
-    @Override
-    public String getExtendItemName() {
-        return "Maxiumn file size of upload";
-    }
+	public static final int DEFAULT = 2 * 1024 * 1024 * 1024;
 
-    public static int getValue() {
-        if (max < 0) {
-            String str = Config.getValue("App." + ID);
-            if (NumberUtil.isInt(str)) {
-                max = Integer.parseInt(str);
-            } else {
-                max = DEFAULT;
-            }
-        }
-        return max;
-    }
+	private static int max = -1;
+
+	@Override
+	public String getExtendItemID() {
+		return ID;
+	}
+
+	@Override
+	public String getExtendItemName() {
+		return "Maxiumn file size of upload";
+	}
+
+	public static int getValue() {
+		if (max < 0) {
+			String str = Config.getValue("App." + ID);
+			if (NumberUtil.isInt(str)) {
+				max = Integer.parseInt(str);
+			}
+			else {
+				max = DEFAULT;
+			}
+		}
+		return max;
+	}
+
 }

@@ -35,219 +35,254 @@ import io.arkx.framework.data.mybatis.pro.sdk.Mapper;
  */
 public class MapperUtil {
 
-    private final Document document;
-    private Class<?> entityCls;
-    private String tableName;
-    private String idColumn;
-    private String idName;
-    private Type type;
+	private final Document document;
 
-    // -- biz
-    private final Map<String, String> methodName2Sql = new HashMap<>();
+	private Class<?> entityCls;
 
-    private static final String TRIM_START = "<trim suffixOverrides=','>";
-    private static final String TRIM_END = "</trim>";
-    private static final String WHERE = " where ";
+	private String tableName;
 
-    String insertColumns;
-    String insertValues;
-    String insertExcludeNullColumns;
-    String insertExcludeNullValues;
-    String updateByIdColumns;
-    String updateByIdExcludeNullColumns;
+	private String idColumn;
 
-    public MapperUtil(Resource resource) {
-        this.document = createDocumentFromResource(resource);
-        Class<?> mapper = XmlUtil.getNamespaceFromXmlResource(resource);
-        Set<Class<?>> parentInters = getAllParentInterface(mapper);
-        if (parentInters.contains(Mapper.class)) {
-            this.entityCls = getTypeArgument(mapper);
-            this.tableName = getAnnotationValue(entityCls, Table.class);
-            if (isEmpty(tableName)) {
-                throw new MyBatisProException("实体" + entityCls.getName() + "必须包含@" + Table.class.getName() + "注解");
-            }
-            Field idField = getIdField(entityCls);
-            this.idName = idField.getName();
-            String col = getAnnotationValue(idField, Column.class);
-            this.idColumn = isEmpty(col) ? toLine(idField.getName(), FIELDS_ALIAS_CACHE.get(entityCls)) : col;
-            this.type = idField.getAnnotation(Id.class).type();
-            this.createSqlFragment();
+	private String idName;
 
-            processBiz();
-        }
-    }
+	private Type type;
 
-    private void processBiz() {
-        String selectPrefix = "select * from " + tableName;
-        String deletePrefix = "delete from " + tableName;
+	// -- biz
+	private final Map<String, String> methodName2Sql = new HashMap<>();
 
-        String insertPrefix = "insert into " + tableName;
-        String updateByIdPrefix = "update " + tableName;
+	private static final String TRIM_START = "<trim suffixOverrides=','>";
 
-        String commonWhereIdIs = WHERE + idColumn + " = #{" + idName + "}";
-        String commonWhereIdIn = WHERE + idColumn
-                + " in <foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>";
+	private static final String TRIM_END = "</trim>";
 
-        String selectById = selectPrefix + commonWhereIdIs;
-        String selectByIds = selectPrefix + commonWhereIdIn;
-        methodName2Sql.put("selectById", selectById);
-        methodName2Sql.put("selectByIds", selectByIds);
-        methodName2Sql.put("selectAll", selectPrefix);
+	private static final String WHERE = " where ";
 
-        String insert = insertPrefix + this.insertColumns + " VALUES " + this.insertValues;
-        String insertList = insertPrefix + " " + this.insertColumns
-                + " VALUES <foreach collection='list' item='item' index='index' separator=','>"
-                + this.insertValues.replace("#{", "#{item.") + "</foreach>";
+	String insertColumns;
 
-        String insertExcludeNull = insertPrefix + " (" + this.insertExcludeNullColumns + ") " + " VALUES ("
-                + this.insertExcludeNullValues + ")";
-        methodName2Sql.put("insert", insert);
-        methodName2Sql.put("insertList", insertList);
-        methodName2Sql.put("insertExcludeNull", insertExcludeNull);
+	String insertValues;
 
-        String updateById = updateByIdPrefix + " set " + this.updateByIdColumns + commonWhereIdIs;
-        String updateByIdExcludeNull = updateByIdPrefix + " set " + this.updateByIdExcludeNullColumns + WHERE
-                + this.idColumn + " = #{" + this.idName + "}";
-        methodName2Sql.put("updateById", updateById);
-        methodName2Sql.put("updateByIdExcludeNull", updateByIdExcludeNull);
+	String insertExcludeNullColumns;
 
-        String deleteById = deletePrefix + commonWhereIdIs;
-        String deleteByIds = deletePrefix + commonWhereIdIn;
-        methodName2Sql.put("deleteById", deleteById);
-        methodName2Sql.put("deleteByIds", deleteByIds);
-    }
+	String insertExcludeNullValues;
 
-    /**
-     * 将通用crud方法填充到resource里
-     */
-    public Resource parse() {
-        Set<String> existingIds = getExistingIdsFromXml();
-        Method[] methods = Mapper.class.getMethods();
-        Stream.of(methods).map(Method::getName).filter(methodName -> !existingIds.contains(methodName))
-                .forEach(methodName -> {
-                    MapperLabel ml;
-                    String returnType = null;
-                    if (methodName.startsWith(MapperLabel.SELECT.getCode())) {
-                        ml = MapperLabel.SELECT;
-                        returnType = entityCls.getName();
-                    } else if (methodName.startsWith(MapperLabel.INSERT.getCode())) {
-                        ml = MapperLabel.INSERT;
-                    } else if (methodName.startsWith(MapperLabel.UPDATE.getCode())) {
-                        ml = MapperLabel.UPDATE;
-                    } else {
-                        ml = MapperLabel.DELETE;
-                    }
+	String updateByIdColumns;
 
-                    DocumentUtil.fillSqlNode(this.document, ml, methodName, returnType, methodName2Sql.get(methodName),
-                            type, idName);
-                });
-        return DocumentUtil.createResourceFromDocument(this.document);
-    }
+	String updateByIdExcludeNullColumns;
 
-    private Set<String> getExistingIdsFromXml() {
-        Set<String> existingIds = new HashSet<>();
-        NodeList selectNodes = document.getElementsByTagName("select");
-        NodeList insertNodes = document.getElementsByTagName("insert");
-        NodeList updateNodes = document.getElementsByTagName("update");
-        NodeList deleteNodes = document.getElementsByTagName("delete");
+	public MapperUtil(Resource resource) {
+		this.document = createDocumentFromResource(resource);
+		Class<?> mapper = XmlUtil.getNamespaceFromXmlResource(resource);
+		Set<Class<?>> parentInters = getAllParentInterface(mapper);
+		if (parentInters.contains(Mapper.class)) {
+			this.entityCls = getTypeArgument(mapper);
+			this.tableName = getAnnotationValue(entityCls, Table.class);
+			if (isEmpty(tableName)) {
+				throw new MyBatisProException("实体" + entityCls.getName() + "必须包含@" + Table.class.getName() + "注解");
+			}
+			Field idField = getIdField(entityCls);
+			this.idName = idField.getName();
+			String col = getAnnotationValue(idField, Column.class);
+			this.idColumn = isEmpty(col) ? toLine(idField.getName(), FIELDS_ALIAS_CACHE.get(entityCls)) : col;
+			this.type = idField.getAnnotation(Id.class).type();
+			this.createSqlFragment();
 
-        addIdsFromNodeList(selectNodes, existingIds);
-        addIdsFromNodeList(insertNodes, existingIds);
-        addIdsFromNodeList(updateNodes, existingIds);
-        addIdsFromNodeList(deleteNodes, existingIds);
+			processBiz();
+		}
+	}
 
-        return existingIds;
-    }
+	private void processBiz() {
+		String selectPrefix = "select * from " + tableName;
+		String deletePrefix = "delete from " + tableName;
 
-    private void addIdsFromNodeList(NodeList nodeList, Set<String> existingIds) {
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-            NamedNodeMap attributes = node.getAttributes();
-            if (attributes != null) {
-                Node idNode = attributes.getNamedItem("id");
-                if (idNode != null) {
-                    existingIds.add(idNode.getNodeValue());
-                }
-            }
-        }
-    }
+		String insertPrefix = "insert into " + tableName;
+		String updateByIdPrefix = "update " + tableName;
 
-    private void createSqlFragment() {
-        Map<String, String> values2Columns = new HashMap<>();
-        IdType pkType = new IdType();
-        PrimaryKey pk = new PrimaryKey();
+		String commonWhereIdIs = WHERE + idColumn + " = #{" + idName + "}";
+		String commonWhereIdIn = WHERE + idColumn
+				+ " in <foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>";
 
-        Reflector r = new Reflector(entityCls);
-        ReflectionUtils.doWithFields(entityCls, field -> {
-            Column colAn = field.getAnnotation(Column.class);
-            String column = Optional.ofNullable(colAn).map(Column::value)
-                    .orElse(SqlUtil.toLine(field.getName(), FIELDS_ALIAS_CACHE.get(entityCls)));
-            values2Columns.put(field.getName(), column);
+		String selectById = selectPrefix + commonWhereIdIs;
+		String selectByIds = selectPrefix + commonWhereIdIn;
+		methodName2Sql.put("selectById", selectById);
+		methodName2Sql.put("selectByIds", selectByIds);
+		methodName2Sql.put("selectAll", selectPrefix);
 
-            Id idAn = field.getAnnotation(Id.class);
-            if (idAn != null) {
-                pkType.type = idAn.type();
-                pk.name = field.getName();
-            }
-        }, f -> isJavaBeanProp(r, f));
+		String insert = insertPrefix + this.insertColumns + " VALUES " + this.insertValues;
+		String insertList = insertPrefix + " " + this.insertColumns
+				+ " VALUES <foreach collection='list' item='item' index='index' separator=','>"
+				+ this.insertValues.replace("#{", "#{item.") + "</foreach>";
 
-        if (pkType.type == Type.IDENTITY) {
-            values2Columns.remove(pk.name);
-        }
-        List<String> columns = new ArrayList<>();
-        List<String> values = new ArrayList<>();
-        values2Columns.forEach((fieldName, column) -> {
-            columns.add(column);
-            values.add(fieldName);
-        });
+		String insertExcludeNull = insertPrefix + " (" + this.insertExcludeNullColumns + ") " + " VALUES ("
+				+ this.insertExcludeNullValues + ")";
+		methodName2Sql.put("insert", insert);
+		methodName2Sql.put("insertList", insertList);
+		methodName2Sql.put("insertExcludeNull", insertExcludeNull);
 
-        this.insertColumns = columns.stream().collect(Collectors.joining(",", "(", ")"));
-        this.insertValues = values.stream().map(column -> "#{" + column + "}")
-                .collect(Collectors.joining(",", "(", ")"));
-        this.createInsertExcludeNullColumnsAndValues(columns, values);
-        this.createUpdateByIdColumns(columns, values);
-        this.createUpdateByIdExcludeNullColumns(columns, values);
-    }
+		String updateById = updateByIdPrefix + " set " + this.updateByIdColumns + commonWhereIdIs;
+		String updateByIdExcludeNull = updateByIdPrefix + " set " + this.updateByIdExcludeNullColumns + WHERE
+				+ this.idColumn + " = #{" + this.idName + "}";
+		methodName2Sql.put("updateById", updateById);
+		methodName2Sql.put("updateByIdExcludeNull", updateByIdExcludeNull);
 
-    private static class IdType {
-        Type type;
-    }
+		String deleteById = deletePrefix + commonWhereIdIs;
+		String deleteByIds = deletePrefix + commonWhereIdIn;
+		methodName2Sql.put("deleteById", deleteById);
+		methodName2Sql.put("deleteByIds", deleteByIds);
+	}
 
-    private static class PrimaryKey {
-        String name;
-    }
+	/**
+	 * 将通用crud方法填充到resource里
+	 */
+	public Resource parse() {
+		Set<String> existingIds = getExistingIdsFromXml();
+		Method[] methods = Mapper.class.getMethods();
+		Stream.of(methods)
+			.map(Method::getName)
+			.filter(methodName -> !existingIds.contains(methodName))
+			.forEach(methodName -> {
+				MapperLabel ml;
+				String returnType = null;
+				if (methodName.startsWith(MapperLabel.SELECT.getCode())) {
+					ml = MapperLabel.SELECT;
+					returnType = entityCls.getName();
+				}
+				else if (methodName.startsWith(MapperLabel.INSERT.getCode())) {
+					ml = MapperLabel.INSERT;
+				}
+				else if (methodName.startsWith(MapperLabel.UPDATE.getCode())) {
+					ml = MapperLabel.UPDATE;
+				}
+				else {
+					ml = MapperLabel.DELETE;
+				}
 
-    private void createInsertExcludeNullColumnsAndValues(List<String> columns, List<String> values) {
-        StringBuilder insertExcludeNullCols = new StringBuilder();
-        StringBuilder insertExcludeNullVals = new StringBuilder();
-        for (int i = 0; i < columns.size(); i++) {
-            insertExcludeNullCols.append("<if test = '").append(values.get(i)).append(" != null'>")
-                    .append(columns.get(i)).append(",</if>");
-            insertExcludeNullVals.append("<if test = '").append(values.get(i)).append(" != null'>#{")
-                    .append(values.get(i)).append("},</if>");
-        }
+				DocumentUtil.fillSqlNode(this.document, ml, methodName, returnType, methodName2Sql.get(methodName),
+						type, idName);
+			});
+		return DocumentUtil.createResourceFromDocument(this.document);
+	}
 
-        this.insertExcludeNullColumns = TRIM_START + insertExcludeNullCols + TRIM_END;
-        this.insertExcludeNullValues = TRIM_START + insertExcludeNullVals + TRIM_END;
-    }
+	private Set<String> getExistingIdsFromXml() {
+		Set<String> existingIds = new HashSet<>();
+		NodeList selectNodes = document.getElementsByTagName("select");
+		NodeList insertNodes = document.getElementsByTagName("insert");
+		NodeList updateNodes = document.getElementsByTagName("update");
+		NodeList deleteNodes = document.getElementsByTagName("delete");
 
-    private void createUpdateByIdColumns(List<String> columns, List<String> values) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < columns.size(); i++) {
-            result.append(columns.get(i)).append(" = #{").append(values.get(i)).append("}");
-            if (i != columns.size() - 1) {
-                result.append(",");
-            }
-        }
-        this.updateByIdColumns = result.toString();
-    }
+		addIdsFromNodeList(selectNodes, existingIds);
+		addIdsFromNodeList(insertNodes, existingIds);
+		addIdsFromNodeList(updateNodes, existingIds);
+		addIdsFromNodeList(deleteNodes, existingIds);
 
-    private void createUpdateByIdExcludeNullColumns(List<String> columns, List<String> values) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < columns.size(); i++) {
-            result.append("<if test = '").append(values.get(i)).append(" != null'>").append(columns.get(i))
-                    .append(" = #{").append(values.get(i)).append("},</if>");
-        }
-        this.updateByIdExcludeNullColumns = TRIM_START + result + TRIM_END;
-    }
+		return existingIds;
+	}
+
+	private void addIdsFromNodeList(NodeList nodeList, Set<String> existingIds) {
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
+			NamedNodeMap attributes = node.getAttributes();
+			if (attributes != null) {
+				Node idNode = attributes.getNamedItem("id");
+				if (idNode != null) {
+					existingIds.add(idNode.getNodeValue());
+				}
+			}
+		}
+	}
+
+	private void createSqlFragment() {
+		Map<String, String> values2Columns = new HashMap<>();
+		IdType pkType = new IdType();
+		PrimaryKey pk = new PrimaryKey();
+
+		Reflector r = new Reflector(entityCls);
+		ReflectionUtils.doWithFields(entityCls, field -> {
+			Column colAn = field.getAnnotation(Column.class);
+			String column = Optional.ofNullable(colAn)
+				.map(Column::value)
+				.orElse(SqlUtil.toLine(field.getName(), FIELDS_ALIAS_CACHE.get(entityCls)));
+			values2Columns.put(field.getName(), column);
+
+			Id idAn = field.getAnnotation(Id.class);
+			if (idAn != null) {
+				pkType.type = idAn.type();
+				pk.name = field.getName();
+			}
+		}, f -> isJavaBeanProp(r, f));
+
+		if (pkType.type == Type.IDENTITY) {
+			values2Columns.remove(pk.name);
+		}
+		List<String> columns = new ArrayList<>();
+		List<String> values = new ArrayList<>();
+		values2Columns.forEach((fieldName, column) -> {
+			columns.add(column);
+			values.add(fieldName);
+		});
+
+		this.insertColumns = columns.stream().collect(Collectors.joining(",", "(", ")"));
+		this.insertValues = values.stream()
+			.map(column -> "#{" + column + "}")
+			.collect(Collectors.joining(",", "(", ")"));
+		this.createInsertExcludeNullColumnsAndValues(columns, values);
+		this.createUpdateByIdColumns(columns, values);
+		this.createUpdateByIdExcludeNullColumns(columns, values);
+	}
+
+	private static class IdType {
+
+		Type type;
+
+	}
+
+	private static class PrimaryKey {
+
+		String name;
+
+	}
+
+	private void createInsertExcludeNullColumnsAndValues(List<String> columns, List<String> values) {
+		StringBuilder insertExcludeNullCols = new StringBuilder();
+		StringBuilder insertExcludeNullVals = new StringBuilder();
+		for (int i = 0; i < columns.size(); i++) {
+			insertExcludeNullCols.append("<if test = '")
+				.append(values.get(i))
+				.append(" != null'>")
+				.append(columns.get(i))
+				.append(",</if>");
+			insertExcludeNullVals.append("<if test = '")
+				.append(values.get(i))
+				.append(" != null'>#{")
+				.append(values.get(i))
+				.append("},</if>");
+		}
+
+		this.insertExcludeNullColumns = TRIM_START + insertExcludeNullCols + TRIM_END;
+		this.insertExcludeNullValues = TRIM_START + insertExcludeNullVals + TRIM_END;
+	}
+
+	private void createUpdateByIdColumns(List<String> columns, List<String> values) {
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < columns.size(); i++) {
+			result.append(columns.get(i)).append(" = #{").append(values.get(i)).append("}");
+			if (i != columns.size() - 1) {
+				result.append(",");
+			}
+		}
+		this.updateByIdColumns = result.toString();
+	}
+
+	private void createUpdateByIdExcludeNullColumns(List<String> columns, List<String> values) {
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < columns.size(); i++) {
+			result.append("<if test = '")
+				.append(values.get(i))
+				.append(" != null'>")
+				.append(columns.get(i))
+				.append(" = #{")
+				.append(values.get(i))
+				.append("},</if>");
+		}
+		this.updateByIdExcludeNullColumns = TRIM_START + result + TRIM_END;
+	}
+
 }

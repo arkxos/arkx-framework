@@ -26,140 +26,143 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Named thread in ThreadFactory. If there is no specified name for thread, it
- * will auto detect using the invoker classname instead.
+ * Named thread in ThreadFactory. If there is no specified name for thread, it will auto
+ * detect using the invoker classname instead.
  *
  * @author yutianbao
  */
 public class NamingThreadFactory implements ThreadFactory {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NamingThreadFactory.class);
 
-    /**
-     * Thread name pre
-     */
-    private String name;
-    /**
-     * Is daemon thread
-     */
-    private boolean daemon;
-    /**
-     * UncaughtExceptionHandler
-     */
-    private UncaughtExceptionHandler uncaughtExceptionHandler;
-    /**
-     * Sequences for multi thread name prefix
-     */
-    private final ConcurrentHashMap<String, AtomicLong> sequences;
+	private static final Logger LOGGER = LoggerFactory.getLogger(NamingThreadFactory.class);
 
-    /**
-     * Constructors
-     */
-    public NamingThreadFactory() {
-        this(null, false, null);
-    }
+	/**
+	 * Thread name pre
+	 */
+	private String name;
 
-    public NamingThreadFactory(String name) {
-        this(name, false, null);
-    }
+	/**
+	 * Is daemon thread
+	 */
+	private boolean daemon;
 
-    public NamingThreadFactory(String name, boolean daemon) {
-        this(name, daemon, null);
-    }
+	/**
+	 * UncaughtExceptionHandler
+	 */
+	private UncaughtExceptionHandler uncaughtExceptionHandler;
 
-    public NamingThreadFactory(String name, boolean daemon, UncaughtExceptionHandler handler) {
-        this.name = name;
-        this.daemon = daemon;
-        this.uncaughtExceptionHandler = handler;
-        this.sequences = new ConcurrentHashMap<String, AtomicLong>();
-    }
+	/**
+	 * Sequences for multi thread name prefix
+	 */
+	private final ConcurrentHashMap<String, AtomicLong> sequences;
 
-    @Override
-    public Thread newThread(Runnable r) {
-        Thread thread = new Thread(r);
-        thread.setDaemon(this.daemon);
+	/**
+	 * Constructors
+	 */
+	public NamingThreadFactory() {
+		this(null, false, null);
+	}
 
-        // If there is no specified name for thread, it will auto detect using the
-        // invoker classname instead.
-        // Notice that auto detect may cause some performance overhead
-        String prefix = this.name;
-        if (StringUtils.isBlank(prefix)) {
-            prefix = getInvoker(2);
-        }
-        thread.setName(prefix + "-" + getSequence(prefix));
+	public NamingThreadFactory(String name) {
+		this(name, false, null);
+	}
 
-        // no specified uncaughtExceptionHandler, just do logging.
-        if (this.uncaughtExceptionHandler != null) {
-            thread.setUncaughtExceptionHandler(this.uncaughtExceptionHandler);
-        } else {
-            thread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-                public void uncaughtException(Thread t, Throwable e) {
-                    LOGGER.error("unhandled exception in thread: " + t.getId() + ":" + t.getName(), e);
-                }
-            });
-        }
+	public NamingThreadFactory(String name, boolean daemon) {
+		this(name, daemon, null);
+	}
 
-        return thread;
-    }
+	public NamingThreadFactory(String name, boolean daemon, UncaughtExceptionHandler handler) {
+		this.name = name;
+		this.daemon = daemon;
+		this.uncaughtExceptionHandler = handler;
+		this.sequences = new ConcurrentHashMap<String, AtomicLong>();
+	}
 
-    /**
-     * Get the method invoker's class name
-     *
-     * @param depth
-     * @return
-     */
-    private String getInvoker(int depth) {
-        Exception e = new Exception();
-        StackTraceElement[] stes = e.getStackTrace();
-        if (stes.length > depth) {
-            return ClassUtils.getShortClassName(stes[depth].getClassName());
-        }
-        return getClass().getSimpleName();
-    }
+	@Override
+	public Thread newThread(Runnable r) {
+		Thread thread = new Thread(r);
+		thread.setDaemon(this.daemon);
 
-    /**
-     * Get sequence for different naming prefix
-     *
-     * @param invoker
-     * @return
-     */
-    private long getSequence(String invoker) {
-        AtomicLong r = this.sequences.get(invoker);
-        if (r == null) {
-            r = new AtomicLong(0);
-            AtomicLong previous = this.sequences.putIfAbsent(invoker, r);
-            if (previous != null) {
-                r = previous;
-            }
-        }
+		// If there is no specified name for thread, it will auto detect using the
+		// invoker classname instead.
+		// Notice that auto detect may cause some performance overhead
+		String prefix = this.name;
+		if (StringUtils.isBlank(prefix)) {
+			prefix = getInvoker(2);
+		}
+		thread.setName(prefix + "-" + getSequence(prefix));
 
-        return r.incrementAndGet();
-    }
+		// no specified uncaughtExceptionHandler, just do logging.
+		if (this.uncaughtExceptionHandler != null) {
+			thread.setUncaughtExceptionHandler(this.uncaughtExceptionHandler);
+		}
+		else {
+			thread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+				public void uncaughtException(Thread t, Throwable e) {
+					LOGGER.error("unhandled exception in thread: " + t.getId() + ":" + t.getName(), e);
+				}
+			});
+		}
 
-    /**
-     * Getters & Setters
-     */
-    public String getName() {
-        return name;
-    }
+		return thread;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * Get the method invoker's class name
+	 * @param depth
+	 * @return
+	 */
+	private String getInvoker(int depth) {
+		Exception e = new Exception();
+		StackTraceElement[] stes = e.getStackTrace();
+		if (stes.length > depth) {
+			return ClassUtils.getShortClassName(stes[depth].getClassName());
+		}
+		return getClass().getSimpleName();
+	}
 
-    public boolean isDaemon() {
-        return daemon;
-    }
+	/**
+	 * Get sequence for different naming prefix
+	 * @param invoker
+	 * @return
+	 */
+	private long getSequence(String invoker) {
+		AtomicLong r = this.sequences.get(invoker);
+		if (r == null) {
+			r = new AtomicLong(0);
+			AtomicLong previous = this.sequences.putIfAbsent(invoker, r);
+			if (previous != null) {
+				r = previous;
+			}
+		}
 
-    public void setDaemon(boolean daemon) {
-        this.daemon = daemon;
-    }
+		return r.incrementAndGet();
+	}
 
-    public UncaughtExceptionHandler getUncaughtExceptionHandler() {
-        return uncaughtExceptionHandler;
-    }
+	/**
+	 * Getters & Setters
+	 */
+	public String getName() {
+		return name;
+	}
 
-    public void setUncaughtExceptionHandler(UncaughtExceptionHandler handler) {
-        this.uncaughtExceptionHandler = handler;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isDaemon() {
+		return daemon;
+	}
+
+	public void setDaemon(boolean daemon) {
+		this.daemon = daemon;
+	}
+
+	public UncaughtExceptionHandler getUncaughtExceptionHandler() {
+		return uncaughtExceptionHandler;
+	}
+
+	public void setUncaughtExceptionHandler(UncaughtExceptionHandler handler) {
+		this.uncaughtExceptionHandler = handler;
+	}
 
 }

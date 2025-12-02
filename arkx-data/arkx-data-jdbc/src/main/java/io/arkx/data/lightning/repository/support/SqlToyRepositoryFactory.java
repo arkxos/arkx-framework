@@ -24,50 +24,43 @@ import io.arkx.framework.data.common.ContextHolder;
  */
 public class SqlToyRepositoryFactory extends JdbcRepositoryFactory {
 
-    private RelationalMappingContext context;
+	private RelationalMappingContext context;
 
-    /**
-     * Creates a new {@link JdbcRepositoryFactory} for the given
-     * {@link DataAccessStrategy}, {@link RelationalMappingContext} and
-     * {@link ApplicationEventPublisher}.
-     *
-     * @param dataAccessStrategy
-     *            must not be {@literal null}.
-     * @param context
-     *            must not be {@literal null}.
-     * @param converter
-     *            must not be {@literal null}.
-     * @param dialect
-     *            must not be {@literal null}.
-     * @param publisher
-     *            must not be {@literal null}.
-     * @param operations
-     *            must not be {@literal null}.
-     */
-    public SqlToyRepositoryFactory(DataAccessStrategy dataAccessStrategy, RelationalMappingContext context,
-            JdbcConverter converter, Dialect dialect, ApplicationEventPublisher publisher,
-            NamedParameterJdbcOperations operations) {
-        super(dataAccessStrategy, context, converter, dialect, publisher, operations);
-        this.context = context;
-    }
+	/**
+	 * Creates a new {@link JdbcRepositoryFactory} for the given
+	 * {@link DataAccessStrategy}, {@link RelationalMappingContext} and
+	 * {@link ApplicationEventPublisher}.
+	 * @param dataAccessStrategy must not be {@literal null}.
+	 * @param context must not be {@literal null}.
+	 * @param converter must not be {@literal null}.
+	 * @param dialect must not be {@literal null}.
+	 * @param publisher must not be {@literal null}.
+	 * @param operations must not be {@literal null}.
+	 */
+	public SqlToyRepositoryFactory(DataAccessStrategy dataAccessStrategy, RelationalMappingContext context,
+			JdbcConverter converter, Dialect dialect, ApplicationEventPublisher publisher,
+			NamedParameterJdbcOperations operations) {
+		super(dataAccessStrategy, context, converter, dialect, publisher, operations);
+		this.context = context;
+	}
 
-    @Override
-    protected Class<?> getRepositoryBaseClass(RepositoryMetadata repositoryMetadata) {
-        return BaseJdbcRepositoryImpl.class;
-    }
+	@Override
+	protected Class<?> getRepositoryBaseClass(RepositoryMetadata repositoryMetadata) {
+		return BaseJdbcRepositoryImpl.class;
+	}
 
-    @Override
-    protected Optional<QueryLookupStrategy> getQueryLookupStrategy(QueryLookupStrategy.Key key,
-            ValueExpressionDelegate valueExpressionDelegate) {
-        // 获取默认策略
-        QueryLookupStrategy defaultStrategy = super.getQueryLookupStrategy(key, valueExpressionDelegate)
-                .orElseThrow(() -> new IllegalStateException("No default query strategy found"));
+	@Override
+	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(QueryLookupStrategy.Key key,
+			ValueExpressionDelegate valueExpressionDelegate) {
+		// 获取默认策略
+		QueryLookupStrategy defaultStrategy = super.getQueryLookupStrategy(key, valueExpressionDelegate)
+			.orElseThrow(() -> new IllegalStateException("No default query strategy found"));
 
-        SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
+		SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
 
-        QueryLookupStrategy queryLookupStrategy = SqlToyQueryLookupStrategy.create(defaultStrategy, sqlToyLazyDao,
-                this.context);
-        return Optional.of(queryLookupStrategy);
-    }
+		QueryLookupStrategy queryLookupStrategy = SqlToyQueryLookupStrategy.create(defaultStrategy, sqlToyLazyDao,
+				this.context);
+		return Optional.of(queryLookupStrategy);
+	}
 
 }

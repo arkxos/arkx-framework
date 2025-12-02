@@ -10,34 +10,36 @@ import io.arkx.framework.json.JSONObject;
  *
  */
 public class DropTableCommand implements IDBCommand {
-    /**
-     * 要删除的数据表
-     */
-    public String Table;
 
-    public static final String Prefix = "DropTable:";
+	/**
+	 * 要删除的数据表
+	 */
+	public String Table;
 
-    @Override
-    public String getPrefix() {
-        return Prefix;
-    }
+	public static final String Prefix = "DropTable:";
 
-    @Override
-    public void parse(String ddl) {
-        ddl = ddl.substring(Prefix.length());
-        JSONObject map = (JSONObject) JSON.parse(ddl);
-        Table = map.getString("Table");
-    }
+	@Override
+	public String getPrefix() {
+		return Prefix;
+	}
 
-    @Override
-    public String toJSON() {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("Table", Table);
-        return Prefix + JSON.toJSONString(map);
-    }
+	@Override
+	public void parse(String ddl) {
+		ddl = ddl.substring(Prefix.length());
+		JSONObject map = (JSONObject) JSON.parse(ddl);
+		Table = map.getString("Table");
+	}
 
-    @Override
-    public String[] getDefaultSQLArray(String dbType) {
-        return new String[]{"drop table " + Table};
-    }
+	@Override
+	public String toJSON() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("Table", Table);
+		return Prefix + JSON.toJSONString(map);
+	}
+
+	@Override
+	public String[] getDefaultSQLArray(String dbType) {
+		return new String[] { "drop table " + Table };
+	}
+
 }

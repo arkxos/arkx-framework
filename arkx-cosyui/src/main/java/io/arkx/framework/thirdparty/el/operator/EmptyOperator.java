@@ -72,66 +72,68 @@ import io.arkx.framework.thirdparty.el.PrimitiveObjects;
  **/
 
 public class EmptyOperator extends UnaryOperator {
-    // -------------------------------------
-    // Singleton
-    // -------------------------------------
 
-    public static final EmptyOperator SINGLETON = new EmptyOperator();
+	// -------------------------------------
+	// Singleton
+	// -------------------------------------
 
-    // -------------------------------------
-    /**
-     * Constructor
-     **/
-    public EmptyOperator() {
-    }
+	public static final EmptyOperator SINGLETON = new EmptyOperator();
 
-    // -------------------------------------
-    // Expression methods
-    // -------------------------------------
-    /**
-     * Returns the symbol representing the operator
-     **/
-    @Override
-    public String getOperatorSymbol() {
-        return "empty";
-    }
+	// -------------------------------------
+	/**
+	 * Constructor
+	 **/
+	public EmptyOperator() {
+	}
 
-    // -------------------------------------
-    /**
-     * Applies the operator to the given value
-     **/
-    @Override
-    public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
-        // See if the value is null
-        if (pValue == null) {
-            return PrimitiveObjects.getBoolean(true);
-        }
+	// -------------------------------------
+	// Expression methods
+	// -------------------------------------
+	/**
+	 * Returns the symbol representing the operator
+	 **/
+	@Override
+	public String getOperatorSymbol() {
+		return "empty";
+	}
 
-        // See if the value is a zero-length String
-        else if ("".equals(pValue)) {
-            return PrimitiveObjects.getBoolean(true);
-        }
+	// -------------------------------------
+	/**
+	 * Applies the operator to the given value
+	 **/
+	@Override
+	public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
+		// See if the value is null
+		if (pValue == null) {
+			return PrimitiveObjects.getBoolean(true);
+		}
 
-        // See if the value is a zero-length array
-        else if (pValue.getClass().isArray() && Array.getLength(pValue) == 0) {
-            return PrimitiveObjects.getBoolean(true);
-        }
+		// See if the value is a zero-length String
+		else if ("".equals(pValue)) {
+			return PrimitiveObjects.getBoolean(true);
+		}
 
-        // See if the value is an empty Map
-        else if (pValue instanceof Map && ((Map<?, ?>) pValue).isEmpty()) {
-            return PrimitiveObjects.getBoolean(true);
-        }
+		// See if the value is a zero-length array
+		else if (pValue.getClass().isArray() && Array.getLength(pValue) == 0) {
+			return PrimitiveObjects.getBoolean(true);
+		}
 
-        // See if the value is an empty Collection
-        else if (pValue instanceof Collection && ((Collection<?>) pValue).isEmpty()) {
-            return PrimitiveObjects.getBoolean(true);
-        }
+		// See if the value is an empty Map
+		else if (pValue instanceof Map && ((Map<?, ?>) pValue).isEmpty()) {
+			return PrimitiveObjects.getBoolean(true);
+		}
 
-        // Otherwise, not empty
-        else {
-            return PrimitiveObjects.getBoolean(false);
-        }
-    }
+		// See if the value is an empty Collection
+		else if (pValue instanceof Collection && ((Collection<?>) pValue).isEmpty()) {
+			return PrimitiveObjects.getBoolean(true);
+		}
 
-    // -------------------------------------
+		// Otherwise, not empty
+		else {
+			return PrimitiveObjects.getBoolean(false);
+		}
+	}
+
+	// -------------------------------------
+
 }

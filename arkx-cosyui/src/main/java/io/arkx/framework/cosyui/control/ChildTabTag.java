@@ -21,234 +21,249 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  */
 public class ChildTabTag extends ArkTag {
 
-    private static final String imgRegex = "<img .*?src=.*?>";
-    public static final Pattern PImg = Pattern.compile(imgRegex, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-    private static Pattern PZIcon = Pattern.compile(" src\\=\"[^\"]*icons\\/([^\"\\/]+)\\.png\"",
-            Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-    private static int No = 0;
+	private static final String imgRegex = "<img .*?src=.*?>";
 
-    private String id;
-    private String onClick;
-    private String beforeClick;
-    private String afterClick;
-    private String src;
-    private boolean selected;
-    private boolean disabled;
-    private boolean visible = true;
-    private boolean lazy = true;
+	public static final Pattern PImg = Pattern.compile(imgRegex, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-    public String getOnClick() {
-        return onClick;
-    }
+	private static Pattern PZIcon = Pattern.compile(" src\\=\"[^\"]*icons\\/([^\"\\/]+)\\.png\"",
+			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-    public void setOnClick(String onClick) {
-        this.onClick = onClick;
-    }
+	private static int No = 0;
 
-    public String getBeforeClick() {
-        return beforeClick;
-    }
+	private String id;
 
-    public void setBeforeClick(String beforeClick) {
-        this.beforeClick = beforeClick;
-    }
+	private String onClick;
 
-    public String getAfterClick() {
-        return afterClick;
-    }
+	private String beforeClick;
 
-    public void setAfterClick(String afterClick) {
-        this.afterClick = afterClick;
-    }
+	private String afterClick;
 
-    public boolean isDisabled() {
-        return disabled;
-    }
+	private String src;
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
+	private boolean selected;
 
-    public boolean isSelected() {
-        return selected;
-    }
+	private boolean disabled;
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
+	private boolean visible = true;
 
-    public String getSrc() {
-        return src;
-    }
+	private boolean lazy = true;
 
-    public void setSrc(String src) {
-        this.src = src;
-    }
+	public String getOnClick() {
+		return onClick;
+	}
 
-    public boolean isVisible() {
-        return visible;
-    }
+	public void setOnClick(String onClick) {
+		this.onClick = onClick;
+	}
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
+	public String getBeforeClick() {
+		return beforeClick;
+	}
 
-    public boolean isLazy() {
-        return lazy;
-    }
+	public void setBeforeClick(String beforeClick) {
+		this.beforeClick = beforeClick;
+	}
 
-    public void setLazy(boolean lazy) {
-        this.lazy = lazy;
-    }
+	public String getAfterClick() {
+		return afterClick;
+	}
 
-    @Override
-    public List<TagAttr> getTagAttrs() {
-        List<TagAttr> list = new ArrayList<>();
-        list.add(new TagAttr("id", true));
-        list.add(new TagAttr("selected", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("disabled", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("lazy", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("visible", TagAttr.BOOL_OPTIONS));
-        list.add(new TagAttr("afterClick"));
-        list.add(new TagAttr("beforeClick"));
-        list.add(new TagAttr("onClick"));
-        list.add(new TagAttr("src"));
-        return list;
-    }
+	public void setAfterClick(String afterClick) {
+		this.afterClick = afterClick;
+	}
 
-    @Override
-    public String getExtendItemName() {
-        return "@{Framework.UIControl.ChildTabTagName}";
-    }
+	public boolean isDisabled() {
+		return disabled;
+	}
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
 
-    @Override
-    public String getPluginID() {
-        return FrameworkPlugin.ID;
-    }
+	public boolean isSelected() {
+		return selected;
+	}
 
-    @Override
-    public String getTagName() {
-        return "childtab";
-    }
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 
-    @Override
-    public boolean isKeepTagSource() {
-        return true;
-    }
+	public String getSrc() {
+		return src;
+	}
 
-    /**
-     * 正则表达式第一次编译时执行，以提高性能
-     */
-    @Override
-    public void afterCompile(TagCommand tc, TemplateExecutor te) {
-        String content = getTagBodySource();
-        Matcher matcher = PImg.matcher(content);
-        String imgTag = null;
-        if (matcher.find()) {
-            imgTag = content.substring(matcher.start(), matcher.end());
-            imgTag = getImgSpirite(imgTag);
-            content = content.replaceFirst(imgRegex, imgTag);
-        }
-        TemplateCompiler c = new TemplateCompiler(te.getManagerContext());
-        c.compileSource(content);
-        if (!tc.isHasBody()) {
-            tc.setHasBody(true);
-        }
-        tc.setCommands(c.getExecutor().getCommands());
-    }
+	public void setSrc(String src) {
+		this.src = src;
+	}
 
-    @Override
-    public int doStartTag() throws TemplateRuntimeException {
-        if (StringUtil.isEmpty(id)) {
-            id = "" + No++;
-        }
-        if (onClick == null) {
-            onClick = "";
-        }
-        if (StringUtil.isNotEmpty(onClick) && !onClick.trim().endsWith(";")) {
-            onClick = onClick.trim() + ";";
-        }
-        if (beforeClick == null) {
-            beforeClick = "";
-        }
-        if (StringUtil.isNotEmpty(beforeClick) && !beforeClick.trim().endsWith(";")) {
-            beforeClick = beforeClick.trim() + ";";
-        }
-        if (afterClick == null) {
-            afterClick = "";
-        }
-        if (StringUtil.isNotEmpty(afterClick) && !afterClick.trim().endsWith(";")) {
-            afterClick = afterClick.trim() + ";";
-        }
-        String type = "";
-        if (selected) {
-            type = "Current";
-        } else if (disabled) {
-            type = "Disabled";
-        }
-        String vStr = "";
-        if (!visible) {
-            vStr = "style='display:none'";
-        }
-        context.getOut().write("<a href='javascript:void(0);' ztype='tab'  hidefocus='true' ");
-        if ("Disabled".equalsIgnoreCase(type)) {
-            context.getOut().write("id='" + id + "' " + vStr + " data-href='" + src + "' class='z-tab z-tab-disabled'");
-        } else {
-            if (lazy) {
-                src = "data-href='" + src + "' data-lazy='true'";
-            } else {
-                src = "data-href='" + src + "' data-lazy='false'";
-            }
-            StringFormat sf = new StringFormat(
-                    "id='?' ? class='z-tab' ? onclick=\"??Ark.TabPage.onChildTabClick(this);?return false;\">");
-            sf.add(id);
-            sf.add(vStr);
-            sf.add(src);
-            sf.add(beforeClick);
-            sf.add(onClick);
-            sf.add(afterClick);
-            context.getOut().write(sf.toString());
-        }
-        return EVAL_BODY_INCLUDE;
-    }
+	public boolean isVisible() {
+		return visible;
+	}
 
-    @Override
-    public int doAfterBody() throws TemplateRuntimeException {
-        try {
-            context.getOut().write("</a>");
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 
-            @SuppressWarnings("unchecked")
-            ArrayList<ChildTabTag> children = (ArrayList<ChildTabTag>) pageContext.getAttribute(TabTag.TabTagKey);
-            if (children != null) {
-                children.add(this);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return EVAL_PAGE;
-    }
+	public boolean isLazy() {
+		return lazy;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setLazy(boolean lazy) {
+		this.lazy = lazy;
+	}
 
-    public String getChildTabId() {
-        return id;
-    }
+	@Override
+	public List<TagAttr> getTagAttrs() {
+		List<TagAttr> list = new ArrayList<>();
+		list.add(new TagAttr("id", true));
+		list.add(new TagAttr("selected", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("disabled", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("lazy", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("visible", TagAttr.BOOL_OPTIONS));
+		list.add(new TagAttr("afterClick"));
+		list.add(new TagAttr("beforeClick"));
+		list.add(new TagAttr("onClick"));
+		list.add(new TagAttr("src"));
+		return list;
+	}
 
-    private static String getImgSpirite(String imgTag) {
-        Matcher matcher = PZIcon.matcher(imgTag);
-        String fileName;
-        if (matcher.find()) {
-            fileName = matcher.group(1);
-            imgTag = imgTag.replaceAll(fileName, "icon000").replaceFirst("<img", "<img class=\"" + fileName + "\"");
-        }
-        return imgTag;
-    }
+	@Override
+	public String getExtendItemName() {
+		return "@{Framework.UIControl.ChildTabTagName}";
+	}
+
+	@Override
+	public String getDescription() {
+		return "";
+	}
+
+	@Override
+	public String getPluginID() {
+		return FrameworkPlugin.ID;
+	}
+
+	@Override
+	public String getTagName() {
+		return "childtab";
+	}
+
+	@Override
+	public boolean isKeepTagSource() {
+		return true;
+	}
+
+	/**
+	 * 正则表达式第一次编译时执行，以提高性能
+	 */
+	@Override
+	public void afterCompile(TagCommand tc, TemplateExecutor te) {
+		String content = getTagBodySource();
+		Matcher matcher = PImg.matcher(content);
+		String imgTag = null;
+		if (matcher.find()) {
+			imgTag = content.substring(matcher.start(), matcher.end());
+			imgTag = getImgSpirite(imgTag);
+			content = content.replaceFirst(imgRegex, imgTag);
+		}
+		TemplateCompiler c = new TemplateCompiler(te.getManagerContext());
+		c.compileSource(content);
+		if (!tc.isHasBody()) {
+			tc.setHasBody(true);
+		}
+		tc.setCommands(c.getExecutor().getCommands());
+	}
+
+	@Override
+	public int doStartTag() throws TemplateRuntimeException {
+		if (StringUtil.isEmpty(id)) {
+			id = "" + No++;
+		}
+		if (onClick == null) {
+			onClick = "";
+		}
+		if (StringUtil.isNotEmpty(onClick) && !onClick.trim().endsWith(";")) {
+			onClick = onClick.trim() + ";";
+		}
+		if (beforeClick == null) {
+			beforeClick = "";
+		}
+		if (StringUtil.isNotEmpty(beforeClick) && !beforeClick.trim().endsWith(";")) {
+			beforeClick = beforeClick.trim() + ";";
+		}
+		if (afterClick == null) {
+			afterClick = "";
+		}
+		if (StringUtil.isNotEmpty(afterClick) && !afterClick.trim().endsWith(";")) {
+			afterClick = afterClick.trim() + ";";
+		}
+		String type = "";
+		if (selected) {
+			type = "Current";
+		}
+		else if (disabled) {
+			type = "Disabled";
+		}
+		String vStr = "";
+		if (!visible) {
+			vStr = "style='display:none'";
+		}
+		context.getOut().write("<a href='javascript:void(0);' ztype='tab'  hidefocus='true' ");
+		if ("Disabled".equalsIgnoreCase(type)) {
+			context.getOut().write("id='" + id + "' " + vStr + " data-href='" + src + "' class='z-tab z-tab-disabled'");
+		}
+		else {
+			if (lazy) {
+				src = "data-href='" + src + "' data-lazy='true'";
+			}
+			else {
+				src = "data-href='" + src + "' data-lazy='false'";
+			}
+			StringFormat sf = new StringFormat(
+					"id='?' ? class='z-tab' ? onclick=\"??Ark.TabPage.onChildTabClick(this);?return false;\">");
+			sf.add(id);
+			sf.add(vStr);
+			sf.add(src);
+			sf.add(beforeClick);
+			sf.add(onClick);
+			sf.add(afterClick);
+			context.getOut().write(sf.toString());
+		}
+		return EVAL_BODY_INCLUDE;
+	}
+
+	@Override
+	public int doAfterBody() throws TemplateRuntimeException {
+		try {
+			context.getOut().write("</a>");
+
+			@SuppressWarnings("unchecked")
+			ArrayList<ChildTabTag> children = (ArrayList<ChildTabTag>) pageContext.getAttribute(TabTag.TabTagKey);
+			if (children != null) {
+				children.add(this);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return EVAL_PAGE;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getChildTabId() {
+		return id;
+	}
+
+	private static String getImgSpirite(String imgTag) {
+		Matcher matcher = PZIcon.matcher(imgTag);
+		String fileName;
+		if (matcher.find()) {
+			fileName = matcher.group(1);
+			imgTag = imgTag.replaceAll(fileName, "icon000").replaceFirst("<img", "<img class=\"" + fileName + "\"");
+		}
+		return imgTag;
+	}
 
 }

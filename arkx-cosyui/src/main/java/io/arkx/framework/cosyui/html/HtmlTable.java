@@ -10,239 +10,244 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  *
  */
 public class HtmlTable extends HtmlElement {
-    private boolean TBody = false;
 
-    private boolean THead = false;
+	private boolean TBody = false;
 
-    public HtmlTable() {
-        super("table");
-    }
+	private boolean THead = false;
 
-    public HtmlTable(HtmlElement ele) {
-        super("table");
-        if (!ele.getTagName().equalsIgnoreCase("table")) {
-            throw new HtmlParseException("Element can't convert to a table,tag=" + ele.getTagName());
-        }
-        attributes = ele.attributes;
-        children = ele.children;
-        if (children != null) {
-            for (HtmlNode node : children) {
-                node.parent = this;
-            }
-        }
-        convertTR(this);
-    }
+	public HtmlTable() {
+		super("table");
+	}
 
-    @Override
-    public void parseHtml(String html) {
-        super.parseHtml(html);
-        convertTR(this);
-    }
+	public HtmlTable(HtmlElement ele) {
+		super("table");
+		if (!ele.getTagName().equalsIgnoreCase("table")) {
+			throw new HtmlParseException("Element can't convert to a table,tag=" + ele.getTagName());
+		}
+		attributes = ele.attributes;
+		children = ele.children;
+		if (children != null) {
+			for (HtmlNode node : children) {
+				node.parent = this;
+			}
+		}
+		convertTR(this);
+	}
 
-    @Override
-    void parseInnerHTML(String html) {
-        super.parseInnerHTML(html);
-        convertTR(this);
-    }
+	@Override
+	public void parseHtml(String html) {
+		super.parseHtml(html);
+		convertTR(this);
+	}
 
-    public void addTR(HtmlTR tr) {
-        addChild(tr);
-    }
+	@Override
+	void parseInnerHTML(String html) {
+		super.parseInnerHTML(html);
+		convertTR(this);
+	}
 
-    private void convertTR(HtmlElement parent) {
-        for (int i = 0; i < parent.getChildren().size(); i++) {
-            HtmlNode node = parent.children.get(i);
-            if (node.getType() == HtmlNode.ELEMENT) {
-                HtmlElement ele = (HtmlElement) node;
-                if (ele instanceof HtmlTR) {
-                    continue;
-                }
-                if (ele.getTagName().equalsIgnoreCase("tr")) {
-                    HtmlTR tr = new HtmlTR(ele);
-                    tr.parent = parent;
-                    parent.children.set(i, tr);
-                } else {
-                    convertTR(ele);
-                }
-            }
-        }
-    }
+	public void addTR(HtmlTR tr) {
+		addChild(tr);
+	}
 
-    public HtmlTR getTR(int index) {
-        int i = 0;
-        convertTR(this);
-        for (HtmlNode node : getChildren()) {
-            if (node instanceof HtmlTR) {
-                if (i == index) {
-                    return (HtmlTR) node;
-                }
-                i++;
-            }
-        }
-        throw new RuntimeException("getTR() Index out of range:" + index + ",max is " + i);
-    }
+	private void convertTR(HtmlElement parent) {
+		for (int i = 0; i < parent.getChildren().size(); i++) {
+			HtmlNode node = parent.children.get(i);
+			if (node.getType() == HtmlNode.ELEMENT) {
+				HtmlElement ele = (HtmlElement) node;
+				if (ele instanceof HtmlTR) {
+					continue;
+				}
+				if (ele.getTagName().equalsIgnoreCase("tr")) {
+					HtmlTR tr = new HtmlTR(ele);
+					tr.parent = parent;
+					parent.children.set(i, tr);
+				}
+				else {
+					convertTR(ele);
+				}
+			}
+		}
+	}
 
-    public void removeTR(int index) {
-        HtmlTR tr = getTR(index);// 隐含调用了convertTR()
-        children.remove(tr);
-    }
+	public HtmlTR getTR(int index) {
+		int i = 0;
+		convertTR(this);
+		for (HtmlNode node : getChildren()) {
+			if (node instanceof HtmlTR) {
+				if (i == index) {
+					return (HtmlTR) node;
+				}
+				i++;
+			}
+		}
+		throw new RuntimeException("getTR() Index out of range:" + index + ",max is " + i);
+	}
 
-    public List<HtmlTR> getTRList() {
-        convertTR(this);
-        List<HtmlElement> trs = getTopElementsByTagName("tr");
-        ArrayList<HtmlTR> list = new ArrayList<HtmlTR>(trs.size());
-        for (HtmlElement ele : trs) {
-            list.add((HtmlTR) ele);
-        }
-        return list;
-    }
+	public void removeTR(int index) {
+		HtmlTR tr = getTR(index);// 隐含调用了convertTR()
+		children.remove(tr);
+	}
 
-    public void removeColumn(int index) {// NO_UCD
-        for (int i = 0; i < getChildren().size(); i++) {
-            HtmlTR tr = getTR(i);
-            if (index < tr.getChildren().size()) {
-                tr.removeTD(index);
-            }
-        }
-    }
+	public List<HtmlTR> getTRList() {
+		convertTR(this);
+		List<HtmlElement> trs = getTopElementsByTagName("tr");
+		ArrayList<HtmlTR> list = new ArrayList<HtmlTR>(trs.size());
+		for (HtmlElement ele : trs) {
+			list.add((HtmlTR) ele);
+		}
+		return list;
+	}
 
-    public void setWidth(int width) {
-        attributes.put("width", width + "");
-    }
+	public void removeColumn(int index) {// NO_UCD
+		for (int i = 0; i < getChildren().size(); i++) {
+			HtmlTR tr = getTR(i);
+			if (index < tr.getChildren().size()) {
+				tr.removeTD(index);
+			}
+		}
+	}
 
-    public int getWidth() {
-        return attributes.getInt("width");
-    }
+	public void setWidth(int width) {
+		attributes.put("width", width + "");
+	}
 
-    public void setHeight(int height) {
-        attributes.put("height", height + "");
-    }
+	public int getWidth() {
+		return attributes.getInt("width");
+	}
 
-    public int getHeight() {
-        return attributes.getInt("height");
-    }
+	public void setHeight(int height) {
+		attributes.put("height", height + "");
+	}
 
-    public void setAlign(String align) {
-        attributes.put("align", align);
-    }
+	public int getHeight() {
+		return attributes.getInt("height");
+	}
 
-    public String getAlign() {
-        return attributes.get("align");
-    }
+	public void setAlign(String align) {
+		attributes.put("align", align);
+	}
 
-    public void setBgColor(String bgColor) {
-        attributes.put("bgColor", bgColor);
-    }
+	public String getAlign() {
+		return attributes.get("align");
+	}
 
-    public String getBgColor() {
-        return attributes.get("bgColor");
-    }
+	public void setBgColor(String bgColor) {
+		attributes.put("bgColor", bgColor);
+	}
 
-    public void setBackgroud(String backgroud) {
-        attributes.put("backgroud", backgroud);
-    }
+	public String getBgColor() {
+		return attributes.get("bgColor");
+	}
 
-    public String getBackgroud() {
-        return attributes.get("backgroud");
-    }
+	public void setBackgroud(String backgroud) {
+		attributes.put("backgroud", backgroud);
+	}
 
-    public void setCellSpacing(String cellSpacing) {
-        addAttribute("cellSpacing", cellSpacing);
-    }
+	public String getBackgroud() {
+		return attributes.get("backgroud");
+	}
 
-    public String getCellSpacing() {
-        return getAttribute("cellSpacing");
-    }
+	public void setCellSpacing(String cellSpacing) {
+		addAttribute("cellSpacing", cellSpacing);
+	}
 
-    public void setCellPadding(String cellPadding) {
-        addAttribute("cellPadding", cellPadding);
-    }
+	public String getCellSpacing() {
+		return getAttribute("cellSpacing");
+	}
 
-    public String getCellPadding() {
-        return getAttribute("cellPadding");
-    }
+	public void setCellPadding(String cellPadding) {
+		addAttribute("cellPadding", cellPadding);
+	}
 
-    public boolean hasTBody() {// NO_UCD
-        return TBody;
-    }
+	public String getCellPadding() {
+		return getAttribute("cellPadding");
+	}
 
-    public void setTBody(boolean tBody) {
-        TBody = tBody;
-    }
+	public boolean hasTBody() {// NO_UCD
+		return TBody;
+	}
 
-    public boolean hasTHead() {// NO_UCD
-        return THead;
-    }
+	public void setTBody(boolean tBody) {
+		TBody = tBody;
+	}
 
-    public void setTHead(boolean tHead) {
-        THead = tHead;
-    }
+	public boolean hasTHead() {// NO_UCD
+		return THead;
+	}
 
-    @Override
-    void getInnerHTML(FastStringBuilder sb, String prefix) {
-        FastStringBuilder outsideOfTbodyNodes = new FastStringBuilder();
-        // tbody里只放tr标签，例如script等标签，要自动溢出到tbody标签外
-        if (innerHTML != null) {
-            if (children == null || children.size() == 0) {
-                sb.append(innerHTML);
-            }
-        }
-        boolean first = true;
-        convertTR(this);
-        if (children != null && children.size() > 0) {
-            if (THead) {
-                sb.append(prefix == null ? "" : "\n" + prefix);
-                sb.append("<thead>");
-            }
-            for (HtmlNode node : children) {
-                if (node instanceof HtmlElement && ((HtmlElement) node).tagName == "script") {
-                    node.format(outsideOfTbodyNodes, prefix);
-                } else {
-                    node.format(sb, prefix);
-                }
-                if (THead && node instanceof HtmlTR) {
-                    if (first) {
-                        sb.append(prefix == null ? "" : "\n" + prefix);
-                        sb.append("</thead>");
-                        if (TBody) {
-                            sb.append(prefix == null ? "" : "\n" + prefix);
-                            sb.append("<tbody>");
-                        }
-                    }
-                    first = false;
-                }
-            }
-            if (TBody) {
-                sb.append(prefix == null ? "" : "\n" + prefix);
-                sb.append("</tbody>");
-            }
-            sb.append(outsideOfTbodyNodes.toString());
-        }
-    }
+	public void setTHead(boolean tHead) {
+		THead = tHead;
+	}
 
-    public void addTHead() {// NO_UCD
-        convertTR(this);
-        addTHead(this);
-    }
+	@Override
+	void getInnerHTML(FastStringBuilder sb, String prefix) {
+		FastStringBuilder outsideOfTbodyNodes = new FastStringBuilder();
+		// tbody里只放tr标签，例如script等标签，要自动溢出到tbody标签外
+		if (innerHTML != null) {
+			if (children == null || children.size() == 0) {
+				sb.append(innerHTML);
+			}
+		}
+		boolean first = true;
+		convertTR(this);
+		if (children != null && children.size() > 0) {
+			if (THead) {
+				sb.append(prefix == null ? "" : "\n" + prefix);
+				sb.append("<thead>");
+			}
+			for (HtmlNode node : children) {
+				if (node instanceof HtmlElement && ((HtmlElement) node).tagName == "script") {
+					node.format(outsideOfTbodyNodes, prefix);
+				}
+				else {
+					node.format(sb, prefix);
+				}
+				if (THead && node instanceof HtmlTR) {
+					if (first) {
+						sb.append(prefix == null ? "" : "\n" + prefix);
+						sb.append("</thead>");
+						if (TBody) {
+							sb.append(prefix == null ? "" : "\n" + prefix);
+							sb.append("<tbody>");
+						}
+					}
+					first = false;
+				}
+			}
+			if (TBody) {
+				sb.append(prefix == null ? "" : "\n" + prefix);
+				sb.append("</tbody>");
+			}
+			sb.append(outsideOfTbodyNodes.toString());
+		}
+	}
 
-    private void addTHead(HtmlElement parent) {
-        for (int i = 0; i < parent.getChildren().size(); i++) {
-            HtmlNode node = parent.children.get(i);
-            if (node instanceof HtmlTR) {
-                HtmlElement ele = new HtmlElement("thead");
-                ele.parent = parent;
-                parent.children.set(i, ele);
-                ele.addChild(node);
-                break;
-            } else {
-                HtmlElement ele = (HtmlElement) node;
-                addTHead(ele);
-            }
-        }
-    }
+	public void addTHead() {// NO_UCD
+		convertTR(this);
+		addTHead(this);
+	}
 
-    @Override
-    public HtmlTable clone() {
-        return new HtmlTable(super.clone());
-    }
+	private void addTHead(HtmlElement parent) {
+		for (int i = 0; i < parent.getChildren().size(); i++) {
+			HtmlNode node = parent.children.get(i);
+			if (node instanceof HtmlTR) {
+				HtmlElement ele = new HtmlElement("thead");
+				ele.parent = parent;
+				parent.children.set(i, ele);
+				ele.addChild(node);
+				break;
+			}
+			else {
+				HtmlElement ele = (HtmlElement) node;
+				addTHead(ele);
+			}
+		}
+	}
+
+	@Override
+	public HtmlTable clone() {
+		return new HtmlTable(super.clone());
+	}
+
 }

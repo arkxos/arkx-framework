@@ -25,29 +25,22 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
  */
 public interface SidecarDiscoveryClient {
 
-    /**
-     * register instance.
-     *
-     * @param applicationName
-     *            applicationName
-     * @param ip
-     *            ip
-     * @param port
-     *            port
-     */
-    void registerInstance(String applicationName, String ip, Integer port);
+	/**
+	 * register instance.
+	 * @param applicationName applicationName
+	 * @param ip ip
+	 * @param port port
+	 */
+	void registerInstance(String applicationName, String ip, Integer port);
 
-    /**
-     * deregister instance.
-     *
-     * @param applicationName
-     *            applicationName
-     * @param ip
-     *            ip
-     * @param port
-     *            port
-     */
-    void deregisterInstance(String applicationName, String ip, Integer port);
+	/**
+	 * deregister instance.
+	 * @param applicationName applicationName
+	 * @param ip ip
+	 * @param port port
+	 */
+	void deregisterInstance(String applicationName, String ip, Integer port);
 
-    void batchRegisterInstance(String applicationName, String groupName, List<Instance> instances);
+	void batchRegisterInstance(String applicationName, String groupName, List<Instance> instances);
+
 }

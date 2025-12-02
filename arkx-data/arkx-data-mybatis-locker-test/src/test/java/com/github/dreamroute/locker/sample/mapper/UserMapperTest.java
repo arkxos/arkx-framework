@@ -32,113 +32,118 @@ import jakarta.annotation.Resource;
 @SpringBootTest
 class UserMapperTest {
 
-    @Resource
-    private UserMapper userMapper;
-    @Resource
-    private DataSource dataSource;
-    @Resource
-    private LockerInterceptor interceptor;
+	@Resource
+	private UserMapper userMapper;
 
-    public static final String LOCKER = "AND version = ";
+	@Resource
+	private DataSource dataSource;
 
-    @BeforeEach
-    void init() {
-        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert initUser = insertInto("smart_user").columns("id", "name", "password", "version")
-                .values(100L, "w.dehai", "123456", 100L).build();
-        new DbSetup(new DataSourceDestination(dataSource), initUser).launch();
-    }
+	@Resource
+	private LockerInterceptor interceptor;
 
-    /**
-     * 无乐观锁更新
-     */
-    @Test
-    void updateUserNoLockerTest() {
-        User user = userMapper.selectById(100L);
-        ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
-        long result = userMapper.updateUserNoLocker(user);
-        Assertions.assertEquals(1, result);
-        Assertions.assertFalse(getMessage(appender, 0).contains(LOCKER));
-    }
+	public static final String LOCKER = "AND version = ";
 
-    /**
-     * 单线程乐观锁更新，更新成功
-     */
-    @Test
-    void updateUserWithLockerTest() {
-        User user = userMapper.selectById(100L);
-        ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
-        long result = userMapper.updateUserWithLocker(user);
-        Assertions.assertEquals(1, result);
-        Assertions.assertTrue(getMessage(appender, 0).contains(LOCKER));
-    }
+	@BeforeEach
+	void init() {
+		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+		Insert initUser = insertInto("smart_user").columns("id", "name", "password", "version")
+			.values(100L, "w.dehai", "123456", 100L)
+			.build();
+		new DbSetup(new DataSourceDestination(dataSource), initUser).launch();
+	}
 
-    /**
-     * 并发更新
-     */
-    @Test
-    void concurrentUpdateTest() {
-        User user = User.builder().id(100).name("w.dehai").password("123456").version(100L).build();
+	/**
+	 * 无乐观锁更新
+	 */
+	@Test
+	void updateUserNoLockerTest() {
+		User user = userMapper.selectById(100L);
+		ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
+		long result = userMapper.updateUserNoLocker(user);
+		Assertions.assertEquals(1, result);
+		Assertions.assertFalse(getMessage(appender, 0).contains(LOCKER));
+	}
 
-        ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
+	/**
+	 * 单线程乐观锁更新，更新成功
+	 */
+	@Test
+	void updateUserWithLockerTest() {
+		User user = userMapper.selectById(100L);
+		ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
+		long result = userMapper.updateUserWithLocker(user);
+		Assertions.assertEquals(1, result);
+		Assertions.assertTrue(getMessage(appender, 0).contains(LOCKER));
+	}
 
-        // 成功
-        assertEquals(1, userMapper.updateUserWithLocker(user));
-        assertTrue(getMessage(appender, 0).contains(LOCKER));
+	/**
+	 * 并发更新
+	 */
+	@Test
+	void concurrentUpdateTest() {
+		User user = User.builder().id(100).name("w.dehai").password("123456").version(100L).build();
 
-        // 抛出异常
-        assertThrows(MyBatisSystemException.class, () -> userMapper.updateUserWithLocker(user));
+		ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
 
-        // 抛出异常，获取真实异常
-        try {
-            userMapper.updateUserWithLocker(user);
-        } catch (MyBatisSystemException e) {
-            Throwable cause = e.getCause().getCause();
-            assertEquals(DataHasBeenModifyException.class, cause.getClass());
-        }
+		// 成功
+		assertEquals(1, userMapper.updateUserWithLocker(user));
+		assertTrue(getMessage(appender, 0).contains(LOCKER));
 
-        // 手动将failThrowException设置成false，更新失败返回0
-        // 原始值
-        boolean failThrowException = (boolean) ReflectUtil.getFieldValue(interceptor, "failThrowException");
-        ReflectUtil.setFieldValue(interceptor, "failThrowException", false);
-        assertEquals(0, userMapper.updateUserWithLocker(user));
-        assertTrue(getMessage(appender, 5).contains(LOCKER));
-        // 将原始值设置回去，避免影响其他测试方法
-        ReflectUtil.setFieldValue(interceptor, "failThrowException", failThrowException);
-    }
+		// 抛出异常
+		assertThrows(MyBatisSystemException.class, () -> userMapper.updateUserWithLocker(user));
 
-    /**
-     * sql中带有动态标签<set>
-     */
-    @Test
-    void updateUserByDynamicTagWithLockerTest() {
-        User user = User.builder().id(100).name("w.dehai").password("123456").version(100L).build();
+		// 抛出异常，获取真实异常
+		try {
+			userMapper.updateUserWithLocker(user);
+		}
+		catch (MyBatisSystemException e) {
+			Throwable cause = e.getCause().getCause();
+			assertEquals(DataHasBeenModifyException.class, cause.getClass());
+		}
 
-        ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
+		// 手动将failThrowException设置成false，更新失败返回0
+		// 原始值
+		boolean failThrowException = (boolean) ReflectUtil.getFieldValue(interceptor, "failThrowException");
+		ReflectUtil.setFieldValue(interceptor, "failThrowException", false);
+		assertEquals(0, userMapper.updateUserWithLocker(user));
+		assertTrue(getMessage(appender, 5).contains(LOCKER));
+		// 将原始值设置回去，避免影响其他测试方法
+		ReflectUtil.setFieldValue(interceptor, "failThrowException", failThrowException);
+	}
 
-        // 成功
-        assertEquals(1, userMapper.updateUserByDynamicTagWithLocker(user));
-        assertTrue(getMessage(appender, 0).contains(LOCKER));
+	/**
+	 * sql中带有动态标签<set>
+	 */
+	@Test
+	void updateUserByDynamicTagWithLockerTest() {
+		User user = User.builder().id(100).name("w.dehai").password("123456").version(100L).build();
 
-        // 抛出异常
-        assertThrows(MyBatisSystemException.class, () -> userMapper.updateUserByDynamicTagWithLocker(user));
+		ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
 
-        // 抛出异常，获取真实异常
-        try {
-            userMapper.updateUserByDynamicTagWithLocker(user);
-        } catch (MyBatisSystemException e) {
-            Throwable cause = e.getCause().getCause();
-            assertEquals(DataHasBeenModifyException.class, cause.getClass());
-        }
+		// 成功
+		assertEquals(1, userMapper.updateUserByDynamicTagWithLocker(user));
+		assertTrue(getMessage(appender, 0).contains(LOCKER));
 
-        // 手动将failThrowException设置成false，更新失败返回0
-        // 原始值
-        boolean failThrowException = (boolean) ReflectUtil.getFieldValue(interceptor, "failThrowException");
-        ReflectUtil.setFieldValue(interceptor, "failThrowException", false);
-        assertEquals(0, userMapper.updateUserByDynamicTagWithLocker(user));
-        assertTrue(getMessage(appender, 5).contains(LOCKER));
-        // 将原始值设置回去，避免影响其他测试方法
-        ReflectUtil.setFieldValue(interceptor, "failThrowException", failThrowException);
-    }
+		// 抛出异常
+		assertThrows(MyBatisSystemException.class, () -> userMapper.updateUserByDynamicTagWithLocker(user));
+
+		// 抛出异常，获取真实异常
+		try {
+			userMapper.updateUserByDynamicTagWithLocker(user);
+		}
+		catch (MyBatisSystemException e) {
+			Throwable cause = e.getCause().getCause();
+			assertEquals(DataHasBeenModifyException.class, cause.getClass());
+		}
+
+		// 手动将failThrowException设置成false，更新失败返回0
+		// 原始值
+		boolean failThrowException = (boolean) ReflectUtil.getFieldValue(interceptor, "failThrowException");
+		ReflectUtil.setFieldValue(interceptor, "failThrowException", false);
+		assertEquals(0, userMapper.updateUserByDynamicTagWithLocker(user));
+		assertTrue(getMessage(appender, 5).contains(LOCKER));
+		// 将原始值设置回去，避免影响其他测试方法
+		ReflectUtil.setFieldValue(interceptor, "failThrowException", failThrowException);
+	}
 
 }

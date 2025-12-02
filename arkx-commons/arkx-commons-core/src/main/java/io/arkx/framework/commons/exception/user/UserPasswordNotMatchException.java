@@ -6,9 +6,11 @@ package io.arkx.framework.commons.exception.user;
  * @author Darkness
  */
 public class UserPasswordNotMatchException extends UserException {
-    private static final long serialVersionUID = 1L;
 
-    public UserPasswordNotMatchException() {
-        super("user.password.not.match", null);
-    }
+	private static final long serialVersionUID = 1L;
+
+	public UserPasswordNotMatchException() {
+		super("user.password.not.match", null);
+	}
+
 }
