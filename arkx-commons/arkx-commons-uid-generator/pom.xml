@@ -32,7 +32,7 @@
     <!-- Properties -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>25</jdk.version>
+        <jdk.version>21</jdk.version>
     </properties>
 
     <!-- Dependencies -->

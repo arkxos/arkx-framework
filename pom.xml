@@ -60,11 +60,11 @@
         <!-- 项目版本号，revision属性用于子模块版本控制 -->
         <revision>0.1.0</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <source>25</source>
-        <target>25</target>
-		<maven.compiler.source>25</maven.compiler.source>
-		<maven.compiler.target>25</maven.compiler.target>
-        <maven.compiler.release>25</maven.compiler.release>
+        <source>21</source>
+        <target>21</target>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         
         <!-- Maven Repository 发布配置 -->
         <maven.repository.url></maven.repository.url>
