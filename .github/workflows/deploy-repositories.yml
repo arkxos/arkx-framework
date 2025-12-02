@@ -79,7 +79,6 @@ jobs:
     if: github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && (github.ref == 'refs/tags/*' || github.ref == 'refs/heads/dev'))
     runs-on: ubuntu-latest
     environment: maven
-    environment: maven
 
     steps:
     - name: Checkout code
@@ -170,9 +169,6 @@ jobs:
           
           ### Maven Central
           - https://search.maven.org/artifact/io.arkx.framework/arkx-framework
-          
-          ### China Repository
-          - Aliyun: https://maven.aliyun.com/repository/public
         draft: false
         prerelease: false
         
