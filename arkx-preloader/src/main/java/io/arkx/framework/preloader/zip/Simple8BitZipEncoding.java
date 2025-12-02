@@ -26,28 +26,31 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This ZipEncoding implementation implements a simple 8bit character
- * set, which mets the following restrictions:
- * 
+ * This ZipEncoding implementation implements a simple 8bit character set, which
+ * mets the following restrictions:
+ *
  * <ul>
- * <li>Characters 0x0000 to 0x007f are encoded as the corresponding
- *        byte values 0x00 to 0x7f.</li>
- * <li>All byte codes from 0x80 to 0xff are mapped to a unique unicode
- *       character in the range 0x0080 to 0x7fff. (No support for
- *       UTF-16 surrogates)
+ * <li>Characters 0x0000 to 0x007f are encoded as the corresponding byte values
+ * 0x00 to 0x7f.</li>
+ * <li>All byte codes from 0x80 to 0xff are mapped to a unique unicode character
+ * in the range 0x0080 to 0x7fff. (No support for UTF-16 surrogates)
  * </ul>
- * 
- * <p>These restrictions most notably apply to the most prominent
- * omissions of java-1.4's {@link java.nio.charset.Charset Charset}
- * implementation, Cp437 and Cp850.</p>
- * 
- * <p>The methods of this class are reentrant.</p>
+ *
+ * <p>
+ * These restrictions most notably apply to the most prominent omissions of
+ * java-1.4's {@link java.nio.charset.Charset Charset} implementation, Cp437 and
+ * Cp850.
+ * </p>
+ *
+ * <p>
+ * The methods of this class are reentrant.
+ * </p>
  */
 class Simple8BitZipEncoding implements ZipEncoding {
 
     /**
-     * A character entity, which is put to the reverse mapping table
-     * of a simple encoding.
+     * A character entity, which is put to the reverse mapping table of a simple
+     * encoding.
      */
     private static final class Simple8BitChar implements Comparable {
         public final char unicode;
@@ -65,27 +68,26 @@ class Simple8BitZipEncoding implements ZipEncoding {
         }
 
         public String toString() {
-            return "0x" + Integer.toHexString(0xffff & (int) unicode)
-                + "->0x" + Integer.toHexString(0xff & (int) code);
+            return "0x" + Integer.toHexString(0xffff & (int) unicode) + "->0x" + Integer.toHexString(0xff & (int) code);
         }
     }
 
     /**
-     * The characters for byte values of 128 to 255 stored as an array of
-     * 128 chars.
+     * The characters for byte values of 128 to 255 stored as an array of 128 chars.
      */
     private final char[] highChars;
 
     /**
-     * A list of {@link Simple8BitChar} objects sorted by the unicode
-     * field.  This list is used to binary search reverse mapping of
-     * unicode characters with a character code greater than 127.
+     * A list of {@link Simple8BitChar} objects sorted by the unicode field. This
+     * list is used to binary search reverse mapping of unicode characters with a
+     * character code greater than 127.
      */
     private final List reverseMapping;
 
     /**
-     * @param highChars The characters for byte values of 128 to 255
-     * stored as an array of 128 chars.
+     * @param highChars
+     *            The characters for byte values of 128 to 255 stored as an array of
+     *            128 chars.
      */
     public Simple8BitZipEncoding(char[] highChars) {
         this.highChars = highChars;
@@ -94,8 +96,7 @@ class Simple8BitZipEncoding implements ZipEncoding {
         byte code = 127;
 
         for (int i = 0; i < this.highChars.length; ++i) {
-            this.reverseMapping.add(new Simple8BitChar(++code,
-                                                       this.highChars[i]));
+            this.reverseMapping.add(new Simple8BitChar(++code, this.highChars[i]));
         }
 
         Collections.sort(this.reverseMapping);
@@ -103,8 +104,9 @@ class Simple8BitZipEncoding implements ZipEncoding {
 
     /**
      * Return the character code for a given encoded byte.
-     * 
-     * @param b The byte to decode.
+     *
+     * @param b
+     *            The byte to decode.
      * @return The associated character value.
      */
     public char decodeByte(byte b) {
@@ -118,7 +120,8 @@ class Simple8BitZipEncoding implements ZipEncoding {
     }
 
     /**
-     * @param c The character to encode.
+     * @param c
+     *            The character to encode.
      * @return Whether the given unicode character is covered by this encoding.
      */
     public boolean canEncodeChar(char c) {
@@ -133,12 +136,13 @@ class Simple8BitZipEncoding implements ZipEncoding {
 
     /**
      * Pushes the encoded form of the given character to the given byte buffer.
-     * 
-     * @param bb The byte buffer to write to.
-     * @param c The character to encode.
-     * @return Whether the given unicode character is covered by this encoding.
-     *         If <code>false</code> is returned, nothing is pushed to the
-     *         byte buffer. 
+     *
+     * @param bb
+     *            The byte buffer to write to.
+     * @param c
+     *            The character to encode.
+     * @return Whether the given unicode character is covered by this encoding. If
+     *         <code>false</code> is returned, nothing is pushed to the byte buffer.
      */
     public boolean pushEncodedChar(ByteBuffer bb, char c) {
 
@@ -156,10 +160,11 @@ class Simple8BitZipEncoding implements ZipEncoding {
     }
 
     /**
-     * @param c A unicode character in the range from 0x0080 to 0x7f00
-     * @return A Simple8BitChar, if this character is covered by this encoding.
-     *         A <code>null</code> value is returned, if this character is not
-     *         covered by this encoding.
+     * @param c
+     *            A unicode character in the range from 0x0080 to 0x7f00
+     * @return A Simple8BitChar, if this character is covered by this encoding. A
+     *         <code>null</code> value is returned, if this character is not covered
+     *         by this encoding.
      */
     private Simple8BitChar encodeHighChar(char c) {
         // for performance an simplicity, yet another reincarnation of
@@ -198,12 +203,11 @@ class Simple8BitZipEncoding implements ZipEncoding {
     }
 
     /**
-     * @see
-     * org.apache.tools.zip.ZipEncoding#canEncode(java.lang.String)
+     * @see org.apache.tools.zip.ZipEncoding#canEncode(java.lang.String)
      */
     public boolean canEncode(String name) {
 
-        for (int i=0;i<name.length();++i) {
+        for (int i = 0; i < name.length(); ++i) {
 
             char c = name.charAt(i);
 
@@ -216,24 +220,22 @@ class Simple8BitZipEncoding implements ZipEncoding {
     }
 
     /**
-     * @see
-     * org.apache.tools.zip.ZipEncoding#encode(java.lang.String)
+     * @see org.apache.tools.zip.ZipEncoding#encode(java.lang.String)
      */
     public ByteBuffer encode(String name) {
-        ByteBuffer out = ByteBuffer.allocate(name.length()
-                                             + 6 + (name.length() + 1) / 2);
+        ByteBuffer out = ByteBuffer.allocate(name.length() + 6 + (name.length() + 1) / 2);
 
-        for (int i=0;i<name.length();++i) {
+        for (int i = 0; i < name.length(); ++i) {
 
             char c = name.charAt(i);
 
             if (out.remaining() < 6) {
-                out = ZipEncodingHelper.growBuffer(out,out.position() + 6);
+                out = ZipEncodingHelper.growBuffer(out, out.position() + 6);
             }
 
-            if (!this.pushEncodedChar(out,c)) {
+            if (!this.pushEncodedChar(out, c)) {
 
-                ZipEncodingHelper.appendSurrogate(out,c);
+                ZipEncodingHelper.appendSurrogate(out, c);
             }
         }
 
@@ -243,18 +245,16 @@ class Simple8BitZipEncoding implements ZipEncoding {
     }
 
     /**
-     * @see
-     * org.apache.tools.zip.ZipEncoding#decode(byte[])
+     * @see org.apache.tools.zip.ZipEncoding#decode(byte[])
      */
     public String decode(byte[] data) throws IOException {
-        char [] ret = new char[data.length];
+        char[] ret = new char[data.length];
 
-        for (int i=0;i<data.length;++i) {
+        for (int i = 0; i < data.length; ++i) {
             ret[i] = this.decodeByte(data[i]);
         }
 
         return new String(ret);
     }
-
 
 }

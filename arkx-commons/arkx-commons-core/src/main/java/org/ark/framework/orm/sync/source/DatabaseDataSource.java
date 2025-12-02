@@ -8,24 +8,25 @@ package org.ark.framework.orm.sync.source;
  * @since 1.0
  */
 
-import io.arkx.framework.data.db.connection.ConnectionConfig;
-import io.arkx.framework.data.jdbc.Query;
-import io.arkx.framework.data.jdbc.Session;
-import io.arkx.framework.data.jdbc.SessionFactory;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import org.ark.framework.orm.Schema;
-import org.ark.framework.orm.sync.SyncException;
-import org.ark.framework.orm.sync.TableSyncConfig;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ark.framework.orm.Schema;
+import org.ark.framework.orm.sync.SyncException;
+import org.ark.framework.orm.sync.TableSyncConfig;
+
+import io.arkx.framework.data.db.connection.ConnectionConfig;
+import io.arkx.framework.data.jdbc.Query;
+import io.arkx.framework.data.jdbc.Session;
+import io.arkx.framework.data.jdbc.SessionFactory;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * 数据库数据源
- * 从数据库中获取增量数据
+ * 数据库数据源 从数据库中获取增量数据
  */
 @Slf4j
 public class DatabaseDataSource implements DataSource {
@@ -38,7 +39,8 @@ public class DatabaseDataSource implements DataSource {
     /**
      * 构造函数
      *
-     * @param dbName 数据库名称
+     * @param dbName
+     *            数据库名称
      */
     public DatabaseDataSource(String dbName) {
         this.dbName = dbName;
@@ -61,9 +63,9 @@ public class DatabaseDataSource implements DataSource {
     }
 
     @Override
-    public List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session, Timestamp lastSyncTime) {
-        log.debug("从数据库 [{}] 获取表 [{}] 的增量数据，时间戳字段: {}, 上次同步时间: {}",
-                dbName, tableCode, config.getTimestampField());
+    public List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session,
+            Timestamp lastSyncTime) {
+        log.debug("从数据库 [{}] 获取表 [{}] 的增量数据，时间戳字段: {}, 上次同步时间: {}", dbName, tableCode, config.getTimestampField());
 
         try {
             if (this.session == null) {
@@ -71,12 +73,8 @@ public class DatabaseDataSource implements DataSource {
             }
 
             // 构建增量数据查询SQL
-            String query = String.format(
-                    "SELECT * FROM %s WHERE %s > ? ORDER BY %s",
-                    tableCode,
-                    config.getTimestampField(),
-                    config.getTimestampField()
-            );
+            String query = String.format("SELECT * FROM %s WHERE %s > ? ORDER BY %s", tableCode,
+                    config.getTimestampField(), config.getTimestampField());
 
             // 执行查询
             Query queryObject = this.session.createQuery(query);
@@ -126,4 +124,3 @@ public class DatabaseDataSource implements DataSource {
         }
     }
 }
-

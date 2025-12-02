@@ -1,20 +1,22 @@
 package io.arkx.framework.commons.util;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64OutputStream;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Base64OutputStream;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 二维码工具类
@@ -37,7 +39,7 @@ public class QRCodeUtils {
         File logoFile = new File("img/logo/28.png");
         BufferedImage image = QRCodeUtils.createQRCode(data);
         // 生成图片 不需要的话注释即可
-        //ImageIO.write(image, "png", new File("result7.png"));
+        // ImageIO.write(image, "png", new File("result7.png"));
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         ImageIO.write(image, "jpg", os);
     }
@@ -95,10 +97,12 @@ public class QRCodeUtils {
      * @return
      * @author stefli
      */
-    public static BufferedImage createQRCode(String data, String charset, Map<EncodeHintType, ?> hint, int width, int height) {
+    public static BufferedImage createQRCode(String data, String charset, Map<EncodeHintType, ?> hint, int width,
+            int height) {
         BitMatrix matrix;
         try {
-            matrix = new MultiFormatWriter().encode(new String(data.getBytes(charset), charset), BarcodeFormat.QR_CODE, width, height, hint);
+            matrix = new MultiFormatWriter().encode(new String(data.getBytes(charset), charset), BarcodeFormat.QR_CODE,
+                    width, height, hint);
             return toBufferedImage(matrix);
         } catch (WriterException e) {
             throw new RuntimeException(e.getMessage(), e);
@@ -157,7 +161,8 @@ public class QRCodeUtils {
      * @author stefli
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static BufferedImage createQRCodeWithLogo(String data, String charset, int width, int height, File logoFile) {
+    public static BufferedImage createQRCodeWithLogo(String data, String charset, int width, int height,
+            File logoFile) {
         Map hint = new HashMap();
         hint.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         hint.put(EncodeHintType.CHARACTER_SET, charset);
@@ -177,7 +182,8 @@ public class QRCodeUtils {
      * @return
      * @author stefli
      */
-    public static BufferedImage createQRCodeWithLogo(String data, String charset, Map<EncodeHintType, ?> hint, int width, int height, File logoFile) {
+    public static BufferedImage createQRCodeWithLogo(String data, String charset, Map<EncodeHintType, ?> hint,
+            int width, int height, File logoFile) {
         try {
             BufferedImage qrcode = createQRCode(data, charset, hint, width, height);
             BufferedImage logo = ImageIO.read(logoFile);
@@ -244,4 +250,3 @@ public class QRCodeUtils {
         }
     }
 }
- 

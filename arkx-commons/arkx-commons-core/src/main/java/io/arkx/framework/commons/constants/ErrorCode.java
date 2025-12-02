@@ -8,6 +8,7 @@ package io.arkx.framework.commons.constants;
 
 public enum ErrorCode {
 
+    // @formatter:off
     /**
      * 成功
      */
@@ -64,6 +65,7 @@ public enum ErrorCode {
     ERROR(5000, "error"),
     GATEWAY_TIMEOUT(5004, "gateway_timeout"),
     SERVICE_UNAVAILABLE(5003, "service_unavailable");
+    // @formatter:on
 
     private int code;
     private String message;
@@ -93,7 +95,6 @@ public enum ErrorCode {
         }
         return ERROR;
     }
-
 
     public int getCode() {
         return code;

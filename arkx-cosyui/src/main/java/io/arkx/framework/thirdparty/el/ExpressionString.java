@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -61,75 +61,77 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * <p>
- * Represents an expression String consisting of a mixture of Strings and Expressions.
- * 
+ * Represents an expression String consisting of a mixture of Strings and
+ * Expressions.
+ *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class ExpressionString {
-	// -------------------------------------
-	// Properties
-	// -------------------------------------
-	// property elements
+    // -------------------------------------
+    // Properties
+    // -------------------------------------
+    // property elements
 
-	Object[] mElements;
+    Object[] mElements;
 
-	public Object[] getElements() {
-		return mElements;
-	}
+    public Object[] getElements() {
+        return mElements;
+    }
 
-	public void setElements(Object[] pElements) {
-		mElements = pElements;
-	}
+    public void setElements(Object[] pElements) {
+        mElements = pElements;
+    }
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public ExpressionString(Object[] pElements) {
-		mElements = pElements;
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public ExpressionString(Object[] pElements) {
+        mElements = pElements;
+    }
 
-	// -------------------------------------
-	/**
-	 * Evaluates the expression string by evaluating each element,
-	 * converting it to a String (using toString, or "" for null values)
-	 * and concatenating the results into a single String.
-	 **/
-	public String evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger) throws ExpressionException {
-		StringBuffer buf = new StringBuffer();
-		for (Object elem : mElements) {
-			if (elem instanceof String) {
-				buf.append((String) elem);
-			} else if (elem instanceof Expression) {
-				Object val = ((Expression) elem).evaluate(pResolver, functions, pLogger);
-				if (val != null) {
-					buf.append(val.toString());
-				}
-			}
-		}
-		return buf.toString();
-	}
+    // -------------------------------------
+    /**
+     * Evaluates the expression string by evaluating each element, converting it to
+     * a String (using toString, or "" for null values) and concatenating the
+     * results into a single String.
+     **/
+    public String evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        StringBuffer buf = new StringBuffer();
+        for (Object elem : mElements) {
+            if (elem instanceof String) {
+                buf.append((String) elem);
+            } else if (elem instanceof Expression) {
+                Object val = ((Expression) elem).evaluate(pResolver, functions, pLogger);
+                if (val != null) {
+                    buf.append(val.toString());
+                }
+            }
+        }
+        return buf.toString();
+    }
 
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	public String getExpressionString() {
-		StringBuffer buf = new StringBuffer();
-		for (Object elem : mElements) {
-			if (elem instanceof String) {
-				buf.append((String) elem);
-			} else if (elem instanceof Expression) {
-				buf.append("${");
-				buf.append(((Expression) elem).getExpressionString());
-				buf.append("}");
-			}
-		}
-		return buf.toString();
-	}
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    public String getExpressionString() {
+        StringBuffer buf = new StringBuffer();
+        for (Object elem : mElements) {
+            if (elem instanceof String) {
+                buf.append((String) elem);
+            } else if (elem instanceof Expression) {
+                buf.append("${");
+                buf.append(((Expression) elem).getExpressionString());
+                buf.append("}");
+            }
+        }
+        return buf.toString();
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 }

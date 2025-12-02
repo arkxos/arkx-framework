@@ -2,12 +2,11 @@ package io.arkx.framework.commons.enums;
 
 /**
  * 操作状态
- * 
+ *
  * @author Darkness
  *
  */
-public enum BusinessStatus
-{
+public enum BusinessStatus {
     /**
      * 成功
      */

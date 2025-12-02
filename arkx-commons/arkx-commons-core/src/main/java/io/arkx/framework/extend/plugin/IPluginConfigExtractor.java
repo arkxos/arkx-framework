@@ -1,6 +1,5 @@
 package io.arkx.framework.extend.plugin;
 
-
 /**
  * @class org.ark.framework.extend.plugin.IPluginConfigExtractor
  * @private
@@ -10,5 +9,5 @@ package io.arkx.framework.extend.plugin;
  */
 public interface IPluginConfigExtractor {
 
-	Object extract(PluginConfig pluginConfig);
+    Object extract(PluginConfig pluginConfig);
 }

@@ -1,9 +1,9 @@
 package io.arkx.framework.enums.scanner.context;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author zhuCan

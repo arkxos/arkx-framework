@@ -1,9 +1,6 @@
 package io.arkx.framework.data.mybatis.pro.core;
 
-import io.arkx.framework.data.mybatis.pro.core.annotations.Transient;
-import io.arkx.framework.data.mybatis.pro.core.util.ClassUtil;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -13,7 +10,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import io.arkx.framework.data.mybatis.pro.core.annotations.Transient;
+import io.arkx.framework.data.mybatis.pro.core.util.ClassUtil;
 
 /**
  * @author w.dehai

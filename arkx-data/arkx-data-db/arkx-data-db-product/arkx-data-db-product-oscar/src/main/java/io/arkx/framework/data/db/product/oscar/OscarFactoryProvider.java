@@ -9,6 +9,8 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.oscar;
 
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.DefaultProductFeatures;
@@ -21,38 +23,36 @@ import io.arkx.framework.data.db.core.provider.sync.TableDataSynchronizeProvider
 import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 
-import javax.sql.DataSource;
-
 @Product(ProductTypeEnum.OSCAR)
 public class OscarFactoryProvider extends AbstractFactoryProvider {
 
-  public OscarFactoryProvider(DataSource dataSource) {
-    super(dataSource);
-  }
+    public OscarFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-  @Override
-  public ProductFeatures getProductFeatures() {
-    return new DefaultProductFeatures();
-  }
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-  @Override
-  public MetadataProvider createMetadataQueryProvider() {
-    return new OscarMetadataQueryProvider(this);
-  }
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new OscarMetadataQueryProvider(this);
+    }
 
-  @Override
-  public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-    return new AutoCastTableDataWriteProvider(this);
-  }
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-  @Override
-  public TableManageProvider createTableManageProvider() {
-    return new OscarTableManageProvider(this);
-  }
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new OscarTableManageProvider(this);
+    }
 
-  @Override
-  public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    return new AutoCastTableDataSynchronizeProvider(this);
-  }
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

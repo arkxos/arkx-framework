@@ -1,21 +1,5 @@
 package io.arkx.framework.data.mybatis.pro.core.util;
 
-import io.arkx.framework.data.mybatis.pro.base.util.ClassPathUtil;
-import io.arkx.framework.data.mybatis.pro.core.annotations.Column;
-import io.arkx.framework.data.mybatis.pro.core.annotations.Table;
-import io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel;
-import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
-import io.arkx.framework.data.mybatis.pro.sdk.Mapper;
-import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
-import org.apache.ibatis.parsing.XNode;
-import org.apache.ibatis.parsing.XPathParser;
-import org.springframework.core.io.Resource;
-import org.springframework.util.StringUtils;
-import org.w3c.dom.Document;
-
-import java.lang.reflect.Field;
-import java.util.*;
-
 import static cn.hutool.core.annotation.AnnotationUtil.getAnnotationValue;
 import static cn.hutool.core.annotation.AnnotationUtil.hasAnnotation;
 import static cn.hutool.core.util.ClassUtil.*;
@@ -33,6 +17,23 @@ import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+import java.lang.reflect.Field;
+import java.util.*;
+
+import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
+import org.apache.ibatis.parsing.XNode;
+import org.apache.ibatis.parsing.XPathParser;
+import org.springframework.core.io.Resource;
+import org.springframework.util.StringUtils;
+import org.w3c.dom.Document;
+
+import io.arkx.framework.data.mybatis.pro.base.util.ClassPathUtil;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Column;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Table;
+import io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel;
+import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
+import io.arkx.framework.data.mybatis.pro.sdk.Mapper;
+
 /**
  * 使用新的resource替换默认resource，如果Mapper接口不存在对应的mapepr.xml文件，就创建接口Mapper对应的mapper.xml
  *
@@ -40,15 +41,20 @@ import static org.springframework.util.CollectionUtils.isEmpty;
  */
 public class MyBatisProUtil {
 
-    private MyBatisProUtil() {}
+    private MyBatisProUtil() {
+    }
 
     // Map<entity-class, <fieldName, alias>>
     public static final Map<Class<?>, Map<String, String>> FIELDS_ALIAS_CACHE = new HashMap<>();
 
     public static Resource[] buildMyBatisPro(Resource[] xmlResources, Set<String> mapperPackages) {
 
-        Set<Class<?>> presentXmlMappers = stream(ofNullable(xmlResources).orElse(new Resource[0])).map(XmlUtil::getNamespaceFromXmlResource).collect(toSet());
-        Set<Class<?>> allMappers = ofNullable(mapperPackages).orElseGet(HashSet::new).stream().map(ClassPathUtil::resolvePackage).flatMap(Arrays::stream).map(mapperPkgName -> scanPackageBySuper(mapperPkgName, Mapper.class)).flatMap(Set::stream).collect(toSet());
+        Set<Class<?>> presentXmlMappers = stream(ofNullable(xmlResources).orElse(new Resource[0]))
+                .map(XmlUtil::getNamespaceFromXmlResource).collect(toSet());
+        Set<Class<?>> allMappers = ofNullable(mapperPackages).orElseGet(HashSet::new).stream()
+                .map(ClassPathUtil::resolvePackage).flatMap(Arrays::stream)
+                .map(mapperPkgName -> scanPackageBySuper(mapperPkgName, Mapper.class)).flatMap(Set::stream)
+                .collect(toSet());
         Set<Class<?>> absentXmlMappers = difference(allMappers, presentXmlMappers);
 
         Set<Resource> allResources = new HashSet<>();
@@ -57,8 +63,7 @@ public class MyBatisProUtil {
         allResources.addAll(asList(ofNullable(xmlResources).orElseGet(() -> new Resource[0])));
 
         // 缓存属性别名
-        allResources.stream()
-                .map(XmlUtil::getNamespaceFromXmlResource)
+        allResources.stream().map(XmlUtil::getNamespaceFromXmlResource)
                 .map(cn.hutool.core.util.ClassUtil::getTypeArgument)
                 .forEach(entityCls -> FIELDS_ALIAS_CACHE.computeIfAbsent(entityCls, MyBatisProUtil::getFieldAliasMap));
 
@@ -75,9 +80,7 @@ public class MyBatisProUtil {
      * 处理通用crud方法
      */
     private static Set<Resource> processMapperMethods(Set<Resource> all) {
-        return ofNullable(all).orElseGet(HashSet::new)
-                .stream()
-                .map(resource -> new MapperUtil(resource).parse())
+        return ofNullable(all).orElseGet(HashSet::new).stream().map(resource -> new MapperUtil(resource).parse())
                 .collect(toSet());
     }
 
@@ -117,9 +120,10 @@ public class MyBatisProUtil {
                             conditions = specialMethodName.substring(7);
                             sql = "select (case when count(*)=0 then 'false' ELSE 'true' end) from ";
                         }
-                        sql += getAnnotationValue(entityCls, Table.class) + " <where> " + createCondition(conditions, FIELDS_ALIAS_CACHE.get(entityCls));
+                        sql += getAnnotationValue(entityCls, Table.class) + " <where> "
+                                + createCondition(conditions, FIELDS_ALIAS_CACHE.get(entityCls));
 
-                        //  对于delete需要特殊处理，delete不需要设置resultType
+                        // 对于delete需要特殊处理，delete不需要设置resultType
                         String resultType = mapperLabel == DELETE ? null : name2Type.get(specialMethodName);
                         fillSqlNode(doc, mapperLabel, specialMethodName, resultType, sql, null, null);
                     }
@@ -140,11 +144,10 @@ public class MyBatisProUtil {
 
     public static Map<String, String> getFieldAliasMap(Class<?> cls) {
         Set<Field> allFields = ClassUtil.getAllFields(cls);
-        return ofNullable(allFields).orElseGet(HashSet::new).stream()
-                .collect(toMap(Field::getName, filed -> {
-                    String alias = getAnnotationValue(filed, Column.class);
-                    return StringUtils.isEmpty(alias) ? toLine(filed.getName()) : alias;
-                }));
+        return ofNullable(allFields).orElseGet(HashSet::new).stream().collect(toMap(Field::getName, filed -> {
+            String alias = getAnnotationValue(filed, Column.class);
+            return StringUtils.isEmpty(alias) ? toLine(filed.getName()) : alias;
+        }));
     }
 
     /**
@@ -167,25 +170,29 @@ public class MyBatisProUtil {
         methods.addAll(updateMethods);
         methods.addAll(deleteMethods);
 
-		Set<String> xmlMethodNames = methods.stream().map(node -> node.getStringAttribute(ID.getCode())).collect(toSet());
+        Set<String> xmlMethodNames = methods.stream().map(node -> node.getStringAttribute(ID.getCode()))
+                .collect(toSet());
 
-		// BaseMapper的方法 + xxxBy方法
-//		Set<String> innerMethodNames = getBaseMethodNames();
-//		List<String> specialMethods = getSpecialMethods(mapperCls);
-//		innerMethodNames.addAll(specialMethods);
+        // BaseMapper的方法 + xxxBy方法
+        // Set<String> innerMethodNames = getBaseMethodNames();
+        // List<String> specialMethods = getSpecialMethods(mapperCls);
+        // innerMethodNames.addAll(specialMethods);
 
-//		SetView<String> intersection = Sets.intersection(xmlMethodNames, innerMethodNames);
-//		if (!isEmpty(intersection)) {
-//			throw new MyBatisProException("不允许接口" + mapperCls.getName() + "的方法" + toJsonStr(innerMethodNames) + "与" + resource.getFilename() + "文件中的方法重名");
-//		}
+        // SetView<String> intersection = Sets.intersection(xmlMethodNames,
+        // innerMethodNames);
+        // if (!isEmpty(intersection)) {
+        // throw new MyBatisProException("不允许接口" + mapperCls.getName() + "的方法" +
+        // toJsonStr(innerMethodNames) + "与" + resource.getFilename() + "文件中的方法重名");
+        // }
 
-		return xmlMethodNames;
-	}
+        return xmlMethodNames;
+    }
 
     /**
      * 将方法名转换成sql语句
      *
-     * @param conditions 方法名
+     * @param conditions
+     *            方法名
      * @return 返回sql语句
      */
     private static String createCondition(String conditions, Map<String, String> alias) {

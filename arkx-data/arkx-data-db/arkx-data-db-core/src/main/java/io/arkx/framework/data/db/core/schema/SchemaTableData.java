@@ -9,10 +9,10 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.schema;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 /**
  * 数据库表的数据

@@ -1,10 +1,11 @@
 package io.arkx.framework.commons.util;
 
-import io.arkx.framework.commons.annotation.Query;
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import io.arkx.framework.commons.annotation.Query;
+
+import lombok.Data;
 
 /**
  * @author darkness
@@ -14,9 +15,9 @@ import java.util.List;
 @Data
 public class CriteriaQueryWrapper<T> {
 
-	public static <T> CriteriaQueryWrapper<T> query() {
-		return new CriteriaQueryWrapper<>();
-	}
+    public static <T> CriteriaQueryWrapper<T> query() {
+        return new CriteriaQueryWrapper<>();
+    }
 
     private List<CriteriaQueryInfo> criteriaQueryInfos = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public class CriteriaQueryWrapper<T> {
     }
 
     public CriteriaQueryWrapper<T> eq(boolean notEmpty, SFunction<T> function, Object value) {
-        if(!notEmpty) {
+        if (!notEmpty) {
             return this;
         }
         return eq(function, value);
@@ -52,7 +53,7 @@ public class CriteriaQueryWrapper<T> {
     }
 
     public CriteriaQueryWrapper<T> likeRight(boolean notEmpty, SFunction<T> function, String value) {
-        if(!notEmpty) {
+        if (!notEmpty) {
             return this;
         }
         CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
@@ -74,10 +75,9 @@ public class CriteriaQueryWrapper<T> {
         private Object val;
     }
 
-
-//    public static void main(String[] args) {
-//        CriteriaQueryWrapper criteriaQueryWrapper = new CriteriaQueryWrapper();
-////        criteriaQueryWrapper.in(BaseAccount::getAccountType, "");
-//    }
+    // public static void main(String[] args) {
+    // CriteriaQueryWrapper criteriaQueryWrapper = new CriteriaQueryWrapper();
+    //// criteriaQueryWrapper.in(BaseAccount::getAccountType, "");
+    // }
 
 }

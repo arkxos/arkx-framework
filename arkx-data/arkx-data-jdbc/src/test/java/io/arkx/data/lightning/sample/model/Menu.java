@@ -1,10 +1,12 @@
 package io.arkx.data.lightning.sample.model;
 
+import org.springframework.data.relational.core.mapping.Table;
+
 import io.arkx.framework.data.common.entity.BaseStringIdTreeEntity;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * @author Nobody

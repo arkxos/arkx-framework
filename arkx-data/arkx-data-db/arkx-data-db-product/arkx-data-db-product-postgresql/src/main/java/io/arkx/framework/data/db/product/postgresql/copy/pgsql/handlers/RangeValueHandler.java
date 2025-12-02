@@ -1,54 +1,52 @@
 package io.arkx.framework.data.db.product.postgresql.copy.pgsql.handlers;
 
-import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.range.Range;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import io.arkx.framework.data.db.product.postgresql.copy.pgsql.model.range.Range;
+
 public class RangeValueHandler<TElementType> extends BaseValueHandler<Range<TElementType>> {
 
-  private final IValueHandler<TElementType> valueHandler;
+    private final IValueHandler<TElementType> valueHandler;
 
-  public RangeValueHandler(IValueHandler<TElementType> valueHandler) {
-    this.valueHandler = valueHandler;
-  }
-
-  @SuppressWarnings("NullAway") // infinite bound checks only pass when bound value is not null
-  @Override
-  protected void internalHandle(DataOutputStream buffer, Range<TElementType> value)
-      throws IOException {
-    buffer.writeInt(getLength(value));
-    buffer.writeByte(value.getFlags());
-
-    if (value.isEmpty()) {
-      return;
+    public RangeValueHandler(IValueHandler<TElementType> valueHandler) {
+        this.valueHandler = valueHandler;
     }
 
-    if (!value.isLowerBoundInfinite()) {
-      valueHandler.handle(buffer, value.getLowerBound());
+    @SuppressWarnings("NullAway") // infinite bound checks only pass when bound value is not null
+    @Override
+    protected void internalHandle(DataOutputStream buffer, Range<TElementType> value) throws IOException {
+        buffer.writeInt(getLength(value));
+        buffer.writeByte(value.getFlags());
+
+        if (value.isEmpty()) {
+            return;
+        }
+
+        if (!value.isLowerBoundInfinite()) {
+            valueHandler.handle(buffer, value.getLowerBound());
+        }
+
+        if (!value.isUpperBoundInfinite()) {
+            valueHandler.handle(buffer, value.getUpperBound());
+        }
     }
 
-    if (!value.isUpperBoundInfinite()) {
-      valueHandler.handle(buffer, value.getUpperBound());
+    @SuppressWarnings("NullAway") // infinite bound checks only pass when bound value is not null
+    @Override
+    public int getLength(Range<TElementType> value) {
+        int totalLen = 1;
+
+        if (!value.isEmpty()) {
+            if (!value.isLowerBoundInfinite()) {
+                totalLen += 4 + valueHandler.getLength(value.getLowerBound());
+            }
+
+            if (!value.isUpperBoundInfinite()) {
+                totalLen += 4 + valueHandler.getLength(value.getUpperBound());
+            }
+        }
+
+        return totalLen;
     }
-  }
-
-  @SuppressWarnings("NullAway") // infinite bound checks only pass when bound value is not null
-  @Override
-  public int getLength(Range<TElementType> value) {
-    int totalLen = 1;
-
-    if (!value.isEmpty()) {
-      if (!value.isLowerBoundInfinite()) {
-        totalLen += 4 + valueHandler.getLength(value.getLowerBound());
-      }
-
-      if (!value.isUpperBoundInfinite()) {
-        totalLen += 4 + valueHandler.getLength(value.getUpperBound());
-      }
-    }
-
-    return totalLen;
-  }
 }
-

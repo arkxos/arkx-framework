@@ -1,14 +1,15 @@
 package io.arkx.framework.commons.util;
 
-import org.apache.commons.codec.binary.Base64;
-
-import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+
+import javax.crypto.Cipher;
+
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * @author https://www.cnblogs.com/nihaorz/p/10690643.html
@@ -51,7 +52,9 @@ public class Rsa2Utils {
 
     /**
      * 私钥加密公钥解密
-     * @throws Exception /
+     *
+     * @throws Exception
+     *             /
      */
     private static void test2(RsaKeyPair keyPair) throws Exception {
         System.out.println("***************** 私钥加密公钥解密开始 *****************");
@@ -71,10 +74,13 @@ public class Rsa2Utils {
     /**
      * 公钥解密
      *
-     * @param publicKeyText 公钥
-     * @param text 待解密的信息
+     * @param publicKeyText
+     *            公钥
+     * @param text
+     *            待解密的信息
      * @return /
-     * @throws Exception /
+     * @throws Exception
+     *             /
      */
     public static String decryptByPublicKey(String publicKeyText, String text) throws Exception {
         X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(Base64.decodeBase64(publicKeyText));
@@ -89,10 +95,13 @@ public class Rsa2Utils {
     /**
      * 私钥加密
      *
-     * @param privateKeyText 私钥
-     * @param text 待加密的信息
+     * @param privateKeyText
+     *            私钥
+     * @param text
+     *            待加密的信息
      * @return /
-     * @throws Exception /
+     * @throws Exception
+     *             /
      */
     public static String encryptByPrivateKey(String privateKeyText, String text) throws Exception {
         PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKeyText));
@@ -107,10 +116,13 @@ public class Rsa2Utils {
     /**
      * 私钥解密
      *
-     * @param privateKeyText 私钥
-     * @param text 待解密的文本
+     * @param privateKeyText
+     *            私钥
+     * @param text
+     *            待解密的文本
      * @return /
-     * @throws Exception /
+     * @throws Exception
+     *             /
      */
     public static String decryptByPrivateKey(String privateKeyText, String text) throws Exception {
         PKCS8EncodedKeySpec pkcs8EncodedKeySpec5 = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKeyText));
@@ -125,8 +137,10 @@ public class Rsa2Utils {
     /**
      * 公钥加密
      *
-     * @param publicKeyText 公钥
-     * @param text 待加密的文本
+     * @param publicKeyText
+     *            公钥
+     * @param text
+     *            待加密的文本
      * @return /
      */
     public static String encryptByPublicKey(String publicKeyText, String text) throws Exception {
@@ -139,7 +153,7 @@ public class Rsa2Utils {
         return Base64.encodeBase64String(result);
     }
 
-    private static byte[] doLongerCipherFinal(int opMode,Cipher cipher, byte[] source) throws Exception {
+    private static byte[] doLongerCipherFinal(int opMode, Cipher cipher, byte[] source) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         if (opMode == Cipher.DECRYPT_MODE) {
             out.write(cipher.doFinal(source));
@@ -160,7 +174,8 @@ public class Rsa2Utils {
      * 构建RSA密钥对
      *
      * @return /
-     * @throws NoSuchAlgorithmException /
+     * @throws NoSuchAlgorithmException
+     *             /
      */
     public static RsaKeyPair generateKeyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
@@ -172,7 +187,6 @@ public class Rsa2Utils {
         String privateKeyString = Base64.encodeBase64String(rsaPrivateKey.getEncoded());
         return new RsaKeyPair(publicKeyString, privateKeyString);
     }
-
 
     /**
      * RSA密钥对对象

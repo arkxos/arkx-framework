@@ -8,16 +8,16 @@ package org.ark.framework.orm.sync.source;
  * @since 1.0
  */
 
-import io.arkx.framework.data.jdbc.Session;
-import org.ark.framework.orm.Schema;
-import org.ark.framework.orm.sync.TableSyncConfig;
-
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.ark.framework.orm.Schema;
+import org.ark.framework.orm.sync.TableSyncConfig;
+
+import io.arkx.framework.data.jdbc.Session;
+
 /**
- * 数据源接口
- * 抽象不同的数据来源，支持从数据库或已加载的SchemaSet获取数据
+ * 数据源接口 抽象不同的数据来源，支持从数据库或已加载的SchemaSet获取数据
  */
 public interface DataSource {
 
@@ -31,18 +31,23 @@ public interface DataSource {
     /**
      * 从数据源获取增量数据
      *
-     * @param tableCode    表代码
-     * @param config       同步配置
+     * @param tableCode
+     *            表代码
+     * @param config
+     *            同步配置
      * @param session
-     * @param lastSyncTime 上次同步时间
+     * @param lastSyncTime
+     *            上次同步时间
      * @return 增量数据列表
      */
-    List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session, Timestamp lastSyncTime);
+    List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session,
+            Timestamp lastSyncTime);
 
     /**
      * 检查数据源中是否包含指定表
      *
-     * @param tableCode 表代码
+     * @param tableCode
+     *            表代码
      * @return 是否包含
      */
     boolean containsTable(String tableCode);

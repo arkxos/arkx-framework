@@ -1,13 +1,5 @@
 package io.arkx.framework.commons.uid;
 
-import io.arkx.framework.commons.uid.component.DefaultUidGenerator;
-import jakarta.annotation.Resource;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,12 +7,21 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import io.arkx.framework.commons.uid.component.DefaultUidGenerator;
+
+import jakarta.annotation.Resource;
+
 /**
  * Test for {@link DefaultUidGenerator}
- * 
+ *
  * @author yutianbao
  */
-@SpringJUnitConfig(locations = { "classpath:uid/default-uid-spring.xml" })
+@SpringJUnitConfig(locations = {"classpath:uid/default-uid-spring.xml"})
 public class DefaultUidGeneratorTest {
     private static final int SIZE = 100000; // 10w
     private static final boolean VERBOSE = true;
@@ -46,7 +47,7 @@ public class DefaultUidGeneratorTest {
 
     /**
      * Test for parallel generate
-     * 
+     *
      * @throws InterruptedException
      */
     @Test

@@ -22,10 +22,12 @@ import java.util.zip.CRC32;
 import java.util.zip.ZipException;
 
 /**
- * Adds Unix file permission and UID/GID fields as well as symbolic
- * link handling.
+ * Adds Unix file permission and UID/GID fields as well as symbolic link
+ * handling.
  *
- * <p>This class uses the ASi extra field in the format:
+ * <p>
+ * This class uses the ASi extra field in the format:
+ *
  * <pre>
  *         Value         Size            Description
  *         -----         ----            -----------
@@ -38,18 +40,22 @@ import java.util.zip.ZipException;
  *         GID           Short           group ID
  *         (var.)        variable        symbolic link filename
  * </pre>
- * taken from appnote.iz (Info-ZIP note, 981119) found at <a
- * href="ftp://ftp.uu.net/pub/archiving/zip/doc/">ftp://ftp.uu.net/pub/archiving/zip/doc/</a></p>
-
  *
- * <p>Short is two bytes and Long is four bytes in big endian byte and
- * word order, device numbers are currently not supported.</p>
+ * taken from appnote.iz (Info-ZIP note, 981119) found at <a href=
+ * "ftp://ftp.uu.net/pub/archiving/zip/doc/">ftp://ftp.uu.net/pub/archiving/zip/doc/</a>
+ * </p>
+ *
+ *
+ * <p>
+ * Short is two bytes and Long is four bytes in big endian byte and word order,
+ * device numbers are currently not supported.
+ * </p>
  *
  */
 public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     private static final ZipShort HEADER_ID = new ZipShort(0x756E);
-    private static final int      WORD = 4;
+    private static final int WORD = 4;
     /**
      * Standard Unix stat(2) file mode.
      *
@@ -71,7 +77,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
     /**
      * File this entry points to, if it is a symbolic link.
      *
-     * <p>empty string - if entry is not a symbolic link.</p>
+     * <p>
+     * empty string - if entry is not a symbolic link.
+     * </p>
      *
      * @since 1.1
      */
@@ -96,6 +104,7 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * The Header-ID.
+     *
      * @return the value for the header id for this extrafield
      * @since 1.1
      */
@@ -104,22 +113,25 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
     }
 
     /**
-     * Length of the extra field in the local file data - without
-     * Header-ID or length specifier.
-     * @return a <code>ZipShort</code> for the length of the data of this extra field
+     * Length of the extra field in the local file data - without Header-ID or
+     * length specifier.
+     *
+     * @return a <code>ZipShort</code> for the length of the data of this extra
+     *         field
      * @since 1.1
      */
     public ZipShort getLocalFileDataLength() {
-        return new ZipShort(WORD         // CRC
-                          + 2         // Mode
-                          + WORD         // SizDev
-                          + 2         // UID
-                          + 2         // GID
-                          + getLinkedFile().getBytes().length);
+        return new ZipShort(WORD // CRC
+                + 2 // Mode
+                + WORD // SizDev
+                + 2 // UID
+                + 2 // GID
+                + getLinkedFile().getBytes().length);
     }
 
     /**
      * Delegate to local file data.
+     *
      * @return the centralDirectory length
      * @since 1.1
      */
@@ -128,8 +140,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
     }
 
     /**
-     * The actual data to put into local file data - without Header-ID
-     * or length specifier.
+     * The actual data to put into local file data - without Header-ID or length
+     * specifier.
+     *
      * @return get the data
      * @since 1.1
      */
@@ -140,13 +153,10 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
         byte[] linkArray = getLinkedFile().getBytes();
         // CheckStyle:MagicNumber OFF
-        System.arraycopy(ZipLong.getBytes(linkArray.length),
-                         0, data, 2, WORD);
+        System.arraycopy(ZipLong.getBytes(linkArray.length), 0, data, 2, WORD);
 
-        System.arraycopy(ZipShort.getBytes(getUserId()),
-                         0, data, 6, 2);
-        System.arraycopy(ZipShort.getBytes(getGroupId()),
-                         0, data, 8, 2);
+        System.arraycopy(ZipShort.getBytes(getUserId()), 0, data, 6, 2);
+        System.arraycopy(ZipShort.getBytes(getGroupId()), 0, data, 8, 2);
 
         System.arraycopy(linkArray, 0, data, 10, linkArray.length);
         // CheckStyle:MagicNumber ON
@@ -163,6 +173,7 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Delegate to local file data.
+     *
      * @return the local file data
      * @since 1.1
      */
@@ -172,7 +183,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Set the user id.
-     * @param uid the user id
+     *
+     * @param uid
+     *            the user id
      * @since 1.1
      */
     public void setUserId(int uid) {
@@ -181,6 +194,7 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Get the user id.
+     *
      * @return the user id
      * @since 1.1
      */
@@ -190,7 +204,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Set the group id.
-     * @param gid the group id
+     *
+     * @param gid
+     *            the group id
      * @since 1.1
      */
     public void setGroupId(int gid) {
@@ -199,6 +215,7 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Get the group id.
+     *
      * @return the group id
      * @since 1.1
      */
@@ -209,8 +226,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
     /**
      * Indicate that this entry is a symbolic link to the given filename.
      *
-     * @param name Name of the file this entry links to, empty String
-     *             if it is not a symbolic link.
+     * @param name
+     *            Name of the file this entry links to, empty String if it is not a
+     *            symbolic link.
      *
      * @since 1.1
      */
@@ -222,8 +240,8 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
     /**
      * Name of linked file
      *
-     * @return name of the file this entry links to if it is a
-     *         symbolic link, the empty string otherwise.
+     * @return name of the file this entry links to if it is a symbolic link, the
+     *         empty string otherwise.
      *
      * @since 1.1
      */
@@ -233,6 +251,7 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Is this entry a symbolic link?
+     *
      * @return true if this is a symbolic link
      * @since 1.1
      */
@@ -242,7 +261,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * File mode of this file.
-     * @param mode the file mode
+     *
+     * @param mode
+     *            the file mode
      * @since 1.1
      */
     public void setMode(int mode) {
@@ -251,6 +272,7 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * File mode of this file.
+     *
      * @return the file mode
      * @since 1.1
      */
@@ -260,7 +282,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Indicate whether this entry is a directory.
-     * @param dirFlag if true, this entry is a directory
+     *
+     * @param dirFlag
+     *            if true, this entry is a directory
      * @since 1.1
      */
     public void setDirectory(boolean dirFlag) {
@@ -270,6 +294,7 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Is this entry a directory?
+     *
      * @return true if this entry is a directory
      * @since 1.1
      */
@@ -279,14 +304,18 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Populate data from this array as if it was in local file data.
-     * @param data an array of bytes
-     * @param offset the start offset
-     * @param length the number of bytes in the array from offset
+     *
+     * @param data
+     *            an array of bytes
+     * @param offset
+     *            the start offset
+     * @param length
+     *            the number of bytes in the array from offset
      * @since 1.1
-     * @throws ZipException on error
+     * @throws ZipException
+     *             on error
      */
-    public void parseFromLocalFileData(byte[] data, int offset, int length)
-        throws ZipException {
+    public void parseFromLocalFileData(byte[] data, int offset, int length) throws ZipException {
 
         long givenChecksum = ZipLong.getValue(data, offset);
         byte[] tmp = new byte[length - WORD];
@@ -295,10 +324,8 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
         crc.update(tmp);
         long realChecksum = crc.getValue();
         if (givenChecksum != realChecksum) {
-            throw new ZipException("bad CRC checksum "
-                                   + Long.toHexString(givenChecksum)
-                                   + " instead of "
-                                   + Long.toHexString(realChecksum));
+            throw new ZipException("bad CRC checksum " + Long.toHexString(givenChecksum) + " instead of "
+                    + Long.toHexString(realChecksum));
         }
 
         int newMode = ZipShort.getValue(tmp, 0);
@@ -320,7 +347,9 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable {
 
     /**
      * Get the file mode for given permissions with the correct file type.
-     * @param mode the mode
+     *
+     * @param mode
+     *            the mode
      * @return the type with the mode
      * @since 1.1
      */

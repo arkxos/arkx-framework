@@ -1,12 +1,5 @@
 package io.arkx.framework.data.leveldb;
 
-import com.sun.star.uno.RuntimeException;
-import org.iq80.leveldb.DB;
-import org.iq80.leveldb.DBFactory;
-import org.iq80.leveldb.DBIterator;
-import org.iq80.leveldb.Options;
-import org.iq80.leveldb.impl.Iq80DBFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,10 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.iq80.leveldb.DB;
+import org.iq80.leveldb.DBFactory;
+import org.iq80.leveldb.DBIterator;
+import org.iq80.leveldb.Options;
+import org.iq80.leveldb.impl.Iq80DBFactory;
+
+import com.sun.star.uno.RuntimeException;
 
 /**
  * LevelDB提供器
- * 
+ *
  * @author Darkness
  * @date 2014-5-31 下午6:34:56
  * @version V1.0
@@ -27,7 +27,7 @@ public class LevelDBProvider {
 
     private static LevelDBProvider instance;
 
-    private Map<String,DB> databases;
+    private Map<String, DB> databases;
 
     public static synchronized LevelDBProvider instance() {
         if (instance == null) {
@@ -47,20 +47,15 @@ public class LevelDBProvider {
                 try {
                     db.close();
                 } catch (IOException e) {
-                    throw new IllegalStateException(
-                            "Cannot completely close LevelDB database: "
-                                + aDirectoryPath
-                                + " because: "
-                                + e.getMessage(),
-                            e);
+                    throw new IllegalStateException("Cannot completely close LevelDB database: " + aDirectoryPath
+                            + " because: " + e.getMessage(), e);
                 }
             }
         }
     }
 
     public void closeAll() {
-        List<String> directoryPaths =
-                new ArrayList<String>(this.databases.keySet());
+        List<String> directoryPaths = new ArrayList<String>(this.databases.keySet());
 
         for (String directoryPath : directoryPaths) {
             this.close(directoryPath);
@@ -84,10 +79,10 @@ public class LevelDBProvider {
     }
 
     /**
-     *  净化数据库
-     * 
+     * 净化数据库
+     *
      * @author Darkness
-     * @date 2014-5-8 下午6:39:05 
+     * @date 2014-5-8 下午6:39:05
      * @version V1.0
      */
     public void purge(DB aDatabase) {
@@ -98,7 +93,7 @@ public class LevelDBProvider {
             iterator.seekToFirst();
 
             while (iterator.hasNext()) {
-                Entry<byte[],byte[]> entry = iterator.next();
+                Entry<byte[], byte[]> entry = iterator.next();
 
                 aDatabase.delete(entry.getKey());
             }
@@ -116,7 +111,7 @@ public class LevelDBProvider {
     private LevelDBProvider() {
         super();
 
-        this.databases = new HashMap<String,DB>();
+        this.databases = new HashMap<String, DB>();
     }
 
     private DB openDatabase(String aDirectoryPath) {
@@ -132,7 +127,8 @@ public class LevelDBProvider {
 
             return db;
         } catch (Throwable t) {
-            throw new IllegalStateException("Cannot open LevelDB database: " + aDirectoryPath + " because: " + t.getMessage(), t);
+            throw new IllegalStateException(
+                    "Cannot open LevelDB database: " + aDirectoryPath + " because: " + t.getMessage(), t);
         }
     }
 }

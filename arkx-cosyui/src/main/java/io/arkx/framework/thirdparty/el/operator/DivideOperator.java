@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -55,89 +55,89 @@
 
 package io.arkx.framework.thirdparty.el.operator;
 
+import java.math.BigDecimal;
+
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.thirdparty.el.Coercions;
 import io.arkx.framework.thirdparty.el.Constants;
 import io.arkx.framework.thirdparty.el.Logger;
 import io.arkx.framework.thirdparty.el.PrimitiveObjects;
 
-import java.math.BigDecimal;
-
 /**
  * <p>
  * The implementation of the divide operator
- * 
+ *
  * @author Nathan Abramson - Art Technology Group
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class DivideOperator extends BinaryOperator {
-	// -------------------------------------
-	// Singleton
-	// -------------------------------------
+    // -------------------------------------
+    // Singleton
+    // -------------------------------------
 
-	public static final DivideOperator SINGLETON = new DivideOperator();
+    public static final DivideOperator SINGLETON = new DivideOperator();
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public DivideOperator() {
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public DivideOperator() {
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	@Override
-	public String getOperatorSymbol() {
-		return "/";
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the symbol representing the operator
+     **/
+    @Override
+    public String getOperatorSymbol() {
+        return "/";
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given value
-	 **/
-	@Override
-	public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
-		if (pLeft == null && pRight == null) {
-			if (pLogger.isLoggingWarning()) {
-				pLogger.logWarning(Constants.ARITH_OP_NULL, getOperatorSymbol());
-			}
-			return PrimitiveObjects.getInteger(0);
-		}
+    // -------------------------------------
+    /**
+     * Applies the operator to the given value
+     **/
+    @Override
+    public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
+        if (pLeft == null && pRight == null) {
+            if (pLogger.isLoggingWarning()) {
+                pLogger.logWarning(Constants.ARITH_OP_NULL, getOperatorSymbol());
+            }
+            return PrimitiveObjects.getInteger(0);
+        }
 
-		if (Coercions.isBigDecimal(pLeft) || Coercions.isBigInteger(pLeft) || Coercions.isBigDecimal(pRight)
-				|| Coercions.isBigInteger(pRight)) {
+        if (Coercions.isBigDecimal(pLeft) || Coercions.isBigInteger(pLeft) || Coercions.isBigDecimal(pRight)
+                || Coercions.isBigInteger(pRight)) {
 
-			BigDecimal left = (BigDecimal) Coercions.coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
-			BigDecimal right = (BigDecimal) Coercions.coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
+            BigDecimal left = (BigDecimal) Coercions.coerceToPrimitiveNumber(pLeft, BigDecimal.class, pLogger);
+            BigDecimal right = (BigDecimal) Coercions.coerceToPrimitiveNumber(pRight, BigDecimal.class, pLogger);
 
-			try {
-				return left.divide(right, BigDecimal.ROUND_HALF_UP);
-			} catch (Exception exc) {
-				if (pLogger.isLoggingError()) {
-					pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
-				}
-				return PrimitiveObjects.getInteger(0);
-			}
-		} else {
+            try {
+                return left.divide(right, BigDecimal.ROUND_HALF_UP);
+            } catch (Exception exc) {
+                if (pLogger.isLoggingError()) {
+                    pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
+                }
+                return PrimitiveObjects.getInteger(0);
+            }
+        } else {
 
-			double left = Coercions.coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
-			double right = Coercions.coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
+            double left = Coercions.coerceToPrimitiveNumber(pLeft, Double.class, pLogger).doubleValue();
+            double right = Coercions.coerceToPrimitiveNumber(pRight, Double.class, pLogger).doubleValue();
 
-			try {
-				return PrimitiveObjects.getDouble(left / right);
-			} catch (Exception exc) {
-				if (pLogger.isLoggingError()) {
-					pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
-				}
-				return PrimitiveObjects.getInteger(0);
-			}
-		}
-	}
+            try {
+                return PrimitiveObjects.getDouble(left / right);
+            } catch (Exception exc) {
+                if (pLogger.isLoggingError()) {
+                    pLogger.logError(Constants.ARITH_ERROR, getOperatorSymbol(), "" + left, "" + right);
+                }
+                return PrimitiveObjects.getInteger(0);
+            }
+        }
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 }

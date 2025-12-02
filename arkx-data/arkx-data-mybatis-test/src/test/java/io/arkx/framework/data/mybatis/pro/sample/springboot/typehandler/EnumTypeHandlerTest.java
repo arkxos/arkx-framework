@@ -1,20 +1,23 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.typehandler;
 
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.EnumTypeHandler;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.EnumTypeHandlerMapper;
+import static com.ninja_squad.dbsetup.Operations.truncate;
+import static io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Gender.MALE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
-import java.util.List;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.EnumTypeHandler;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.EnumTypeHandlerMapper;
 
-import static com.ninja_squad.dbsetup.Operations.truncate;
-import static io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Gender.MALE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 
 @SpringBootTest
 class EnumTypeHandlerTest {
@@ -49,4 +52,3 @@ class EnumTypeHandlerTest {
     }
 
 }
-

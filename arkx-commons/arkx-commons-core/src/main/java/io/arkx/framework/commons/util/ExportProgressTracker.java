@@ -13,8 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 数据库导出进度跟踪器
- * 用于跟踪数据库导出过程的进度
+ * 数据库导出进度跟踪器 用于跟踪数据库导出过程的进度
  */
 public class ExportProgressTracker {
     private static final ExportProgressTracker INSTANCE = new ExportProgressTracker();
@@ -23,12 +22,12 @@ public class ExportProgressTracker {
     private final Map<String, TaskProgress> taskProgressMap = new ConcurrentHashMap<>();
 
     // 任务阶段常量
-    public static final int STAGE_INIT = 0;              // 初始化
+    public static final int STAGE_INIT = 0; // 初始化
     public static final int STAGE_SCHEMA_GENERATION = 1; // Schema生成
-    public static final int STAGE_COMPILATION = 2;       // 编译
-    public static final int STAGE_JAR_CREATION = 3;      // JAR创建
-    public static final int STAGE_DATA_EXPORT = 4;       // 数据导出
-    public static final int STAGE_COMPLETE = 5;          // 完成
+    public static final int STAGE_COMPILATION = 2; // 编译
+    public static final int STAGE_JAR_CREATION = 3; // JAR创建
+    public static final int STAGE_DATA_EXPORT = 4; // 数据导出
+    public static final int STAGE_COMPLETE = 5; // 完成
 
     // 总步骤数（不包括COMPLETE状态）
     public static final int TOTAL_STEPS = 5;
@@ -37,14 +36,7 @@ public class ExportProgressTracker {
     private static final int[] STAGE_WEIGHTS = {5, 40, 15, 10, 30, 0};
 
     // 各阶段名称
-    private static final String[] STAGE_NAMES = {
-            "初始化",
-            "生成Schema文件",
-            "编译Schema文件",
-            "创建JAR包",
-            "导出数据",
-            "完成"
-    };
+    private static final String[] STAGE_NAMES = {"初始化", "生成Schema文件", "编译Schema文件", "创建JAR包", "导出数据", "完成"};
 
     private ExportProgressTracker() {
         // 私有构造函数
@@ -56,8 +48,11 @@ public class ExportProgressTracker {
 
     /**
      * 开始一个新的导出任务
-     * @param taskId 任务ID
-     * @param totalTables 总表数（用于计算schema生成阶段的进度）
+     *
+     * @param taskId
+     *            任务ID
+     * @param totalTables
+     *            总表数（用于计算schema生成阶段的进度）
      */
     public void startTask(String taskId, int totalTables) {
         TaskProgress progress = new TaskProgress(totalTables);
@@ -66,8 +61,11 @@ public class ExportProgressTracker {
 
     /**
      * 更新任务阶段
-     * @param taskId 任务ID
-     * @param stage 新阶段
+     *
+     * @param taskId
+     *            任务ID
+     * @param stage
+     *            新阶段
      */
     public void updateStage(String taskId, int stage) {
         TaskProgress progress = taskProgressMap.get(taskId);
@@ -80,8 +78,11 @@ public class ExportProgressTracker {
 
     /**
      * 更新当前阶段的进度
-     * @param taskId 任务ID
-     * @param stageProgress 阶段内进度（0-100）
+     *
+     * @param taskId
+     *            任务ID
+     * @param stageProgress
+     *            阶段内进度（0-100）
      */
     public void updateStageProgress(String taskId, int stageProgress) {
         TaskProgress progress = taskProgressMap.get(taskId);
@@ -92,7 +93,9 @@ public class ExportProgressTracker {
 
     /**
      * 增加表生成计数（用于Schema生成阶段）
-     * @param taskId 任务ID
+     *
+     * @param taskId
+     *            任务ID
      */
     public void incrementTableCount(String taskId) {
         TaskProgress progress = taskProgressMap.get(taskId);
@@ -107,8 +110,11 @@ public class ExportProgressTracker {
 
     /**
      * 更新当前正在处理的表名
-     * @param taskId 任务ID
-     * @param tableName 表名
+     *
+     * @param taskId
+     *            任务ID
+     * @param tableName
+     *            表名
      */
     public void updateCurrentTable(String taskId, String tableName) {
         TaskProgress progress = taskProgressMap.get(taskId);
@@ -119,7 +125,9 @@ public class ExportProgressTracker {
 
     /**
      * 获取任务总进度（百分比）
-     * @param taskId 任务ID
+     *
+     * @param taskId
+     *            任务ID
      * @return 总进度（0-100）
      */
     public int getProgress(String taskId) {
@@ -143,7 +151,9 @@ public class ExportProgressTracker {
 
     /**
      * 获取当前任务状态信息
-     * @param taskId 任务ID
+     *
+     * @param taskId
+     *            任务ID
      * @return 状态描述
      */
     public String getStatusDescription(String taskId) {
@@ -168,14 +178,15 @@ public class ExportProgressTracker {
         }
 
         String tableInfo = progress.currentTableName != null && !progress.currentTableName.isEmpty()
-                ? " [当前表: " + progress.currentTableName + "]" : "";
+                ? " [当前表: " + progress.currentTableName + "]"
+                : "";
 
         String stageName = STAGE_NAMES[progress.currentStage];
         String stageDetails = "";
 
         // 添加阶段特定详情
         switch (progress.currentStage) {
-            case STAGE_SCHEMA_GENERATION:
+            case STAGE_SCHEMA_GENERATION :
                 stageDetails = " (" + progress.completedTables.get() + "/" + progress.totalTables + ")";
                 break;
         }
@@ -185,7 +196,9 @@ public class ExportProgressTracker {
 
     /**
      * 完成任务并清理资源
-     * @param taskId 任务ID
+     *
+     * @param taskId
+     *            任务ID
      */
     public void completeTask(String taskId) {
         TaskProgress progress = taskProgressMap.get(taskId);
@@ -200,7 +213,9 @@ public class ExportProgressTracker {
 
     /**
      * 清除任务记录
-     * @param taskId 任务ID
+     *
+     * @param taskId
+     *            任务ID
      */
     public void removeTask(String taskId) {
         taskProgressMap.remove(taskId);
@@ -208,7 +223,9 @@ public class ExportProgressTracker {
 
     /**
      * 获取任务当前阶段
-     * @param taskId 任务ID
+     *
+     * @param taskId
+     *            任务ID
      * @return 当前阶段
      */
     public int getCurrentStage(String taskId) {
@@ -218,8 +235,11 @@ public class ExportProgressTracker {
 
     /**
      * 设置任务错误信息
-     * @param taskId 任务ID
-     * @param errorMessage 错误信息
+     *
+     * @param taskId
+     *            任务ID
+     * @param errorMessage
+     *            错误信息
      */
     public void setError(String taskId, String errorMessage) {
         TaskProgress progress = taskProgressMap.get(taskId);

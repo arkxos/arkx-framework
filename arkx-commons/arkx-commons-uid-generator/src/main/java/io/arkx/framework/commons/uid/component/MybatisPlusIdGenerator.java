@@ -1,10 +1,12 @@
 package io.arkx.framework.commons.uid.component;
 
-import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
-import io.arkx.framework.commons.uid.UidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import io.arkx.framework.commons.uid.UidGenerator;
+
+import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 
 /**
  *

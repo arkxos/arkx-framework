@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -55,6 +55,10 @@
 
 package io.arkx.framework.thirdparty.el;
 
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.Map;
+
 import io.arkx.framework.commons.collection.DataRow;
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.commons.util.NumberUtil;
@@ -65,16 +69,13 @@ import io.arkx.framework.cosyui.expression.IFunctionMapper;
 import io.arkx.framework.cosyui.expression.ITagData;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
 
-import java.lang.reflect.Array;
-import java.util.List;
-import java.util.Map;
-
 /**
  * <p>
- * Represents an operator that obtains a Map entry, an indexed value, a property value, or an indexed property value of an object. The
- * following are the rules for evaluating this operator:
+ * Represents an operator that obtains a Map entry, an indexed value, a property
+ * value, or an indexed property value of an object. The following are the rules
+ * for evaluating this operator:
  * <ul>
- * 
+ *
  * <pre>
  * Evaluating a[b] (assuming a.b == a["b"])
  *   a is null
@@ -97,20 +98,20 @@ import java.util.Map;
  *     a.get(b) or Array.get(a, b) throws other exception
  *       error
  *     return a.get(b) or Array.get(a, b)
- * 
+ *
  *   coerce b to String
  *   b is a readable property of a
  *     getter throws an exception
  *       error
  *     otherwise
  *       return result of getter call
- * 
+ *
  *   otherwise
  *     error
  * </pre>
- * 
+ *
  * </ul>
- * 
+ *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
@@ -118,177 +119,178 @@ import java.util.Map;
 
 public class ArraySuffix extends ValueSuffix {
 
-	Expression mIndex;
+    Expression mIndex;
 
-	public Expression getIndex() {
-		return mIndex;
-	}
+    public Expression getIndex() {
+        return mIndex;
+    }
 
-	public void setIndex(Expression pIndex) {
-		mIndex = pIndex;
-	}
+    public void setIndex(Expression pIndex) {
+        mIndex = pIndex;
+    }
 
-	/**
-	 * Constructor
-	 **/
-	public ArraySuffix(Expression pIndex) {
-		mIndex = pIndex;
-	}
+    /**
+     * Constructor
+     **/
+    public ArraySuffix(Expression pIndex) {
+        mIndex = pIndex;
+    }
 
-	/**
-	 * Gets the value of the index
-	 **/
-	Object evaluateIndex(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger) throws ExpressionException {
-		return mIndex.evaluate(pResolver, functions, pLogger);
-	}
+    /**
+     * Gets the value of the index
+     **/
+    Object evaluateIndex(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        return mIndex.evaluate(pResolver, functions, pLogger);
+    }
 
-	/**
-	 * Returns the operator symbol
-	 **/
-	String getOperatorSymbol() {
-		return "[]";
-	}
+    /**
+     * Returns the operator symbol
+     **/
+    String getOperatorSymbol() {
+        return "[]";
+    }
 
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		return "[" + mIndex.getExpressionString() + "]";
-	}
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        return "[" + mIndex.getExpressionString() + "]";
+    }
 
-	/**
-	 * Evaluates the expression in the given context, operating on the
-	 * given value.
-	 **/
-	@Override
-	public Object evaluate(Object pValue, IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-			throws ExpressionException {
-		Object indexVal;
-		String indexStr;
-		BeanProperty property;
+    /**
+     * Evaluates the expression in the given context, operating on the given value.
+     **/
+    @Override
+    public Object evaluate(Object pValue, IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        Object indexVal;
+        String indexStr;
+        BeanProperty property;
 
-		// Check for null value
-		if (pValue == null) {
-			if (pLogger.isLoggingWarning()) {
-				pLogger.logWarning(Constants.CANT_GET_INDEXED_VALUE_OF_NULL, getOperatorSymbol());
-			}
-			return null;
-		}
+        // Check for null value
+        if (pValue == null) {
+            if (pLogger.isLoggingWarning()) {
+                pLogger.logWarning(Constants.CANT_GET_INDEXED_VALUE_OF_NULL, getOperatorSymbol());
+            }
+            return null;
+        }
 
-		// Evaluate the index
-		else if ((indexVal = evaluateIndex(pResolver, functions, pLogger)) == null) {
-			if (pLogger.isLoggingWarning()) {
-				pLogger.logWarning(Constants.CANT_GET_NULL_INDEX, getOperatorSymbol());
-			}
-			return null;
-		}
+        // Evaluate the index
+        else if ((indexVal = evaluateIndex(pResolver, functions, pLogger)) == null) {
+            if (pLogger.isLoggingWarning()) {
+                pLogger.logWarning(Constants.CANT_GET_NULL_INDEX, getOperatorSymbol());
+            }
+            return null;
+        }
 
-		// See if it's a List or array
-		else if (pValue instanceof List || pValue.getClass().isArray() || pValue instanceof DataTable) {
-			Integer indexObj = Coercions.coerceToInteger(indexVal, pLogger);
-			if (indexObj == null) {
-				if (pLogger.isLoggingError()) {
-					pLogger.logError(Constants.BAD_INDEX_VALUE, getOperatorSymbol(), indexVal.getClass().getName());
-				}
-				return null;
-			} else if (pValue instanceof DataTable) {
-				return ((DataTable) pValue).getDataRow(indexObj);
-			} else if (pValue instanceof List) {
-				try {
-					return ((List<?>) pValue).get(indexObj.intValue());
-				} catch (ArrayIndexOutOfBoundsException exc) {
-					if (pLogger.isLoggingWarning()) {
-						pLogger.logWarning(Constants.EXCEPTION_ACCESSING_LIST, exc, indexObj);
-					}
-					return null;
-				} catch (IndexOutOfBoundsException exc) {
-					if (pLogger.isLoggingWarning()) {
-						pLogger.logWarning(Constants.EXCEPTION_ACCESSING_LIST, exc, indexObj);
-					}
-					return null;
-				} catch (Exception exc) {
-					if (pLogger.isLoggingError()) {
-						pLogger.logError(Constants.EXCEPTION_ACCESSING_LIST, exc, indexObj);
-					}
-					return null;
-				}
-			} else {
-				try {
-					return Array.get(pValue, indexObj.intValue());
-				} catch (ArrayIndexOutOfBoundsException exc) {
-					if (pLogger.isLoggingWarning()) {
-						pLogger.logWarning(Constants.EXCEPTION_ACCESSING_ARRAY, exc, indexObj);
-					}
-					return null;
-				} catch (IndexOutOfBoundsException exc) {
-					if (pLogger.isLoggingWarning()) {
-						pLogger.logWarning(Constants.EXCEPTION_ACCESSING_ARRAY, exc, indexObj);
-					}
-					return null;
-				} catch (Exception exc) {
-					if (pLogger.isLoggingError()) {
-						pLogger.logError(Constants.EXCEPTION_ACCESSING_ARRAY, exc, indexObj);
-					}
-					return null;
-				}
-			}
-		}
+        // See if it's a List or array
+        else if (pValue instanceof List || pValue.getClass().isArray() || pValue instanceof DataTable) {
+            Integer indexObj = Coercions.coerceToInteger(indexVal, pLogger);
+            if (indexObj == null) {
+                if (pLogger.isLoggingError()) {
+                    pLogger.logError(Constants.BAD_INDEX_VALUE, getOperatorSymbol(), indexVal.getClass().getName());
+                }
+                return null;
+            } else if (pValue instanceof DataTable) {
+                return ((DataTable) pValue).getDataRow(indexObj);
+            } else if (pValue instanceof List) {
+                try {
+                    return ((List<?>) pValue).get(indexObj.intValue());
+                } catch (ArrayIndexOutOfBoundsException exc) {
+                    if (pLogger.isLoggingWarning()) {
+                        pLogger.logWarning(Constants.EXCEPTION_ACCESSING_LIST, exc, indexObj);
+                    }
+                    return null;
+                } catch (IndexOutOfBoundsException exc) {
+                    if (pLogger.isLoggingWarning()) {
+                        pLogger.logWarning(Constants.EXCEPTION_ACCESSING_LIST, exc, indexObj);
+                    }
+                    return null;
+                } catch (Exception exc) {
+                    if (pLogger.isLoggingError()) {
+                        pLogger.logError(Constants.EXCEPTION_ACCESSING_LIST, exc, indexObj);
+                    }
+                    return null;
+                }
+            } else {
+                try {
+                    return Array.get(pValue, indexObj.intValue());
+                } catch (ArrayIndexOutOfBoundsException exc) {
+                    if (pLogger.isLoggingWarning()) {
+                        pLogger.logWarning(Constants.EXCEPTION_ACCESSING_ARRAY, exc, indexObj);
+                    }
+                    return null;
+                } catch (IndexOutOfBoundsException exc) {
+                    if (pLogger.isLoggingWarning()) {
+                        pLogger.logWarning(Constants.EXCEPTION_ACCESSING_ARRAY, exc, indexObj);
+                    }
+                    return null;
+                } catch (Exception exc) {
+                    if (pLogger.isLoggingError()) {
+                        pLogger.logError(Constants.EXCEPTION_ACCESSING_ARRAY, exc, indexObj);
+                    }
+                    return null;
+                }
+            }
+        }
 
-		// See if it's a Map
-		else if (pValue instanceof Map) {
-			Map<?, ?> val = (Map<?, ?>) pValue;
-			Object v = val.get(indexVal);
-			if (v != null) {
-				return v;
-			}
-		}
+        // See if it's a Map
+        else if (pValue instanceof Map) {
+            Map<?, ?> val = (Map<?, ?>) pValue;
+            Object v = val.get(indexVal);
+            if (v != null) {
+                return v;
+            }
+        }
 
-		// Coerce to a String for property access
-		if ((indexStr = Coercions.coerceToString(indexVal, pLogger)) == null) {
-			return null;
-		} else if (pValue instanceof DataRow) {
-			DataRow val = (DataRow) pValue;
-			if (indexVal instanceof Number) {
-				int i = ((Number) indexVal).intValue();
-				if (val.getColumnCount() > i) {
-					return val.get(i);
-				}
-			} else if (val.getDataColumn(indexStr) == null) {
-				if (NumberUtil.isNumber(indexStr)) {
-					int i = Double.valueOf(Double.parseDouble(indexStr)).intValue();
-					if (val.getColumnCount() > i) {
-						return val.get(i);
-					}
-				}
-			} else {
-				return val.get(indexStr);
-			}
-			return null;
-		} else if (pValue instanceof ITagData) {// 主要是用于变量的逐级上溯查找
-			if (indexStr.equalsIgnoreCase("parent")) {
-				return ((ITagData) pValue).getParent();
-			} else {
-				return ((ITagData) pValue).getValue(indexStr);
-			}
-		}
-		// Look for a JavaBean property
-		else if ((property = BeanManager.getBeanDescription(pValue.getClass()).getProperty(indexStr)) != null) {
-			try {
-				return property.read(pValue);
-			} catch (Exception exc) {
-				if (pLogger.isLoggingError()) {
-					pLogger.logError(Constants.ERROR_GETTING_PROPERTY, exc, indexStr, pValue.getClass().getName());
-				}
-				return null;
-			}
-		}
+        // Coerce to a String for property access
+        if ((indexStr = Coercions.coerceToString(indexVal, pLogger)) == null) {
+            return null;
+        } else if (pValue instanceof DataRow) {
+            DataRow val = (DataRow) pValue;
+            if (indexVal instanceof Number) {
+                int i = ((Number) indexVal).intValue();
+                if (val.getColumnCount() > i) {
+                    return val.get(i);
+                }
+            } else if (val.getDataColumn(indexStr) == null) {
+                if (NumberUtil.isNumber(indexStr)) {
+                    int i = Double.valueOf(Double.parseDouble(indexStr)).intValue();
+                    if (val.getColumnCount() > i) {
+                        return val.get(i);
+                    }
+                }
+            } else {
+                return val.get(indexStr);
+            }
+            return null;
+        } else if (pValue instanceof ITagData) {// 主要是用于变量的逐级上溯查找
+            if (indexStr.equalsIgnoreCase("parent")) {
+                return ((ITagData) pValue).getParent();
+            } else {
+                return ((ITagData) pValue).getValue(indexStr);
+            }
+        }
+        // Look for a JavaBean property
+        else if ((property = BeanManager.getBeanDescription(pValue.getClass()).getProperty(indexStr)) != null) {
+            try {
+                return property.read(pValue);
+            } catch (Exception exc) {
+                if (pLogger.isLoggingError()) {
+                    pLogger.logError(Constants.ERROR_GETTING_PROPERTY, exc, indexStr, pValue.getClass().getName());
+                }
+                return null;
+            }
+        }
 
-		else {
-			// if (pLogger.isLoggingError()) {
-			// pLogger.logError(Constants.CANT_FIND_INDEX, indexVal, pValue.getClass().getName(), getOperatorSymbol());
-			// }
-			return null;
-		}
-	}
+        else {
+            // if (pLogger.isLoggingError()) {
+            // pLogger.logError(Constants.CANT_FIND_INDEX, indexVal,
+            // pValue.getClass().getName(), getOperatorSymbol());
+            // }
+            return null;
+        }
+    }
 }

@@ -1,7 +1,7 @@
 package io.arkx.framework.data.jpa.sqltoy;
 
-import io.arkx.framework.data.common.ContextHolder;
-import jakarta.persistence.EntityManager;
+import java.io.Serializable;
+
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -10,7 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
-import java.io.Serializable;
+import io.arkx.framework.data.common.ContextHolder;
+
+import jakarta.persistence.EntityManager;
 
 /**
  * @author Darkness
@@ -18,21 +20,24 @@ import java.io.Serializable;
  * @version V1.0
  */
 public class SqlToyJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
-		extends JpaRepositoryFactoryBean<R, T, I> implements ApplicationContextAware {
+        extends
+            JpaRepositoryFactoryBean<R, T, I>
+        implements
+            ApplicationContextAware {
 
-	public SqlToyJpaRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
-		super(repositoryInterface);
-	}
+    public SqlToyJpaRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
+        super(repositoryInterface);
+    }
 
-	@Override
-	protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
-		SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
-		return new SqlToyRepositoryFactory(sqlToyLazyDao, em);
-	}
+    @Override
+    protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
+        SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
+        return new SqlToyRepositoryFactory(sqlToyLazyDao, em);
+    }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		ContextHolder.appContext = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ContextHolder.appContext = applicationContext;
+    }
 
 }

@@ -1,9 +1,10 @@
 package io.arkx.framework.enums.conversion;
 
-import jakarta.persistence.AttributeConverter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
+
+import jakarta.persistence.AttributeConverter;
 
 /**
  * @author: zhuCan
@@ -14,6 +15,5 @@ import org.springframework.context.annotation.Import;
 @ConditionalOnClass({AttributeConverter.class})
 @Import({ConverterPackageScan.class})
 public class EnumsConversionAutoConfiguration {
-
 
 }

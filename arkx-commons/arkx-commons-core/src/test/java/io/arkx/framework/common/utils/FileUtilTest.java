@@ -1,10 +1,10 @@
 package io.arkx.framework.common.utils;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockMultipartFile;
-
 import static io.arkx.framework.commons.utils3.FileUtil.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 
 public class FileUtilTest {
 

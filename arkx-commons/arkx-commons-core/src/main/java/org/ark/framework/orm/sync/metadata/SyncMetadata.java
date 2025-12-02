@@ -8,13 +8,12 @@ package org.ark.framework.orm.sync.metadata;
  * @since 1.0
  */
 
-import lombok.Data;
-
 import java.util.Date;
 
+import lombok.Data;
+
 /**
- * 同步元数据
- * 用于存储同步任务的状态和元数据信息
+ * 同步元数据 用于存储同步任务的状态和元数据信息
  */
 @Data
 public class SyncMetadata {

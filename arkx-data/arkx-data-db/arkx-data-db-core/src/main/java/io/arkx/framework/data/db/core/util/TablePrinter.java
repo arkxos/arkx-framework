@@ -1,7 +1,5 @@
 package io.arkx.framework.data.db.core.util;
 
-import cn.hutool.core.io.FileUtil;
-
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +9,8 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import cn.hutool.core.io.FileUtil;
+
 /**
  * @author Nobody
  * @date 2025-07-09 14:58
@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
  */
 public class TablePrinter {
 
-    public static void printTable(String tableName, List<String> fields, Map<String, String> types, List<Object[]> rows) {
+    public static void printTable(String tableName, List<String> fields, Map<String, String> types,
+            List<Object[]> rows) {
         List<String[]> data = new ArrayList<>();
         data.add(fields.toArray(new String[0]));
         data.add(fields.stream().map(types::get).toArray(String[]::new));
@@ -39,28 +40,27 @@ public class TablePrinter {
             return;
         }
 
-//        List<String> lines = data.stream().map(line -> String.join(",", line)).collect(Collectors.toList());
-        List<String> lines = data.stream()
-                .map(row -> Arrays.stream(row)
-                        .map(cell -> {
-                            if (cell == null) return "";
-                            // 判断是否需要加引号
-//                            if (cell.contains(",") || cell.contains("\"") || cell.contains("\n") || cell.contains("'")) {
-                                return "\"" + cell.replace("\"", "\"\"") + "\""; // 双引号包裹并转义内部双引号
-//                            }
-//                            return cell;
-                        })
-                        .collect(Collectors.joining(",")))
-                .collect(Collectors.toList());
+        // List<String> lines = data.stream().map(line -> String.join(",",
+        // line)).collect(Collectors.toList());
+        List<String> lines = data.stream().map(row -> Arrays.stream(row).map(cell -> {
+            if (cell == null)
+                return "";
+            // 判断是否需要加引号
+            // if (cell.contains(",") || cell.contains("\"") || cell.contains("\n") ||
+            // cell.contains("'")) {
+            return "\"" + cell.replace("\"", "\"\"") + "\""; // 双引号包裹并转义内部双引号
+            // }
+            // return cell;
+        }).collect(Collectors.joining(","))).collect(Collectors.toList());
         File tempDir = new File(System.getProperty("user.dir") + File.separator + "temp");
         if (!tempDir.exists()) {
             tempDir.mkdir();
         }
-        String filename = tableName + "_" +
-                LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")) +
-                "_" + (int)(ThreadLocalRandom.current().nextDouble() * 1000) +
-                ".csv";
-        FileUtil.writeUtf8Lines(lines, System.getProperty("user.dir")+ File.separator+"temp"+File.separator+ filename);
+        String filename = tableName + "_"
+                + LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")) + "_"
+                + (int) (ThreadLocalRandom.current().nextDouble() * 1000) + ".csv";
+        FileUtil.writeUtf8Lines(lines,
+                System.getProperty("user.dir") + File.separator + "temp" + File.separator + filename);
 
         // 提取表头（假设第一行为表头）
         String[] header = data.getFirst();
@@ -73,10 +73,8 @@ public class TablePrinter {
         }
 
         // 生成分隔线（兼容 JDK 1.8）
-        String separator = "+" + String.join("+", Arrays.stream(colWidths)
-                .boxed() // 转换为 Stream<Integer>
-                .map(width -> repeatString('-', width * 2))
-                .collect(Collectors.toList())) + "+";
+        String separator = "+" + String.join("+", Arrays.stream(colWidths).boxed() // 转换为 Stream<Integer>
+                .map(width -> repeatString('-', width * 2)).collect(Collectors.toList())) + "+";
 
         // 打印表头
         System.out.println(separator);
@@ -105,7 +103,8 @@ public class TablePrinter {
 
     // 计算单个字符串的显示宽度（中文字符 2，英文字符 1）
     private static int getDisplayWidth(String str) {
-        if (str == null) return 0;
+        if (str == null)
+            return 0;
         int width = 0;
         for (char c : str.toCharArray()) {
             width += (c >= 0x4E00 && c <= 0x9FFF) ? 2 : 1; // 中文字符 Unicode 范围

@@ -1,10 +1,11 @@
 package io.arkx.framework.encrypt.core.encryptor;
 
+import org.apache.commons.lang3.StringUtils;
+
 import io.arkx.framework.encrypt.core.EncryptContext;
 import io.arkx.framework.encrypt.enumd.AlgorithmType;
 import io.arkx.framework.encrypt.enumd.EncodeType;
 import io.arkx.framework.encrypt.utils.EncryptUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * sm2算法实现
@@ -37,8 +38,10 @@ public class Sm2Encryptor extends AbstractEncryptor {
     /**
      * 加密
      *
-     * @param value      待加密字符串
-     * @param encodeType 加密后的编码格式
+     * @param value
+     *            待加密字符串
+     * @param encodeType
+     *            加密后的编码格式
      */
     @Override
     public String encrypt(String value, EncodeType encodeType) {
@@ -52,7 +55,8 @@ public class Sm2Encryptor extends AbstractEncryptor {
     /**
      * 解密
      *
-     * @param value      待加密字符串
+     * @param value
+     *            待加密字符串
      */
     @Override
     public String decrypt(String value) {

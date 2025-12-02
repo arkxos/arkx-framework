@@ -1,8 +1,8 @@
 package io.arkx.framework.data.mybatis.pro.core;
 
-import io.arkx.framework.data.mybatis.pro.sdk.Mapper;
-
 import java.util.List;
+
+import io.arkx.framework.data.mybatis.pro.sdk.Mapper;
 
 /**
  * @author w.dehai

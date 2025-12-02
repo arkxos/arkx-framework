@@ -1,14 +1,15 @@
 package io.arkx.framework.data.mybatis.model;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Maps;
+import java.io.Serializable;
+import java.util.Map;
+
 import io.arkx.framework.commons.constants.CommonConstants;
 import io.arkx.framework.commons.util.BeanConvertUtils;
 import io.arkx.framework.commons.util.StringUtils;
 import io.arkx.framework.commons.utils2.StringUtil;
 
-import java.io.Serializable;
-import java.util.Map;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Maps;
 
 /**
  * 分页参数
@@ -39,8 +40,10 @@ public class PageParams extends Page implements Serializable {
         if (map == null) {
             map = Maps.newHashMap();
         }
-        this.page = Integer.parseInt(map.getOrDefault(CommonConstants.PAGE_KEY, CommonConstants.DEFAULT_PAGE).toString());
-        this.limit = Integer.parseInt(map.getOrDefault(CommonConstants.PAGE_LIMIT_KEY, CommonConstants.DEFAULT_LIMIT).toString());
+        this.page = Integer
+                .parseInt(map.getOrDefault(CommonConstants.PAGE_KEY, CommonConstants.DEFAULT_PAGE).toString());
+        this.limit = Integer
+                .parseInt(map.getOrDefault(CommonConstants.PAGE_LIMIT_KEY, CommonConstants.DEFAULT_LIMIT).toString());
         this.sort = (String) map.getOrDefault(CommonConstants.PAGE_SORT_KEY, "");
         this.order = (String) map.getOrDefault(CommonConstants.PAGE_ORDER_KEY, "");
         super.setCurrent(page - 1);

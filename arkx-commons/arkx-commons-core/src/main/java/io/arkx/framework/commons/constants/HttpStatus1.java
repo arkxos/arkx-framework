@@ -2,11 +2,10 @@ package io.arkx.framework.commons.constants;
 
 /**
  * 返回状态码
- * 
+ *
  * @author Darkness
  */
-public class HttpStatus1
-{
+public class HttpStatus1 {
     /**
      * 操作成功
      */

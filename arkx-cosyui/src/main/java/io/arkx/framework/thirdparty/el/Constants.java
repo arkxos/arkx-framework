@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -61,79 +61,81 @@ import java.util.ResourceBundle;
 
 /**
  * <p>
- * This contains all of the non-public constants, including messsage strings read from the resource file.
- * 
+ * This contains all of the non-public constants, including messsage strings
+ * read from the resource file.
+ *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class Constants {
-	static ResourceBundle sResources = ResourceBundle.getBundle("io.arkx.framework.thirdparty.el.Resources", Locale.ENGLISH);
+    static ResourceBundle sResources = ResourceBundle.getBundle("io.arkx.framework.thirdparty.el.Resources",
+            Locale.ENGLISH);
 
-	public static final String EXCEPTION_GETTING_BEANINFO = getStringResource("EXCEPTION_GETTING_BEANINFO");
+    public static final String EXCEPTION_GETTING_BEANINFO = getStringResource("EXCEPTION_GETTING_BEANINFO");
 
-	public static final String NULL_EXPRESSION_STRING = getStringResource("NULL_EXPRESSION_STRING");
+    public static final String NULL_EXPRESSION_STRING = getStringResource("NULL_EXPRESSION_STRING");
 
-	public static final String PARSE_EXCEPTION = getStringResource("PARSE_EXCEPTION");
+    public static final String PARSE_EXCEPTION = getStringResource("PARSE_EXCEPTION");
 
-	public static final String ERROR_GETTING_PROPERTY = getStringResource("ERROR_GETTING_PROPERTY");
+    public static final String ERROR_GETTING_PROPERTY = getStringResource("ERROR_GETTING_PROPERTY");
 
-	public static final String CANT_GET_INDEXED_VALUE_OF_NULL = getStringResource("CANT_GET_INDEXED_VALUE_OF_NULL");
+    public static final String CANT_GET_INDEXED_VALUE_OF_NULL = getStringResource("CANT_GET_INDEXED_VALUE_OF_NULL");
 
-	public static final String CANT_GET_NULL_INDEX = getStringResource("CANT_GET_NULL_INDEX");
+    public static final String CANT_GET_NULL_INDEX = getStringResource("CANT_GET_NULL_INDEX");
 
-	public static final String BAD_INDEX_VALUE = getStringResource("BAD_INDEX_VALUE");
+    public static final String BAD_INDEX_VALUE = getStringResource("BAD_INDEX_VALUE");
 
-	public static final String EXCEPTION_ACCESSING_LIST = getStringResource("EXCEPTION_ACCESSING_LIST");
+    public static final String EXCEPTION_ACCESSING_LIST = getStringResource("EXCEPTION_ACCESSING_LIST");
 
-	public static final String EXCEPTION_ACCESSING_ARRAY = getStringResource("EXCEPTION_ACCESSING_ARRAY");
+    public static final String EXCEPTION_ACCESSING_ARRAY = getStringResource("EXCEPTION_ACCESSING_ARRAY");
 
-	public static final String TOSTRING_EXCEPTION = getStringResource("TOSTRING_EXCEPTION");
+    public static final String TOSTRING_EXCEPTION = getStringResource("TOSTRING_EXCEPTION");
 
-	public static final String BOOLEAN_TO_NUMBER = getStringResource("BOOLEAN_TO_NUMBER");
+    public static final String BOOLEAN_TO_NUMBER = getStringResource("BOOLEAN_TO_NUMBER");
 
-	public static final String STRING_TO_NUMBER_EXCEPTION = getStringResource("STRING_TO_NUMBER_EXCEPTION");
+    public static final String STRING_TO_NUMBER_EXCEPTION = getStringResource("STRING_TO_NUMBER_EXCEPTION");
 
-	public static final String COERCE_TO_NUMBER = getStringResource("COERCE_TO_NUMBER");
+    public static final String COERCE_TO_NUMBER = getStringResource("COERCE_TO_NUMBER");
 
-	public static final String BOOLEAN_TO_CHARACTER = getStringResource("BOOLEAN_TO_CHARACTER");
+    public static final String BOOLEAN_TO_CHARACTER = getStringResource("BOOLEAN_TO_CHARACTER");
 
-	public static final String COERCE_TO_CHARACTER = getStringResource("COERCE_TO_CHARACTER");
+    public static final String COERCE_TO_CHARACTER = getStringResource("COERCE_TO_CHARACTER");
 
-	public static final String COERCE_TO_OBJECT = getStringResource("COERCE_TO_OBJECT");
+    public static final String COERCE_TO_OBJECT = getStringResource("COERCE_TO_OBJECT");
 
-	public static final String NO_PROPERTY_EDITOR = getStringResource("NO_PROPERTY_EDITOR");
+    public static final String NO_PROPERTY_EDITOR = getStringResource("NO_PROPERTY_EDITOR");
 
-	public static final String PROPERTY_EDITOR_ERROR = getStringResource("PROPERTY_EDITOR_ERROR");
+    public static final String PROPERTY_EDITOR_ERROR = getStringResource("PROPERTY_EDITOR_ERROR");
 
-	public static final String ARITH_OP_NULL = getStringResource("ARITH_OP_NULL");
+    public static final String ARITH_OP_NULL = getStringResource("ARITH_OP_NULL");
 
-	public static final String ARITH_OP_BAD_TYPE = getStringResource("ARITH_OP_BAD_TYPE");
+    public static final String ARITH_OP_BAD_TYPE = getStringResource("ARITH_OP_BAD_TYPE");
 
-	public static final String ARITH_ERROR = getStringResource("ARITH_ERROR");
+    public static final String ARITH_ERROR = getStringResource("ARITH_ERROR");
 
-	public static final String UNARY_OP_BAD_TYPE = getStringResource("UNARY_OP_BAD_TYPE");
+    public static final String UNARY_OP_BAD_TYPE = getStringResource("UNARY_OP_BAD_TYPE");
 
-	public static final String COMPARABLE_ERROR = getStringResource("COMPARABLE_ERROR");
+    public static final String COMPARABLE_ERROR = getStringResource("COMPARABLE_ERROR");
 
-	public static final String UNKNOWN_FUNCTION = getStringResource("UNKNOWN_FUNCTION");
+    public static final String UNKNOWN_FUNCTION = getStringResource("UNKNOWN_FUNCTION");
 
-	public static final Object[] NoArgs = new Object[0];
+    public static final Object[] NoArgs = new Object[0];
 
-	public static String getStringResource(String pResourceName) throws MissingResourceException {
-		try {
-			String ret = sResources.getString(pResourceName);
-			if (ret == null) {
-				String str = "ERROR: Unable to load resource " + pResourceName;
-				System.err.println(str);
-				throw new MissingResourceException(str, "io.arkx.framework.cosyui.expression.Constants", pResourceName);
-			} else {
-				return ret;
-			}
-		} catch (MissingResourceException exc) {
-			System.err.println("ERROR: Unable to load resource " + pResourceName + ": " + exc);
-			throw exc;
-		}
-	}
+    public static String getStringResource(String pResourceName) throws MissingResourceException {
+        try {
+            String ret = sResources.getString(pResourceName);
+            if (ret == null) {
+                String str = "ERROR: Unable to load resource " + pResourceName;
+                System.err.println(str);
+                throw new MissingResourceException(str, "io.arkx.framework.cosyui.expression.Constants", pResourceName);
+            } else {
+                return ret;
+            }
+        } catch (MissingResourceException exc) {
+            System.err.println("ERROR: Unable to load resource " + pResourceName + ": " + exc);
+            throw exc;
+        }
+    }
 }

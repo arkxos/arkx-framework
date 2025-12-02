@@ -1,11 +1,11 @@
 package io.arkx.framework.avatarmq.msg;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.io.Serializable;
 
 /**
  * @filename:Message.java
@@ -66,8 +66,7 @@ public class Message extends BaseMessage implements Serializable {
         boolean result = false;
         if (obj != null && Message.class.isAssignableFrom(obj.getClass())) {
             Message msg = (Message) obj;
-            result = new EqualsBuilder().append(topic, msg.getTopic()).append(body, msg.getBody())
-                    .isEquals();
+            result = new EqualsBuilder().append(topic, msg.getTopic()).append(body, msg.getBody()).isEquals();
         }
         return result;
     }

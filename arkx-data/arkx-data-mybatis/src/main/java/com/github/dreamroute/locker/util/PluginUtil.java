@@ -23,22 +23,23 @@
  */
 package com.github.dreamroute.locker.util;
 
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.SystemMetaObject;
-import org.springframework.util.ObjectUtils;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.reflection.SystemMetaObject;
+import org.springframework.util.ObjectUtils;
+
 /**
  * @author w.dehai
  */
 public final class PluginUtil {
 
-    private PluginUtil() {} // private constructor
+    private PluginUtil() {
+    } // private constructor
 
     /**
      * <p>
@@ -47,8 +48,9 @@ public final class PluginUtil {
      * If integrate more than a plugin, maybe there are conflict in these plugins,
      * because plugin will proxy the object.<br>
      * So, here get the orignal target object
-     * 
-     * @param target proxy-object
+     *
+     * @param target
+     *            proxy-object
      * @return original target object
      */
     public static Object processTarget(Object target) {

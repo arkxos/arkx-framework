@@ -1,11 +1,12 @@
 package io.arkx.framework.commons.websocket.config;
 
-import io.arkx.framework.commons.websocket.distribute.LocalMessageDistributor;
-import io.arkx.framework.commons.websocket.distribute.MessageDistributor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.arkx.framework.commons.websocket.distribute.LocalMessageDistributor;
+import io.arkx.framework.commons.websocket.distribute.MessageDistributor;
 
 /**
  * 本地的消息分发器配置
@@ -13,18 +14,19 @@ import org.springframework.context.annotation.Configuration;
  * @author hccake
  */
 @ConditionalOnProperty(prefix = WebSocketProperties.PREFIX, name = "message-distributor",
-		havingValue = MessageDistributorTypeConstants.LOCAL)
+        havingValue = MessageDistributorTypeConstants.LOCAL)
 @Configuration(proxyBeanMethods = false)
 public class LocalMessageDistributorConfiguration {
 
-	/**
-	 * 配置本地消息分发器，使用本地内存实现，不支持集群环境。
-	 * @return 返回一个 {@link LocalMessageDistributor} 实例，用于处理本地消息分发。
-	 */
-	@Bean
-	@ConditionalOnMissingBean(MessageDistributor.class)
-	public LocalMessageDistributor messageDistributor() {
-		return new LocalMessageDistributor();
-	}
+    /**
+     * 配置本地消息分发器，使用本地内存实现，不支持集群环境。
+     *
+     * @return 返回一个 {@link LocalMessageDistributor} 实例，用于处理本地消息分发。
+     */
+    @Bean
+    @ConditionalOnMissingBean(MessageDistributor.class)
+    public LocalMessageDistributor messageDistributor() {
+        return new LocalMessageDistributor();
+    }
 
 }

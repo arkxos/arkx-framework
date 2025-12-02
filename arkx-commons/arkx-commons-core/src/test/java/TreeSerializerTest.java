@@ -1,26 +1,25 @@
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
+import org.ark.common.Person;
+
 import io.arkx.framework.commons.collection.tree.TreeNode;
 import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.data.fastjson.TreexObjectSerializer;
-import org.ark.common.Person;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
 
 public class TreeSerializerTest {
     public static void main(String[] args) {
         Treex<String, Person> tree = new Treex<>();
-		TreeNode<String, Person> rootNode = tree.getRoot();
-		rootNode.setId("0");
-		rootNode.setValue(new Person());
-		rootNode.addChildByValue(new Person());
-		rootNode.addChildByValue(new Person());
+        TreeNode<String, Person> rootNode = tree.getRoot();
+        rootNode.setId("0");
+        rootNode.setValue(new Person());
+        rootNode.addChildByValue(new Person());
+        rootNode.addChildByValue(new Person());
 
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(
-                SerializerFeature.PrettyFormat,
-                SerializerFeature.WriteMapNullValue,
-                SerializerFeature.WriteDateUseDateFormat,
-                SerializerFeature.DisableCircularReferenceDetect);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat, SerializerFeature.DisableCircularReferenceDetect);
         fastJsonConfig.getSerializeConfig().put(Treex.class, new TreexObjectSerializer());
 
         String jsonString = JSON.toJSONString(tree, fastJsonConfig.getSerializeConfig());

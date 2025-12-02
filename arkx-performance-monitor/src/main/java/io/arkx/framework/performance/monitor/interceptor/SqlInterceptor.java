@@ -1,8 +1,9 @@
 package io.arkx.framework.performance.monitor.interceptor;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Nobody
@@ -14,13 +15,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SqlInterceptor {
 
-	@Bean
-	public static DataSourcePostProcessor dataSourcePostProcessor() {
-		return new DataSourcePostProcessor();
-	}
+    @Bean
+    public static DataSourcePostProcessor dataSourcePostProcessor() {
+        return new DataSourcePostProcessor();
+    }
 
-	@Bean
-	public DataSourceProxyFactory dataSourceProxyFactory() {
-		return new DataSourceProxyFactory();
-	}
+    @Bean
+    public DataSourceProxyFactory dataSourceProxyFactory() {
+        return new DataSourceProxyFactory();
+    }
 }

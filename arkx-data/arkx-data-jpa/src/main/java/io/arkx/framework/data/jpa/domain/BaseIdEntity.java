@@ -1,16 +1,18 @@
 package io.arkx.framework.data.jpa.domain;
 
-import io.arkx.framework.data.jpa.util.SnowflakeGenerator;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Transient;
+import java.io.Serializable;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.util.ClassUtils;
 
-import java.io.Serializable;
+import io.arkx.framework.data.jpa.util.SnowflakeGenerator;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 
 /**
  * 基础实体
@@ -21,7 +23,7 @@ import java.io.Serializable;
 public abstract class BaseIdEntity<PK extends Serializable> implements Persistable<PK> {
 
     @Id
-    @GenericGenerator(name="snowflake",strategy = SnowflakeGenerator.TYPE)
+    @GenericGenerator(name = "snowflake", strategy = SnowflakeGenerator.TYPE)
     @GeneratedValue(generator = "snowflake")
     private PK id;
 

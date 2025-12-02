@@ -1,10 +1,12 @@
 package io.arkx.framework.data.mybatis.pro.core.consts;
 
-import io.arkx.framework.data.mybatis.pro.base.typehandler.EnumTypeHandler;
-import lombok.Data;
+import static io.arkx.framework.data.mybatis.pro.core.consts.MyBatisProProperties.DEFAULT_MYBATIS_PRO_PREFIX;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import static io.arkx.framework.data.mybatis.pro.core.consts.MyBatisProProperties.DEFAULT_MYBATIS_PRO_PREFIX;
+import io.arkx.framework.data.mybatis.pro.base.typehandler.EnumTypeHandler;
+
+import lombok.Data;
 
 /**
  * mybatis-pro的配置信息
@@ -45,7 +47,8 @@ public class MyBatisProProperties {
     private boolean enableLogicalDelete;
 
     /**
-     * 逻辑删除的方式：backup，update；backup：物理删除 + 备份；update：删除动作实际上是执行update操作，将状态位修改成为无效状态，默认是backup方式
+     * 逻辑删除的方式：backup，update；backup：物理删除 +
+     * 备份；update：删除动作实际上是执行update操作，将状态位修改成为无效状态，默认是backup方式
      */
     private LogicalDeleteType logicalDeleteType = LogicalDeleteType.BACKUP;
 
@@ -60,12 +63,14 @@ public class MyBatisProProperties {
     private String logicalDeleteColumn = LOGICAL_DELETE_STATUS_COLUMN;
 
     /**
-     * 逻辑删除数据有效状态，单表查询时会在sql的where条件上自动加上[AND ${logicalDeleteColumn} = ${logicalDeleteActive}]
+     * 逻辑删除数据有效状态，单表查询时会在sql的where条件上自动加上[AND ${logicalDeleteColumn} =
+     * ${logicalDeleteActive}]
      */
     private Integer logicalDeleteActive = LOGICAL_DELETE_STATUS_ACTIVE;
 
     /**
-     * 逻辑删除数据删除状态，进行逻辑删除时，实际上执行的是[update set ${logicalDeleteColumn} = ${logicalDeleteInActive}]
+     * 逻辑删除数据删除状态，进行逻辑删除时，实际上执行的是[update set ${logicalDeleteColumn} =
+     * ${logicalDeleteInActive}]
      */
     private Integer logicalDeleteInActive = LOGICAL_DELETE_STATUS_IN_ACTIVE;
 }

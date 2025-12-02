@@ -9,11 +9,9 @@ package org.ark.framework.orm.util;
  */
 
 /**
- * 雪花ID生成器
- * 基于Twitter的Snowflake算法实现分布式唯一ID生成
+ * 雪花ID生成器 基于Twitter的Snowflake算法实现分布式唯一ID生成
  *
- * ID结构：
- * 1位符号位(固定为0) + 41位时间戳 + 10位机器ID + 12位序列号
+ * ID结构： 1位符号位(固定为0) + 41位时间戳 + 10位机器ID + 12位序列号
  *
  * @author Zhoulanzhen
  * @date 2025/1/18
@@ -50,7 +48,9 @@ public class SnowflakeIdGenerator {
 
     /**
      * 私有构造函数
-     * @param machineId 机器ID (0-1023)
+     *
+     * @param machineId
+     *            机器ID (0-1023)
      */
     private SnowflakeIdGenerator(long machineId) {
         if (machineId < 0 || machineId > MAX_MACHINE_ID) {
@@ -61,6 +61,7 @@ public class SnowflakeIdGenerator {
 
     /**
      * 获取单例实例
+     *
      * @return SnowflakeIdGenerator实例
      */
     public static SnowflakeIdGenerator getInstance() {
@@ -78,7 +79,9 @@ public class SnowflakeIdGenerator {
 
     /**
      * 获取指定机器ID的实例
-     * @param machineId 机器ID
+     *
+     * @param machineId
+     *            机器ID
      * @return SnowflakeIdGenerator实例
      */
     public static SnowflakeIdGenerator getInstance(long machineId) {
@@ -87,6 +90,7 @@ public class SnowflakeIdGenerator {
 
     /**
      * 生成下一个ID
+     *
      * @return 雪花ID
      */
     public synchronized long nextId() {
@@ -112,13 +116,12 @@ public class SnowflakeIdGenerator {
         lastTimestamp = currentTimestamp;
 
         // 组装ID
-        return ((currentTimestamp - START_TIMESTAMP) << TIMESTAMP_SHIFT)
-                | (machineId << MACHINE_SHIFT)
-                | sequence;
+        return ((currentTimestamp - START_TIMESTAMP) << TIMESTAMP_SHIFT) | (machineId << MACHINE_SHIFT) | sequence;
     }
 
     /**
      * 获取当前时间戳
+     *
      * @return 当前时间戳
      */
     private long getCurrentTimestamp() {
@@ -127,7 +130,9 @@ public class SnowflakeIdGenerator {
 
     /**
      * 等待下一毫秒
-     * @param lastTimestamp 上次时间戳
+     *
+     * @param lastTimestamp
+     *            上次时间戳
      * @return 下一毫秒时间戳
      */
     private long waitNextMillis(long lastTimestamp) {
@@ -140,7 +145,9 @@ public class SnowflakeIdGenerator {
 
     /**
      * 解析雪花ID
-     * @param id 雪花ID
+     *
+     * @param id
+     *            雪花ID
      * @return ID信息
      */
     public static IdInfo parseId(long id) {
@@ -179,8 +186,7 @@ public class SnowflakeIdGenerator {
 
         @Override
         public String toString() {
-            return String.format("IdInfo{timestamp=%d, machineId=%d, sequence=%d}",
-                    timestamp, machineId, sequence);
+            return String.format("IdInfo{timestamp=%d, machineId=%d, sequence=%d}", timestamp, machineId, sequence);
         }
     }
 }

@@ -1,15 +1,16 @@
 package io.arkx.framework.log;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
 
 /**
  */
@@ -34,7 +35,7 @@ public class LogBackConfigLoader {
 
     /**
      * 加载外部的logback配置文件
-     * 
+     *
      * @param externalConfigFileLocation
      *            配置文件路径
      * @throws IOException

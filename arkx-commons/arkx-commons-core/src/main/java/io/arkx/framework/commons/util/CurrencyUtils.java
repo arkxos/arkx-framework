@@ -59,13 +59,15 @@ public class CurrencyUtils extends org.apache.commons.lang3.math.NumberUtils {
         return fen.divide(new BigDecimal(100), 2, RoundingMode.HALF_UP).doubleValue();
     }
 
-
     /**
      * 对数字进行四舍五入，保留2位小数
      *
-     * @param number   要四舍五入的数字
-     * @param decimal  保留的小数点数
-     * @param rounding 是否四舍五入
+     * @param number
+     *            要四舍五入的数字
+     * @param decimal
+     *            保留的小数点数
+     * @param rounding
+     *            是否四舍五入
      * @return
      * @author
      * @version 1.00.00
@@ -106,46 +108,44 @@ public class CurrencyUtils extends org.apache.commons.lang3.math.NumberUtils {
     /**
      * 将数字转换成以万为单位或者以亿为单位，因为在前端数字太大显示有问题
      *
-     * @param amount 报销金额
-     * @return 120.00
-     * 1816.00亿
-     * 122.21万
-     * 1.29亿
+     * @param amount
+     *            报销金额
+     * @return 120.00 1816.00亿 122.21万 1.29亿
      */
     public static String formatAmountCny(double amount) {
-        //最终返回的结果值
+        // 最终返回的结果值
         String result = String.valueOf(amount);
-        //四舍五入后的值
+        // 四舍五入后的值
         double value = 0;
-        //转换后的值
+        // 转换后的值
         double tempValue = 0;
-        //余数
+        // 余数
         double remainder = 0;
 
-        //金额大于1百万小于1亿
+        // 金额大于1百万小于1亿
         if (amount > MILLIONS && amount < BILLION) {
             tempValue = amount / MILLION;
             remainder = amount % MILLION;
 
-            //余数小于5000则不进行四舍五入
+            // 余数小于5000则不进行四舍五入
             if (remainder < (MILLION / DEFAULT_DECIMAL)) {
                 value = formatNumber(tempValue, DEFAULT_DECIMAL, false);
             } else {
                 value = formatNumber(tempValue, DEFAULT_DECIMAL, true);
             }
-            //如果值刚好是10000万，则要变成1亿
+            // 如果值刚好是10000万，则要变成1亿
             if (value == MILLION) {
                 result = zeroFill(value / MILLION) + BILLION_UNIT;
             } else {
                 result = zeroFill(value) + MILLION_UNIT;
             }
         }
-        //金额大于1亿
+        // 金额大于1亿
         else if (amount > BILLION) {
             tempValue = amount / BILLION;
             remainder = amount % BILLION;
 
-            //余数小于50000000则不进行四舍五入
+            // 余数小于50000000则不进行四舍五入
             if (remainder < (BILLION / DEFAULT_DECIMAL)) {
                 value = formatNumber(tempValue, DEFAULT_DECIMAL, false);
             } else {
@@ -169,7 +169,7 @@ public class CurrencyUtils extends org.apache.commons.lang3.math.NumberUtils {
     public static void main(String[] args) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         System.out.println(currencyFormat.format(222222222222L));
-        //554,545.4544;
+        // 554,545.4544;
         System.out.println(yuan2fen(120.445));
         System.out.println(formatAmountCny(1200.35));
         System.out.println(formatAmountCny(12000.35));

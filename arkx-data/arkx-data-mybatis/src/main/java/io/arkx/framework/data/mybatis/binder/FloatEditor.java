@@ -15,4 +15,4 @@ public class FloatEditor extends PropertiesEditor {
     public String getAsText() {
         return getValue().toString();
     }
-}  
+}

@@ -12,10 +12,10 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.TYPE })
+@Target({java.lang.annotation.ElementType.TYPE})
 public @interface FixedCategory {
-	
-	String name() default "";
 
-	String code();
+    String name() default "";
+
+    String code();
 }

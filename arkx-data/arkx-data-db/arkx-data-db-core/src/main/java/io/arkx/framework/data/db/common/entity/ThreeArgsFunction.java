@@ -15,12 +15,12 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface ThreeArgsFunction<U, V, W, R> {
 
-  R apply(U var1, V var2, W var3);
+    R apply(U var1, V var2, W var3);
 
-  default <T> ThreeArgsFunction<U, V, W, T> andThen(Function<? super R, ? extends T> after) {
-    Objects.requireNonNull(after);
-    return (u, v, w) -> {
-      return after.apply(this.apply(u, v, w));
-    };
-  }
+    default <T> ThreeArgsFunction<U, V, W, T> andThen(Function<? super R, ? extends T> after) {
+        Objects.requireNonNull(after);
+        return (u, v, w) -> {
+            return after.apply(this.apply(u, v, w));
+        };
+    }
 }

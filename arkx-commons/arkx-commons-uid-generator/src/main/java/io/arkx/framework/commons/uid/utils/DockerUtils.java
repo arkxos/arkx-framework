@@ -84,7 +84,8 @@ public abstract class DockerUtils {
         DOCKER_HOST = System.getenv(ENV_KEY_HOST);
         DOCKER_PORT = System.getenv(ENV_KEY_PORT);
 
-        // not found from 'JPAAS_HTTP_PORT', then try to find from 'JPAAS_HOST_PORT_8080'
+        // not found from 'JPAAS_HTTP_PORT', then try to find from
+        // 'JPAAS_HOST_PORT_8080'
         if (StringUtils.isBlank(DOCKER_PORT)) {
             DOCKER_PORT = System.getenv(ENV_KEY_PORT_ORIGINAL);
         }
@@ -102,7 +103,8 @@ public abstract class DockerUtils {
 
         } else {
             LOGGER.error("Missing host or port from env for Docker. host:{}, port:{}", DOCKER_HOST, DOCKER_PORT);
-            throw new RuntimeException("Missing host or port from env for Docker. host:" + DOCKER_HOST + ", port:" + DOCKER_PORT);
+            throw new RuntimeException(
+                    "Missing host or port from env for Docker. host:" + DOCKER_HOST + ", port:" + DOCKER_PORT);
         }
     }
 

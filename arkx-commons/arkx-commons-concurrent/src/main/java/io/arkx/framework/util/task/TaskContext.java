@@ -1,8 +1,9 @@
 package io.arkx.framework.util.task;
 
-import com.tuples.Tuple;
 import io.arkx.framework.util.task.callback.TaskListener;
 import io.arkx.framework.util.task.exception.ExecutionException;
+
+import com.tuples.Tuple;
 
 public final class TaskContext {
 
@@ -57,7 +58,7 @@ public final class TaskContext {
 
     public void onSuccess(Object... objs) {
         if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.SUCCESS)
-            && task.getTaskListeners() != null) {
+                && task.getTaskListeners() != null) {
             this.toResult(objs);
             for (TaskListener listener : task.getTaskListeners()) {
                 listener.onExecuteFinish(this, null);
@@ -70,8 +71,7 @@ public final class TaskContext {
     }
 
     public void onError(Exception error) {
-        if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.ERROR)
-            && task.getTaskListeners() != null) {
+        if (((AbstractTask) task).setStatus(TaskStatus.RUNNING, TaskStatus.ERROR) && task.getTaskListeners() != null) {
             for (TaskListener listener : task.getTaskListeners()) {
                 listener.onExecuteFinish(null, error);
             }
@@ -102,10 +102,8 @@ public final class TaskContext {
         return this.result;
     }
 
-
     public Group group() {
         return this.group;
     }
-
 
 }

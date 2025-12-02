@@ -1,10 +1,10 @@
 package io.arkx.framework.avatarmq.netty;
 
-import org.apache.commons.pool.impl.GenericObjectPool;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import org.apache.commons.pool.impl.GenericObjectPool;
 
 /**
  * @filename:MessageConnectPool.java
@@ -34,7 +34,8 @@ public class MessageConnectPool extends GenericObjectPool<MessageConnectFactory>
     private MessageConnectPool() {
         try {
             messageConnectConfigProperties = new Properties();
-			InputStream inputStream = MessageConnectPool.class.getClassLoader().getResourceAsStream(configPropertiesString);
+            InputStream inputStream = MessageConnectPool.class.getClassLoader()
+                    .getResourceAsStream(configPropertiesString);
             messageConnectConfigProperties.load(inputStream);
             inputStream.close();
 
@@ -49,7 +50,8 @@ public class MessageConnectPool extends GenericObjectPool<MessageConnectFactory>
         int maxWait = Integer.parseInt(messageConnectConfigProperties.getProperty("maxWait"));
         int sessionTimeOut = Integer.parseInt(messageConnectConfigProperties.getProperty("sessionTimeOut"));
 
-        System.out.printf("MessageConnectPool[maxActive=%d,minIdle=%d,maxIdle=%d,maxWait=%d,sessionTimeOut=%d]\n", maxActive, minIdle, maxIdle, maxWait, sessionTimeOut);
+        System.out.printf("MessageConnectPool[maxActive=%d,minIdle=%d,maxIdle=%d,maxWait=%d,sessionTimeOut=%d]\n",
+                maxActive, minIdle, maxIdle, maxWait, sessionTimeOut);
 
         this.setMaxActive(maxActive);
         this.setMaxIdle(maxIdle);
@@ -70,7 +72,8 @@ public class MessageConnectPool extends GenericObjectPool<MessageConnectFactory>
         try {
             return (MessageConnectFactory) pool.borrowObject();
         } catch (Exception e) {
-            System.out.printf("get message connection throw the error from message connection pool, error message is %s\n",
+            System.out.printf(
+                    "get message connection throw the error from message connection pool, error message is %s\n",
                     e.getMessage());
         }
         return null;

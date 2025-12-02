@@ -1,27 +1,28 @@
 package io.arkx.framework.data.fastjson;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.JSONSerializer;
-import com.alibaba.fastjson.serializer.ObjectSerializer;
-import com.alibaba.fastjson.serializer.SerializeWriter;
-import io.arkx.framework.commons.collection.Mapx;
-import io.arkx.framework.commons.collection.tree.TreeNode;
-import io.arkx.framework.commons.collection.tree.Treex;
-import io.arkx.framework.commons.util.lang.ClassUtil;
-
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.arkx.framework.commons.collection.Mapx;
+import io.arkx.framework.commons.collection.tree.TreeNode;
+import io.arkx.framework.commons.collection.tree.Treex;
+import io.arkx.framework.commons.util.lang.ClassUtil;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.alibaba.fastjson.serializer.ObjectSerializer;
+import com.alibaba.fastjson.serializer.SerializeWriter;
+
 public class TreexObjectSerializer implements ObjectSerializer {
 
     @Override
     public void write(JSONSerializer serializer, //
-                      Object object, //
-                      Object fieldName, //
-                      Type fieldType, //
-                      int features) throws IOException {
+            Object object, //
+            Object fieldName, //
+            Type fieldType, //
+            int features) throws IOException {
         SerializeWriter out = serializer.out;
 
         if (object == null) {
@@ -34,7 +35,7 @@ public class TreexObjectSerializer implements ObjectSerializer {
         boolean isWarpTreeNode = tree.isWarpTreeNode();
         String jsonString = "";
         if (isWarpTreeNode) {
-        	 jsonString = JSON.toJSONString(mapedData);
+            jsonString = JSON.toJSONString(mapedData);
         } else {
             jsonString = JSON.toJSONString(mapedData.get("children"));
         }

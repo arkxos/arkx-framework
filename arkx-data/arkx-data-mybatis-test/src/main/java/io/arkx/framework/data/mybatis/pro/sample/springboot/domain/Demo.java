@@ -1,8 +1,8 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.domain;
 
-import lombok.Data;
-
 import java.util.Date;
+
+import lombok.Data;
 
 /**
  * @author w.dehi.2021-12-20

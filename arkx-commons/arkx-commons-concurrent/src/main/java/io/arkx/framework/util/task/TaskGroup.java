@@ -1,9 +1,5 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.execute.BaseTaskExecutor;
-import io.arkx.framework.util.task.util.Assert;
-import io.arkx.framework.util.task.util.Utils;
-
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +7,10 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import io.arkx.framework.util.task.execute.BaseTaskExecutor;
+import io.arkx.framework.util.task.util.Assert;
+import io.arkx.framework.util.task.util.Utils;
 
 // 非线程安全
 // 只能在同一线程添加任务，以及在同一线程调用 await 方法
@@ -46,11 +46,14 @@ public final class TaskGroup {
     /**
      * 等待任务组中的所有任务执行完毕
      * <p>
-     *     该方法会阻塞当前线程，直到任务组中的所有任务执行完毕
-     *     该方法只能在同一线程中调用
+     * 该方法会阻塞当前线程，直到任务组中的所有任务执行完毕 该方法只能在同一线程中调用
      * </p>
-     * <p>之前该方法使用死循环实现，这有可能造成阻塞线程永远无法停止</p>
-     * <p>所以在新版本中放弃死循环的阻塞方式，改为使用 {@link Condition} 的方式实现</p>
+     * <p>
+     * 之前该方法使用死循环实现，这有可能造成阻塞线程永远无法停止
+     * </p>
+     * <p>
+     * 所以在新版本中放弃死循环的阻塞方式，改为使用 {@link Condition} 的方式实现
+     * </p>
      */
     public void await() {
         lock.lock();
@@ -168,7 +171,7 @@ public final class TaskGroup {
                 this.group.runningTaskQueue.remove(this.task);
                 this.group.taskCount.decrementAndGet();
             }
-            // 尝试将任务数设置为 0，如果设置成功，然后尝试唤醒等待的线程    
+            // 尝试将任务数设置为 0，如果设置成功，然后尝试唤醒等待的线程
             if (this.group.taskCount.compareAndSet(0, 0)) {
                 this.group.lock.lock();
                 try {

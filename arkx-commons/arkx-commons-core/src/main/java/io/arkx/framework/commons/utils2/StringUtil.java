@@ -1,19 +1,5 @@
 package io.arkx.framework.commons.utils2;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.convert.Convert;
-import cn.hutool.core.lang.Validator;
-import cn.hutool.core.util.StrUtil;
-import io.arkx.framework.commons.util.EncodeUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import nl.basjes.parse.useragent.UserAgent;
-import nl.basjes.parse.useragent.UserAgentAnalyzer;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.AntPathMatcher;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -25,6 +11,22 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.AntPathMatcher;
+
+import io.arkx.framework.commons.util.EncodeUtils;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.StrUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import nl.basjes.parse.useragent.UserAgent;
+import nl.basjes.parse.useragent.UserAgentAnalyzer;
 
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
@@ -41,17 +43,14 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     public static final String CommaSeparator = ",";
     private static final String UNKNOWN = "unknown";
 
-    private static final UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer
-            .newBuilder()
-            .hideMatcherLoadStats()
-            .withCache(10000)
-            .withField(UserAgent.AGENT_NAME_VERSION)
-            .build();
+    private static final UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer.newBuilder().hideMatcherLoadStats()
+            .withCache(10000).withField(UserAgent.AGENT_NAME_VERSION).build();
 
     /**
      * 获取参数不为空值
      *
-     * @param str defaultValue 要判断的value
+     * @param str
+     *            defaultValue 要判断的value
      * @return value 返回值
      */
     public static String blankToDefault(String str, String defaultValue) {
@@ -90,8 +89,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 转换为Boolean类型
-     * 'true', 'on', 'y', 't', 'yes' or '1' (case insensitive) will return true. Otherwise, false is returned.
+     * 转换为Boolean类型 'true', 'on', 'y', 't', 'yes' or '1' (case insensitive) will
+     * return true. Otherwise, false is returned.
      */
     public static Boolean toBoolean(final Object val) {
         if (val == null) {
@@ -100,10 +99,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         return BooleanUtils.toBoolean(val.toString()) || "1".equals(val.toString());
     }
 
-
     /**
-     * 如果对象为空，则使用defaultVal值
-     * see: ObjectUtils.toString(obj, defaultVal)
+     * 如果对象为空，则使用defaultVal值 see: ObjectUtils.toString(obj, defaultVal)
      *
      * @param obj
      * @param defaultVal
@@ -116,8 +113,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 是否包含字符串
      *
-     * @param str  验证字符串
-     * @param strs 字符串组
+     * @param str
+     *            验证字符串
+     * @param strs
+     *            字符串组
      * @return 包含返回true
      */
     public static boolean inString(String str, String... strs) {
@@ -169,8 +168,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 缩略字符串（不区分中英文字符）
      *
-     * @param str    目标字符串
-     * @param length 截取长度
+     * @param str
+     *            目标字符串
+     * @param length
+     *            截取长度
      * @return
      */
     public static String ellipsis(String str, int length) {
@@ -241,9 +242,13 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * url追加参数
      *
-     * @param url   传入的url ex："http://exp.kunnr.com/so/index.html?kunnrId=16&userProfile=16#/app/home"
-     * @param name  参数名
-     * @param value 参数值
+     * @param url
+     *            传入的url
+     *            ex："http://exp.kunnr.com/so/index.html?kunnrId=16&userProfile=16#/app/home"
+     * @param name
+     *            参数名
+     * @param value
+     *            参数值
      * @return
      * @author: xg.chen
      * @date:2016年9月2日
@@ -270,10 +275,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         return url;
     }
 
-
     /**
-     * 驼峰转下划线
-     * createTime > create_time
+     * 驼峰转下划线 createTime > create_time
      *
      * @param param
      * @return
@@ -301,13 +304,12 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 下划线转驼峰
-     * create_time > createTime
+     * 下划线转驼峰 create_time > createTime
      *
      * @param param
      * @return underlineToCamel("hello_world ") == "helloWorld"
-     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
-     * toUnderScoreCase("helloWorld") = "hello_world"
+     *         toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     *         toUnderScoreCase("helloWorld") = "hello_world"
      */
     public static String underlineToCamel(String param) {
         if (param == null || "".equals(param.trim())) {
@@ -338,8 +340,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
      * 驼峰命名法工具
      *
      * @return toCamelCase(" hello_world ") == "helloWorld"
-     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
-     * toUnderScoreCase("helloWorld") = "hello_world"
+     *         toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     *         toUnderScoreCase("helloWorld") = "hello_world"
      */
     public static String toCapitalizeCamelCase(String s) {
         if (s == null) {
@@ -353,8 +355,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
      * 驼峰命名法工具
      *
      * @return toCamelCase(" hello_world ") == "helloWorld"
-     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
-     * toUnderScoreCase("helloWorld") = "hello_world"
+     *         toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     *         toUnderScoreCase("helloWorld") = "hello_world"
      */
     public static String toUnderScoreCase(String s) {
         if (s == null) {
@@ -390,7 +392,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 格式化存储单位
      *
-     * @param size byte 字节
+     * @param size
+     *            byte 字节
      * @return
      */
     public static String formatBytes(long size) {
@@ -459,19 +462,11 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 检测是否未手机号
-     * 中国电信号段
-     * 133、149、153、173、177、180、181、189、199
-     * 中国联通号段
-     * 130、131、132、145、155、156、166、175、176、185、186
-     * 中国移动号段
+     * 检测是否未手机号 中国电信号段 133、149、153、173、177、180、181、189、199 中国联通号段
+     * 130、131、132、145、155、156、166、175、176、185、186 中国移动号段
      * 134(0-8)、135、136、137、138、139、147、150、151、152、157、158、159、178、182、183、184、187、188、198
-     * 其他号段
-     * 14号段以前为上网卡专属号段，如中国联通的是145，中国移动的是147等等。
-     * 虚拟运营商
-     * 电信：1700、1701、1702
-     * 移动：1703、1705、1706
-     * 联通：1704、1707、1708、1709、171
+     * 其他号段 14号段以前为上网卡专属号段，如中国联通的是145，中国移动的是147等等。 虚拟运营商 电信：1700、1701、1702
+     * 移动：1703、1705、1706 联通：1704、1707、1708、1709、171
      *
      * @param mobile
      * @return
@@ -497,7 +492,6 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         String regex = "\\w+@\\w+\\.[a-z]+(\\.[a-z]+)?";
         return Pattern.matches(regex, email);
     }
-
 
     /**
      * 检测域名
@@ -542,9 +536,7 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 校验银行卡卡号
-     * 校验过程：
-     * 1、从卡号最后一位数字开始，逆向将奇数位(1、3、5等等)相加。
+     * 校验银行卡卡号 校验过程： 1、从卡号最后一位数字开始，逆向将奇数位(1、3、5等等)相加。
      * 2、从卡号最后一位数字开始，逆向将偶数位数字，先乘以2（如果乘积为两位数，将个位十位数字相加，即将其减去9），再求和。
      * 3、将奇数位总和加上偶数位总和，结果应该可以被10整除。
      */
@@ -569,8 +561,9 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
      * @return
      */
     public static char getBankCardCheckCode(String nonCheckCodeBankCard) {
-        if (nonCheckCodeBankCard == null || nonCheckCodeBankCard.trim().length() == 0 || !nonCheckCodeBankCard.matches("\\d+")) {
-            //如果传的不是数据返回N
+        if (nonCheckCodeBankCard == null || nonCheckCodeBankCard.trim().length() == 0
+                || !nonCheckCodeBankCard.matches("\\d+")) {
+            // 如果传的不是数据返回N
             return 'N';
         }
         char[] chs = nonCheckCodeBankCard.trim().toCharArray();
@@ -586,7 +579,6 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         return (luhmSum % 10 == 0) ? '0' : (char) ((10 - luhmSum % 10) + '0');
     }
 
-
     /**
      * 处理非法字符
      */
@@ -598,9 +590,14 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         ret.add(new Object[]{"eval\\((.*?)\\)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
         ret.add(new Object[]{"expression\\((.*?)\\)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
         ret.add(new Object[]{"(javascript:|vbscript:|view-source:)*", Pattern.CASE_INSENSITIVE});
-        ret.add(new Object[]{"<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
-        ret.add(new Object[]{"(window\\.location|window\\.|\\.location|document\\.cookie|document\\.|alert\\(.*?\\)|window\\.open\\()*", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
-        ret.add(new Object[]{"<+\\s*\\w*\\s*(oncontrolselect|oncopy|oncut|ondataavailable|ondatasetchanged|ondatasetcomplete|ondblclick|ondeactivate|ondrag|ondragend|ondragenter|ondragleave|ondragover|ondragstart|ondrop|onerror=|onerroupdate|onfilterchange|onfinish|onfocus|onfocusin|onfocusout|onhelp|onkeydown|onkeypress|onkeyup|onlayoutcomplete|onload|onlosecapture|onmousedown|onmouseenter|onmouseleave|onmousemove|onmousout|onmouseover|onmouseup|onmousewheel|onmove|onmoveend|onmovestart|onabort|onactivate|onafterprint|onafterupdate|onbefore|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onblur|onbounce|oncellchange|onchange|onclick|oncontextmenu|onpaste|onpropertychange|onreadystatuschange|onreset|onresize|onresizend|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onselect|onselectionchange|onselectstart|onstart|onstop|onsubmit|onunload)+\\s*=+", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
+        ret.add(new Object[]{"<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
+        ret.add(new Object[]{
+                "(window\\.location|window\\.|\\.location|document\\.cookie|document\\.|alert\\(.*?\\)|window\\.open\\()*",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
+        ret.add(new Object[]{
+                "<+\\s*\\w*\\s*(oncontrolselect|oncopy|oncut|ondataavailable|ondatasetchanged|ondatasetcomplete|ondblclick|ondeactivate|ondrag|ondragend|ondragenter|ondragleave|ondragover|ondragstart|ondrop|onerror=|onerroupdate|onfilterchange|onfinish|onfocus|onfocusin|onfocusout|onhelp|onkeydown|onkeypress|onkeyup|onlayoutcomplete|onload|onlosecapture|onmousedown|onmouseenter|onmouseleave|onmousemove|onmousout|onmouseover|onmouseup|onmousewheel|onmove|onmoveend|onmovestart|onabort|onactivate|onafterprint|onafterupdate|onbefore|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onblur|onbounce|oncellchange|onchange|onclick|oncontextmenu|onpaste|onpropertychange|onreadystatuschange|onreset|onresize|onresizend|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onselect|onselectionchange|onselectstart|onstart|onstop|onsubmit|onunload)+\\s*=+",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL});
         return ret;
     }
 
@@ -629,7 +626,7 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
 
     public static String stripXss(String value) {
         if (StringUtil.isBlank(value)) {
-           return "";
+            return "";
         }
 
         Matcher matcher = null;
@@ -680,7 +677,6 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         }
         return passwordStr;
     }
-
 
     /**
      * 将 Exception 转化为 String
@@ -748,10 +744,12 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         try {
             InetAddress candidateAddress = null;
             // 遍历所有的网络接口
-            for (Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces(); interfaces.hasMoreElements();) {
+            for (Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces(); interfaces
+                    .hasMoreElements();) {
                 NetworkInterface anInterface = interfaces.nextElement();
                 // 在所有的接口下再遍历IP
-                for (Enumeration<InetAddress> inetAddresses = anInterface.getInetAddresses(); inetAddresses.hasMoreElements();) {
+                for (Enumeration<InetAddress> inetAddresses = anInterface.getInetAddresses(); inetAddresses
+                        .hasMoreElements();) {
                     InetAddress inetAddr = inetAddresses.nextElement();
                     // 排除loopback类型地址
                     if (!inetAddr.isLoopbackAddress()) {
@@ -793,8 +791,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
      * 转义{}： format("this is \\{} for {}", "a", "b") -> this is {} for a<br>
      * 转义\： format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
      *
-     * @param template 文本模板，被替换的部分用 {} 表示
-     * @param params   参数值
+     * @param template
+     *            文本模板，被替换的部分用 {} 表示
+     * @param params
+     *            参数值
      * @return 格式化后的文本
      */
     public static String format(String template, Object... params) {
@@ -804,7 +804,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 是否为http(s)://开头
      *
-     * @param link 链接
+     * @param link
+     *            链接
      * @return 结果
      */
     public static boolean ishttp(String link) {
@@ -813,10 +814,14 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 字符串转list
      *
-     * @param str         字符串
-     * @param sep         分隔符
-     * @param filterBlank 过滤纯空白
-     * @param trim        去掉首尾空白
+     * @param str
+     *            字符串
+     * @param sep
+     *            分隔符
+     * @param filterBlank
+     *            过滤纯空白
+     * @param trim
+     *            去掉首尾空白
      * @return list集合
      */
     public static List<String> str2List(String str, String sep, boolean filterBlank, boolean trim) {
@@ -846,8 +851,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 查找指定字符串是否包含指定字符串列表中的任意一个字符串同时串忽略大小写
      *
-     * @param cs                  指定字符串
-     * @param searchCharSequences 需要检查的字符串数组
+     * @param cs
+     *            指定字符串
+     * @param searchCharSequences
+     *            需要检查的字符串数组
      * @return 是否包含任意一个字符串
      */
     public static boolean containsAnyIgnoreCase(CharSequence cs, CharSequence... searchCharSequences) {
@@ -857,8 +864,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 字符串转set
      *
-     * @param str 字符串
-     * @param sep 分隔符
+     * @param str
+     *            字符串
+     * @param sep
+     *            分隔符
      * @return set集合
      */
     public static Set<String> str2Set(String str, String sep) {
@@ -868,20 +877,23 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 是否包含字符串
      *
-     * @param str  验证字符串
-     * @param strs 字符串组
+     * @param str
+     *            验证字符串
+     * @param strs
+     *            字符串组
      * @return 包含返回true
      */
     public static boolean inStringIgnoreCase(String str, String... strs) {
         return StrUtil.equalsAnyIgnoreCase(str, strs);
     }
 
-
     /**
      * 查找指定字符串是否匹配指定字符串列表中的任意一个字符串
      *
-     * @param str  指定字符串
-     * @param strs 需要检查的字符串数组
+     * @param str
+     *            指定字符串
+     * @param strs
+     *            需要检查的字符串数组
      * @return 是否匹配
      */
     public static boolean matches(String str, List<String> strs) {
@@ -897,25 +909,25 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 判断url是否与规则配置:
-     * ? 表示单个字符;
-     * * 表示一层路径内的任意字符串，不可跨层级;
-     * ** 表示任意层路径;
+     * 判断url是否与规则配置: ? 表示单个字符; * 表示一层路径内的任意字符串，不可跨层级; ** 表示任意层路径;
      *
-     * @param pattern 匹配规则
-     * @param url     需要匹配的url
+     * @param pattern
+     *            匹配规则
+     * @param url
+     *            需要匹配的url
      */
     public static boolean isMatch(String pattern, String url) {
         AntPathMatcher matcher = new AntPathMatcher();
         return matcher.match(pattern, url);
     }
 
-
     /**
      * 数字左边补齐0，使之达到指定长度。注意，如果数字转换为字符串后，长度大于size，则只保留 最后size个字符。
      *
-     * @param num  数字对象
-     * @param size 字符串指定长度
+     * @param num
+     *            数字对象
+     * @param size
+     *            字符串指定长度
      * @return 返回数字的字符串格式，该字符串为指定长度。
      */
     public static String padl(final Number num, final int size) {
@@ -925,9 +937,12 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 字符串左补齐。如果原始字符串s长度大于size，则只保留最后size个字符。
      *
-     * @param s    原始字符串
-     * @param size 字符串指定长度
-     * @param c    用于补齐的字符
+     * @param s
+     *            原始字符串
+     * @param size
+     *            字符串指定长度
+     * @param c
+     *            用于补齐的字符
      * @return 返回指定长度的字符串，由原字符串左补齐或截取得到。
      */
     public static String padl(final String s, final int size, final char c) {
@@ -949,7 +964,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 切分字符串(分隔符默认逗号)
      *
-     * @param str 被切分的字符串
+     * @param str
+     *            被切分的字符串
      * @return 分割后的数据列表
      */
     public static List<String> splitList(String str) {
@@ -959,8 +975,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 切分字符串
      *
-     * @param str       被切分的字符串
-     * @param separator 分隔符
+     * @param str
+     *            被切分的字符串
+     * @param separator
+     *            分隔符
      * @return 分割后的数据列表
      */
     public static List<String> splitList(String str, String separator) {
@@ -970,8 +988,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 切分字符串自定义转换(分隔符默认逗号)
      *
-     * @param str    被切分的字符串
-     * @param mapper 自定义转换
+     * @param str
+     *            被切分的字符串
+     * @param mapper
+     *            自定义转换
      * @return 分割后的数据列表
      */
     public static <T> List<T> splitTo(String str, Function<? super Object, T> mapper) {
@@ -981,20 +1001,19 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     /**
      * 切分字符串自定义转换
      *
-     * @param str       被切分的字符串
-     * @param separator 分隔符
-     * @param mapper    自定义转换
+     * @param str
+     *            被切分的字符串
+     * @param separator
+     *            分隔符
+     * @param mapper
+     *            自定义转换
      * @return 分割后的数据列表
      */
     public static <T> List<T> splitTo(String str, String separator, Function<? super Object, T> mapper) {
         if (isBlank(str)) {
             return new ArrayList<>(0);
         }
-        return StrUtil.split(str, separator)
-                .stream()
-                .filter(Objects::nonNull)
-                .map(mapper)
-                .collect(Collectors.toList());
+        return StrUtil.split(str, separator).stream().filter(Objects::nonNull).map(mapper).collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
@@ -1003,47 +1022,49 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         System.out.println(StringUtil.matchDomain("qq.com"));
         System.out.println(StringUtil.matchIp("qq.com"));
         System.out.println(StringUtil.matchIp("192.168.0.1"));
-        /*System.out.println("test");
-        System.out.println(checkPassword("f0a2adfdf56241bf839d714f7f74f4d1"));
-        String value = null;
-        value = stripXss("<script language=text/javascript>alert(document.cookie);</script>");
-        System.out.println("type-1: '" + value + "'");
-
-        value = stripXss("<script src='' onerror='alert(document.cookie)'></script>");
-        System.out.println("type-2: '" + value + "'");
-
-        value = stripXss("</script>");
-        System.out.println("type-3: '" + value + "'");
-
-        value = stripXss(" eval(abc);");
-        System.out.println("type-4: '" + value + "'");
-
-        value = stripXss(" expression(abc);");
-        System.out.println("type-5: '" + value + "'");
-
-        value = stripXss("<img src='' onerror='alert(document.cookie);'></img>");
-        System.out.println("type-6: '" + value + "'");
-
-        value = stripXss("<img src='' onerror='alert(document.cookie);'/>");
-        System.out.println("type-7: '" + value + "'");
-
-        value = stripXss("<img src='' onerror='alert(document.cookie);'>");
-        System.out.println("type-8: '" + value + "'");
-
-        value = stripXss("<script language=text/javascript>alert(document.cookie);");
-        System.out.println("type-9: '" + value + "'");
-
-        value = stripXss("<script>window.location='url'");
-        System.out.println("type-10: '" + value + "'");
-
-        value = stripXss(" onload='alert(\"abc\");");
-        System.out.println("type-11: '" + value + "'");
-
-        value = stripXss("<img src=x<!--'<\"-->>");
-        System.out.println("type-12: '" + value + "'");
-
-        value = stripXss("<=img onstop=");
-        System.out.println("type-13: '" + value + "'");*/
+        /*
+         * System.out.println("test");
+         * System.out.println(checkPassword("f0a2adfdf56241bf839d714f7f74f4d1")); String
+         * value = null; value =
+         * stripXss("<script language=text/javascript>alert(document.cookie);</script>"
+         * ); System.out.println("type-1: '" + value + "'");
+         *
+         * value =
+         * stripXss("<script src='' onerror='alert(document.cookie)'></script>");
+         * System.out.println("type-2: '" + value + "'");
+         *
+         * value = stripXss("</script>"); System.out.println("type-3: '" + value + "'");
+         *
+         * value = stripXss(" eval(abc);"); System.out.println("type-4: '" + value +
+         * "'");
+         *
+         * value = stripXss(" expression(abc);"); System.out.println("type-5: '" + value
+         * + "'");
+         *
+         * value = stripXss("<img src='' onerror='alert(document.cookie);'></img>");
+         * System.out.println("type-6: '" + value + "'");
+         *
+         * value = stripXss("<img src='' onerror='alert(document.cookie);'/>");
+         * System.out.println("type-7: '" + value + "'");
+         *
+         * value = stripXss("<img src='' onerror='alert(document.cookie);'>");
+         * System.out.println("type-8: '" + value + "'");
+         *
+         * value = stripXss("<script language=text/javascript>alert(document.cookie);");
+         * System.out.println("type-9: '" + value + "'");
+         *
+         * value = stripXss("<script>window.location='url'");
+         * System.out.println("type-10: '" + value + "'");
+         *
+         * value = stripXss(" onload='alert(\"abc\");"); System.out.println("type-11: '"
+         * + value + "'");
+         *
+         * value = stripXss("<img src=x<!--'<\"-->>"); System.out.println("type-12: '" +
+         * value + "'");
+         *
+         * value = stripXss("<=img onstop="); System.out.println("type-13: '" + value +
+         * "'");
+         */
 
         // System.out.println(formatBytes(1222));
         // System.out.println(underlineToCamel("create_time"));

@@ -1,19 +1,21 @@
 package io.arkx.framework.encrypt.filter;
 
-import cn.hutool.core.io.IoUtil;
-import io.arkx.framework.commons.constants.Constants;
-import io.arkx.framework.encrypt.utils.EncryptUtils;
-import jakarta.servlet.ReadListener;
-import jakarta.servlet.ServletInputStream;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.springframework.http.MediaType;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+
+import org.springframework.http.MediaType;
+
+import io.arkx.framework.commons.constants.Constants;
+import io.arkx.framework.encrypt.utils.EncryptUtils;
+
+import cn.hutool.core.io.IoUtil;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 
 /**
  * 解密请求参数工具类
@@ -24,7 +26,8 @@ public class DecryptRequestBodyWrapper extends HttpServletRequestWrapper {
 
     private final byte[] body;
 
-    public DecryptRequestBodyWrapper(HttpServletRequest request, String privateKey, String headerFlag) throws IOException {
+    public DecryptRequestBodyWrapper(HttpServletRequest request, String privateKey, String headerFlag)
+            throws IOException {
         super(request);
         // 获取 AES 密码 采用 RSA 加密
         String headerRsa = request.getHeader(headerFlag);
@@ -44,7 +47,6 @@ public class DecryptRequestBodyWrapper extends HttpServletRequestWrapper {
         return new BufferedReader(new InputStreamReader(getInputStream()));
     }
 
-
     @Override
     public int getContentLength() {
         return body.length;
@@ -59,7 +61,6 @@ public class DecryptRequestBodyWrapper extends HttpServletRequestWrapper {
     public String getContentType() {
         return MediaType.APPLICATION_JSON_VALUE;
     }
-
 
     @Override
     public ServletInputStream getInputStream() {

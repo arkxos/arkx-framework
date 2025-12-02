@@ -6,4 +6,5 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @author w.dehai
  */
 @EnableConfigurationProperties(MyBatisProProperties.class)
-public class MyBatisProConfig {}
+public class MyBatisProConfig {
+}

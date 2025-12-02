@@ -1,7 +1,10 @@
 package io.arkx.framework.avatarmq.netty;
 
-import com.google.common.base.Preconditions;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import java.net.SocketAddress;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadFactory;
+
 import io.arkx.framework.avatarmq.core.CallBackInvoker;
 import io.arkx.framework.avatarmq.core.MessageSystemConfig;
 import io.arkx.framework.avatarmq.serialize.KryoCodecUtil;
@@ -12,10 +15,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
-import java.net.SocketAddress;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadFactory;
+import com.google.common.base.Preconditions;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * @filename:MessageConnectFactory.java
@@ -26,8 +27,8 @@ import java.util.concurrent.ThreadFactory;
  */
 public class MessageConnectFactory {
 
-	private static KryoCodecUtil util = null;//new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
-	
+    private static KryoCodecUtil util = null;// new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
+
     private SocketAddress remoteAddr = null;
     private ChannelInboundHandlerAdapter messageHandler = null;
     private Map<String, CallBackInvoker<Object>> callBackMap = new ConcurrentHashMap<>();
@@ -35,15 +36,13 @@ public class MessageConnectFactory {
     private long timeout = 10 * 1000;
     private boolean connected = false;
     private EventLoopGroup eventLoopGroup = null;
-    
+
     private Channel messageChannel = null;
     private DefaultEventExecutorGroup defaultEventExecutorGroup;
     private NettyClustersConfig nettyClustersConfig = new NettyClustersConfig();
 
-    private ThreadFactory threadFactory = new ThreadFactoryBuilder()
-            .setNameFormat("MessageConnectFactory-%d")
-            .setDaemon(true)
-            .build();
+    private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("MessageConnectFactory-%d")
+            .setDaemon(true).build();
 
     public MessageConnectFactory(String serverAddress) {
         String[] ipAddr = serverAddress.split(MessageSystemConfig.IpV4AddressDelimiter);
@@ -58,23 +57,22 @@ public class MessageConnectFactory {
 
     public void init() {
         try {
-            defaultEventExecutorGroup = new DefaultEventExecutorGroup(NettyClustersConfig.getWorkerThreads(), threadFactory);
+            defaultEventExecutorGroup = new DefaultEventExecutorGroup(NettyClustersConfig.getWorkerThreads(),
+                    threadFactory);
             eventLoopGroup = new NioEventLoopGroup();
             bootstrap = new Bootstrap();
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
                     .handler(new ChannelInitializer<SocketChannel>() {
-                    	@Override
+                        @Override
                         public void initChannel(SocketChannel channel) throws Exception {
                             channel.pipeline().addLast(defaultEventExecutorGroup);
                             channel.pipeline().addLast(new MessageObjectEncoder(util));
                             channel.pipeline().addLast(new MessageObjectDecoder(util));
                             channel.pipeline().addLast(messageHandler);
                         }
-                    })
-                    .option(ChannelOption.SO_SNDBUF, nettyClustersConfig.getClientSocketSndBufSize())
+                    }).option(ChannelOption.SO_SNDBUF, nettyClustersConfig.getClientSocketSndBufSize())
                     .option(ChannelOption.SO_RCVBUF, nettyClustersConfig.getClientSocketRcvBufSize())
-                    .option(ChannelOption.TCP_NODELAY, true)
-                    .option(ChannelOption.SO_KEEPALIVE, false);
+                    .option(ChannelOption.TCP_NODELAY, true).option(ChannelOption.SO_KEEPALIVE, false);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -88,7 +86,7 @@ public class MessageConnectFactory {
             ChannelFuture channelFuture = bootstrap.connect(this.remoteAddr).sync();
 
             channelFuture.addListener(new ChannelFutureListener() {
-            	@Override
+                @Override
                 public void operationComplete(ChannelFuture future) throws Exception {
                     Channel channel = future.channel();
                     messageChannel = channel;

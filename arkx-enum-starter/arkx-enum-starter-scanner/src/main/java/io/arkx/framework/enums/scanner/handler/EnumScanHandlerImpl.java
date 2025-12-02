@@ -1,16 +1,16 @@
 package io.arkx.framework.enums.scanner.handler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import io.arkx.framework.enums.core.enums.CodeEnum;
 import io.arkx.framework.enums.scanner.annotation.EnumScan;
 import io.arkx.framework.enums.scanner.cached.EnumCache;
 import io.arkx.framework.enums.scanner.context.ResourcesScanner;
 import io.arkx.framework.enums.scanner.model.CodeItem;
 import io.arkx.framework.enums.scanner.model.CodeTable;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author: zhuCan
@@ -29,7 +29,6 @@ public class EnumScanHandlerImpl implements EnumScanHandler {
      */
     private ResourcesScanner<Class<?>> resourcesScanner;
 
-
     public EnumScanHandlerImpl(EnumCache cache, ResourcesScanner<Class<?>> resourcesScanner) {
         this.cache = cache;
         this.resourcesScanner = resourcesScanner;
@@ -47,19 +46,20 @@ public class EnumScanHandlerImpl implements EnumScanHandler {
         classes.forEach(clazz -> {
             try {
                 // 过滤出 继承了CodeEnum 和 标记了EnumScan注解的枚举
-                if (CodeEnum.class.isAssignableFrom(clazz) && clazz.isEnum() && clazz.isAnnotationPresent(EnumScan.class)) {
+                if (CodeEnum.class.isAssignableFrom(clazz) && clazz.isEnum()
+                        && clazz.isAnnotationPresent(EnumScan.class)) {
                     // 枚举的所有实例
-                    List<CodeEnum> items = Arrays.stream(clazz.getEnumConstants())
-                            .map(item -> (CodeEnum) item)
+                    List<CodeEnum> items = Arrays.stream(clazz.getEnumConstants()).map(item -> (CodeEnum) item)
                             .collect(Collectors.toList());
 
-                    //获取默认值
+                    // 获取默认值
                     int defaultEnumCode = clazz.getAnnotation(EnumScan.class).defaultEnumCode();
 
                     // 填充数据
                     codeEnums.add(new CodeTable(clazz.getSimpleName(),
                             items.stream().map(CodeItem::new).collect(Collectors.toList()),
-                            items.stream().collect(Collectors.toMap(CodeEnum::code, i -> i, (m, n) -> m)).get(defaultEnumCode),
+                            items.stream().collect(Collectors.toMap(CodeEnum::code, i -> i, (m, n) -> m))
+                                    .get(defaultEnumCode),
                             clazz.getName()));
                 }
             } catch (Exception e) {
@@ -85,6 +85,5 @@ public class EnumScanHandlerImpl implements EnumScanHandler {
         }
         return read;
     }
-
 
 }

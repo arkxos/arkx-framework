@@ -23,7 +23,7 @@ public class CallBackInvoker<T> {
 
     public CallBackInvoker() {
     }
-    
+
     public void setReason(Throwable reason) {
         this.reason = reason;
         publish();
@@ -57,7 +57,7 @@ public class CallBackInvoker<T> {
             listener.onCallBack(messageResult);
         }
     }
-    
+
     public String getRequestId() {
         return requestId;
     }

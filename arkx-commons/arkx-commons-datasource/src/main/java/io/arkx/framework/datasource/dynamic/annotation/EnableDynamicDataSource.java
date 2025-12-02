@@ -16,18 +16,19 @@
 
 package io.arkx.framework.datasource.dynamic.annotation;
 
-import io.arkx.framework.datasource.dynamic.DynamicDataSourceAutoConfiguration;
+import java.lang.annotation.*;
+
 import org.springframework.context.annotation.Import;
 
-import java.lang.annotation.*;
+import io.arkx.framework.datasource.dynamic.DynamicDataSourceAutoConfiguration;
 
 /**
  * @author Lucky
  * @date 2019-05-18
- * <p>
- * 开启动态数据源
+ *       <p>
+ *       开启动态数据源
  */
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited

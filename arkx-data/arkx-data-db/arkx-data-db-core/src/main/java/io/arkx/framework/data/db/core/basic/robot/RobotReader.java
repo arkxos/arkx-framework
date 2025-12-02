@@ -13,12 +13,12 @@ import io.arkx.framework.data.db.core.basic.task.TaskResult;
 
 public abstract class RobotReader<R extends TaskResult> extends AbstractRobot<R> {
 
-  public abstract void startRead();
+    public abstract void startRead();
 
-  @Override
-  public void startWork() {
-    startRead();
-  }
+    @Override
+    public void startWork() {
+        startRead();
+    }
 
-  public abstract long getRemainingCount();
+    public abstract long getRemainingCount();
 }

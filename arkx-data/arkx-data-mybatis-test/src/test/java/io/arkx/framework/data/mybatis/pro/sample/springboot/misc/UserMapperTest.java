@@ -1,22 +1,25 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.misc;
 
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import com.ninja_squad.dbsetup.operation.Insert;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.ninja_squad.dbsetup.Operations.insertInto;
+import static com.ninja_squad.dbsetup.Operations.truncate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
-import java.util.List;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.ninja_squad.dbsetup.Operations.insertInto;
-import static com.ninja_squad.dbsetup.Operations.truncate;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.operation.Insert;
 
 /**
  * 描述：杂项测试
@@ -33,11 +36,7 @@ class UserMapperTest {
     @BeforeEach
     void init() {
         new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert insert = insertInto("smart_user")
-                .columns("name")
-                .values("w.dehai")
-                .values("Jaedong")
-                .build();
+        Insert insert = insertInto("smart_user").columns("name").values("w.dehai").values("Jaedong").build();
         new DbSetup(new DataSourceDestination(dataSource), insert).launch();
     }
 

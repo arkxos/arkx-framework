@@ -11,12 +11,12 @@ import java.lang.annotation.Target;
  * @date 2016年11月9日 上午11:09:54
  * @version V1.0
  */
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FastColumn {
 
-	int length() default -1;
+    int length() default -1;
 
-	String name() default "";
+    String name() default "";
 
 }

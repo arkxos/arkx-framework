@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface RecordTransformProvider {
 
-  String getTransformerName();
+    String getTransformerName();
 
-  Object[] doTransform(String schema, String table, List<String> fieldNames, Object[] recordValue);
+    Object[] doTransform(String schema, String table, List<String> fieldNames, Object[] recordValue);
 }

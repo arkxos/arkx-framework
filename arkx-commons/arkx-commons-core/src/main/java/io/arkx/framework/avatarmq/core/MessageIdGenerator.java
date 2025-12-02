@@ -30,10 +30,10 @@ public class MessageIdGenerator {
     public String generate() {
         String id = "";
         switch (strategy) {
-            case StrategyUUID:
+            case StrategyUUID :
                 id = UUID.randomUUID().toString();
                 break;
-            case StrategyRandomDigital:
+            case StrategyRandomDigital :
                 id = new BigInteger(130, secureRandom).toString(10);
                 break;
         }

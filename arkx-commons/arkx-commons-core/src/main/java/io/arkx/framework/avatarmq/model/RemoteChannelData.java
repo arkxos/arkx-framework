@@ -1,7 +1,8 @@
 package io.arkx.framework.avatarmq.model;
 
-import io.netty.channel.Channel;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+
+import io.netty.channel.Channel;
 
 /**
  * @filename:RemoteChannelData.java
@@ -42,8 +43,7 @@ public class RemoteChannelData {
         boolean result = false;
         if (obj != null && RemoteChannelData.class.isAssignableFrom(obj.getClass())) {
             RemoteChannelData info = (RemoteChannelData) obj;
-            result = new EqualsBuilder().append(clientId, info.getClientId())
-                    .isEquals();
+            result = new EqualsBuilder().append(clientId, info.getClientId()).isEquals();
         }
         return result;
     }

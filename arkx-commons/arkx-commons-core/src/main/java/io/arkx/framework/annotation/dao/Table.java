@@ -7,10 +7,10 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface Table {
-	/**
-	 * @return 表名
-	 */
-	String value();
+    /**
+     * @return 表名
+     */
+    String value();
 }

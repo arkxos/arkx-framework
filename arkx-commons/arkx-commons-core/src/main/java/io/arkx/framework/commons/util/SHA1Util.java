@@ -240,8 +240,9 @@ public class SHA1Util {
     }
 
     private static boolean sha1_vm_test() {
-        return hexcase ? hex_sha1("abc").equals("a9993e364706816aba3e25717850c26c9cd0d89d") : hex_sha1("abc").equals(
-                "a9993e364706816aba3e25717850c26c9cd0d89d");
+        return hexcase
+                ? hex_sha1("abc").equals("a9993e364706816aba3e25717850c26c9cd0d89d")
+                : hex_sha1("abc").equals("a9993e364706816aba3e25717850c26c9cd0d89d");
     }
 
     public static String str_hmac_sha1(String key, String data) {
@@ -296,13 +297,12 @@ public class SHA1Util {
     }
 
     public static void main(String args[]) {
-    	String string = "";
-    	for (int i = 0; i < 3000; i++) {
-    		string += "dddddddddddddddddddddddddddddddddddddddddddddd";
-    		string += "dddddddddddddddddddddddddddddddddddddddddddddd";
-    		string += "dddddddddddddddddddddddddddddddddddddddddddddd";
-		}
+        String string = "";
+        for (int i = 0; i < 3000; i++) {
+            string += "dddddddddddddddddddddddddddddddddddddddddddddd";
+            string += "dddddddddddddddddddddddddddddddddddddddddddddd";
+            string += "dddddddddddddddddddddddddddddddddddddddddddddd";
+        }
         System.out.println("admin的SHA1的值为：" + hex_sha1(string) + ",length=" + hex_sha1(string).length());
     }
 }
-

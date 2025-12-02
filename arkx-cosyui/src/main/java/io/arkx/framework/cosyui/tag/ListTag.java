@@ -1,6 +1,9 @@
 package io.arkx.framework.cosyui.tag;
 
-import com.google.common.base.Joiner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import io.arkx.framework.Constant;
 import io.arkx.framework.FrameworkPlugin;
 import io.arkx.framework.WebCurrent;
@@ -23,308 +26,306 @@ import io.arkx.framework.json.JSON;
 import io.arkx.framework.security.PrivCheck;
 import io.arkx.framework.security.exception.PrivException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.google.common.base.Joiner;
 
 /**
  * 列表循环标签，用于循环输出DataTable数据，有两种用法：<br>
  * 1、指定item和data属性，其中item的值作为变量名的前缀，data属性为一个DataTable变量的表达式。
  * 2、作为其他标签的内部循环器，这就要求外部循环器在上下文中设置两个变量：ZListItemNameKey（用于指定变量名前缀）和ZListDataNameKey（用于指定DataTable变量）
  * 注意：在循环体内可以获取到${i}用于表明循环了几次，${first}用来表明是不是第一次循环，${last}用来表明是否是最后一次循环
- * 
+ *
  */
 public class ListTag extends ArkTag implements IListTag, IBreakableTag {
-	public static final String ZListDataNameKey = "_Ark_ZList_Data";
-	public static final String ZListItemNameKey = "_Ark_ZList_Item";
-	String method;
-	String rest;
-	boolean page;
-	int size;
-	int rowIndex;
-	String id;
-	Object data;
-	String item;
-	int count;
-	int begin;
-	DataRow currentRow; // 当前数据行
-	DataTable dataTable;
+    public static final String ZListDataNameKey = "_Ark_ZList_Data";
+    public static final String ZListItemNameKey = "_Ark_ZList_Item";
+    String method;
+    String rest;
+    boolean page;
+    int size;
+    int rowIndex;
+    String id;
+    Object data;
+    String item;
+    int count;
+    int begin;
+    DataRow currentRow; // 当前数据行
+    DataTable dataTable;
 
-	@Override
-	public String getTagName() {
-		return "list";
-	}
+    @Override
+    public String getTagName() {
+        return "list";
+    }
 
-	@Override
-	public boolean isKeepTagSource() {
-		return true;
-	}
+    @Override
+    public boolean isKeepTagSource() {
+        return true;
+    }
 
-	@Override
-	public void afterCompile(TagCommand tc, TemplateExecutor te) {
-		String content = getTagBodySource();
-		content = StringUtil.rightTrim(content);
-		TemplateCompiler c = new TemplateCompiler(te.getManagerContext());
-		c.compileSource(content);
-		if (!tc.isHasBody()) {
-			tc.setHasBody(true);
-		}
-		tc.setCommands(c.getExecutor().getCommands());
-	}
+    @Override
+    public void afterCompile(TagCommand tc, TemplateExecutor te) {
+        String content = getTagBodySource();
+        content = StringUtil.rightTrim(content);
+        TemplateCompiler c = new TemplateCompiler(te.getManagerContext());
+        c.compileSource(content);
+        if (!tc.isHasBody()) {
+            tc.setHasBody(true);
+        }
+        tc.setCommands(c.getExecutor().getCommands());
+    }
 
-	@Override
-	public int doStartTag() throws TemplateRuntimeException {
-		try {
-			if (ObjectUtil.notEmpty(method)) {
-				IMethodLocator m = MethodLocatorUtil.find(method);
-				PrivCheck.check(m);
-				RequestData request = WebCurrent.getRequest();
-				ListAction la = new ListAction();
-				la.setParams(request);
-				la.setPage(page);
-				la.setMethod(method);
-				la.setID(id);
-				la.setPageSize(size);
-				la.setTag(this);
-				if (request != null) {
-					la.setQueryString(request.getQueryString());
-				}
-				if (page) {
-					la.setPageIndex(0);
-					if (StringUtil.isNotEmpty(la.getParam("PageIndex"))) {
-						la.setPageIndex(Integer.parseInt(la.getParam("PageIndex")) - 1);
-					}
-					if (la.getPageIndex() < 0) {
-						la.setPageIndex(0);
-					}
-				}
-				m.execute(la);
-				dataTable = la.getDataSource();
-				pageContext.setAttribute(id + Constant.ActionInPageContext, la);// 供PageBar标签使用
-			} else if (ObjectUtil.notEmpty(rest)) {
-				RequestData request = WebCurrent.getRequest();
-				
-				if(rest.indexOf("?") != -1) {
-					// name=John&Age=18&Age=18&Gender=3
-					String parentParamsStr = StringUtil.splitEx(rest, "?")[1];
-					Mapx<String, String> parentParams = StringUtil.splitToMapx(parentParamsStr, "&", "=");
-					DataRow dataRow = getParentCurrentDataRow();
-					List<String> newParams = new ArrayList<>();
-					for (Map.Entry<String,String> entry : parentParams.entrySet()) {
-						String paramValue = entry.getValue();
-						if(paramValue.startsWith("parent.")) {
-							String value = dataRow.getString(paramValue.replace("parent.", ""));
-							newParams.add(entry.getKey() + "=" + value);
-							request.put(entry.getKey(), value);
-						} else {
-							request.put(entry.getKey(), entry.getValue());
-						}
-					}
-					rest = StringUtil.splitEx(rest,"?")[0] + "?" + Joiner.on("&").join(newParams);
-					
-				}
-				JsonResult jsonResult = RestUtil.post(rest, request, DataTable.class);
-				if(!jsonResult.isSuccess()) {
-					throw new TemplateRuntimeException(jsonResult.getMessage());
-				}
-				DataTable dt = (DataTable)jsonResult.getData();
-				
-				ListAction la = new ListAction();
-				la.setParams(request);
-				la.setPage(page);
-				la.setMethod(method);
-				la.setRest(rest);
-				la.setID(id);
-				la.setPageSize(size);
-				la.setTag(this);
-				if (request != null) {
-					la.setQueryString(request.getQueryString());
-				}
-				if (page) {
-					la.setPageIndex(0);
-					if (StringUtil.isNotEmpty(la.getParam("PageIndex"))) {
-						la.setPageIndex(Integer.parseInt(la.getParam("PageIndex")) - 1);
-					}
-					if (la.getPageIndex() < 0) {
-						la.setPageIndex(0);
-					}
-				}
-				
-				la.bindData(dt);
-				
-				this.dataTable = la.getDataSource();
-				pageContext.setAttribute(id + Constant.ActionInPageContext, la);// 供PageBar标签使用
-			} else {
-				if (StringUtil.isEmpty(item)) {
-					item = pageContext.eval(ZListItemNameKey);
-				}
-				if (data != null) {
-					if (data instanceof DataTable) {
-						dataTable = (DataTable) data;
-					} else if(data instanceof String) {
-						dataTable = JSON.parseBean((String)this.data, DataTable.class);
-					} else {
-						throw new UIException(Lang.get("Framework.ZListDataAttributeMustBeDataTable"));
-					}
-				} else {
-					dataTable = (DataTable) pageContext.evalExpression("${" + ZListDataNameKey + "}");
-				}
-			}
-		} catch (PrivException e) {
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		begin = begin <= 0 ? 1 : begin;
-		count = count <= 0 ? Integer.MAX_VALUE : count;
-		if (begin > 0) {
-			rowIndex = begin - 1;
-		}
-		if (dataTable != null && dataTable.getRowCount() > 0 && rowIndex < dataTable.getRowCount()) {
-			if (dataTable.getDataColumn("_RowNo") == null) {
-				dataTable.insertColumn(new DataColumn("_RowNo", DataTypes.INTEGER));
-				for (int i = 0; i < dataTable.getRowCount(); i++) {
-					dataTable.set(i, "_RowNo", i + 1);
-				}
-			}
-			currentRow = dataTable.getDataRow(rowIndex++);
-			if (ObjectUtil.notEmpty(item)) {
-				context.addDataVariable(item, currentRow);
-			}
-			context.addDataVariable("i", rowIndex - begin + 1);
-			context.addDataVariable("first", true);
-			if (rowIndex == dataTable.getRowCount() - 1) {
-				context.addDataVariable("last", true);// 存在只有一条记录的情况
-			} else {
-				context.addDataVariable("last", false);
-			}
-			return EVAL_BODY_INCLUDE;
-		} else {
-			return SKIP_BODY;
-		}
-	}
-	
-	/**
-	 * 得到上级循环的当前行
-	 */
-	public DataRow getParentCurrentDataRow() {
-		AbstractTag p = this.getParent();
-		if (p instanceof ListTag) {
-			return ((ListTag) p).getCurrentDataRow();
-		}
-		return null;
-	}
+    @Override
+    public int doStartTag() throws TemplateRuntimeException {
+        try {
+            if (ObjectUtil.notEmpty(method)) {
+                IMethodLocator m = MethodLocatorUtil.find(method);
+                PrivCheck.check(m);
+                RequestData request = WebCurrent.getRequest();
+                ListAction la = new ListAction();
+                la.setParams(request);
+                la.setPage(page);
+                la.setMethod(method);
+                la.setID(id);
+                la.setPageSize(size);
+                la.setTag(this);
+                if (request != null) {
+                    la.setQueryString(request.getQueryString());
+                }
+                if (page) {
+                    la.setPageIndex(0);
+                    if (StringUtil.isNotEmpty(la.getParam("PageIndex"))) {
+                        la.setPageIndex(Integer.parseInt(la.getParam("PageIndex")) - 1);
+                    }
+                    if (la.getPageIndex() < 0) {
+                        la.setPageIndex(0);
+                    }
+                }
+                m.execute(la);
+                dataTable = la.getDataSource();
+                pageContext.setAttribute(id + Constant.ActionInPageContext, la);// 供PageBar标签使用
+            } else if (ObjectUtil.notEmpty(rest)) {
+                RequestData request = WebCurrent.getRequest();
 
-	@Override
-	public int doAfterBody() throws TemplateRuntimeException {
-		if (this.variables.containsKey("_ARK_BREAK_TAG")) {
-			return 6;
-		}
-		if (dataTable.getRowCount() > rowIndex && rowIndex - begin + 1 < count) {
-			currentRow = dataTable.getDataRow(rowIndex++);
-			if (ObjectUtil.notEmpty(item)) {
-				context.addDataVariable(item, currentRow);
-			}
-			context.addDataVariable("i", rowIndex - begin + 1);
-			context.addDataVariable("first", false);// 后续都置为false
-			if (rowIndex == dataTable.getRowCount()) {
-				context.addDataVariable("last", true);
-			}
-			return EVAL_BODY_AGAIN;
-		} else {
-			return SKIP_BODY;
-		}
-	}
+                if (rest.indexOf("?") != -1) {
+                    // name=John&Age=18&Age=18&Gender=3
+                    String parentParamsStr = StringUtil.splitEx(rest, "?")[1];
+                    Mapx<String, String> parentParams = StringUtil.splitToMapx(parentParamsStr, "&", "=");
+                    DataRow dataRow = getParentCurrentDataRow();
+                    List<String> newParams = new ArrayList<>();
+                    for (Map.Entry<String, String> entry : parentParams.entrySet()) {
+                        String paramValue = entry.getValue();
+                        if (paramValue.startsWith("parent.")) {
+                            String value = dataRow.getString(paramValue.replace("parent.", ""));
+                            newParams.add(entry.getKey() + "=" + value);
+                            request.put(entry.getKey(), value);
+                        } else {
+                            request.put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    rest = StringUtil.splitEx(rest, "?")[0] + "?" + Joiner.on("&").join(newParams);
 
-	public String getMethod() {
-		return method;
-	}
+                }
+                JsonResult jsonResult = RestUtil.post(rest, request, DataTable.class);
+                if (!jsonResult.isSuccess()) {
+                    throw new TemplateRuntimeException(jsonResult.getMessage());
+                }
+                DataTable dt = (DataTable) jsonResult.getData();
 
-	public void setMethod(String method) {
-		this.method = method;
-	}
+                ListAction la = new ListAction();
+                la.setParams(request);
+                la.setPage(page);
+                la.setMethod(method);
+                la.setRest(rest);
+                la.setID(id);
+                la.setPageSize(size);
+                la.setTag(this);
+                if (request != null) {
+                    la.setQueryString(request.getQueryString());
+                }
+                if (page) {
+                    la.setPageIndex(0);
+                    if (StringUtil.isNotEmpty(la.getParam("PageIndex"))) {
+                        la.setPageIndex(Integer.parseInt(la.getParam("PageIndex")) - 1);
+                    }
+                    if (la.getPageIndex() < 0) {
+                        la.setPageIndex(0);
+                    }
+                }
 
-	public boolean isPage() {
-		return page;
-	}
+                la.bindData(dt);
 
-	public void setPage(boolean page) {
-		this.page = page;
-	}
+                this.dataTable = la.getDataSource();
+                pageContext.setAttribute(id + Constant.ActionInPageContext, la);// 供PageBar标签使用
+            } else {
+                if (StringUtil.isEmpty(item)) {
+                    item = pageContext.eval(ZListItemNameKey);
+                }
+                if (data != null) {
+                    if (data instanceof DataTable) {
+                        dataTable = (DataTable) data;
+                    } else if (data instanceof String) {
+                        dataTable = JSON.parseBean((String) this.data, DataTable.class);
+                    } else {
+                        throw new UIException(Lang.get("Framework.ZListDataAttributeMustBeDataTable"));
+                    }
+                } else {
+                    dataTable = (DataTable) pageContext.evalExpression("${" + ZListDataNameKey + "}");
+                }
+            }
+        } catch (PrivException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        begin = begin <= 0 ? 1 : begin;
+        count = count <= 0 ? Integer.MAX_VALUE : count;
+        if (begin > 0) {
+            rowIndex = begin - 1;
+        }
+        if (dataTable != null && dataTable.getRowCount() > 0 && rowIndex < dataTable.getRowCount()) {
+            if (dataTable.getDataColumn("_RowNo") == null) {
+                dataTable.insertColumn(new DataColumn("_RowNo", DataTypes.INTEGER));
+                for (int i = 0; i < dataTable.getRowCount(); i++) {
+                    dataTable.set(i, "_RowNo", i + 1);
+                }
+            }
+            currentRow = dataTable.getDataRow(rowIndex++);
+            if (ObjectUtil.notEmpty(item)) {
+                context.addDataVariable(item, currentRow);
+            }
+            context.addDataVariable("i", rowIndex - begin + 1);
+            context.addDataVariable("first", true);
+            if (rowIndex == dataTable.getRowCount() - 1) {
+                context.addDataVariable("last", true);// 存在只有一条记录的情况
+            } else {
+                context.addDataVariable("last", false);
+            }
+            return EVAL_BODY_INCLUDE;
+        } else {
+            return SKIP_BODY;
+        }
+    }
 
-	public int getSize() {
-		return size;
-	}
+    /**
+     * 得到上级循环的当前行
+     */
+    public DataRow getParentCurrentDataRow() {
+        AbstractTag p = this.getParent();
+        if (p instanceof ListTag) {
+            return ((ListTag) p).getCurrentDataRow();
+        }
+        return null;
+    }
 
-	public void setSize(int size) {
-		this.size = size;
-	}
+    @Override
+    public int doAfterBody() throws TemplateRuntimeException {
+        if (this.variables.containsKey("_ARK_BREAK_TAG")) {
+            return 6;
+        }
+        if (dataTable.getRowCount() > rowIndex && rowIndex - begin + 1 < count) {
+            currentRow = dataTable.getDataRow(rowIndex++);
+            if (ObjectUtil.notEmpty(item)) {
+                context.addDataVariable(item, currentRow);
+            }
+            context.addDataVariable("i", rowIndex - begin + 1);
+            context.addDataVariable("first", false);// 后续都置为false
+            if (rowIndex == dataTable.getRowCount()) {
+                context.addDataVariable("last", true);
+            }
+            return EVAL_BODY_AGAIN;
+        } else {
+            return SKIP_BODY;
+        }
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getMethod() {
+        return method;
+    }
 
-	@Override
-	public DataRow getCurrentDataRow() {
-		return currentRow;
-	}
+    public void setMethod(String method) {
+        this.method = method;
+    }
 
-	public DataTable getData() {
-		return dataTable;
-	}
+    public boolean isPage() {
+        return page;
+    }
 
-	@Override
-	public List<TagAttr> getTagAttrs() {
-		List<TagAttr> list = new ArrayList<TagAttr>();
-		list.add(new TagAttr("id", true));
-		list.add(new TagAttr("method", DataTypes.STRING.code(), "@{Framework.ListTag.Method}"));
-		list.add(new TagAttr("rest", DataTypes.STRING.code(), "@{Framework.ListTag.Rest}"));
-		list.add(new TagAttr("data", DataTypes.STRING.code(), "@{Framework.ListTag.Data}"));
-		list.add(new TagAttr("item", DataTypes.STRING.code(), "@{Framework.ListTag.Item}"));
-		list.add(new TagAttr("size", DataTypes.INTEGER.code(), "@{Framework.ListTag.Size}"));
-		list.add(new TagAttr("page", TagAttr.BOOL_OPTIONS, "@{Framework.ListTag.Page}"));
-		list.add(new TagAttr("count", DataTypes.INTEGER.code(), "@{Framework.ListTag.Count}"));
-		list.add(new TagAttr("begin", DataTypes.INTEGER.code(), "@{Framework.ListTag.Begin}"));
-		return list;
-	}
+    public void setPage(boolean page) {
+        this.page = page;
+    }
 
-	@Override
-	public String getDescription() {
-		return "@{Framework.ZListTagDescription}";
-	}
+    public int getSize() {
+        return size;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "@{Framework.ZListTagName}";
-	}
+    public void setSize(int size) {
+        this.size = size;
+    }
 
-	@Override
-	public String getPluginID() {
-		return FrameworkPlugin.ID;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+    @Override
+    public DataRow getCurrentDataRow() {
+        return currentRow;
+    }
 
-	public void setItem(String item) {
-		this.item = item;
-	}
+    public DataTable getData() {
+        return dataTable;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    @Override
+    public List<TagAttr> getTagAttrs() {
+        List<TagAttr> list = new ArrayList<TagAttr>();
+        list.add(new TagAttr("id", true));
+        list.add(new TagAttr("method", DataTypes.STRING.code(), "@{Framework.ListTag.Method}"));
+        list.add(new TagAttr("rest", DataTypes.STRING.code(), "@{Framework.ListTag.Rest}"));
+        list.add(new TagAttr("data", DataTypes.STRING.code(), "@{Framework.ListTag.Data}"));
+        list.add(new TagAttr("item", DataTypes.STRING.code(), "@{Framework.ListTag.Item}"));
+        list.add(new TagAttr("size", DataTypes.INTEGER.code(), "@{Framework.ListTag.Size}"));
+        list.add(new TagAttr("page", TagAttr.BOOL_OPTIONS, "@{Framework.ListTag.Page}"));
+        list.add(new TagAttr("count", DataTypes.INTEGER.code(), "@{Framework.ListTag.Count}"));
+        list.add(new TagAttr("begin", DataTypes.INTEGER.code(), "@{Framework.ListTag.Begin}"));
+        return list;
+    }
 
-	public void setBegin(int begin) {
-		this.begin = begin;
-	}
+    @Override
+    public String getDescription() {
+        return "@{Framework.ZListTagDescription}";
+    }
 
-	public String getRest() {
-		return rest;
-	}
+    @Override
+    public String getExtendItemName() {
+        return "@{Framework.ZListTagName}";
+    }
 
-	public void setRest(String rest) {
-		this.rest = rest;
-	}
+    @Override
+    public String getPluginID() {
+        return FrameworkPlugin.ID;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setBegin(int begin) {
+        this.begin = begin;
+    }
+
+    public String getRest() {
+        return rest;
+    }
+
+    public void setRest(String rest) {
+        this.rest = rest;
+    }
 }

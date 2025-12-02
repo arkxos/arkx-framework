@@ -1,7 +1,9 @@
 package com.github.dreamroute.sqlprinter.starter.anno;
 
-import cn.hutool.core.util.ReflectUtil;
-import com.github.dreamroute.sqlprinter.starter.interceptor.SqlPrinter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.BeansException;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -11,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.lang.NonNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import com.github.dreamroute.sqlprinter.starter.interceptor.SqlPrinter;
+
+import cn.hutool.core.util.ReflectUtil;
 
 /**
  * 初始化插件配置信息

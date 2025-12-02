@@ -4,14 +4,14 @@ import io.arkx.framework.core.FrameworkException;
 
 /**
  * JSON异常
- * 
+ *
  */
 public class JSONException extends FrameworkException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public JSONException(String message) {
-		super(message);
-	}
+    public JSONException(String message) {
+        super(message);
+    }
 
 }

@@ -15,20 +15,6 @@
  */
 package io.arkx.framework.commons.utils3;
 
-import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.poi.excel.BigExcelWriter;
-import cn.hutool.poi.excel.ExcelUtil;
-import io.arkx.framework.commons.exception.BadRequestException;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.apache.poi.util.IOUtils;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
@@ -36,6 +22,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
+import io.arkx.framework.commons.exception.BadRequestException;
+
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.poi.excel.BigExcelWriter;
+import cn.hutool.poi.excel.ExcelUtil;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * File工具类，扩展 hutool 工具包
@@ -48,11 +50,9 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
 
     /**
-     * 系统临时目录
-     * <br>
-     * windows 包含路径分割符，但Linux 不包含,
-     * 在windows \\==\ 前提下，
-     * 为安全起见 同意拼装 路径分割符，
+     * 系统临时目录 <br>
+     * windows 包含路径分割符，但Linux 不包含, 在windows \\==\ 前提下， 为安全起见 同意拼装 路径分割符，
+     *
      * <pre>
      *       java.io.tmpdir
      *       windows : C:\Users/xxx\AppData\Local\Temp\
@@ -83,7 +83,6 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     public static final String MUSIC = "音乐";
     public static final String VIDEO = "视频";
     public static final String OTHER = "其他";
-
 
     /**
      * MultipartFile转File
@@ -137,13 +136,13 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     public static String getSize(long size) {
         String resultSize;
         if (size / GB >= 1) {
-            //如果当前Byte的值大于等于1GB
+            // 如果当前Byte的值大于等于1GB
             resultSize = DF.format(size / (float) GB) + "GB   ";
         } else if (size / MB >= 1) {
-            //如果当前Byte的值大于等于1MB
+            // 如果当前Byte的值大于等于1MB
             resultSize = DF.format(size / (float) MB) + "MB   ";
         } else if (size / KB >= 1) {
-            //如果当前Byte的值大于等于1KB
+            // 如果当前Byte的值大于等于1KB
             resultSize = DF.format(size / (float) KB) + "KB   ";
         } else {
             resultSize = size + "B   ";
@@ -209,20 +208,20 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         BigExcelWriter writer = ExcelUtil.getBigWriter(file);
         // 一次性写出内容，使用默认样式，强制输出标题
         writer.write(list, true);
-        SXSSFSheet sheet = (SXSSFSheet)writer.getSheet();
-        //上面需要强转SXSSFSheet  不然没有trackAllColumnsForAutoSizing方法
+        SXSSFSheet sheet = (SXSSFSheet) writer.getSheet();
+        // 上面需要强转SXSSFSheet 不然没有trackAllColumnsForAutoSizing方法
         sheet.trackAllColumnsForAutoSizing();
-        //列宽自适应
+        // 列宽自适应
         writer.autoSizeColumnAll();
-        //response为HttpServletResponse对象
+        // response为HttpServletResponse对象
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+        // test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
         response.setHeader("Content-Disposition", "attachment;filename=file.xlsx");
         ServletOutputStream out = response.getOutputStream();
         // 终止后删除临时文件
         file.deleteOnExit();
         writer.flush(out, true);
-        //此处记得关闭输出Servlet流
+        // 此处记得关闭输出Servlet流
         IoUtil.close(out);
     }
 
@@ -310,11 +309,15 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     /**
      * 下载文件
      *
-     * @param request  /
-     * @param response /
-     * @param file     /
+     * @param request
+     *            /
+     * @param response
+     *            /
+     * @param file
+     *            /
      */
-    public static void downloadFile(HttpServletRequest request, HttpServletResponse response, File file, boolean deleteOnExit) {
+    public static void downloadFile(HttpServletRequest request, HttpServletResponse response, File file,
+            boolean deleteOnExit) {
         response.setCharacterEncoding(request.getCharacterEncoding());
         response.setContentType("application/octet-stream");
         FileInputStream fis = null;

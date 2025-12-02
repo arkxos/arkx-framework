@@ -1,11 +1,13 @@
 package io.arkx.framework.data.db.core.schema;
 
+import org.springframework.data.relational.core.mapping.Table;
+
 import io.arkx.framework.data.common.entity.StringIdEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.relational.core.mapping.Table;
 
 /**
  *

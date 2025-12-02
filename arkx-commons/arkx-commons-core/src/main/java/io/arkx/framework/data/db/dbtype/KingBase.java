@@ -1,6 +1,7 @@
 package io.arkx.framework.data.db.dbtype;
 
-import com.sun.star.uno.RuntimeException;
+import java.sql.SQLException;
+
 import io.arkx.framework.commons.collection.DataTypes;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.db.command.DropTableCommand;
@@ -8,10 +9,11 @@ import io.arkx.framework.data.db.command.RenameTableCommand;
 import io.arkx.framework.data.db.connection.Connection;
 import io.arkx.framework.data.db.connection.ConnectionConfig;
 
-import java.sql.SQLException;
+import com.sun.star.uno.RuntimeException;
 
 /**
  * 人大金仓数据库
+ *
  * @author Darkness
  * @date 2011-12-10 下午04:57:55
  * @version V1.0
@@ -116,12 +118,12 @@ public class KingBase extends AbstractDBType {
     @Override
     public String[] toSQLArray(DropTableCommand c) {
         String sql = "drop table " + c.Table + " cascade";
-        return new String[] { sql };
+        return new String[]{sql};
     }
 
     @Override
     public String[] toSQLArray(RenameTableCommand c) {
-        return new String[] { "rename " + c.Table + " to " + c.NewTable };
+        return new String[]{"rename " + c.Table + " to " + c.NewTable};
     }
 
     @Override

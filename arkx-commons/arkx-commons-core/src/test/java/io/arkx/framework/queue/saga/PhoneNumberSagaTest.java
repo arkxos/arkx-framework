@@ -1,31 +1,26 @@
 package io.arkx.framework.queue.saga;
 
-import io.arkx.framework.queue2.MessageBus;
-import io.arkx.framework.queue2.Subscribe;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Before;
+
+import io.arkx.framework.queue2.MessageBus;
+import io.arkx.framework.queue2.Subscribe;
 
 public class PhoneNumberSagaTest {
 
-	private MatchtedPhoneNumberCounter matchtedPhoneNumberCounter;
+    private MatchtedPhoneNumberCounter matchtedPhoneNumberCounter;
     private PhoneNumberExecutive phoneNumberExecutive;
     private PhoneNumberFinder phoneNumberFinder;
     private TotalPhoneNumbersCounter totalPhoneNumbersCounter;
 
-    private static String[] phoneNumbers = new String[] {
-        "303-555-1212   John",
-        "212-555-1212   Joe",
-        "718-555-1212   Zoe",
-        "720-555-1212   Manny",
-        "312-555-1212   Jerry",
-        "303-555-9999   Sally"
-    };
+    private static String[] phoneNumbers = new String[]{"303-555-1212   John", "212-555-1212   Joe",
+            "718-555-1212   Zoe", "720-555-1212   Manny", "312-555-1212   Jerry", "303-555-9999   Sally"};
 
     public PhoneNumberSagaTest() {
         super();
@@ -48,7 +43,7 @@ public class PhoneNumberSagaTest {
 
     @Before("")
     protected void setUp() throws Exception {
-    	
+
         phoneNumberExecutive = new PhoneNumberExecutive();
         phoneNumberFinder = new PhoneNumberFinder();
         matchtedPhoneNumberCounter = new MatchtedPhoneNumberCounter();
@@ -67,7 +62,7 @@ public class PhoneNumberSagaTest {
 
     /**
      * 电话号码流程
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午9:43:26
      * @version V1.0
@@ -114,7 +109,7 @@ public class PhoneNumberSagaTest {
 
     /**
      * 电话号码执行器
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午9:42:45
      * @version V1.0
@@ -135,7 +130,7 @@ public class PhoneNumberSagaTest {
         }
 
         public String start(String[] aPhoneNumbers) {
-        		// 创建流程
+            // 创建流程
             PhoneNumberProcess process = new PhoneNumberProcess();
 
             synchronized (this.processes) {
@@ -153,41 +148,33 @@ public class PhoneNumberSagaTest {
             }
 
             System.out.println("STARTED: " + process.id());
-            
-            MessageBus.globalInstance().publish(new AllPhoneNumbersListed(
-                    process.id(),
-                    allPhoneNumbers));
+
+            MessageBus.globalInstance().publish(new AllPhoneNumbersListed(process.id(), allPhoneNumbers));
 
             return process.id();
         }
 
-		@Subscribe(events = { AllPhoneNumbersCounted.class, MatchedPhoneNumbersCounted.class })
-		public void filteredDispatch(PhoneNumberProcessEvent event) {
+        @Subscribe(events = {AllPhoneNumbersCounted.class, MatchedPhoneNumbersCounted.class})
+        public void filteredDispatch(PhoneNumberProcessEvent event) {
 
-    		String processId = event.processId();
-    		PhoneNumberProcess process = this.processes.get(processId);
-    		
-        	if(event instanceof AllPhoneNumbersCounted) {
-        		AllPhoneNumbersCounted allPhoneNumbersCounted = (AllPhoneNumbersCounted)event;
-        		
-        		process.setTotalPhoneNumbers(allPhoneNumbersCounted.totalPhoneNumbers());
+            String processId = event.processId();
+            PhoneNumberProcess process = this.processes.get(processId);
+
+            if (event instanceof AllPhoneNumbersCounted) {
+                AllPhoneNumbersCounted allPhoneNumbersCounted = (AllPhoneNumbersCounted) event;
+
+                process.setTotalPhoneNumbers(allPhoneNumbersCounted.totalPhoneNumbers());
                 System.out.println("AllPhoneNumbersCounted...");
-    		}else if(event instanceof MatchedPhoneNumbersCounted) {
-    			MatchedPhoneNumbersCounted matchedPhoneNumbersCounted = (MatchedPhoneNumbersCounted)event;
-        		
-        		process.setMatchedPhoneNumbers(matchedPhoneNumbersCounted.matchedPhoneNumbers());
+            } else if (event instanceof MatchedPhoneNumbersCounted) {
+                MatchedPhoneNumbersCounted matchedPhoneNumbersCounted = (MatchedPhoneNumbersCounted) event;
+
+                process.setMatchedPhoneNumbers(matchedPhoneNumbersCounted.matchedPhoneNumbers());
                 System.out.println("MatchedPhoneNumbersCounted...");
-    		}
-        	
+            }
+
             if (process.isCompleted()) {
-                System.out.println(
-                        "Process: "
-                        + process.id()
-                        + ": "
-                        + process.matchedPhoneNumbers()
-                        + " of "
-                        + process.totalPhoneNumbers()
-                        + " phone numbers found.");
+                System.out.println("Process: " + process.id() + ": " + process.matchedPhoneNumbers() + " of "
+                        + process.totalPhoneNumbers() + " phone numbers found.");
             }
         }
 
@@ -195,7 +182,7 @@ public class PhoneNumberSagaTest {
 
     /**
      * 查找指定号码处理器
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午9:59:06
      * @version V1.0
@@ -203,7 +190,7 @@ public class PhoneNumberSagaTest {
      */
     private class PhoneNumberFinder {
 
-        @Subscribe(events = { AllPhoneNumbersListed.class })
+        @Subscribe(events = {AllPhoneNumbersListed.class})
         public void filteredDispatch(AllPhoneNumbersListed event) {
             System.out.println("AllPhoneNumbersListed (to match)...");
 
@@ -222,16 +209,14 @@ public class PhoneNumberSagaTest {
                 }
             }
 
-            MessageBus.globalInstance().publish(new PhoneNumbersMatched(
-                    event.processId(),
-                    foundPhoneNumbers));
+            MessageBus.globalInstance().publish(new PhoneNumbersMatched(event.processId(), foundPhoneNumbers));
         }
 
     }
 
     /**
      * 匹配的号码计数器
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午10:02:00
      * @version V1.0
@@ -239,7 +224,7 @@ public class PhoneNumberSagaTest {
      */
     private class MatchtedPhoneNumberCounter {
 
-        @Subscribe(events = { PhoneNumbersMatched.class })
+        @Subscribe(events = {PhoneNumbersMatched.class})
         public void filteredDispatch(PhoneNumbersMatched event) {
 
             System.out.println("PhoneNumbersMatched (to count)...");
@@ -248,16 +233,15 @@ public class PhoneNumberSagaTest {
 
             String[] allPhoneNumbersToCount = allMatchedPhoneNumbers.split("\n");
 
-            MessageBus.globalInstance().publish(new MatchedPhoneNumbersCounted(
-            		event.processId(),
-                    allPhoneNumbersToCount.length));
+            MessageBus.globalInstance()
+                    .publish(new MatchedPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
         }
 
     }
 
     /**
      * 所有号码计数器
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午10:03:53
      * @version V1.0
@@ -265,7 +249,7 @@ public class PhoneNumberSagaTest {
      */
     private class TotalPhoneNumbersCounter {
 
-    	@Subscribe(events = { AllPhoneNumbersListed.class })
+        @Subscribe(events = {AllPhoneNumbersListed.class})
         public void filteredDispatch(AllPhoneNumbersListed event) {
 
             System.out.println("AllPhoneNumbersListed (to total)...");
@@ -274,9 +258,8 @@ public class PhoneNumberSagaTest {
 
             String[] allPhoneNumbersToCount = allPhoneNumbers.split("\n");
 
-            MessageBus.globalInstance().publish(new AllPhoneNumbersCounted(
-            		event.processId(),
-                    allPhoneNumbersToCount.length));
+            MessageBus.globalInstance()
+                    .publish(new AllPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
         }
 
     }

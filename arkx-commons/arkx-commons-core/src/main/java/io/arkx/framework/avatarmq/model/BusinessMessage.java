@@ -1,8 +1,8 @@
 package io.arkx.framework.avatarmq.model;
 
-import io.arkx.framework.avatarmq.msg.BaseMessage;
-
 import java.io.Serializable;
+
+import io.arkx.framework.avatarmq.msg.BaseMessage;
 
 /**
  * @filename:BusinessMessage.java

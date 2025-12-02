@@ -19,67 +19,67 @@ package io.arkx.framework.thirdparty.fastjson;
  * @author wenshao<szujobs@hotmail.com>
  */
 public enum Feature {
-	/**
-	 * 
-	 */
-	AutoCloseSource,
-	/**
-	 * 
-	 */
-	AllowComment,
-	/**
-	 * 
-	 */
-	AllowUnQuotedFieldNames,
-	/**
-	 * 
-	 */
-	AllowSingleQuotes,
-	/**
-	 * 
-	 */
-	InternFieldNames,
-	/**
-	 * 
-	 */
-	AllowISO8601DateFormat,
-
-	/**
-	 * {"a":1,,,"b":2}
-	 */
-	AllowArbitraryCommas,
-
-	/**
-     * 
+    /**
+     *
      */
-	UseBigDecimal,
-
-	/**
-	 * @since 1.1.2
-	 */
-	IgnoreNotMatch,
-
-	/**
-     * 
+    AutoCloseSource,
+    /**
+     *
      */
-	SortFeidFastMatch,
-
-	/**
-     * 
+    AllowComment,
+    /**
+     *
      */
-	DisableASM;
+    AllowUnQuotedFieldNames,
+    /**
+     *
+     */
+    AllowSingleQuotes,
+    /**
+     *
+     */
+    InternFieldNames,
+    /**
+     *
+     */
+    AllowISO8601DateFormat,
 
-	private Feature() {
-		mask = 1 << ordinal();
-	}
+    /**
+     * {"a":1,,,"b":2}
+     */
+    AllowArbitraryCommas,
 
-	private final int mask;
+    /**
+     *
+     */
+    UseBigDecimal,
 
-	public final int getMask() {
-		return mask;
-	}
+    /**
+     * @since 1.1.2
+     */
+    IgnoreNotMatch,
 
-	public static boolean isEnabled(int features, Feature feature) {
-		return (features & feature.getMask()) != 0;
-	}
+    /**
+     *
+     */
+    SortFeidFastMatch,
+
+    /**
+     *
+     */
+    DisableASM;
+
+    private Feature() {
+        mask = 1 << ordinal();
+    }
+
+    private final int mask;
+
+    public final int getMask() {
+        return mask;
+    }
+
+    public static boolean isEnabled(int features, Feature feature) {
+        return (features & feature.getMask()) != 0;
+    }
 }

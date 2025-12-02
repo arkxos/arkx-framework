@@ -2,11 +2,10 @@ package io.arkx.framework.commons.enums;
 
 /**
  * 操作人类别
- * 
+ *
  * @author Darkness
  */
-public enum OperatorType
-{
+public enum OperatorType {
     /**
      * 其它
      */

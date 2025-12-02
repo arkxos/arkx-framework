@@ -8,10 +8,10 @@ package org.ark.framework.orm.sync.source;
  * @since 1.0
  */
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUtil;
-import io.arkx.framework.data.jdbc.Session;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Method;
+import java.sql.Timestamp;
+import java.util.*;
+
 import org.ark.framework.orm.Schema;
 import org.ark.framework.orm.SchemaSet;
 import org.ark.framework.orm.SchemaUtil;
@@ -19,13 +19,14 @@ import org.ark.framework.orm.sync.SyncException;
 import org.ark.framework.orm.sync.TableSyncConfig;
 import org.ark.framework.orm.sync.util.ExceptionUtil;
 
-import java.lang.reflect.Method;
-import java.sql.Timestamp;
-import java.util.*;
+import io.arkx.framework.data.jdbc.Session;
+
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * SchemaSet数据源
- * 从预加载的SchemaSet对象获取增量数据
+ * SchemaSet数据源 从预加载的SchemaSet对象获取增量数据
  */
 @Slf4j
 public class SchemaSetDataSource implements DataSource {
@@ -36,7 +37,8 @@ public class SchemaSetDataSource implements DataSource {
     /**
      * 构造函数
      *
-     * @param name 数据源名称
+     * @param name
+     *            数据源名称
      */
     public SchemaSetDataSource(String name) {
         this.name = name;
@@ -46,8 +48,10 @@ public class SchemaSetDataSource implements DataSource {
     /**
      * 添加SchemaSet
      *
-     * @param tableCode 表代码
-     * @param schemaSet SchemaSet对象
+     * @param tableCode
+     *            表代码
+     * @param schemaSet
+     *            SchemaSet对象
      */
     public void addSchemaSet(String tableCode, SchemaSet<?> schemaSet) {
         if (schemaSet == null) {
@@ -59,8 +63,7 @@ public class SchemaSetDataSource implements DataSource {
         if (schemaSets.containsKey(tableCode)) {
             SchemaSet<?> existingSet = schemaSets.get(tableCode);
             existingSet.addAllWildcard(schemaSet);
-            log.info("已追加 SchemaSet 到表 [{}]，追加 {} 条记录，当前总数 {}",
-                    tableCode, schemaSet.size(), existingSet.size());
+            log.info("已追加 SchemaSet 到表 [{}]，追加 {} 条记录，当前总数 {}", tableCode, schemaSet.size(), existingSet.size());
         } else {
             schemaSets.put(tableCode, schemaSet);
             log.info("已添加 SchemaSet 到表 [{}]，包含 {} 条记录", tableCode, schemaSet.size());
@@ -87,9 +90,10 @@ public class SchemaSetDataSource implements DataSource {
     }
 
     @Override
-    public List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session, Timestamp lastSyncTime) {
-//        log.debug("从SchemaSet数据源 [{}] 获取表 [{}] 的增量数据，时间戳字段: {}, 上次同步时间: {}",
-//                name, tableCode, config.getTimestampField());
+    public List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session,
+            Timestamp lastSyncTime) {
+        // log.debug("从SchemaSet数据源 [{}] 获取表 [{}] 的增量数据，时间戳字段: {}, 上次同步时间: {}",
+        // name, tableCode, config.getTimestampField());
 
         try {
             SchemaSet<?> schemaSet = schemaSets.get(tableCode);
@@ -103,8 +107,6 @@ public class SchemaSetDataSource implements DataSource {
             session.beginTransaction();
             schema1.setSession(session);
             schema1.setExternallyManagedTransaction(true);
-
-
 
             Class<?> aClass = Thread.currentThread().getContextClassLoader()
                     .loadClass(nameSpace + "." + tableCode + "Schema");
@@ -128,21 +130,20 @@ public class SchemaSetDataSource implements DataSource {
 
                 if (customTime == null && createTime == null && updateTime == null) {
                     incrementalData.add(schema);
-                } else if (updateTime != null && updateTime.getTime() > lastSyncTime.getTime() || (createTime != null && createTime.getTime() > lastSyncTime.getTime())
-                        || (customTime != null && customTime.getTime() > lastSyncTime.getTime())
-                ) {
+                } else if (updateTime != null && updateTime.getTime() > lastSyncTime.getTime()
+                        || (createTime != null && createTime.getTime() > lastSyncTime.getTime())
+                        || (customTime != null && customTime.getTime() > lastSyncTime.getTime())) {
                     incrementalData.add(schema);
                 }
             }
 
-            log.debug("从SchemaSet数据源 [{}] 表 [{}] 筛选出 {} 条增量数据",
-                    name, tableCode, incrementalData.size());
+            log.debug("从SchemaSet数据源 [{}] 表 [{}] 筛选出 {} 条增量数据", name, tableCode, incrementalData.size());
 
             return incrementalData;
 
         } catch (Exception e) {
             log.error("从SchemaSet数据源 [{}] 获取表 [{}] 的增量数据时发生错误", name, tableCode, e);
-            throw new SyncException("获取增量数据失败"+ ExceptionUtil.getFullDetailMessage(e), e);
+            throw new SyncException("获取增量数据失败" + ExceptionUtil.getFullDetailMessage(e), e);
         }
     }
 
@@ -203,4 +204,3 @@ public class SchemaSetDataSource implements DataSource {
         log.debug("SchemaSet数据源 [{}] 已关闭", name);
     }
 }
-

@@ -8,7 +8,8 @@ package io.arkx.framework.data.mybatis.pro.core.consts;
  */
 public class KeyWord {
 
-    private KeyWord() {}
+    private KeyWord() {
+    }
 
     // … where x.lastname = ?1 and x.firstname = ?2
     public static final String AND = "And";
@@ -28,17 +29,17 @@ public class KeyWord {
     // … where x.age >= ?1
     public static final String GREATER_THAN_EQUAL = "GTE";
 
-    //… where x.age is null
+    // … where x.age is null
     public static final String IS_NULL = "IsNull";
 
-    //… where x.age not null
+    // … where x.age not null
     public static final String IS_NOT_NULL = "IsNotNull";
 
-    //… where x.age is null or x.age = ''
+    // … where x.age is null or x.age = ''
     public static final String IS_BLANK = "IsBlank";
 
-    //… where x.age is null or x.age = ''
-    public static final String IS_NOT_BLANK= "IsNotBlank";
+    // … where x.age is null or x.age = ''
+    public static final String IS_NOT_BLANK = "IsNotBlank";
 
     // … where x.firstname like ?1
     public static final String LIKE = "Like";
@@ -51,10 +52,10 @@ public class KeyWord {
     // … where x.firstname like %?1
     public static final String ENDING_WITH = "EndWith";
 
-    //… where x.lastname <> ?1
+    // … where x.lastname <> ?1
     public static final String NOT = "Not";
 
-    //… where x.age in ?1
+    // … where x.age in ?1
     public static final String IN = "In";
     // … where x.age not in ?1
     public static final String NOT_IN = "NotIn";

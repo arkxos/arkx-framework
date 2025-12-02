@@ -1,10 +1,7 @@
 package io.arkx.framework.commons.uid.config;
 
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
-import io.arkx.framework.commons.uid.constant.Mode;
-import io.arkx.framework.commons.uid.worker.DatasourceWorkerIdAssigner;
-import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
-import lombok.extern.slf4j.Slf4j;
+import javax.sql.DataSource;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -18,7 +15,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import javax.sql.DataSource;
+import io.arkx.framework.commons.uid.constant.Mode;
+import io.arkx.framework.commons.uid.worker.DatasourceWorkerIdAssigner;
+import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
+
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 线上环境依赖于数据库生成WorkId,用于自动生成其对应的WorkId以及避免重复，

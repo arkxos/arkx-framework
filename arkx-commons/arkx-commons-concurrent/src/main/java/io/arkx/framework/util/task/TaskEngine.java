@@ -1,11 +1,11 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.util.Assert;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
+
+import io.arkx.framework.util.task.util.Assert;
 
 public final class TaskEngine {
 
@@ -29,7 +29,8 @@ public final class TaskEngine {
     /**
      * 创建无返回结果的任务，任务的执行结果使用回调处理，使用 {@link TaskEngine#commit(Task)} 执行创建的任务
      *
-     * @param taskRunner 要执行的具体任务
+     * @param taskRunner
+     *            要执行的具体任务
      * @return 任务
      */
     public Task.Builder buildTask(TaskRunner taskRunner) {
@@ -39,7 +40,8 @@ public final class TaskEngine {
     /**
      * 执行指定的任务
      *
-     * @param task 要执行的任务，使用 {@link TaskEngine#buildTask(TaskRunner)} 创建
+     * @param task
+     *            要执行的任务，使用 {@link TaskEngine#buildTask(TaskRunner)} 创建
      */
     public void commit(Task task) {
         Assert.notNull(task);
@@ -59,7 +61,8 @@ public final class TaskEngine {
     /**
      * 初始化一个任务组，可自定义任务组名称
      *
-     * @param name 任务组的名称
+     * @param name
+     *            任务组的名称
      * @return {@link TaskGroup}
      */
     public TaskGroup prepareGroup(String name) {
@@ -71,8 +74,10 @@ public final class TaskEngine {
     /**
      * 创建有返回结果的任务，使用 {@link ResultTask#get()} 获取任务执行的结果
      *
-     * @param executor 要执行的具体任务
-     * @param <T>      任务返回结果的具体类型
+     * @param executor
+     *            要执行的具体任务
+     * @param <T>
+     *            任务返回结果的具体类型
      * @return 带有返回结果的任务
      */
     public <T> ResultTask.Builder<T> buildResultTask(ResultTaskRunner<T> executor) {
@@ -82,8 +87,10 @@ public final class TaskEngine {
     /**
      * 直接创建并执行一个默认类型和默认 ID 的有返回结果的任务，使用 {@link ResultTask#get()} 获取任务执行的结果
      *
-     * @param executor 要执行的具体任务
-     * @param <T>      任务返回结果的具体类型
+     * @param executor
+     *            要执行的具体任务
+     * @param <T>
+     *            任务返回结果的具体类型
      * @return 有返回结果的任务
      */
     public <T> ResultTask<T> commit(ResultTaskRunner<T> executor) {
@@ -91,10 +98,14 @@ public final class TaskEngine {
     }
 
     /**
-     * @param type     任务类型
-     * @param id       任务 ID
-     * @param executor 要执行的具体任务
-     * @param <T>      任务返回结果的具体类型
+     * @param type
+     *            任务类型
+     * @param id
+     *            任务 ID
+     * @param executor
+     *            要执行的具体任务
+     * @param <T>
+     *            任务返回结果的具体类型
      * @return 有返回结果的任务
      */
     public <T> ResultTask<T> commit(String type, String id, ResultTaskRunner<T> executor) {
@@ -127,8 +138,10 @@ public final class TaskEngine {
     /**
      * 试图关闭线程池，同时阻塞等待线程池关闭
      *
-     * @param timeout 超时时间
-     * @param unit    超时时间的时间单位
+     * @param timeout
+     *            超时时间
+     * @param unit
+     *            超时时间的时间单位
      * @return {@code true} 线程池正常关闭；如果到达超时时间后，线程池仍未关闭，返回 {@code false}
      * @see ThreadPoolExecutor#shutdown()
      * @see ThreadPoolExecutor#awaitTermination(long, TimeUnit)
@@ -172,7 +185,7 @@ public final class TaskEngine {
     }
 
     public void start() {
-//        this.taskScheduler.start();
+        // this.taskScheduler.start();
     }
 
     public static class Builder {
@@ -218,10 +231,10 @@ public final class TaskEngine {
             return this;
         }
 
-//        public Builder completedTaskHandler(CompletedTaskHandler handler) {
-//            this.completedTaskHandler = handler;
-//            return this;
-//        }
+        // public Builder completedTaskHandler(CompletedTaskHandler handler) {
+        // this.completedTaskHandler = handler;
+        // return this;
+        // }
 
         public Builder windowsScheduledExecutor() {
             this.windowsScheduledExecutor = true;
@@ -231,9 +244,9 @@ public final class TaskEngine {
         public TaskEngine build() {
             BlockingQueue<Runnable> queue = createQueue(this.queueCapacity);
             DefaultThreadPoolExecutor executor = new DefaultThreadPoolExecutor(this.coreSize, this.maxPoolSize,
-                this.keepAliveSeconds, TimeUnit.SECONDS, queue, Executors.defaultThreadFactory(),
-                getRejectedExecutionHandler(this.rejectedExecutionHandler), this.completedTaskHandler);
-            if(windowsScheduledExecutor) {
+                    this.keepAliveSeconds, TimeUnit.SECONDS, queue, Executors.defaultThreadFactory(),
+                    getRejectedExecutionHandler(this.rejectedExecutionHandler), this.completedTaskHandler);
+            if (windowsScheduledExecutor) {
                 return new TaskEngine(executor);
             }
             return new TaskEngine(executor);

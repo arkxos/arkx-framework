@@ -1,9 +1,10 @@
 package io.arkx.framework.data.mybatis.pro.service.adaptor.id;
 
-import io.arkx.framework.data.mybatis.pro.service.adaptor.validator.ElementNotEmpty;
-import lombok.Data;
-
 import java.io.Serializable;
+
+import io.arkx.framework.data.mybatis.pro.service.adaptor.validator.ElementNotEmpty;
+
+import lombok.Data;
 
 /**
  * 前端请求中只有多个id参数

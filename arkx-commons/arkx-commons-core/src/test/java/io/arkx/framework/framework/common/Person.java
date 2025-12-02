@@ -3,80 +3,79 @@ package io.arkx.framework.framework.common;
 import java.util.Date;
 import java.util.List;
 
-
 /**
- * 
+ *
  * @author Darkness
  * @date 2012-9-27 上午9:27:46
  * @version V1.0
  */
 public class Person extends Entity {
 
-	public static final String BornTime = "BornTime";
-	
-	private String name;
-	private String sex;
-	private Date bornTime;
-	private int age;
-	
-	private List<Person> childs;
+    public static final String BornTime = "BornTime";
 
-	public Person(String name, int age, Date bornTime) {
-		this.name = name;
-		this.age = age;
-		this.bornTime = bornTime;
-	}
+    private String name;
+    private String sex;
+    private Date bornTime;
+    private int age;
 
-	public Person() {
-	}
+    private List<Person> childs;
 
-	public Person(int age) {
-		this.age = age;
-	}
+    public Person(String name, int age, Date bornTime) {
+        this.name = name;
+        this.age = age;
+        this.bornTime = bornTime;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Person() {
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Person(int age) {
+        this.age = age;
+    }
 
-	public String getSex() {
-		return sex;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-	public Date getBornTime() {
-		return bornTime;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public void setBornTime(Date bornTime) {
-		this.bornTime = bornTime;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	public List<Person> getChilds() {
-		return childs;
-	}
+    public Date getBornTime() {
+        return bornTime;
+    }
 
-	public void setChilds(List<Person> childs) {
-		this.childs = childs;
-	}
-	
-	@Override
-	public String toString() {
-		return "name: " + name + ", birthday:" + bornTime + ", sex: " + sex + ", age:" + age;
-	}
-	
+    public void setBornTime(Date bornTime) {
+        this.bornTime = bornTime;
+    }
+
+    public List<Person> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(List<Person> childs) {
+        this.childs = childs;
+    }
+
+    @Override
+    public String toString() {
+        return "name: " + name + ", birthday:" + bornTime + ", sex: " + sex + ", age:" + age;
+    }
+
 }

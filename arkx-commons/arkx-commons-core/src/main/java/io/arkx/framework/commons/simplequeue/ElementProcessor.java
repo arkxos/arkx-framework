@@ -12,22 +12,22 @@ package io.arkx.framework.commons.simplequeue;
  */
 public interface ElementProcessor {
 
-	/**
-	 * Downloads web pages and store in Page object.
-	 *
-	 * @param request
-	 *            request
-	 * @param task
-	 *            task
-	 * @return page
-	 */
-	ExecuteResult execute(ElementWarpper elementWarpper, Task task);
+    /**
+     * Downloads web pages and store in Page object.
+     *
+     * @param request
+     *            request
+     * @param task
+     *            task
+     * @return page
+     */
+    ExecuteResult execute(ElementWarpper elementWarpper, Task task);
 
-	/**
-	 * get the site settings
-	 *
-	 * @return site
-	 * @see Config
-	 */
-	Config getConfig();
+    /**
+     * get the site settings
+     *
+     * @return site
+     * @see Config
+     */
+    Config getConfig();
 }

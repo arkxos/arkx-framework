@@ -1,20 +1,19 @@
 package io.arkx.framework.data.db.common.entity;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
- * 迁移任务字段映射实体类
- * 对应数据库表：dbswitch_column_mapping
- * 用于描述源表字段与目标表字段之间的映射关系
+ * 迁移任务字段映射实体类 对应数据库表：dbswitch_column_mapping 用于描述源表字段与目标表字段之间的映射关系
  */
 @Data
 @Builder

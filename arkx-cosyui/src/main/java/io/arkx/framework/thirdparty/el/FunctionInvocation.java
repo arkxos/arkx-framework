@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -55,114 +55,115 @@
 
 package io.arkx.framework.thirdparty.el;
 
+import java.util.Iterator;
+import java.util.List;
+
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.expression.IFunction;
 import io.arkx.framework.cosyui.expression.IFunctionMapper;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
 
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * <p>
  * Represents a function call.
  * </p>
- * 
+ *
  * @author Shawn Bayern (in the style of Nathan's other classes)
  **/
 
 public class FunctionInvocation extends Expression {
-	// -------------------------------------
-	// Properties
-	// -------------------------------------
-	// property index
+    // -------------------------------------
+    // Properties
+    // -------------------------------------
+    // property index
 
-	private String functionName;
-	private List<Expression> argumentList;
+    private String functionName;
+    private List<Expression> argumentList;
 
-	public String getFunctionName() {
-		return functionName;
-	}
+    public String getFunctionName() {
+        return functionName;
+    }
 
-	public void setFunctionName(String f) {
-		functionName = f;
-	}
+    public void setFunctionName(String f) {
+        functionName = f;
+    }
 
-	public List<Expression> getArgumentList() {
-		return argumentList;
-	}
+    public List<Expression> getArgumentList() {
+        return argumentList;
+    }
 
-	public void setArgumentList(List<Expression> l) {
-		argumentList = l;
-	}
+    public void setArgumentList(List<Expression> l) {
+        argumentList = l;
+    }
 
-	public FunctionInvocation(String functionName, List<Expression> argumentList) {
-		this.functionName = functionName;
-		this.argumentList = argumentList;
-	}
+    public FunctionInvocation(String functionName, List<Expression> argumentList) {
+        this.functionName = functionName;
+        this.argumentList = argumentList;
+    }
 
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		StringBuffer b = new StringBuffer();
-		b.append(functionName);
-		b.append("(");
-		Iterator<Expression> i = argumentList.iterator();
-		while (i.hasNext()) {
-			b.append(i.next().getExpressionString());
-			if (i.hasNext()) {
-				b.append(", ");
-			}
-		}
-		b.append(")");
-		return b.toString();
-	}
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        StringBuffer b = new StringBuffer();
+        b.append(functionName);
+        b.append("(");
+        Iterator<Expression> i = argumentList.iterator();
+        while (i.hasNext()) {
+            b.append(i.next().getExpressionString());
+            if (i.hasNext()) {
+                b.append(", ");
+            }
+        }
+        b.append(")");
+        return b.toString();
+    }
 
-	// -------------------------------------
-	/**
-	 * Evaluates by looking up the name in the VariableResolver
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger) throws ExpressionException {
+    // -------------------------------------
+    /**
+     * Evaluates by looking up the name in the VariableResolver
+     **/
+    @Override
+    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
 
-		// if the Map is null, then the function is invalid
-		if (functions == null) {
-			pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
-		}
+        // if the Map is null, then the function is invalid
+        if (functions == null) {
+            pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
+        }
 
-		// normalize function name
-		String prefix = null;
-		String localName = null;
-		int index = functionName.indexOf(':');
-		if (index == -1) {
-			prefix = "";
-			localName = functionName;
-		} else {
-			prefix = functionName.substring(0, index);
-			localName = functionName.substring(index + 1);
-		}
+        // normalize function name
+        String prefix = null;
+        String localName = null;
+        int index = functionName.indexOf(':');
+        if (index == -1) {
+            prefix = "";
+            localName = functionName;
+        } else {
+            prefix = functionName.substring(0, index);
+            localName = functionName.substring(index + 1);
+        }
 
-		// ensure that the function's name is mapped
-		IFunction target = functions.resolveFunction(prefix, localName);
-		if (target == null) {
-			pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
-		}
+        // ensure that the function's name is mapped
+        IFunction target = functions.resolveFunction(prefix, localName);
+        if (target == null) {
+            pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
+        }
 
-		Class<?>[] types = target.getArgumentTypes();
-		Object[] arguments = new Object[argumentList.size()];
-		for (int i = 0; i < types.length && i < arguments.length; i++) {
-			arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
-			arguments[i] = Coercions.coerce(arguments[i], types[i], pLogger);
-		}
-		if (types.length < arguments.length) {// 动态参数的情况
-			for (int i = types.length; i < arguments.length; i++) {
-				arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
-			}
-		}
+        Class<?>[] types = target.getArgumentTypes();
+        Object[] arguments = new Object[argumentList.size()];
+        for (int i = 0; i < types.length && i < arguments.length; i++) {
+            arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
+            arguments[i] = Coercions.coerce(arguments[i], types[i], pLogger);
+        }
+        if (types.length < arguments.length) {// 动态参数的情况
+            for (int i = types.length; i < arguments.length; i++) {
+                arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
+            }
+        }
 
-		// finally, invoke the target method, which we know to be static
-		return target.execute(pResolver, arguments);
-	}
+        // finally, invoke the target method, which we know to be static
+        return target.execute(pResolver, arguments);
+    }
 }

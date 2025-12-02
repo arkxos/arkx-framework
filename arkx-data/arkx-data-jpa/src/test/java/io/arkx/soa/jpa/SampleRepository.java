@@ -1,13 +1,14 @@
 package io.arkx.soa.jpa;
 
-import io.arkx.framework.data.jpa.annotation.TemplateQuery;
-import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-import java.util.Map;
+import io.arkx.framework.data.jpa.annotation.TemplateQuery;
+import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 
 /**
  * .
@@ -18,22 +19,22 @@ import java.util.Map;
  */
 public interface SampleRepository extends BaseJpaRepository<Sample, Long> {
 
-	@TemplateQuery
-	Page<Sample> findByContent(String content, Pageable pageable);
+    @TemplateQuery
+    Page<Sample> findByContent(String content, Pageable pageable);
 
-	@TemplateQuery
-	List<Sample> findByTemplateQueryObject(SampleQuery sampleQuery, Pageable pageable);
+    @TemplateQuery
+    List<Sample> findByTemplateQueryObject(SampleQuery sampleQuery, Pageable pageable);
 
-	@TemplateQuery
-	Long countContent(String content);
+    @TemplateQuery
+    Long countContent(String content);
 
-	@TemplateQuery
-	List<SampleDTO> findDtos();
+    @TemplateQuery
+    List<SampleDTO> findDtos();
 
-	// #{name?:'and content like :name'}
-	@Query(nativeQuery = true, value = "select * from t_sample where content like ?1")
-	List<Sample> findDtos2(String name);
+    // #{name?:'and content like :name'}
+    @Query(nativeQuery = true, value = "select * from t_sample where content like ?1")
+    List<Sample> findDtos2(String name);
 
-	@TemplateQuery
-	List<Map<String,Object>> findMap();
+    @TemplateQuery
+    List<Map<String, Object>> findMap();
 }

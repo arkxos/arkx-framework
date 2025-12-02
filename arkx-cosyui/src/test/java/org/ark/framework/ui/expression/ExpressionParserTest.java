@@ -8,42 +8,42 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * 
+ *
  * @author Darkness
  * @date 2012-9-8 下午3:00:32
  * @version V1.0
  */
 public class ExpressionParserTest {
 
-	@Test
-	public void parseTrue() throws ParseException {
+    @Test
+    public void parseTrue() throws ParseException {
 
-		String condition = "true";
-		ExpressionParser ep = new ExpressionParser(condition);
+        String condition = "true";
+        ExpressionParser ep = new ExpressionParser(condition);
 
-		Assertions.assertTrue((Boolean)ep.execute());
-	}
+        Assertions.assertTrue((Boolean) ep.execute());
+    }
 
-	@Test
-	public void parse() throws ParseException {
+    @Test
+    public void parse() throws ParseException {
 
-		String condition = "'darkness sky'!=${person.name}";
+        String condition = "'darkness sky'!=${person.name}";
 
-		ExpressionParser ep = new ExpressionParser(condition);
-		IExpressionContext context = new Context();
-		ep.setContext(context);
-		
-		Assertions.assertTrue((Boolean)ep.execute());
-	}
+        ExpressionParser ep = new ExpressionParser(condition);
+        IExpressionContext context = new Context();
+        ep.setContext(context);
 
-	class Context implements IExpressionContext {
+        Assertions.assertTrue((Boolean) ep.execute());
+    }
 
-		public Object eval(PlaceHolder paramPlaceHolder) {
-			if("person".equals(paramPlaceHolder.getPrefix()) && "name".equals(paramPlaceHolder.getVarName())) {
-				return "darkness";
-			}
-			return null;
-		}
+    class Context implements IExpressionContext {
 
-	}
+        public Object eval(PlaceHolder paramPlaceHolder) {
+            if ("person".equals(paramPlaceHolder.getPrefix()) && "name".equals(paramPlaceHolder.getVarName())) {
+                return "darkness";
+            }
+            return null;
+        }
+
+    }
 }

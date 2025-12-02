@@ -1,14 +1,12 @@
 package io.arkx.framework.commons.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.google.common.net.HttpHeaders;
-import io.arkx.framework.commons.utils2.StringUtil;
-import jakarta.servlet.ServletInputStream;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.Map.Entry;
+
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -16,12 +14,17 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 
-import java.io.*;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.*;
-import java.util.Map.Entry;
+import io.arkx.framework.commons.utils2.StringUtil;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.net.HttpHeaders;
+
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Http与Servlet工具类.
@@ -47,8 +50,10 @@ public class WebUtils {
     /**
      * 设置 Cookie（生成时间为1天）
      *
-     * @param name  名称
-     * @param value 值
+     * @param name
+     *            名称
+     * @param value
+     *            值
      */
     public static void setCookie(HttpServletResponse response, String name, String value) {
         setCookie(response, name, value, 60 * 60 * 24);
@@ -57,8 +62,10 @@ public class WebUtils {
     /**
      * 设置 Cookie
      *
-     * @param name  名称
-     * @param value 值
+     * @param name
+     *            名称
+     * @param value
+     *            值
      */
     public static void setCookie(HttpServletResponse response, String name, String value, String path) {
         setCookie(response, name, value, path, 60 * 60 * 24);
@@ -67,9 +74,12 @@ public class WebUtils {
     /**
      * 设置 Cookie
      *
-     * @param name   名称
-     * @param value  值
-     * @param maxAge 生存时间（单位秒）
+     * @param name
+     *            名称
+     * @param value
+     *            值
+     * @param maxAge
+     *            生存时间（单位秒）
      */
     public static void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
         setCookie(response, name, value, "/", maxAge);
@@ -78,10 +88,14 @@ public class WebUtils {
     /**
      * 设置 Cookie
      *
-     * @param name   名称
-     * @param value  值
-     * @param maxAge 生存时间（单位秒）
-     * @param path   路径
+     * @param name
+     *            名称
+     * @param value
+     *            值
+     * @param maxAge
+     *            生存时间（单位秒）
+     * @param path
+     *            路径
      */
     public static void setCookie(HttpServletResponse response, String name, String value, String path, int maxAge) {
         Cookie cookie = new Cookie(name, null);
@@ -112,7 +126,8 @@ public class WebUtils {
     /**
      * 获得指定Cookie的值
      *
-     * @param name 名称
+     * @param name
+     *            名称
      * @return 值
      */
     public static String getCookie(HttpServletRequest request, String name) {
@@ -122,7 +137,8 @@ public class WebUtils {
     /**
      * 获得指定Cookie的值，并删除。
      *
-     * @param name 名称
+     * @param name
+     *            名称
      * @return 值
      */
     public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name) {
@@ -132,13 +148,18 @@ public class WebUtils {
     /**
      * 获得指定Cookie的值
      *
-     * @param request  请求对象
-     * @param response 响应对象
-     * @param name     名字
-     * @param isRemove 是否移除
+     * @param request
+     *            请求对象
+     * @param response
+     *            响应对象
+     * @param name
+     *            名字
+     * @param isRemove
+     *            是否移除
      * @return 值
      */
-    public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name, boolean isRemove) {
+    public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name,
+            boolean isRemove) {
         String value = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -168,7 +189,6 @@ public class WebUtils {
         // Http 1.1 header, set model time after now.
         response.setHeader(HttpHeaders.CACHE_CONTROL, "private, max-age=" + expiresSeconds);
     }
-
 
     /**
      * 设置禁止客户端缓存的Header.
@@ -200,9 +220,11 @@ public class WebUtils {
      * <p>
      * 如果无修改, checkIfModify返回false ,设置304 not modify status.
      *
-     * @param lastModified 内容的最后修改时间.
+     * @param lastModified
+     *            内容的最后修改时间.
      */
-    public static boolean checkIfModifiedSince(HttpServletRequest request, HttpServletResponse response, long lastModified) {
+    public static boolean checkIfModifiedSince(HttpServletRequest request, HttpServletResponse response,
+            long lastModified) {
         long ifModifiedSince = request.getDateHeader(HttpHeaders.IF_MODIFIED_SINCE);
         if ((ifModifiedSince != -1) && (lastModified < ifModifiedSince + 1000)) {
             response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
@@ -216,7 +238,8 @@ public class WebUtils {
      * <p>
      * 如果Etag有效, checkIfNoneMatch返回false, 设置304 not modify status.
      *
-     * @param etag 内容的ETag.
+     * @param etag
+     *            内容的ETag.
      */
     public static boolean checkIfNoneMatchEtag(HttpServletRequest request, HttpServletResponse response, String etag) {
         String headerValue = request.getHeader(HttpHeaders.IF_NONE_MATCH);
@@ -247,7 +270,8 @@ public class WebUtils {
     /**
      * 设置让浏览器弹出下载对话框的Header.
      *
-     * @param fileName 下载后的文件名.
+     * @param fileName
+     *            下载后的文件名.
      */
     public static void setFileDownloadHeader(HttpServletResponse response, String fileName) {
         try {
@@ -352,11 +376,8 @@ public class WebUtils {
     }
 
     /**
-     * 从request中获得参数，并返回可读的Map
-     * application/x-www-form-urlencode
-     * application/json
-     * application/json;charset=UTF-8
-     * multipart/form-data
+     * 从request中获得参数，并返回可读的Map application/x-www-form-urlencode application/json
+     * application/json;charset=UTF-8 multipart/form-data
      *
      * @param request
      * @return
@@ -416,7 +437,6 @@ public class WebUtils {
         return returnMap;
     }
 
-
     /**
      * 组合Parameters生成Query String的Parameter部分,并在paramter name上加上prefix.
      */
@@ -452,7 +472,10 @@ public class WebUtils {
      * @param request
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
-        return (request.getHeader("X-Requested-With") != null && "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString())) || (request.getHeader("Content-Type") != null && request.getHeader("Content-Type").startsWith("application/json"));
+        return (request.getHeader("X-Requested-With") != null
+                && "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString()))
+                || (request.getHeader("Content-Type") != null
+                        && request.getHeader("Content-Type").startsWith("application/json"));
     }
 
     /**
@@ -482,7 +505,7 @@ public class WebUtils {
         if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        //对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
         if (ip != null && ip.length() > 0) {
             String[] ips = ip.split(",");
             if (ips.length > 0) {
@@ -492,7 +515,6 @@ public class WebUtils {
         return ip;
     }
 
-
     /**
      * 判断访问URI是否是静态文件请求
      *
@@ -500,7 +522,8 @@ public class WebUtils {
      */
     public static boolean isStaticFile(String uri) {
         return StringUtil.endsWithAny(uri, staticFiles) && !StringUtil.endsWithAny(uri, new String[]{urlSuffix})
-                && !StringUtil.endsWithAny(uri, new String[]{".jsp"}) && !StringUtil.endsWithAny(uri, new String[]{".java"});
+                && !StringUtil.endsWithAny(uri, new String[]{".jsp"})
+                && !StringUtil.endsWithAny(uri, new String[]{".java"});
     }
 
     /**
@@ -533,10 +556,10 @@ public class WebUtils {
     }
 
     public static String getServerUrl(HttpServletRequest request) {
-        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+                + request.getContextPath();
         return url;
     }
-
 
     public static String getContextPath(HttpServletRequest request) {
         return request.getContextPath();

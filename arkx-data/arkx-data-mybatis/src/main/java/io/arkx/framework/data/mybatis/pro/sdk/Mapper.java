@@ -5,8 +5,5 @@ package io.arkx.framework.data.mybatis.pro.sdk;
  *
  * @author w.dehai
  */
-public interface Mapper<T, ID> extends
-        SelectMapper<T, ID>,
-        InsertMapper<T>,
-        UpdateMapper<T>,
-        DeleteMapper<ID> {}
+public interface Mapper<T, ID> extends SelectMapper<T, ID>, InsertMapper<T>, UpdateMapper<T>, DeleteMapper<ID> {
+}

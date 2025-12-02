@@ -1,16 +1,18 @@
 package io.arkx.framework.data.mybatis.pro.core;
 
-import io.arkx.framework.data.mybatis.pro.core.annotations.Column;
-import io.arkx.framework.data.mybatis.pro.core.annotations.Transient;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.junit.jupiter.api.Test;
+import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.getFieldAliasMap;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.Serializable;
 import java.util.Map;
 
-import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.getFieldAliasMap;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import io.arkx.framework.data.mybatis.pro.core.annotations.Column;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Transient;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author w.dehai

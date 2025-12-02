@@ -1,8 +1,11 @@
 package io.arkx.framework.commons.util;
 
-import cn.hutool.core.exceptions.UtilException;
-import cn.hutool.core.lang.TypeReference;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -18,15 +21,13 @@ import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import cn.hutool.core.exceptions.UtilException;
+import cn.hutool.core.lang.TypeReference;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * spring工具类
- * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
+ * spring工具类 以静态变量保存Spring ApplicationContext,
+ * 可在任何代码任何地方任何时候中取出ApplicaitonContext.
  *
  * @author Darkness
  */
@@ -53,6 +54,7 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     /**
      * 判断以给定名字注册的bean定义是一个singleton还是一个prototype。
      * 如果与给定名字相应的bean定义没有被找到，将会抛出一个异常（NoSuchBeanDefinitionException）
+     *
      * @param name
      * @return boolean
      * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
@@ -90,7 +92,7 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     @SuppressWarnings("unchecked")
     public static <T> T getAopProxy(T invoker) {
         return (T) getBean(invoker.getClass());
-//        return (T) AopContext.currentProxy();
+        // return (T) AopContext.currentProxy();
     }
 
     /**
@@ -100,9 +102,9 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
         return getApplicationContext();
     }
 
-//    public static boolean isVirtual() {
-//        return Threading.VIRTUAL.isActive(getBean(Environment.class));
-//    }
+    // public static boolean isVirtual() {
+    // return Threading.VIRTUAL.isActive(getBean(Environment.class));
+    // }
 
     public ArkSpringContextHolder() {
     }
@@ -118,8 +120,8 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         if (ArkSpringContextHolder.applicationContext != null) {
-            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" +
-                    ArkSpringContextHolder.applicationContext);
+            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:"
+                    + ArkSpringContextHolder.applicationContext);
         }
         ArkSpringContextHolder.applicationContext = applicationContext;
         if (addCallback) {
@@ -135,7 +137,7 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
      * 取得存储在静态变量中的ApplicationContext.
      */
     public static ApplicationContext getApplicationContext() {
-//        assertContextInjected();
+        // assertContextInjected();
         return applicationContext;
     }
 
@@ -154,34 +156,36 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
      * 清除SpringContextHolder中的ApplicationContext为Null.
      */
     private static void clearHolder() {
-        log.debug("清除SpringContextHolder中的ApplicationContext:"
-                + applicationContext);
+        log.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
         applicationContext = null;
     }
     /**
      * 检查ApplicationContext不为空.
      */
-//    private static void assertContextInjected() {
-//        if (applicationContext == null) {
-//            throw new IllegalStateException("applicaitonContext属性未注入, 请在applicationContext" +
-//                    ".xml中定义SpringContextHolder或在SpringBoot启动类中注册SpringContextHolder.");
-//        }
-//    }
+    // private static void assertContextInjected() {
+    // if (applicationContext == null) {
+    // throw new IllegalStateException("applicaitonContext属性未注入,
+    // 请在applicationContext" +
+    // ".xml中定义SpringContextHolder或在SpringBoot启动类中注册SpringContextHolder.");
+    // }
+    // }
 
     public static ListableBeanFactory getBeanFactory() {
         ListableBeanFactory factory = beanFactory == null ? applicationContext : beanFactory;
         if (factory == null) {
-            throw new UtilException("No ConfigurableListableBeanFactory or ApplicationContext injected, maybe not in the Spring environment?");
+            throw new UtilException(
+                    "No ConfigurableListableBeanFactory or ApplicationContext injected, maybe not in the Spring environment?");
         } else {
             return factory;
         }
     }
 
     /**
-     * 针对 某些初始化方法，在SpringContextHolder 未初始化时 提交回调方法。
-     * 在SpringContextHolder 初始化后，进行回调使用
+     * 针对 某些初始化方法，在SpringContextHolder 未初始化时 提交回调方法。 在SpringContextHolder
+     * 初始化后，进行回调使用
      *
-     * @param callBack 回调函数
+     * @param callBack
+     *            回调函数
      */
     public synchronized static void addCallBacks(CallBack callBack) {
         if (addCallback) {
@@ -201,7 +205,7 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
                 throw new UtilException("No ConfigurableListableBeanFactory from context!");
             }
 
-            factory = ((ConfigurableApplicationContext)applicationContext).getBeanFactory();
+            factory = ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
         }
 
         return factory;
@@ -215,7 +219,7 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
      * @throws org.springframework.beans.BeansException
      */
     public static <T> T getBean(String name) {
-        return (T)getBeanFactory().getBean(name);
+        return (T) getBeanFactory().getBean(name);
     }
 
     /**
@@ -235,14 +239,15 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     }
 
     public static <T> T getBean(TypeReference<T> reference) {
-        ParameterizedType parameterizedType = (ParameterizedType)reference.getType();
-        Class<T> rawType = (Class)parameterizedType.getRawType();
+        ParameterizedType parameterizedType = (ParameterizedType) reference.getType();
+        Class<T> rawType = (Class) parameterizedType.getRawType();
         Class<?>[] genericTypes = (Class[]) Arrays.stream(parameterizedType.getActualTypeArguments()).map((type) -> {
-            return (Class)type;
+            return (Class) type;
         }).toArray((x$0) -> {
             return new Class[x$0];
         });
-        String[] beanNames = getBeanFactory().getBeanNamesForType(ResolvableType.forClassWithGenerics(rawType, genericTypes));
+        String[] beanNames = getBeanFactory()
+                .getBeanNamesForType(ResolvableType.forClassWithGenerics(rawType, genericTypes));
         return getBean(beanNames[0], rawType);
     }
 
@@ -290,7 +295,7 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     public static void unregisterBean(String beanName) {
         ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
         if (factory instanceof DefaultSingletonBeanRegistry) {
-            DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry)factory;
+            DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry) factory;
             registry.destroySingleton(beanName);
         } else {
             throw new UtilException("Can not unregister bean, the factory is not a DefaultSingletonBeanRegistry!");
@@ -300,9 +305,12 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     /**
      * 获取SpringBoot 配置信息
      *
-     * @param property     属性key
-     * @param defaultValue 默认值
-     * @param requiredType 返回类型
+     * @param property
+     *            属性key
+     * @param defaultValue
+     *            默认值
+     * @param requiredType
+     *            返回类型
      * @return /
      */
     public static <T> T getProperties(String property, T defaultValue, Class<T> requiredType) {
@@ -313,14 +321,16 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
             if (envValue != null) {
                 result = envValue;
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return result;
     }
 
     /**
      * 获取SpringBoot 配置信息
      *
-     * @param property 属性key
+     * @param property
+     *            属性key
      * @return /
      */
     public static String getProperties(String property) {
@@ -330,8 +340,10 @@ public final class ArkSpringContextHolder implements BeanFactoryPostProcessor, A
     /**
      * 获取SpringBoot 配置信息
      *
-     * @param property     属性key
-     * @param requiredType 返回类型
+     * @param property
+     *            属性key
+     * @param requiredType
+     *            返回类型
      * @return /
      */
     public static <T> T getProperties(String property, Class<T> requiredType) {

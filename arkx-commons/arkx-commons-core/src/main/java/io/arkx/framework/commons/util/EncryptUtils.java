@@ -1,11 +1,5 @@
 package io.arkx.framework.commons.util;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,11 +12,15 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.zip.CRC32;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
- * 数据加密
- * 继承org.apache.commons.codec.digest.DigestUtils
- * 1、Base64编码
- * 1、AES、DES可逆算法
+ * 数据加密 继承org.apache.commons.codec.digest.DigestUtils 1、Base64编码 1、AES、DES可逆算法
  * 2、md5,Hex,Sha不可逆算法加密
  *
  * @author liuyadu
@@ -49,8 +47,10 @@ public class EncryptUtils extends DigestUtils {
     /**
      * AES加密(可逆)
      *
-     * @param plainText  明文
-     * @param privateKey 密钥
+     * @param plainText
+     *            明文
+     * @param privateKey
+     *            密钥
      * @return
      * @throws NoSuchAlgorithmException
      */
@@ -87,8 +87,10 @@ public class EncryptUtils extends DigestUtils {
     /**
      * AES解密
      *
-     * @param cipherText 密文
-     * @param privateKey 密钥
+     * @param cipherText
+     *            密文
+     * @param privateKey
+     *            密钥
      * @return
      * @throws Exception
      */
@@ -122,8 +124,10 @@ public class EncryptUtils extends DigestUtils {
     /**
      * 加密DES(可逆)
      *
-     * @param plainText  明文
-     * @param privateKey 密钥
+     * @param plainText
+     *            明文
+     * @param privateKey
+     *            密钥
      * @return
      */
     public static String encryptDES(String plainText, String privateKey) {
@@ -150,8 +154,10 @@ public class EncryptUtils extends DigestUtils {
     /**
      * 解密DES
      *
-     * @param cipherText 密文
-     * @param privateKey 密钥
+     * @param cipherText
+     *            密文
+     * @param privateKey
+     *            密钥
      * @return
      */
     public static String decryptDES(String cipherText, String privateKey) {
@@ -176,7 +182,6 @@ public class EncryptUtils extends DigestUtils {
         }
     }
 
-
     /**
      * 获取文件md5值
      *
@@ -184,7 +189,7 @@ public class EncryptUtils extends DigestUtils {
      */
     public static String md5(File file) {
         try {
-            //encrypt
+            // encrypt
             MessageDigest messagedigest = MessageDigest.getInstance("MD5");
             FileInputStream in = new FileInputStream(file);
             FileChannel ch = in.getChannel();

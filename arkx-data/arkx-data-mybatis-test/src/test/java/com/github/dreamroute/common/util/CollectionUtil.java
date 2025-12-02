@@ -1,9 +1,9 @@
 package com.github.dreamroute.common.util;
 
+import static java.util.Optional.ofNullable;
+
 import java.util.*;
 import java.util.stream.Stream;
-
-import static java.util.Optional.ofNullable;
 
 /**
  * 描述：{@link java.util.Optional}辅助类
@@ -11,7 +11,8 @@ import static java.util.Optional.ofNullable;
  * @author w.dehi.2022-05-10
  */
 public class CollectionUtil {
-    private CollectionUtil() {}
+    private CollectionUtil() {
+    }
 
     public static <T> boolean isEmpty(Collection<T> source) {
         return source == null || source.isEmpty();

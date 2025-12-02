@@ -14,14 +14,14 @@ import io.arkx.framework.data.db.core.provider.manage.DefaultTableManageProvider
 
 public class OscarTableManageProvider extends DefaultTableManageProvider {
 
-  public OscarTableManageProvider(ProductFactoryProvider factoryProvider) {
-    super(factoryProvider);
-  }
+    public OscarTableManageProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-  @Override
-  public void dropTable(String schemaName, String tableName) {
-    String sql = "DROP TABLE \"%s\".\"%s\" CASCADE ".formatted(schemaName, tableName);
-    this.executeSql(sql);
-  }
+    @Override
+    public void dropTable(String schemaName, String tableName) {
+        String sql = "DROP TABLE \"%s\".\"%s\" CASCADE ".formatted(schemaName, tableName);
+        this.executeSql(sql);
+    }
 
 }

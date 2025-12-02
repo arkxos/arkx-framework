@@ -9,8 +9,7 @@ package org.ark.framework.orm.sync;
  */
 
 /**
- * 同步异常
- * 表示在同步过程中发生的异常
+ * 同步异常 表示在同步过程中发生的异常
  */
 public class SyncException extends RuntimeException {
 
@@ -24,7 +23,8 @@ public class SyncException extends RuntimeException {
     /**
      * 构造函数
      *
-     * @param message 错误消息
+     * @param message
+     *            错误消息
      */
     public SyncException(String message) {
         super(message);
@@ -34,8 +34,10 @@ public class SyncException extends RuntimeException {
     /**
      * 构造函数
      *
-     * @param message 错误消息
-     * @param cause 原因异常
+     * @param message
+     *            错误消息
+     * @param cause
+     *            原因异常
      */
     public SyncException(String message, Throwable cause) {
         super(message, cause);
@@ -45,8 +47,10 @@ public class SyncException extends RuntimeException {
     /**
      * 构造函数
      *
-     * @param message 错误消息
-     * @param errorCode 错误码
+     * @param message
+     *            错误消息
+     * @param errorCode
+     *            错误码
      */
     public SyncException(String message, String errorCode) {
         super(message);
@@ -56,9 +60,12 @@ public class SyncException extends RuntimeException {
     /**
      * 构造函数
      *
-     * @param message 错误消息
-     * @param cause 原因异常
-     * @param errorCode 错误码
+     * @param message
+     *            错误消息
+     * @param cause
+     *            原因异常
+     * @param errorCode
+     *            错误码
      */
     public SyncException(String message, Throwable cause, String errorCode) {
         super(message, cause);

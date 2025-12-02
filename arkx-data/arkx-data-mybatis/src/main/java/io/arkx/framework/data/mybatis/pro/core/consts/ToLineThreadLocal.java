@@ -4,7 +4,8 @@ package io.arkx.framework.data.mybatis.pro.core.consts;
  * @author : w.dehai.2021.04.01
  */
 public class ToLineThreadLocal {
-    private ToLineThreadLocal() {}
+    private ToLineThreadLocal() {
+    }
 
     public static final ThreadLocal<Boolean> TO_LINE = new ThreadLocal<>();
 }

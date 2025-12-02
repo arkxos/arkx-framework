@@ -7,19 +7,19 @@ package org.ark.framework.infrastructure.repositories;
  * @version V1.0
  */
 public class EntityCacheManager {
-	
-	/**
-	 * 检测实体是否启用缓存
-	 * 
-	 * @author Darkness
-	 * @date 2012-12-18 下午04:43:30 
-	 * @version V1.0
-	 */
-	public static boolean isUseCache(Class<?> entityClass) {
-		if (entityClass.isAnnotationPresent(Cache.class)) {
-			return entityClass.getAnnotation(Cache.class).value();
-		}
 
-		return false;
-	}
+    /**
+     * 检测实体是否启用缓存
+     *
+     * @author Darkness
+     * @date 2012-12-18 下午04:43:30
+     * @version V1.0
+     */
+    public static boolean isUseCache(Class<?> entityClass) {
+        if (entityClass.isAnnotationPresent(Cache.class)) {
+            return entityClass.getAnnotation(Cache.class).value();
+        }
+
+        return false;
+    }
 }

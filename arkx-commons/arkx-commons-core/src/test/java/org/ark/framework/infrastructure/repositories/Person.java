@@ -1,13 +1,13 @@
 package org.ark.framework.infrastructure.repositories;
 
+import java.util.Date;
+
 import io.arkx.framework.annotation.Entity;
 import io.arkx.framework.annotation.Ingore;
 import io.arkx.framework.data.jdbc.BaseEntity;
 
-import java.util.Date;
-
 /**
- * 
+ *
  * @author Darkness
  * @date 2012-9-27 上午9:27:46
  * @version V1.0
@@ -15,45 +15,45 @@ import java.util.Date;
 @Entity(name = "test__person")
 public class Person extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Ingore
-	public static final String Birthday = "birthday";
-	
-	private String name;
-	private String sex;
-	private int age;
-	private Date birthday;
+    private static final long serialVersionUID = 1L;
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    @Ingore
+    public static final String Birthday = "birthday";
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    private String name;
+    private String sex;
+    private int age;
+    private Date birthday;
 
-	public String getName() {
-		return name;
-	}
+    public Date getBirthday() {
+        return birthday;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
-	public String getSex() {
-		return sex;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }

@@ -3,7 +3,8 @@ package io.arkx.framework.data.jpa.util;
 import java.util.Random;
 
 /**
- * from https://github.com/twitter/snowflake/blob/master/src/main/scala/com/twitter/service/snowflake/IdWorker.scala
+ * from
+ * https://github.com/twitter/snowflake/blob/master/src/main/scala/com/twitter/service/snowflake/IdWorker.scala
  *
  * @author stormning on 16/6/2.
  */
@@ -95,10 +96,12 @@ public class IdWorker {
 
     /**
      * get the timestamp (millis second) of id
-     * @param id the nextId
+     *
+     * @param id
+     *            the nextId
      * @return the timestamp of id
      */
-    public long getIdTimestamp(long id){
+    public long getIdTimestamp(long id) {
         return idepoch + (id >> timestampLeftShift);
     }
 
@@ -116,12 +119,8 @@ public class IdWorker {
 
     @Override
     public String toString() {
-        String sb = "IdWorker{" + "workerId=" + workerId +
-                ", datacenterId=" + datacenterId +
-                ", idepoch=" + idepoch +
-                ", lastTimestamp=" + lastTimestamp +
-                ", sequence=" + sequence +
-                '}';
+        String sb = "IdWorker{" + "workerId=" + workerId + ", datacenterId=" + datacenterId + ", idepoch=" + idepoch
+                + ", lastTimestamp=" + lastTimestamp + ", sequence=" + sequence + '}';
         return sb;
     }
 }

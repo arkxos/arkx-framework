@@ -1,5 +1,7 @@
 package io.arkx.framework.data.jpa.converter;
 
+import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -7,13 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
-
 /**
- * 对象转换器.
- * S source
- * D destination
- * ID source id
+ * 对象转换器. S source D destination ID source id
  *
  * @author stormning on 16/6/15.
  */
@@ -37,7 +34,7 @@ public abstract class AbstractConverter<S, D, ID> implements ConverterEx<S, D, I
     }
 
     protected void initAssemblers(List<ConverterAssembler> assemblers) {
-        //implement it
+        // implement it
     }
 
     public void setHints(Map<String, Object> hints) {
@@ -170,7 +167,6 @@ public abstract class AbstractConverter<S, D, ID> implements ConverterEx<S, D, I
         }
     }
 
-
     protected abstract ID getId(S source);
 
     protected abstract D internalConvert(S source);
@@ -178,7 +174,6 @@ public abstract class AbstractConverter<S, D, ID> implements ConverterEx<S, D, I
     protected abstract S internalGet(ID id);
 
     protected abstract Map<ID, S> internalMGet(Collection<ID> ids);
-
 
     @Override
     public void afterPropertiesSet() throws Exception {

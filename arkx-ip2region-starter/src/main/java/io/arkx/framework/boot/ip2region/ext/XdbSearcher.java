@@ -1,7 +1,11 @@
 package io.arkx.framework.boot.ip2region.ext;
 
-import io.arkx.framework.boot.ip2region.util.Util;
-import lombok.extern.slf4j.Slf4j;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ResourceLoaderAware;
@@ -10,11 +14,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+import io.arkx.framework.boot.ip2region.util.Util;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * https://github.com/lionsoul2014/ip2region/tree/master/binding/java
@@ -41,10 +43,8 @@ public class XdbSearcher implements ResourceLoaderAware, DisposableBean {
     }
 
     /**
-     * 缓存整个 xdb 数据 （推荐）
-     * 1、创建 searcher 对象
-     * 2、加载数据
-     * 3、关闭 searcher 对象
+     * 缓存整个 xdb 数据 （推荐） 1、创建 searcher 对象 2、加载数据 3、关闭 searcher 对象
+     *
      * @param location
      * @throws IOException
      */
@@ -52,13 +52,13 @@ public class XdbSearcher implements ResourceLoaderAware, DisposableBean {
         // 1、从 dbPath 加载整个 xdb 到内存。
         if (Objects.isNull(xdbBuff)) {
             try {
-                if(new File(location).exists()) {
+                if (new File(location).exists()) {
                     // load ip2region.db from java.nio.file.Path
                     xdbBuff = Searcher.loadContentFromFile(location);
                 } else {
                     // 查找resource
                     Resource resource = resourceLoader.getResource(location);
-                    try(ByteArrayOutputStream output = new ByteArrayOutputStream();) {
+                    try (ByteArrayOutputStream output = new ByteArrayOutputStream();) {
                         FileCopyUtils.copy(resource.getInputStream(), output);
                         xdbBuff = output.toByteArray();
                     }
@@ -82,17 +82,18 @@ public class XdbSearcher implements ResourceLoaderAware, DisposableBean {
     /**
      * get the region with a int ip address with memory binary search algorithm
      *
-     * @param   ip
+     * @param ip
      * @throws IOException
      */
     public String memorySearch(long ip) throws IOException {
-        if(Objects.isNull(xdbBuff) || Objects.isNull(searcher)){
+        if (Objects.isNull(xdbBuff) || Objects.isNull(searcher)) {
             return NOT_MATCH;
         }
         long sTime = System.nanoTime();
         String region = searcher.search(ip);
         long cost = TimeUnit.NANOSECONDS.toMicros((long) (System.nanoTime() - sTime));
-        log.info(" IP : {} >> region: {}, ioCount: {}, took: {} μs \n", Searcher.long2ip(ip), region, searcher.getIOCount(), cost);
+        log.info(" IP : {} >> region: {}, ioCount: {}, took: {} μs \n", Searcher.long2ip(ip), region,
+                searcher.getIOCount(), cost);
         // not matched
         if (!StringUtils.hasText(region)) {
             return NOT_MATCH;
@@ -103,9 +104,9 @@ public class XdbSearcher implements ResourceLoaderAware, DisposableBean {
     /**
      * get the region throught the ip address with memory binary search algorithm
      *
-     * @param   ip
-     * @return  DataBlock
-     * @throws  IOException
+     * @param ip
+     * @return DataBlock
+     * @throws IOException
      */
     public String memorySearch(String ip) throws IOException {
         return memorySearch(Util.ip2long(ip));
@@ -118,7 +119,7 @@ public class XdbSearcher implements ResourceLoaderAware, DisposableBean {
 
     @Override
     public void destroy() throws Exception {
-        if(Objects.nonNull(searcher)){
+        if (Objects.nonNull(searcher)) {
             searcher.close();
         }
     }

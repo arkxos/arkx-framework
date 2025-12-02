@@ -1,14 +1,15 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.callback.Progress;
-import io.arkx.framework.util.task.callback.TaskCompletedListener;
-import io.arkx.framework.util.task.callback.TaskListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.arkx.framework.util.task.callback.Progress;
+import io.arkx.framework.util.task.callback.TaskCompletedListener;
+import io.arkx.framework.util.task.callback.TaskListener;
 
 public class TreeTaskTest {
 
@@ -16,17 +17,13 @@ public class TreeTaskTest {
 
     @BeforeAll
     public static void before() {
-        taskEngine = new TaskEngine.Builder()
-            .windowsScheduledExecutor()
-            .corePoolSize(4)
-            .maxPoolSize(4)
-            .build();
+        taskEngine = new TaskEngine.Builder().windowsScheduledExecutor().corePoolSize(4).maxPoolSize(4).build();
         taskEngine.start();
     }
 
     @AfterAll
     public static void after() {
-//        taskEngine.shutdown();
+        // taskEngine.shutdown();
     }
 
     @Test
@@ -39,8 +36,9 @@ public class TreeTaskTest {
         AnalyzeFilesTask analyzeFilesTask = new AnalyzeFilesTask(files);
         taskEngine.commit(analyzeFilesTask);
 
-//        assertEquals(1, taskEngine.getRunningTasks().size());
-//        assertEquals(TaskStatus.RUNNING, taskEngine.getRunningTasks().get(0).getStatus());
+        // assertEquals(1, taskEngine.getRunningTasks().size());
+        // assertEquals(TaskStatus.RUNNING,
+        // taskEngine.getRunningTasks().get(0).getStatus());
 
         analyzeFilesTask.await();
 
@@ -75,14 +73,14 @@ public class TreeTaskTest {
             }
         });
 
-        while(!analyzeFilesTask.isFinished()) {
+        while (!analyzeFilesTask.isFinished()) {
             Thread.sleep(1000);
-//            analyzeFilesTask.print();
+            // analyzeFilesTask.print();
         }
 
         analyzeFilesTask.print();
 
-//        assertEquals(TaskStatus.SUCCESS, analyzeFilesTask.getStatus());
+        // assertEquals(TaskStatus.SUCCESS, analyzeFilesTask.getStatus());
 
     }
 

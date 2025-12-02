@@ -1,9 +1,8 @@
 package io.arkx.framework.extend.plugin;
 
-import io.arkx.framework.commons.util.FileUtil;
-
 import java.io.File;
 
+import io.arkx.framework.commons.util.FileUtil;
 
 /**
  * @class org.ark.framework.extend.plugin.spi.FilePluginParser
@@ -14,22 +13,22 @@ import java.io.File;
  */
 public class FilePluginParser implements IPluginParser {
 
-	@Override
-	public boolean validate(File f) {
-		return (f.isFile()) && f.getName().toLowerCase().endsWith(".plugin");
-	}
+    @Override
+    public boolean validate(File f) {
+        return (f.isFile()) && f.getName().toLowerCase().endsWith(".plugin");
+    }
 
-	@Override
-	public PluginConfig[] parse(File f) {
-		PluginConfig pc = new PluginConfig();
-		try {
-			pc.parse(FileUtil.readText(f, "UTF-8"));
-			pc.setUpdateSite(f.getAbsolutePath());
-			pc.setPackageFile(f.getAbsolutePath());
-		} catch (PluginException e) {
-			e.printStackTrace();
-		}
-		return new PluginConfig[] { pc };
-	}
+    @Override
+    public PluginConfig[] parse(File f) {
+        PluginConfig pc = new PluginConfig();
+        try {
+            pc.parse(FileUtil.readText(f, "UTF-8"));
+            pc.setUpdateSite(f.getAbsolutePath());
+            pc.setPackageFile(f.getAbsolutePath());
+        } catch (PluginException e) {
+            e.printStackTrace();
+        }
+        return new PluginConfig[]{pc};
+    }
 
 }

@@ -1,12 +1,19 @@
 package io.arkx.framework.data.mybatis.pro.core.util;
 
-import io.arkx.framework.data.mybatis.pro.core.annotations.Column;
-import io.arkx.framework.data.mybatis.pro.core.annotations.Id;
-import io.arkx.framework.data.mybatis.pro.core.annotations.Table;
-import io.arkx.framework.data.mybatis.pro.core.annotations.Type;
-import io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel;
-import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
-import io.arkx.framework.data.mybatis.pro.sdk.Mapper;
+import static cn.hutool.core.annotation.AnnotationUtil.getAnnotationValue;
+import static cn.hutool.core.util.ClassUtil.getTypeArgument;
+import static io.arkx.framework.data.mybatis.pro.core.util.ClassUtil.*;
+import static io.arkx.framework.data.mybatis.pro.core.util.DocumentUtil.createDocumentFromResource;
+import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.FIELDS_ALIAS_CACHE;
+import static io.arkx.framework.data.mybatis.pro.core.util.SqlUtil.toLine;
+import static org.springframework.util.StringUtils.isEmpty;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.ibatis.reflection.Reflector;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ReflectionUtils;
@@ -15,19 +22,13 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static cn.hutool.core.annotation.AnnotationUtil.getAnnotationValue;
-import static cn.hutool.core.util.ClassUtil.getTypeArgument;
-import static io.arkx.framework.data.mybatis.pro.core.util.ClassUtil.*;
-import static io.arkx.framework.data.mybatis.pro.core.util.DocumentUtil.createDocumentFromResource;
-import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.FIELDS_ALIAS_CACHE;
-import static io.arkx.framework.data.mybatis.pro.core.util.SqlUtil.toLine;
-import static org.springframework.util.StringUtils.isEmpty;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Column;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Id;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Table;
+import io.arkx.framework.data.mybatis.pro.core.annotations.Type;
+import io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel;
+import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
+import io.arkx.framework.data.mybatis.pro.sdk.Mapper;
 
 /**
  * @author w.dehai
@@ -84,7 +85,8 @@ public class MapperUtil {
         String updateByIdPrefix = "update " + tableName;
 
         String commonWhereIdIs = WHERE + idColumn + " = #{" + idName + "}";
-        String commonWhereIdIn = WHERE + idColumn + " in <foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>";
+        String commonWhereIdIn = WHERE + idColumn
+                + " in <foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>";
 
         String selectById = selectPrefix + commonWhereIdIs;
         String selectByIds = selectPrefix + commonWhereIdIn;
@@ -93,15 +95,19 @@ public class MapperUtil {
         methodName2Sql.put("selectAll", selectPrefix);
 
         String insert = insertPrefix + this.insertColumns + " VALUES " + this.insertValues;
-        String insertList = insertPrefix + " " + this.insertColumns + " VALUES <foreach collection='list' item='item' index='index' separator=','>" + this.insertValues.replace("#{", "#{item.") + "</foreach>";
+        String insertList = insertPrefix + " " + this.insertColumns
+                + " VALUES <foreach collection='list' item='item' index='index' separator=','>"
+                + this.insertValues.replace("#{", "#{item.") + "</foreach>";
 
-        String insertExcludeNull = insertPrefix + " (" + this.insertExcludeNullColumns + ") " + " VALUES (" + this.insertExcludeNullValues + ")";
+        String insertExcludeNull = insertPrefix + " (" + this.insertExcludeNullColumns + ") " + " VALUES ("
+                + this.insertExcludeNullValues + ")";
         methodName2Sql.put("insert", insert);
         methodName2Sql.put("insertList", insertList);
         methodName2Sql.put("insertExcludeNull", insertExcludeNull);
 
         String updateById = updateByIdPrefix + " set " + this.updateByIdColumns + commonWhereIdIs;
-        String updateByIdExcludeNull = updateByIdPrefix + " set " + this.updateByIdExcludeNullColumns + WHERE + this.idColumn + " = #{" + this.idName + "}";
+        String updateByIdExcludeNull = updateByIdPrefix + " set " + this.updateByIdExcludeNullColumns + WHERE
+                + this.idColumn + " = #{" + this.idName + "}";
         methodName2Sql.put("updateById", updateById);
         methodName2Sql.put("updateByIdExcludeNull", updateByIdExcludeNull);
 
@@ -117,9 +123,7 @@ public class MapperUtil {
     public Resource parse() {
         Set<String> existingIds = getExistingIdsFromXml();
         Method[] methods = Mapper.class.getMethods();
-        Stream.of(methods)
-                .map(Method::getName)
-                .filter(methodName -> !existingIds.contains(methodName))
+        Stream.of(methods).map(Method::getName).filter(methodName -> !existingIds.contains(methodName))
                 .forEach(methodName -> {
                     MapperLabel ml;
                     String returnType = null;
@@ -134,7 +138,8 @@ public class MapperUtil {
                         ml = MapperLabel.DELETE;
                     }
 
-                    DocumentUtil.fillSqlNode(this.document, ml, methodName, returnType, methodName2Sql.get(methodName), type, idName);
+                    DocumentUtil.fillSqlNode(this.document, ml, methodName, returnType, methodName2Sql.get(methodName),
+                            type, idName);
                 });
         return DocumentUtil.createResourceFromDocument(this.document);
     }
@@ -175,7 +180,8 @@ public class MapperUtil {
         Reflector r = new Reflector(entityCls);
         ReflectionUtils.doWithFields(entityCls, field -> {
             Column colAn = field.getAnnotation(Column.class);
-            String column = Optional.ofNullable(colAn).map(Column::value).orElse(SqlUtil.toLine(field.getName(), FIELDS_ALIAS_CACHE.get(entityCls)));
+            String column = Optional.ofNullable(colAn).map(Column::value)
+                    .orElse(SqlUtil.toLine(field.getName(), FIELDS_ALIAS_CACHE.get(entityCls)));
             values2Columns.put(field.getName(), column);
 
             Id idAn = field.getAnnotation(Id.class);
@@ -196,7 +202,8 @@ public class MapperUtil {
         });
 
         this.insertColumns = columns.stream().collect(Collectors.joining(",", "(", ")"));
-        this.insertValues = values.stream().map(column -> "#{" + column + "}").collect(Collectors.joining(",", "(", ")"));
+        this.insertValues = values.stream().map(column -> "#{" + column + "}")
+                .collect(Collectors.joining(",", "(", ")"));
         this.createInsertExcludeNullColumnsAndValues(columns, values);
         this.createUpdateByIdColumns(columns, values);
         this.createUpdateByIdExcludeNullColumns(columns, values);
@@ -213,9 +220,11 @@ public class MapperUtil {
     private void createInsertExcludeNullColumnsAndValues(List<String> columns, List<String> values) {
         StringBuilder insertExcludeNullCols = new StringBuilder();
         StringBuilder insertExcludeNullVals = new StringBuilder();
-        for (int i=0; i<columns.size(); i++) {
-            insertExcludeNullCols.append("<if test = '").append(values.get(i)).append(" != null'>").append(columns.get(i)).append(",</if>");
-            insertExcludeNullVals.append("<if test = '").append(values.get(i)).append(" != null'>#{").append(values.get(i)).append("},</if>");
+        for (int i = 0; i < columns.size(); i++) {
+            insertExcludeNullCols.append("<if test = '").append(values.get(i)).append(" != null'>")
+                    .append(columns.get(i)).append(",</if>");
+            insertExcludeNullVals.append("<if test = '").append(values.get(i)).append(" != null'>#{")
+                    .append(values.get(i)).append("},</if>");
         }
 
         this.insertExcludeNullColumns = TRIM_START + insertExcludeNullCols + TRIM_END;
@@ -224,7 +233,7 @@ public class MapperUtil {
 
     private void createUpdateByIdColumns(List<String> columns, List<String> values) {
         StringBuilder result = new StringBuilder();
-        for (int i=0; i<columns.size(); i++) {
+        for (int i = 0; i < columns.size(); i++) {
             result.append(columns.get(i)).append(" = #{").append(values.get(i)).append("}");
             if (i != columns.size() - 1) {
                 result.append(",");
@@ -235,10 +244,10 @@ public class MapperUtil {
 
     private void createUpdateByIdExcludeNullColumns(List<String> columns, List<String> values) {
         StringBuilder result = new StringBuilder();
-        for (int i=0; i<columns.size(); i++) {
-            result.append("<if test = '").append(values.get(i)).append(" != null'>").append(columns.get(i)).append(" = #{").append(values.get(i)).append("},</if>");
+        for (int i = 0; i < columns.size(); i++) {
+            result.append("<if test = '").append(values.get(i)).append(" != null'>").append(columns.get(i))
+                    .append(" = #{").append(values.get(i)).append("},</if>");
         }
         this.updateByIdExcludeNullColumns = TRIM_START + result + TRIM_END;
     }
 }
-

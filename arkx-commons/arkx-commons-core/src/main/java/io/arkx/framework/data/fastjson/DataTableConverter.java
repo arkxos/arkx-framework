@@ -1,13 +1,14 @@
 package io.arkx.framework.data.fastjson;
 
-import com.alibaba.fastjson.serializer.JSONSerializer;
-import com.alibaba.fastjson.serializer.ObjectSerializer;
-import com.alibaba.fastjson.serializer.SerializeWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+
 import io.arkx.framework.commons.collection.DataTable;
 import io.arkx.framework.json.JSON;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
+import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.alibaba.fastjson.serializer.ObjectSerializer;
+import com.alibaba.fastjson.serializer.SerializeWriter;
 
 /**
  * @author Darkness
@@ -16,17 +17,16 @@ import java.lang.reflect.Type;
  */
 public class DataTableConverter implements ObjectSerializer {
 
-	@Override
-	public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
-			throws IOException {
-		SerializeWriter out = serializer.getWriter();
-		if (object == null) {
-			serializer.getWriter().writeNull();
-			return;
-		}
-		DataTable dataTypes = (DataTable) object;
-		out.write(JSON.toJSONString(dataTypes));
-	}
-	
-}
+    @Override
+    public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
+            throws IOException {
+        SerializeWriter out = serializer.getWriter();
+        if (object == null) {
+            serializer.getWriter().writeNull();
+            return;
+        }
+        DataTable dataTypes = (DataTable) object;
+        out.write(JSON.toJSONString(dataTypes));
+    }
 
+}

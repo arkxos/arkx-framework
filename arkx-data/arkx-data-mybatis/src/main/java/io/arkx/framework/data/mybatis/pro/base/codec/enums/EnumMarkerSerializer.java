@@ -1,13 +1,14 @@
 package io.arkx.framework.data.mybatis.pro.base.codec.enums;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.IOException;
-
 /**
  * 描述：EnumMarker Jackson序列化，将EnumMarkder序列化成getValue()方式：
+ *
  * <pre>
  *     {
  *         "name": "w.dehi",

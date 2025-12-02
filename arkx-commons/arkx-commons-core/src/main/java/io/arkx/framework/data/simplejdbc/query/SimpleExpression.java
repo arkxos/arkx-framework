@@ -3,28 +3,28 @@ package io.arkx.framework.data.simplejdbc.query;
 import java.util.Collection;
 
 public class SimpleExpression implements Criterion {
-	
-	private String columnName;
 
-	private Object value;
+    private String columnName;
 
-	private String op;
+    private Object value;
 
-	public SimpleExpression(String columnName, Object value, String op) {
-		this.columnName = columnName;
-		this.value = value;
-		this.op = op;
-	}
+    private String op;
 
-	public String toSqlString() {
-		return columnName + op + '?';
-	}
+    public SimpleExpression(String columnName, Object value, String op) {
+        this.columnName = columnName;
+        this.value = value;
+        this.op = op;
+    }
 
-	public Object getValue() {
-		return value;
-	}
+    public String toSqlString() {
+        return columnName + op + '?';
+    }
 
-	public Collection<?> getValues() {
-		return null;
-	}
+    public Object getValue() {
+        return value;
+    }
+
+    public Collection<?> getValues() {
+        return null;
+    }
 }

@@ -21,6 +21,6 @@ package io.arkx.framework.cloud.sidecar;
  */
 public interface CustomHealthCheckHandler {
 
-	void handler(String applicationName, SidecarInstanceInfo sidecarInstanceInfo);
+    void handler(String applicationName, SidecarInstanceInfo sidecarInstanceInfo);
 
 }

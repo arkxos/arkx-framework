@@ -1,6 +1,11 @@
 package io.arkx.framework.annotation.util;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.*;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -10,14 +15,11 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.SystemPropertyUtils;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.*;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 包工具，根据package路径，加载class
+ *
  * @author Darkness
  * @date 2019-10-01 16:11:57
  * @version V1.0
@@ -25,27 +27,25 @@ import java.util.*;
 @Slf4j
 public class PackageUtil {
 
-    //扫描  scanPackages 下的文件的匹配符
+    // 扫描 scanPackages 下的文件的匹配符
     protected static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
 
     /**
-     * 结合spring的类扫描方式
-     * 根据需要扫描的包路径及相应的注解，获取最终测method集合
-     * 仅返回public方法，如果方法是非public类型的，不会被返回
-     * 可以扫描工程下的class文件及jar中的class文件
+     * 结合spring的类扫描方式 根据需要扫描的包路径及相应的注解，获取最终测method集合
+     * 仅返回public方法，如果方法是非public类型的，不会被返回 可以扫描工程下的class文件及jar中的class文件
      *
      * @param scanPackages
      * @param annotation
      * @return
      */
     public static List<Method> findClassAnnotationMethods(String scanPackages, Class<? extends Annotation> annotation) {
-        //获取所有的类
+        // 获取所有的类
         List<String> clazzSet = findPackageClass(scanPackages);
         List<Method> methods = new ArrayList<>();
-        //遍历类，查询相应的annotation方法
+        // 遍历类，查询相应的annotation方法
         for (String clazz : clazzSet) {
             try {
-            	List<Method> ms = findAnnotationMethods(clazz, annotation);
+                List<Method> ms = findAnnotationMethods(clazz, annotation);
                 if (ms != null) {
                     methods.addAll(ms);
                 }
@@ -58,14 +58,15 @@ public class PackageUtil {
     /**
      * 根据扫描包的,查询下面的所有类
      *
-     * @param scanPackages 扫描的package路径
+     * @param scanPackages
+     *            扫描的package路径
      * @return
      */
     public static List<String> findPackageClass(String scanPackages) {
         if (StringUtils.isBlank(scanPackages)) {
             return new ArrayList<>();
         }
-        //验证及排重包路径,避免父子路径多次扫描
+        // 验证及排重包路径,避免父子路径多次扫描
         List<String> packages = checkPackage(scanPackages);
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
@@ -74,12 +75,14 @@ public class PackageUtil {
             if (StringUtils.isBlank(basePackage)) {
                 continue;
             }
-            String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
-                    org.springframework.util.ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage)) + "/" + DEFAULT_RESOURCE_PATTERN;
+            String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
+                    + org.springframework.util.ClassUtils.convertClassNameToResourcePath(
+                            SystemPropertyUtils.resolvePlaceholders(basePackage))
+                    + "/" + DEFAULT_RESOURCE_PATTERN;
             try {
                 Resource[] resources = resourcePatternResolver.getResources(packageSearchPath);
                 for (Resource resource : resources) {
-                    //检查resource，这里的resource都是class
+                    // 检查resource，这里的resource都是class
                     String clazz = loadClassName(metadataReaderFactory, resource);
                     clazzSet.add(clazz);
                 }
@@ -102,7 +105,7 @@ public class PackageUtil {
             return new ArrayList<>();
         }
         List<String> packages = new ArrayList<String>();
-        //排重路径
+        // 排重路径
         Collections.addAll(packages, scanPackages.split(","));
         for (String pInArr : packages.toArray(new String[packages.size()])) {
             if (StringUtils.isBlank(pInArr) || pInArr.equals(".") || pInArr.startsWith(".")) {
@@ -116,10 +119,10 @@ public class PackageUtil {
             while (packageIte.hasNext()) {
                 String pack = packageIte.next();
                 if (pInArr.startsWith(pack + ".")) {
-                    //如果待加入的路径是已经加入的pack的子集，不加入
+                    // 如果待加入的路径是已经加入的pack的子集，不加入
                     needAdd = false;
                 } else if (pack.startsWith(pInArr + ".")) {
-                    //如果待加入的路径是已经加入的pack的父集，删除已加入的pack
+                    // 如果待加入的路径是已经加入的pack的父集，删除已加入的pack
                     packageIte.remove();
                 }
             }
@@ -130,15 +133,17 @@ public class PackageUtil {
         return packages;
     }
 
-
     /**
      * 加载资源，根据resource获取className
      *
-     * @param metadataReaderFactory spring中用来读取resource为class的工具
-     * @param resource              这里的资源就是一个Class
+     * @param metadataReaderFactory
+     *            spring中用来读取resource为class的工具
+     * @param resource
+     *            这里的资源就是一个Class
      * @throws IOException
      */
-    private static String loadClassName(MetadataReaderFactory metadataReaderFactory, Resource resource) throws IOException {
+    private static String loadClassName(MetadataReaderFactory metadataReaderFactory, Resource resource)
+            throws IOException {
         try {
             if (resource.isReadable()) {
                 MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
@@ -153,12 +158,12 @@ public class PackageUtil {
     }
 
     /**
-     * 把action下面的所有method遍历一次，标记他们是否需要进行敏感词验证
-     * 如果需要，放入cache中
+     * 把action下面的所有method遍历一次，标记他们是否需要进行敏感词验证 如果需要，放入cache中
      *
      * @param fullClassName
      */
-    public static List<Method> findAnnotationMethods(String fullClassName, Class<? extends Annotation> anno) throws ClassNotFoundException {
+    public static List<Method> findAnnotationMethods(String fullClassName, Class<? extends Annotation> anno)
+            throws ClassNotFoundException {
         List<Method> methodSet = new ArrayList<Method>();
         Class<?> clz = Class.forName(fullClassName);
         Method[] methods = clz.getDeclaredMethods();
@@ -173,53 +178,54 @@ public class PackageUtil {
         }
         return methodSet;
     }
-    
+
     public static List<String> findAnnotationClasses(String scanPackages, Class<? extends Annotation> annotationClass) {
-    	 //获取所有的类
-    	List<String> clazzSet = findPackageClass(scanPackages);
-    	List<String> result = new ArrayList<>();
-        //遍历类，查询相应的annotation方法
+        // 获取所有的类
+        List<String> clazzSet = findPackageClass(scanPackages);
+        List<String> result = new ArrayList<>();
+        // 遍历类，查询相应的annotation方法
         for (String clazz : clazzSet) {
             try {
-            	if(!clazz.endsWith("UI") && !clazz.endsWith("BaseUIFacade")) {
-            		continue;
-            	}
-            	
-            	Class<?> clz = Class.forName(clazz);
+                if (!clazz.endsWith("UI") && !clazz.endsWith("BaseUIFacade")) {
+                    continue;
+                }
+
+                Class<?> clz = Class.forName(clazz);
                 if (clz.isAnnotationPresent(annotationClass)) {
-                	result.add(clazz);
+                    result.add(clazz);
                 }
             } catch (ClassNotFoundException ignore) {
             }
         }
         return result;
     }
-    
+
     /**
-     * 
+     *
      * @param scanPackages
      * @param annotationClass
      * @return
      */
-    public static Set<String> findAnnotationedClasses(String scanPackages, Class<? extends Annotation> annotationClass) {
-		// 获取所有的类
-		List<String> clazzSet = PackageUtil.findPackageClass(scanPackages);
-		Set<String> result = new HashSet<>();
-		// 遍历类，查询相应的annotation方法
-		for (String clazz : clazzSet) {
-			try {
-				Class<?> clz = Class.forName(clazz);
-				if (clz.isAnnotationPresent(annotationClass)) {
-					result.add(clazz);
-				}
-			} catch (ClassNotFoundException ignore) {
-			}
-		}
-		return result;
-	}
+    public static Set<String> findAnnotationedClasses(String scanPackages,
+            Class<? extends Annotation> annotationClass) {
+        // 获取所有的类
+        List<String> clazzSet = PackageUtil.findPackageClass(scanPackages);
+        Set<String> result = new HashSet<>();
+        // 遍历类，查询相应的annotation方法
+        for (String clazz : clazzSet) {
+            try {
+                Class<?> clz = Class.forName(clazz);
+                if (clz.isAnnotationPresent(annotationClass)) {
+                    result.add(clazz);
+                }
+            } catch (ClassNotFoundException ignore) {
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
-        String packages = "io.arkx";//,com.ab,com.c,com.as.t,com.as,com.as.ta,com.at.ja,com.at.jc,com.at.";
+        String packages = "io.arkx";// ,com.ab,com.c,com.as.t,com.as,com.as.ta,com.at.ja,com.at.jc,com.at.";
         System.out.println("检测前的package: " + packages);
         System.out.println("检测后的package: " + StringUtils.join(checkPackage(packages), ","));
         List<String> classes = findPackageClass(packages);

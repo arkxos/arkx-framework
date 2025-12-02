@@ -15,29 +15,36 @@
  */
 package io.arkx.framework.commons.uid.component;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
+
 import io.arkx.framework.commons.uid.UidGenerator;
 import io.arkx.framework.commons.uid.exception.UidGenerateException;
 import io.arkx.framework.commons.uid.utils.BitsAllocator;
 import io.arkx.framework.commons.uid.utils.DateUtils;
 import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Represents an implementation of {@link UidGenerator}
  * <p>
  * The unique id has 64bits (long), default allocated as blow:<br>
  * <li>sign: The highest bit is 0
- * <li>delta seconds: The next 28 bits, represents delta seconds since a customer epoch(2016-05-20 00:00:00.000).
- * Supports about 8.7 years until to 2024-11-20 21:24:16
- * <li>worker id: The next 22 bits, represents the worker's id which assigns based on database, max id is about 420W
- * <li>sequence: The next 13 bits, represents a sequence within the same second, max for 8192/s<br><br>
+ * <li>delta seconds: The next 28 bits, represents delta seconds since a
+ * customer epoch(2016-05-20 00:00:00.000). Supports about 8.7 years until to
+ * 2024-11-20 21:24:16
+ * <li>worker id: The next 22 bits, represents the worker's id which assigns
+ * based on database, max id is about 420W
+ * <li>sequence: The next 13 bits, represents a sequence within the same second,
+ * max for 8192/s<br>
+ * <br>
  * <p>
- * The {@link DefaultUidGenerator#parseUID(long)} is a tool method to parse the bits
+ * The {@link DefaultUidGenerator#parseUID(long)} is a tool method to parse the
+ * bits
  *
  * <pre>{@code
  * +------+----------------------+----------------+-----------+
@@ -50,7 +57,8 @@ import java.util.concurrent.TimeUnit;
  * <li>timeBits: default as 28
  * <li>workerBits: default as 22
  * <li>seqBits: default as 13
- * <li>epochStr: Epoch date string format 'yyyy-MM-dd'. Default as '2016-05-20'<p>
+ * <li>epochStr: Epoch date string format 'yyyy-MM-dd'. Default as '2016-05-20'
+ * <p>
  *
  * <b>Note that:</b> The total bits must be 64 -1
  *
@@ -72,20 +80,19 @@ public class DefaultUidGenerator implements UidGenerator, InitializingBean {
     protected String epochStr = "2025-10-01";
     protected long epochSeconds = TimeUnit.MILLISECONDS.toSeconds(1759248000000L);
 
-//    public static void main(String[] args) {
-//        LocalDate localDate = LocalDate.of(2016, 5, 20);
-//
-//        // 定义纪元起点和指定日期的开始时刻（UTC时区）
-//        LocalDateTime epochStart = LocalDateTime.of(1970, 1, 1, 0, 0);
-//        LocalDateTime dateStart = localDate.atTime(LocalTime.MAX);
-//
-//        // 计算两个时间点之间的秒数差
-//        long secondsSinceEpoch = ChronoUnit.SECONDS.between(epochStart, dateStart);
-//        System.out.println("秒数 (Epoch): " + secondsSinceEpoch);
-//
-//        System.out.println(TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern("2025-10-01").getTime()));
-//    }
-
+    // public static void main(String[] args) {
+    // LocalDate localDate = LocalDate.of(2016, 5, 20);
+    //
+    // // 定义纪元起点和指定日期的开始时刻（UTC时区）
+    // LocalDateTime epochStart = LocalDateTime.of(1970, 1, 1, 0, 0);
+    // LocalDateTime dateStart = localDate.atTime(LocalTime.MAX);
+    //
+    // // 计算两个时间点之间的秒数差
+    // long secondsSinceEpoch = ChronoUnit.SECONDS.between(epochStart, dateStart);
+    // System.out.println("秒数 (Epoch): " + secondsSinceEpoch);
+    //
+    // System.out.println(TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern("2025-10-01").getTime()));
+    // }
 
     /**
      * Stable fields after spring bean initializing
@@ -112,7 +119,8 @@ public class DefaultUidGenerator implements UidGenerator, InitializingBean {
         // initialize worker id
         workerId = workerIdAssigner.assignWorkerId();
         if (workerId > bitsAllocator.getMaxWorkerId()) {
-            throw new UidGenerateException("Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
+            throw new UidGenerateException(
+                    "Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
         }
         log.info("Initialized bits(1, {}, {}, {}) for workerID:{}", timeBits, workerBits, seqBits, workerId);
     }
@@ -144,15 +152,16 @@ public class DefaultUidGenerator implements UidGenerator, InitializingBean {
         String thatTimeStr = DateUtils.formatByDateTimePattern(thatTime);
 
         // format as string
-        return String.format("{\"UID\":\"%d\",\"timestamp\":\"%s\",\"workerId\":\"%d\",\"sequence\":\"%d\"}",
-                uid, thatTimeStr, workerId, sequence);
+        return String.format("{\"UID\":\"%d\",\"timestamp\":\"%s\",\"workerId\":\"%d\",\"sequence\":\"%d\"}", uid,
+                thatTimeStr, workerId, sequence);
     }
 
     /**
      * Get UID
      *
      * @return UID
-     * @throws UidGenerateException in the case: Clock moved backwards; Exceeds the max timestamp
+     * @throws UidGenerateException
+     *             in the case: Clock moved backwards; Exceeds the max timestamp
      */
     protected synchronized long nextId() {
         long currentSecond = getCurrentSecond();

@@ -1,58 +1,58 @@
 package io.arkx.framework.commons.collection;
 
-/**   
+/**
  * @class org.ark.framework.collection.PageDataTable
  * @author Darkness
- * @date 2012-9-15 下午12:11:41 
- * @version V1.0   
+ * @date 2012-9-15 下午12:11:41
+ * @version V1.0
  */
 public class PageDataTable implements IPageData {
 
-	private boolean pageEnable = true;
-	private int pageSize;
-	private int pageIndex;
-	private int total;
-	private DataTable dataTable;
-	
-	public int getPageSize() {
-		return pageSize;
-	}
+    private boolean pageEnable = true;
+    private int pageSize;
+    private int pageIndex;
+    private int total;
+    private DataTable dataTable;
 
-	public int getPageIndex() {
-		return pageIndex;
-	}
+    public int getPageSize() {
+        return pageSize;
+    }
 
-	public int getTotal() {
-		if(pageEnable)
-			return total;
-		return dataTable.getRowCount();
-	}
+    public int getPageIndex() {
+        return pageIndex;
+    }
 
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
+    public int getTotal() {
+        if (pageEnable)
+            return total;
+        return dataTable.getRowCount();
+    }
 
-	public void setPageIndex(int pageIndex) {
-		this.pageIndex = pageIndex;
-	}
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
-	public void setTotal(int total) {
-		this.total = total;
-	}
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
 
-	public void setData(Object data) {
-		dataTable = (DataTable)data;
-	}
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
-	public DataTable getData() {
-		return dataTable;
-	}
+    public void setData(Object data) {
+        dataTable = (DataTable) data;
+    }
 
-	public void setPageEnabled(boolean pageEnable) {
-		this.pageEnable = pageEnable;
-	}
+    public DataTable getData() {
+        return dataTable;
+    }
 
-	public boolean isPageEnabled() {
-		return this.pageEnable;
-	}
+    public void setPageEnabled(boolean pageEnable) {
+        this.pageEnable = pageEnable;
+    }
+
+    public boolean isPageEnabled() {
+        return this.pageEnable;
+    }
 }

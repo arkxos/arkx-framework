@@ -23,25 +23,25 @@ import java.util.Map;
  */
 public class Keywords {
 
-	static {
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("null", JSONToken.NULL);
-		map.put("new", JSONToken.NEW);
-		map.put("true", JSONToken.TRUE);
-		map.put("false", JSONToken.FALSE);
-		DEFAULT_KEYWORDS = new Keywords(map);
-	}
+    static {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put("null", JSONToken.NULL);
+        map.put("new", JSONToken.NEW);
+        map.put("true", JSONToken.TRUE);
+        map.put("false", JSONToken.FALSE);
+        DEFAULT_KEYWORDS = new Keywords(map);
+    }
 
-	private final Map<String, Integer> keywords;
+    private final Map<String, Integer> keywords;
 
-	public static Keywords DEFAULT_KEYWORDS;
+    public static Keywords DEFAULT_KEYWORDS;
 
-	public Keywords(Map<String, Integer> keywords) {
-		this.keywords = keywords;
-	}
+    public Keywords(Map<String, Integer> keywords) {
+        this.keywords = keywords;
+    }
 
-	public Integer getKeyword(String key) {
-		return keywords.get(key);
-	}
+    public Integer getKeyword(String key) {
+        return keywords.get(key);
+    }
 
 }

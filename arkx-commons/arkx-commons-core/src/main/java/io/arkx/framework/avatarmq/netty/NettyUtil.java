@@ -1,8 +1,5 @@
 package io.arkx.framework.avatarmq.netty;
 
-import com.google.common.base.Preconditions;
-import io.netty.channel.Channel;
-
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.*;
@@ -11,6 +8,10 @@ import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.SelectorProvider;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
+import io.netty.channel.Channel;
+
+import com.google.common.base.Preconditions;
 
 /**
  * @filename:NettyUtil.java

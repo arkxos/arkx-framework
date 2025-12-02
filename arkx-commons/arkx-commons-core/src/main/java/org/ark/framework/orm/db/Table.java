@@ -1,63 +1,63 @@
 package org.ark.framework.orm.db;
-//package org.ark.framework.orm.schema;
+// package org.ark.framework.orm.schema;
 //
-//import java.util.ArrayList;
-//import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 //
-///**
-// * 
+/// **
+// *
 // * @author Darkness
 // * @date 2012-9-18 下午3:46:44
 // * @version V1.0
 // */
-//public class Table {
+// public class Table {
 //
-//	private String tableName;
-//	private String comment;
-//	
-//	private List<Column> columns = new ArrayList<Column>();
+// private String tableName;
+// private String comment;
 //
-//	public String getTableName() {
-//		return tableName;
-//	}
+// private List<Column> columns = new ArrayList<Column>();
 //
-//	public void setTableName(String tableName) {
-//		this.tableName = tableName;
-//	}
+// public String getTableName() {
+// return tableName;
+// }
 //
-//	public List<Column> getColumns() {
-//		return columns;
-//	}
+// public void setTableName(String tableName) {
+// this.tableName = tableName;
+// }
 //
-//	public void addColumn(Column column) {
-//		this.columns.add(column);
-//	}
+// public List<Column> getColumns() {
+// return columns;
+// }
 //
-//	/**
-//	 * 获取表中列的数量
-//	 * 
-//	 * @author Darkness
-//	 * @date 2012-9-18 下午4:35:58 
-//	 * @version V1.0
-//	 */
-//	public int getColumnSize() {
-//		return this.columns.size();
-//	}
+// public void addColumn(Column column) {
+// this.columns.add(column);
+// }
 //
-//	public String getComment() {
-//		return comment;
-//	}
+// /**
+// * 获取表中列的数量
+// *
+// * @author Darkness
+// * @date 2012-9-18 下午4:35:58
+// * @version V1.0
+// */
+// public int getColumnSize() {
+// return this.columns.size();
+// }
 //
-//	public void setComment(String comment) {
-//		this.comment = comment;
-//	}
+// public String getComment() {
+// return comment;
+// }
 //
-//	public Column getColumn(int i) {
-//		if(i<0 || i > getColumnSize()-1) {
-//			return null;
-//		}
-//		
-//		return this.columns.get(i);
-//	}
+// public void setComment(String comment) {
+// this.comment = comment;
+// }
 //
-//}
+// public Column getColumn(int i) {
+// if(i<0 || i > getColumnSize()-1) {
+// return null;
+// }
+//
+// return this.columns.get(i);
+// }
+//
+// }

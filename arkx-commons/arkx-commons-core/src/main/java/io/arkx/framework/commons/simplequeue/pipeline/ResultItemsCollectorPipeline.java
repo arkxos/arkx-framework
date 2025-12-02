@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.simplequeue.pipeline;
 
-import io.arkx.framework.commons.simplequeue.ResultItems;
-import io.arkx.framework.commons.simplequeue.Task;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import io.arkx.framework.commons.simplequeue.ResultItems;
+import io.arkx.framework.commons.simplequeue.Task;
 
 /**
  * @author code4crafter@gmail.com

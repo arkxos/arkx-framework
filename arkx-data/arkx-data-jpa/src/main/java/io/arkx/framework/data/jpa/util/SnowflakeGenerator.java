@@ -1,10 +1,10 @@
 package io.arkx.framework.data.jpa.util;
 
+import java.io.Serializable;
+
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
-
-import java.io.Serializable;
 
 public class SnowflakeGenerator implements IdentifierGenerator {
     public static final String TYPE = "io.arkx.spring.jpa.util.SnowflakeGenerator";
@@ -12,7 +12,8 @@ public class SnowflakeGenerator implements IdentifierGenerator {
     private static final IdWorker idWorker = new IdWorker();
 
     @Override
-    public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {
+    public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o)
+            throws HibernateException {
         return idWorker.getId();
     }
 }

@@ -1,15 +1,17 @@
 package io.arkx.framework.enums.core.serializer;
 
+import java.io.IOException;
+import java.util.regex.Pattern;
+
+import org.springframework.util.StringUtils;
+
+import io.arkx.framework.enums.core.enums.CodeEnum;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-import io.arkx.framework.enums.core.enums.CodeEnum;
-import org.springframework.util.StringUtils;
-
-import java.io.IOException;
-import java.util.regex.Pattern;
 
 /**
  * @author: zhuCan
@@ -60,7 +62,8 @@ public class JsonEnumDeserializer extends JsonDeserializer<Enum<?>> implements C
     /**
      * 判断是否为整数
      *
-     * @param str 传入的字符串
+     * @param str
+     *            传入的字符串
      * @return 是整数返回true, 否则返回false
      */
     public static boolean isInteger(String str) {

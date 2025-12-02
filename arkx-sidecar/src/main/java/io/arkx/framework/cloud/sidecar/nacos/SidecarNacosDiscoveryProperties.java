@@ -16,31 +16,32 @@
 
 package io.arkx.framework.cloud.sidecar.nacos;
 
-import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import io.arkx.framework.cloud.sidecar.SidecarProperties;
+
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 
 /**
  * @author yuhuangbin
  */
 public class SidecarNacosDiscoveryProperties extends NacosDiscoveryProperties {
 
-	SidecarProperties sidecarProperties;
+    SidecarProperties sidecarProperties;
 
-	public SidecarNacosDiscoveryProperties(SidecarProperties sidecarProperties) {
-		this.sidecarProperties = sidecarProperties;
-	}
+    public SidecarNacosDiscoveryProperties(SidecarProperties sidecarProperties) {
+        this.sidecarProperties = sidecarProperties;
+    }
 
-//	@Override
-//	public void init() throws Exception {
-//		super.init();
-//
-//		String ip = sidecarProperties.getIp();
-//		if (StringUtils.hasText(ip)) {
-//			this.setIp(ip);
-//		}
-//
-//		Integer port = sidecarProperties.getPort();
-//		this.setPort(port);
-//	}
+    // @Override
+    // public void init() throws Exception {
+    // super.init();
+    //
+    // String ip = sidecarProperties.getIp();
+    // if (StringUtils.hasText(ip)) {
+    // this.setIp(ip);
+    // }
+    //
+    // Integer port = sidecarProperties.getPort();
+    // this.setPort(port);
+    // }
 
 }

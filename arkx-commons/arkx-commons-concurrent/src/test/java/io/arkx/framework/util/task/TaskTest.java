@@ -1,14 +1,14 @@
 package io.arkx.framework.util.task;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class TaskTest {
 
@@ -27,22 +27,19 @@ public class TaskTest {
     @Test
     public void testTask() {
         Task task = taskEngine.buildTask(ctx -> {
-                try {
-                    Thread.sleep(1000 * 5);
-                } catch (InterruptedException ignore) {
-                }
-                ctx.onSuccess("success");
-                ctx.onError("error", null);
-            })
-            .progress((task1, progress) -> {
-                System.out.println("progress: " + progress + ", " + task1);
-            })
-            .end((ctx, error) -> {
-                System.out.println("execute task finished");
-                assertEquals("success", ctx.getResult().getString(0));
-                assertEquals(TaskStatus.SUCCESS, ctx.getStatus());
-            })
-            .build();
+            try {
+                Thread.sleep(1000 * 5);
+            } catch (InterruptedException ignore) {
+            }
+            ctx.onSuccess("success");
+            ctx.onError("error", null);
+        }).progress((task1, progress) -> {
+            System.out.println("progress: " + progress + ", " + task1);
+        }).end((ctx, error) -> {
+            System.out.println("execute task finished");
+            assertEquals("success", ctx.getResult().getString(0));
+            assertEquals(TaskStatus.SUCCESS, ctx.getStatus());
+        }).build();
 
         taskEngine.commit(task);
 

@@ -1,9 +1,9 @@
 package io.arkx.framework.performance.monitor.repository;
 
-import io.arkx.framework.performance.monitor.model.TraceNode;
-
 import java.sql.SQLException;
 import java.util.List;
+
+import io.arkx.framework.performance.monitor.model.TraceNode;
 
 /**
  * @author Nobody
@@ -13,10 +13,10 @@ import java.util.List;
 /* ====================== 跟踪存储仓库 ====================== */
 public interface TraceRepository {
 
-	void saveBatch(List<TraceNode> nodes) throws SQLException;
+    void saveBatch(List<TraceNode> nodes) throws SQLException;
 
-	List<TraceNode> findByRequestId(String requestId) throws SQLException;
+    List<TraceNode> findByRequestId(String requestId) throws SQLException;
 
-	void shutdown();
+    void shutdown();
 
 }

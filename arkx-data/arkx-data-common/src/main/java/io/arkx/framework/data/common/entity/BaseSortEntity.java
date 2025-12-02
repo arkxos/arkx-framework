@@ -1,11 +1,11 @@
 package io.arkx.framework.data.common.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  * @author Darkness
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class BaseSortEntity<PK extends Serializable> extends BaseEntity<PK> {
 
-	@Column(name = "SORT_ORDER")
-	private long sortOrder = 0;// 排序号
+    @Column(name = "SORT_ORDER")
+    private long sortOrder = 0;// 排序号
 
 }

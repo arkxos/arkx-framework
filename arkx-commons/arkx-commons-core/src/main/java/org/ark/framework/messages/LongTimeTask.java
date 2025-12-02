@@ -1,214 +1,214 @@
 package org.ark.framework.messages;
 
+import java.util.ArrayList;
+
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.LogUtil;
 import io.arkx.framework.commons.util.StringFormat;
 import io.arkx.framework.commons.util.StringUtil;
 import io.arkx.framework.i18n.LangMapping;
 
-import java.util.ArrayList;
-
-
 /**
  * @class org.ark.framework.messages.LongTimeTask
- * 
+ *
  * @author Darkness
- * @date 2013-1-31 上午11:30:09 
+ * @date 2013-1-31 上午11:30:09
  * @version V1.0
  */
 public abstract class LongTimeTask extends Thread {
-	private static Mapx<Long, LongTimeTask> map = new Mapx();
+    private static Mapx<Long, LongTimeTask> map = new Mapx();
 
-	private static long IDBase = System.currentTimeMillis();
-	private static final int MaxListSize = 1000;
-	private long id;
-	private ArrayList<String> list = new ArrayList();
-	protected int percent;
-	protected String currentInfo;
-	private String finishedInfo;
-	protected ArrayList<String> errors = new ArrayList();
-	private boolean stopFlag;
-//	private Account.UserData user;
-	private String type;
-	private long stopTime = System.currentTimeMillis() + 1440000L;
+    private static long IDBase = System.currentTimeMillis();
+    private static final int MaxListSize = 1000;
+    private long id;
+    private ArrayList<String> list = new ArrayList();
+    protected int percent;
+    protected String currentInfo;
+    private String finishedInfo;
+    protected ArrayList<String> errors = new ArrayList();
+    private boolean stopFlag;
+    // private Account.UserData user;
+    private String type;
+    private long stopTime = System.currentTimeMillis() + 1440000L;
 
-	public static LongTimeTask createEmptyInstance() {
-		return new LongTimeTask(false) {
-			public void execute() {
-			}
-		};
-	}
+    public static LongTimeTask createEmptyInstance() {
+        return new LongTimeTask(false) {
+            public void execute() {
+            }
+        };
+    }
 
-	public static LongTimeTask getInstanceById(long id) {
-		return (LongTimeTask) map.get(id);
-	}
+    public static LongTimeTask getInstanceById(long id) {
+        return (LongTimeTask) map.get(id);
+    }
 
-	public static void removeInstanceById(long id) {
-		synchronized (LongTimeTask.class) {
-			map.remove(Long.valueOf(id));
-		}
-	}
+    public static void removeInstanceById(long id) {
+        synchronized (LongTimeTask.class) {
+            map.remove(Long.valueOf(id));
+        }
+    }
 
-	public static String cancelByType(String type) {
-		String message = LangMapping.get("Framework.Task.NotExistTaskOfType") + ":" + type;
-		LongTimeTask ltt = getInstanceByType(type);
-		if (ltt != null) {
-			ltt.stopTask();
-			message = LangMapping.get("Framework.Task.TaskStopping");
-		}
-		return message;
-	}
+    public static String cancelByType(String type) {
+        String message = LangMapping.get("Framework.Task.NotExistTaskOfType") + ":" + type;
+        LongTimeTask ltt = getInstanceByType(type);
+        if (ltt != null) {
+            ltt.stopTask();
+            message = LangMapping.get("Framework.Task.TaskStopping");
+        }
+        return message;
+    }
 
-	public static LongTimeTask getInstanceByType(String type) {
-		if (StringUtil.isNotEmpty(type)) {
-			long current = System.currentTimeMillis();
-			for (Long key : map.keyArray()) {
-				LongTimeTask ltt =  map.get(key);
-				if (type.equals(ltt.getType())) {
-					if (current - ltt.stopTime > 60000L) {
-						map.remove(key);
-						return null;
-					}
-					return ltt;
-				}
-			}
-		}
-		return null;
-	}
+    public static LongTimeTask getInstanceByType(String type) {
+        if (StringUtil.isNotEmpty(type)) {
+            long current = System.currentTimeMillis();
+            for (Long key : map.keyArray()) {
+                LongTimeTask ltt = map.get(key);
+                if (type.equals(ltt.getType())) {
+                    if (current - ltt.stopTime > 60000L) {
+                        map.remove(key);
+                        return null;
+                    }
+                    return ltt;
+                }
+            }
+        }
+        return null;
+    }
 
-	public LongTimeTask() {
-		this(true);
-	}
+    public LongTimeTask() {
+        this(true);
+    }
 
-	private LongTimeTask(boolean flag) {
-		if (flag) {
-			setName("LongTimeTask Thread");
-			synchronized (LongTimeTask.class) {
-				this.id = (IDBase++);
-				map.put(Long.valueOf(this.id), this);
-				clearStopedTask();
-			}
-		}
-	}
+    private LongTimeTask(boolean flag) {
+        if (flag) {
+            setName("LongTimeTask Thread");
+            synchronized (LongTimeTask.class) {
+                this.id = (IDBase++);
+                map.put(Long.valueOf(this.id), this);
+                clearStopedTask();
+            }
+        }
+    }
 
-	private void clearStopedTask() {
-		synchronized (LongTimeTask.class) {
-			long current = System.currentTimeMillis();
-			for (Long k : map.keyArray()) {
-				LongTimeTask ltt = (LongTimeTask) map.get(k);
-				if (current - ltt.stopTime > 60000L)
-					map.remove(k);
-			}
-		}
-	}
+    private void clearStopedTask() {
+        synchronized (LongTimeTask.class) {
+            long current = System.currentTimeMillis();
+            for (Long k : map.keyArray()) {
+                LongTimeTask ltt = (LongTimeTask) map.get(k);
+                if (current - ltt.stopTime > 60000L)
+                    map.remove(k);
+            }
+        }
+    }
 
-	public long getTaskID() {
-		return this.id;
-	}
+    public long getTaskID() {
+        return this.id;
+    }
 
-	public void info(String message) {
-		LogUtil.info(message);
-		this.list.add(message);
-		if (this.list.size() > 1000)
-			this.list.remove(0);
-	}
+    public void info(String message) {
+        LogUtil.info(message);
+        this.list.add(message);
+        if (this.list.size() > 1000)
+            this.list.remove(0);
+    }
 
-	public String[] getMessages() {
-		String[] arr = new String[this.list.size()];
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = ((String) this.list.get(i));
-		}
-		this.list.clear();
-		return arr;
-	}
+    public String[] getMessages() {
+        String[] arr = new String[this.list.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = ((String) this.list.get(i));
+        }
+        this.list.clear();
+        return arr;
+    }
 
-	public void run() {
-		if (StringUtil.isNotEmpty(this.type)) {
-			LongTimeTask ltt = getInstanceByType(this.type);
-			if ((ltt != null) && (ltt != this))
-				return;
-		}
-		try {
-//			Account.setCurrent(this.user);
-			execute();
-		} catch (StopThreadException ie) {
-			interrupt();
-		} finally {
-			this.stopTime = System.currentTimeMillis();
-		}
-	}
+    public void run() {
+        if (StringUtil.isNotEmpty(this.type)) {
+            LongTimeTask ltt = getInstanceByType(this.type);
+            if ((ltt != null) && (ltt != this))
+                return;
+        }
+        try {
+            // Account.setCurrent(this.user);
+            execute();
+        } catch (StopThreadException ie) {
+            interrupt();
+        } finally {
+            this.stopTime = System.currentTimeMillis();
+        }
+    }
 
-	public abstract void execute();
+    public abstract void execute();
 
-	public boolean checkStop() {
-		return this.stopFlag;
-	}
+    public boolean checkStop() {
+        return this.stopFlag;
+    }
 
-	public void stopTask() {
-		clearStopedTask();
-		this.stopFlag = true;
-	}
+    public void stopTask() {
+        clearStopedTask();
+        this.stopFlag = true;
+    }
 
-	public int getPercent() {
-		return this.percent;
-	}
+    public int getPercent() {
+        return this.percent;
+    }
 
-	public void setPercent(int percent) {
-		this.percent = percent;
-	}
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
 
-	public void setCurrentInfo(String currentInfo) {
-		this.currentInfo = currentInfo;
-		LogUtil.info(currentInfo);
-	}
+    public void setCurrentInfo(String currentInfo) {
+        this.currentInfo = currentInfo;
+        LogUtil.info(currentInfo);
+    }
 
-	public String getCurrentInfo() {
-		return this.currentInfo;
-	}
+    public String getCurrentInfo() {
+        return this.currentInfo;
+    }
 
-	public void setFinishedInfo(String finishedInfo) {
-		this.finishedInfo = finishedInfo;
-		LogUtil.info(finishedInfo);
-	}
+    public void setFinishedInfo(String finishedInfo) {
+        this.finishedInfo = finishedInfo;
+        LogUtil.info(finishedInfo);
+    }
 
-	public String getFinishedInfo() {
-		return this.finishedInfo;
-	}
+    public String getFinishedInfo() {
+        return this.finishedInfo;
+    }
 
-//	public void setUser(Account.UserData user) {
-//		this.user = user;
-//	}
+    // public void setUser(Account.UserData user) {
+    // this.user = user;
+    // }
 
-	public void addError(String error) {
-		this.errors.add(error);
-	}
+    public void addError(String error) {
+        this.errors.add(error);
+    }
 
-	public void addError(String[] errorArr) {
-		for (int i = 0; i < errorArr.length; i++)
-			this.errors.add(errorArr[i]);
-	}
+    public void addError(String[] errorArr) {
+        for (int i = 0; i < errorArr.length; i++)
+            this.errors.add(errorArr[i]);
+    }
 
-	public String getAllErrors() {
-		if (this.errors.size() == 0) {
-			return null;
-		}
-		StringBuilder sb = new StringBuilder();
-		StringFormat sf = new StringFormat(LangMapping.get("Framework.Task.TotleErrors"), new Object[] { Integer.valueOf(this.errors.size()) });
-		sb.append(sf.toString() + ":<br>");
-		for (int i = 0; i < this.errors.size(); i++) {
-			sb.append(i + 1);
-			sb.append(": ");
-			sb.append((String) this.errors.get(i));
-			sb.append("<br>");
-		}
-		return sb.toString();
-	}
+    public String getAllErrors() {
+        if (this.errors.size() == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        StringFormat sf = new StringFormat(LangMapping.get("Framework.Task.TotleErrors"),
+                new Object[]{Integer.valueOf(this.errors.size())});
+        sb.append(sf.toString() + ":<br>");
+        for (int i = 0; i < this.errors.size(); i++) {
+            sb.append(i + 1);
+            sb.append(": ");
+            sb.append((String) this.errors.get(i));
+            sb.append("<br>");
+        }
+        return sb.toString();
+    }
 
-	public String getType() {
-		return this.type;
-	}
+    public String getType() {
+        return this.type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 }

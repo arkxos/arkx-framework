@@ -9,7 +9,15 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.provider.query;
 
-import cn.hutool.core.util.HexUtil;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import io.arkx.framework.data.db.common.consts.Constants;
 import io.arkx.framework.data.db.common.entity.IncrementPoint;
 import io.arkx.framework.data.db.common.entity.ResultSetWrapper;
@@ -20,20 +28,12 @@ import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.schema.ColumnValue;
 import io.arkx.framework.data.db.core.schema.SchemaTableData;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import cn.hutool.core.util.HexUtil;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DefaultTableDataQueryProvider
-        extends AbstractCommonProvider
-        implements TableDataQueryProvider {
+public class DefaultTableDataQueryProvider extends AbstractCommonProvider implements TableDataQueryProvider {
 
     private final int resultSetType = ResultSet.TYPE_FORWARD_ONLY;
     private final int concurrency = ResultSet.CONCUR_READ_ONLY;
@@ -52,15 +52,13 @@ public class DefaultTableDataQueryProvider
     @Override
     public void setQueryFetchSize(int size) {
         if (size < Constants.MINIMUM_FETCH_SIZE) {
-            throw new IllegalArgumentException(
-                    "设置的批量处理行数的大小fetchSize=" + size + "不得小于" + Constants.MINIMUM_FETCH_SIZE);
+            throw new IllegalArgumentException("设置的批量处理行数的大小fetchSize=" + size + "不得小于" + Constants.MINIMUM_FETCH_SIZE);
         }
         this.fetchSize = size;
     }
 
-    public ResultSetWrapper queryTableData(String schemaName, String tableName,
-                                           String shardDbCode, List<String> fields,
-                                           IncrementPoint point, List<String> orders) {
+    public ResultSetWrapper queryTableData(String schemaName, String tableName, String shardDbCode, List<String> fields,
+            IncrementPoint point, List<String> orders) {
         StringBuilder sb = new StringBuilder("SELECT ");
         sb.append(quoteName(StringUtils.join(fields, quoteName(","))));
         sb.append(" FROM ");
@@ -103,11 +101,8 @@ public class DefaultTableDataQueryProvider
             Statement statement = connection.createStatement(resultSetType, concurrency);
             statement.setQueryTimeout(Constants.DEFAULT_QUERY_TIMEOUT_SECONDS);
             statement.setFetchSize(fetchSize);
-            return ResultSetWrapper.builder()
-                    .connection(connection)
-                    .statement(statement)
-                    .resultSet(statement.executeQuery(sql))
-                    .build();
+            return ResultSetWrapper.builder().connection(connection).statement(statement)
+                    .resultSet(statement.executeQuery(sql)).build();
         } catch (Throwable t) {
             log.error("查询数据异常", sql);
             throw new RuntimeException(t);
@@ -142,7 +137,6 @@ public class DefaultTableDataQueryProvider
         }
     }
 
-
     public List<Map<String, Object>> convertResultSetToMap(ResultSet rs) throws SQLException {
         // 假设已获得ResultSet rs
         List<Map<String, Object>> resultList = new ArrayList<>();
@@ -174,8 +168,7 @@ public class DefaultTableDataQueryProvider
     }
 
     @Override
-    public SchemaTableData queryTableData(Connection connection, String schemaName, String tableName,
-                                          int rowCount) {
+    public SchemaTableData queryTableData(Connection connection, String schemaName, String tableName, int rowCount) {
         String fullTableName = quoteSchemaTableName(schemaName, tableName);
         String querySQL = "SELECT * FROM %s ".formatted(fullTableName);
         SchemaTableData data = new SchemaTableData();
@@ -219,7 +212,8 @@ public class DefaultTableDataQueryProvider
     }
 
     @Override
-    public ColumnValue queryFieldMaxValue(Connection connection, String schemaName, String tableName, String filedName) {
+    public ColumnValue queryFieldMaxValue(Connection connection, String schemaName, String tableName,
+            String filedName) {
         String fullTableName = quoteSchemaTableName(schemaName, tableName);
         String querySQL = "SELECT MAX(%s) FROM %s ".formatted(quoteName(filedName), fullTableName);
         try (Statement st = connection.createStatement()) {

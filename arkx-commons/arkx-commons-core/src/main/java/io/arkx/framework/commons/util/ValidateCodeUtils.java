@@ -5,8 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * 验证码工具类
- * 可生成数字、大写、小写字母及三者混合类型的验证码。 支持自定义验证码字符数量； 支持自定义验证码图片的大小； 支持自定义需排除的特殊字符；
+ * 验证码工具类 可生成数字、大写、小写字母及三者混合类型的验证码。 支持自定义验证码字符数量； 支持自定义验证码图片的大小； 支持自定义需排除的特殊字符；
  * 支持自定义干扰线的数量； 支持自定义验证码图文颜色
  *
  * @author liuyadu
@@ -56,9 +55,12 @@ public class ValidateCodeUtils {
     /**
      * 生成验证码字符串
      *
-     * @param type    验证码类型，参见本类的静态属性
-     * @param length  验证码长度，大于0的整数
-     * @param exChars 需排除的特殊字符（仅对数字、字母混合型验证码有效，无需排除则为null）
+     * @param type
+     *            验证码类型，参见本类的静态属性
+     * @param length
+     *            验证码长度，大于0的整数
+     * @param exChars
+     *            需排除的特殊字符（仅对数字、字母混合型验证码有效，无需排除则为null）
      * @return 验证码字符串
      */
     public static String getTextCode(int type, int length, String exChars) {
@@ -71,7 +73,7 @@ public class ValidateCodeUtils {
 
         switch (type) {
             // 仅数字
-            case TYPE_NUM_ONLY:
+            case TYPE_NUM_ONLY :
                 while (i < length) {
                     int t = r.nextInt(10);
                     // 排除特殊字符
@@ -83,7 +85,7 @@ public class ValidateCodeUtils {
                 break;
 
             // 仅字母（即大写字母、小写字母混合）
-            case TYPE_LETTER_ONLY:
+            case TYPE_LETTER_ONLY :
                 while (i < length) {
                     int t = r.nextInt(123);
                     if ((t >= 97 || (t >= 65 && t <= 90)) && (exChars == null || exChars.indexOf((char) t) < 0)) {
@@ -94,10 +96,11 @@ public class ValidateCodeUtils {
                 break;
 
             // 数字、大写字母、小写字母混合
-            case TYPE_ALL_MIXED:
+            case TYPE_ALL_MIXED :
                 while (i < length) {
                     int t = r.nextInt(123);
-                    if ((t >= 97 || (t >= 65 && t <= 90) || (t >= 48 && t <= 57)) && (exChars == null || exChars.indexOf((char) t) < 0)) {
+                    if ((t >= 97 || (t >= 65 && t <= 90) || (t >= 48 && t <= 57))
+                            && (exChars == null || exChars.indexOf((char) t) < 0)) {
                         code.append((char) t);
                         i++;
                     }
@@ -105,7 +108,7 @@ public class ValidateCodeUtils {
                 break;
 
             // 数字、大写字母混合
-            case TYPE_NUM_UPPER:
+            case TYPE_NUM_UPPER :
                 while (i < length) {
                     int t = r.nextInt(91);
                     if ((t >= 65 || (t >= 48 && t <= 57)) && (exChars == null || exChars.indexOf((char) t) < 0)) {
@@ -116,7 +119,7 @@ public class ValidateCodeUtils {
                 break;
 
             // 数字、小写字母混合
-            case TYPE_NUM_LOWER:
+            case TYPE_NUM_LOWER :
                 while (i < length) {
                     int t = r.nextInt(123);
                     if ((t >= 97 || (t >= 48 && t <= 57)) && (exChars == null || exChars.indexOf((char) t) < 0)) {
@@ -127,7 +130,7 @@ public class ValidateCodeUtils {
                 break;
 
             // 仅大写字母
-            case TYPE_UPPER_ONLY:
+            case TYPE_UPPER_ONLY :
                 while (i < length) {
                     int t = r.nextInt(91);
                     if ((t >= 65) && (exChars == null || exChars.indexOf((char) t) < 0)) {
@@ -138,7 +141,7 @@ public class ValidateCodeUtils {
                 break;
 
             // 仅小写字母
-            case TYPE_LOWER_ONLY:
+            case TYPE_LOWER_ONLY :
                 while (i < length) {
                     int t = r.nextInt(123);
                     if ((t >= 97) && (exChars == null || exChars.indexOf((char) t) < 0)) {
@@ -147,13 +150,12 @@ public class ValidateCodeUtils {
                     }
                 }
                 break;
-            default:
+            default :
                 break;
         }
 
         return code.toString();
     }
-
 
     public static BufferedImage getImageCode(String textCode, int width, int height) {
         return getImageCode(textCode, width, height, 0, true, Color.white, Color.blue, null);
@@ -162,17 +164,26 @@ public class ValidateCodeUtils {
     /**
      * 已有验证码，生成验证码图片
      *
-     * @param textCode       文本验证码
-     * @param width          图片宽度
-     * @param height         图片高度
-     * @param interLine      图片中干扰线的条数
-     * @param randomLocation 每个字符的高低位置是否随机
-     * @param backColor      图片颜色，若为null，则采用随机颜色
-     * @param foreColor      字体颜色，若为null，则采用随机颜色
-     * @param lineColor      干扰线颜色，若为null，则采用随机颜色
+     * @param textCode
+     *            文本验证码
+     * @param width
+     *            图片宽度
+     * @param height
+     *            图片高度
+     * @param interLine
+     *            图片中干扰线的条数
+     * @param randomLocation
+     *            每个字符的高低位置是否随机
+     * @param backColor
+     *            图片颜色，若为null，则采用随机颜色
+     * @param foreColor
+     *            字体颜色，若为null，则采用随机颜色
+     * @param lineColor
+     *            干扰线颜色，若为null，则采用随机颜色
      * @return 图片缓存对象
      */
-    public static BufferedImage getImageCode(String textCode, int width, int height, int interLine, boolean randomLocation, Color backColor, Color foreColor, Color lineColor) {
+    public static BufferedImage getImageCode(String textCode, int width, int height, int interLine,
+            boolean randomLocation, Color backColor, Color foreColor, Color lineColor) {
         BufferedImage bim = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = bim.getGraphics();
 
@@ -229,21 +240,33 @@ public class ValidateCodeUtils {
     /**
      * 生成图片验证码
      *
-     * @param type           验证码类型，参见本类的静态属性
-     * @param length         验证码字符长度，大于0的整数
-     * @param exChars        需排除的特殊字符
-     * @param width          图片宽度
-     * @param height         图片高度
-     * @param interLine      图片中干扰线的条数
-     * @param randomLocation 每个字符的高低位置是否随机
-     * @param backColor      图片颜色，若为null，则采用随机颜色
-     * @param foreColor      字体颜色，若为null，则采用随机颜色
-     * @param lineColor      干扰线颜色，若为null，则采用随机颜色
+     * @param type
+     *            验证码类型，参见本类的静态属性
+     * @param length
+     *            验证码字符长度，大于0的整数
+     * @param exChars
+     *            需排除的特殊字符
+     * @param width
+     *            图片宽度
+     * @param height
+     *            图片高度
+     * @param interLine
+     *            图片中干扰线的条数
+     * @param randomLocation
+     *            每个字符的高低位置是否随机
+     * @param backColor
+     *            图片颜色，若为null，则采用随机颜色
+     * @param foreColor
+     *            字体颜色，若为null，则采用随机颜色
+     * @param lineColor
+     *            干扰线颜色，若为null，则采用随机颜色
      * @return 图片缓存对象
      */
-    public static BufferedImage getImageCode(int type, int length, String exChars, int width, int height, int interLine, boolean randomLocation, Color backColor, Color foreColor, Color lineColor) {
+    public static BufferedImage getImageCode(int type, int length, String exChars, int width, int height, int interLine,
+            boolean randomLocation, Color backColor, Color foreColor, Color lineColor) {
         String textCode = getTextCode(type, length, exChars);
-        BufferedImage bim = getImageCode(textCode, width, height, interLine, randomLocation, backColor, foreColor, lineColor);
+        BufferedImage bim = getImageCode(textCode, width, height, interLine, randomLocation, backColor, foreColor,
+                lineColor);
 
         return bim;
     }

@@ -1,11 +1,13 @@
 package io.arkx.framework.encrypt.core;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.ReflectUtil;
-import io.arkx.framework.encrypt.annotation.EncryptField;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.io.Resources;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -16,13 +18,13 @@ import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.util.ClassUtils;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+import io.arkx.framework.encrypt.annotation.EncryptField;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.ReflectUtil;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 加密管理类
@@ -47,12 +49,12 @@ public class EncryptorManager {
     /**
      * 构造方法传入类加密字段缓存
      *
-     * @param typeAliasesPackage 实体类包
+     * @param typeAliasesPackage
+     *            实体类包
      */
     public EncryptorManager(String typeAliasesPackage) {
         scanEncryptClasses(typeAliasesPackage);
     }
-
 
     /**
      * 获取类加密字段缓存
@@ -67,7 +69,8 @@ public class EncryptorManager {
     /**
      * 注册加密执行者到缓存
      *
-     * @param encryptContext 加密执行者需要的相关配置参数
+     * @param encryptContext
+     *            加密执行者需要的相关配置参数
      */
     public IEncryptor registAndGetEncryptor(EncryptContext encryptContext) {
         if (encryptorMap.containsKey(encryptContext)) {
@@ -81,7 +84,8 @@ public class EncryptorManager {
     /**
      * 移除缓存中的加密执行者
      *
-     * @param encryptContext 加密执行者需要的相关配置参数
+     * @param encryptContext
+     *            加密执行者需要的相关配置参数
      */
     public void removeEncryptor(EncryptContext encryptContext) {
         this.encryptorMap.remove(encryptContext);
@@ -90,8 +94,10 @@ public class EncryptorManager {
     /**
      * 根据配置进行加密。会进行本地缓存对应的算法和对应的秘钥信息。
      *
-     * @param value          待加密的值
-     * @param encryptContext 加密相关的配置信息
+     * @param value
+     *            待加密的值
+     * @param encryptContext
+     *            加密相关的配置信息
      */
     public String encrypt(String value, EncryptContext encryptContext) {
         IEncryptor encryptor = this.registAndGetEncryptor(encryptContext);
@@ -101,8 +107,10 @@ public class EncryptorManager {
     /**
      * 根据配置进行解密
      *
-     * @param value          待解密的值
-     * @param encryptContext 加密相关的配置信息
+     * @param value
+     *            待解密的值
+     * @param encryptContext
+     *            加密相关的配置信息
      */
     public String decrypt(String value, EncryptContext encryptContext) {
         IEncryptor encryptor = this.registAndGetEncryptor(encryptContext);
@@ -115,7 +123,8 @@ public class EncryptorManager {
     private void scanEncryptClasses(String typeAliasesPackage) {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         CachingMetadataReaderFactory factory = new CachingMetadataReaderFactory();
-        String[] packagePatternArray = StringUtils.splitPreserveAllTokens(typeAliasesPackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
+        String[] packagePatternArray = StringUtils.splitPreserveAllTokens(typeAliasesPackage,
+                ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
         String classpath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
         try {
             for (String packagePattern : packagePatternArray) {
@@ -149,9 +158,9 @@ public class EncryptorManager {
             fieldSet.addAll(Arrays.asList(fields));
             clazz = clazz.getSuperclass();
         }
-        fieldSet = fieldSet.stream().filter(field ->
-                field.isAnnotationPresent(EncryptField.class) && field.getType() == String.class)
-            .collect(Collectors.toSet());
+        fieldSet = fieldSet.stream()
+                .filter(field -> field.isAnnotationPresent(EncryptField.class) && field.getType() == String.class)
+                .collect(Collectors.toSet());
         for (Field field : fieldSet) {
             field.setAccessible(true);
         }

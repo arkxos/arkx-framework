@@ -4,15 +4,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 字段映射扩展实体类
- * 对应数据库表：dbswitch_column_plus
- * 用于存储字段映射的额外信息
+ * 字段映射扩展实体类 对应数据库表：dbswitch_column_plus 用于存储字段映射的额外信息
  */
 @Data
 @Builder
@@ -50,7 +49,6 @@ public class ColumnPlusEntity {
      */
     @TableField("value")
     private String value;
-
 
     /**
      * 字典名称

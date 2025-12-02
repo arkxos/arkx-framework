@@ -11,5 +11,5 @@ package io.arkx.framework.data.db.core.basic.task;
 
 public interface TaskResult {
 
-  void padding();
+    void padding();
 }

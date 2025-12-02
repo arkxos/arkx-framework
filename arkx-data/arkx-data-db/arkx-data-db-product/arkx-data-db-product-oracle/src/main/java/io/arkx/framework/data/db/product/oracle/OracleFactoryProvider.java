@@ -9,6 +9,8 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.oracle;
 
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.DefaultProductFeatures;
@@ -20,43 +22,41 @@ import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
 import io.arkx.framework.data.db.core.provider.sync.TableDataSynchronizeProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 
-import javax.sql.DataSource;
-
 @Product(ProductTypeEnum.ORACLE)
 public class OracleFactoryProvider extends AbstractFactoryProvider {
 
-  public OracleFactoryProvider(DataSource dataSource) {
-    super(dataSource);
-  }
+    public OracleFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-  @Override
-  public ProductFeatures getProductFeatures() {
-    return new DefaultProductFeatures();
-  }
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-  @Override
-  public MetadataProvider createMetadataQueryProvider() {
-    return new OracleMetadataQueryProvider(this);
-  }
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new OracleMetadataQueryProvider(this);
+    }
 
-  @Override
-  public TableDataQueryProvider createTableDataQueryProvider() {
-    return new OracleTableDataQueryProvider(this);
-  }
+    @Override
+    public TableDataQueryProvider createTableDataQueryProvider() {
+        return new OracleTableDataQueryProvider(this);
+    }
 
-  @Override
-  public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-    return new OracleTableDataWriteProvider(this);
-  }
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new OracleTableDataWriteProvider(this);
+    }
 
-  @Override
-  public TableManageProvider createTableManageProvider() {
-    return new OracleTableManageProvider(this);
-  }
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new OracleTableManageProvider(this);
+    }
 
-  @Override
-  public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    return new OracleTableDataSynchronizer(this);
-  }
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new OracleTableDataSynchronizer(this);
+    }
 
 }

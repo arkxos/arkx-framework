@@ -15,9 +15,10 @@ import io.arkx.framework.avatarmq.msg.Message;
 public class AvatarMQConsumer1 {
 
     private static ProducerMessageHook hook = new ProducerMessageHook() {
-    	@Override
+        @Override
         public ConsumerAckMessage hookMessage(Message message) {
-            System.out.printf("AvatarMQConsumer1 收到消息编号:%s,消息内容:%s\n", message.getMsgId(), new String(message.getBody()));
+            System.out.printf("AvatarMQConsumer1 收到消息编号:%s,消息内容:%s\n", message.getMsgId(),
+                    new String(message.getBody()));
             return ConsumerAckMessage.createSuccessAckMessage();
         }
     };

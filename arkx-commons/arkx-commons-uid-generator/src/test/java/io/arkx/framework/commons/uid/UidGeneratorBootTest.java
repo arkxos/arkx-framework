@@ -19,13 +19,14 @@ public class UidGeneratorBootTest {
 
     @Test
     public void testSerialGenerate() throws InterruptedException {
-        for(int i = 0;i<10;i++) {
+        for (int i = 0; i < 10; i++) {
             Thread.sleep(500);
             // Generate UID
             long uid = uidGenerator.getUID();
 
             // Parse UID into [Timestamp, WorkerId, Sequence]
-            // {"UID":"180363646902239241","parsed":{    "timestamp":"2017-01-19 12:15:46",    "workerId":"4",    "sequence":"9"        }}
+            // {"UID":"180363646902239241","parsed":{ "timestamp":"2017-01-19 12:15:46",
+            // "workerId":"4", "sequence":"9" }}
             System.out.println(uidGenerator.parseUID(uid));
         }
     }

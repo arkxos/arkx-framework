@@ -11,9 +11,9 @@ import java.io.Serializable;
  */
 public class ProducerAckMessage extends BaseMessage implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	private String ack;
+    private static final long serialVersionUID = 1L;
+
+    private String ack;
     private int status;
     private String msgId;
 
@@ -41,7 +41,7 @@ public class ProducerAckMessage extends BaseMessage implements Serializable {
         this.msgId = msgId;
     }
 
-	public boolean isSuccess() {
-		return getStatus() == SUCCESS;
-	}
+    public boolean isSuccess() {
+        return getStatus() == SUCCESS;
+    }
 }

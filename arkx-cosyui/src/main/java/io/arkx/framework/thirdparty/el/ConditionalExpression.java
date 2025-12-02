@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -61,93 +61,95 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * <p>
- * Represents a conditional expression. I've decided not to produce an abstract base "TernaryOperatorExpression" class since (a) future
- * ternary operators are unlikely and (b) it's not clear that there would be a meaningful way to abstract them. (For instance, would they
- * all be right- associative? Would they all have two fixed operator symbols?)
- * 
+ * Represents a conditional expression. I've decided not to produce an abstract
+ * base "TernaryOperatorExpression" class since (a) future ternary operators are
+ * unlikely and (b) it's not clear that there would be a meaningful way to
+ * abstract them. (For instance, would they all be right- associative? Would
+ * they all have two fixed operator symbols?)
+ *
  * @author Shawn Bayern
  **/
 
 public class ConditionalExpression extends Expression {
-	// -------------------------------------
-	// Properties
-	// -------------------------------------
-	// property condition
+    // -------------------------------------
+    // Properties
+    // -------------------------------------
+    // property condition
 
-	Expression mCondition;
+    Expression mCondition;
 
-	public Expression getCondition() {
-		return mCondition;
-	}
+    public Expression getCondition() {
+        return mCondition;
+    }
 
-	public void setCondition(Expression pCondition) {
-		mCondition = pCondition;
-	}
+    public void setCondition(Expression pCondition) {
+        mCondition = pCondition;
+    }
 
-	// -------------------------------------
-	// property trueBranch
+    // -------------------------------------
+    // property trueBranch
 
-	Expression mTrueBranch;
+    Expression mTrueBranch;
 
-	public Expression getTrueBranch() {
-		return mTrueBranch;
-	}
+    public Expression getTrueBranch() {
+        return mTrueBranch;
+    }
 
-	public void setTrueBranch(Expression pTrueBranch) {
-		mTrueBranch = pTrueBranch;
-	}
+    public void setTrueBranch(Expression pTrueBranch) {
+        mTrueBranch = pTrueBranch;
+    }
 
-	// -------------------------------------
-	// property falseBranch
+    // -------------------------------------
+    // property falseBranch
 
-	Expression mFalseBranch;
+    Expression mFalseBranch;
 
-	public Expression getFalseBranch() {
-		return mFalseBranch;
-	}
+    public Expression getFalseBranch() {
+        return mFalseBranch;
+    }
 
-	public void setFalseBranch(Expression pFalseBranch) {
-		mFalseBranch = pFalseBranch;
-	}
+    public void setFalseBranch(Expression pFalseBranch) {
+        mFalseBranch = pFalseBranch;
+    }
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public ConditionalExpression(Expression pCondition, Expression pTrueBranch, Expression pFalseBranch) {
-		mCondition = pCondition;
-		mTrueBranch = pTrueBranch;
-		mFalseBranch = pFalseBranch;
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public ConditionalExpression(Expression pCondition, Expression pTrueBranch, Expression pFalseBranch) {
+        mCondition = pCondition;
+        mTrueBranch = pTrueBranch;
+        mFalseBranch = pFalseBranch;
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		return "( " + mCondition.getExpressionString() + " ? " + mTrueBranch.getExpressionString() + " : "
-				+ mFalseBranch.getExpressionString() + " )";
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        return "( " + mCondition.getExpressionString() + " ? " + mTrueBranch.getExpressionString() + " : "
+                + mFalseBranch.getExpressionString() + " )";
+    }
 
-	// -------------------------------------
-	/**
-	 * Evaluates the conditional expression and returns the literal result
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver vr, IFunctionMapper f, Logger l) throws ExpressionException {
-		// first, evaluate the condition (and coerce the result to a boolean value)
-		boolean condition = Coercions.coerceToBoolean(mCondition.evaluate(vr, f, l), l).booleanValue();
+    // -------------------------------------
+    /**
+     * Evaluates the conditional expression and returns the literal result
+     **/
+    @Override
+    public Object evaluate(IVariableResolver vr, IFunctionMapper f, Logger l) throws ExpressionException {
+        // first, evaluate the condition (and coerce the result to a boolean value)
+        boolean condition = Coercions.coerceToBoolean(mCondition.evaluate(vr, f, l), l).booleanValue();
 
-		// then, use this boolean to branch appropriately
-		if (condition) {
-			return mTrueBranch.evaluate(vr, f, l);
-		} else {
-			return mFalseBranch.evaluate(vr, f, l);
-		}
-	}
+        // then, use this boolean to branch appropriately
+        if (condition) {
+            return mTrueBranch.evaluate(vr, f, l);
+        } else {
+            return mFalseBranch.evaluate(vr, f, l);
+        }
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 }

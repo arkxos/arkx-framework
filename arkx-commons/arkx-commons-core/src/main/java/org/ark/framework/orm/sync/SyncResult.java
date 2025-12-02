@@ -8,12 +8,12 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import lombok.Data;
 import org.ark.framework.orm.sync.metadata.SyncStatus;
 
+import lombok.Data;
+
 /**
- * 同步结果
- * 存储单个表同步的结果信息
+ * 同步结果 存储单个表同步的结果信息
  */
 @Data
 public class SyncResult {
@@ -61,7 +61,8 @@ public class SyncResult {
     /**
      * 构造函数
      *
-     * @param tableCode 表编码
+     * @param tableCode
+     *            表编码
      */
     public SyncResult(String tableCode) {
         this.tableCode = tableCode;
@@ -72,9 +73,12 @@ public class SyncResult {
     /**
      * 构造函数
      *
-     * @param tableCode 表编码
-     * @param recordsProcessed 处理的记录数
-     * @param status 同步状态
+     * @param tableCode
+     *            表编码
+     * @param recordsProcessed
+     *            处理的记录数
+     * @param status
+     *            同步状态
      */
     public SyncResult(String tableCode, int recordsProcessed, SyncStatus status) {
         this.tableCode = tableCode;
@@ -113,19 +117,19 @@ public class SyncResult {
         sb.append("表 ").append(tableCode).append(" 同步");
 
         switch (status) {
-            case SUCCESS:
+            case SUCCESS :
                 sb.append("成功，处理 ").append(recordsProcessed).append(" 条记录");
                 break;
-            case INCONSISTENT:
+            case INCONSISTENT :
                 sb.append("完成但数据不一致，处理 ").append(recordsProcessed).append(" 条记录");
                 break;
-            case FAILED:
+            case FAILED :
                 sb.append("失败: ").append(error != null ? error.getMessage() : "未知错误");
                 break;
-            case CANCELLED:
+            case CANCELLED :
                 sb.append("被取消");
                 break;
-            default:
+            default :
                 sb.append("状态: ").append(status);
         }
 

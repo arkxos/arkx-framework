@@ -8,10 +8,6 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,9 +17,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodNode;
+
 /**
- * 自动依赖提取工具
- * 分析类文件并提取所有依赖
+ * 自动依赖提取工具 分析类文件并提取所有依赖
  */
 public class DependencyExtractor {
 
@@ -58,10 +57,8 @@ public class DependencyExtractor {
         System.out.println("处理类: " + className);
 
         // 将类名转换为文件路径
-        String classFilePath = sourceProjectPath + "/target/classes/"
-                + className.replace('.', '/') + ".class";
-        String sourceFilePath = sourceProjectPath + "/src/main/java/"
-                + className.replace('.', '/') + ".java";
+        String classFilePath = sourceProjectPath + "/target/classes/" + className.replace('.', '/') + ".class";
+        String sourceFilePath = sourceProjectPath + "/src/main/java/" + className.replace('.', '/') + ".java";
 
         File classFile = new File(classFilePath);
         File sourceFile = new File(sourceFilePath);
@@ -78,9 +75,8 @@ public class DependencyExtractor {
             // 递归处理所有项目内部依赖
             for (String dependency : dependencies) {
                 // 跟项目包名相同的依赖才处理
-                if (dependency.startsWith(getBasePackage(className)) &&
-                        !dependency.startsWith("java.") &&
-                        !dependency.startsWith("javax.")) {
+                if (dependency.startsWith(getBasePackage(className)) && !dependency.startsWith("java.")
+                        && !dependency.startsWith("javax.")) {
                     analyzeDependencies(dependency);
                 }
             }
@@ -158,8 +154,7 @@ public class DependencyExtractor {
         }
 
         // 复制文件
-        Files.copy(sourceFile.toPath(), Paths.get(targetFilePath),
-                StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(sourceFile.toPath(), Paths.get(targetFilePath), StandardCopyOption.REPLACE_EXISTING);
 
         System.out.println("已复制: " + relativePath);
     }
@@ -167,9 +162,8 @@ public class DependencyExtractor {
     public static void main(String[] args) {
         try {
 
-
-            DependencyExtractor extractor = new DependencyExtractor(
-                    "org.ark.framework.orm.sync", "com.ark.data.sync.old.lib", "org.ark.framework.orm.sync.Demo");
+            DependencyExtractor extractor = new DependencyExtractor("org.ark.framework.orm.sync",
+                    "com.ark.data.sync.old.lib", "org.ark.framework.orm.sync.Demo");
             extractor.extract();
 
         } catch (Exception e) {

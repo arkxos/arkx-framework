@@ -1,11 +1,10 @@
 package io.arkx.framework.enums.scanner.cached;
 
-
-import io.arkx.framework.enums.scanner.model.CodeTable;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.arkx.framework.enums.scanner.model.CodeTable;
 
 /**
  * @author: zhuCan
@@ -17,7 +16,8 @@ public interface EnumCache {
     /**
      * 写入缓存
      *
-     * @param codeEnums 码表实体
+     * @param codeEnums
+     *            码表实体
      */
     void write(List<CodeTable> codeEnums);
 
@@ -31,8 +31,7 @@ public interface EnumCache {
     /**
      * @author: zhuCan
      * @date: 2020/7/9 10:32
-     * @description: 默认的枚举缓存实现类, 把枚举数据缓存到本地内存中
-     * 可以通过重写一个实现enumCache 的容器类来覆盖默认缓存
+     * @description: 默认的枚举缓存实现类, 把枚举数据缓存到本地内存中 可以通过重写一个实现enumCache 的容器类来覆盖默认缓存
      */
     class DefaultMemoryEnumCache implements EnumCache {
 

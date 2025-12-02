@@ -1,5 +1,9 @@
 package io.arkx.framework.extend.plugin;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.ObjectUtil;
 import io.arkx.framework.data.xml.XMLElement;
@@ -10,328 +14,325 @@ import io.arkx.framework.extend.ExtendPointConfig;
 import io.arkx.framework.extend.ExtendServiceConfig;
 import io.arkx.framework.i18n.LangUtil;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * 插件配置信息，对应一个.plugin文件
+ *
  * @private
  * @author Darkness
- * @date 2012-8-5 下午7:52:13 
+ * @date 2012-8-5 下午7:52:13
  * @version V1.0
  */
 public class PluginConfig {
-	// 扩展点列表
-	private Mapx<String, ExtendPointConfig> extendPoints = new Mapx<>();
-	// 扩展服务列表
-	private Mapx<String, ExtendServiceConfig> extendServices = new Mapx<>();
-	private Mapx<String, String> requiredExtendPoints = new Mapx<>();
-	private Mapx<String, String> requiredExtendServices = new Mapx<>();
-	// 依赖的插件
-	private Mapx<String, String> requiredPlugins = new Mapx<>();
-	// 扩展行为列表
-	private Mapx<String, ExtendActionConfig> extendActions = new Mapx<>();
-	// 扩展项列表
-	private Mapx<String, ExtendItemConfig> extendItems = new Mapx<>();
-	
-	private String ID;//ID 
-	private String Name;//名称
-	private String ClassName;
-	private String author;//作者
-	private String provider;//供应商
-	private String version;//版本
-	private String description;//备注
-	private String updateSite;
-	private String packageFile;// 所属文件包：xxx.jar or folder
-	private boolean UIAsJar;//zhtmlInJar
-	private boolean resourceAsJar;
-	private boolean enabled;//状态
-	private boolean running;
-	// 文件列表
-	private Set<String> pluginFiles = new HashSet<>();
-	private String defaultCrudJavaPath;
-	private String defaultCrudUIPath;
+    // 扩展点列表
+    private Mapx<String, ExtendPointConfig> extendPoints = new Mapx<>();
+    // 扩展服务列表
+    private Mapx<String, ExtendServiceConfig> extendServices = new Mapx<>();
+    private Mapx<String, String> requiredExtendPoints = new Mapx<>();
+    private Mapx<String, String> requiredExtendServices = new Mapx<>();
+    // 依赖的插件
+    private Mapx<String, String> requiredPlugins = new Mapx<>();
+    // 扩展行为列表
+    private Mapx<String, ExtendActionConfig> extendActions = new Mapx<>();
+    // 扩展项列表
+    private Mapx<String, ExtendItemConfig> extendItems = new Mapx<>();
 
-	public boolean isResourceAsJar() {
-		return resourceAsJar;
-	}
+    private String ID;// ID
+    private String Name;// 名称
+    private String ClassName;
+    private String author;// 作者
+    private String provider;// 供应商
+    private String version;// 版本
+    private String description;// 备注
+    private String updateSite;
+    private String packageFile;// 所属文件包：xxx.jar or folder
+    private boolean UIAsJar;// zhtmlInJar
+    private boolean resourceAsJar;
+    private boolean enabled;// 状态
+    private boolean running;
+    // 文件列表
+    private Set<String> pluginFiles = new HashSet<>();
+    private String defaultCrudJavaPath;
+    private String defaultCrudUIPath;
 
-	public void setResourceAsJar(boolean resourceAsJar) {
-		this.resourceAsJar = resourceAsJar;
-	}
+    public boolean isResourceAsJar() {
+        return resourceAsJar;
+    }
 
-	public Mapx<String, ExtendPointConfig> getExtendPoints() {
-		return extendPoints;
-	}
+    public void setResourceAsJar(boolean resourceAsJar) {
+        this.resourceAsJar = resourceAsJar;
+    }
 
-	public Mapx<String, ExtendServiceConfig> getExtendServices() {
-		return extendServices;
-	}
+    public Mapx<String, ExtendPointConfig> getExtendPoints() {
+        return extendPoints;
+    }
 
-	public Mapx<String, String> getRequiredExtendPoints() {
-		return requiredExtendPoints;
-	}
+    public Mapx<String, ExtendServiceConfig> getExtendServices() {
+        return extendServices;
+    }
 
-	public Mapx<String, String> getRequiredPlugins() {
-		return requiredPlugins;
-	}
+    public Mapx<String, String> getRequiredExtendPoints() {
+        return requiredExtendPoints;
+    }
 
-	public Mapx<String, ExtendActionConfig> getExtendActions() {
-		return extendActions;
-	}
+    public Mapx<String, String> getRequiredPlugins() {
+        return requiredPlugins;
+    }
 
-	public Mapx<String, ExtendItemConfig> getExtendItems() {
-		return extendItems;
-	}
+    public Mapx<String, ExtendActionConfig> getExtendActions() {
+        return extendActions;
+    }
 
-	public String getID() {
-		return ID;
-	}
+    public Mapx<String, ExtendItemConfig> getExtendItems() {
+        return extendItems;
+    }
 
-	public String getClassName() {
-		return ClassName;
-	}
+    public String getID() {
+        return ID;
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    public String getClassName() {
+        return ClassName;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getAuthor() {
+        return author;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public String getDescription(String language) {
-		if (description == null) {
-			return null;
-		}
-		return LangUtil.get(description, language);
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getName() {
-		return Name;
-	}
+    public String getDescription(String language) {
+        if (description == null) {
+            return null;
+        }
+        return LangUtil.get(description, language);
+    }
 
-	public String getName(String language) {
-		if (Name == null) {
-			return null;
-		}
-		return LangUtil.get(Name, language);
-	}
+    public String getName() {
+        return Name;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public String getName(String language) {
+        if (Name == null) {
+            return null;
+        }
+        return LangUtil.get(Name, language);
+    }
 
-	public void setEnabled(boolean enabling) {
-		this.enabled = enabling;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public boolean isRunning() {
-		return running;
-	}
+    public void setEnabled(boolean enabling) {
+        this.enabled = enabling;
+    }
 
-	public void setRunning(boolean running) {
-		this.running = running;
-	}
+    public boolean isRunning() {
+        return running;
+    }
 
-	public String getProvider() {
-		return provider;
-	}
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
 
-	public void setID(String iD) {
-		ID = iD;
-	}
+    public String getProvider() {
+        return provider;
+    }
 
-	public void setName(String name) {
-		Name = name;
-	}
+    public void setID(String iD) {
+        ID = iD;
+    }
 
-	public void setClassName(String className) {
-		ClassName = className;
-	}
+    public void setName(String name) {
+        Name = name;
+    }
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+    public void setClassName(String className) {
+        ClassName = className;
+    }
 
-	public void setProvider(String provider) {
-		this.provider = provider;
-	}
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	XMLElement root;
-	
-	public XMLElement getRoot() {
-		return root;
-	}
-	
-	public void parse(String xml) throws PluginException {
-		XMLParser parser = new XMLParser(xml);
-		parser.parse();
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-		enabled = true;// 默认开启，待分析依赖关系时判断是否可用。
+    XMLElement root;
 
-		// 基本信息
-		root = parser.getDocument().getRoot();
-		
-		ID = root.elementText("id");
-		Name = root.elementText("name");
-		ClassName = root.elementText("class");
-		description = root.elementText("description");
-		version = root.elementText("version");
-		author = root.elementText("author");
-		provider = root.elementText("provider");
-		updateSite = root.elementText("updateSite");
-		defaultCrudJavaPath = root.elementText("defaultCrudJavaPath");
-		defaultCrudUIPath = root.elementText("defaultCrudUIPath");
-		UIAsJar = Boolean.parseBoolean(root.elementText("UIAsJar"));
-		resourceAsJar = Boolean.parseBoolean(root.elementText("resourceAsJar"));
+    public XMLElement getRoot() {
+        return root;
+    }
 
-		if (ObjectUtil.isEmpty(updateSite)) {
-			updateSite = "http://www.ark.com/update/";
-		}
+    public void parse(String xml) throws PluginException {
+        XMLParser parser = new XMLParser(xml);
+        parser.parse();
 
-		if (ObjectUtil.isEmpty(ID)) {
-			throw new PluginException("id is empty!");
-		}
-		if (ObjectUtil.isEmpty(Name)) {
-			throw new PluginException("name is empty!");
-		}
-		if (ObjectUtil.isEmpty(version)) {
-			throw new PluginException("version is empty!");
-		}
+        enabled = true;// 默认开启，待分析依赖关系时判断是否可用。
 
-		// 文件列表
-		List<XMLElement> nds = root.elements("files.*");
-		for (XMLElement nd : nds) {
-			if (nd.getQName().equalsIgnoreCase("directory")) {
-				pluginFiles.add("[D]" + nd.getText());
-			}
-			if (nd.getQName().equalsIgnoreCase("file")) {
-				pluginFiles.add(nd.getText());
-			}
-		}
+        // 基本信息
+        root = parser.getDocument().getRoot();
 
-		// 依赖关系
-		nds = root.elements("required.plugin");
-		if (ObjectUtil.notEmpty(nds)) {
-			for (XMLElement nd : nds) {
-				requiredPlugins.put(nd.getText(), nd.getAttributes().get("version"));
-			}
-		}
+        ID = root.elementText("id");
+        Name = root.elementText("name");
+        ClassName = root.elementText("class");
+        description = root.elementText("description");
+        version = root.elementText("version");
+        author = root.elementText("author");
+        provider = root.elementText("provider");
+        updateSite = root.elementText("updateSite");
+        defaultCrudJavaPath = root.elementText("defaultCrudJavaPath");
+        defaultCrudUIPath = root.elementText("defaultCrudUIPath");
+        UIAsJar = Boolean.parseBoolean(root.elementText("UIAsJar"));
+        resourceAsJar = Boolean.parseBoolean(root.elementText("resourceAsJar"));
 
-		// 扩展点
-		nds = root.elements("extendPoint");
-		if (ObjectUtil.notEmpty(nds)) {
-			for (XMLElement nd : nds) {
-				ExtendPointConfig ep = new ExtendPointConfig();
-				ep.init(this, nd);
-				extendPoints.put(ep.getID(), ep);
-			}
-		}
+        if (ObjectUtil.isEmpty(updateSite)) {
+            updateSite = "http://www.ark.com/update/";
+        }
 
-		// 扩展服务
-		nds = root.elements("extendService");
-		if (ObjectUtil.notEmpty(nds)) {
-			for (XMLElement nd : nds) {
-				ExtendServiceConfig ep = new ExtendServiceConfig();
-				ep.init(this, nd);
-				extendServices.put(ep.getID(), ep);
-			}
-		}
+        if (ObjectUtil.isEmpty(ID)) {
+            throw new PluginException("id is empty!");
+        }
+        if (ObjectUtil.isEmpty(Name)) {
+            throw new PluginException("name is empty!");
+        }
+        if (ObjectUtil.isEmpty(version)) {
+            throw new PluginException("version is empty!");
+        }
 
-		// 扩展项
-		nds = root.elements("extendItem");
-		if (ObjectUtil.notEmpty(nds)) {
-			for (XMLElement nd : nds) {
-				ExtendItemConfig ei = new ExtendItemConfig();
-				ei.init(this, nd);
-				extendItems.put(ei.getID(), ei);
-				requiredExtendServices.put(ei.getExtendServiceID(), "Y");
-			}
-		}
+        // 文件列表
+        List<XMLElement> nds = root.elements("files.*");
+        for (XMLElement nd : nds) {
+            if (nd.getQName().equalsIgnoreCase("directory")) {
+                pluginFiles.add("[D]" + nd.getText());
+            }
+            if (nd.getQName().equalsIgnoreCase("file")) {
+                pluginFiles.add(nd.getText());
+            }
+        }
 
-		// 扩展行为
-		nds = root.elements("extendAction");
-		if (ObjectUtil.notEmpty(nds)) {
-			for (XMLElement nd : nds) {
-				ExtendActionConfig eac = new ExtendActionConfig();
-				eac.init(this, nd);
-				extendActions.put(eac.getID(), eac);
-				requiredExtendPoints.put(eac.getExtendPointID(), "Y");
-			}
-		}
-	}
-	
-	public Object extract(IPluginConfigExtractor extractor) {
-		return extractor.extract(this);
-	}
+        // 依赖关系
+        nds = root.elements("required.plugin");
+        if (ObjectUtil.notEmpty(nds)) {
+            for (XMLElement nd : nds) {
+                requiredPlugins.put(nd.getText(), nd.getAttributes().get("version"));
+            }
+        }
 
-	public String getUpdateSite() {
-		return updateSite;
-	}
+        // 扩展点
+        nds = root.elements("extendPoint");
+        if (ObjectUtil.notEmpty(nds)) {
+            for (XMLElement nd : nds) {
+                ExtendPointConfig ep = new ExtendPointConfig();
+                ep.init(this, nd);
+                extendPoints.put(ep.getID(), ep);
+            }
+        }
 
-	public void setUpdateSite(String updateSite) {
-		this.updateSite = updateSite;
-	}
+        // 扩展服务
+        nds = root.elements("extendService");
+        if (ObjectUtil.notEmpty(nds)) {
+            for (XMLElement nd : nds) {
+                ExtendServiceConfig ep = new ExtendServiceConfig();
+                ep.init(this, nd);
+                extendServices.put(ep.getID(), ep);
+            }
+        }
 
-	public boolean isUIAsJar() {
-		return UIAsJar;
-	}
+        // 扩展项
+        nds = root.elements("extendItem");
+        if (ObjectUtil.notEmpty(nds)) {
+            for (XMLElement nd : nds) {
+                ExtendItemConfig ei = new ExtendItemConfig();
+                ei.init(this, nd);
+                extendItems.put(ei.getID(), ei);
+                requiredExtendServices.put(ei.getExtendServiceID(), "Y");
+            }
+        }
 
-	public void setUIAsJar(boolean UIAsJar) {
-		this.UIAsJar = UIAsJar;
-	}
+        // 扩展行为
+        nds = root.elements("extendAction");
+        if (ObjectUtil.notEmpty(nds)) {
+            for (XMLElement nd : nds) {
+                ExtendActionConfig eac = new ExtendActionConfig();
+                eac.init(this, nd);
+                extendActions.put(eac.getID(), eac);
+                requiredExtendPoints.put(eac.getExtendPointID(), "Y");
+            }
+        }
+    }
 
-	@Override
-	public String toString() {
-		String str = super.toString();
-		str = str.substring(str.lastIndexOf('@'));
-		str = "plugin:" + getID() + str;
-		return str;
-	}
+    public Object extract(IPluginConfigExtractor extractor) {
+        return extractor.extract(this);
+    }
 
-	public Set<String> getPluginFiles() {
-		return pluginFiles;
-	}
+    public String getUpdateSite() {
+        return updateSite;
+    }
 
-	public void setPluginFiles(Set<String> pluginFiles) {
-		this.pluginFiles = pluginFiles;
-	}
+    public void setUpdateSite(String updateSite) {
+        this.updateSite = updateSite;
+    }
 
-	public String getDefaultCrudJavaPath() {
-		return defaultCrudJavaPath;
-	}
+    public boolean isUIAsJar() {
+        return UIAsJar;
+    }
 
-	public void setDefaultCrudJavaPath(String defaultCrudJavaPath) {
-		this.defaultCrudJavaPath = defaultCrudJavaPath;
-	}
+    public void setUIAsJar(boolean UIAsJar) {
+        this.UIAsJar = UIAsJar;
+    }
 
-	public String getDefaultCrudUIPath() {
-		return defaultCrudUIPath;
-	}
+    @Override
+    public String toString() {
+        String str = super.toString();
+        str = str.substring(str.lastIndexOf('@'));
+        str = "plugin:" + getID() + str;
+        return str;
+    }
 
-	public void setDefaultCrudUIPath(String defaultCrudUIPath) {
-		this.defaultCrudUIPath = defaultCrudUIPath;
-	}
+    public Set<String> getPluginFiles() {
+        return pluginFiles;
+    }
 
-	public String getPackageFile() {
-		return packageFile;
-	}
+    public void setPluginFiles(Set<String> pluginFiles) {
+        this.pluginFiles = pluginFiles;
+    }
 
-	public void setPackageFile(String packageFile) {
-		this.packageFile = packageFile;
-	}
+    public String getDefaultCrudJavaPath() {
+        return defaultCrudJavaPath;
+    }
+
+    public void setDefaultCrudJavaPath(String defaultCrudJavaPath) {
+        this.defaultCrudJavaPath = defaultCrudJavaPath;
+    }
+
+    public String getDefaultCrudUIPath() {
+        return defaultCrudUIPath;
+    }
+
+    public void setDefaultCrudUIPath(String defaultCrudUIPath) {
+        this.defaultCrudUIPath = defaultCrudUIPath;
+    }
+
+    public String getPackageFile() {
+        return packageFile;
+    }
+
+    public void setPackageFile(String packageFile) {
+        this.packageFile = packageFile;
+    }
 }

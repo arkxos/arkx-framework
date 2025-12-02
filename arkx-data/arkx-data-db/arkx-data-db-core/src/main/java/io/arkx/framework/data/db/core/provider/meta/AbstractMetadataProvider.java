@@ -9,19 +9,21 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.provider.meta;
 
-import cn.hutool.core.text.StrPool;
-import io.arkx.framework.data.db.common.type.TableIndexEnum;
-import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
-import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.schema.*;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.sql.*;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import io.arkx.framework.data.db.common.type.TableIndexEnum;
+import io.arkx.framework.data.db.core.provider.AbstractCommonProvider;
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.schema.*;
+
+import cn.hutool.core.text.StrPool;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 数据库元信息抽象基类
@@ -29,9 +31,7 @@ import java.util.stream.Collectors;
  * @author tang
  */
 @Slf4j
-public abstract class AbstractMetadataProvider
-        extends AbstractCommonProvider
-        implements MetadataProvider {
+public abstract class AbstractMetadataProvider extends AbstractCommonProvider implements MetadataProvider {
 
     protected static final String[] TABLE_TYPES = new String[]{"TABLE", "VIEW", "PARTITIONED TABLE"};
 
@@ -71,8 +71,7 @@ public abstract class AbstractMetadataProvider
     public List<TableDescription> queryTableList(Connection connection, String schemaName) {
         List<TableDescription> ret = new ArrayList<>();
         Set<String> uniqueSet = new LinkedHashSet<>();
-        try (ResultSet tables = connection.getMetaData()
-                .getTables(catalogName, schemaName, "%", TABLE_TYPES)) {
+        try (ResultSet tables = connection.getMetaData().getTables(catalogName, schemaName, "%", TABLE_TYPES)) {
             while (tables.next()) {
                 String tableName = tables.getString("TABLE_NAME");
                 if (uniqueSet.contains(tableName)) {
@@ -95,10 +94,8 @@ public abstract class AbstractMetadataProvider
     }
 
     @Override
-    public TableDescription queryTableMeta(Connection connection, String schemaName,
-                                           String tableName) {
-        try (ResultSet tables = connection.getMetaData()
-                .getTables(catalogName, schemaName, tableName, TABLE_TYPES)) {
+    public TableDescription queryTableMeta(Connection connection, String schemaName, String tableName) {
+        try (ResultSet tables = connection.getMetaData().getTables(catalogName, schemaName, tableName, TABLE_TYPES)) {
             if (tables.next()) {
                 TableDescription td = new TableDescription();
                 td.setSchemaName(schemaName);
@@ -114,11 +111,9 @@ public abstract class AbstractMetadataProvider
     }
 
     @Override
-    public List<String> queryTableColumnName(Connection connection, String schemaName,
-                                             String tableName) {
+    public List<String> queryTableColumnName(Connection connection, String schemaName, String tableName) {
         Set<String> columns = new LinkedHashSet<>();
-        try (ResultSet rs = connection.getMetaData()
-                .getColumns(catalogName, schemaName, tableName, null)) {
+        try (ResultSet rs = connection.getMetaData().getColumns(catalogName, schemaName, tableName, null)) {
             while (rs.next()) {
                 columns.add(rs.getString("COLUMN_NAME"));
             }
@@ -129,21 +124,19 @@ public abstract class AbstractMetadataProvider
     }
 
     @Override
-    public List<ColumnDescription> queryTableColumnMeta(Connection connection, String schemaName,
-                                                        String tableName) {
+    public List<ColumnDescription> queryTableColumnMeta(Connection connection, String schemaName, String tableName) {
         String sql = this.getTableFieldsQuerySQL(schemaName, tableName);
         List<ColumnDescription> ret = this.querySelectSqlColumnMeta(connection, sql);
 
         // 补充一下注释信息
-        try (ResultSet columns = connection.getMetaData()
-                .getColumns(catalogName, schemaName, tableName, null)) {
+        try (ResultSet columns = connection.getMetaData().getColumns(catalogName, schemaName, tableName, null)) {
             while (columns.next()) {
                 String columnName = columns.getString("COLUMN_NAME");
                 String remarks = columns.getString("REMARKS");
                 for (ColumnDescription cd : ret) {
                     if (columnName.equals(cd.getFieldName())) {
                         cd.setRemarks(remarks);
-                        //break out of the loop early
+                        // break out of the loop early
                         break;
                     }
                 }
@@ -155,11 +148,9 @@ public abstract class AbstractMetadataProvider
     }
 
     @Override
-    public List<String> queryTablePrimaryKeys(Connection connection, String schemaName,
-                                              String tableName) {
+    public List<String> queryTablePrimaryKeys(Connection connection, String schemaName, String tableName) {
         Set<String> ret = new LinkedHashSet<>();
-        try (ResultSet primaryKeys = connection.getMetaData()
-                .getPrimaryKeys(catalogName, schemaName, tableName)) {
+        try (ResultSet primaryKeys = connection.getMetaData().getPrimaryKeys(catalogName, schemaName, tableName)) {
             while (primaryKeys.next()) {
                 ret.add(primaryKeys.getString("COLUMN_NAME"));
             }
@@ -174,8 +165,7 @@ public abstract class AbstractMetadataProvider
         List<IndexDescription> ret = new ArrayList<>();
         Map<String, List<IndexFieldMeta>> indexFieldsMap = new HashMap<>();
         Map<String, TableIndexEnum> indexTypesMap = new HashMap<>();
-        try (ResultSet rs = connection.getMetaData()
-                .getIndexInfo(catalogName, schemaName, tableName, false, true)) {
+        try (ResultSet rs = connection.getMetaData().getIndexInfo(catalogName, schemaName, tableName, false, true)) {
             while (rs.next()) {
                 String indexName = rs.getString("INDEX_NAME");
                 Boolean nonUnique = rs.getBoolean("NON_UNIQUE");
@@ -183,15 +173,15 @@ public abstract class AbstractMetadataProvider
                 String columnName = rs.getString("COLUMN_NAME");
                 Integer ordinalPosition = rs.getInt("ORDINAL_POSITION");
 
-                Boolean isAscOrder = Objects.isNull(orderMethod) ? null
+                Boolean isAscOrder = Objects.isNull(orderMethod)
+                        ? null
                         : ("A".equals(orderMethod) ? true : "D".equals(orderMethod) ? false : null);
                 IndexFieldMeta indexFieldMeta = new IndexFieldMeta(columnName, ordinalPosition, isAscOrder);
                 if (StringUtils.isNotBlank(indexName)) {
                     indexTypesMap.putIfAbsent(indexName,
                             (null != nonUnique)
                                     ? (nonUnique ? TableIndexEnum.NORMAL : TableIndexEnum.UNIQUE)
-                                    : TableIndexEnum.NORMAL
-                    );
+                                    : TableIndexEnum.NORMAL);
                     indexFieldsMap.computeIfAbsent(indexName, key -> new ArrayList<>()).add(indexFieldMeta);
                 }
             }
@@ -202,8 +192,7 @@ public abstract class AbstractMetadataProvider
                     TableIndexEnum typeEnum = entry.getValue();
                     List<IndexFieldMeta> indexFields = indexFieldsMap.get(indexName);
                     if (CollectionUtils.isNotEmpty(indexFields)) {
-                        List<String> fieldList = indexFields.stream()
-                                .map(IndexFieldMeta::getFieldName)
+                        List<String> fieldList = indexFields.stream().map(IndexFieldMeta::getFieldName)
                                 .collect(Collectors.toList());
                         if (primaryKeys.size() == indexFields.size() && primaryKeys.containsAll(fieldList)) {
                             continue;
@@ -224,8 +213,8 @@ public abstract class AbstractMetadataProvider
     }
 
     @Override
-    public String getFieldDefinition(ColumnMetaData v, List<String> pks, boolean useAutoInc,
-                                     boolean addCr, boolean withRemarks) {
+    public String getFieldDefinition(ColumnMetaData v, List<String> pks, boolean useAutoInc, boolean addCr,
+            boolean withRemarks) {
         throw new RuntimeException("AbstractDatabase Unimplemented!");
     }
 
@@ -245,7 +234,7 @@ public abstract class AbstractMetadataProvider
 
     @Override
     public void postAppendCreateTableSql(StringBuilder builder, String tblComment, List<String> primaryKeys,
-                                         SourceProperties tblProperties) {
+            SourceProperties tblProperties) {
         // Nothing, please override by subclass!
     }
 
@@ -253,32 +242,27 @@ public abstract class AbstractMetadataProvider
     public String getPrimaryKeyAsString(List<String> pks) {
         if (!pks.isEmpty()) {
             return quoteName(
-                    StringUtils.join(
-                            pks.stream().distinct().collect(Collectors.toList())
-                            , quoteName(StrPool.COMMA)
-                    )
-            );
+                    StringUtils.join(pks.stream().distinct().collect(Collectors.toList()), quoteName(StrPool.COMMA)));
         }
         return StringUtils.EMPTY;
     }
 
     @Override
-    public List<String> getTableColumnCommentDefinition(TableDescription td,
-                                                        List<ColumnDescription> cds) {
+    public List<String> getTableColumnCommentDefinition(TableDescription td, List<ColumnDescription> cds) {
         throw new RuntimeException("AbstractDatabase Unimplemented!");
     }
 
     /**
      * 执行写SQL操作
      *
-     * @param sql 写SQL语句
+     * @param sql
+     *            写SQL语句
      */
     protected final int executeSql(String sql) {
         if (log.isDebugEnabled()) {
             log.debug("Execute sql :{}", sql);
         }
-        try (Connection connection = getDataSource().getConnection();
-             Statement st = connection.createStatement()) {
+        try (Connection connection = getDataSource().getConnection(); Statement st = connection.createStatement()) {
             return st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -334,7 +318,7 @@ public abstract class AbstractMetadataProvider
     }
 
     protected List<ColumnDescription> getSelectSqlColumnMeta(Connection connection, String querySQL,
-                                                             Consumer<Connection> preQueryFunc) {
+            Consumer<Connection> preQueryFunc) {
         List<ColumnDescription> ret = new ArrayList<>();
         try (Statement st = connection.createStatement()) {
             preQueryFunc.accept(connection);

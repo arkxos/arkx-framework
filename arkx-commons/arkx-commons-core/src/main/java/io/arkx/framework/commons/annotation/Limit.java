@@ -15,12 +15,12 @@
  */
 package io.arkx.framework.commons.annotation;
 
-import io.arkx.framework.commons.aspect.LimitType;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import io.arkx.framework.commons.aspect.LimitType;
 
 /**
  * @author darkness

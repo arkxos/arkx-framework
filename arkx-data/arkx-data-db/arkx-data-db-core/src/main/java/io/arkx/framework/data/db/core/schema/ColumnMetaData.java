@@ -10,6 +10,7 @@
 package io.arkx.framework.data.db.core.schema;
 
 import io.arkx.framework.data.db.common.consts.Constants;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +29,8 @@ public class ColumnMetaData {
     public static final int TYPE_NONE = 0;
 
     /**
-     * Value type indicating that the value contains a floating point double precision number.
+     * Value type indicating that the value contains a floating point double
+     * precision number.
      */
     public static final int TYPE_NUMBER = 1;
 
@@ -53,7 +55,8 @@ public class ColumnMetaData {
     public static final int TYPE_INTEGER = 5;
 
     /**
-     * Value type indicating that the value contains a floating point precision number with arbitrary precision.
+     * Value type indicating that the value contains a floating point precision
+     * number with arbitrary precision.
      */
     public static final int TYPE_BIGNUMBER = 6;
 
@@ -68,7 +71,8 @@ public class ColumnMetaData {
     public static final int TYPE_BINARY = 8;
 
     /**
-     * Value type indicating that the value contains a date-time with nanosecond precision
+     * Value type indicating that the value contains a date-time with nanosecond
+     * precision
      */
     public static final int TYPE_TIMESTAMP = 9;
 
@@ -85,8 +89,8 @@ public class ColumnMetaData {
     /**
      * The Constant typeCodes.
      */
-    public static final String[] TYPE_CODES = new String[]{"-", "Number", "String", "Date", "Boolean",
-            "Integer", "BigNumber", "Serializable", "Binary", "Timestamp", "Time", "Internet Address",};
+    public static final String[] TYPE_CODES = new String[]{"-", "Number", "String", "Date", "Boolean", "Integer",
+            "BigNumber", "Serializable", "Binary", "Timestamp", "Time", "Internet Address",};
 
     //////////////////////////////////////////////////////////////////////
 
@@ -204,7 +208,8 @@ public class ColumnMetaData {
     }
 
     /**
-     * Checks whether or not this Value is Numeric A Value is numeric if it is either of type Number or Integer
+     * Checks whether or not this Value is Numeric A Value is numeric if it is
+     * either of type Number or Integer
      *
      * @return true if the value is either of type Number or Integer
      */
@@ -215,7 +220,8 @@ public class ColumnMetaData {
     /**
      * Checks whether or not the specified type is either Integer or Number
      *
-     * @param t the type to check
+     * @param t
+     *            the type to check
      * @return true if the type is Integer or Number
      */
     public static final boolean isNumeric(int t) {
@@ -223,7 +229,8 @@ public class ColumnMetaData {
     }
 
     /**
-     * Return the type of a value in a textual form: "String", "Number", "Integer", "Boolean", "Date", ...
+     * Return the type of a value in a textual form: "String", "Number", "Integer",
+     * "Boolean", "Date", ...
      *
      * @return A String describing the type of value.
      */
@@ -239,25 +246,25 @@ public class ColumnMetaData {
         boolean signed = desc.isSigned();
 
         switch (type) {
-            case java.sql.Types.CHAR:
-            case java.sql.Types.NCHAR:
-            case java.sql.Types.VARCHAR:
-            case java.sql.Types.NVARCHAR:
+            case java.sql.Types.CHAR :
+            case java.sql.Types.NCHAR :
+            case java.sql.Types.VARCHAR :
+            case java.sql.Types.NVARCHAR :
                 valtype = ColumnMetaData.TYPE_STRING;
                 length = desc.getDisplaySize();
                 break;
 
-            case java.sql.Types.LONGVARCHAR:
-            case java.sql.Types.LONGNVARCHAR:
-            case java.sql.Types.CLOB:
-            case java.sql.Types.NCLOB:
-            case java.sql.Types.SQLXML:
-            case java.sql.Types.ROWID:
+            case java.sql.Types.LONGVARCHAR :
+            case java.sql.Types.LONGNVARCHAR :
+            case java.sql.Types.CLOB :
+            case java.sql.Types.NCLOB :
+            case java.sql.Types.SQLXML :
+            case java.sql.Types.ROWID :
                 valtype = ColumnMetaData.TYPE_STRING;
                 length = Constants.CLOB_LENGTH;
                 break;
 
-            case java.sql.Types.BIGINT:
+            case java.sql.Types.BIGINT :
                 // verify Unsigned BIGINT overflow!
                 //
                 if (signed) {
@@ -271,29 +278,29 @@ public class ColumnMetaData {
                 }
                 break;
 
-            case java.sql.Types.INTEGER:
+            case java.sql.Types.INTEGER :
                 valtype = ColumnMetaData.TYPE_INTEGER;
                 precision = 0; // Max 2.147.483.647
                 length = 9;
                 break;
 
-            case java.sql.Types.SMALLINT:
+            case java.sql.Types.SMALLINT :
                 valtype = ColumnMetaData.TYPE_INTEGER;
                 precision = 0; // Max 32.767
                 length = 4;
                 break;
 
-            case java.sql.Types.TINYINT:
+            case java.sql.Types.TINYINT :
                 valtype = ColumnMetaData.TYPE_INTEGER;
                 precision = 0; // Max 127
                 length = 2;
                 break;
 
-            case java.sql.Types.DECIMAL:
-            case java.sql.Types.DOUBLE:
-            case java.sql.Types.FLOAT:
-            case java.sql.Types.REAL:
-            case java.sql.Types.NUMERIC:
+            case java.sql.Types.DECIMAL :
+            case java.sql.Types.DOUBLE :
+            case java.sql.Types.FLOAT :
+            case java.sql.Types.REAL :
+            case java.sql.Types.NUMERIC :
                 valtype = ColumnMetaData.TYPE_NUMBER;
                 length = desc.getPrecisionSize();
                 precision = desc.getScaleSize();
@@ -304,8 +311,7 @@ public class ColumnMetaData {
                     precision = -1;
                 }
 
-                if (type == java.sql.Types.DOUBLE || type == java.sql.Types.FLOAT
-                        || type == java.sql.Types.REAL) {
+                if (type == java.sql.Types.DOUBLE || type == java.sql.Types.FLOAT || type == java.sql.Types.REAL) {
                     if (precision == 0) {
                         if (!signed) {
                             precision = -1; // precision is obviously incorrect if the type if
@@ -317,9 +323,7 @@ public class ColumnMetaData {
                     }
 
                     // If we're dealing with PostgreSQL and double precision types
-                    if ((desc.getProductType().isLikePostgres())
-                            && type == java.sql.Types.DOUBLE
-                            && precision >= 16
+                    if ((desc.getProductType().isLikePostgres()) && type == java.sql.Types.DOUBLE && precision >= 16
                             && length >= 16) {
                         precision = -1;
                         length = -1;
@@ -336,16 +340,12 @@ public class ColumnMetaData {
 
                     // If we're dealing with Hive and double/float precision types
                     if (desc.getProductType().isLikeHive()) {
-                        if (type == java.sql.Types.DOUBLE
-                                && precision >= 15
-                                && length >= 15) {
+                        if (type == java.sql.Types.DOUBLE && precision >= 15 && length >= 15) {
                             precision = 6;
                             length = 25;
                         }
 
-                        if (type == java.sql.Types.FLOAT
-                                && precision >= 7
-                                && length >= 7) {
+                        if (type == java.sql.Types.FLOAT && precision >= 7 && length >= 7) {
                             precision = 6;
                             length = 25;
                         }
@@ -391,35 +391,35 @@ public class ColumnMetaData {
 
                 break;
 
-            case java.sql.Types.TIMESTAMP:
-            case java.sql.Types.TIMESTAMP_WITH_TIMEZONE:
+            case java.sql.Types.TIMESTAMP :
+            case java.sql.Types.TIMESTAMP_WITH_TIMEZONE :
                 valtype = ColumnMetaData.TYPE_TIMESTAMP;
                 length = desc.getScaleSize();
                 break;
 
-            case java.sql.Types.DATE:
+            case java.sql.Types.DATE :
                 valtype = ColumnMetaData.TYPE_DATE;
                 break;
 
-            case java.sql.Types.TIME:
-            case java.sql.Types.TIME_WITH_TIMEZONE:
+            case java.sql.Types.TIME :
+            case java.sql.Types.TIME_WITH_TIMEZONE :
                 valtype = ColumnMetaData.TYPE_TIME;
                 break;
 
-            case java.sql.Types.BOOLEAN:
-            case java.sql.Types.BIT:
+            case java.sql.Types.BOOLEAN :
+            case java.sql.Types.BIT :
                 valtype = ColumnMetaData.TYPE_BOOLEAN;
                 break;
 
-            case java.sql.Types.BINARY:
-            case java.sql.Types.BLOB:
-            case java.sql.Types.VARBINARY:
-            case java.sql.Types.LONGVARBINARY:
+            case java.sql.Types.BINARY :
+            case java.sql.Types.BLOB :
+            case java.sql.Types.VARBINARY :
+            case java.sql.Types.LONGVARBINARY :
                 valtype = ColumnMetaData.TYPE_BINARY;
                 precision = -1;
                 break;
 
-            default:
+            default :
                 // others total 9 value, set default STRING type:
                 // java.sql.Types.JAVA_OBJECT
                 // java.sql.Types.OTHER

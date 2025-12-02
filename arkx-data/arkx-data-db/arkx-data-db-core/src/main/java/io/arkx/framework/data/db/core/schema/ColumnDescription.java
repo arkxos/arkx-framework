@@ -10,6 +10,7 @@
 package io.arkx.framework.data.db.core.schema;
 
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
+
 import lombok.Getter;
 import lombok.Setter;
 

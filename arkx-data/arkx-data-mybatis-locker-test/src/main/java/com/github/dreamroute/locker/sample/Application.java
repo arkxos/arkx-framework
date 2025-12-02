@@ -1,9 +1,10 @@
 package com.github.dreamroute.locker.sample;
 
-import com.github.dreamroute.sqlprinter.starter.anno.EnableSQLPrinter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.github.dreamroute.sqlprinter.starter.anno.EnableSQLPrinter;
 
 /**
  * @author w.dehai

@@ -1,14 +1,14 @@
 package io.arkx.framework.avatarmq.broker.strategy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.arkx.framework.avatarmq.broker.ConsumerMessageListener;
 import io.arkx.framework.avatarmq.broker.ProducerMessageListener;
 import io.arkx.framework.avatarmq.model.MessageSource;
 import io.arkx.framework.avatarmq.model.RequestMessage;
 import io.arkx.framework.avatarmq.model.ResponseMessage;
 import io.netty.channel.ChannelHandlerContext;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @filename:BrokerStrategyContext.java
@@ -31,7 +31,7 @@ public class BrokerStrategyContext {
     private ConsumerMessageListener hookConsumer;
     private BrokerStrategy strategy;
 
-    private static Map<Integer,BrokerStrategy> strategyMap = new HashMap<>();
+    private static Map<Integer, BrokerStrategy> strategyMap = new HashMap<>();
 
     static {
         strategyMap.put(AvatarMQProducerMessageStrategy, new BrokerProducerMessageStrategy());
@@ -40,7 +40,8 @@ public class BrokerStrategyContext {
         strategyMap.put(AvatarMQUnsubscribeStrategy, new BrokerUnsubscribeStrategy());
     }
 
-    public BrokerStrategyContext(RequestMessage request, ResponseMessage response, ChannelHandlerContext channelHandler) {
+    public BrokerStrategyContext(RequestMessage request, ResponseMessage response,
+            ChannelHandlerContext channelHandler) {
         this.request = request;
         this.response = response;
         this.channelHandler = channelHandler;
@@ -56,16 +57,18 @@ public class BrokerStrategyContext {
 
     public void invoke() {
         switch (request.getMsgType()) {
-            case AvatarMQMessage:
-                strategy = strategyMap.get(request.getMsgSource() == MessageSource.AvatarMQProducer ? AvatarMQProducerMessageStrategy : AvatarMQConsumerMessageStrategy);
+            case AvatarMQMessage :
+                strategy = strategyMap.get(request.getMsgSource() == MessageSource.AvatarMQProducer
+                        ? AvatarMQProducerMessageStrategy
+                        : AvatarMQConsumerMessageStrategy);
                 break;
-            case AvatarMQSubscribe:
+            case AvatarMQSubscribe :
                 strategy = strategyMap.get(AvatarMQSubscribeStrategy);
                 break;
-            case AvatarMQUnsubscribe:
+            case AvatarMQUnsubscribe :
                 strategy = strategyMap.get(AvatarMQUnsubscribeStrategy);
                 break;
-            default:
+            default :
                 break;
         }
 

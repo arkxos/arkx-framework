@@ -7,10 +7,11 @@ package org.ark.framework.orm.db.create;
  * @date 2025-10-16 17:10
  * @since 1.0
  */
-import io.arkx.framework.commons.util.ObjectUtil;
+import java.util.*;
+
 import org.ark.framework.orm.SchemaColumn;
 
-import java.util.*;
+import io.arkx.framework.commons.util.ObjectUtil;
 
 /**
  * 达梦数据库建表实现
@@ -22,24 +23,19 @@ public class DMTableCreator extends AbstractTableCreator {
 
     static {
         // 初始化达梦数据库关键字列表
-        String[] damengKeywords = {
-                "ADD", "ALL", "ALTER", "AND", "ANY", "AS", "ASC", "AUDIT", "BETWEEN", "BY",
-                "CASCADE", "CHECK", "CLUSTER", "COLUMN", "COMMENT", "COMPRESS", "CONNECT",
-                "CREATE", "CURRENT", "DATE", "DECIMAL", "DEFAULT", "DELETE", "DESC", "DROP",
-                "ELSE", "EXCLUSIVE", "EXISTS", "FILE", "FLOAT", "FOR", "FOREIGN", "FROM",
-                "GRANT", "GROUP", "HAVING", "IDENTIFIED", "IMMEDIATE", "IN", "INCREMENT",
-                "INDEX", "INITIAL", "INSERT", "INTEGER", "INTERSECT", "INTO", "IS", "LEVEL",
-                "LIKE", "LOCK", "LONG", "MAXEXTENTS", "MINUS", "MODE", "MODIFY", "NOAUDIT",
-                "NOCOMPRESS", "NOT", "NOWAIT", "NULL", "NUMBER", "OF", "OFFLINE", "ON", "ONLINE",
-                "OPTION", "OR", "ORDER", "PCTFREE", "PRIOR", "PRIVILEGES", "PUBLIC", "RAW",
-                "RENAME", "RESOURCE", "REVOKE", "ROW", "ROWID", "ROWNUM", "ROWS", "SELECT",
-                "SESSION", "SET", "SHARE", "SIZE", "SMALLINT", "START", "SYNONYM", "SYSDATE",
-                "TABLE", "THEN", "TO", "TRIGGER", "UID", "UNION", "UNIQUE", "UPDATE", "USER",
-                "VALIDATE", "VALUES", "VARCHAR", "VARCHAR2", "VIEW", "WHENEVER", "WHERE", "WITH",
-                "ROWID", "TRXID", "OPTRTID", "RROWID", "CLUSTER_ID", "DATA_MAGIC", "LENGTH",
-                "COLUMN_COUNT", "ROW_SIZE", "MODIFY_TIME", "DELETE_TRXID",
-                "DELETE_OPTRTID", "DROP_TIME", "AUTOINCREMENT", "IDENTITY"
-        };
+        String[] damengKeywords = {"ADD", "ALL", "ALTER", "AND", "ANY", "AS", "ASC", "AUDIT", "BETWEEN", "BY",
+                "CASCADE", "CHECK", "CLUSTER", "COLUMN", "COMMENT", "COMPRESS", "CONNECT", "CREATE", "CURRENT", "DATE",
+                "DECIMAL", "DEFAULT", "DELETE", "DESC", "DROP", "ELSE", "EXCLUSIVE", "EXISTS", "FILE", "FLOAT", "FOR",
+                "FOREIGN", "FROM", "GRANT", "GROUP", "HAVING", "IDENTIFIED", "IMMEDIATE", "IN", "INCREMENT", "INDEX",
+                "INITIAL", "INSERT", "INTEGER", "INTERSECT", "INTO", "IS", "LEVEL", "LIKE", "LOCK", "LONG",
+                "MAXEXTENTS", "MINUS", "MODE", "MODIFY", "NOAUDIT", "NOCOMPRESS", "NOT", "NOWAIT", "NULL", "NUMBER",
+                "OF", "OFFLINE", "ON", "ONLINE", "OPTION", "OR", "ORDER", "PCTFREE", "PRIOR", "PRIVILEGES", "PUBLIC",
+                "RAW", "RENAME", "RESOURCE", "REVOKE", "ROW", "ROWID", "ROWNUM", "ROWS", "SELECT", "SESSION", "SET",
+                "SHARE", "SIZE", "SMALLINT", "START", "SYNONYM", "SYSDATE", "TABLE", "THEN", "TO", "TRIGGER", "UID",
+                "UNION", "UNIQUE", "UPDATE", "USER", "VALIDATE", "VALUES", "VARCHAR", "VARCHAR2", "VIEW", "WHENEVER",
+                "WHERE", "WITH", "ROWID", "TRXID", "OPTRTID", "RROWID", "CLUSTER_ID", "DATA_MAGIC", "LENGTH",
+                "COLUMN_COUNT", "ROW_SIZE", "MODIFY_TIME", "DELETE_TRXID", "DELETE_OPTRTID", "DROP_TIME",
+                "AUTOINCREMENT", "IDENTITY"};
 
         for (String keyword : damengKeywords) {
             RESERVED_KEYWORDS.add(keyword.toUpperCase());
@@ -47,10 +43,10 @@ public class DMTableCreator extends AbstractTableCreator {
     }
 
     /**
-     * 检查并处理保留关键字
-     * 如果列名是保留关键字，则使用双引号包裹
+     * 检查并处理保留关键字 如果列名是保留关键字，则使用双引号包裹
      *
-     * @param columnName 列名
+     * @param columnName
+     *            列名
      * @return 处理后的列名
      */
     protected String escapeColumnNameIfReserved(String columnName) {
@@ -74,20 +70,22 @@ public class DMTableCreator extends AbstractTableCreator {
             return "text";
         }
 
-        Map<Integer, String> typeMap = new HashMap<>() {{
-            put(1, "VARCHAR2");         // VARCHAR
-            put(2, "BLOB");             // BLOB
-            put(3, "DOUBLE PRECISION"); // DOUBLE
-            put(4, "DECIMAL");          // DECIMAL
-            put(5, "NUMBER");           // NUMBER
-            put(6, "NUMBER");           // NUMBER
-            put(7, "BIGINT");          // INTEGER
-            put(8, "INTEGER");          // INTEGER
-            put(9, "INTEGER");          // INTEGER
-            put(10, "TEXT");            // 自定义 TEXT 类型
-            put(12, "DATETIME");       // DATETIME
-            put(22, "DATETIME");       // DATETIME
-        }};
+        Map<Integer, String> typeMap = new HashMap<>() {
+            {
+                put(1, "VARCHAR2"); // VARCHAR
+                put(2, "BLOB"); // BLOB
+                put(3, "DOUBLE PRECISION"); // DOUBLE
+                put(4, "DECIMAL"); // DECIMAL
+                put(5, "NUMBER"); // NUMBER
+                put(6, "NUMBER"); // NUMBER
+                put(7, "BIGINT"); // INTEGER
+                put(8, "INTEGER"); // INTEGER
+                put(9, "INTEGER"); // INTEGER
+                put(10, "TEXT"); // 自定义 TEXT 类型
+                put(12, "DATETIME"); // DATETIME
+                put(22, "DATETIME"); // DATETIME
+            }
+        };
 
         return typeMap.getOrDefault(columnType, null);
     }
@@ -118,8 +116,8 @@ public class DMTableCreator extends AbstractTableCreator {
 
             int length = sc.getLength();
 
-            //达梦 varchar2 扩大一倍
-            String convert = convert(sc.getColumnType(),0,0);
+            // 达梦 varchar2 扩大一倍
+            String convert = convert(sc.getColumnType(), 0, 0);
             if ("VARCHAR2".equals(convert)) {
                 length = length + length;
             }
@@ -150,8 +148,11 @@ public class DMTableCreator extends AbstractTableCreator {
 
     /**
      * 获取字段的长度和精度描述部分 如(50) 或 (10,2)
-     * @param length 长度
-     * @param precision 精度
+     *
+     * @param length
+     *            长度
+     * @param precision
+     *            精度
      * @return 格式化后的长度精度声明
      */
     public String getFieldExtDesc(int length, int precision) {

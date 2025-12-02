@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.simplequeue.pipeline;
 
+import java.util.Map;
+
 import io.arkx.framework.commons.simplequeue.ResultItems;
 import io.arkx.framework.commons.simplequeue.Task;
-
-import java.util.Map;
 
 /**
  * Write results in console.<br>

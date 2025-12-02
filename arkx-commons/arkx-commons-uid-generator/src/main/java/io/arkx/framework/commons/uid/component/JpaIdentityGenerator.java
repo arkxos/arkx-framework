@@ -1,12 +1,12 @@
-//package io.arkx.framework.commons.uid.component;
+// package io.arkx.framework.commons.uid.component;
 //
-//import io.arkx.framework.commons.uid.UidGenerator;
-//import org.hibernate.engine.spi.SharedSessionContractImplementor;
-//import org.hibernate.id.IdentityGenerator;
+// import io.arkx.framework.commons.uid.UidGenerator;
+// import org.hibernate.engine.spi.SharedSessionContractImplementor;
+// import org.hibernate.id.IdentityGenerator;
 //
-//import java.io.Serializable;
+// import java.io.Serializable;
 //
-///**
+/// **
 // * 自定义JPA#Identity策略生成器
 // * –IDENTITY：采用数据库ID自增长的方式来自增主键字段（Oracle 不支持）；
 // * –AUTO： JPA自动选择合适的策略，是默认选项；
@@ -15,29 +15,30 @@
 // *
 // * @author DengJun 2021/4/21
 // */
-//public class JpaIdentityGenerator extends IdentityGenerator {
+// public class JpaIdentityGenerator extends IdentityGenerator {
 //
-////    @Override
-////    public Serializable generate(SharedSessionContractImplementor s, Object obj) {
-////        return getInstance().getUID();
-////    }
+//// @Override
+//// public Serializable generate(SharedSessionContractImplementor s, Object
+// obj) {
+//// return getInstance().getUID();
+//// }
 //
-//    public static UidGenerator getInstance() {
-//        return UidGeneratorHolder.HOLDER.uidGenerator;
-//    }
+// public static UidGenerator getInstance() {
+// return UidGeneratorHolder.HOLDER.uidGenerator;
+// }
 //
-//    public static void setInstance(final UidGenerator uidGenerator) {
-//        if (UidGeneratorHolder.HOLDER.uidGenerator == null) {
-//            UidGeneratorHolder.HOLDER.setHolder(uidGenerator);
-//        }
-//    }
+// public static void setInstance(final UidGenerator uidGenerator) {
+// if (UidGeneratorHolder.HOLDER.uidGenerator == null) {
+// UidGeneratorHolder.HOLDER.setHolder(uidGenerator);
+// }
+// }
 //
-//    private enum UidGeneratorHolder {
-//        HOLDER;
-//        private UidGenerator uidGenerator;
+// private enum UidGeneratorHolder {
+// HOLDER;
+// private UidGenerator uidGenerator;
 //
-//        public void setHolder(UidGenerator uidGenerator) {
-//            HOLDER.uidGenerator = uidGenerator;
-//        }
-//    }
-//}
+// public void setHolder(UidGenerator uidGenerator) {
+// HOLDER.uidGenerator = uidGenerator;
+// }
+// }
+// }

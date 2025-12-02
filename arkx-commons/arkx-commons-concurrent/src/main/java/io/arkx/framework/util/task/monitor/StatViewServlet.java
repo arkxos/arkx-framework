@@ -1,15 +1,16 @@
 package io.arkx.framework.util.task.monitor;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import io.arkx.framework.util.task.util.Utils;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 public class StatViewServlet extends HttpServlet {
 
@@ -20,7 +21,6 @@ public class StatViewServlet extends HttpServlet {
 
     private String username;
     private String password;
-
 
     @Override
     public void init() throws ServletException {
@@ -62,10 +62,10 @@ public class StatViewServlet extends HttpServlet {
             return;
         }
         if (requireAuth() //
-            && !checkUser(req)//
-            && !("/login.html".equals(path) //
-            || path.startsWith("/css")//
-            || path.startsWith("/js"))) {
+                && !checkUser(req)//
+                && !("/login.html".equals(path) //
+                        || path.startsWith("/css")//
+                        || path.startsWith("/js"))) {
             if (contextPath.equals("") || contextPath.equals("/")) {
                 toLogin(resp, "/atask/login.html");
             } else {

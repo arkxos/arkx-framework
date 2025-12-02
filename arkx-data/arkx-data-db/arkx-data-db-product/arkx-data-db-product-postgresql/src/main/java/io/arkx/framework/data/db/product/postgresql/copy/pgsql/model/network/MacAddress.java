@@ -6,34 +6,31 @@ import java.util.stream.IntStream;
 
 public class MacAddress {
 
-  private final byte[] addressBytes;
+    private final byte[] addressBytes;
 
-  public MacAddress(byte[] addressBytes) {
+    public MacAddress(byte[] addressBytes) {
 
-    if (addressBytes == null) {
-      throw new IllegalArgumentException("addressBytes");
+        if (addressBytes == null) {
+            throw new IllegalArgumentException("addressBytes");
+        }
+
+        if (addressBytes.length != 6) {
+            throw new IllegalArgumentException("addressBytes");
+        }
+
+        this.addressBytes = addressBytes;
     }
 
-    if (addressBytes.length != 6) {
-      throw new IllegalArgumentException("addressBytes");
+    public byte[] getAddressBytes() {
+        return addressBytes;
     }
 
-    this.addressBytes = addressBytes;
-  }
+    @Override
+    public String toString() {
 
-  public byte[] getAddressBytes() {
-    return addressBytes;
-  }
+        List<String> bytesAsHexString = IntStream.range(0, addressBytes.length).map(idx -> addressBytes[idx])
+                .mapToObj(value -> "0x%x".formatted(value)).collect(Collectors.toList());
 
-  @Override
-  public String toString() {
-
-    List<String> bytesAsHexString = IntStream
-        .range(0, addressBytes.length)
-        .map(idx -> addressBytes[idx])
-        .mapToObj(value -> "0x%x".formatted(value))
-        .collect(Collectors.toList());
-
-    return String.join("-", bytesAsHexString);
-  }
+        return String.join("-", bytesAsHexString);
+    }
 }

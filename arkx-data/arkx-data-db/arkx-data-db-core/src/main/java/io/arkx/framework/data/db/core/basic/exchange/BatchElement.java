@@ -9,13 +9,14 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.basic.exchange;
 
+import java.util.List;
+
 import io.arkx.framework.data.db.common.entity.ThreeArgsFunction;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 /**
  * 队列中的批元素结构
@@ -26,23 +27,23 @@ import java.util.List;
 @AllArgsConstructor
 public class BatchElement {
 
-  /**
-   * 表名映射字符串，形如 A --> B 的形式
-   */
-  private String tableNameMapString;
+    /**
+     * 表名映射字符串，形如 A --> B 的形式
+     */
+    private String tableNameMapString;
 
-  /**
-   * 数据写入回调函数
-   */
-  private ThreeArgsFunction<List<String>, List<Object[]>, org.slf4j.Logger, Long> handler;
+    /**
+     * 数据写入回调函数
+     */
+    private ThreeArgsFunction<List<String>, List<Object[]>, org.slf4j.Logger, Long> handler;
 
-  /**
-   * 写入回调函数的第1个参数
-   */
-  private List<String> arg1;
+    /**
+     * 写入回调函数的第1个参数
+     */
+    private List<String> arg1;
 
-  /**
-   * 写入回调函数的第2个参数
-   */
-  private List<Object[]> arg2;
+    /**
+     * 写入回调函数的第2个参数
+     */
+    private List<Object[]> arg2;
 }

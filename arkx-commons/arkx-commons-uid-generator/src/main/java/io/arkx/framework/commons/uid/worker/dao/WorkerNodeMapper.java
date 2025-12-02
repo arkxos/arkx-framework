@@ -15,10 +15,11 @@
  */
 package io.arkx.framework.commons.uid.worker.dao;
 
-import io.arkx.framework.commons.uid.worker.entity.WorkerNodeEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+
+import io.arkx.framework.commons.uid.worker.entity.WorkerNodeEntity;
 
 /**
  * DAO for M_WORKER_NODE
@@ -31,8 +32,10 @@ public interface WorkerNodeMapper {
     /**
      * Get {@link WorkerNodeEntity} by node host
      *
-     * @param hostName host
-     * @param port     port
+     * @param hostName
+     *            host
+     * @param port
+     *            port
      * @return WorkerNodeEntity
      */
     WorkerNodeEntity getWorkerNodeByHostPort(@Param("hostName") String hostName, @Param("port") String port);
@@ -40,7 +43,8 @@ public interface WorkerNodeMapper {
     /**
      * Add {@link WorkerNodeEntity}
      *
-     * @param workerNodeEntity worker
+     * @param workerNodeEntity
+     *            worker
      * @return Id
      */
     int addWorkerNode(WorkerNodeEntity workerNodeEntity);
@@ -48,7 +52,8 @@ public interface WorkerNodeMapper {
     /**
      * update {@link WorkerNodeEntity}
      *
-     * @param workerNodeEntity worker
+     * @param workerNodeEntity
+     *            worker
      * @return Id
      */
     int updateWorkerNode(WorkerNodeEntity workerNodeEntity);
@@ -56,20 +61,20 @@ public interface WorkerNodeMapper {
     /**
      * 查询数据库是否存在
      */
-//    int queryDatabaseExist();
+    // int queryDatabaseExist();
 
     /**
      * 查询数据表是否存在
      */
-//    int queryTableExist();
+    // int queryTableExist();
 
     /**
      * 创建表
      */
-//    int createTable();
+    // int createTable();
 
     /**
      * 创建库
      */
-//    int createDatabase();
+    // int createDatabase();
 }

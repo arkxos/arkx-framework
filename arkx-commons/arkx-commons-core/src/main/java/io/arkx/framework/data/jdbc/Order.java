@@ -8,46 +8,46 @@ package io.arkx.framework.data.jdbc;
  */
 public class Order {
 
-	public static Order asc(String field) {
-		return new Order("asc", field);
-	}
+    public static Order asc(String field) {
+        return new Order("asc", field);
+    }
 
-	public static Order desc(String field) {
-		return new Order("desc", field);
-	}
+    public static Order desc(String field) {
+        return new Order("desc", field);
+    }
 
-	private String order;
-	private String field;
+    private String order;
+    private String field;
 
-	public String getOrder() {
-		return order;
-	}
+    public String getOrder() {
+        return order;
+    }
 
-	public void setOrder(String order) {
-		this.order = order;
-	}
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
-	public String getField() {
-		return field;
-	}
+    public String getField() {
+        return field;
+    }
 
-	public void setField(String field) {
-		this.field = field;
-	}
+    public void setField(String field) {
+        this.field = field;
+    }
 
-	private Order(String order, String field) {
-		this.order = order;
-		this.field = field;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof Order)) {
-			return false;
-		}
-		
-		Order _order = (Order)obj;
-		
-		return this.order.equals(_order.order) && this.field.equals(_order.field);
-	}
+    private Order(String order, String field) {
+        this.order = order;
+        this.field = field;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Order)) {
+            return false;
+        }
+
+        Order _order = (Order) obj;
+
+        return this.order.equals(_order.order) && this.field.equals(_order.field);
+    }
 }

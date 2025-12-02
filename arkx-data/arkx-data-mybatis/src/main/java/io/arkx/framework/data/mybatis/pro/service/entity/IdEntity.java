@@ -1,6 +1,7 @@
 package io.arkx.framework.data.mybatis.pro.service.entity;
 
 import io.arkx.framework.data.mybatis.pro.core.annotations.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

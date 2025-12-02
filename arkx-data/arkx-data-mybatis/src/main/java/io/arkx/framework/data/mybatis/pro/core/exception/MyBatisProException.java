@@ -5,11 +5,12 @@ package io.arkx.framework.data.mybatis.pro.core.exception;
  */
 public class MyBatisProException extends RuntimeException {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -7785085024619152403L;
 
-    public MyBatisProException() {}
+    public MyBatisProException() {
+    }
 
     public MyBatisProException(String message) {
         super(message);

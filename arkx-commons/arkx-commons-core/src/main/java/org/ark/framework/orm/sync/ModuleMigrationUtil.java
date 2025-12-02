@@ -8,8 +8,6 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,9 +22,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * 模块迁移工具类
- * 用于将类及其依赖从一个模块复制到另一个模块
+ * 模块迁移工具类 用于将类及其依赖从一个模块复制到另一个模块
  */
 @Slf4j
 public class ModuleMigrationUtil {
@@ -40,15 +39,20 @@ public class ModuleMigrationUtil {
     /**
      * 将一个类及其所有依赖复制到新的模块
      *
-     * @param sourceModulePath 源模块根目录的路径
-     * @param targetModulePath 目标模块根目录的路径
-     * @param rootClassName 要迁移的根类的完全限定名
-     * @param includePatterns 要包含的类的包名模式（正则表达式）
-     * @param excludePatterns 要排除的类的包名模式（正则表达式）
+     * @param sourceModulePath
+     *            源模块根目录的路径
+     * @param targetModulePath
+     *            目标模块根目录的路径
+     * @param rootClassName
+     *            要迁移的根类的完全限定名
+     * @param includePatterns
+     *            要包含的类的包名模式（正则表达式）
+     * @param excludePatterns
+     *            要排除的类的包名模式（正则表达式）
      * @return 复制的类数量
      */
-    public static int migrateClass(String sourceModulePath, String targetModulePath,
-                                   String rootClassName, List<String> includePatterns, List<String> excludePatterns) {
+    public static int migrateClass(String sourceModulePath, String targetModulePath, String rootClassName,
+            List<String> includePatterns, List<String> excludePatterns) {
 
         log.info("开始迁移类 {} 及其依赖从 {} 到 {}", rootClassName, sourceModulePath, targetModulePath);
 
@@ -82,8 +86,8 @@ public class ModuleMigrationUtil {
             processedClasses.add(className);
 
             // 检查类是否符合包含/排除模式
-            if (!matchesIncludePatterns(className, includePatterns) ||
-                    matchesExcludePatterns(className, excludePatterns)) {
+            if (!matchesIncludePatterns(className, includePatterns)
+                    || matchesExcludePatterns(className, excludePatterns)) {
                 log.debug("跳过类 {}: 不符合包含/排除模式", className);
                 continue;
             }
@@ -126,9 +130,12 @@ public class ModuleMigrationUtil {
     /**
      * 复制指定的类列表到新模块
      *
-     * @param sourceModulePath 源模块根目录的路径
-     * @param targetModulePath 目标模块根目录的路径
-     * @param classNames 要复制的类的完全限定名列表
+     * @param sourceModulePath
+     *            源模块根目录的路径
+     * @param targetModulePath
+     *            目标模块根目录的路径
+     * @param classNames
+     *            要复制的类的完全限定名列表
      * @return 复制的类数量
      */
     public static int copySpecificClasses(String sourceModulePath, String targetModulePath, List<String> classNames) {
@@ -164,8 +171,10 @@ public class ModuleMigrationUtil {
     /**
      * 扫描源模块中与增量同步相关的所有类
      *
-     * @param sourceModulePath 源模块根目录的路径
-     * @param packageName 要扫描的包名（例如 org.ark.framework.orm.sync）
+     * @param sourceModulePath
+     *            源模块根目录的路径
+     * @param packageName
+     *            要扫描的包名（例如 org.ark.framework.orm.sync）
      * @return 找到的类的完全限定名列表
      */
     public static List<String> scanSyncRelatedClasses(String sourceModulePath, String packageName) {
@@ -189,8 +198,10 @@ public class ModuleMigrationUtil {
     /**
      * 迁移与Demo相关的所有类
      *
-     * @param sourceModulePath 源模块根目录的路径
-     * @param targetModulePath 目标模块根目录的路径
+     * @param sourceModulePath
+     *            源模块根目录的路径
+     * @param targetModulePath
+     *            目标模块根目录的路径
      * @return 复制的类数量
      */
     public static int migrateDemoAndDependencies(String sourceModulePath, String targetModulePath) {
@@ -222,8 +233,8 @@ public class ModuleMigrationUtil {
         log.info("开始迁移Demo类及其所有非Spring Boot依赖");
 
         // 迁移Demo类及其依赖
-        return migrateClass(sourceModulePath, targetModulePath,
-                "org.ark.framework.orm.sync.Demo", includePatterns, excludePatterns);
+        return migrateClass(sourceModulePath, targetModulePath, "org.ark.framework.orm.sync.Demo", includePatterns,
+                excludePatterns);
     }
 
     /**
@@ -255,15 +266,11 @@ public class ModuleMigrationUtil {
         while (matcher.find()) {
             String importClass = matcher.group(1);
             // 只处理非静态导入且不是标准库和常见第三方库的导入
-            if (!importClass.startsWith("java.") &&
-                    !importClass.startsWith("javax.") &&
-                    !importClass.startsWith("org.springframework.") &&
-                    !importClass.startsWith("org.springdoc.") &&
-                    !importClass.startsWith("com.google.") &&
-                    !importClass.startsWith("lombok.") &&
-                    !importClass.startsWith("org.slf4j.") &&
-                    !importClass.startsWith("org.apache.commons.") &&
-                    !importClass.contains(".*")) {
+            if (!importClass.startsWith("java.") && !importClass.startsWith("javax.")
+                    && !importClass.startsWith("org.springframework.") && !importClass.startsWith("org.springdoc.")
+                    && !importClass.startsWith("com.google.") && !importClass.startsWith("lombok.")
+                    && !importClass.startsWith("org.slf4j.") && !importClass.startsWith("org.apache.commons.")
+                    && !importClass.contains(".*")) {
                 imports.add(importClass);
             }
         }
@@ -315,7 +322,8 @@ public class ModuleMigrationUtil {
     /**
      * 生成模块迁移报告
      */
-    public static void generateMigrationReport(String sourceModulePath, String targetModulePath, List<String> migratedClasses) {
+    public static void generateMigrationReport(String sourceModulePath, String targetModulePath,
+            List<String> migratedClasses) {
         log.info("生成迁移报告");
 
         StringBuilder report = new StringBuilder();
@@ -353,8 +361,7 @@ public class ModuleMigrationUtil {
         // 生成迁移报告
         List<String> migratedClasses = scanSyncRelatedClasses(sourceModulePath, "org.ark.framework.orm.sync");
         // 过滤掉Spring Boot相关类
-        migratedClasses = migratedClasses.stream()
-                .filter(className -> !className.contains("org.springframework"))
+        migratedClasses = migratedClasses.stream().filter(className -> !className.contains("org.springframework"))
                 .collect(Collectors.toList());
         generateMigrationReport(sourceModulePath, targetModulePath, migratedClasses);
 

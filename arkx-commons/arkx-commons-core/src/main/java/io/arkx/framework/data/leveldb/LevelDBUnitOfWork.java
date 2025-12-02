@@ -1,238 +1,240 @@
 package io.arkx.framework.data.leveldb;
 
-import com.google.gson.reflect.TypeToken;
-import io.arkx.framework.commons.serializer.ObjectSerializer;
-import org.iq80.leveldb.DB;
-import org.iq80.leveldb.WriteBatch;
-
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.iq80.leveldb.DB;
+import org.iq80.leveldb.WriteBatch;
+
+import io.arkx.framework.commons.serializer.ObjectSerializer;
+
+import com.google.gson.reflect.TypeToken;
+
 public class LevelDBUnitOfWork {
 
-	private static Map<String, ReentrantLock> keyLocks = new ConcurrentHashMap<String, ReentrantLock>();
+    private static Map<String, ReentrantLock> keyLocks = new ConcurrentHashMap<String, ReentrantLock>();
 
-	private static ThreadLocal<LevelDBUnitOfWork> unitsOfWork = new ThreadLocal<LevelDBUnitOfWork>();
+    private static ThreadLocal<LevelDBUnitOfWork> unitsOfWork = new ThreadLocal<LevelDBUnitOfWork>();
 
-	private WriteBatch batch;
-	private DB database;
-	private List<ReentrantLock> locks;
-	private Map<String, Set<Object>> referenceKeys;
-	private ObjectSerializer serializer;
+    private WriteBatch batch;
+    private DB database;
+    private List<ReentrantLock> locks;
+    private Map<String, Set<Object>> referenceKeys;
+    private ObjectSerializer serializer;
 
-	public static LevelDBUnitOfWork current() {
-		LevelDBUnitOfWork uow = unitsOfWork.get();
+    public static LevelDBUnitOfWork current() {
+        LevelDBUnitOfWork uow = unitsOfWork.get();
 
-		if (uow == null) {
-			throw new IllegalStateException("No unit of work has been started.");
-		}
+        if (uow == null) {
+            throw new IllegalStateException("No unit of work has been started.");
+        }
 
-		return uow;
-	}
+        return uow;
+    }
 
-	public static LevelDBUnitOfWork readOnly(DB aDatabase) {
-		LevelDBUnitOfWork uow = unitsOfWork.get();
+    public static LevelDBUnitOfWork readOnly(DB aDatabase) {
+        LevelDBUnitOfWork uow = unitsOfWork.get();
 
-		if (uow == null) {
-			uow = new LevelDBUnitOfWork(aDatabase, false);
+        if (uow == null) {
+            uow = new LevelDBUnitOfWork(aDatabase, false);
 
-			unitsOfWork.set(uow);
-		}
+            unitsOfWork.set(uow);
+        }
 
-		return uow;
-	}
+        return uow;
+    }
 
-	public static LevelDBUnitOfWork start(DB aDatabase) {
-		LevelDBUnitOfWork uow = unitsOfWork.get();
+    public static LevelDBUnitOfWork start(DB aDatabase) {
+        LevelDBUnitOfWork uow = unitsOfWork.get();
 
-		if (uow == null) {
-			uow = new LevelDBUnitOfWork(aDatabase);
+        if (uow == null) {
+            uow = new LevelDBUnitOfWork(aDatabase);
 
-			unitsOfWork.set(uow);
-		} else {
-			uow.createWriteBatch(aDatabase);
-		}
+            unitsOfWork.set(uow);
+        } else {
+            uow.createWriteBatch(aDatabase);
+        }
 
-		return uow;
-	}
+        return uow;
+    }
 
-	public void commit() {
-		this.database.write(this.batch);
+    public void commit() {
+        this.database.write(this.batch);
 
-		this.close();
-	}
+        this.close();
+    }
 
-	public void lock(String aLockKey) {
-		ReentrantLock lock = this.findKeyLock(aLockKey);
+    public void lock(String aLockKey) {
+        ReentrantLock lock = this.findKeyLock(aLockKey);
 
-		this.locks.add(lock);
+        this.locks.add(lock);
 
-		lock.lock();
-	}
+        lock.lock();
+    }
 
-	public byte[] readObjectAsBytes(LevelDBKey aKey) {
-		return this.database.get(aKey.keyAsBytes());
-	}
-	
-	public byte[] readObjectAsBytes(byte[] aKey) {
-		return this.database.get(aKey);
-	}
+    public byte[] readObjectAsBytes(LevelDBKey aKey) {
+        return this.database.get(aKey.keyAsBytes());
+    }
 
-	public <T> T readObject(LevelDBKey aKey, Class<T> aType) {
-		return this.readObject(aKey.keyAsBytes(), aType);
-	}
+    public byte[] readObjectAsBytes(byte[] aKey) {
+        return this.database.get(aKey);
+    }
 
-	public <T> T readObject(byte[] aKey, Class<T> aType) {
-		byte[] objectBytes = this.database.get(aKey);
+    public <T> T readObject(LevelDBKey aKey, Class<T> aType) {
+        return this.readObject(aKey.keyAsBytes(), aType);
+    }
 
-		T object = null;
+    public <T> T readObject(byte[] aKey, Class<T> aType) {
+        byte[] objectBytes = this.database.get(aKey);
 
-		if (objectBytes != null) {
-			object = this.serializer.deserialize(new String(objectBytes), aType);
-		}
+        T object = null;
 
-		return object;
-	}
+        if (objectBytes != null) {
+            object = this.serializer.deserialize(new String(objectBytes), aType);
+        }
 
-	public Object readKey(LevelDBKey aKey) {
-		Object singleKey = null;
+        return object;
+    }
 
-		Set<Object> keys = this.loadReferenceKeyValues(aKey);
+    public Object readKey(LevelDBKey aKey) {
+        Object singleKey = null;
 
-		if (!keys.isEmpty()) {
-			singleKey = keys.iterator().next();
-		}
+        Set<Object> keys = this.loadReferenceKeyValues(aKey);
 
-		return singleKey;
-	}
+        if (!keys.isEmpty()) {
+            singleKey = keys.iterator().next();
+        }
 
-	public List<Object> readKeys(LevelDBKey aKey) {
-		return new ArrayList<Object>(this.loadReferenceKeyValues(aKey));
-	}
+        return singleKey;
+    }
 
-	public void remove(LevelDBKey aPrimaryKey) {
-		this.batch.delete(aPrimaryKey.keyAsBytes());
-	}
+    public List<Object> readKeys(LevelDBKey aKey) {
+        return new ArrayList<Object>(this.loadReferenceKeyValues(aKey));
+    }
 
-	public void removeKeyReference(LevelDBKey aKey) {
-		Set<Object> allValues = this.loadReferenceKeyValues(aKey);
+    public void remove(LevelDBKey aPrimaryKey) {
+        this.batch.delete(aPrimaryKey.keyAsBytes());
+    }
 
-		if (allValues.remove(aKey.primaryKeyValue())) {
-			if (allValues.isEmpty()) {
-				this.batch.delete(aKey.keyAsBytes());
-			} else {
-				String serializedValue = this.serializer.serialize(allValues);
+    public void removeKeyReference(LevelDBKey aKey) {
+        Set<Object> allValues = this.loadReferenceKeyValues(aKey);
 
-				this.batch.put(aKey.keyAsBytes(), serializedValue.getBytes());
-			}
-		}
-	}
+        if (allValues.remove(aKey.primaryKeyValue())) {
+            if (allValues.isEmpty()) {
+                this.batch.delete(aKey.keyAsBytes());
+            } else {
+                String serializedValue = this.serializer.serialize(allValues);
 
-	public void rollback() {
-		this.close();
-	}
+                this.batch.put(aKey.keyAsBytes(), serializedValue.getBytes());
+            }
+        }
+    }
 
-	public void updateKeyReference(LevelDBKey aKey) {
-		Set<Object> allValues = this.loadReferenceKeyValues(aKey);
+    public void rollback() {
+        this.close();
+    }
 
-		allValues.add(aKey.primaryKeyValue());
+    public void updateKeyReference(LevelDBKey aKey) {
+        Set<Object> allValues = this.loadReferenceKeyValues(aKey);
 
-		String serializedValue = this.serializer.serialize(allValues);
+        allValues.add(aKey.primaryKeyValue());
 
-		this.batch.put(aKey.keyAsBytes(), serializedValue.getBytes());
-	}
+        String serializedValue = this.serializer.serialize(allValues);
 
-	public void write(LevelDBKey aKey, Object aValue) {
-		String serializedValue = this.serializer.serialize(aValue);
+        this.batch.put(aKey.keyAsBytes(), serializedValue.getBytes());
+    }
 
-		this.batch.put(aKey.keyAsBytes(), serializedValue.getBytes());
-	}
+    public void write(LevelDBKey aKey, Object aValue) {
+        String serializedValue = this.serializer.serialize(aValue);
 
-	public void write(byte[] aKey, Object aValue) {
-		String serializedValue = this.serializer.serialize(aValue);
+        this.batch.put(aKey.keyAsBytes(), serializedValue.getBytes());
+    }
 
-		this.batch.put(aKey, serializedValue.getBytes());
-	}
+    public void write(byte[] aKey, Object aValue) {
+        String serializedValue = this.serializer.serialize(aValue);
 
-	private LevelDBUnitOfWork(DB aDatabase) {
-		this(aDatabase, true);
-	}
+        this.batch.put(aKey, serializedValue.getBytes());
+    }
 
-	private LevelDBUnitOfWork(DB aDatabase, boolean isWritable) {
-		super();
+    private LevelDBUnitOfWork(DB aDatabase) {
+        this(aDatabase, true);
+    }
 
-		if (isWritable) {
-			this.createWriteBatch(aDatabase);
-		}
+    private LevelDBUnitOfWork(DB aDatabase, boolean isWritable) {
+        super();
 
-		this.database = aDatabase;
-		this.locks = new ArrayList<ReentrantLock>(1);
-		this.referenceKeys = new HashMap<String, Set<Object>>();
-		this.serializer = ObjectSerializer.instance();
-	}
+        if (isWritable) {
+            this.createWriteBatch(aDatabase);
+        }
 
-	private void createWriteBatch(DB aDatabase) {
-		if (this.batch == null) {
-			this.batch = aDatabase.createWriteBatch();
-		}
-	}
+        this.database = aDatabase;
+        this.locks = new ArrayList<ReentrantLock>(1);
+        this.referenceKeys = new HashMap<String, Set<Object>>();
+        this.serializer = ObjectSerializer.instance();
+    }
 
-	private void close() {
-		unitsOfWork.set(null);
+    private void createWriteBatch(DB aDatabase) {
+        if (this.batch == null) {
+            this.batch = aDatabase.createWriteBatch();
+        }
+    }
 
-		if (this.batch != null) {
-			try {
-				this.batch.close();
-				this.batch = null;
-			} catch (IOException e) {
-				throw new IllegalStateException("Cannot close unit of work.");
-			}
-		}
+    private void close() {
+        unitsOfWork.set(null);
 
-		if (!this.locks.isEmpty()) {
-			for (ReentrantLock lock : this.locks) {
-				while (lock.getHoldCount() > 0) {
-					lock.unlock();
-				}
-			}
+        if (this.batch != null) {
+            try {
+                this.batch.close();
+                this.batch = null;
+            } catch (IOException e) {
+                throw new IllegalStateException("Cannot close unit of work.");
+            }
+        }
 
-			this.locks.clear();
-		}
-	}
+        if (!this.locks.isEmpty()) {
+            for (ReentrantLock lock : this.locks) {
+                while (lock.getHoldCount() > 0) {
+                    lock.unlock();
+                }
+            }
 
-	private ReentrantLock findKeyLock(String aLockKey) {
-		ReentrantLock lock = keyLocks.get(aLockKey);
+            this.locks.clear();
+        }
+    }
 
-		if (lock == null) {
-			lock = new ReentrantLock();
+    private ReentrantLock findKeyLock(String aLockKey) {
+        ReentrantLock lock = keyLocks.get(aLockKey);
 
-			keyLocks.put(aLockKey, lock);
-		}
+        if (lock == null) {
+            lock = new ReentrantLock();
 
-		return lock;
-	}
+            keyLocks.put(aLockKey, lock);
+        }
 
-	public Set<Object> loadReferenceKeyValues(LevelDBKey aKey) {
-		Set<Object> allValues = this.referenceKeys.get(aKey.key());
+        return lock;
+    }
 
-		if (allValues == null) {
-			byte[] currentValues = this.database.get(aKey.keyAsBytes());
+    public Set<Object> loadReferenceKeyValues(LevelDBKey aKey) {
+        Set<Object> allValues = this.referenceKeys.get(aKey.key());
 
-			if (currentValues == null) {
-				allValues = new HashSet<Object>();
-			} else {
-				Type listType = new TypeToken<HashSet<Object>>() {
-				}.getType();
+        if (allValues == null) {
+            byte[] currentValues = this.database.get(aKey.keyAsBytes());
 
-				allValues = this.serializer.deserialize(new String(currentValues), listType);
-			}
+            if (currentValues == null) {
+                allValues = new HashSet<Object>();
+            } else {
+                Type listType = new TypeToken<HashSet<Object>>() {
+                }.getType();
 
-			this.referenceKeys.put(aKey.key(), allValues);
-		}
+                allValues = this.serializer.deserialize(new String(currentValues), listType);
+            }
 
-		return allValues;
-	}
+            this.referenceKeys.put(aKey.key(), allValues);
+        }
+
+        return allValues;
+    }
 }

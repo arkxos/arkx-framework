@@ -1,9 +1,10 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.util.RandomUtil;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
+
+import io.arkx.framework.util.task.util.RandomUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AnalyzeFilesTask extends TreeTask {
@@ -22,7 +23,7 @@ public class AnalyzeFilesTask extends TreeTask {
             this.addChild(new ReadExcelTask(file));
         }
     }
-    
+
 }
 
 class ReadExcelTask extends TreeTask {
@@ -39,14 +40,14 @@ class ReadExcelTask extends TreeTask {
         boolean isBig = RandomUtil.randomInt(1) == 1;
         int sheetCount = RandomUtil.randomInt(1, 5);
 
-        if(isBig) {
+        if (isBig) {
             for (int i = 0; i < sheetCount; i++) {
                 this.addChild(new ReadExcelSheetTask(file, i));
             }
         } else {
             for (int i = 0; i < sheetCount; i++) {
-                String data = "data from 【"+i+"】" + file;
-                this.addChild(new HandleSheetDataTask(file, i+1, data));
+                String data = "data from 【" + i + "】" + file;
+                this.addChild(new HandleSheetDataTask(file, i + 1, data));
             }
         }
     }
@@ -59,14 +60,14 @@ class ReadExcelSheetTask extends TreeTask {
     private int sheetNo;
 
     protected ReadExcelSheetTask(String filePath, int sheetNo) {
-        super("ReadExcelSheetTask", filePath + "["+sheetNo+"]");
+        super("ReadExcelSheetTask", filePath + "[" + sheetNo + "]");
         this.filePath = filePath;
         this.sheetNo = sheetNo;
     }
 
     @Override
     public void run(TaskContext ctx) {
-        String data = "data from 【"+sheetNo+"】" + filePath;
+        String data = "data from 【" + sheetNo + "】" + filePath;
         this.addChild(new HandleSheetDataTask(filePath, sheetNo, data));
         System.out.println("ReadExcelSheet: [" + sheetNo + "]" + filePath);
     }
@@ -78,7 +79,7 @@ class HandleSheetDataTask extends TreeTask {
     private String data;
 
     public HandleSheetDataTask(String filePath, int sheetNo, String data) {
-        super("", filePath + "["+sheetNo+"]");
+        super("", filePath + "[" + sheetNo + "]");
     }
 
     @Override

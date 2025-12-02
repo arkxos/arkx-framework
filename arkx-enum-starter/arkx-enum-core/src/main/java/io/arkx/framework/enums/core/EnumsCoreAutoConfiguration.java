@@ -1,8 +1,5 @@
 package io.arkx.framework.enums.core;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.arkx.framework.enums.core.mvc.JsonEnumConverter;
-import io.arkx.framework.enums.core.mvc.MvcConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -10,6 +7,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import io.arkx.framework.enums.core.mvc.JsonEnumConverter;
+import io.arkx.framework.enums.core.mvc.MvcConfiguration;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author zhuCan
@@ -34,7 +36,7 @@ public class EnumsCoreAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(WebMvcConfigurer.class)
-    public MvcConfiguration mvcConfiguration(){
+    public MvcConfiguration mvcConfiguration() {
         return new MvcConfiguration();
     }
 }

@@ -1,259 +1,261 @@
 package io.arkx.framework.data.jdbc;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
+import org.ark.framework.orm.sql.DBUtil;
+
 import io.arkx.framework.annotation.Column;
 import io.arkx.framework.annotation.Entity;
 import io.arkx.framework.annotation.Ingore;
 import io.arkx.framework.commons.collection.*;
 import io.arkx.framework.commons.util.lang.ReflectionUtil;
-import org.ark.framework.infrastructure.entityfactoryframework.EntityBuilderFactory;
-import org.ark.framework.orm.sql.DBUtil;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
- * @class org.ark.framework.orm.query.Criteria
- * 规格约束查询模式
- * 
- * 示例： 
- * <pre>
- * Criteria criteria = getSession().createCriteria(ParticipantParamValue.class);
- * criteria.add(Restrictions.eq(ParticipantParamValue.ParticipantValueId, getId()));
- * criteria.add(Restrictions.like(ParticipantParamValue.ParticipantValue, "abc")); 
- * criteria.add(Restrictions.in(ParticipantParamValue.ParticipantValue, "'a', 'b', 'c'"));
- * 
- * Date startTime = DateUtil.parseDateTime("2012-02-22 11:25:14");
-		Date endTime = DateUtil.parseDateTime("2012-02-28 11:25:14");
-		criteria.add(Restrictions.gt(Person.Birthday, startTime));
-		criteria.add(Restrictions.lt(Person.Birthday, endTime));
-		
- * criteria.addOrder(Order.asc(ParticipantParam.SortOrder));
- * 
- * List<ParticipantParamValue> paramValues = criteria.findEntities();
- * </pre>
+ * @class org.ark.framework.orm.query.Criteria 规格约束查询模式
+ *
+ *        示例：
+ *
+ *        <pre>
+ *        Criteria criteria = getSession().createCriteria(ParticipantParamValue.class);
+ *        criteria.add(Restrictions.eq(ParticipantParamValue.ParticipantValueId, getId()));
+ *        criteria.add(Restrictions.like(ParticipantParamValue.ParticipantValue, "abc"));
+ *        criteria.add(Restrictions.in(ParticipantParamValue.ParticipantValue, "'a', 'b', 'c'"));
+ *
+ *        Date startTime = DateUtil.parseDateTime("2012-02-22 11:25:14");
+ *        Date endTime = DateUtil.parseDateTime("2012-02-28 11:25:14");
+ *        criteria.add(Restrictions.gt(Person.Birthday, startTime));
+ *        criteria.add(Restrictions.lt(Person.Birthday, endTime));
+ *
+ *        criteria.addOrder(Order.asc(ParticipantParam.SortOrder));
+ *
+ *        List<ParticipantParamValue> paramValues = criteria.findEntities();
+ *        </pre>
+ *
  * @author Darkness
  * @date 2012-9-15 上午9:47:44
  * @version V1.0
  */
 public class Criteria {
 
-	private Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass;
-	private List<Restrictions> restrictions = new ArrayList<Restrictions>();
-	private List<Order> orders = new ArrayList<Order>();
+    private Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass;
+    private List<Restrictions> restrictions = new ArrayList<Restrictions>();
+    private List<Order> orders = new ArrayList<Order>();
 
-	private Query qb;
+    private Query qb;
 
-	 Criteria(Transaction transaction, Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass) {
-		this.domainObjectClass = domainObjectClass;
+    Criteria(Transaction transaction, Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass) {
+        this.domainObjectClass = domainObjectClass;
 
-		String tableName = null;
-		if (domainObjectClass.isAnnotationPresent(Entity.class)) {
-			tableName = domainObjectClass.getAnnotation(Entity.class).name();
-		} else {
-			tableName = domainObjectClass.getSimpleName();
-		}
+        String tableName = null;
+        if (domainObjectClass.isAnnotationPresent(Entity.class)) {
+            tableName = domainObjectClass.getAnnotation(Entity.class).name();
+        } else {
+            tableName = domainObjectClass.getSimpleName();
+        }
 
-		qb = new Query(transaction, "select * from " + tableName + " where 1=1");
-	}
+        qb = new Query(transaction, "select * from " + tableName + " where 1=1");
+    }
 
-	public Criteria add(Restrictions criteria) {
-		restrictions.add(criteria);
-		return this;
-	}
+    public Criteria add(Restrictions criteria) {
+        restrictions.add(criteria);
+        return this;
+    }
 
-	public Criteria addOrder(Order order) {
-		orders.add(order);
-		return this;
-	}
-	
-	/**
-	 * 是否存在该排序
-	 * 
-	 * @author Darkness
-	 * @date 2013-3-28 下午03:24:07 
-	 * @version V1.0
-	 */
-	public boolean isExistOrder(Order order) {
-		for (Order _order : orders) {
-			if(_order.equals(order)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public Criteria addOrder(Order order) {
+        orders.add(order);
+        return this;
+    }
 
-	public DataTable dataTable() {
+    /**
+     * 是否存在该排序
+     *
+     * @author Darkness
+     * @date 2013-3-28 下午03:24:07
+     * @version V1.0
+     */
+    public boolean isExistOrder(Order order) {
+        for (Order _order : orders) {
+            if (_order.equals(order)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-		initQuery();
+    public DataTable dataTable() {
 
-		return qb.executeDataTable();
-	}
+        initQuery();
 
-	@SuppressWarnings("unchecked")
-	public <T> T findEntity() {
+        return qb.executeDataTable();
+    }
 
-		initQuery();
-		DataTable dataTable = qb.executeDataTable();
-		return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
-	}
+    @SuppressWarnings("unchecked")
+    public <T> T findEntity() {
 
-	@SuppressWarnings("unchecked")
-	public <T> List<T> findEntities() {
+        initQuery();
+        DataTable dataTable = qb.executeDataTable();
+        return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
+    }
 
-		initQuery();
-		DataTable dataTable = qb.executeDataTable();
-		List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
-		
-		if(result == null) {
-			return new ArrayList<>();
-		}
-		
-		return result;
-	}
+    @SuppressWarnings("unchecked")
+    public <T> List<T> findEntities() {
 
-	private void setQueryBuilderWithRestriction(Restrictions restriction){
-		if (Restrictions.IN.equals(restriction.getSqlOperator())) {
-			qb.append(restriction.getField() + " IN (" + restriction.getValue() + ")");
-		} else {
-			qb.append(restriction.getField() + " " + restriction.getSqlOperator() + " ? ", restriction.getValue());
-		}
-	}
-	
-	private void initQuery() {
-		for (Restrictions restriction : restrictions) {
-			
-			if (restriction == null || (restriction.isRestriction() && restriction.isNull())) {
-				continue;
-			}
-			
-			qb.append(" and ");
-			
-			if(restriction.isRestriction()) {
-				
-				if(restriction.isSingle()) {
-					setQueryBuilderWithRestriction(restriction.getSingle());
-				} else {
-					qb.append("(");
-					
-					setQueryBuilderWithRestriction(restriction.getFirstRestrictions());
-					
-					qb.append(" " + restriction.getSqlOperator() + " ");
-					
-					setQueryBuilderWithRestriction(restriction.getSecondRestrictions());
-					
-					qb.append(")");
-				}
-			}  else {
-				setQueryBuilderWithRestriction(restriction);
-			}
-		}
+        initQuery();
+        DataTable dataTable = qb.executeDataTable();
+        List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
 
-		boolean isFirst = true;
-		for (Order order : orders) {
+        if (result == null) {
+            return new ArrayList<>();
+        }
 
-			if (!isFirst) {
-				qb.append(",");
-			} else {
-				qb.append(" order by ");
-			}
+        return result;
+    }
 
-			qb.append(" " + order.getField() + " " + order.getOrder());
+    private void setQueryBuilderWithRestriction(Restrictions restriction) {
+        if (Restrictions.IN.equals(restriction.getSqlOperator())) {
+            qb.append(restriction.getField() + " IN (" + restriction.getValue() + ")");
+        } else {
+            qb.append(restriction.getField() + " " + restriction.getSqlOperator() + " ? ", restriction.getValue());
+        }
+    }
 
-			if (isFirst) {
-				isFirst = false;
-			}
-		}
-	}
+    private void initQuery() {
+        for (Restrictions restriction : restrictions) {
 
-	private <T> void initQuery(T example) {
+            if (restriction == null || (restriction.isRestriction() && restriction.isNull())) {
+                continue;
+            }
 
-		Field[] fields = ReflectionUtil.getDeclaredFields(example.getClass());
-		for (Field field : fields) {
+            qb.append(" and ");
 
-			Ingore ingore = field.getAnnotation(Ingore.class);
-			if (ingore != null) {
-				continue;
-			}
+            if (restriction.isRestriction()) {
 
-			String columnName = field.getName();
+                if (restriction.isSingle()) {
+                    setQueryBuilderWithRestriction(restriction.getSingle());
+                } else {
+                    qb.append("(");
 
-			Column column = field.getAnnotation(Column.class);
-			if (column != null) {
-				columnName = column.name();
-			}
+                    setQueryBuilderWithRestriction(restriction.getFirstRestrictions());
 
-			Object fieldValue = ReflectionUtil.getFieldValue(example, field.getName());
-			if (fieldValue == null) {
-				continue;
-			}
+                    qb.append(" " + restriction.getSqlOperator() + " ");
 
-			qb.append(" and " + columnName + " = ?", fieldValue);
-		}
-	}
+                    setQueryBuilderWithRestriction(restriction.getSecondRestrictions());
 
-	public IPageData page(IPageInfo pageInfo) {
+                    qb.append(")");
+                }
+            } else {
+                setQueryBuilderWithRestriction(restriction);
+            }
+        }
 
-		PageDataTable result = new PageDataTable();
+        boolean isFirst = true;
+        for (Order order : orders) {
 
-		result.setPageEnabled(pageInfo.isPageEnabled());
+            if (!isFirst) {
+                qb.append(",");
+            } else {
+                qb.append(" order by ");
+            }
 
-		initQuery();
+            qb.append(" " + order.getField() + " " + order.getOrder());
 
-		if (pageInfo.isPageEnabled()) {
-			result.setTotal(DBUtil.getCount(qb));
-			result.setPageIndex(pageInfo.getPageIndex());
-			result.setPageSize(pageInfo.getPageSize());
-			
-			List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findPagedEntities(domainObjectClass,pageInfo.getPageSize(), pageInfo.getPageIndex());
-			
-			result.setData(DataTableUtil.toDataTable(entities));
-		} else {
-			
-			List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findEntities( domainObjectClass);
-			
-			result.setData(DataTableUtil.toDataTable(entities));
-		}
-		return result;
-	}
+            if (isFirst) {
+                isFirst = false;
+            }
+        }
+    }
 
-	/**
-	 * 根据example查询实体
-	 * 
-	 * @author Darkness
-	 * @date 2012-11-25 下午05:02:21 
-	 * @version V1.0
-	 */
-	@SuppressWarnings("unchecked")
-	public <T> T findEntityByExample(T entityExample) {
+    private <T> void initQuery(T example) {
 
-		initQuery(entityExample);
+        Field[] fields = ReflectionUtil.getDeclaredFields(example.getClass());
+        for (Field field : fields) {
 
-		DataTable dataTable = qb.executeDataTable();
-		
-		return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
-	}
+            Ingore ingore = field.getAnnotation(Ingore.class);
+            if (ingore != null) {
+                continue;
+            }
 
-	/**
-	 *  根据example查询实体集合
-	 * 
-	 * @author Darkness
-	 * @date 2012-11-25 下午05:02:41 
-	 * @version V1.0
-	 */
-	@SuppressWarnings("unchecked")
-	public <T> List<T> findEntitiesByExample(T entityExample) {
+            String columnName = field.getName();
 
-		initQuery(entityExample);
+            Column column = field.getAnnotation(Column.class);
+            if (column != null) {
+                columnName = column.name();
+            }
 
-		DataTable dataTable = qb.executeDataTable();
-		List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
-		
-		if(result == null) {
-			return new ArrayList<T>();
-		}
-		return result;
-	}
+            Object fieldValue = ReflectionUtil.getFieldValue(example, field.getName());
+            if (fieldValue == null) {
+                continue;
+            }
+
+            qb.append(" and " + columnName + " = ?", fieldValue);
+        }
+    }
+
+    public IPageData page(IPageInfo pageInfo) {
+
+        PageDataTable result = new PageDataTable();
+
+        result.setPageEnabled(pageInfo.isPageEnabled());
+
+        initQuery();
+
+        if (pageInfo.isPageEnabled()) {
+            result.setTotal(DBUtil.getCount(qb));
+            result.setPageIndex(pageInfo.getPageIndex());
+            result.setPageSize(pageInfo.getPageSize());
+
+            List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findPagedEntities(domainObjectClass,
+                    pageInfo.getPageSize(), pageInfo.getPageIndex());
+
+            result.setData(DataTableUtil.toDataTable(entities));
+        } else {
+
+            List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findEntities(domainObjectClass);
+
+            result.setData(DataTableUtil.toDataTable(entities));
+        }
+        return result;
+    }
+
+    /**
+     * 根据example查询实体
+     *
+     * @author Darkness
+     * @date 2012-11-25 下午05:02:21
+     * @version V1.0
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T findEntityByExample(T entityExample) {
+
+        initQuery(entityExample);
+
+        DataTable dataTable = qb.executeDataTable();
+
+        return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
+    }
+
+    /**
+     * 根据example查询实体集合
+     *
+     * @author Darkness
+     * @date 2012-11-25 下午05:02:41
+     * @version V1.0
+     */
+    @SuppressWarnings("unchecked")
+    public <T> List<T> findEntitiesByExample(T entityExample) {
+
+        initQuery(entityExample);
+
+        DataTable dataTable = qb.executeDataTable();
+        List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
+
+        if (result == null) {
+            return new ArrayList<T>();
+        }
+        return result;
+    }
 
 }

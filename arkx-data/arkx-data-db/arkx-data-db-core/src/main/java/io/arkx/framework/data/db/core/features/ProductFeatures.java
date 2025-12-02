@@ -14,12 +14,12 @@ package io.arkx.framework.data.db.core.features;
  */
 public interface ProductFeatures {
 
-  /**
-   * FetchSize转换
-   *
-   * @param fetchSize
-   * @return 转换后的fetchSize
-   */
-  int convertFetchSize(int fetchSize);
+    /**
+     * FetchSize转换
+     *
+     * @param fetchSize
+     * @return 转换后的fetchSize
+     */
+    int convertFetchSize(int fetchSize);
 
 }

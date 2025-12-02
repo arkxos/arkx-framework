@@ -1,13 +1,15 @@
 package io.arkx.framework.data.mybatis.controller;
 
-import cn.hutool.core.util.ObjectUtil;
-import io.arkx.framework.data.mybatis.query.CriteriaQuery;
-import io.arkx.framework.data.mybatis.service.IBaseService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import io.arkx.framework.data.mybatis.query.CriteriaQuery;
+import io.arkx.framework.data.mybatis.service.IBaseService;
+
+import cn.hutool.core.util.ObjectUtil;
 
 /**
  * @author: Administrator
@@ -17,7 +19,6 @@ import java.util.Map;
 public class BaseController<Biz extends IBaseService<T>, T> {
     @Autowired
     protected Biz bizService;
-
 
     public CriteriaQuery<T> q() {
         CriteriaQuery q = new CriteriaQuery();

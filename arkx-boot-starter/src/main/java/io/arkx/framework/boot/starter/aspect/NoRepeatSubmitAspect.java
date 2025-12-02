@@ -1,9 +1,9 @@
 package io.arkx.framework.boot.starter.aspect;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
-import io.arkx.framework.commons.exception.OpenException;
-import io.arkx.framework.commons.util.EncryptUtil;
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,9 +17,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import io.arkx.framework.commons.exception.OpenException;
+import io.arkx.framework.commons.util.EncryptUtil;
+
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 
 /**
  * @author darkness
@@ -29,13 +31,13 @@ import java.util.concurrent.TimeUnit;
 @Aspect
 @Component
 public class NoRepeatSubmitAspect {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(NoRepeatSubmitAspect.class);
 
     private static final String SUFFIX = "SUFFIX";
 
-//    @Autowired
-//    LockService lockService;
+    // @Autowired
+    // LockService lockService;
 
     @Autowired
     private RedissonClient redissonClient;
@@ -55,7 +57,7 @@ public class NoRepeatSubmitAspect {
     }
 
     /**
-     *  接收请求，并记录数据
+     * 接收请求，并记录数据
      */
     @Around(value = "repeatPoint(noRepeatSubmit)")
     public Object doBefore(ProceedingJoinPoint joinPoint, NoRepeatSubmit noRepeatSubmit) throws Throwable {
@@ -76,7 +78,7 @@ public class NoRepeatSubmitAspect {
         } else {
             String jsonString = JSON.toJSONString(args[argIndex]);
             String md5String = EncryptUtil.encrypByMd5(jsonString);
-//            suffix = String.valueOf(args[argIndex]);
+            // suffix = String.valueOf(args[argIndex]);
             suffix = md5String;
         }
 

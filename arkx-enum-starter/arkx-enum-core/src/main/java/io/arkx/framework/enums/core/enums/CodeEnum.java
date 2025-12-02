@@ -27,9 +27,12 @@ public interface CodeEnum {
     /**
      * 通过code 获取枚举值
      *
-     * @param enumType   默认的枚举查询转换方法
-     * @param i          枚举标识
-     * @param <EnumType> 枚举类型
+     * @param enumType
+     *            默认的枚举查询转换方法
+     * @param i
+     *            枚举标识
+     * @param <EnumType>
+     *            枚举类型
      * @return 枚举
      */
     static <EnumType extends CodeEnum> EnumType valueOf(Class<EnumType> enumType, Integer i) {

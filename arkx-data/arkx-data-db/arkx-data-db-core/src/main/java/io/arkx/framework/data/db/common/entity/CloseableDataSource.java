@@ -9,16 +9,17 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.entity;
 
-import javax.sql.DataSource;
 import java.io.Closeable;
+
+import javax.sql.DataSource;
 
 public interface CloseableDataSource extends DataSource, Closeable {
 
-  String getJdbcUrl();
+    String getJdbcUrl();
 
-  String getDriverClass();
+    String getDriverClass();
 
-  String getUserName();
+    String getUserName();
 
-  String getPassword();
+    String getPassword();
 }

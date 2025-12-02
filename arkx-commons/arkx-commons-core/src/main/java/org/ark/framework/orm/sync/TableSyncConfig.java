@@ -8,37 +8,33 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import lombok.Builder;
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.Builder;
+import lombok.Data;
+
 /**
- * 表同步配置
- * 定义表同步的相关参数和策略
+ * 表同步配置 定义表同步的相关参数和策略
  */
 @Data
 @Builder
 public class TableSyncConfig {
 
     /**
-     * 时间戳字段名
-     * 用于增量数据捕获的时间戳字段
+     * 时间戳字段名 用于增量数据捕获的时间戳字段
      */
     private String timestampField;
 
     /**
-     * 主键字段
-     * 用于数据一致性验证和更新操作
+     * 主键字段 用于数据一致性验证和更新操作
      */
     private String primaryKeyField;
 
     /**
-     * 需要同步的字段集合
-     * 如果为空，则同步所有字段
+     * 需要同步的字段集合 如果为空，则同步所有字段
      */
     @Builder.Default
     private Set<String> includedFields = new HashSet<>();
@@ -50,8 +46,7 @@ public class TableSyncConfig {
     private Set<String> excludedFields = new HashSet<>();
 
     /**
-     * 用于数据一致性比较的字段列表
-     * 如果为空，则比较所有字段
+     * 用于数据一致性比较的字段列表 如果为空，则比较所有字段
      */
     @Builder.Default
     private List<String> compareFields = new ArrayList<>();
@@ -63,8 +58,7 @@ public class TableSyncConfig {
     private ConflictStrategy conflictStrategy = ConflictStrategy.SOURCE_WINS;
 
     /**
-     * 批处理大小
-     * 每次批量处理的记录数
+     * 批处理大小 每次批量处理的记录数
      */
     @Builder.Default
     private int batchSize = 1000;
@@ -84,15 +78,14 @@ public class TableSyncConfig {
     /**
      * 构建基本配置
      *
-     * @param timestampField 时间戳字段
-     * @param primaryKeyField 主键字段
+     * @param timestampField
+     *            时间戳字段
+     * @param primaryKeyField
+     *            主键字段
      * @return 配置对象
      */
     public static TableSyncConfig basic(String timestampField, String primaryKeyField) {
-        return TableSyncConfig.builder()
-                .timestampField(timestampField)
-                .primaryKeyField(primaryKeyField)
-                .build();
+        return TableSyncConfig.builder().timestampField(timestampField).primaryKeyField(primaryKeyField).build();
     }
 
     /**

@@ -1,76 +1,76 @@
-//package org.ark.framework.infrastructure.repositories;
+// package org.ark.framework.infrastructure.repositories;
 //
-//import java.util.List;
+// import java.util.List;
 //
-//import jdbc.io.arkx.framework.data.Entity;
+// import jdbc.io.arkx.framework.data.Entity;
 //
 //
-///**
+/// **
 // * @class org.ark.framework.infrastructure.repositories.CachedRepository
 // * @author Darkness
 // * @date 2013-1-25 下午03:13:01
 // * @version V1.0
 // */
-//public class CachedRepository<T extends Entity> extends BaseRepository<T> {
+// public class CachedRepository<T extends Entity> extends BaseRepository<T> {
 //
-//	protected List<T> entities;
+// protected List<T> entities;
 //
-//	protected static Object mutex = new Object();
+// protected static Object mutex = new Object();
 //
-//	@Override
-//	public T findById(String id) {
-//		for (T entity : findAll()) {
-//			if (entity.getId().equals(id)) {
-//				return entity;
-//			}
-//		}
-//		return null;
-//	}
+// @Override
+// public T findById(String id) {
+// for (T entity : findAll()) {
+// if (entity.getId().equals(id)) {
+// return entity;
+// }
+// }
+// return null;
+// }
 //
-//	@Override
-//	public List<T> findAll() {
+// @Override
+// public List<T> findAll() {
 //
-//		if (entities == null) {
-//			entities = super.findAll();
-//			findAllAfter();
-//		}
-//		return entities;
-//	}
-//	
-//	protected void findAllAfter() {}
+// if (entities == null) {
+// entities = super.findAll();
+// findAllAfter();
+// }
+// return entities;
+// }
 //
-//	@Override
-//	public T save(T entity) {
+// protected void findAllAfter() {}
 //
-//		T _entity = super.save(entity);
+// @Override
+// public T save(T entity) {
 //
-//		reloadEntities();
+// T _entity = super.save(entity);
 //
-//		return _entity;
-//	}
-//	
-//	public void update(T entity) {
-//		
-//		super.update(entity);
-//		
-//		reloadEntities();
-//	}
+// reloadEntities();
 //
-//	@Override
-//	public int delete(String ids) {
+// return _entity;
+// }
 //
-//		int rows = super.delete(ids);
+// public void update(T entity) {
 //
-//		reloadEntities();
+// super.update(entity);
 //
-//		return rows;
-//	}
+// reloadEntities();
+// }
 //
-//	public void reloadEntities() {
-//		synchronized (mutex) {
-//			entities = super.findAll();
-//			findAllAfter();
-//		}
-//	}
+// @Override
+// public int delete(String ids) {
 //
-//}
+// int rows = super.delete(ids);
+//
+// reloadEntities();
+//
+// return rows;
+// }
+//
+// public void reloadEntities() {
+// synchronized (mutex) {
+// entities = super.findAll();
+// findAllAfter();
+// }
+// }
+//
+// }

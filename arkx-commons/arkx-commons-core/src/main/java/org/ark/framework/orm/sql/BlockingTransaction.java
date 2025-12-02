@@ -1,194 +1,197 @@
-//package org.ark.framework.orm.sql;
+// package org.ark.framework.orm.sql;
 //
-//import java.sql.SQLException;
+// import java.sql.SQLException;
 //
-//import org.ark.framework.collection.Executor;
-//import org.ark.framework.orm.Schema;
-//import org.ark.framework.orm.SchemaSet;
+// import org.ark.framework.collection.Executor;
+// import org.ark.framework.orm.Schema;
+// import org.ark.framework.orm.SchemaSet;
 //
-//import connection.db.io.arkx.framework.data.Connection;
-//import connection.db.io.arkx.framework.data.ConnectionPoolManager;
-//import exception.db.io.arkx.framework.data.CommitException;
-//import jdbc.io.arkx.framework.data.JdbcTemplate;
-//import jdbc.io.arkx.framework.data.Query;
+// import connection.db.io.arkx.framework.data.Connection;
+// import connection.db.io.arkx.framework.data.ConnectionPoolManager;
+// import exception.db.io.arkx.framework.data.CommitException;
+// import jdbc.io.arkx.framework.data.JdbcTemplate;
+// import jdbc.io.arkx.framework.data.Query;
 //
 //
-///**
+/// **
 // * @class org.ark.framework.orm.sql.BlockingTransaction
-// * 
+// *
 // * @author Darkness
-// * @date 2013-1-31 上午11:44:35 
+// * @date 2013-1-31 上午11:44:35
 // * @version V1.0
 // */
-//public class BlockingTransaction extends Transaction {
-//	
-//	private boolean isExistsOpeningOperate = false;
+// public class BlockingTransaction extends Transaction {
 //
-//	private static ThreadLocal<Object> current = new ThreadLocal<Object>();
-//	private Connection conn;
+// private boolean isExistsOpeningOperate = false;
 //
-//	public BlockingTransaction() {
-//		if (this.dataAccess == null) {
-//			this.conn = ConnectionPoolManager.getConnection();
-//			this.conn.isBlockingTransactionStarted = true;
-//			this.dataAccess = new JdbcTemplate(this.conn);
-////			this.dataAccess.setAutoCommit(false);
-//			bindTransactionToThread();
-//		}
-//	}
+// private static ThreadLocal<Object> current = new ThreadLocal<Object>();
+// private Connection conn;
 //
-//	public BlockingTransaction(String poolName) {
-//		this.dataAccess = new JdbcTemplate(ConnectionPoolManager.getConnection(poolName));
-//		this.conn = this.dataAccess.getConnection();
-//		this.conn.isBlockingTransactionStarted = true;
-//		
-////		this.dataAccess.setAutoCommit(false);
-//		bindTransactionToThread();
-//	}
+// public BlockingTransaction() {
+// if (this.dataAccess == null) {
+// this.conn = ConnectionPoolManager.getConnection();
+// this.conn.isBlockingTransactionStarted = true;
+// this.dataAccess = new JdbcTemplate(this.conn);
+//// this.dataAccess.setAutoCommit(false);
+// bindTransactionToThread();
+// }
+// }
 //
-//	public BlockingTransaction(JdbcTemplate da) {
-//		this.dataAccess = da;
-//		this.conn = this.dataAccess.getConnection();
-//		this.conn.isBlockingTransactionStarted = true;
-////		this.dataAccess.setAutoCommit(false);
-//		bindTransactionToThread();
-//	}
+// public BlockingTransaction(String poolName) {
+// this.dataAccess = new
+// JdbcTemplate(ConnectionPoolManager.getConnection(poolName));
+// this.conn = this.dataAccess.getConnection();
+// this.conn.isBlockingTransactionStarted = true;
 //
-//	public void setDataAccess(JdbcTemplate dAccess) {
-//		if ((this.dataAccess != null) && (!this.outerConnFlag)) {
-//			throw new RuntimeException("setDataAccess() must before any add()");
-//		}
-//		super.setDataAccess(dAccess);
-//	}
+//// this.dataAccess.setAutoCommit(false);
+// bindTransactionToThread();
+// }
 //
-//	public void add(Query qb) {
-//		executeWithBlockedConnection(qb, 7, true);
-//	}
+// public BlockingTransaction(JdbcTemplate da) {
+// this.dataAccess = da;
+// this.conn = this.dataAccess.getConnection();
+// this.conn.isBlockingTransactionStarted = true;
+//// this.dataAccess.setAutoCommit(false);
+// bindTransactionToThread();
+// }
 //
-//	public void add(Schema schema, int type) {
-//		executeWithBlockedConnection(schema, type, true);
-//	}
+// public void setDataAccess(JdbcTemplate dAccess) {
+// if ((this.dataAccess != null) && (!this.outerConnFlag)) {
+// throw new RuntimeException("setDataAccess() must before any add()");
+// }
+// super.setDataAccess(dAccess);
+// }
 //
-//	public void add(SchemaSet<?> set, int type) {
-//		executeWithBlockedConnection(set, type, true);
-//	}
+// public void add(Query qb) {
+// executeWithBlockedConnection(qb, 7, true);
+// }
 //
-//	public void addWithException(Query qb) throws Exception {
-//		executeWithBlockedConnection(qb, 7, false);
-//	}
+// public void add(Schema schema, int type) {
+// executeWithBlockedConnection(schema, type, true);
+// }
 //
-//	public void addWithException(Schema schema, int type) throws Exception {
-//		executeWithException(schema, type);
-//	}
+// public void add(SchemaSet<?> set, int type) {
+// executeWithBlockedConnection(set, type, true);
+// }
 //
-//	public void addWithException(SchemaSet<?> set, int type) throws Exception {
-//		executeWithException(set, type);
-//	}
+// public void addWithException(Query qb) throws Exception {
+// executeWithBlockedConnection(qb, 7, false);
+// }
 //
-//	private void executeWithBlockedConnection(Object obj, int type, boolean rollBackFlag) {
-//		try {
-//			executeObject(obj, type);
-//			this.isExistsOpeningOperate = true;
-//		} catch (SQLException e) {
-//			if ((!this.outerConnFlag) && (rollBackFlag)) {
-//				try {
-////					this.dataAccess.rollback();
-//					this.conn.isBlockingTransactionStarted = false;
-//				} catch (Exception e1) {
-//					e1.printStackTrace();
-//				} finally {
-////						this.dataAccess.close();
-//				}
-//			}
-//			throw new RuntimeException(e);
-//		}
-//	}
+// public void addWithException(Schema schema, int type) throws Exception {
+// executeWithException(schema, type);
+// }
 //
-//	private void executeWithException(Object obj, int type) throws Exception {
-//		executeObject(obj, type);
-//		this.isExistsOpeningOperate = true;
-//	}
+// public void addWithException(SchemaSet<?> set, int type) throws Exception {
+// executeWithException(set, type);
+// }
 //
-//	public boolean commit() {
-//		return commit(true);
-//	}
+// private void executeWithBlockedConnection(Object obj, int type, boolean
+// rollBackFlag) {
+// try {
+// executeObject(obj, type);
+// this.isExistsOpeningOperate = true;
+// } catch (SQLException e) {
+// if ((!this.outerConnFlag) && (rollBackFlag)) {
+// try {
+//// this.dataAccess.rollback();
+// this.conn.isBlockingTransactionStarted = false;
+// } catch (Exception e1) {
+// e1.printStackTrace();
+// } finally {
+//// this.dataAccess.close();
+// }
+// }
+// throw new RuntimeException(e);
+// }
+// }
 //
-//	public boolean commit(boolean setAutoCommitStatus) {
-//		if (this.dataAccess != null) {
-//			try {
-////				this.dataAccess.commit();
-//			} catch (CommitException e) {
-//				e.printStackTrace();
-//				this.exceptionMessage = e.getMessage();
-//				if (!this.outerConnFlag) {
-////					this.dataAccess.rollback();
-//				}
-//				return false;
-//			} finally {
-//					if ((!this.outerConnFlag) || (setAutoCommitStatus))
-////						this.dataAccess.setAutoCommit(true);
-//				if (!this.outerConnFlag) {
-//					try {
-//						this.conn.isBlockingTransactionStarted = false;
-//						this.dataAccess.getConnection().close();
-//					} catch (SQLException e) {
-//						e.printStackTrace();
-//					}
-//				}
-//				this.isExistsOpeningOperate = false;
-//				current.set(null);
-//			}
-//			for (int i = 0; i < this.executorList.size(); i++) {
-//				Executor executor = (Executor) this.executorList.get(i);
-//				executor.execute();
-//			}
-//		}
-//		return true;
-//	}
+// private void executeWithException(Object obj, int type) throws Exception {
+// executeObject(obj, type);
+// this.isExistsOpeningOperate = true;
+// }
 //
-//	public void rollback() {
-//		if (this.dataAccess != null) {
-////				this.dataAccess.rollback();
-//				this.isExistsOpeningOperate = false;
-//			try {
-//				this.conn.isBlockingTransactionStarted = false;
-//				this.dataAccess.getConnection().close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//			current.set(null);
-//		}
-//	}
+// public boolean commit() {
+// return commit(true);
+// }
 //
-//	private void bindTransactionToThread() {
-//		Object obj = current.get();
-//		if (obj == null)
-//			current.set(this);
-//		else
-//			throw new RuntimeException("One thread cann't have two BlockingTransaction!");
-//	}
+// public boolean commit(boolean setAutoCommitStatus) {
+// if (this.dataAccess != null) {
+// try {
+//// this.dataAccess.commit();
+// } catch (CommitException e) {
+// e.printStackTrace();
+// this.exceptionMessage = e.getMessage();
+// if (!this.outerConnFlag) {
+//// this.dataAccess.rollback();
+// }
+// return false;
+// } finally {
+// if ((!this.outerConnFlag) || (setAutoCommitStatus))
+//// this.dataAccess.setAutoCommit(true);
+// if (!this.outerConnFlag) {
+// try {
+// this.conn.isBlockingTransactionStarted = false;
+// this.dataAccess.getConnection().close();
+// } catch (SQLException e) {
+// e.printStackTrace();
+// }
+// }
+// this.isExistsOpeningOperate = false;
+// current.set(null);
+// }
+// for (int i = 0; i < this.executorList.size(); i++) {
+// Executor executor = (Executor) this.executorList.get(i);
+// executor.execute();
+// }
+// }
+// return true;
+// }
 //
-//	public static void clearTransactionBinding() {
-//		Object obj = current.get();
-//		if (obj == null) {
-//			return;
-//		}
-//		BlockingTransaction bt = (BlockingTransaction) obj;
-//		if (bt.isExistsOpeningOperate) {
-//			bt.rollback();
-//		}
-//		current.set(null);
-//	}
+// public void rollback() {
+// if (this.dataAccess != null) {
+//// this.dataAccess.rollback();
+// this.isExistsOpeningOperate = false;
+// try {
+// this.conn.isBlockingTransactionStarted = false;
+// this.dataAccess.getConnection().close();
+// } catch (SQLException e) {
+// e.printStackTrace();
+// }
+// current.set(null);
+// }
+// }
 //
-//	public static Connection getCurrentThreadConnection() {
-//		Object obj = current.get();
-//		if (obj == null) {
-//			return null;
-//		}
-//		BlockingTransaction bt = (BlockingTransaction) obj;
-//		if ((bt.dataAccess == null) || (bt.dataAccess.getConnection() == null)) {
-//			return null;
-//		}
-//		return bt.dataAccess.getConnection();
-//	}
-//}
+// private void bindTransactionToThread() {
+// Object obj = current.get();
+// if (obj == null)
+// current.set(this);
+// else
+// throw new RuntimeException("One thread cann't have two
+// BlockingTransaction!");
+// }
+//
+// public static void clearTransactionBinding() {
+// Object obj = current.get();
+// if (obj == null) {
+// return;
+// }
+// BlockingTransaction bt = (BlockingTransaction) obj;
+// if (bt.isExistsOpeningOperate) {
+// bt.rollback();
+// }
+// current.set(null);
+// }
+//
+// public static Connection getCurrentThreadConnection() {
+// Object obj = current.get();
+// if (obj == null) {
+// return null;
+// }
+// BlockingTransaction bt = (BlockingTransaction) obj;
+// if ((bt.dataAccess == null) || (bt.dataAccess.getConnection() == null)) {
+// return null;
+// }
+// return bt.dataAccess.getConnection();
+// }
+// }

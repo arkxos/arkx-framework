@@ -3,215 +3,214 @@ package io.arkx.framework;
 import java.util.regex.Pattern;
 
 /**
- * @class org.ark.framework.Constant
- * 系统常量定义，框架中的一些全局常量。
- * 
+ * @class org.ark.framework.Constant 系统常量定义，框架中的一些全局常量。
+ *
  * @author Darkness
- * @date 2012-8-5 下午7:28:21 
+ * @date 2012-8-5 下午7:28:21
  * @version V1.0
  */
 public class Constant {
-	
-	public static final Pattern PatternField = Pattern.compile("\\$\\{([\\w\\.]+?)\\}");
 
-	public static final Pattern PatternSpeicalField = Pattern.compile("\\$\\{[@#](\\w+?)\\}");
+    public static final Pattern PatternField = Pattern.compile("\\$\\{([\\w\\.]+?)\\}");
 
-	public static final Pattern PatternPropField = Pattern.compile("\\$\\{(\\w+?)\\.(\\w+?)(\\|(.*?))??\\}");
-	
-	/**
-	 * Session中的User对象的属性名
-	 */
-	public static final String UserAttrName = "_ARK_USER";
-	
-	public static final String DefaultAuthKey = "_ARK_AUTHKEY";
+    public static final Pattern PatternSpeicalField = Pattern.compile("\\$\\{[@#](\\w+?)\\}");
 
-	/**
-	 * Cookie中SessionID对应的Cookie项名称，不同的中间件可能有所不同
-	 */
-	public static final String SessionIDCookieName = "JSESSIONID";
+    public static final Pattern PatternPropField = Pattern.compile("\\$\\{(\\w+?)\\.(\\w+?)(\\|(.*?))??\\}");
 
-	/**
-	 * Response对象中需要游览器执行的JS段
-	 */
-	public static final String ResponseScriptAttr = "_ARK_SCRIPT";
+    /**
+     * Session中的User对象的属性名
+     */
+    public static final String UserAttrName = "_ARK_USER";
 
-	/**
-	 * Response对象中需要浏览器显示的消息文本
-	 */
-	public static final String ResponseMessageAttrName = "_ARK_MESSAGE";//
+    public static final String DefaultAuthKey = "_ARK_AUTHKEY";
 
-	/**
-	 * Response对象中反馈给游览器的状态值，一般0表示有错误，1表示执行成功
-	 */
-	public static final String ResponseStatusAttrName = "_ARK_STATUS";
+    /**
+     * Cookie中SessionID对应的Cookie项名称，不同的中间件可能有所不同
+     */
+    public static final String SessionIDCookieName = "JSESSIONID";
 
-	/**
-	 * DataGrid中的表示当前页数的属性名，从0开始，0表示第一页
-	 */
-	public static final String DataGridPageIndex = "_ARK_PAGEINDEX";
+    /**
+     * Response对象中需要游览器执行的JS段
+     */
+    public static final String ResponseScriptAttr = "_ARK_SCRIPT";
 
-	/**
-	 * DataGrid中表示记录总数的属性名
-	 */
-	public static final String DataGridPageTotal = "_ARK_PAGETOTAL";
+    /**
+     * Response对象中需要浏览器显示的消息文本
+     */
+    public static final String ResponseMessageAttrName = "_ARK_MESSAGE";//
 
-	/**
-	 * DataGrid中表示排序方式的属性名，其值形如id desc,name asc
-	 */
-	public static final String DataGridSortString = "_ARK_SORTSTRING";
+    /**
+     * Response对象中反馈给游览器的状态值，一般0表示有错误，1表示执行成功
+     */
+    public static final String ResponseStatusAttrName = "_ARK_STATUS";
 
-	/**
-	 * DataGrid中表示当前动作是插入空白行的属性名
-	 */
-	public static final String DataGridInsertRow = "_ARK_INSERTROW";
+    /**
+     * DataGrid中的表示当前页数的属性名，从0开始，0表示第一页
+     */
+    public static final String DataGridPageIndex = "_ARK_PAGEINDEX";
 
-	/**
-	 * DataGrid中表示允许多选的属性名
-	 */
-	public static final String DataGridMultiSelect = "_ARK_MULTISELECT";
+    /**
+     * DataGrid中表示记录总数的属性名
+     */
+    public static final String DataGridPageTotal = "_ARK_PAGETOTAL";
 
-	/**
-	 * DataGrid中表示要求自动填充空白行以保持DataGrid高度的属性名
-	 */
-	public static final String DataGridAutoFill = "_ARK_AUTOFILL";
+    /**
+     * DataGrid中表示排序方式的属性名，其值形如id desc,name asc
+     */
+    public static final String DataGridSortString = "_ARK_SORTSTRING";
 
-	/**
-	 * DataGrid中表示允许内容滚动的属性
-	 */
-	public static final String DataGridScroll = "_ARK_SCROLL";
+    /**
+     * DataGrid中表示当前动作是插入空白行的属性名
+     */
+    public static final String DataGridInsertRow = "_ARK_INSERTROW";
 
-	/**
-	 * 表示属性值是一个DataTable
-	 */
-	public static final String DataTable = "_ARK_DATATABLE";
+    /**
+     * DataGrid中表示允许多选的属性名
+     */
+    public static final String DataGridMultiSelect = "_ARK_MULTISELECT";
 
-	/**
-	 * 表示属性值是唯一ID
-	 */
-	public static final String ID = "_ARK_ID";
+    /**
+     * DataGrid中表示要求自动填充空白行以保持DataGrid高度的属性名
+     */
+    public static final String DataGridAutoFill = "_ARK_AUTOFILL";
 
-	/**
-	 * 表示属性值是一个后台Page类的方法
-	 */
-	public static final String Method = "_ARK_METHOD";
-	
-	public static final String Rest = "_ARK_REST";
+    /**
+     * DataGrid中表示允许内容滚动的属性
+     */
+    public static final String DataGridScroll = "_ARK_SCROLL";
 
-	/**
-	 * 表示是否允许分页，值为字 符串true和false
-	 */
-	public static final String Page = "_ARK_PAGE";
+    /**
+     * 表示属性值是一个DataTable
+     */
+    public static final String DataTable = "_ARK_DATATABLE";
 
-	/**
-	 * 表示大小的属性名，例如分页大小
-	 */
-	public static final String Size = "_ARK_SIZE";
+    /**
+     * 表示属性值是唯一ID
+     */
+    public static final String ID = "_ARK_ID";
 
-	/**
-	 * 表示拖拽的方法名，例如DataList的SortEnd
-	 */
-	public static final String SortEnd = "_ARK_SORTEND";
+    /**
+     * 表示属性值是一个后台Page类的方法
+     */
+    public static final String Method = "_ARK_METHOD";
 
-	/**
-	 * 表示拖拽的样式名，例如DataList的DragClass
-	 */
-	public static final String DragClass = "_ARK_DRAGCLASS";
+    public static final String Rest = "_ARK_REST";
 
-	/**
-	 * 表示控件标签包含的HTML内容的属性名
-	 */
-	public static final String TagBody = "_ARK_TAGBODY";
+    /**
+     * 表示是否允许分页，值为字 符串true和false
+     */
+    public static final String Page = "_ARK_PAGE";
 
-	/**
-	 * 表示控件标签包含的HTML内容的属性名
-	 */
-	public static final String TemplateTR = "_ARK_TEMPLATE_TR";
+    /**
+     * 表示大小的属性名，例如分页大小
+     */
+    public static final String Size = "_ARK_SIZE";
 
-	/**
-	 * 表示树形结构中层级的属性名
-	 */
-	public static final String TreeLevel = "_ARK_TREE_LEVEL";
+    /**
+     * 表示拖拽的方法名，例如DataList的SortEnd
+     */
+    public static final String SortEnd = "_ARK_SORTEND";
 
-	/**
-	 * 树形控件中表示是否延迟加载的属性名
-	 */
-	public static final String TreeLazy = "_ARK_TREE_LAZY"; // 延迟加载
+    /**
+     * 表示拖拽的样式名，例如DataList的DragClass
+     */
+    public static final String DragClass = "_ARK_DRAGCLASS";
 
-	/**
-	 * 树形控件中节点是否使用多选框
-	 */
-	public static final String TreeCheckbox = "_ARK_TREE_CHECKBOX"; // 多选框
-	/**
-	 * 多选联动
-	 */
-	public static final String TreeCascade = "_ARK_TREE_CASCADE"; // 多选联动
+    /**
+     * 表示控件标签包含的HTML内容的属性名
+     */
+    public static final String TagBody = "_ARK_TAGBODY";
 
-	/**
-	 * 树形控件中节点是否使用单选框
-	 */
-	public static final String TreeRadio = "_ARK_TREE_RADIO"; // 单选框
+    /**
+     * 表示控件标签包含的HTML内容的属性名
+     */
+    public static final String TemplateTR = "_ARK_TEMPLATE_TR";
 
-	/**
-	 * 树形控件中表示是否全部展开的属性名
-	 */
-	public static final String TreeExpand = "_ARK_TREE_EXPAND"; // 是否在延迟加载是全部展开
+    /**
+     * 表示树形结构中层级的属性名
+     */
+    public static final String TreeLevel = "_ARK_TREE_LEVEL";
 
-	/**
-	 * 树形控件中表示关联父节点的字段名
-	 */
-	public static final String TreeParentColumn = "_ARK_TREE_PARENTCOLUMN"; // 是否在延迟加载是全部展开
+    /**
+     * 树形控件中表示是否延迟加载的属性名
+     */
+    public static final String TreeLazy = "_ARK_TREE_LAZY"; // 延迟加载
 
-	/**
-	 * 树形控件中表示css的属性名
-	 */
-	public static final String TreeStyle = "_ARK_TREE_STYLE";
+    /**
+     * 树形控件中节点是否使用多选框
+     */
+    public static final String TreeCheckbox = "_ARK_TREE_CHECKBOX"; // 多选框
+    /**
+     * 多选联动
+     */
+    public static final String TreeCascade = "_ARK_TREE_CASCADE"; // 多选联动
 
-	/**
-	 * 表示属性值是一个DataCollection对象
-	 */
-	public static final String Data = "_ARK_DATA";
+    /**
+     * 树形控件中节点是否使用单选框
+     */
+    public static final String TreeRadio = "_ARK_TREE_RADIO"; // 单选框
 
-	/**
-	 * 表示属性值是一个URL
-	 */
-	public static final String URL = "_ARK_URL";
+    /**
+     * 树形控件中表示是否全部展开的属性名
+     */
+    public static final String TreeExpand = "_ARK_TREE_EXPAND"; // 是否在延迟加载是全部展开
 
-	/**
-	 * 设置数据的输出格式
-	 */
-	public static final String DataFormat = "_ARK_DATA_FORMAT";
+    /**
+     * 树形控件中表示关联父节点的字段名
+     */
+    public static final String TreeParentColumn = "_ARK_TREE_PARENTCOLUMN"; // 是否在延迟加载是全部展开
 
-	/**
-	 * 表示一个空字符串。（某些场合下如果直接传空字符串，会被过滤掉，如URL中）
-	 */
-	public static final String Null = "_ARK_NULL";
+    /**
+     * 树形控件中表示css的属性名
+     */
+    public static final String TreeStyle = "_ARK_TREE_STYLE";
 
-	/**
-	 * 控件Action在PageContext中的属性名
-	 */
-	public static final String ActionInPageContext = "_ARK_ACTION";
+    /**
+     * 表示属性值是一个DataCollection对象
+     */
+    public static final String Data = "_ARK_DATA";
 
-	/**
-	 * 用户当前语言在Cookie中的属性名
-	 */
-	public static final String LanguageCookieName = "_ARK_LANGUAGE";
+    /**
+     * 表示属性值是一个URL
+     */
+    public static final String URL = "_ARK_URL";
 
-	/**
-	 * 当前请求不使用Session
-	 */
-	public static final String NoSession = "_ARK_NOSESSION";
+    /**
+     * 设置数据的输出格式
+     */
+    public static final String DataFormat = "_ARK_DATA_FORMAT";
 
-	/**
-	 * 缓存数量
-	 */
-	public static final String CacheSize = "_ARK_CACHESIZE";
+    /**
+     * 表示一个空字符串。（某些场合下如果直接传空字符串，会被过滤掉，如URL中）
+     */
+    public static final String Null = "_ARK_NULL";
 
-	/**
-	 * 延迟加载
-	 */
-	public static final String Lazy = "_ARK_LAZY";
+    /**
+     * 控件Action在PageContext中的属性名
+     */
+    public static final String ActionInPageContext = "_ARK_ACTION";
 
-	public static final String DataGridSQL = "_ARK_DATAGRID_SQL";
-	public static final String DragHandle = "_ARK_DRAGHANDLE";
-	public static final String PAGE_BREAK = "<!--_ARK_PAGE_BREAK_-->";
+    /**
+     * 用户当前语言在Cookie中的属性名
+     */
+    public static final String LanguageCookieName = "_ARK_LANGUAGE";
+
+    /**
+     * 当前请求不使用Session
+     */
+    public static final String NoSession = "_ARK_NOSESSION";
+
+    /**
+     * 缓存数量
+     */
+    public static final String CacheSize = "_ARK_CACHESIZE";
+
+    /**
+     * 延迟加载
+     */
+    public static final String Lazy = "_ARK_LAZY";
+
+    public static final String DataGridSQL = "_ARK_DATAGRID_SQL";
+    public static final String DragHandle = "_ARK_DRAGHANDLE";
+    public static final String PAGE_BREAK = "<!--_ARK_PAGE_BREAK_-->";
 }

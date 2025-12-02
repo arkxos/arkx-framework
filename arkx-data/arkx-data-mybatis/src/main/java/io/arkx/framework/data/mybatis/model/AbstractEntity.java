@@ -1,17 +1,20 @@
 package io.arkx.framework.data.mybatis.model;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 实体类父类
+ *
  * @author darkness
  * @date 2022/5/12 18:48
  * @version 1.0
@@ -36,7 +39,6 @@ public abstract class AbstractEntity extends Model implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     @Schema(description = "修改时间")
     public Date updateTime;
-
 
     public Date getCreateTime() {
         return createTime;

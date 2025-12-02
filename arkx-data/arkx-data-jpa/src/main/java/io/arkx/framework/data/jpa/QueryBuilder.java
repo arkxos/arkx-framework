@@ -1,7 +1,11 @@
 package io.arkx.framework.data.jpa;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Parameter;
+import java.beans.PropertyDescriptor;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
@@ -14,22 +18,19 @@ import org.hibernate.transform.Transformers;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.beans.PropertyDescriptor;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Parameter;
 
 /**
- * 
+ *
  * @author Darkness
  * @date 2020年10月20日 下午11:29:40
  * @version V1.0
  */
 public class QueryBuilder {
 
-    private static final Pattern ORDERBY_PATTERN_1 = Pattern
-            .compile("order\\s+by.+?$", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+    private static final Pattern ORDERBY_PATTERN_1 = Pattern.compile("order\\s+by.+?$",
+            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
     private static Map<Class, ResultTransformer> transformerCache = new ConcurrentHashMap<>();
 
@@ -37,8 +38,8 @@ public class QueryBuilder {
         ResultTransformer transformer;
         if (Map.class.isAssignableFrom(clazz)) {
             transformer = Transformers.ALIAS_TO_ENTITY_MAP;
-        } else if (Number.class.isAssignableFrom(clazz) || clazz.isPrimitive() || String.class.isAssignableFrom(clazz) ||
-                Date.class.isAssignableFrom(clazz)) {
+        } else if (Number.class.isAssignableFrom(clazz) || clazz.isPrimitive() || String.class.isAssignableFrom(clazz)
+                || Date.class.isAssignableFrom(clazz)) {
             transformer = transformerCache.computeIfAbsent(clazz, SmartTransformer::new);
         } else {
             transformer = transformerCache.computeIfAbsent(clazz, BeanTransformerAdapter::new);
@@ -48,13 +49,13 @@ public class QueryBuilder {
 
     public static NativeQuery toSQLQuery(EntityManager em, String nativeQuery, Object beanOrMap) {
         Session session = em.unwrap(Session.class);
-		NativeQuery query = session.createNativeQuery(nativeQuery);
+        NativeQuery query = session.createNativeQuery(nativeQuery);
         setParams(query, beanOrMap);
         return query;
     }
 
     private static String wrapCountQuery(String query) {
-        return "select count(1) from (" + query + ") countTable ";//as ctmp
+        return "select count(1) from (" + query + ") countTable ";// as ctmp
     }
 
     private static String cleanOrderBy(String query) {
@@ -75,9 +76,8 @@ public class QueryBuilder {
     }
 
     private static boolean canClean(String orderByPart) {
-        return orderByPart != null && (!orderByPart.contains(")")
-                ||
-                StringUtils.countOccurrencesOf(orderByPart, ")") == StringUtils.countOccurrencesOf(orderByPart, "("));
+        return orderByPart != null && (!orderByPart.contains(")") || StringUtils.countOccurrencesOf(orderByPart,
+                ")") == StringUtils.countOccurrencesOf(orderByPart, "("));
     }
 
     public static String toCountQuery(String query) {
@@ -85,11 +85,11 @@ public class QueryBuilder {
     }
 
     public static void setParams(Query query, Object beanOrMap) {
-		Set<Parameter<?>> nps = query.getParameters();//.getNamedParameters();
-		if (nps != null) {
+        Set<Parameter<?>> nps = query.getParameters();// .getNamedParameters();
+        if (nps != null) {
             Map<String, Object> params = toParams(beanOrMap);
             for (Parameter parameter : nps) {
-				String key = parameter.getName();
+                String key = parameter.getName();
                 Object arg = params.get(key);
                 if (arg == null) {
                     query.setParameter(key, null);
@@ -130,9 +130,10 @@ public class QueryBuilder {
         if (object == null) {
             return false;
         }
-        /*if (object instanceof Number && ((Number) object).longValue() == 0) {
-            return false;
-		}*/
+        /*
+         * if (object instanceof Number && ((Number) object).longValue() == 0) { return
+         * false; }
+         */
         return !(object instanceof Collection && CollectionUtils.isEmpty((Collection<?>) object));
     }
 
@@ -163,28 +164,21 @@ public class QueryBuilder {
         }
     }
 
-
     public static void main(String[] args) {
         String t1 = "select * from user order by id";
         String t2 = "select * from abc order by xxx(convert( resName using gbk )) collate gbk_chinese_ci asc";
         String t3 = "select count * from ((select * from aaa group by a order by a) union all (select * from aaa group by a order by a))";
-        String t4 = "SELECT\n" +
-                "  t1.*,t2.name AS dictionaryName,t3.name AS classifyName\n" +
-                "FROM res_data_element t1 LEFT JOIN sys_business_dictionary t2 ON  t1.dictionary_id = t2.id\n" +
-                "  LEFT JOIN sys_business_dictionary t3 ON  t1.classify = t3.id\n" +
-                "WHERE  1=1\n" +
-                "       AND  t1.is_history_version = 1\n" +
-                "       AND t1.status = 1\n" +
-                "       AND (t1.name LIKE '%${nameOrCodeOrENameOrCompany}%'\n" +
-                "         OR\n" +
-                "         t1.code LIKE '%${nameOrCodeOrENameOrCompany}%'\n" +
-                "         OR\n" +
-                "         t1.englishname LIKE '%${nameOrCodeOrENameOrCompany}%'\n" +
-                "         OR\n" +
-                "         t1.submit_company LIKE '%${nameOrCodeOrENameOrCompany}%')";
+        String t4 = "SELECT\n" + "  t1.*,t2.name AS dictionaryName,t3.name AS classifyName\n"
+                + "FROM res_data_element t1 LEFT JOIN sys_business_dictionary t2 ON  t1.dictionary_id = t2.id\n"
+                + "  LEFT JOIN sys_business_dictionary t3 ON  t1.classify = t3.id\n" + "WHERE  1=1\n"
+                + "       AND  t1.is_history_version = 1\n" + "       AND t1.status = 1\n"
+                + "       AND (t1.name LIKE '%${nameOrCodeOrENameOrCompany}%'\n" + "         OR\n"
+                + "         t1.code LIKE '%${nameOrCodeOrENameOrCompany}%'\n" + "         OR\n"
+                + "         t1.englishname LIKE '%${nameOrCodeOrENameOrCompany}%'\n" + "         OR\n"
+                + "         t1.submit_company LIKE '%${nameOrCodeOrENameOrCompany}%')";
         System.out.println(QueryBuilder.toCountQuery(t1));
         System.out.println(QueryBuilder.toCountQuery(t2));
         System.out.println(QueryBuilder.toCountQuery(t3));
-//        System.out.println(QueryBuilder.toCountQuery(t4));
+        // System.out.println(QueryBuilder.toCountQuery(t4));
     }
 }

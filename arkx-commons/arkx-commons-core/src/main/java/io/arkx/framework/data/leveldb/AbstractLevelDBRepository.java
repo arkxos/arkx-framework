@@ -2,40 +2,39 @@ package io.arkx.framework.data.leveldb;
 
 import org.iq80.leveldb.DB;
 
-
 public abstract class AbstractLevelDBRepository {
 
-	private DB database;
-	private String databasePath;
+    private DB database;
+    private String databasePath;
 
-	protected AbstractLevelDBRepository(String aDirectoryPath) {
-		super();
+    protected AbstractLevelDBRepository(String aDirectoryPath) {
+        super();
 
-		this.openDatabase(aDirectoryPath);
-	}
+        this.openDatabase(aDirectoryPath);
+    }
 
-	protected DB database() {
-		return this.database;
-	}
+    protected DB database() {
+        return this.database;
+    }
 
-	protected String databasePath() {
-		return this.databasePath;
-	}
+    protected String databasePath() {
+        return this.databasePath;
+    }
 
-	private void setDatabase(DB aDatabase) {
-		this.database = aDatabase;
-	}
+    private void setDatabase(DB aDatabase) {
+        this.database = aDatabase;
+    }
 
-	private void setDatabasePath(String aDatabasePath) {
-		this.databasePath = aDatabasePath;
-	}
+    private void setDatabasePath(String aDatabasePath) {
+        this.databasePath = aDatabasePath;
+    }
 
-	private void openDatabase(String aDirectoryPath) {
-		LevelDBProvider levelDBProvider = LevelDBProvider.instance();
+    private void openDatabase(String aDirectoryPath) {
+        LevelDBProvider levelDBProvider = LevelDBProvider.instance();
 
-		DB db = levelDBProvider.databaseFrom(aDirectoryPath);
+        DB db = levelDBProvider.databaseFrom(aDirectoryPath);
 
-		this.setDatabase(db);
-		this.setDatabasePath(aDirectoryPath);
-	}
+        this.setDatabase(db);
+        this.setDatabasePath(aDirectoryPath);
+    }
 }

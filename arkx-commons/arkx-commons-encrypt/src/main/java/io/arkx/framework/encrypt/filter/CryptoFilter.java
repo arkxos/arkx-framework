@@ -1,14 +1,7 @@
 package io.arkx.framework.encrypt.filter;
 
-import cn.hutool.core.util.ObjectUtil;
-import io.arkx.framework.commons.constants.HttpStatus;
-import io.arkx.framework.commons.exception.OpenException;
-import io.arkx.framework.commons.util.ArkSpringContextHolder;
-import io.arkx.framework.encrypt.annotation.ApiEncrypt;
-import io.arkx.framework.encrypt.properties.ApiDecryptProperties;
-import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -16,8 +9,16 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.io.IOException;
+import io.arkx.framework.commons.constants.HttpStatus;
+import io.arkx.framework.commons.exception.OpenException;
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
+import io.arkx.framework.encrypt.annotation.ApiEncrypt;
+import io.arkx.framework.encrypt.properties.ApiDecryptProperties;
 
+import cn.hutool.core.util.ObjectUtil;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Crypto 过滤器
@@ -32,7 +33,8 @@ public class CryptoFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         // 获取加密注解
@@ -48,14 +50,15 @@ public class CryptoFilter implements Filter {
             String headerValue = servletRequest.getHeader(properties.getHeaderFlag());
             if (StringUtils.isNotBlank(headerValue)) {
                 // 请求解密
-                requestWrapper = new DecryptRequestBodyWrapper(servletRequest, properties.getPrivateKey(), properties.getHeaderFlag());
+                requestWrapper = new DecryptRequestBodyWrapper(servletRequest, properties.getPrivateKey(),
+                        properties.getHeaderFlag());
             } else {
                 // 是否有注解，有就报错，没有放行
                 if (ObjectUtil.isNotNull(apiEncrypt)) {
-                    HandlerExceptionResolver exceptionResolver = ArkSpringContextHolder.getBean("handlerExceptionResolver", HandlerExceptionResolver.class);
-                    exceptionResolver.resolveException(
-                        servletRequest, servletResponse, null,
-                        new OpenException(HttpStatus.FORBIDDEN, "没有访问权限，请联系管理员授权"));
+                    HandlerExceptionResolver exceptionResolver = ArkSpringContextHolder
+                            .getBean("handlerExceptionResolver", HandlerExceptionResolver.class);
+                    exceptionResolver.resolveException(servletRequest, servletResponse, null,
+                            new OpenException(HttpStatus.FORBIDDEN, "没有访问权限，请联系管理员授权"));
                     return;
                 }
             }
@@ -67,15 +70,14 @@ public class CryptoFilter implements Filter {
             responseWrapper = responseBodyWrapper;
         }
 
-        chain.doFilter(
-            ObjectUtil.defaultIfNull(requestWrapper, request),
-            ObjectUtil.defaultIfNull(responseWrapper, response));
+        chain.doFilter(ObjectUtil.defaultIfNull(requestWrapper, request),
+                ObjectUtil.defaultIfNull(responseWrapper, response));
 
         if (responseFlag) {
             servletResponse.reset();
             // 对原始内容加密
-            String encryptContent = responseBodyWrapper.getEncryptContent(
-                servletResponse, properties.getPublicKey(), properties.getHeaderFlag());
+            String encryptContent = responseBodyWrapper.getEncryptContent(servletResponse, properties.getPublicKey(),
+                    properties.getHeaderFlag());
             // 对加密后的内容写出
             servletResponse.getWriter().write(encryptContent);
         }
@@ -85,7 +87,8 @@ public class CryptoFilter implements Filter {
      * 获取 ApiEncrypt 注解
      */
     private ApiEncrypt getApiEncryptAnnotation(HttpServletRequest servletRequest) {
-        RequestMappingHandlerMapping handlerMapping = ArkSpringContextHolder.getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping handlerMapping = ArkSpringContextHolder.getBean("requestMappingHandlerMapping",
+                RequestMappingHandlerMapping.class);
         // 获取注解
         try {
             HandlerExecutionChain mappingHandler = handlerMapping.getHandler(servletRequest);
@@ -93,8 +96,8 @@ public class CryptoFilter implements Filter {
                 Object handler = mappingHandler.getHandler();
                 if (ObjectUtil.isNotNull(handler)) {
                     // 从handler获取注解
-                    if (handler instanceof  HandlerMethod) {
-                        return ((HandlerMethod)handler).getMethodAnnotation(ApiEncrypt.class);
+                    if (handler instanceof HandlerMethod) {
+                        return ((HandlerMethod) handler).getMethodAnnotation(ApiEncrypt.class);
                     }
                 }
             }

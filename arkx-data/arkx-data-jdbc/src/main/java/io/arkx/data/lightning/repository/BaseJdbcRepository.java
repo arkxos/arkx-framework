@@ -1,9 +1,10 @@
 package io.arkx.data.lightning.repository;
 
-import io.arkx.framework.data.common.repository.ExtBaseRepository;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.ListPagingAndSortingRepository;
 import org.springframework.data.repository.query.ListQueryByExampleExecutor;
+
+import io.arkx.framework.data.common.repository.ExtBaseRepository;
 
 /**
  * @author Nobody
@@ -11,9 +12,10 @@ import org.springframework.data.repository.query.ListQueryByExampleExecutor;
  * @since 1.0
  */
 public interface BaseJdbcRepository<T, ID>
-		extends ListCrudRepository<T, ID>,
-		ListPagingAndSortingRepository<T, ID>,
-		ListQueryByExampleExecutor<T>,
-		ExtBaseRepository<T, ID> {
+        extends
+            ListCrudRepository<T, ID>,
+            ListPagingAndSortingRepository<T, ID>,
+            ListQueryByExampleExecutor<T>,
+            ExtBaseRepository<T, ID> {
 
 }

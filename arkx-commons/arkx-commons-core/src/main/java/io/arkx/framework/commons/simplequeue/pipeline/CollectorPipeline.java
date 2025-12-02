@@ -1,8 +1,8 @@
 package io.arkx.framework.commons.simplequeue.pipeline;
 
-import io.arkx.framework.commons.simplequeue.QueueExecutor;
-
 import java.util.List;
+
+import io.arkx.framework.commons.simplequeue.QueueExecutor;
 
 /**
  * Pipeline that can collect and store results. <br>

@@ -15,4 +15,4 @@ public class DoubleEditor extends PropertiesEditor {
     public String getAsText() {
         return getValue().toString();
     }
-} 
+}

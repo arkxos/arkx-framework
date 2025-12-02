@@ -7,12 +7,13 @@ import java.lang.annotation.Target;
 
 /**
  * 备注
+ *
  * @author Darkness
  * @date 2013-12-5 下午04:24:57
  * @version V1.0
  */
-@Target({ ElementType.TYPE, ElementType.METHOD,ElementType.FIELD })
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Comment {
-	String value() default "";
+    String value() default "";
 }

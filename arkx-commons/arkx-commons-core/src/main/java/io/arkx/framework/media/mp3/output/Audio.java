@@ -20,65 +20,65 @@
  */
 package io.arkx.framework.media.mp3.output;
 
-import io.arkx.framework.media.mp3.decoder.IAudio;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import io.arkx.framework.media.mp3.decoder.IAudio;
+
 /**
  * 将解码得到的PCM数据写入音频设备（播放）。
- * 
+ *
  */
 public class Audio implements IAudio {
-	private SourceDataLine dateline;
+    private SourceDataLine dateline;
 
-	@Override
-	public boolean open(int rate, int channels, int bufferSize) {
-		if(rate == 0 || !(channels == 1 || channels == 2))
-			return false;
-		if(bufferSize <= 4608)
-			bufferSize = 4608 * 8;
-		AudioFormat af = new AudioFormat(rate, 16, channels, true, false);
-		try {
-			dateline = AudioSystem.getSourceDataLine(af);
-			dateline.open(af, bufferSize);
-			// dateline.open(af);
-		} catch (LineUnavailableException e) {
-			System.out.println("初始化音频输出失败。");
-			return false;
-		}
+    @Override
+    public boolean open(int rate, int channels, int bufferSize) {
+        if (rate == 0 || !(channels == 1 || channels == 2))
+            return false;
+        if (bufferSize <= 4608)
+            bufferSize = 4608 * 8;
+        AudioFormat af = new AudioFormat(rate, 16, channels, true, false);
+        try {
+            dateline = AudioSystem.getSourceDataLine(af);
+            dateline.open(af, bufferSize);
+            // dateline.open(af);
+        } catch (LineUnavailableException e) {
+            System.out.println("初始化音频输出失败。");
+            return false;
+        }
 
-		dateline.start();
-		return true;
-	}
+        dateline.start();
+        return true;
+    }
 
-	@Override
-	public int write(byte[] b, int off, int size) {
-		return dateline.write(b, off, size);
-	}
+    @Override
+    public int write(byte[] b, int off, int size) {
+        return dateline.write(b, off, size);
+    }
 
-	public void start(boolean started) {
-		if (dateline == null)
-			return;
-		if (started)
-			dateline.start();
-		else
-			dateline.stop();
-	}
+    public void start(boolean started) {
+        if (dateline == null)
+            return;
+        if (started)
+            dateline.start();
+        else
+            dateline.stop();
+    }
 
-	@Override
-	public void drain() {
-		if (dateline != null)
-			dateline.drain();
-	}
+    @Override
+    public void drain() {
+        if (dateline != null)
+            dateline.drain();
+    }
 
-	@Override
-	public void close() {
-		if (dateline != null)
-			if (dateline.isOpen())
-				dateline.close();
-	}
+    @Override
+    public void close() {
+        if (dateline != null)
+            if (dateline.isOpen())
+                dateline.close();
+    }
 
 }

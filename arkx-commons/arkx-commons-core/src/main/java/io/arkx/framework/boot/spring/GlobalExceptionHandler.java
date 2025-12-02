@@ -10,11 +10,11 @@
 //
 //import lombok.extern.slf4j.Slf4j;
 //
-///**  
-// * 
-// * @author darkness  
+///**
+// *
+// * @author darkness
 // * @date 2018-08-26 14:54:13
-// * @version 1.0  
+// * @version 1.0
 // * @since 4.0
 // */
 //@Slf4j
@@ -45,8 +45,6 @@
 //		}
 //		return JsonResult.createErrorResult(message);
 //	}
-//	
+//
 //}
 package io.arkx.framework.boot.spring;
-
-

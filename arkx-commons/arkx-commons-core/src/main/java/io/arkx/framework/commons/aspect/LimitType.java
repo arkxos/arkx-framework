@@ -17,6 +17,7 @@ package io.arkx.framework.commons.aspect;
 
 /**
  * 限流枚举
+ *
  * @author darkness
  * @date 2021/7/12 12:33
  * @version 1.0
@@ -25,6 +26,6 @@ public enum LimitType {
     // 默认
     CUSTOMER,
 
-    //  by ip addr
+    // by ip addr
     IP
 }

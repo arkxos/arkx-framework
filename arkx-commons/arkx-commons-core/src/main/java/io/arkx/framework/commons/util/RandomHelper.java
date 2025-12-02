@@ -47,7 +47,6 @@ public final class RandomHelper {
         return randomString().toUpperCase();
     }
 
-
     /**
      * 生成UUID
      *
@@ -74,7 +73,8 @@ public final class RandomHelper {
     /**
      * 指定位数数字
      *
-     * @param charCount 位数
+     * @param charCount
+     *            位数
      * @return String rand num
      */
     public static String getRandNum(int charCount) {
@@ -89,8 +89,10 @@ public final class RandomHelper {
     /**
      * 范围内随机数字
      *
-     * @param from 开始
-     * @param to   结束
+     * @param from
+     *            开始
+     * @param to
+     *            结束
      * @return int int
      */
     public static int randomInt(int from, int to) {

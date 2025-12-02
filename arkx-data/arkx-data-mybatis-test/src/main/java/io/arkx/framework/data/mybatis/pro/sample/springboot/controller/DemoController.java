@@ -1,14 +1,6 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Demo;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Gender;
-import jakarta.validation.Valid;
-import lombok.Data;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,7 +8,18 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Demo;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Gender;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.validation.Valid;
+import lombok.Data;
 
 /**
  * 描述：测试枚举类型的HttpMessageConverter
@@ -61,7 +64,7 @@ public class DemoController {
 
     @Data
     public static class DeserializeEnumDTO implements Serializable {
-//        private Collection<Gender> genders;
+        // private Collection<Gender> genders;
         private List<String> names;
         private Gender gender;
         private List<Sub> subs;

@@ -1,22 +1,25 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.sdk;
 
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
+import static com.ninja_squad.dbsetup.Operations.truncate;
+import static java.util.stream.Collectors.toList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
 
-import static com.ninja_squad.dbsetup.Operations.truncate;
-import static java.util.stream.Collectors.toList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 
 /**
  * @author w.dehai
@@ -71,33 +74,3 @@ class InsertTest {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

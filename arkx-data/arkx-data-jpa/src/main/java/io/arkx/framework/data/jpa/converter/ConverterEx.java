@@ -1,11 +1,11 @@
 package io.arkx.framework.data.jpa.converter;
 
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.domain.Page;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
 
 /**
  * 转换器扩展.
@@ -22,7 +22,7 @@ public interface ConverterEx<S, D, ID> extends Converter<S, D> {
 
     D get(ID id);
 
-    Map<ID,D> mget(Collection<ID> ids);
+    Map<ID, D> mget(Collection<ID> ids);
 
     List<ID> getIds(List<S> source);
 }

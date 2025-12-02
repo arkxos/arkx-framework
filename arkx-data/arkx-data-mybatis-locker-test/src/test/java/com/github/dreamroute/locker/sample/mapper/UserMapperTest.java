@@ -1,8 +1,19 @@
 package com.github.dreamroute.locker.sample.mapper;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
-import cn.hutool.core.util.ReflectUtil;
+import static com.github.dreamroute.locker.sample.mapper.AppenderUtil.create;
+import static com.github.dreamroute.locker.sample.mapper.AppenderUtil.getMessage;
+import static com.ninja_squad.dbsetup.Operations.insertInto;
+import static com.ninja_squad.dbsetup.Operations.truncate;
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.sql.DataSource;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mybatis.spring.MyBatisSystemException;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.github.dreamroute.locker.anno.EnableLocker;
 import com.github.dreamroute.locker.exception.DataHasBeenModifyException;
 import com.github.dreamroute.locker.interceptor.LockerInterceptor;
@@ -11,20 +22,11 @@ import com.github.dreamroute.sqlprinter.starter.interceptor.SqlPrinter;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Insert;
+
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
+import cn.hutool.core.util.ReflectUtil;
 import jakarta.annotation.Resource;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mybatis.spring.MyBatisSystemException;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.sql.DataSource;
-
-import static com.github.dreamroute.locker.sample.mapper.AppenderUtil.create;
-import static com.github.dreamroute.locker.sample.mapper.AppenderUtil.getMessage;
-import static com.ninja_squad.dbsetup.Operations.insertInto;
-import static com.ninja_squad.dbsetup.Operations.truncate;
-import static org.junit.jupiter.api.Assertions.*;
 
 @EnableLocker
 @SpringBootTest
@@ -42,10 +44,8 @@ class UserMapperTest {
     @BeforeEach
     void init() {
         new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert initUser = insertInto("smart_user")
-                .columns("id", "name", "password", "version")
-                .values(100L, "w.dehai", "123456", 100L)
-                .build();
+        Insert initUser = insertInto("smart_user").columns("id", "name", "password", "version")
+                .values(100L, "w.dehai", "123456", 100L).build();
         new DbSetup(new DataSourceDestination(dataSource), initUser).launch();
     }
 
@@ -78,11 +78,7 @@ class UserMapperTest {
      */
     @Test
     void concurrentUpdateTest() {
-        User user = User.builder()
-                .id(100)
-                .name("w.dehai")
-                .password("123456")
-                .version(100L).build();
+        User user = User.builder().id(100).name("w.dehai").password("123456").version(100L).build();
 
         ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
 
@@ -116,11 +112,7 @@ class UserMapperTest {
      */
     @Test
     void updateUserByDynamicTagWithLockerTest() {
-        User user = User.builder()
-                .id(100)
-                .name("w.dehai")
-                .password("123456")
-                .version(100L).build();
+        User user = User.builder().id(100).name("w.dehai").password("123456").version(100L).build();
 
         ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
 

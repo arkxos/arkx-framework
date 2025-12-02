@@ -3,43 +3,36 @@ package io.arkx.framework.data.simplejdbc.query;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class InExpression implements Criterion
-{
+public class InExpression implements Criterion {
     private String columnName;
 
     private Object[] values;
 
-    protected InExpression(String columnName, Object[] values)
-    {
+    protected InExpression(String columnName, Object[] values) {
         this.columnName = columnName;
         this.values = values;
     }
 
-    public String toSqlString()
-    {
+    public String toSqlString() {
         StringBuilder params = new StringBuilder();
-        
-        for(int i = 0; i < values.length; i++)
-        {
-            if(i > 0)
-            {
+
+        for (int i = 0; i < values.length; i++) {
+            if (i > 0) {
                 params.append(',');
                 params.append(' ');
             }
-            
+
             params.append('?');
         }
-        
+
         return columnName + " in (" + params + ')';
     }
 
-    public Object getValue()
-    {
+    public Object getValue() {
         return null;
     }
 
-    public Collection<?> getValues()
-    {
-        return values.length > 0? Arrays.asList(values): null;
+    public Collection<?> getValues() {
+        return values.length > 0 ? Arrays.asList(values) : null;
     }
 }

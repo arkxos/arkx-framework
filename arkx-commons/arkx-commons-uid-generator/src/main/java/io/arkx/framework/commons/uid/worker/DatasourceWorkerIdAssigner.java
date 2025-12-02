@@ -15,19 +15,20 @@
  */
 package io.arkx.framework.commons.uid.worker;
 
-import io.arkx.framework.commons.uid.exception.UidGenerateException;
-import io.arkx.framework.commons.uid.worker.dao.WorkerNodeMapper;
-import io.arkx.framework.commons.uid.worker.entity.WorkerNodeEntity;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.arkx.framework.commons.uid.exception.UidGenerateException;
+import io.arkx.framework.commons.uid.worker.dao.WorkerNodeMapper;
+import io.arkx.framework.commons.uid.worker.entity.WorkerNodeEntity;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * Represents an implementation of {@link WorkerIdAssigner}, 
- * the worker id will be discarded after assigned to the UidGenerator
- * 基于数据库获取 workerId（机器节点ID）
+ * Represents an implementation of {@link WorkerIdAssigner}, the worker id will
+ * be discarded after assigned to the UidGenerator 基于数据库获取 workerId（机器节点ID）
  *
  * @author yutianbao
  */
@@ -38,10 +39,12 @@ public class DatasourceWorkerIdAssigner extends AbstractWorkerAssigner implement
     private final SqlSessionFactory sqlSessionFactory;
 
     /**
-     * Assign worker id base on database.<p>
-     * If there is host name & port in the environment, we considered that the node runs in Docker container<br>
+     * Assign worker id base on database.
+     * <p>
+     * If there is host name & port in the environment, we considered that the node
+     * runs in Docker container<br>
      * Otherwise, the node runs on an actual machine.
-     * 
+     *
      * @return assigned worker id
      */
     @Override
@@ -56,7 +59,8 @@ public class DatasourceWorkerIdAssigner extends AbstractWorkerAssigner implement
             // add worker node for new (ignore the same IP + PORT)
             doCheck(workerNodeMapper);
 
-            WorkerNodeEntity node = workerNodeMapper.getWorkerNodeByHostPort(workerNodeEntity.getHostName(), workerNodeEntity.getPort());
+            WorkerNodeEntity node = workerNodeMapper.getWorkerNodeByHostPort(workerNodeEntity.getHostName(),
+                    workerNodeEntity.getPort());
             long workerId;
             if (node == null) {
                 workerNodeMapper.addWorkerNode(workerNodeEntity);
@@ -80,14 +84,16 @@ public class DatasourceWorkerIdAssigner extends AbstractWorkerAssigner implement
 
     // 检查数据库和表
     public void doCheck(WorkerNodeMapper workerNodeMapper) {
-//        if (workerNodeMapper.queryDatabaseExist() == 0 && workerNodeMapper.createDatabase() > 0) {
-//            log.info("Not found database 'fun_cloud_base',auto created success");
-//            if (workerNodeMapper.createTable() > 0) {
-//                log.info("Not found table 'ark_uid_worker_node',auto created success");
-//            }
-//        } else if (workerNodeMapper.queryTableExist() == 0 && workerNodeMapper.createTable() > 0) {
-//            log.info("Not found table 'ark_uid_worker_node',auto created success");
-//        }
+        // if (workerNodeMapper.queryDatabaseExist() == 0 &&
+        // workerNodeMapper.createDatabase() > 0) {
+        // log.info("Not found database 'fun_cloud_base',auto created success");
+        // if (workerNodeMapper.createTable() > 0) {
+        // log.info("Not found table 'ark_uid_worker_node',auto created success");
+        // }
+        // } else if (workerNodeMapper.queryTableExist() == 0 &&
+        // workerNodeMapper.createTable() > 0) {
+        // log.info("Not found table 'ark_uid_worker_node',auto created success");
+        // }
     }
 
 }

@@ -25,52 +25,52 @@ import java.util.Set;
  */
 public class ParserConfig {
 
-	public static ParserConfig getGlobalInstance() {
-		return global;
-	}
+    public static ParserConfig getGlobalInstance() {
+        return global;
+    }
 
-	private final Set<Class<?>> primitiveClasses = new HashSet<Class<?>>();
+    private final Set<Class<?>> primitiveClasses = new HashSet<Class<?>>();
 
-	private static ParserConfig global = new ParserConfig();
+    private static ParserConfig global = new ParserConfig();
 
-	protected final SymbolTable symbolTable = new SymbolTable();
+    protected final SymbolTable symbolTable = new SymbolTable();
 
-	public ParserConfig() {
-		primitiveClasses.add(boolean.class);
-		primitiveClasses.add(Boolean.class);
+    public ParserConfig() {
+        primitiveClasses.add(boolean.class);
+        primitiveClasses.add(Boolean.class);
 
-		primitiveClasses.add(char.class);
-		primitiveClasses.add(Character.class);
+        primitiveClasses.add(char.class);
+        primitiveClasses.add(Character.class);
 
-		primitiveClasses.add(byte.class);
-		primitiveClasses.add(Byte.class);
+        primitiveClasses.add(byte.class);
+        primitiveClasses.add(Byte.class);
 
-		primitiveClasses.add(short.class);
-		primitiveClasses.add(Short.class);
+        primitiveClasses.add(short.class);
+        primitiveClasses.add(Short.class);
 
-		primitiveClasses.add(int.class);
-		primitiveClasses.add(Integer.class);
+        primitiveClasses.add(int.class);
+        primitiveClasses.add(Integer.class);
 
-		primitiveClasses.add(long.class);
-		primitiveClasses.add(Long.class);
+        primitiveClasses.add(long.class);
+        primitiveClasses.add(Long.class);
 
-		primitiveClasses.add(float.class);
-		primitiveClasses.add(Float.class);
+        primitiveClasses.add(float.class);
+        primitiveClasses.add(Float.class);
 
-		primitiveClasses.add(double.class);
-		primitiveClasses.add(Double.class);
+        primitiveClasses.add(double.class);
+        primitiveClasses.add(Double.class);
 
-		primitiveClasses.add(BigInteger.class);
-		primitiveClasses.add(BigDecimal.class);
+        primitiveClasses.add(BigInteger.class);
+        primitiveClasses.add(BigDecimal.class);
 
-		primitiveClasses.add(String.class);
-		primitiveClasses.add(java.util.Date.class);
-		primitiveClasses.add(java.sql.Date.class);
-		primitiveClasses.add(java.sql.Time.class);
-		primitiveClasses.add(java.sql.Timestamp.class);
-	}
+        primitiveClasses.add(String.class);
+        primitiveClasses.add(java.util.Date.class);
+        primitiveClasses.add(java.sql.Date.class);
+        primitiveClasses.add(java.sql.Time.class);
+        primitiveClasses.add(java.sql.Timestamp.class);
+    }
 
-	public SymbolTable getSymbolTable() {
-		return symbolTable;
-	}
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
 }

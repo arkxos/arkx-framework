@@ -1,15 +1,16 @@
 package io.arkx.framework.commons.collection.tree.jackson;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
+import java.util.Map;
+
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.collection.tree.TreeNode;
 import io.arkx.framework.commons.collection.tree.Treex;
 import io.arkx.framework.commons.util.lang.ClassUtil;
 
-import java.io.IOException;
-import java.util.Map;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 
 /**
  * Treex类的Jackson序列化器
@@ -42,10 +43,10 @@ public class TreexSerializer extends JsonSerializer<Treex<?, ?>> {
         gen.writeStartObject();
 
         // 序列化节点的基本属性
-//        gen.writeObjectField("id", node.getId());
-//        gen.writeStringField("name", node.getName());
+        // gen.writeObjectField("id", node.getId());
+        // gen.writeStringField("name", node.getName());
         gen.writeStringField("nodeType", node.getNodeType());
-//        gen.writeObjectField("parentId", node.getParentId());
+        // gen.writeObjectField("parentId", node.getParentId());
         gen.writeBooleanField("isParent", node.isParent());
         gen.writeBooleanField("isLeaf", node.isLeaf());
         gen.writeNumberField("depth", node.getDepth());

@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.util;
 
-import io.arkx.framework.commons.collection.tree.TreeNode;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import io.arkx.framework.commons.collection.tree.TreeNode;
 
 /**
  * 树工具类
@@ -12,7 +12,8 @@ public class TreeUtils {
     /**
      * 两层循环实现建树
      *
-     * @param treeNodes 传入的树节点列表
+     * @param treeNodes
+     *            传入的树节点列表
      * @return
      */
     public static <T extends TreeNode> List<T> bulid(List<T> treeNodes, Object root) {

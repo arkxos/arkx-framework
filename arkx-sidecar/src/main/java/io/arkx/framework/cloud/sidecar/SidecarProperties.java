@@ -16,13 +16,14 @@
 
 package io.arkx.framework.cloud.sidecar;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author www.itmuch.com
@@ -33,11 +34,11 @@ import java.util.List;
 @Setter
 public class SidecarProperties {
 
-	/**
-	 * interval of health check.
-	 */
-	private long healthCheckInterval = 30_000L;
+    /**
+     * interval of health check.
+     */
+    private long healthCheckInterval = 30_000L;
 
-	private List<SidecarConfig> proxyList = new ArrayList<>();
+    private List<SidecarConfig> proxyList = new ArrayList<>();
 
 }

@@ -12,8 +12,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 时间估算器
- * 用于算任务的剩余时间和完成百分比
+ * 时间估算器 用于算任务的剩余时间和完成百分比
  */
 @Slf4j
 public class TimeEstimator {
@@ -55,7 +54,8 @@ public class TimeEstimator {
     /**
      * 构造函数
      *
-     * @param totalCount 总计数量
+     * @param totalCount
+     *            总计数量
      */
     public TimeEstimator(int totalCount) {
         this.startTime = System.currentTimeMillis();
@@ -68,7 +68,8 @@ public class TimeEstimator {
     /**
      * 更新进度
      *
-     * @param currentCount 当前已处理数量
+     * @param currentCount
+     *            当前已处理数量
      * @return 是否有足够样本用于估算
      */
     public boolean update(int currentCount) {
@@ -126,8 +127,9 @@ public class TimeEstimator {
      * @return 进度百分比
      */
     public int getProgressPercentage() {
-        if (totalCount <= 0) return 0;
-        return Math.min(100, Math.max(0, (int)((currentCount * 100.0) / totalCount)));
+        if (totalCount <= 0)
+            return 0;
+        return Math.min(100, Math.max(0, (int) ((currentCount * 100.0) / totalCount)));
     }
 
     /**
@@ -159,7 +161,7 @@ public class TimeEstimator {
         }
 
         int remainingCount = totalCount - currentCount;
-        return (long)(remainingCount / averageSpeed * 1000);
+        return (long) (remainingCount / averageSpeed * 1000);
     }
 
     /**
@@ -194,11 +196,13 @@ public class TimeEstimator {
     /**
      * 格式化时间为友好字符串
      *
-     * @param timeMs 时间(毫秒)
+     * @param timeMs
+     *            时间(毫秒)
      * @return 格式化后的字符串 (HH:mm:ss 或 mm:ss)
      */
     public static String formatTime(long timeMs) {
-        if (timeMs < 0) return "未知";
+        if (timeMs < 0)
+            return "未知";
 
         long seconds = timeMs / 1000;
         long minutes = seconds / 60;

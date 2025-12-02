@@ -1,13 +1,5 @@
 package io.arkx.framework.commons.uid;
 
-import io.arkx.framework.commons.uid.component.CachedUidGenerator;
-import jakarta.annotation.Resource;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,12 +8,21 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import io.arkx.framework.commons.uid.component.CachedUidGenerator;
+
+import jakarta.annotation.Resource;
+
 /**
  * Test for {@link CachedUidGenerator}
- * 
+ *
  * @author yutianbao
  */
-@SpringJUnitConfig(locations = { "classpath:uid/cached-uid-spring.xml" })
+@SpringJUnitConfig(locations = {"classpath:uid/cached-uid-spring.xml"})
 public class CachedUidGeneratorTest {
     private static final int SIZE = 7000000; // 700w
     private static final boolean VERBOSE = false;
@@ -32,7 +33,7 @@ public class CachedUidGeneratorTest {
 
     /**
      * Test for serially generate
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -49,7 +50,7 @@ public class CachedUidGeneratorTest {
 
     /**
      * Test for parallel generate
-     * 
+     *
      * @throws InterruptedException
      * @throws IOException
      */

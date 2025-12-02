@@ -1,11 +1,12 @@
 package io.arkx.framework.avatarmq.core;
 
-import com.google.common.base.Splitter;
-import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicLong;
+
+import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
+
+import com.google.common.base.Splitter;
 
 /**
  * @filename:AckMessageTask.java
@@ -29,7 +30,8 @@ public class AckMessageTask implements Callable<Long> {
         for (int i = 0; i < messages.length; i++) {
             boolean error = false;
             ProducerAckMessage ack = new ProducerAckMessage();
-            Object[] msg = Splitter.on(MessageSystemConfig.MessageDelimiter).trimResults().splitToList(messages[i]).toArray();
+            Object[] msg = Splitter.on(MessageSystemConfig.MessageDelimiter).trimResults().splitToList(messages[i])
+                    .toArray();
             if (msg.length == 2) {
                 ack.setAck((String) msg[0]);
                 ack.setMsgId((String) msg[1]);

@@ -11,15 +11,15 @@ import java.io.Serializable;
  */
 public class ConsumerAckMessage extends BaseMessage implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	public static ConsumerAckMessage createSuccessAckMessage() {
-		ConsumerAckMessage result = new ConsumerAckMessage();
+    private static final long serialVersionUID = 1L;
+
+    public static ConsumerAckMessage createSuccessAckMessage() {
+        ConsumerAckMessage result = new ConsumerAckMessage();
         result.setStatus(ConsumerAckMessage.SUCCESS);
         return result;
-	}
-	
-	private String ack;
+    }
+
+    private String ack;
     private int status;
     private String msgId;
 

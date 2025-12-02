@@ -1,7 +1,5 @@
 package io.arkx.framework.commons.compiler;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,6 +9,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -25,9 +25,11 @@ public class DynamicCompilationUtils {
     /**
      * Builds a comprehensive classpath string for the Java compiler.
      *
-     * @param actualClassesPath Path to the directory where compiled .class files will be placed
-     *                          (and where pre-existing dependencies might be copied).
-     * @param sourcePath        Path to the .java source files.
+     * @param actualClassesPath
+     *            Path to the directory where compiled .class files will be placed
+     *            (and where pre-existing dependencies might be copied).
+     * @param sourcePath
+     *            Path to the .java source files.
      * @return A string suitable for use with the -classpath javac option.
      */
     public static String buildComprehensiveClasspath(String actualClassesPath, String sourcePath) {
@@ -38,7 +40,8 @@ public class DynamicCompilationUtils {
         if (actualClassesPath != null && !actualClassesPath.isEmpty()) {
             File normalizedClassesPath = new File(actualClassesPath);
             cp.append(normalizedClassesPath.getAbsolutePath());
-            log.debug("Compiler CP: Added (1) classes output/dependency path: {}", normalizedClassesPath.getAbsolutePath());
+            log.debug("Compiler CP: Added (1) classes output/dependency path: {}",
+                    normalizedClassesPath.getAbsolutePath());
         }
 
         // 2. 添加外部lib目录中的JARs
@@ -50,7 +53,8 @@ public class DynamicCompilationUtils {
                 baseDir = appHome;
                 log.debug("Using APP_HOME as base directory for external lib: {}", baseDir);
             } else {
-                log.warn("APP_HOME ({}) is defined but does not exist or is not a directory. Falling back to user.dir.", appHome);
+                log.warn("APP_HOME ({}) is defined but does not exist or is not a directory. Falling back to user.dir.",
+                        appHome);
             }
         }
 
@@ -70,7 +74,8 @@ public class DynamicCompilationUtils {
                 log.debug("Compiler CP: No JAR files found in external ./lib directory: {}", libDir.getAbsolutePath());
             }
         } else {
-            log.debug("Compiler CP: External ./lib directory not found or not a directory at: {}", libDir.getAbsolutePath());
+            log.debug("Compiler CP: External ./lib directory not found or not a directory at: {}",
+                    libDir.getAbsolutePath());
         }
 
         // 3. 源文件路径
@@ -103,7 +108,8 @@ public class DynamicCompilationUtils {
     /**
      * Closes a URLClassLoader and attempts to release its resources.
      *
-     * @param classLoader The URLClassLoader to close.
+     * @param classLoader
+     *            The URLClassLoader to close.
      */
     public static void closeClassLoader(URLClassLoader classLoader) {
         if (classLoader == null) {
@@ -121,11 +127,13 @@ public class DynamicCompilationUtils {
     }
 
     /**
-     * Extracts all *.class files from a given JAR file into a specified output directory,
-     * maintaining their package structure.
+     * Extracts all *.class files from a given JAR file into a specified output
+     * directory, maintaining their package structure.
      *
-     * @param jarFile   The JAR file to extract classes from.
-     * @param outputDir The directory where .class files will be extracted.
+     * @param jarFile
+     *            The JAR file to extract classes from.
+     * @param outputDir
+     *            The directory where .class files will be extracted.
      */
     public static void extractAllClassesFromJar(File jarFile, String outputDir) {
         log.debug("Extracting all classes from JAR: {} into directory: {}", jarFile.getAbsolutePath(), outputDir);
@@ -135,7 +143,8 @@ public class DynamicCompilationUtils {
                 JarEntry entry = entries.nextElement();
                 if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
                     // JAR内部路径使用'/'分隔符，需要转换为本地文件系统路径
-                    // 例如: "com/arkxos/framework/SomeClass.class" -> "com\arkxos\framework\SomeClass.class" (Windows)
+                    // 例如: "com/arkxos/framework/SomeClass.class" ->
+                    // "com\arkxos\framework\SomeClass.class" (Windows)
                     String entryPath = entry.getName().replace('/', File.separatorChar);
                     File outFile = new File(outputDir, entryPath);
 
@@ -143,11 +152,12 @@ public class DynamicCompilationUtils {
                     if (!outFile.getParentFile().exists()) {
                         boolean created = outFile.getParentFile().mkdirs();
                         if (!created) {
-                            log.warn("Failed to create parent directories for: {}", outFile.getParentFile().getAbsolutePath());
+                            log.warn("Failed to create parent directories for: {}",
+                                    outFile.getParentFile().getAbsolutePath());
                         }
                     }
                     try (InputStream in = jar.getInputStream(entry);
-                         FileOutputStream out = new FileOutputStream(outFile)) {
+                            FileOutputStream out = new FileOutputStream(outFile)) {
                         byte[] buffer = new byte[8192];
                         int bytesRead;
                         while ((bytesRead = in.read(buffer)) != -1) {
@@ -155,7 +165,8 @@ public class DynamicCompilationUtils {
                         }
                         log.debug("Extracted class: {} to {}", entry.getName(), outFile.getAbsolutePath());
                     } catch (IOException e) {
-                        log.error("Error extracting class file {} from JAR {}: {}", entry.getName(), jarFile.getName(), e.getMessage(), e);
+                        log.error("Error extracting class file {} from JAR {}: {}", entry.getName(), jarFile.getName(),
+                                e.getMessage(), e);
                     }
                 }
             }
@@ -166,18 +177,24 @@ public class DynamicCompilationUtils {
     }
 
     /**
-     * Ensures that necessary framework classes are available for compilation by extracting them
-     * from specified JAR files located in an external 'lib' directory into the compilation classesPath.
+     * Ensures that necessary framework classes are available for compilation by
+     * extracting them from specified JAR files located in an external 'lib'
+     * directory into the compilation classesPath.
      *
-     * @param classesPath           The directory where .class files will be extracted (compiler's -d output).
-     * @param criticalJarFilenames  A list of JAR filenames (e.g., "my-framework.jar") to scan for classes.
-     *                              These JARs are expected to be in the './lib' directory relative to the application's runtime location.
+     * @param classesPath
+     *            The directory where .class files will be extracted (compiler's -d
+     *            output).
+     * @param criticalJarFilenames
+     *            A list of JAR filenames (e.g., "my-framework.jar") to scan for
+     *            classes. These JARs are expected to be in the './lib' directory
+     *            relative to the application's runtime location.
      */
     public static void ensureFrameworkClassesAvailable(String classesPath, List<String> criticalJarFilenames) {
         // 规范化输出目录路径，确保跨平台兼容性
         File normalizedClassesPath = new File(classesPath);
         String normalizedClassesPathStr = normalizedClassesPath.getAbsolutePath();
-        log.debug("Ensuring framework classes are available in: {} by extracting from specified JARs.", normalizedClassesPathStr);
+        log.debug("Ensuring framework classes are available in: {} by extracting from specified JARs.",
+                normalizedClassesPathStr);
 
         String baseDir = System.getProperty("user.dir");
         String appHome = System.getenv("APP_HOME");
@@ -187,7 +204,9 @@ public class DynamicCompilationUtils {
                 baseDir = appHome;
                 log.debug("Using APP_HOME as base directory for external lib: {}", baseDir);
             } else {
-                log.warn("APP_HOME ({}) is defined but does not exist or is not a directory. Falling back to user.dir for lib scanning.", appHome);
+                log.warn(
+                        "APP_HOME ({}) is defined but does not exist or is not a directory. Falling back to user.dir for lib scanning.",
+                        appHome);
             }
         }
 
@@ -195,7 +214,8 @@ public class DynamicCompilationUtils {
         File externalLibDir = new File(baseDir, "lib");
 
         if (!externalLibDir.exists() || !externalLibDir.isDirectory()) {
-            log.warn("External lib directory not found at: {}. Cannot extract framework classes from JARs.", externalLibDir.getAbsolutePath());
+            log.warn("External lib directory not found at: {}. Cannot extract framework classes from JARs.",
+                    externalLibDir.getAbsolutePath());
             return;
         }
 

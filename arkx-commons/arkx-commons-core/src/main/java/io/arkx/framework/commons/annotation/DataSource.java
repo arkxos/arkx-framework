@@ -1,8 +1,8 @@
 package io.arkx.framework.commons.annotation;
 
-import io.arkx.framework.commons.enums.DataSourceType;
-
 import java.lang.annotation.*;
+
+import io.arkx.framework.commons.enums.DataSourceType;
 
 /**
  * 自定义多数据源切换注解
@@ -11,12 +11,11 @@ import java.lang.annotation.*;
  *
  * @author Darkness
  */
-@Target({ ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface DataSource
-{
+public @interface DataSource {
     /**
      * 切换数据源名称
      */

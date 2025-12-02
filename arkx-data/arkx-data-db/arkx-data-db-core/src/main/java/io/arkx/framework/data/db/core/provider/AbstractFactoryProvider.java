@@ -9,35 +9,34 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.provider;
 
+import java.util.Objects;
+
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.common.util.ExamineUtils;
 import io.arkx.framework.data.db.core.annotation.Product;
 
-import javax.sql.DataSource;
-import java.util.Objects;
-
 public abstract class AbstractFactoryProvider implements ProductFactoryProvider {
 
-  private DataSource dataSource;
+    private DataSource dataSource;
 
-  protected AbstractFactoryProvider(DataSource dataSource) {
-    ExamineUtils.checkNotNull(dataSource, "datasource");
-    this.dataSource = dataSource;
-  }
+    protected AbstractFactoryProvider(DataSource dataSource) {
+        ExamineUtils.checkNotNull(dataSource, "datasource");
+        this.dataSource = dataSource;
+    }
 
-  @Override
-  public DataSource getDataSource() {
-    return this.dataSource;
-  }
+    @Override
+    public DataSource getDataSource() {
+        return this.dataSource;
+    }
 
-  @Override
-  public final ProductTypeEnum getProductType() {
-    Product annotation = getClass().getAnnotation(Product.class);
-    ExamineUtils.checkState(
-        Objects.nonNull(annotation),
-        "Should use Product annotation for class : %s",
-        getClass().getName());
-    return annotation.value();
-  }
+    @Override
+    public final ProductTypeEnum getProductType() {
+        Product annotation = getClass().getAnnotation(Product.class);
+        ExamineUtils.checkState(Objects.nonNull(annotation), "Should use Product annotation for class : %s",
+                getClass().getName());
+        return annotation.value();
+    }
 
 }

@@ -4,11 +4,10 @@ import io.arkx.framework.commons.util.StringUtils;
 
 /**
  * 分页数据
- * 
+ *
  * @author Darkness
  */
-public class PageDomain
-{
+public class PageDomain {
     /** 当前记录起始索引 */
     private Integer pageNum;
 
@@ -21,52 +20,42 @@ public class PageDomain
     /** 排序的方向 "desc" 或者 "asc". */
     private String isAsc;
 
-    public String getOrderBy()
-    {
-        if (StringUtils.isEmpty(orderByColumn))
-        {
+    public String getOrderBy() {
+        if (StringUtils.isEmpty(orderByColumn)) {
             return "";
         }
         return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
     }
 
-    public Integer getPageNum()
-    {
+    public Integer getPageNum() {
         return pageNum;
     }
 
-    public void setPageNum(Integer pageNum)
-    {
+    public void setPageNum(Integer pageNum) {
         this.pageNum = pageNum;
     }
 
-    public Integer getPageSize()
-    {
+    public Integer getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(Integer pageSize)
-    {
+    public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 
-    public String getOrderByColumn()
-    {
+    public String getOrderByColumn() {
         return orderByColumn;
     }
 
-    public void setOrderByColumn(String orderByColumn)
-    {
+    public void setOrderByColumn(String orderByColumn) {
         this.orderByColumn = orderByColumn;
     }
 
-    public String getIsAsc()
-    {
+    public String getIsAsc() {
         return isAsc;
     }
 
-    public void setIsAsc(String isAsc)
-    {
+    public void setIsAsc(String isAsc) {
         this.isAsc = isAsc;
     }
 }

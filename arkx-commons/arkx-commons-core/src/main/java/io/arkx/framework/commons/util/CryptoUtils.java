@@ -1,18 +1,21 @@
 package io.arkx.framework.commons.util;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import io.arkx.framework.commons.utils2.StringUtil;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+import io.arkx.framework.commons.utils2.StringUtil;
+
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author liuyadu
@@ -22,9 +25,12 @@ public class CryptoUtils {
     /**
      * 公钥加密
      *
-     * @param paramMap     参数集合不含clientSecret
-     * @param clientSecret 验证接口的clientSecret
-     * @param type         加密类型
+     * @param paramMap
+     *            参数集合不含clientSecret
+     * @param clientSecret
+     *            验证接口的clientSecret
+     * @param type
+     *            加密类型
      * @return
      */
     public static String encrypt(Map<String, Object> paramMap, String clientSecret, CryptoType type) {
@@ -38,9 +44,12 @@ public class CryptoUtils {
     /**
      * 公钥加密
      *
-     * @param paramString  参数集合不含clientSecret
-     * @param clientSecret 验证接口的clientSecret
-     * @param type         加密类型
+     * @param paramString
+     *            参数集合不含clientSecret
+     * @param clientSecret
+     *            验证接口的clientSecret
+     * @param type
+     *            加密类型
      * @return
      */
     public static String encrypt(String paramString, String clientSecret, CryptoType type) {
@@ -50,23 +59,24 @@ public class CryptoUtils {
                 type = CryptoType.RSA;
             }
 
-            //加密
+            // 加密
             switch (type) {
-                case DES:
+                case DES :
                     encryptStr = EncryptUtils.encryptDES(paramString, clientSecret);
                     break;
-                case AES:
+                case AES :
                     encryptStr = EncryptUtils.encryptAES(paramString, clientSecret);
                     break;
-                case RSA:
+                case RSA :
                     try {
                         encryptStr = RSAUtils.encryptByPublicKey(paramString, clientSecret);
-                    } catch (InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                    } catch (InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException
+                            | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
                         log.error(e.getMessage());
                         return null;
                     }
                     break;
-                default:
+                default :
                     break;
             }
         }
@@ -77,9 +87,12 @@ public class CryptoUtils {
     /**
      * 公钥解密
      *
-     * @param paramString  必须包含
-     * @param clientSecret 验证接口的clientSecret
-     * @param type         加密类型
+     * @param paramString
+     *            必须包含
+     * @param clientSecret
+     *            验证接口的clientSecret
+     * @param type
+     *            加密类型
      * @return
      */
     public static Map<String, String> decryptToMap(String paramString, String clientSecret, CryptoType type) {
@@ -95,9 +108,12 @@ public class CryptoUtils {
     /**
      * 公钥解密
      *
-     * @param paramString  必须包含
-     * @param clientSecret 验证接口的clientSecret
-     * @param type         加密类型
+     * @param paramString
+     *            必须包含
+     * @param clientSecret
+     *            验证接口的clientSecret
+     * @param type
+     *            加密类型
      * @return
      */
     public static String decrypt(String paramString, String clientSecret, CryptoType type) {
@@ -107,15 +123,15 @@ public class CryptoUtils {
                 type = CryptoType.RSA;
             }
 
-            //加密
+            // 加密
             switch (type) {
-                case DES:
+                case DES :
                     decryptStr = EncryptUtils.decryptDES(paramString, clientSecret);
                     break;
-                case AES:
+                case AES :
                     decryptStr = EncryptUtils.decryptAES(paramString, clientSecret);
                     break;
-                case RSA:
+                case RSA :
                     try {
                         decryptStr = RSAUtils.decryptByPublicKey(paramString, clientSecret);
                     } catch (Exception e) {
@@ -123,7 +139,7 @@ public class CryptoUtils {
                         return null;
                     }
                     break;
-                default:
+                default :
                     break;
             }
         }
@@ -131,10 +147,7 @@ public class CryptoUtils {
     }
 
     public enum CryptoType {
-        DES,
-        TripleDES,
-        AES,
-        RSA;
+        DES, TripleDES, AES, RSA;
 
         public static boolean contains(String type) {
             for (CryptoType typeEnum : CryptoType.values()) {

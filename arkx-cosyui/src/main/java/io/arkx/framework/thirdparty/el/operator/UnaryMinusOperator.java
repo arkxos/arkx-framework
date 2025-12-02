@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -55,104 +55,101 @@
 
 package io.arkx.framework.thirdparty.el.operator;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.thirdparty.el.Coercions;
 import io.arkx.framework.thirdparty.el.Constants;
 import io.arkx.framework.thirdparty.el.Logger;
 import io.arkx.framework.thirdparty.el.PrimitiveObjects;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 /**
  * <p>
  * The implementation of the unary minus operator
- * 
+ *
  * @author Nathan Abramson - Art Technology Group
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class UnaryMinusOperator extends UnaryOperator {
-	// -------------------------------------
-	// Singleton
-	// -------------------------------------
+    // -------------------------------------
+    // Singleton
+    // -------------------------------------
 
-	public static final UnaryMinusOperator SINGLETON = new UnaryMinusOperator();
+    public static final UnaryMinusOperator SINGLETON = new UnaryMinusOperator();
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public UnaryMinusOperator() {
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public UnaryMinusOperator() {
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	@Override
-	public String getOperatorSymbol() {
-		return "-";
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the symbol representing the operator
+     **/
+    @Override
+    public String getOperatorSymbol() {
+        return "-";
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given value
-	 **/
-	@Override
-	public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
-		if (pValue == null) {
-			/*
-			 * if (pLogger.isLoggingWarning ()) {
-			 * pLogger.logWarning
-			 * (Constants.ARITH_OP_NULL,
-			 * getOperatorSymbol ());
-			 * }
-			 */
-			return PrimitiveObjects.getInteger(0);
-		}
+    // -------------------------------------
+    /**
+     * Applies the operator to the given value
+     **/
+    @Override
+    public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
+        if (pValue == null) {
+            /*
+             * if (pLogger.isLoggingWarning ()) { pLogger.logWarning
+             * (Constants.ARITH_OP_NULL, getOperatorSymbol ()); }
+             */
+            return PrimitiveObjects.getInteger(0);
+        }
 
-		else if (pValue instanceof BigInteger) {
-			return ((BigInteger) pValue).negate();
-		}
+        else if (pValue instanceof BigInteger) {
+            return ((BigInteger) pValue).negate();
+        }
 
-		else if (pValue instanceof BigDecimal) {
-			return ((BigDecimal) pValue).negate();
-		}
+        else if (pValue instanceof BigDecimal) {
+            return ((BigDecimal) pValue).negate();
+        }
 
-		else if (pValue instanceof String) {
-			if (Coercions.isFloatingPointString(pValue)) {
-				double dval = Coercions.coerceToPrimitiveNumber(pValue, Double.class, pLogger).doubleValue();
-				return PrimitiveObjects.getDouble(-dval);
-			} else {
-				long lval = Coercions.coerceToPrimitiveNumber(pValue, Long.class, pLogger).longValue();
-				return PrimitiveObjects.getLong(-lval);
-			}
-		}
+        else if (pValue instanceof String) {
+            if (Coercions.isFloatingPointString(pValue)) {
+                double dval = Coercions.coerceToPrimitiveNumber(pValue, Double.class, pLogger).doubleValue();
+                return PrimitiveObjects.getDouble(-dval);
+            } else {
+                long lval = Coercions.coerceToPrimitiveNumber(pValue, Long.class, pLogger).longValue();
+                return PrimitiveObjects.getLong(-lval);
+            }
+        }
 
-		else if (pValue instanceof Byte) {
-			return PrimitiveObjects.getByte((byte) -((Byte) pValue).byteValue());
-		} else if (pValue instanceof Short) {
-			return PrimitiveObjects.getShort((short) -((Short) pValue).shortValue());
-		} else if (pValue instanceof Integer) {
-			return PrimitiveObjects.getInteger(-((Integer) pValue).intValue());
-		} else if (pValue instanceof Long) {
-			return PrimitiveObjects.getLong(-((Long) pValue).longValue());
-		} else if (pValue instanceof Float) {
-			return PrimitiveObjects.getFloat(-((Float) pValue).floatValue());
-		} else if (pValue instanceof Double) {
-			return PrimitiveObjects.getDouble(-((Double) pValue).doubleValue());
-		}
+        else if (pValue instanceof Byte) {
+            return PrimitiveObjects.getByte((byte) -((Byte) pValue).byteValue());
+        } else if (pValue instanceof Short) {
+            return PrimitiveObjects.getShort((short) -((Short) pValue).shortValue());
+        } else if (pValue instanceof Integer) {
+            return PrimitiveObjects.getInteger(-((Integer) pValue).intValue());
+        } else if (pValue instanceof Long) {
+            return PrimitiveObjects.getLong(-((Long) pValue).longValue());
+        } else if (pValue instanceof Float) {
+            return PrimitiveObjects.getFloat(-((Float) pValue).floatValue());
+        } else if (pValue instanceof Double) {
+            return PrimitiveObjects.getDouble(-((Double) pValue).doubleValue());
+        }
 
-		else {
-			if (pLogger.isLoggingError()) {
-				pLogger.logError(Constants.UNARY_OP_BAD_TYPE, getOperatorSymbol(), pValue.getClass().getName());
-			}
-			return PrimitiveObjects.getInteger(0);
-		}
-	}
+        else {
+            if (pLogger.isLoggingError()) {
+                pLogger.logError(Constants.UNARY_OP_BAD_TYPE, getOperatorSymbol(), pValue.getClass().getName());
+            }
+            return PrimitiveObjects.getInteger(0);
+        }
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 }

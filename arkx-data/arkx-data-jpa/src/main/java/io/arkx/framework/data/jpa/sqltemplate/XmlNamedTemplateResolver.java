@@ -1,5 +1,8 @@
 package io.arkx.framework.data.jpa.sqltemplate;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.xml.DefaultDocumentLoader;
@@ -16,16 +19,13 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * .
  *
  * @author stormning on 2016/12/17.
  */
 public class XmlNamedTemplateResolver implements NamedTemplateResolver {
-	
+
     protected final Log logger = LogFactory.getLog(getClass());
 
     private String encoding = "UTF-8";
@@ -47,7 +47,7 @@ public class XmlNamedTemplateResolver implements NamedTemplateResolver {
     @Override
     public Iterator<Void> doInTemplateResource(Resource resource, final NamedTemplateCallback callback)
             throws Exception {
-    	logger.debug("load jpa sql template: " + resource.getURL());
+        logger.debug("load jpa sql template: " + resource.getURL());
         InputSource inputSource = new InputSource(resource.getInputStream());
         inputSource.setEncoding(encoding);
         Document doc = documentLoader.loadDocument(inputSource, entityResolver, errorHandler,
@@ -72,7 +72,7 @@ public class XmlNamedTemplateResolver implements NamedTemplateResolver {
 
             @Override
             public void remove() {
-                //ignore
+                // ignore
             }
         };
     }

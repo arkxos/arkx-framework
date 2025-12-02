@@ -1,13 +1,12 @@
 package io.arkx.framework.data.db.core.util;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import io.arkx.framework.data.db.common.entity.NewDictInfoEntity;
 import io.arkx.framework.data.db.common.entity.RawDictInfoEntity;
 import io.arkx.framework.data.db.common.util.DataDumpCenter;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class DictMappingUtils {
 
@@ -17,34 +16,20 @@ public class DictMappingUtils {
     public static void init() {
 
         // 加载旧系统字典
-        Raw_MAP = DataDumpCenter.rawDictInfoDao_getAll().get().stream()
-            .collect(
+        Raw_MAP = DataDumpCenter.rawDictInfoDao_getAll().get().stream().collect(
                 // 根据parentId进行分组
-                Collectors.groupingBy(
-                    RawDictInfoEntity::getParentId,
-                    // 使用使用oldValue作为key, 将分组的子字典列表转成map
-                    Collectors.toMap(
-                        RawDictInfoEntity::getOldValue,
-                        entity -> entity
-                    )
-                )
-            );
+                Collectors.groupingBy(RawDictInfoEntity::getParentId,
+                        // 使用使用oldValue作为key, 将分组的子字典列表转成map
+                        Collectors.toMap(RawDictInfoEntity::getOldValue, entity -> entity)));
 
         // 新旧字典映射关系
-        DICT_MAPPING = DataDumpCenter.dictMappingInfoDao().get()
-            .stream()
-            .map(mapping -> {
-                // 通过映射关系查询yth字典
-                NewDictInfoEntity newDict = DataDumpCenter.newDictInfoDao_getDictById().apply(mapping.getNewDictId());
-                HashMap<Integer, NewDictInfoEntity> mapper = new HashMap<>();
-                mapper.put(mapping.getRawDictId(), newDict);
-                return mapper;
-            })
-            .flatMap(map -> map.entrySet().stream())
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue
-            ));
+        DICT_MAPPING = DataDumpCenter.dictMappingInfoDao().get().stream().map(mapping -> {
+            // 通过映射关系查询yth字典
+            NewDictInfoEntity newDict = DataDumpCenter.newDictInfoDao_getDictById().apply(mapping.getNewDictId());
+            HashMap<Integer, NewDictInfoEntity> mapper = new HashMap<>();
+            mapper.put(mapping.getRawDictId(), newDict);
+            return mapper;
+        }).flatMap(map -> map.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static NewDictInfoEntity getNewDict(Integer rawParentDictId, Object oldValue) {

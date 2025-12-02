@@ -1,15 +1,16 @@
 package io.arkx.framework.avatarmq.core;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import io.arkx.framework.avatarmq.netty.NettyClustersConfig;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import io.arkx.framework.avatarmq.netty.NettyClustersConfig;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 /**
  * @filename:SemaphoreCache.java
@@ -22,9 +23,8 @@ public class SemaphoreCache {
 
     private final static int hookTime = MessageSystemConfig.SemaphoreCacheHookTimeValue;
 
-    private static final LoadingCache<String, Semaphore> cache = CacheBuilder.newBuilder().
-            concurrencyLevel(NettyClustersConfig.getWorkerThreads()).
-            build(new CacheLoader<String, Semaphore>() {
+    private static final LoadingCache<String, Semaphore> cache = CacheBuilder.newBuilder()
+            .concurrencyLevel(NettyClustersConfig.getWorkerThreads()).build(new CacheLoader<String, Semaphore>() {
                 public Semaphore load(String input) throws Exception {
                     return new Semaphore(0);
                 }

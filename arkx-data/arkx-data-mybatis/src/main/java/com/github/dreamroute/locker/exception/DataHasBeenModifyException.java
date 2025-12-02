@@ -5,9 +5,10 @@ package com.github.dreamroute.locker.exception;
  *
  * @author w.dehi.2022-01-09
  */
-public class DataHasBeenModifyException extends RuntimeException{
+public class DataHasBeenModifyException extends RuntimeException {
 
-    public DataHasBeenModifyException() {}
+    public DataHasBeenModifyException() {
+    }
 
     public DataHasBeenModifyException(String message) {
         super(message);

@@ -1,27 +1,31 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.interceptor;
 
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import com.ninja_squad.dbsetup.operation.Insert;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.DictMapper;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper.FindByIdLTDto;
-import jakarta.annotation.Resource;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.sql.DataSource;
-import java.util.List;
-
 import static com.google.common.collect.Lists.newArrayList;
 import static com.ninja_squad.dbsetup.Operations.insertInto;
 import static com.ninja_squad.dbsetup.Operations.truncate;
 import static io.arkx.framework.data.mybatis.pro.core.util.MyBatisProUtil.FIELDS_ALIAS_CACHE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.DictMapper;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper.FindByIdLTDto;
+
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.operation.Insert;
+
+import jakarta.annotation.Resource;
 
 /**
  * @author : w.dehai.2021.04.01
@@ -42,19 +46,14 @@ class LimitColumnInterceptorTest {
         new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
         Insert insert = insertInto("smart_user")
                 .columns("name", "password", "phone_no", "version", "addr_info", "status")
-                .values("w.dehai", "123456", "1306006", 1L, "成都", 1)
-                .values("Jaedong", "123", "1306006", 1L, "北京", 1)
-                .values("w.dehai", "123", "1306006", 2L, "美国", 1)
-                .build();
+                .values("w.dehai", "123456", "1306006", 1L, "成都", 1).values("Jaedong", "123", "1306006", 1L, "北京", 1)
+                .values("w.dehai", "123", "1306006", 2L, "美国", 1).build();
         new DbSetup(new DataSourceDestination(dataSource), insert).launch();
 
         // init smat_dict
         new DbSetup(new DataSourceDestination(dataSource), truncate("smart_dict")).launch();
-        Insert insert2 = insertInto("smart_dict")
-                .columns("value", "cn_name", "status")
-                .values(1, "有效", 1)
-                .values(0, "无效", 1)
-                .build();
+        Insert insert2 = insertInto("smart_dict").columns("value", "cn_name", "status").values(1, "有效", 1)
+                .values(0, "无效", 1).build();
         new DbSetup(new DataSourceDestination(dataSource), insert2).launch();
     }
 
@@ -70,7 +69,7 @@ class LimitColumnInterceptorTest {
 
     @Test
     void findByIdLTETest() {
-        List<User> users =  userMapper.findByIdLTE(2L, "id", "name", "password", "version", "phoneNo", "addr");
+        List<User> users = userMapper.findByIdLTE(2L, "id", "name", "password", "version", "phoneNo", "addr");
         assertEquals(2, users.size());
     }
 

@@ -9,8 +9,7 @@ package org.ark.framework.orm.sync.metadata;
  */
 
 /**
- * 同步状态枚举
- * 表示同步任务的状态
+ * 同步状态枚举 表示同步任务的状态
  */
 public enum SyncStatus {
     /**

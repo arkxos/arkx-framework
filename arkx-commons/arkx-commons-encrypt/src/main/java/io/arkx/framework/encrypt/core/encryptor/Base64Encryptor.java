@@ -28,8 +28,10 @@ public class Base64Encryptor extends AbstractEncryptor {
     /**
      * 加密
      *
-     * @param value      待加密字符串
-     * @param encodeType 加密后的编码格式
+     * @param value
+     *            待加密字符串
+     * @param encodeType
+     *            加密后的编码格式
      */
     @Override
     public String encrypt(String value, EncodeType encodeType) {
@@ -39,7 +41,8 @@ public class Base64Encryptor extends AbstractEncryptor {
     /**
      * 解密
      *
-     * @param value      待加密字符串
+     * @param value
+     *            待加密字符串
      */
     @Override
     public String decrypt(String value) {

@@ -1,5 +1,14 @@
 package io.arkx.framework.enums.scanner;
 
+import java.util.List;
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
+
 import io.arkx.framework.enums.scanner.annotation.EnumScan;
 import io.arkx.framework.enums.scanner.cached.EnumCache;
 import io.arkx.framework.enums.scanner.context.EnumScanProperties;
@@ -8,14 +17,6 @@ import io.arkx.framework.enums.scanner.context.ResourcesScanner;
 import io.arkx.framework.enums.scanner.context.TypeFilterProvider;
 import io.arkx.framework.enums.scanner.handler.EnumScanHandler;
 import io.arkx.framework.enums.scanner.handler.EnumScanHandlerImpl;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
-
-import java.util.List;
 
 /**
  * @author: zhuCan
@@ -27,8 +28,7 @@ import java.util.List;
 public class EnumsScannerAutoConfiguration {
 
     @Bean
-    public EnumScanHandler enumTable(EnumCache cache,
-                                     ResourcesScanner<Class<?>> scanner) {
+    public EnumScanHandler enumTable(EnumCache cache, ResourcesScanner<Class<?>> scanner) {
         return new EnumScanHandlerImpl(cache, scanner);
     }
 
@@ -46,24 +46,22 @@ public class EnumsScannerAutoConfiguration {
     /**
      * 资料扫描器
      *
-     * @param properties          配置
-     * @param typeFilterProviders 扩展扫描器过滤条件提供者
+     * @param properties
+     *            配置
+     * @param typeFilterProviders
+     *            扩展扫描器过滤条件提供者
      * @return scanner
      */
     @Bean
     @ConditionalOnMissingBean(ResourcesScanner.class)
     public ResourcesScanner<Class<?>> resourcesScanner(EnumScanProperties properties,
-                                                       List<TypeFilterProvider> typeFilterProviders,
-                                                       ApplicationContext context) {
-
+            List<TypeFilterProvider> typeFilterProviders, ApplicationContext context) {
 
         return new ExtensionClassPathScanningCandidateComponentProvider(false, x -> {
 
             if (typeFilterProviders != null) {
                 // 增加扫描过滤器
-                typeFilterProviders.stream()
-                        .map(TypeFilterProvider::filter)
-                        .forEach(x::addIncludeFilter);
+                typeFilterProviders.stream().map(TypeFilterProvider::filter).forEach(x::addIncludeFilter);
             }
 
         }, properties, context);
@@ -80,6 +78,5 @@ public class EnumsScannerAutoConfiguration {
         // 设置默认的 filter
         return () -> new AnnotationTypeFilter(EnumScan.class);
     }
-
 
 }

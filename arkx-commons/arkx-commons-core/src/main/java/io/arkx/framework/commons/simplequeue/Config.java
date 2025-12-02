@@ -32,7 +32,8 @@ public class Config {
      * Set the interval between the processing of two pages.<br>
      * Time unit is micro seconds.<br>
      *
-     * @param sleepTime sleepTime
+     * @param sleepTime
+     *            sleepTime
      * @return this
      */
     public Config setSleepTime(int sleepTime) {
@@ -62,7 +63,8 @@ public class Config {
     /**
      * Set retry times when download fail, 0 by default.<br>
      *
-     * @param retryTimes retryTimes
+     * @param retryTimes
+     *            retryTimes
      * @return this
      */
     public Config setRetryTimes(int retryTimes) {
@@ -71,7 +73,8 @@ public class Config {
     }
 
     /**
-     * When cycleRetryTimes is more than 0, it will add back to scheduler and try download again. <br>
+     * When cycleRetryTimes is more than 0, it will add back to scheduler and try
+     * download again. <br>
      *
      * @return retry times when download fail
      */
@@ -82,7 +85,8 @@ public class Config {
     /**
      * Set cycleRetryTimes times when download fail, 0 by default. <br>
      *
-     * @param cycleRetryTimes cycleRetryTimes
+     * @param cycleRetryTimes
+     *            cycleRetryTimes
      * @return this
      */
     public Config setCycleRetryTimes(int cycleRetryTimes) {
@@ -97,7 +101,8 @@ public class Config {
     /**
      * Set retry sleep times when download fail, 1000 by default. <br>
      *
-     * @param retrySleepTime retrySleepTime
+     * @param retrySleepTime
+     *            retrySleepTime
      * @return this
      */
     public Config setRetrySleepTime(int retrySleepTime) {
@@ -109,7 +114,7 @@ public class Config {
         return new Task() {
             @Override
             public String getUUID() {
-                String uuid = null;//Config.this.getDomain();
+                String uuid = null;// Config.this.getDomain();
                 if (uuid == null) {
                     uuid = UUID.randomUUID().toString();
                 }
@@ -125,14 +130,19 @@ public class Config {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Config site = (Config) o;
 
-        if (cycleRetryTimes != site.cycleRetryTimes) return false;
-        if (retryTimes != site.retryTimes) return false;
-        if (sleepTime != site.sleepTime) return false;
+        if (cycleRetryTimes != site.cycleRetryTimes)
+            return false;
+        if (retryTimes != site.retryTimes)
+            return false;
+        if (sleepTime != site.sleepTime)
+            return false;
 
         return true;
     }
@@ -148,11 +158,8 @@ public class Config {
 
     @Override
     public String toString() {
-        return "Site{" +
-                ", sleepTime=" + sleepTime +
-                ", retryTimes=" + retryTimes +
-                ", cycleRetryTimes=" + cycleRetryTimes +
-                '}';
+        return "Site{" + ", sleepTime=" + sleepTime + ", retryTimes=" + retryTimes + ", cycleRetryTimes="
+                + cycleRetryTimes + '}';
     }
 
 }

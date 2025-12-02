@@ -15,11 +15,11 @@
  */
 package io.arkx.framework.commons.uid.utils;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
-
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * DateUtils provides date formatting, parsing
@@ -62,7 +62,8 @@ public abstract class DateUtils extends org.apache.commons.lang3.time.DateUtils 
      * @param str
      * @param pattern
      * @return
-     * @throws RuntimeException when ParseException occurred
+     * @throws RuntimeException
+     *             when ParseException occurred
      */
     public static Date parseDate(String str, String pattern) {
         try {

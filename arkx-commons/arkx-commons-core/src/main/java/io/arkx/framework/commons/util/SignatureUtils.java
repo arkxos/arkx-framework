@@ -1,16 +1,19 @@
 package io.arkx.framework.commons.util;
 
-import com.alibaba.fastjson.JSONObject;
-import io.arkx.framework.commons.constants.CommonConstants;
-import io.arkx.framework.commons.utils2.StringUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
-
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.springframework.util.Assert;
+
+import io.arkx.framework.commons.constants.CommonConstants;
+import io.arkx.framework.commons.utils2.StringUtil;
+
+import com.alibaba.fastjson.JSONObject;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author liuyadu
@@ -24,7 +27,7 @@ public class SignatureUtils {
 
     public static void main(String[] args) {
         String clientSecret = "0osTIhce7uPvDKHz6aa67bhCukaKoYl4";
-        //参数签名算法测试例子
+        // 参数签名算法测试例子
         HashMap<String, String> signMap = new HashMap<>(0);
         signMap.put("AppId", "1552274783265");
         signMap.put("SignType", SignType.SHA256.name());
@@ -43,29 +46,37 @@ public class SignatureUtils {
      * @param paramsMap
      */
     public static void validateParams(Map<String, String> paramsMap) {
-        Assert.notNull(paramsMap.get(CommonConstants.APP_ID_KEY), String.format("签名验证失败:%s不能为空", CommonConstants.APP_ID_KEY));
-        Assert.notNull(paramsMap.get(CommonConstants.NONCE_KEY), String.format("签名验证失败:%s不能为空", CommonConstants.NONCE_KEY));
-        Assert.notNull(paramsMap.get(CommonConstants.TIMESTAMP_KEY), String.format("签名验证失败:%s不能为空", CommonConstants.TIMESTAMP_KEY));
-        Assert.notNull(paramsMap.get(CommonConstants.SIGN_TYPE_KEY), String.format("签名验证失败:%s不能为空", CommonConstants.SIGN_TYPE_KEY));
-        Assert.notNull(paramsMap.get(CommonConstants.SIGN_KEY), String.format("签名验证失败:%s不能为空", CommonConstants.SIGN_KEY));
+        Assert.notNull(paramsMap.get(CommonConstants.APP_ID_KEY),
+                String.format("签名验证失败:%s不能为空", CommonConstants.APP_ID_KEY));
+        Assert.notNull(paramsMap.get(CommonConstants.NONCE_KEY),
+                String.format("签名验证失败:%s不能为空", CommonConstants.NONCE_KEY));
+        Assert.notNull(paramsMap.get(CommonConstants.TIMESTAMP_KEY),
+                String.format("签名验证失败:%s不能为空", CommonConstants.TIMESTAMP_KEY));
+        Assert.notNull(paramsMap.get(CommonConstants.SIGN_TYPE_KEY),
+                String.format("签名验证失败:%s不能为空", CommonConstants.SIGN_TYPE_KEY));
+        Assert.notNull(paramsMap.get(CommonConstants.SIGN_KEY),
+                String.format("签名验证失败:%s不能为空", CommonConstants.SIGN_KEY));
         if (!SignType.contains(paramsMap.get(CommonConstants.SIGN_TYPE_KEY))) {
-            throw new IllegalArgumentException(String.format("签名验证失败:%s必须为:%s,%s", CommonConstants.SIGN_TYPE_KEY, SignType.MD5, SignType.SHA256));
+            throw new IllegalArgumentException(
+                    String.format("签名验证失败:%s必须为:%s,%s", CommonConstants.SIGN_TYPE_KEY, SignType.MD5, SignType.SHA256));
         }
         try {
             DateUtils.parseDate(paramsMap.get(CommonConstants.TIMESTAMP_KEY), "yyyyMMddHHmmss");
         } catch (ParseException e) {
-            throw new IllegalArgumentException(String.format("签名验证失败:%s格式必须为:%s", CommonConstants.TIMESTAMP_KEY, "yyyyMMddHHmmss"));
+            throw new IllegalArgumentException(
+                    String.format("签名验证失败:%s格式必须为:%s", CommonConstants.TIMESTAMP_KEY, "yyyyMMddHHmmss"));
         }
         String timestamp = paramsMap.get(CommonConstants.TIMESTAMP_KEY);
         Long clientTimestamp = Long.parseLong(timestamp);
-        //判断时间戳 timestamp=201808091113
+        // 判断时间戳 timestamp=201808091113
         if ((DateUtils.getCurrentTimestamp() - clientTimestamp) > MAX_EXPIRE) {
             throw new IllegalArgumentException(String.format("签名验证失败:%s已过期", CommonConstants.TIMESTAMP_KEY));
         }
     }
 
     /**
-     * @param paramsMap    必须包含
+     * @param paramsMap
+     *            必须包含
      * @param clientSecret
      * @return
      */
@@ -73,9 +84,9 @@ public class SignatureUtils {
         try {
             validateParams(paramsMap);
             String sign = paramsMap.get(CommonConstants.SIGN_KEY);
-            //重新生成签名
+            // 重新生成签名
             String signNew = getSign(paramsMap, clientSecret);
-            //判断当前签名是否正确
+            // 判断当前签名是否正确
             if (signNew.equals(sign)) {
                 return true;
             }
@@ -86,23 +97,21 @@ public class SignatureUtils {
         return false;
     }
 
-
     /**
      * 得到签名
      *
-     * @param paramMap     参数集合不含clientSecret
-     *                     必须包含clientId=客户端ID
-     *                     signType = SHA256|MD5 签名方式
-     *                     timestamp=时间戳
-     *                     nonce=随机字符串
-     * @param clientSecret 验证接口的clientSecret
+     * @param paramMap
+     *            参数集合不含clientSecret 必须包含clientId=客户端ID signType = SHA256|MD5 签名方式
+     *            timestamp=时间戳 nonce=随机字符串
+     * @param clientSecret
+     *            验证接口的clientSecret
      * @return
      */
     public static String getSign(Map<String, String> paramMap, String clientSecret) {
         if (paramMap == null) {
             return "";
         }
-        //排序
+        // 排序
         Set<String> keySet = paramMap.keySet();
         String[] keyArray = keySet.toArray(new String[keySet.size()]);
         Arrays.sort(keyArray);
@@ -124,27 +133,25 @@ public class SignatureUtils {
                 sb.append(k).append("=").append(paramMap.get(k).trim()).append("&");
             }
         }
-        //暂时不需要个人认证
+        // 暂时不需要个人认证
         sb.append(CommonConstants.SECRET_KEY + "=").append(clientSecret);
         String signStr = "";
-        //加密
+        // 加密
         switch (type) {
-            case MD5:
+            case MD5 :
                 signStr = EncryptUtils.md5Hex(sb.toString()).toLowerCase();
                 break;
-            case SHA256:
+            case SHA256 :
                 signStr = EncryptUtils.sha256Hex(sb.toString()).toLowerCase();
                 break;
-            default:
+            default :
                 break;
         }
         return signStr;
     }
 
-
     public enum SignType {
-        MD5,
-        SHA256;
+        MD5, SHA256;
 
         public static boolean contains(String type) {
             for (SignType typeEnum : SignType.values()) {

@@ -15,6 +15,3 @@ public class BaseEntity extends IdEntity {
     private Long createTime;
     private String createUser;
 }
-
-
-

@@ -8,7 +8,7 @@ import io.arkx.framework.commons.collection.DataRow;
  * @date 2012-9-25 下午7:23:17
  * @version V1.0
  */
-public interface IEntityFactory<T > {
-	
-	T BuildEntity(DataRow dataRow);
+public interface IEntityFactory<T> {
+
+    T BuildEntity(DataRow dataRow);
 }

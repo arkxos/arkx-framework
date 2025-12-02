@@ -1,10 +1,10 @@
 package io.arkx.framework.util.task.execute;
 
+import java.util.concurrent.Callable;
+
 import io.arkx.framework.util.task.ResultBaseTask;
 import io.arkx.framework.util.task.TaskContext;
 import io.arkx.framework.util.task.TaskStatus;
-
-import java.util.concurrent.Callable;
 
 public class ResultTaskExecutor<T> implements Callable<T> {
 

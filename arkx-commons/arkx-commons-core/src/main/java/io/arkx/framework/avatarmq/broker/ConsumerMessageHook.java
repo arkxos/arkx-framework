@@ -20,7 +20,8 @@ public class ConsumerMessageHook implements ConsumerMessageListener {
 
     public void hookConsumerMessage(SubscribeMessage request, RemoteChannelData channel) {
 
-        System.out.println("receive subcript info groupid:" + request.getClusterId() + " topic:" + request.getTopic() + " clientId:" + channel.getClientId());
+        System.out.println("receive subcript info groupid:" + request.getClusterId() + " topic:" + request.getTopic()
+                + " clientId:" + channel.getClientId());
 
         SubscriptionData subscript = new SubscriptionData();
 

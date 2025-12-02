@@ -1,6 +1,7 @@
 package io.arkx.framework.encrypt.enumd;
 
 import io.arkx.framework.encrypt.core.encryptor.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,13 +1,14 @@
 package io.arkx.framework.data.mybatis.pro.base.typehandler;
 
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarker;
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarker;
 
 /**
  * 枚举type handler处理器
@@ -18,7 +19,8 @@ public class EnumTypeHandler<E extends EnumMarker> extends BaseTypeHandler<EnumM
 
     private Class<E> type;
 
-    public EnumTypeHandler() {}
+    public EnumTypeHandler() {
+    }
 
     public EnumTypeHandler(Class<E> type) {
         if (type == null) {
@@ -28,7 +30,8 @@ public class EnumTypeHandler<E extends EnumMarker> extends BaseTypeHandler<EnumM
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, EnumMarker parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, EnumMarker parameter, JdbcType jdbcType)
+            throws SQLException {
         ps.setObject(i, parameter.getValue());
     }
 
@@ -41,7 +44,8 @@ public class EnumTypeHandler<E extends EnumMarker> extends BaseTypeHandler<EnumM
             try {
                 return EnumMarker.valueOf(type, value);
             } catch (Exception ex) {
-                throw new IllegalArgumentException("Cannot convert " + value + " to " + type.getSimpleName() + " by ordinal value.", ex);
+                throw new IllegalArgumentException(
+                        "Cannot convert " + value + " to " + type.getSimpleName() + " by ordinal value.", ex);
             }
         }
     }
@@ -55,7 +59,8 @@ public class EnumTypeHandler<E extends EnumMarker> extends BaseTypeHandler<EnumM
             try {
                 return EnumMarker.valueOf(type, value);
             } catch (Exception ex) {
-                throw new IllegalArgumentException("Cannot convert " + value + " to " + type.getSimpleName() + " by ordinal value.", ex);
+                throw new IllegalArgumentException(
+                        "Cannot convert " + value + " to " + type.getSimpleName() + " by ordinal value.", ex);
             }
         }
     }

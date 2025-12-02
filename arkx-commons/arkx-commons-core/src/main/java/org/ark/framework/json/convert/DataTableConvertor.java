@@ -1,79 +1,80 @@
 package org.ark.framework.json.convert;
 
-import io.arkx.framework.commons.collection.DataColumn;
-import io.arkx.framework.commons.collection.DataTable;
 import org.ark.framework.json.JSONArray;
 import org.ark.framework.json.JSONObject;
 
+import io.arkx.framework.commons.collection.DataColumn;
+import io.arkx.framework.commons.collection.DataTable;
+
 /**
- * 
- * 
+ *
+ *
  * @author Darkness
- * @date 2013-3-30 下午03:56:36 
+ * @date 2013-3-30 下午03:56:36
  * @version V1.0
  */
 public class DataTableConvertor implements IJSONConvertor {
-	
-	public String getTypeID() {
-		return "DataTable";
-	}
 
-	@Override
-	public String getExtendItemID() {
-		return getTypeID();
-	}
+    public String getTypeID() {
+        return "DataTable";
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return getExtendItemID();
-	}
+    @Override
+    public String getExtendItemID() {
+        return getTypeID();
+    }
 
-	public boolean match(Object obj) {
-		return obj instanceof DataTable;
-	}
+    @Override
+    public String getExtendItemName() {
+        return getExtendItemID();
+    }
 
-	public static String convert(Object obj) {
-		return new DataTableConvertor().toJSON(obj).toJSONString();
-	}
+    public boolean match(Object obj) {
+        return obj instanceof DataTable;
+    }
 
-	public JSONObject toJSON(Object obj) {
-		JSONObject jo = new JSONObject();
-		DataTable dt = (DataTable) obj;
-		jo.put("Columns", dt.getDataColumns());
-		Object[][] vs = new Object[dt.getRowCount()][dt.getColumnCount()];
-		for (int i = 0; i < dt.getColumnCount(); i++) {
-			Object[] columns = dt.getColumnValues(i);
-			for (int j = 0; j < dt.getRowCount(); j++) {
-				vs[j][i] = columns[j];
-			}
-		}
-		jo.put("Values", vs);
-		jo.put("@type", "DataTable");
-		return jo;
-	}
+    public static String convert(Object obj) {
+        return new DataTableConvertor().toJSON(obj).toJSONString();
+    }
 
-	public static DataTable reverse(JSONObject map) {
-		return (DataTable) new DataTableConvertor().fromJSON(map);
-	}
+    public JSONObject toJSON(Object obj) {
+        JSONObject jo = new JSONObject();
+        DataTable dt = (DataTable) obj;
+        jo.put("Columns", dt.getDataColumns());
+        Object[][] vs = new Object[dt.getRowCount()][dt.getColumnCount()];
+        for (int i = 0; i < dt.getColumnCount(); i++) {
+            Object[] columns = dt.getColumnValues(i);
+            for (int j = 0; j < dt.getRowCount(); j++) {
+                vs[j][i] = columns[j];
+            }
+        }
+        jo.put("Values", vs);
+        jo.put("@type", "DataTable");
+        return jo;
+    }
 
-	public Object fromJSON(JSONObject map) {
-		JSONArray columns = (JSONArray) map.get("Columns");
-		JSONArray values = (JSONArray) map.get("Values");
-		DataColumn[] dcs = new DataColumn[columns.size()];
-		for (int i = 0; i < columns.size(); i++) {
-			dcs[i] = new DataColumn();
-			JSONObject col = (JSONObject) columns.get(i);
-			dcs[i].setColumnName((String) col.get("Name"));
-			dcs[i].setColumnType(((Integer) col.get("Type")).intValue());
-		}
+    public static DataTable reverse(JSONObject map) {
+        return (DataTable) new DataTableConvertor().fromJSON(map);
+    }
 
-		Object[][] vs = (Object[][]) null;
-		if (values.size() > 0) {
-			vs = new Object[values.size()][dcs.length];
-			for (int i = 0; i < values.size(); i++) {
-				vs[i] = ((JSONArray) values.get(i)).toArray();
-			}
-		}
-		return new DataTable(dcs, vs);
-	}
+    public Object fromJSON(JSONObject map) {
+        JSONArray columns = (JSONArray) map.get("Columns");
+        JSONArray values = (JSONArray) map.get("Values");
+        DataColumn[] dcs = new DataColumn[columns.size()];
+        for (int i = 0; i < columns.size(); i++) {
+            dcs[i] = new DataColumn();
+            JSONObject col = (JSONObject) columns.get(i);
+            dcs[i].setColumnName((String) col.get("Name"));
+            dcs[i].setColumnType(((Integer) col.get("Type")).intValue());
+        }
+
+        Object[][] vs = (Object[][]) null;
+        if (values.size() > 0) {
+            vs = new Object[values.size()][dcs.length];
+            for (int i = 0; i < values.size(); i++) {
+                vs[i] = ((JSONArray) values.get(i)).toArray();
+            }
+        }
+        return new DataTable(dcs, vs);
+    }
 }

@@ -11,13 +11,15 @@ package io.arkx.framework.commons.websocket.distribute;
  */
 public class LocalMessageDistributor implements MessageDistributor, MessageSender {
 
-	/**
-	 * 分发消息，对于本地分发器，直接调用发送逻辑。
-	 * @param messageDO 待发送的消息对象，包含消息内容和目标会话信息。
-	 */
-	@Override
-	public void distribute(MessageDO messageDO) {
-		doSend(messageDO);
-	}
+    /**
+     * 分发消息，对于本地分发器，直接调用发送逻辑。
+     *
+     * @param messageDO
+     *            待发送的消息对象，包含消息内容和目标会话信息。
+     */
+    @Override
+    public void distribute(MessageDO messageDO) {
+        doSend(messageDO);
+    }
 
 }

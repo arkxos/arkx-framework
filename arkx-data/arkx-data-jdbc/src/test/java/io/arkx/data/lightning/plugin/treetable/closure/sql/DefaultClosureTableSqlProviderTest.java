@@ -1,11 +1,12 @@
 package io.arkx.data.lightning.plugin.treetable.closure.sql;
 
-import io.arkx.framework.data.common.entity.IdType;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import io.arkx.framework.data.common.entity.IdType;
 
 @SpringBootTest
 public class DefaultClosureTableSqlProviderTest {

@@ -1,6 +1,10 @@
 package io.arkx.framework.data.jpa;
 
-import jakarta.persistence.Column;
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 import org.hibernate.boot.Metadata;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.integrator.spi.Integrator;
@@ -9,10 +13,7 @@ import org.hibernate.mapping.Property;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import jakarta.persistence.Column;
 
 /**
  * Integrator used to process comment annotation.
@@ -31,29 +32,37 @@ public class CommentIntegrator implements Integrator {
     /**
      * Perform comment integration.
      *
-     * @param metadata        The "compiled" representation of the mapping information
-     * @param sessionFactory  The session factory being created
-     * @param serviceRegistry The session factory's service registry
+     * @param metadata
+     *            The "compiled" representation of the mapping information
+     * @param sessionFactory
+     *            The session factory being created
+     * @param serviceRegistry
+     *            The session factory's service registry
      */
     @Override
-    public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
+    public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory,
+            SessionFactoryServiceRegistry serviceRegistry) {
         processComment(metadata);
     }
 
     /**
      * Not used.
      *
-     * @param sessionFactoryImplementor     The session factory being closed.
-     * @param sessionFactoryServiceRegistry That session factory's service registry
+     * @param sessionFactoryImplementor
+     *            The session factory being closed.
+     * @param sessionFactoryServiceRegistry
+     *            That session factory's service registry
      */
     @Override
-    public void disintegrate(SessionFactoryImplementor sessionFactoryImplementor, SessionFactoryServiceRegistry sessionFactoryServiceRegistry) {
+    public void disintegrate(SessionFactoryImplementor sessionFactoryImplementor,
+            SessionFactoryServiceRegistry sessionFactoryServiceRegistry) {
     }
 
     /**
      * Process comment annotation.
      *
-     * @param metadata process annotation of this {@code Metadata}.
+     * @param metadata
+     *            process annotation of this {@code Metadata}.
      */
     private void processComment(Metadata metadata) {
         for (PersistentClass persistentClass : metadata.getEntityBindings()) {
@@ -71,7 +80,7 @@ public class CommentIntegrator implements Integrator {
             } else {
                 org.hibernate.mapping.Component component = persistentClass.getIdentifierMapper();
                 if (component != null) {
-                    //noinspection unchecked
+                    // noinspection unchecked
                     Iterator<Property> iterator = component.getPropertyIterator();
                     while (iterator.hasNext()) {
                         fieldComment(persistentClass, iterator.next().getName());
@@ -79,19 +88,21 @@ public class CommentIntegrator implements Integrator {
                 }
             }
             // Process fields with Comment annotation.
-            //noinspection unchecked
-            List<Property> properties = persistentClass.getDeclaredProperties();//.getPropertyIterator();
-			for (Property property : properties) {
-				fieldComment(persistentClass, property.getName());
-			}
+            // noinspection unchecked
+            List<Property> properties = persistentClass.getDeclaredProperties();// .getPropertyIterator();
+            for (Property property : properties) {
+                fieldComment(persistentClass, property.getName());
+            }
         }
     }
 
     /**
      * Process @{code comment} annotation of field.
      *
-     * @param persistentClass Hibernate {@code PersistentClass}
-     * @param columnName            name of field
+     * @param persistentClass
+     *            Hibernate {@code PersistentClass}
+     * @param columnName
+     *            name of field
      */
     private void fieldComment(PersistentClass persistentClass, String columnName) {
         try {
@@ -104,14 +115,14 @@ public class CommentIntegrator implements Integrator {
                     }
                 }
                 String comment = field.getAnnotation(Comment.class).value();
-                //noinspection unchecked
+                // noinspection unchecked
                 Collection<org.hibernate.mapping.Column> columns = persistentClass.getTable().getColumns();
-				for (org.hibernate.mapping.Column column : columns) {
-					if (columnName.equalsIgnoreCase(column.getName().replace("_", ""))) {
-						column.setComment(comment);
-						break;
-					}
-				}
+                for (org.hibernate.mapping.Column column : columns) {
+                    if (columnName.equalsIgnoreCase(column.getName().replace("_", ""))) {
+                        column.setComment(comment);
+                        break;
+                    }
+                }
             }
         } catch (NoSuchFieldException | SecurityException ignored) {
         }

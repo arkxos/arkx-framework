@@ -7,7 +7,7 @@ public final class Assert {
     }
 
     public static void notNull(Object obj) {
-        if(obj == null) {
+        if (obj == null) {
             throw new IllegalArgumentException("parameter not null.");
         }
     }

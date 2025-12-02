@@ -1,10 +1,12 @@
 package io.arkx.framework.commons.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
-import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import lombok.Data;
 
 /**
  * @author darkness
@@ -15,26 +17,26 @@ import java.util.List;
 @Schema(description = "分页数据")
 public class PageResult<T> {
 
-	@Schema(description = "总记录数", example = "0")
-	private long total;
+    @Schema(description = "总记录数", example = "0")
+    private long total;
 
     private int current = Constants.CURRENT_PAGE;
 
-    //分页数量
+    // 分页数量
     private int size = Constants.PAGE_SIZE;
-	
+
     @Schema(description = "数据")
     private List<T> records;
 
-	private Object data;
+    private Object data;
 
-	public static <T> PageResult<T> of(Page<T> page) {
-		PageResult<T> pageResult = new PageResult<>();
-		pageResult.setTotal(page.getTotalElements());
-		pageResult.setCurrent(page.getNumber());
-		pageResult.setSize(page.getSize());
-		pageResult.setRecords(page.getContent());
-		return pageResult;
-	}
+    public static <T> PageResult<T> of(Page<T> page) {
+        PageResult<T> pageResult = new PageResult<>();
+        pageResult.setTotal(page.getTotalElements());
+        pageResult.setCurrent(page.getNumber());
+        pageResult.setSize(page.getSize());
+        pageResult.setRecords(page.getContent());
+        return pageResult;
+    }
 
 }

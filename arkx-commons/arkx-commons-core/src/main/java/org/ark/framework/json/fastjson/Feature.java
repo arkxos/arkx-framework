@@ -1,50 +1,49 @@
 package org.ark.framework.json.fastjson;
 
-public enum Feature
-{
-  AutoCloseSource, 
+public enum Feature {
+    AutoCloseSource,
 
-  AllowComment, 
+    AllowComment,
 
-  AllowUnQuotedFieldNames, 
+    AllowUnQuotedFieldNames,
 
-  AllowSingleQuotes, 
+    AllowSingleQuotes,
 
-  InternFieldNames, 
+    InternFieldNames,
 
-  AllowISO8601DateFormat, 
+    AllowISO8601DateFormat,
 
-  AllowArbitraryCommas, 
+    AllowArbitraryCommas,
 
-  UseBigDecimal, 
+    UseBigDecimal,
 
-  IgnoreNotMatch, 
+    IgnoreNotMatch,
 
-  SortFeidFastMatch, 
+    SortFeidFastMatch,
 
-  DisableASM;
+    DisableASM;
 
-  private final int mask;
+    private final int mask;
 
-  private Feature() { this.mask = (1 << ordinal()); }
-
-
-  public final int getMask()
-  {
-    return this.mask;
-  }
-
-  public static boolean isEnabled(int features, Feature feature) {
-    return (features & feature.getMask()) != 0;
-  }
-
-  public static int config(int features, Feature feature, boolean state) {
-    if (state)
-      features |= feature.getMask();
-    else {
-      features &= (feature.getMask() ^ 0xFFFFFFFF);
+    private Feature() {
+        this.mask = (1 << ordinal());
     }
 
-    return features;
-  }
+    public final int getMask() {
+        return this.mask;
+    }
+
+    public static boolean isEnabled(int features, Feature feature) {
+        return (features & feature.getMask()) != 0;
+    }
+
+    public static int config(int features, Feature feature, boolean state) {
+        if (state)
+            features |= feature.getMask();
+        else {
+            features &= (feature.getMask() ^ 0xFFFFFFFF);
+        }
+
+        return features;
+    }
 }

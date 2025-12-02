@@ -1,9 +1,10 @@
 package io.arkx.framework.commons.util;
 
-import io.arkx.framework.commons.ArkSecurityService;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import io.arkx.framework.commons.ArkSecurityService;
 
 /**
  *

@@ -1,13 +1,14 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.misc;
 
-import com.google.common.collect.Sets;
-import org.junit.jupiter.api.Test;
-import org.springframework.util.ObjectUtils;
+import static io.arkx.framework.data.mybatis.pro.base.util.ClassPathUtil.resolvePackage;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 
-import static io.arkx.framework.data.mybatis.pro.base.util.ClassPathUtil.resolvePackage;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.springframework.util.ObjectUtils;
+
+import com.google.common.collect.Sets;
 
 /**
  * 描述：通配符路径解析测试

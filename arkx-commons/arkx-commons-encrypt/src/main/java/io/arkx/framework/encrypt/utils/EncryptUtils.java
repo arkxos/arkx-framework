@@ -1,5 +1,9 @@
 package io.arkx.framework.encrypt.utils;
 
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
@@ -8,10 +12,6 @@ import cn.hutool.crypto.SmUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import cn.hutool.crypto.asymmetric.SM2;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 安全相关工具类
@@ -31,7 +31,8 @@ public class EncryptUtils {
     /**
      * Base64加密
      *
-     * @param data 待加密数据
+     * @param data
+     *            待加密数据
      * @return 加密后字符串
      */
     public static String encryptByBase64(String data) {
@@ -41,7 +42,8 @@ public class EncryptUtils {
     /**
      * Base64解密
      *
-     * @param data 待解密数据
+     * @param data
+     *            待解密数据
      * @return 解密后字符串
      */
     public static String decryptByBase64(String data) {
@@ -51,8 +53,10 @@ public class EncryptUtils {
     /**
      * AES加密
      *
-     * @param data     待解密数据
-     * @param password 秘钥字符串
+     * @param data
+     *            待解密数据
+     * @param password
+     *            秘钥字符串
      * @return 加密后字符串, 采用Base64编码
      */
     public static String encryptByAes(String data, String password) {
@@ -70,8 +74,10 @@ public class EncryptUtils {
     /**
      * AES加密
      *
-     * @param data     待解密数据
-     * @param password 秘钥字符串
+     * @param data
+     *            待解密数据
+     * @param password
+     *            秘钥字符串
      * @return 加密后字符串, 采用Hex编码
      */
     public static String encryptByAesHex(String data, String password) {
@@ -89,8 +95,10 @@ public class EncryptUtils {
     /**
      * AES解密
      *
-     * @param data     待解密数据
-     * @param password 秘钥字符串
+     * @param data
+     *            待解密数据
+     * @param password
+     *            秘钥字符串
      * @return 解密后字符串
      */
     public static String decryptByAes(String data, String password) {
@@ -108,8 +116,10 @@ public class EncryptUtils {
     /**
      * sm4加密
      *
-     * @param data     待加密数据
-     * @param password 秘钥字符串
+     * @param data
+     *            待加密数据
+     * @param password
+     *            秘钥字符串
      * @return 加密后字符串, 采用Base64编码
      */
     public static String encryptBySm4(String data, String password) {
@@ -127,8 +137,10 @@ public class EncryptUtils {
     /**
      * sm4加密
      *
-     * @param data     待加密数据
-     * @param password 秘钥字符串
+     * @param data
+     *            待加密数据
+     * @param password
+     *            秘钥字符串
      * @return 加密后字符串, 采用Base64编码
      */
     public static String encryptBySm4Hex(String data, String password) {
@@ -146,8 +158,10 @@ public class EncryptUtils {
     /**
      * sm4解密
      *
-     * @param data     待解密数据
-     * @param password 秘钥字符串
+     * @param data
+     *            待解密数据
+     * @param password
+     *            秘钥字符串
      * @return 解密后字符串
      */
     public static String decryptBySm4(String data, String password) {
@@ -178,8 +192,10 @@ public class EncryptUtils {
     /**
      * sm2公钥加密
      *
-     * @param data      待加密数据
-     * @param publicKey 公钥
+     * @param data
+     *            待加密数据
+     * @param publicKey
+     *            公钥
      * @return 加密后字符串, 采用Base64编码
      */
     public static String encryptBySm2(String data, String publicKey) {
@@ -193,8 +209,10 @@ public class EncryptUtils {
     /**
      * sm2公钥加密
      *
-     * @param data      待加密数据
-     * @param publicKey 公钥
+     * @param data
+     *            待加密数据
+     * @param publicKey
+     *            公钥
      * @return 加密后字符串, 采用Hex编码
      */
     public static String encryptBySm2Hex(String data, String publicKey) {
@@ -208,8 +226,10 @@ public class EncryptUtils {
     /**
      * sm2私钥解密
      *
-     * @param data       待加密数据
-     * @param privateKey 私钥
+     * @param data
+     *            待加密数据
+     * @param privateKey
+     *            私钥
      * @return 解密后字符串
      */
     public static String decryptBySm2(String data, String privateKey) {
@@ -236,8 +256,10 @@ public class EncryptUtils {
     /**
      * rsa公钥加密
      *
-     * @param data      待加密数据
-     * @param publicKey 公钥
+     * @param data
+     *            待加密数据
+     * @param publicKey
+     *            公钥
      * @return 加密后字符串, 采用Base64编码
      */
     public static String encryptByRsa(String data, String publicKey) {
@@ -251,8 +273,10 @@ public class EncryptUtils {
     /**
      * rsa公钥加密
      *
-     * @param data      待加密数据
-     * @param publicKey 公钥
+     * @param data
+     *            待加密数据
+     * @param publicKey
+     *            公钥
      * @return 加密后字符串, 采用Hex编码
      */
     public static String encryptByRsaHex(String data, String publicKey) {
@@ -266,8 +290,10 @@ public class EncryptUtils {
     /**
      * rsa私钥解密
      *
-     * @param data       待加密数据
-     * @param privateKey 私钥
+     * @param data
+     *            待加密数据
+     * @param privateKey
+     *            私钥
      * @return 解密后字符串
      */
     public static String decryptByRsa(String data, String privateKey) {
@@ -281,7 +307,8 @@ public class EncryptUtils {
     /**
      * md5加密
      *
-     * @param data 待加密数据
+     * @param data
+     *            待加密数据
      * @return 加密后字符串, 采用Hex编码
      */
     public static String encryptByMd5(String data) {
@@ -291,7 +318,8 @@ public class EncryptUtils {
     /**
      * sha256加密
      *
-     * @param data 待加密数据
+     * @param data
+     *            待加密数据
      * @return 加密后字符串, 采用Hex编码
      */
     public static String encryptBySha256(String data) {
@@ -301,7 +329,8 @@ public class EncryptUtils {
     /**
      * sm3加密
      *
-     * @param data 待加密数据
+     * @param data
+     *            待加密数据
      * @return 加密后字符串, 采用Hex编码
      */
     public static String encryptBySm3(String data) {

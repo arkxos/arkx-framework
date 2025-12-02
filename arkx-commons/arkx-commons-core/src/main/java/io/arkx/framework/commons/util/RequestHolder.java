@@ -15,20 +15,23 @@
  */
 package io.arkx.framework.commons.util;
 
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.Objects;
+
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.Objects;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 获取 HttpServletRequest
+ *
  * @author Zheng Jie
  * @date 2018-11-24
  */
 public class RequestHolder {
 
     public static HttpServletRequest getHttpServletRequest() {
-        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
+                .getRequest();
     }
 }

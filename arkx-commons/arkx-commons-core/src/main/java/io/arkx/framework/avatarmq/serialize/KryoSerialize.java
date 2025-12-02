@@ -54,5 +54,3 @@
 //    }
 //}
 package io.arkx.framework.avatarmq.serialize;
-
-

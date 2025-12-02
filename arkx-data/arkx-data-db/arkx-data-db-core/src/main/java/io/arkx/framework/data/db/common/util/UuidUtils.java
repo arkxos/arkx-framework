@@ -9,9 +9,9 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.util;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.UUID;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * UUID工具类
@@ -19,8 +19,8 @@ import java.util.UUID;
 @UtilityClass
 public final class UuidUtils {
 
-  public static String generateUuid() {
-    return UUID.randomUUID().toString().replace("-", "");
-  }
+    public static String generateUuid() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 
 }

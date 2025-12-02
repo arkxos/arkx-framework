@@ -19,15 +19,15 @@
 package io.arkx.framework.preloader.zip;
 
 /**
- * Simple placeholder for all those extra fields we don't want to deal
- * with.
+ * Simple placeholder for all those extra fields we don't want to deal with.
  *
- * <p>Assumes local file data and central directory entries are
- * identical - unless told the opposite.</p>
+ * <p>
+ * Assumes local file data and central directory entries are identical - unless
+ * told the opposite.
+ * </p>
  *
  */
-public class UnrecognizedExtraField
-    implements CentralDirectoryParsingZipExtraField {
+public class UnrecognizedExtraField implements CentralDirectoryParsingZipExtraField {
 
     /**
      * The Header-ID.
@@ -38,7 +38,9 @@ public class UnrecognizedExtraField
 
     /**
      * Set the header id.
-     * @param headerId the header id to use
+     *
+     * @param headerId
+     *            the header id to use
      */
     public void setHeaderId(ZipShort headerId) {
         this.headerId = headerId;
@@ -46,6 +48,7 @@ public class UnrecognizedExtraField
 
     /**
      * Get the header id.
+     *
      * @return the header id
      */
     public ZipShort getHeaderId() {
@@ -53,17 +56,18 @@ public class UnrecognizedExtraField
     }
 
     /**
-     * Extra field data in local file data - without
-     * Header-ID or length specifier.
+     * Extra field data in local file data - without Header-ID or length specifier.
      *
      * @since 1.1
      */
     private byte[] localData;
 
     /**
-     * Set the extra field data in the local file data -
-     * without Header-ID or length specifier.
-     * @param data the field data to use
+     * Set the extra field data in the local file data - without Header-ID or length
+     * specifier.
+     *
+     * @param data
+     *            the field data to use
      */
     public void setLocalFileDataData(byte[] data) {
         localData = ZipUtil.copy(data);
@@ -71,6 +75,7 @@ public class UnrecognizedExtraField
 
     /**
      * Get the length of the local data.
+     *
      * @return the length of the local data
      */
     public ZipShort getLocalFileDataLength() {
@@ -79,6 +84,7 @@ public class UnrecognizedExtraField
 
     /**
      * Get the local data.
+     *
      * @return the local data
      */
     public byte[] getLocalFileDataData() {
@@ -86,8 +92,8 @@ public class UnrecognizedExtraField
     }
 
     /**
-     * Extra field data in central directory - without
-     * Header-ID or length specifier.
+     * Extra field data in central directory - without Header-ID or length
+     * specifier.
      *
      * @since 1.1
      */
@@ -95,15 +101,18 @@ public class UnrecognizedExtraField
 
     /**
      * Set the extra field data in central directory.
-     * @param data the data to use
+     *
+     * @param data
+     *            the data to use
      */
     public void setCentralDirectoryData(byte[] data) {
         centralData = ZipUtil.copy(data);
     }
 
     /**
-     * Get the central data length.
-     * If there is no central data, get the local file data length.
+     * Get the central data length. If there is no central data, get the local file
+     * data length.
+     *
      * @return the central data length
      */
     public ZipShort getCentralDirectoryLength() {
@@ -115,6 +124,7 @@ public class UnrecognizedExtraField
 
     /**
      * Get the central data.
+     *
      * @return the central data if present, else return the local file data
      */
     public byte[] getCentralDirectoryData() {
@@ -125,9 +135,12 @@ public class UnrecognizedExtraField
     }
 
     /**
-     * @param data the array of bytes.
-     * @param offset the source location in the data array.
-     * @param length the number of bytes to use in the data array.
+     * @param data
+     *            the array of bytes.
+     * @param offset
+     *            the source location in the data array.
+     * @param length
+     *            the number of bytes to use in the data array.
      * @see ZipExtraField#parseFromLocalFileData(byte[], int, int)
      */
     public void parseFromLocalFileData(byte[] data, int offset, int length) {
@@ -137,12 +150,14 @@ public class UnrecognizedExtraField
     }
 
     /**
-     * @param data the array of bytes.
-     * @param offset the source location in the data array.
-     * @param length the number of bytes to use in the data array.
+     * @param data
+     *            the array of bytes.
+     * @param offset
+     *            the source location in the data array.
+     * @param length
+     *            the number of bytes to use in the data array.
      */
-    public void parseFromCentralDirectoryData(byte[] data, int offset,
-                                              int length) {
+    public void parseFromCentralDirectoryData(byte[] data, int offset, int length) {
         byte[] tmp = new byte[length];
         System.arraycopy(data, offset, tmp, 0, length);
         setCentralDirectoryData(tmp);

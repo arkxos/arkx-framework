@@ -17,6 +17,7 @@ public class BeanUtils {
 
     /***
      * 转换方法引用为属性名
+     *
      * @param fn
      * @return
      */
@@ -25,14 +26,13 @@ public class BeanUtils {
         // 获取方法名
         String methodName = lambda.getImplMethodName();
         String prefix = null;
-        if(methodName.startsWith("get")){
+        if (methodName.startsWith("get")) {
             prefix = "get";
-        }
-        else if(methodName.startsWith("is")){
+        } else if (methodName.startsWith("is")) {
             prefix = "is";
         }
-        if(prefix == null){
-            System.out.println("无效的getter方法: "+ methodName);
+        if (prefix == null) {
+            System.out.println("无效的getter方法: " + methodName);
         }
         // 截取get/is之后的字符串并转换首字母为小写
         return toLowerCaseFirstOne(methodName.replace(prefix, ""));
@@ -40,11 +40,12 @@ public class BeanUtils {
 
     /**
      * 首字母转小写
+     *
      * @param s
      * @return
      */
-    static String toLowerCaseFirstOne(String s){
-        if(Character.isLowerCase(s.charAt(0)))
+    static String toLowerCaseFirstOne(String s) {
+        if (Character.isLowerCase(s.charAt(0)))
             return s;
         else
             return Character.toLowerCase(s.charAt(0)) + s.substring(1);
@@ -56,7 +57,7 @@ public class BeanUtils {
     static SerializedLambda getSerializedLambda(Serializable fn) {
         SerializedLambda lambda = CLASS_LAMDBA_CACHE.get(fn.getClass());
         // 先检查缓存中是否已存在
-        if(lambda == null) {
+        if (lambda == null) {
             try {
                 // 提取SerializedLambda并缓存
                 Method method = fn.getClass().getDeclaredMethod("writeReplace");

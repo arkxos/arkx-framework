@@ -1,7 +1,8 @@
 package com.github.dreamroute.sqlprinter.starter.anno;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Data;
 
 /**
  * @author w.dehai
@@ -23,7 +24,7 @@ public class SqlprinterProperties {
     /**
      * 结果表格中不打印的字段, 默认全部打印
      */
-    private String[] showResultExclude = {}; 
+    private String[] showResultExclude = {};
 
     /**
      * 是否格式化SQL，默认格式化

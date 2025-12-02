@@ -1,241 +1,252 @@
 package org.ark.framework.jaf.tag;
 
-import jakarta.servlet.jsp.JspException;
-import jakarta.servlet.jsp.PageContext;
-import jakarta.servlet.jsp.tagext.BodyTagSupport;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.ark.framework.jaf.ParamManager;
 import org.ark.framework.jaf.PlaceHolder;
 import org.ark.framework.jaf.PlaceHolderContext;
 import org.ark.framework.jaf.controls.ChildTab;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.BodyTagSupport;
 
 /**
  * @class org.ark.framework.jaf.tag.ChildTabTag
- * <h2>标签项</h2>
- * 
+ *        <h2>标签项</h2>
+ *
  * @author Darkness
- * @date 2012-11-19 下午03:12:32 
+ * @date 2012-11-19 下午03:12:32
  * @version V1.0
  */
 public class ChildTabTag extends BodyTagSupport {
-	
-	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * id
-	 * @property id
-	 * @type {String}
-	 */
-	private String id;
-	
-	/**
-	 * 选项卡点击执行函数
-	 * @property onClick
-	 * @type {Function}
-	 */
-	private String onClick;
-	
-	/**
-	 * 选项卡点击后执行函数
-	 * @property afterClick
-	 * @type {Function}
-	 */
-	private String afterClick;
-	
-	/**
-	 * 选项卡页面
-	 * @property src
-	 * @type {String}
-	 */
-	private String src;
-	
-	/**
-	 * 是否默认选中
-	 * @property selected
-	 * @type {boolean}
-	 */
-	private boolean selected;
-	
-	/**
-	 * 是否禁用
-	 * @property disabled
-	 * @type {boolean}
-	 */
-	private boolean disabled;
-	
-	/**
-	 * 是否显示
-	 * @property visible
-	 * @type {boolean}
-	 */
-	private boolean visible;
-	
-	/**
-	 * 是否懒加载
-	 * @property lazy
-	 * @type {boolean}
-	 */
-	private boolean lazy;
-	
-	/**
-	 * 显示类型，默认为iframe
-	 * @property type(div/iframe)
-	 * @type {String}
-	 */
-	private String type = "iframe";
-	
-	/**
-	 * 小图标，如：“../../Icons/icon018a1.png”
-	 * @property img
-	 * @type {String}
-	 */
-	private String img;
-	
-	/**
-	 * 标题
-	 * @property title
-	 * @type {String}
-	 */
-	private String title;
 
-	public void setPageContext(PageContext pc) {
-		super.setPageContext(pc);
-		this.id = null;
-		this.onClick = null;
-		this.afterClick = null;
-		this.src = null;
-		this.selected = false;
-		this.disabled = false;
-		this.visible = true;
-		this.lazy = false;
-	}
+    private static final long serialVersionUID = 1L;
 
-	public int doAfterBody() throws JspException {
-		
-		String content = getBodyContent().getString();
-		
-		try {
-			ChildTab childTab = new ChildTab(content);
-			
-			childTab.setId(id);
-			childTab.setTitle(title);
-			childTab.setImg(img);
-			childTab.setDisplayType(getType());
-			childTab.setOnClick(onClick);
-			childTab.setAfterClick(afterClick);
-			
-			Map<String, String> paramValues = new HashMap<String, String>();
-			List<String> params = ParamManager.extractParam(this.src);
-			for (String param : params) {
-				PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
-				String srcValue = context.eval(new PlaceHolder(param)) + "";
-				paramValues.put(param, srcValue);
-			}
-			this.src = ParamManager.replaceParam(this.src, paramValues);
-			
-			childTab.setSrc(this.src);
-			childTab.setSelected(selected);
-			childTab.setDisabled(disabled);
-			childTab.setVisible(visible);
-			childTab.setLazy(lazy);
-			
-			String html = childTab.getHtml();
-			getPreviousOut().print(html);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 6;
-	}
+    /**
+     * id
+     *
+     * @property id
+     * @type {String}
+     */
+    private String id;
 
-	public String getId() {
-		return this.id;
-	}
+    /**
+     * 选项卡点击执行函数
+     *
+     * @property onClick
+     * @type {Function}
+     */
+    private String onClick;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * 选项卡点击后执行函数
+     *
+     * @property afterClick
+     * @type {Function}
+     */
+    private String afterClick;
 
-	public String getOnClick() {
-		return this.onClick;
-	}
+    /**
+     * 选项卡页面
+     *
+     * @property src
+     * @type {String}
+     */
+    private String src;
 
-	public void setOnClick(String onClick) {
-		this.onClick = onClick;
-	}
+    /**
+     * 是否默认选中
+     *
+     * @property selected
+     * @type {boolean}
+     */
+    private boolean selected;
 
-	public String getAfterClick() {
-		return this.afterClick;
-	}
+    /**
+     * 是否禁用
+     *
+     * @property disabled
+     * @type {boolean}
+     */
+    private boolean disabled;
 
-	public void setAfterClick(String afterClick) {
-		this.afterClick = afterClick;
-	}
+    /**
+     * 是否显示
+     *
+     * @property visible
+     * @type {boolean}
+     */
+    private boolean visible;
 
-	public boolean isDisabled() {
-		return this.disabled;
-	}
+    /**
+     * 是否懒加载
+     *
+     * @property lazy
+     * @type {boolean}
+     */
+    private boolean lazy;
 
-	public void setDisabled(boolean disabled) {
-		this.disabled = disabled;
-	}
+    /**
+     * 显示类型，默认为iframe
+     *
+     * @property type(div/iframe)
+     * @type {String}
+     */
+    private String type = "iframe";
 
-	public boolean isSelected() {
-		return this.selected;
-	}
+    /**
+     * 小图标，如：“../../Icons/icon018a1.png”
+     *
+     * @property img
+     * @type {String}
+     */
+    private String img;
 
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
+    /**
+     * 标题
+     *
+     * @property title
+     * @type {String}
+     */
+    private String title;
 
-	public String getSrc() {
-		return this.src;
-	}
+    public void setPageContext(PageContext pc) {
+        super.setPageContext(pc);
+        this.id = null;
+        this.onClick = null;
+        this.afterClick = null;
+        this.src = null;
+        this.selected = false;
+        this.disabled = false;
+        this.visible = true;
+        this.lazy = false;
+    }
 
-	public void setSrc(String src) {
-		this.src = src;
-	}
+    public int doAfterBody() throws JspException {
 
-	public boolean isVisible() {
-		return this.visible;
-	}
+        String content = getBodyContent().getString();
 
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
+        try {
+            ChildTab childTab = new ChildTab(content);
 
-	public boolean isLazy() {
-		return this.lazy;
-	}
+            childTab.setId(id);
+            childTab.setTitle(title);
+            childTab.setImg(img);
+            childTab.setDisplayType(getType());
+            childTab.setOnClick(onClick);
+            childTab.setAfterClick(afterClick);
 
-	public void setLazy(boolean lazy) {
-		this.lazy = lazy;
-	}
+            Map<String, String> paramValues = new HashMap<String, String>();
+            List<String> params = ParamManager.extractParam(this.src);
+            for (String param : params) {
+                PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
+                String srcValue = context.eval(new PlaceHolder(param)) + "";
+                paramValues.put(param, srcValue);
+            }
+            this.src = ParamManager.replaceParam(this.src, paramValues);
 
-	public String getType() {
-		return type;
-	}
+            childTab.setSrc(this.src);
+            childTab.setSelected(selected);
+            childTab.setDisabled(disabled);
+            childTab.setVisible(visible);
+            childTab.setLazy(lazy);
 
-	public void setType(String type) {
-		this.type = type;
-	}
+            String html = childTab.getHtml();
+            getPreviousOut().print(html);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 6;
+    }
 
-	public String getImg() {
-		return img;
-	}
+    public String getId() {
+        return this.id;
+    }
 
-	public void setImg(String img) {
-		this.img = img;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getOnClick() {
+        return this.onClick;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setOnClick(String onClick) {
+        this.onClick = onClick;
+    }
+
+    public String getAfterClick() {
+        return this.afterClick;
+    }
+
+    public void setAfterClick(String afterClick) {
+        this.afterClick = afterClick;
+    }
+
+    public boolean isDisabled() {
+        return this.disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public boolean isSelected() {
+        return this.selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public String getSrc() {
+        return this.src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
+    public boolean isVisible() {
+        return this.visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isLazy() {
+        return this.lazy;
+    }
+
+    public void setLazy(boolean lazy) {
+        this.lazy = lazy;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

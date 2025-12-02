@@ -1,23 +1,23 @@
 package io.arkx.framework.cosyui;
-//package io.arkx.framework.cosyui;
+// package io.arkx.framework.cosyui;
 //
-///**
+/// **
 // * 可分页的Action
-// * 
+// *
 // */
-//public interface IPageEnableAction {
+// public interface IPageEnableAction {
 //
-//	int getPageSize();
+// int getPageSize();
 //
-//	int getPageIndex();
+// int getPageIndex();
 //
-//	int getTotal();
+// int getTotal();
 //
-//	void setPageSize(int pageSize);
+// void setPageSize(int pageSize);
 //
-//	void setPageIndex(int pageIndex);
+// void setPageIndex(int pageIndex);
 //
-////	void setTotal(QueryBuilder qb);
+//// void setTotal(QueryBuilder qb);
 //
-//	void setTotal(int total);
-//}
+// void setTotal(int total);
+// }

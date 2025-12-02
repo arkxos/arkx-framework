@@ -19,12 +19,12 @@ package io.arkx.framework.preloader.zip;
 
 /**
  * Utility class for handling DOS and Java time conversions.
+ *
  * @since Ant 1.8.1
  */
 public abstract class ZipUtil {
     /**
-     * Create a copy of the given array - or return null if the
-     * argument is null.
+     * Create a copy of the given array - or return null if the argument is null.
      */
     static byte[] copy(byte[] from) {
         if (from != null) {

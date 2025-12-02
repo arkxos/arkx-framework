@@ -15,14 +15,8 @@
  */
 package io.arkx.framework.boot.starter.aspect;
 
-import com.google.common.collect.ImmutableList;
-import io.arkx.framework.commons.annotation.Limit;
-import io.arkx.framework.commons.aspect.LimitType;
-import io.arkx.framework.commons.exception.BadRequestException;
-import io.arkx.framework.commons.util.RequestHolder;
-import io.arkx.framework.commons.util.StringUtils;
-import io.arkx.framework.commons.utils2.StringUtil;
-import jakarta.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,7 +29,16 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
+import io.arkx.framework.commons.annotation.Limit;
+import io.arkx.framework.commons.aspect.LimitType;
+import io.arkx.framework.commons.exception.BadRequestException;
+import io.arkx.framework.commons.util.RequestHolder;
+import io.arkx.framework.commons.util.StringUtils;
+import io.arkx.framework.commons.utils2.StringUtil;
+
+import com.google.common.collect.ImmutableList;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author darkness
@@ -46,10 +49,10 @@ import java.lang.reflect.Method;
 @Component
 public class LimitAspect {
 
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     private static final Logger logger = LoggerFactory.getLogger(LimitAspect.class);
 
-    public LimitAspect(RedisTemplate<String,Object> redisTemplate) {
+    public LimitAspect(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -73,11 +76,8 @@ public class LimitAspect {
             }
         }
 
-        ImmutableList<String> keys = ImmutableList.of(
-                StringUtils.join(
-                        limit.prefix(), "_",
-                        key, "_",
-                        request.getRequestURI().replaceAll("/","_")));
+        ImmutableList<String> keys = ImmutableList
+                .of(StringUtils.join(limit.prefix(), "_", key, "_", request.getRequestURI().replaceAll("/", "_")));
 
         String luaScript = buildLuaScript();
         RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);
@@ -94,15 +94,8 @@ public class LimitAspect {
      * 限流脚本
      */
     private String buildLuaScript() {
-        return "local c" +
-                "\nc = redis.call('get',KEYS[1])" +
-                "\nif c and tonumber(c) > tonumber(ARGV[1]) then" +
-                "\nreturn c;" +
-                "\nend" +
-                "\nc = redis.call('incr',KEYS[1])" +
-                "\nif tonumber(c) == 1 then" +
-                "\nredis.call('expire',KEYS[1],ARGV[2])" +
-                "\nend" +
-                "\nreturn c;";
+        return "local c" + "\nc = redis.call('get',KEYS[1])" + "\nif c and tonumber(c) > tonumber(ARGV[1]) then"
+                + "\nreturn c;" + "\nend" + "\nc = redis.call('incr',KEYS[1])" + "\nif tonumber(c) == 1 then"
+                + "\nredis.call('expire',KEYS[1],ARGV[2])" + "\nend" + "\nreturn c;";
     }
 }

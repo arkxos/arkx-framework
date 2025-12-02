@@ -1,16 +1,17 @@
 package io.arkx.framework.data.mybatis.pro.core.util;
 
-import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
+import static cn.hutool.core.util.ClassUtil.loadClass;
+import static io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel.MAPPER;
+import static io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel.NAMESPACE;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.parsing.XPathParser;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
-import static cn.hutool.core.util.ClassUtil.loadClass;
-import static io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel.MAPPER;
-import static io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel.NAMESPACE;
-import static java.nio.charset.StandardCharsets.UTF_8;
+import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
 
 /**
  * 描述：xml文件工具类
@@ -18,16 +19,19 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @author w.dehi.2022-04-01
  */
 public class XmlUtil {
-    private XmlUtil() {}
+    private XmlUtil() {
+    }
 
     /**
      * 从mapper.xml文件中获取namespace
      *
-     * @param resource mapper.xml数据流
+     * @param resource
+     *            mapper.xml数据流
      */
     public static Class<?> getNamespaceFromXmlResource(Resource resource) {
         try {
-            XPathParser xPathParser = new XPathParser(resource.getInputStream(), true, null, new XMLMapperEntityResolver());
+            XPathParser xPathParser = new XPathParser(resource.getInputStream(), true, null,
+                    new XMLMapperEntityResolver());
             XNode mapperNode = xPathParser.evalNode(MAPPER.getCode());
             String namespace = mapperNode.getStringAttribute(NAMESPACE.getCode());
             return loadClass(namespace);
@@ -39,17 +43,16 @@ public class XmlUtil {
     /**
      * create a new and empty xml file of mapper.
      *
-     * @param mapper namespace
+     * @param mapper
+     *            namespace
      * @return return an empty xml file
      */
     public static Resource createEmptyResource(Class<?> mapper) {
         String namespace = mapper.getName();
-        String xml =
-                "<?xml version='1.0' encoding='UTF-8' ?>\n" +
-                "<!DOCTYPE mapper\n" +
-                "        PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'\n" +
-                "        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>\n" +
-                "<mapper namespace='" + namespace + "'></mapper>";
+        String xml = "<?xml version='1.0' encoding='UTF-8' ?>\n" + "<!DOCTYPE mapper\n"
+                + "        PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'\n"
+                + "        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>\n" + "<mapper namespace='" + namespace
+                + "'></mapper>";
         return new ByteArrayResource(xml.getBytes(UTF_8));
     }
 }

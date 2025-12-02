@@ -1,10 +1,10 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.callback.Progress;
-import io.arkx.framework.util.task.util.Assert;
-
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import io.arkx.framework.util.task.callback.Progress;
+import io.arkx.framework.util.task.util.Assert;
 
 public interface ResultTask<T> extends Task {
 
@@ -18,10 +18,13 @@ public interface ResultTask<T> extends Task {
     /**
      * 在指定的时间内获取任务执行的结果，如果任务在指定的时间内没有完成，则会抛出异常。该方法会阻塞当前线程，直到任务执行完成，或任务超时
      *
-     * @param timeout 任务执行超时时间
-     * @param unit    时间单位
+     * @param timeout
+     *            任务执行超时时间
+     * @param unit
+     *            时间单位
      * @return 任务执行的结果
-     * @throws TimeoutException 如果任务在指定的时间内没有完成，则会抛出该异常
+     * @throws TimeoutException
+     *             如果任务在指定的时间内没有完成，则会抛出该异常
      */
     T get(long timeout, TimeUnit unit) throws TimeoutException;
 

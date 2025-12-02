@@ -21,18 +21,20 @@ package io.arkx.framework.preloader.zip;
 import java.util.zip.ZipException;
 
 /**
- * Wrapper for extra field data that doesn't conform to the recommended format of header-tag + size + data.
+ * Wrapper for extra field data that doesn't conform to the recommended format
+ * of header-tag + size + data.
  *
- * <p>The header-id is artificial (and not listed as a know ID in
- * the .ZIP File Format Specification).  
- * Since it isn't used anywhere except to satisfy the
- * ZipExtraField contract it shouldn't matter anyway.</p>
+ * <p>
+ * The header-id is artificial (and not listed as a know ID in the .ZIP File
+ * Format Specification). Since it isn't used anywhere except to satisfy the
+ * ZipExtraField contract it shouldn't matter anyway.
+ * </p>
+ *
  * @see <a href="http://www.pkware.com/documents/casestudies/APPNOTE.TXT
- * APPNOTE.TXT">.ZIP File Format Specification</a>
+ *      APPNOTE.TXT">.ZIP File Format Specification</a>
  * @since Ant 1.8.1
  */
-public final class UnparseableExtraFieldData
-    implements CentralDirectoryParsingZipExtraField {
+public final class UnparseableExtraFieldData implements CentralDirectoryParsingZipExtraField {
 
     private static final ZipShort HEADER_ID = new ZipShort(0xACC1);
 
@@ -63,9 +65,7 @@ public final class UnparseableExtraFieldData
      * @return The CentralDirectoryLength value
      */
     public ZipShort getCentralDirectoryLength() {
-        return centralDirectoryData == null
-            ? getLocalFileDataLength()
-            : new ZipShort(centralDirectoryData.length);
+        return centralDirectoryData == null ? getLocalFileDataLength() : new ZipShort(centralDirectoryData.length);
     }
 
     /**
@@ -83,16 +83,18 @@ public final class UnparseableExtraFieldData
      * @return The CentralDirectoryData value
      */
     public byte[] getCentralDirectoryData() {
-        return centralDirectoryData == null
-            ? getLocalFileDataData() : ZipUtil.copy(centralDirectoryData);
+        return centralDirectoryData == null ? getLocalFileDataData() : ZipUtil.copy(centralDirectoryData);
     }
 
     /**
      * Populate data from this array as if it was in local file data.
      *
-     * @param buffer the buffer to read data from
-     * @param offset offset into buffer to read data
-     * @param length the length of data
+     * @param buffer
+     *            the buffer to read data from
+     * @param offset
+     *            offset into buffer to read data
+     * @param length
+     *            the length of data
      */
     public void parseFromLocalFileData(byte[] buffer, int offset, int length) {
         localFileData = new byte[length];
@@ -102,13 +104,16 @@ public final class UnparseableExtraFieldData
     /**
      * Populate data from this array as if it was in central directory data.
      *
-     * @param buffer the buffer to read data from
-     * @param offset offset into buffer to read data
-     * @param length the length of data
-     * @exception ZipException on error
+     * @param buffer
+     *            the buffer to read data from
+     * @param offset
+     *            offset into buffer to read data
+     * @param length
+     *            the length of data
+     * @exception ZipException
+     *                on error
      */
-    public void parseFromCentralDirectoryData(byte[] buffer, int offset,
-                                              int length) {
+    public void parseFromCentralDirectoryData(byte[] buffer, int offset, int length) {
         centralDirectoryData = new byte[length];
         System.arraycopy(buffer, offset, centralDirectoryData, 0, length);
         if (localFileData == null) {

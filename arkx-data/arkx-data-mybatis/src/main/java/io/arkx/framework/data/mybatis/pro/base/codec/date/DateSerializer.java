@@ -1,12 +1,13 @@
 package io.arkx.framework.data.mybatis.pro.base.codec.date;
 
-import cn.hutool.core.date.DateUtil;
+import java.io.IOException;
+import java.util.Date;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.IOException;
-import java.util.Date;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * 描述：日期序列化，将{@link java.util.Date}类型转换成'yyyy-MM-dd HH:mm:ss'

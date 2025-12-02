@@ -16,52 +16,52 @@ import io.arkx.framework.cosyui.web.mvc.IURLHandler;
  */
 public class WebCurrentData extends CurrentData {
 
-	public IURLHandler handler;
-	public AbstractExecuteContext executeContext;
-	public UIFacade facade;
-	public IMethodLocator method;
-	public Account.UserData userData;
+    public IURLHandler handler;
+    public AbstractExecuteContext executeContext;
+    public UIFacade facade;
+    public IMethodLocator method;
+    public Account.UserData userData;
 
-	public RequestData request = new RequestData();
-	public ResponseData response = new ResponseData();
-	//		public Transaction transaction = new Transaction();
-	public Dispatcher dispatcher = new Dispatcher();
+    public RequestData request = new RequestData();
+    public ResponseData response = new ResponseData();
+    // public Transaction transaction = new Transaction();
+    public Dispatcher dispatcher = new Dispatcher();
 
-	public Errorx errorx = new Errorx();
+    public Errorx errorx = new Errorx();
 
-	/**
-	 * 清空数据
-	 */
-	@Override
-	public void clear() {
-		super.clear();
+    /**
+     * 清空数据
+     */
+    @Override
+    public void clear() {
+        super.clear();
 
-		handler = null;
-		facade = null;
-		method = null;
-		executeContext = null;
-		userData = null;
-//			transaction = null;
-		if (errorx != null) {
-			Errorx.clear();
-		}
+        handler = null;
+        facade = null;
+        method = null;
+        executeContext = null;
+        userData = null;
+        // transaction = null;
+        if (errorx != null) {
+            Errorx.clear();
+        }
 
-		if (dispatcher != null) {
-			dispatcher.clear();
-		}
-		if (request != null) {
-			if (request.getEntryTableLength() < 64) {
-				request.clear();
-			} else {
-				request = new RequestData();
-			}
-		}
-		if (response != null) {
-			if (response.getEntryTableLength() < 64) {
-				response.clear();
-			} else {
-				response = new ResponseData();
-			}
-		}
-	}
+        if (dispatcher != null) {
+            dispatcher.clear();
+        }
+        if (request != null) {
+            if (request.getEntryTableLength() < 64) {
+                request.clear();
+            } else {
+                request = new RequestData();
+            }
+        }
+        if (response != null) {
+            if (response.getEntryTableLength() < 64) {
+                response.clear();
+            } else {
+                response = new ResponseData();
+            }
+        }
+    }
 }

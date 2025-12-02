@@ -1,8 +1,8 @@
 package io.arkx.framework.boot.ip2region;
 
-import org.lionsoul.ip2region.xdb.Searcher;
-
 import java.util.concurrent.TimeUnit;
+
+import org.lionsoul.ip2region.xdb.Searcher;
 
 public class SearcherTest {
     public static void main(String[] args) {

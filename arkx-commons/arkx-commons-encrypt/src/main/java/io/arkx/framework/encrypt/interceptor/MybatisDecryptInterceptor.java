@@ -1,23 +1,25 @@
 package io.arkx.framework.encrypt.interceptor;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.ObjectUtil;
+import java.lang.reflect.Field;
+import java.sql.Statement;
+import java.util.*;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.executor.resultset.ResultSetHandler;
+import org.apache.ibatis.plugin.*;
+
 import io.arkx.framework.encrypt.annotation.EncryptField;
 import io.arkx.framework.encrypt.core.EncryptContext;
 import io.arkx.framework.encrypt.core.EncryptorManager;
 import io.arkx.framework.encrypt.enumd.AlgorithmType;
 import io.arkx.framework.encrypt.enumd.EncodeType;
 import io.arkx.framework.encrypt.properties.EncryptorProperties;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.executor.resultset.ResultSetHandler;
-import org.apache.ibatis.plugin.*;
-
-import java.lang.reflect.Field;
-import java.sql.Statement;
-import java.util.*;
 
 /**
  * 出参解密拦截器
@@ -26,11 +28,7 @@ import java.util.*;
  * @version 4.6.0
  */
 @Slf4j
-@Intercepts({@Signature(
-    type = ResultSetHandler.class,
-    method = "handleResultSets",
-    args = {Statement.class})
-})
+@Intercepts({@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class})})
 @AllArgsConstructor
 public class MybatisDecryptInterceptor implements Interceptor {
 
@@ -51,25 +49,27 @@ public class MybatisDecryptInterceptor implements Interceptor {
     /**
      * 解密对象
      *
-     * @param sourceObject 待加密对象
+     * @param sourceObject
+     *            待加密对象
      */
     private void decryptHandler(Object sourceObject) {
         if (ObjectUtil.isNull(sourceObject)) {
             return;
         }
-        if (sourceObject instanceof Map<?, ?> ) {
+        if (sourceObject instanceof Map<?, ?>) {
             Map<?, ?> map = (Map<?, ?>) sourceObject;
             new HashSet<>(map.values()).forEach(this::decryptHandler);
             return;
         }
-        if (sourceObject instanceof List<?> ) {
+        if (sourceObject instanceof List<?>) {
             List<?> list = (List<?>) sourceObject;
-            if(CollUtil.isEmpty(list)) {
+            if (CollUtil.isEmpty(list)) {
                 return;
             }
             // 判断第一个元素是否含有注解。如果没有直接返回，提高效率
             Object firstItem = list.get(0);
-            if (ObjectUtil.isNull(firstItem) || CollUtil.isEmpty(encryptorManager.getFieldCache(firstItem.getClass()))) {
+            if (ObjectUtil.isNull(firstItem)
+                    || CollUtil.isEmpty(encryptorManager.getFieldCache(firstItem.getClass()))) {
                 return;
             }
             list.forEach(this::decryptHandler);
@@ -77,7 +77,7 @@ public class MybatisDecryptInterceptor implements Interceptor {
         }
         // 不在缓存中的类,就是没有加密注解的类(当然也有可能是typeAliasesPackage写错)
         Set<Field> fields = encryptorManager.getFieldCache(sourceObject.getClass());
-        if(ObjectUtil.isNull(fields)){
+        if (ObjectUtil.isNull(fields)) {
             return;
         }
         try {
@@ -92,8 +92,10 @@ public class MybatisDecryptInterceptor implements Interceptor {
     /**
      * 字段值进行加密。通过字段的批注注册新的加密算法
      *
-     * @param value 待加密的值
-     * @param field 待加密字段
+     * @param value
+     *            待加密的值
+     * @param field
+     *            待加密字段
      * @return 加密后结果
      */
     private String decryptField(String value, Field field) {
@@ -102,11 +104,20 @@ public class MybatisDecryptInterceptor implements Interceptor {
         }
         EncryptField encryptField = field.getAnnotation(EncryptField.class);
         EncryptContext encryptContext = new EncryptContext();
-        encryptContext.setAlgorithm(encryptField.algorithm() == AlgorithmType.DEFAULT ? defaultProperties.getAlgorithm() : encryptField.algorithm());
-        encryptContext.setEncode(encryptField.encode() == EncodeType.DEFAULT ? defaultProperties.getEncode() : encryptField.encode());
-        encryptContext.setPassword(StringUtils.isBlank(encryptField.password()) ? defaultProperties.getPassword() : encryptField.password());
-        encryptContext.setPrivateKey(StringUtils.isBlank(encryptField.privateKey()) ? defaultProperties.getPrivateKey() : encryptField.privateKey());
-        encryptContext.setPublicKey(StringUtils.isBlank(encryptField.publicKey()) ? defaultProperties.getPublicKey() : encryptField.publicKey());
+        encryptContext.setAlgorithm(encryptField.algorithm() == AlgorithmType.DEFAULT
+                ? defaultProperties.getAlgorithm()
+                : encryptField.algorithm());
+        encryptContext.setEncode(
+                encryptField.encode() == EncodeType.DEFAULT ? defaultProperties.getEncode() : encryptField.encode());
+        encryptContext.setPassword(StringUtils.isBlank(encryptField.password())
+                ? defaultProperties.getPassword()
+                : encryptField.password());
+        encryptContext.setPrivateKey(StringUtils.isBlank(encryptField.privateKey())
+                ? defaultProperties.getPrivateKey()
+                : encryptField.privateKey());
+        encryptContext.setPublicKey(StringUtils.isBlank(encryptField.publicKey())
+                ? defaultProperties.getPublicKey()
+                : encryptField.publicKey());
         return this.encryptorManager.decrypt(value, encryptContext);
     }
 

@@ -21,11 +21,9 @@ public class SchemaUpsertEntity {
 
     private String execSql;
 
-
     private String errorMessage;
 
-    public SchemaUpsertEntity() {}
-
-
+    public SchemaUpsertEntity() {
+    }
 
 }

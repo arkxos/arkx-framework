@@ -27,7 +27,8 @@ public class ExceptionUtil {
     /**
      * 获取异常的完整detailMessage文本，包括所有嵌套的原因异常
      *
-     * @param e 异常对象
+     * @param e
+     *            异常对象
      * @return 完整的异常详细信息
      */
     public static String getFullDetailMessage(Throwable e) {
@@ -63,7 +64,8 @@ public class ExceptionUtil {
     /**
      * 通过反射获取异常的detailMessage字段
      *
-     * @param throwable 异常对象
+     * @param throwable
+     *            异常对象
      * @return detailMessage内容
      */
     private static String getExceptionDetailMessage(Throwable throwable) {
@@ -81,7 +83,8 @@ public class ExceptionUtil {
     /**
      * 获取异常及其所有嵌套异常的列表
      *
-     * @param e 异常对象
+     * @param e
+     *            异常对象
      * @return 异常列表
      */
     public static List<Throwable> getAllExceptions(Throwable e) {

@@ -1,14 +1,15 @@
 package io.arkx.framework.avatarmq.broker.server;
 
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.Executors;
+
 import io.arkx.framework.avatarmq.broker.AckPullMessageController;
 import io.arkx.framework.avatarmq.broker.AckPushMessageController;
 import io.arkx.framework.avatarmq.broker.SendMessageController;
 import io.arkx.framework.avatarmq.netty.NettyClustersConfig;
 
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.Executors;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 
 /**
  * @filename:BrokerParallelServer.java
@@ -20,7 +21,8 @@ import java.util.concurrent.Executors;
 public class BrokerParallelServer implements RemotingServer {
 
     protected int parallel = NettyClustersConfig.getWorkerThreads();
-    protected ListeningExecutorService executor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(parallel));
+    protected ListeningExecutorService executor = MoreExecutors
+            .listeningDecorator(Executors.newFixedThreadPool(parallel));
     protected ExecutorCompletionService<Void> executorService;
 
     public BrokerParallelServer() {

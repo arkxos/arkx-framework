@@ -1,11 +1,11 @@
 package io.arkx.framework.data.mybatis.binder;
 
-import org.springframework.util.StringUtils;
-
 import java.beans.PropertyEditorSupport;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import org.springframework.util.StringUtils;
 
 public class CustomTimestampEditor extends PropertyEditorSupport {
     private final SimpleDateFormat dateFormat;
@@ -37,7 +37,8 @@ public class CustomTimestampEditor extends PropertyEditorSupport {
             setValue(null);
         } else {
             if ((text != null) && (this.exactDateLength >= 0) && (text.length() != this.exactDateLength)) {
-                throw new IllegalArgumentException("Could not parse date: it is not exactly" + this.exactDateLength + "characters long");
+                throw new IllegalArgumentException(
+                        "Could not parse date: it is not exactly" + this.exactDateLength + "characters long");
             }
 
             try {

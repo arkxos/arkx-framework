@@ -1,18 +1,20 @@
 package io.arkx.framework.avatarmq.consumer;
 
-import io.arkx.framework.avatarmq.model.RemoteChannelData;
-import io.arkx.framework.avatarmq.model.SubscriptionData;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.iterators.FilterIterator;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.iterators.FilterIterator;
+
+import io.arkx.framework.avatarmq.model.RemoteChannelData;
+import io.arkx.framework.avatarmq.model.SubscriptionData;
+
 /**
  * 负责管理消费者集群
+ *
  * @filename:ConsumerContext.java
  * @description:ConsumerContext功能模块
  * @author tangjie<https://github.com/tang-jie>
@@ -20,16 +22,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2016-8-11
  */
 public class ConsumerContext {
-	// 消费者集群关系定义
-	private static final CopyOnWriteArrayList<ClustersRelation> relationArray = new CopyOnWriteArrayList<>();
-	// 消费者集群状态
-	private static final CopyOnWriteArrayList<ClustersState> stateArray = new CopyOnWriteArrayList<>();
+    // 消费者集群关系定义
+    private static final CopyOnWriteArrayList<ClustersRelation> relationArray = new CopyOnWriteArrayList<>();
+    // 消费者集群状态
+    private static final CopyOnWriteArrayList<ClustersState> stateArray = new CopyOnWriteArrayList<>();
 
     public static void setClustersStat(String clusters, int stat) {
         stateArray.add(new ClustersState(clusters, stat));
     }
 
-	// 根据消费者集群编码cluster_id获取一个消费者集群的状态
+    // 根据消费者集群编码cluster_id获取一个消费者集群的状态
     public static int getClustersStat(String clusters) {
 
         Predicate predicate = new Predicate() {
@@ -50,7 +52,7 @@ public class ConsumerContext {
         return (state != null) ? state.getState() : 0;
     }
 
-	// 根据消费者集群编码cluster_id查找一个消费者集群
+    // 根据消费者集群编码cluster_id查找一个消费者集群
     public static ConsumerClusters selectByClusters(String clusters) {
         Predicate predicate = new Predicate() {
             public boolean evaluate(Object object) {
@@ -70,13 +72,14 @@ public class ConsumerContext {
         return (relation != null) ? relation.getClusters() : null;
     }
 
-	// 查找一下关注这个主题的消费者集群集合
+    // 查找一下关注这个主题的消费者集群集合
     public static List<ConsumerClusters> selectByTopic(String topic) {
 
         List<ConsumerClusters> clusters = new ArrayList<ConsumerClusters>();
 
         for (int i = 0; i < relationArray.size(); i++) {
-            ConcurrentHashMap<String, SubscriptionData> subscriptionTable = relationArray.get(i).getClusters().getSubMap();
+            ConcurrentHashMap<String, SubscriptionData> subscriptionTable = relationArray.get(i).getClusters()
+                    .getSubMap();
             if (subscriptionTable.containsKey(topic)) {
                 clusters.add(relationArray.get(i).getClusters());
             }
@@ -85,7 +88,7 @@ public class ConsumerContext {
         return clusters;
     }
 
-	// 添加消费者集群
+    // 添加消费者集群
     public static void addClusters(String clusters, RemoteChannelData channelinfo) {
         ConsumerClusters manage = selectByClusters(clusters);
         if (manage == null) {
@@ -108,7 +111,7 @@ public class ConsumerContext {
         }
     }
 
-	// 从一个消费者集群中删除一个消费者
+    // 从一个消费者集群中删除一个消费者
     public static void unLoad(String clientId) {
 
         for (int i = 0; i < relationArray.size(); i++) {

@@ -1,8 +1,8 @@
 package io.arkx.framework.data.jpa;
 
-import org.springframework.util.CollectionUtils;
-
 import java.util.*;
+
+import org.springframework.util.CollectionUtils;
 
 /**
  * .

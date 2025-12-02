@@ -1,9 +1,11 @@
 package io.arkx.framework.commons.uid.worker;
 
+import org.springframework.data.redis.core.RedisTemplate;
+
 import io.arkx.framework.commons.uid.exception.UidGenerateException;
 import io.arkx.framework.commons.uid.worker.entity.WorkerNodeEntity;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * 基于Redis获取workerId（机器节点ID）
@@ -25,9 +27,7 @@ public class RedisWorkerIdAssigner extends AbstractWorkerAssigner implements Wor
     }
 
     /**
-     * Redis是单线程的，无需考虑线程安全，
-     * 用一个全局key颁发workerId，
-     * 每个服务器一个key用于记录服务器信息
+     * Redis是单线程的，无需考虑线程安全， 用一个全局key颁发workerId， 每个服务器一个key用于记录服务器信息
      */
     @Override
     public long assignWorkerId() {
@@ -37,7 +37,8 @@ public class RedisWorkerIdAssigner extends AbstractWorkerAssigner implements Wor
             return workerId;
         }
         Long incr = redisTemplate.opsForValue().increment(assigner);
-        if (incr == null) throw new UidGenerateException();
+        if (incr == null)
+            throw new UidGenerateException();
         int value = incr.intValue();
         redisTemplate.opsForValue().set(workerKey, value);
         return value;

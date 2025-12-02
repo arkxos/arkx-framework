@@ -9,21 +9,22 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.tdengine;
 
-import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.provider.sync.AutoCastTableDataSynchronizeProvider;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.provider.sync.AutoCastTableDataSynchronizeProvider;
+
 public class TdengineTableSynchronizer extends AutoCastTableDataSynchronizeProvider {
 
-  public TdengineTableSynchronizer(ProductFactoryProvider factoryProvider) {
-    super(factoryProvider);
-  }
+    public TdengineTableSynchronizer(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-  @Override
-  protected TransactionDefinition getDefaultTransactionDefinition() {
-    DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-    return definition;
-  }
+    @Override
+    protected TransactionDefinition getDefaultTransactionDefinition() {
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        return definition;
+    }
 
 }

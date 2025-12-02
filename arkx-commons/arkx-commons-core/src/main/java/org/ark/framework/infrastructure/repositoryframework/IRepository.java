@@ -1,9 +1,8 @@
 package org.ark.framework.infrastructure.repositoryframework;
 
-import io.arkx.framework.data.jdbc.Entity;
-
 import java.util.List;
 
+import io.arkx.framework.data.jdbc.Entity;
 
 /**
  * @class org.ark.framework.infrastructure.repositoryframework.IRepository
@@ -12,16 +11,16 @@ import java.util.List;
  * @version V1.0
  */
 public interface IRepository<T extends Entity> {
-	
-	T findBy(Object key);
-	
-	List<T> findAll();
 
-	void add(T item);
+    T findBy(Object key);
 
-	T get(Object key);
+    List<T> findAll();
 
-	T set(Object key, T entity);
+    void add(T item);
 
-	void remove(T item);
+    T get(Object key);
+
+    T set(Object key, T entity);
+
+    void remove(T item);
 }

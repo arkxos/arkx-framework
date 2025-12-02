@@ -9,23 +9,24 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.sqlite;
 
-import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvider;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvider;
+
 public class SqliteTableDataWriteProvider extends AutoCastTableDataWriteProvider {
 
-  public SqliteTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
-    super(factoryProvider);
-  }
+    public SqliteTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-  @Override
-  protected TransactionDefinition getDefaultTransactionDefinition() {
-    DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-    definition.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
-    definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-    return definition;
-  }
+    @Override
+    protected TransactionDefinition getDefaultTransactionDefinition() {
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        definition.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
+        definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        return definition;
+    }
 
 }

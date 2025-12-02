@@ -1,10 +1,8 @@
 package io.arkx.framework.enums.conversion.processor;
 
-import com.google.auto.service.AutoService;
-import com.squareup.javapoet.*;
-import io.arkx.framework.enums.conversion.annotation.JsonAutoConverter;
-import io.arkx.framework.enums.conversion.converter.AbstractJsonConverter;
-import jakarta.persistence.Converter;
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -14,9 +12,14 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
+
+import io.arkx.framework.enums.conversion.annotation.JsonAutoConverter;
+import io.arkx.framework.enums.conversion.converter.AbstractJsonConverter;
+
+import com.google.auto.service.AutoService;
+import com.squareup.javapoet.*;
+
+import jakarta.persistence.Converter;
 
 /**
  * @author: zhuCan
@@ -59,15 +62,17 @@ public class JsonConvertProcessor extends AbstractProcessor {
             // 构建类
             TypeSpec clazz = TypeSpec.classBuilder(x.getSimpleName() + "Converter")
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addAnnotation(AnnotationSpec.builder(Converter.class).addMember("autoApply", CodeBlock.builder().add("$L", annotation.autoApply()).build()).build())
-                    .addJavadoc(" generator for Json converter " + doc)
-                    .superclass(ParameterizedTypeName.get(ClassName.get(AbstractJsonConverter.class),
-                            ClassName.get((TypeElement) x)))
+                    .addAnnotation(
+                            AnnotationSpec.builder(Converter.class)
+                                    .addMember("autoApply",
+                                            CodeBlock.builder().add("$L", annotation.autoApply()).build())
+                                    .build())
+                    .addJavadoc(" generator for Json converter " + doc).superclass(ParameterizedTypeName
+                            .get(ClassName.get(AbstractJsonConverter.class), ClassName.get((TypeElement) x)))
                     .build();
             try {
                 // 创建java文件
-                JavaFile javaFile = JavaFile.builder(packageName, clazz)
-                        .build();
+                JavaFile javaFile = JavaFile.builder(packageName, clazz).build();
                 // 写入
                 javaFile.writeTo(filer);
             } catch (IOException e) {
@@ -77,15 +82,18 @@ public class JsonConvertProcessor extends AbstractProcessor {
             // 构建集合转换类
             TypeSpec listClazz = TypeSpec.classBuilder(x.getSimpleName() + "ListConverter")
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addAnnotation(AnnotationSpec.builder(Converter.class).addMember("autoApply", CodeBlock.builder().add("$L", annotation.autoApply()).build()).build())
+                    .addAnnotation(
+                            AnnotationSpec.builder(Converter.class)
+                                    .addMember("autoApply",
+                                            CodeBlock.builder().add("$L", annotation.autoApply()).build())
+                                    .build())
                     .addJavadoc(" generator for Json converter " + doc)
                     .superclass(ParameterizedTypeName.get(ClassName.get(AbstractJsonConverter.class),
                             ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get((TypeElement) x))))
                     .build();
             try {
                 // 创建java文件
-                JavaFile javaFile = JavaFile.builder(packageName, listClazz)
-                        .build();
+                JavaFile javaFile = JavaFile.builder(packageName, listClazz).build();
                 // 写入
                 javaFile.writeTo(filer);
             } catch (IOException e) {

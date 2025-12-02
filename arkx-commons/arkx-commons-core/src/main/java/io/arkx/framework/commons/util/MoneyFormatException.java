@@ -1,8 +1,7 @@
 package io.arkx.framework.commons.util;
 
 /**
- * An exception which is raised when there is a problem parsing a moeny
- * field.
+ * An exception which is raised when there is a problem parsing a moeny field.
  *
  * @author Andrew Leppard
  */
@@ -14,7 +13,8 @@ public class MoneyFormatException extends Throwable {
     /**
      * Create a new money format exception.
      *
-     * @param reason for the exception.
+     * @param reason
+     *            for the exception.
      */
     public MoneyFormatException(String reason) {
         this.reason = reason;
@@ -32,9 +32,9 @@ public class MoneyFormatException extends Throwable {
     /**
      * Convert the exception to a string
      *
-     * @return	string version of the exception
+     * @return string version of the exception
      */
     public String toString() {
-	return getReason();
+        return getReason();
     }
 }

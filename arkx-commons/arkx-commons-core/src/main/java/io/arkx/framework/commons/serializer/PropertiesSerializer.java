@@ -1,12 +1,12 @@
 package io.arkx.framework.commons.serializer;
 
-import com.google.gson.JsonObject;
-
 import java.util.Properties;
+
+import com.google.gson.JsonObject;
 
 /**
  * 属性序列化处理器
- *  
+ *
  * @author Darkness
  * @date 2014-12-17 下午9:32:12
  * @version V1.0
@@ -18,7 +18,7 @@ public class PropertiesSerializer extends AbstractSerializer {
 
     /**
      * 默认的序列化处理器
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午9:31:11
      * @version V1.0
@@ -42,7 +42,7 @@ public class PropertiesSerializer extends AbstractSerializer {
 
     /**
      * 序列化属性
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午9:31:58
      * @version V1.0

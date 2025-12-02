@@ -9,6 +9,8 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.doris;
 
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.ProductFeatures;
@@ -19,33 +21,31 @@ import io.arkx.framework.data.db.core.provider.sync.TableDataSynchronizeProvider
 import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 
-import javax.sql.DataSource;
-
 @Product(ProductTypeEnum.DORIS)
 public class DorisFactoryProvider extends AbstractFactoryProvider {
 
-  public DorisFactoryProvider(DataSource dataSource) {
-    super(dataSource);
-  }
+    public DorisFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-  @Override
-  public ProductFeatures getProductFeatures() {
-    return new DorisFeatures();
-  }
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DorisFeatures();
+    }
 
-  @Override
-  public MetadataProvider createMetadataQueryProvider() {
-    return new DorisMetadataQueryProvider(this);
-  }
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new DorisMetadataQueryProvider(this);
+    }
 
-  @Override
-  public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-    return new AutoCastTableDataWriteProvider(this);
-  }
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-  @Override
-  public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    return new AutoCastTableDataSynchronizeProvider(this);
-  }
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

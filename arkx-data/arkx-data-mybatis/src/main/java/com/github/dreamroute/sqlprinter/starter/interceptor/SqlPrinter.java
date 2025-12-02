@@ -23,15 +23,13 @@
  */
 package com.github.dreamroute.sqlprinter.starter.interceptor;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.druid.sql.SQLUtils;
-import com.github.dreamroute.sqlprinter.starter.anno.SqlprinterProperties;
-import com.github.dreamroute.sqlprinter.starter.anno.ValueConverter;
-import lombok.extern.slf4j.Slf4j;
+import static java.util.Optional.ofNullable;
+
+import java.lang.reflect.Field;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.*;
+
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.mapping.*;
@@ -46,12 +44,16 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.util.*;
+import com.alibaba.druid.sql.SQLUtils;
+import com.github.dreamroute.sqlprinter.starter.anno.SqlprinterProperties;
+import com.github.dreamroute.sqlprinter.starter.anno.ValueConverter;
 
-import static java.util.Optional.ofNullable;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * print simple sql
@@ -62,12 +64,8 @@ import static java.util.Optional.ofNullable;
  */
 @Slf4j
 @EnableConfigurationProperties(SqlprinterProperties.class)
-@Intercepts(
-        {
-                @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class}),
-                @Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})
-        }
-)
+@Intercepts({@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class}),
+        @Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
 public class SqlPrinter implements Interceptor, ApplicationListener<ContextRefreshedEvent> {
 
     private final SqlprinterProperties sqlprinterProperties;
@@ -112,13 +110,15 @@ public class SqlPrinter implements Interceptor, ApplicationListener<ContextRefre
                     p.id = ms.getId();
                     processSql(ms.getId(), ms.getBoundSql(m.getValue("parameterObject")), p);
                 }
-                // 对于((PreparedStatement) countStmt).execute()这种方式执行的sql, 不会走ResultSetHandler拦截, 所以不会走下方的查询逻辑, 因此打印sql放在这里, 而分页插件就包含((PreparedStatement) countStmt).execute()这种查询
-                else if(ms.getId().contains("分页统计")) {
+                // 对于((PreparedStatement) countStmt).execute()这种方式执行的sql, 不会走ResultSetHandler拦截,
+                // 所以不会走下方的查询逻辑, 因此打印sql放在这里, 而分页插件就包含((PreparedStatement)
+                // countStmt).execute()这种查询
+                else if (ms.getId().contains("分页统计")) {
                     p = getSql(invocation);
                 }
             }
 
-            // 查询走这里, 这里会生成sql 
+            // 查询走这里, 这里会生成sql
             else {
                 p = getSql(invocation);
             }
@@ -148,7 +148,7 @@ public class SqlPrinter implements Interceptor, ApplicationListener<ContextRefre
 
     private void processSql(String id, BoundSql boundSql, Parse parse) {
         if (show && !filter.contains(id)) {
-            
+
             Object parameterObject = boundSql.getParameterObject();
             String originalSql = boundSql.getSql();
             StringBuilder sb = new StringBuilder(originalSql);
@@ -249,7 +249,8 @@ public class SqlPrinter implements Interceptor, ApplicationListener<ContextRefre
 
     private Field[] filterExclude(Field[] fields) {
         if (showResultExclude != null && showResultExclude.length > 0) {
-            return Arrays.stream(fields).filter(field -> !ArrayUtil.contains(showResultExclude, field.getName())).toArray(Field[]::new);
+            return Arrays.stream(fields).filter(field -> !ArrayUtil.contains(showResultExclude, field.getName()))
+                    .toArray(Field[]::new);
         }
         return fields;
     }
@@ -266,18 +267,19 @@ public class SqlPrinter implements Interceptor, ApplicationListener<ContextRefre
     }
 
     /**
-     * 使用druid格式化sql，如果格式化失败，那么返回未经过格式化的sql，增加此格式化的原因是因为：
-     * 1. 为了美观和打印的格式统一
-     * 2. mysql的xml文件编写的sql带有动态标签，如果动态标签不满足条件时sql会有很多多余的换行和缩进
+     * 使用druid格式化sql，如果格式化失败，那么返回未经过格式化的sql，增加此格式化的原因是因为： 1. 为了美观和打印的格式统一 2.
+     * mysql的xml文件编写的sql带有动态标签，如果动态标签不满足条件时sql会有很多多余的换行和缩进
      *
-     * @param sql 需要格式化的sql
+     * @param sql
+     *            需要格式化的sql
      * @return 返回格式化之后的sql
      */
     private String format(String sql) {
         try {
             // 此格式化在不改变sql语义的情况下会移除一些括号，比如：
             // 格式化前：select * from xx where id = (#{id} and name = #{name}) and pwd = #{pwd}
-            // 格式化后：select * from xx where id = #{id} and name = #{name} and pwd = #{pwd}（括号被移除）
+            // 格式化后：select * from xx where id = #{id} and name = #{name} and pwd =
+            // #{pwd}（括号被移除）
             // 但是如果移除括号会改变sql语义，那就不会被移除
             return SQLUtils.formatMySql(sql);
         } catch (Exception e) {

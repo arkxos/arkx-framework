@@ -1,23 +1,25 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import io.arkx.framework.data.mybatis.pro.base.codec.date.*;
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerDeserializer;
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerDeserializerForCollection;
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerSerializerForExtra;
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerSerializerForExtraCollection;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import io.arkx.framework.data.mybatis.pro.base.codec.date.*;
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerDeserializer;
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerDeserializerForCollection;
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerSerializerForExtra;
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerSerializerForExtraCollection;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
  * 描述：自定义HttpMessageConverter
@@ -63,5 +65,3 @@ public class HttpMsgConverterConfig implements WebMvcConfigurer {
     }
 
 }
-
-

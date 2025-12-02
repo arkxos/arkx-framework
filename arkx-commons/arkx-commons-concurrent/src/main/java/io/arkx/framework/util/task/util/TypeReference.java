@@ -17,4 +17,3 @@ public abstract class TypeReference<T> implements Type {
         return this.type.toString();
     }
 }
-

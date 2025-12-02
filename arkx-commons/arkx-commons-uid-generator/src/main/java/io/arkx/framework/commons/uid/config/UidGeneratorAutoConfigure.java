@@ -1,5 +1,12 @@
 package io.arkx.framework.commons.uid.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.Nullable;
+
 import io.arkx.framework.commons.uid.UidGenerator;
 import io.arkx.framework.commons.uid.buffer.RingBuffer;
 import io.arkx.framework.commons.uid.component.CachedUidGenerator;
@@ -8,13 +15,8 @@ import io.arkx.framework.commons.uid.constant.Mode;
 import io.arkx.framework.commons.uid.properties.UidGeneratorProperties;
 import io.arkx.framework.commons.uid.worker.DefaultWorkerIdAssigner;
 import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.Nullable;
 
 /**
  * UidGenerator自动装配
@@ -42,7 +44,7 @@ public class UidGeneratorAutoConfigure {
         uidGenerator.setSeqBits(properties.getSeqBits());
         uidGenerator.setTimeBits(properties.getTimeBits());
         uidGenerator.setWorkerBits(properties.getWorkerBits());
-//        JpaIdentityGenerator.setInstance(uidGenerator);
+        // JpaIdentityGenerator.setInstance(uidGenerator);
         log.info("Default generator loading completed");
         return uidGenerator;
     }
@@ -78,7 +80,7 @@ public class UidGeneratorAutoConfigure {
         uidGenerator.setRejectedTakeBufferHandler(ringBuffer -> {
             log.info("reject take buffer");
         });
-//        JpaIdentityGenerator.setInstance(uidGenerator);
+        // JpaIdentityGenerator.setInstance(uidGenerator);
         log.info("Memory generator loading completed");
         return uidGenerator;
     }

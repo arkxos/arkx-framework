@@ -1,14 +1,15 @@
 package io.arkx.framework.enums.conversion.typehelper;
 
-import io.arkx.framework.enums.core.enums.CodeEnum;
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
-
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+
+import io.arkx.framework.enums.core.enums.CodeEnum;
 
 /**
  * @author zhuCan
@@ -29,7 +30,8 @@ public class CodeEnumTypeHelper<T extends CodeEnum> extends BaseTypeHandler<T> {
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement preparedStatement, int i, T parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement preparedStatement, int i, T parameter, JdbcType jdbcType)
+            throws SQLException {
         if (jdbcType == null) {
             preparedStatement.setInt(i, parameter.code());
         } else {

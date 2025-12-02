@@ -9,6 +9,8 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.gbase;
 
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.ProductFeatures;
@@ -20,33 +22,31 @@ import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvi
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 import io.arkx.framework.data.db.product.mysql.MysqlFeatures;
 
-import javax.sql.DataSource;
-
 @Product(ProductTypeEnum.GBASE8A)
 public class GbaseFactoryProvider extends AbstractFactoryProvider {
 
-  public GbaseFactoryProvider(DataSource dataSource) {
-    super(dataSource);
-  }
+    public GbaseFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-  @Override
-  public ProductFeatures getProductFeatures() {
-    return new MysqlFeatures();
-  }
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new MysqlFeatures();
+    }
 
-  @Override
-  public MetadataProvider createMetadataQueryProvider() {
-    return new GbaseMetadataQueryProvider(this);
-  }
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new GbaseMetadataQueryProvider(this);
+    }
 
-  @Override
-  public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-    return new AutoCastTableDataWriteProvider(this);
-  }
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-  @Override
-  public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    return new AutoCastTableDataSynchronizeProvider(this);
-  }
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

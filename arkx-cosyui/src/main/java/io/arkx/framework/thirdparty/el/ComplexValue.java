@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -55,81 +55,83 @@
 
 package io.arkx.framework.thirdparty.el;
 
+import java.util.List;
+
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.expression.IFunctionMapper;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
 
-import java.util.List;
-
 /**
  * <p>
- * Represents a dynamic value, which consists of a prefix and an optional set of ValueSuffix elements. A prefix is something like an
- * identifier, and a suffix is something like a "property of" or "indexed element of" operator.
- * 
+ * Represents a dynamic value, which consists of a prefix and an optional set of
+ * ValueSuffix elements. A prefix is something like an identifier, and a suffix
+ * is something like a "property of" or "indexed element of" operator.
+ *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class ComplexValue extends Expression {
-	Expression mPrefix;
+    Expression mPrefix;
 
-	public Expression getPrefix() {
-		return mPrefix;
-	}
+    public Expression getPrefix() {
+        return mPrefix;
+    }
 
-	public void setPrefix(Expression pPrefix) {
-		mPrefix = pPrefix;
-	}
+    public void setPrefix(Expression pPrefix) {
+        mPrefix = pPrefix;
+    }
 
-	List<ValueSuffix> mSuffixes;
+    List<ValueSuffix> mSuffixes;
 
-	public List<ValueSuffix> getSuffixes() {
-		return mSuffixes;
-	}
+    public List<ValueSuffix> getSuffixes() {
+        return mSuffixes;
+    }
 
-	public void setSuffixes(List<ValueSuffix> pSuffixes) {
-		mSuffixes = pSuffixes;
-	}
+    public void setSuffixes(List<ValueSuffix> pSuffixes) {
+        mSuffixes = pSuffixes;
+    }
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public ComplexValue(Expression pPrefix, List<ValueSuffix> pSuffixes) {
-		mPrefix = pPrefix;
-		mSuffixes = pSuffixes;
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public ComplexValue(Expression pPrefix, List<ValueSuffix> pSuffixes) {
+        mPrefix = pPrefix;
+        mSuffixes = pSuffixes;
+    }
 
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append(mPrefix.getExpressionString());
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append(mPrefix.getExpressionString());
 
-		for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
-			ValueSuffix suffix = mSuffixes.get(i);
-			buf.append(suffix.getExpressionString());
-		}
+        for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
+            ValueSuffix suffix = mSuffixes.get(i);
+            buf.append(suffix.getExpressionString());
+        }
 
-		return buf.toString();
-	}
+        return buf.toString();
+    }
 
-	/**
-	 * Evaluates by evaluating the prefix, then applying the suffixes
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger) throws ExpressionException {
-		Object ret = mPrefix.evaluate(pResolver, functions, pLogger);
+    /**
+     * Evaluates by evaluating the prefix, then applying the suffixes
+     **/
+    @Override
+    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        Object ret = mPrefix.evaluate(pResolver, functions, pLogger);
 
-		// Apply the suffixes
-		for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
-			ValueSuffix suffix = mSuffixes.get(i);
-			ret = suffix.evaluate(ret, pResolver, functions, pLogger);
-		}
+        // Apply the suffixes
+        for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
+            ValueSuffix suffix = mSuffixes.get(i);
+            ret = suffix.evaluate(ret, pResolver, functions, pLogger);
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 }

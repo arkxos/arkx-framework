@@ -1,10 +1,7 @@
 package io.arkx.framework.enums.conversion.processor;
 
-import com.google.auto.service.AutoService;
-import com.squareup.javapoet.*;
-import io.arkx.framework.enums.conversion.annotation.EnumAutoConverter;
-import io.arkx.framework.enums.conversion.converter.AbstractEnumConverter;
-import jakarta.persistence.Converter;
+import java.io.IOException;
+import java.util.Set;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -14,8 +11,14 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
-import java.io.IOException;
-import java.util.Set;
+
+import io.arkx.framework.enums.conversion.annotation.EnumAutoConverter;
+import io.arkx.framework.enums.conversion.converter.AbstractEnumConverter;
+
+import com.google.auto.service.AutoService;
+import com.squareup.javapoet.*;
+
+import jakarta.persistence.Converter;
 
 /**
  * @author: zhuCan
@@ -58,20 +61,18 @@ public class EnumConvertProcessor extends AbstractProcessor {
             // 构建类
             TypeSpec clazz = TypeSpec.classBuilder(x.getSimpleName() + "Converter")
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addAnnotation(AnnotationSpec.builder(Converter.class)
-                            .addMember("autoApply", CodeBlock.builder()
-                                    .add("$L", annotation.autoApply())
+                    .addAnnotation(
+                            AnnotationSpec.builder(Converter.class)
+                                    .addMember("autoApply",
+                                            CodeBlock.builder().add("$L", annotation.autoApply()).build())
                                     .build())
-                            .build())
                     .addJavadoc(" generator for enum converter " + doc)
                     .superclass(ParameterizedTypeName.get(ClassName.get(AbstractEnumConverter.class),
-                            ClassName.get((TypeElement) x),
-                            ClassName.get(Integer.class)))
+                            ClassName.get((TypeElement) x), ClassName.get(Integer.class)))
                     .build();
             try {
                 // 创建java文件
-                JavaFile javaFile = JavaFile.builder(packageName, clazz)
-                        .build();
+                JavaFile javaFile = JavaFile.builder(packageName, clazz).build();
                 // 写入
                 javaFile.writeTo(filer);
             } catch (IOException e) {

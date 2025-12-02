@@ -6,30 +6,30 @@ package io.arkx.data.lightning.sample.service;
  * @since 1.0
  */
 
-import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
-import io.arkx.data.lightning.sample.model.Dept;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
+import io.arkx.data.lightning.sample.model.Dept;
 
 @Service
 public class DeptService {
 
-	private final ClosureTableServiceImpl closureService;
+    private final ClosureTableServiceImpl closureService;
 
-	public DeptService(ClosureTableServiceImpl closureService) {
-		this.closureService = closureService;
-	}
+    public DeptService(ClosureTableServiceImpl closureService) {
+        this.closureService = closureService;
+    }
 
-	@Transactional
-	public void addDept(Dept dept) {
-//		closureService.insertNode(dept, "dept");
-	}
+    @Transactional
+    public void addDept(Dept dept) {
+        // closureService.insertNode(dept, "dept");
+    }
 
-	public List<Dept> getDeptDescendants(Long deptId) {
-//		return closureService.findDescendants("dept", deptId, Dept.class);
-		return null;
-	}
+    public List<Dept> getDeptDescendants(Long deptId) {
+        // return closureService.findDescendants("dept", deptId, Dept.class);
+        return null;
+    }
 }
-

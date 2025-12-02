@@ -15,10 +15,11 @@
  */
 package io.arkx.framework.boot.starter;
 
-import lombok.Data;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import lombok.Data;
+import lombok.Setter;
 
 /**
  * @author darkness
@@ -31,10 +32,10 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "arkx.rsa")
 public class RsaProperties {
 
-    //    @Value("${opencloud.rsa.private-key}")
+    // @Value("${opencloud.rsa.private-key}")
     private String privateKey;
 
-    //    @Value("${opencloud.rsa.public-key}")
+    // @Value("${opencloud.rsa.public-key}")
     private String publicKey;
 
 }

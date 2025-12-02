@@ -1,212 +1,222 @@
-//package org.ark.framework.jaf.controls;
+// package org.ark.framework.jaf.controls;
 //
-//import java.io.OutputStream;
-//import java.lang.reflect.Method;
+// import java.io.OutputStream;
+// import java.lang.reflect.Method;
 //
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
+// import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletResponse;
 //
-//import org.ark.framework.Config;
-//import org.ark.framework.jaf.Current;
-//import org.ark.framework.jaf.ZAction;
-//import org.ark.framework.jaf.html.HtmlTR;
-//import org.ark.framework.jaf.html.HtmlTable;
-//import org.ark.framework.orm.query.QueryBuilder;
-//import org.ark.framework.security.PrivCheck;
-//import org.ark.framework.security.VerifyCheck;
-//import org.ark.framework.utility.DateUtil;
-//import org.ark.framework.utility.HtmlUtil;
-//import org.ark.framework.utility.LogUtil;
-//import org.ark.framework.utility.ServletUtil;
-//import util.io.arkx.framework.commons.StringUtil;
+// import org.ark.framework.Config;
+// import org.ark.framework.jaf.Current;
+// import org.ark.framework.jaf.ZAction;
+// import org.ark.framework.jaf.html.HtmlTR;
+// import org.ark.framework.jaf.html.HtmlTable;
+// import org.ark.framework.orm.query.QueryBuilder;
+// import org.ark.framework.security.PrivCheck;
+// import org.ark.framework.security.VerifyCheck;
+// import org.ark.framework.utility.DateUtil;
+// import org.ark.framework.utility.HtmlUtil;
+// import org.ark.framework.utility.LogUtil;
+// import org.ark.framework.utility.ServletUtil;
+// import util.io.arkx.framework.commons.StringUtil;
 //
-//import io.arkx.framework.framework.RequestData;
-//import io.arkx.framework.cosyuiFacade;
-//import io.arkx.framework.framework.annotation.Priv;
-//import io.arkx.framework.framework.annotation.Verify;
-//import io.arkx.framework.framework.collection.DataTable;
-//import io.arkx.framework.framework.collection.Mapx;
-//import control.io.arkx.framework.cosyui.DataGridAction;
+// import io.arkx.framework.framework.RequestData;
+// import io.arkx.framework.cosyuiFacade;
+// import io.arkx.framework.framework.annotation.Priv;
+// import io.arkx.framework.framework.annotation.Verify;
+// import io.arkx.framework.framework.collection.DataTable;
+// import io.arkx.framework.framework.collection.Mapx;
+// import control.io.arkx.framework.cosyui.DataGridAction;
 //
 //
-///**
+/// **
 // * @class org.ark.framework.jaf.controls.DataGridUI
-// * 
+// *
 // * @author Darkness
-// * @date 2013-1-31 下午12:40:41 
+// * @date 2013-1-31 下午12:40:41
 // * @version V1.0
 // */
-//public class DataGridUI extends UIFacade {
-//	
-//	public static final int MaxPageSize = 10000;
+// public class DataGridUI extends UIFacade {
 //
-//	@Verify(ignoreAll = true)
-//	@Priv(login = false)
-//	public void doWork() {
-//		try {
-//			DataGridAction dga = new DataGridAction();
+// public static final int MaxPageSize = 10000;
 //
-//			dga.setTagBody(StringUtil.htmlDecode($V("_ARK_TAGBODY")));
-//			String method = $V("_ARK_METHOD");
-//			dga.setMethod(method);
+// @Verify(ignoreAll = true)
+// @Priv(login = false)
+// public void doWork() {
+// try {
+// DataGridAction dga = new DataGridAction();
 //
-//			dga.setID($V("_ARK_ID"));
-//			dga.setPageFlag("true".equalsIgnoreCase($V("_ARK_PAGE")));
-//			dga.setMultiSelect(!"false".equalsIgnoreCase($V("_ARK_MULTISELECT")));
-//			dga.setAutoFill(!"false".equalsIgnoreCase($V("_ARK_AUTOFILL")));
-//			dga.setScroll("true".equalsIgnoreCase($V("_ARK_SCROLL")));
-//			dga.setLazy("true".equalsIgnoreCase($V("_ARK_LAZY")));
-//			if (StringUtil.isNotEmpty($V("_ARK_CACHESIZE"))) {
-//				dga.setCacheSize(Integer.parseInt($V("_ARK_CACHESIZE")));
-//			}
-//			dga.setParams(WebCurrent.getRequest());
-//			dga.Response = Current.getResponse();
+// dga.setTagBody(StringUtil.htmlDecode($V("_ARK_TAGBODY")));
+// String method = $V("_ARK_METHOD");
+// dga.setMethod(method);
 //
-//			if (dga.isPageFlag()) {
-//				dga.setPageIndex(0);
-//				if ((this.Request.get("_ARK_PAGEINDEX") != null) && (!this.Request.get("_ARK_PAGEINDEX").equals(""))) {
-//					dga.setPageIndex(Integer.parseInt(this.Request.getString("_ARK_PAGEINDEX")));
-//				}
-//				if (dga.getPageIndex() < 0) {
-//					dga.setPageIndex(0);
-//				}
-//				if (dga.getPageIndex() != 0) {
-//					dga.setTotal(Integer.parseInt(this.Request.getString("_ARK_PAGETOTAL")));
-//				}
-//				dga.setPageSize(Integer.parseInt($V("_ARK_SIZE")));
-//				if (dga.getPageSize() > 10000) {
-//					dga.setPageSize(10000);
-//				}
-//			}
+// dga.setID($V("_ARK_ID"));
+// dga.setPageFlag("true".equalsIgnoreCase($V("_ARK_PAGE")));
+// dga.setMultiSelect(!"false".equalsIgnoreCase($V("_ARK_MULTISELECT")));
+// dga.setAutoFill(!"false".equalsIgnoreCase($V("_ARK_AUTOFILL")));
+// dga.setScroll("true".equalsIgnoreCase($V("_ARK_SCROLL")));
+// dga.setLazy("true".equalsIgnoreCase($V("_ARK_LAZY")));
+// if (StringUtil.isNotEmpty($V("_ARK_CACHESIZE"))) {
+// dga.setCacheSize(Integer.parseInt($V("_ARK_CACHESIZE")));
+// }
+// dga.setParams(WebCurrent.getRequest());
+// dga.Response = Current.getResponse();
 //
-//			HtmlTable table = new HtmlTable();
-//			table.parseHtml(dga.getTagBody());
-//			dga.setTemplate(table);
-//			dga.parse();
+// if (dga.isPageFlag()) {
+// dga.setPageIndex(0);
+// if ((this.Request.get("_ARK_PAGEINDEX") != null) &&
+// (!this.Request.get("_ARK_PAGEINDEX").equals(""))) {
+// dga.setPageIndex(Integer.parseInt(this.Request.getString("_ARK_PAGEINDEX")));
+// }
+// if (dga.getPageIndex() < 0) {
+// dga.setPageIndex(0);
+// }
+// if (dga.getPageIndex() != 0) {
+// dga.setTotal(Integer.parseInt(this.Request.getString("_ARK_PAGETOTAL")));
+// }
+// dga.setPageSize(Integer.parseInt($V("_ARK_SIZE")));
+// if (dga.getPageSize() > 10000) {
+// dga.setPageSize(10000);
+// }
+// }
 //
-//			String strInsertRowIndex = this.Request.getString("_ARK_INSERTROW");
-//			if (StringUtil.isNotEmpty(strInsertRowIndex)) {
-//				DataTable dt = (DataTable) this.Request.get("_ARK_DATATABLE");
-//				this.Request.remove("_ARK_DATATABLE");
-//				this.Request.remove("_ARK_INSERTROW");
-//				dga.bindData(dt);
+// HtmlTable table = new HtmlTable();
+// table.parseHtml(dga.getTagBody());
+// dga.setTemplate(table);
+// dga.parse();
 //
-//				HtmlTR tr = dga.getTable().getTR(1);
-//				$S("TRAttr", tr.getAttributes());
-//				for (int i = 0; i < tr.Children.size(); i++) {
-//					$S("TDAttr" + i, tr.getTD(i).getAttributes());
-//					$S("TDHtml" + i, tr.getTD(i).getInnerHTML());
-//				}
-//			} else {
-//				Method m = Current.findMethod(method, new Class[] { DataGridAction.class });
-//				if (!PrivCheck.check(m, this.Request, this.Response)) {
-//					return;
-//				}
+// String strInsertRowIndex = this.Request.getString("_ARK_INSERTROW");
+// if (StringUtil.isNotEmpty(strInsertRowIndex)) {
+// DataTable dt = (DataTable) this.Request.get("_ARK_DATATABLE");
+// this.Request.remove("_ARK_DATATABLE");
+// this.Request.remove("_ARK_INSERTROW");
+// dga.bindData(dt);
 //
-//				if (!VerifyCheck.check(m)) {
-//					String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
-//					LogUtil.warn(message);
-//					Current.getResponse().setFailedMessage(message);
-//					return;
-//				}
-//				Current.invokeMethod(m, new Object[] { dga });
+// HtmlTR tr = dga.getTable().getTR(1);
+// $S("TRAttr", tr.getAttributes());
+// for (int i = 0; i < tr.Children.size(); i++) {
+// $S("TDAttr" + i, tr.getTD(i).getAttributes());
+// $S("TDHtml" + i, tr.getTD(i).getInnerHTML());
+// }
+// } else {
+// Method m = Current.findMethod(method, new Class[] { DataGridAction.class });
+// if (!PrivCheck.check(m, this.Request, this.Response)) {
+// return;
+// }
 //
-//				$S("BodyHTML", dga.getBodyHtml());
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+// if (!VerifyCheck.check(m)) {
+// String message = "Verify check failed:method=" + method + ",data=" +
+// WebCurrent.getRequest();
+// LogUtil.warn(message);
+// Current.getResponse().setFailedMessage(message);
+// return;
+// }
+// Current.invokeMethod(m, new Object[] { dga });
 //
-//	@Priv(login = false)
-//	public void toExcel(ZAction za) throws Exception {
-//		HttpServletRequest request = za.getRequest();
-//		HttpServletResponse response = za.getResponse();
-//		request.setCharacterEncoding(Config.getGlobalCharset());
-//		response.reset();
-//		response.setContentType("application/octet-stream");
-//		response.setHeader("Content-Disposition", "attachment; filename=Excel_" + DateUtil.getCurrentDateTime("yyyyMMddhhmmss") + ".xls");
-//		try {
-//			String xls = "_Excel_";
-//			Mapx params = ServletUtil.getParameterMap(request);
-//			String ID = params.getString(xls + "_ARK_ID");
-//			String tagBody = params.getString(xls + "_ARK_TAGBODY");
-//			String pageIndex = params.getString(xls + "_ARK_PAGEINDEX");
-//			String pageSize = params.getString(xls + "_ARK_SIZE");
-//			String pageTotal = params.getString(xls + "_ARK_PAGETOTAL");
-//			String method = params.getString(xls + "_ARK_METHOD");
-//			String pageFlag = params.getString(xls + "_ARK_PAGE");
-//			String excelPageFlag = params.getString(xls + "_ARK_ToExcelPageFlag");
-//			String strWidths = params.getString(xls + "_ARK_Widths");
-//			String strIndexes = params.getString(xls + "_ARK_Indexes");
-//			String strRows = params.getString(xls + "_ARK_Rows");
+// $S("BodyHTML", dga.getBodyHtml());
+// }
+// } catch (Exception e) {
+// e.printStackTrace();
+// }
+// }
 //
-//			if ((tagBody != null) && (!tagBody.equals(""))) {
-//				tagBody = StringUtil.htmlDecode(tagBody);
-//			}
-//			DataGridAction dga = new DataGridAction();
-//			HtmlTable table = new HtmlTable();
-//			dga.setMethod(method);
-//			dga.setID(ID);
-//			dga.setTagBody(tagBody);
-//			if ("1".equals(excelPageFlag)) {
-//				if ("true".equals(pageFlag)) {
-//					dga.setPageFlag(true);
-//					dga.setPageIndex(0);
-//					dga.setPageSize(Integer.parseInt(pageTotal));
-//				}
+// @Priv(login = false)
+// public void toExcel(ZAction za) throws Exception {
+// HttpServletRequest request = za.getRequest();
+// HttpServletResponse response = za.getResponse();
+// request.setCharacterEncoding(Config.getGlobalCharset());
+// response.reset();
+// response.setContentType("application/octet-stream");
+// response.setHeader("Content-Disposition", "attachment; filename=Excel_" +
+// DateUtil.getCurrentDateTime("yyyyMMddhhmmss") + ".xls");
+// try {
+// String xls = "_Excel_";
+// Mapx params = ServletUtil.getParameterMap(request);
+// String ID = params.getString(xls + "_ARK_ID");
+// String tagBody = params.getString(xls + "_ARK_TAGBODY");
+// String pageIndex = params.getString(xls + "_ARK_PAGEINDEX");
+// String pageSize = params.getString(xls + "_ARK_SIZE");
+// String pageTotal = params.getString(xls + "_ARK_PAGETOTAL");
+// String method = params.getString(xls + "_ARK_METHOD");
+// String pageFlag = params.getString(xls + "_ARK_PAGE");
+// String excelPageFlag = params.getString(xls + "_ARK_ToExcelPageFlag");
+// String strWidths = params.getString(xls + "_ARK_Widths");
+// String strIndexes = params.getString(xls + "_ARK_Indexes");
+// String strRows = params.getString(xls + "_ARK_Rows");
 //
-//			} else if ("true".equals(pageFlag)) {
-//				dga.setPageFlag(true);
-//				dga.setPageIndex(StringUtil.isEmpty(pageIndex) ? 0 : Integer.parseInt(pageIndex));
-//				dga.setPageSize(StringUtil.isEmpty(pageSize) ? 0 : Integer.parseInt(pageSize));
-//			}
+// if ((tagBody != null) && (!tagBody.equals(""))) {
+// tagBody = StringUtil.htmlDecode(tagBody);
+// }
+// DataGridAction dga = new DataGridAction();
+// HtmlTable table = new HtmlTable();
+// dga.setMethod(method);
+// dga.setID(ID);
+// dga.setTagBody(tagBody);
+// if ("1".equals(excelPageFlag)) {
+// if ("true".equals(pageFlag)) {
+// dga.setPageFlag(true);
+// dga.setPageIndex(0);
+// dga.setPageSize(Integer.parseInt(pageTotal));
+// }
 //
-//			table.parseHtml(dga.getTagBody());
-//			dga.setTemplate(table);
-//			dga.parse();
+// } else if ("true".equals(pageFlag)) {
+// dga.setPageFlag(true);
+// dga.setPageIndex(StringUtil.isEmpty(pageIndex) ? 0 :
+// Integer.parseInt(pageIndex));
+// dga.setPageSize(StringUtil.isEmpty(pageSize) ? 0 :
+// Integer.parseInt(pageSize));
+// }
 //
-//			OutputStream os = response.getOutputStream();
+// table.parseHtml(dga.getTagBody());
+// dga.setTemplate(table);
+// dga.parse();
 //
-//			Method m = Current.prepareMethod(request, response, method, new Class[] { DataGridAction.class });
-//			if (!PrivCheck.check(m, request, response)) {
-//				return;
-//			}
+// OutputStream os = response.getOutputStream();
 //
-//			RequestData map = WebCurrent.getRequest();
-//			for (String k : map.keyArray()) {
-//				if (k.startsWith(xls)) {
-//					Object v = map.get(k);
-//					map.remove(k);
-//					map.put(k.substring(xls.length()), v);
-//				}
-//			}
-//			dga.setParams(map);
-//			dga.Response = Current.getResponse();
-//			Current.invokeMethod(m, new Object[] { dga });
+// Method m = Current.prepareMethod(request, response, method, new Class[] {
+// DataGridAction.class });
+// if (!PrivCheck.check(m, request, response)) {
+// return;
+// }
 //
-//			String[] rows = (String[]) null;
-//			if (StringUtil.isNotEmpty(strRows)) {
-//				rows = strRows.split(",");
-//			}
+// RequestData map = WebCurrent.getRequest();
+// for (String k : map.keyArray()) {
+// if (k.startsWith(xls)) {
+// Object v = map.get(k);
+// map.remove(k);
+// map.put(k.substring(xls.length()), v);
+// }
+// }
+// dga.setParams(map);
+// dga.Response = Current.getResponse();
+// Current.invokeMethod(m, new Object[] { dga });
 //
-//			HtmlTable ht = dga.getTable();
-//			if ((ht.getChildren().size() > 0) && ("blank".equalsIgnoreCase(ht.getTR(ht.getChildren().size() - 1).getAttribute("ztype")))) {
-//				ht.removeTR(ht.getChildren().size() - 1);
-//			}
-//			HtmlUtil.htmlTableToExcel(os, ht, strWidths.split(","), strIndexes.split(","), rows);
+// String[] rows = (String[]) null;
+// if (StringUtil.isNotEmpty(strRows)) {
+// rows = strRows.split(",");
+// }
 //
-//			os.flush();
-//			os.close();
+// HtmlTable ht = dga.getTable();
+// if ((ht.getChildren().size() > 0) &&
+// ("blank".equalsIgnoreCase(ht.getTR(ht.getChildren().size() -
+// 1).getAttribute("ztype")))) {
+// ht.removeTR(ht.getChildren().size() - 1);
+// }
+// HtmlUtil.htmlTableToExcel(os, ht, strWidths.split(","),
+// strIndexes.split(","), rows);
 //
-//			os = null;
-//			response.flushBuffer();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+// os.flush();
+// os.close();
 //
-//	public static void sqlBind(DataGridAction dgp) {
-//		dgp.bindData(new QueryBuilder((String) dgp.getParams().get("_ARK_DATAGRID_SQL"), new Object[0]));
-//	}
-//}
+// os = null;
+// response.flushBuffer();
+// } catch (Exception e) {
+// e.printStackTrace();
+// }
+// }
+//
+// public static void sqlBind(DataGridAction dgp) {
+// dgp.bindData(new QueryBuilder((String)
+// dgp.getParams().get("_ARK_DATAGRID_SQL"), new Object[0]));
+// }
+// }

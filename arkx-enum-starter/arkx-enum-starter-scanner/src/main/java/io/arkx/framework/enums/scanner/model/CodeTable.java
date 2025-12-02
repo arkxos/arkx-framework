@@ -1,8 +1,8 @@
 package io.arkx.framework.enums.scanner.model;
 
-import io.arkx.framework.enums.core.enums.CodeEnum;
-
 import java.util.List;
+
+import io.arkx.framework.enums.core.enums.CodeEnum;
 
 /**
  * @author: zhuCan
@@ -31,14 +31,12 @@ public class CodeTable {
      */
     private String classPath;
 
-
     public CodeTable(String enumName, List<CodeItem> items, CodeEnum defaultItem, String classPath) {
         this.enumName = enumName;
         this.items = items;
         this.defaultItem = defaultItem;
         this.classPath = classPath;
     }
-
 
     public String getEnumName() {
         return enumName;

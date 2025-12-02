@@ -1,19 +1,5 @@
 package io.arkx.framework.data.jpa.hibernate;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import jakarta.persistence.Column;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
-import org.hibernate.internal.CoreMessageLogger;
-import org.hibernate.internal.util.ReflectHelper;
-import org.hibernate.type.descriptor.java.DataHelper;
-import org.hibernate.usertype.DynamicParameterizedType;
-import org.hibernate.usertype.UserType;
-import org.jboss.logging.Logger;
-import org.springframework.util.ReflectionUtils;
-
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
@@ -25,25 +11,42 @@ import java.sql.*;
 import java.util.Objects;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.internal.CoreMessageLogger;
+import org.hibernate.internal.util.ReflectHelper;
+import org.hibernate.type.descriptor.java.DataHelper;
+import org.hibernate.usertype.DynamicParameterizedType;
+import org.hibernate.usertype.UserType;
+import org.jboss.logging.Logger;
+import org.springframework.util.ReflectionUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
+import jakarta.persistence.Column;
+
 public class JSONType implements UserType, DynamicParameterizedType, Serializable {
     private static final long serialVersionUID = 352044032843534075L;
-    private static final CoreMessageLogger LOG = Logger.getMessageLogger(CoreMessageLogger.class, JSONType.class.getName());
+    private static final CoreMessageLogger LOG = Logger.getMessageLogger(CoreMessageLogger.class,
+            JSONType.class.getName());
     public static final String TYPE = "io.arkx.data.jpa.JSONType";
     public static final String CLASS_NAME = "class";
     private int sqlType = Types.VARCHAR;
     private Type type = Object.class;
 
-//    @Override
-//    public int[] sqlTypes() {
-//        return new int[]{sqlType};
-//    }
+    // @Override
+    // public int[] sqlTypes() {
+    // return new int[]{sqlType};
+    // }
 
-	@Override
-	public int getSqlType() {
-		return sqlType;
-	}
+    @Override
+    public int getSqlType() {
+        return sqlType;
+    }
 
-	@Override
+    @Override
     public Class returnedClass() {
         if (type instanceof ParameterizedType) {
             return (Class) ((ParameterizedType) type).getRawType();
@@ -62,15 +65,18 @@ public class JSONType implements UserType, DynamicParameterizedType, Serializabl
         return x.hashCode();
     }
 
-	@Override
-	public Object nullSafeGet(ResultSet rs, int i, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws SQLException {
-//		return null;
-//	}
-//
-//	@Override
-//    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException, SQLException {
-//		String value = extractString(rs.getObject(names[0]));
-		String value = extractString(rs.getObject(i));
+    @Override
+    public Object nullSafeGet(ResultSet rs, int i, SharedSessionContractImplementor sharedSessionContractImplementor,
+            Object o) throws SQLException {
+        // return null;
+        // }
+        //
+        // @Override
+        // public Object nullSafeGet(ResultSet rs, String[] names,
+        // SharedSessionContractImplementor sharedSessionContractImplementor, Object o)
+        // throws HibernateException, SQLException {
+        // String value = extractString(rs.getObject(names[0]));
+        String value = extractString(rs.getObject(i));
         if (rs.wasNull() || StringUtils.isEmpty(value)) {
             if (LOG.isTraceEnabled()) {
                 LOG.tracev("Returning null as column {0}", i);
@@ -84,7 +90,8 @@ public class JSONType implements UserType, DynamicParameterizedType, Serializabl
     }
 
     @Override
-    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor sharedSessionContractImplementor) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement st, Object value, int index,
+            SharedSessionContractImplementor sharedSessionContractImplementor) throws HibernateException, SQLException {
         if (value == null) {
             if (LOG.isTraceEnabled()) {
                 LOG.tracev("Binding null to parameter: {0}", index);
@@ -109,15 +116,12 @@ public class JSONType implements UserType, DynamicParameterizedType, Serializabl
     @Override
     public Object deepCopy(Object value) throws HibernateException {
         return value;
-/*      if (value instanceof JSONObject) {
-            return ((JSONObject) value).clone();
-        } else if (value instanceof Cloneable) {
-            return ObjectUtils.clone(value);
-        } else if (value instanceof Serializable) {
-            return SerializationHelper.clone((Serializable) value);
-        } else {
-            return value;
-        }*/
+        /*
+         * if (value instanceof JSONObject) { return ((JSONObject) value).clone(); }
+         * else if (value instanceof Cloneable) { return ObjectUtils.clone(value); }
+         * else if (value instanceof Serializable) { return
+         * SerializationHelper.clone((Serializable) value); } else { return value; }
+         */
     }
 
     @Override
@@ -154,8 +158,8 @@ public class JSONType implements UserType, DynamicParameterizedType, Serializabl
         } catch (Exception e) {
             LOG.error(e.getMessage());
         }
-        final DynamicParameterizedType.ParameterType reader = (DynamicParameterizedType.ParameterType) parameters.get(
-                DynamicParameterizedType.PARAMETER_TYPE);
+        final DynamicParameterizedType.ParameterType reader = (DynamicParameterizedType.ParameterType) parameters
+                .get(DynamicParameterizedType.PARAMETER_TYPE);
         if (reader != null) {
             type = reader.getReturnedClass();
             parseSqlType(reader.getAnnotationsMethod());

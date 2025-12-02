@@ -11,5 +11,5 @@ package io.arkx.framework.data.db.common.event;
 
 public interface ExceptionHandler {
 
-  void handleException(ListenedEvent event, Throwable throwable);
+    void handleException(ListenedEvent event, Throwable throwable);
 }

@@ -1,5 +1,8 @@
 package io.arkx.framework.avatarmq.core;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.Phaser;
+
 import io.arkx.framework.avatarmq.broker.SendMessageLauncher;
 import io.arkx.framework.avatarmq.consumer.ClustersState;
 import io.arkx.framework.avatarmq.consumer.ConsumerContext;
@@ -7,9 +10,6 @@ import io.arkx.framework.avatarmq.model.*;
 import io.arkx.framework.avatarmq.msg.ConsumerAckMessage;
 import io.arkx.framework.avatarmq.msg.Message;
 import io.arkx.framework.avatarmq.netty.NettyUtil;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.Phaser;
 
 /**
  * @filename:SendMessageTask.java
@@ -34,7 +34,8 @@ public class SendMessageTask implements Callable<Void> {
             Message msg = task.getMessage();
 
             if (ConsumerContext.selectByClusters(task.getClusters()) != null) {
-                RemoteChannelData channel = ConsumerContext.selectByClusters(task.getClusters()).nextRemoteChannelData();
+                RemoteChannelData channel = ConsumerContext.selectByClusters(task.getClusters())
+                        .nextRemoteChannelData();
 
                 ResponseMessage response = new ResponseMessage();
                 response.setMsgSource(MessageSource.AvatarMQBroker);

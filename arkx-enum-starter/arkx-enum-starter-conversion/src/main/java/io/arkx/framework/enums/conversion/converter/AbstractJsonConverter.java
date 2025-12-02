@@ -1,25 +1,26 @@
 package io.arkx.framework.enums.conversion.converter;
 
+import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import jakarta.persistence.AttributeConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import jakarta.persistence.AttributeConverter;
 
 /**
  * @author: zhuCan
  * @date: 2019-07-17 16:17
- * @description: 通用型 实体类jsonBean <--> json 字段 转换基类
- * 使用方式 :
- * 1. 在实体类的字段上面 @Convert(Converter=子类.class)
- * 2. 在子类上加入 @Converter(autoApply = true), 可开启jpa全局自动转换
+ * @description: 通用型 实体类jsonBean <--> json 字段 转换基类 使用方式 : 1.
+ *               在实体类的字段上面 @Convert(Converter=子类.class) 2.
+ *               在子类上加入 @Converter(autoApply = true), 可开启jpa全局自动转换
  */
 public abstract class AbstractJsonConverter<T> implements AttributeConverter<T, String> {
 

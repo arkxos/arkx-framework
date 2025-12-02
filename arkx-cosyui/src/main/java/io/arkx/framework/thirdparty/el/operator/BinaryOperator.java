@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -61,50 +61,50 @@ import io.arkx.framework.thirdparty.el.Logger;
 /**
  * <p>
  * This is the superclass for all binary operators
- * 
+ *
  * @author Nathan Abramson - Art Technology Group
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public abstract class BinaryOperator {
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public BinaryOperator() {
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public BinaryOperator() {
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	public abstract String getOperatorSymbol();
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the symbol representing the operator
+     **/
+    public abstract String getOperatorSymbol();
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given pair of values
-	 **/
-	public abstract Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException;
+    // -------------------------------------
+    /**
+     * Applies the operator to the given pair of values
+     **/
+    public abstract Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException;
 
-	// -------------------------------------
-	/**
-	 * Returns true if evaluation is necessary given the specified Left
-	 * value. The And/OrOperators make use of this
-	 **/
-	public boolean shouldEvaluate(Object pLeft) {
-		return true;
-	}
+    // -------------------------------------
+    /**
+     * Returns true if evaluation is necessary given the specified Left value. The
+     * And/OrOperators make use of this
+     **/
+    public boolean shouldEvaluate(Object pLeft) {
+        return true;
+    }
 
-	// -------------------------------------
-	/**
-	 * Returns true if the operator expects its arguments to be coerced
-	 * to Booleans. The And/Or operators set this to true.
-	 **/
-	public boolean shouldCoerceToBoolean() {
-		return false;
-	}
+    // -------------------------------------
+    /**
+     * Returns true if the operator expects its arguments to be coerced to Booleans.
+     * The And/Or operators set this to true.
+     **/
+    public boolean shouldCoerceToBoolean() {
+        return false;
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 }

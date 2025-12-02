@@ -1,13 +1,14 @@
 package io.arkx.framework.message.tcp.codec;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler.Sharable;
-import org.jboss.marshalling.Marshaller;
-
 import java.io.IOException;
 
+import org.jboss.marshalling.Marshaller;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler.Sharable;
+
 /**
- * 
+ *
  * @author Darkness
  * @date 2017年4月11日 下午3:43:36
  * @version 1.0
@@ -16,24 +17,24 @@ import java.io.IOException;
 @Sharable
 public class MarshallingEncoder {
 
-	private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
-	Marshaller marshaller;
+    private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
+    Marshaller marshaller;
 
-	public MarshallingEncoder() throws IOException {
-		marshaller = MarshallingCodecFactory.buildMarshalling();
-	}
+    public MarshallingEncoder() throws IOException {
+        marshaller = MarshallingCodecFactory.buildMarshalling();
+    }
 
-	protected void encode(Object msg, ByteBuf out) throws Exception {
-		try {
-			int lengthPos = out.writerIndex();
-			out.writeBytes(LENGTH_PLACEHOLDER);
-			ChannelBufferByteOutput output = new ChannelBufferByteOutput(out);
-			marshaller.start(output);
-			marshaller.writeObject(msg);
-			marshaller.finish();
-			out.setInt(lengthPos, out.writerIndex() - lengthPos - 4);
-		} finally {
-			marshaller.close();
-		}
-	}
+    protected void encode(Object msg, ByteBuf out) throws Exception {
+        try {
+            int lengthPos = out.writerIndex();
+            out.writeBytes(LENGTH_PLACEHOLDER);
+            ChannelBufferByteOutput output = new ChannelBufferByteOutput(out);
+            marshaller.start(output);
+            marshaller.writeObject(msg);
+            marshaller.finish();
+            out.setInt(lengthPos, out.writerIndex() - lengthPos - 4);
+        } finally {
+            marshaller.close();
+        }
+    }
 }

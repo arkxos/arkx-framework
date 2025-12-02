@@ -1,21 +1,13 @@
 package io.arkx.framework.data.jpa.repository;
 
-import io.arkx.framework.boot.spring.IocBeanRegister;
-import io.arkx.framework.boot.spring.axon.Auditor;
-import io.arkx.framework.boot.spring.axon.CurrentAuditor;
-import io.arkx.framework.commons.collection.DataTable;
-import io.arkx.framework.commons.collection.tree.Treex;
-import io.arkx.framework.commons.exception.ServiceException;
-import io.arkx.framework.commons.util.ArkSpringContextHolder;
-import io.arkx.framework.commons.util.StringUtil;
-import io.arkx.framework.commons.util.SystemIdGenerator;
-import io.arkx.framework.commons.util.UuidUtil;
-import io.arkx.framework.data.common.entity.*;
-import io.arkx.framework.data.common.repository.ExtBaseRepository;
-import io.arkx.framework.data.jdbc.ResultDataTable;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
+import java.beans.PropertyDescriptor;
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.*;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.persister.entity.EntityPersister;
@@ -32,53 +24,66 @@ import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
-import java.beans.PropertyDescriptor;
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.*;
+import io.arkx.framework.boot.spring.IocBeanRegister;
+import io.arkx.framework.boot.spring.axon.Auditor;
+import io.arkx.framework.boot.spring.axon.CurrentAuditor;
+import io.arkx.framework.commons.collection.DataTable;
+import io.arkx.framework.commons.collection.tree.Treex;
+import io.arkx.framework.commons.exception.ServiceException;
+import io.arkx.framework.commons.util.ArkSpringContextHolder;
+import io.arkx.framework.commons.util.StringUtil;
+import io.arkx.framework.commons.util.SystemIdGenerator;
+import io.arkx.framework.commons.util.UuidUtil;
+import io.arkx.framework.data.common.entity.*;
+import io.arkx.framework.data.common.repository.ExtBaseRepository;
+import io.arkx.framework.data.jdbc.ResultDataTable;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 
 /**
- * <p>通用Jpa仓库实现</p>
+ * <p>
+ * 通用Jpa仓库实现
+ * </p>
+ *
  * @author Darkness
  * @date 2019-07-19 18:41:49
  * @version V1.0
  */
-public class BaseJpaRepositoryImpl<T, ID extends Serializable>
-		extends SimpleJpaRepository<T, ID>
-		implements ExtBaseRepository<T, ID> {
+public class BaseJpaRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
+        implements
+            ExtBaseRepository<T, ID> {
 
-	private Class<T> domainClass;
-	private EntityManager entityManager;
-	JpaEntityInformation<T, Serializable> entityInformation;
-	private SystemIdGenerator systemIdGenerator;
-	private boolean isStatusAble = false; // 实体类是否弃用状态字段
+    private Class<T> domainClass;
+    private EntityManager entityManager;
+    JpaEntityInformation<T, Serializable> entityInformation;
+    private SystemIdGenerator systemIdGenerator;
+    private boolean isStatusAble = false; // 实体类是否弃用状态字段
     private Method statusReadMethod;// 状态字段读方法
     private Method statusWriteMethod;// 状态字段写方法
-    
-	public BaseJpaRepositoryImpl(JpaEntityInformation<T, Serializable> entityInformation, EntityManager entityManager) {
-		super(entityInformation, entityManager);
-		this.entityManager = entityManager;
-		this.entityInformation = entityInformation;
-		this.domainClass = entityInformation.getJavaType();
-		this.initStatusInfo();
-	}
 
-	/**
-	 * 初始化状态信息
-	 */
-	private void initStatusInfo() {
-		PropertyDescriptor descriptor = findFieldPropertyDescriptor(entityInformation.getJavaType(), Status.class);
-		isStatusAble = descriptor != null;
-		if (isStatusAble) {
-			statusReadMethod = descriptor.getReadMethod();
-			statusWriteMethod = descriptor.getWriteMethod();
-		}
-	}
-	
-	/**
+    public BaseJpaRepositoryImpl(JpaEntityInformation<T, Serializable> entityInformation, EntityManager entityManager) {
+        super(entityInformation, entityManager);
+        this.entityManager = entityManager;
+        this.entityInformation = entityInformation;
+        this.domainClass = entityInformation.getJavaType();
+        this.initStatusInfo();
+    }
+
+    /**
+     * 初始化状态信息
+     */
+    private void initStatusInfo() {
+        PropertyDescriptor descriptor = findFieldPropertyDescriptor(entityInformation.getJavaType(), Status.class);
+        isStatusAble = descriptor != null;
+        if (isStatusAble) {
+            statusReadMethod = descriptor.getReadMethod();
+            statusWriteMethod = descriptor.getWriteMethod();
+        }
+    }
+
+    /**
      * 根据id查询map结构数据
      */
     @Override
@@ -104,7 +109,7 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
         Map<ID, T> result = new LinkedHashMap<>();
         for (T t : list) {
             if (t != null) {
-                result.put((ID)entityInformation.getId(t), t);
+                result.put((ID) entityInformation.getId(t), t);
             }
         }
         return result;
@@ -117,9 +122,9 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
     @Transactional
     public void toggleStatus(ID id) {
         if (isStatusAble && id != null) {
-        	Optional<T> targetOptional = findById(id);
+            Optional<T> targetOptional = findById(id);
             if (targetOptional.isPresent()) {
-            	T target = targetOptional.get();
+                T target = targetOptional.get();
                 Status status = (Status) ReflectionUtils.invokeMethod(statusReadMethod, target);
                 if (status == Status.ACTIVE || status == Status.INACTIVE) {
                     ReflectionUtils.invokeMethod(statusWriteMethod, target,
@@ -143,6 +148,7 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
 
     /**
      * 改变实体状态
+     *
      * @param id
      * @param status
      */
@@ -150,7 +156,7 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
         if (isStatusAble && id != null) {
             Optional<T> targetOptional = findById(id);
             if (targetOptional.isPresent()) {
-            	T target = targetOptional.get();
+                T target = targetOptional.get();
                 Status oldStatus = (Status) ReflectionUtils.invokeMethod(statusReadMethod, target);
                 if (oldStatus != status) {
                     ReflectionUtils.invokeMethod(statusWriteMethod, target, status);
@@ -160,243 +166,257 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable>
         }
     }
 
-	@Override
-	public <S extends T> S insert(S instance) {
-		return save(instance);
-	}
+    @Override
+    public <S extends T> S insert(S instance) {
+        return save(instance);
+    }
 
-	@Override
-	public <S extends T> void batchInsert(List<S> entities) {
+    @Override
+    public <S extends T> void batchInsert(List<S> entities) {
 
-	}
+    }
 
-	@Override
-	public <S extends T> S update(S instance) {
-		return save(instance);
-	}
+    @Override
+    public <S extends T> S update(S instance) {
+        return save(instance);
+    }
 
-	@Override
-	public boolean support(String modelType) {
-		return domainClass.getName().equals(modelType);
-	}
+    @Override
+    public boolean support(String modelType) {
+        return domainClass.getName().equals(modelType);
+    }
 
-	public SystemIdGenerator getSystemIdGenerator() {
-		if (systemIdGenerator == null) {
-			systemIdGenerator = ArkSpringContextHolder.getBean(SystemIdGenerator.class);
-		}
-		return systemIdGenerator;
-	}
+    public SystemIdGenerator getSystemIdGenerator() {
+        if (systemIdGenerator == null) {
+            systemIdGenerator = ArkSpringContextHolder.getBean(SystemIdGenerator.class);
+        }
+        return systemIdGenerator;
+    }
 
-	@Override
-	@Transactional
-	public <S extends T> S save(S entity) {
-		if(entity instanceof BaseEntity) {
-			BaseEntity baseEntity = (BaseEntity)entity;
-			String operatorId = "";
-			LocalDateTime occrOn = LocalDateTime.now();
-			
-			Auditor currentAuditor = CurrentAuditor.get(); 
-			if(currentAuditor != null) {
-				operatorId = currentAuditor.getOperatorId();
-				occrOn = currentAuditor.getOccurredOn();
-			} else {
-//				operatorId = Account.getUserName();
-				occrOn = LocalDateTime.now();
-			}
+    @Override
+    @Transactional
+    public <S extends T> S save(S entity) {
+        if (entity instanceof BaseEntity) {
+            BaseEntity baseEntity = (BaseEntity) entity;
+            String operatorId = "";
+            LocalDateTime occrOn = LocalDateTime.now();
 
-			if(operatorId == null) {
-				operatorId = "unknown";
-			}
-			if(StringUtil.isEmpty(baseEntity.getCreateBy())) {
-				baseEntity.setCreateBy(operatorId);
-				baseEntity.setCreateTime(occrOn);
-			}
-			
-			if(StringUtil.isEmpty(baseEntity.getUpdateBy())) {
-				baseEntity.setUpdateBy(operatorId);
-				baseEntity.setUpdateTime(occrOn);
-			}
-		}
+            Auditor currentAuditor = CurrentAuditor.get();
+            if (currentAuditor != null) {
+                operatorId = currentAuditor.getOperatorId();
+                occrOn = currentAuditor.getOccurredOn();
+            } else {
+                // operatorId = Account.getUserName();
+                occrOn = LocalDateTime.now();
+            }
 
-		if(entity instanceof LongId baseEntity) {
-			if (baseEntity.getId() == null) {
-				Long id = getSystemIdGenerator().generate();
-				baseEntity.setId(id);
-			}
-		} else if(entity instanceof StringId baseEntity) {
-			if (StringUtil.isEmpty(baseEntity.getId())) {
-				baseEntity.setId(UuidUtil.base58Uuid());
-			}
-		}
+            if (operatorId == null) {
+                operatorId = "unknown";
+            }
+            if (StringUtil.isEmpty(baseEntity.getCreateBy())) {
+                baseEntity.setCreateBy(operatorId);
+                baseEntity.setCreateTime(occrOn);
+            }
 
-		if (TreeEntity.class.isAssignableFrom(entity.getClass())) {
-			TreeEntity treeEntity = (TreeEntity) entity;
+            if (StringUtil.isEmpty(baseEntity.getUpdateBy())) {
+                baseEntity.setUpdateBy(operatorId);
+                baseEntity.setUpdateTime(occrOn);
+            }
+        }
 
-//			if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
-//				if (StringUtil.isEmpty(treeEntity.getParentInnerCode()) || "0".equals(treeEntity.getParentInnerCode())) {
-//					treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", 4));
-//					treeEntity.setParentInnerCode(treeEntity.getInnerCode());
-//
-//					Long sortOrder = jdbcTemplate().queryForObject(
-//							"SELECT max(SORT_ORDER) FROM " + getTableName() + " ORDER BY SORT_ORDER", Long.class);
-//					if (sortOrder == null) {
-//						sortOrder = 0L;
-//					}
-//					treeEntity.setSortOrder(sortOrder + 1L);
-//				} else {
-//					Query query = entityManager.createQuery("FROM " + entity.getClass().getSimpleName() + " WHERE innerCode='"+treeEntity.getParentInnerCode()+"'");
-//					TreeEntity parentEntity = (TreeEntity)query.getSingleResult();
-//
-//					if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
-//						treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", parentEntity.getInnerCode(), 4));
-//					}
-////					treeEntity.setParentInnerCode(parentEntity.getInnerCode());
-//					treeEntity.setTreeLevel(parentEntity.getTreeLevel() + 1L);
-//
-//					Long sortOrder = jdbcTemplate().queryForObject(
-//							"SELECT max(SORT_ORDER) FROM " + getTableName() + " WHERE INNER_CODE LIKE ?", new Object[] {parentEntity.getInnerCode() + "%"}, Long.class);
-//					if (sortOrder == null) {
-//						sortOrder = 0L;
-//					}
-//					treeEntity.setSortOrder(sortOrder + 1L);
-//
-//					if ("Y".equals(parentEntity.getIsLeaf())) {
-//						parentEntity.setIsLeaf("N");
-//					}
-//					if (parentEntity.getIsTreeLeaf() == 1) {
-//						parentEntity.setIsTreeLeaf(0);
-//					}
-////					getSession().createQuery("update " + EntityAnnotationManager.getTableName(entity.getClass()) + " set sort_order=sort_order+1 where sort_order>?", orderflag).executeNoQuery();
-//				}
-//			}
-		}
-		
-		return super.save(entity);
-	}
-	
-	@Override
-	public DataTable queryDataTable(String sql, Object... params) {
-		DataTable dataTable = jdbcTemplate().query(sql, params, new ResultSetExtractor<DataTable>() {
+        if (entity instanceof LongId baseEntity) {
+            if (baseEntity.getId() == null) {
+                Long id = getSystemIdGenerator().generate();
+                baseEntity.setId(id);
+            }
+        } else if (entity instanceof StringId baseEntity) {
+            if (StringUtil.isEmpty(baseEntity.getId())) {
+                baseEntity.setId(UuidUtil.base58Uuid());
+            }
+        }
 
-			@Override
-			public DataTable extractData(ResultSet rs) throws SQLException, DataAccessException {
-				return new ResultDataTable(rs);
-			}});
-		
-		return dataTable;
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public List<Map<String, Object>> queryMap(String sql, Object... params) {
-		Query query = entityManager.createNativeQuery(sql);
-		if(params != null) {
-			int i = 0;
-			for (Object param : params) {
-				query.setParameter(i++, param);
-			}
-		}
+        if (TreeEntity.class.isAssignableFrom(entity.getClass())) {
+            TreeEntity treeEntity = (TreeEntity) entity;
 
-		query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-		List rows = query.getResultList();
-		return rows;
-	}
+            // if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
+            // if (StringUtil.isEmpty(treeEntity.getParentInnerCode()) ||
+            // "0".equals(treeEntity.getParentInnerCode())) {
+            // treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName()
+            // + "InnerCode", 4));
+            // treeEntity.setParentInnerCode(treeEntity.getInnerCode());
+            //
+            // Long sortOrder = jdbcTemplate().queryForObject(
+            // "SELECT max(SORT_ORDER) FROM " + getTableName() + " ORDER BY SORT_ORDER",
+            // Long.class);
+            // if (sortOrder == null) {
+            // sortOrder = 0L;
+            // }
+            // treeEntity.setSortOrder(sortOrder + 1L);
+            // } else {
+            // Query query = entityManager.createQuery("FROM " +
+            // entity.getClass().getSimpleName() + " WHERE
+            // innerCode='"+treeEntity.getParentInnerCode()+"'");
+            // TreeEntity parentEntity = (TreeEntity)query.getSingleResult();
+            //
+            // if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
+            // treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName()
+            // + "InnerCode", parentEntity.getInnerCode(), 4));
+            // }
+            //// treeEntity.setParentInnerCode(parentEntity.getInnerCode());
+            // treeEntity.setTreeLevel(parentEntity.getTreeLevel() + 1L);
+            //
+            // Long sortOrder = jdbcTemplate().queryForObject(
+            // "SELECT max(SORT_ORDER) FROM " + getTableName() + " WHERE INNER_CODE LIKE ?",
+            // new Object[] {parentEntity.getInnerCode() + "%"}, Long.class);
+            // if (sortOrder == null) {
+            // sortOrder = 0L;
+            // }
+            // treeEntity.setSortOrder(sortOrder + 1L);
+            //
+            // if ("Y".equals(parentEntity.getIsLeaf())) {
+            // parentEntity.setIsLeaf("N");
+            // }
+            // if (parentEntity.getIsTreeLeaf() == 1) {
+            // parentEntity.setIsTreeLeaf(0);
+            // }
+            //// getSession().createQuery("update " +
+            // EntityAnnotationManager.getTableName(entity.getClass()) + " set
+            // sort_order=sort_order+1 where sort_order>?", orderflag).executeNoQuery();
+            // }
+            // }
+        }
 
-	@Override
-	public List<T> queryList(String sql, Object... params) {
-		Query query = entityManager.createNativeQuery(sql);
-		if(params != null) {
-			int i = 1;
-			for (Object param : params) {
-				query.setParameter(i++, param);
-			}
-		}
+        return super.save(entity);
+    }
 
-		query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.TO_LIST);
-		List rows = query.getResultList();
-		return rows;
-	}
-	
-//	public long queryForLong(String sql, Object... params) {
-//		Object result = jdbcTemplate().queryForObject(sql, params, Object.class);
-//		if(result == null) {
-//			return 0L;
-//		}
-//		return Long.valueOf(result+"");
-//	}
+    @Override
+    public DataTable queryDataTable(String sql, Object... params) {
+        DataTable dataTable = jdbcTemplate().query(sql, params, new ResultSetExtractor<DataTable>() {
 
-	@Override
-	public long queryForLong(String sql, Object... params)  {
-		List<Long> results = jdbcTemplate().query(sql, params, new RowMapperResultSetExtractor<>(new SingleColumnRowMapper<>(Long.class)));
-		if(results == null) {
-			return 0L;
-		}
-		if(results.isEmpty()) {
-			return 0L;
-		}
-		if(results.get(0) == null) {
-			return 0L;
-		}
+            @Override
+            public DataTable extractData(ResultSet rs) throws SQLException, DataAccessException {
+                return new ResultDataTable(rs);
+            }
+        });
 
-		return results.get(0);
-	}
+        return dataTable;
+    }
 
-	@Override
-	public int executeSql(String sql, Object... params) {
-		return 0;
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public List<Map<String, Object>> queryMap(String sql, Object... params) {
+        Query query = entityManager.createNativeQuery(sql);
+        if (params != null) {
+            int i = 0;
+            for (Object param : params) {
+                query.setParameter(i++, param);
+            }
+        }
 
-	@Override
-	public Treex<String, T> findAllTree() {
-		return null;
-	}
+        query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        List rows = query.getResultList();
+        return rows;
+    }
 
-	@Override
-	public Treex<String, T> queryTreeByParentId(String parentId) {
-		return null;
-	}
+    @Override
+    public List<T> queryList(String sql, Object... params) {
+        Query query = entityManager.createNativeQuery(sql);
+        if (params != null) {
+            int i = 1;
+            for (Object param : params) {
+                query.setParameter(i++, param);
+            }
+        }
 
-	@Override
-	public List<T> findChildrenByParentId(ID parentId) {
-		return List.of();
-	}
+        query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.TO_LIST);
+        List rows = query.getResultList();
+        return rows;
+    }
 
-	public String getTableName() {
-		//通过EntityManager获取factory
-		EntityManagerFactory entityManagerFactory = entityManager.getEntityManagerFactory();
-		SessionFactoryImpl sessionFactory = (SessionFactoryImpl)entityManagerFactory.unwrap(SessionFactory.class);
-		Map<String, EntityPersister> persisterMap = sessionFactory.getMetamodel().entityPersisters();
-		for(Map.Entry<String,EntityPersister> entity : persisterMap.entrySet()){
-		    Class<?> targetClass = entity.getValue().getMappedClass();
-		    SingleTableEntityPersister persister = (SingleTableEntityPersister)entity.getValue();
-		    
-		    String entityName = targetClass.getSimpleName();//Entity的名称
-		    String tableName = persister.getTableName();//Entity对应的表的英文名
-		 
-//		    System.out.println("类名：" + entityName + " => 表名：" + tableName);
-		    
-		    if (targetClass == domainClass) {
-		    	return tableName;
-		    }
-		 
-		    //属性
-//		    Iterable<AttributeDefinition> attributes = persister.getAttributes();
-//		    for(AttributeDefinition attr : attributes){
-//		        String propertyName = attr.getName(); //在entity中的属性名称
-//		        String[] columnName = persister.getPropertyColumnNames(propertyName); //对应数据库表中的字段名
-//		        String type = "";
-//		        PropertyDescriptor targetPd = BeanUtils.getPropertyDescriptor(targetClass, propertyName);
-//		        if(targetPd != null){
-//		            type = targetPd.getPropertyType().getSimpleName();
-//		        }
-//		        System.out.println("属性名：" + propertyName + " => 类型：" + type + " => 数据库字段名：" + columnName[0]);
-//		    }
-		}
-		throw new ServiceException("非jpa管理的类" + domainClass);
-	}
-	
-	public JdbcTemplate jdbcTemplate() {
-		return IocBeanRegister.getBean(JdbcTemplate.class);
-	}
+    // public long queryForLong(String sql, Object... params) {
+    // Object result = jdbcTemplate().queryForObject(sql, params, Object.class);
+    // if(result == null) {
+    // return 0L;
+    // }
+    // return Long.valueOf(result+"");
+    // }
+
+    @Override
+    public long queryForLong(String sql, Object... params) {
+        List<Long> results = jdbcTemplate().query(sql, params,
+                new RowMapperResultSetExtractor<>(new SingleColumnRowMapper<>(Long.class)));
+        if (results == null) {
+            return 0L;
+        }
+        if (results.isEmpty()) {
+            return 0L;
+        }
+        if (results.get(0) == null) {
+            return 0L;
+        }
+
+        return results.get(0);
+    }
+
+    @Override
+    public int executeSql(String sql, Object... params) {
+        return 0;
+    }
+
+    @Override
+    public Treex<String, T> findAllTree() {
+        return null;
+    }
+
+    @Override
+    public Treex<String, T> queryTreeByParentId(String parentId) {
+        return null;
+    }
+
+    @Override
+    public List<T> findChildrenByParentId(ID parentId) {
+        return List.of();
+    }
+
+    public String getTableName() {
+        // 通过EntityManager获取factory
+        EntityManagerFactory entityManagerFactory = entityManager.getEntityManagerFactory();
+        SessionFactoryImpl sessionFactory = (SessionFactoryImpl) entityManagerFactory.unwrap(SessionFactory.class);
+        Map<String, EntityPersister> persisterMap = sessionFactory.getMetamodel().entityPersisters();
+        for (Map.Entry<String, EntityPersister> entity : persisterMap.entrySet()) {
+            Class<?> targetClass = entity.getValue().getMappedClass();
+            SingleTableEntityPersister persister = (SingleTableEntityPersister) entity.getValue();
+
+            String entityName = targetClass.getSimpleName();// Entity的名称
+            String tableName = persister.getTableName();// Entity对应的表的英文名
+
+            // System.out.println("类名：" + entityName + " => 表名：" + tableName);
+
+            if (targetClass == domainClass) {
+                return tableName;
+            }
+
+            // 属性
+            // Iterable<AttributeDefinition> attributes = persister.getAttributes();
+            // for(AttributeDefinition attr : attributes){
+            // String propertyName = attr.getName(); //在entity中的属性名称
+            // String[] columnName = persister.getPropertyColumnNames(propertyName);
+            // //对应数据库表中的字段名
+            // String type = "";
+            // PropertyDescriptor targetPd = BeanUtils.getPropertyDescriptor(targetClass,
+            // propertyName);
+            // if(targetPd != null){
+            // type = targetPd.getPropertyType().getSimpleName();
+            // }
+            // System.out.println("属性名：" + propertyName + " => 类型：" + type + " => 数据库字段名：" +
+            // columnName[0]);
+            // }
+        }
+        throw new ServiceException("非jpa管理的类" + domainClass);
+    }
+
+    public JdbcTemplate jdbcTemplate() {
+        return IocBeanRegister.getBean(JdbcTemplate.class);
+    }
 
 }

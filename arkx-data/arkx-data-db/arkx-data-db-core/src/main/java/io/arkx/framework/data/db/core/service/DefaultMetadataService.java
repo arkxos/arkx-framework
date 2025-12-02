@@ -9,6 +9,16 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
 import io.arkx.framework.data.db.core.provider.ProductProviderFactory;
@@ -17,15 +27,6 @@ import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
 import io.arkx.framework.data.db.core.schema.*;
 import io.arkx.framework.data.db.core.util.GenerateSqlUtils;
 import io.arkx.framework.data.db.core.util.SyncUtil;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 用DataSource对象的元数据获取服务
@@ -41,8 +42,7 @@ public class DefaultMetadataService implements MetadataService {
 
     public DefaultMetadataService(DataSource dataSource, ProductTypeEnum type) {
         this.dataSource = dataSource;
-        this.factoryProvider = ProductProviderFactory
-                .newProvider(type, dataSource);
+        this.factoryProvider = ProductProviderFactory.newProvider(type, dataSource);
         this.metaQueryProvider = factoryProvider.createMetadataQueryProvider();
         this.dataQueryProvider = factoryProvider.createTableDataQueryProvider();
     }
@@ -164,8 +164,7 @@ public class DefaultMetadataService implements MetadataService {
                 throw new IllegalArgumentException("Table Or View Not Exist");
             }
 
-            List<ColumnDescription> columns = metaQueryProvider.queryTableColumnMeta(
-                    connection, schemaName, tableName);
+            List<ColumnDescription> columns = metaQueryProvider.queryTableColumnMeta(connection, schemaName, tableName);
 
             List<String> pks;
             String createSql;
@@ -241,10 +240,9 @@ public class DefaultMetadataService implements MetadataService {
     }
 
     @Override
-    public List<String> getDDLCreateTableSQL(MetadataProvider provider,
-                                             List<ColumnDescription> fieldNames, List<String> primaryKeys, String schemaName,
-                                             String tableName, String tableRemarks, boolean autoIncr, SourceProperties tblProperties,
-                                             String dbSyncMode, String slaveDbCode) {
+    public List<String> getDDLCreateTableSQL(MetadataProvider provider, List<ColumnDescription> fieldNames,
+            List<String> primaryKeys, String schemaName, String tableName, String tableRemarks, boolean autoIncr,
+            SourceProperties tblProperties, String dbSyncMode, String slaveDbCode) {
 
         List<ColumnDescription> targetTableColumnDescriptions = new ArrayList<>(fieldNames);
         List<String> targetTablePrimaryKeys = new ArrayList<>(primaryKeys);
@@ -261,8 +259,8 @@ public class DefaultMetadataService implements MetadataService {
             arkSyncIdColumn.setFieldType(Types.INTEGER);
             targetTableColumnDescriptions.addFirst(arkSyncIdColumn);
         }
-        return GenerateSqlUtils.getDDLCreateTableSQL(
-                provider, targetTableColumnDescriptions, targetTablePrimaryKeys, schemaName, tableName, tableRemarks, autoIncr, tblProperties);
+        return GenerateSqlUtils.getDDLCreateTableSQL(provider, targetTableColumnDescriptions, targetTablePrimaryKeys,
+                schemaName, tableName, tableRemarks, autoIncr, tblProperties);
     }
 
     @Override

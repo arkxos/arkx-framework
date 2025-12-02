@@ -1,7 +1,5 @@
 package io.arkx.framework.commons.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
@@ -12,6 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
@@ -34,7 +34,8 @@ public class StringHelper extends StringUtils {
     /**
      * 转换为字节数组
      *
-     * @param str 字符串
+     * @param str
+     *            字符串
      * @return byte[] byte [ ]
      */
     public static byte[] getBytes(String str) {
@@ -47,7 +48,8 @@ public class StringHelper extends StringUtils {
     /**
      * 转换为字节数组
      *
-     * @param bytes 字节数组
+     * @param bytes
+     *            字节数组
      * @return String string
      */
     public static String toString(byte[] bytes) {
@@ -57,8 +59,10 @@ public class StringHelper extends StringUtils {
     /**
      * 是否包含字符串
      *
-     * @param str  验证字符串
-     * @param strs 字符串组
+     * @param str
+     *            验证字符串
+     * @param strs
+     *            字符串组
      * @return 包含返回true boolean
      */
     public static boolean inString(String str, String... strs) {
@@ -75,7 +79,8 @@ public class StringHelper extends StringUtils {
     /**
      * 替换掉HTML标签方法
      *
-     * @param html the html
+     * @param html
+     *            the html
      * @return the string
      */
     public static String replaceHtml(String html) {
@@ -91,8 +96,11 @@ public class StringHelper extends StringUtils {
     /**
      * 驼峰命名法工具
      *
-     * @param s the s
-     * @return String  toCamelCase("hello_world") == "helloWorld" toCapitalizeCamelCase("hello_world") == "HelloWorld" toUnderScoreCase("helloWorld") = "hello_world"
+     * @param s
+     *            the s
+     * @return String toCamelCase("hello_world") == "helloWorld"
+     *         toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     *         toUnderScoreCase("helloWorld") = "hello_world"
      */
     public static String toCamelCase(String s) {
         if (s == null) {
@@ -122,8 +130,11 @@ public class StringHelper extends StringUtils {
     /**
      * 驼峰命名法工具
      *
-     * @param s the s
-     * @return String  toCamelCase("hello_world") == "helloWorld" toCapitalizeCamelCase("hello_world") == "HelloWorld" toUnderScoreCase("helloWorld") = "hello_world"
+     * @param s
+     *            the s
+     * @return String toCamelCase("hello_world") == "helloWorld"
+     *         toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     *         toUnderScoreCase("helloWorld") = "hello_world"
      */
     public static String toCapitalizeCamelCase(String s) {
         if (s == null) {
@@ -136,8 +147,11 @@ public class StringHelper extends StringUtils {
     /**
      * 驼峰命名法工具
      *
-     * @param s the s
-     * @return String  toCamelCase("hello_world") == "helloWorld" toCapitalizeCamelCase("hello_world") == "HelloWorld" toUnderScoreCase("helloWorld") = "hello_world"
+     * @param s
+     *            the s
+     * @return String toCamelCase("hello_world") == "helloWorld"
+     *         toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     *         toUnderScoreCase("helloWorld") = "hello_world"
      */
     public static String toUnderScoreCase(String s) {
         if (s == null) {
@@ -173,8 +187,10 @@ public class StringHelper extends StringUtils {
     /**
      * Trim to default string.
      *
-     * @param str          字符串
-     * @param defaultValue 默认值
+     * @param str
+     *            字符串
+     * @param defaultValue
+     *            默认值
      * @return String string
      */
     public static String trimToDefault(final String str, String defaultValue) {
@@ -251,7 +267,8 @@ public class StringHelper extends StringUtils {
     /**
      * 生成订单号
      *
-     * @param prefix 订单号前缀：G商品订单，F服务订单，P支付订单，R退款订单，T转账订单
+     * @param prefix
+     *            订单号前缀：G商品订单，F服务订单，P支付订单，R退款订单，T转账订单
      * @return String
      */
     public static String getSeq(String prefix) {
@@ -267,7 +284,8 @@ public class StringHelper extends StringUtils {
             }
         }
         SimpleDateFormat fm = new SimpleDateFormat("yyyyMMddHHmmss");
-        return String.format("%s%s%06d", prefix, fm.format(new Date()), (int) seq.getAndIncrement() % 1000000 + RandomHelper.randomInt(100, 999) * 1000);
+        return String.format("%s%s%06d", prefix, fm.format(new Date()),
+                (int) seq.getAndIncrement() % 1000000 + RandomHelper.randomInt(100, 999) * 1000);
     }
 
     public static void main(String[] args) {

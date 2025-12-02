@@ -1,9 +1,10 @@
 package io.arkx.framework.avatarmq.model;
 
-import io.arkx.framework.avatarmq.msg.Message;
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-import java.io.Serializable;
+import io.arkx.framework.avatarmq.msg.Message;
 
 /**
  * @filename:MessageDispatchTask.java
@@ -48,8 +49,8 @@ public class MessageDispatchTask implements Serializable {
         boolean result = false;
         if (obj != null && MessageDispatchTask.class.isAssignableFrom(obj.getClass())) {
             MessageDispatchTask task = (MessageDispatchTask) obj;
-            result = new EqualsBuilder().append(clusters, task.getClusters()).append(topic, task.getTopic()).append(message, task.getMessage())
-                    .isEquals();
+            result = new EqualsBuilder().append(clusters, task.getClusters()).append(topic, task.getTopic())
+                    .append(message, task.getMessage()).isEquals();
         }
         return result;
     }

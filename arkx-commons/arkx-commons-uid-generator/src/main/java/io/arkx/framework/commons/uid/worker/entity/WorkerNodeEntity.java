@@ -15,14 +15,14 @@
  */
 package io.arkx.framework.commons.uid.worker.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Entity for M_WORKER_NODE

@@ -1,5 +1,7 @@
 package io.arkx.framework.avatarmq.producer;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import io.arkx.framework.avatarmq.core.AvatarMQAction;
 import io.arkx.framework.avatarmq.model.MessageSource;
 import io.arkx.framework.avatarmq.model.MessageType;
@@ -9,10 +11,9 @@ import io.arkx.framework.avatarmq.msg.Message;
 import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
 import io.arkx.framework.avatarmq.netty.MessageProcessor;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 /**
  * 消息的生产者
+ *
  * @filename:AvatarMQProducer.java
  * @description:AvatarMQProducer功能模块
  * @author tangjie<https://github.com/tang-jie>
@@ -29,14 +30,14 @@ public class AvatarMQProducer extends MessageProcessor implements AvatarMQAction
     private String clusterId = "";
     private AtomicLong msgId = new AtomicLong(0L);
 
-	// 连接消息转发服务器broker的ip地址，以及生产出来消息附带的主题信息
-	public AvatarMQProducer(String brokerServerAddress, String topic) {
-		super(brokerServerAddress);
-		this.brokerServerAddress = brokerServerAddress;
-		this.topic = topic;
-	}
+    // 连接消息转发服务器broker的ip地址，以及生产出来消息附带的主题信息
+    public AvatarMQProducer(String brokerServerAddress, String topic) {
+        super(brokerServerAddress);
+        this.brokerServerAddress = brokerServerAddress;
+        this.topic = topic;
+    }
 
-	//没有连接上消息转发服务器broker就发送的话，直接应答失败
+    // 没有连接上消息转发服务器broker就发送的话，直接应答失败
     private ProducerAckMessage checkMode() {
         if (!brokerConnect) {
             ProducerAckMessage ack = new ProducerAckMessage();
@@ -47,14 +48,14 @@ public class AvatarMQProducer extends MessageProcessor implements AvatarMQAction
         return null;
     }
 
-	// 启动消息生产者
-	public void start() {
-		super.getMessageConnectFactory().connect();
-		brokerConnect = true;
-		running = true;
-	}
+    // 启动消息生产者
+    public void start() {
+        super.getMessageConnectFactory().connect();
+        brokerConnect = true;
+        running = true;
+    }
 
-	//连接消息转发服务器broker，设定生产者消息处理钩子，用于处理broker过来的消息应答
+    // 连接消息转发服务器broker，设定生产者消息处理钩子，用于处理broker过来的消息应答
     public void init() {
         ProducerHookMessageEvent hook = new ProducerHookMessageEvent();
         hook.setBrokerConnect(brokerConnect);
@@ -62,7 +63,7 @@ public class AvatarMQProducer extends MessageProcessor implements AvatarMQAction
         super.getMessageConnectFactory().setMessageHandle(new MessageProducerHandler(this, hook));
     }
 
-	// 投递消息API
+    // 投递消息API
     public ProducerAckMessage delivery(Message message) {
         if (!running || !brokerConnect) {
             return checkMode();
@@ -89,7 +90,7 @@ public class AvatarMQProducer extends MessageProcessor implements AvatarMQAction
         return result;
     }
 
-	// 关闭消息生产者
+    // 关闭消息生产者
     public void shutdown() {
         if (running) {
             running = false;

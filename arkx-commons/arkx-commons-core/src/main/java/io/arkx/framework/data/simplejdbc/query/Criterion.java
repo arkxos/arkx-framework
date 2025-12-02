@@ -4,9 +4,9 @@ import java.util.Collection;
 
 public interface Criterion {
 
-	Object getValue();
+    Object getValue();
 
-	Collection<?> getValues();
+    Collection<?> getValues();
 
-	String toSqlString();
+    String toSqlString();
 }

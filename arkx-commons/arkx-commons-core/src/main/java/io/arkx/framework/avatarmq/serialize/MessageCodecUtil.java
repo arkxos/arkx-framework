@@ -1,8 +1,8 @@
 package io.arkx.framework.avatarmq.serialize;
 
-import io.netty.buffer.ByteBuf;
-
 import java.io.IOException;
+
+import io.netty.buffer.ByteBuf;
 
 /**
  * @filename:MessageCodecUtil.java
@@ -13,9 +13,9 @@ import java.io.IOException;
  */
 public interface MessageCodecUtil {
 
-	final public static int MESSAGE_LENGTH = 4;
+    final public static int MESSAGE_LENGTH = 4;
 
-	void encode(final ByteBuf out, final Object message) throws IOException;
+    void encode(final ByteBuf out, final Object message) throws IOException;
 
-	Object decode(byte[] body) throws IOException;
+    Object decode(byte[] body) throws IOException;
 }

@@ -1,10 +1,11 @@
 package io.arkx.framework.avatarmq.netty;
 
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
+
 import io.arkx.framework.avatarmq.core.HookMessageEvent;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 
 /**
  * @filename:MessageEventWrapper.java
@@ -13,10 +14,13 @@ import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
  * @blog http://www.cnblogs.com/jietang/
  * @since 2016-8-11
  */
-public class MessageEventWrapper<T> extends ChannelInboundHandlerAdapter implements MessageEventHandler, MessageEventProxy {
+public class MessageEventWrapper<T> extends ChannelInboundHandlerAdapter
+        implements
+            MessageEventHandler,
+            MessageEventProxy {
 
-	public final static String proxyMappedName = "handleMessage";
-	
+    public final static String proxyMappedName = "handleMessage";
+
     protected MessageProcessor processor;
     protected Throwable cause;
     protected HookMessageEvent<T> hook;
@@ -55,8 +59,8 @@ public class MessageEventWrapper<T> extends ChannelInboundHandlerAdapter impleme
     }
 
     @Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		super.channelRead(ctx, msg);
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        super.channelRead(ctx, msg);
 
         ProxyFactory weaver = new ProxyFactory(wrapper);
         NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor();
@@ -68,7 +72,7 @@ public class MessageEventWrapper<T> extends ChannelInboundHandlerAdapter impleme
         proxyObject.handleMessage(ctx, msg);
     }
 
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         this.cause = cause;
         cause.printStackTrace();
     }

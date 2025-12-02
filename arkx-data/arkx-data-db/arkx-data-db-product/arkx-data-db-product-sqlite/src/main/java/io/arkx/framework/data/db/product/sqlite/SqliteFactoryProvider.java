@@ -9,6 +9,8 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.sqlite;
 
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.DefaultProductFeatures;
@@ -19,38 +21,36 @@ import io.arkx.framework.data.db.core.provider.meta.MetadataProvider;
 import io.arkx.framework.data.db.core.provider.sync.TableDataSynchronizeProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 
-import javax.sql.DataSource;
-
 @Product(ProductTypeEnum.SQLITE3)
 public class SqliteFactoryProvider extends AbstractFactoryProvider {
 
-  public SqliteFactoryProvider(DataSource dataSource) {
-    super(dataSource);
-  }
+    public SqliteFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-  @Override
-  public ProductFeatures getProductFeatures() {
-    return new DefaultProductFeatures();
-  }
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-  @Override
-  public MetadataProvider createMetadataQueryProvider() {
-    return new SqliteMetadataQueryProvider(this);
-  }
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new SqliteMetadataQueryProvider(this);
+    }
 
-  @Override
-  public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-    return new SqliteTableDataWriteProvider(this);
-  }
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new SqliteTableDataWriteProvider(this);
+    }
 
-  @Override
-  public TableManageProvider createTableManageProvider() {
-    return new SqliteTableManageProvider(this);
-  }
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new SqliteTableManageProvider(this);
+    }
 
-  @Override
-  public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    return new SqliteTableSynchronizer(this);
-  }
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new SqliteTableSynchronizer(this);
+    }
 
 }

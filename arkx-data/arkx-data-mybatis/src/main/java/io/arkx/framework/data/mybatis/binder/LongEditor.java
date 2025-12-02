@@ -15,4 +15,4 @@ public class LongEditor extends PropertiesEditor {
     public String getAsText() {
         return getValue().toString();
     }
-}  
+}

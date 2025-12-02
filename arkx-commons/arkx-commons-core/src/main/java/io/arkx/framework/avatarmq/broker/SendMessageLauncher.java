@@ -1,14 +1,14 @@
 package io.arkx.framework.avatarmq.broker;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.TimeUnit;
+
 import io.arkx.framework.avatarmq.core.CallBackInvoker;
 import io.arkx.framework.avatarmq.core.MessageSystemConfig;
 import io.arkx.framework.avatarmq.model.ResponseMessage;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @filename:SendMessageLauncher.java
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SendMessageLauncher {
 
-	private static SendMessageLauncher resource;
+    private static SendMessageLauncher resource;
 
     public static SendMessageLauncher getInstance() {
         if (resource == null) {
@@ -31,7 +31,7 @@ public class SendMessageLauncher {
         }
         return resource;
     }
-    
+
     private long timeout = MessageSystemConfig.MessageTimeOutValue;
 
     public Map<String, CallBackInvoker<Object>> invokeMap = new ConcurrentSkipListMap<>();

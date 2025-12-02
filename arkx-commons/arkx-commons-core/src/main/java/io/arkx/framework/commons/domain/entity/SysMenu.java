@@ -1,23 +1,24 @@
 package io.arkx.framework.commons.domain.entity;
 
-import io.arkx.framework.commons.domain.BaseEntity;
-import io.arkx.framework.commons.util.StringUtils;
-import jakarta.validation.constraints.NotBlank;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import io.arkx.framework.commons.domain.BaseEntity;
+import io.arkx.framework.commons.util.StringUtils;
+
+import jakarta.validation.constraints.NotBlank;
+
 /**
  * 菜单权限表 sys_menu
- * 
+ *
  * @author Darkness
  * @see io.arkx.system.model.MenuEntity
  */
 @Deprecated
-public class SysMenu extends BaseEntity
-{
+public class SysMenu extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 菜单ID */
@@ -62,173 +63,130 @@ public class SysMenu extends BaseEntity
     /** 子菜单 */
     private List<SysMenu> children = new ArrayList<SysMenu>();
 
-    public Long getMenuId()
-    {
+    public Long getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(Long menuId)
-    {
+    public void setMenuId(Long menuId) {
         this.menuId = menuId;
     }
 
-    public String getMenuName()
-    {
+    public String getMenuName() {
         return menuName;
     }
 
-    public void setMenuName(String menuName)
-    {
+    public void setMenuName(String menuName) {
         this.menuName = menuName;
     }
 
-    public String getParentName()
-    {
+    public String getParentName() {
         return parentName;
     }
 
-    public void setParentName(String parentName)
-    {
+    public void setParentName(String parentName) {
         this.parentName = parentName;
     }
 
-    public Long getParentId()
-    {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId)
-    {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
     @NotBlank(message = "显示顺序不能为空")
-    public String getOrderNum()
-    {
+    public String getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(String orderNum)
-    {
+    public void setOrderNum(String orderNum) {
         this.orderNum = orderNum;
     }
 
-   
-    public String getPath()
-    {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(String path)
-    {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    public String getComponent()
-    {
+    public String getComponent() {
         return component;
     }
 
-    public void setComponent(String component)
-    {
+    public void setComponent(String component) {
         this.component = component;
     }
 
-    public String getIsFrame()
-    {
+    public String getIsFrame() {
         return isFrame;
     }
 
-    public void setIsFrame(String isFrame)
-    {
+    public void setIsFrame(String isFrame) {
         this.isFrame = isFrame;
     }
 
-   
-    public String getMenuType()
-    {
+    public String getMenuType() {
         return menuType;
     }
 
-    public void setMenuType(String menuType)
-    {
+    public void setMenuType(String menuType) {
         this.menuType = menuType;
     }
 
-    public String getVisible()
-    {
+    public String getVisible() {
         return visible;
     }
 
-    public void setVisible(String visible)
-    {
+    public void setVisible(String visible) {
         this.visible = visible;
     }
 
-    public String getStatus()
-    {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status)
-    {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-     public String getPerms()
-    {
-        if (StringUtils.isEmpty(perms))
-        {
+    public String getPerms() {
+        if (StringUtils.isEmpty(perms)) {
             return StringUtils.EMPTY;
         }
         return perms;
     }
 
-    public void setPerms(String perms)
-    {
+    public void setPerms(String perms) {
         this.perms = perms;
     }
 
-    public String getIcon()
-    {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon)
-    {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
-    public List<SysMenu> getChildren()
-    {
+    public List<SysMenu> getChildren() {
         return children;
     }
 
-    public void setChildren(List<SysMenu> children)
-    {
+    public void setChildren(List<SysMenu> children) {
         this.children = children;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("menuId", getMenuId())
-            .append("menuName", getMenuName())
-            .append("parentId", getParentId())
-            .append("orderNum", getOrderNum())
-            .append("path", getPath())
-            .append("component", getComponent())
-            .append("isFrame", getIsFrame())
-            .append("menuType", getMenuType())
-            .append("visible", getVisible())
-            .append("status ", getStatus())
-            .append("perms", getPerms())
-            .append("icon", getIcon())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("menuId", getMenuId())
+                .append("menuName", getMenuName()).append("parentId", getParentId()).append("orderNum", getOrderNum())
+                .append("path", getPath()).append("component", getComponent()).append("isFrame", getIsFrame())
+                .append("menuType", getMenuType()).append("visible", getVisible()).append("status ", getStatus())
+                .append("perms", getPerms()).append("icon", getIcon()).append("createBy", getCreateBy())
+                .append("createTime", getCreateTime()).append("updateBy", getUpdateBy())
+                .append("updateTime", getUpdateTime()).append("remark", getRemark()).toString();
     }
 }

@@ -22,11 +22,11 @@ public class MessageEventAdvisor implements MethodInterceptor {
 
     public Object invoke(MethodInvocation invocation) throws Throwable {
         proxy.beforeMessage(msg);
-        
+
         Object obj = invocation.proceed();
-        
+
         proxy.afterMessage(msg);
-        
+
         return obj;
     }
 }

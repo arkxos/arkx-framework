@@ -8,10 +8,9 @@ package org.ark.framework.orm.schema;
  * @since 1.0
  */
 
-import org.apache.log4j.Logger;
-
 import java.util.*;
 
+import org.apache.log4j.Logger;
 
 /**
  * Schema字段工具类，用于处理Schema字段的通用操作
@@ -27,11 +26,14 @@ public class SchemaColumnUtils {
     /**
      * 处理重复的字段，忽略大小写，保留最后一个，并在Comment中添加重复提示
      *
-     * @param columns 原始字段列表
-     * @param tableName 表名（用于日志输出）
+     * @param columns
+     *            原始字段列表
+     * @param tableName
+     *            表名（用于日志输出）
      * @return 处理后的字段列表
      */
-    public static SchemaGenerator.SchemaColumn[] filterDuplicateColumns(SchemaGenerator.SchemaColumn[] columns, String tableName) {
+    public static SchemaGenerator.SchemaColumn[] filterDuplicateColumns(SchemaGenerator.SchemaColumn[] columns,
+            String tableName) {
         if (columns == null || columns.length == 0) {
             return columns;
         }

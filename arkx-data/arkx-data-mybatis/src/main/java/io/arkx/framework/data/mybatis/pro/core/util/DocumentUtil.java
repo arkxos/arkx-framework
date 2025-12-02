@@ -1,13 +1,9 @@
 package io.arkx.framework.data.mybatis.pro.core.util;
 
-import io.arkx.framework.data.mybatis.pro.core.annotations.Type;
-import io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel;
-import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
-import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.util.StringUtils;
-import org.w3c.dom.*;
+import static io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel.MAPPER;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,17 +12,24 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 
-import static io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel.MAPPER;
+import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.util.StringUtils;
+import org.w3c.dom.*;
+
+import io.arkx.framework.data.mybatis.pro.core.annotations.Type;
+import io.arkx.framework.data.mybatis.pro.core.consts.MapperLabel;
+import io.arkx.framework.data.mybatis.pro.core.exception.MyBatisProException;
 
 /**
  * @author w.dehai
  */
 public class DocumentUtil {
 
-    private DocumentUtil() {}
+    private DocumentUtil() {
+    }
 
     /**
      * 将Document转换成Resource
@@ -59,8 +62,8 @@ public class DocumentUtil {
     public static Document createDocumentFromResource(Resource resource) {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-//            documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-//            documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+            // documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            // documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             documentBuilderFactory.setValidating(false);
             documentBuilderFactory.setNamespaceAware(false);
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
@@ -75,14 +78,21 @@ public class DocumentUtil {
     /**
      * 给Document填充sql节点
      *
-     * @param document mapper文档
-     * @param tagName 标签
-     * @param id id
-     * @param resultType 返回类型
-     * @param sql sql语句
-     * @param type 主键是否自增
+     * @param document
+     *            mapper文档
+     * @param tagName
+     *            标签
+     * @param id
+     *            id
+     * @param resultType
+     *            返回类型
+     * @param sql
+     *            sql语句
+     * @param type
+     *            主键是否自增
      */
-    public static void fillSqlNode(Document document, MapperLabel tagName, String id, String resultType, String sql, Type type, String idName) {
+    public static void fillSqlNode(Document document, MapperLabel tagName, String id, String resultType, String sql,
+            Type type, String idName) {
         Element statement = document.createElement(tagName.getCode());
 
         Text sqlNode = document.createTextNode(sql);

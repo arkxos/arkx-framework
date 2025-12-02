@@ -1,11 +1,10 @@
 package io.arkx.framework.data.jpa.sqltemplate.freemarker;
 
-import io.arkx.framework.boot.spring.IocBeanRegister;
-import io.arkx.framework.data.jpa.AopTargetUtils;
-import io.arkx.framework.data.jpa.QueryBuilder;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.query.*;
@@ -14,13 +13,19 @@ import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import io.arkx.framework.boot.spring.IocBeanRegister;
+import io.arkx.framework.data.jpa.AopTargetUtils;
+import io.arkx.framework.data.jpa.QueryBuilder;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 /**
- * <p>Freemarker模板查询</p>
+ * <p>
+ * Freemarker模板查询
+ * </p>
+ *
  * @author Darkness
  * @date 2020年10月25日 下午1:41:10
  * @version V1.0
@@ -32,8 +37,10 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
     /**
      * Creates a new {@link AbstractJpaQuery} from the given {@link JpaQueryMethod}.
      *
-     * @param method jpa query method
-     * @param em     entity manager
+     * @param method
+     *            jpa query method
+     * @param em
+     *            entity manager
      */
     public FreemarkerTemplateQuery(JpaQueryMethod method, EntityManager em) {
         super(method, em);
@@ -41,12 +48,13 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
 
     @Override
     protected Query doCreateQuery(JpaParametersParameterAccessor accessor) {
-    	Object[] values = accessor.getValues();
+        Object[] values = accessor.getValues();
         String nativeQuery = getQuery(values);
         JpaParameters parameters = getQueryMethod().getParameters();
-//        ParameterAccessor accessor = new ParametersParameterAccessor(parameters, values);
-        String sortedQueryString = QueryUtils
-                .applySorting(nativeQuery, accessor.getSort(), QueryUtils.detectAlias(nativeQuery));
+        // ParameterAccessor accessor = new ParametersParameterAccessor(parameters,
+        // values);
+        String sortedQueryString = QueryUtils.applySorting(nativeQuery, accessor.getSort(),
+                QueryUtils.detectAlias(nativeQuery));
         Query query = bind(createJpaQuery(sortedQueryString), values);
         if (parameters.hasPageableParameter()) {
             Pageable pageable = (Pageable) (values[parameters.getPageableIndex()]);
@@ -63,14 +71,14 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
     }
 
     private String getQueryFromTpl(Object[] values) {
-    	FreemarkerSqlTemplates freemarkerSqlTemplates = IocBeanRegister.getBean(FreemarkerSqlTemplates.class);
-    	freemarkerSqlTemplates.setEm(getEntityManager());
+        FreemarkerSqlTemplates freemarkerSqlTemplates = IocBeanRegister.getBean(FreemarkerSqlTemplates.class);
+        freemarkerSqlTemplates.setEm(getEntityManager());
         return freemarkerSqlTemplates.process(getEntityName(), getMethodName(), getParams(values));
     }
 
     private Map<String, Object> getParams(Object[] values) {
         JpaParameters parameters = getQueryMethod().getParameters();
-        //gen model
+        // gen model
         Map<String, Object> params = new HashMap<>();
         for (int i = 0; i < parameters.getNumberOfParameters(); i++) {
             Object value = values[i];
@@ -80,14 +88,9 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
                     continue;
                 }
                 Class<?> clz = value.getClass();
-                if (clz.isPrimitive() 
-                		|| String.class.isAssignableFrom(clz) 
-                		|| Number.class.isAssignableFrom(clz)
-                        || clz.isArray() 
-                        || Collection.class.isAssignableFrom(clz) 
-                        || clz.isEnum()
-                        || Date.class.isAssignableFrom(clz) 
-                        || java.sql.Date.class.isAssignableFrom(clz)) {
+                if (clz.isPrimitive() || String.class.isAssignableFrom(clz) || Number.class.isAssignableFrom(clz)
+                        || clz.isArray() || Collection.class.isAssignableFrom(clz) || clz.isEnum()
+                        || Date.class.isAssignableFrom(clz) || java.sql.Date.class.isAssignableFrom(clz)) {
                     params.put(parameter.getName().orElse(null), value);
                 } else {
                     params = QueryBuilder.toParams(value);
@@ -100,10 +103,10 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
     private Query createJpaQuery(String queryString) {
         Class<?> objectType = getQueryMethod().getReturnedObjectType();
 
-        //get original proxy query.
+        // get original proxy query.
         Query oriProxyQuery;
 
-        //must be hibernate QueryImpl
+        // must be hibernate QueryImpl
         NativeQuery query;
 
         if (useJpaSpec && getQueryMethod().isQueryForEntity()) {
@@ -112,7 +115,7 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
             oriProxyQuery = getEntityManager().createNativeQuery(queryString);
             query = AopTargetUtils.getTarget(oriProxyQuery);
             Class<?> genericType;
-            //find generic type
+            // find generic type
             if (objectType.isAssignableFrom(Map.class)) {
                 genericType = objectType;
             } else {
@@ -124,7 +127,7 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
                 QueryBuilder.transform(query, genericType);
             }
         }
-        //return the original proxy query, for a series of JPA actions, e.g.:close em.
+        // return the original proxy query, for a series of JPA actions, e.g.:close em.
         return oriProxyQuery;
     }
 
@@ -146,8 +149,8 @@ public class FreemarkerTemplateQuery extends AbstractJpaQuery {
     }
 
     private Query bind(Query query, Object[] values) {
-        //get proxy target if exist.
-        //must be hibernate QueryImpl
+        // get proxy target if exist.
+        // must be hibernate QueryImpl
         NativeQuery targetQuery = AopTargetUtils.getTarget(query);
         Map<String, Object> params = getParams(values);
         if (!CollectionUtils.isEmpty(params)) {

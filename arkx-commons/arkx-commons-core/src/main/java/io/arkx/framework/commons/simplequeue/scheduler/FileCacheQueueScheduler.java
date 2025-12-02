@@ -1,11 +1,5 @@
 package io.arkx.framework.commons.simplequeue.scheduler;
 
-import io.arkx.framework.commons.simplequeue.ElementWarpper;
-import io.arkx.framework.commons.simplequeue.Task;
-import io.arkx.framework.commons.simplequeue.scheduler.component.DuplicateRemover;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-
 import java.io.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,14 +7,21 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+
+import io.arkx.framework.commons.simplequeue.ElementWarpper;
+import io.arkx.framework.commons.simplequeue.Task;
+import io.arkx.framework.commons.simplequeue.scheduler.component.DuplicateRemover;
 
 /**
- * Store urls and cursor in files so that a Spider can resume the status when shutdown.<br>
+ * Store urls and cursor in files so that a Spider can resume the status when
+ * shutdown.<br>
  *
  * @author code4crafter@gmail.com <br>
  * @since 0.2.0
  */
-public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler,Closeable {
+public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler, Closeable {
 
     private String filePath = System.getProperty("java.io.tmpdir");
 
@@ -41,7 +42,7 @@ public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implement
     private BlockingQueue<ElementWarpper> queue;
 
     private Set<String> urls;
-    
+
     private ScheduledExecutorService flushThreadPool;
 
     public FileCacheQueueScheduler(String filePath) {
@@ -71,31 +72,30 @@ public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implement
     }
 
     private void initDuplicateRemover() {
-        setDuplicateRemover(
-                new DuplicateRemover() {
-                    @Override
-                    public boolean isDuplicate(ElementWarpper request, Task task) {
-                        if (!inited.get()) {
-                            init(task);
-                        }
-                        return !urls.add(request.get());
-                    }
+        setDuplicateRemover(new DuplicateRemover() {
+            @Override
+            public boolean isDuplicate(ElementWarpper request, Task task) {
+                if (!inited.get()) {
+                    init(task);
+                }
+                return !urls.add(request.get());
+            }
 
-                    @Override
-                    public void resetDuplicateCheck(Task task) {
-                        urls.clear();
-                    }
+            @Override
+            public void resetDuplicateCheck(Task task) {
+                urls.clear();
+            }
 
-                    @Override
-                    public int getTotalRequestsCount(Task task) {
-                        return urls.size();
-                    }
-                });
+            @Override
+            public int getTotalRequestsCount(Task task) {
+                return urls.size();
+            }
+        });
     }
 
     private void initFlushThread() {
-    	flushThreadPool = Executors.newScheduledThreadPool(1);
-    	flushThreadPool.scheduleAtFixedRate(new Runnable() {
+        flushThreadPool = Executors.newScheduledThreadPool(1);
+        flushThreadPool.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 flush();
@@ -120,7 +120,7 @@ public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implement
             readUrlFile();
             // initDuplicateRemover();
         } catch (FileNotFoundException e) {
-            //init
+            // init
             logger.info("init cache file " + getFileName(fileUrlAllName));
         } catch (IOException e) {
             logger.error("init file error", e);
@@ -150,9 +150,9 @@ public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implement
     private void readCursorFile() throws IOException {
         BufferedReader fileCursorReader = null;
         try {
-        	fileCursorReader = new BufferedReader(new FileReader(getFileName(fileCursor)));
+            fileCursorReader = new BufferedReader(new FileReader(getFileName(fileCursor)));
             String line;
-            //read the last number
+            // read the last number
             while ((line = fileCursorReader.readLine()) != null) {
                 cursor = new AtomicInteger(NumberUtils.toInt(line));
             }
@@ -162,12 +162,12 @@ public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implement
             }
         }
     }
-    
+
     public void close() throws IOException {
-		flushThreadPool.shutdown();	
-		fileUrlWriter.close();
-		fileCursorWriter.close();
-	}
+        flushThreadPool.shutdown();
+        fileUrlWriter.close();
+        fileCursorWriter.close();
+    }
 
     private String getFileName(String filename) {
         return filePath + task.getUUID() + filename;

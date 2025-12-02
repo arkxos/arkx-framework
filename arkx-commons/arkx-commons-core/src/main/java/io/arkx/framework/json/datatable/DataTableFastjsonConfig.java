@@ -1,22 +1,23 @@
 package io.arkx.framework.json.datatable;
 
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.serializer.SerializeConfig;
 import io.arkx.framework.commons.collection.DataTable;
 
-/**  
- * 
- * @author darkness  
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+
+/**
+ *
+ * @author darkness
  * @date 2018-10-09 22:43:52
- * @version 1.0  
+ * @version 1.0
  * @since 4.0
  */
 public class DataTableFastjsonConfig {
 
-	public static void init(){
+    public static void init() {
         SerializeConfig.getGlobalInstance().put(DataTable.class, new DataTableSerializer());
-        
+
         ParserConfig.getGlobalInstance().putDeserializer(DataTable.class, new DataTableDeserializer());
     }
-	
+
 }

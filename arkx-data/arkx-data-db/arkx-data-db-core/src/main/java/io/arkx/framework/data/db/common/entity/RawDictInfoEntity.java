@@ -9,11 +9,13 @@
 /// //////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.common.entity;
 
+import io.arkx.framework.commons.collection.tree.TreeNodeData;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.arkx.framework.commons.collection.tree.TreeNodeData;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,7 +47,7 @@ public class RawDictInfoEntity implements TreeNodeData<Integer> {
     private String dictName;
 
     /**
-     * 状态 0：无效  1：有效
+     * 状态 0：无效 1：有效
      */
     @TableField("STATUS")
     private Integer status;

@@ -1,13 +1,15 @@
 package io.arkx.framework.performance.monitor.interceptor;
 
-import io.arkx.framework.performance.monitor.TraceRecorder;
-import io.arkx.framework.performance.monitor.config.MonitorConfigService;
-import io.arkx.framework.performance.monitor.sql.handler.DataSourceProxyHandler;
+import java.lang.reflect.Proxy;
+
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
-import javax.sql.DataSource;
-import java.lang.reflect.Proxy;
+import io.arkx.framework.performance.monitor.TraceRecorder;
+import io.arkx.framework.performance.monitor.config.MonitorConfigService;
+import io.arkx.framework.performance.monitor.sql.handler.DataSourceProxyHandler;
 
 /**
  * @author Nobody
@@ -16,22 +18,17 @@ import java.lang.reflect.Proxy;
  */
 public class DataSourceProxyFactory {
 
-	private  MonitorConfigService monitorConfigService;
-	private  TraceRecorder traceRecorder;
+    private MonitorConfigService monitorConfigService;
+    private TraceRecorder traceRecorder;
 
-	@Autowired
-	public void setDependencies(
-			@Lazy MonitorConfigService monitorConfigService,
-			@Lazy TraceRecorder traceRecorder) {
-		this.monitorConfigService = monitorConfigService;
-		this.traceRecorder = traceRecorder;
-	}
+    @Autowired
+    public void setDependencies(@Lazy MonitorConfigService monitorConfigService, @Lazy TraceRecorder traceRecorder) {
+        this.monitorConfigService = monitorConfigService;
+        this.traceRecorder = traceRecorder;
+    }
 
-	public DataSource createMonitoredDataSource(DataSource realDataSource) {
-		return (DataSource) Proxy.newProxyInstance(
-				DataSource.class.getClassLoader(),
-				new Class[]{DataSource.class},
-				new DataSourceProxyHandler(realDataSource, monitorConfigService, traceRecorder)
-		);
-	}
+    public DataSource createMonitoredDataSource(DataSource realDataSource) {
+        return (DataSource) Proxy.newProxyInstance(DataSource.class.getClassLoader(), new Class[]{DataSource.class},
+                new DataSourceProxyHandler(realDataSource, monitorConfigService, traceRecorder));
+    }
 }

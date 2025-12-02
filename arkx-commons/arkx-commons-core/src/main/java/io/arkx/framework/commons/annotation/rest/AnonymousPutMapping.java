@@ -16,17 +16,17 @@
 
 package io.arkx.framework.commons.annotation.rest;
 
-import io.arkx.framework.commons.annotation.AnonymousAccess;
+import java.lang.annotation.*;
+
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.lang.annotation.*;
+import io.arkx.framework.commons.annotation.AnonymousAccess;
 
 /**
  * Annotation for mapping HTTP {@code PUT} requests onto specific handler
- * methods.
- * * 支持匿名访问  PutMapping
+ * methods. * 支持匿名访问 PutMapping
  *
  * @author liaojinlong
  * @see AnonymousGetMapping

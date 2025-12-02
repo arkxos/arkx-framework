@@ -1,12 +1,13 @@
 package org.ark.framework.orm;
 
-import io.arkx.framework.commons.util.*;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
+
+import io.arkx.framework.commons.util.*;
+
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 从导出的数据库文件中读取SchemaSet数据，支持读取后直接处理，无需导入数据库
@@ -56,8 +57,7 @@ public class SchemaSetImporter {
                 totalTables++;
                 log.debug("添加新表 {}, 类型: {}, 记录数: {}", tableCode, schemaClassName, schemaSet.size());
             } else {
-                log.debug("添加表 {} 的另一个SchemaSet, 类型: {}, 当前分片记录数: {}",
-                        tableCode, schemaClassName, schemaSet.size());
+                log.debug("添加表 {} 的另一个SchemaSet, 类型: {}, 当前分片记录数: {}", tableCode, schemaClassName, schemaSet.size());
             }
         }
 
@@ -99,7 +99,8 @@ public class SchemaSetImporter {
     /**
      * 从文件中导入SchemaSet数据
      *
-     * @param filePath 数据文件路径
+     * @param filePath
+     *            数据文件路径
      * @return 包含所有SchemaSet的导入结果对象
      */
     public ImportResult importFromFile(String filePath) {
@@ -124,8 +125,8 @@ public class SchemaSetImporter {
 
                     try {
                         result.addSchemaSet(schemaSet);
-                        log.debug("已读取表 {} (类型: {}) 的SchemaSet数据第 {} 页，包含 {} 条记录",
-                                tableCode, schemaClassName, tablePageCounts.get(tableCode), schemaSet.size());
+                        log.debug("已读取表 {} (类型: {}) 的SchemaSet数据第 {} 页，包含 {} 条记录", tableCode, schemaClassName,
+                                tablePageCounts.get(tableCode), schemaSet.size());
                     } catch (Exception e) {
                         log.error("添加表 {} 的SchemaSet失败: {}", tableCode, e.getMessage(), e);
                     }
@@ -141,12 +142,10 @@ public class SchemaSetImporter {
                 int pageCount = entry.getValue();
                 int totalRecords = result.getTableTotalRecords(tableCode);
 
-                log.info("表 {} 共有 {} 页数据，总记录数: {}",
-                        tableCode, pageCount, totalRecords);
+                log.info("表 {} 共有 {} 页数据，总记录数: {}", tableCode, pageCount, totalRecords);
             }
 
-            log.info("从文件中读取数据完成，共 {} 个表，{} 条记录",
-                    result.getTotalTables(), result.getTotalRecords());
+            log.info("从文件中读取数据完成，共 {} 个表，{} 条记录", result.getTotalTables(), result.getTotalRecords());
 
         } catch (Exception e) {
             log.error("从文件 {} 读取数据失败: {}", filePath, e.getMessage(), e);
@@ -158,8 +157,10 @@ public class SchemaSetImporter {
     /**
      * 从文件中读取单个SchemaSet对象
      *
-     * @param braf 随机访问文件
-     * @param pageIndex 页码索引（用于日志）
+     * @param braf
+     *            随机访问文件
+     * @param pageIndex
+     *            页码索引（用于日志）
      * @return SchemaSet对象，如果读取失败则返回null
      */
     private SchemaSet<?> readSchemaSetFromFile(BufferedRandomAccessFile braf, int pageIndex) throws IOException {
@@ -202,8 +203,10 @@ public class SchemaSetImporter {
     /**
      * 从文件中获取指定表的所有SchemaSet数据
      *
-     * @param filePath 数据文件路径
-     * @param tableCode 表名
+     * @param filePath
+     *            数据文件路径
+     * @param tableCode
+     *            表名
      * @return 表对应的SchemaSet对象列表，如果未找到则返回空列表
      */
     public List<SchemaSet<?>> getSchemaSetsByTableCode(String filePath, String tableCode) {
@@ -228,8 +231,7 @@ public class SchemaSetImporter {
                     totalRecords += set.size();
                 }
 
-                log.info("已找到表 {} 的 {} 个SchemaSet，共 {} 条记录",
-                        tableCode, result.size(), totalRecords);
+                log.info("已找到表 {} 的 {} 个SchemaSet，共 {} 条记录", tableCode, result.size(), totalRecords);
             } else {
                 log.warn("文件中未找到表 {} 的数据", tableCode);
             }
@@ -243,7 +245,8 @@ public class SchemaSetImporter {
     /**
      * 获取文件中包含的所有表名
      *
-     * @param filePath 数据文件路径
+     * @param filePath
+     *            数据文件路径
      * @return 表名列表
      */
     public List<String> getAllTableCodes(String filePath) {
@@ -276,7 +279,7 @@ public class SchemaSetImporter {
      */
     public static void main(String[] args) {
 
-        //先加载jar包
+        // 先加载jar包
         try {
             ClassLoadUtil.addJarPath("E:\\db-data\\");
         } catch (MalformedURLException e) {
@@ -299,14 +302,16 @@ public class SchemaSetImporter {
             // 例如：将数据转换为其他格式、进行数据分析等
         }
 
-//        // 根据表名获取特定表的所有SchemaSet
-//        List<SchemaSet<?>> userSchemaSets = result.getSchemaSetsByTableCode("SYS_USER");
-//        if (!userSchemaSets.isEmpty()) {
-//            int totalRecords = 0;
-//            for (SchemaSet<?> set : userSchemaSets) {
-//                totalRecords += set.size();
-//            }
-//            System.out.println("用户表共有 " + userSchemaSets.size() + " 个分片，包含 " + totalRecords + " 条记录");
-//        }
+        // // 根据表名获取特定表的所有SchemaSet
+        // List<SchemaSet<?>> userSchemaSets =
+        // result.getSchemaSetsByTableCode("SYS_USER");
+        // if (!userSchemaSets.isEmpty()) {
+        // int totalRecords = 0;
+        // for (SchemaSet<?> set : userSchemaSets) {
+        // totalRecords += set.size();
+        // }
+        // System.out.println("用户表共有 " + userSchemaSets.size() + " 个分片，包含 " +
+        // totalRecords + " 条记录");
+        // }
     }
 }

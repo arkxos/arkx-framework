@@ -4,6 +4,7 @@ import io.arkx.framework.data.mybatis.pro.core.annotations.Column;
 import io.arkx.framework.data.mybatis.pro.core.annotations.Id;
 import io.arkx.framework.data.mybatis.pro.core.annotations.Table;
 import io.arkx.framework.data.mybatis.pro.core.annotations.Transient;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

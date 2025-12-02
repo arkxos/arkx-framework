@@ -1,8 +1,5 @@
 package io.arkx.framework.commons.util;
 
-import io.arkx.framework.commons.utils2.StringUtil;
-import org.apache.commons.lang3.time.DateFormatUtils;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -12,9 +9,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+
+import io.arkx.framework.commons.utils2.StringUtil;
+
 /**
- * 日期工具类,
- * 继承org.apache.commons.lang.time.DateUtils类
+ * 日期工具类, 继承org.apache.commons.lang.time.DateUtils类
  *
  * @author Liuyadu
  * @version 2014-4-15
@@ -28,34 +28,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     private static final long ONE_MONTH = 2592000;
     private static final long ONE_YEAR = 31104000;
 
-
-    private static String[] parsePatterns = {
-		"yyyy-MM-dd",
-		"yyyy-MM-dd HH:mm:ss",
-		"yyyy-MM-dd HH:mm",
-		"yyyy-MM",
-		"yyyy/MM/dd",
-		"yyyy/MM/dd HH:mm:ss",
-		"yyyy/MM/dd HH:mm",
-		"yyyy/MM",
-		"yyyy.MM.dd",
-		"yyyy.MM.dd HH:mm:ss",
-		"yyyy.MM.dd HH:mm",
-		"yyyy.MM",
-		"yyyyMMdd",
-		"yyyyMMddHHmmss",
-		"yyyyMMddHHmm",
-		"yyyyMM"
-    };
+    private static String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
+            "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss",
+            "yyyy.MM.dd HH:mm", "yyyy.MM", "yyyyMMdd", "yyyyMMddHHmmss", "yyyyMMddHHmm", "yyyyMM"};
 
     /**
-     * 日期型字符串转化为日期 格式
-     * {
-     * "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
-     * "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM",
-     * "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM",
-     * "yyyyMMdd", "yyyyMMddHHmmss", "yyyyMMddHHmm", "yyyyMM"
-     * }
+     * 日期型字符串转化为日期 格式 { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm",
+     * "yyyy-MM", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm",
+     * "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm",
+     * "yyyy.MM", "yyyyMMdd", "yyyyMMddHHmmss", "yyyyMMddHHmm", "yyyyMM" }
      */
     public static Date parseDate(String str) {
         if (str == null) {
@@ -94,7 +75,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         }
         return formatDate;
     }
-
 
     /**
      * 获取当前时间戳（yyyyMMddHHmmss）
@@ -183,7 +163,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return getAddDate(date, Calendar.YEAR, -1);
     }
 
-
     /**
      * 获取前一周
      *
@@ -224,13 +203,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return getAddDate(date, Calendar.YEAR, 1);
     }
 
-
     /**
      * 增加日期
      *
      * @param date
-     * @param field  Calendar.MONTH,Calendar.DAY_OF_YEAR
-     * @param amount 正数为将来时间, 负数为过去时间
+     * @param field
+     *            Calendar.MONTH,Calendar.DAY_OF_YEAR
+     * @param amount
+     *            正数为将来时间, 负数为过去时间
      * @return
      */
     public static Date getAddDate(Date date, int field, int amount) {
@@ -347,7 +327,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return (afterTime - beforeTime) / (ONE_MILLIS * ONE_DAY);
     }
 
-
     /**
      * 距离今天多久
      *
@@ -367,7 +346,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         if (second <= 0) {
             second = 0;
         }
-        //*--------------微博体（标准）
+        // *--------------微博体（标准）
         if (second == 0) {
             interval = "刚刚";
         } else if (second < ONE_MINUTE / 2) {
@@ -375,32 +354,31 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         } else if (second >= ONE_MINUTE / 2 && second < ONE_MINUTE) {
             interval = "半分钟前";
         } else if (second >= ONE_MINUTE && second < ONE_MINUTE * ONE_MINUTE) {
-            //大于1分钟 小于1小时
+            // 大于1分钟 小于1小时
             long minute = second / ONE_MINUTE;
             interval = minute + "分钟前";
         } else if (second >= ONE_HOUR && second < ONE_DAY) {
-            //大于1小时 小于24小时
+            // 大于1小时 小于24小时
             long hour = (second / ONE_MINUTE) / ONE_MINUTE;
             interval = hour + "小时前";
         } else if (second >= ONE_DAY && second <= ONE_DAY * 2) {
-            //大于1D 小于2D
+            // 大于1D 小于2D
             interval = "昨天" + formatDate(createAt, "HH:mm");
         } else if (second >= ONE_DAY * 2 && second <= ONE_DAY * 7) {
-            //大于2D小时 小于 7天
+            // 大于2D小时 小于 7天
             long day = ((second / ONE_MINUTE) / ONE_MINUTE) / 24;
             interval = day + "天前";
         } else if (second <= ONE_DAY * 365 && second >= ONE_DAY * 7) {
-            //大于7天小于365天
+            // 大于7天小于365天
             interval = formatDate(createAt, "MM-dd HH:mm");
         } else if (second >= ONE_DAY * 365) {
-            //大于365天
+            // 大于365天
             interval = formatDate(createAt, "yyyy-MM-dd HH:mm");
         } else {
             interval = "0";
         }
         return interval;
     }
-
 
     /**
      * 距离截止日期还有多长时间
@@ -415,8 +393,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         if (remain <= ONE_HOUR) {
             return "只剩下" + remain / ONE_MINUTE + "分钟";
         } else if (remain <= ONE_DAY) {
-            return "只剩下" + remain / ONE_HOUR + "小时"
-                    + (remain % ONE_HOUR / ONE_MINUTE) + "分钟";
+            return "只剩下" + remain / ONE_HOUR + "小时" + (remain % ONE_HOUR / ONE_MINUTE) + "分钟";
         } else {
             long day = remain / ONE_DAY;
             long hour = remain % ONE_DAY / ONE_HOUR;
@@ -425,12 +402,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         }
     }
 
-
     /**
      * Unix时间戳转换成指定格式日期字符串
      *
-     * @param timestampString 时间戳 如："1473048265";
-     * @param pattern         要格式化的格式 默认："yyyy-MM-dd HH:mm:ss";
+     * @param timestampString
+     *            时间戳 如："1473048265";
+     * @param pattern
+     *            要格式化的格式 默认："yyyy-MM-dd HH:mm:ss";
      * @return 返回结果 如："2016-09-05 16:06:42";
      */
     public static String unixTimeStamp2Date(String timestampString, String pattern) {
@@ -445,8 +423,10 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * 日期格式字符串转换成Unix时间戳
      *
-     * @param dateStr 字符串日期
-     * @param pattern 如：yyyy-MM-dd HH:mm:ss
+     * @param dateStr
+     *            字符串日期
+     * @param pattern
+     *            如：yyyy-MM-dd HH:mm:ss
      * @return
      */
     public static String date2UnixTimeStamp(String dateStr, String pattern) {
@@ -458,7 +438,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         }
         return "";
     }
-
 
     public static void main(String[] args) {
         System.out.println(formatDate(getBeforeDay(new Date()), "yyyy-MM-dd"));
@@ -477,7 +456,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     public static String toString(LocalDateTime dateTime) {
-        if(dateTime == null) {
+        if (dateTime == null) {
             return "";
         }
         return DefaultDateTimeFormatter.format(dateTime);
@@ -488,7 +467,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     public static Integer getYearMonth(LocalDate dateTime) {
-        String month = dateTime.getMonthValue() < 10 ? ("0" + dateTime.getMonthValue()) : (dateTime.getMonthValue() + "");
+        String month = dateTime.getMonthValue() < 10
+                ? ("0" + dateTime.getMonthValue())
+                : (dateTime.getMonthValue() + "");
         return Integer.valueOf(dateTime.getYear() + "" + month);
     }
 }

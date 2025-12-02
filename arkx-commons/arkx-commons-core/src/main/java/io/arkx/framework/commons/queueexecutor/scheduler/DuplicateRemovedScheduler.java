@@ -1,13 +1,16 @@
 package io.arkx.framework.commons.queueexecutor.scheduler;
 
-import io.arkx.framework.commons.queueexecutor.Element;
-import io.arkx.framework.commons.queueexecutor.scheduler.component.DuplicateRemover;
-import io.arkx.framework.commons.queueexecutor.scheduler.component.HashSetDuplicateRemover;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.arkx.framework.commons.queueexecutor.Element;
+import io.arkx.framework.commons.queueexecutor.scheduler.component.DuplicateRemover;
+import io.arkx.framework.commons.queueexecutor.scheduler.component.HashSetDuplicateRemover;
+
 /**
- * Remove duplicate urls and only push urls which are not duplicate.<br></br>
+ * Remove duplicate urls and only push urls which are not duplicate.<br>
+ * </br>
+ *
  * @author Darkness
  * @date 2015-1-9 下午10:38:41
  * @version V1.0

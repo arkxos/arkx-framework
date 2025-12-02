@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  * @author: liaojinlong
  * @date: 2020/6/11 16:28
- * @apiNote: JDK 8  新日期类 格式化与字符串转换 工具类
+ * @apiNote: JDK 8 新日期类 格式化与字符串转换 工具类
  */
 public class DateUtil {
 
@@ -33,7 +33,8 @@ public class DateUtil {
     /**
      * LocalDateTime 转时间戳
      *
-     * @param localDateTime /
+     * @param localDateTime
+     *            /
      * @return /
      */
     public static Long getTimeStamp(LocalDateTime localDateTime) {
@@ -43,7 +44,8 @@ public class DateUtil {
     /**
      * 时间戳转LocalDateTime
      *
-     * @param timeStamp /
+     * @param timeStamp
+     *            /
      * @return /
      */
     public static LocalDateTime fromTimeStamp(Long timeStamp) {
@@ -51,10 +53,10 @@ public class DateUtil {
     }
 
     /**
-     * LocalDateTime 转 Date
-     * Jdk8 后 不推荐使用 {@link Date} Date
+     * LocalDateTime 转 Date Jdk8 后 不推荐使用 {@link Date} Date
      *
-     * @param localDateTime /
+     * @param localDateTime
+     *            /
      * @return /
      */
     public static Date toDate(LocalDateTime localDateTime) {
@@ -62,22 +64,21 @@ public class DateUtil {
     }
 
     /**
-     * LocalDate 转 Date
-     * Jdk8 后 不推荐使用 {@link Date} Date
+     * LocalDate 转 Date Jdk8 后 不推荐使用 {@link Date} Date
      *
-     * @param localDate /
+     * @param localDate
+     *            /
      * @return /
      */
     public static Date toDate(LocalDate localDate) {
         return toDate(localDate.atTime(LocalTime.now(ZoneId.systemDefault())));
     }
 
-
     /**
-     * Date转 LocalDateTime
-     * Jdk8 后 不推荐使用 {@link Date} Date
+     * Date转 LocalDateTime Jdk8 后 不推荐使用 {@link Date} Date
      *
-     * @param date /
+     * @param date
+     *            /
      * @return /
      */
     public static LocalDateTime toLocalDateTime(Date date) {
@@ -87,8 +88,10 @@ public class DateUtil {
     /**
      * 日期 格式化
      *
-     * @param localDateTime /
-     * @param patten /
+     * @param localDateTime
+     *            /
+     * @param patten
+     *            /
      * @return /
      */
     public static String localDateTimeFormat(LocalDateTime localDateTime, String patten) {
@@ -99,8 +102,10 @@ public class DateUtil {
     /**
      * 日期 格式化
      *
-     * @param localDateTime /
-     * @param df /
+     * @param localDateTime
+     *            /
+     * @param df
+     *            /
      * @return /
      */
     public static String localDateTimeFormat(LocalDateTime localDateTime, DateTimeFormatter df) {
@@ -110,7 +115,8 @@ public class DateUtil {
     /**
      * 日期格式化 yyyy-MM-dd HH:mm:ss
      *
-     * @param localDateTime /
+     * @param localDateTime
+     *            /
      * @return /
      */
     public static String localDateTimeFormatyMdHms(LocalDateTime localDateTime) {
@@ -120,7 +126,8 @@ public class DateUtil {
     /**
      * 日期格式化 yyyy-MM-dd
      *
-     * @param localDateTime /
+     * @param localDateTime
+     *            /
      * @return /
      */
     public String localDateTimeFormatyMd(LocalDateTime localDateTime) {
@@ -130,7 +137,8 @@ public class DateUtil {
     /**
      * 字符串转 LocalDateTime ，字符串格式 yyyy-MM-dd
      *
-     * @param localDateTime /
+     * @param localDateTime
+     *            /
      * @return /
      */
     public static LocalDateTime parseLocalDateTimeFormat(String localDateTime, String pattern) {
@@ -141,7 +149,8 @@ public class DateUtil {
     /**
      * 字符串转 LocalDateTime ，字符串格式 yyyy-MM-dd
      *
-     * @param localDateTime /
+     * @param localDateTime
+     *            /
      * @return /
      */
     public static LocalDateTime parseLocalDateTimeFormat(String localDateTime, DateTimeFormatter dateTimeFormatter) {
@@ -151,7 +160,8 @@ public class DateUtil {
     /**
      * 字符串转 LocalDateTime ，字符串格式 yyyy-MM-dd HH:mm:ss
      *
-     * @param localDateTime /
+     * @param localDateTime
+     *            /
      * @return /
      */
     public static LocalDateTime parseLocalDateTimeFormatyMdHms(String localDateTime) {

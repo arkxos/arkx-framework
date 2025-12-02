@@ -1,9 +1,9 @@
 package io.arkx.framework.encrypt.annotation;
 
+import java.lang.annotation.*;
+
 import io.arkx.framework.encrypt.enumd.AlgorithmType;
 import io.arkx.framework.encrypt.enumd.EncodeType;
-
-import java.lang.annotation.*;
 
 /**
  * 字段加密注解

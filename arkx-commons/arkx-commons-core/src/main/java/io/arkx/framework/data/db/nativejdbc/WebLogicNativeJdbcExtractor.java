@@ -23,14 +23,18 @@ import java.sql.SQLException;
 
 /**
  * * 移植自Spring：<br>
- * Implementation of the {@link NativeJdbcExtractor} interface for WebLogic, supporting WebLogic Server 8.1 and higher.
+ * Implementation of the {@link NativeJdbcExtractor} interface for WebLogic,
+ * supporting WebLogic Server 8.1 and higher.
  * <p>
- * Returns the underlying native Connection to application code instead of WebLogic's wrapper implementation; unwraps the Connection for
- * native statements. The returned JDBC classes can then safely be cast, e.g. to <code>oracle.jdbc.OracleConnection</code>.
+ * Returns the underlying native Connection to application code instead of
+ * WebLogic's wrapper implementation; unwraps the Connection for native
+ * statements. The returned JDBC classes can then safely be cast, e.g. to
+ * <code>oracle.jdbc.OracleConnection</code>.
  * <p>
- * This NativeJdbcExtractor can be set just to <i>allow</i> working with a WebLogic DataSource: If a given object is not a WebLogic
- * Connection wrapper, it will be returned as-is.
- * 
+ * This NativeJdbcExtractor can be set just to <i>allow</i> working with a
+ * WebLogic DataSource: If a given object is not a WebLogic Connection wrapper,
+ * it will be returned as-is.
+ *
  * @author Thomas Risberg
  * @author Juergen Hoeller
  * @since 1.0.2
@@ -39,45 +43,47 @@ import java.sql.SQLException;
  */
 public class WebLogicNativeJdbcExtractor {
 
-	private static final String JDBC_EXTENSION_NAME = "weblogic.jdbc.extensions.WLConnection";
+    private static final String JDBC_EXTENSION_NAME = "weblogic.jdbc.extensions.WLConnection";
 
-	private static Class<?> jdbcExtensionClass;
+    private static Class<?> jdbcExtensionClass;
 
-	private static Method getVendorConnectionMethod;
+    private static Method getVendorConnectionMethod;
 
-	/**
-	 * This constructor retrieves the WebLogic JDBC extension interface, so we can get the underlying vendor connection
-	 * using reflection.
-	 */
-	public static void init() {
-		try {
-			jdbcExtensionClass = WebLogicNativeJdbcExtractor.class.getClassLoader().loadClass(JDBC_EXTENSION_NAME);
-			getVendorConnectionMethod = jdbcExtensionClass.getMethod("getVendorConnection", (Class[]) null);
-		} catch (Exception ex) {
-			throw new IllegalStateException(
-					"Could not initialize WebLogicNativeJdbcExtractor because WebLogic API classes are not available: " + ex);
-		}
-	}
+    /**
+     * This constructor retrieves the WebLogic JDBC extension interface, so we can
+     * get the underlying vendor connection using reflection.
+     */
+    public static void init() {
+        try {
+            jdbcExtensionClass = WebLogicNativeJdbcExtractor.class.getClassLoader().loadClass(JDBC_EXTENSION_NAME);
+            getVendorConnectionMethod = jdbcExtensionClass.getMethod("getVendorConnection", (Class[]) null);
+        } catch (Exception ex) {
+            throw new IllegalStateException(
+                    "Could not initialize WebLogicNativeJdbcExtractor because WebLogic API classes are not available: "
+                            + ex);
+        }
+    }
 
-	/**
-	 * Retrieve the Connection via WebLogic's <code>getVendorConnection</code> method.
-	 */
-	public static Connection doGetNativeConnection(Connection con) throws SQLException {
-		if (jdbcExtensionClass == null) {
-			init();
-		}
-		if (jdbcExtensionClass.isAssignableFrom(con.getClass())) {
-			try {
-				return (Connection) getVendorConnectionMethod.invoke(con, new Object[0]);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-		}
-		return con;
-	}
+    /**
+     * Retrieve the Connection via WebLogic's <code>getVendorConnection</code>
+     * method.
+     */
+    public static Connection doGetNativeConnection(Connection con) throws SQLException {
+        if (jdbcExtensionClass == null) {
+            init();
+        }
+        if (jdbcExtensionClass.isAssignableFrom(con.getClass())) {
+            try {
+                return (Connection) getVendorConnectionMethod.invoke(con, new Object[0]);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return con;
+    }
 
 }

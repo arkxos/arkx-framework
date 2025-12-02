@@ -1,10 +1,10 @@
 package io.arkx.framework.commons.simplequeue;
 
-import io.arkx.framework.commons.simplequeue.scheduler.PriorityScheduler;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.arkx.framework.commons.simplequeue.scheduler.PriorityScheduler;
 
 /**
  * Object contains url to crawl.<br>
@@ -29,6 +29,7 @@ public class ElementWarpper implements Serializable {
     /**
      * Priority of the request.<br>
      * The bigger will be processed earlier. <br>
+     *
      * @see PriorityScheduler
      */
     private long priority;
@@ -47,9 +48,11 @@ public class ElementWarpper implements Serializable {
     /**
      * Set the priority of request for sorting.<br>
      * Need a scheduler supporting priority.<br>
+     *
      * @see PriorityScheduler
      *
-     * @param priority priority
+     * @param priority
+     *            priority
      * @return this
      */
     public ElementWarpper setPriority(long priority) {
@@ -99,22 +102,21 @@ public class ElementWarpper implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         ElementWarpper request = (ElementWarpper) o;
 
-        if (url != null ? !url.equals(request.url) : request.url != null) return false;
+        if (url != null ? !url.equals(request.url) : request.url != null)
+            return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Request{" +
-                "url='" + url + '\'' +
-                ", extras=" + extras +
-                ", priority=" + priority +
-                '}';
+        return "Request{" + "url='" + url + '\'' + ", extras=" + extras + ", priority=" + priority + '}';
     }
 
 }

@@ -1,5 +1,20 @@
 package io.arkx.framework.commons.simplequeue;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.SerializationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.arkx.framework.commons.crawl.PageProcessor;
 import io.arkx.framework.commons.simplequeue.pipeline.CollectorPipeline;
 import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
@@ -10,20 +25,6 @@ import io.arkx.framework.commons.simplequeue.scheduler.Scheduler;
 import io.arkx.framework.commons.simplequeue.utils.WMCollections;
 import io.arkx.framework.commons.util.CountableThreadPool;
 import io.arkx.framework.commons.util.NumberUtil;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.SerializationUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Closeable;
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Entrance of a crawler.<br>
@@ -47,7 +48,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * Spider can resume the status when shutdown. <br>
  * Spider.create(new SimplePageProcessor("http://my.oschina.net/",
  * "http://my.oschina.net/*blog/*")) <br>
- * .scheduler(new FileCacheQueueScheduler("/data/temp/webmagic/cache/")).run(); <br>
+ * .scheduler(new FileCacheQueueScheduler("/data/temp/webmagic/cache/")).run();
+ * <br>
  *
  * @author code4crafter@gmail.com <br>
  * @see ElementProcessor
@@ -105,18 +107,19 @@ public class QueueExecutor implements Runnable, Task {
     private int emptySleepTime = 30000;
 
     private String name;
-    
+
     /**
      * create a spider with pageProcessor.
      *
-     * @param pageProcessor pageProcessor
+     * @param pageProcessor
+     *            pageProcessor
      * @return new spider
      * @see PageProcessor
      */
     public static QueueExecutor create(QueueTask queueTask) {
         return new QueueExecutor(queueTask.taskName(), queueTask).addElement(queueTask.initElements());
     }
-    
+
     public static QueueExecutor create(String name, ElementProcessor elementProcessor) {
         return new QueueExecutor(name, elementProcessor);
     }
@@ -124,10 +127,11 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * create a spider with pageProcessor.
      *
-     * @param pageProcessor pageProcessor
+     * @param pageProcessor
+     *            pageProcessor
      */
     public QueueExecutor(String name, ElementProcessor elementProcessor) {
-    	this.name = name;
+        this.name = name;
         this.elementProcessor = elementProcessor;
         this.config = elementProcessor.getConfig();
     }
@@ -136,7 +140,8 @@ public class QueueExecutor implements Runnable, Task {
      * Set startUrls of Spider.<br>
      * Prior to startUrls of Site.
      *
-     * @param startElements startElements
+     * @param startElements
+     *            startElements
      * @return this
      */
     public QueueExecutor startElements(List<String> startElements) {
@@ -144,7 +149,7 @@ public class QueueExecutor implements Runnable, Task {
         this.startElementWrappers = convertToElementWarppers(startElements);
         return this;
     }
-    
+
     public static List<ElementWarpper> convertToElementWarppers(Collection<String> elements) {
         List<ElementWarpper> result = new ArrayList<ElementWarpper>(elements.size());
         for (String element : elements) {
@@ -157,7 +162,8 @@ public class QueueExecutor implements Runnable, Task {
      * Set startUrls of Spider.<br>
      * Prior to startUrls of Site.
      *
-     * @param startElementWarppers startRequests
+     * @param startElementWarppers
+     *            startRequests
      * @return this
      */
     public QueueExecutor startElementWarppers(List<ElementWarpper> startElementWarppers) {
@@ -170,7 +176,8 @@ public class QueueExecutor implements Runnable, Task {
      * Set an uuid for spider.<br>
      * Default uuid is domain of site.<br>
      *
-     * @param uuid uuid
+     * @param uuid
+     *            uuid
      * @return this
      */
     public QueueExecutor setUUID(String uuid) {
@@ -181,7 +188,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * set scheduler for Spider
      *
-     * @param scheduler scheduler
+     * @param scheduler
+     *            scheduler
      * @return this
      * @see #setScheduler(Scheduler)
      */
@@ -193,7 +201,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * set scheduler for Spider
      *
-     * @param scheduler scheduler
+     * @param scheduler
+     *            scheduler
      * @return this
      * @see Scheduler
      * @since 0.2.1
@@ -214,7 +223,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * add a pipeline for Spider
      *
-     * @param pipeline pipeline
+     * @param pipeline
+     *            pipeline
      * @return this
      * @see #addPipeline(Pipeline)
      * @deprecated
@@ -226,7 +236,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * add a pipeline for Spider
      *
-     * @param pipeline pipeline
+     * @param pipeline
+     *            pipeline
      * @return this
      * @see Pipeline
      * @since 0.2.1
@@ -240,7 +251,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * set pipelines for Spider
      *
-     * @param pipelines pipelines
+     * @param pipelines
+     *            pipelines
      * @return this
      * @see Pipeline
      * @since 0.4.1
@@ -263,7 +275,7 @@ public class QueueExecutor implements Runnable, Task {
 
     protected void initComponent() {
         if (pipelines.isEmpty()) {
-//            pipelines.add(new ConsolePipeline());
+            // pipelines.add(new ConsolePipeline());
         }
         if (threadPool == null || threadPool.isShutdown()) {
             if (executorService != null && !executorService.isShutdown()) {
@@ -285,7 +297,7 @@ public class QueueExecutor implements Runnable, Task {
     public void run() {
         checkRunningStat();
         initComponent();
-        logger.info("Spider {} started!",getUUID());
+        logger.info("Spider {} started!", getUUID());
         while (!Thread.currentThread().isInterrupted() && stat.get() == STAT_RUNNING) {
             final ElementWarpper elementWarpper = scheduler.poll(this);
             if (elementWarpper == null) {
@@ -370,7 +382,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * Process specific urls without url discovering.
      *
-     * @param urls urls to process
+     * @param urls
+     *            urls to process
      */
     public void test(String... urls) {
         initComponent();
@@ -383,7 +396,7 @@ public class QueueExecutor implements Runnable, Task {
 
     private void processElement(ElementWarpper request) {
         ExecuteResult page = elementProcessor.execute(request, this);
-        if (page.isExecuteSuccess()){
+        if (page.isExecuteSuccess()) {
             onProcessSuccess(request, page);
         } else {
             onProcessFail(request);
@@ -391,12 +404,12 @@ public class QueueExecutor implements Runnable, Task {
     }
 
     private void onProcessSuccess(ElementWarpper request, ExecuteResult executeResult) {
-		extractAndAddElementWarppers(executeResult, spawnElement);
-		if (!executeResult.getResultItems().isSkip()) {
-			for (Pipeline pipeline : pipelines) {
-				pipeline.process(executeResult.getResultItems(), this);
-			}
-		}
+        extractAndAddElementWarppers(executeResult, spawnElement);
+        if (!executeResult.getResultItems().isSkip()) {
+            for (Pipeline pipeline : pipelines) {
+                pipeline.process(executeResult.getResultItems(), this);
+            }
+        }
         sleep(config.getSleepTime());
         return;
     }
@@ -413,12 +426,14 @@ public class QueueExecutor implements Runnable, Task {
     private void doCycleRetry(ElementWarpper elementWarpper) {
         Object cycleTriedTimesObject = elementWarpper.getExtra(ElementWarpper.CYCLE_TRIED_TIMES);
         if (cycleTriedTimesObject == null) {
-            addElement(SerializationUtils.clone(elementWarpper).setPriority(0).putExtra(ElementWarpper.CYCLE_TRIED_TIMES, 1));
+            addElement(SerializationUtils.clone(elementWarpper).setPriority(0)
+                    .putExtra(ElementWarpper.CYCLE_TRIED_TIMES, 1));
         } else {
             int cycleTriedTimes = (Integer) cycleTriedTimesObject;
             cycleTriedTimes++;
             if (cycleTriedTimes < config.getCycleRetryTimes()) {
-                addElement(SerializationUtils.clone(elementWarpper).setPriority(0).putExtra(ElementWarpper.CYCLE_TRIED_TIMES, cycleTriedTimes));
+                addElement(SerializationUtils.clone(elementWarpper).setPriority(0)
+                        .putExtra(ElementWarpper.CYCLE_TRIED_TIMES, cycleTriedTimes));
             }
         }
         sleep(config.getRetrySleepTime());
@@ -428,7 +443,7 @@ public class QueueExecutor implements Runnable, Task {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
-            logger.error("Thread interrupted when sleep",e);
+            logger.error("Thread interrupted when sleep", e);
         }
     }
 
@@ -459,7 +474,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * Add urls to crawl. <br>
      *
-     * @param urls urls
+     * @param urls
+     *            urls
      * @return this
      */
     public QueueExecutor addElement(String... urls) {
@@ -469,7 +485,7 @@ public class QueueExecutor implements Runnable, Task {
         signalNewElement();
         return this;
     }
-    
+
     public QueueExecutor addElement(List<String> urls) {
         for (String url : urls) {
             addElement(new ElementWarpper(url));
@@ -481,14 +497,16 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * Download urls synchronizing.
      *
-     * @param urls urls
-     * @param <T> type of process result
+     * @param urls
+     *            urls
+     * @param <T>
+     *            type of process result
      * @return list downloaded
      */
     public <T> List<T> getAll(Collection<String> urls) {
         destroyWhenExit = false;
         spawnElement = false;
-        if (startElementWrappers!=null){
+        if (startElementWrappers != null) {
             startElementWrappers.clear();
         }
         for (ElementWarpper request : convertToElementWarppers(urls)) {
@@ -519,7 +537,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * Add urls with information to crawl.<br>
      *
-     * @param requests requests
+     * @param requests
+     *            requests
      * @return this
      */
     public QueueExecutor addRequest(ElementWarpper... requests) {
@@ -533,7 +552,7 @@ public class QueueExecutor implements Runnable, Task {
     private void waitNewElement() {
         newElementLock.lock();
         try {
-            //double check
+            // double check
             if (threadPool.getThreadAlive() == 0 && exitWhenComplete) {
                 return;
             }
@@ -569,7 +588,8 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * start with more than one threads
      *
-     * @param threadNum threadNum
+     * @param threadNum
+     *            threadNum
      * @return this
      */
     public QueueExecutor thread(int threadNum) {
@@ -584,8 +604,10 @@ public class QueueExecutor implements Runnable, Task {
     /**
      * start with more than one threads
      *
-     * @param executorService executorService to run the spider
-     * @param threadNum threadNum
+     * @param executorService
+     *            executorService to run the spider
+     * @param threadNum
+     *            threadNum
      * @return this
      */
     public QueueExecutor thread(ExecutorService executorService, int threadNum) {
@@ -607,7 +629,8 @@ public class QueueExecutor implements Runnable, Task {
      * True: exit when all url of the site is downloaded. <br>
      * False: not exit until call stop() manually.<br>
      *
-     * @param exitWhenComplete exitWhenComplete
+     * @param exitWhenComplete
+     *            exitWhenComplete
      * @return this
      */
     public QueueExecutor setExitWhenComplete(boolean exitWhenComplete) {
@@ -640,7 +663,6 @@ public class QueueExecutor implements Runnable, Task {
         return Status.fromValue(stat.get());
     }
 
-
     public enum Status {
         Init(0), Running(1), Stopped(2);
 
@@ -660,7 +682,7 @@ public class QueueExecutor implements Runnable, Task {
                     return status;
                 }
             }
-            //default value
+            // default value
             return Init;
         }
     }
@@ -680,10 +702,12 @@ public class QueueExecutor implements Runnable, Task {
 
     /**
      * Whether add urls extracted to download.<br>
-     * Add urls to download when it is true, and just download seed urls when it is false. <br>
+     * Add urls to download when it is true, and just download seed urls when it is
+     * false. <br>
      * DO NOT set it unless you know what it means!
      *
-     * @param spawnUrl spawnUrl
+     * @param spawnUrl
+     *            spawnUrl
      * @return this
      * @since 0.4.0
      */
@@ -720,7 +744,7 @@ public class QueueExecutor implements Runnable, Task {
         this.queueListeners = spiderListeners;
         return this;
     }
-    
+
     public QueueExecutor addSpiderListener(QueueListener spiderListener) {
         this.queueListeners.add(spiderListener);
         return this;
@@ -735,51 +759,53 @@ public class QueueExecutor implements Runnable, Task {
     }
 
     /**
-     * Set wait time when no url is polled.<br><br>
+     * Set wait time when no url is polled.<br>
+     * <br>
      *
-     * @param emptySleepTime In MILLISECONDS.
+     * @param emptySleepTime
+     *            In MILLISECONDS.
      */
     public void setEmptySleepTime(int emptySleepTime) {
         this.emptySleepTime = emptySleepTime;
     }
 
-	public QueueExecutor printPercent() {
-		QueueExecutor me = this;
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while(me.getStatus() != Status.Stopped) {
-					printSchedulerPercent();
-					
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				
-				printSchedulerPercent();
-			}
-		});
-		thread.setDaemon(false);
-		thread.start();
-		
-		return this;
-	}
-	
-	private void printSchedulerPercent() {
-		MonitorableScheduler scheduler = (MonitorableScheduler)this.getScheduler();
-		
-		int total = scheduler.getTotalElementsCount(this);
-		if(total == 0) {
-			System.out.println("["+name+"]preparing...");
-			return;
-		}
-		
-		int left = scheduler.getLeftElementsCount(this);
-		int finish = total - left;
-		double percent = NumberUtil.roundHalfDown(finish * 100.0 / total, 2);
-		
-		System.out.println("["+name+"]total: " + total + ", left: " + left + ", percent: " + percent + " %");
-	}
+    public QueueExecutor printPercent() {
+        QueueExecutor me = this;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (me.getStatus() != Status.Stopped) {
+                    printSchedulerPercent();
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                printSchedulerPercent();
+            }
+        });
+        thread.setDaemon(false);
+        thread.start();
+
+        return this;
+    }
+
+    private void printSchedulerPercent() {
+        MonitorableScheduler scheduler = (MonitorableScheduler) this.getScheduler();
+
+        int total = scheduler.getTotalElementsCount(this);
+        if (total == 0) {
+            System.out.println("[" + name + "]preparing...");
+            return;
+        }
+
+        int left = scheduler.getLeftElementsCount(this);
+        int finish = total - left;
+        double percent = NumberUtil.roundHalfDown(finish * 100.0 / total, 2);
+
+        System.out.println("[" + name + "]total: " + total + ", left: " + left + ", percent: " + percent + " %");
+    }
 }

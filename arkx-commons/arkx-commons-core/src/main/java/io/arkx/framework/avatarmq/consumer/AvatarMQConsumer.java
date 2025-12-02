@@ -1,6 +1,5 @@
 package io.arkx.framework.avatarmq.consumer;
 
-import com.google.common.base.Joiner;
 import io.arkx.framework.avatarmq.core.AvatarMQAction;
 import io.arkx.framework.avatarmq.core.MessageIdGenerator;
 import io.arkx.framework.avatarmq.core.MessageSystemConfig;
@@ -10,8 +9,11 @@ import io.arkx.framework.avatarmq.msg.SubscribeMessage;
 import io.arkx.framework.avatarmq.msg.UnSubscribeMessage;
 import io.arkx.framework.avatarmq.netty.MessageProcessor;
 
+import com.google.common.base.Joiner;
+
 /**
  * 消息消费者
+ *
  * @filename:AvatarMQConsumer.java
  * @description:AvatarMQConsumer功能模块
  * @author tangjie<https://github.com/tang-jie>
@@ -29,7 +31,7 @@ public class AvatarMQConsumer extends MessageProcessor implements AvatarMQAction
     private String clusterId = "";
     private String consumerId = "";
 
-	// 连接的消息服务器broker的ip地址以及关注的生产过来的消息钩子
+    // 连接的消息服务器broker的ip地址以及关注的生产过来的消息钩子
     public AvatarMQConsumer(String brokerServerAddress, String topic, ProducerMessageHook hook) {
         super(brokerServerAddress);
         this.hook = hook;
@@ -37,7 +39,7 @@ public class AvatarMQConsumer extends MessageProcessor implements AvatarMQAction
         this.topic = topic;
     }
 
-	// 向消息服务器broker发送取消订阅消息
+    // 向消息服务器broker发送取消订阅消息
     private void unRegister() {
         RequestMessage request = new RequestMessage();
         request.setMsgType(MessageType.AvatarMQUnsubscribe);
@@ -49,7 +51,7 @@ public class AvatarMQConsumer extends MessageProcessor implements AvatarMQAction
         running = false;
     }
 
-	// 向消息服务器broker发送订阅消息
+    // 向消息服务器broker发送订阅消息
     private void register() {
         RequestMessage request = new RequestMessage();
         request.setMsgType(MessageType.AvatarMQSubscribe);
@@ -66,12 +68,14 @@ public class AvatarMQConsumer extends MessageProcessor implements AvatarMQAction
     }
 
     public void init() {
-        super.getMessageConnectFactory().setMessageHandle(new MessageConsumerHandler(this, new ConsumerHookMessageEvent(hook)));
+        super.getMessageConnectFactory()
+                .setMessageHandle(new MessageConsumerHandler(this, new ConsumerHookMessageEvent(hook)));
         Joiner joiner = Joiner.on(MessageSystemConfig.MessageDelimiter).skipNulls();
-        consumerId = joiner.join((clusterId.equals("") ? defaultClusterId : clusterId), topic, new MessageIdGenerator().generate());
+        consumerId = joiner.join((clusterId.equals("") ? defaultClusterId : clusterId), topic,
+                new MessageIdGenerator().generate());
     }
 
-	// 连接消息服务器broker
+    // 连接消息服务器broker
     public void start() {
         if (isSubscribeMessage()) {
             super.getMessageConnectFactory().connect();

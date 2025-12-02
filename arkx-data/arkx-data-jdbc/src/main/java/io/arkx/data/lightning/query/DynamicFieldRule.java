@@ -1,6 +1,7 @@
 package io.arkx.data.lightning.query;
 
 import io.arkx.framework.commons.utils2.StringUtil;
+
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -20,37 +21,38 @@ public class DynamicFieldRule extends Rule {
     public String toSql() {
         String columnName = StringUtil.camelToUnderline(field);
         String columnValue = value;
-        if("string".equals(type)) {
+        if ("string".equals(type)) {
             columnValue = "'" + columnValue + "'";
         }
         switch (operator) {
-            case "equals":
+            case "equals" :
                 return columnName + " = " + columnValue;
-            case "great_than":
+            case "great_than" :
                 return columnName + " > " + columnValue;
-            case "less_than":
+            case "less_than" :
                 return columnName + " < " + columnValue;
-            case "great_than_equals":
+            case "great_than_equals" :
                 return columnName + " >= " + columnValue;
-            case "less_than_equals":
+            case "less_than_equals" :
                 return columnName + " <= " + columnValue;
-            case "not_equals":
+            case "not_equals" :
                 return columnName + " != " + columnValue;
-            case "like":
-                return columnName + " like '%"+value+"%'";
-            case "before_like":
-                return columnName + " like '"+value+"%'";
-            case "end_like":
-                return columnName + " like '%"+value+"'";
-            case "in":
-                return columnName + " in("+value+")";
-            case "not_in":
-                return columnName + " not in("+value+")";
-            case "between":
+            case "like" :
+                return columnName + " like '%" + value + "%'";
+            case "before_like" :
+                return columnName + " like '" + value + "%'";
+            case "end_like" :
+                return columnName + " like '%" + value + "'";
+            case "in" :
+                return columnName + " in(" + value + ")";
+            case "not_in" :
+                return columnName + " not in(" + value + ")";
+            case "between" :
                 String[] temp = value.split(",");
-                return columnName + " between '"+temp[0]+"' and '" + temp[1] + "'";
+                return columnName + " between '" + temp[0] + "' and '" + temp[1] + "'";
 
-            default: throw new RuntimeException("操作符错误：" + operator);
+            default :
+                throw new RuntimeException("操作符错误：" + operator);
         }
     }
 }

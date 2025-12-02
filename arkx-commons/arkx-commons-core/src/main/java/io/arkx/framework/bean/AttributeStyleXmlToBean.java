@@ -1,68 +1,68 @@
 package io.arkx.framework.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import io.arkx.framework.commons.collection.Mapx;
 import io.arkx.framework.commons.util.lang.ClassUtil;
 import io.arkx.framework.data.xml.XMLElement;
 import io.arkx.framework.data.xml.XMLMultiLoader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 /**
  * 根据xml的attribute转换成bean
+ *
  * @author Darkness
  * @date 2013-12-14 下午04:01:25
  * @version V1.0
  */
 public class AttributeStyleXmlToBean extends AbstractXmlToBean {
 
-	public AttributeStyleXmlToBean(boolean ingoreRoot) {
-		super(ingoreRoot);
-	}
-	
-	public List<Object> toBean(XMLMultiLoader xmlLoader) {
-		XMLElement xmlElement = xmlLoader.getRoot();
+    public AttributeStyleXmlToBean(boolean ingoreRoot) {
+        super(ingoreRoot);
+    }
 
-		List<XMLElement> elements = xmlElement.getElements();
-		List<Object> beans = dealChildren(elements.get(0), new Mapx<String, Object>());
+    public List<Object> toBean(XMLMultiLoader xmlLoader) {
+        XMLElement xmlElement = xmlLoader.getRoot();
 
-		return beans;
-	}
+        List<XMLElement> elements = xmlElement.getElements();
+        List<Object> beans = dealChildren(elements.get(0), new Mapx<String, Object>());
 
-	public static String generatePk() {
+        return beans;
+    }
+
+    public static String generatePk() {
         return UUID.randomUUID().toString();
     }
-	
-	private List<Object> dealChildren(XMLElement element, Mapx<String, Object> parentParams) {
-		List<Object> result = new ArrayList<Object>();
 
-		Mapx<String, Object> paramToChildren = null;
+    private List<Object> dealChildren(XMLElement element, Mapx<String, Object> parentParams) {
+        List<Object> result = new ArrayList<Object>();
 
-		String CHILDREN_MARK = "children-";
-		Object bean = null;
-		if (element.getQName().startsWith(CHILDREN_MARK)) {
-			paramToChildren = parentParams;
-		} else {// 非子节点，转换成bean
-			parentParams.put("id", generatePk());
-			parentParams.putAll(element.getAttributes());
-			bean = buildBean(element.getQName(), parentParams);
+        Mapx<String, Object> paramToChildren = null;
 
-			paramToChildren = new Mapx<String, Object>();
-			Mapx<String, Object> parentProperties = ClassUtil.getPropertyValues(bean);
+        String CHILDREN_MARK = "children-";
+        Object bean = null;
+        if (element.getQName().startsWith(CHILDREN_MARK)) {
+            paramToChildren = parentParams;
+        } else {// 非子节点，转换成bean
+            parentParams.put("id", generatePk());
+            parentParams.putAll(element.getAttributes());
+            bean = buildBean(element.getQName(), parentParams);
 
-			paramToChildren.putAll(parentProperties, "parent.");
+            paramToChildren = new Mapx<String, Object>();
+            Mapx<String, Object> parentProperties = ClassUtil.getPropertyValues(bean);
 
-			result.add(bean);
-		}
+            paramToChildren.putAll(parentProperties, "parent.");
 
-		for (XMLElement childElement : element.getElements()) {
-			List<Object> childBeans = dealChildren(childElement, paramToChildren);
-			result.addAll(childBeans);
-		}
+            result.add(bean);
+        }
 
-		return result;
-	}
+        for (XMLElement childElement : element.getElements()) {
+            List<Object> childBeans = dealChildren(childElement, paramToChildren);
+            result.addAll(childBeans);
+        }
 
-	
+        return result;
+    }
+
 }

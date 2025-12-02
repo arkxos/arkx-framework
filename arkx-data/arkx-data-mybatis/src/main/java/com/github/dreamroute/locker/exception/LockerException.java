@@ -7,7 +7,8 @@ package com.github.dreamroute.locker.exception;
  */
 public class LockerException extends RuntimeException {
 
-    public LockerException() {}
+    public LockerException() {
+    }
 
     public LockerException(String message) {
         super(message);

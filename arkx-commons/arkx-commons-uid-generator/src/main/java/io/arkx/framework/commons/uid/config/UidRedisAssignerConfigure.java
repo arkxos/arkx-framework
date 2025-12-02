@@ -1,9 +1,5 @@
 package io.arkx.framework.commons.uid.config;
 
-import io.arkx.framework.commons.uid.constant.Mode;
-import io.arkx.framework.commons.uid.worker.RedisWorkerIdAssigner;
-import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -13,6 +9,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import io.arkx.framework.commons.uid.constant.Mode;
+import io.arkx.framework.commons.uid.worker.RedisWorkerIdAssigner;
+import io.arkx.framework.commons.uid.worker.WorkerIdAssigner;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author DengJun 2021/5/10
@@ -29,7 +31,7 @@ public class UidRedisAssignerConfigure {
     @Bean
     @ConditionalOnBean({RedisTemplate.class})
     @ConditionalOnMissingBean(RedisWorkerIdAssigner.class)
-    @SuppressWarnings({"unchecked","rawtypes"})
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public WorkerIdAssigner redisWorkerIdAssigner(RedisTemplate redisTemplate) {
         log.info("WorkerIdAssigner turn on redis");
         return new RedisWorkerIdAssigner(redisTemplate);

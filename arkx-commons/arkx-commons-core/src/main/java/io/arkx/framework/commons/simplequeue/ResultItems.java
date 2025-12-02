@@ -1,9 +1,9 @@
 package io.arkx.framework.commons.simplequeue;
 
-import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
 
 /**
  * Object contains extract results.<br>
@@ -58,12 +58,12 @@ public class ResultItems {
         return skip;
     }
 
-
     /**
      * Set whether to skip the result.<br>
      * Result which is skipped will not be processed by Pipeline.
      *
-     * @param skip whether to skip the result
+     * @param skip
+     *            whether to skip the result
      * @return this
      */
     public ResultItems setSkip(boolean skip) {
@@ -73,10 +73,6 @@ public class ResultItems {
 
     @Override
     public String toString() {
-        return "ResultItems{" +
-                "fields=" + fields +
-                ", request=" + request +
-                ", skip=" + skip +
-                '}';
+        return "ResultItems{" + "fields=" + fields + ", request=" + request + ", skip=" + skip + '}';
     }
 }

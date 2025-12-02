@@ -9,23 +9,23 @@ package io.arkx.soa.jpa;
  */
 public class SampleDTO {
 
-	private long id;
+    private long id;
 
-	private String contentShow;
+    private String contentShow;
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getContentShow() {
-		return contentShow;
-	}
+    public String getContentShow() {
+        return contentShow;
+    }
 
-	public void setContentShow(String contentShow) {
-		this.contentShow = contentShow;
-	}
+    public void setContentShow(String contentShow) {
+        this.contentShow = contentShow;
+    }
 }

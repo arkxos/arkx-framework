@@ -1,15 +1,13 @@
 package io.arkx.framework.data.jpa.sqltemplate.freemarker;
 
-import cn.hutool.core.collection.ConcurrentHashSet;
-import freemarker.cache.StringTemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import io.arkx.framework.data.jpa.sqltemplate.NamedTemplateResolver;
-import io.arkx.framework.data.jpa.sqltemplate.SftlNamedTemplateResolver;
-import io.arkx.framework.data.jpa.sqltemplate.XmlNamedTemplateResolver;
-import io.arkx.framework.data.jpa.util.JpaConstants;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.metamodel.EntityType;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,19 +20,23 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import io.arkx.framework.data.jpa.sqltemplate.NamedTemplateResolver;
+import io.arkx.framework.data.jpa.sqltemplate.SftlNamedTemplateResolver;
+import io.arkx.framework.data.jpa.sqltemplate.XmlNamedTemplateResolver;
+import io.arkx.framework.data.jpa.util.JpaConstants;
+
+import cn.hutool.core.collection.ConcurrentHashSet;
+import freemarker.cache.StringTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.metamodel.EntityType;
 
 /**
  * <p>
  * FreemarkerSql模板
  * </p>
- * 
+ *
  * @author Darkness
  * @date 2020年10月29日 下午4:13:10
  * @version V1.0
@@ -42,271 +44,272 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class FreemarkerSqlTemplates implements ResourceLoaderAware, InitializingBean {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private static Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+    private static Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 
-	private static StringTemplateLoader sqlTemplateLoader = new StringTemplateLoader();
+    private static StringTemplateLoader sqlTemplateLoader = new StringTemplateLoader();
 
-	static {
-		cfg.setTemplateLoader(sqlTemplateLoader);
-	}
+    static {
+        cfg.setTemplateLoader(sqlTemplateLoader);
+    }
 
-	private String encoding = JpaConstants.ENCODING;
+    private String encoding = JpaConstants.ENCODING;
 
-//    @PersistenceContext
-//	private EntityManager em;
+    // @PersistenceContext
+    // private EntityManager em;
 
-	private Map<String, Long> lastModifiedCache = new ConcurrentHashMap<>();
+    private Map<String, Long> lastModifiedCache = new ConcurrentHashMap<>();
 
-	private Map<String, List<Resource>> sqlResources = new ConcurrentHashMap<>();
+    private Map<String, List<Resource>> sqlResources = new ConcurrentHashMap<>();
 
-	private String templateLocation = "classpath:/sqls";
+    private String templateLocation = "classpath:/sqls";
 
-	private String templateBasePackage = "**";
+    private String templateBasePackage = "**";
 
-	private ResourceLoader resourceLoader;
+    private ResourceLoader resourceLoader;
 
-	private String suffix = ".xml";
+    private String suffix = ".xml";
 
-	private Boolean autoCheck = Boolean.TRUE; // 默认开启自动检测SQL文件的更新
+    private Boolean autoCheck = Boolean.TRUE; // 默认开启自动检测SQL文件的更新
 
-	private Map<String, NamedTemplateResolver> suffixResolvers = new HashMap<>();
+    private Map<String, NamedTemplateResolver> suffixResolvers = new HashMap<>();
 
-	private Set<EntityManager> entityManagers = new ConcurrentHashSet<>();
-	
-	private Lock lock = new ReentrantLock(); 
-	
-	{
-		suffixResolvers.put(".sftl", new SftlNamedTemplateResolver());
-	}
+    private Set<EntityManager> entityManagers = new ConcurrentHashSet<>();
 
-//    public FreemarkerSqlTemplates(EntityManager em) {
-//    	this.em = em;
-//    }
+    private Lock lock = new ReentrantLock();
 
-	public void setEm(EntityManager em) {
-		if (entityManagers.contains(em)) {
-			return;
-		}
-		
-		 // 获取锁  
-        lock.lock();  
-        
-        try {  
-            // 访问此锁保护的资源  
-        	if (entityManagers.contains(em)) {
-    			return;
-    		}
-        	try {
-				this.loadResources(em);
-				entityManagers.add(em);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        } finally {  
-            // 释放锁  
-            lock.unlock();  
-        }  
-	}
+    {
+        suffixResolvers.put(".sftl", new SftlNamedTemplateResolver());
+    }
 
-	public String process(String entityName, String methodName, Map<String, Object> model) {
-		try {
-			if (this.autoCheck && isModified(entityName)) {
-				reloadTemplateResource(entityName);
-			}
+    // public FreemarkerSqlTemplates(EntityManager em) {
+    // this.em = em;
+    // }
 
-			Template template = this.getTemplate(entityName, methodName);
-			assert template != null;
+    public void setEm(EntityManager em) {
+        if (entityManagers.contains(em)) {
+            return;
+        }
 
-			StringWriter writer = new StringWriter();
-			template.process(model, writer);
-			String sql = writer.toString();
-			logger.debug(sql);
-			return sql;
-		} catch (Exception e) {
-			logger.error("process template error. Entity name: " + entityName + " methodName:" + methodName, e);
-			return StringUtils.EMPTY;
-		}
-	}
+        // 获取锁
+        lock.lock();
 
-	private Template getTemplate(String entityName, String methodName) {
-		String templateKey = getTemplateKey(entityName, methodName);
-		try {
-			return cfg.getTemplate(templateKey, encoding);
-		} catch (IOException e) {
-			logger.error("Template not found for name {}", templateKey);
-			return null;
-		}
-	}
+        try {
+            // 访问此锁保护的资源
+            if (entityManagers.contains(em)) {
+                return;
+            }
+            try {
+                this.loadResources(em);
+                entityManagers.add(em);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } finally {
+            // 释放锁
+            lock.unlock();
+        }
+    }
 
-	private String getTemplateKey(String entityName, String methodName) {
-		return entityName + ":" + methodName;
-	}
+    public String process(String entityName, String methodName, Map<String, Object> model) {
+        try {
+            if (this.autoCheck && isModified(entityName)) {
+                reloadTemplateResource(entityName);
+            }
 
-	private boolean isModified(final String entityName) {
-		try {
-			Long lastModified = lastModifiedCache.get(entityName);
-			List<Resource> resourceList = sqlResources.get(entityName);
-//			if (resourceList == null || resourceList.isEmpty()) {
-//				this.loadResources();
-//			}
+            Template template = this.getTemplate(entityName, methodName);
+            assert template != null;
 
-			lastModified = lastModifiedCache.get(entityName);
-			resourceList = sqlResources.get(entityName);
-			if (resourceList == null || resourceList.isEmpty()) {
-				return false;
-			}
+            StringWriter writer = new StringWriter();
+            template.process(model, writer);
+            String sql = writer.toString();
+            logger.debug(sql);
+            return sql;
+        } catch (Exception e) {
+            logger.error("process template error. Entity name: " + entityName + " methodName:" + methodName, e);
+            return StringUtils.EMPTY;
+        }
+    }
 
-			long newLastModified = 0;
-			for (Resource resource : resourceList) {
-				if (newLastModified == 0) {
-					newLastModified = resource.lastModified();
-				} else {
-					// get the last modified.
-					newLastModified = newLastModified > resource.lastModified() ? newLastModified
-							: resource.lastModified();
-				}
-			}
+    private Template getTemplate(String entityName, String methodName) {
+        String templateKey = getTemplateKey(entityName, methodName);
+        try {
+            return cfg.getTemplate(templateKey, encoding);
+        } catch (IOException e) {
+            logger.error("Template not found for name {}", templateKey);
+            return null;
+        }
+    }
 
-			// check modified for cache.
-			if (lastModified == null || newLastModified > lastModified) {
-				lastModifiedCache.put(entityName, newLastModified);
-				return true;
-			}
-		} catch (Exception e) {
-			logger.error("{}", e);
-		}
-		return false;
-	}
+    private String getTemplateKey(String entityName, String methodName) {
+        return entityName + ":" + methodName;
+    }
 
-	@Override
-	public void setResourceLoader(ResourceLoader resourceLoader) {
-		this.resourceLoader = resourceLoader;
-		XmlNamedTemplateResolver xmlNamedTemplateResolver = new XmlNamedTemplateResolver(resourceLoader);
-		xmlNamedTemplateResolver.setEncoding(encoding);
-		this.suffixResolvers.put(".xml", xmlNamedTemplateResolver);
-	}
+    private boolean isModified(final String entityName) {
+        try {
+            Long lastModified = lastModifiedCache.get(entityName);
+            List<Resource> resourceList = sqlResources.get(entityName);
+            // if (resourceList == null || resourceList.isEmpty()) {
+            // this.loadResources();
+            // }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-//		this.loadResources();
-	}
+            lastModified = lastModifiedCache.get(entityName);
+            resourceList = sqlResources.get(entityName);
+            if (resourceList == null || resourceList.isEmpty()) {
+                return false;
+            }
 
-	private void loadResources(EntityManager em) throws Exception {
-		Set<String> entityNames = loadEntityNames(em);
+            long newLastModified = 0;
+            for (Resource resource : resourceList) {
+                if (newLastModified == 0) {
+                    newLastModified = resource.lastModified();
+                } else {
+                    // get the last modified.
+                    newLastModified = newLastModified > resource.lastModified()
+                            ? newLastModified
+                            : resource.lastModified();
+                }
+            }
 
-		resolveSqlResource(entityNames);
+            // check modified for cache.
+            if (lastModified == null || newLastModified > lastModified) {
+                lastModifiedCache.put(entityName, newLastModified);
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("{}", e);
+        }
+        return false;
+    }
 
-		for (String entityName : entityNames) {
-			if (isModified(entityName)) {
-				reloadTemplateResource(entityName);
-			}
-		}
-	}
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+        XmlNamedTemplateResolver xmlNamedTemplateResolver = new XmlNamedTemplateResolver(resourceLoader);
+        xmlNamedTemplateResolver.setEncoding(encoding);
+        this.suffixResolvers.put(".xml", xmlNamedTemplateResolver);
+    }
 
-	private void reloadTemplateResource(String entityName) throws Exception {
-		logger.debug("load resource " + entityName);
-		List<Resource> resourceList = sqlResources.get(entityName);
-		if (resourceList == null) {
-			return;
-		}
-		// process template.
-		for (Resource resource : resourceList) {
-			NamedTemplateResolver namedTemplateResolver = suffixResolvers.get(suffix);
-			Iterator<Void> iterator = namedTemplateResolver.doInTemplateResource(resource, (templateName, content) -> {
-				String key = getTemplateKey(entityName, templateName);
-				Object src = sqlTemplateLoader.findTemplateSource(key);
-				if (src != null) {
-					logger.warn("found duplicate template key, will replace the value, key:" + key);
-				}
-				sqlTemplateLoader.putTemplate(getTemplateKey(entityName, templateName), content);
-			});
-			while (iterator.hasNext()) {
-				iterator.next();
-			}
-		}
-	}
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // this.loadResources();
+    }
 
-	private void resolveSqlResource(Set<String> names) throws IOException {
-		if (names.isEmpty()) {
-			return;
-		}
+    private void loadResources(EntityManager em) throws Exception {
+        Set<String> entityNames = loadEntityNames(em);
 
-		String suffixPattern = "/**/*" + suffix;
-		String pattern;
-		if (StringUtils.isNotBlank(templateBasePackage)) {
-			pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-					+ ClassUtils.convertClassNameToResourcePath(templateBasePackage) + suffixPattern;
+        resolveSqlResource(entityNames);
 
-			loadPatternResource(names, pattern);
-		}
-		if (StringUtils.isNotBlank(templateLocation)) {
-			pattern = templateLocation.contains(suffix) ? templateLocation : templateLocation + suffixPattern;
-			try {
-				loadPatternResource(names, pattern);
-			} catch (FileNotFoundException e) {
-				if ("classpath:/sqls".equals(templateLocation)) {
-					// warn: default value
-					logger.warn("templateLocation[" + templateLocation + "] not exist!");
-					logger.warn(e.getMessage());
-				} else {
-					// throw: custom value.
-					throw e;
-				}
-			}
-		}
-	}
+        for (String entityName : entityNames) {
+            if (isModified(entityName)) {
+                reloadTemplateResource(entityName);
+            }
+        }
+    }
 
-	private Set<String> loadEntityNames(EntityManager em) {
-		Set<String> names = new HashSet<>();
-		if (em == null) {
-			return names;
-		}
-		Set<EntityType<?>> entities = em.getMetamodel().getEntities();
-		for (EntityType<?> entity : entities) {
-			names.add(entity.getName());
-		}
-		return names;
-	}
+    private void reloadTemplateResource(String entityName) throws Exception {
+        logger.debug("load resource " + entityName);
+        List<Resource> resourceList = sqlResources.get(entityName);
+        if (resourceList == null) {
+            return;
+        }
+        // process template.
+        for (Resource resource : resourceList) {
+            NamedTemplateResolver namedTemplateResolver = suffixResolvers.get(suffix);
+            Iterator<Void> iterator = namedTemplateResolver.doInTemplateResource(resource, (templateName, content) -> {
+                String key = getTemplateKey(entityName, templateName);
+                Object src = sqlTemplateLoader.findTemplateSource(key);
+                if (src != null) {
+                    logger.warn("found duplicate template key, will replace the value, key:" + key);
+                }
+                sqlTemplateLoader.putTemplate(getTemplateKey(entityName, templateName), content);
+            });
+            while (iterator.hasNext()) {
+                iterator.next();
+            }
+        }
+    }
 
-	private void loadPatternResource(Set<String> names, String pattern) throws IOException {
-		PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver(
-				resourceLoader);
-		Resource[] resources = resourcePatternResolver.getResources(pattern);
-		for (Resource resource : resources) {
-			String resourceName = resource.getFilename().replace(suffix, "");
-			if (names.contains(resourceName)) {
-				// allow multi resource.
-				List<Resource> resourceList;
-				if (sqlResources.containsKey(resourceName)) {
-					resourceList = sqlResources.get(resourceName);
-				} else {
-					resourceList = new LinkedList<>();
-					sqlResources.put(resourceName, resourceList);
-				}
-				resourceList.add(resource);
-			}
-		}
-	}
+    private void resolveSqlResource(Set<String> names) throws IOException {
+        if (names.isEmpty()) {
+            return;
+        }
 
-	public void setTemplateLocation(String templateLocation) {
-		this.templateLocation = templateLocation;
-	}
+        String suffixPattern = "/**/*" + suffix;
+        String pattern;
+        if (StringUtils.isNotBlank(templateBasePackage)) {
+            pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
+                    + ClassUtils.convertClassNameToResourcePath(templateBasePackage) + suffixPattern;
 
-	public void setTemplateBasePackage(String templateBasePackage) {
-		this.templateBasePackage = templateBasePackage;
-	}
+            loadPatternResource(names, pattern);
+        }
+        if (StringUtils.isNotBlank(templateLocation)) {
+            pattern = templateLocation.contains(suffix) ? templateLocation : templateLocation + suffixPattern;
+            try {
+                loadPatternResource(names, pattern);
+            } catch (FileNotFoundException e) {
+                if ("classpath:/sqls".equals(templateLocation)) {
+                    // warn: default value
+                    logger.warn("templateLocation[" + templateLocation + "] not exist!");
+                    logger.warn(e.getMessage());
+                } else {
+                    // throw: custom value.
+                    throw e;
+                }
+            }
+        }
+    }
 
-	public void setEncoding(String encoding) {
-		this.encoding = encoding;
-	}
+    private Set<String> loadEntityNames(EntityManager em) {
+        Set<String> names = new HashSet<>();
+        if (em == null) {
+            return names;
+        }
+        Set<EntityType<?>> entities = em.getMetamodel().getEntities();
+        for (EntityType<?> entity : entities) {
+            names.add(entity.getName());
+        }
+        return names;
+    }
 
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
-	}
+    private void loadPatternResource(Set<String> names, String pattern) throws IOException {
+        PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver(
+                resourceLoader);
+        Resource[] resources = resourcePatternResolver.getResources(pattern);
+        for (Resource resource : resources) {
+            String resourceName = resource.getFilename().replace(suffix, "");
+            if (names.contains(resourceName)) {
+                // allow multi resource.
+                List<Resource> resourceList;
+                if (sqlResources.containsKey(resourceName)) {
+                    resourceList = sqlResources.get(resourceName);
+                } else {
+                    resourceList = new LinkedList<>();
+                    sqlResources.put(resourceName, resourceList);
+                }
+                resourceList.add(resource);
+            }
+        }
+    }
 
-	public void setAutoCheck(Boolean autoCheck) {
-		this.autoCheck = autoCheck;
-	}
+    public void setTemplateLocation(String templateLocation) {
+        this.templateLocation = templateLocation;
+    }
+
+    public void setTemplateBasePackage(String templateBasePackage) {
+        this.templateBasePackage = templateBasePackage;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public void setAutoCheck(Boolean autoCheck) {
+        this.autoCheck = autoCheck;
+    }
 }

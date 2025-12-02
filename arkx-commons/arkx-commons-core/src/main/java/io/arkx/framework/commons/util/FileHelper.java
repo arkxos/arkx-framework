@@ -1,19 +1,18 @@
 package io.arkx.framework.commons.util;
 
+import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
+import java.util.Date;
+import java.util.UUID;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.nio.file.FileAlreadyExistsException;
-import java.util.Date;
-import java.util.UUID;
-
 /**
- * 文件操作工具类
- * 实现文件的创建、删除、复制以及目录的创建、删除、复制等功能
+ * 文件操作工具类 实现文件的创建、删除、复制以及目录的创建、删除、复制等功能
  *
  * @author liujianhong
  * @date 2019-07-02 16:12
@@ -42,10 +41,13 @@ public class FileHelper extends FileUtils {
     /**
      * 复制文件，可以复制单个文件或文件夹
      *
-     * @param srcFileName  待复制的文件名
-     * @param descFileName 目标文件名
+     * @param srcFileName
+     *            待复制的文件名
+     * @param descFileName
+     *            目标文件名
      * @return 如果复制成功 ，则返回true，否是返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean copy(String srcFileName, String descFileName) throws IOException {
         File file = new File(srcFileName);
@@ -64,10 +66,13 @@ public class FileHelper extends FileUtils {
     /**
      * 复制单个文件，如果目标文件存在，则不覆盖
      *
-     * @param srcFileName  待复制的文件名
-     * @param descFileName 目标文件名
+     * @param srcFileName
+     *            待复制的文件名
+     * @param descFileName
+     *            目标文件名
      * @return 如果复制成功 ，则返回true，否则返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean copyFile(String srcFileName, String descFileName) throws IOException {
         return copyFileCover(srcFileName, descFileName, false);
@@ -76,11 +81,15 @@ public class FileHelper extends FileUtils {
     /**
      * 复制单个文件
      *
-     * @param srcFileName  待复制的文件名
-     * @param descFileName 目标文件名
-     * @param coverlay     如果目标文件已存在，是否覆盖
+     * @param srcFileName
+     *            待复制的文件名
+     * @param descFileName
+     *            目标文件名
+     * @param coverlay
+     *            如果目标文件已存在，是否覆盖
      * @return 如果复制成功 ，则返回true，否则返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean copyFileCover(String srcFileName, String descFileName, boolean coverlay) throws IOException {
         File srcFile = new File(srcFileName);
@@ -108,10 +117,7 @@ public class FileHelper extends FileUtils {
         }
 
         // 准备复制文件
-        try (
-                InputStream ins = new FileInputStream(srcFile);
-                OutputStream outs = new FileOutputStream(descFile);
-        ) {
+        try (InputStream ins = new FileInputStream(srcFile); OutputStream outs = new FileOutputStream(descFile);) {
             copy(ins, outs);
             return true;
         } catch (Exception e) {
@@ -123,10 +129,13 @@ public class FileHelper extends FileUtils {
     /**
      * 复制整个目录的内容，如果目标目录存在，则不覆盖
      *
-     * @param srcDirName  源目录名
-     * @param descDirName 目标目录名
+     * @param srcDirName
+     *            源目录名
+     * @param descDirName
+     *            目标目录名
      * @return 如果复制成功返回true ，否则返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean copyDirectory(String srcDirName, String descDirName) throws IOException {
         return copyDirectoryCover(srcDirName, descDirName, false);
@@ -135,14 +144,18 @@ public class FileHelper extends FileUtils {
     /**
      * 复制整个目录的内容
      *
-     * @param srcDirName  源目录名
-     * @param descDirName 目标目录名
-     * @param coverlay    如果目标目录存在，是否覆盖
+     * @param srcDirName
+     *            源目录名
+     * @param descDirName
+     *            目标目录名
+     * @param coverlay
+     *            如果目标目录存在，是否覆盖
      * @return 如果复制成功返回true ，否则返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
-    public static boolean copyDirectoryCover(String srcDirName,
-                                             String descDirName, boolean coverlay) throws IOException {
+    public static boolean copyDirectoryCover(String srcDirName, String descDirName, boolean coverlay)
+            throws IOException {
         File srcDir = new File(srcDirName);
         // 判断源目录是否存在
         if (!srcDir.exists()) {
@@ -178,10 +191,13 @@ public class FileHelper extends FileUtils {
     /**
      * 复制整个目录的内容
      *
-     * @param folder      源目录
-     * @param descDirName 目的地址
+     * @param folder
+     *            源目录
+     * @param descDirName
+     *            目的地址
      * @return boolean boolean
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean copyFolder(File folder, String descDirName) throws IOException {
         File[] files = folder.listFiles();
@@ -189,7 +205,8 @@ public class FileHelper extends FileUtils {
             for (File file : files) {
                 // 如果是一个单个文件，则直接复制
                 if ((file.isFile() && !copyFile(file.getAbsolutePath(), descDirName + file.getName()))
-                        || (file.isDirectory() && !copyDirectory(file.getAbsolutePath(), descDirName + file.getName()))) {
+                        || (file.isDirectory()
+                                && !copyDirectory(file.getAbsolutePath(), descDirName + file.getName()))) {
                     return false;
                 }
             }
@@ -200,9 +217,12 @@ public class FileHelper extends FileUtils {
     /**
      * Stream copy, use default buf_size.
      *
-     * @param is InputStream
-     * @param os OutputStream
-     * @throws IOException IO异常
+     * @param is
+     *            InputStream
+     * @param os
+     *            OutputStream
+     * @throws IOException
+     *             IO异常
      */
     public static void copy(InputStream is, OutputStream os) throws IOException {
         copy(is, os, BUF_SIZE);
@@ -211,9 +231,12 @@ public class FileHelper extends FileUtils {
     /**
      * copy data from reader to writer.
      *
-     * @param reader Reader
-     * @param writer Writer
-     * @throws IOException IO异常
+     * @param reader
+     *            Reader
+     * @param writer
+     *            Writer
+     * @throws IOException
+     *             IO异常
      */
     public static void copy(Reader reader, Writer writer) throws IOException {
         char[] buf = new char[BUF_SIZE];
@@ -230,10 +253,14 @@ public class FileHelper extends FileUtils {
     /**
      * Stream copy.
      *
-     * @param is      InputStream
-     * @param os      OutputStream
-     * @param bufSize int
-     * @throws IOException IO异常
+     * @param is
+     *            InputStream
+     * @param os
+     *            OutputStream
+     * @param bufSize
+     *            int
+     * @throws IOException
+     *             IO异常
      */
     public static void copy(InputStream is, OutputStream os, int bufSize) throws IOException {
         byte[] buf = new byte[bufSize];
@@ -250,10 +277,13 @@ public class FileHelper extends FileUtils {
     /**
      * 将目标的文件或目录移动到新位置上.
      *
-     * @param srcFileName  待复制的文件名
-     * @param descFileName 目标文件名
+     * @param srcFileName
+     *            待复制的文件名
+     * @param descFileName
+     *            目标文件名
      * @return 如果移动成功 ，则返回true，否是返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean move(String srcFileName, String descFileName) throws IOException {
         return copy(srcFileName, descFileName) && delFile(srcFileName);
@@ -262,7 +292,8 @@ public class FileHelper extends FileUtils {
     /**
      * 删除文件，可以删除单个文件或文件夹
      *
-     * @param fileName 被删除的文件名
+     * @param fileName
+     *            被删除的文件名
      * @return 如果删除成功 ，则返回true，否是返回false
      */
     public static boolean delFile(String fileName) {
@@ -282,7 +313,8 @@ public class FileHelper extends FileUtils {
     /**
      * 删除单个文件
      *
-     * @param fileName 被删除的文件名
+     * @param fileName
+     *            被删除的文件名
      * @return 如果删除成功 ，则返回true，否则返回false
      */
     public static boolean deleteFile(String fileName) {
@@ -304,7 +336,8 @@ public class FileHelper extends FileUtils {
     /**
      * 删除目录及目录下的文件
      *
-     * @param dirName 被删除的目录所在的文件路径
+     * @param dirName
+     *            被删除的目录所在的文件路径
      * @return 如果目录删除成功 ，则返回true，否则返回false
      */
     public static boolean deleteDirectory(String dirName) {
@@ -330,7 +363,8 @@ public class FileHelper extends FileUtils {
     /**
      * 清空一个目录.
      *
-     * @param dirName 需要清除的目录.如果该参数实际上是一个file,不处理,返回true,
+     * @param dirName
+     *            需要清除的目录.如果该参数实际上是一个file,不处理,返回true,
      * @return 是否清除成功 boolean
      */
     public static boolean clearFolder(String dirName) {
@@ -341,7 +375,8 @@ public class FileHelper extends FileUtils {
     /**
      * 清空目录
      *
-     * @param folder 目标目录
+     * @param folder
+     *            目标目录
      * @return 是否清除成功
      */
     private static boolean clearFolder(File folder) {
@@ -360,9 +395,11 @@ public class FileHelper extends FileUtils {
     /**
      * 创建单个文件
      *
-     * @param descFileName 文件名，包含路径
+     * @param descFileName
+     *            文件名，包含路径
      * @return 如果创建成功 ，则返回true，否则返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean createFile(String descFileName) throws IOException {
         File file = new File(descFileName);
@@ -394,9 +431,11 @@ public class FileHelper extends FileUtils {
     /**
      * 创建目录
      *
-     * @param descDirName 目录名,包含路径
+     * @param descDirName
+     *            目录名,包含路径
      * @return 如果创建成功 ，则返回true，否则返回false
-     * @throws IOException the io exception
+     * @throws IOException
+     *             the io exception
      */
     public static boolean createDirectory(String descDirName) throws IOException {
         String descDirNames = descDirName;
@@ -421,9 +460,11 @@ public class FileHelper extends FileUtils {
     /**
      * 从指定Reader中读取数据字符串.
      *
-     * @param reader Reader
+     * @param reader
+     *            Reader
      * @return String string
-     * @throws IOException IO异常
+     * @throws IOException
+     *             IO异常
      */
     public static String read(Reader reader) throws IOException {
         CharArrayWriter writer = new CharArrayWriter();
@@ -434,9 +475,12 @@ public class FileHelper extends FileUtils {
     /**
      * 保存一个数据到指定文件中.
      *
-     * @param file 文件
-     * @param data 内容
-     * @throws IOException IO异常
+     * @param file
+     *            文件
+     * @param data
+     *            内容
+     * @throws IOException
+     *             IO异常
      */
     public static void saveData(File file, String data) throws IOException {
         if (!file.getParentFile().exists() && !mkParentDirs(file)) {
@@ -448,7 +492,8 @@ public class FileHelper extends FileUtils {
     /**
      * 创建父目录
      *
-     * @param file 文件
+     * @param file
+     *            文件
      * @return boolean
      */
     private static boolean mkParentDirs(File file) {
@@ -458,10 +503,14 @@ public class FileHelper extends FileUtils {
     /**
      * 将数据保存到指定位置上.
      *
-     * @param file   文件
-     * @param data   内容
-     * @param append 是否追加
-     * @throws IOException IO异常
+     * @param file
+     *            文件
+     * @param data
+     *            内容
+     * @param append
+     *            是否追加
+     * @throws IOException
+     *             IO异常
      */
     public static void saveData(String file, String data, Boolean append) throws IOException {
         saveData(new File(file), data, append);
@@ -470,10 +519,14 @@ public class FileHelper extends FileUtils {
     /**
      * 保存一个数据到指定文件中
      *
-     * @param file   文件
-     * @param data   内容
-     * @param append 是否追加
-     * @throws IOException IO异常
+     * @param file
+     *            文件
+     * @param data
+     *            内容
+     * @param append
+     *            是否追加
+     * @throws IOException
+     *             IO异常
      */
     public static void saveData(File file, String data, Boolean append) throws IOException {
         if (!file.getParentFile().exists() && !mkParentDirs(file)) {
@@ -485,9 +538,12 @@ public class FileHelper extends FileUtils {
     /**
      * 保存bytes到一个输出流中并且关闭它
      *
-     * @param os   输出流
-     * @param data 内容
-     * @throws IOException IO异常
+     * @param os
+     *            输出流
+     * @param data
+     *            内容
+     * @throws IOException
+     *             IO异常
      */
     public static void saveData(OutputStream os, byte[] data) throws IOException {
         try {
@@ -500,15 +556,16 @@ public class FileHelper extends FileUtils {
     /**
      * 保存String到指定输出流中.
      *
-     * @param os   输出流
-     * @param data 内容
-     * @throws IOException IO异常
+     * @param os
+     *            输出流
+     * @param data
+     *            内容
+     * @throws IOException
+     *             IO异常
      */
     public static void saveData(OutputStream os, String data) throws IOException {
 
-        try (
-                BufferedOutputStream bos = new BufferedOutputStream(os, BUF_SIZE);
-        ) {
+        try (BufferedOutputStream bos = new BufferedOutputStream(os, BUF_SIZE);) {
             byte[] bs = data.getBytes(DEFAULT_ENCODING);
             bos.write(bs);
         }
@@ -517,9 +574,12 @@ public class FileHelper extends FileUtils {
     /**
      * 将数据保存到指定位置上.
      *
-     * @param file 文件路径
-     * @param data 内容
-     * @throws IOException IO异常
+     * @param file
+     *            文件路径
+     * @param data
+     *            内容
+     * @throws IOException
+     *             IO异常
      */
     public static void saveData(String file, String data) throws IOException {
         saveData(new File(file), data);
@@ -528,7 +588,8 @@ public class FileHelper extends FileUtils {
     /**
      * 修复路径，将 \\ 或 / 等替换为 File.separator
      *
-     * @param path 路径
+     * @param path
+     *            路径
      * @return 路径 string
      */
     public static String path(String path) {
@@ -546,7 +607,8 @@ public class FileHelper extends FileUtils {
     /**
      * 关闭流.
      *
-     * @param closeable 流
+     * @param closeable
+     *            流
      */
     public static void close(Closeable closeable) {
         if (closeable != null) {
@@ -561,7 +623,8 @@ public class FileHelper extends FileUtils {
     /**
      * 增加文件结尾/
      *
-     * @param name 文件路径
+     * @param name
+     *            文件路径
      * @return 文件路径 string
      */
     public static String addEndSlash(String name) {
@@ -571,7 +634,8 @@ public class FileHelper extends FileUtils {
     /**
      * 移除文件结尾/
      *
-     * @param name 文件路径
+     * @param name
+     *            文件路径
      * @return 文件路径 string
      */
     public static String clearEndSlash(String name) {
@@ -581,14 +645,16 @@ public class FileHelper extends FileUtils {
     /**
      * 文件路径
      *
-     * @param prefix 前缀
-     * @param suffix 后缀
+     * @param prefix
+     *            前缀
+     * @param suffix
+     *            后缀
      * @return 返回上传路径
      */
     public static String getPath(String prefix, String suffix) {
-        //生成uuid
+        // 生成uuid
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        //文件路径
+        // 文件路径
         String path = DateFormatUtils.format(new Date(), "yyyyMMdd") + "/" + uuid;
 
         if (StringUtils.isNotBlank(prefix)) {

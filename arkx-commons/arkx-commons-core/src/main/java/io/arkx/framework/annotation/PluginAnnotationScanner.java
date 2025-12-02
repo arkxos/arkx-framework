@@ -1,14 +1,15 @@
 package io.arkx.framework.annotation;
 
-import lombok.Setter;
+import java.lang.annotation.Annotation;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-import java.lang.annotation.Annotation;
-import java.util.Set;
+import lombok.Setter;
 
 /**
  * @author Darkness
@@ -24,18 +25,20 @@ public class PluginAnnotationScanner extends ClassPathBeanDefinitionScanner {
 
     /**
      * 因构造函数无法传入指定的Annotation类，需使用静态方法来调用
+     *
      * @param registry
      * @param clazz
      * @return
      */
-    public static synchronized PluginAnnotationScanner getScanner(BeanDefinitionRegistry registry,Class<? extends Annotation> clazz){
+    public static synchronized PluginAnnotationScanner getScanner(BeanDefinitionRegistry registry,
+            Class<? extends Annotation> clazz) {
         staticTempAnnotationClazz = clazz;
         PluginAnnotationScanner scanner = new PluginAnnotationScanner(registry);
         scanner.setSelfAnnotationClazz(clazz);
         return scanner;
     }
-    
-	/**
+
+    /**
      * 实体类对应的AnnotationClazz
      */
     @Setter

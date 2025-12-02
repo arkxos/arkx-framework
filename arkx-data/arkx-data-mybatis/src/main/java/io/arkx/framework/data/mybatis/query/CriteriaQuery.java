@@ -1,19 +1,21 @@
 package io.arkx.framework.data.mybatis.query;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.core.annotation.AnnotationUtils;
+
+import io.arkx.framework.commons.annotation.TableAlias;
+import io.arkx.framework.commons.util.StringUtils;
+import io.arkx.framework.commons.utils2.StringUtil;
+import io.arkx.framework.data.mybatis.model.PageParams;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.google.common.collect.Lists;
-import io.arkx.framework.commons.annotation.TableAlias;
-import io.arkx.framework.commons.util.StringUtils;
-import io.arkx.framework.commons.utils2.StringUtil;
-import io.arkx.framework.data.mybatis.model.PageParams;
-import org.springframework.core.annotation.AnnotationUtils;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author: zyf
@@ -35,7 +37,6 @@ public class CriteriaQuery<T> extends QueryWrapper<T> {
      */
     private PageParams pageParams;
 
-
     public CriteriaQuery() {
 
     }
@@ -45,7 +46,7 @@ public class CriteriaQuery<T> extends QueryWrapper<T> {
         String sort = pageParams.getSort();
         apply("1=1");
         if (ObjectUtils.isNotEmpty(sort)) {
-            //自动添加ordery by
+            // 自动添加ordery by
             String order = pageParams.getOrder();
             Boolean isAsc = StringUtils.equalsIgnoreCase(SqlKeyword.ASC.name(), order);
             sort = StringUtil.camelToUnderline(sort);
@@ -57,14 +58,12 @@ public class CriteriaQuery<T> extends QueryWrapper<T> {
         return aliasMap;
     }
 
-
     /**
      * 创建外键表关联对象,需要在mapper(xml)中编写join
      */
     public void createAlias(String entiry, String alias) {
         this.aliasMap.put(entiry, alias);
     }
-
 
     /**
      * 创建外键表关联对象,需要在mapper(xml)中编写join
@@ -103,7 +102,6 @@ public class CriteriaQuery<T> extends QueryWrapper<T> {
         return this;
     }
 
-
     /**
      * ge
      */
@@ -139,7 +137,6 @@ public class CriteriaQuery<T> extends QueryWrapper<T> {
         gt(ObjectUtils.isNotEmpty(val), column, val);
         return this;
     }
-
 
     /**
      * or

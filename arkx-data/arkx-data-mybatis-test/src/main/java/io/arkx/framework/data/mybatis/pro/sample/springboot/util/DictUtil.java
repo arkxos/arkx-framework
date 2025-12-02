@@ -1,7 +1,7 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.util;
 
-import cn.hutool.core.util.ReflectUtil;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.util.anno.Dict;
+import static io.arkx.framework.data.mybatis.pro.sample.springboot.util.DictFieldCache.findForClass;
+import static java.util.stream.Collectors.*;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -9,8 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.arkx.framework.data.mybatis.pro.sample.springboot.util.DictFieldCache.findForClass;
-import static java.util.stream.Collectors.*;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.util.anno.Dict;
+
+import cn.hutool.core.util.ReflectUtil;
 
 /**
  * 字典工具类
@@ -19,15 +20,20 @@ import static java.util.stream.Collectors.*;
  */
 public final class DictUtil {
 
-    private DictUtil() {}
+    private DictUtil() {
+    }
 
     /**
      * 字典List -> Map<enName, Map<value, cnName>>
      */
-    public static Map<String, Map<Integer, String>> dict2Map(List<io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict> list) {
+    public static Map<String, Map<Integer, String>> dict2Map(
+            List<io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict> list) {
         Map<String, Map<Integer, String>> result = new HashMap<>(128);
         list.stream().collect(groupingBy(io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict::getEnName))
-                .forEach((k, v) -> result.put(k, v.stream().collect(toMap(io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict::getValue, io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict::getLabelValue))));
+                .forEach((k, v) -> result.put(k,
+                        v.stream().collect(toMap(
+                                io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict::getValue,
+                                io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict::getLabelValue))));
         return result;
     }
 
@@ -65,7 +71,8 @@ public final class DictUtil {
     /**
      * 驼峰转下划线
      *
-     * @param src 驼峰
+     * @param src
+     *            驼峰
      * @return 返回下划线名称
      */
     public static String humpToLine(String src) {

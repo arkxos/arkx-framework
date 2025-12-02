@@ -1,13 +1,13 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.execute.BaseTaskExecutor;
-import io.arkx.framework.util.task.execute.ResultTaskExecutor;
-import io.arkx.framework.util.task.execute.TreeTaskExecutor;
-
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+
+import io.arkx.framework.util.task.execute.BaseTaskExecutor;
+import io.arkx.framework.util.task.execute.ResultTaskExecutor;
+import io.arkx.framework.util.task.execute.TreeTaskExecutor;
 
 public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 
@@ -17,7 +17,8 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
     private final AtomicLong completedTaskNumber = new AtomicLong(0);
     private final Deque<Task> runningQueue = new ConcurrentLinkedDeque<>();
     private final Map<String, TaskGroup> runningTaskGrous = new ConcurrentHashMap<>();
-//    private final LinkedBlockingDeque<Task> completedQueue = new LinkedBlockingDeque<>();
+    // private final LinkedBlockingDeque<Task> completedQueue = new
+    // LinkedBlockingDeque<>();
 
     private final CompletedTaskHandler completedTaskHandler;
 
@@ -25,25 +26,25 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
     private List<Task> waitingTasks = new CopyOnWriteArrayList<>();
 
     public DefaultThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
-                                     BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory,
-                                     RejectedExecutionHandler handler, CompletedTaskHandler completedTaskHandler) {
+            BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler,
+            CompletedTaskHandler completedTaskHandler) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
         if (completedTaskHandler == null) {
             this.completedTaskHandler = new DefaultCompletedTaskHandler();
         } else {
             this.completedTaskHandler = completedTaskHandler;
         }
-//        startHandleCompletedTask();
+        // startHandleCompletedTask();
     }
 
     public void submit(Task task) {
         this.waitingTasks.add(task);
-//        this.executeTask(task);
+        // this.executeTask(task);
         this.loopForExecute();
     }
 
     private void loopForExecute() {
-        while(true) {
+        while (true) {
             long lastThreadCheckTime = System.currentTimeMillis();
 
             int poolSize = this.getCorePoolSize();
@@ -65,8 +66,8 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 
                 boolean taskCompleted = treeTask.isFinished();
                 needExecute = treeTask.findNeedExecuteTask();
-                if(needExecute == null) {
-                    if(taskCompleted) {
+                if (needExecute == null) {
+                    if (taskCompleted) {
                         waitingTasks.remove(0);
                     }
                     return;
@@ -76,10 +77,10 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
                 }
 
                 // 此线程任务很轻，在此计算任务进度并触发进度监控
-//                        caculateTaskPercentAndNotifice(treeTask);
+                // caculateTaskPercentAndNotifice(treeTask);
             } else {
                 waitingTasks.remove(0);
-//                        needExecute = task;
+                // needExecute = task;
                 executeTask(task);
             }
         }
@@ -136,24 +137,24 @@ public final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
         if (r instanceof CustomFutureTask<?> futureTask) {
             Task task = futureTask.getTask();
             runningQueue.remove(task);
-//            completedQueue.offer(task);
+            // completedQueue.offer(task);
             completedTaskNumber.incrementAndGet();
 
             this.loopForExecute();
         }
     }
 
-//    private void startHandleCompletedTask() {
-//        new Thread(() -> {
-//            while (true) {
-//                try {
-//                    Task take = completedQueue.take();
-//                    DefaultThreadPoolExecutor.this.completedTaskHandler.handle(take);
-//                } catch (Throwable ignore) {
-//                }
-//            }
-//        }).start();
-//    }
+    // private void startHandleCompletedTask() {
+    // new Thread(() -> {
+    // while (true) {
+    // try {
+    // Task take = completedQueue.take();
+    // DefaultThreadPoolExecutor.this.completedTaskHandler.handle(take);
+    // } catch (Throwable ignore) {
+    // }
+    // }
+    // }).start();
+    // }
 
     // 获取正在运行的任务，包含任务组中的任务
     public final List<Task> getRunningTasks() {

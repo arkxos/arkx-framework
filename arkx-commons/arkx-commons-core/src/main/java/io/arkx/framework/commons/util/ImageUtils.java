@@ -1,11 +1,12 @@
 package io.arkx.framework.commons.util;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.io.*;
 import java.net.MalformedURLException;
+
+import javax.imageio.ImageIO;
 
 /**
  * 图片工具类
@@ -16,10 +17,14 @@ public final class ImageUtils {
     /**
      * 图片缩放
      *
-     * @param org    原图路径
-     * @param dest   缩放图路径
-     * @param height 高度
-     * @param width  宽度
+     * @param org
+     *            原图路径
+     * @param dest
+     *            缩放图路径
+     * @param height
+     *            高度
+     * @param width
+     *            宽度
      */
     public static boolean resize(String org, String dest, int height, int width) {
         // 是否进行了压缩
@@ -41,7 +46,8 @@ public final class ImageUtils {
 
             // 计算比例
             if ((itempHeight > height) || (itempWidth > width)) {
-                ratio = Math.min((Integer.valueOf(height)).doubleValue() / itempHeight, (Integer.valueOf(width)).doubleValue() / itempWidth);
+                ratio = Math.min((Integer.valueOf(height)).doubleValue() / itempHeight,
+                        (Integer.valueOf(width)).doubleValue() / itempWidth);
                 AffineTransformOp op = new AffineTransformOp(AffineTransform.getScaleInstance(ratio, ratio), null);
                 itemp = op.filter(bi, null);
                 ImageIO.write((BufferedImage) itemp, pictype, d);
@@ -188,8 +194,10 @@ public final class ImageUtils {
     /**
      * 将图片转换为BASE64加密字符串.
      *
-     * @param imagePath 图片路径.
-     * @param format    图片格式.
+     * @param imagePath
+     *            图片路径.
+     * @param format
+     *            图片格式.
      * @return
      */
     public static String convertImageToByte(String imagePath, String format) {
@@ -221,7 +229,8 @@ public final class ImageUtils {
      * 将图片流转换为BASE64加密字符串.
      *
      * @param imageInputStream
-     * @param format           图片格式.
+     * @param format
+     *            图片格式.
      * @return
      */
     public static String convertImageStreamToByte(InputStream imageInputStream, String format) {
@@ -252,8 +261,10 @@ public final class ImageUtils {
      * 将BASE64加密字符串转换为图片.
      *
      * @param base64String
-     * @param imagePath    图片生成路径.
-     * @param format       图片格式.
+     * @param imagePath
+     *            图片生成路径.
+     * @param format
+     *            图片格式.
      */
     public static void convertByteToImage(String base64String, String imagePath, String format) throws Exception {
         byte[] bytes = null;

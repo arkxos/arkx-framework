@@ -26,9 +26,9 @@ public class TypeUtil {
     public static ParameterizedType toParameterizedType(Type type) {
         ParameterizedType result = null;
         if (type instanceof ParameterizedType) {
-            result = (ParameterizedType)type;
+            result = (ParameterizedType) type;
         } else if (type instanceof Class) {
-            Class<?> clazz = (Class)type;
+            Class<?> clazz = (Class) type;
             Type genericSuper = clazz.getGenericSuperclass();
             if (null == genericSuper || Object.class.equals(genericSuper)) {
                 Type[] genericInterfaces = clazz.getGenericInterfaces();

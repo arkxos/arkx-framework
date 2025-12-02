@@ -1,23 +1,26 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.condition;
 
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import com.ninja_squad.dbsetup.operation.Insert;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
+import static com.ninja_squad.dbsetup.Operations.insertInto;
+import static com.ninja_squad.dbsetup.Operations.truncate;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
 
-import static com.ninja_squad.dbsetup.Operations.insertInto;
-import static com.ninja_squad.dbsetup.Operations.truncate;
-import static org.junit.jupiter.api.Assertions.*;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.operation.Insert;
 
 /**
  * @author w.dehai
@@ -33,12 +36,9 @@ class FindByTest {
     @BeforeEach
     void init() {
         new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-        Insert insert = insertInto("smart_user")
-                .columns("name", "password", "phone_no", "version", "status")
-                .values("w.dehai", "123456", "1306006", 1L, 1)
-                .values("Jaedong", "123", "1306006", 1L, 1)
-                .values("w.dehai", "123", "1306006", 2L, 1)
-                .build();
+        Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "version", "status")
+                .values("w.dehai", "123456", "1306006", 1L, 1).values("Jaedong", "123", "1306006", 1L, 1)
+                .values("w.dehai", "123", "1306006", 2L, 1).build();
         new DbSetup(new DataSourceDestination(dataSource), insert).launch();
     }
 
@@ -64,7 +64,7 @@ class FindByTest {
     void findByVersionOrderByIdDescTest() {
         List<User> users = userMapper.findByVersionOrderByIdDesc(1L);
         Long[] ids = users.stream().map(User::getId).toArray(Long[]::new);
-        assertArrayEquals(new Long[] {2L, 1L}, ids);
+        assertArrayEquals(new Long[]{2L, 1L}, ids);
     }
 
     @Test
@@ -179,14 +179,14 @@ class FindByTest {
     void findByNameOrderByVersionTest() {
         List<User> users = userMapper.findByNameOrderByVersion("w.dehai");
         Long[] versions = users.stream().map(User::getVersion).toArray(Long[]::new);
-        assertArrayEquals(new Long[] {1L, 2L}, versions);
+        assertArrayEquals(new Long[]{1L, 2L}, versions);
     }
 
     @Test
     void findByNameOrderByVersionDescTest() {
         List<User> users = userMapper.findByNameOrderByVersionDesc("w.dehai");
         Long[] versions = users.stream().map(User::getVersion).toArray(Long[]::new);
-        assertArrayEquals(new Long[] {2L, 1L}, versions);
+        assertArrayEquals(new Long[]{2L, 1L}, versions);
     }
 
     @Test
@@ -216,17 +216,3 @@ class FindByTest {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

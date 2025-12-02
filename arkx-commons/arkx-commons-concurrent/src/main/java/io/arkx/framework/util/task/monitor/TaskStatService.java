@@ -1,11 +1,11 @@
 package io.arkx.framework.util.task.monitor;
 
+import java.util.Collection;
+
 import io.arkx.framework.util.task.TaskEngine;
 import io.arkx.framework.util.task.TaskGroup;
 import io.arkx.framework.util.task.util.Json;
 import io.arkx.framework.util.task.util.Utils;
-
-import java.util.Collection;
 
 public final class TaskStatService {
 
@@ -37,11 +37,8 @@ public final class TaskStatService {
         object.put("count_running_taskgroup", taskGroups.size());
         Json.JsonArray groups = Json.createArray();
         for (TaskGroup group : taskGroups) {
-            Json.JsonObject groupObject = Json.createObject()
-                .put("name", group.getName())
-                .put("id", group.getId())
-                .put("count_running_task", group.getRunningTasks().size())
-                .end();
+            Json.JsonObject groupObject = Json.createObject().put("name", group.getName()).put("id", group.getId())
+                    .put("count_running_task", group.getRunningTasks().size()).end();
             groups.add(groupObject);
         }
         object.put("groups", groups.end());

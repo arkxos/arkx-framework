@@ -11,7 +11,7 @@ import org.springframework.core.convert.support.DefaultConversionService;
  * @version V1.0, 2015/9/1.
  */
 public class SmartTransformer implements ResultTransformer {
-//		extends BasicTransformerAdapter {
+    // extends BasicTransformerAdapter {
 
     private static DefaultConversionService conversionService = new DefaultConversionService();
 
@@ -29,8 +29,8 @@ public class SmartTransformer implements ResultTransformer {
         return null;
     }
 
-//    @Override
-//    public List transformList(List list) {
-//        return super.transformList(list);
-//    }
+    // @Override
+    // public List transformList(List list) {
+    // return super.transformList(list);
+    // }
 }

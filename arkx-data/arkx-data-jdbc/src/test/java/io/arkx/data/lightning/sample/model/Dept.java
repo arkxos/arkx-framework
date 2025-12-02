@@ -1,11 +1,13 @@
 package io.arkx.data.lightning.sample.model;
 
+import org.springframework.data.relational.core.mapping.Table;
+
 import io.arkx.framework.data.common.entity.StringIdTreeEntity;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * @author Nobody
@@ -21,4 +23,3 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Dept extends StringIdTreeEntity {
 
 }
-

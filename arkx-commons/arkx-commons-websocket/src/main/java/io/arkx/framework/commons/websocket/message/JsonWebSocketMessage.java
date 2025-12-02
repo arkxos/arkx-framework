@@ -11,13 +11,14 @@ package io.arkx.framework.commons.websocket.message;
  */
 public interface JsonWebSocketMessage {
 
-	/**
-	 * 获取消息类型。
-	 * <p>
-	 * 消息类型主要用于匹配对应的消息处理器，实现消息的路由和分发。
-	 * </p>
-	 * @return 当前消息的类型字符串。
-	 */
-	String getType();
+    /**
+     * 获取消息类型。
+     * <p>
+     * 消息类型主要用于匹配对应的消息处理器，实现消息的路由和分发。
+     * </p>
+     *
+     * @return 当前消息的类型字符串。
+     */
+    String getType();
 
 }

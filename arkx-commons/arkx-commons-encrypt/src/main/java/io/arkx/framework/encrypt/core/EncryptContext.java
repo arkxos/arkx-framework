@@ -2,6 +2,7 @@ package io.arkx.framework.encrypt.core;
 
 import io.arkx.framework.encrypt.enumd.AlgorithmType;
 import io.arkx.framework.encrypt.enumd.EncodeType;
+
 import lombok.Data;
 
 /**

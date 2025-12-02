@@ -1,20 +1,19 @@
 package io.arkx.framework.data.db.core.util;
 
-import cn.hutool.core.date.StopWatch;
-import cn.hutool.core.lang.Pair;
-import lombok.Builder;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import cn.hutool.core.date.StopWatch;
+import cn.hutool.core.lang.Pair;
+import lombok.Builder;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 public class SqlExcutor {
-
 
     @Data
     @Builder
@@ -27,9 +26,8 @@ public class SqlExcutor {
         private List<Map<String, Object>> resultData;
     }
 
-
     public static ScriptExecuteResult execute(Connection connection, String sql, int page, int size)
-        throws SQLException {
+            throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setQueryTimeout(300);
         statement.setFetchSize(isMySqlConnection(connection) ? Integer.MIN_VALUE : (size < 10) ? 100 : size);
@@ -70,23 +68,14 @@ public class SqlExcutor {
                         skipNumber--;
                     }
                 }
-                return ScriptExecuteResult.builder()
-                    .isSelect(true)
-                    .sql(sql)
-                    .resultSummary("Time: " + seconds)
-                    .resultHeader(columns)
-                    .resultData(list)
-                    .build();
+                return ScriptExecuteResult.builder().isSelect(true).sql(sql).resultSummary("Time: " + seconds)
+                        .resultHeader(columns).resultData(list).build();
             }
         } else {
             int updateCount = statement.getUpdateCount();
-            return ScriptExecuteResult.builder()
-                .isSelect(false)
-                .sql(sql)
-                .resultSummary("affected : " + updateCount + ", Time: " + seconds)
-                .resultHeader(Collections.emptyList())
-                .resultData(Collections.emptyList())
-                .build();
+            return ScriptExecuteResult.builder().isSelect(false).sql(sql)
+                    .resultSummary("affected : " + updateCount + ", Time: " + seconds)
+                    .resultHeader(Collections.emptyList()).resultData(Collections.emptyList()).build();
         }
     }
 
@@ -99,7 +88,6 @@ public class SqlExcutor {
         }
     }
 
-
     public void execute(Connection connection, String sql) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setQueryTimeout(300);
@@ -110,48 +98,25 @@ public class SqlExcutor {
         stopWatch.stop();
         log.info("Time: {}", stopWatch.getTotalTimeSeconds());
 
-
-        /*try (CloseableDataSource dataSource = connectionService.getDataSource(databaseConn)) {
-            try (Connection connection = dataSource.getConnection()) {
-                List<SqlInput> summaries = new ArrayList<>(statements.size());
-                List<SqlResult> results = new ArrayList<>(statements.size());
-                for (String sql : statements) {
-                    try {
-                        ScriptExecuteResult result = DBSqlUtils.execute(connection, sql, page, size);
-                        summaries.add(SqlInput.builder().sql(sql).summary(result.getResultSummary()).build());
-                        if (CollectionUtils.isNotEmpty(result.getResultHeader())) {
-                            results.add(
-                                SqlResult.builder()
-                                    .columns(result.getResultHeader().stream()
-                                        .map(one ->
-                                            ColumnItem.builder()
-                                                .columnName(specialReplace(one.getKey()))
-                                                .columnType(one.getValue())
-                                                .build()
-                                        ).collect(Collectors.toList()))
-                                    .rows(convertRows(result.getResultData()))
-                                    .build());
-                        }
-                    } catch (Exception e) {
-                        summaries.add(
-                            SqlInput.builder()
-                                .sql(sql)
-                                .summary(e.getMessage())
-                                .build());
-                    }
-                }
-                return Result.success(
-                    OnlineSqlDataResponse.builder()
-                        .summaries(summaries)
-                        .results(results)
-                        .build());
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
+        /*
+         * try (CloseableDataSource dataSource =
+         * connectionService.getDataSource(databaseConn)) { try (Connection connection =
+         * dataSource.getConnection()) { List<SqlInput> summaries = new
+         * ArrayList<>(statements.size()); List<SqlResult> results = new
+         * ArrayList<>(statements.size()); for (String sql : statements) { try {
+         * ScriptExecuteResult result = DBSqlUtils.execute(connection, sql, page, size);
+         * summaries.add(SqlInput.builder().sql(sql).summary(result.getResultSummary()).
+         * build()); if (CollectionUtils.isNotEmpty(result.getResultHeader())) {
+         * results.add( SqlResult.builder() .columns(result.getResultHeader().stream()
+         * .map(one -> ColumnItem.builder() .columnName(specialReplace(one.getKey()))
+         * .columnType(one.getValue()) .build() ).collect(Collectors.toList()))
+         * .rows(convertRows(result.getResultData())) .build()); } } catch (Exception e)
+         * { summaries.add( SqlInput.builder() .sql(sql) .summary(e.getMessage())
+         * .build()); } } return Result.success( OnlineSqlDataResponse.builder()
+         * .summaries(summaries) .results(results) .build()); } } catch (Exception e) {
+         * throw new RuntimeException(e); }
+         */
 
     }
-
-
 
 }

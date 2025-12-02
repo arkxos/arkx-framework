@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -61,67 +61,68 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * <p>
- * Represents an operator that obtains the value of another value's property. This is a specialization of ArraySuffix - a.b is equivalent to
- * a["b"]
- * 
+ * Represents an operator that obtains the value of another value's property.
+ * This is a specialization of ArraySuffix - a.b is equivalent to a["b"]
+ *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class PropertySuffix extends ArraySuffix {
-	// -------------------------------------
-	// Properties
-	// -------------------------------------
-	// property name
+    // -------------------------------------
+    // Properties
+    // -------------------------------------
+    // property name
 
-	String mName;
+    String mName;
 
-	public String getName() {
-		return mName;
-	}
+    public String getName() {
+        return mName;
+    }
 
-	public void setName(String pName) {
-		mName = pName;
-	}
+    public void setName(String pName) {
+        mName = pName;
+    }
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public PropertySuffix(String pName) {
-		super(null);
-		mName = pName;
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public PropertySuffix(String pName) {
+        super(null);
+        mName = pName;
+    }
 
-	// -------------------------------------
-	/**
-	 * Gets the value of the index
-	 **/
-	@Override
-	Object evaluateIndex(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger) throws ExpressionException {
-		return mName;
-	}
+    // -------------------------------------
+    /**
+     * Gets the value of the index
+     **/
+    @Override
+    Object evaluateIndex(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        return mName;
+    }
 
-	// -------------------------------------
-	/**
-	 * Returns the operator symbol
-	 **/
-	@Override
-	String getOperatorSymbol() {
-		return ".";
-	}
+    // -------------------------------------
+    /**
+     * Returns the operator symbol
+     **/
+    @Override
+    String getOperatorSymbol() {
+        return ".";
+    }
 
-	// -------------------------------------
-	// ValueSuffix methods
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		return "." + StringLiteral.toIdentifierToken(mName);
-	}
+    // -------------------------------------
+    // ValueSuffix methods
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        return "." + StringLiteral.toIdentifierToken(mName);
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 }

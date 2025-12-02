@@ -8,17 +8,17 @@ package org.ark.framework.orm.sync;
  * @since 1.0
  */
 
-import lombok.Data;
-import org.ark.framework.orm.sync.metadata.SyncStatus;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.ark.framework.orm.sync.metadata.SyncStatus;
+
+import lombok.Data;
+
 /**
- * 同步汇总
- * 汇总多个表的同步结果
+ * 同步汇总 汇总多个表的同步结果
  */
 @Data
 public class SyncSummary {
@@ -85,8 +85,10 @@ public class SyncSummary {
     /**
      * 添加表同步结果
      *
-     * @param tableCode 表编码
-     * @param result 同步结果
+     * @param tableCode
+     *            表编码
+     * @param result
+     *            同步结果
      */
     public void addTableResult(String tableCode, SyncResult result) {
         tableResults.put(tableCode, result);
@@ -108,8 +110,10 @@ public class SyncSummary {
     /**
      * 添加表错误
      *
-     * @param tableCode 表编码
-     * @param error 错误
+     * @param tableCode
+     *            表编码
+     * @param error
+     *            错误
      */
     public void addTableError(String tableCode, Throwable error) {
         totalTables.incrementAndGet();
@@ -165,7 +169,8 @@ public class SyncSummary {
     /**
      * 获取指定表的同步结果
      *
-     * @param tableCode 表编码
+     * @param tableCode
+     *            表编码
      * @return 表同步结果，如果不存在则返回null
      */
     public SyncResult getTableResult(String tableCode) {
@@ -179,12 +184,9 @@ public class SyncSummary {
      */
     public String getSummary() {
         StringBuilder sb = new StringBuilder();
-        sb.append("同步任务汇总: 总表数=").append(totalTables.get())
-                .append(", 成功=").append(successTables.get())
-                .append(", 失败=").append(failedTables.get())
-                .append(", 数据不一致=").append(inconsistentTables.get())
-                .append(", 总记录数=").append(totalRecordsProcessed.get())
-                .append(", 成功率=").append(String.format("%.2f%%", getSuccessRate()))
+        sb.append("同步任务汇总: 总表数=").append(totalTables.get()).append(", 成功=").append(successTables.get()).append(", 失败=")
+                .append(failedTables.get()).append(", 数据不一致=").append(inconsistentTables.get()).append(", 总记录数=")
+                .append(totalRecordsProcessed.get()).append(", 成功率=").append(String.format("%.2f%%", getSuccessRate()))
                 .append(", 总耗时=").append(getTotalDurationMs()).append("毫秒");
 
         return sb.toString();

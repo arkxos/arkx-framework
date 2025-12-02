@@ -1,14 +1,5 @@
 package io.arkx.framework.commons.util;
 
-import io.arkx.framework.commons.collection.TwoTuple;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.ArrayUtils;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -22,8 +13,21 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Enumeration;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.ArrayUtils;
+
+import io.arkx.framework.commons.collection.TwoTuple;
+
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Rsa 工具类，公钥私钥生成，加解密 SHA256withRSA
+ *
  * @author darkness
  * @date 2021/6/23 15:56
  * @version 1.0
@@ -31,8 +35,8 @@ import java.util.Enumeration;
 @Slf4j
 public class RSAUtils {
     /*
-     * MAX_DECRYPT_BLOCK应等于密钥长度/8（1byte=8bit），所以当密钥位数为2048时，最大解密长度应为256.
-     * 128 对应 1024，256对应2048
+     * MAX_DECRYPT_BLOCK应等于密钥长度/8（1byte=8bit），所以当密钥位数为2048时，最大解密长度应为256. 128 对应
+     * 1024，256对应2048
      */
     private static final int KEY_SIZE = 2048;
 
@@ -56,7 +60,8 @@ public class RSAUtils {
      * 构建RSA密钥对
      *
      * @return /
-     * @throws Exception /
+     * @throws Exception
+     *             /
      */
     public static RsaKeyPair generateStringKeyPair() throws Exception {
         TwoTuple<PublicKey, PrivateKey> keyTwoTuple = generateKeyPair();
@@ -80,7 +85,8 @@ public class RSAUtils {
     /**
      * 生成密钥
      *
-     * @param seed 种子
+     * @param seed
+     *            种子
      * @return 密钥对象
      * @throws Exception
      */
@@ -102,8 +108,10 @@ public class RSAUtils {
     /**
      * 用私钥对信息进行数字签名
      *
-     * @param data       加密数据
-     * @param privateKey 私钥-base64加密的
+     * @param data
+     *            加密数据
+     * @param privateKey
+     *            私钥-base64加密的
      * @return
      * @throws Exception
      */
@@ -123,7 +131,8 @@ public class RSAUtils {
     /**
      * BASE64Encoder 加密
      *
-     * @param data 要加密的数据
+     * @param data
+     *            要加密的数据
      * @return 加密后的字符串
      */
     private static String encodeBase64String(byte[] data) {
@@ -149,8 +158,10 @@ public class RSAUtils {
     /**
      * RSA公钥加密
      *
-     * @param str       加密字符串
-     * @param publicKey 公钥
+     * @param str
+     *            加密字符串
+     * @param publicKey
+     *            公钥
      * @return 密文
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
@@ -158,7 +169,8 @@ public class RSAUtils {
      * @throws InvalidKeyException
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException
-     * @throws Exception                 加密过程中的异常信息
+     * @throws Exception
+     *             加密过程中的异常信息
      */
     public static String encryptByPublicKey(String str, String publicKey)
             throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
@@ -186,8 +198,10 @@ public class RSAUtils {
     /**
      * RSA私钥加密
      *
-     * @param str        加密字符串
-     * @param privateKey 公钥
+     * @param str
+     *            加密字符串
+     * @param privateKey
+     *            公钥
      * @return 密文
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
@@ -196,7 +210,8 @@ public class RSAUtils {
      * @throws UnsupportedEncodingException
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException
-     * @throws Exception                    加密过程中的异常信息
+     * @throws Exception
+     *             加密过程中的异常信息
      */
     public static String encryptByPrivateKey(String str, String privateKey)
             throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
@@ -277,13 +292,15 @@ public class RSAUtils {
     /**
      * RSA私钥解密
      *
-     * @param encryptStr 加密字符串
-     * @param privateKey 私钥
+     * @param encryptStr
+     *            加密字符串
+     * @param privateKey
+     *            私钥
      * @return 铭文
-     * @throws Exception                 解密过程中的异常信息
+     * @throws Exception
+     *             解密过程中的异常信息
      */
-    public static String decryptByPrivateKey(String encryptStr, String privateKey)
-            throws Exception {
+    public static String decryptByPrivateKey(String encryptStr, String privateKey) throws Exception {
         // base64编码的私钥
         byte[] decoded = decodeBase64(privateKey);
         PKCS8EncodedKeySpec pkcs8EncodedKeySpec5 = new PKCS8EncodedKeySpec(decoded);
@@ -303,13 +320,15 @@ public class RSAUtils {
     /**
      * RSA公钥解密
      *
-     * @param encryptStr 加密字符串
-     * @param publicKey  公钥
+     * @param encryptStr
+     *            加密字符串
+     * @param publicKey
+     *            公钥
      * @return 铭文
-     * @throws Exception                 解密过程中的异常信息
+     * @throws Exception
+     *             解密过程中的异常信息
      */
-    public static String decryptByPublicKey(String encryptStr, String publicKey)
-            throws Exception {
+    public static String decryptByPublicKey(String encryptStr, String publicKey) throws Exception {
         // base64编码的私钥
         byte[] decoded = decodeBase64(publicKey);
         RSAPublicKey priKey = (RSAPublicKey) KeyFactory.getInstance(KEY_ALGORITHM)
@@ -324,7 +343,7 @@ public class RSAUtils {
         return result;
     }
 
-    private static String doLongerCipherFinal(int opMode,Cipher cipher, byte[] data) throws Exception {
+    private static String doLongerCipherFinal(int opMode, Cipher cipher, byte[] data) throws Exception {
         // 解密时超过128字节报错。为此采用分段解密的办法来解密
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < data.length; i += MAX_DECRYPT_BLOCK) {
@@ -334,9 +353,9 @@ public class RSAUtils {
         return sb.toString();
     }
 
-        /**
-         * RSA密钥对对象
-         */
+    /**
+     * RSA密钥对对象
+     */
     public static class RsaKeyPair {
 
         private final String publicKey;
@@ -367,9 +386,9 @@ public class RSAUtils {
 
         // 构建密钥
         RsaKeyPair keyPair = generateStringKeyPair();
-        
-//        log.info("私钥format：{}", privateKey.getFormat());
-//        log.info("公钥format：{}", publicKey.getFormat());
+
+        // log.info("私钥format：{}", privateKey.getFormat());
+        // log.info("公钥format：{}", publicKey.getFormat());
         log.info("私钥string：{}", keyPair.getPrivateKey());
         log.info("公钥string：{}", keyPair.getPublicKey());
 
@@ -397,52 +416,54 @@ public class RSAUtils {
         log.info("公钥解密结果为：{}", decryStr2);
     }
 
-//    public static void main(String[] args) throws Exception {
-//        System.out.println("\n");
-//        RsaKeyPair keyPair = generateKeyPair();
-//        System.out.println("公钥：" + keyPair.getPublicKey());
-//        System.out.println("私钥：" + keyPair.getPrivateKey());
-//        System.out.println("\n");
-//        test1(keyPair);
-//        System.out.println("\n");
-//        test2(keyPair);
-//        System.out.println("\n");
-//    }
-//
-//    /**
-//     * 公钥加密私钥解密
-//     */
-//    private static void test1(RsaKeyPair keyPair) throws Exception {
-//        System.out.println("***************** 公钥加密私钥解密开始 *****************");
-//        String text1 = encryptByPublicKey(keyPair.getPublicKey(), me.zhengjie.utils2.RSAUtils.SRC);
-//        String text2 = decryptByPrivateKey(keyPair.getPrivateKey(), text1);
-//        System.out.println("加密前：" + me.zhengjie.utils2.RSAUtils.SRC);
-//        System.out.println("加密后：" + text1);
-//        System.out.println("解密后：" + text2);
-//        if (me.zhengjie.utils2.RSAUtils.SRC.equals(text2)) {
-//            System.out.println("解密字符串和原始字符串一致，解密成功");
-//        } else {
-//            System.out.println("解密字符串和原始字符串不一致，解密失败");
-//        }
-//        System.out.println("***************** 公钥加密私钥解密结束 *****************");
-//    }
-//
-//    /**
-//     * 私钥加密公钥解密
-//     * @throws Exception /
-//     */
-//    private static void test2(RsaKeyPair keyPair) throws Exception {
-//        System.out.println("***************** 私钥加密公钥解密开始 *****************");
-//        String text1 = encryptByPrivateKey(keyPair.getPrivateKey(), me.zhengjie.utils2.RSAUtils.SRC);
-//        String text2 = decryptByPublicKey(keyPair.getPublicKey(), text1);
-//        System.out.println("加密前：" + me.zhengjie.utils2.RSAUtils.SRC);
-//        System.out.println("加密后：" + text1);
-//        System.out.println("解密后：" + text2);
-//        if (me.zhengjie.utils2.RSAUtils.SRC.equals(text2)) {
-//            System.out.println("解密字符串和原始字符串一致，解密成功");
-//        } else {
-//            System.out.println("解密字符串和原始字符串不一致，解密失败");
-//        }
-//        System.out.println("***************** 私钥加密公钥解密结束 *****************");
-//    }
+    // public static void main(String[] args) throws Exception {
+    // System.out.println("\n");
+    // RsaKeyPair keyPair = generateKeyPair();
+    // System.out.println("公钥：" + keyPair.getPublicKey());
+    // System.out.println("私钥：" + keyPair.getPrivateKey());
+    // System.out.println("\n");
+    // test1(keyPair);
+    // System.out.println("\n");
+    // test2(keyPair);
+    // System.out.println("\n");
+    // }
+    //
+    // /**
+    // * 公钥加密私钥解密
+    // */
+    // private static void test1(RsaKeyPair keyPair) throws Exception {
+    // System.out.println("***************** 公钥加密私钥解密开始 *****************");
+    // String text1 = encryptByPublicKey(keyPair.getPublicKey(),
+    // me.zhengjie.utils2.RSAUtils.SRC);
+    // String text2 = decryptByPrivateKey(keyPair.getPrivateKey(), text1);
+    // System.out.println("加密前：" + me.zhengjie.utils2.RSAUtils.SRC);
+    // System.out.println("加密后：" + text1);
+    // System.out.println("解密后：" + text2);
+    // if (me.zhengjie.utils2.RSAUtils.SRC.equals(text2)) {
+    // System.out.println("解密字符串和原始字符串一致，解密成功");
+    // } else {
+    // System.out.println("解密字符串和原始字符串不一致，解密失败");
+    // }
+    // System.out.println("***************** 公钥加密私钥解密结束 *****************");
+    // }
+    //
+    // /**
+    // * 私钥加密公钥解密
+    // * @throws Exception /
+    // */
+    // private static void test2(RsaKeyPair keyPair) throws Exception {
+    // System.out.println("***************** 私钥加密公钥解密开始 *****************");
+    // String text1 = encryptByPrivateKey(keyPair.getPrivateKey(),
+    // me.zhengjie.utils2.RSAUtils.SRC);
+    // String text2 = decryptByPublicKey(keyPair.getPublicKey(), text1);
+    // System.out.println("加密前：" + me.zhengjie.utils2.RSAUtils.SRC);
+    // System.out.println("加密后：" + text1);
+    // System.out.println("解密后：" + text2);
+    // if (me.zhengjie.utils2.RSAUtils.SRC.equals(text2)) {
+    // System.out.println("解密字符串和原始字符串一致，解密成功");
+    // } else {
+    // System.out.println("解密字符串和原始字符串不一致，解密失败");
+    // }
+    // System.out.println("***************** 私钥加密公钥解密结束 *****************");
+    // }
 }

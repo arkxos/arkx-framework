@@ -1,16 +1,17 @@
 package io.arkx.framework.commons.crawl.scheduler;
 
-import io.arkx.framework.commons.crawl.Request;
-import org.apache.http.annotation.ThreadSafe;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-/**   
- * 
+import org.apache.http.annotation.ThreadSafe;
+
+import io.arkx.framework.commons.crawl.Request;
+
+/**
+ *
  * @author Darkness
- * @date 2015-1-9 下午5:18:38 
- * @version V1.0   
+ * @date 2015-1-9 下午5:18:38
+ * @version V1.0
  */
 @ThreadSafe
 public class QueueScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler {

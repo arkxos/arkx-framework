@@ -1,12 +1,12 @@
 package io.arkx.framework.data.jpa.util;
 
-import io.arkx.framework.commons.collection.tree.TreeNode;
-import io.arkx.framework.commons.collection.tree.Treex;
-import io.arkx.framework.data.common.entity.TreeEntity;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.arkx.framework.commons.collection.tree.TreeNode;
+import io.arkx.framework.commons.collection.tree.Treex;
+import io.arkx.framework.data.common.entity.TreeEntity;
 
 /**
  * @author Darkness
@@ -15,48 +15,47 @@ import java.util.Map;
  */
 public class TreeEntityUtil {
 
-	public static <T extends TreeEntity> Treex<String, T> buildTree(List<T> dataList) {
-		Treex<String, T> tree = new Treex<>();
+    public static <T extends TreeEntity> Treex<String, T> buildTree(List<T> dataList) {
+        Treex<String, T> tree = new Treex<>();
 
-		Map<String, TreeNode<String, T>> treeNodeMap = new HashMap<>();
-		for (T entity : dataList) {
-//			String parentInnerCode = entity.getParentInnerCode();
-//			TreeNode<String, T> treeNode = null;
-//			if (treeNodeMap.containsKey(parentInnerCode)) {
-//				TreeNode<String, T> parentNode = treeNodeMap.get(parentInnerCode);
-//				treeNode = parentNode.addChildByValue(entity);
-//			} else {
-//				TreeNode<String, T> rootNode = tree.getRoot();
-//				if (rootNode.getValue() != null) {
-//					throw new ServiceException("发现多个根节点数据，树根节点只能有一个");
-//				}
-//				rootNode.setValue(entity);
-//
-//				treeNode = rootNode;
-//			}
-//
-//			treeNodeMap.put(entity.getInnerCode(), treeNode);
-		}
+        Map<String, TreeNode<String, T>> treeNodeMap = new HashMap<>();
+        for (T entity : dataList) {
+            // String parentInnerCode = entity.getParentInnerCode();
+            // TreeNode<String, T> treeNode = null;
+            // if (treeNodeMap.containsKey(parentInnerCode)) {
+            // TreeNode<String, T> parentNode = treeNodeMap.get(parentInnerCode);
+            // treeNode = parentNode.addChildByValue(entity);
+            // } else {
+            // TreeNode<String, T> rootNode = tree.getRoot();
+            // if (rootNode.getValue() != null) {
+            // throw new ServiceException("发现多个根节点数据，树根节点只能有一个");
+            // }
+            // rootNode.setValue(entity);
+            //
+            // treeNode = rootNode;
+            // }
+            //
+            // treeNodeMap.put(entity.getInnerCode(), treeNode);
+        }
 
-		return tree;
-	}
-	
-	public static <T extends TreeEntity> Treex<String, T> buildTreeWithWarpRoot(List<T> dataList) {
-		Treex<String, T> tree = new Treex<>();
+        return tree;
+    }
 
-//		Map<String, TreeNode<String, T>> treeNodeMap = new HashMap<>();
-//		for (T entity : dataList) {
-//			String parentInnerCode = entity.getParentInnerCode();
-//			TreeNode<String, T> parentNode = tree.getRoot();
-//			if (treeNodeMap.containsKey(parentInnerCode)) {
-//				parentNode = treeNodeMap.get(parentInnerCode);
-//			}
-//			TreeNode<String, T> treeNode = parentNode.addChildByValue(entity);
-//			treeNodeMap.put(entity.getInnerCode(), treeNode);
-//		}
+    public static <T extends TreeEntity> Treex<String, T> buildTreeWithWarpRoot(List<T> dataList) {
+        Treex<String, T> tree = new Treex<>();
 
-		return tree;
-	}
+        // Map<String, TreeNode<String, T>> treeNodeMap = new HashMap<>();
+        // for (T entity : dataList) {
+        // String parentInnerCode = entity.getParentInnerCode();
+        // TreeNode<String, T> parentNode = tree.getRoot();
+        // if (treeNodeMap.containsKey(parentInnerCode)) {
+        // parentNode = treeNodeMap.get(parentInnerCode);
+        // }
+        // TreeNode<String, T> treeNode = parentNode.addChildByValue(entity);
+        // treeNodeMap.put(entity.getInnerCode(), treeNode);
+        // }
+
+        return tree;
+    }
 
 }
-

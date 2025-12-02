@@ -1,9 +1,11 @@
 package com.github.dreamroute.locker.sample.mapper;
 
+import org.apache.ibatis.annotations.Update;
+
+import io.arkx.framework.data.mybatis.pro.service.mapper.BaseMapper;
+
 import com.github.dreamroute.locker.anno.Locker;
 import com.github.dreamroute.locker.sample.domain.User;
-import io.arkx.framework.data.mybatis.pro.service.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Update;
 
 /**
  * @author w.dehai
@@ -13,7 +15,8 @@ public interface UserMapper extends BaseMapper<User, Long> {
     /**
      * 带有乐观锁的方法
      *
-     * @param user 参数
+     * @param user
+     *            参数
      * @return 更新成功返回
      */
     @Locker
@@ -29,7 +32,8 @@ public interface UserMapper extends BaseMapper<User, Long> {
     /**
      * 不带乐观锁的方法
      *
-     * @param user 参数
+     * @param user
+     *            参数
      * @return 返回修改成功条数
      */
     @Update("update smart_user set name = #{name}, version = #{version} where id = #{id}")

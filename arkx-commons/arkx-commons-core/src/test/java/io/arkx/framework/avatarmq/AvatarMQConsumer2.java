@@ -16,7 +16,8 @@ public class AvatarMQConsumer2 {
 
     private static ProducerMessageHook hook = new ProducerMessageHook() {
         public ConsumerAckMessage hookMessage(Message message) {
-            System.out.printf("AvatarMQConsumer2 收到消息编号:%s,消息内容:%s\n", message.getMsgId(), new String(message.getBody()));
+            System.out.printf("AvatarMQConsumer2 收到消息编号:%s,消息内容:%s\n", message.getMsgId(),
+                    new String(message.getBody()));
             ConsumerAckMessage result = new ConsumerAckMessage();
             result.setStatus(ConsumerAckMessage.SUCCESS);
             return result;

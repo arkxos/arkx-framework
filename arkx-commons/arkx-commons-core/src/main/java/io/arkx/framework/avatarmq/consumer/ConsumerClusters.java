@@ -1,19 +1,21 @@
 package io.arkx.framework.avatarmq.consumer;
 
-import io.arkx.framework.avatarmq.model.RemoteChannelData;
-import io.arkx.framework.avatarmq.model.SubscriptionData;
-import io.arkx.framework.avatarmq.netty.NettyUtil;
-import io.netty.channel.Channel;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
+import io.arkx.framework.avatarmq.model.RemoteChannelData;
+import io.arkx.framework.avatarmq.model.SubscriptionData;
+import io.arkx.framework.avatarmq.netty.NettyUtil;
+import io.netty.channel.Channel;
+
 /**
  * 负责定义消费者集群的行为，以及负责消息的路由
+ *
  * @filename:ConsumerClusters.java
  * @description:ConsumerClusters功能模块
  * @author tangjie<https://github.com/tang-jie>
@@ -22,16 +24,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConsumerClusters {
 
-	//轮询调度（Round-Robin Scheduling）位置标记
+    // 轮询调度（Round-Robin Scheduling）位置标记
     private int next = 0;
     private final String clustersId;
-    /*生产者消息的主题, 消息对应的topic信息数据结构*/
-	private final ConcurrentHashMap<String, SubscriptionData> subMap = new ConcurrentHashMap<>();
+    /* 生产者消息的主题, 消息对应的topic信息数据结构 */
+    private final ConcurrentHashMap<String, SubscriptionData> subMap = new ConcurrentHashMap<>();
 
-	/*消费者标识编码, 对应的消费者的netty网络通信管道信息*/
-	private final ConcurrentHashMap<String, RemoteChannelData> channelMap = new ConcurrentHashMap<>();
+    /* 消费者标识编码, 对应的消费者的netty网络通信管道信息 */
+    private final ConcurrentHashMap<String, RemoteChannelData> channelMap = new ConcurrentHashMap<>();
 
-    private final List<RemoteChannelData> channelList = Collections.synchronizedList(new ArrayList<RemoteChannelData>());
+    private final List<RemoteChannelData> channelList = Collections
+            .synchronizedList(new ArrayList<RemoteChannelData>());
 
     public ConsumerClusters(String clustersId) {
         this.clustersId = clustersId;
@@ -49,7 +52,7 @@ public class ConsumerClusters {
         return channelMap;
     }
 
-	// 添加一个消费者到消费者集群
+    // 添加一个消费者到消费者集群
     public void attachRemoteChannelData(String clientId, RemoteChannelData channelinfo) {
         if (findRemoteChannelData(channelinfo.getClientId()) == null) {
             channelMap.put(clientId, channelinfo);
@@ -60,7 +63,7 @@ public class ConsumerClusters {
         }
     }
 
-	// 从消费者集群中删除一个消费者
+    // 从消费者集群中删除一个消费者
     public void detachRemoteChannelData(String clientId) {
         channelMap.remove(clientId);
 
@@ -77,13 +80,13 @@ public class ConsumerClusters {
         }
     }
 
-	// 根据消费者标识编码，在消费者集群中查找定位一个消费者，如果不存在返回null
+    // 根据消费者标识编码，在消费者集群中查找定位一个消费者，如果不存在返回null
     public RemoteChannelData findRemoteChannelData(String clientId) {
-    	return channelMap.get(clientId);
+        return channelMap.get(clientId);
     }
 
-	// 负载均衡，根据连接到broker的顺序，依次投递消息给消费者。这里的均衡算法直接采用
-	// 轮询调度（Round-Robin Scheduling），后续可以加入：加权轮询、随机轮询、哈希轮询等等策略。
+    // 负载均衡，根据连接到broker的顺序，依次投递消息给消费者。这里的均衡算法直接采用
+    // 轮询调度（Round-Robin Scheduling），后续可以加入：加权轮询、随机轮询、哈希轮询等等策略。
     public RemoteChannelData nextRemoteChannelData() {
 
         Predicate predicate = new Predicate() {
@@ -98,7 +101,7 @@ public class ConsumerClusters {
         return channelList.get(next++ % channelList.size());
     }
 
-	// 根据生产者的主题关键字，定位于具体的消息结构
+    // 根据生产者的主题关键字，定位于具体的消息结构
     public SubscriptionData findSubscriptionData(String topic) {
         return this.subMap.get(topic);
     }

@@ -46,8 +46,7 @@ public class ClustersState {
         boolean result = false;
         if (obj != null && ClustersState.class.isAssignableFrom(obj.getClass())) {
             ClustersState clusters = (ClustersState) obj;
-            result = new EqualsBuilder().append(clusters, clusters.getClusters())
-                    .isEquals();
+            result = new EqualsBuilder().append(clusters, clusters.getClusters()).isEquals();
         }
         return result;
     }

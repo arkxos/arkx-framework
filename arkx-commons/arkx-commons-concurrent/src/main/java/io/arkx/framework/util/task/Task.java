@@ -1,12 +1,12 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.callback.Progress;
-import io.arkx.framework.util.task.callback.TaskListener;
-import io.arkx.framework.util.task.util.Assert;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import io.arkx.framework.util.task.callback.Progress;
+import io.arkx.framework.util.task.callback.TaskListener;
+import io.arkx.framework.util.task.util.Assert;
 
 public interface Task {
 
@@ -82,7 +82,8 @@ public interface Task {
     /**
      * 取消当前任务
      *
-     * @param mayInterruptIfRunning {@code true} 如果执行当前任务的线程需要被中断。否则任务可能会执行完成
+     * @param mayInterruptIfRunning
+     *            {@code true} 如果执行当前任务的线程需要被中断。否则任务可能会执行完成
      * @return {@code true} 如果当前任务被取消；否则返回 {@code false}
      */
     boolean cancel(boolean mayInterruptIfRunning);
@@ -93,12 +94,14 @@ public interface Task {
     void await();
 
     /**
-     * 在指定的时间内等待当前任务执行完成，会阻断当前线程继续执行，直到任务完成或达到了指定的时间。
-     * 如果到达指定时间，任务仍未完成，将会抛出异常
+     * 在指定的时间内等待当前任务执行完成，会阻断当前线程继续执行，直到任务完成或达到了指定的时间。 如果到达指定时间，任务仍未完成，将会抛出异常
      *
-     * @param timeout 超时时间
-     * @param unit    时间单位
-     * @throws TimeoutException 如果到达指定时间，任务仍未完成，将会抛出此异常
+     * @param timeout
+     *            超时时间
+     * @param unit
+     *            时间单位
+     * @throws TimeoutException
+     *             如果到达指定时间，任务仍未完成，将会抛出此异常
      */
     void await(long timeout, TimeUnit unit) throws TimeoutException;
 
@@ -121,7 +124,8 @@ public interface Task {
         /**
          * 设置任务的类型，如果不设置，默认为 {@code DEFAULT}
          *
-         * @param type 任务类型
+         * @param type
+         *            任务类型
          * @return {@link Builder}
          */
         public Builder type(String type) {
@@ -132,7 +136,8 @@ public interface Task {
         /**
          * 设置任务的进度回调。使用 {@link TaskContext#onProgress(int)} 会触发该回调
          *
-         * @param progress 进度回调
+         * @param progress
+         *            进度回调
          * @return {@link Builder}
          */
         public Builder progress(Progress progress) {
@@ -141,18 +146,21 @@ public interface Task {
         }
 
         /**
-         * 设置任务完成时的回调，可以使用 {@link TaskContext#onSuccess(Object...)}、{@link TaskContext#onError(String, Object)} 或
-         * {@link TaskContext#onError(Exception)} 触发该回调。
+         * 设置任务完成时的回调，可以使用
+         * {@link TaskContext#onSuccess(Object...)}、{@link TaskContext#onError(String, Object)}
+         * 或 {@link TaskContext#onError(Exception)} 触发该回调。
          * <p>
-         * 如果调用 {@link TaskContext#onSuccess(Object...)} 触发回调，任务状态为成功 {@link TaskStatus#SUCCESS}，并且回调函数的第二个参数
-         * {@code Exception} 将为 {@code null}
+         * 如果调用 {@link TaskContext#onSuccess(Object...)} 触发回调，任务状态为成功
+         * {@link TaskStatus#SUCCESS}，并且回调函数的第二个参数 {@code Exception} 将为 {@code null}
          * </p>
          * <p>
-         * 如果调用 {@link TaskContext#onError(String, Object)} 或 {@link TaskContext#onError(Exception)} 触发回调，认为的状态为错误 {@link TaskStatus#ERROR}，
-         * 并且回调函数的第二个参数不为 {@code null}
+         * 如果调用 {@link TaskContext#onError(String, Object)} 或
+         * {@link TaskContext#onError(Exception)} 触发回调，认为的状态为错误
+         * {@link TaskStatus#ERROR}， 并且回调函数的第二个参数不为 {@code null}
          * </p>
          *
-         * @param taskListener 任务完成时的回调
+         * @param taskListener
+         *            任务完成时的回调
          * @return {@link Builder}
          * @see TaskListener#onExecuteFinish(TaskContext, Exception)
          */

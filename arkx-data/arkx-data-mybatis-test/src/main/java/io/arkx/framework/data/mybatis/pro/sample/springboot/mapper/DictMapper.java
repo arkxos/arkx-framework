@@ -1,11 +1,12 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.mapper;
 
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict;
-import io.arkx.framework.data.mybatis.pro.service.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
 
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.Dict;
+import io.arkx.framework.data.mybatis.pro.service.mapper.BaseMapper;
+
 /**
- * 
+ *
  * @author w.dehai
  *
  */

@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -57,131 +57,132 @@ package io.arkx.framework.thirdparty.el;
 
 /**
  * <p>
- * This converts primitive values to their Object counterparts. For bytes and chars, values from 0 to 255 are cached. For shorts, ints, and
- * longs, values -1000 to 1000 are cached.
- * 
+ * This converts primitive values to their Object counterparts. For bytes and
+ * chars, values from 0 to 255 are cached. For shorts, ints, and longs, values
+ * -1000 to 1000 are cached.
+ *
  * @author Nathan Abramson - Art Technology Group
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class PrimitiveObjects {
-	static int BYTE_LOWER_BOUND = 0;
-	static int BYTE_UPPER_BOUND = 255;
-	static int CHARACTER_LOWER_BOUND = 0;
-	static int CHARACTER_UPPER_BOUND = 255;
-	static int SHORT_LOWER_BOUND = -1000;
-	static int SHORT_UPPER_BOUND = 1000;
-	static int INTEGER_LOWER_BOUND = -1000;
-	static int INTEGER_UPPER_BOUND = 1000;
-	static int LONG_LOWER_BOUND = -1000;
-	static int LONG_UPPER_BOUND = 1000;
+    static int BYTE_LOWER_BOUND = 0;
+    static int BYTE_UPPER_BOUND = 255;
+    static int CHARACTER_LOWER_BOUND = 0;
+    static int CHARACTER_UPPER_BOUND = 255;
+    static int SHORT_LOWER_BOUND = -1000;
+    static int SHORT_UPPER_BOUND = 1000;
+    static int INTEGER_LOWER_BOUND = -1000;
+    static int INTEGER_UPPER_BOUND = 1000;
+    static int LONG_LOWER_BOUND = -1000;
+    static int LONG_UPPER_BOUND = 1000;
 
-	static Byte[] mBytes = createBytes();
-	static Character[] mCharacters = createCharacters();
-	static Short[] mShorts = createShorts();
-	static Integer[] mIntegers = createIntegers();
-	static Long[] mLongs = createLongs();
+    static Byte[] mBytes = createBytes();
+    static Character[] mCharacters = createCharacters();
+    static Short[] mShorts = createShorts();
+    static Integer[] mIntegers = createIntegers();
+    static Long[] mLongs = createLongs();
 
-	public static Boolean getBoolean(boolean pValue) {
-		return pValue ? Boolean.TRUE : Boolean.FALSE;
-	}
+    public static Boolean getBoolean(boolean pValue) {
+        return pValue ? Boolean.TRUE : Boolean.FALSE;
+    }
 
-	public static Byte getByte(byte pValue) {
-		if (pValue >= BYTE_LOWER_BOUND) {// && pValue <= BYTE_UPPER_BOUND不需要，byte最大为127，不可能大于这个值
-			return mBytes[pValue - BYTE_LOWER_BOUND];
-		} else {
-			return Byte.valueOf(pValue);
-		}
-	}
+    public static Byte getByte(byte pValue) {
+        if (pValue >= BYTE_LOWER_BOUND) {// && pValue <= BYTE_UPPER_BOUND不需要，byte最大为127，不可能大于这个值
+            return mBytes[pValue - BYTE_LOWER_BOUND];
+        } else {
+            return Byte.valueOf(pValue);
+        }
+    }
 
-	public static Character getCharacter(char pValue) {
-		if (pValue >= CHARACTER_LOWER_BOUND && pValue <= CHARACTER_UPPER_BOUND) {
-			return mCharacters[pValue - CHARACTER_LOWER_BOUND];
-		} else {
-			return Character.valueOf(pValue);
-		}
-	}
+    public static Character getCharacter(char pValue) {
+        if (pValue >= CHARACTER_LOWER_BOUND && pValue <= CHARACTER_UPPER_BOUND) {
+            return mCharacters[pValue - CHARACTER_LOWER_BOUND];
+        } else {
+            return Character.valueOf(pValue);
+        }
+    }
 
-	public static Short getShort(short pValue) {
-		if (pValue >= SHORT_LOWER_BOUND && pValue <= SHORT_UPPER_BOUND) {
-			return mShorts[pValue - SHORT_LOWER_BOUND];
-		} else {
-			return Short.valueOf(pValue);
-		}
-	}
+    public static Short getShort(short pValue) {
+        if (pValue >= SHORT_LOWER_BOUND && pValue <= SHORT_UPPER_BOUND) {
+            return mShorts[pValue - SHORT_LOWER_BOUND];
+        } else {
+            return Short.valueOf(pValue);
+        }
+    }
 
-	public static Integer getInteger(int pValue) {
-		if (pValue >= INTEGER_LOWER_BOUND && pValue <= INTEGER_UPPER_BOUND) {
-			return mIntegers[pValue - INTEGER_LOWER_BOUND];
-		} else {
-			return Integer.valueOf(pValue);
-		}
-	}
+    public static Integer getInteger(int pValue) {
+        if (pValue >= INTEGER_LOWER_BOUND && pValue <= INTEGER_UPPER_BOUND) {
+            return mIntegers[pValue - INTEGER_LOWER_BOUND];
+        } else {
+            return Integer.valueOf(pValue);
+        }
+    }
 
-	public static Long getLong(long pValue) {
-		if (pValue >= LONG_LOWER_BOUND && pValue <= LONG_UPPER_BOUND) {
-			return mLongs[(int) pValue - LONG_LOWER_BOUND];
-		} else {
-			return Long.valueOf(pValue);
-		}
-	}
+    public static Long getLong(long pValue) {
+        if (pValue >= LONG_LOWER_BOUND && pValue <= LONG_UPPER_BOUND) {
+            return mLongs[(int) pValue - LONG_LOWER_BOUND];
+        } else {
+            return Long.valueOf(pValue);
+        }
+    }
 
-	public static Float getFloat(float pValue) {
-		return Float.valueOf(pValue);
-	}
+    public static Float getFloat(float pValue) {
+        return Float.valueOf(pValue);
+    }
 
-	public static Double getDouble(double pValue) {
-		return Double.valueOf(pValue);
-	}
+    public static Double getDouble(double pValue) {
+        return Double.valueOf(pValue);
+    }
 
-	static Byte[] createBytes() {
-		int len = BYTE_UPPER_BOUND - BYTE_LOWER_BOUND + 1;
-		Byte[] ret = new Byte[len];
-		byte val = (byte) BYTE_LOWER_BOUND;
-		for (int i = 0; i < len; i++, val++) {
-			ret[i] = Byte.valueOf(val);
-		}
-		return ret;
-	}
+    static Byte[] createBytes() {
+        int len = BYTE_UPPER_BOUND - BYTE_LOWER_BOUND + 1;
+        Byte[] ret = new Byte[len];
+        byte val = (byte) BYTE_LOWER_BOUND;
+        for (int i = 0; i < len; i++, val++) {
+            ret[i] = Byte.valueOf(val);
+        }
+        return ret;
+    }
 
-	static Character[] createCharacters() {
-		int len = CHARACTER_UPPER_BOUND - CHARACTER_LOWER_BOUND + 1;
-		Character[] ret = new Character[len];
-		char val = (char) CHARACTER_LOWER_BOUND;
-		for (int i = 0; i < len; i++, val++) {
-			ret[i] = Character.valueOf(val);
-		}
-		return ret;
-	}
+    static Character[] createCharacters() {
+        int len = CHARACTER_UPPER_BOUND - CHARACTER_LOWER_BOUND + 1;
+        Character[] ret = new Character[len];
+        char val = (char) CHARACTER_LOWER_BOUND;
+        for (int i = 0; i < len; i++, val++) {
+            ret[i] = Character.valueOf(val);
+        }
+        return ret;
+    }
 
-	static Short[] createShorts() {
-		int len = SHORT_UPPER_BOUND - SHORT_LOWER_BOUND + 1;
-		Short[] ret = new Short[len];
-		short val = (short) SHORT_LOWER_BOUND;
-		for (int i = 0; i < len; i++, val++) {
-			ret[i] = Short.valueOf(val);
-		}
-		return ret;
-	}
+    static Short[] createShorts() {
+        int len = SHORT_UPPER_BOUND - SHORT_LOWER_BOUND + 1;
+        Short[] ret = new Short[len];
+        short val = (short) SHORT_LOWER_BOUND;
+        for (int i = 0; i < len; i++, val++) {
+            ret[i] = Short.valueOf(val);
+        }
+        return ret;
+    }
 
-	static Integer[] createIntegers() {
-		int len = INTEGER_UPPER_BOUND - INTEGER_LOWER_BOUND + 1;
-		Integer[] ret = new Integer[len];
-		int val = INTEGER_LOWER_BOUND;
-		for (int i = 0; i < len; i++, val++) {
-			ret[i] = Integer.valueOf(val);
-		}
-		return ret;
-	}
+    static Integer[] createIntegers() {
+        int len = INTEGER_UPPER_BOUND - INTEGER_LOWER_BOUND + 1;
+        Integer[] ret = new Integer[len];
+        int val = INTEGER_LOWER_BOUND;
+        for (int i = 0; i < len; i++, val++) {
+            ret[i] = Integer.valueOf(val);
+        }
+        return ret;
+    }
 
-	static Long[] createLongs() {
-		int len = LONG_UPPER_BOUND - LONG_LOWER_BOUND + 1;
-		Long[] ret = new Long[len];
-		long val = LONG_LOWER_BOUND;
-		for (int i = 0; i < len; i++, val++) {
-			ret[i] = Long.valueOf(val);
-		}
-		return ret;
-	}
+    static Long[] createLongs() {
+        int len = LONG_UPPER_BOUND - LONG_LOWER_BOUND + 1;
+        Long[] ret = new Long[len];
+        long val = LONG_LOWER_BOUND;
+        for (int i = 0; i < len; i++, val++) {
+            ret[i] = Long.valueOf(val);
+        }
+        return ret;
+    }
 
 }

@@ -1,5 +1,12 @@
 package org.ark.framework.jaf;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+
+import org.ark.framework.security.PrivCheck;
+import org.ark.framework.security.VerifyCheck;
+
 import io.arkx.framework.Config;
 import io.arkx.framework.Constant;
 import io.arkx.framework.commons.util.LogUtil;
@@ -8,110 +15,104 @@ import io.arkx.framework.cosyui.web.ResponseData;
 import io.arkx.framework.extend.ExtendManager;
 import io.arkx.framework.extend.action.AfterUIMethodInvokeAction;
 import io.arkx.framework.extend.action.BeforeUIMethodInvokeAction;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.ark.framework.security.PrivCheck;
-import org.ark.framework.security.VerifyCheck;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
-
 
 /**
- * @class org.ark.framework.MainServlet
- *        框架主控制器，处理前端发送过来的请求，动态调用对应的UIFacade方法
- * 
+ * @class org.ark.framework.MainServlet 框架主控制器，处理前端发送过来的请求，动态调用对应的UIFacade方法
+ *
  * @author Darkness
  * @date 2012-8-5 下午12:21:43
  * @version V1.0
  */
 public class MainServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+    public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
 
-			dealWithHead(request, response);
+            dealWithHead(request, response);
 
-			String url = request.getParameter(Constant.URL);
-			if (("".equals(url)) || ("/".equals(url))) {
-				url = "/Index.zhtml";
-			}
+            String url = request.getParameter(Constant.URL);
+            if (("".equals(url)) || ("/".equals(url))) {
+                url = "/Index.zhtml";
+            }
 
-			String method = request.getParameter(Constant.Method);
-			if (StringUtil.isEmpty(method)) {
-				LogUtil.warn("Error in Server.sendRequest(),QueryString=" + request.getQueryString() + ",Referer=" + request.getHeader("referer"));
-				return;
-			}
-			
-//			CurrentConnection.bindTransactionToThread();
+            String method = request.getParameter(Constant.Method);
+            if (StringUtil.isEmpty(method)) {
+                LogUtil.warn("Error in Server.sendRequest(),QueryString=" + request.getQueryString() + ",Referer="
+                        + request.getHeader("referer"));
+                return;
+            }
 
-			Method m = Current.prepareMethod(request, response, method, null);
+            // CurrentConnection.bindTransactionToThread();
 
-			if (!PrivCheck.check(m, Current.getRequest(), Current.getResponse())) {
-				String message = "Priv check failed:method=" + method;
-				LogUtil.warn(message);
-				Current.getResponse().setFailedMessage(message);
-				response.getWriter().write(Current.getResponse().toXML());
-				return;
-			}
+            Method m = Current.prepareMethod(request, response, method, null);
 
-			if (!VerifyCheck.check(m)) {
-				String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
-				LogUtil.warn(message);
-				Current.getResponse().setFailedMessage(message);
-				response.getWriter().write(Current.getResponse().toXML());
-				return;
-			}
+            if (!PrivCheck.check(m, Current.getRequest(), Current.getResponse())) {
+                String message = "Priv check failed:method=" + method;
+                LogUtil.warn(message);
+                Current.getResponse().setFailedMessage(message);
+                response.getWriter().write(Current.getResponse().toXML());
+                return;
+            }
 
-			ExtendManager.invoke(BeforeUIMethodInvokeAction.ExtendPointID, new Object[] { method });
+            if (!VerifyCheck.check(m)) {
+                String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+                LogUtil.warn(message);
+                Current.getResponse().setFailedMessage(message);
+                response.getWriter().write(Current.getResponse().toXML());
+                return;
+            }
 
-			Current.invokeMethod(m, null);
+            ExtendManager.invoke(BeforeUIMethodInvokeAction.ExtendPointID, new Object[]{method});
 
-			ExtendManager.invoke(AfterUIMethodInvokeAction.ExtendPointID, new Object[] { method });
+            Current.invokeMethod(m, null);
 
-//			CurrentConnection.clearTransactionBinding();
-			
-			response.getWriter().write(Current.getResponse().toXML());
-		} catch (Throwable e) {
-			e.printStackTrace();
-			ResponseData r = new ResponseData();
-			r.setFailedMessage(e.getMessage());
-			response.getWriter().write(r.toXML());
-			
-//			try {
-//				CurrentConnection.getCurrentThreadConnection().rollback();
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
-//			CurrentConnection.clearTransactionBinding();
-		}
-	}
+            ExtendManager.invoke(AfterUIMethodInvokeAction.ExtendPointID, new Object[]{method});
 
-	private void dealWithHead(HttpServletRequest request, HttpServletResponse response) {
-		response.setHeader("Pragma", "No-Cache");
-		response.setHeader("Cache-Control", "No-Cache");
-		response.setDateHeader("Expires", 0L);
+            // CurrentConnection.clearTransactionBinding();
 
-		response.setContentType("text/xml");
+            response.getWriter().write(Current.getResponse().toXML());
+        } catch (Throwable e) {
+            e.printStackTrace();
+            ResponseData r = new ResponseData();
+            r.setFailedMessage(e.getMessage());
+            response.getWriter().write(r.toXML());
 
-		if ((Config.ServletMajorVersion == 2) && (Config.ServletMinorVersion == 3))
-			response.setContentType("text/xml;charset=utf-8");
-		else {
-			response.setCharacterEncoding("UTF-8");
-		}
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+            // try {
+            // CurrentConnection.getCurrentThreadConnection().rollback();
+            // } catch (SQLException e1) {
+            // e1.printStackTrace();
+            // }
+            // CurrentConnection.clearTransactionBinding();
+        }
+    }
 
-		if (!"true".equals(request.getParameter(Constant.NoSession))) {
-			request.getSession(true);
-		}
-	}
+    private void dealWithHead(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Pragma", "No-Cache");
+        response.setHeader("Cache-Control", "No-Cache");
+        response.setDateHeader("Expires", 0L);
+
+        response.setContentType("text/xml");
+
+        if ((Config.ServletMajorVersion == 2) && (Config.ServletMinorVersion == 3))
+            response.setContentType("text/xml;charset=utf-8");
+        else {
+            response.setCharacterEncoding("UTF-8");
+        }
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        if (!"true".equals(request.getParameter(Constant.NoSession))) {
+            request.getSession(true);
+        }
+    }
 }

@@ -1,12 +1,13 @@
 package io.arkx.framework.commons.crawl.scheduler.component;
 
-import com.google.common.collect.Sets;
-import io.arkx.framework.commons.crawl.Request;
-
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.arkx.framework.commons.crawl.Request;
+
+import com.google.common.collect.Sets;
 /**
- *  
+ *
  * @author Darkness
  * @date 2015-1-9 下午10:46:08
  * @version V1.0

@@ -1,8 +1,8 @@
 package io.arkx.framework.data.common.sqltoy;
 
-import org.springframework.data.annotation.QueryAnnotation;
-
 import java.lang.annotation.*;
+
+import org.springframework.data.annotation.QueryAnnotation;
 
 /**
  * @author Darkness
@@ -10,10 +10,10 @@ import java.lang.annotation.*;
  * @version V1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @QueryAnnotation
 @Documented
 public @interface SqlToyQuery {
-	
-	String value() default "";
+
+    String value() default "";
 }

@@ -1,8 +1,8 @@
 package io.arkx.framework.enums.conversion.converter;
 
-import jakarta.persistence.Converter;
-
 import java.util.List;
+
+import jakarta.persistence.Converter;
 
 /**
  * @author: zhuCan

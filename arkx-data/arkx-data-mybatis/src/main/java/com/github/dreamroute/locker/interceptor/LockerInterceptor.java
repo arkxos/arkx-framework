@@ -1,19 +1,19 @@
 package com.github.dreamroute.locker.interceptor;
 
-import cn.hutool.core.util.ReflectUtil;
-import com.github.dreamroute.locker.anno.Locker;
-import com.github.dreamroute.locker.exception.DataHasBeenModifyException;
-import com.github.dreamroute.locker.util.PluginUtil;
-import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.JSQLParserException;
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.JdbcParameter;
-import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
-import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
-import net.sf.jsqlparser.expression.operators.relational.ParenthesedExpressionList;
-import net.sf.jsqlparser.parser.CCJSqlParserUtil;
-import net.sf.jsqlparser.schema.Column;
-import net.sf.jsqlparser.statement.update.Update;
+import static cn.hutool.core.annotation.AnnotationUtil.hasAnnotation;
+import static com.github.dreamroute.locker.util.PluginUtil.getAllMethods;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Arrays.stream;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -35,32 +35,30 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.util.StringUtils;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import com.github.dreamroute.locker.anno.Locker;
+import com.github.dreamroute.locker.exception.DataHasBeenModifyException;
+import com.github.dreamroute.locker.util.PluginUtil;
 
-import static cn.hutool.core.annotation.AnnotationUtil.hasAnnotation;
-import static com.github.dreamroute.locker.util.PluginUtil.getAllMethods;
-import static com.google.common.collect.Lists.newArrayList;
-import static java.util.Arrays.stream;
-import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.toList;
+import cn.hutool.core.util.ReflectUtil;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.JdbcParameter;
+import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import net.sf.jsqlparser.expression.operators.relational.ParenthesedExpressionList;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.schema.Column;
+import net.sf.jsqlparser.statement.update.Update;
 
 /**
- * 原理：
- * 1. 拦截被@Locker标记的方法，执行更新操作；
- * 2. 上一步骤中的update方法如果返回值是0，那么查询一次被更新的数据；
- * 3. 如果version > 当前值，那么就抛出异常（如果需要抛出异常的话）；
+ * 原理： 1. 拦截被@Locker标记的方法，执行更新操作； 2. 上一步骤中的update方法如果返回值是0，那么查询一次被更新的数据； 3.
+ * 如果version > 当前值，那么就抛出异常（如果需要抛出异常的话）；
  *
  * @author w.dehi
  */
 @Slf4j
-@Intercepts({
-        @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})
-})
+@Intercepts({@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})})
 public class LockerInterceptor implements Interceptor, ApplicationListener<ContextRefreshedEvent> {
 
     private final String versionColumn;
@@ -83,8 +81,7 @@ public class LockerInterceptor implements Interceptor, ApplicationListener<Conte
         this.config = sqlSessionFactory.getConfiguration();
         Collection<Class<?>> mappers = this.config.getMapperRegistry().getMappers();
         this.ids = ofNullable(mappers).orElseGet(ArrayList::new).stream()
-                .flatMap(mapper -> stream(getAllMethods(mapper))
-                        .filter(method -> hasAnnotation(method, Locker.class))
+                .flatMap(mapper -> stream(getAllMethods(mapper)).filter(method -> hasAnnotation(method, Locker.class))
                         .map(m -> mapper.getName() + "." + m.getName()))
                 .collect(toList());
     }
@@ -116,7 +113,7 @@ public class LockerInterceptor implements Interceptor, ApplicationListener<Conte
         // 获取新的sql
         Update update = (Update) CCJSqlParserUtil.parse(old);
         Expression where = update.getWhere();
-		ParenthesedExpressionList p = new ParenthesedExpressionList(where);
+        ParenthesedExpressionList p = new ParenthesedExpressionList(where);
         EqualsTo lock = new EqualsTo(new Column(versionColumn), new JdbcParameter());
         AndExpression newWhere = new AndExpression().withLeftExpression(p).withRightExpression(lock);
         update.setWhere(newWhere);
@@ -125,7 +122,8 @@ public class LockerInterceptor implements Interceptor, ApplicationListener<Conte
         BoundSql newBoundSql = new BoundSql(config, newSql, pms, param);
         newBoundSql.setAdditionalParameter(versionColumn + "_v", versionValue);
 
-        MappedStatement m = new Builder(config, "com.[plugin]optimistic_locker_update_with_locker._inner_update", new StaticSqlSource(config, newSql), SqlCommandType.UPDATE).build();
+        MappedStatement m = new Builder(config, "com.[plugin]optimistic_locker_update_with_locker._inner_update",
+                new StaticSqlSource(config, newSql), SqlCommandType.UPDATE).build();
         StatementHandler sh = config.newStatementHandler(executor, m, param, RowBounds.DEFAULT, null, newBoundSql);
         Statement updateStmt = prepareStatement(executor.getTransaction(), sh);
         ((PreparedStatement) updateStmt).execute();
@@ -150,8 +148,10 @@ public class LockerInterceptor implements Interceptor, ApplicationListener<Conte
 
             Object value = ReflectUtil.getFieldValue(param, idName);
             BoundSql select = new BoundSql(config, sql, parameterMappings, value);
-            MappedStatement selectMs = new Builder(config, "com.[plugin]optimistic_locker_update_faild._inner_select", new StaticSqlSource(config, sql), SqlCommandType.SELECT).build();
-            StatementHandler selectSh = config.newStatementHandler(executor, selectMs, value, RowBounds.DEFAULT, null, select);
+            MappedStatement selectMs = new Builder(config, "com.[plugin]optimistic_locker_update_faild._inner_select",
+                    new StaticSqlSource(config, sql), SqlCommandType.SELECT).build();
+            StatementHandler selectSh = config.newStatementHandler(executor, selectMs, value, RowBounds.DEFAULT, null,
+                    select);
             Statement selectStmt = prepareStatement(executor.getTransaction(), selectSh);
             ((PreparedStatement) selectStmt).execute();
             ResultSet rs = selectStmt.getResultSet();
@@ -183,7 +183,8 @@ public class LockerInterceptor implements Interceptor, ApplicationListener<Conte
         String id = et.getLeftExpression().toString();
 
         StringJoiner joiner = new StringJoiner(" ");
-        String selectSql = joiner.add("SELECT").add(versionColumn).add("FROM").add(tableName).add("WHERE").add(et.toString()).toString();
+        String selectSql = joiner.add("SELECT").add(versionColumn).add("FROM").add(tableName).add("WHERE")
+                .add(et.toString()).toString();
 
         return selectSql + ":" + id;
     }

@@ -17,40 +17,40 @@ import cn.hutool.core.util.StrUtil;
  * @author tang
  */
 public enum CaseConvertEnum {
-  /**
-   * 不做任何处理
-   */
-  NONE(s -> s),
-  /**
-   * 全大写
-   */
-  UPPER(String::toUpperCase),
-  /**
-   * 全小写
-   */
-  LOWER(String::toLowerCase),
-  /**
-   * 驼峰转下划线
-   */
-  SNAKE(StrUtil::toUnderlineCase),
-  /**
-   * 下划线转驼峰
-   */
-  CAMEL(StrUtil::toCamelCase);
+    /**
+     * 不做任何处理
+     */
+    NONE(s -> s),
+    /**
+     * 全大写
+     */
+    UPPER(String::toUpperCase),
+    /**
+     * 全小写
+     */
+    LOWER(String::toLowerCase),
+    /**
+     * 驼峰转下划线
+     */
+    SNAKE(StrUtil::toUnderlineCase),
+    /**
+     * 下划线转驼峰
+     */
+    CAMEL(StrUtil::toCamelCase);
 
-  private Converter function;
+    private Converter function;
 
-  CaseConvertEnum(Converter function) {
-    this.function = function;
-  }
+    CaseConvertEnum(Converter function) {
+        this.function = function;
+    }
 
-  public String convert(String name) {
-    return function.convert(name);
-  }
+    public String convert(String name) {
+        return function.convert(name);
+    }
 
-  interface Converter {
+    interface Converter {
 
-    String convert(String s);
-  }
+        String convert(String s);
+    }
 
 }

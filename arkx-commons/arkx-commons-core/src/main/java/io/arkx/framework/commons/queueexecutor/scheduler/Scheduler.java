@@ -4,9 +4,9 @@ import io.arkx.framework.commons.queueexecutor.Element;
 
 /**
  * Scheduler is the part of url management.<br>
- * You can implement interface Scheduler to do:
- * manage urls to fetch
- * remove duplicate urls
+ * You can implement interface Scheduler to do: manage urls to fetch remove
+ * duplicate urls
+ *
  * @author Darkness
  * @date 2015-1-9 下午10:35:29
  * @version V1.0
@@ -14,18 +14,18 @@ import io.arkx.framework.commons.queueexecutor.Element;
  */
 public interface Scheduler<T> {
 
-	/**
-	 * add a url to fetch
-	 * 
-	 * @param element
-	 */
-	void push(Element<T> element);
+    /**
+     * add a url to fetch
+     *
+     * @param element
+     */
+    void push(Element<T> element);
 
-	/**
-	 * get an url to crawl
-	 *
-	 * @return the url to crawl
-	 */
-	Element<T> poll();
+    /**
+     * get an url to crawl
+     *
+     * @return the url to crawl
+     */
+    Element<T> poll();
 
 }

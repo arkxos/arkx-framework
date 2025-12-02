@@ -1,21 +1,24 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.interceptor;
 
-import com.github.dreamroute.locker.anno.EnableLocker;
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import com.ninja_squad.dbsetup.operation.Insert;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
-import jakarta.annotation.Resource;
+import static com.ninja_squad.dbsetup.Operations.insertInto;
+import static com.ninja_squad.dbsetup.Operations.truncate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.mapper.UserMapper;
 
-import static com.ninja_squad.dbsetup.Operations.insertInto;
-import static com.ninja_squad.dbsetup.Operations.truncate;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.github.dreamroute.locker.anno.EnableLocker;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.operation.Insert;
+
+import jakarta.annotation.Resource;
 
 /**
  * 描述：乐观锁插件测试，测试时在启动类上添加@EnableLocker，观察SQL是否是带有乐观锁
@@ -36,10 +39,8 @@ class LockerInterceptorTest {
         new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
         Insert insert = insertInto("smart_user")
                 .columns("name", "password", "phone_no", "version", "addr_info", "status")
-                .values("w.dehai", "123456", "1306006", 1L, "成都", 1)
-                .values("Jaedong", "123", "1306006", 1L, "北京", 1)
-                .values("w.dehai", "123", "1306006", 2L, "美国", 1)
-                .build();
+                .values("w.dehai", "123456", "1306006", 1L, "成都", 1).values("Jaedong", "123", "1306006", 1L, "北京", 1)
+                .values("w.dehai", "123", "1306006", 2L, "美国", 1).build();
         new DbSetup(new DataSourceDestination(dataSource), insert).launch();
     }
 

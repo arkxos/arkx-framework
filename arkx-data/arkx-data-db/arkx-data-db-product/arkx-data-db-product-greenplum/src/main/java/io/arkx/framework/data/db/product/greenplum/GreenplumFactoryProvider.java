@@ -9,6 +9,8 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.greenplum;
 
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.DefaultProductFeatures;
@@ -23,39 +25,35 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 import io.arkx.framework.data.db.product.postgresql.PostgresTableCopyWriteProvider;
 import io.arkx.framework.data.db.product.postgresql.PostgresTableManageProvider;
 
-import javax.sql.DataSource;
-
 @Product(ProductTypeEnum.GREENPLUM)
 public class GreenplumFactoryProvider extends AbstractFactoryProvider {
 
-  public GreenplumFactoryProvider(DataSource dataSource) {
-    super(dataSource);
-  }
+    public GreenplumFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-  @Override
-  public ProductFeatures getProductFeatures() {
-    return new DefaultProductFeatures();
-  }
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-  @Override
-  public MetadataProvider createMetadataQueryProvider() {
-    return new GreenplumMetadataQueryProvider(this);
-  }
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new GreenplumMetadataQueryProvider(this);
+    }
 
-  @Override
-  public TableManageProvider createTableManageProvider() {
-    return new PostgresTableManageProvider(this);
-  }
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new PostgresTableManageProvider(this);
+    }
 
-  @Override
-  public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-    return useInsert
-        ? new AutoCastTableDataWriteProvider(this)
-        : new PostgresTableCopyWriteProvider(this);
-  }
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return useInsert ? new AutoCastTableDataWriteProvider(this) : new PostgresTableCopyWriteProvider(this);
+    }
 
-  @Override
-  public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    return new AutoCastTableDataSynchronizeProvider(this);
-  }
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 }

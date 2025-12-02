@@ -11,28 +11,31 @@ package io.arkx.framework.commons.websocket.message;
  */
 public abstract class AbstractJsonWebSocketMessage implements JsonWebSocketMessage {
 
-	/**
-	 * 消息类型字段的名称。
-	 */
-	public static final String TYPE_FIELD = "type";
+    /**
+     * 消息类型字段的名称。
+     */
+    public static final String TYPE_FIELD = "type";
 
-	private final String type;
+    private final String type;
 
-	/**
-	 * 构造函数，用于创建抽象 JSON WebSocket 消息实例。
-	 * @param type 消息的类型标识符。
-	 */
-	protected AbstractJsonWebSocketMessage(String type) {
-		this.type = type;
-	}
+    /**
+     * 构造函数，用于创建抽象 JSON WebSocket 消息实例。
+     *
+     * @param type
+     *            消息的类型标识符。
+     */
+    protected AbstractJsonWebSocketMessage(String type) {
+        this.type = type;
+    }
 
-	/**
-	 * 获取消息的类型。
-	 * @return 消息类型字符串。
-	 */
-	@Override
-	public String getType() {
-		return type;
-	}
+    /**
+     * 获取消息的类型。
+     *
+     * @return 消息类型字符串。
+     */
+    @Override
+    public String getType() {
+        return type;
+    }
 
 }

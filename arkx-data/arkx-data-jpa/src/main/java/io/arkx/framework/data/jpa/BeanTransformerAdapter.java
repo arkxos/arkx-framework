@@ -1,5 +1,11 @@
 package io.arkx.framework.data.jpa;
 
+import java.beans.PropertyDescriptor;
+import java.sql.Clob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.transform.ResultTransformer;
@@ -12,12 +18,6 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.util.StringUtils;
-
-import java.beans.PropertyDescriptor;
-import java.sql.Clob;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 
 /**
  * .
@@ -32,13 +32,14 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
 
     static {
         BeanTransformerAdapter.conversionService = new DefaultConversionService();
-//        Collection<Converter<?, ?>> convertersToRegister = JodaTimeConverters.getConvertersToRegister();
+        // Collection<Converter<?, ?>> convertersToRegister =
+        // JodaTimeConverters.getConvertersToRegister();
 
-//        for (Converter<?, ?> converter : convertersToRegister) {
-//            BeanTransformerAdapter.conversionService.addConverter(converter);
-//        }
+        // for (Converter<?, ?> converter : convertersToRegister) {
+        // BeanTransformerAdapter.conversionService.addConverter(converter);
+        // }
         BeanTransformerAdapter.conversionService.addConverter(ClobToStringConverter.INSTANCE);
-//        BeanTransformerAdapter.conversionService.addConverter(BlobToStringConverter.INSTANCE);
+        // BeanTransformerAdapter.conversionService.addConverter(BlobToStringConverter.INSTANCE);
     }
 
     /**
@@ -82,12 +83,14 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
     }
 
     /**
-     * Create a new BeanPropertyRowMapper, accepting unpopulated properties
-     * in the target bean.
-     * <p>Consider using the {@link #newInstance} factory method instead,
-     * which allows for specifying the mapped type once only.
+     * Create a new BeanPropertyRowMapper, accepting unpopulated properties in the
+     * target bean.
+     * <p>
+     * Consider using the {@link #newInstance} factory method instead, which allows
+     * for specifying the mapped type once only.
      *
-     * @param mappedClass the class that each row should be mapped to
+     * @param mappedClass
+     *            the class that each row should be mapped to
      */
     public BeanTransformerAdapter(Class<T> mappedClass) {
         initialize(mappedClass);
@@ -96,9 +99,11 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
     /**
      * Create a new BeanPropertyRowMapper.
      *
-     * @param mappedClass         the class that each row should be mapped to
-     * @param checkFullyPopulated whether we're strictly validating that
-     *                            all bean properties have been mapped from corresponding database fields
+     * @param mappedClass
+     *            the class that each row should be mapped to
+     * @param checkFullyPopulated
+     *            whether we're strictly validating that all bean properties have
+     *            been mapped from corresponding database fields
      */
     public BeanTransformerAdapter(Class<T> mappedClass, boolean checkFullyPopulated) {
         initialize(mappedClass);
@@ -106,11 +111,13 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
     }
 
     /**
-     * Static factory method to create a new BeanPropertyRowMapper
-     * (with the mapped class specified only once).
+     * Static factory method to create a new BeanPropertyRowMapper (with the mapped
+     * class specified only once).
      *
-     * @param mappedClass the class that each row should be mapped to
-     * @param <T> class type
+     * @param mappedClass
+     *            the class that each row should be mapped to
+     * @param <T>
+     *            class type
      * @return instance
      */
     public static <T> BeanPropertyRowMapper<T> newInstance(Class<T> mappedClass) {
@@ -122,7 +129,8 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
     /**
      * Initialize the mapping metadata for the given class.
      *
-     * @param mappedClass the mapped class.
+     * @param mappedClass
+     *            the mapped class.
      */
     protected void initialize(Class<T> mappedClass) {
         this.mappedClass = mappedClass;
@@ -140,10 +148,11 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
     }
 
     /**
-     * Convert a name in camelCase to an underscored name in lower case.
-     * Any upper case letters are converted to lower case with a preceding underscore.
+     * Convert a name in camelCase to an underscored name in lower case. Any upper
+     * case letters are converted to lower case with a preceding underscore.
      *
-     * @param name the string containing original name
+     * @param name
+     *            the string containing original name
      * @return the converted name
      */
     private String underscoreName(String name) {
@@ -166,6 +175,7 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
 
     /**
      * Get the class that we are mapping to.
+     *
      * @return mapped class
      */
     public final Class<T> getMappedClass() {
@@ -174,7 +184,9 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
 
     /**
      * Set the class that each row should be mapped to.
-     * @param mappedClass mapped class
+     *
+     * @param mappedClass
+     *            mapped class
      */
     public void setMappedClass(Class<T> mappedClass) {
         if (this.mappedClass == null) {
@@ -190,6 +202,7 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
     /**
      * Return whether we're strictly validating that all bean properties have been
      * mapped from corresponding database fields.
+     *
      * @return flag
      */
     public boolean isCheckFullyPopulated() {
@@ -199,36 +212,41 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
     /**
      * Set whether we're strictly validating that all bean properties have been
      * mapped from corresponding database fields.
-     * <p>Default is {@code false}, accepting unpopulated properties in the
-     * target bean.
+     * <p>
+     * Default is {@code false}, accepting unpopulated properties in the target
+     * bean.
      */
     public void setCheckFullyPopulated(boolean checkFullyPopulated) {
         this.checkFullyPopulated = checkFullyPopulated;
     }
 
     /**
-     * Return whether we're defaulting Java primitives in the case of mapping a null value
-     * from corresponding database fields.
+     * Return whether we're defaulting Java primitives in the case of mapping a null
+     * value from corresponding database fields.
      */
     public boolean isPrimitivesDefaultedForNullValue() {
         return primitivesDefaultedForNullValue;
     }
 
     /**
-     * Set whether we're defaulting Java primitives in the case of mapping a null value
-     * from corresponding database fields.
-     * <p>Default is {@code false}, throwing an exception when nulls are mapped to Java primitives.
+     * Set whether we're defaulting Java primitives in the case of mapping a null
+     * value from corresponding database fields.
+     * <p>
+     * Default is {@code false}, throwing an exception when nulls are mapped to Java
+     * primitives.
      */
     public void setPrimitivesDefaultedForNullValue(boolean primitivesDefaultedForNullValue) {
         this.primitivesDefaultedForNullValue = primitivesDefaultedForNullValue;
     }
 
     /**
-     * Initialize the given BeanWrapper to be used for row mapping.
-     * To be called for each row.
-     * <p>The default implementation is empty. Can be overridden in subclasses.
+     * Initialize the given BeanWrapper to be used for row mapping. To be called for
+     * each row.
+     * <p>
+     * The default implementation is empty. Can be overridden in subclasses.
      *
-     * @param bw the BeanWrapper to initialize
+     * @param bw
+     *            the BeanWrapper to initialize
      */
     protected void initBeanWrapper(BeanWrapper bw) {
         bw.setConversionService(conversionService);
@@ -236,18 +254,24 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
 
     /**
      * Retrieve a JDBC object value for the specified column.
-     * <p>The default implementation calls
+     * <p>
+     * The default implementation calls
      * {@link JdbcUtils#getResultSetValue(java.sql.ResultSet, int, Class)}.
-     * Subclasses may override this to check specific value types upfront,
-     * or to post-process values return from {@code getResultSetValue}.
+     * Subclasses may override this to check specific value types upfront, or to
+     * post-process values return from {@code getResultSetValue}.
      *
-     * @param rs    is the ResultSet holding the data
-     * @param index is the column index
-     * @param pd    the bean property that each result object is expected to match
-     *              (or {@code null} if none specified)
+     * @param rs
+     *            is the ResultSet holding the data
+     * @param index
+     *            is the column index
+     * @param pd
+     *            the bean property that each result object is expected to match (or
+     *            {@code null} if none specified)
      * @return the Object value
-     * @throws SQLException in case of extraction failure
-     * @see org.springframework.jdbc.support.JdbcUtils#getResultSetValue(java.sql.ResultSet, int, Class)
+     * @throws SQLException
+     *             in case of extraction failure
+     * @see org.springframework.jdbc.support.JdbcUtils#getResultSetValue(java.sql.ResultSet,
+     *      int, Class)
      */
     protected Object getColumnValue(ResultSet rs, int index, PropertyDescriptor pd) throws SQLException {
         return JdbcUtils.getResultSetValue(rs, index, pd.getPropertyType());
@@ -271,9 +295,8 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
                     } catch (TypeMismatchException e) {
                         if (value == null && primitivesDefaultedForNullValue) {
                             logger.debug("Intercepted TypeMismatchException for column " + column + " and column '"
-                                    + column + "' with value " + value + " when setting property '" + pd.getName() +
-                                    "' of type " + pd.getPropertyType()
-                                    + " on object: " + mappedObject);
+                                    + column + "' with value " + value + " when setting property '" + pd.getName()
+                                    + "' of type " + pd.getPropertyType() + " on object: " + mappedObject);
                         } else {
                             throw e;
                         }
@@ -282,8 +305,8 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
                         populatedProperties.add(pd.getName());
                     }
                 } catch (NotWritablePropertyException ex) {
-                    throw new DataRetrievalFailureException("Unable to map column " + column
-                            + " to property " + pd.getName(), ex);
+                    throw new DataRetrievalFailureException(
+                            "Unable to map column " + column + " to property " + pd.getName(), ex);
                 }
             }
         }
@@ -301,7 +324,6 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
         return list;
     }
 
-
     enum ClobToStringConverter implements Converter<Clob, String> {
 
         INSTANCE;
@@ -312,13 +334,13 @@ public class BeanTransformerAdapter<T> implements ResultTransformer {
         }
     }
 
-//    enum BlobToStringConverter implements Converter<Blob, String> {
-//
-//        INSTANCE;
-//
-//        @Override
-//        public String convert(Blob source) {
-//            return BlobType.INSTANCE.toString(source);
-//        }
-//    }
+    // enum BlobToStringConverter implements Converter<Blob, String> {
+    //
+    // INSTANCE;
+    //
+    // @Override
+    // public String convert(Blob source) {
+    // return BlobType.INSTANCE.toString(source);
+    // }
+    // }
 }

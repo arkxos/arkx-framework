@@ -9,11 +9,12 @@ public class HexUtil {
     /**
      * UTF-8的三个字节的BOM
      */
-    public static final byte[] BOM = new byte[] { (byte) 239, (byte) 187, (byte) 191 };
+    public static final byte[] BOM = new byte[]{(byte) 239, (byte) 187, (byte) 191};
     /**
      * 十六进制字符
      */
-    public static final char HexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    public static final char HexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+            'f'};
 
     public static String hexEncode(byte[] data) {
         int l = data.length;

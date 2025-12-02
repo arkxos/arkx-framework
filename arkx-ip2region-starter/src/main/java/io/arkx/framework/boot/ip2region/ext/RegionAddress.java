@@ -2,6 +2,7 @@ package io.arkx.framework.boot.ip2region.ext;
 
 /**
  * Basic RegionAddress Info
+ *
  * @author 凡梦星尘(elkan1788@gmail.com)
  */
 public class RegionAddress {
@@ -17,8 +18,11 @@ public class RegionAddress {
 
     /**
      *
-     * Translate this string "中国|华东|江苏省|南京市|电信" or "印度尼西亚|0|大雅加达|雅加达|Telin" to location fields.
-     * @param region location region address info array
+     * Translate this string "中国|华东|江苏省|南京市|电信" or "印度尼西亚|0|大雅加达|雅加达|Telin" to
+     * location fields.
+     *
+     * @param region
+     *            location region address info array
      */
     public RegionAddress(String[] region) {
         this(region[0], region[2], region[3], region[1], region[4]);
@@ -26,11 +30,17 @@ public class RegionAddress {
 
     /**
      * Basic constructor method
-     * @param country   Country name
-     * @param province  province name
-     * @param city      city name
-     * @param area      area name
-     * @param ISP       ISP name
+     *
+     * @param country
+     *            Country name
+     * @param province
+     *            province name
+     * @param city
+     *            city name
+     * @param area
+     *            area name
+     * @param ISP
+     *            ISP name
      */
     public RegionAddress(String country, String province, String city, String area, String ISP) {
         this.country = country;
@@ -82,12 +92,7 @@ public class RegionAddress {
 
     @Override
     public String toString() {
-        return "RegionAddress{" +
-                "country='" + country + '\'' +
-                ", province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", area='" + area + '\'' +
-                ", ISP='" + ISP + '\'' +
-                '}';
+        return "RegionAddress{" + "country='" + country + '\'' + ", province='" + province + '\'' + ", city='" + city
+                + '\'' + ", area='" + area + '\'' + ", ISP='" + ISP + '\'' + '}';
     }
 }

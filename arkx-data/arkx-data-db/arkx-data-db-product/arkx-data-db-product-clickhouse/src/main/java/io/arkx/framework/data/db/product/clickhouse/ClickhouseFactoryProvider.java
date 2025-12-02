@@ -9,6 +9,8 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.clickhouse;
 
+import javax.sql.DataSource;
+
 import io.arkx.framework.data.db.common.type.ProductTypeEnum;
 import io.arkx.framework.data.db.core.annotation.Product;
 import io.arkx.framework.data.db.core.features.DefaultProductFeatures;
@@ -22,38 +24,36 @@ import io.arkx.framework.data.db.core.provider.sync.TableDataSynchronizeProvider
 import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvider;
 import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 
-import javax.sql.DataSource;
-
 @Product(ProductTypeEnum.CLICKHOUSE)
 public class ClickhouseFactoryProvider extends AbstractFactoryProvider {
 
-  public ClickhouseFactoryProvider(DataSource dataSource) {
-    super(dataSource);
-  }
+    public ClickhouseFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-  @Override
-  public ProductFeatures getProductFeatures() {
-    return new DefaultProductFeatures();
-  }
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-  @Override
-  public MetadataProvider createMetadataQueryProvider() {
-    return new ClickhouseMetadataQueryProvider(this);
-  }
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new ClickhouseMetadataQueryProvider(this);
+    }
 
-  @Override
-  public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-    return new AutoCastTableDataWriteProvider(this);
-  }
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-  @Override
-  public TableManageProvider createTableManageProvider() {
-    return new DefaultTableManageProvider(this);
-  }
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new DefaultTableManageProvider(this);
+    }
 
-  @Override
-  public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-    return new AutoCastTableDataSynchronizeProvider(this);
-  }
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

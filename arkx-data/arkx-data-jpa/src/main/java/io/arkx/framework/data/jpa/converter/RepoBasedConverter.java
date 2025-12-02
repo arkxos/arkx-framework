@@ -1,7 +1,10 @@
 package io.arkx.framework.data.jpa.converter;
 
-import io.arkx.framework.data.jpa.auditing.CachingJpaRepository;
-import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -9,10 +12,8 @@ import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.support.Repositories;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import io.arkx.framework.data.jpa.auditing.CachingJpaRepository;
+import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 
 /**
  * .
@@ -20,8 +21,9 @@ import java.util.Optional;
  * @author stormning on 16/6/16.
  */
 @SuppressWarnings({"unchecked"})
-public abstract class RepoBasedConverter<S, D, ID extends Serializable> extends AbstractConverter<S, D, ID> implements
-        ApplicationContextAware {
+public abstract class RepoBasedConverter<S, D, ID extends Serializable> extends AbstractConverter<S, D, ID>
+        implements
+            ApplicationContextAware {
 
     private Repositories repositories;
 

@@ -1,8 +1,8 @@
 package io.arkx.framework.data.mybatis.pro.base;
 
-import lombok.Data;
-
 import java.util.Date;
+
+import lombok.Data;
 
 /**
  * @author w.dehai.2021/8/10.14:50

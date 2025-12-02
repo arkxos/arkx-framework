@@ -1,16 +1,18 @@
 package io.arkx.framework.data.mybatis.pro.base.codec.enums;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.text.CharSequenceUtil;
+import java.io.IOException;
+import java.util.Collection;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.IOException;
-import java.util.Collection;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 
 /**
  * 描述：EnumMarker Jackson序列化，将EnumMarkder序列化成getValue()，并且为对象增加一个以Desc结尾的枚举字段方式：
+ *
  * <pre>
  *     {
  *         "name": "w.dehai",

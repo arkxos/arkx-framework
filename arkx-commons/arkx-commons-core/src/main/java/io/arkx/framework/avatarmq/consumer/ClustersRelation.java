@@ -43,8 +43,7 @@ public class ClustersRelation {
         boolean result = false;
         if (obj != null && ClustersRelation.class.isAssignableFrom(obj.getClass())) {
             ClustersRelation clusters = (ClustersRelation) obj;
-            result = new EqualsBuilder().append(id, clusters.getId())
-                    .isEquals();
+            result = new EqualsBuilder().append(id, clusters.getId()).isEquals();
         }
         return result;
     }

@@ -19,8 +19,10 @@ public interface IEncryptor {
     /**
      * 加密
      *
-     * @param value      待加密字符串
-     * @param encodeType 加密后的编码格式
+     * @param value
+     *            待加密字符串
+     * @param encodeType
+     *            加密后的编码格式
      * @return 加密后的字符串
      */
     String encrypt(String value, EncodeType encodeType);
@@ -28,7 +30,8 @@ public interface IEncryptor {
     /**
      * 解密
      *
-     * @param value      待加密字符串
+     * @param value
+     *            待加密字符串
      * @return 解密后的字符串
      */
     String decrypt(String value);

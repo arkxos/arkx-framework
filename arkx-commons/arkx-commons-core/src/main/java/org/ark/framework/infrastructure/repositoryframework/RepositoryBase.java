@@ -1,7 +1,8 @@
 package org.ark.framework.infrastructure.repositoryframework;
 
-import io.arkx.framework.data.jdbc.Entity;
 import org.ark.framework.infrastructure.IUnitOfWork;
+
+import io.arkx.framework.data.jdbc.Entity;
 
 /**
  * @class org.ark.framework.infrastructure.repositoryframework.RepositoryBase
@@ -10,44 +11,44 @@ import org.ark.framework.infrastructure.IUnitOfWork;
  * @version V1.0
  */
 public abstract class RepositoryBase<T extends Entity> implements IRepository<T>, IUnitOfWorkRepository<T> {
-	
-	private IUnitOfWork unitOfWork;
 
-	protected RepositoryBase() {
-	}
+    private IUnitOfWork unitOfWork;
 
-	protected RepositoryBase(IUnitOfWork unitOfWork) {
-		this.unitOfWork = unitOfWork;
-	}
+    protected RepositoryBase() {
+    }
 
-	// #region IRepository<T> Members
+    protected RepositoryBase(IUnitOfWork unitOfWork) {
+        this.unitOfWork = unitOfWork;
+    }
 
-	public abstract T findBy(Object key);
+    // #region IRepository<T> Members
 
-	public void add(T item) {
-		if (this.unitOfWork != null) {
-			this.unitOfWork.registerAdded(item, this);
-		}
-	}
+    public abstract T findBy(Object key);
 
-	public void remove(T item) {
-		if (this.unitOfWork != null) {
-			this.unitOfWork.registerRemoved(item, this);
-		}
-	}
+    public void add(T item) {
+        if (this.unitOfWork != null) {
+            this.unitOfWork.registerAdded(item, this);
+        }
+    }
 
-	public T get(Object key) {
-		return this.findBy(key);
-	}
+    public void remove(T item) {
+        if (this.unitOfWork != null) {
+            this.unitOfWork.registerRemoved(item, this);
+        }
+    }
 
-	public T set(Object key, T value) {
-		if (this.findBy(key) == null) {
-			this.add(value);
-		} else {
-			this.unitOfWork.registerChanged(value, this);
-		}
-		return value;
-	}
+    public T get(Object key) {
+        return this.findBy(key);
+    }
 
-	// #endregion
+    public T set(Object key, T value) {
+        if (this.findBy(key) == null) {
+            this.add(value);
+        } else {
+            this.unitOfWork.registerChanged(value, this);
+        }
+        return value;
+    }
+
+    // #endregion
 }

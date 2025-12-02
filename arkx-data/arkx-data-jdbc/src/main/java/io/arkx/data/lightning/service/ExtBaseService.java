@@ -1,12 +1,13 @@
 package io.arkx.data.lightning.service;
 
-import io.arkx.framework.commons.collection.DataTable;
-import org.springframework.beans.BeanUtils;
-
 import java.beans.PropertyDescriptor;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.BeanUtils;
+
+import io.arkx.framework.commons.collection.DataTable;
 
 /**
  * @author Nobody
@@ -15,43 +16,44 @@ import java.util.Map;
  */
 public interface ExtBaseService<T, ID> {
 
-	boolean support(String modelType);
+    boolean support(String modelType);
 
-	/**
-	 * 获取对象属性描述
-	 * @param target
-	 * @param fieldClass
-	 * @return
-	 */
-	default PropertyDescriptor findFieldPropertyDescriptor(Class<?> target, Class<?> fieldClass) {
-		PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(target);
-		for (PropertyDescriptor pd : propertyDescriptors) {
-			if (pd.getPropertyType() == fieldClass) {
-				return pd;
-			}
-		}
-		return null;
-	}
+    /**
+     * 获取对象属性描述
+     *
+     * @param target
+     * @param fieldClass
+     * @return
+     */
+    default PropertyDescriptor findFieldPropertyDescriptor(Class<?> target, Class<?> fieldClass) {
+        PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(target);
+        for (PropertyDescriptor pd : propertyDescriptors) {
+            if (pd.getPropertyType() == fieldClass) {
+                return pd;
+            }
+        }
+        return null;
+    }
 
-	Map<ID, T> mget(Collection<ID> ids);
+    Map<ID, T> mget(Collection<ID> ids);
 
-	//for cache
-	Map<ID, T> mgetOneByOne(Collection<ID> ids);
+    // for cache
+    Map<ID, T> mgetOneByOne(Collection<ID> ids);
 
-	//for cache
-	List<T> findAllOneByOne(Collection<ID> ids);
+    // for cache
+    List<T> findAllOneByOne(Collection<ID> ids);
 
-	void toggleStatus(ID id);
+    void toggleStatus(ID id);
 
-	@SuppressWarnings("unchecked")
-	void fakeDelete(ID... ids);
+    @SuppressWarnings("unchecked")
+    void fakeDelete(ID... ids);
 
-	DataTable queryDataTable(String sql, Object... params);
+    DataTable queryDataTable(String sql, Object... params);
 
-	List<Map<String, Object>> queryMap(String sql, Object... params);
+    List<Map<String, Object>> queryMap(String sql, Object... params);
 
-	List<T> queryList(String sql, Object... params);
+    List<T> queryList(String sql, Object... params);
 
-	long queryForLong(String sql, Object... params);
+    long queryForLong(String sql, Object... params);
 
 }

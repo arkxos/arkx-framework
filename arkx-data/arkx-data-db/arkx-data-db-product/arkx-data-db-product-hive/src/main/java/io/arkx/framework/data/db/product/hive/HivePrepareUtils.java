@@ -9,59 +9,54 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.hive;
 
-import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+
 @UtilityClass
 public final class HivePrepareUtils {
 
-  private final static String HIVE_SQL_1 = "set hive.resultset.use.unique.column.names=false";
-  private final static String HIVE_SQL_2 = "set hive.support.concurrency=true";
-  private final static String HIVE_SQL_3 = "set hive.txn.manager = org.apache.hadoop.hive.ql.lockmgr.DbTxnManager";
+    private final static String HIVE_SQL_1 = "set hive.resultset.use.unique.column.names=false";
+    private final static String HIVE_SQL_2 = "set hive.support.concurrency=true";
+    private final static String HIVE_SQL_3 = "set hive.txn.manager = org.apache.hadoop.hive.ql.lockmgr.DbTxnManager";
 
-  @SneakyThrows
-  public static void setResultSetColumnNameNotUnique(Connection connection) {
-    executeWithoutResultSet(connection, HIVE_SQL_1);
-  }
-
-  public static void prepare(Connection connection, String schema, String table)
-      throws SQLException {
-    executeWithoutResultSet(connection, HIVE_SQL_1);
-    if (isTransactionalTable(connection, schema, table)) {
-      executeWithoutResultSet(connection, HIVE_SQL_2);
-      executeWithoutResultSet(connection, HIVE_SQL_3);
+    @SneakyThrows
+    public static void setResultSetColumnNameNotUnique(Connection connection) {
+        executeWithoutResultSet(connection, HIVE_SQL_1);
     }
-  }
 
-  private static boolean isTransactionalTable(Connection connection, String schema, String table)
-      throws SQLException {
-    String fullTableName = "`%s`.`%s`".formatted(schema, table);
-    String sql = "DESCRIBE FORMATTED %s".formatted(fullTableName);
-    try (Statement st = connection.createStatement();
-        ResultSet rs = st.executeQuery(sql)) {
-      while (rs.next()) {
-        String dataType = rs.getString("data_type");
-        String comment = rs.getString("comment");
-        if (dataType != null
-            && comment != null
-            && dataType.startsWith("transactional")
-            && comment.startsWith("true")) {
-          return true;
+    public static void prepare(Connection connection, String schema, String table) throws SQLException {
+        executeWithoutResultSet(connection, HIVE_SQL_1);
+        if (isTransactionalTable(connection, schema, table)) {
+            executeWithoutResultSet(connection, HIVE_SQL_2);
+            executeWithoutResultSet(connection, HIVE_SQL_3);
         }
-      }
-      return false;
     }
-  }
 
-  private static boolean executeWithoutResultSet(Connection connection, String sql)
-      throws SQLException {
-    try (Statement st = connection.createStatement()) {
-      return st.execute(sql);
+    private static boolean isTransactionalTable(Connection connection, String schema, String table)
+            throws SQLException {
+        String fullTableName = "`%s`.`%s`".formatted(schema, table);
+        String sql = "DESCRIBE FORMATTED %s".formatted(fullTableName);
+        try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                String dataType = rs.getString("data_type");
+                String comment = rs.getString("comment");
+                if (dataType != null && comment != null && dataType.startsWith("transactional")
+                        && comment.startsWith("true")) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
-  }
+
+    private static boolean executeWithoutResultSet(Connection connection, String sql) throws SQLException {
+        try (Statement st = connection.createStatement()) {
+            return st.execute(sql);
+        }
+    }
 }

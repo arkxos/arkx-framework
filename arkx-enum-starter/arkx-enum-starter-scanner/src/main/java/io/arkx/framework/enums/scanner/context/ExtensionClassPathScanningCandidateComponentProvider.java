@@ -1,5 +1,12 @@
 package io.arkx.framework.enums.scanner.context;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -8,19 +15,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.AnnotationMetadata;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
 /**
  * @author zhuCan
  * @description 扩展 spring 资源扫描器
  * @since 2021-01-11 10:48
  **/
-public class ExtensionClassPathScanningCandidateComponentProvider extends ClassPathScanningCandidateComponentProvider implements ResourcesScanner<Class<?>> {
+public class ExtensionClassPathScanningCandidateComponentProvider extends ClassPathScanningCandidateComponentProvider
+        implements
+            ResourcesScanner<Class<?>> {
 
     /**
      * 日志对象
@@ -37,16 +39,14 @@ public class ExtensionClassPathScanningCandidateComponentProvider extends ClassP
      */
     private ApplicationContext context;
 
-
     public ExtensionClassPathScanningCandidateComponentProvider(boolean useDefaultFilters,
-                                                                Consumer<ExtensionClassPathScanningCandidateComponentProvider> consumer,
-                                                                EnumScanProperties properties, ApplicationContext context) {
+            Consumer<ExtensionClassPathScanningCandidateComponentProvider> consumer, EnumScanProperties properties,
+            ApplicationContext context) {
         super(useDefaultFilters);
         this.properties = properties;
         this.context = context;
         consumer.accept(this);
     }
-
 
     @Override
     protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
@@ -74,10 +74,8 @@ public class ExtensionClassPathScanningCandidateComponentProvider extends ClassP
                 log.error("扫描资源, 执行 class 加载异常", e);
             }
             return null;
-        }).filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        }).filter(Objects::nonNull).collect(Collectors.toList());
 
     }
-
 
 }

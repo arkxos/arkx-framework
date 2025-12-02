@@ -4,6 +4,7 @@ import io.arkx.framework.commons.constants.ErrorCode;
 
 /**
  * 基础错误异常
+ *
  * @author darkness
  * @date 2021/6/30 16:04
  * @version 1.0

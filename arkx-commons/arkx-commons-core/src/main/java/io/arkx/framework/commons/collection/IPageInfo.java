@@ -1,25 +1,25 @@
 package io.arkx.framework.commons.collection;
-/**   
+/**
  * @class org.ark.framework.collection.IPageInfo
  * @author Darkness
- * @date 2012-9-15 上午11:40:12 
- * @version V1.0   
+ * @date 2012-9-15 上午11:40:12
+ * @version V1.0
  */
 public interface IPageInfo {
 
-	void setPageEnabled(boolean pageEnabled);
-	
-	boolean isPageEnabled();
-	
-	int getPageSize();
+    void setPageEnabled(boolean pageEnabled);
 
-	int getPageIndex();
+    boolean isPageEnabled();
 
-	int getTotal();
+    int getPageSize();
 
-	void setPageSize(int paramInt);
+    int getPageIndex();
 
-	void setPageIndex(int paramInt);
-	
-	void setTotal(int paramInt);
+    int getTotal();
+
+    void setPageSize(int paramInt);
+
+    void setPageIndex(int paramInt);
+
+    void setTotal(int paramInt);
 }

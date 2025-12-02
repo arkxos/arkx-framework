@@ -1,16 +1,17 @@
 package io.arkx.framework.data.mybatis.pro.base.codec;
 
-import cn.hutool.core.annotation.AnnotationUtil;
-import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.ReflectUtil;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonParser;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonParser;
+
+import cn.hutool.core.annotation.AnnotationUtil;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.ReflectUtil;
 
 /**
  * 描述：企微对象别名缓存
@@ -18,7 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author w.dehai.2024/8/26.11:16
  */
 public class PropertyAliasCache {
-    private PropertyAliasCache() {}
+    private PropertyAliasCache() {
+    }
 
     private static final ConcurrentHashMap<Class<?>, Map<String, String>> CACHE = new ConcurrentHashMap<>();
 

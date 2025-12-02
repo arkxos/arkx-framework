@@ -1,8 +1,7 @@
 package io.arkx.data.lightning.repository.support;
 
-import io.arkx.framework.data.common.sqltoy.SqlToyQuery;
-import io.arkx.framework.data.common.sqltoy.SqlToyTemplateQuery;
-import jakarta.validation.constraints.NotNull;
+import java.lang.reflect.Method;
+
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.data.jdbc.repository.query.JdbcQueryMethod;
 import org.springframework.data.projection.ProjectionFactory;
@@ -12,7 +11,10 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.RepositoryQuery;
 
-import java.lang.reflect.Method;
+import io.arkx.framework.data.common.sqltoy.SqlToyQuery;
+import io.arkx.framework.data.common.sqltoy.SqlToyTemplateQuery;
+
+import jakarta.validation.constraints.NotNull;
 
 /**
  * @author Nobody
@@ -21,49 +23,43 @@ import java.lang.reflect.Method;
  */
 public class SqlToyQueryLookupStrategy implements QueryLookupStrategy {
 
-	protected SqlToyLazyDao sqlToyLazyDao;
+    protected SqlToyLazyDao sqlToyLazyDao;
 
-	protected QueryLookupStrategy jdbcQueryLookupStrategy;
-	private final RelationalMappingContext context;
+    protected QueryLookupStrategy jdbcQueryLookupStrategy;
+    private final RelationalMappingContext context;
 
-	public SqlToyQueryLookupStrategy(QueryLookupStrategy defaultStrategy,
-									 SqlToyLazyDao sqlToyLazyDao,
-									 RelationalMappingContext context) {
-		this.context = context;
-		this.sqlToyLazyDao = sqlToyLazyDao;
+    public SqlToyQueryLookupStrategy(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+            RelationalMappingContext context) {
+        this.context = context;
+        this.sqlToyLazyDao = sqlToyLazyDao;
 
-		this.jdbcQueryLookupStrategy = defaultStrategy;
+        this.jdbcQueryLookupStrategy = defaultStrategy;
 
-	}
+    }
 
-	public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy,
-											 SqlToyLazyDao sqlToyLazyDao,
-											 RelationalMappingContext context) {
-		return new SqlToyQueryLookupStrategy(defaultStrategy,sqlToyLazyDao, context);
-	}
+    public static QueryLookupStrategy create(QueryLookupStrategy defaultStrategy, SqlToyLazyDao sqlToyLazyDao,
+            RelationalMappingContext context) {
+        return new SqlToyQueryLookupStrategy(defaultStrategy, sqlToyLazyDao, context);
+    }
 
-	@Override
-	public RepositoryQuery resolveQuery(@NotNull Method method,
-										RepositoryMetadata metadata,
-										ProjectionFactory factory,
-										NamedQueries namedQueries) {
-		if (method.isAnnotationPresent(SqlToyQuery.class)) {
-			return createSqlToyQuery(method, metadata, factory, namedQueries);
-		} else {
-			return jdbcQueryLookupStrategy.resolveQuery(method, metadata, factory, namedQueries);
-		}
-	}
+    @Override
+    public RepositoryQuery resolveQuery(@NotNull Method method, RepositoryMetadata metadata, ProjectionFactory factory,
+            NamedQueries namedQueries) {
+        if (method.isAnnotationPresent(SqlToyQuery.class)) {
+            return createSqlToyQuery(method, metadata, factory, namedQueries);
+        } else {
+            return jdbcQueryLookupStrategy.resolveQuery(method, metadata, factory, namedQueries);
+        }
+    }
 
-	private RepositoryQuery createSqlToyQuery(
-			Method method,
-			RepositoryMetadata repositoryMetadata,
-			ProjectionFactory projectionFactory,
-			NamedQueries namedQueries) {
+    private RepositoryQuery createSqlToyQuery(Method method, RepositoryMetadata repositoryMetadata,
+            ProjectionFactory projectionFactory, NamedQueries namedQueries) {
 
-		// 使用Spring的JpaQueryMethodFactory
-		JdbcQueryMethod queryMethod = new JdbcQueryMethod(method, repositoryMetadata, projectionFactory, namedQueries, this.context);
+        // 使用Spring的JpaQueryMethodFactory
+        JdbcQueryMethod queryMethod = new JdbcQueryMethod(method, repositoryMetadata, projectionFactory, namedQueries,
+                this.context);
 
-		return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod);
-	}
+        return new SqlToyTemplateQuery(sqlToyLazyDao, method, queryMethod);
+    }
 
 }

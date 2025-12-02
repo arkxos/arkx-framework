@@ -1,11 +1,13 @@
 package io.arkx.framework.enums.core.mvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import io.arkx.framework.enums.core.serializer.JsonEnumDeserializer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
+import io.arkx.framework.enums.core.serializer.JsonEnumDeserializer;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
  * @author: zhuCan
@@ -27,7 +29,7 @@ public class JsonEnumConverter implements ApplicationListener<ContextRefreshedEv
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Enum.class, new JsonEnumDeserializer());
 
-        if (objectMapper != null){
+        if (objectMapper != null) {
             objectMapper.registerModule(simpleModule);
         }
 

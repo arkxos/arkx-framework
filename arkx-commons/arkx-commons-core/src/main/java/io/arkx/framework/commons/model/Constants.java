@@ -2,6 +2,7 @@ package io.arkx.framework.commons.model;
 
 /**
  * 常量类
+ *
  * @author darkness
  * @date 2022/6/20 11:53
  * @version 1.0
@@ -34,15 +35,14 @@ public class Constants {
 
     public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
-
     /**
      * 下一步,默认从1开始
      */
-    public static final int CURRENT_PAGE=1;
+    public static final int CURRENT_PAGE = 1;
     /**
      * 分页记录行大小
      */
-    public static final int PAGE_SIZE=10;
+    public static final int PAGE_SIZE = 10;
 
     /**
      * 时间常量

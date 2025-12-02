@@ -1,20 +1,23 @@
 package io.arkx.framework.commons.simplequeue;
 
-import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
 
 /**
  * Object storing extracted result and urls to fetch.<br>
  * Not thread safe.<br>
- * Main method：                                               <br>
- * {@link #getUrl()} get url of current page                   <br>
- * {@link #getHtml()}  get content of current page                 <br>
- * {@link #putField(String, Object)}  save extracted result            <br>
- * {@link #getResultItems()} get extract results to be used in {@link Pipeline}<br>
- * {@link #addTargetRequests(java.util.List)} {@link #addTargetRequest(String)} add urls to fetch                 <br>
+ * Main method： <br>
+ * {@link #getUrl()} get url of current page <br>
+ * {@link #getHtml()} get content of current page <br>
+ * {@link #putField(String, Object)} save extracted result <br>
+ * {@link #getResultItems()} get extract results to be used in
+ * {@link Pipeline}<br>
+ * {@link #addTargetRequests(java.util.List)} {@link #addTargetRequest(String)}
+ * add urls to fetch <br>
  *
  * @author code4crafter@gmail.com <br>
  * @see ElementProcessor
@@ -30,17 +33,17 @@ public class ExecuteResult {
     private boolean downloadSuccess = true;
 
     private List<ElementWarpper> targetRequests = new ArrayList<>();
-    
+
     public ExecuteResult() {
     }
 
-    public static ExecuteResult fail(){
+    public static ExecuteResult fail() {
         ExecuteResult page = new ExecuteResult();
         page.setExecuteSuccess(false);
         return page;
     }
-    
-    public static ExecuteResult success(){
+
+    public static ExecuteResult success() {
         ExecuteResult page = new ExecuteResult();
         page.setExecuteSuccess(true);
         return page;
@@ -55,8 +58,10 @@ public class ExecuteResult {
     /**
      * store extract results
      *
-     * @param key key
-     * @param field field
+     * @param key
+     *            key
+     * @param field
+     *            field
      */
     public void putField(String key, Object field) {
         resultItems.put(key, field);
@@ -69,7 +74,8 @@ public class ExecuteResult {
     /**
      * add urls to fetch
      *
-     * @param requests requests
+     * @param requests
+     *            requests
      */
     public void addTargetRequests(List<String> requests) {
         for (String s : requests) {
@@ -83,8 +89,10 @@ public class ExecuteResult {
     /**
      * add urls to fetch
      *
-     * @param requests requests
-     * @param priority priority
+     * @param requests
+     *            requests
+     * @param priority
+     *            priority
      */
     public void addTargetRequests(List<String> requests, long priority) {
         for (String s : requests) {
@@ -98,7 +106,8 @@ public class ExecuteResult {
     /**
      * add url to fetch
      *
-     * @param requestString requestString
+     * @param requestString
+     *            requestString
      */
     public void addTargetRequest(String requestString) {
         if (StringUtils.isBlank(requestString) || requestString.equals("#")) {
@@ -110,7 +119,8 @@ public class ExecuteResult {
     /**
      * add requests to fetch
      *
-     * @param request request
+     * @param request
+     *            request
      */
     public void addTargetRequest(ElementWarpper request) {
         targetRequests.add(request);
@@ -144,10 +154,7 @@ public class ExecuteResult {
 
     @Override
     public String toString() {
-        return "Page{" +
-                ", resultItems=" + resultItems +
-                ", success=" + downloadSuccess +
-                ", targetRequests=" + targetRequests +
-                '}';
+        return "Page{" + ", resultItems=" + resultItems + ", success=" + downloadSuccess + ", targetRequests="
+                + targetRequests + '}';
     }
 }

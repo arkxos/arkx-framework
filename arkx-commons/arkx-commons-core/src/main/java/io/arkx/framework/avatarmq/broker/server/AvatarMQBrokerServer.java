@@ -1,6 +1,12 @@
 package io.arkx.framework.avatarmq.broker.server;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.concurrent.ThreadFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import io.arkx.framework.avatarmq.broker.ConsumerMessageHook;
 import io.arkx.framework.avatarmq.broker.MessageBrokerHandler;
 import io.arkx.framework.avatarmq.broker.ProducerMessageHook;
@@ -22,12 +28,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.util.concurrent.ThreadFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * @filename:AvatarMQBrokerServer.java
@@ -39,14 +40,10 @@ import java.util.logging.Logger;
 public class AvatarMQBrokerServer extends BrokerParallelServer implements RemotingServer {
 
     private ThreadFactory threadBossFactory = new ThreadFactoryBuilder()
-            .setNameFormat("AvatarMQBroker[BossSelector]-%d")
-            .setDaemon(true)
-            .build();
+            .setNameFormat("AvatarMQBroker[BossSelector]-%d").setDaemon(true).build();
 
     private ThreadFactory threadWorkerFactory = new ThreadFactoryBuilder()
-            .setNameFormat("AvatarMQBroker[WorkerSelector]-%d")
-            .setDaemon(true)
-            .build();
+            .setNameFormat("AvatarMQBroker[WorkerSelector]-%d").setDaemon(true).build();
 
     private int brokerServerPort = 0;
     private ServerBootstrap bootstrap;
@@ -60,40 +57,35 @@ public class AvatarMQBrokerServer extends BrokerParallelServer implements Remoti
     public AvatarMQBrokerServer(String serverAddress) {
         String[] ipAddr = serverAddress.split(MessageSystemConfig.IpV4AddressDelimiter);
 
-		if (ipAddr.length == 2) {
-			serverIpAddr = NettyUtil.string2SocketAddress(serverAddress);
-		}
+        if (ipAddr.length == 2) {
+            serverIpAddr = NettyUtil.string2SocketAddress(serverAddress);
+        }
     }
 
     public void init() {
         try {
-            handler = new MessageBrokerHandler().buildConsumerHook(new ConsumerMessageHook()).buildProducerHook(new ProducerMessageHook());
+            handler = new MessageBrokerHandler().buildConsumerHook(new ConsumerMessageHook())
+                    .buildProducerHook(new ProducerMessageHook());
 
             boss = new NioEventLoopGroup(1, threadBossFactory);
 
             workers = new NioEventLoopGroup(parallel, threadWorkerFactory, NettyUtil.getNioSelectorProvider());
 
-            KryoCodecUtil util = null;//new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
+            KryoCodecUtil util = null;// new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
 
             bootstrap = new ServerBootstrap();
 
-            bootstrap.group(boss, workers).channel(NioServerSocketChannel.class)
-                    .option(ChannelOption.SO_BACKLOG, 1024)
-                    .option(ChannelOption.SO_REUSEADDR, true)
-                    .option(ChannelOption.SO_KEEPALIVE, false)
+            bootstrap.group(boss, workers).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 1024)
+                    .option(ChannelOption.SO_REUSEADDR, true).option(ChannelOption.SO_KEEPALIVE, false)
                     .childOption(ChannelOption.TCP_NODELAY, true)
                     .option(ChannelOption.SO_SNDBUF, nettyClustersConfig.getClientSocketSndBufSize())
                     .option(ChannelOption.SO_RCVBUF, nettyClustersConfig.getClientSocketRcvBufSize())
-                    .handler(new LoggingHandler(LogLevel.INFO))
-                    .localAddress(serverIpAddr)
+                    .handler(new LoggingHandler(LogLevel.INFO)).localAddress(serverIpAddr)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
-                    	@Override
-						public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(
-                                    defaultEventExecutorGroup,
-                                    new MessageObjectEncoder(util),
-                                    new MessageObjectDecoder(util),
-                                    handler);
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(defaultEventExecutorGroup, new MessageObjectEncoder(util),
+                                    new MessageObjectDecoder(util), handler);
                         }
                     });
 

@@ -1,7 +1,7 @@
 package io.arkx.framework.commons.util;
 
 /**
- * 
+ *
  * @author Darkness
  * @date 2016年7月4日 下午3:58:30
  * @version V1.0
@@ -9,5 +9,5 @@ package io.arkx.framework.commons.util;
 @FunctionalInterface
 public interface Handler {
 
-	void execute();
+    void execute();
 }

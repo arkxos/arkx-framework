@@ -4,53 +4,42 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class LogicalExpression implements Criterion
-{
+public class LogicalExpression implements Criterion {
     private Criterion lhs;
 
     private Criterion rhs;
 
     private String op;
 
-    public LogicalExpression(Criterion lhs, Criterion rhs, String op)
-    {
+    public LogicalExpression(Criterion lhs, Criterion rhs, String op) {
         this.lhs = lhs;
         this.rhs = rhs;
         this.op = op;
     }
 
-    public String toSqlString()
-    {
+    public String toSqlString() {
         return '(' + lhs.toSqlString() + ' ' + op + ' ' + rhs.toSqlString() + ')';
     }
 
-    public Object getValue()
-    {
+    public Object getValue() {
         return null;
     }
 
-    public Collection<?> getValues()
-    {
+    public Collection<?> getValues() {
         List<Object> values = new ArrayList<Object>();
-        
-        if(lhs.getValue() != null)
-        {
+
+        if (lhs.getValue() != null) {
             values.add(lhs.getValue());
-        }
-        else if(lhs.getValues() != null)
-        {
+        } else if (lhs.getValues() != null) {
             values.addAll(lhs.getValues());
         }
-        
-        if(rhs.getValue() != null)
-        {
+
+        if (rhs.getValue() != null) {
             values.add(rhs.getValue());
-        }
-        else if(rhs.getValues() != null)
-        {
+        } else if (rhs.getValues() != null) {
             values.addAll(rhs.getValues());
         }
-        
-        return values.isEmpty()? null: values;
+
+        return values.isEmpty() ? null : values;
     }
 }

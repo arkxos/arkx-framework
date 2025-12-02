@@ -1,6 +1,7 @@
 package io.arkx.framework.data.mybatis.pro.core.util;
 
-import io.arkx.framework.data.mybatis.pro.core.consts.KeyWord;
+import static io.arkx.framework.data.mybatis.pro.core.consts.ToLineThreadLocal.TO_LINE;
+import static org.springframework.util.StringUtils.isEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +10,15 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.arkx.framework.data.mybatis.pro.core.consts.ToLineThreadLocal.TO_LINE;
-import static org.springframework.util.StringUtils.isEmpty;
+import io.arkx.framework.data.mybatis.pro.core.consts.KeyWord;
 
 /**
  * @author w.dehai
  */
 public class SqlUtil {
 
-    private SqlUtil() {}
+    private SqlUtil() {
+    }
 
     private static final String AND = KeyWord.AND;
     private static final String OR = KeyWord.OR;
@@ -72,7 +73,8 @@ public class SqlUtil {
             if (statement.endsWith(KeyWord.BETWEEN)) {
                 variableName = firstLower(removeKeyWord(statement, KeyWord.BETWEEN));
                 column = toLine(variableName, alias);
-                condition.append(column).append(" ").append(KeyWord.BETWEEN.toLowerCase()).append(" #{start} and #{end}");
+                condition.append(column).append(" ").append(KeyWord.BETWEEN.toLowerCase())
+                        .append(" #{start} and #{end}");
             } else if (statement.endsWith(KeyWord.LESS_THAN)) {
                 variableName = firstLower(removeKeyWord(statement, KeyWord.LESS_THAN));
                 column = toLine(variableName, alias);
@@ -128,11 +130,13 @@ public class SqlUtil {
             } else if (statement.endsWith(KeyWord.IN) && !statement.endsWith(KeyWord.NOT_IN)) {
                 variableName = firstLower(removeKeyWord(statement, KeyWord.IN));
                 column = toLine(variableName, alias);
-                condition.append(column).append(" in ").append("<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
+                condition.append(column).append(" in ").append(
+                        "<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
             } else if (statement.endsWith(KeyWord.NOT_IN)) {
                 variableName = firstLower(removeKeyWord(statement, KeyWord.NOT_IN));
                 column = toLine(variableName, alias);
-                condition.append(column).append(" not in ").append("<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
+                condition.append(column).append(" not in ").append(
+                        "<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
             } else {
 
                 // 这里处理两类：1.处理等号的条件，2.处理最后一个条件（可能包含OrderBy和DESC和opt）
@@ -158,7 +162,8 @@ public class SqlUtil {
                 condition.append(column).append(" = ").append("#{").append(variableName).append("}");
             }
             if (opt) {
-                builder.append("<if test = \"").append(variableName).append(" != null and ").append(variableName).append(" != ''\">").append(condition).append("</if>");
+                builder.append("<if test = \"").append(variableName).append(" != null and ").append(variableName)
+                        .append(" != ''\">").append(condition).append("</if>");
             } else {
                 builder.append(condition);
             }
@@ -254,7 +259,8 @@ public class SqlUtil {
     /**
      * 驼峰转下划线
      *
-     * @param camelCase userName
+     * @param camelCase
+     *            userName
      * @return user_name
      */
     public static String toLine(String camelCase) {

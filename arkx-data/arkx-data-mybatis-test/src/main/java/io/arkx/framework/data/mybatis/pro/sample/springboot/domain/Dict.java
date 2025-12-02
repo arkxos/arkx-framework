@@ -2,6 +2,7 @@ package io.arkx.framework.data.mybatis.pro.sample.springboot.domain;
 
 import io.arkx.framework.data.mybatis.pro.core.annotations.Table;
 import io.arkx.framework.data.mybatis.pro.service.entity.IdEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * 
+ *
  * @author w.dehai
  *
  */

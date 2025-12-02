@@ -1,23 +1,26 @@
 package io.arkx.framework.data.mybatis.pro.base;
 
-import cn.hutool.core.date.DateUtil;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import io.arkx.framework.data.mybatis.pro.base.codec.date.DateDeserializer;
-import io.arkx.framework.data.mybatis.pro.base.codec.date.DateSerializer;
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerDeserializer;
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.JsonUtil;
-import org.junit.jupiter.api.Test;
+import static io.arkx.framework.data.mybatis.pro.base.Gender.FEMALE;
+import static io.arkx.framework.data.mybatis.pro.base.Gender.MALE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static io.arkx.framework.data.mybatis.pro.base.Gender.FEMALE;
-import static io.arkx.framework.data.mybatis.pro.base.Gender.MALE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+
+import io.arkx.framework.data.mybatis.pro.base.codec.date.DateDeserializer;
+import io.arkx.framework.data.mybatis.pro.base.codec.date.DateSerializer;
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.EnumMarkerDeserializer;
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.JsonUtil;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author w.dehai.2021/8/10.14:51
@@ -35,17 +38,11 @@ class JsonUtilTest {
         module.addDeserializer(Date.class, new DateDeserializer());
         mapper.registerModule(module);
 
-        User male = mapper.readValue("{\n" +
-                "  \"id\": 100,\n" +
-                "  \"gender\": 1,\n" +
-                "  \"birthday\": \"2022-05-05 15:05:12.333\"\n" +
-                "}", User.class);
+        User male = mapper.readValue("{\n" + "  \"id\": 100,\n" + "  \"gender\": 1,\n"
+                + "  \"birthday\": \"2022-05-05 15:05:12.333\"\n" + "}", User.class);
 
-        User female = mapper.readValue("{\n" +
-                "  \"id\": 100,\n" +
-                "  \"gender\": 2,\n" +
-                "  \"birthday\": \"2022-05-05 15:05:12.333\"\n" +
-                "}", User.class);
+        User female = mapper.readValue("{\n" + "  \"id\": 100,\n" + "  \"gender\": 2,\n"
+                + "  \"birthday\": \"2022-05-05 15:05:12.333\"\n" + "}", User.class);
 
         assertEquals(MALE, male.getGender());
         assertEquals(FEMALE, female.getGender());

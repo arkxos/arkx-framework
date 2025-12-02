@@ -17,26 +17,27 @@ package io.arkx.framework.thirdparty.commons.fileupload;
 
 /**
  * Exception for errors encountered while processing the request.
- * 
+ *
  * @author <a href="mailto:jmcnally@collab.net">John McNally</a>
  * @version $Id: FileUploadException.java 155417 2005-02-26 13:00:27Z dirkv $
  */
 public class FileUploadException extends Exception {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructs a new <code>FileUploadException</code> without message.
-	 */
-	public FileUploadException() {
-	}
+    /**
+     * Constructs a new <code>FileUploadException</code> without message.
+     */
+    public FileUploadException() {
+    }
 
-	/**
-	 * Constructs a new <code>FileUploadException</code> with specified detail
-	 * message.
-	 * 
-	 * @param msg the error message.
-	 */
-	public FileUploadException(final String msg) {
-		super(msg);
-	}
+    /**
+     * Constructs a new <code>FileUploadException</code> with specified detail
+     * message.
+     *
+     * @param msg
+     *            the error message.
+     */
+    public FileUploadException(final String msg) {
+        super(msg);
+    }
 }

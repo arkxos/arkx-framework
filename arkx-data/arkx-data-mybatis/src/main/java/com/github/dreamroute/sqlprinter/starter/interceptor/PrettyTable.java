@@ -37,13 +37,12 @@ public class PrettyTable {
         }
     }
 
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        //边距
+        // 边距
         int margin = 1;
-        //总列宽+2*边距数量*列数+列分隔符数量-1
+        // 总列宽+2*边距数量*列数+列分隔符数量-1
         int lineLength = Arrays.stream(columnWidth).sum() + margin * 2 * columnCount + (columnCount - 1);
 
         builder.append("|").append(fillChars('=', lineLength)).append("|\n");
@@ -71,4 +70,3 @@ public class PrettyTable {
         return new String(chArr);
     }
 }
-

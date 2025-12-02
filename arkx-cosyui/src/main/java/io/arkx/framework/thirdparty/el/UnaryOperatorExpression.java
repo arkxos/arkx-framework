@@ -1,7 +1,7 @@
 /*
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999 The Apache Software Foundation.  All rights 
+ * Copyright (c) 1999 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -17,15 +17,15 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:  
- *       "This product includes software developed by the 
+ *    any, must include the following acknowlegement:
+ *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowlegement may appear in the software itself,
  *    if and wherever such third-party acknowlegements normally appear.
  *
  * 4. The names "The Jakarta Project", "Tomcat", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written 
+ *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
@@ -55,94 +55,95 @@
 
 package io.arkx.framework.thirdparty.el;
 
+import java.util.List;
+
 import io.arkx.framework.cosyui.expression.ExpressionException;
 import io.arkx.framework.cosyui.expression.IFunctionMapper;
 import io.arkx.framework.cosyui.expression.IVariableResolver;
 import io.arkx.framework.thirdparty.el.operator.UnaryOperator;
 
-import java.util.List;
-
 /**
  * <p>
  * An expression representing one or more unary operators on a value
- * 
+ *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
  **/
 
 public class UnaryOperatorExpression extends Expression {
-	List<UnaryOperator> mOperators;
-	UnaryOperator mOperator;
+    List<UnaryOperator> mOperators;
+    UnaryOperator mOperator;
 
-	public UnaryOperator getOperator() {
-		return mOperator;
-	}
+    public UnaryOperator getOperator() {
+        return mOperator;
+    }
 
-	public void setOperator(UnaryOperator pOperator) {
-		mOperator = pOperator;
-	}
+    public void setOperator(UnaryOperator pOperator) {
+        mOperator = pOperator;
+    }
 
-	public List<UnaryOperator> getOperators() {
-		return mOperators;
-	}
+    public List<UnaryOperator> getOperators() {
+        return mOperators;
+    }
 
-	public void setOperators(List<UnaryOperator> pOperators) {
-		mOperators = pOperators;
-	}
+    public void setOperators(List<UnaryOperator> pOperators) {
+        mOperators = pOperators;
+    }
 
-	Expression mExpression;
+    Expression mExpression;
 
-	public Expression getExpression() {
-		return mExpression;
-	}
+    public Expression getExpression() {
+        return mExpression;
+    }
 
-	public void setExpression(Expression pExpression) {
-		mExpression = pExpression;
-	}
+    public void setExpression(Expression pExpression) {
+        mExpression = pExpression;
+    }
 
-	public UnaryOperatorExpression(UnaryOperator pOperator, List<UnaryOperator> pOperators, Expression pExpression) {
-		mOperator = pOperator;
-		mOperators = pOperators;
-		mExpression = pExpression;
-	}
+    public UnaryOperatorExpression(UnaryOperator pOperator, List<UnaryOperator> pOperators, Expression pExpression) {
+        mOperator = pOperator;
+        mOperators = pOperators;
+        mExpression = pExpression;
+    }
 
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append("(");
-		if (mOperator != null) {
-			buf.append(mOperator.getOperatorSymbol());
-			buf.append(" ");
-		} else {
-			for (int i = 0; i < mOperators.size(); i++) {
-				UnaryOperator operator = mOperators.get(i);
-				buf.append(operator.getOperatorSymbol());
-				buf.append(" ");
-			}
-		}
-		buf.append(mExpression.getExpressionString());
-		buf.append(")");
-		return buf.toString();
-	}
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(");
+        if (mOperator != null) {
+            buf.append(mOperator.getOperatorSymbol());
+            buf.append(" ");
+        } else {
+            for (int i = 0; i < mOperators.size(); i++) {
+                UnaryOperator operator = mOperators.get(i);
+                buf.append(operator.getOperatorSymbol());
+                buf.append(" ");
+            }
+        }
+        buf.append(mExpression.getExpressionString());
+        buf.append(")");
+        return buf.toString();
+    }
 
-	/**
-	 * Evaluates to the literal value
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger) throws ExpressionException {
-		Object value = mExpression.evaluate(pResolver, functions, pLogger);
-		if (mOperator != null) {
-			value = mOperator.apply(value, pLogger);
-		} else {
-			for (int i = mOperators.size() - 1; i >= 0; i--) {
-				UnaryOperator operator = mOperators.get(i);
-				value = operator.apply(value, pLogger);
-			}
-		}
-		return value;
-	}
+    /**
+     * Evaluates to the literal value
+     **/
+    @Override
+    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        Object value = mExpression.evaluate(pResolver, functions, pLogger);
+        if (mOperator != null) {
+            value = mOperator.apply(value, pLogger);
+        } else {
+            for (int i = mOperators.size() - 1; i >= 0; i--) {
+                UnaryOperator operator = mOperators.get(i);
+                value = operator.apply(value, pLogger);
+            }
+        }
+        return value;
+    }
 }

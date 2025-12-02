@@ -9,66 +9,64 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.core.provider;
 
-import io.arkx.framework.data.db.common.type.ProductTypeEnum;
-import io.arkx.framework.data.db.common.util.ExamineUtils;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.sql.DataSource;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.sql.DataSource;
+
+import io.arkx.framework.data.db.common.type.ProductTypeEnum;
+import io.arkx.framework.data.db.common.util.ExamineUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ProductProviderFactory {
 
-  private static Map<ProductTypeEnum, Class<? extends ProductFactoryProvider>> providers;
+    private static Map<ProductTypeEnum, Class<? extends ProductFactoryProvider>> providers;
 
-  static {
-    providers = new ConcurrentHashMap<>();
-  }
-
-  public static void register(ProductTypeEnum type, String classPath) {
-    log.info("Register product {} by subclass :{} ", type, classPath);
-    ClassLoader classLoader = ProductProviderFactory.class.getClassLoader();
-
-    Class<?> clazz = null;
-    try {
-      clazz = classLoader.loadClass(classPath);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    static {
+        providers = new ConcurrentHashMap<>();
     }
 
-    // Check subclass
-    ExamineUtils.check(ProductFactoryProvider.class.isAssignableFrom(clazz),
-        "Class '%s' is not a subclass of " +
-            "class ProductFactoryProvider", clazz.getName());
+    public static void register(ProductTypeEnum type, String classPath) {
+        log.info("Register product {} by subclass :{} ", type, classPath);
+        ClassLoader classLoader = ProductProviderFactory.class.getClassLoader();
 
-    // Check exists
-    ExamineUtils.check(!providers.containsKey(type),
-        "Exists ProductFactoryProvider: %s (%s)",
-        type.name(), providers.get(type.name()));
+        Class<?> clazz = null;
+        try {
+            clazz = classLoader.loadClass(classPath);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-    // Register class
-    providers.put(type, (Class) clazz);
-  }
+        // Check subclass
+        ExamineUtils.check(ProductFactoryProvider.class.isAssignableFrom(clazz),
+                "Class '%s' is not a subclass of " + "class ProductFactoryProvider", clazz.getName());
 
-  public static ProductFactoryProvider newProvider(ProductTypeEnum type, DataSource dataSource) {
-    Class<? extends ProductFactoryProvider> clazz = providers.get(type);
-    ExamineUtils.check(clazz != null,
-        "Not exists ProductFactoryProvider: %s", type);
+        // Check exists
+        ExamineUtils.check(!providers.containsKey(type), "Exists ProductFactoryProvider: %s (%s)", type.name(),
+                providers.get(type.name()));
 
-    assert ProductFactoryProvider.class.isAssignableFrom(clazz);
-    ProductFactoryProvider instance = null;
-    try {
-      instance = clazz.getDeclaredConstructor(DataSource.class).newInstance(dataSource);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+        // Register class
+        providers.put(type, (Class) clazz);
     }
 
-    ExamineUtils.check(type.equals(instance.getProductType()),
-        "ProductFactoryProvider with type '%s' " +
-            "can't be opened by product type '%s'",
-        instance.getProductType(), type);
-    return instance;
-  }
+    public static ProductFactoryProvider newProvider(ProductTypeEnum type, DataSource dataSource) {
+        Class<? extends ProductFactoryProvider> clazz = providers.get(type);
+        ExamineUtils.check(clazz != null, "Not exists ProductFactoryProvider: %s", type);
+
+        assert ProductFactoryProvider.class.isAssignableFrom(clazz);
+        ProductFactoryProvider instance = null;
+        try {
+            instance = clazz.getDeclaredConstructor(DataSource.class).newInstance(dataSource);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        ExamineUtils.check(type.equals(instance.getProductType()),
+                "ProductFactoryProvider with type '%s' " + "can't be opened by product type '%s'",
+                instance.getProductType(), type);
+        return instance;
+    }
 
 }

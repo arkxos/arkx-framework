@@ -1,14 +1,5 @@
 package io.arkx.framework.util.task;
 
-import io.arkx.framework.util.task.callback.Progress;
-import io.arkx.framework.util.task.callback.TaskCompletedListener;
-import io.arkx.framework.util.task.callback.TaskListener;
-import io.arkx.framework.util.task.exception.TaskException;
-import io.arkx.framework.util.task.util.Assert;
-import io.arkx.framework.util.task.util.Utils;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -16,6 +7,16 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
+
+import io.arkx.framework.util.task.callback.Progress;
+import io.arkx.framework.util.task.callback.TaskCompletedListener;
+import io.arkx.framework.util.task.callback.TaskListener;
+import io.arkx.framework.util.task.exception.TaskException;
+import io.arkx.framework.util.task.util.Assert;
+import io.arkx.framework.util.task.util.Utils;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
@@ -62,7 +63,7 @@ public abstract class AbstractTask implements Task {
 
         boolean result = this.statusReference.compareAndSet(expect, update);
 
-        if(update != TaskStatus.INIT) {
+        if (update != TaskStatus.INIT) {
             this.waittingForExecute = false;
         }
 
@@ -123,19 +124,19 @@ public abstract class AbstractTask implements Task {
 
     @Override
     public boolean isFinished() {
-//        TaskStatus status = getStatus();
-//        return status != TaskStatus.INIT
-//            && status != TaskStatus.QUEUED
-//            && status != TaskStatus.RUNNING;
+        // TaskStatus status = getStatus();
+        // return status != TaskStatus.INIT
+        // && status != TaskStatus.QUEUED
+        // && status != TaskStatus.RUNNING;
         return this.finished;
     }
 
     @Override
     public void triggerCompleted() {
-        if(!isFinished()) {
+        if (!isFinished()) {
             return;
         }
-        if(!hasTriggerCompleted) {
+        if (!hasTriggerCompleted) {
             hasTriggerCompleted = true;
             for (TaskCompletedListener completedListener : taskCompletedListeners) {
                 completedListener.onCompleteFinish();
@@ -145,7 +146,7 @@ public abstract class AbstractTask implements Task {
     }
 
     public String getCost() {
-        if(endTime == 0) {
+        if (endTime == 0) {
             return "";
         }
         return formatTime(endTime - startTime);
@@ -155,7 +156,7 @@ public abstract class AbstractTask implements Task {
      * 毫秒转化时分秒毫秒
      */
     public static String formatTime(long ms) {
-//		Integer namiao = 1000;
+        // Integer namiao = 1000;
         long weimiaoUnit = 1000;
         long haomiaoUnit = weimiaoUnit * 1000;
         long secondUnit = haomiaoUnit * 1000;
@@ -168,34 +169,36 @@ public abstract class AbstractTask implements Task {
         Long minute = (ms - day * dayUnit - hour * hourUnit) / minuteUnit;
         Long second = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit) / secondUnit;
         Long haomiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit) / haomiaoUnit;
-        Long weimiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit - haomiao * haomiaoUnit) / weimiaoUnit;
-        Long namiao = ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit - haomiao * haomiaoUnit - weimiao * weimiaoUnit;
+        Long weimiao = (ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
+                - haomiao * haomiaoUnit) / weimiaoUnit;
+        Long namiao = ms - day * dayUnit - hour * hourUnit - minute * minuteUnit - second * secondUnit
+                - haomiao * haomiaoUnit - weimiao * weimiaoUnit;
 
         StringBuffer sb = new StringBuffer();
-        if(day > 0) {
-            sb.append(day+"天");
+        if (day > 0) {
+            sb.append(day + "天");
         }
-        if(hour > 0) {
-            sb.append(hour+"小时");
+        if (hour > 0) {
+            sb.append(hour + "小时");
         }
-        if(minute > 0) {
-            sb.append(minute+"分");
+        if (minute > 0) {
+            sb.append(minute + "分");
         }
-        if(second > 0) {
-            sb.append(second+"秒");
+        if (second > 0) {
+            sb.append(second + "秒");
         }
-        if(haomiao > 0) {
-            sb.append(haomiao+"毫秒");
+        if (haomiao > 0) {
+            sb.append(haomiao + "毫秒");
         }
-        if(weimiao > 0) {
-            sb.append(weimiao+"微秒");
+        if (weimiao > 0) {
+            sb.append(weimiao + "微秒");
         }
-        if(namiao > 0) {
-            sb.append(namiao+"纳秒");
+        if (namiao > 0) {
+            sb.append(namiao + "纳秒");
         }
 
         String result = sb.toString();
-        if(result.length() == 0) {
+        if (result.length() == 0) {
             result = "0纳秒";
         }
         return result;

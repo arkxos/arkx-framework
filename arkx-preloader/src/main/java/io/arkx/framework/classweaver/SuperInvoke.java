@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.CLASS)
-@Target({ java.lang.annotation.ElementType.METHOD })
+@Target({java.lang.annotation.ElementType.METHOD})
 public @interface SuperInvoke {
 }

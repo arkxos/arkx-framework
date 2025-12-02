@@ -19,9 +19,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * <p>Abstracts access to the request information needed for file uploads. This
- * interfsace should be implemented for each type of request that may be
- * handled by FileUpload, such as servlets and portlets.</p>
+ * <p>
+ * Abstracts access to the request information needed for file uploads. This
+ * interfsace should be implemented for each type of request that may be handled
+ * by FileUpload, such as servlets and portlets.
+ * </p>
  *
  * @author <a href="mailto:martinc@apache.org">Martin Cooper</a>
  *
@@ -57,7 +59,8 @@ public interface RequestContext {
      *
      * @return The input stream for the request.
      *
-     * @throws IOException if a problem occurs.
+     * @throws IOException
+     *             if a problem occurs.
      */
     InputStream getInputStream() throws IOException;
 }

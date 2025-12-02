@@ -1,7 +1,8 @@
 package io.arkx.framework.commons.util;
 
-import cn.hutool.core.util.IdUtil;
 import org.springframework.stereotype.Service;
+
+import cn.hutool.core.util.IdUtil;
 
 @Service
 public class SystemIdGenerator {

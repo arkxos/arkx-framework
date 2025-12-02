@@ -9,71 +9,74 @@
 /////////////////////////////////////////////////////////////
 package io.arkx.framework.data.db.product.mongodb;
 
-import com.google.common.collect.Lists;
-import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
-import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import org.apache.commons.collections4.CollectionUtils;
+
+import io.arkx.framework.data.db.core.provider.ProductFactoryProvider;
+import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvider;
+
+import com.google.common.collect.Lists;
+
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 public class MongodbTableDataWriteProvider extends DefaultTableDataWriteProvider {
 
-  public MongodbTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
-    super(factoryProvider);
-  }
-
-  @Override
-  public void prepareWrite(String schemaName, String tableName, List<String> fieldNames) {
-    this.columnType = Collections.emptyMap();
-    this.schemaName = schemaName;
-    this.tableName = tableName;
-
-    try (Connection connection = getDataSource().getConnection()) {
-      try (Statement stmt = connection.createStatement()) {
-        stmt.executeUpdate("%s.getCollection('%s').drop();".formatted(schemaName, tableName));
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
+    public MongodbTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
     }
-  }
 
-  @Override
-  public long write(List<String> fieldNames, List<Object[]> recordValues) {
-    if (CollectionUtils.isEmpty(fieldNames) || CollectionUtils.isEmpty(recordValues)) {
-      return 0L;
-    }
-    for (List<Object[]> partRecordValues : Lists.partition(recordValues, 500)) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("%s.getCollection('%s').insertMany".formatted(schemaName, tableName));
-      sb.append("( ").append(asString(fieldNames, partRecordValues)).append(" )");
-      String sql = sb.toString();
-      try (Connection connection = getDataSource().getConnection()) {
-        try (Statement stmt = connection.createStatement()) {
-          stmt.executeUpdate(sql);
+    @Override
+    public void prepareWrite(String schemaName, String tableName, List<String> fieldNames) {
+        this.columnType = Collections.emptyMap();
+        this.schemaName = schemaName;
+        this.tableName = tableName;
+
+        try (Connection connection = getDataSource().getConnection()) {
+            try (Statement stmt = connection.createStatement()) {
+                stmt.executeUpdate("%s.getCollection('%s').drop();".formatted(schemaName, tableName));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
     }
-    return recordValues.size();
-  }
 
-  private String asString(List<String> fieldNames, List<Object[]> recordValues) {
-    int fieldCount = Math.min(fieldNames.size(), recordValues.getFirst().length);
-    List<Map<String, Object>> rows = new ArrayList<>(recordValues.size());
-    for (Object[] row : recordValues) {
-      Map<String, Object> columns = new LinkedHashMap<>(fieldCount);
-      for (int i = 0; i < fieldCount; ++i) {
-        columns.put(fieldNames.get(i), row[i]);
-      }
-      rows.add(columns);
+    @Override
+    public long write(List<String> fieldNames, List<Object[]> recordValues) {
+        if (CollectionUtils.isEmpty(fieldNames) || CollectionUtils.isEmpty(recordValues)) {
+            return 0L;
+        }
+        for (List<Object[]> partRecordValues : Lists.partition(recordValues, 500)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("%s.getCollection('%s').insertMany".formatted(schemaName, tableName));
+            sb.append("( ").append(asString(fieldNames, partRecordValues)).append(" )");
+            String sql = sb.toString();
+            try (Connection connection = getDataSource().getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    stmt.executeUpdate(sql);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return recordValues.size();
     }
-    return MongodbJacksonUtils.toJsonStr(rows);
-  }
+
+    private String asString(List<String> fieldNames, List<Object[]> recordValues) {
+        int fieldCount = Math.min(fieldNames.size(), recordValues.getFirst().length);
+        List<Map<String, Object>> rows = new ArrayList<>(recordValues.size());
+        for (Object[] row : recordValues) {
+            Map<String, Object> columns = new LinkedHashMap<>(fieldCount);
+            for (int i = 0; i < fieldCount; ++i) {
+                columns.put(fieldNames.get(i), row[i]);
+            }
+            rows.add(columns);
+        }
+        return MongodbJacksonUtils.toJsonStr(rows);
+    }
 
 }

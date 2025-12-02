@@ -1,22 +1,25 @@
 package io.arkx.framework.data.mybatis.pro.sample.springboot.service;
 
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.ninja_squad.dbsetup.Operations.truncate;
+import static java.util.stream.Collectors.toList;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import io.arkx.framework.data.mybatis.pro.sample.springboot.domain.User;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.ninja_squad.dbsetup.Operations.truncate;
-import static java.util.stream.Collectors.toList;
-import static org.junit.jupiter.api.Assertions.*;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 
 /**
  * @author w.dehai
@@ -81,10 +84,8 @@ class UserServiceTest {
 
     @Test
     void deleteListTest() {
-        List<User> users = newArrayList(
-                User.builder().name("w.dehai").version(1L).build(),
-                User.builder().name("w.dehai").version(2L).build()
-        );
+        List<User> users = newArrayList(User.builder().name("w.dehai").version(1L).build(),
+                User.builder().name("w.dehai").version(2L).build());
         userService.insertList(users);
 
         int result = userService.delete(newArrayList(1L, 2L));

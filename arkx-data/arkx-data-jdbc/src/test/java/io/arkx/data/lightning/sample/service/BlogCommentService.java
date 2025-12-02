@@ -1,11 +1,12 @@
 package io.arkx.data.lightning.sample.service;
 
-import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
-import io.arkx.data.lightning.sample.model.BlogComment;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import io.arkx.data.lightning.plugin.treetable.closure.service.ClosureTableServiceImpl;
+import io.arkx.data.lightning.sample.model.BlogComment;
 
 /**
  * @author Nobody
@@ -16,19 +17,20 @@ import java.util.List;
 @Service
 public class BlogCommentService {
 
-	private final ClosureTableServiceImpl closureService;
+    private final ClosureTableServiceImpl closureService;
 
-	public BlogCommentService(ClosureTableServiceImpl closureService) {
-		this.closureService = closureService;
-	}
+    public BlogCommentService(ClosureTableServiceImpl closureService) {
+        this.closureService = closureService;
+    }
 
-	@Transactional
-	public void addBlogComment(BlogComment comment) {
-//		closureService.insertNode(comment, "blog_comment");
-	}
+    @Transactional
+    public void addBlogComment(BlogComment comment) {
+        // closureService.insertNode(comment, "blog_comment");
+    }
 
-	public List<BlogComment> getCommentDescendants(Long commentId) {
-//		return closureService.findDescendants("blog_comment", commentId, BlogComment.class);
-		return null;
-	}
+    public List<BlogComment> getCommentDescendants(Long commentId) {
+        // return closureService.findDescendants("blog_comment", commentId,
+        // BlogComment.class);
+        return null;
+    }
 }

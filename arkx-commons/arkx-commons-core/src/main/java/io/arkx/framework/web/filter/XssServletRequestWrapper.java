@@ -1,19 +1,19 @@
 package io.arkx.framework.web.filter;
 
+import java.io.*;
+import java.util.*;
+
+import org.apache.commons.io.IOUtils;
+
 import io.arkx.framework.commons.utils2.StringUtil;
+
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.apache.commons.io.IOUtils;
-
-import java.io.*;
-import java.util.*;
 
 /**
- * xss 过滤
- * body 缓存
- * headers 缓存
+ * xss 过滤 body 缓存 headers 缓存
  *
  * @author liuyadu
  */
@@ -90,7 +90,6 @@ public class XssServletRequestWrapper extends HttpServletRequestWrapper {
     public void putHeader(String name, String value) {
         this.headers.put(name, value);
     }
-
 
     @Override
     public Enumeration<String> getHeaderNames() {

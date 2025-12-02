@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public  class SortField {
+public class SortField {
 
-	@NotNull
-	private String field;     // 字段名
-	private String direction = "ASC";; // 排序方向(ASC/DESC)
-
+    @NotNull
+    private String field; // 字段名
+    private String direction = "ASC";; // 排序方向(ASC/DESC)
 
 }

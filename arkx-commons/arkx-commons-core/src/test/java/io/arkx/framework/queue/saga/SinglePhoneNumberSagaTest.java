@@ -1,15 +1,17 @@
 package io.arkx.framework.queue.saga;
 
-import io.arkx.framework.queue2.MessageBus;
-import io.arkx.framework.queue2.Subscribe;
-import lombok.Setter;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import io.arkx.framework.queue2.MessageBus;
+import io.arkx.framework.queue2.Subscribe;
+
+import lombok.Setter;
 
 public class SinglePhoneNumberSagaTest {
 
@@ -17,15 +19,9 @@ public class SinglePhoneNumberSagaTest {
 
     @Test
     public void counterPhoneNumbers() throws Exception {
-    	String[] phoneNumbers = new String[] {
-    	        "303-555-1212   John",
-    	        "212-555-1212   Joe",
-    	        "718-555-1212   Zoe",
-    	        "720-555-1212   Manny",
-    	        "312-555-1212   Jerry",
-    	        "303-555-9999   Sally"
-    	    };
-    	
+        String[] phoneNumbers = new String[]{"303-555-1212   John", "212-555-1212   Joe", "718-555-1212   Zoe",
+                "720-555-1212   Manny", "312-555-1212   Jerry", "303-555-9999   Sally"};
+
         this.phoneNumberExecutive.start(phoneNumbers);
 
         assertNotNull(this.phoneNumberExecutive);
@@ -41,7 +37,7 @@ public class SinglePhoneNumberSagaTest {
 
     /**
      * 电话号码执行器
-     *  
+     *
      * @author Darkness
      * @date 2014-12-17 下午9:42:45
      * @version V1.0
@@ -49,12 +45,12 @@ public class SinglePhoneNumberSagaTest {
      */
     private static class PhoneNumberExecutive {
 
-    	private String id;// 流程id
+        private String id;// 流程id
         @Setter
         private int matchedPhoneNumbers;// 匹配的号码数
         @Setter
         private int totalPhoneNumbers;// 总号码数
-        
+
         public PhoneNumberExecutive() {
             super();
 
@@ -62,7 +58,7 @@ public class SinglePhoneNumberSagaTest {
             this.matchedPhoneNumbers = -1;
             this.totalPhoneNumbers = -1;
         }
-        
+
         public boolean isCompleted() {
             return this.matchedPhoneNumbers() >= 0 && this.totalPhoneNumbers() >= 0;
         }
@@ -92,41 +88,33 @@ public class SinglePhoneNumberSagaTest {
 
             String processId = UUID.randomUUID().toString().toUpperCase();
             System.out.println("STARTED: " + processId);
-            
-            MessageBus.globalInstance().publish(new AllPhoneNumbersListed(
-            		processId,
-                    allPhoneNumbers));
+
+            MessageBus.globalInstance().publish(new AllPhoneNumbersListed(processId, allPhoneNumbers));
 
         }
 
-		@Subscribe(events = { AllPhoneNumbersCounted.class, MatchedPhoneNumbersCounted.class })
-		public void filteredDispatch(PhoneNumberProcessEvent event) {
-        	if(event instanceof AllPhoneNumbersCounted) {
-        		AllPhoneNumbersCounted allPhoneNumbersCounted = (AllPhoneNumbersCounted)event;
-        		
-        		this.setTotalPhoneNumbers(allPhoneNumbersCounted.totalPhoneNumbers());
+        @Subscribe(events = {AllPhoneNumbersCounted.class, MatchedPhoneNumbersCounted.class})
+        public void filteredDispatch(PhoneNumberProcessEvent event) {
+            if (event instanceof AllPhoneNumbersCounted) {
+                AllPhoneNumbersCounted allPhoneNumbersCounted = (AllPhoneNumbersCounted) event;
+
+                this.setTotalPhoneNumbers(allPhoneNumbersCounted.totalPhoneNumbers());
                 System.out.println("AllPhoneNumbersCounted...");
-    		}else if(event instanceof MatchedPhoneNumbersCounted) {
-    			MatchedPhoneNumbersCounted matchedPhoneNumbersCounted = (MatchedPhoneNumbersCounted)event;
-        		
-    			this.setMatchedPhoneNumbers(matchedPhoneNumbersCounted.matchedPhoneNumbers());
+            } else if (event instanceof MatchedPhoneNumbersCounted) {
+                MatchedPhoneNumbersCounted matchedPhoneNumbersCounted = (MatchedPhoneNumbersCounted) event;
+
+                this.setMatchedPhoneNumbers(matchedPhoneNumbersCounted.matchedPhoneNumbers());
                 System.out.println("MatchedPhoneNumbersCounted...");
-    		}
-        	
+            }
+
             if (this.isCompleted()) {
-                System.out.println(
-                        "Process: "
-                        + this.id()
-                        + ": "
-                        + this.matchedPhoneNumbers()
-                        + " of "
-                        + this.totalPhoneNumbers()
-                        + " phone numbers found.");
+                System.out.println("Process: " + this.id() + ": " + this.matchedPhoneNumbers() + " of "
+                        + this.totalPhoneNumbers() + " phone numbers found.");
             }
         }
-		
-		//查找指定号码处理器
-        @Subscribe(events = { AllPhoneNumbersListed.class })
+
+        // 查找指定号码处理器
+        @Subscribe(events = {AllPhoneNumbersListed.class})
         public void finderPhoneNumber(AllPhoneNumbersListed event) {
             System.out.println("AllPhoneNumbersListed (to match)...");
 
@@ -145,13 +133,11 @@ public class SinglePhoneNumberSagaTest {
                 }
             }
 
-            MessageBus.globalInstance().publish(new PhoneNumbersMatched(
-                    event.processId(),
-                    foundPhoneNumbers));
+            MessageBus.globalInstance().publish(new PhoneNumbersMatched(event.processId(), foundPhoneNumbers));
         }
-        
-        //匹配的号码计数器
-        @Subscribe(events = { PhoneNumbersMatched.class })
+
+        // 匹配的号码计数器
+        @Subscribe(events = {PhoneNumbersMatched.class})
         public void CounterMatchtedPhoneNumber(PhoneNumbersMatched event) {
 
             System.out.println("PhoneNumbersMatched (to count)...");
@@ -160,13 +146,12 @@ public class SinglePhoneNumberSagaTest {
 
             String[] allPhoneNumbersToCount = allMatchedPhoneNumbers.split("\n");
 
-            MessageBus.globalInstance().publish(new MatchedPhoneNumbersCounted(
-            		event.processId(),
-                    allPhoneNumbersToCount.length));
+            MessageBus.globalInstance()
+                    .publish(new MatchedPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
         }
-        
-    	//所有号码计数器
-    	@Subscribe(events = { AllPhoneNumbersListed.class })
+
+        // 所有号码计数器
+        @Subscribe(events = {AllPhoneNumbersListed.class})
         public void CounterTotalPhoneNumbers(AllPhoneNumbersListed event) {
 
             System.out.println("AllPhoneNumbersListed (to total)...");
@@ -175,9 +160,8 @@ public class SinglePhoneNumberSagaTest {
 
             String[] allPhoneNumbersToCount = allPhoneNumbers.split("\n");
 
-            MessageBus.globalInstance().publish(new AllPhoneNumbersCounted(
-            		event.processId(),
-                    allPhoneNumbersToCount.length));
+            MessageBus.globalInstance()
+                    .publish(new AllPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
         }
 
     }

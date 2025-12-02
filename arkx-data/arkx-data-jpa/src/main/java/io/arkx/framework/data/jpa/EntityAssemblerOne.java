@@ -1,11 +1,11 @@
 package io.arkx.framework.data.jpa;
 
-import org.springframework.util.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.util.CollectionUtils;
 
 /**
  * 单对象组装器.
@@ -55,7 +55,8 @@ public abstract class EntityAssemblerOne<T, K, V> implements EntityAssembler<T> 
     /**
      * 从原对象中提取键
      *
-     * @param bean 原对象
+     * @param bean
+     *            原对象
      * @return 键
      */
     protected abstract K getKey(T bean);
@@ -63,15 +64,18 @@ public abstract class EntityAssemblerOne<T, K, V> implements EntityAssembler<T> 
     /**
      * 设置原对象目标值
      *
-     * @param bean  原对象
-     * @param value 目标值
+     * @param bean
+     *            原对象
+     * @param value
+     *            目标值
      */
     protected abstract void setValue(T bean, V value);
 
     /**
      * 根据键获取目标值
      *
-     * @param key 键
+     * @param key
+     *            键
      * @return 目标值
      */
     protected abstract V getValue(K key);
@@ -79,7 +83,8 @@ public abstract class EntityAssemblerOne<T, K, V> implements EntityAssembler<T> 
     /**
      * 批量获取值
      *
-     * @param keys 键列表
+     * @param keys
+     *            键列表
      * @return 目标值map
      */
     protected abstract Map<K, V> mgetValue(Collection<K> keys);

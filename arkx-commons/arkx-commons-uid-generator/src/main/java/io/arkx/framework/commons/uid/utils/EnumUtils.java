@@ -18,15 +18,16 @@ package io.arkx.framework.commons.uid.utils;
 import org.springframework.util.Assert;
 
 /**
- * EnumUtils provides the operations for {@link ValuedEnum} such as Parse, value of...
- * 
+ * EnumUtils provides the operations for {@link ValuedEnum} such as Parse, value
+ * of...
+ *
  * @author yutianbao
  */
 public abstract class EnumUtils {
 
     /**
      * Parse the bounded value into ValuedEnum
-     * 
+     *
      * @param clz
      * @param value
      * @return
@@ -47,7 +48,7 @@ public abstract class EnumUtils {
 
     /**
      * Null-safe valueOf function
-     * 
+     *
      * @param <T>
      * @param enumType
      * @param name

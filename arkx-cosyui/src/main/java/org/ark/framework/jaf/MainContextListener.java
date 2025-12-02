@@ -1,55 +1,55 @@
 package org.ark.framework.jaf;
 
+import org.ark.framework.schedule.CronManager;
+
 import io.arkx.framework.Config;
 import io.arkx.framework.extend.plugin.PluginManager;
+
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
-import org.ark.framework.schedule.CronManager;
-
 
 /**
- * @class org.ark.framework.MainContextListener
- * 系统启动上下文监听器
- * 
+ * @class org.ark.framework.MainContextListener 系统启动上下文监听器
+ *
  * @author Darkness
- * @date 2012-11-23 下午01:36:59 
+ * @date 2012-11-23 下午01:36:59
  * @version V1.0
  */
 public class MainContextListener implements ServletContextListener {
-	
-	private CronManager manager;
 
-	public void contextDestroyed(ServletContextEvent arg0) {
-		try {
-			if (this.manager != null)
-				this.manager.destory();
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-	}
+    private CronManager manager;
 
-	public void contextInitialized(ServletContextEvent event) {
-		
-		ServletContext sc = event.getServletContext();
-		
-		Config.setValue("System.ContainerInfo", sc.getServerInfo());
-		
-		Config.getJBossInfo();
-		
-		try {
-			Config.loadConfig();
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-		
-		Config.setPluginContext(true);
-		
-		PluginManager.initWebPlugin();
-		
-		this.manager = CronManager.getInstance();
-		
-//		ExtendManager.start();
-	}
-	
+    public void contextDestroyed(ServletContextEvent arg0) {
+        try {
+            if (this.manager != null)
+                this.manager.destory();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    public void contextInitialized(ServletContextEvent event) {
+
+        ServletContext sc = event.getServletContext();
+
+        Config.setValue("System.ContainerInfo", sc.getServerInfo());
+
+        Config.getJBossInfo();
+
+        try {
+            Config.loadConfig();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        Config.setPluginContext(true);
+
+        PluginManager.initWebPlugin();
+
+        this.manager = CronManager.getInstance();
+
+        // ExtendManager.start();
+    }
+
 }

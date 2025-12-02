@@ -1,12 +1,14 @@
 package io.arkx.framework.data.mybatis.pro.base.codec.enums;
 
+import java.io.IOException;
+
+import org.springframework.beans.BeanUtils;
+
+import io.arkx.framework.data.mybatis.pro.base.codec.PropertyAliasCache;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import io.arkx.framework.data.mybatis.pro.base.codec.PropertyAliasCache;
-import org.springframework.beans.BeanUtils;
-
-import java.io.IOException;
 
 /**
  * 描述：EnumMarker Jackson反序列化

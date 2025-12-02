@@ -1,12 +1,12 @@
 package io.arkx.framework.data.mybatis.pro.interceptor;
 
-import io.arkx.framework.data.mybatis.pro.base.codec.enums.JsonUtil;
-import io.arkx.framework.data.mybatis.pro.core.consts.LogicalDeleteType;
-import io.arkx.framework.data.mybatis.pro.core.consts.MyBatisProProperties;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.parser.CCJSqlParserUtil;
-import net.sf.jsqlparser.statement.delete.Delete;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.System.currentTimeMillis;
+import static org.apache.ibatis.mapping.SqlCommandType.DELETE;
+
+import java.sql.*;
+import java.util.*;
+
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -23,12 +23,14 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
 import org.springframework.util.CollectionUtils;
 
-import java.sql.*;
-import java.util.*;
+import io.arkx.framework.data.mybatis.pro.base.codec.enums.JsonUtil;
+import io.arkx.framework.data.mybatis.pro.core.consts.LogicalDeleteType;
+import io.arkx.framework.data.mybatis.pro.core.consts.MyBatisProProperties;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static java.lang.System.currentTimeMillis;
-import static org.apache.ibatis.mapping.SqlCommandType.DELETE;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.statement.delete.Delete;
 
 /**
  * 逻辑删除插件
@@ -63,15 +65,15 @@ public class LogicalDeleteInterceptor implements Interceptor {
 
         if (props.getLogicalDeleteType() == LogicalDeleteType.BACKUP) {
             /*
-             * 原理：
-             * 1. 查询出需要删除的数据；
-             * 2. 将此数据存入备份表；
-             * 3. 物理删除对应数据
+             * 原理： 1. 查询出需要删除的数据； 2. 将此数据存入备份表； 3. 物理删除对应数据
              */
-            String selectSql = new StringJoiner(" ").add("SELECT").add("*").add("FROM").add(tableName).add("WHERE").add(delete.getWhere().toString()).toString();
+            String selectSql = new StringJoiner(" ").add("SELECT").add("*").add("FROM").add(tableName).add("WHERE")
+                    .add(delete.getWhere().toString()).toString();
             BoundSql selectBoundSql = new BoundSql(config, selectSql, boundSql.getParameterMappings(), parameter);
-            MappedStatement m = new Builder(config, "com.[plugin]mybatis_pro_backup._inner_select", new StaticSqlSource(config, selectSql), SqlCommandType.SELECT).build();
-            StatementHandler handler = config.newStatementHandler(executor, m, parameter, RowBounds.DEFAULT, null, selectBoundSql);
+            MappedStatement m = new Builder(config, "com.[plugin]mybatis_pro_backup._inner_select",
+                    new StaticSqlSource(config, selectSql), SqlCommandType.SELECT).build();
+            StatementHandler handler = config.newStatementHandler(executor, m, parameter, RowBounds.DEFAULT, null,
+                    selectBoundSql);
             Statement stmt = prepareStatement(transaction, handler);
             ((PreparedStatement) stmt).execute();
             ResultSet rs = stmt.getResultSet();
@@ -88,7 +90,9 @@ public class LogicalDeleteInterceptor implements Interceptor {
             stmt.close();
 
             if (!CollectionUtils.isEmpty(result)) {
-                String insert = new StringJoiner(" ").add("INSERT INTO").add(MyBatisProProperties.LOGICAL_DELETE_TABLE_NAME).add("(table_name, data, delete_time) VALUES (?, ?, ?)").toString();
+                String insert = new StringJoiner(" ").add("INSERT INTO")
+                        .add(MyBatisProProperties.LOGICAL_DELETE_TABLE_NAME)
+                        .add("(table_name, data, delete_time) VALUES (?, ?, ?)").toString();
                 Connection conn = transaction.getConnection();
                 try (PreparedStatement ps = conn.prepareStatement(insert)) {
                     for (Map<String, Object> data : result) {
@@ -107,9 +111,11 @@ public class LogicalDeleteInterceptor implements Interceptor {
             /*
              * 原理：将delete改成update
              */
-            String updateSql = "UPDATE " + tableName + " SET " + props.getLogicalDeleteColumn() + " = " + props.getLogicalDeleteInActive() + " WHERE " + delete.getWhere().toString();
+            String updateSql = "UPDATE " + tableName + " SET " + props.getLogicalDeleteColumn() + " = "
+                    + props.getLogicalDeleteInActive() + " WHERE " + delete.getWhere().toString();
             BoundSql updateBoundSql = new BoundSql(config, updateSql, boundSql.getParameterMappings(), parameter);
-            StatementHandler handler = config.newStatementHandler(executor, ms, parameter, RowBounds.DEFAULT, null, updateBoundSql);
+            StatementHandler handler = config.newStatementHandler(executor, ms, parameter, RowBounds.DEFAULT, null,
+                    updateBoundSql);
             PreparedStatement stmt = (PreparedStatement) prepareStatement(transaction, handler);
             int result = stmt.executeUpdate();
             stmt.close();
