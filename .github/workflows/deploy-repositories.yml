@@ -91,9 +91,6 @@ jobs:
       with:
         java-version: '25'
         distribution: 'temurin'
-        server-id: central
-        server-username: MAVEN_USERNAME
-        server-password: MAVEN_PASSWORD
         
     - name: Cache Maven packages
       uses: actions/cache@v3
@@ -101,6 +98,24 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
+        
+    - name: Configure Maven settings for Sonatype Central
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml << 'EOF'
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}</id>
+              <username>${{ secrets.SONATYPE_CENTRAL_USERNAME }}</username>
+              <password>${{ secrets.SONATYPE_CENTRAL_PASSWORD }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
         
     - name: Configure Git user
       run: |
@@ -128,16 +143,15 @@ jobs:
           mvn clean deploy \
             -P central-release \
             -DskipTests \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}
         else
           mvn clean deploy \
             -P central-release,release \
             -DskipTests \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}
         fi
-      env:
-        MAVEN_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
-        MAVEN_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
 
 
 

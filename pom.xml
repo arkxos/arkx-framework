@@ -286,14 +286,14 @@
         <profile>
             <id>central-release</id>
             <properties>
-                <maven.repository.id>central</maven.repository.id>
+                <maven.repository.id>${sonatype.central.server.id}</maven.repository.id>
                 <maven.repository.url>https://central.sonatype.com/repository/maven2/</maven.repository.url>
-                <maven.snapshot.repository.id>central</maven.snapshot.repository.id>
+                <maven.snapshot.repository.id>${sonatype.central.server.id}</maven.snapshot.repository.id>
                 <maven.snapshot.repository.url>https://central.sonatype.com/repository/maven-snapshots/</maven.snapshot.repository.url>
             </properties>
             <repositories>
                 <repository>
-                    <id>central</id>
+                    <id>${sonatype.central.server.id}</id>
                     <url>https://central.sonatype.com/repository/maven-snapshots/</url>
                     <releases>
                         <enabled>false</enabled>
@@ -520,19 +520,7 @@
                         </executions>
                     </plugin>
                     
-                    <!-- Nexus Staging 插件 - 用于 Maven Central 发布 -->
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.13</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                            <stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
-                        </configuration>
-                    </plugin>
+
                     
                     <!-- Maven Deploy 插件 -->
                     <plugin>
