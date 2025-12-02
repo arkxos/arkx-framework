@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+    branches: [ dev ]
   workflow_dispatch:
     inputs:
       version:
@@ -43,15 +44,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Get version from tag or input
+    - name: Get version from tag, branch, or input
       id: version
       run: |
         if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
+          # 标签推送 - 正式版
           VERSION=${GITHUB_REF#refs/tags/v}
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "release_type=release" >> $GITHUB_OUTPUT
           echo "is_snapshot=false" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/heads/dev ]]; then
+          # dev 分支推送 - 开发快照版本（主流方案）
+          VERSION="0.1.0-SNAPSHOT"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "release_type=snapshot" >> $GITHUB_OUTPUT
+          echo "is_snapshot=true" >> $GITHUB_OUTPUT
         else
+          # 手动触发
           VERSION="${{ github.event.inputs.version }}"
           RELEASE_TYPE="${{ github.event.inputs.release_type }}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
@@ -65,7 +74,7 @@ jobs:
 
   deploy-maven-central:
     needs: detect-version
-    if: github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && github.ref == 'refs/tags/*')
+    if: github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && (github.ref == 'refs/tags/*' || github.ref == 'refs/heads/dev'))
     runs-on: ubuntu-latest
     
     steps:
@@ -129,7 +138,7 @@ jobs:
 
   deploy-china-repos:
     needs: detect-version
-    if: github.event.inputs.deploy_to_china == 'true' || (github.event_name == 'push' && github.ref == 'refs/tags/*')
+    if: github.event.inputs.deploy_to_china == 'true' || (github.event_name == 'push' && (github.ref == 'refs/tags/*' || github.ref == 'refs/heads/dev'))
     runs-on: ubuntu-latest
     
     strategy:
