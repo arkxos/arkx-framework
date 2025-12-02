@@ -149,13 +149,13 @@ jobs:
     - name: Deploy to Maven Central
       run: |
         if [[ "${{ needs.detect-version.outputs.is_snapshot }}" == "true" ]]; then
-          mvn clean central:deploy \
+          mvn clean org.sonatype.central:central-publishing-maven-plugin:deploy \
             -P central-release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
             -X
         else
-          mvn clean central:deploy \
+          mvn clean org.sonatype.central:central-publishing-maven-plugin:deploy \
             -P central-release,release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \

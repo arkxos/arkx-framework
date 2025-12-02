@@ -131,14 +131,14 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>3.1.1</version>
                 </plugin>
-                
+
                 <!-- Maven GPG 插件 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
-                
+
                 <!-- Central Publishing 插件 - 新的 Sonatype Central Portal 推荐方式 -->
                 <plugin>
                     <groupId>org.sonatype.central</groupId>
