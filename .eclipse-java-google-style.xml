@@ -11,9 +11,9 @@
         <setting id="org.eclipse.jdt.core.formatter.enabling_tag" value="@formatter:on"/>
         
         <!-- Critical enum formatting settings - 每行一个枚举常量 -->
-        <setting id="org.eclipse.jdt.core.formatter.alignment_for_enum_constants" value="0"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_enum_constants" value="16"/>
         <setting id="org.eclipse.jdt.core.formatter.wrap_before_enum_constant" value="true"/>
-        <setting id="org.eclipse.jdt.core.formatter.wrap_outer_expressions_when_nested" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.wrap_outer_expressions_when_nested" value="true"/>
         <setting id="org.eclipse.jdt.core.formatter.insert_space_before_comma_in_enum_declarations" value="do not insert"/>
         <setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_enum_declarations" value="insert"/>
         <setting id="org.eclipse.jdt.core.formatter.brace_position_for_enum_declaration" value="end_of_line"/>
@@ -23,6 +23,9 @@
         <setting id="org.eclipse.jdt.core.formatter.insert_space_before_comma_in_enum_constant_arguments" value="do not insert"/>
         <setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_enum_constant_arguments" value="insert"/>
         <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_enum_constant" value="0"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_expressions_in_array_initializer" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_new_line_after_annotation_on_enum_constant" value="insert"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_new_line_before_closing_brace_in_enum_constant" value="do not insert"/>
         
         <!-- Lambda expression settings -->
         <setting id="org.eclipse.jdt.core.formatter.insert_space_before_lambda_arrow" value="insert"/>
