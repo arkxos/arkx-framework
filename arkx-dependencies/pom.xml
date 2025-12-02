@@ -169,6 +169,10 @@
 		<sms.version>3.0.0</sms.version>
 		<shardingsphere.version>5.4.1</shardingsphere.version>
 		<hutool.version>5.8.38</hutool.version>
+		
+		<!-- Excel处理 -->
+		<jxls.version>2.4.7</jxls.version>
+		<jxls-poi.version>1.0.16</jxls-poi.version>
 	</properties>
 
 	<!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
@@ -783,6 +787,18 @@
 				<groupId>io.jsonwebtoken</groupId>
 				<artifactId>jjwt-jackson</artifactId>
 				<version>${jjwt.version}</version>
+			</dependency>
+			
+			<!-- Jxls Excel处理 -->
+			<dependency>
+				<groupId>org.jxls</groupId>
+				<artifactId>jxls</artifactId>
+				<version>${jxls.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jxls</groupId>
+				<artifactId>jxls-poi</artifactId>
+				<version>${jxls-poi.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

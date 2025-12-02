@@ -125,9 +125,9 @@ jobs:
       run: |
         mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
         
-    - name: Build (skip tests)
+    - name: Build and package artifacts
       run: |
-        mvn clean compile -B -DskipTests
+        mvn clean package -B -DskipTests -Dgpg.skip=true
         
     - name: Import GPG key
       uses: crazy-max/ghaction-import-gpg@v6
@@ -144,22 +144,30 @@ jobs:
         echo "SONATYPE_CENTRAL_SERVER_ID: ${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}"
         echo "SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}"
         echo "=== Maven effective settings ==="
-        mvn help:effective-settings -P central-release -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}
+        mvn help:effective-settings -P central-release
         
-    - name: Deploy to Maven Central
+    - name: Deploy to Maven Central (skip rebuild)
       run: |
         if [[ "${{ needs.detect-version.outputs.is_snapshot }}" == "true" ]]; then
-          mvn clean deploy \
+          mvn deploy \
             -P central-release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            -X
+            -Dmaven.test.skip=true \
+            -Dmaven.main.skip=true \
+            -Dmaven.javadoc.skip=false \
+            -Dmaven.source.skip=false \
+            --no-transfer-progress
         else
-          mvn clean deploy \
+          mvn deploy \
             -P central-release,release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            -X
+            -Dmaven.test.skip=true \
+            -Dmaven.main.skip=true \
+            -Dmaven.javadoc.skip=false \
+            -Dmaven.source.skip=false \
+            --no-transfer-progress
         fi
 
 
