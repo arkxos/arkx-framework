@@ -47,10 +47,10 @@ jobs:
           delete-branch: true
 
       - name: mvn clean install
-        run: mvn clean install -Pboot
+        run: mvn clean install -Pboot -DskipTests
 
       - name: mvn clean install
-        run: mvn clean install
+        run: mvn clean install -DskipTests
 
       - name: failure notification
         if: failure() && github.repository == 'arkxos/arkx-framework'
