@@ -1,25 +1,15 @@
-# Maven Repository 自动发布配置使用说明
+# Maven Central 自动发布配置使用说明
 
 ## 概述
 
-本项目已配置了完整的 Maven Repository 自动发布功能，支持发布到多种类型的 Maven 仓库。
+本项目已配置了完整的 Maven Central 自动发布功能，支持发布到 Maven Central Repository。
 
 ## 支持的仓库类型
 
-### 1. Nexus 私有仓库
-- **Profile ID**: `nexus-release`
-- **适用场景**: 企业内部私有仓库
-- **仓库地址**: http://192.168.7.245:8081
-
-### 2. 阿里云效私有仓库
-- **Profile ID**: `aliyun-rdc-release`
-- **适用场景**: 阿里云效平台
-- **仓库地址**: https://repo.rdc.aliyun.com
-
-### 3. Maven Central 仓库
+### Maven Central 仓库
 - **Profile ID**: `central-release`
 - **适用场景**: 开源项目发布到 Maven Central
-- **仓库地址**: https://oss.sonatype.org
+- **仓库地址**: https://central.sonatype.com
 
 ## 使用方法
 
@@ -33,17 +23,7 @@ mvn clean deploy -P nexus-release
 mvn clean deploy -P nexus-release,release
 ```
 
-### 2. 发布到阿里云效私有仓库
-
-```bash
-# 发布 SNAPSHOT 版本
-mvn clean deploy -P aliyun-rdc-release
-
-# 发布 RELEASE 版本
-mvn clean deploy -P aliyun-rdc-release,release
-```
-
-### 3. 发布到 Maven Central 仓库
+### 2. 发布到 Maven Central 仓库
 
 ```bash
 # 发布 SNAPSHOT 版本
@@ -74,18 +54,7 @@ mvn clean deploy -P central-release,release -Dgpg.passphrase=your-gpg-password
             <password>your-password</password>
         </server>
         
-        <!-- 阿里云效仓库认证 -->
-        <server>
-            <id>rdc-releases</id>
-            <username>your-username</username>
-            <password>your-password</password>
-        </server>
-        <server>
-            <id>rdc-snapshots</id>
-            <username>your-username</username>
-            <password>your-password</password>
-        </server>
-        
+
         <!-- Maven Central 仓库认证 -->
         <server>
             <id>ossrh</id>

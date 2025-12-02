@@ -13,20 +13,13 @@
 #### Maven Central 发布
 | Secret 名称 | 描述 | 获取方式 |
 |-----------|------|----------|
-| `SONATYPE_USERNAME` | Sonatype Central 账号 | https://central.sonatype.com/ |
-| `SONATYPE_PASSWORD` | Sonatype Central 密码 | 账号设置中生成 |
+| `SONATYPE_CENTRAL_USERNAME` | Sonatype Central 账号 | https://central.sonatype.com/ |
+| `SONATYPE_CENTRAL_PASSWORD` | Sonatype Central 密码 | 账号设置中生成 |
 | `GPG_PRIVATE_KEY` | GPG 私钥内容 | `gpg --export-secret-keys --armor` |
 | `GPG_PASSPHRASE` | GPG 私钥密码 | 生成密钥时设置的密码 |
+| `GH_TOKEN` | GitHub Token | GitHub Settings → Developer settings → Personal access tokens |
 
-#### 国内仓库发布
-| Secret 名称 | 描述 | 获取方式 |
-|-----------|------|----------|
-| `ALIYUN_USERNAME` | 阿里云效账号 | https://packages.aliyun.com/ |
-| `ALIYUN_PASSWORD` | 阿里云效密码 | 账号设置中生成 |
-| `TENCENT_USERNAME` | 腾讯云开发者账号 | https://cloud.tencent.com/ |
-| `TENCENT_PASSWORD` | 腾讯云开发者密码 | 腾讯云访问管理 |
-| `GITEE_USERNAME` | Gitee 账号 | https://gitee.com/ |
-| `GITEE_PASSWORD` | Gitee 密码 | Gitee 设置中生成 |
+
 
 ## 🛡️ 安全最佳实践
 
