@@ -32,11 +32,6 @@
     </developer>
   </developers>
 
-  <scm>
-    <connection>https://github.com/JonZhang3/aTask.git</connection>
-    <url>https://github.com/JonZhang3</url>
-  </scm>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

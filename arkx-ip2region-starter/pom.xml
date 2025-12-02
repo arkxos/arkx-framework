@@ -24,24 +24,6 @@
     </license>
   </licenses>
 
-  <developers>
-    <developer>
-      <name>wandl</name>
-      <email>hiwepy@gmail.com</email>
-      <roles>
-        <role>developer</role>
-      </roles>
-      <timezone>+8</timezone>
-    </developer>
-  </developers>
-
-  <scm>
-    <connection>scm:git:https:github.com/hiwepy/${project.artifactId}.git</connection>
-    <developerConnection>scm:git:https:github.com/hiwepy/${project.artifactId}.git</developerConnection>
-    <tag>${project.artifactId}</tag>
-    <url>https:github.com/hiwepy/${project.artifactId}</url>
-  </scm>
-
   <distributionManagement>
     <repository>
       <id>ossrh</id>
