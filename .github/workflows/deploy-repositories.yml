@@ -102,7 +102,7 @@ jobs:
     - name: Configure Maven settings for Sonatype Central
       run: |
         mkdir -p ~/.m2
-        cat > ~/.m2/settings.xml << 'EOF'
+        cat > ~/.m2/settings.xml << EOF
         <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
@@ -116,6 +116,7 @@ jobs:
           </servers>
         </settings>
         EOF
+        echo "Generated settings.xml with server ID: ${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}"
         
     - name: Configure Git user
       run: |
@@ -137,6 +138,16 @@ jobs:
         passphrase: ${{ secrets.GPG_PASSPHRASE }}
         trust_level: 5
         
+    - name: Debug Maven settings
+      run: |
+        echo "=== Maven settings.xml ==="
+        cat ~/.m2/settings.xml
+        echo "=== Environment variables ==="
+        echo "SONATYPE_CENTRAL_SERVER_ID: ${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}"
+        echo "SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}"
+        echo "=== Maven effective settings ==="
+        mvn help:effective-settings -P central-release -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}
+        
     - name: Deploy to Maven Central
       run: |
         if [[ "${{ needs.detect-version.outputs.is_snapshot }}" == "true" ]]; then
@@ -144,13 +155,15 @@ jobs:
             -P central-release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}
+            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }} \
+            -X
         else
           mvn clean deploy \
             -P central-release,release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}
+            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }} \
+            -X
         fi
 
 
