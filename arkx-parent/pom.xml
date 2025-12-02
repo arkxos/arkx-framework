@@ -143,6 +143,30 @@
 					</includeOnlyProperties>
 				</configuration>
 			</plugin>
+			<!-- Google Java Format 插件 -->
+			<plugin>
+				<groupId>com.github.ekryd.sortpom</groupId>
+				<artifactId>sortpom-maven-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>sort</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<createBackupFile>false</createBackupFile>
+					<lineSeparator>
+</lineSeparator>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.2</version>
+			</plugin>
 			<!--
 				代码格式插件，默认使用spring 规则，可运行命令进行项目格式化：./mvnw spring-javaformat:apply 或 mvn spring-javaformat:apply，可在IDEA中安装插件以下插件进行自动格式化：
 				https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin
@@ -155,8 +179,20 @@
 					<execution>
 						<phase>validate</phase>
 						<inherited>true</inherited>
+						<goals>
+							<goal>apply</goal>
+						</goals>
 					</execution>
 				</executions>
+				<configuration>
+<!--					<failOnFormatErrors>true</failOnFormatErrors> &lt;!&ndash; 如果存在格式错误，是否中断构建 &ndash;&gt;-->
+					<includes>
+						<include>**/*.java</include> <!-- 指定要格式化的文件 -->
+					</includes>
+					<style>GOOGLE</style> <!-- 使用 Google 风格 -->
+					<indentSize>4</indentSize> <!-- 缩进大小为 4 个空格 -->
+					<columnLimit>120</columnLimit> <!-- 行宽限制为 120 个字符 -->
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
