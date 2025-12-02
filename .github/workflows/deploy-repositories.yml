@@ -54,8 +54,15 @@ jobs:
           echo "release_type=release" >> $GITHUB_OUTPUT
           echo "is_snapshot=false" >> $GITHUB_OUTPUT
         elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/heads/dev ]]; then
-          # dev 分支推送 - 开发快照版本（主流方案）
-          VERSION="0.1.0-SNAPSHOT"
+          # dev 分支推送 - 从 pom.xml 读取版本号
+          VERSION=$(mvn help:evaluate -Dexpression=revision -q -DforceStdout)
+          if [[ -z "$VERSION" ]]; then
+            VERSION="0.1.0-SNAPSHOT"
+          fi
+          # 如果不是 SNAPSHOT 版本，自动添加 -SNAPSHOT
+          if [[ ! "$VERSION" =~ .*-SNAPSHOT$ ]]; then
+            VERSION="${VERSION}-SNAPSHOT"
+          fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "release_type=snapshot" >> $GITHUB_OUTPUT
           echo "is_snapshot=true" >> $GITHUB_OUTPUT
@@ -141,10 +148,6 @@ jobs:
     if: github.event.inputs.deploy_to_china == 'true' || (github.event_name == 'push' && (github.ref == 'refs/tags/*' || github.ref == 'refs/heads/dev'))
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        repo: [aliyun, tencent]
-        
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -170,15 +173,15 @@ jobs:
       run: |
         mvn clean compile -B -DskipTests
         
-    - name: Deploy to ${{ matrix.repo }} Cloud
+    - name: Deploy to Aliyun Cloud
       run: |
         mvn clean deploy \
-          -P ${{ matrix.repo }}-cloud \
+          -P aliyun-cloud \
           -DskipTests \
           -Dmaven.wagon.http.retryHandler.count=3
       env:
-        MAVEN_USERNAME: ${{ secrets[format('{0}_USERNAME', matrix.repo)] }}
-        MAVEN_PASSWORD: ${{ secrets[format('{0}_PASSWORD', matrix.repo)] }}
+        MAVEN_USERNAME: ${{ secrets.ALIYUN_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.ALIYUN_PASSWORD }}
 
   create-github-release:
     needs: [detect-version, deploy-maven-central, deploy-china-repos]
@@ -209,9 +212,8 @@ jobs:
           ### Maven Central
           - https://search.maven.org/artifact/io.arkx.framework/arkx-framework
           
-          ### China Repositories
+          ### China Repository
           - Aliyun: https://maven.aliyun.com/repository/public
-          - Tencent: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
         draft: false
         prerelease: false
         
