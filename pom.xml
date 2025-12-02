@@ -148,7 +148,6 @@
                     <configuration>
                         <publishingServerId>central</publishingServerId>
                         <autoPublish>true</autoPublish>
-                        <waitUntil>published</waitUntil>
                     </configuration>
                 </plugin>
                 
@@ -295,6 +294,7 @@
                 <maven.repository.id>central</maven.repository.id>
                 <maven.snapshot.repository.id>central</maven.snapshot.repository.id>
                 <maven.snapshot.repository.url>https://central.sonatype.com/repository/maven-snapshots/</maven.snapshot.repository.url>
+                <gpg.skip>true</gpg.skip>
             </properties>
             <distributionManagement>
                 <snapshotRepository>
