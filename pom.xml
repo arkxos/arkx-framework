@@ -316,6 +316,16 @@
             </repositories>
             <build>
                 <plugins>
+                    <!-- SNAPSHOT 版本修改 flatten 插件配置，避免 SNAPSHOT 转换为 timestamp -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                        <configuration>
+                            <!-- 使用 oss 模式而不是 resolveCiFriendliesOnly，避免 SNAPSHOT 转换 -->
+                            <flattenMode>oss</flattenMode>
+                            <updatePomFile>true</updatePomFile>
+                        </configuration>
+                    </plugin>
                     <!-- SNAPSHOT 版本使用传统的 maven-deploy-plugin -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

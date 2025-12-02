@@ -53,7 +53,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>flatten-maven-plugin</artifactId>
 				<configuration>
-					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+					<flattenMode>oss</flattenMode>
 					<flattenDependencyMode>all</flattenDependencyMode>
 					<updatePomFile>true</updatePomFile>
 					<pomElements>
