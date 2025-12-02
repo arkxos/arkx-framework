@@ -9,7 +9,7 @@ package io.arkx.framework.thirdparty.el.parser;
 
 public class SimpleCharStream {
 
-// NO_UCD
+	// NO_UCD
 	/** Whether parser is static. */
 	public static final boolean staticFlag = false;
 

@@ -7,7 +7,7 @@ package io.arkx.framework.thirdparty.el.parser;
  */
 public interface ELParserConstants {
 
-// NO_UCD
+	// NO_UCD
 
 	/** End of File. */
 	int EOF = 0;

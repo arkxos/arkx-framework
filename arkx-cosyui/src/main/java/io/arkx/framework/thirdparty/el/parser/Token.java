@@ -8,7 +8,7 @@ package io.arkx.framework.thirdparty.el.parser;
 
 public class Token implements java.io.Serializable {
 
-// NO_UCD
+	// NO_UCD
 
 	/**
 	 * An integer that describes the kind of this token. This numbering system is

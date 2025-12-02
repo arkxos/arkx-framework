@@ -25,7 +25,7 @@ package io.arkx.framework.thirdparty.commons;
  */
 public class EntityArrays {
 
-// NO_UCD
+	// NO_UCD
 
 	/**
 	 * Mapping to escape <a href=

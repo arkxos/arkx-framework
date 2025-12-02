@@ -11,7 +11,7 @@ import io.arkx.framework.json.JSONObject;
  */
 public class SQLCommand implements IDBCommand {
 
-// NO_UCD
+	// NO_UCD
 	/**
 	 * 指令对应的SQL
 	 */

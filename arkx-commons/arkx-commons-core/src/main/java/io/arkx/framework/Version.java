@@ -9,7 +9,7 @@ package io.arkx.framework;
  */
 public class Version {
 
-// NO_UCD
+	// NO_UCD
 
 	public static float VERSION2_1 = 2.1f;
 

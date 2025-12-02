@@ -31,7 +31,7 @@ import java.util.Locale;
  */
 public abstract class CharSequenceTranslator {
 
-// NO_UCD
+	// NO_UCD
 
 	/**
 	 * Translate a set of codepoints, represented by an int index into a CharSequence,

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class NumberUtil {
 
-// NO_UCD
+	// NO_UCD
 	private static Pattern numberPatter = Pattern.compile("^[\\d\\.E\\,\\+\\-]*$");
 
 	private static final int DEFAULT_SCALE = 10;// 默认精度

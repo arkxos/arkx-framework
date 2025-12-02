@@ -170,8 +170,8 @@ public class Excel2003Reader implements HSSFListener {
 						thisStr = Boolean.toString(frec.getCachedBooleanValue());
 						break;
 					case 5:// CellType.ERROR.getCode():
-						// thisStr =
-						// HSSFErrorConstants.getText(frec.getCachedErrorValue());
+							// thisStr =
+							// HSSFErrorConstants.getText(frec.getCachedErrorValue());
 						thisStr = FormulaError.forInt(frec.getCachedErrorValue()).getString();
 						break;
 					case 1:// CellType.STRING.getCode():

@@ -29,7 +29,7 @@ import io.arkx.framework.thirdparty.commons.StringEscapeUtils;
  */
 public class StringUtil {
 
-// NO_UCD
+	// NO_UCD
 	/**
 	 * UTF-8的三个字节的BOM
 	 */

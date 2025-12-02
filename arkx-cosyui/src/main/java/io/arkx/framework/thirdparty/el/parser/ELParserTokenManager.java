@@ -4,7 +4,7 @@ package io.arkx.framework.thirdparty.el.parser;
 /** Token Manager. */
 public class ELParserTokenManager implements ELParserConstants {
 
-// NO_UCD
+	// NO_UCD
 
 	/** Debug output. */
 	public java.io.PrintStream debugStream = System.out;

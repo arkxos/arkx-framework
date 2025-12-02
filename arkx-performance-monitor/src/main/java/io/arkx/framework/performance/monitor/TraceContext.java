@@ -106,8 +106,8 @@ public class TraceContext {
 			node.setParentId(currentStack.peek().getTraceId());
 		}
 		else {// 当前调用根节点
-			// currentStack.push(node);
-			// return null;
+				// currentStack.push(node);
+				// return null;
 		}
 
 		// 设置调用深度

@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class MapVariableResolver implements IVariableResolver {
 
-// NO_UCD
+	// NO_UCD
 	private Map<?, ?> map;
 
 	/**

@@ -34,7 +34,6 @@
     <module>arkx-commons-websocket</module>
   </modules>
 
-  <dependencies>
-</dependencies>
+  <dependencies></dependencies>
 
 </project>
