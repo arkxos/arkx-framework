@@ -2,7 +2,8 @@ package io.arkx.framework.queue.saga;
 
 import io.arkx.framework.queue2.MessageBus;
 import io.arkx.framework.queue2.Subscribe;
-import org.aspectj.lang.annotation.Before;
+import lombok.Setter;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SinglePhoneNumberSagaTest {
 
-    private PhoneNumberExecutive phoneNumberExecutive;
+    private static PhoneNumberExecutive phoneNumberExecutive;
 
     @Test
     public void counterPhoneNumbers() throws Exception {
@@ -32,8 +33,8 @@ public class SinglePhoneNumberSagaTest {
         assertEquals(6, this.phoneNumberExecutive.totalPhoneNumbers());
     }
 
-    @Before("")
-    public void setUp() throws Exception {
+    @BeforeAll
+    public static void setUp() throws Exception {
         phoneNumberExecutive = new PhoneNumberExecutive();
         MessageBus.globalInstance().register(phoneNumberExecutive);
     }
@@ -46,10 +47,12 @@ public class SinglePhoneNumberSagaTest {
      * @version V1.0
      * @since ark 1.0
      */
-    private class PhoneNumberExecutive {
+    private static class PhoneNumberExecutive {
 
     	private String id;// 流程id
+        @Setter
         private int matchedPhoneNumbers;// 匹配的号码数
+        @Setter
         private int totalPhoneNumbers;// 总号码数
         
         public PhoneNumberExecutive() {
@@ -72,19 +75,11 @@ public class SinglePhoneNumberSagaTest {
             return this.matchedPhoneNumbers;
         }
 
-        public void setMatchedPhoneNumbers(int aMatchedPhoneNumbersCount) {
-            this.matchedPhoneNumbers = aMatchedPhoneNumbersCount;
-        }
-
         public int totalPhoneNumbers() {
             return this.totalPhoneNumbers;
         }
 
-        public void setTotalPhoneNumbers(int aTotalPhoneNumberCount) {
-            this.totalPhoneNumbers = aTotalPhoneNumberCount;
-        }
-
-        public String start(String[] aPhoneNumbers) {
+        public void start(String[] aPhoneNumbers) {
             String allPhoneNumbers = "";
 
             for (String phoneNumber : aPhoneNumbers) {
@@ -102,7 +97,6 @@ public class SinglePhoneNumberSagaTest {
             		processId,
                     allPhoneNumbers));
 
-            return processId;
         }
 
 		@Subscribe(events = { AllPhoneNumbersCounted.class, MatchedPhoneNumbersCounted.class })

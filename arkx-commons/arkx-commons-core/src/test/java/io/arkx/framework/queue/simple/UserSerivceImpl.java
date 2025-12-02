@@ -9,10 +9,10 @@ public class UserSerivceImpl  {
 	
 	public void deleteUser(String id) {
 		// 先发布删除事件
-		MessageBus.globalInstance().publish(new Message<User>("deleteUserEvent", new User("darkness", "堕落天使")));
+		MessageBus.globalInstance().publish(new Message<>("deleteUserEvent", new User("darkness", "堕落天使")));
 	}
 	
 	public void updateUser(User user) {
-		MessageBus.globalInstance().publish(new Message<User>("updateUserEvent", user));
+		MessageBus.globalInstance().publish(new Message<>("updateUserEvent", user));
 	}
 }

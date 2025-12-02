@@ -1,8 +1,9 @@
 package io.arkx.soa.jpa;
 
-import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author <a href="mailto:stormning@163.com">stormning</a>
  * @version V1.0, 16/3/15.
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
+@DataJpaTest
 @ContextConfiguration(classes = AppConfig.class)
 public class JpaTest {
 	
 	@Autowired
 	private SampleRepository sampleRepository;
 
-	@Before("")
+	@BeforeEach
     public void addSomeSample() {
 		sampleRepository.deleteAll();
 		for (int i = 0; i < 10; i++) {
