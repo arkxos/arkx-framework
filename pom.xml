@@ -166,48 +166,26 @@
                     <version>2.43.0</version>
                     <configuration>
                         <java>
-                            <!-- 使用最简单的格式化配置，避免枚举问题 -->
+                            <!-- 使用 Eclipse 格式化器，配置为保持枚举格式 -->
+                            <eclipse>
+                                <file>${maven.multiModuleProjectDirectory}/.eclipse-java-google-style.xml</file>
+                            </eclipse>
+                            <!-- 移除未使用的导入 -->
                             <removeUnusedImports />
-                            <importOrder>
-                                <order>java,javax,org,io,com</order>
-                                <semanticSort>true</semanticSort>
-                            </importOrder>
-                            <trimTrailingWhitespace />
-                            <endWithNewline />
                             <!-- 导入排序 -->
                             <importOrder>
                                 <order>java,javax,org,io,com</order>
                                 <semanticSort>true</semanticSort>
                             </importOrder>
-                            <!-- 移除未使用的导入 -->
-                            <removeUnusedImports />
+                            <!-- 基本清理 -->
+                            <trimTrailingWhitespace />
+                            <endWithNewline />
                             <!-- 格式化文件包含 -->
                             <includes>
                                 <include>src/main/java/**/*.java</include>
                                 <include>src/test/java/**/*.java</include>
                             </includes>
                             <!-- 排除特定文件或模式 -->
-                            <excludes>
-                                <exclude>**/generated/**</exclude>
-                            </excludes>
-                            <!-- 自定义格式化规则 -->
-                            <trimTrailingWhitespace />
-                            <endWithNewline />
-                            <indent>
-                                <spaces>true</spaces>
-                                <spacesPerTab>4</spacesPerTab>
-                            </indent>
-                        </java>
-                        <!-- 设置检查模式，如果格式不正确则构建失败 -->
-                        <check>
-                            <failOnViolation>true</failOnViolation>
-                        </check>
-                        <!-- 跳过格式化的文件类型 -->
-                        <java>
-                            <includes>
-                                <include>src/main/java/**/*.java</include>
-                                <include>src/test/java/**/*.java</include>
-                            </includes>
                             <excludes>
                                 <exclude>**/generated/**</exclude>
                                 <exclude>**/build/**</exclude>
