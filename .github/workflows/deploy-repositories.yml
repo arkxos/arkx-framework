@@ -147,18 +147,22 @@ jobs:
         mvn help:effective-settings -P central-release
         
     - name: Deploy to Maven Central (skip rebuild)
+      timeout-minutes: 30
       run: |
         if [[ "${{ needs.detect-version.outputs.is_snapshot }}" == "true" ]]; then
+          echo "🚀 Deploying SNAPSHOT version to Central Snapshots..."
           mvn deploy \
-            -P central-release \
+            -P central-snapshot \
             -DskipTests \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+            -Dgpg.skip=true \
             -Dmaven.test.skip=true \
             -Dmaven.main.skip=true \
             -Dmaven.javadoc.skip=false \
             -Dmaven.source.skip=false \
-            --no-transfer-progress
+            --no-transfer-progress \
+            -B
         else
+          echo "🚀 Deploying RELEASE version to Central Portal..."
           mvn deploy \
             -P central-release,release \
             -DskipTests \
@@ -167,8 +171,11 @@ jobs:
             -Dmaven.main.skip=true \
             -Dmaven.javadoc.skip=false \
             -Dmaven.source.skip=false \
-            --no-transfer-progress
+            --no-transfer-progress \
+            -B
         fi
+        
+        echo "✅ Deployment completed successfully!"
 
 
 
