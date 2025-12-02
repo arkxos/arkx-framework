@@ -139,11 +139,15 @@
                     <version>3.1.0</version>
                 </plugin>
                 
-                <!-- Nexus Staging 插件 -->
+                <!-- Central Publishing 插件 - 新的 Sonatype Central Portal 推荐方式 -->
                 <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.13</version>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.9.0</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                    </configuration>
                 </plugin>
                 
                 <!-- Maven Release 插件 -->
@@ -303,6 +307,20 @@
                     </snapshots>
                 </repository>
             </repositories>
+            <build>
+                <plugins>
+                    <!-- Central Publishing 插件 - 新的 Sonatype Central Portal 推荐方式 -->
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.9.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         
         <!-- GitHub Packages 实时仓库 -->
@@ -521,17 +539,7 @@
                     </plugin>
                     
 
-                    
-                    <!-- Maven Deploy 插件 -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <configuration>
-                            <deployAtEnd>true</deployAtEnd>
-                            <updateReleaseInfo>true</updateReleaseInfo>
-                        </configuration>
-                    </plugin>
+
                 </plugins>
             </build>
         </profile>
