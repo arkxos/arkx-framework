@@ -286,25 +286,14 @@
         <profile>
             <id>central-release</id>
             <properties>
-                <maven.repository.id>ossrh</maven.repository.id>
-                <maven.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</maven.repository.url>
-                <maven.snapshot.repository.id>ossrh</maven.snapshot.repository.id>
-                <maven.snapshot.repository.url>https://oss.sonatype.org/content/repositories/snapshots</maven.snapshot.repository.url>
+                <maven.repository.id>central</maven.repository.id>
+                <maven.repository.url>https://central.sonatype.com/repository/maven2/</maven.repository.url>
+                <maven.snapshot.repository.id>central</maven.snapshot.repository.id>
+                <maven.snapshot.repository.url>https://central.sonatype.com/repository/maven-snapshots/</maven.snapshot.repository.url>
             </properties>
             <repositories>
                 <repository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-                <!-- Sonatype Central 实时仓库 -->
-                <repository>
-                    <id>sonatype-central</id>
+                    <id>central</id>
                     <url>https://central.sonatype.com/repository/maven-snapshots/</url>
                     <releases>
                         <enabled>false</enabled>

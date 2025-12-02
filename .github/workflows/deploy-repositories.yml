@@ -95,7 +95,7 @@ jobs:
       with:
         java-version: '25'
         distribution: 'temurin'
-        server-id: ossrh
+        server-id: central
         server-username: MAVEN_USERNAME
         server-password: MAVEN_PASSWORD
         
@@ -140,8 +140,8 @@ jobs:
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
         fi
       env:
-        MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-        MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        MAVEN_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
 
   deploy-china-repos:
     needs: detect-version
