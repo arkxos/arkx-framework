@@ -109,14 +109,14 @@ jobs:
                                       http://maven.apache.org/xsd/settings-1.0.0.xsd">
           <servers>
             <server>
-              <id>${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}</id>
+              <id>central</id>
               <username>${{ secrets.SONATYPE_CENTRAL_USERNAME }}</username>
               <password>${{ secrets.SONATYPE_CENTRAL_PASSWORD }}</password>
             </server>
           </servers>
         </settings>
         EOF
-        echo "Generated settings.xml with server ID: ${{ secrets.SONATYPE_CENTRAL_SERVER_ID }}"
+        echo "Generated settings.xml with server ID: central"
         
     - name: Configure Git user
       run: |
@@ -155,14 +155,12 @@ jobs:
             -P central-release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }} \
             -X
         else
           mvn clean deploy \
             -P central-release,release \
             -DskipTests \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            -Dsonatype.central.server.id=${{ secrets.SONATYPE_CENTRAL_SERVER_ID }} \
             -X
         fi
 
