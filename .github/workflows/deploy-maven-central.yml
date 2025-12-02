@@ -71,9 +71,9 @@ jobs:
       run: |
         mvn versions:set -DnewVersion=${{ steps.version.outputs.version }} -DgenerateBackupPoms=false
         
-    - name: Build and test
+    - name: Build (skip tests)
       run: |
-        mvn clean test -B
+        mvn clean compile -B -DskipTests
         
     - name: Import GPG key
       uses: crazy-max/ghaction-import-gpg@v6

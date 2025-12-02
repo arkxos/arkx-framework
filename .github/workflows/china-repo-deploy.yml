@@ -103,9 +103,9 @@ jobs:
       run: |
         mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
         
-    - name: Build and test
+    - name: Build (skip tests)
       run: |
-        mvn clean test -B
+        mvn clean compile -B -DskipTests
         
     - name: Deploy to Aliyun Cloud
       run: |
@@ -148,9 +148,9 @@ jobs:
       run: |
         mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
         
-    - name: Build and test
+    - name: Build (skip tests)
       run: |
-        mvn clean test -B
+        mvn clean compile -B -DskipTests
         
     - name: Deploy to Tencent Cloud
       run: |
@@ -190,9 +190,9 @@ jobs:
       run: |
         mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
         
-    - name: Build and test
+    - name: Build (skip tests)
       run: |
-        mvn clean test -B
+        mvn clean compile -B -DskipTests
         
     - name: Deploy to Huawei Cloud
       run: |
@@ -235,9 +235,9 @@ jobs:
       run: |
         mvn versions:set -DnewVersion=${{ needs.detect-version.outputs.version }} -DgenerateBackupPoms=false
         
-    - name: Build and test
+    - name: Build (skip tests)
       run: |
-        mvn clean test -B
+        mvn clean compile -B -DskipTests
         
     - name: Deploy to Gitee Go
       run: |

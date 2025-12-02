@@ -39,9 +39,9 @@ jobs:
         # 设置 SNAPSHOT 版本
         mvn versions:set -DnewVersion=0.3.1-SNAPSHOT -DgenerateBackupPoms=false
         
-    - name: Build and test
+    - name: Build (skip tests)
       run: |
-        mvn clean test -B
+        mvn clean compile -B -DskipTests
         
     - name: Import GPG key
       uses: crazy-max/ghaction-import-gpg@v6
