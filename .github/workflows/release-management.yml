@@ -1,9 +1,8 @@
 name: Release Management
 
 on:
-  create:
-    branches: [ release/* ]
   push:
+    branches: [ release/* ]
     tags:
       - 'v*'
   workflow_dispatch:
@@ -57,7 +56,7 @@ jobs:
 
   deploy-release:
     needs: detect-version
-    if: github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && (github.ref == 'refs/tags/*' || startsWith(github.ref, 'refs/heads/release/')))
+    if: github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && (startsWith(github.ref, 'refs/heads/release/') || github.ref == 'refs/tags/*'))
     runs-on: ubuntu-latest
     environment: maven
 
@@ -134,7 +133,7 @@ jobs:
 
   update-main-and-cleanup:
     needs: [detect-version, deploy-release]
-    if: needs.detect-version.outputs.is_release == 'true' && (github.event.inputs.deploy_to_central == 'true' || startsWith(github.ref, 'refs/heads/release/'))
+    if: needs.detect-version.outputs.is_release == 'true' && (github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')))
     runs-on: ubuntu-latest
     
     steps:
@@ -193,7 +192,7 @@ jobs:
 
   create-github-release:
     needs: [detect-version, deploy-release]
-    if: needs.detect-version.outputs.is_release == 'true' && (github.event.inputs.deploy_to_central == 'true' || github.ref == 'refs/tags/*')
+    if: needs.detect-version.outputs.is_release == 'true' && (github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && github.ref == 'refs/tags/*'))
     runs-on: ubuntu-latest
     
     steps:
