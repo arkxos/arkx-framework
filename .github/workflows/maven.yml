@@ -59,7 +59,6 @@ jobs:
           WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
         with:
           msgtype: markdown
-          content: |
-            # 💤🤷‍♀️ failure 🙅‍♂️💣 [arkxos/arkx-framework](https://github.com/arkxos/arkx-framework)
-            > Github Action: https://github.com/arkxos/arkx-framework failure
-            > (⋟﹏⋞)   from github action message
+          content: "# 💤🤷‍♀️ failure 🙅‍♂️💣 [arkxos/arkx-framework](https://github.com/arkxos/arkx-framework)
+> Github Action: https://github.com/arkxos/arkx-framework failure
+> (⋟﹏⋞)   from github action message"
