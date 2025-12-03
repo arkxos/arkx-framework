@@ -11,6 +11,7 @@
 
   <artifactId>arkx-commons</artifactId>
   <packaging>pom</packaging>
+  <name>ArkX Commons</name>
 
   <description>公共聚合模块</description>
 

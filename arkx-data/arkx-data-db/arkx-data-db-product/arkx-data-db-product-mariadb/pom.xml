@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-mariadb</artifactId>
+  <name>ArkX Data DB Product MariaDB</name>
 
   <dependencies>
 

@@ -8,6 +8,7 @@
     <version>${revision}</version>
   </parent>
   <artifactId>arkx-data-db-product-mongodb</artifactId>
+  <name>ArkX Data DB Product MongoDB</name>
 
   <dependencies>
 

@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product</artifactId>
+  <name>arkx-data-db-product</name>
 
   <packaging>pom</packaging>
 

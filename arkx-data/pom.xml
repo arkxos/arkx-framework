@@ -11,6 +11,7 @@
 
   <artifactId>arkx-data</artifactId>
   <packaging>pom</packaging>
+  <name>ArkX Data</name>
 
   <modules>
     <module>arkx-data-common</module>

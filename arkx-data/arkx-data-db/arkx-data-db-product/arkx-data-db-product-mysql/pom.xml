@@ -8,6 +8,7 @@
     <version>${revision}</version>
   </parent>
   <artifactId>arkx-data-db-product-mysql</artifactId>
+  <name>ArkX Data DB Product MySQL</name>
 
   <dependencies>
 

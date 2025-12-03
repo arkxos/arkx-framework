@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-oracle</artifactId>
+  <name>ArkX Data DB Product Oracle</name>
 
   <dependencies>
 
