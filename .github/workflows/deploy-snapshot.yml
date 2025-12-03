@@ -33,9 +33,27 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Configure Maven settings for Sonatype Central
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << EOF
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>central</id>
+              <username>${{ secrets.SONATYPE_CENTRAL_USERNAME }}</username>
+              <password>${{ secrets.SONATYPE_CENTRAL_PASSWORD }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+
       - name: Build and deploy SNAPSHOT
         run: |
-          mvn clean deploy -DskipTests
+          mvn clean deploy -P central-snapshot -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
