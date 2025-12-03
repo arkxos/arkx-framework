@@ -120,6 +120,16 @@ jobs:
         passphrase: ${{ secrets.GPG_PASSPHRASE }}
         trust_level: 5
         
+    - name: Debug deployment configuration
+      run: |
+        echo "=== Deployment Info ==="
+        echo "Version: ${{ needs.detect-version.outputs.version }}"
+        echo "Profile: central-release,release"
+        echo "=== Maven Settings ==="
+        cat ~/.m2/settings.xml
+        echo "=== Effective POM ==="
+        mvn help:effective-pom -P central-release,release | head -50
+
     - name: Deploy to Maven Central
       timeout-minutes: 30
       run: |
@@ -129,7 +139,13 @@ jobs:
           -DskipTests \
           -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
           --no-transfer-progress \
-          -B
+          -X \
+          -B || {
+            echo "=== Deployment failed, checking status ==="
+            echo "You may need to manually publish the deployment at:"
+            echo "https://central.sonatype.com/publishing/deployments"
+            exit 1
+          }
 
   update-main-and-cleanup:
     needs: [detect-version, deploy-release]
