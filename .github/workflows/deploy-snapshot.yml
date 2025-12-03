@@ -18,7 +18,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '25'
           distribution: 'temurin'
 
       - name: Setup Maven
@@ -37,26 +37,41 @@ jobs:
         run: |
           mkdir -p ~/.m2
           cat > ~/.m2/settings.xml << EOF
-          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-            http://maven.apache.org/xsd/settings-1.0.0.xsd">
-            <servers>
-              <server>
-                <id>central</id>
-                <username>${{ secrets.SONATYPE_CENTRAL_USERNAME }}</username>
-                <password>${{ secrets.SONATYPE_CENTRAL_PASSWORD }}</password>
-              </server>
-            </servers>
-          </settings>
-          EOF
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>central</id>
+              <username>${{ secrets.SONATYPE_CENTRAL_USERNAME }}</username>
+              <password>${{ secrets.SONATYPE_CENTRAL_PASSWORD }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+        echo "Generated settings.xml with server ID: central"
+
+      - name: Debug Maven settings
+        run: |
+          echo "=== Maven settings.xml ==="
+          cat ~/.m2/settings.xml
+          echo "=== Environment variables ==="
+          echo "SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}"
+          echo "=== Maven effective settings ==="
+          mvn help:effective-settings -P central-snapshot
 
       - name: Build and deploy SNAPSHOT
+        timeout-minutes: 30
         run: |
-          mvn clean deploy -P central-snapshot -DskipTests
-        env:
-          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          echo "🚀 Deploying SNAPSHOT version to Central Snapshots..."
+          mvn deploy \
+            -P central-snapshot \
+            -DskipTests \
+            -Dgpg.skip=true \
+            --no-transfer-progress \
+            -B
+          echo "✅ SNAPSHOT deployment completed successfully!"
 
       - name: Summary
         run: |
