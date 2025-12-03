@@ -10,6 +10,7 @@
 	</parent>
 
 	<artifactId>arkx-boot-dependencies</artifactId>
+	<name>ArkX Boot Dependencies</name>
 	<packaging>pom</packaging>
 
 	<!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->

@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-sybase</artifactId>
+  <name>ArkX Data DB Product Sybase</name>
 
   <dependencies>
 

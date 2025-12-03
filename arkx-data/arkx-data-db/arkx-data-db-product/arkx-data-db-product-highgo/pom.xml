@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-highgo</artifactId>
+  <name>ArkX Data DB Product Highgo</name>
 
   <dependencies>
 

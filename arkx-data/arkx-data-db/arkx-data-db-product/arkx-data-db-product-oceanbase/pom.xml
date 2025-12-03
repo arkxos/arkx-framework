@@ -8,6 +8,7 @@
     <version>${revision}</version>
   </parent>
   <artifactId>arkx-data-db-product-oceanbase</artifactId>
+  <name>ArkX Data DB Product OceanBase</name>
 
   <dependencies>
 

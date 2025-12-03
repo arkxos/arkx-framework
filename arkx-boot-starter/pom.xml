@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>arkx-boot-starter</artifactId>
+  <name>ArkX Boot Starter</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

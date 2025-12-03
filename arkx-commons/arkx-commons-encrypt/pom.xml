@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>arkx-commons-encrypt</artifactId>
+  <name>ArkX Commons Encrypt</name>
 
   <description>arkx-common-encrypt 数据加解密模块</description>
 

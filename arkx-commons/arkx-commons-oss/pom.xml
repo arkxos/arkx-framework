@@ -8,6 +8,7 @@
   </parent>
 
   <artifactId>arkx-commons-oss</artifactId>
+  <name>ArkX Commons OSS</name>
   <packaging>jar</packaging>
 
   <description>文件系统依赖</description>

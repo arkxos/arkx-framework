@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-greenplum</artifactId>
+  <name>ArkX Data DB Product Greenplum</name>
 
   <dependencies>
 

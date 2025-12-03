@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-sqlite</artifactId>
+  <name>ArkX Data DB Product SQLite</name>
 
   <dependencies>
 

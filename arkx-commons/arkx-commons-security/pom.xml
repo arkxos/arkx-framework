@@ -8,6 +8,7 @@
   </parent>
 
   <artifactId>arkx-commons-security</artifactId>
+  <name>ArkX Commons Security</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

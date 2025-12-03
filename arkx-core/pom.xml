@@ -9,6 +9,7 @@
     <relativePath>../arkx-parent/pom.xml</relativePath>
   </parent>
   <artifactId>arkx-core</artifactId>
+  <name>ArkX Core</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

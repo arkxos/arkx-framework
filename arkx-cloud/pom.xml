@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-cloud</artifactId>
+  <name>ArkX Cloud</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

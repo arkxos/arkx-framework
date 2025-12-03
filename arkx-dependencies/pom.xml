@@ -10,6 +10,7 @@
 	</parent>
 
 	<artifactId>arkx-dependencies</artifactId>
+	<name>ArkX Dependencies</name>
 	<packaging>pom</packaging>
 
 	<properties>

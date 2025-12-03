@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>arkx-preloader</artifactId>
+  <name>ArkX Preloader</name>
 
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->

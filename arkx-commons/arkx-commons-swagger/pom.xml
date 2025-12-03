@@ -26,6 +26,7 @@
   </parent>
 
   <artifactId>arkx-commons-swagger</artifactId>
+  <name>ArkX Commons Swagger</name>
   <packaging>jar</packaging>
 
   <description>接口文档</description>

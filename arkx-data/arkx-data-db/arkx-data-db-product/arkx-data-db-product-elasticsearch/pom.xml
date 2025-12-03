@@ -8,6 +8,7 @@
     <version>${revision}</version>
   </parent>
   <artifactId>arkx-data-db-product-elasticsearch</artifactId>
+  <name>ArkX Data DB Product Elasticsearch</name>
 
   <dependencies>
 

@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-register-product</artifactId>
+  <name>ArkX Data DB Register Product</name>
 
   <dependencies>
     <dependency>

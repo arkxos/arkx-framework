@@ -25,6 +25,7 @@
   </parent>
 
   <artifactId>arkx-commons-seata</artifactId>
+  <name>ArkX Commons Seata</name>
   <packaging>jar</packaging>
 
   <description>分布式事务处理模块</description>

@@ -8,6 +8,7 @@
   </parent>
 
   <artifactId>arkx-commons-xss</artifactId>
+  <name>ArkX Commons XSS</name>
   <packaging>jar</packaging>
 
   <description>pigx xss 安全过滤插件 基于 JSOUP</description>

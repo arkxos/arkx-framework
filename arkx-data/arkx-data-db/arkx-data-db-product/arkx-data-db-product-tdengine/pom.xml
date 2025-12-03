@@ -8,6 +8,7 @@
     <version>${revision}</version>
   </parent>
   <artifactId>arkx-data-db-product-tdengine</artifactId>
+  <name>ArkX Data DB Product TDengine</name>
 
   <dependencies>
 

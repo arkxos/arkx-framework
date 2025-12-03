@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-gbase</artifactId>
+  <name>ArkX Data DB Product GBase</name>
 
   <dependencies>
 

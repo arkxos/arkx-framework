@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-jpa</artifactId>
+  <name>ArkX Data JPA</name>
 
   <dependencyManagement>
     <dependencies>

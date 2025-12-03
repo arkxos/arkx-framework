@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-hive</artifactId>
+  <name>ArkX Data DB Product Hive</name>
 
   <dependencies>
 

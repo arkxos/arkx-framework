@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-performance-monitor</artifactId>
+  <name>ArkX Performance Monitor</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

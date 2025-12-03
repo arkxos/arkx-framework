@@ -10,6 +10,7 @@
 
   <artifactId>arkx-commons-core</artifactId>
   <packaging>jar</packaging>
+  <name>ArkX Commons Core</name>
 
   <dependencies>
     <dependency>

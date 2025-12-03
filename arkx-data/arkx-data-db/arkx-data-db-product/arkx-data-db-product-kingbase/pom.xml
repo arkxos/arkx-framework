@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-kingbase</artifactId>
+  <name>ArkX Data DB Product Kingbase</name>
 
   <dependencies>
 

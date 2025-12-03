@@ -23,6 +23,7 @@
     <version>${revision}</version>
   </parent>
   <artifactId>arkx-commons-feign</artifactId>
+  <name>ArkX Commons Feign</name>
   <packaging>jar</packaging>
   <description>feign-sentinel服务降级熔断、限流组件</description>
 

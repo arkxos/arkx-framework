@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-openguass</artifactId>
+  <name>ArkX Data DB Product OpenGauss</name>
 
   <dependencies>
 

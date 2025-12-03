@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-sqlserver</artifactId>
+  <name>ArkX Data DB Product SQL Server</name>
 
   <dependencies>
 

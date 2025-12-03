@@ -8,6 +8,7 @@
   </parent>
 
   <artifactId>arkx-data-mybatis-test</artifactId>
+  <name>ArkX Data MyBatis Test</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

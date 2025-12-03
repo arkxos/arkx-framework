@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-sidecar</artifactId>
+  <name>ArkX Sidecar</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

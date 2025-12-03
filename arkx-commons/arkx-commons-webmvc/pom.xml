@@ -8,6 +8,7 @@
   </parent>
 
   <artifactId>arkx-commons-webmvc</artifactId>
+  <name>ArkX Commons WebMVC</name>
 
   <properties>
     <maven.compiler.source>25</maven.compiler.source>

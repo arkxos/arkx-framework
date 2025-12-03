@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>arkx-data-db-product-oscar</artifactId>
+  <name>ArkX Data DB Product Oscar</name>
 
   <dependencies>
 

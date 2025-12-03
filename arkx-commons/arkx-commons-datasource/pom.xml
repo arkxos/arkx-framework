@@ -23,6 +23,7 @@
   </parent>
 
   <artifactId>arkx-commons-datasource</artifactId>
+  <name>ArkX Commons Datasource</name>
 
   <packaging>jar</packaging>
 
