@@ -22,20 +22,20 @@ import lombok.NoArgsConstructor;
 @Table("ark_meta_column")
 public class MetaColumn extends StringIdEntity {
 
-	private Long connectionConfigId;
+    private Long connectionConfigId;
 
-	private String schemaName;
+    private String schemaName;
 
-	private String tableName;
+    private String tableName;
 
-	private String fieldName;
+    private String fieldName;
 
-	private String categoryId;
+    private String categoryId;
 
-	private Integer categoryLevel;
+    private Integer categoryLevel;
 
-	private String referencedTableName;
+    private String referencedTableName;
 
-	private String referencedFieldName;
+    private String referencedFieldName;
 
 }

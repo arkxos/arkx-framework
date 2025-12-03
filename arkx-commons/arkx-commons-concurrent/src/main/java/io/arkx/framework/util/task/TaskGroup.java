@@ -16,183 +16,179 @@ import io.arkx.framework.util.task.util.Utils;
 // 只能在同一线程添加任务，以及在同一线程调用 await 方法
 public final class TaskGroup {
 
-	private final DefaultThreadPoolExecutor taskScheduler;
+    private final DefaultThreadPoolExecutor taskScheduler;
 
-	private final String name;
+    private final String name;
 
-	private final String id;
+    private final String id;
 
-	final AtomicInteger counter = new AtomicInteger(0);
+    final AtomicInteger counter = new AtomicInteger(0);
 
-	final Data data = new Data();
+    final Data data = new Data();
 
-	private final Deque<Task> runningTaskQueue = new ConcurrentLinkedDeque<>();
+    private final Deque<Task> runningTaskQueue = new ConcurrentLinkedDeque<>();
 
-	private final ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
 
-	private final Condition isEmpty = lock.newCondition();
+    private final Condition isEmpty = lock.newCondition();
 
-	private final AtomicInteger taskCount = new AtomicInteger(0);
+    private final AtomicInteger taskCount = new AtomicInteger(0);
 
-	TaskGroup(String name, DefaultThreadPoolExecutor taskScheduler) {
-		this.name = name;
-		this.id = Utils.generateId();
-		this.taskScheduler = taskScheduler;
-	}
+    TaskGroup(String name, DefaultThreadPoolExecutor taskScheduler) {
+        this.name = name;
+        this.id = Utils.generateId();
+        this.taskScheduler = taskScheduler;
+    }
 
-	public void whenComplete(final Runnable runnable) {
-		new Thread(() -> {
-			await();
-			if (runnable != null) {
-				runnable.run();
-			}
-		}).start();
-	}
+    public void whenComplete(final Runnable runnable) {
+        new Thread(() -> {
+            await();
+            if (runnable != null) {
+                runnable.run();
+            }
+        }).start();
+    }
 
-	/**
-	 * 等待任务组中的所有任务执行完毕
-	 * <p>
-	 * 该方法会阻塞当前线程，直到任务组中的所有任务执行完毕 该方法只能在同一线程中调用
-	 * </p>
-	 * <p>
-	 * 之前该方法使用死循环实现，这有可能造成阻塞线程永远无法停止
-	 * </p>
-	 * <p>
-	 * 所以在新版本中放弃死循环的阻塞方式，改为使用 {@link Condition} 的方式实现
-	 * </p>
-	 */
-	public void await() {
-		lock.lock();
-		try {
-			isEmpty.await();
-		}
-		catch (InterruptedException ignore) {
+    /**
+     * 等待任务组中的所有任务执行完毕
+     * <p>
+     * 该方法会阻塞当前线程，直到任务组中的所有任务执行完毕 该方法只能在同一线程中调用
+     * </p>
+     * <p>
+     * 之前该方法使用死循环实现，这有可能造成阻塞线程永远无法停止
+     * </p>
+     * <p>
+     * 所以在新版本中放弃死循环的阻塞方式，改为使用 {@link Condition} 的方式实现
+     * </p>
+     */
+    public void await() {
+        lock.lock();
+        try {
+            isEmpty.await();
+        } catch (InterruptedException ignore) {
 
-		}
-		finally {
-			lock.unlock();
-		}
-	}
+        } finally {
+            lock.unlock();
+        }
+    }
 
-	public int getCounter() {
-		return counter.get();
-	}
+    public int getCounter() {
+        return counter.get();
+    }
 
-	public Data getData() {
-		return this.data;
-	}
+    public Data getData() {
+        return this.data;
+    }
 
-	public void go(Item item) {
-		Assert.notNull(item);
+    public void go(Item item) {
+        Assert.notNull(item);
 
-		item.setTaskGroup(this);
-		runningTaskQueue.offer(item);
-		taskCount.incrementAndGet();
-		taskScheduler.submit(item, this);
-	}
+        item.setTaskGroup(this);
+        runningTaskQueue.offer(item);
+        taskCount.incrementAndGet();
+        taskScheduler.submit(item, this);
+    }
 
-	public Builder buildItem(TaskRunner taskRunner) {
-		Assert.notNull(taskRunner);
+    public Builder buildItem(TaskRunner taskRunner) {
+        Assert.notNull(taskRunner);
 
-		return new Builder(taskRunner, this);
-	}
+        return new Builder(taskRunner, this);
+    }
 
-	public Item newItem(TaskRunner taskRunner) {
-		Assert.notNull(taskRunner);
+    public Item newItem(TaskRunner taskRunner) {
+        Assert.notNull(taskRunner);
 
-		return new Builder(taskRunner, this).build();
-	}
+        return new Builder(taskRunner, this).build();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public List<Task> getRunningTasks() {
-		return new LinkedList<>(runningTaskQueue);
-	}
+    public List<Task> getRunningTasks() {
+        return new LinkedList<>(runningTaskQueue);
+    }
 
-	public static final class Item extends BaseTask {
+    public static final class Item extends BaseTask {
 
-		private TaskGroup taskGroup;
+        private TaskGroup taskGroup;
 
-		private Item(String type, String id, TaskRunner taskRunner, TaskGroup taskGroup) {
-			super(type, id, taskRunner);
-			this.taskGroup = taskGroup;
-		}
+        private Item(String type, String id, TaskRunner taskRunner, TaskGroup taskGroup) {
+            super(type, id, taskRunner);
+            this.taskGroup = taskGroup;
+        }
 
-		private void setTaskGroup(TaskGroup group) {
-			this.taskGroup = group;
-		}
+        private void setTaskGroup(TaskGroup group) {
+            this.taskGroup = group;
+        }
 
-		public String getGroupName() {
-			return this.taskGroup.name;
-		}
+        public String getGroupName() {
+            return this.taskGroup.name;
+        }
 
-	}
+    }
 
-	public static final class Builder extends Task.Builder {
+    public static final class Builder extends Task.Builder {
 
-		private final TaskGroup taskGroup;
+        private final TaskGroup taskGroup;
 
-		private Builder(TaskRunner taskRunner, TaskGroup taskGroup) {
-			super(taskRunner);
-			this.taskGroup = taskGroup;
-		}
+        private Builder(TaskRunner taskRunner, TaskGroup taskGroup) {
+            super(taskRunner);
+            this.taskGroup = taskGroup;
+        }
 
-		@Override
-		public Item build() {
-			Item item = new Item(this.type, this.id, taskRunner, taskGroup);
-			item.setProgress(this.progress);
-			item.addListener(this.taskListener);
-			return item;
-		}
+        @Override
+        public Item build() {
+            Item item = new Item(this.type, this.id, taskRunner, taskGroup);
+            item.setProgress(this.progress);
+            item.addListener(this.taskListener);
+            return item;
+        }
 
-	}
+    }
 
-	protected static class GroupItemExecutorBase extends BaseTaskExecutor {
+    protected static class GroupItemExecutorBase extends BaseTaskExecutor {
 
-		private final TaskGroup group;
+        private final TaskGroup group;
 
-		protected GroupItemExecutorBase(BaseTask task, TaskGroup group) {
-			super(task);
-			this.group = group;
-		}
+        protected GroupItemExecutorBase(BaseTask task, TaskGroup group) {
+            super(task);
+            this.group = group;
+        }
 
-		@Override
-		public void run() {
-			super.run();
-		}
+        @Override
+        public void run() {
+            super.run();
+        }
 
-		@Override
-		protected TaskContext createContext() {
-			return new TaskContext(task, group);
-		}
+        @Override
+        protected TaskContext createContext() {
+            return new TaskContext(task, group);
+        }
 
-		@Override
-		protected void finallyExecute() {
-			try {
-				super.finallyExecute();
-			}
-			finally {
-				this.group.runningTaskQueue.remove(this.task);
-				this.group.taskCount.decrementAndGet();
-			}
-			// 尝试将任务数设置为 0，如果设置成功，然后尝试唤醒等待的线程
-			if (this.group.taskCount.compareAndSet(0, 0)) {
-				this.group.lock.lock();
-				try {
-					this.group.isEmpty.signalAll();
-				}
-				finally {
-					this.group.lock.unlock();
-				}
-			}
-		}
+        @Override
+        protected void finallyExecute() {
+            try {
+                super.finallyExecute();
+            } finally {
+                this.group.runningTaskQueue.remove(this.task);
+                this.group.taskCount.decrementAndGet();
+            }
+            // 尝试将任务数设置为 0，如果设置成功，然后尝试唤醒等待的线程
+            if (this.group.taskCount.compareAndSet(0, 0)) {
+                this.group.lock.lock();
+                try {
+                    this.group.isEmpty.signalAll();
+                } finally {
+                    this.group.lock.unlock();
+                }
+            }
+        }
 
-	}
+    }
 
 }

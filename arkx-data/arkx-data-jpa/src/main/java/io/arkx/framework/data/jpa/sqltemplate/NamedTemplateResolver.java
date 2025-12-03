@@ -11,6 +11,6 @@ import org.springframework.core.io.Resource;
  */
 public interface NamedTemplateResolver {
 
-	Iterator<Void> doInTemplateResource(Resource resource, final NamedTemplateCallback callback) throws Exception;
+    Iterator<Void> doInTemplateResource(Resource resource, final NamedTemplateCallback callback) throws Exception;
 
 }

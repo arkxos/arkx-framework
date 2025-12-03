@@ -7,19 +7,19 @@ package com.github.dreamroute.locker.exception;
  */
 public class DataHasBeenModifyException extends RuntimeException {
 
-	public DataHasBeenModifyException() {
-	}
+    public DataHasBeenModifyException() {
+    }
 
-	public DataHasBeenModifyException(String message) {
-		super(message);
-	}
+    public DataHasBeenModifyException(String message) {
+        super(message);
+    }
 
-	public DataHasBeenModifyException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public DataHasBeenModifyException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public DataHasBeenModifyException(Throwable cause) {
-		super(cause);
-	}
+    public DataHasBeenModifyException(Throwable cause) {
+        super(cause);
+    }
 
 }

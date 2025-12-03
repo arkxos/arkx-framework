@@ -36,39 +36,37 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  */
 public class EnumMarkerDeserializerForCollection extends JsonDeserializer<Collection<Enum<? extends EnumMarker>>> {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<Enum<? extends EnumMarker>> deserialize(JsonParser p, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
-		ArrayNode treeNode = p.readValueAsTree();
-		Field field;
-		try {
-			field = p.getCurrentValue().getClass().getDeclaredField(p.currentName());
-		}
-		catch (NoSuchFieldException e) {
-			return null;
-		}
-		field.setAccessible(true);
-		if (!field.getType().equals(Collection.class)) {
-			return null;
-		}
-		ParameterizedType genericType = (ParameterizedType) field.getGenericType();
-		Class<? extends EnumMarker> actualTypeArgument = (Class<? extends EnumMarker>) genericType
-			.getActualTypeArguments()[0];
-		@SuppressWarnings("rawtypes")
-		Collection result = new ArrayList<>();
-		Iterator<JsonNode> elements = treeNode.elements();
-		while (elements.hasNext()) {
-			String v = elements.next().asText();
-			if (EnumMarker.class.isAssignableFrom(actualTypeArgument)) {
-				EnumMarker enumMarker = EnumMarker.valueOf(actualTypeArgument, Integer.parseInt(v));
-				result.add(enumMarker);
-			}
-			else {
-				result.add(v);
-			}
-		}
-		return result;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public Collection<Enum<? extends EnumMarker>> deserialize(JsonParser p, DeserializationContext ctxt)
+            throws IOException, JsonProcessingException {
+        ArrayNode treeNode = p.readValueAsTree();
+        Field field;
+        try {
+            field = p.getCurrentValue().getClass().getDeclaredField(p.currentName());
+        } catch (NoSuchFieldException e) {
+            return null;
+        }
+        field.setAccessible(true);
+        if (!field.getType().equals(Collection.class)) {
+            return null;
+        }
+        ParameterizedType genericType = (ParameterizedType) field.getGenericType();
+        Class<? extends EnumMarker> actualTypeArgument = (Class<? extends EnumMarker>) genericType
+                .getActualTypeArguments()[0];
+        @SuppressWarnings("rawtypes")
+        Collection result = new ArrayList<>();
+        Iterator<JsonNode> elements = treeNode.elements();
+        while (elements.hasNext()) {
+            String v = elements.next().asText();
+            if (EnumMarker.class.isAssignableFrom(actualTypeArgument)) {
+                EnumMarker enumMarker = EnumMarker.valueOf(actualTypeArgument, Integer.parseInt(v));
+                result.add(enumMarker);
+            } else {
+                result.add(v);
+            }
+        }
+        return result;
+    }
 
 }

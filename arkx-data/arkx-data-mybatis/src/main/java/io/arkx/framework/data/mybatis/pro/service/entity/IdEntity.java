@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class IdEntity {
 
-	@Id
-	private Long id;
+    @Id
+    private Long id;
 
 }

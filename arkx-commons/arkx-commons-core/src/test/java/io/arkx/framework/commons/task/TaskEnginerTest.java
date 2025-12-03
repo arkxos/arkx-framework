@@ -18,33 +18,33 @@ import com.alibaba.fastjson.JSON;
  */
 public class TaskEnginerTest {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		String taskEnginerDataPath = SystemInfo.userHome() + File.separator + "temp" + File.separator
-				+ "task-enginer-data";
-		TaskEnginer taskEnginer = new TaskEnginer(taskEnginerDataPath);
-		taskEnginer.start();
+        String taskEnginerDataPath = SystemInfo.userHome() + File.separator + "temp" + File.separator
+                + "task-enginer-data";
+        TaskEnginer taskEnginer = new TaskEnginer(taskEnginerDataPath);
+        taskEnginer.start();
 
-		if (!taskEnginer.containsTask(ReadFileTaskProcessor.ID + "_01")) {
-			// taskEnginer.deleteTask(ReadFileTaskModel.ID);
-			taskEnginer.addTask(new ReadFileTaskProcessor("_01"));
-		}
+        if (!taskEnginer.containsTask(ReadFileTaskProcessor.ID + "_01")) {
+            // taskEnginer.deleteTask(ReadFileTaskModel.ID);
+            taskEnginer.addTask(new ReadFileTaskProcessor("_01"));
+        }
 
-		taskEnginer.onFinished(() -> {
-			System.out.println("execute finished");
-		});
+        taskEnginer.onFinished(() -> {
+            System.out.println("execute finished");
+        });
 
-		taskEnginer.run();
+        taskEnginer.run();
 
-		TimeWatch timeWatch = TimeWatch.create();
-		timeWatch.startWithTaskName("dd");
-		String text = FileUtil.readText(
-				"/Users/darkness/ice-queen3-data/task-enginer-data/download-raw-eod-quote__xiuqiu-2016-4__snapshot_2016-11-18.json");
-		timeWatch.stopAndPrint();
-		timeWatch.startWithTaskName("json");
-		QueueInfo task = JSON.parseObject(text, QueueInfo.class);
-		timeWatch.stopAndPrint();
-		System.out.println(task);
-	}
+        TimeWatch timeWatch = TimeWatch.create();
+        timeWatch.startWithTaskName("dd");
+        String text = FileUtil.readText(
+                "/Users/darkness/ice-queen3-data/task-enginer-data/download-raw-eod-quote__xiuqiu-2016-4__snapshot_2016-11-18.json");
+        timeWatch.stopAndPrint();
+        timeWatch.startWithTaskName("json");
+        QueueInfo task = JSON.parseObject(text, QueueInfo.class);
+        timeWatch.stopAndPrint();
+        System.out.println(task);
+    }
 
 }

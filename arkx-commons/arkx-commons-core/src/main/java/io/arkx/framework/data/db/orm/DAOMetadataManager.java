@@ -8,17 +8,17 @@ import io.arkx.framework.commons.collection.ConcurrentMapx;
  */
 public class DAOMetadataManager {
 
-	static ConcurrentMapx<String, DAOMetadata> map = new ConcurrentMapx<String, DAOMetadata>();
+    static ConcurrentMapx<String, DAOMetadata> map = new ConcurrentMapx<String, DAOMetadata>();
 
-	@SuppressWarnings("rawtypes")
-	public static DAOMetadata getMetadata(Class<? extends DAO> clazz) {
-		String className = clazz.getName();
-		if (!map.containsKey(className)) {
-			DAOMetadata dm = new DAOMetadata(clazz);
-			map.put(className, dm);
-			return dm;
-		}
-		return map.get(className);
-	}
+    @SuppressWarnings("rawtypes")
+    public static DAOMetadata getMetadata(Class<? extends DAO> clazz) {
+        String className = clazz.getName();
+        if (!map.containsKey(className)) {
+            DAOMetadata dm = new DAOMetadata(clazz);
+            map.put(className, dm);
+            return dm;
+        }
+        return map.get(className);
+    }
 
 }

@@ -13,13 +13,14 @@ import io.arkx.framework.data.mybatis.resolver.SqlFilterArgumentResolver;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class MybatisWebMvcConfigurer implements WebMvcConfigurer {
 
-	/**
-	 * SQL 过滤器避免SQL 注入
-	 * @param argumentResolvers
-	 */
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		argumentResolvers.add(new SqlFilterArgumentResolver());
-	}
+    /**
+     * SQL 过滤器避免SQL 注入
+     *
+     * @param argumentResolvers
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new SqlFilterArgumentResolver());
+    }
 
 }

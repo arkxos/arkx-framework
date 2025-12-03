@@ -12,11 +12,11 @@ import jakarta.servlet.jsp.PageContext;
  */
 public class RadioTag extends CheckboxTag {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public void setPageContext(PageContext pc) {
-		super.setPageContext(pc);
-		this.type = "radio";
-	}
+    public void setPageContext(PageContext pc) {
+        super.setPageContext(pc);
+        this.type = "radio";
+    }
 
 }

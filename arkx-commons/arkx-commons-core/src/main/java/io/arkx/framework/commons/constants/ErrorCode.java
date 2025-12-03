@@ -8,7 +8,7 @@ package io.arkx.framework.commons.constants;
 
 public enum ErrorCode {
 
-	// @formatter:off
+    // @formatter:off
     /**
      * 成功
      */
@@ -67,42 +67,42 @@ public enum ErrorCode {
     SERVICE_UNAVAILABLE(5003, "service_unavailable");
     // @formatter:on
 
-	private int code;
+    private int code;
 
-	private String message;
+    private String message;
 
-	ErrorCode() {
-	}
+    ErrorCode() {
+    }
 
-	private ErrorCode(int code, String message) {
-		this.code = code;
-		this.message = message;
-	}
+    private ErrorCode(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 
-	public static ErrorCode getResultEnum(int code) {
-		for (ErrorCode type : ErrorCode.values()) {
-			if (type.getCode() == code) {
-				return type;
-			}
-		}
-		return ERROR;
-	}
+    public static ErrorCode getResultEnum(int code) {
+        for (ErrorCode type : ErrorCode.values()) {
+            if (type.getCode() == code) {
+                return type;
+            }
+        }
+        return ERROR;
+    }
 
-	public static ErrorCode getResultEnum(String message) {
-		for (ErrorCode type : ErrorCode.values()) {
-			if (type.getMessage().equals(message)) {
-				return type;
-			}
-		}
-		return ERROR;
-	}
+    public static ErrorCode getResultEnum(String message) {
+        for (ErrorCode type : ErrorCode.values()) {
+            if (type.getMessage().equals(message)) {
+                return type;
+            }
+        }
+        return ERROR;
+    }
 
-	public int getCode() {
-		return code;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
 }

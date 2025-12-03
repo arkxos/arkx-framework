@@ -18,24 +18,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class ConverterFactory {
 
-	private static Map<String, Converter> cache = new ConcurrentHashMap<>();
+    private static Map<String, Converter> cache = new ConcurrentHashMap<>();
 
-	public static <T extends Converter> T getConverter(Class<T> clazz) {
-		String clazzName = clazz.getName();
-		Converter converter = cache.get(clazzName);
-		if (Objects.isNull(converter)) {
-			try {
-				converter = clazz.newInstance();
-			}
-			catch (InstantiationException | IllegalAccessException e) {
-				log.error("Error:", e);
-			}
-		}
+    public static <T extends Converter> T getConverter(Class<T> clazz) {
+        String clazzName = clazz.getName();
+        Converter converter = cache.get(clazzName);
+        if (Objects.isNull(converter)) {
+            try {
+                converter = clazz.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                log.error("Error:", e);
+            }
+        }
 
-		return (T) converter;
-	}
+        return (T) converter;
+    }
 
-	private ConverterFactory() {
-	}
+    private ConverterFactory() {
+    }
 
 }

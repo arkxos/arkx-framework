@@ -11,13 +11,15 @@ package io.arkx.framework.commons.websocket.distribute;
  */
 public interface MessageDistributor {
 
-	/**
-	 * 分发消息。
-	 * <p>
-	 * 根据实现类的不同，此方法可以将消息发送到本地会话或发布到消息队列中， 以便在集群环境中进行广播或单点发送。
-	 * </p>
-	 * @param messageDO 待发送的消息对象，包含消息内容和目标会话信息。
-	 */
-	void distribute(MessageDO messageDO);
+    /**
+     * 分发消息。
+     * <p>
+     * 根据实现类的不同，此方法可以将消息发送到本地会话或发布到消息队列中， 以便在集群环境中进行广播或单点发送。
+     * </p>
+     *
+     * @param messageDO
+     *            待发送的消息对象，包含消息内容和目标会话信息。
+     */
+    void distribute(MessageDO messageDO);
 
 }

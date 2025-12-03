@@ -67,28 +67,28 @@ import io.arkx.framework.thirdparty.el.Logger;
 
 public class NotEqualsOperator extends EqualityOperator {
 
-	public static final NotEqualsOperator SINGLETON = new NotEqualsOperator();
+    public static final NotEqualsOperator SINGLETON = new NotEqualsOperator();
 
-	/**
-	 * Constructor
-	 **/
-	public NotEqualsOperator() {
-	}
+    /**
+     * Constructor
+     **/
+    public NotEqualsOperator() {
+    }
 
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	@Override
-	public String getOperatorSymbol() {
-		return "!=";
-	}
+    /**
+     * Returns the symbol representing the operator
+     **/
+    @Override
+    public String getOperatorSymbol() {
+        return "!=";
+    }
 
-	/**
-	 * Applies the operator given the fact that the two elements are equal.
-	 **/
-	@Override
-	public boolean apply(boolean pAreEqual, Logger pLogger) {
-		return !pAreEqual;
-	}
+    /**
+     * Applies the operator given the fact that the two elements are equal.
+     **/
+    @Override
+    public boolean apply(boolean pAreEqual, Logger pLogger) {
+        return !pAreEqual;
+    }
 
 }

@@ -13,16 +13,20 @@ import org.springframework.core.annotation.Order;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public interface EntityAssembler<T> {
 
-	/**
-	 * 组装
-	 * @param bean bean
-	 */
-	void assemble(T bean);
+    /**
+     * 组装
+     *
+     * @param bean
+     *            bean
+     */
+    void assemble(T bean);
 
-	/**
-	 * 批量组装
-	 * @param beans beans
-	 */
-	void massemble(Iterable<T> beans);
+    /**
+     * 批量组装
+     *
+     * @param beans
+     *            beans
+     */
+    void massemble(Iterable<T> beans);
 
 }

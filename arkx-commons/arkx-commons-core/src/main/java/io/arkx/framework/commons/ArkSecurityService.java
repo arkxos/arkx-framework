@@ -10,8 +10,8 @@ import java.util.List;
  */
 public interface ArkSecurityService {
 
-	List<Long> getCurrentUserDataScope();
+    List<Long> getCurrentUserDataScope();
 
-	String getCurrentUsername();
+    String getCurrentUsername();
 
 }

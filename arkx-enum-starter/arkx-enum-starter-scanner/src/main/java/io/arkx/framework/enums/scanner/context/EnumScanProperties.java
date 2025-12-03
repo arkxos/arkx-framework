@@ -13,17 +13,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "enum-scan")
 public class EnumScanProperties {
 
-	/**
-	 * 扫描的包路径
-	 */
-	private List<String> scanPackages = Collections.singletonList("com");
+    /**
+     * 扫描的包路径
+     */
+    private List<String> scanPackages = Collections.singletonList("com");
 
-	public List<String> getScanPackages() {
-		return scanPackages;
-	}
+    public List<String> getScanPackages() {
+        return scanPackages;
+    }
 
-	public void setScanPackages(List<String> scanPackages) {
-		this.scanPackages = scanPackages;
-	}
+    public void setScanPackages(List<String> scanPackages) {
+        this.scanPackages = scanPackages;
+    }
 
 }

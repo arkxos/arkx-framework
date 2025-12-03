@@ -41,61 +41,65 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @author lengleng
  * @date 2019-06-24
- * <p>
- * 解决Mybatis Plus Order By SQL注入问题
+ *       <p>
+ *       解决Mybatis Plus Order By SQL注入问题
  */
 @Slf4j
 public class SqlFilterArgumentResolver implements HandlerMethodArgumentResolver {
 
-	/**
-	 * 判断Controller是否包含page 参数
-	 * @param parameter 参数
-	 * @return 是否过滤
-	 */
-	@Override
-	public boolean supportsParameter(MethodParameter parameter) {
-		return parameter.getParameterType().equals(Page.class);
-	}
+    /**
+     * 判断Controller是否包含page 参数
+     *
+     * @param parameter
+     *            参数
+     * @return 是否过滤
+     */
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.getParameterType().equals(Page.class);
+    }
 
-	/**
-	 * @param parameter 入参集合
-	 * @param mavContainer model 和 view
-	 * @param webRequest web相关
-	 * @param binderFactory 入参解析
-	 * @return 检查后新的page对象
-	 * <p>
-	 * page 只支持查询 GET .如需解析POST获取请求报文体处理
-	 */
-	@Override
-	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    /**
+     * @param parameter
+     *            入参集合
+     * @param mavContainer
+     *            model 和 view
+     * @param webRequest
+     *            web相关
+     * @param binderFactory
+     *            入参解析
+     * @return 检查后新的page对象
+     *         <p>
+     *         page 只支持查询 GET .如需解析POST获取请求报文体处理
+     */
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
 
-		HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
 
-		String[] ascs = request.getParameterValues("ascs");
-		String[] descs = request.getParameterValues("descs");
-		String current = request.getParameter("current");
-		String size = request.getParameter("size");
+        String[] ascs = request.getParameterValues("ascs");
+        String[] descs = request.getParameterValues("descs");
+        String current = request.getParameter("current");
+        String size = request.getParameter("size");
 
-		Page<?> page = new Page<>();
-		if (StrUtil.isNotBlank(current)) {
-			page.setCurrent(Convert.toLong(current, 0L));
-		}
+        Page<?> page = new Page<>();
+        if (StrUtil.isNotBlank(current)) {
+            page.setCurrent(Convert.toLong(current, 0L));
+        }
 
-		if (StrUtil.isNotBlank(size)) {
-			page.setSize(Convert.toLong(size, 10L));
-		}
+        if (StrUtil.isNotBlank(size)) {
+            page.setSize(Convert.toLong(size, 10L));
+        }
 
-		List<OrderItem> orderItemList = new ArrayList<>();
-		Optional.ofNullable(ascs)
-			.ifPresent(s -> orderItemList
-				.addAll(Arrays.stream(s).filter(asc -> !SqlInjectionUtils.check(asc)).map(OrderItem::asc).toList()));
-		Optional.ofNullable(descs)
-			.ifPresent(s -> orderItemList
-				.addAll(Arrays.stream(s).filter(desc -> !SqlInjectionUtils.check(desc)).map(OrderItem::desc).toList()));
-		page.addOrder(orderItemList);
+        List<OrderItem> orderItemList = new ArrayList<>();
+        Optional.ofNullable(ascs).ifPresent(s -> orderItemList
+                .addAll(Arrays.stream(s).filter(asc -> !SqlInjectionUtils.check(asc)).map(OrderItem::asc).toList()));
+        Optional.ofNullable(descs).ifPresent(s -> orderItemList
+                .addAll(Arrays.stream(s).filter(desc -> !SqlInjectionUtils.check(desc)).map(OrderItem::desc).toList()));
+        page.addOrder(orderItemList);
 
-		return page;
-	}
+        return page;
+    }
 
 }

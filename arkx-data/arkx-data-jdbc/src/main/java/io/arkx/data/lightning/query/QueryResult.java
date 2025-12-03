@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QueryResult {
 
-	private String sql; // 生成的SQL语句
+    private String sql; // 生成的SQL语句
 
-	private String error;
+    private String error;
 
 }

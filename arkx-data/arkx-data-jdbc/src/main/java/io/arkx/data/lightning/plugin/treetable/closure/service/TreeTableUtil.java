@@ -17,26 +17,26 @@ import io.arkx.framework.data.common.entity.TreeEntity;
  */
 public class TreeTableUtil {
 
-	public static BizTableMeta findBizTableMeta(Class<? extends TreeEntity> clazz) {
-		// 2. 闭包表关系插入（由闭包服务完成）
-		BizTableMeta meta = new BizTableMeta();
+    public static BizTableMeta findBizTableMeta(Class<? extends TreeEntity> clazz) {
+        // 2. 闭包表关系插入（由闭包服务完成）
+        BizTableMeta meta = new BizTableMeta();
 
-		IdType idType = LongId.class.isAssignableFrom(clazz) ? IdType.LONG : IdType.STRING;
-		if (clazz.isAnnotationPresent(Table.class)) {
-			Table treeTable = clazz.getAnnotation(Table.class);
-			String bizTable = treeTable.name();
-			if (StringUtils.isEmpty(bizTable)) {
-				bizTable = treeTable.value();
-			}
-			if (StringUtils.isEmpty(bizTable)) {
-				bizTable = StringUtil.camelToUnderline(clazz.getSimpleName());
-			}
-			meta.setBizTable(bizTable);
-			meta.setUseIndependent(false);
-			meta.setIdType(idType);
-		}
+        IdType idType = LongId.class.isAssignableFrom(clazz) ? IdType.LONG : IdType.STRING;
+        if (clazz.isAnnotationPresent(Table.class)) {
+            Table treeTable = clazz.getAnnotation(Table.class);
+            String bizTable = treeTable.name();
+            if (StringUtils.isEmpty(bizTable)) {
+                bizTable = treeTable.value();
+            }
+            if (StringUtils.isEmpty(bizTable)) {
+                bizTable = StringUtil.camelToUnderline(clazz.getSimpleName());
+            }
+            meta.setBizTable(bizTable);
+            meta.setUseIndependent(false);
+            meta.setIdType(idType);
+        }
 
-		return meta;
-	}
+        return meta;
+    }
 
 }

@@ -6,6 +6,9 @@
         <setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
         <setting id="org.eclipse.jdt.core.formatter.tabulation.size" value="4"/>
         <setting id="org.eclipse.jdt.core.formatter.indentation.size" value="4"/>
+        <setting id="org.eclipse.jdt.core.formatter.indentation.switch_statements" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.indentation.body_statements" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.indentation.body_declarations" value="true"/>
         <setting id="org.eclipse.jdt.core.formatter.use_on_off_tags" value="true"/>
         <setting id="org.eclipse.jdt.core.formatter.disabling_tag" value="@formatter:off"/>
         <setting id="org.eclipse.jdt.core.formatter.enabling_tag" value="@formatter:on"/>

@@ -17,294 +17,265 @@ import io.arkx.framework.data.mybatis.pro.core.consts.KeyWord;
  */
 public class SqlUtil {
 
-	private SqlUtil() {
-	}
+    private SqlUtil() {
+    }
 
-	private static final String AND = KeyWord.AND;
+    private static final String AND = KeyWord.AND;
 
-	private static final String OR = KeyWord.OR;
+    private static final String OR = KeyWord.OR;
 
-	private static final String OPT = "Opt";
+    private static final String OPT = "Opt";
 
-	private static final String LIMIT = "Limit";
+    private static final String LIMIT = "Limit";
 
-	private static final String ANDING = " and ";
+    private static final String ANDING = " and ";
 
-	private static final String ORING = " or ";
+    private static final String ORING = " or ";
 
-	private static final String OB = "ORDERBY";
+    private static final String OB = "ORDERBY";
 
-	public static String createConditionFragment(String conditions, Map<String, String> alias) {
-		// 将OrderBy替换成ORDERBY，不然OrderBy的头两个字幕要和Or关键字冲突，造成分割错乱
-		conditions = conditions.replace(KeyWord.ORDER_BY, OB);
+    public static String createConditionFragment(String conditions, Map<String, String> alias) {
+        // 将OrderBy替换成ORDERBY，不然OrderBy的头两个字幕要和Or关键字冲突，造成分割错乱
+        conditions = conditions.replace(KeyWord.ORDER_BY, OB);
 
-		// 判断limit
-		boolean limit = false;
-		if (conditions.endsWith(LIMIT)) {
-			limit = true;
-			conditions = conditions.substring(0, conditions.length() - LIMIT.length());
-		}
+        // 判断limit
+        boolean limit = false;
+        if (conditions.endsWith(LIMIT)) {
+            limit = true;
+            conditions = conditions.substring(0, conditions.length() - LIMIT.length());
+        }
 
-		List<String> result = nameToken(conditions);
+        List<String> result = nameToken(conditions);
 
-		return fragment(result, conditions.endsWith(OPT), limit, alias);
-	}
+        return fragment(result, conditions.endsWith(OPT), limit, alias);
+    }
 
-	private static String fragment(List<String> tokens, boolean opt, boolean limit, Map<String, String> alias) {
-		StringBuilder builder = new StringBuilder();
-		StringBuilder condition = new StringBuilder();
-		StringBuilder orderByStr = new StringBuilder();
-		for (String token : tokens) {
-			String key;
-			int pos;
-			if (token.endsWith(AND)) {
-				key = ANDING;
-				pos = token.length() - 3;
-			}
-			else if (token.endsWith(OR)) {
-				key = ORING;
-				pos = token.length() - 2;
-			}
-			else {
-				if (token.endsWith(OPT)) {
-					token = token.substring(0, token.length() - OPT.length());
-				}
-				key = "";
-				pos = token.length();
-			}
-			String statement = token.substring(0, pos);
-			String variableName;
-			String column;
+    private static String fragment(List<String> tokens, boolean opt, boolean limit, Map<String, String> alias) {
+        StringBuilder builder = new StringBuilder();
+        StringBuilder condition = new StringBuilder();
+        StringBuilder orderByStr = new StringBuilder();
+        for (String token : tokens) {
+            String key;
+            int pos;
+            if (token.endsWith(AND)) {
+                key = ANDING;
+                pos = token.length() - 3;
+            } else if (token.endsWith(OR)) {
+                key = ORING;
+                pos = token.length() - 2;
+            } else {
+                if (token.endsWith(OPT)) {
+                    token = token.substring(0, token.length() - OPT.length());
+                }
+                key = "";
+                pos = token.length();
+            }
+            String statement = token.substring(0, pos);
+            String variableName;
+            String column;
 
-			if (statement.endsWith(KeyWord.BETWEEN)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.BETWEEN));
-				column = toLine(variableName, alias);
-				condition.append(column)
-					.append(" ")
-					.append(KeyWord.BETWEEN.toLowerCase())
-					.append(" #{start} and #{end}");
-			}
-			else if (statement.endsWith(KeyWord.LESS_THAN)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.LESS_THAN));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" <![CDATA[<]]> #{").append(variableName).append("}");
-			}
-			else if (statement.endsWith(KeyWord.LESS_THAN_EQUAL)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.LESS_THAN_EQUAL));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" <![CDATA[<=]]> #{").append(variableName).append("}");
-			}
-			else if (statement.endsWith(KeyWord.GREATER_THAN)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.GREATER_THAN));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" <![CDATA[>]]> #{").append(variableName).append("}");
-			}
-			else if (statement.endsWith(KeyWord.GREATER_THAN_EQUAL)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.GREATER_THAN_EQUAL));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" <![CDATA[>=]]> #{").append(variableName).append("}");
-			}
-			else if (statement.endsWith(KeyWord.IS_NULL)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.IS_NULL));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" is null");
-			}
-			else if (statement.endsWith(KeyWord.IS_NOT_NULL)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.IS_NOT_NULL));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" is not null");
-			}
-			else if (statement.endsWith(KeyWord.IS_BLANK)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.IS_BLANK));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" is null or ").append(column).append(" = ''");
-			}
-			else if (statement.endsWith(KeyWord.IS_NOT_BLANK)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.IS_NOT_BLANK));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" is not null and ").append(column).append(" != ''");
-			}
-			else if (statement.endsWith(KeyWord.LIKE) && !statement.endsWith(KeyWord.NOT_LIKE)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.LIKE));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" like CONCAT('%', #{").append(variableName).append("}, '%')");
-			}
-			else if (statement.endsWith(KeyWord.NOT_LIKE)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.NOT_LIKE));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" not like CONCAT('%', #{").append(variableName).append("}, '%')");
-			}
-			else if (statement.endsWith(KeyWord.STARTING_WITH)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.STARTING_WITH));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" like CONCAT(#{").append(variableName).append("}, '%')");
-			}
-			else if (statement.endsWith(KeyWord.ENDING_WITH)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.ENDING_WITH));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" like CONCAT('%', #{").append(variableName).append("})");
-			}
-			else if (statement.endsWith(KeyWord.NOT)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.NOT));
-				column = toLine(variableName, alias);
-				condition.append(column).append(" <![CDATA[<>]]> ").append("#{").append(variableName).append("}");
-			}
-			else if (statement.endsWith(KeyWord.IN) && !statement.endsWith(KeyWord.NOT_IN)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.IN));
-				column = toLine(variableName, alias);
-				condition.append(column)
-					.append(" in ")
-					.append("<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
-			}
-			else if (statement.endsWith(KeyWord.NOT_IN)) {
-				variableName = firstLower(removeKeyWord(statement, KeyWord.NOT_IN));
-				column = toLine(variableName, alias);
-				condition.append(column)
-					.append(" not in ")
-					.append("<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
-			}
-			else {
+            if (statement.endsWith(KeyWord.BETWEEN)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.BETWEEN));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" ").append(KeyWord.BETWEEN.toLowerCase())
+                        .append(" #{start} and #{end}");
+            } else if (statement.endsWith(KeyWord.LESS_THAN)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.LESS_THAN));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" <![CDATA[<]]> #{").append(variableName).append("}");
+            } else if (statement.endsWith(KeyWord.LESS_THAN_EQUAL)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.LESS_THAN_EQUAL));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" <![CDATA[<=]]> #{").append(variableName).append("}");
+            } else if (statement.endsWith(KeyWord.GREATER_THAN)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.GREATER_THAN));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" <![CDATA[>]]> #{").append(variableName).append("}");
+            } else if (statement.endsWith(KeyWord.GREATER_THAN_EQUAL)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.GREATER_THAN_EQUAL));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" <![CDATA[>=]]> #{").append(variableName).append("}");
+            } else if (statement.endsWith(KeyWord.IS_NULL)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.IS_NULL));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" is null");
+            } else if (statement.endsWith(KeyWord.IS_NOT_NULL)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.IS_NOT_NULL));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" is not null");
+            } else if (statement.endsWith(KeyWord.IS_BLANK)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.IS_BLANK));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" is null or ").append(column).append(" = ''");
+            } else if (statement.endsWith(KeyWord.IS_NOT_BLANK)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.IS_NOT_BLANK));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" is not null and ").append(column).append(" != ''");
+            } else if (statement.endsWith(KeyWord.LIKE) && !statement.endsWith(KeyWord.NOT_LIKE)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.LIKE));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" like CONCAT('%', #{").append(variableName).append("}, '%')");
+            } else if (statement.endsWith(KeyWord.NOT_LIKE)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.NOT_LIKE));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" not like CONCAT('%', #{").append(variableName).append("}, '%')");
+            } else if (statement.endsWith(KeyWord.STARTING_WITH)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.STARTING_WITH));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" like CONCAT(#{").append(variableName).append("}, '%')");
+            } else if (statement.endsWith(KeyWord.ENDING_WITH)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.ENDING_WITH));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" like CONCAT('%', #{").append(variableName).append("})");
+            } else if (statement.endsWith(KeyWord.NOT)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.NOT));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" <![CDATA[<>]]> ").append("#{").append(variableName).append("}");
+            } else if (statement.endsWith(KeyWord.IN) && !statement.endsWith(KeyWord.NOT_IN)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.IN));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" in ").append(
+                        "<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
+            } else if (statement.endsWith(KeyWord.NOT_IN)) {
+                variableName = firstLower(removeKeyWord(statement, KeyWord.NOT_IN));
+                column = toLine(variableName, alias);
+                condition.append(column).append(" not in ").append(
+                        "<foreach collection='list' index='index' open='(' close=')' separator=','>#{list[${index}]}</foreach>");
+            } else {
 
-				// 这里处理两类：1.处理等号的条件，2.处理最后一个条件（可能包含OrderBy和DESC和opt）
+                // 这里处理两类：1.处理等号的条件，2.处理最后一个条件（可能包含OrderBy和DESC和opt）
 
-				// 1. 处理DESC
-				if (statement.contains(KeyWord.DESC)) {
-					statement = statement.substring(0, statement.length() - 4);
-					orderByStr.append(" desc ");
-				}
+                // 1. 处理DESC
+                if (statement.contains(KeyWord.DESC)) {
+                    statement = statement.substring(0, statement.length() - 4);
+                    orderByStr.append(" desc ");
+                }
 
-				// 2. 处理OrderBy(也就是被替换之后的ORDERBY)
-				int orderBy = statement.indexOf(OB);
-				if (orderBy != -1) {
-					String[] ob = statement.split(OB);
-					statement = ob[0];
-					String orderByColumn = toLine(firstLower(ob[1]), alias);
-					orderByStr.insert(0, orderByColumn).append(" ").insert(0, " order by ");
-				}
+                // 2. 处理OrderBy(也就是被替换之后的ORDERBY)
+                int orderBy = statement.indexOf(OB);
+                if (orderBy != -1) {
+                    String[] ob = statement.split(OB);
+                    statement = ob[0];
+                    String orderByColumn = toLine(firstLower(ob[1]), alias);
+                    orderByStr.insert(0, orderByColumn).append(" ").insert(0, " order by ");
+                }
 
-				// 3. 处理条件
-				variableName = firstLower(statement);
-				column = toLine(variableName, alias);
-				condition.append(column).append(" = ").append("#{").append(variableName).append("}");
-			}
-			if (opt) {
-				builder.append("<if test = \"")
-					.append(variableName)
-					.append(" != null and ")
-					.append(variableName)
-					.append(" != ''\">")
-					.append(condition)
-					.append("</if>");
-			}
-			else {
-				builder.append(condition);
-			}
-			// 清空condition
-			condition = new StringBuilder();
+                // 3. 处理条件
+                variableName = firstLower(statement);
+                column = toLine(variableName, alias);
+                condition.append(column).append(" = ").append("#{").append(variableName).append("}");
+            }
+            if (opt) {
+                builder.append("<if test = \"").append(variableName).append(" != null and ").append(variableName)
+                        .append(" != ''\">").append(condition).append("</if>");
+            } else {
+                builder.append(condition);
+            }
+            // 清空condition
+            condition = new StringBuilder();
 
-			builder.append(key);
-		}
-		builder.insert(0, "<trim suffixOverrides = 'and|AND|or|OR'>");
-		builder.append(" </trim>");
-		builder.append(" </where>");
+            builder.append(key);
+        }
+        builder.insert(0, "<trim suffixOverrides = 'and|AND|or|OR'>");
+        builder.append(" </trim>");
+        builder.append(" </where>");
 
-		// 将order by放在最后处理
-		if (orderByStr.length() > 0) {
-			builder.append(orderByStr);
-		}
+        // 将order by放在最后处理
+        if (orderByStr.length() > 0) {
+            builder.append(orderByStr);
+        }
 
-		// 最终处理limit
-		if (limit) {
-			builder.append("limit #{limit}");
-		}
+        // 最终处理limit
+        if (limit) {
+            builder.append("limit #{limit}");
+        }
 
-		return builder.toString();
-	}
+        return builder.toString();
+    }
 
-	private static String removeKeyWord(String column, String keyword) {
-		return column.substring(0, column.length() - keyword.length());
-	}
+    private static String removeKeyWord(String column, String keyword) {
+        return column.substring(0, column.length() - keyword.length());
+    }
 
-	private static List<String> nameToken(String name) {
-		List<String> token = new ArrayList<>();
-		while (name.length() > 0) {
-			String spliter = keyPos(name);
-			if (Objects.equals(spliter, "")) {
-				token.add(name);
-				break;
-			}
-			int pos = name.indexOf(spliter) + spliter.length();
-			String before = name.substring(0, pos);
+    private static List<String> nameToken(String name) {
+        List<String> token = new ArrayList<>();
+        while (name.length() > 0) {
+            String spliter = keyPos(name);
+            if (Objects.equals(spliter, "")) {
+                token.add(name);
+                break;
+            }
+            int pos = name.indexOf(spliter) + spliter.length();
+            String before = name.substring(0, pos);
 
-			token.add(before);
-			name = name.substring(pos);
-		}
-		return token;
-	}
+            token.add(before);
+            name = name.substring(pos);
+        }
+        return token;
+    }
 
-	private static String keyPos(String name) {
-		int andIndex = name.indexOf(AND);
-		int orIndex = name.indexOf(OR);
+    private static String keyPos(String name) {
+        int andIndex = name.indexOf(AND);
+        int orIndex = name.indexOf(OR);
 
-		// and和or后一个字符如果是小写，那么说明and和or是字段的一部分，比如OrderId，这种就不能查分成Or + derId
-		char a = name.charAt(andIndex + AND.length());
-		char o = name.charAt(orIndex + OR.length());
-		boolean alower = Character.isUpperCase(a);
-		boolean olower = Character.isUpperCase(o);
+        // and和or后一个字符如果是小写，那么说明and和or是字段的一部分，比如OrderId，这种就不能查分成Or + derId
+        char a = name.charAt(andIndex + AND.length());
+        char o = name.charAt(orIndex + OR.length());
+        boolean alower = Character.isUpperCase(a);
+        boolean olower = Character.isUpperCase(o);
 
-		if (andIndex == -1 && orIndex == -1) {
-			return "";
-		}
-		else if (andIndex == -1) {
-			if (olower) {
-				return OR;
-			}
-			return "";
-		}
-		else if (orIndex == -1) {
-			if (alower) {
-				return AND;
-			}
-			return "";
-		}
-		else {
-			return andIndex < orIndex ? AND : OR;
-		}
-	}
+        if (andIndex == -1 && orIndex == -1) {
+            return "";
+        } else if (andIndex == -1) {
+            if (olower) {
+                return OR;
+            }
+            return "";
+        } else if (orIndex == -1) {
+            if (alower) {
+                return AND;
+            }
+            return "";
+        } else {
+            return andIndex < orIndex ? AND : OR;
+        }
+    }
 
-	// 首字母改小写
-	private static String firstLower(String name) {
-		return name.substring(0, 1).toLowerCase() + name.substring(1);
-	}
+    // 首字母改小写
+    private static String firstLower(String name) {
+        return name.substring(0, 1).toLowerCase() + name.substring(1);
+    }
 
-	// 驼峰转下划线
-	static String toLine(String camelCase, Map<String, String> alias) {
-		// 如果有别名，那么忽略驼峰下划线互转
-		String name = alias.get(camelCase);
-		if (!isEmpty(name)) {
-			return name;
-		}
+    // 驼峰转下划线
+    static String toLine(String camelCase, Map<String, String> alias) {
+        // 如果有别名，那么忽略驼峰下划线互转
+        String name = alias.get(camelCase);
+        if (!isEmpty(name)) {
+            return name;
+        }
 
-		if (Boolean.TRUE.equals(TO_LINE.get())) {
-			return toLine(camelCase);
-		}
-		return camelCase;
-	}
+        if (Boolean.TRUE.equals(TO_LINE.get())) {
+            return toLine(camelCase);
+        }
+        return camelCase;
+    }
 
-	/**
-	 * 驼峰转下划线
-	 * @param camelCase userName
-	 * @return user_name
-	 */
-	public static String toLine(String camelCase) {
-		Pattern humpPattern = Pattern.compile("[A-Z]");
-		Matcher matcher = humpPattern.matcher(camelCase);
-		StringBuffer sb = new StringBuffer();
-		while (matcher.find()) {
-			matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
-		}
-		matcher.appendTail(sb);
-		return sb.toString();
-	}
+    /**
+     * 驼峰转下划线
+     *
+     * @param camelCase
+     *            userName
+     * @return user_name
+     */
+    public static String toLine(String camelCase) {
+        Pattern humpPattern = Pattern.compile("[A-Z]");
+        Matcher matcher = humpPattern.matcher(camelCase);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
 
 }

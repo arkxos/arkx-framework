@@ -35,22 +35,22 @@ import com.alibaba.cloud.nacos.discovery.NacosDiscoveryAutoConfiguration;
  * @author www.itmuch.com
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore({ NacosDiscoveryAutoConfiguration.class, SidecarAutoConfiguration.class })
+@AutoConfigureBefore({NacosDiscoveryAutoConfiguration.class, SidecarAutoConfiguration.class})
 @ConditionalOnClass(NacosDiscoveryProperties.class)
 @EnableConfigurationProperties(SidecarProperties.class)
 public class SidecarNacosAutoConfiguration {
 
-	@Bean
-	@ConditionalOnMissingBean
-	public SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties(SidecarProperties sidecarProperties) {
-		return new SidecarNacosDiscoveryProperties(sidecarProperties);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties(SidecarProperties sidecarProperties) {
+        return new SidecarNacosDiscoveryProperties(sidecarProperties);
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public SidecarDiscoveryClient sidecarDiscoveryClient(NacosServiceManager nacosServiceManager,
-			SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties) {
-		return new SidecarNacosDiscoveryClient(nacosServiceManager, sidecarNacosDiscoveryProperties);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public SidecarDiscoveryClient sidecarDiscoveryClient(NacosServiceManager nacosServiceManager,
+            SidecarNacosDiscoveryProperties sidecarNacosDiscoveryProperties) {
+        return new SidecarNacosDiscoveryClient(nacosServiceManager, sidecarNacosDiscoveryProperties);
+    }
 
 }

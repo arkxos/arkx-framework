@@ -7,6 +7,6 @@ package io.arkx.framework.commons.crawl;
  */
 public interface DownloadFinishHandler {
 
-	void handle();
+    void handle();
 
 }

@@ -16,16 +16,16 @@ package io.arkx.framework.data.db.common.type;
  */
 public enum TableIndexEnum {
 
-	NORMAL("普通索引"), UNIQUE("唯一索引"),;
+    NORMAL("普通索引"), UNIQUE("唯一索引"),;
 
-	private String description;
+    private String description;
 
-	TableIndexEnum(String description) {
-		this.description = description;
-	}
+    TableIndexEnum(String description) {
+        this.description = description;
+    }
 
-	public boolean isUnique() {
-		return UNIQUE == this;
-	}
+    public boolean isUnique() {
+        return UNIQUE == this;
+    }
 
 }

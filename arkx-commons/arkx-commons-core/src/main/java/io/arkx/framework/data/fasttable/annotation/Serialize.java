@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * @date 2016年11月9日 上午10:55:06
  * @version V1.0
  */
-@Target({ ElementType.FIELD, ElementType.TYPE })
+@Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.CLASS)
 public @interface Serialize {
 

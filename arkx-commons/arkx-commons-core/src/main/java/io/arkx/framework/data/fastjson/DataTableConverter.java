@@ -17,16 +17,16 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
  */
 public class DataTableConverter implements ObjectSerializer {
 
-	@Override
-	public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
-			throws IOException {
-		SerializeWriter out = serializer.getWriter();
-		if (object == null) {
-			serializer.getWriter().writeNull();
-			return;
-		}
-		DataTable dataTypes = (DataTable) object;
-		out.write(JSON.toJSONString(dataTypes));
-	}
+    @Override
+    public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
+            throws IOException {
+        SerializeWriter out = serializer.getWriter();
+        if (object == null) {
+            serializer.getWriter().writeNull();
+            return;
+        }
+        DataTable dataTypes = (DataTable) object;
+        out.write(JSON.toJSONString(dataTypes));
+    }
 
 }

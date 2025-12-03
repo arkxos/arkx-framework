@@ -7,8 +7,8 @@ package io.arkx.framework.commons.crawl;
  */
 public interface PageProcessor {
 
-	void process(Page page);
+    void process(Page page);
 
-	Site getSite();
+    Site getSite();
 
 }

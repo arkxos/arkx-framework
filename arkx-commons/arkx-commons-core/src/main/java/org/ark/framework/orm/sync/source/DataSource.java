@@ -21,38 +21,45 @@ import io.arkx.framework.data.jdbc.Session;
  */
 public interface DataSource {
 
-	/**
-	 * 获取数据源名称
-	 * @return 数据源名称
-	 */
-	String getName();
+    /**
+     * 获取数据源名称
+     *
+     * @return 数据源名称
+     */
+    String getName();
 
-	/**
-	 * 从数据源获取增量数据
-	 * @param tableCode 表代码
-	 * @param config 同步配置
-	 * @param session
-	 * @param lastSyncTime 上次同步时间
-	 * @return 增量数据列表
-	 */
-	List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session,
-			Timestamp lastSyncTime);
+    /**
+     * 从数据源获取增量数据
+     *
+     * @param tableCode
+     *            表代码
+     * @param config
+     *            同步配置
+     * @param session
+     * @param lastSyncTime
+     *            上次同步时间
+     * @return 增量数据列表
+     */
+    List<Schema> fetchIncrementalData(String tableCode, TableSyncConfig config, Session session,
+            Timestamp lastSyncTime);
 
-	/**
-	 * 检查数据源中是否包含指定表
-	 * @param tableCode 表代码
-	 * @return 是否包含
-	 */
-	boolean containsTable(String tableCode);
+    /**
+     * 检查数据源中是否包含指定表
+     *
+     * @param tableCode
+     *            表代码
+     * @return 是否包含
+     */
+    boolean containsTable(String tableCode);
 
-	/**
-	 * 初始化数据源
-	 */
-	void initialize();
+    /**
+     * 初始化数据源
+     */
+    void initialize();
 
-	/**
-	 * 关闭数据源
-	 */
-	void close();
+    /**
+     * 关闭数据源
+     */
+    void close();
 
 }

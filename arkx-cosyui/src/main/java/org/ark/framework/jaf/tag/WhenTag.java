@@ -22,100 +22,98 @@ import jakarta.servlet.jsp.tagext.Tag;
  */
 public class WhenTag extends BodyTagSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String value;
+    private String value;
 
-	private String out;
+    private String out;
 
-	private boolean other;
+    private boolean other;
 
-	public void setPageContext(PageContext pc) {
-		super.setPageContext(pc);
-		this.value = null;
-		this.out = null;
-		this.other = false;
-	}
+    public void setPageContext(PageContext pc) {
+        super.setPageContext(pc);
+        this.value = null;
+        this.out = null;
+        this.other = false;
+    }
 
-	public int doStartTag() throws JspException {
-		Tag tag = getParent();
-		if (!(tag instanceof ChooseTag)) {
-			throw new RuntimeException("tag when must in tag choose");
-		}
-		ChooseTag parent = (ChooseTag) tag;
-		Object v1 = parent.getValue();
-		Object v2 = this.value;
-		if (!this.other) {
-			if (this.value == null) {
-				throw new RuntimeException("tag when's other and value can't be empty at the same time");
-			}
-			if (this.value.startsWith("${")) {
-				PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
-				v2 = context.eval(new PlaceHolder(this.value));
-			}
-		}
-		if (this.other) {
-			if (!parent.isMatched()) {
-				output(parent);
-				return 2;
-			}
-			return 0;
-		}
-		if (Primitives.getBoolean(Operators.eq(v1, v2))) {
-			output(parent);
-			return 2;
-		}
-		return 0;
-	}
+    public int doStartTag() throws JspException {
+        Tag tag = getParent();
+        if (!(tag instanceof ChooseTag)) {
+            throw new RuntimeException("tag when must in tag choose");
+        }
+        ChooseTag parent = (ChooseTag) tag;
+        Object v1 = parent.getValue();
+        Object v2 = this.value;
+        if (!this.other) {
+            if (this.value == null) {
+                throw new RuntimeException("tag when's other and value can't be empty at the same time");
+            }
+            if (this.value.startsWith("${")) {
+                PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
+                v2 = context.eval(new PlaceHolder(this.value));
+            }
+        }
+        if (this.other) {
+            if (!parent.isMatched()) {
+                output(parent);
+                return 2;
+            }
+            return 0;
+        }
+        if (Primitives.getBoolean(Operators.eq(v1, v2))) {
+            output(parent);
+            return 2;
+        }
+        return 0;
+    }
 
-	private void output(ChooseTag parent) {
-		if (StringUtil.isNotEmpty(this.out)) {
-			if (this.out.startsWith("${")) {
-				PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
-				this.out = String.valueOf(context.eval(new PlaceHolder(this.out)));
-			}
-			try {
-				this.pageContext.getOut().print(this.out);
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		parent.setMatched(true);
-	}
+    private void output(ChooseTag parent) {
+        if (StringUtil.isNotEmpty(this.out)) {
+            if (this.out.startsWith("${")) {
+                PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
+                this.out = String.valueOf(context.eval(new PlaceHolder(this.out)));
+            }
+            try {
+                this.pageContext.getOut().print(this.out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        parent.setMatched(true);
+    }
 
-	public int doAfterBody() throws JspException {
-		try {
-			getPreviousOut().print(getBodyContent().getString());
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		return 6;
-	}
+    public int doAfterBody() throws JspException {
+        try {
+            getPreviousOut().print(getBodyContent().getString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 6;
+    }
 
-	public String getValue() {
-		return this.value;
-	}
+    public String getValue() {
+        return this.value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public String getOut() {
-		return this.out;
-	}
+    public String getOut() {
+        return this.out;
+    }
 
-	public void setOut(String out) {
-		this.out = out;
-	}
+    public void setOut(String out) {
+        this.out = out;
+    }
 
-	public boolean isOther() {
-		return this.other;
-	}
+    public boolean isOther() {
+        return this.other;
+    }
 
-	public void setOther(boolean other) {
-		this.other = other;
-	}
+    public void setOther(boolean other) {
+        this.other = other;
+    }
 
 }

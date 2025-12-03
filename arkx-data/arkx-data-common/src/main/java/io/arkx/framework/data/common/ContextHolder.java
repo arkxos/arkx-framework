@@ -11,14 +11,14 @@ import org.springframework.context.ApplicationContext;
  */
 public class ContextHolder {
 
-	public static ApplicationContext appContext;
+    public static ApplicationContext appContext;
 
-	public static <T> Collection<T> getBeansOfType(Class<T> clazz) {
-		return appContext.getBeansOfType(clazz).values();
-	}
+    public static <T> Collection<T> getBeansOfType(Class<T> clazz) {
+        return appContext.getBeansOfType(clazz).values();
+    }
 
-	public static <T> T getBean(Class<T> clazz) {
-		return appContext.getBean(clazz);
-	}
+    public static <T> T getBean(Class<T> clazz) {
+        return appContext.getBean(clazz);
+    }
 
 }

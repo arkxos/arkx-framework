@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Subscribe {
 
-	Class<? extends Message<?>>[] events() default {};
+    Class<? extends Message<?>>[] events() default {};
 
-	String[] eventNames() default {};
+    String[] eventNames() default {};
 
 }

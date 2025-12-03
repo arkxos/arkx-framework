@@ -10,11 +10,11 @@ import org.springframework.data.annotation.QueryAnnotation;
  * @version V1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @QueryAnnotation
 @Documented
 public @interface SqlToyQuery {
 
-	String value() default "";
+    String value() default "";
 
 }

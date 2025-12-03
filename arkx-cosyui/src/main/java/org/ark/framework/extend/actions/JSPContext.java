@@ -12,34 +12,34 @@ import io.arkx.framework.cosyui.web.RequestData;
  */
 public class JSPContext {
 
-	private StringBuilder sb = new StringBuilder();
+    private StringBuilder sb = new StringBuilder();
 
-	private ArrayList<String> includes = new ArrayList<String>();
+    private ArrayList<String> includes = new ArrayList<String>();
 
-	private RequestData request = null;
+    private RequestData request = null;
 
-	public JSPContext(RequestData request) {
-		this.request = request;
-	}
+    public JSPContext(RequestData request) {
+        this.request = request;
+    }
 
-	public RequestData getRequest() {
-		return this.request;
-	}
+    public RequestData getRequest() {
+        return this.request;
+    }
 
-	protected String getOut() {
-		return this.sb.toString();
-	}
+    protected String getOut() {
+        return this.sb.toString();
+    }
 
-	protected ArrayList<String> getIncludes() {
-		return this.includes;
-	}
+    protected ArrayList<String> getIncludes() {
+        return this.includes;
+    }
 
-	public void write(Object obj) {
-		this.sb.append(obj);
-	}
+    public void write(Object obj) {
+        this.sb.append(obj);
+    }
 
-	public void include(String file) {
-		this.includes.add(file);
-	}
+    public void include(String file) {
+        this.includes.add(file);
+    }
 
 }

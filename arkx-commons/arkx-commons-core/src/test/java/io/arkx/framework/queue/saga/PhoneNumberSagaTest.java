@@ -14,261 +14,260 @@ import io.arkx.framework.queue2.Subscribe;
 
 public class PhoneNumberSagaTest {
 
-	private MatchtedPhoneNumberCounter matchtedPhoneNumberCounter;
+    private MatchtedPhoneNumberCounter matchtedPhoneNumberCounter;
 
-	private PhoneNumberExecutive phoneNumberExecutive;
+    private PhoneNumberExecutive phoneNumberExecutive;
 
-	private PhoneNumberFinder phoneNumberFinder;
+    private PhoneNumberFinder phoneNumberFinder;
 
-	private TotalPhoneNumbersCounter totalPhoneNumbersCounter;
+    private TotalPhoneNumbersCounter totalPhoneNumbersCounter;
 
-	private static String[] phoneNumbers = new String[] { "303-555-1212   John", "212-555-1212   Joe",
-			"718-555-1212   Zoe", "720-555-1212   Manny", "312-555-1212   Jerry", "303-555-9999   Sally" };
+    private static String[] phoneNumbers = new String[]{"303-555-1212   John", "212-555-1212   Joe",
+            "718-555-1212   Zoe", "720-555-1212   Manny", "312-555-1212   Jerry", "303-555-9999   Sally"};
 
-	public PhoneNumberSagaTest() {
-		super();
-	}
+    public PhoneNumberSagaTest() {
+        super();
+    }
 
-	public void testPhoneNumbersCounter() throws Exception {
-		String processId = this.phoneNumberExecutive.start(phoneNumbers);
+    public void testPhoneNumbersCounter() throws Exception {
+        String processId = this.phoneNumberExecutive.start(phoneNumbers);
 
-		Thread.sleep(1000L);
+        Thread.sleep(1000L);
 
-		PhoneNumberProcess process = this.phoneNumberExecutive.processOfId(processId);
+        PhoneNumberProcess process = this.phoneNumberExecutive.processOfId(processId);
 
-		assertNotNull(process);
-		assertEquals(2, process.matchedPhoneNumbers());
-		assertEquals(6, process.totalPhoneNumbers());
-	}
+        assertNotNull(process);
+        assertEquals(2, process.matchedPhoneNumbers());
+        assertEquals(6, process.totalPhoneNumbers());
+    }
 
-	private void assertNotNull(PhoneNumberProcess process) {
-	}
+    private void assertNotNull(PhoneNumberProcess process) {
+    }
 
-	@Before("")
-	protected void setUp() throws Exception {
+    @Before("")
+    protected void setUp() throws Exception {
 
-		phoneNumberExecutive = new PhoneNumberExecutive();
-		phoneNumberFinder = new PhoneNumberFinder();
-		matchtedPhoneNumberCounter = new MatchtedPhoneNumberCounter();
-		totalPhoneNumbersCounter = new TotalPhoneNumbersCounter();
+        phoneNumberExecutive = new PhoneNumberExecutive();
+        phoneNumberFinder = new PhoneNumberFinder();
+        matchtedPhoneNumberCounter = new MatchtedPhoneNumberCounter();
+        totalPhoneNumbersCounter = new TotalPhoneNumbersCounter();
 
-		MessageBus.globalInstance().register(phoneNumberExecutive);
-		MessageBus.globalInstance().register(phoneNumberFinder);
-		MessageBus.globalInstance().register(matchtedPhoneNumberCounter);
-		MessageBus.globalInstance().register(totalPhoneNumbersCounter);
+        MessageBus.globalInstance().register(phoneNumberExecutive);
+        MessageBus.globalInstance().register(phoneNumberFinder);
+        MessageBus.globalInstance().register(matchtedPhoneNumberCounter);
+        MessageBus.globalInstance().register(totalPhoneNumbersCounter);
 
-	}
+    }
 
-	@After("")
-	protected void tearDown() throws Exception {
-	}
+    @After("")
+    protected void tearDown() throws Exception {
+    }
 
-	/**
-	 * 电话号码流程
-	 *
-	 * @author Darkness
-	 * @date 2014-12-17 下午9:43:26
-	 * @version V1.0
-	 * @since ark 1.0
-	 */
-	private class PhoneNumberProcess {
+    /**
+     * 电话号码流程
+     *
+     * @author Darkness
+     * @date 2014-12-17 下午9:43:26
+     * @version V1.0
+     * @since ark 1.0
+     */
+    private class PhoneNumberProcess {
 
-		private String id;// 流程id
+        private String id;// 流程id
 
-		private int matchedPhoneNumbers;// 匹配的号码数
+        private int matchedPhoneNumbers;// 匹配的号码数
 
-		private int totalPhoneNumbers;// 总号码数
+        private int totalPhoneNumbers;// 总号码数
 
-		public PhoneNumberProcess() {
-			super();
+        public PhoneNumberProcess() {
+            super();
 
-			this.id = UUID.randomUUID().toString().toUpperCase();
-			this.matchedPhoneNumbers = -1;
-			this.totalPhoneNumbers = -1;
-		}
+            this.id = UUID.randomUUID().toString().toUpperCase();
+            this.matchedPhoneNumbers = -1;
+            this.totalPhoneNumbers = -1;
+        }
 
-		public boolean isCompleted() {
-			return this.matchedPhoneNumbers() >= 0 && this.totalPhoneNumbers() >= 0;
-		}
+        public boolean isCompleted() {
+            return this.matchedPhoneNumbers() >= 0 && this.totalPhoneNumbers() >= 0;
+        }
 
-		public String id() {
-			return this.id;
-		}
+        public String id() {
+            return this.id;
+        }
 
-		public int matchedPhoneNumbers() {
-			return this.matchedPhoneNumbers;
-		}
+        public int matchedPhoneNumbers() {
+            return this.matchedPhoneNumbers;
+        }
 
-		public void setMatchedPhoneNumbers(int aMatchedPhoneNumbersCount) {
-			this.matchedPhoneNumbers = aMatchedPhoneNumbersCount;
-		}
+        public void setMatchedPhoneNumbers(int aMatchedPhoneNumbersCount) {
+            this.matchedPhoneNumbers = aMatchedPhoneNumbersCount;
+        }
 
-		public int totalPhoneNumbers() {
-			return this.totalPhoneNumbers;
-		}
+        public int totalPhoneNumbers() {
+            return this.totalPhoneNumbers;
+        }
 
-		public void setTotalPhoneNumbers(int aTotalPhoneNumberCount) {
-			this.totalPhoneNumbers = aTotalPhoneNumberCount;
-		}
+        public void setTotalPhoneNumbers(int aTotalPhoneNumberCount) {
+            this.totalPhoneNumbers = aTotalPhoneNumberCount;
+        }
 
-	}
+    }
 
-	/**
-	 * 电话号码执行器
-	 *
-	 * @author Darkness
-	 * @date 2014-12-17 下午9:42:45
-	 * @version V1.0
-	 * @since ark 1.0
-	 */
-	private class PhoneNumberExecutive {
+    /**
+     * 电话号码执行器
+     *
+     * @author Darkness
+     * @date 2014-12-17 下午9:42:45
+     * @version V1.0
+     * @since ark 1.0
+     */
+    private class PhoneNumberExecutive {
 
-		private Map<String, PhoneNumberProcess> processes;
+        private Map<String, PhoneNumberProcess> processes;
 
-		public PhoneNumberExecutive() {
-			super();
-
-			this.processes = new HashMap<String, PhoneNumberProcess>();
-		}
-
-		public PhoneNumberProcess processOfId(String aProcessId) {
-			return this.processes.get(aProcessId);
-		}
+        public PhoneNumberExecutive() {
+            super();
+
+            this.processes = new HashMap<String, PhoneNumberProcess>();
+        }
 
-		public String start(String[] aPhoneNumbers) {
-			// 创建流程
-			PhoneNumberProcess process = new PhoneNumberProcess();
+        public PhoneNumberProcess processOfId(String aProcessId) {
+            return this.processes.get(aProcessId);
+        }
 
-			synchronized (this.processes) {
-				this.processes.put(process.id(), process);
-			}
+        public String start(String[] aPhoneNumbers) {
+            // 创建流程
+            PhoneNumberProcess process = new PhoneNumberProcess();
 
-			String allPhoneNumbers = "";
+            synchronized (this.processes) {
+                this.processes.put(process.id(), process);
+            }
 
-			for (String phoneNumber : aPhoneNumbers) {
-				if (!allPhoneNumbers.isEmpty()) {
-					allPhoneNumbers = allPhoneNumbers + "\n";
-				}
+            String allPhoneNumbers = "";
 
-				allPhoneNumbers = allPhoneNumbers + phoneNumber;
-			}
+            for (String phoneNumber : aPhoneNumbers) {
+                if (!allPhoneNumbers.isEmpty()) {
+                    allPhoneNumbers = allPhoneNumbers + "\n";
+                }
 
-			System.out.println("STARTED: " + process.id());
+                allPhoneNumbers = allPhoneNumbers + phoneNumber;
+            }
 
-			MessageBus.globalInstance().publish(new AllPhoneNumbersListed(process.id(), allPhoneNumbers));
+            System.out.println("STARTED: " + process.id());
 
-			return process.id();
-		}
+            MessageBus.globalInstance().publish(new AllPhoneNumbersListed(process.id(), allPhoneNumbers));
 
-		@Subscribe(events = { AllPhoneNumbersCounted.class, MatchedPhoneNumbersCounted.class })
-		public void filteredDispatch(PhoneNumberProcessEvent event) {
+            return process.id();
+        }
 
-			String processId = event.processId();
-			PhoneNumberProcess process = this.processes.get(processId);
+        @Subscribe(events = {AllPhoneNumbersCounted.class, MatchedPhoneNumbersCounted.class})
+        public void filteredDispatch(PhoneNumberProcessEvent event) {
 
-			if (event instanceof AllPhoneNumbersCounted) {
-				AllPhoneNumbersCounted allPhoneNumbersCounted = (AllPhoneNumbersCounted) event;
+            String processId = event.processId();
+            PhoneNumberProcess process = this.processes.get(processId);
 
-				process.setTotalPhoneNumbers(allPhoneNumbersCounted.totalPhoneNumbers());
-				System.out.println("AllPhoneNumbersCounted...");
-			}
-			else if (event instanceof MatchedPhoneNumbersCounted) {
-				MatchedPhoneNumbersCounted matchedPhoneNumbersCounted = (MatchedPhoneNumbersCounted) event;
+            if (event instanceof AllPhoneNumbersCounted) {
+                AllPhoneNumbersCounted allPhoneNumbersCounted = (AllPhoneNumbersCounted) event;
 
-				process.setMatchedPhoneNumbers(matchedPhoneNumbersCounted.matchedPhoneNumbers());
-				System.out.println("MatchedPhoneNumbersCounted...");
-			}
+                process.setTotalPhoneNumbers(allPhoneNumbersCounted.totalPhoneNumbers());
+                System.out.println("AllPhoneNumbersCounted...");
+            } else if (event instanceof MatchedPhoneNumbersCounted) {
+                MatchedPhoneNumbersCounted matchedPhoneNumbersCounted = (MatchedPhoneNumbersCounted) event;
 
-			if (process.isCompleted()) {
-				System.out.println("Process: " + process.id() + ": " + process.matchedPhoneNumbers() + " of "
-						+ process.totalPhoneNumbers() + " phone numbers found.");
-			}
-		}
+                process.setMatchedPhoneNumbers(matchedPhoneNumbersCounted.matchedPhoneNumbers());
+                System.out.println("MatchedPhoneNumbersCounted...");
+            }
 
-	}
+            if (process.isCompleted()) {
+                System.out.println("Process: " + process.id() + ": " + process.matchedPhoneNumbers() + " of "
+                        + process.totalPhoneNumbers() + " phone numbers found.");
+            }
+        }
 
-	/**
-	 * 查找指定号码处理器
-	 *
-	 * @author Darkness
-	 * @date 2014-12-17 下午9:59:06
-	 * @version V1.0
-	 * @since ark 1.0
-	 */
-	private class PhoneNumberFinder {
+    }
 
-		@Subscribe(events = { AllPhoneNumbersListed.class })
-		public void filteredDispatch(AllPhoneNumbersListed event) {
-			System.out.println("AllPhoneNumbersListed (to match)...");
+    /**
+     * 查找指定号码处理器
+     *
+     * @author Darkness
+     * @date 2014-12-17 下午9:59:06
+     * @version V1.0
+     * @since ark 1.0
+     */
+    private class PhoneNumberFinder {
 
-			String allPhoneNumbers = event.allPhoneNumbers();
+        @Subscribe(events = {AllPhoneNumbersListed.class})
+        public void filteredDispatch(AllPhoneNumbersListed event) {
+            System.out.println("AllPhoneNumbersListed (to match)...");
 
-			String[] allPhoneNumbersToSearch = allPhoneNumbers.split("\n");
+            String allPhoneNumbers = event.allPhoneNumbers();
 
-			String foundPhoneNumbers = "";
+            String[] allPhoneNumbersToSearch = allPhoneNumbers.split("\n");
 
-			for (String phoneNumber : allPhoneNumbersToSearch) {
-				if (phoneNumber.contains("303-")) {
-					if (!foundPhoneNumbers.isEmpty()) {
-						foundPhoneNumbers = foundPhoneNumbers + "\n";
-					}
-					foundPhoneNumbers = foundPhoneNumbers + phoneNumber;
-				}
-			}
+            String foundPhoneNumbers = "";
 
-			MessageBus.globalInstance().publish(new PhoneNumbersMatched(event.processId(), foundPhoneNumbers));
-		}
+            for (String phoneNumber : allPhoneNumbersToSearch) {
+                if (phoneNumber.contains("303-")) {
+                    if (!foundPhoneNumbers.isEmpty()) {
+                        foundPhoneNumbers = foundPhoneNumbers + "\n";
+                    }
+                    foundPhoneNumbers = foundPhoneNumbers + phoneNumber;
+                }
+            }
 
-	}
+            MessageBus.globalInstance().publish(new PhoneNumbersMatched(event.processId(), foundPhoneNumbers));
+        }
 
-	/**
-	 * 匹配的号码计数器
-	 *
-	 * @author Darkness
-	 * @date 2014-12-17 下午10:02:00
-	 * @version V1.0
-	 * @since ark 1.0
-	 */
-	private class MatchtedPhoneNumberCounter {
+    }
 
-		@Subscribe(events = { PhoneNumbersMatched.class })
-		public void filteredDispatch(PhoneNumbersMatched event) {
+    /**
+     * 匹配的号码计数器
+     *
+     * @author Darkness
+     * @date 2014-12-17 下午10:02:00
+     * @version V1.0
+     * @since ark 1.0
+     */
+    private class MatchtedPhoneNumberCounter {
 
-			System.out.println("PhoneNumbersMatched (to count)...");
+        @Subscribe(events = {PhoneNumbersMatched.class})
+        public void filteredDispatch(PhoneNumbersMatched event) {
 
-			String allMatchedPhoneNumbers = event.matchedPhoneNumbers();
+            System.out.println("PhoneNumbersMatched (to count)...");
 
-			String[] allPhoneNumbersToCount = allMatchedPhoneNumbers.split("\n");
+            String allMatchedPhoneNumbers = event.matchedPhoneNumbers();
 
-			MessageBus.globalInstance()
-				.publish(new MatchedPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
-		}
+            String[] allPhoneNumbersToCount = allMatchedPhoneNumbers.split("\n");
 
-	}
+            MessageBus.globalInstance()
+                    .publish(new MatchedPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
+        }
 
-	/**
-	 * 所有号码计数器
-	 *
-	 * @author Darkness
-	 * @date 2014-12-17 下午10:03:53
-	 * @version V1.0
-	 * @since ark 1.0
-	 */
-	private class TotalPhoneNumbersCounter {
+    }
 
-		@Subscribe(events = { AllPhoneNumbersListed.class })
-		public void filteredDispatch(AllPhoneNumbersListed event) {
+    /**
+     * 所有号码计数器
+     *
+     * @author Darkness
+     * @date 2014-12-17 下午10:03:53
+     * @version V1.0
+     * @since ark 1.0
+     */
+    private class TotalPhoneNumbersCounter {
 
-			System.out.println("AllPhoneNumbersListed (to total)...");
+        @Subscribe(events = {AllPhoneNumbersListed.class})
+        public void filteredDispatch(AllPhoneNumbersListed event) {
 
-			String allPhoneNumbers = event.allPhoneNumbers();
+            System.out.println("AllPhoneNumbersListed (to total)...");
 
-			String[] allPhoneNumbersToCount = allPhoneNumbers.split("\n");
+            String allPhoneNumbers = event.allPhoneNumbers();
 
-			MessageBus.globalInstance()
-				.publish(new AllPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
-		}
+            String[] allPhoneNumbersToCount = allPhoneNumbers.split("\n");
 
-	}
+            MessageBus.globalInstance()
+                    .publish(new AllPhoneNumbersCounted(event.processId(), allPhoneNumbersToCount.length));
+        }
+
+    }
 
 }

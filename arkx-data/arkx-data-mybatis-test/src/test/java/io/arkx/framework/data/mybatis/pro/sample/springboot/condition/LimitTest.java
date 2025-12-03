@@ -29,42 +29,39 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class LimitTest {
 
-	@Autowired
-	private UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-		Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "version", "status")
-			.values("w.dehai", "123456", "1306006", 1L, 1)
-			.values("Jaedong", "123", "1306006", 1L, 1)
-			.values("w.dehai", "123", "1306006", 2L, 1)
-			.values("w.dehai", "123", "1306006", 2L, 1)
-			.build();
-		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-	}
+    @BeforeEach
+    void init() {
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+        Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "version", "status")
+                .values("w.dehai", "123456", "1306006", 1L, 1).values("Jaedong", "123", "1306006", 1L, 1)
+                .values("w.dehai", "123", "1306006", 2L, 1).values("w.dehai", "123", "1306006", 2L, 1).build();
+        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+    }
 
-	@Test
-	void findByNameLimitTest() {
-		Appender appender = new Appender(SqlPrinter.class);
-		List<User> result = userMapper.findByNameLimit("w.dehai", 2);
-		assertEquals(2, result.size());
-		assertTrue(appender.contains("SELECT password, order_id AS orderId, name, id, addr_info AS addr\n"
-				+ "\t, version, phone_no AS phoneNo, status\n" + "FROM smart_user\n" + "WHERE name = 'w.dehai'\n"
-				+ "LIMIT 2"));
-	}
+    @Test
+    void findByNameLimitTest() {
+        Appender appender = new Appender(SqlPrinter.class);
+        List<User> result = userMapper.findByNameLimit("w.dehai", 2);
+        assertEquals(2, result.size());
+        assertTrue(appender.contains("SELECT password, order_id AS orderId, name, id, addr_info AS addr\n"
+                + "\t, version, phone_no AS phoneNo, status\n" + "FROM smart_user\n" + "WHERE name = 'w.dehai'\n"
+                + "LIMIT 2"));
+    }
 
-	@Test
-	void findByNameAndPasswordOrderByIdLimitTest() {
-		Appender appender = new Appender(SqlPrinter.class);
-		List<User> users = userMapper.findByNameAndPasswordOrderByIdLimit("w.dehai", "123", 2);
-		assertEquals(2, users.size());
-		assertTrue(appender.contains("SELECT password, order_id AS orderId, name, id, addr_info AS addr\n"
-				+ "\t, version, phone_no AS phoneNo, status\n" + "FROM smart_user\n" + "WHERE name = 'w.dehai'\n"
-				+ "\tAND password = '123'\n" + "ORDER BY id\n" + "LIMIT 2"));
-	}
+    @Test
+    void findByNameAndPasswordOrderByIdLimitTest() {
+        Appender appender = new Appender(SqlPrinter.class);
+        List<User> users = userMapper.findByNameAndPasswordOrderByIdLimit("w.dehai", "123", 2);
+        assertEquals(2, users.size());
+        assertTrue(appender.contains("SELECT password, order_id AS orderId, name, id, addr_info AS addr\n"
+                + "\t, version, phone_no AS phoneNo, status\n" + "FROM smart_user\n" + "WHERE name = 'w.dehai'\n"
+                + "\tAND password = '123'\n" + "ORDER BY id\n" + "LIMIT 2"));
+    }
 
 }

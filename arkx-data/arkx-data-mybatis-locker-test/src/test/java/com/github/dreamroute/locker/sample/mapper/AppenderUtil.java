@@ -14,16 +14,16 @@ import ch.qos.logback.core.read.ListAppender;
  */
 public class AppenderUtil {
 
-	public static ListAppender<ILoggingEvent> create(Class<?> c) {
-		Logger logger = (Logger) LoggerFactory.getLogger(c);
-		ListAppender<ILoggingEvent> appender = new ListAppender<>();
-		appender.start();
-		logger.addAppender(appender);
-		return appender;
-	}
+    public static ListAppender<ILoggingEvent> create(Class<?> c) {
+        Logger logger = (Logger) LoggerFactory.getLogger(c);
+        ListAppender<ILoggingEvent> appender = new ListAppender<>();
+        appender.start();
+        logger.addAppender(appender);
+        return appender;
+    }
 
-	public static String getMessage(ListAppender<ILoggingEvent> appender, int index) {
-		return appender.list.get(index).getFormattedMessage();
-	}
+    public static String getMessage(ListAppender<ILoggingEvent> appender, int index) {
+        return appender.list.get(index).getFormattedMessage();
+    }
 
 }

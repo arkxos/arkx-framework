@@ -17,51 +17,49 @@ import jakarta.servlet.jsp.tagext.TagSupport;
  */
 public class ParamTag extends TagSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String var;
+    private String var;
 
-	private String Default;
+    private String Default;
 
-	public void setPageContext(PageContext pc) {
-		super.setPageContext(pc);
-		this.var = null;
-		this.Default = null;
-	}
+    public void setPageContext(PageContext pc) {
+        super.setPageContext(pc);
+        this.var = null;
+        this.Default = null;
+    }
 
-	public int doStartTag() throws JspException {
-		try {
-			PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
-			Object value = context.eval(new PlaceHolder(this.var));
-			if (value != null) {
-				String v = String.valueOf(value);
-				v = LangUtil.get(v);
-				this.pageContext.getOut().write(v);
-			}
-			else if (this.Default != null) {
-				this.pageContext.getOut().write(this.Default);
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
+    public int doStartTag() throws JspException {
+        try {
+            PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
+            Object value = context.eval(new PlaceHolder(this.var));
+            if (value != null) {
+                String v = String.valueOf(value);
+                v = LangUtil.get(v);
+                this.pageContext.getOut().write(v);
+            } else if (this.Default != null) {
+                this.pageContext.getOut().write(this.Default);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
-	public String getVar() {
-		return this.var;
-	}
+    public String getVar() {
+        return this.var;
+    }
 
-	public void setVar(String var) {
-		this.var = var;
-	}
+    public void setVar(String var) {
+        this.var = var;
+    }
 
-	public String getDefault() {
-		return this.Default;
-	}
+    public String getDefault() {
+        return this.Default;
+    }
 
-	public void setDefault(String default1) {
-		this.Default = default1;
-	}
+    public void setDefault(String default1) {
+        this.Default = default1;
+    }
 
 }

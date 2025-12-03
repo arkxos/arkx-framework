@@ -16,24 +16,24 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NoRepeatSubmit {
 
-	/**
-	 * 锁过期的时间
-	 */
-	int seconds() default 5;
+    /**
+     * 锁过期的时间
+     */
+    int seconds() default 5;
 
-	/**
-	 * 锁的位置
-	 */
-	String location() default "NoRepeatSubmit";
+    /**
+     * 锁的位置
+     */
+    String location() default "NoRepeatSubmit";
 
-	/**
-	 * 要扫描的参数位置
-	 */
-	int argIndex() default 0;
+    /**
+     * 要扫描的参数位置
+     */
+    int argIndex() default 0;
 
-	/**
-	 * 参数名称
-	 */
-	String name() default "";
+    /**
+     * 参数名称
+     */
+    String name() default "";
 
 }

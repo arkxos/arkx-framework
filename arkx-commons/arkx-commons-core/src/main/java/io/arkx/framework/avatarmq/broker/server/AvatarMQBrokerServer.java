@@ -39,113 +39,101 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  */
 public class AvatarMQBrokerServer extends BrokerParallelServer implements RemotingServer {
 
-	private ThreadFactory threadBossFactory = new ThreadFactoryBuilder()
-		.setNameFormat("AvatarMQBroker[BossSelector]-%d")
-		.setDaemon(true)
-		.build();
+    private ThreadFactory threadBossFactory = new ThreadFactoryBuilder()
+            .setNameFormat("AvatarMQBroker[BossSelector]-%d").setDaemon(true).build();
 
-	private ThreadFactory threadWorkerFactory = new ThreadFactoryBuilder()
-		.setNameFormat("AvatarMQBroker[WorkerSelector]-%d")
-		.setDaemon(true)
-		.build();
+    private ThreadFactory threadWorkerFactory = new ThreadFactoryBuilder()
+            .setNameFormat("AvatarMQBroker[WorkerSelector]-%d").setDaemon(true).build();
 
-	private int brokerServerPort = 0;
+    private int brokerServerPort = 0;
 
-	private ServerBootstrap bootstrap;
+    private ServerBootstrap bootstrap;
 
-	private MessageBrokerHandler handler;
+    private MessageBrokerHandler handler;
 
-	private SocketAddress serverIpAddr;
+    private SocketAddress serverIpAddr;
 
-	private NettyClustersConfig nettyClustersConfig = new NettyClustersConfig();
+    private NettyClustersConfig nettyClustersConfig = new NettyClustersConfig();
 
-	private DefaultEventExecutorGroup defaultEventExecutorGroup;
+    private DefaultEventExecutorGroup defaultEventExecutorGroup;
 
-	private EventLoopGroup boss;
+    private EventLoopGroup boss;
 
-	private EventLoopGroup workers;
+    private EventLoopGroup workers;
 
-	public AvatarMQBrokerServer(String serverAddress) {
-		String[] ipAddr = serverAddress.split(MessageSystemConfig.IpV4AddressDelimiter);
+    public AvatarMQBrokerServer(String serverAddress) {
+        String[] ipAddr = serverAddress.split(MessageSystemConfig.IpV4AddressDelimiter);
 
-		if (ipAddr.length == 2) {
-			serverIpAddr = NettyUtil.string2SocketAddress(serverAddress);
-		}
-	}
+        if (ipAddr.length == 2) {
+            serverIpAddr = NettyUtil.string2SocketAddress(serverAddress);
+        }
+    }
 
-	public void init() {
-		try {
-			handler = new MessageBrokerHandler().buildConsumerHook(new ConsumerMessageHook())
-				.buildProducerHook(new ProducerMessageHook());
+    public void init() {
+        try {
+            handler = new MessageBrokerHandler().buildConsumerHook(new ConsumerMessageHook())
+                    .buildProducerHook(new ProducerMessageHook());
 
-			boss = new NioEventLoopGroup(1, threadBossFactory);
+            boss = new NioEventLoopGroup(1, threadBossFactory);
 
-			workers = new NioEventLoopGroup(parallel, threadWorkerFactory, NettyUtil.getNioSelectorProvider());
+            workers = new NioEventLoopGroup(parallel, threadWorkerFactory, NettyUtil.getNioSelectorProvider());
 
-			KryoCodecUtil util = null;// new
-										// KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
+            KryoCodecUtil util = null;// new
+                                      // KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
 
-			bootstrap = new ServerBootstrap();
+            bootstrap = new ServerBootstrap();
 
-			bootstrap.group(boss, workers)
-				.channel(NioServerSocketChannel.class)
-				.option(ChannelOption.SO_BACKLOG, 1024)
-				.option(ChannelOption.SO_REUSEADDR, true)
-				.option(ChannelOption.SO_KEEPALIVE, false)
-				.childOption(ChannelOption.TCP_NODELAY, true)
-				.option(ChannelOption.SO_SNDBUF, nettyClustersConfig.getClientSocketSndBufSize())
-				.option(ChannelOption.SO_RCVBUF, nettyClustersConfig.getClientSocketRcvBufSize())
-				.handler(new LoggingHandler(LogLevel.INFO))
-				.localAddress(serverIpAddr)
-				.childHandler(new ChannelInitializer<SocketChannel>() {
-					@Override
-					public void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline()
-							.addLast(defaultEventExecutorGroup, new MessageObjectEncoder(util),
-									new MessageObjectDecoder(util), handler);
-					}
-				});
+            bootstrap.group(boss, workers).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 1024)
+                    .option(ChannelOption.SO_REUSEADDR, true).option(ChannelOption.SO_KEEPALIVE, false)
+                    .childOption(ChannelOption.TCP_NODELAY, true)
+                    .option(ChannelOption.SO_SNDBUF, nettyClustersConfig.getClientSocketSndBufSize())
+                    .option(ChannelOption.SO_RCVBUF, nettyClustersConfig.getClientSocketRcvBufSize())
+                    .handler(new LoggingHandler(LogLevel.INFO)).localAddress(serverIpAddr)
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(defaultEventExecutorGroup, new MessageObjectEncoder(util),
+                                    new MessageObjectDecoder(util), handler);
+                        }
+                    });
 
-			super.init();
-		}
-		catch (IOException ex) {
-			Logger.getLogger(AvatarMQBrokerServer.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+            super.init();
+        } catch (IOException ex) {
+            Logger.getLogger(AvatarMQBrokerServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-	public int localListenPort() {
-		return brokerServerPort;
-	}
+    public int localListenPort() {
+        return brokerServerPort;
+    }
 
-	public void shutdown() {
-		try {
-			super.shutdown();
-			boss.shutdownGracefully();
-			workers.shutdownGracefully();
-			defaultEventExecutorGroup.shutdownGracefully();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("AvatarMQBrokerServer shutdown exception!");
-		}
-	}
+    public void shutdown() {
+        try {
+            super.shutdown();
+            boss.shutdownGracefully();
+            workers.shutdownGracefully();
+            defaultEventExecutorGroup.shutdownGracefully();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("AvatarMQBrokerServer shutdown exception!");
+        }
+    }
 
-	public void start() {
-		try {
-			String ipAddress = NettyUtil.socketAddress2String(serverIpAddr);
-			System.out.printf("broker server ip:[%s]\n", ipAddress);
+    public void start() {
+        try {
+            String ipAddress = NettyUtil.socketAddress2String(serverIpAddr);
+            System.out.printf("broker server ip:[%s]\n", ipAddress);
 
-			ChannelFuture sync = this.bootstrap.bind().sync();
+            ChannelFuture sync = this.bootstrap.bind().sync();
 
-			super.start();
+            super.start();
 
-			sync.channel().closeFuture().sync();
-			InetSocketAddress addr = (InetSocketAddress) sync.channel().localAddress();
-			brokerServerPort = addr.getPort();
-		}
-		catch (InterruptedException ex) {
-			Logger.getLogger(AvatarMQBrokerServer.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+            sync.channel().closeFuture().sync();
+            InetSocketAddress addr = (InetSocketAddress) sync.channel().localAddress();
+            brokerServerPort = addr.getPort();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AvatarMQBrokerServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

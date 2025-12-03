@@ -17,16 +17,16 @@ import io.arkx.framework.data.db.core.provider.sync.AutoCastTableDataSynchronize
 
 public class SqliteTableSynchronizer extends AutoCastTableDataSynchronizeProvider {
 
-	public SqliteTableSynchronizer(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public SqliteTableSynchronizer(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	protected TransactionDefinition getDefaultTransactionDefinition() {
-		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-		definition.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
-		definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		return definition;
-	}
+    @Override
+    protected TransactionDefinition getDefaultTransactionDefinition() {
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        definition.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
+        definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        return definition;
+    }
 
 }

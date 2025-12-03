@@ -61,8 +61,9 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * <p>
- * Represents an element that can appear as a suffix in a complex value, such as a
- * property or index operator, or a method call (should they ever need to be supported).
+ * Represents an element that can appear as a suffix in a complex value, such as
+ * a property or index operator, or a method call (should they ever need to be
+ * supported).
  *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
@@ -71,19 +72,19 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 public abstract class ValueSuffix {
 
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	public abstract String getExpressionString();
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    public abstract String getExpressionString();
 
-	// -------------------------------------
-	/**
-	 * Evaluates the expression in the given context, operating on the given value.
-	 **/
-	public abstract Object evaluate(Object pValue, IVariableResolver pResolver, IFunctionMapper functions,
-			Logger pLogger) throws ExpressionException;
+    // -------------------------------------
+    /**
+     * Evaluates the expression in the given context, operating on the given value.
+     **/
+    public abstract Object evaluate(Object pValue, IVariableResolver pResolver, IFunctionMapper functions,
+            Logger pLogger) throws ExpressionException;
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

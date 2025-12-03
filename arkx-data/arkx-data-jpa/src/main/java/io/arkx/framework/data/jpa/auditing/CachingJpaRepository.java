@@ -18,44 +18,44 @@ import io.arkx.framework.data.jpa.repository.BaseJpaRepository;
 @NoRepositoryBean
 public interface CachingJpaRepository<T, ID extends Serializable> extends BaseJpaRepository<T, ID> {
 
-	@Cacheable(value = "dict")
-	@Override
-	Optional<T> findById(ID id);
+    @Cacheable(value = "dict")
+    @Override
+    Optional<T> findById(ID id);
 
-	@Cacheable(value = "dict")
-	@Override
-	List<T> findAll();
+    @Cacheable(value = "dict")
+    @Override
+    List<T> findAll();
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	<S extends T> S save(S toSave);
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    <S extends T> S save(S toSave);
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	void deleteInBatch(Iterable<T> entities);
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    void deleteInBatch(Iterable<T> entities);
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	<S extends T> S saveAndFlush(S entity);
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    <S extends T> S saveAndFlush(S entity);
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	void deleteAllInBatch();
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    void deleteAllInBatch();
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	void deleteById(ID id);
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    void deleteById(ID id);
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	void delete(T entity);
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    void delete(T entity);
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	void deleteAll(Iterable<? extends T> entities);
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    void deleteAll(Iterable<? extends T> entities);
 
-	@CacheEvict(value = "dict", allEntries = true)
-	@Override
-	void deleteAll();
+    @CacheEvict(value = "dict", allEntries = true)
+    @Override
+    void deleteAll();
 
 }

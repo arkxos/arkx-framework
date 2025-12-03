@@ -15,29 +15,29 @@ import io.arkx.framework.extend.AbstractExtendService;
  */
 public class SystemTaskService extends AbstractExtendService<SystemTask> {
 
-	public static final String ID = "org.ark.framework.schedule.SystemTaskService";
+    public static final String ID = "org.ark.framework.schedule.SystemTaskService";
 
-	private static boolean cronConfigLoaded = false;
+    private static boolean cronConfigLoaded = false;
 
-	public static SystemTaskService getInstance() {
-		if (!cronConfigLoaded) {
-			loadCronConfig();
-			cronConfigLoaded = true;
-		}
-		return (SystemTaskService) findInstance(SystemTaskService.class);
-	}
+    public static SystemTaskService getInstance() {
+        if (!cronConfigLoaded) {
+            loadCronConfig();
+            cronConfigLoaded = true;
+        }
+        return (SystemTaskService) findInstance(SystemTaskService.class);
+    }
 
-	private static void loadCronConfig() {
-		List<XMLElement> datas = Config.getElements("*.cron.task");
-		for (int i = 0; (datas != null) && (i < datas.size()); i++) {
-			String id = datas.get(i).getAttributes().getString("id");
-			String time = datas.get(i).getAttributes().getString("time");
-			if ((ObjectUtil.empty(id)) && (ObjectUtil.empty(time))) {
-				continue;
-			}
-			SystemTask st = (SystemTask) getInstance().get(id);
-			st.setCronExpression(time);
-		}
-	}
+    private static void loadCronConfig() {
+        List<XMLElement> datas = Config.getElements("*.cron.task");
+        for (int i = 0; (datas != null) && (i < datas.size()); i++) {
+            String id = datas.get(i).getAttributes().getString("id");
+            String time = datas.get(i).getAttributes().getString("time");
+            if ((ObjectUtil.empty(id)) && (ObjectUtil.empty(time))) {
+                continue;
+            }
+            SystemTask st = (SystemTask) getInstance().get(id);
+            st.setCronExpression(time);
+        }
+    }
 
 }

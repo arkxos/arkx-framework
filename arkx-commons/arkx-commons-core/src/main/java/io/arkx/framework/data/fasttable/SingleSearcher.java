@@ -7,10 +7,10 @@ package io.arkx.framework.data.fasttable;
  */
 public abstract class SingleSearcher<T, K extends Comparable<? super K>> implements ISearcher<T, K, T> {
 
-	@Override
-	public T search(T foundRecord, long foundRecordIndex, long low, long high, FastTable recordFile,
-			RecordFunction<T> converter, int recordLength) {
-		return foundRecord;
-	}
+    @Override
+    public T search(T foundRecord, long foundRecordIndex, long low, long high, FastTable recordFile,
+            RecordFunction<T> converter, int recordLength) {
+        return foundRecord;
+    }
 
 }

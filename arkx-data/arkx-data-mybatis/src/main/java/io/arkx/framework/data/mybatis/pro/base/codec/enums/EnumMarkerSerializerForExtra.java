@@ -29,20 +29,19 @@ import cn.hutool.core.text.CharSequenceUtil;
 @SuppressWarnings("rawtypes")
 public class EnumMarkerSerializerForExtra extends JsonSerializer<Enum> {
 
-	@Override
-	public void serialize(Enum value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-		if (value instanceof EnumMarker) {
-			EnumMarker v = (EnumMarker) value;
-			gen.writeObject(v.getValue());
-			String currentName = gen.getOutputContext().getCurrentName();
-			if (CharSequenceUtil.isBlank(currentName)) {
-				currentName = gen.getOutputContext().getParent().getCurrentName();
-			}
-			gen.writeObjectField(currentName + "Desc", v.getDesc());
-		}
-		else {
-			gen.writeObject(value.toString());
-		}
-	}
+    @Override
+    public void serialize(Enum value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        if (value instanceof EnumMarker) {
+            EnumMarker v = (EnumMarker) value;
+            gen.writeObject(v.getValue());
+            String currentName = gen.getOutputContext().getCurrentName();
+            if (CharSequenceUtil.isBlank(currentName)) {
+                currentName = gen.getOutputContext().getParent().getCurrentName();
+            }
+            gen.writeObjectField(currentName + "Desc", v.getDesc());
+        } else {
+            gen.writeObject(value.toString());
+        }
+    }
 
 }

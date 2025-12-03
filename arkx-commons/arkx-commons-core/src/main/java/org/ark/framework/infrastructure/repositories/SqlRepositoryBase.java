@@ -28,207 +28,206 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public abstract class SqlRepositoryBase<T extends Entity> extends RepositoryBase<T> {
 
-	// #region Private Members
+    // #region Private Members
 
-	private IEntityFactory<T> entityFactory;
+    private IEntityFactory<T> entityFactory;
 
-	private Class<T> genericClass;
+    private Class<T> genericClass;
 
-	@SuppressWarnings("rawtypes")
-	private HashMap<String, AppendChildData> childCallbacks;
+    @SuppressWarnings("rawtypes")
+    private HashMap<String, AppendChildData> childCallbacks;
 
-	private String baseQuery;
+    private String baseQuery;
 
-	private String baseWhereClause;
+    private String baseWhereClause;
 
-	// #region AppendChildData Delegate
-	// The delegate signature required for callback methods
-	public interface AppendChildData<T> {
+    // #region AppendChildData Delegate
+    // The delegate signature required for callback methods
+    public interface AppendChildData<T> {
 
-		void append(T entityAggregate, Object childEntityKeyValue);
+        void append(T entityAggregate, Object childEntityKeyValue);
 
-	}
+    }
 
-	@SuppressWarnings("rawtypes")
-	protected HashMap<String, AppendChildData> getChildCallbacks() {
-		return this.childCallbacks;
-	}
+    @SuppressWarnings("rawtypes")
+    protected HashMap<String, AppendChildData> getChildCallbacks() {
+        return this.childCallbacks;
+    }
 
-	// #endregion
+    // #endregion
 
-	@SuppressWarnings("unchecked")
-	protected Class<T> getGenericClass() {
+    @SuppressWarnings("unchecked")
+    protected Class<T> getGenericClass() {
 
-		if (genericClass == null) {
-			Type type = getClass().getGenericSuperclass();
-			Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
-			genericClass = (Class<T>) trueType;
-		}
-		return genericClass;
-	}
+        if (genericClass == null) {
+            Type type = getClass().getGenericSuperclass();
+            Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+            genericClass = (Class<T>) trueType;
+        }
+        return genericClass;
+    }
 
-	// #endregion
+    // #endregion
 
-	// #region Constructors
+    // #region Constructors
 
-	protected SqlRepositoryBase() {
-		this(null);
-	}
+    protected SqlRepositoryBase() {
+        this(null);
+    }
 
-	@SuppressWarnings("rawtypes")
-	protected SqlRepositoryBase(IUnitOfWork unitOfWork) {
-		super(unitOfWork);
-		this.entityFactory = EntityBuilderFactory.buildFactory(getGenericClass());
-		this.childCallbacks = new HashMap<String, AppendChildData>();
-		this.BuildChildCallbacks();
-		this.baseQuery = this.getBaseQuery();
-		this.baseWhereClause = this.getBaseWhereClause();
-	}
+    @SuppressWarnings("rawtypes")
+    protected SqlRepositoryBase(IUnitOfWork unitOfWork) {
+        super(unitOfWork);
+        this.entityFactory = EntityBuilderFactory.buildFactory(getGenericClass());
+        this.childCallbacks = new HashMap<String, AppendChildData>();
+        this.BuildChildCallbacks();
+        this.baseQuery = this.getBaseQuery();
+        this.baseWhereClause = this.getBaseWhereClause();
+    }
 
-	// #endregion
+    // #endregion
 
-	// #region Abstract Methods
+    // #region Abstract Methods
 
-	@Override
-	public T findBy(Object key) {
-		StringBuilder builder = this.getBaseQueryBuilder();
-		builder.append(this.buildBaseWhereClause(key));
-		return this.buildEntityFromSql(builder.toString());
-	}
+    @Override
+    public T findBy(Object key) {
+        StringBuilder builder = this.getBaseQueryBuilder();
+        builder.append(this.buildBaseWhereClause(key));
+        return this.buildEntityFromSql(builder.toString());
+    }
 
-	// #endregion
+    // #endregion
 
-	// #region Protected Methods
+    // #region Protected Methods
 
-	/**
-	 * 根据sql构建实体
-	 *
-	 * @author Darkness
-	 * @date 2012-9-27 上午9:26:03
-	 * @version V1.0
-	 */
-	protected T buildEntityFromSql(String sql) {
+    /**
+     * 根据sql构建实体
+     *
+     * @author Darkness
+     * @date 2012-9-27 上午9:26:03
+     * @version V1.0
+     */
+    protected T buildEntityFromSql(String sql) {
 
-		return EntityBuilderFactory.buildEntityFromSql(getGenericClass(), sql);
-	}
+        return EntityBuilderFactory.buildEntityFromSql(getGenericClass(), sql);
+    }
 
-	/**
-	 * 根据sql查询结果集
-	 *
-	 * @author Darkness
-	 * @date 2012-9-27 上午9:23:27
-	 * @version V1.0
-	 */
-	protected ResultSet executeQuery(String sql) {
-		try {
-			stmt = getConnection().prepareStatement(sql);
-			return stmt.executeQuery();
-		}
-		catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    /**
+     * 根据sql查询结果集
+     *
+     * @author Darkness
+     * @date 2012-9-27 上午9:23:27
+     * @version V1.0
+     */
+    protected ResultSet executeQuery(String sql) {
+        try {
+            stmt = getConnection().prepareStatement(sql);
+            return stmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	Connection mysqlConn = null;
+    Connection mysqlConn = null;
 
-	PreparedStatement stmt = null;
+    PreparedStatement stmt = null;
 
-	private Connection getConnection() {
-		if (mysqlConn == null) {
-			mysqlConn = ConnectionPoolManager.getConnection();// ConnectionManager.getConnection();
-		}
-		return mysqlConn;
-	}
+    private Connection getConnection() {
+        if (mysqlConn == null) {
+            mysqlConn = ConnectionPoolManager.getConnection();// ConnectionManager.getConnection();
+        }
+        return mysqlConn;
+    }
 
-	/**
-	 * 根据sql构建实体集
-	 *
-	 * @author Darkness
-	 * @date 2012-9-27 上午9:26:49
-	 * @version V1.0
-	 */
-	protected List<T> buildEntitiesFromSql(String sql) {
+    /**
+     * 根据sql构建实体集
+     *
+     * @author Darkness
+     * @date 2012-9-27 上午9:26:49
+     * @version V1.0
+     */
+    protected List<T> buildEntitiesFromSql(String sql) {
 
-		return EntityBuilderFactory.buildEntitiesFromSql(getGenericClass(), sql);
-	}
+        return EntityBuilderFactory.buildEntitiesFromSql(getGenericClass(), sql);
+    }
 
-	// #endregion
+    // #endregion
 
-	/**
-	 * 查询所有有效Entity列表
-	 *
-	 * @method findAll
-	 * @return {List<Entity>}
-	 */
-	@Override
-	public List<T> findAll() {
+    /**
+     * 查询所有有效Entity列表
+     *
+     * @method findAll
+     * @return {List<Entity>}
+     */
+    @Override
+    public List<T> findAll() {
 
-		List<T> entities = findAllSortBy("DESC");
+        List<T> entities = findAllSortBy("DESC");
 
-		findAllAfter(entities);
+        findAllAfter(entities);
 
-		return entities;
-	}
+        return entities;
+    }
 
-	protected void findAllAfter(List<T> entities) {
-	}
+    protected void findAllAfter(List<T> entities) {
+    }
 
-	public List<T> findAllAsc() {
-		List<T> entities = findAllSortBy("asc");
+    public List<T> findAllAsc() {
+        List<T> entities = findAllSortBy("asc");
 
-		findAllAfter(entities);
+        findAllAfter(entities);
 
-		return entities;
-	}
+        return entities;
+    }
 
-	private List<T> findAllSortBy(String sortOrderType) {
-		StringBuilder builder = this.getBaseQueryBuilder();
-		List<T> result = buildEntitiesFromSql(builder.toString() + " WHERE " + BaseEntity.UseFlag + "='Y' AND "
-				+ BaseEntity.DeleteStatus + "='N' ORDER BY SORT_ORDER " + sortOrderType);
+    private List<T> findAllSortBy(String sortOrderType) {
+        StringBuilder builder = this.getBaseQueryBuilder();
+        List<T> result = buildEntitiesFromSql(builder.toString() + " WHERE " + BaseEntity.UseFlag + "='Y' AND "
+                + BaseEntity.DeleteStatus + "='N' ORDER BY SORT_ORDER " + sortOrderType);
 
-		if (result == null) {
-			return new ArrayList<T>();
-		}
+        if (result == null) {
+            return new ArrayList<T>();
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * 查询所有没有逻辑删除的Entity列表
-	 *
-	 * @method findAllLogic
-	 * @return {List<Entity>}
-	 *
-	 * @author Darkness
-	 * @date 2013-2-1 下午01:36:14
-	 * @version V1.0
-	 */
-	public List<T> findAllLogic() {
-		StringBuilder builder = this.getBaseQueryBuilder();
-		List<T> result = buildEntitiesFromSql(
-				builder.toString() + " WHERE " + BaseEntity.DeleteStatus + "='N' ORDER BY SORT_ORDER");
+    /**
+     * 查询所有没有逻辑删除的Entity列表
+     *
+     * @method findAllLogic
+     * @return {List<Entity>}
+     *
+     * @author Darkness
+     * @date 2013-2-1 下午01:36:14
+     * @version V1.0
+     */
+    public List<T> findAllLogic() {
+        StringBuilder builder = this.getBaseQueryBuilder();
+        List<T> result = buildEntitiesFromSql(
+                builder.toString() + " WHERE " + BaseEntity.DeleteStatus + "='N' ORDER BY SORT_ORDER");
 
-		if (result == null) {
-			return new ArrayList<>();
-		}
+        if (result == null) {
+            return new ArrayList<>();
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	protected StringBuilder getBaseQueryBuilder() {
-		StringBuilder builder = new StringBuilder(50);
-		builder.append(this.baseQuery);
-		return builder;
-	}
+    protected StringBuilder getBaseQueryBuilder() {
+        StringBuilder builder = new StringBuilder(50);
+        builder.append(this.baseQuery);
+        return builder;
+    }
 
-	protected String buildBaseWhereClause(Object key) {
-		return StringFormat.format(this.baseWhereClause, key);
-	}
+    protected String buildBaseWhereClause(Object key) {
+        return StringFormat.format(this.baseWhereClause, key);
+    }
 
-	protected abstract void BuildChildCallbacks();
+    protected abstract void BuildChildCallbacks();
 
-	protected abstract String getBaseQuery();
+    protected abstract String getBaseQuery();
 
-	protected abstract String getBaseWhereClause();
+    protected abstract String getBaseWhereClause();
 
 }

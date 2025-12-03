@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface ISchemaLoader {
 
-	List<String> load(String path);
+    List<String> load(String path);
 
 }

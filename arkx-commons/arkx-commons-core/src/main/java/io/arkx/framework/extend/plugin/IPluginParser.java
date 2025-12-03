@@ -11,23 +11,23 @@ import java.io.File;
  */
 public interface IPluginParser {
 
-	/**
-	 * 符合格式的插件
-	 *
-	 * @author Darkness
-	 * @date 2012-11-23 下午03:13:10
-	 * @version V1.0
-	 * @param f
-	 */
-	boolean validate(File f);
+    /**
+     * 符合格式的插件
+     *
+     * @author Darkness
+     * @date 2012-11-23 下午03:13:10
+     * @version V1.0
+     * @param f
+     */
+    boolean validate(File f);
 
-	/**
-	 * 解析插件配置
-	 *
-	 * @author Darkness
-	 * @date 2012-11-23 下午03:17:19
-	 * @version V1.0
-	 */
-	PluginConfig[] parse(File f);
+    /**
+     * 解析插件配置
+     *
+     * @author Darkness
+     * @date 2012-11-23 下午03:17:19
+     * @version V1.0
+     */
+    PluginConfig[] parse(File f);
 
 }

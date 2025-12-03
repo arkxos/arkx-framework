@@ -12,10 +12,10 @@ import io.arkx.framework.data.common.entity.Status;
 @WritingConverter
 public class EnumToIntegerConverter implements Converter<Status, JdbcValue> {
 
-	@Override
-	public JdbcValue convert(Status source) {
-		// 将枚举转换为数据库可存储的值
-		return JdbcValue.of(source.getCode(), JDBCType.INTEGER);
-	}
+    @Override
+    public JdbcValue convert(Status source) {
+        // 将枚举转换为数据库可存储的值
+        return JdbcValue.of(source.getCode(), JDBCType.INTEGER);
+    }
 
 }

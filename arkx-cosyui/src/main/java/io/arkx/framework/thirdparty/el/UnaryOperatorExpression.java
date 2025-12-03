@@ -73,82 +73,80 @@ import io.arkx.framework.thirdparty.el.operator.UnaryOperator;
 
 public class UnaryOperatorExpression extends Expression {
 
-	List<UnaryOperator> mOperators;
+    List<UnaryOperator> mOperators;
 
-	UnaryOperator mOperator;
+    UnaryOperator mOperator;
 
-	public UnaryOperator getOperator() {
-		return mOperator;
-	}
+    public UnaryOperator getOperator() {
+        return mOperator;
+    }
 
-	public void setOperator(UnaryOperator pOperator) {
-		mOperator = pOperator;
-	}
+    public void setOperator(UnaryOperator pOperator) {
+        mOperator = pOperator;
+    }
 
-	public List<UnaryOperator> getOperators() {
-		return mOperators;
-	}
+    public List<UnaryOperator> getOperators() {
+        return mOperators;
+    }
 
-	public void setOperators(List<UnaryOperator> pOperators) {
-		mOperators = pOperators;
-	}
+    public void setOperators(List<UnaryOperator> pOperators) {
+        mOperators = pOperators;
+    }
 
-	Expression mExpression;
+    Expression mExpression;
 
-	public Expression getExpression() {
-		return mExpression;
-	}
+    public Expression getExpression() {
+        return mExpression;
+    }
 
-	public void setExpression(Expression pExpression) {
-		mExpression = pExpression;
-	}
+    public void setExpression(Expression pExpression) {
+        mExpression = pExpression;
+    }
 
-	public UnaryOperatorExpression(UnaryOperator pOperator, List<UnaryOperator> pOperators, Expression pExpression) {
-		mOperator = pOperator;
-		mOperators = pOperators;
-		mExpression = pExpression;
-	}
+    public UnaryOperatorExpression(UnaryOperator pOperator, List<UnaryOperator> pOperators, Expression pExpression) {
+        mOperator = pOperator;
+        mOperators = pOperators;
+        mExpression = pExpression;
+    }
 
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append("(");
-		if (mOperator != null) {
-			buf.append(mOperator.getOperatorSymbol());
-			buf.append(" ");
-		}
-		else {
-			for (int i = 0; i < mOperators.size(); i++) {
-				UnaryOperator operator = mOperators.get(i);
-				buf.append(operator.getOperatorSymbol());
-				buf.append(" ");
-			}
-		}
-		buf.append(mExpression.getExpressionString());
-		buf.append(")");
-		return buf.toString();
-	}
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(");
+        if (mOperator != null) {
+            buf.append(mOperator.getOperatorSymbol());
+            buf.append(" ");
+        } else {
+            for (int i = 0; i < mOperators.size(); i++) {
+                UnaryOperator operator = mOperators.get(i);
+                buf.append(operator.getOperatorSymbol());
+                buf.append(" ");
+            }
+        }
+        buf.append(mExpression.getExpressionString());
+        buf.append(")");
+        return buf.toString();
+    }
 
-	/**
-	 * Evaluates to the literal value
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-			throws ExpressionException {
-		Object value = mExpression.evaluate(pResolver, functions, pLogger);
-		if (mOperator != null) {
-			value = mOperator.apply(value, pLogger);
-		}
-		else {
-			for (int i = mOperators.size() - 1; i >= 0; i--) {
-				UnaryOperator operator = mOperators.get(i);
-				value = operator.apply(value, pLogger);
-			}
-		}
-		return value;
-	}
+    /**
+     * Evaluates to the literal value
+     **/
+    @Override
+    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        Object value = mExpression.evaluate(pResolver, functions, pLogger);
+        if (mOperator != null) {
+            value = mOperator.apply(value, pLogger);
+        } else {
+            for (int i = mOperators.size() - 1; i >= 0; i--) {
+                UnaryOperator operator = mOperators.get(i);
+                value = operator.apply(value, pLogger);
+            }
+        }
+        return value;
+    }
 
 }

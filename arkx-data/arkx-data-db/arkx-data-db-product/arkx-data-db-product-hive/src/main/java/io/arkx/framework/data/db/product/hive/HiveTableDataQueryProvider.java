@@ -17,18 +17,17 @@ import io.arkx.framework.data.db.core.provider.query.DefaultTableDataQueryProvid
 
 public class HiveTableDataQueryProvider extends DefaultTableDataQueryProvider {
 
-	public HiveTableDataQueryProvider(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public HiveTableDataQueryProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	protected void beforeExecuteQuery(Connection connection, String schema, String table) {
-		try {
-			HivePrepareUtils.prepare(connection, schema, table);
-		}
-		catch (SQLException t) {
-			throw new RuntimeException(t);
-		}
-	}
+    @Override
+    protected void beforeExecuteQuery(Connection connection, String schema, String table) {
+        try {
+            HivePrepareUtils.prepare(connection, schema, table);
+        } catch (SQLException t) {
+            throw new RuntimeException(t);
+        }
+    }
 
 }

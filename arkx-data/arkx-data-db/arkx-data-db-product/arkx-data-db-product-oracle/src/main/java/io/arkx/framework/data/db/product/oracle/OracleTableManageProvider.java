@@ -14,14 +14,14 @@ import io.arkx.framework.data.db.core.provider.manage.DefaultTableManageProvider
 
 public class OracleTableManageProvider extends DefaultTableManageProvider {
 
-	public OracleTableManageProvider(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public OracleTableManageProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	public void dropTable(String schemaName, String tableName) {
-		String sql = "DROP TABLE \"%s\".\"%s\" CASCADE CONSTRAINTS".formatted(schemaName, tableName);
-		this.executeSql(sql);
-	}
+    @Override
+    public void dropTable(String schemaName, String tableName) {
+        String sql = "DROP TABLE \"%s\".\"%s\" CASCADE CONSTRAINTS".formatted(schemaName, tableName);
+        this.executeSql(sql);
+    }
 
 }

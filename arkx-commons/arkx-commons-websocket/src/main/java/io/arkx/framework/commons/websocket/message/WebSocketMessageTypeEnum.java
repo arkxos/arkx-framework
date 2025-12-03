@@ -16,16 +16,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum WebSocketMessageTypeEnum {
 
-	/**
-	 * Ping 消息类型，通常由客户端发送，用于心跳检测。
-	 */
-	PING("ping"),
+    /**
+     * Ping 消息类型，通常由客户端发送，用于心跳检测。
+     */
+    PING("ping"),
 
-	/**
-	 * Pong 消息类型，通常由服务器响应 Ping 消息发送，用于心跳检测。
-	 */
-	PONG("pong");
+    /**
+     * Pong 消息类型，通常由服务器响应 Ping 消息发送，用于心跳检测。
+     */
+    PONG("pong");
 
-	private final String value;
+    private final String value;
 
 }

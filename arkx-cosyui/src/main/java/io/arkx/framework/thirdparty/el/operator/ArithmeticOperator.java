@@ -72,32 +72,32 @@ import io.arkx.framework.thirdparty.el.Logger;
 
 public abstract class ArithmeticOperator extends BinaryOperator {
 
-	/**
-	 * Applies the operator to the given value
-	 **/
-	@Override
-	public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
-		return Coercions.applyArithmeticOperator(pLeft, pRight, this, pLogger);
-	}
+    /**
+     * Applies the operator to the given value
+     **/
+    @Override
+    public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
+        return Coercions.applyArithmeticOperator(pLeft, pRight, this, pLogger);
+    }
 
-	/**
-	 * Applies the operator to the given double values, returning a double
-	 **/
-	public abstract double apply(double pLeft, double pRight);
+    /**
+     * Applies the operator to the given double values, returning a double
+     **/
+    public abstract double apply(double pLeft, double pRight);
 
-	/**
-	 * Applies the operator to the given double values, returning a double
-	 **/
-	public abstract long apply(long pLeft, long pRight);
+    /**
+     * Applies the operator to the given double values, returning a double
+     **/
+    public abstract long apply(long pLeft, long pRight);
 
-	/**
-	 * Applies the operator to the given BigDecimal values, returning a BigDecimal.
-	 **/
-	public abstract BigDecimal apply(BigDecimal pLeft, BigDecimal pRight);
+    /**
+     * Applies the operator to the given BigDecimal values, returning a BigDecimal.
+     **/
+    public abstract BigDecimal apply(BigDecimal pLeft, BigDecimal pRight);
 
-	/**
-	 * Applies the operator to the given BigInteger values, returning a BigInteger.
-	 **/
-	public abstract BigInteger apply(BigInteger pLeft, BigInteger pRight);
+    /**
+     * Applies the operator to the given BigInteger values, returning a BigInteger.
+     **/
+    public abstract BigInteger apply(BigInteger pLeft, BigInteger pRight);
 
 }

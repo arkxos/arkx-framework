@@ -12,76 +12,75 @@ import java.util.zip.ZipEntry;
  */
 public class JarResourceEntry {
 
-	private String jarFileName;
+    private String jarFileName;
 
-	private long lastModified;
+    private long lastModified;
 
-	private String path;
+    private String path;
 
-	private boolean isDirectory = false;
+    private boolean isDirectory = false;
 
-	;
-	private long length;
+    ;
+    private long length;
 
-	public boolean isDirectory() {
-		return isDirectory;
-	}
+    public boolean isDirectory() {
+        return isDirectory;
+    }
 
-	public boolean isFile() {
-		return !isDirectory;
-	}
+    public boolean isFile() {
+        return !isDirectory;
+    }
 
-	public JarResourceEntry(String jarFileName, long lastModified, String path, boolean dirFlag, long length) {
-		this.jarFileName = jarFileName;
-		this.lastModified = lastModified;
-		this.path = path;
-		isDirectory = dirFlag;
-		this.length = length;
-	}
+    public JarResourceEntry(String jarFileName, long lastModified, String path, boolean dirFlag, long length) {
+        this.jarFileName = jarFileName;
+        this.lastModified = lastModified;
+        this.path = path;
+        isDirectory = dirFlag;
+        this.length = length;
+    }
 
-	public InputStream toStream() throws IOException {
-		JarFile jf = new JarFile(jarFileName);
-		try {
-			ZipEntry ze = jf.getEntry(path);
-			if (ze != null) {
-				return jf.getInputStream(ze);
-			}
-		}
-		finally {
-			// jf.close();
-		}
-		return null;
-	}
+    public InputStream toStream() throws IOException {
+        JarFile jf = new JarFile(jarFileName);
+        try {
+            ZipEntry ze = jf.getEntry(path);
+            if (ze != null) {
+                return jf.getInputStream(ze);
+            }
+        } finally {
+            // jf.close();
+        }
+        return null;
+    }
 
-	public List<JarResourceEntry> listFiles() {
-		return JarResourceRoot.listFiles(path);
-	}
+    public List<JarResourceEntry> listFiles() {
+        return JarResourceRoot.listFiles(path);
+    }
 
-	public String getJarFileName() {
-		return jarFileName;
-	}
+    public String getJarFileName() {
+        return jarFileName;
+    }
 
-	public void setJarFileName(String jarFileName) {
-		this.jarFileName = jarFileName;
-	}
+    public void setJarFileName(String jarFileName) {
+        this.jarFileName = jarFileName;
+    }
 
-	public long getLastModified() {
-		return lastModified;
-	}
+    public long getLastModified() {
+        return lastModified;
+    }
 
-	public String getFullPath() {
-		return path;
-	}
+    public String getFullPath() {
+        return path;
+    }
 
-	public long length() {
-		return length;
-	}
+    public long length() {
+        return length;
+    }
 
-	public String getName() {
-		if (path.indexOf("/") >= 0) {
-			return path.substring(path.lastIndexOf("/") + 1);
-		}
-		return path;
-	}
+    public String getName() {
+        if (path.indexOf("/") >= 0) {
+            return path.substring(path.lastIndexOf("/") + 1);
+        }
+        return path;
+    }
 
 }

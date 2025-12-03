@@ -8,6 +8,6 @@ package io.arkx.framework.commons.util;
 @FunctionalInterface
 public interface Handler {
 
-	void execute();
+    void execute();
 
 }

@@ -8,17 +8,17 @@ package io.arkx.framework.message.tcp;
  */
 public enum BusinesMessageType {
 
-	// 0-50为系统保留消息类型
-	OpenLight((byte) 51), CloseLight((byte) 52);
+    // 0-50为系统保留消息类型
+    OpenLight((byte) 51), CloseLight((byte) 52);
 
-	private byte value;
+    private byte value;
 
-	private BusinesMessageType(byte value) {
-		this.value = value;
-	}
+    private BusinesMessageType(byte value) {
+        this.value = value;
+    }
 
-	public byte value() {
-		return this.value;
-	}
+    public byte value() {
+        return this.value;
+    }
 
 }

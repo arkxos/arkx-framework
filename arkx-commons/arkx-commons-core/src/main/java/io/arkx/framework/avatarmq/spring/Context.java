@@ -9,6 +9,6 @@ package io.arkx.framework.avatarmq.spring;
  */
 public interface Context<T> {
 
-	T get();
+    T get();
 
 }

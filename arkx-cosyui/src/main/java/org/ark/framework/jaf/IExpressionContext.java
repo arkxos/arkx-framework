@@ -8,6 +8,6 @@ package org.ark.framework.jaf;
  */
 public interface IExpressionContext {
 
-	Object eval(PlaceHolder paramPlaceHolder);
+    Object eval(PlaceHolder paramPlaceHolder);
 
 }

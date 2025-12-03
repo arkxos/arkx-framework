@@ -8,10 +8,10 @@ package org.ark.framework.ssi;
  */
 class SSIConditionalState {
 
-	boolean branchTaken = false;
+    boolean branchTaken = false;
 
-	int nestingCount = 0;
+    int nestingCount = 0;
 
-	boolean processConditionalCommandsOnly = false;
+    boolean processConditionalCommandsOnly = false;
 
 }

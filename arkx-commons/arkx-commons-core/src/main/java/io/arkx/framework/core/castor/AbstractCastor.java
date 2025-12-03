@@ -6,14 +6,14 @@ package io.arkx.framework.core.castor;
  */
 public abstract class AbstractCastor implements ICastor {
 
-	@Override
-	public String getExtendItemID() {
-		return this.getClass().getName();
-	}
+    @Override
+    public String getExtendItemID() {
+        return this.getClass().getName();
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return this.getClass().getName();
-	}
+    @Override
+    public String getExtendItemName() {
+        return this.getClass().getName();
+    }
 
 }

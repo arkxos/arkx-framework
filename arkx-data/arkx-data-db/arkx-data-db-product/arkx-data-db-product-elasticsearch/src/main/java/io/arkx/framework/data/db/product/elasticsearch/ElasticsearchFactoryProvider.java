@@ -25,38 +25,38 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.ELASTICSEARCH)
 public class ElasticsearchFactoryProvider extends AbstractFactoryProvider {
 
-	public ElasticsearchFactoryProvider(DataSource dataSource) {
-		super(dataSource);
-	}
+    public ElasticsearchFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-	@Override
-	public ProductFeatures getProductFeatures() {
-		return new DefaultProductFeatures();
-	}
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-	@Override
-	public MetadataProvider createMetadataQueryProvider() {
-		return new ElasticsearchMetadataQueryProvider(this);
-	}
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new ElasticsearchMetadataQueryProvider(this);
+    }
 
-	@Override
-	public TableDataQueryProvider createTableDataQueryProvider() {
-		return new ElasticsearchTableDataQueryProvider(this);
-	}
+    @Override
+    public TableDataQueryProvider createTableDataQueryProvider() {
+        return new ElasticsearchTableDataQueryProvider(this);
+    }
 
-	@Override
-	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-		return new ElasticsearchTableDataWriteProvider(this);
-	}
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new ElasticsearchTableDataWriteProvider(this);
+    }
 
-	@Override
-	public TableManageProvider createTableManageProvider() {
-		return new ElasticsearchTableManageProvider(this);
-	}
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new ElasticsearchTableManageProvider(this);
+    }
 
-	@Override
-	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-		return new ElasticsearchTableDataSynchronizer(this);
-	}
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new ElasticsearchTableDataSynchronizer(this);
+    }
 
 }

@@ -17,14 +17,14 @@ import io.arkx.framework.data.db.core.provider.write.AutoCastTableDataWriteProvi
 
 public class TDengineTableDataWriteProvider extends AutoCastTableDataWriteProvider {
 
-	public TDengineTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public TDengineTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	protected TransactionDefinition getDefaultTransactionDefinition() {
-		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-		return definition;
-	}
+    @Override
+    protected TransactionDefinition getDefaultTransactionDefinition() {
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        return definition;
+    }
 
 }

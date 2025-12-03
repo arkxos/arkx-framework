@@ -30,9 +30,9 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class RequestHolder {
 
-	public static HttpServletRequest getHttpServletRequest() {
-		return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
-			.getRequest();
-	}
+    public static HttpServletRequest getHttpServletRequest() {
+        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
+                .getRequest();
+    }
 
 }

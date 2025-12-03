@@ -14,22 +14,22 @@ import lombok.Setter;
 @Setter
 public class BaseEvent implements Auditor {
 
-	private String operatorId;// 操作人id
+    private String operatorId;// 操作人id
 
-	private String operatorRealName;
+    private String operatorRealName;
 
-	private String operatorBranchInnerCode;// 操作人部门编码
+    private String operatorBranchInnerCode;// 操作人部门编码
 
-	private String operatorBranchName;
+    private String operatorBranchName;
 
-	private LocalDateTime occurredOn;
+    private LocalDateTime occurredOn;
 
-	public void init(Auditor auditor) {
-		this.setOperatorId(auditor.getOperatorId());
-		this.setOperatorRealName(auditor.getOperatorRealName());
-		this.setOperatorBranchInnerCode(auditor.getOperatorBranchInnerCode());
-		this.setOperatorBranchName(auditor.getOperatorBranchName());
-		this.setOccurredOn(auditor.getOccurredOn());
-	}
+    public void init(Auditor auditor) {
+        this.setOperatorId(auditor.getOperatorId());
+        this.setOperatorRealName(auditor.getOperatorRealName());
+        this.setOperatorBranchInnerCode(auditor.getOperatorBranchInnerCode());
+        this.setOperatorBranchName(auditor.getOperatorBranchName());
+        this.setOccurredOn(auditor.getOccurredOn());
+    }
 
 }

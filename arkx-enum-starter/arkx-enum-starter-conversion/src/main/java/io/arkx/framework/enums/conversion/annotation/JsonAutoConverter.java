@@ -12,10 +12,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.SOURCE)
 public @interface JsonAutoConverter {
 
-	/**
-	 * 是否开启自动转换
-	 * @return
-	 */
-	boolean autoApply() default true;
+    /**
+     * 是否开启自动转换
+     *
+     * @return
+     */
+    boolean autoApply() default true;
 
 }

@@ -15,12 +15,12 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public interface BrokerStrategy {
 
-	void messageDispatch(RequestMessage request, ResponseMessage response);
+    void messageDispatch(RequestMessage request, ResponseMessage response);
 
-	void setHookProducer(ProducerMessageListener hookProducer);
+    void setHookProducer(ProducerMessageListener hookProducer);
 
-	void setHookConsumer(ConsumerMessageListener hookConsumer);
+    void setHookConsumer(ConsumerMessageListener hookConsumer);
 
-	void setChannelHandler(ChannelHandlerContext channelHandler);
+    void setChannelHandler(ChannelHandlerContext channelHandler);
 
 }

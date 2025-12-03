@@ -15,14 +15,14 @@ import io.arkx.framework.commons.ArkSecurityService;
 @Service
 public class ArkSecurityServiceImpl implements ArkSecurityService {
 
-	@Override
-	public List<Long> getCurrentUserDataScope() {
-		return SecurityUtils.getCurrentUserDataScope();
-	}
+    @Override
+    public List<Long> getCurrentUserDataScope() {
+        return SecurityUtils.getCurrentUserDataScope();
+    }
 
-	@Override
-	public String getCurrentUsername() {
-		return SecurityUtils.getCurrentUsername();
-	}
+    @Override
+    public String getCurrentUsername() {
+        return SecurityUtils.getCurrentUsername();
+    }
 
 }

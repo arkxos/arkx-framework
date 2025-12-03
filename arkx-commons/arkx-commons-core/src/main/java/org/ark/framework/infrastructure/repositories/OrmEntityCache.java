@@ -18,41 +18,40 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public class OrmEntityCache extends CacheDataProvider {
 
-	public static final String ProviderID = "OrmEntity";
+    public static final String ProviderID = "OrmEntity";
 
-	@Override
-	public String getExtendItemID() {
-		return ProviderID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ProviderID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "Orm 缓存";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "Orm 缓存";
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void onTypeNotFound(String type) {
-		CacheManager.setMapx(ProviderID, type, new CacheMapx<String, Object>(10000));
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onTypeNotFound(String type) {
+        CacheManager.setMapx(ProviderID, type, new CacheMapx<String, Object>(10000));
 
-		Class<? extends Entity> entityClass = null;
-		try {
-			entityClass = (Class<? extends Entity>) Class.forName(type);
-		}
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		String tableName = EntityAnnotationManager.getTableName(entityClass);
-		String sql = "SELECT * FROM " + tableName;
-		List<? extends Entity> entities = EntityBuilderFactory.buildEntitiesFromSql(entityClass, sql);
-		for (Entity entity : entities) {
-			CacheManager.set(ProviderID, type, entity.getId(), entity);
-		}
+        Class<? extends Entity> entityClass = null;
+        try {
+            entityClass = (Class<? extends Entity>) Class.forName(type);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        String tableName = EntityAnnotationManager.getTableName(entityClass);
+        String sql = "SELECT * FROM " + tableName;
+        List<? extends Entity> entities = EntityBuilderFactory.buildEntitiesFromSql(entityClass, sql);
+        for (Entity entity : entities) {
+            CacheManager.set(ProviderID, type, entity.getId(), entity);
+        }
 
-	}
+    }
 
-	@Override
-	public void onKeyNotFound(String type, String key) {
-	}
+    @Override
+    public void onKeyNotFound(String type, String key) {
+    }
 
 }

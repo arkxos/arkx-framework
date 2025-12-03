@@ -21,16 +21,16 @@ import lombok.experimental.SuperBuilder;
 @Table("smart_dict")
 public class Dict extends IdEntity {
 
-	private Integer value;
+    private Integer value;
 
-	private String labelValue;
+    private String labelValue;
 
-	private String enName;
+    private String enName;
 
-	private String cnName;
+    private String cnName;
 
-	private Integer sort;
+    private Integer sort;
 
-	private Integer status;
+    private Integer status;
 
 }

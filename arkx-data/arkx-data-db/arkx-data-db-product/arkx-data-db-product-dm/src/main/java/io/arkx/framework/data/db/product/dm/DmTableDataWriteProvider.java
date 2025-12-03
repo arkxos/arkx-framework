@@ -17,18 +17,18 @@ import io.arkx.framework.data.db.core.provider.write.DefaultTableDataWriteProvid
 
 public class DmTableDataWriteProvider extends DefaultTableDataWriteProvider {
 
-	public DmTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public DmTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	public long write(List<String> fieldNames, List<Object[]> recordValues) {
-		recordValues.parallelStream().forEach((Object[] row) -> {
-			for (int i = 0; i < row.length; ++i) {
-				row[i] = ObjectCastUtils.castByDetermine(row[i]);
-			}
-		});
-		return super.write(fieldNames, recordValues);
-	}
+    @Override
+    public long write(List<String> fieldNames, List<Object[]> recordValues) {
+        recordValues.parallelStream().forEach((Object[] row) -> {
+            for (int i = 0; i < row.length; ++i) {
+                row[i] = ObjectCastUtils.castByDetermine(row[i]);
+            }
+        });
+        return super.write(fieldNames, recordValues);
+    }
 
 }

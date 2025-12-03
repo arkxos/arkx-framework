@@ -46,36 +46,34 @@ import lombok.RequiredArgsConstructor;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class ArkXssAutoConfiguration implements WebMvcConfigurer {
 
-	private final ArkXssProperties xssProperties;
+    private final ArkXssProperties xssProperties;
 
-	@Bean
-	@ConditionalOnMissingBean
-	public XssCleaner xssCleaner(ArkXssProperties properties) {
-		return new DefaultXssCleaner(properties);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public XssCleaner xssCleaner(ArkXssProperties properties) {
+        return new DefaultXssCleaner(properties);
+    }
 
-	@Bean
-	public FormXssClean formXssClean(ArkXssProperties properties, XssCleaner xssCleaner) {
-		return new FormXssClean(properties, xssCleaner);
-	}
+    @Bean
+    public FormXssClean formXssClean(ArkXssProperties properties, XssCleaner xssCleaner) {
+        return new FormXssClean(properties, xssCleaner);
+    }
 
-	@Bean
-	public Jackson2ObjectMapperBuilderCustomizer xssJacksonCustomizer(ArkXssProperties properties,
-			XssCleaner xssCleaner) {
-		return builder -> builder.deserializerByType(String.class, new JacksonXssClean(properties, xssCleaner));
-	}
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer xssJacksonCustomizer(ArkXssProperties properties,
+            XssCleaner xssCleaner) {
+        return builder -> builder.deserializerByType(String.class, new JacksonXssClean(properties, xssCleaner));
+    }
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		List<String> patterns = xssProperties.getPathPatterns();
-		if (patterns.isEmpty()) {
-			patterns.add("/**");
-		}
-		XssCleanInterceptor interceptor = new XssCleanInterceptor(xssProperties);
-		registry.addInterceptor(interceptor)
-			.addPathPatterns(patterns)
-			.excludePathPatterns(xssProperties.getPathExcludePatterns())
-			.order(Ordered.LOWEST_PRECEDENCE);
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        List<String> patterns = xssProperties.getPathPatterns();
+        if (patterns.isEmpty()) {
+            patterns.add("/**");
+        }
+        XssCleanInterceptor interceptor = new XssCleanInterceptor(xssProperties);
+        registry.addInterceptor(interceptor).addPathPatterns(patterns)
+                .excludePathPatterns(xssProperties.getPathExcludePatterns()).order(Ordered.LOWEST_PRECEDENCE);
+    }
 
 }

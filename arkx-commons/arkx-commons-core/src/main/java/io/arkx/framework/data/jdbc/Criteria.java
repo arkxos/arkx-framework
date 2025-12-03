@@ -16,9 +16,9 @@ import io.arkx.framework.commons.util.lang.ReflectionUtil;
 /**
  * @class org.ark.framework.orm.query.Criteria 规格约束查询模式
  *
- * 示例：
+ *        示例：
  *
- * <pre>
+ *        <pre>
  *        Criteria criteria = getSession().createCriteria(ParticipantParamValue.class);
  *        criteria.add(Restrictions.eq(ParticipantParamValue.ParticipantValueId, getId()));
  *        criteria.add(Restrictions.like(ParticipantParamValue.ParticipantValue, "abc"));
@@ -33,236 +33,231 @@ import io.arkx.framework.commons.util.lang.ReflectionUtil;
  *
  *        List<ParticipantParamValue> paramValues = criteria.findEntities();
  *        </pre>
+ *
  * @author Darkness
  * @date 2012-9-15 上午9:47:44
  * @version V1.0
  */
 public class Criteria {
 
-	private Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass;
+    private Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass;
 
-	private List<Restrictions> restrictions = new ArrayList<Restrictions>();
+    private List<Restrictions> restrictions = new ArrayList<Restrictions>();
 
-	private List<Order> orders = new ArrayList<Order>();
+    private List<Order> orders = new ArrayList<Order>();
 
-	private Query qb;
+    private Query qb;
 
-	Criteria(Transaction transaction, Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass) {
-		this.domainObjectClass = domainObjectClass;
+    Criteria(Transaction transaction, Class<? extends io.arkx.framework.data.jdbc.Entity> domainObjectClass) {
+        this.domainObjectClass = domainObjectClass;
 
-		String tableName = null;
-		if (domainObjectClass.isAnnotationPresent(Entity.class)) {
-			tableName = domainObjectClass.getAnnotation(Entity.class).name();
-		}
-		else {
-			tableName = domainObjectClass.getSimpleName();
-		}
+        String tableName = null;
+        if (domainObjectClass.isAnnotationPresent(Entity.class)) {
+            tableName = domainObjectClass.getAnnotation(Entity.class).name();
+        } else {
+            tableName = domainObjectClass.getSimpleName();
+        }
 
-		qb = new Query(transaction, "select * from " + tableName + " where 1=1");
-	}
+        qb = new Query(transaction, "select * from " + tableName + " where 1=1");
+    }
 
-	public Criteria add(Restrictions criteria) {
-		restrictions.add(criteria);
-		return this;
-	}
+    public Criteria add(Restrictions criteria) {
+        restrictions.add(criteria);
+        return this;
+    }
 
-	public Criteria addOrder(Order order) {
-		orders.add(order);
-		return this;
-	}
+    public Criteria addOrder(Order order) {
+        orders.add(order);
+        return this;
+    }
 
-	/**
-	 * 是否存在该排序
-	 *
-	 * @author Darkness
-	 * @date 2013-3-28 下午03:24:07
-	 * @version V1.0
-	 */
-	public boolean isExistOrder(Order order) {
-		for (Order _order : orders) {
-			if (_order.equals(order)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     * 是否存在该排序
+     *
+     * @author Darkness
+     * @date 2013-3-28 下午03:24:07
+     * @version V1.0
+     */
+    public boolean isExistOrder(Order order) {
+        for (Order _order : orders) {
+            if (_order.equals(order)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public DataTable dataTable() {
+    public DataTable dataTable() {
 
-		initQuery();
+        initQuery();
 
-		return qb.executeDataTable();
-	}
+        return qb.executeDataTable();
+    }
 
-	@SuppressWarnings("unchecked")
-	public <T> T findEntity() {
+    @SuppressWarnings("unchecked")
+    public <T> T findEntity() {
 
-		initQuery();
-		DataTable dataTable = qb.executeDataTable();
-		return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
-	}
+        initQuery();
+        DataTable dataTable = qb.executeDataTable();
+        return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
+    }
 
-	@SuppressWarnings("unchecked")
-	public <T> List<T> findEntities() {
+    @SuppressWarnings("unchecked")
+    public <T> List<T> findEntities() {
 
-		initQuery();
-		DataTable dataTable = qb.executeDataTable();
-		List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
+        initQuery();
+        DataTable dataTable = qb.executeDataTable();
+        List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
 
-		if (result == null) {
-			return new ArrayList<>();
-		}
+        if (result == null) {
+            return new ArrayList<>();
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private void setQueryBuilderWithRestriction(Restrictions restriction) {
-		if (Restrictions.IN.equals(restriction.getSqlOperator())) {
-			qb.append(restriction.getField() + " IN (" + restriction.getValue() + ")");
-		}
-		else {
-			qb.append(restriction.getField() + " " + restriction.getSqlOperator() + " ? ", restriction.getValue());
-		}
-	}
+    private void setQueryBuilderWithRestriction(Restrictions restriction) {
+        if (Restrictions.IN.equals(restriction.getSqlOperator())) {
+            qb.append(restriction.getField() + " IN (" + restriction.getValue() + ")");
+        } else {
+            qb.append(restriction.getField() + " " + restriction.getSqlOperator() + " ? ", restriction.getValue());
+        }
+    }
 
-	private void initQuery() {
-		for (Restrictions restriction : restrictions) {
+    private void initQuery() {
+        for (Restrictions restriction : restrictions) {
 
-			if (restriction == null || (restriction.isRestriction() && restriction.isNull())) {
-				continue;
-			}
+            if (restriction == null || (restriction.isRestriction() && restriction.isNull())) {
+                continue;
+            }
 
-			qb.append(" and ");
+            qb.append(" and ");
 
-			if (restriction.isRestriction()) {
+            if (restriction.isRestriction()) {
 
-				if (restriction.isSingle()) {
-					setQueryBuilderWithRestriction(restriction.getSingle());
-				}
-				else {
-					qb.append("(");
+                if (restriction.isSingle()) {
+                    setQueryBuilderWithRestriction(restriction.getSingle());
+                } else {
+                    qb.append("(");
 
-					setQueryBuilderWithRestriction(restriction.getFirstRestrictions());
+                    setQueryBuilderWithRestriction(restriction.getFirstRestrictions());
 
-					qb.append(" " + restriction.getSqlOperator() + " ");
+                    qb.append(" " + restriction.getSqlOperator() + " ");
 
-					setQueryBuilderWithRestriction(restriction.getSecondRestrictions());
+                    setQueryBuilderWithRestriction(restriction.getSecondRestrictions());
 
-					qb.append(")");
-				}
-			}
-			else {
-				setQueryBuilderWithRestriction(restriction);
-			}
-		}
+                    qb.append(")");
+                }
+            } else {
+                setQueryBuilderWithRestriction(restriction);
+            }
+        }
 
-		boolean isFirst = true;
-		for (Order order : orders) {
+        boolean isFirst = true;
+        for (Order order : orders) {
 
-			if (!isFirst) {
-				qb.append(",");
-			}
-			else {
-				qb.append(" order by ");
-			}
+            if (!isFirst) {
+                qb.append(",");
+            } else {
+                qb.append(" order by ");
+            }
 
-			qb.append(" " + order.getField() + " " + order.getOrder());
+            qb.append(" " + order.getField() + " " + order.getOrder());
 
-			if (isFirst) {
-				isFirst = false;
-			}
-		}
-	}
+            if (isFirst) {
+                isFirst = false;
+            }
+        }
+    }
 
-	private <T> void initQuery(T example) {
+    private <T> void initQuery(T example) {
 
-		Field[] fields = ReflectionUtil.getDeclaredFields(example.getClass());
-		for (Field field : fields) {
+        Field[] fields = ReflectionUtil.getDeclaredFields(example.getClass());
+        for (Field field : fields) {
 
-			Ingore ingore = field.getAnnotation(Ingore.class);
-			if (ingore != null) {
-				continue;
-			}
+            Ingore ingore = field.getAnnotation(Ingore.class);
+            if (ingore != null) {
+                continue;
+            }
 
-			String columnName = field.getName();
+            String columnName = field.getName();
 
-			Column column = field.getAnnotation(Column.class);
-			if (column != null) {
-				columnName = column.name();
-			}
+            Column column = field.getAnnotation(Column.class);
+            if (column != null) {
+                columnName = column.name();
+            }
 
-			Object fieldValue = ReflectionUtil.getFieldValue(example, field.getName());
-			if (fieldValue == null) {
-				continue;
-			}
+            Object fieldValue = ReflectionUtil.getFieldValue(example, field.getName());
+            if (fieldValue == null) {
+                continue;
+            }
 
-			qb.append(" and " + columnName + " = ?", fieldValue);
-		}
-	}
+            qb.append(" and " + columnName + " = ?", fieldValue);
+        }
+    }
 
-	public IPageData page(IPageInfo pageInfo) {
+    public IPageData page(IPageInfo pageInfo) {
 
-		PageDataTable result = new PageDataTable();
+        PageDataTable result = new PageDataTable();
 
-		result.setPageEnabled(pageInfo.isPageEnabled());
+        result.setPageEnabled(pageInfo.isPageEnabled());
 
-		initQuery();
+        initQuery();
 
-		if (pageInfo.isPageEnabled()) {
-			result.setTotal(DBUtil.getCount(qb));
-			result.setPageIndex(pageInfo.getPageIndex());
-			result.setPageSize(pageInfo.getPageSize());
+        if (pageInfo.isPageEnabled()) {
+            result.setTotal(DBUtil.getCount(qb));
+            result.setPageIndex(pageInfo.getPageIndex());
+            result.setPageSize(pageInfo.getPageSize());
 
-			List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findPagedEntities(domainObjectClass,
-					pageInfo.getPageSize(), pageInfo.getPageIndex());
+            List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findPagedEntities(domainObjectClass,
+                    pageInfo.getPageSize(), pageInfo.getPageIndex());
 
-			result.setData(DataTableUtil.toDataTable(entities));
-		}
-		else {
+            result.setData(DataTableUtil.toDataTable(entities));
+        } else {
 
-			List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findEntities(domainObjectClass);
+            List<? extends io.arkx.framework.data.jdbc.Entity> entities = qb.findEntities(domainObjectClass);
 
-			result.setData(DataTableUtil.toDataTable(entities));
-		}
-		return result;
-	}
+            result.setData(DataTableUtil.toDataTable(entities));
+        }
+        return result;
+    }
 
-	/**
-	 * 根据example查询实体
-	 *
-	 * @author Darkness
-	 * @date 2012-11-25 下午05:02:21
-	 * @version V1.0
-	 */
-	@SuppressWarnings("unchecked")
-	public <T> T findEntityByExample(T entityExample) {
+    /**
+     * 根据example查询实体
+     *
+     * @author Darkness
+     * @date 2012-11-25 下午05:02:21
+     * @version V1.0
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T findEntityByExample(T entityExample) {
 
-		initQuery(entityExample);
+        initQuery(entityExample);
 
-		DataTable dataTable = qb.executeDataTable();
+        DataTable dataTable = qb.executeDataTable();
 
-		return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
-	}
+        return (T) EntityBuilderFactory.buildEntityFromDataTable(domainObjectClass, dataTable);
+    }
 
-	/**
-	 * 根据example查询实体集合
-	 *
-	 * @author Darkness
-	 * @date 2012-11-25 下午05:02:41
-	 * @version V1.0
-	 */
-	@SuppressWarnings("unchecked")
-	public <T> List<T> findEntitiesByExample(T entityExample) {
+    /**
+     * 根据example查询实体集合
+     *
+     * @author Darkness
+     * @date 2012-11-25 下午05:02:41
+     * @version V1.0
+     */
+    @SuppressWarnings("unchecked")
+    public <T> List<T> findEntitiesByExample(T entityExample) {
 
-		initQuery(entityExample);
+        initQuery(entityExample);
 
-		DataTable dataTable = qb.executeDataTable();
-		List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
+        DataTable dataTable = qb.executeDataTable();
+        List<T> result = (List<T>) EntityBuilderFactory.buildEntitiesFromDataTable(domainObjectClass, dataTable);
 
-		if (result == null) {
-			return new ArrayList<T>();
-		}
-		return result;
-	}
+        if (result == null) {
+            return new ArrayList<T>();
+        }
+        return result;
+    }
 
 }

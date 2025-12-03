@@ -14,21 +14,21 @@ import io.arkx.framework.commons.util.ObjectUtil;
  */
 public class ObjectUtilTest {
 
-	@Test
-	public void in() {
-		boolean simpleIn = ObjectUtil.in(new Object[] { "a", "a", "b", "c" });
-		assertTrue(simpleIn);
+    @Test
+    public void in() {
+        boolean simpleIn = ObjectUtil.in(new Object[]{"a", "a", "b", "c"});
+        assertTrue(simpleIn);
 
-		boolean in = ObjectUtil.in(new Object[] { "b", "a" }, new Object[] { "a", "b", "c" });
-		assertTrue(in);
+        boolean in = ObjectUtil.in(new Object[]{"b", "a"}, new Object[]{"a", "b", "c"});
+        assertTrue(in);
 
-		boolean notIn = ObjectUtil.in(new Object[] { "a", "e" }, new Object[] { "a", "b", "c" });
-		assertFalse(notIn);
+        boolean notIn = ObjectUtil.in(new Object[]{"a", "e"}, new Object[]{"a", "b", "c"});
+        assertFalse(notIn);
 
-		String[] arr1 = { "预约时间", "性别", "姓名", "年龄", "电话", "身份证号码", "诊疗卡号", "订单号", "挂号时间", "科室", "医院", "监护人" };
-		String[] arr2 = { "预约时间", "姓名", "性别", "年龄", "电话", "身份证号码", "诊疗卡号", "订单号", "挂号时间", "科室", "医院", "监护人", "行政" };
-		boolean largeIn = ObjectUtil.in(arr1, arr2);
-		assertTrue(largeIn);
-	}
+        String[] arr1 = {"预约时间", "性别", "姓名", "年龄", "电话", "身份证号码", "诊疗卡号", "订单号", "挂号时间", "科室", "医院", "监护人"};
+        String[] arr2 = {"预约时间", "姓名", "性别", "年龄", "电话", "身份证号码", "诊疗卡号", "订单号", "挂号时间", "科室", "医院", "监护人", "行政"};
+        boolean largeIn = ObjectUtil.in(arr1, arr2);
+        assertTrue(largeIn);
+    }
 
 }

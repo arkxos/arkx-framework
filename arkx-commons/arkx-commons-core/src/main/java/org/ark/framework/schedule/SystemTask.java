@@ -8,30 +8,30 @@ package org.ark.framework.schedule;
  */
 public abstract class SystemTask extends AbstractTask {
 
-	protected boolean isRunning = false;
+    protected boolean isRunning = false;
 
-	protected String cronExpression;
+    protected String cronExpression;
 
-	public String getType() {
-		return "General";
-	}
+    public String getType() {
+        return "General";
+    }
 
-	public abstract void execute();
+    public abstract void execute();
 
-	public boolean isRunning() {
-		return this.isRunning;
-	}
+    public boolean isRunning() {
+        return this.isRunning;
+    }
 
-	public void setRunning(boolean isRunning) {
-		this.isRunning = isRunning;
-	}
+    public void setRunning(boolean isRunning) {
+        this.isRunning = isRunning;
+    }
 
-	public String getCronExpression() {
-		return this.cronExpression;
-	}
+    public String getCronExpression() {
+        return this.cronExpression;
+    }
 
-	public String setCronExpression(String expr) {
-		return this.cronExpression = expr;
-	}
+    public String setCronExpression(String expr) {
+        return this.cronExpression = expr;
+    }
 
 }

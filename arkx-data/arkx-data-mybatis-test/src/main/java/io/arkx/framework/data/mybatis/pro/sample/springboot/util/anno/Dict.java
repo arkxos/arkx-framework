@@ -15,9 +15,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dict {
 
-	/**
-	 * 手动指定DictMap的enName
-	 */
-	String value() default "";
+    /**
+     * 手动指定DictMap的enName
+     */
+    String value() default "";
 
 }

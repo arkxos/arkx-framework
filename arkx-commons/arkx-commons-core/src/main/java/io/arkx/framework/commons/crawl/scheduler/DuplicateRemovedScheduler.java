@@ -18,34 +18,34 @@ import io.arkx.framework.commons.crawl.scheduler.component.HashSetDuplicateRemov
  */
 public abstract class DuplicateRemovedScheduler implements Scheduler {
 
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	private DuplicateRemover duplicatedRemover = new HashSetDuplicateRemover();
+    private DuplicateRemover duplicatedRemover = new HashSetDuplicateRemover();
 
-	public DuplicateRemover getDuplicateRemover() {
-		return duplicatedRemover;
-	}
+    public DuplicateRemover getDuplicateRemover() {
+        return duplicatedRemover;
+    }
 
-	public DuplicateRemovedScheduler setDuplicateRemover(DuplicateRemover duplicatedRemover) {
-		this.duplicatedRemover = duplicatedRemover;
-		return this;
-	}
+    public DuplicateRemovedScheduler setDuplicateRemover(DuplicateRemover duplicatedRemover) {
+        this.duplicatedRemover = duplicatedRemover;
+        return this;
+    }
 
-	@Override
-	public void push(Request request) {
-		logger.trace("get a candidate url {}", request.getUrl());
-		if (!duplicatedRemover.isDuplicate(request) || shouldReserved(request)) {
-			logger.debug("push to queue {}", request.getUrl());
-			pushWhenNoDuplicate(request);
-		}
-	}
+    @Override
+    public void push(Request request) {
+        logger.trace("get a candidate url {}", request.getUrl());
+        if (!duplicatedRemover.isDuplicate(request) || shouldReserved(request)) {
+            logger.debug("push to queue {}", request.getUrl());
+            pushWhenNoDuplicate(request);
+        }
+    }
 
-	protected boolean shouldReserved(Request request) {
-		return request.getExtra(Request.CYCLE_TRIED_TIMES) != null;
-	}
+    protected boolean shouldReserved(Request request) {
+        return request.getExtra(Request.CYCLE_TRIED_TIMES) != null;
+    }
 
-	protected void pushWhenNoDuplicate(Request request) {
+    protected void pushWhenNoDuplicate(Request request) {
 
-	}
+    }
 
 }

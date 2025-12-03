@@ -10,12 +10,12 @@ import io.arkx.framework.extend.IExtendAction;
  */
 public abstract class AfterConfigInitAction implements IExtendAction {
 
-	public static final String ExtendPointID = "org.ark.framework.AfterConfigInit";
+    public static final String ExtendPointID = "org.ark.framework.AfterConfigInit";
 
-	@Override
-	public boolean isUsable() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isUsable() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
 }

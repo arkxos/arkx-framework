@@ -5,6 +5,6 @@ import io.arkx.framework.util.task.TaskContext;
 @FunctionalInterface
 public interface TaskListener {
 
-	void onExecuteFinish(TaskContext ctx, Exception error);
+    void onExecuteFinish(TaskContext ctx, Exception error);
 
 }

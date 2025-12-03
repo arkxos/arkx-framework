@@ -17,25 +17,25 @@ import io.arkx.framework.data.fasttable.annotation.Complexity;
  */
 public class ComplexityProcessor extends AbstractProcessor {
 
-	public ComplexityProcessor() {
-		super();
-	}
+    public ComplexityProcessor() {
+        super();
+    }
 
-	@Override
-	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-		return true;
-	}
+    @Override
+    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        return true;
+    }
 
-	@Override
-	public SourceVersion getSupportedSourceVersion() {
-		return SourceVersion.latestSupported();
-	}
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
+    }
 
-	@Override
-	public Set<String> getSupportedAnnotationTypes() {
-		Set<String> annotataions = new LinkedHashSet<String>();
-		annotataions.add(Complexity.class.getCanonicalName());
-		return annotataions;
-	}
+    @Override
+    public Set<String> getSupportedAnnotationTypes() {
+        Set<String> annotataions = new LinkedHashSet<String>();
+        annotataions.add(Complexity.class.getCanonicalName());
+        return annotataions;
+    }
 
 }

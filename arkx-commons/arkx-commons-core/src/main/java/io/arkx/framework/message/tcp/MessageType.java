@@ -8,25 +8,25 @@ package io.arkx.framework.message.tcp;
  */
 public enum MessageType {
 
-	REQUEST((byte) 0), RESPONSE((byte) 1);
+    REQUEST((byte) 0), RESPONSE((byte) 1);
 
-	private byte value;
+    private byte value;
 
-	private MessageType(byte value) {
-		this.value = value;
-	}
+    private MessageType(byte value) {
+        this.value = value;
+    }
 
-	public byte value() {
-		return this.value;
-	}
+    public byte value() {
+        return this.value;
+    }
 
-	public static MessageType valueOf(byte value) {
-		for (MessageType messageType : MessageType.values()) {
-			if (messageType.value == value) {
-				return messageType;
-			}
-		}
-		return null;
-	}
+    public static MessageType valueOf(byte value) {
+        for (MessageType messageType : MessageType.values()) {
+            if (messageType.value == value) {
+                return messageType;
+            }
+        }
+        return null;
+    }
 
 }

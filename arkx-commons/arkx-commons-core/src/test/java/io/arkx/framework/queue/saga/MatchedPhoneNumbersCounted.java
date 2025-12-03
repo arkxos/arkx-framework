@@ -10,16 +10,16 @@ package io.arkx.framework.queue.saga;
  */
 public class MatchedPhoneNumbersCounted extends PhoneNumberProcessEvent {
 
-	private int matchedPhoneNumbers;
+    private int matchedPhoneNumbers;
 
-	public MatchedPhoneNumbersCounted(String aProcessId, int aMatchedPhoneNumbersCount) {
-		super(aProcessId);
+    public MatchedPhoneNumbersCounted(String aProcessId, int aMatchedPhoneNumbersCount) {
+        super(aProcessId);
 
-		this.matchedPhoneNumbers = aMatchedPhoneNumbersCount;
-	}
+        this.matchedPhoneNumbers = aMatchedPhoneNumbersCount;
+    }
 
-	public int matchedPhoneNumbers() {
-		return this.matchedPhoneNumbers;
-	}
+    public int matchedPhoneNumbers() {
+        return this.matchedPhoneNumbers;
+    }
 
 }

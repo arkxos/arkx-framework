@@ -12,87 +12,87 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class Tree {
 
-	private String rootText;
+    private String rootText;
 
-	private String rootIcon;
+    private String rootIcon;
 
-	private String identifierColumnName;
+    private String identifierColumnName;
 
-	private String parentIdentifierColumnName;
+    private String parentIdentifierColumnName;
 
-	private String leafIcon = "icons/extra/icon_tree09.gif";
+    private String leafIcon = "icons/extra/icon_tree09.gif";
 
-	private String branchIcon = "icons/extra/icon_tree09.gif";
+    private String branchIcon = "icons/extra/icon_tree09.gif";
 
-	private String data;
+    private String data;
 
-	public Tree() {
-	}
+    public Tree() {
+    }
 
-	public Tree(DataTable dataTable) {
-		this.data = JSON.toJSONString(dataTable);
-	}
+    public Tree(DataTable dataTable) {
+        this.data = JSON.toJSONString(dataTable);
+    }
 
-	public String getData() {
-		return data;
-	}
+    public String getData() {
+        return data;
+    }
 
-	@JSONField(serialize = false)
-	public DataTable getDataTable() {
-		DataTable dataTable = JSON.parseBean(data, DataTable.class);
-		return dataTable;
-	}
+    @JSONField(serialize = false)
+    public DataTable getDataTable() {
+        DataTable dataTable = JSON.parseBean(data, DataTable.class);
+        return dataTable;
+    }
 
-	public void setData(String data) {
-		this.data = data;
-	}
+    public void setData(String data) {
+        this.data = data;
+    }
 
-	public String getRootText() {
-		return rootText;
-	}
+    public String getRootText() {
+        return rootText;
+    }
 
-	public void setRootText(String rootText) {
-		this.rootText = rootText;
-	}
+    public void setRootText(String rootText) {
+        this.rootText = rootText;
+    }
 
-	public String getRootIcon() {
-		return rootIcon;
-	}
+    public String getRootIcon() {
+        return rootIcon;
+    }
 
-	public void setRootIcon(String rootIcon) {
-		this.rootIcon = rootIcon;
-	}
+    public void setRootIcon(String rootIcon) {
+        this.rootIcon = rootIcon;
+    }
 
-	public String getIdentifierColumnName() {
-		return identifierColumnName;
-	}
+    public String getIdentifierColumnName() {
+        return identifierColumnName;
+    }
 
-	public void setIdentifierColumnName(String identifierColumnName) {
-		this.identifierColumnName = identifierColumnName;
-	}
+    public void setIdentifierColumnName(String identifierColumnName) {
+        this.identifierColumnName = identifierColumnName;
+    }
 
-	public String getLeafIcon() {
-		return leafIcon;
-	}
+    public String getLeafIcon() {
+        return leafIcon;
+    }
 
-	public void setLeafIcon(String leafIcon) {
-		this.leafIcon = leafIcon;
-	}
+    public void setLeafIcon(String leafIcon) {
+        this.leafIcon = leafIcon;
+    }
 
-	public String getBranchIcon() {
-		return branchIcon;
-	}
+    public String getBranchIcon() {
+        return branchIcon;
+    }
 
-	public void setBranchIcon(String branchIcon) {
-		this.branchIcon = branchIcon;
-	}
+    public void setBranchIcon(String branchIcon) {
+        this.branchIcon = branchIcon;
+    }
 
-	public String getParentIdentifierColumnName() {
-		return parentIdentifierColumnName;
-	}
+    public String getParentIdentifierColumnName() {
+        return parentIdentifierColumnName;
+    }
 
-	public void setParentIdentifierColumnName(String parentIdentifierColumnName) {
-		this.parentIdentifierColumnName = parentIdentifierColumnName;
-	}
+    public void setParentIdentifierColumnName(String parentIdentifierColumnName) {
+        this.parentIdentifierColumnName = parentIdentifierColumnName;
+    }
 
 }

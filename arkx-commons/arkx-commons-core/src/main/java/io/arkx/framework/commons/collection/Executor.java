@@ -8,12 +8,12 @@ package io.arkx.framework.commons.collection;
  */
 public abstract class Executor {
 
-	protected Object param;
+    protected Object param;
 
-	public Executor(Object param) {
-		this.param = param;
-	}
+    public Executor(Object param) {
+        this.param = param;
+    }
 
-	public abstract boolean execute();
+    public abstract boolean execute();
 
 }

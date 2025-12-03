@@ -70,55 +70,54 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 public class NamedValue extends Expression {
 
-	// -------------------------------------
-	// Constants
-	// -------------------------------------
+    // -------------------------------------
+    // Constants
+    // -------------------------------------
 
-	// -------------------------------------
-	// Properties
-	// -------------------------------------
-	// property name
+    // -------------------------------------
+    // Properties
+    // -------------------------------------
+    // property name
 
-	String mName;
+    String mName;
 
-	public String getName() {
-		return mName;
-	}
+    public String getName() {
+        return mName;
+    }
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public NamedValue(String pName) {
-		mName = pName;
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public NamedValue(String pName) {
+        mName = pName;
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		return StringLiteral.toIdentifierToken(mName);
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        return StringLiteral.toIdentifierToken(mName);
+    }
 
-	// -------------------------------------
-	/**
-	 * Evaluates by looking up the name in the VariableResolver
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-			throws ExpressionException {
-		if (pResolver == null) {
-			return null;
-		}
-		else {
-			return pResolver.resolveVariable(mName);
-		}
-	}
+    // -------------------------------------
+    /**
+     * Evaluates by looking up the name in the VariableResolver
+     **/
+    @Override
+    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        if (pResolver == null) {
+            return null;
+        } else {
+            return pResolver.resolveVariable(mName);
+        }
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

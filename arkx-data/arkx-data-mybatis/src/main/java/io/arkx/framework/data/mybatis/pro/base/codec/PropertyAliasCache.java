@@ -20,29 +20,28 @@ import cn.hutool.core.util.ReflectUtil;
  */
 public class PropertyAliasCache {
 
-	private PropertyAliasCache() {
-	}
+    private PropertyAliasCache() {
+    }
 
-	private static final ConcurrentHashMap<Class<?>, Map<String, String>> CACHE = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Class<?>, Map<String, String>> CACHE = new ConcurrentHashMap<>();
 
-	public static String getFieldAliasMap(JsonParser jsonParser) {
-		Map<String, String> map = CACHE.computeIfAbsent(jsonParser.getCurrentValue().getClass(), c -> {
-			Map<String, String> fieldMap = new HashMap<>();
-			Field[] fields = ReflectUtil.getFields(c);
-			for (Field field : fields) {
-				String fieldName = field.getName();
-				String annotationValue = AnnotationUtil.getAnnotationValue(field, JsonProperty.class);
-				annotationValue = CharSequenceUtil.isBlank(annotationValue) ? fieldName : annotationValue;
-				fieldMap.put(annotationValue, fieldName);
-			}
-			return fieldMap;
-		});
-		try {
-			return map.get(jsonParser.getCurrentName());
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static String getFieldAliasMap(JsonParser jsonParser) {
+        Map<String, String> map = CACHE.computeIfAbsent(jsonParser.getCurrentValue().getClass(), c -> {
+            Map<String, String> fieldMap = new HashMap<>();
+            Field[] fields = ReflectUtil.getFields(c);
+            for (Field field : fields) {
+                String fieldName = field.getName();
+                String annotationValue = AnnotationUtil.getAnnotationValue(field, JsonProperty.class);
+                annotationValue = CharSequenceUtil.isBlank(annotationValue) ? fieldName : annotationValue;
+                fieldMap.put(annotationValue, fieldName);
+            }
+            return fieldMap;
+        });
+        try {
+            return map.get(jsonParser.getCurrentName());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -21,50 +21,44 @@ import com.google.common.cache.LoadingCache;
  */
 public class SemaphoreCache {
 
-	private final static int hookTime = MessageSystemConfig.SemaphoreCacheHookTimeValue;
+    private final static int hookTime = MessageSystemConfig.SemaphoreCacheHookTimeValue;
 
-	private static final LoadingCache<String, Semaphore> cache = CacheBuilder.newBuilder()
-		.concurrencyLevel(NettyClustersConfig.getWorkerThreads())
-		.build(new CacheLoader<String, Semaphore>() {
-			public Semaphore load(String input) throws Exception {
-				return new Semaphore(0);
-			}
-		});
+    private static final LoadingCache<String, Semaphore> cache = CacheBuilder.newBuilder()
+            .concurrencyLevel(NettyClustersConfig.getWorkerThreads()).build(new CacheLoader<String, Semaphore>() {
+                public Semaphore load(String input) throws Exception {
+                    return new Semaphore(0);
+                }
+            });
 
-	public static int getAvailablePermits(String key) {
-		try {
-			return cache.get(key).availablePermits();
-		}
-		catch (ExecutionException ex) {
-			Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
-			return 0;
-		}
-	}
+    public static int getAvailablePermits(String key) {
+        try {
+            return cache.get(key).availablePermits();
+        } catch (ExecutionException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
 
-	public static void release(String key) {
-		try {
-			cache.get(key).release();
-			TimeUnit.MILLISECONDS.sleep(hookTime);
-		}
-		catch (ExecutionException ex) {
-			Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		catch (InterruptedException ex) {
-			Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+    public static void release(String key) {
+        try {
+            cache.get(key).release();
+            TimeUnit.MILLISECONDS.sleep(hookTime);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-	public static void acquire(String key) {
-		try {
-			cache.get(key).acquire();
-			TimeUnit.MILLISECONDS.sleep(hookTime);
-		}
-		catch (InterruptedException ex) {
-			Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		catch (ExecutionException ex) {
-			Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+    public static void acquire(String key) {
+        try {
+            cache.get(key).acquire();
+            TimeUnit.MILLISECONDS.sleep(hookTime);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(SemaphoreCache.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

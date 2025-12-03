@@ -13,9 +13,9 @@ import io.arkx.framework.data.db.core.features.ProductFeatures;
 
 public class StarrocksFeatures implements ProductFeatures {
 
-	@Override
-	public int convertFetchSize(int fetchSize) {
-		return Integer.MIN_VALUE;
-	}
+    @Override
+    public int convertFetchSize(int fetchSize) {
+        return Integer.MIN_VALUE;
+    }
 
 }

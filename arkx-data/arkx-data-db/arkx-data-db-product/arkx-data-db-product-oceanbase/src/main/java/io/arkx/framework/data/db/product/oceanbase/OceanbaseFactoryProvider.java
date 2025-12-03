@@ -40,58 +40,61 @@ import lombok.extern.slf4j.Slf4j;
 @Product(ProductTypeEnum.OCEANBASE)
 public class OceanbaseFactoryProvider extends AbstractFactoryProvider {
 
-	private Boolean isMySqlMode;
+    private Boolean isMySqlMode;
 
-	public OceanbaseFactoryProvider(DataSource dataSource) {
-		super(dataSource);
+    public OceanbaseFactoryProvider(DataSource dataSource) {
+        super(dataSource);
 
-		try (Connection connection = getDataSource().getConnection()) {
-			this.isMySqlMode = OceanbaseUtils.isOceanBaseUseMysqlMode(connection);
-			if (log.isDebugEnabled()) {
-				log.debug("#### Target OceanBase is {} Mode ", this.isMySqlMode ? "MySQL" : "Oracle");
-			}
-		}
-		catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        try (Connection connection = getDataSource().getConnection()) {
+            this.isMySqlMode = OceanbaseUtils.isOceanBaseUseMysqlMode(connection);
+            if (log.isDebugEnabled()) {
+                log.debug("#### Target OceanBase is {} Mode ", this.isMySqlMode ? "MySQL" : "Oracle");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public ProductFeatures getProductFeatures() {
-		return isMySqlMode ? new MysqlFeatures() : new DefaultProductFeatures();
-	}
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return isMySqlMode ? new MysqlFeatures() : new DefaultProductFeatures();
+    }
 
-	@Override
-	public MetadataProvider createMetadataQueryProvider() {
-		MetadataProvider provider = isMySqlMode ? new MysqlMetadataQueryProvider(this)
-				: new OracleMetadataQueryProvider(this);
-		return new OceanbaseMetadataQueryProvider(this, provider);
-	}
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        MetadataProvider provider = isMySqlMode
+                ? new MysqlMetadataQueryProvider(this)
+                : new OracleMetadataQueryProvider(this);
+        return new OceanbaseMetadataQueryProvider(this, provider);
+    }
 
-	@Override
-	public TableDataQueryProvider createTableDataQueryProvider() {
-		return new OceanbaseTableDataQueryProvider(this, isMySqlMode);
-	}
+    @Override
+    public TableDataQueryProvider createTableDataQueryProvider() {
+        return new OceanbaseTableDataQueryProvider(this, isMySqlMode);
+    }
 
-	@Override
-	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-		TableDataWriteProvider provider = isMySqlMode ? new AutoCastTableDataWriteProvider(this)
-				: new OracleTableDataWriteProvider(this);
-		return new OceanbaseTableDataWriteProvider(this, provider);
-	}
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        TableDataWriteProvider provider = isMySqlMode
+                ? new AutoCastTableDataWriteProvider(this)
+                : new OracleTableDataWriteProvider(this);
+        return new OceanbaseTableDataWriteProvider(this, provider);
+    }
 
-	@Override
-	public TableManageProvider createTableManageProvider() {
-		TableManageProvider provider = isMySqlMode ? new DefaultTableManageProvider(this)
-				: new OracleTableManageProvider(this);
-		return new OceanbaseTableManageProvider(this, provider);
-	}
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        TableManageProvider provider = isMySqlMode
+                ? new DefaultTableManageProvider(this)
+                : new OracleTableManageProvider(this);
+        return new OceanbaseTableManageProvider(this, provider);
+    }
 
-	@Override
-	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-		TableDataSynchronizeProvider provider = isMySqlMode ? new AutoCastTableDataSynchronizeProvider(this)
-				: new OracleTableDataSynchronizer(this);
-		return new OceanbaseTableDataSynchronizer(this, provider);
-	}
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        TableDataSynchronizeProvider provider = isMySqlMode
+                ? new AutoCastTableDataSynchronizeProvider(this)
+                : new OracleTableDataSynchronizer(this);
+        return new OceanbaseTableDataSynchronizer(this, provider);
+    }
 
 }

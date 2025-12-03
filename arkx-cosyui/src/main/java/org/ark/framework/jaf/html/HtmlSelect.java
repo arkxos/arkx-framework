@@ -8,9 +8,9 @@ package org.ark.framework.jaf.html;
  */
 public class HtmlSelect extends HtmlElement {
 
-	public HtmlSelect() {
-		this.ElementType = "SELECT";
-		this.TagName = "select";
-	}
+    public HtmlSelect() {
+        this.ElementType = "SELECT";
+        this.TagName = "select";
+    }
 
 }

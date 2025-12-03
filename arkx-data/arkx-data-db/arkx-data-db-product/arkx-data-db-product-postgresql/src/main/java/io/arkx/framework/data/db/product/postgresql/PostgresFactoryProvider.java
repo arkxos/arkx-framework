@@ -26,33 +26,33 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.POSTGRESQL)
 public class PostgresFactoryProvider extends AbstractFactoryProvider {
 
-	public PostgresFactoryProvider(DataSource dataSource) {
-		super(dataSource);
-	}
+    public PostgresFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-	@Override
-	public ProductFeatures getProductFeatures() {
-		return new DefaultProductFeatures();
-	}
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-	@Override
-	public MetadataProvider createMetadataQueryProvider() {
-		return new PostgresMetadataQueryProvider(this);
-	}
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new PostgresMetadataQueryProvider(this);
+    }
 
-	@Override
-	public TableManageProvider createTableManageProvider() {
-		return new PostgresTableManageProvider(this);
-	}
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new PostgresTableManageProvider(this);
+    }
 
-	@Override
-	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-		return useInsert ? new AutoCastTableDataWriteProvider(this) : new PostgresTableCopyWriteProvider(this);
-	}
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return useInsert ? new AutoCastTableDataWriteProvider(this) : new PostgresTableCopyWriteProvider(this);
+    }
 
-	@Override
-	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-		return new AutoCastTableDataSynchronizeProvider(this);
-	}
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

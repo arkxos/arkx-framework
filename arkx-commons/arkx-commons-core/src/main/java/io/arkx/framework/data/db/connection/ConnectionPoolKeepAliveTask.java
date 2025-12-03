@@ -8,31 +8,31 @@ import io.arkx.framework.schedule.SystemTask;
  */
 public class ConnectionPoolKeepAliveTask extends SystemTask {
 
-	public static final String ID = "connection.db.io.arkx.framework.data.ConnectionPoolKeepAliveTask";
+    public static final String ID = "connection.db.io.arkx.framework.data.ConnectionPoolKeepAliveTask";
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "@{Platform.DBConnPoolKeepAliveTask}";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "@{Platform.DBConnPoolKeepAliveTask}";
+    }
 
-	@Override
-	public void execute() {
-		if (ConnectionPoolManager.isEmpty()) {
-			return;
-		}
-		for (ConnectionPool pool : ConnectionPoolManager.pools()) {
-			pool.keepAlive();
-		}
-	}
+    @Override
+    public void execute() {
+        if (ConnectionPoolManager.isEmpty()) {
+            return;
+        }
+        for (ConnectionPool pool : ConnectionPoolManager.pools()) {
+            pool.keepAlive();
+        }
+    }
 
-	@Override
-	public String getDefaultCronExpression() {
-		return "*/3 * * * *";
-	}
+    @Override
+    public String getDefaultCronExpression() {
+        return "*/3 * * * *";
+    }
 
 }

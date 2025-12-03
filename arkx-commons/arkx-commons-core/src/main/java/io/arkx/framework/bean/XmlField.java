@@ -12,15 +12,15 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.FIELD })
+@Target({java.lang.annotation.ElementType.FIELD})
 public @interface XmlField {
 
-	String refer() default "";
+    String refer() default "";
 
-	boolean parentIdField() default false;
+    boolean parentIdField() default false;
 
-	boolean spelling() default false;
+    boolean spelling() default false;
 
-	String prefix() default "";
+    String prefix() default "";
 
 }

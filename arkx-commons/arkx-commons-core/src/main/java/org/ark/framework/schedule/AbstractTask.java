@@ -10,8 +10,8 @@ import io.arkx.framework.extend.IExtendItem;
  */
 public abstract class AbstractTask implements IExtendItem {
 
-	public abstract String getType();
+    public abstract String getType();
 
-	public abstract String getCronExpression();
+    public abstract String getCronExpression();
 
 }

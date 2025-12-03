@@ -15,12 +15,12 @@ import javax.sql.DataSource;
 
 public interface CloseableDataSource extends DataSource, Closeable {
 
-	String getJdbcUrl();
+    String getJdbcUrl();
 
-	String getDriverClass();
+    String getDriverClass();
 
-	String getUserName();
+    String getUserName();
 
-	String getPassword();
+    String getPassword();
 
 }

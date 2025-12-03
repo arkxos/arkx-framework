@@ -14,18 +14,18 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public class InitBaseEntityInfo extends EntitySaveExtendAction {
 
-	@Override
-	protected void save(Entity entity) {
-		if (BaseEntity.class.isAssignableFrom(entity.getClass())) {
-			BaseEntity baseEntity = (BaseEntity) entity;
-			baseEntity.setCreateTime(new Date());
-			baseEntity.setUpdateTime(baseEntity.getCreateTime());
+    @Override
+    protected void save(Entity entity) {
+        if (BaseEntity.class.isAssignableFrom(entity.getClass())) {
+            BaseEntity baseEntity = (BaseEntity) entity;
+            baseEntity.setCreateTime(new Date());
+            baseEntity.setUpdateTime(baseEntity.getCreateTime());
 
-			// if(!StringUtil.isEmpty(Account.getId())) {
-			// baseEntity.setCreatorId(Account.getId());
-			// baseEntity.setUpdatorId(Account.getId());
-			// }
-		}
-	}
+            // if(!StringUtil.isEmpty(Account.getId())) {
+            // baseEntity.setCreatorId(Account.getId());
+            // baseEntity.setUpdatorId(Account.getId());
+            // }
+        }
+    }
 
 }

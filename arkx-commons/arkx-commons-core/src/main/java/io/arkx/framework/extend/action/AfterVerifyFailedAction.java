@@ -12,18 +12,18 @@ import io.arkx.framework.extend.IExtendAction;
  */
 public abstract class AfterVerifyFailedAction implements IExtendAction {
 
-	public static final String ID = "io.arkx.framework.AfterPrivCheckFailedAction";
+    public static final String ID = "io.arkx.framework.AfterPrivCheckFailedAction";
 
-	@Override
-	public Object execute(Object[] args) throws ExtendException {
-		String methodName = (String) args[0];
-		String k = (String) args[1];
-		String v = (String) args[2];
-		String rule = (String) args[3];
-		execute(methodName, k, v, rule);
-		return null;
-	}
+    @Override
+    public Object execute(Object[] args) throws ExtendException {
+        String methodName = (String) args[0];
+        String k = (String) args[1];
+        String v = (String) args[2];
+        String rule = (String) args[3];
+        execute(methodName, k, v, rule);
+        return null;
+    }
 
-	public abstract void execute(String methodName, String k, String v, String rule);
+    public abstract void execute(String methodName, String k, String v, String rule);
 
 }

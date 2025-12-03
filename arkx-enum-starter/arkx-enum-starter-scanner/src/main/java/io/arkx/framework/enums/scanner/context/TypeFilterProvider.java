@@ -9,10 +9,11 @@ import org.springframework.core.type.filter.TypeFilter;
  **/
 public interface TypeFilterProvider {
 
-	/**
-	 * 提供过滤器
-	 * @return filter
-	 */
-	TypeFilter filter();
+    /**
+     * 提供过滤器
+     *
+     * @return filter
+     */
+    TypeFilter filter();
 
 }

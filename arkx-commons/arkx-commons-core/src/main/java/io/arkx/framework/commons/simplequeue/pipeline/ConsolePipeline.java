@@ -14,12 +14,12 @@ import io.arkx.framework.commons.simplequeue.Task;
  */
 public class ConsolePipeline implements Pipeline {
 
-	@Override
-	public void process(ResultItems resultItems, Task task) {
-		System.out.println("get page: " + resultItems.getRequest().get());
-		for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
-			System.out.println(entry.getKey() + ":\t" + entry.getValue());
-		}
-	}
+    @Override
+    public void process(ResultItems resultItems, Task task) {
+        System.out.println("get page: " + resultItems.getRequest().get());
+        for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
+            System.out.println(entry.getKey() + ":\t" + entry.getValue());
+        }
+    }
 
 }

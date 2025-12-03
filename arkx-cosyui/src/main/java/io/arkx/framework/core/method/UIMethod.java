@@ -7,9 +7,9 @@ import io.arkx.framework.cosyui.web.UIFacade;
  */
 public abstract class UIMethod extends UIFacade {
 
-	/**
-	 * 执行响应逻辑
-	 */
-	public abstract void execute();
+    /**
+     * 执行响应逻辑
+     */
+    public abstract void execute();
 
 }

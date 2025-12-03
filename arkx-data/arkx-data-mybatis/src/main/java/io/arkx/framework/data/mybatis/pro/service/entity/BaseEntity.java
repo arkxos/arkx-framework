@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class BaseEntity extends IdEntity {
 
-	private Long createTime;
+    private Long createTime;
 
-	private String createUser;
+    private String createUser;
 
 }

@@ -11,9 +11,9 @@ package io.arkx.framework.data.db.core.features;
 
 public class DefaultProductFeatures implements ProductFeatures {
 
-	@Override
-	public int convertFetchSize(int fetchSize) {
-		return fetchSize;
-	}
+    @Override
+    public int convertFetchSize(int fetchSize) {
+        return fetchSize;
+    }
 
 }

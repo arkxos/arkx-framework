@@ -11,6 +11,6 @@ import io.arkx.framework.avatarmq.msg.ProducerAckMessage;
  */
 public interface NotifyCallback {
 
-	void onEvent(ProducerAckMessage result);
+    void onEvent(ProducerAckMessage result);
 
 }

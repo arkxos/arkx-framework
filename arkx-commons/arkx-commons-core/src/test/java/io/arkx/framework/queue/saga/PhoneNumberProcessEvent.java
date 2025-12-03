@@ -12,12 +12,12 @@ import io.arkx.framework.queue2.Message;
  */
 public abstract class PhoneNumberProcessEvent extends Message<String> {
 
-	public PhoneNumberProcessEvent(String aProcessId) {
-		super("PhoneNumberProcessEvent", aProcessId);
-	}
+    public PhoneNumberProcessEvent(String aProcessId) {
+        super("PhoneNumberProcessEvent", aProcessId);
+    }
 
-	public String processId() {
-		return this.getSource();
-	}
+    public String processId() {
+        return this.getSource();
+    }
 
 }

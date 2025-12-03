@@ -14,9 +14,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Id {
 
-	/**
-	 * 默认自增
-	 */
-	Type type() default Type.IDENTITY;
+    /**
+     * 默认自增
+     */
+    Type type() default Type.IDENTITY;
 
 }

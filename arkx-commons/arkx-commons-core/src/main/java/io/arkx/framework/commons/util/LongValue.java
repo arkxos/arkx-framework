@@ -8,30 +8,30 @@ package io.arkx.framework.commons.util;
  */
 public class LongValue {
 
-	private long value;
+    private long value;
 
-	public LongValue() {
-		this(0);
-	}
+    public LongValue() {
+        this(0);
+    }
 
-	public LongValue(long value) {
-		this.value = value;
-	}
+    public LongValue(long value) {
+        this.value = value;
+    }
 
-	public void add() {
-		value++;
-	}
+    public void add() {
+        value++;
+    }
 
-	public void add(long value) {
-		this.value += value;
-	}
+    public void add(long value) {
+        this.value += value;
+    }
 
-	public void set(long value) {
-		this.value = value;
-	}
+    public void set(long value) {
+        this.value = value;
+    }
 
-	public long get() {
-		return value;
-	}
+    public long get() {
+        return value;
+    }
 
 }

@@ -18,57 +18,55 @@ import io.arkx.framework.performance.monitor.config.MonitorConfigService;
 @RequestMapping("/api/monitoring/config")
 public class ConfigController {
 
-	private final MonitorConfig config;
+    private final MonitorConfig config;
 
-	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
-	private final MonitorConfigService monitorConfigService;
+    private final MonitorConfigService monitorConfigService;
 
-	public ConfigController(MonitorConfig config, MonitorConfigService monitorConfigService) {
-		this.config = config;
-		this.monitorConfigService = monitorConfigService;
-	}
+    public ConfigController(MonitorConfig config, MonitorConfigService monitorConfigService) {
+        this.config = config;
+        this.monitorConfigService = monitorConfigService;
+    }
 
-	@GetMapping
-	public Map<String, Object> getConfig() {
-		lock.readLock().lock();
-		try {
-			return Map.of("enabled", config.isEnabled(), "samplingRate", config.getSamplingRate(), "slowThreshold",
-					config.getSlowThreshold(), "captureSqlParameters", config.isCaptureSqlParameters(),
-					"storeToDatabase", config.isStoreToDatabase());
-		}
-		finally {
-			lock.readLock().unlock();
-		}
-	}
+    @GetMapping
+    public Map<String, Object> getConfig() {
+        lock.readLock().lock();
+        try {
+            return Map.of("enabled", config.isEnabled(), "samplingRate", config.getSamplingRate(), "slowThreshold",
+                    config.getSlowThreshold(), "captureSqlParameters", config.isCaptureSqlParameters(),
+                    "storeToDatabase", config.isStoreToDatabase());
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
 
-	@PostMapping
-	public String updateConfig(@RequestBody Map<String, Object> updates) {
-		lock.writeLock().lock();
-		try {
-			if (updates.containsKey("enabled"))
-				config.setEnabled((Boolean) updates.get("enabled"));
+    @PostMapping
+    public String updateConfig(@RequestBody Map<String, Object> updates) {
+        lock.writeLock().lock();
+        try {
+            if (updates.containsKey("enabled"))
+                config.setEnabled((Boolean) updates.get("enabled"));
 
-			if (updates.containsKey("samplingRate"))
-				config.setSamplingRate((Integer) updates.get("samplingRate"));
+            if (updates.containsKey("samplingRate"))
+                config.setSamplingRate((Integer) updates.get("samplingRate"));
 
-			if (updates.containsKey("slowThreshold"))
-				config.setSlowThreshold(((Number) updates.get("slowThreshold")).longValue());
+            if (updates.containsKey("slowThreshold"))
+                config.setSlowThreshold(((Number) updates.get("slowThreshold")).longValue());
 
-			if (updates.containsKey("captureSqlParameters"))
-				config.setCaptureSqlParameters((Boolean) updates.get("captureSqlParameters"));
+            if (updates.containsKey("captureSqlParameters"))
+                config.setCaptureSqlParameters((Boolean) updates.get("captureSqlParameters"));
 
-			if (updates.containsKey("storeToDatabase"))
-				config.setStoreToDatabase((Boolean) updates.get("storeToDatabase"));
+            if (updates.containsKey("storeToDatabase"))
+                config.setStoreToDatabase((Boolean) updates.get("storeToDatabase"));
 
-			// 标记配置已变更
-			monitorConfigService.markDirty();
+            // 标记配置已变更
+            monitorConfigService.markDirty();
 
-			return "Config updated successfully";
-		}
-		finally {
-			lock.writeLock().unlock();
-		}
-	}
+            return "Config updated successfully";
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
 
 }

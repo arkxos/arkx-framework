@@ -8,17 +8,17 @@ package io.arkx.framework.message.mq;
  */
 public enum MqBusinessType {
 
-	// 0-50为系统保留消息类型
-	RegisterProducer(21), RegisterConsumer(22), TopicMessage(23);
+    // 0-50为系统保留消息类型
+    RegisterProducer(21), RegisterConsumer(22), TopicMessage(23);
 
-	private int value;
+    private int value;
 
-	private MqBusinessType(int value) {
-		this.value = value;
-	}
+    private MqBusinessType(int value) {
+        this.value = value;
+    }
 
-	public int value() {
-		return this.value;
-	}
+    public int value() {
+        return this.value;
+    }
 
 }

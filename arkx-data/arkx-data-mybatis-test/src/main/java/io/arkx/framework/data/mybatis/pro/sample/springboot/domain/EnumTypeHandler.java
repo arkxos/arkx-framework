@@ -9,11 +9,11 @@ import lombok.Data;
 @Table("smart_typehandler")
 public class EnumTypeHandler {
 
-	@Id
-	private Long id;
+    @Id
+    private Long id;
 
-	private Gender gender;
+    private Gender gender;
 
-	private Integer status;
+    private Integer status;
 
 }

@@ -12,16 +12,16 @@ import io.arkx.framework.commons.simplequeue.Task;
  */
 public class ResultItemsCollectorPipeline implements CollectorPipeline<ResultItems> {
 
-	private List<ResultItems> collector = new ArrayList<ResultItems>();
+    private List<ResultItems> collector = new ArrayList<ResultItems>();
 
-	@Override
-	public synchronized void process(ResultItems resultItems, Task task) {
-		collector.add(resultItems);
-	}
+    @Override
+    public synchronized void process(ResultItems resultItems, Task task) {
+        collector.add(resultItems);
+    }
 
-	@Override
-	public List<ResultItems> getCollected() {
-		return collector;
-	}
+    @Override
+    public List<ResultItems> getCollected() {
+        return collector;
+    }
 
 }

@@ -44,121 +44,127 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
  */
 public class JsonUtil {
 
-	private JsonUtil() {
-	}
+    private JsonUtil() {
+    }
 
-	private static final ObjectMapper MAPPER = new JsonMapper();
+    private static final ObjectMapper MAPPER = new JsonMapper();
 
-	private static final ObjectMapper MAPPER_FOR_WEB = new JsonMapper();
+    private static final ObjectMapper MAPPER_FOR_WEB = new JsonMapper();
 
-	static {
+    static {
 
-		EnumMarkerDeserializer emd = new EnumMarkerDeserializer();
-		DateSerializer ds = new DateSerializer();
-		DateDeserializer dd = new DateDeserializer();
+        EnumMarkerDeserializer emd = new EnumMarkerDeserializer();
+        DateSerializer ds = new DateSerializer();
+        DateDeserializer dd = new DateDeserializer();
 
-		SimpleModule module = new SimpleModule();
-		module.addSerializer(Enum.class, new EnumMarkerSerializer());
-		module.addDeserializer(Enum.class, emd);
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Enum.class, new EnumMarkerSerializer());
+        module.addDeserializer(Enum.class, emd);
 
-		module.addSerializer(Date.class, ds);
-		module.addDeserializer(Date.class, dd);
-		MAPPER.registerModule(module);
-		MAPPER.registerModule(new JavaTimeModule());
-		MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        module.addSerializer(Date.class, ds);
+        module.addDeserializer(Date.class, dd);
+        MAPPER.registerModule(module);
+        MAPPER.registerModule(new JavaTimeModule());
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-		SimpleModule moduleForWeb = new SimpleModule();
-		moduleForWeb.addSerializer(EnumMarker.class, new EnumMarkerSerializerForWeb());
-		moduleForWeb.addDeserializer(Enum.class, emd);
+        SimpleModule moduleForWeb = new SimpleModule();
+        moduleForWeb.addSerializer(EnumMarker.class, new EnumMarkerSerializerForWeb());
+        moduleForWeb.addDeserializer(Enum.class, emd);
 
-		moduleForWeb.addSerializer(Date.class, ds);
-		moduleForWeb.addDeserializer(Date.class, dd);
-		MAPPER_FOR_WEB.registerModule(moduleForWeb);
-		MAPPER_FOR_WEB.registerModule(new JavaTimeModule());
-		MAPPER_FOR_WEB.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	}
+        moduleForWeb.addSerializer(Date.class, ds);
+        moduleForWeb.addDeserializer(Date.class, dd);
+        MAPPER_FOR_WEB.registerModule(moduleForWeb);
+        MAPPER_FOR_WEB.registerModule(new JavaTimeModule());
+        MAPPER_FOR_WEB.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
-	/**
-	 * 序列化对象：将对象转换成json字符串
-	 *
-	 * <pre>
-	 *     {
-	 *         "name": "w.dehi",
-	 *         "gender": EnumMarkder.getValue()
-	 *     }
-	 * </pre>
-	 * @param target pojo对象
-	 * @return 返回json字符串
-	 */
-	public static String toJsonStr(Object target) {
-		try {
-			return MAPPER.writeValueAsString(target);
-		}
-		catch (JsonProcessingException e) {
-			throw new IllegalArgumentException("序列化失败: ", e);
-		}
-	}
+    /**
+     * 序列化对象：将对象转换成json字符串
+     *
+     * <pre>
+     *     {
+     *         "name": "w.dehi",
+     *         "gender": EnumMarkder.getValue()
+     *     }
+     * </pre>
+     *
+     * @param target
+     *            pojo对象
+     * @return 返回json字符串
+     */
+    public static String toJsonStr(Object target) {
+        try {
+            return MAPPER.writeValueAsString(target);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("序列化失败: ", e);
+        }
+    }
 
-	/**
-	 * 序列化对象：将对象转换成json字符串
-	 *
-	 * <pre>
-	 *       {
-	 *           "name": "w.dehi",
-	 *           "gender": {
-	 *               "value": EnumMarker.getValue(),
-	 *               "desc": EnumMarker.getDesc()
-	 *           }
-	 *       }
-	 * </pre>
-	 * @param target pojo对象
-	 * @return 返回json字符串
-	 */
-	public static String toJsonStrForWeb(Object target) {
-		try {
-			return MAPPER_FOR_WEB.writeValueAsString(target);
-		}
-		catch (JsonProcessingException e) {
-			throw new IllegalArgumentException("序列化失败: ", e);
-		}
-	}
+    /**
+     * 序列化对象：将对象转换成json字符串
+     *
+     * <pre>
+     *       {
+     *           "name": "w.dehi",
+     *           "gender": {
+     *               "value": EnumMarker.getValue(),
+     *               "desc": EnumMarker.getDesc()
+     *           }
+     *       }
+     * </pre>
+     *
+     * @param target
+     *            pojo对象
+     * @return 返回json字符串
+     */
+    public static String toJsonStrForWeb(Object target) {
+        try {
+            return MAPPER_FOR_WEB.writeValueAsString(target);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("序列化失败: ", e);
+        }
+    }
 
-	/**
-	 * 反序列化对象：将字符串转换成pojo对象
-	 *
-	 * <pre>
-	 *     Json字符串：
-	 *     {
-	 *         "name": "w.deahi",
-	 *         "gender": 1
-	 *     }
-	 *
-	 * </pre>
-	 * @param inputJson json字符串
-	 * @param clazz pojo类型
-	 */
-	public static <T> T parseObj(String inputJson, Class<T> clazz) {
-		try {
-			return MAPPER.readValue(inputJson, clazz);
-		}
-		catch (JsonProcessingException e) {
-			throw new IllegalArgumentException("反序列化失败, 需要被反序列化的字符串: " + inputJson, e);
-		}
-	}
+    /**
+     * 反序列化对象：将字符串转换成pojo对象
+     *
+     * <pre>
+     *     Json字符串：
+     *     {
+     *         "name": "w.deahi",
+     *         "gender": 1
+     *     }
+     *
+     * </pre>
+     *
+     * @param inputJson
+     *            json字符串
+     * @param clazz
+     *            pojo类型
+     */
+    public static <T> T parseObj(String inputJson, Class<T> clazz) {
+        try {
+            return MAPPER.readValue(inputJson, clazz);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("反序列化失败, 需要被反序列化的字符串: " + inputJson, e);
+        }
+    }
 
-	/**
-	 * 反序列化列表：将字符串转换成pojo列表
-	 * @param inputJson json字符串
-	 * @param clazz pojo类型
-	 */
-	public static <T> List<T> parseArr(String inputJson, Class<T> clazz) {
-		try {
-			CollectionType javaType = MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
-			return MAPPER.readValue(inputJson, javaType);
-		}
-		catch (JsonProcessingException e) {
-			throw new IllegalArgumentException("反序列化失败, 需要被反序列化的字符串: " + inputJson, e);
-		}
-	}
+    /**
+     * 反序列化列表：将字符串转换成pojo列表
+     *
+     * @param inputJson
+     *            json字符串
+     * @param clazz
+     *            pojo类型
+     */
+    public static <T> List<T> parseArr(String inputJson, Class<T> clazz) {
+        try {
+            CollectionType javaType = MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
+            return MAPPER.readValue(inputJson, javaType);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("反序列化失败, 需要被反序列化的字符串: " + inputJson, e);
+        }
+    }
 
 }

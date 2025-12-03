@@ -26,26 +26,26 @@ import lombok.RequiredArgsConstructor;
  */
 public class EnumMarkerSerializerForWeb extends JsonSerializer<EnumMarker> {
 
-	public EnumMarkerSerializerForWeb() {
-	}
+    public EnumMarkerSerializerForWeb() {
+    }
 
-	public void serialize(EnumMarker value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-		gen.writeObject(new EnumObj(value.getValue(), value.getDesc()));
-		// -- 也可以使用下面方式输出给前端，效果一样
-		// gen.writeStartObject();
-		// gen.writeNumberField("value", v.getValue());
-		// gen.writeStringField("desc", v.getDesc());
-		// gen.writeEndObject();
-	}
+    public void serialize(EnumMarker value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeObject(new EnumObj(value.getValue(), value.getDesc()));
+        // -- 也可以使用下面方式输出给前端，效果一样
+        // gen.writeStartObject();
+        // gen.writeNumberField("value", v.getValue());
+        // gen.writeStringField("desc", v.getDesc());
+        // gen.writeEndObject();
+    }
 
-	@Getter
-	@RequiredArgsConstructor
-	private static class EnumObj {
+    @Getter
+    @RequiredArgsConstructor
+    private static class EnumObj {
 
-		private final Integer value;
+        private final Integer value;
 
-		private final String desc;
+        private final String desc;
 
-	}
+    }
 
 }

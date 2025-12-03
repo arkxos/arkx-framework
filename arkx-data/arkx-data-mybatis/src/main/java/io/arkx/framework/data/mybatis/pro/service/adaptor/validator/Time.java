@@ -18,26 +18,26 @@ import jakarta.validation.Payload;
  * @author w.dehai
  *
  */
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Documented
 @Repeatable(List.class)
-@Constraint(validatedBy = { TimeValidator.class })
+@Constraint(validatedBy = {TimeValidator.class})
 public @interface Time {
 
-	String message() default "时间不正确, 范围1972-01-01 00:00:00 ~ 2037-12-31 00:00:00";
+    String message() default "时间不正确, 范围1972-01-01 00:00:00 ~ 2037-12-31 00:00:00";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
-	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
-	@Retention(RUNTIME)
-	@Documented
-	@interface List {
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
+    @Retention(RUNTIME)
+    @Documented
+    @interface List {
 
-		Time[] value();
+        Time[] value();
 
-	}
+    }
 
 }

@@ -70,63 +70,63 @@ import io.arkx.framework.thirdparty.el.PrimitiveObjects;
 
 public class AndOperator extends BinaryOperator {
 
-	// -------------------------------------
-	// Singleton
-	// -------------------------------------
+    // -------------------------------------
+    // Singleton
+    // -------------------------------------
 
-	public static final AndOperator SINGLETON = new AndOperator();
+    public static final AndOperator SINGLETON = new AndOperator();
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public AndOperator() {
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public AndOperator() {
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	@Override
-	public String getOperatorSymbol() {
-		return "and";
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the symbol representing the operator
+     **/
+    @Override
+    public String getOperatorSymbol() {
+        return "and";
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given value
-	 **/
-	@Override
-	public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
-		// Coerce the values to booleans
-		boolean left = Coercions.coerceToBoolean(pLeft, pLogger).booleanValue();
-		boolean right = Coercions.coerceToBoolean(pRight, pLogger).booleanValue();
+    // -------------------------------------
+    /**
+     * Applies the operator to the given value
+     **/
+    @Override
+    public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
+        // Coerce the values to booleans
+        boolean left = Coercions.coerceToBoolean(pLeft, pLogger).booleanValue();
+        boolean right = Coercions.coerceToBoolean(pRight, pLogger).booleanValue();
 
-		return PrimitiveObjects.getBoolean(left && right);
-	}
+        return PrimitiveObjects.getBoolean(left && right);
+    }
 
-	// -------------------------------------
-	/**
-	 * Returns true if evaluation is necessary given the specified Left value. The
-	 * And/OrOperators make use of this
-	 **/
-	@Override
-	public boolean shouldEvaluate(Object pLeft) {
-		return pLeft instanceof Boolean && ((Boolean) pLeft).booleanValue() == true;
-	}
+    // -------------------------------------
+    /**
+     * Returns true if evaluation is necessary given the specified Left value. The
+     * And/OrOperators make use of this
+     **/
+    @Override
+    public boolean shouldEvaluate(Object pLeft) {
+        return pLeft instanceof Boolean && ((Boolean) pLeft).booleanValue() == true;
+    }
 
-	// -------------------------------------
-	/**
-	 * Returns true if the operator expects its arguments to be coerced to Booleans. The
-	 * And/Or operators set this to true.
-	 **/
-	@Override
-	public boolean shouldCoerceToBoolean() {
-		return true;
-	}
+    // -------------------------------------
+    /**
+     * Returns true if the operator expects its arguments to be coerced to Booleans.
+     * The And/Or operators set this to true.
+     **/
+    @Override
+    public boolean shouldCoerceToBoolean() {
+        return true;
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

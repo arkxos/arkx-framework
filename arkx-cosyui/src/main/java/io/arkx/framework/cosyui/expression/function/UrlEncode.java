@@ -10,34 +10,34 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  */
 public class UrlEncode extends AbstractFunction {
 
-	@Override
-	public String getFunctionName() {
-		return "urlEncode";
-	}
+    @Override
+    public String getFunctionName() {
+        return "urlEncode";
+    }
 
-	@Override
-	public Object execute(IVariableResolver resolver, Object... args) {
-		String input = (String) args[0];
-		if (input == null) {
-			return "";
-		}
-		if (args.length > 1) {
-			String charset = (String) args[1];
-			if (StringUtil.isNotEmpty(charset)) {
-				return StringUtil.urlEncode(input, charset);
-			}
-		}
-		return StringUtil.urlEncode(input);
-	}
+    @Override
+    public Object execute(IVariableResolver resolver, Object... args) {
+        String input = (String) args[0];
+        if (input == null) {
+            return "";
+        }
+        if (args.length > 1) {
+            String charset = (String) args[1];
+            if (StringUtil.isNotEmpty(charset)) {
+                return StringUtil.urlEncode(input, charset);
+            }
+        }
+        return StringUtil.urlEncode(input);
+    }
 
-	@Override
-	public String getFunctionPrefix() {
-		return "";
-	}
+    @Override
+    public String getFunctionPrefix() {
+        return "";
+    }
 
-	@Override
-	public Class<?>[] getArgumentTypes() {
-		return new Class<?>[] { String.class, String.class };
-	}
+    @Override
+    public Class<?>[] getArgumentTypes() {
+        return new Class<?>[]{String.class, String.class};
+    }
 
 }

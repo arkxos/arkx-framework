@@ -14,46 +14,45 @@ import io.arkx.framework.commons.util.FileUtil;
  */
 public class ReadFileTaskProcessor implements Task<String> {
 
-	public static final String ID = "read-file";
+    public static final String ID = "read-file";
 
-	private String id;
+    private String id;
 
-	public ReadFileTaskProcessor(String id) {
-		this.id = ID + id;
-	}
+    public ReadFileTaskProcessor(String id) {
+        this.id = ID + id;
+    }
 
-	@Override
-	public String getId() {
-		return id;
-	}
+    @Override
+    public String getId() {
+        return id;
+    }
 
-	@Override
-	public List<String> preparedTodoList(String taskId) {
-		List<String> result = new ArrayList<>();
+    @Override
+    public List<String> preparedTodoList(String taskId) {
+        List<String> result = new ArrayList<>();
 
-		String folderPath = "D:\\ice-queen-data\\download\\raw-eod-quote-neteasy\\raw_eod_quote__2016-4_2016-11-14_snapshot\\datas";
-		File file = new File(folderPath);
-		String[] fileNames = file.list();
+        String folderPath = "D:\\ice-queen-data\\download\\raw-eod-quote-neteasy\\raw_eod_quote__2016-4_2016-11-14_snapshot\\datas";
+        File file = new File(folderPath);
+        String[] fileNames = file.list();
 
-		for (String fileName : fileNames) {
-			result.add(folderPath + File.separator + fileName);
-		}
+        for (String fileName : fileNames) {
+            result.add(folderPath + File.separator + fileName);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public boolean executeTodo(String taskId, String todo) {
-		// System.out.println("do todo:" + todo.getElement());
-		FileUtil.readText(todo);
-		try {
-			Thread.sleep(10);
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+    @Override
+    public boolean executeTodo(String taskId, String todo) {
+        // System.out.println("do todo:" + todo.getElement());
+        FileUtil.readText(todo);
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 }

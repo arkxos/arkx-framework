@@ -9,14 +9,14 @@ package io.arkx.framework.boot.starter.aspect;
  */
 public class RedisKey {
 
-	/**
-	 * 不可重复点击的锁前缀
-	 */
-	public static final String NO_REPEAT_LOCK_PREFIX = "arkx:no_repeat_lock:";
+    /**
+     * 不可重复点击的锁前缀
+     */
+    public static final String NO_REPEAT_LOCK_PREFIX = "arkx:no_repeat_lock:";
 
-	/**
-	 * 不可重复点击的锁前缀
-	 */
-	public static final String NO_REPEAT_LOCK_VALUE_PREFIX = "arkx:no_repeat_lock_value:";
+    /**
+     * 不可重复点击的锁前缀
+     */
+    public static final String NO_REPEAT_LOCK_VALUE_PREFIX = "arkx:no_repeat_lock_value:";
 
 }

@@ -7,8 +7,8 @@ package io.arkx.data.lightning.service;
  */
 public interface ListPagingAndSortingService<T, ID> extends Service<T, ID> {
 
-	java.util.List<T> findAll(org.springframework.data.domain.Sort sort);
+    java.util.List<T> findAll(org.springframework.data.domain.Sort sort);
 
-	org.springframework.data.domain.Page<T> findAll(org.springframework.data.domain.Pageable pageable);
+    org.springframework.data.domain.Page<T> findAll(org.springframework.data.domain.Pageable pageable);
 
 }

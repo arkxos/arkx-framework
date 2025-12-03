@@ -6,18 +6,18 @@ package io.arkx.framework.data.db.exception;
  */
 public class DropException extends DDLException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public DropException(Exception e) {
-		super(e);
-	}
+    public DropException(Exception e) {
+        super(e);
+    }
 
-	public DropException(String message) {
-		super(message);
-	}
+    public DropException(String message) {
+        super(message);
+    }
 
-	public DropException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public DropException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

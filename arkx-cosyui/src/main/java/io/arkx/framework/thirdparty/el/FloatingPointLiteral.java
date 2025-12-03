@@ -57,8 +57,8 @@ package io.arkx.framework.thirdparty.el;
 
 /**
  * <p>
- * An expression representing a floating point literal value. The value is stored
- * internally as a double.
+ * An expression representing a floating point literal value. The value is
+ * stored internally as a double.
  *
  * @author Nathan Abramson - Art Technology Group
  * @version $Change: 181177 $$DateTime: 2001/06/26 08:45:09 $$Author: luehe $
@@ -66,33 +66,33 @@ package io.arkx.framework.thirdparty.el;
 
 public class FloatingPointLiteral extends Literal {
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public FloatingPointLiteral(String pToken) {
-		super(getValueFromToken(pToken));
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public FloatingPointLiteral(String pToken) {
+        super(getValueFromToken(pToken));
+    }
 
-	// -------------------------------------
-	/**
-	 * Parses the given token into the literal value
-	 **/
-	static Object getValueFromToken(String pToken) {
-		return Double.valueOf(pToken);
-	}
+    // -------------------------------------
+    /**
+     * Parses the given token into the literal value
+     **/
+    static Object getValueFromToken(String pToken) {
+        return Double.valueOf(pToken);
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		return getValue().toString();
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        return getValue().toString();
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

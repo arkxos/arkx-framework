@@ -29,43 +29,41 @@ import jakarta.annotation.Resource;
 @SpringBootTest
 class LockerInterceptorTest {
 
-	@Resource
-	private UserMapper userMapper;
+    @Resource
+    private UserMapper userMapper;
 
-	@Resource
-	private DataSource dataSource;
+    @Resource
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
-		// init smat_user
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-		Insert insert = insertInto("smart_user")
-			.columns("name", "password", "phone_no", "version", "addr_info", "status")
-			.values("w.dehai", "123456", "1306006", 1L, "成都", 1)
-			.values("Jaedong", "123", "1306006", 1L, "北京", 1)
-			.values("w.dehai", "123", "1306006", 2L, "美国", 1)
-			.build();
-		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-	}
+    @BeforeEach
+    void init() {
+        // init smat_user
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+        Insert insert = insertInto("smart_user")
+                .columns("name", "password", "phone_no", "version", "addr_info", "status")
+                .values("w.dehai", "123456", "1306006", 1L, "成都", 1).values("Jaedong", "123", "1306006", 1L, "北京", 1)
+                .values("w.dehai", "123", "1306006", 2L, "美国", 1).build();
+        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+    }
 
-	@Test
-	void updateTest() {
-		User user = userMapper.selectById(1L);
-		user.setPassword("dd");
-		int update = userMapper.updateById(user);
-		assertEquals(1, update);
-		User result = userMapper.selectById(1L);
-		assertEquals("dd", result.getPassword());
-	}
+    @Test
+    void updateTest() {
+        User user = userMapper.selectById(1L);
+        user.setPassword("dd");
+        int update = userMapper.updateById(user);
+        assertEquals(1, update);
+        User result = userMapper.selectById(1L);
+        assertEquals("dd", result.getPassword());
+    }
 
-	@Test
-	void updateExcludeNullTest() {
-		User user = userMapper.selectById(1L);
-		user.setPassword("dd");
-		int update = userMapper.updateByIdExcludeNull(user);
-		assertEquals(1, update);
-		User result = userMapper.selectById(1L);
-		assertEquals("dd", result.getPassword());
-	}
+    @Test
+    void updateExcludeNullTest() {
+        User user = userMapper.selectById(1L);
+        user.setPassword("dd");
+        int update = userMapper.updateByIdExcludeNull(user);
+        assertEquals(1, update);
+        User result = userMapper.selectById(1L);
+        assertEquals("dd", result.getPassword());
+    }
 
 }

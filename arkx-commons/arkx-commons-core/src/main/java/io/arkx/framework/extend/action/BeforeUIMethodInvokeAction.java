@@ -12,14 +12,14 @@ import io.arkx.framework.extend.IExtendAction;
  */
 public abstract class BeforeUIMethodInvokeAction implements IExtendAction {
 
-	public static final String ExtendPointID = "io.arkx.framework.BeforeUIMethodInvoke";
+    public static final String ExtendPointID = "io.arkx.framework.BeforeUIMethodInvoke";
 
-	@Override
-	public Object execute(Object[] args) throws ExtendException {
-		execute((String) args[0]);
-		return null;
-	}
+    @Override
+    public Object execute(Object[] args) throws ExtendException {
+        execute((String) args[0]);
+        return null;
+    }
 
-	public abstract void execute(String method) throws ExtendException;
+    public abstract void execute(String method) throws ExtendException;
 
 }

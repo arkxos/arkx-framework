@@ -9,31 +9,31 @@ import io.arkx.framework.commons.util.Primitives;
  */
 public class ExpressionAutoEscaping implements IApplicationConfigItem {
 
-	public static final String ID = "ExpressionAutoEscaping";
+    public static final String ID = "ExpressionAutoEscaping";
 
-	public static final boolean DEFAULT = false;
+    public static final boolean DEFAULT = false;
 
-	private static boolean loaded = false;
+    private static boolean loaded = false;
 
-	private static boolean value = DEFAULT;
+    private static boolean value = DEFAULT;
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "Expression value auto escaping";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "Expression value auto escaping";
+    }
 
-	public static boolean getValue() {
-		if (!loaded) {
-			String str = Config.getValue("App." + ID);
-			value = Primitives.getBoolean(str);
-			loaded = true;
-		}
-		return value;
-	}
+    public static boolean getValue() {
+        if (!loaded) {
+            String str = Config.getValue("App." + ID);
+            value = Primitives.getBoolean(str);
+            loaded = true;
+        }
+        return value;
+    }
 
 }

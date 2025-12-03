@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class Ids implements Serializable {
 
-	@ElementNotEmpty
-	private Long[] ids;
+    @ElementNotEmpty
+    private Long[] ids;
 
 }

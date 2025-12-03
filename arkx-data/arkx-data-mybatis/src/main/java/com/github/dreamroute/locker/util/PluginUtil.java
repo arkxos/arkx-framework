@@ -38,48 +38,50 @@ import org.springframework.util.ObjectUtils;
  */
 public final class PluginUtil {
 
-	private PluginUtil() {
-	} // private constructor
+    private PluginUtil() {
+    } // private constructor
 
-	/**
-	 * <p>
-	 * Recursive get the original target object.
-	 * <p>
-	 * If integrate more than a plugin, maybe there are conflict in these plugins, because
-	 * plugin will proxy the object.<br>
-	 * So, here get the orignal target object
-	 * @param target proxy-object
-	 * @return original target object
-	 */
-	public static Object processTarget(Object target) {
-		if (Proxy.isProxyClass(target.getClass())) {
-			MetaObject mo = SystemMetaObject.forObject(target);
-			return processTarget(mo.getValue("h.target"));
-		}
-		return target;
-	}
+    /**
+     * <p>
+     * Recursive get the original target object.
+     * <p>
+     * If integrate more than a plugin, maybe there are conflict in these plugins,
+     * because plugin will proxy the object.<br>
+     * So, here get the orignal target object
+     *
+     * @param target
+     *            proxy-object
+     * @return original target object
+     */
+    public static Object processTarget(Object target) {
+        if (Proxy.isProxyClass(target.getClass())) {
+            MetaObject mo = SystemMetaObject.forObject(target);
+            return processTarget(mo.getValue("h.target"));
+        }
+        return target;
+    }
 
-	/**
-	 * 获取cls所有方法，包括父接口的方法
-	 */
-	public static Method[] getAllMethods(Class<?> cls) {
-		Set<Class<?>> all = getAllParentInterface(cls);
-		all.add(cls);
-		return all.stream().flatMap(c -> Arrays.stream(c.getDeclaredMethods())).toArray(Method[]::new);
-	}
+    /**
+     * 获取cls所有方法，包括父接口的方法
+     */
+    public static Method[] getAllMethods(Class<?> cls) {
+        Set<Class<?>> all = getAllParentInterface(cls);
+        all.add(cls);
+        return all.stream().flatMap(c -> Arrays.stream(c.getDeclaredMethods())).toArray(Method[]::new);
+    }
 
-	public static Set<Class<?>> getAllParentInterface(Class<?> cls) {
-		Set<Class<?>> result = new HashSet<>();
-		recursiveCls(cls, result);
-		return result;
-	}
+    public static Set<Class<?>> getAllParentInterface(Class<?> cls) {
+        Set<Class<?>> result = new HashSet<>();
+        recursiveCls(cls, result);
+        return result;
+    }
 
-	private static void recursiveCls(Class<?> cls, Set<Class<?>> result) {
-		Class<?>[] interfaces = cls.getInterfaces();
-		if (!ObjectUtils.isEmpty(interfaces)) {
-			result.addAll(Arrays.asList(interfaces));
-			Arrays.stream(interfaces).forEach(inter -> recursiveCls(inter, result));
-		}
-	}
+    private static void recursiveCls(Class<?> cls, Set<Class<?>> result) {
+        Class<?>[] interfaces = cls.getInterfaces();
+        if (!ObjectUtils.isEmpty(interfaces)) {
+            result.addAll(Arrays.asList(interfaces));
+            Arrays.stream(interfaces).forEach(inter -> recursiveCls(inter, result));
+        }
+    }
 
 }

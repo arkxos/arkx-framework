@@ -17,25 +17,25 @@ import lombok.experimental.SuperBuilder;
 @Table("smart_user")
 public class User {
 
-	@Id
-	private Long id;
+    @Id
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private String password;
+    private String password;
 
-	private Long version;
+    private Long version;
 
-	@Transient
-	private Integer gender;
+    @Transient
+    private Integer gender;
 
-	private String phoneNo;
+    private String phoneNo;
 
-	@Column("addr_info")
-	private String addr;
+    @Column("addr_info")
+    private String addr;
 
-	private String orderId;
+    private String orderId;
 
-	private Integer status;
+    private Integer status;
 
 }

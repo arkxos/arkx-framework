@@ -23,48 +23,48 @@ import java.util.Calendar;
  */
 public interface JSONLexer {
 
-	void nextToken();
+    void nextToken();
 
-	void nextToken(int expect);
+    void nextToken(int expect);
 
-	int token();
+    int token();
 
-	int pos();
+    int pos();
 
-	String stringVal();
+    String stringVal();
 
-	Number integerValue();
+    Number integerValue();
 
-	BigDecimal decimalValue();
+    BigDecimal decimalValue();
 
-	double doubleValue();
+    double doubleValue();
 
-	boolean isEnabled(Feature feature);
+    boolean isEnabled(Feature feature);
 
-	String numberString();
+    String numberString();
 
-	boolean isEOF();
+    boolean isEOF();
 
-	boolean isBlankInput();
+    boolean isBlankInput();
 
-	char getCurrent();
+    char getCurrent();
 
-	void skipWhitespace();
+    void skipWhitespace();
 
-	void incrementBufferPosition();
+    void incrementBufferPosition();
 
-	String scanSymbol(final SymbolTable symbolTable, final char quote);
+    String scanSymbol(final SymbolTable symbolTable, final char quote);
 
-	void resetStringPosition();
+    void resetStringPosition();
 
-	String scanSymbolUnQuoted(final SymbolTable symbolTable);
+    String scanSymbolUnQuoted(final SymbolTable symbolTable);
 
-	void scanString();
+    void scanString();
 
-	void scanNumber();
+    void scanNumber();
 
-	boolean scanISO8601DateIfMatch();
+    boolean scanISO8601DateIfMatch();
 
-	Calendar getCalendar();
+    Calendar getCalendar();
 
 }

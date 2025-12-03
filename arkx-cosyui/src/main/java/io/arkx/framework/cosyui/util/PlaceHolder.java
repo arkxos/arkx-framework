@@ -6,10 +6,10 @@ package io.arkx.framework.cosyui.util;
  */
 public class PlaceHolder {
 
-	public boolean isString;
+    public boolean isString;
 
-	public boolean isExpression;
+    public boolean isExpression;
 
-	public String Value;
+    public String Value;
 
 }

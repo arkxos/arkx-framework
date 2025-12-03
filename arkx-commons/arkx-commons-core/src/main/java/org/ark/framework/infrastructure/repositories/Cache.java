@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.TYPE })
+@Target({java.lang.annotation.ElementType.TYPE})
 public @interface Cache {
 
-	public abstract boolean value() default true;
+    public abstract boolean value() default true;
 
 }

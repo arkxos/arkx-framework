@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 public class TableColumnPair {
 
-	private String tableName;
+    private String tableName;
 
-	private String columnName;
+    private String columnName;
 
 }

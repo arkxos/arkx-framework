@@ -14,70 +14,70 @@ import io.arkx.framework.data.fasttable.util.RecordConverterGenerator;
 @Serialize
 public class Person {
 
-	@FastColumn(length = 10)
-	private String name;
+    @FastColumn(length = 10)
+    private String name;
 
-	@FastColumn
-	private int age;
+    @FastColumn
+    private int age;
 
-	@FastColumn
-	private double money;
+    @FastColumn
+    private double money;
 
-	@FastColumn
-	private float salary;
+    @FastColumn
+    private float salary;
 
-	@FastColumn
-	private boolean isMarried;
+    @FastColumn
+    private boolean isMarried;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	public double getMoney() {
-		return money;
-	}
+    public double getMoney() {
+        return money;
+    }
 
-	public void setMoney(double money) {
-		this.money = money;
-	}
+    public void setMoney(double money) {
+        this.money = money;
+    }
 
-	public float getSalary() {
-		return salary;
-	}
+    public float getSalary() {
+        return salary;
+    }
 
-	public void setSalary(float salary) {
-		this.salary = salary;
-	}
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
 
-	public boolean isMarried() {
-		return isMarried;
-	}
+    public boolean isMarried() {
+        return isMarried;
+    }
 
-	public void setMarried(boolean isMarried) {
-		this.isMarried = isMarried;
-	}
+    public void setMarried(boolean isMarried) {
+        this.isMarried = isMarried;
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		String text = RecordConverterGenerator.generate(Person.class);
-		System.out.println(text);
-	}
+        String text = RecordConverterGenerator.generate(Person.class);
+        System.out.println(text);
+    }
 
 }

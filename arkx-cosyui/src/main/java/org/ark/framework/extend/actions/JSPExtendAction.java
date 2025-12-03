@@ -23,49 +23,47 @@ import jakarta.servlet.jsp.PageContext;
  */
 public abstract class JSPExtendAction implements IExtendAction {
 
-	public Object execute(Object[] args) throws ExtendException {
+    public Object execute(Object[] args) throws ExtendException {
 
-		PageContext pageContext = (PageContext) args[0];
-		HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-		HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
-		RequestData r = Current.initRequest(request);
-		JSPContext context = new JSPContext(r);
-		execute(context);
-		if (!ObjectUtil.empty(context.getOut())) {
-			try {
-				pageContext.getOut().print(context.getOut());
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if (context.getIncludes().size() > 0) {
-			for (String file : context.getIncludes()) {
-				try {
-					ZhtmlIncludeResponseWrapper responseWraper = new ZhtmlIncludeResponseWrapper(response,
-							pageContext.getOut());
-					if (!ZhtmlManager.execute(file, request, responseWraper, pageContext.getServletContext())) {
-						if (!file.startsWith("/")) {
-							file = "/" + file;
-						}
-						pageContext.include(file);
-					}
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					throw new ExtendException(e.getMessage());
-				}
-			}
-		}
-		return null;
-	}
+        PageContext pageContext = (PageContext) args[0];
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
+        RequestData r = Current.initRequest(request);
+        JSPContext context = new JSPContext(r);
+        execute(context);
+        if (!ObjectUtil.empty(context.getOut())) {
+            try {
+                pageContext.getOut().print(context.getOut());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (context.getIncludes().size() > 0) {
+            for (String file : context.getIncludes()) {
+                try {
+                    ZhtmlIncludeResponseWrapper responseWraper = new ZhtmlIncludeResponseWrapper(response,
+                            pageContext.getOut());
+                    if (!ZhtmlManager.execute(file, request, responseWraper, pageContext.getServletContext())) {
+                        if (!file.startsWith("/")) {
+                            file = "/" + file;
+                        }
+                        pageContext.include(file);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new ExtendException(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
 
-	public abstract void execute(JSPContext context) throws ExtendException;
+    public abstract void execute(JSPContext context) throws ExtendException;
 
-	@Override
-	public boolean isUsable() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isUsable() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
 }

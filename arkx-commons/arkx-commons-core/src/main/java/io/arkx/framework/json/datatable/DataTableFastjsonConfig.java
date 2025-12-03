@@ -13,10 +13,10 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
  */
 public class DataTableFastjsonConfig {
 
-	public static void init() {
-		SerializeConfig.getGlobalInstance().put(DataTable.class, new DataTableSerializer());
+    public static void init() {
+        SerializeConfig.getGlobalInstance().put(DataTable.class, new DataTableSerializer());
 
-		ParserConfig.getGlobalInstance().putDeserializer(DataTable.class, new DataTableDeserializer());
-	}
+        ParserConfig.getGlobalInstance().putDeserializer(DataTable.class, new DataTableDeserializer());
+    }
 
 }

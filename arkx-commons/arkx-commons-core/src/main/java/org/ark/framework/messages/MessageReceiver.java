@@ -10,10 +10,10 @@ import io.arkx.framework.commons.collection.Mapx;
  */
 public abstract class MessageReceiver {
 
-	public String[] getMessageTypeNames() {
-		return MessageBus.getMessageNames(this);
-	}
+    public String[] getMessageTypeNames() {
+        return MessageBus.getMessageNames(this);
+    }
 
-	public abstract Mapx<String, Object> receive(Message paramMessage);
+    public abstract Mapx<String, Object> receive(Message paramMessage);
 
 }

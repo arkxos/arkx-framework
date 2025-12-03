@@ -26,33 +26,32 @@ import jakarta.annotation.Resource;
 @SpringBootTest
 class UserMapperTest {
 
-	@Resource
-	private DataSource dataSource;
+    @Resource
+    private DataSource dataSource;
 
-	@Resource
-	private UserMapper userMapper;
+    @Resource
+    private UserMapper userMapper;
 
-	@BeforeEach
-	void init() {
+    @BeforeEach
+    void init() {
 
-		// init smat_user
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-		Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "version", "addr_info")
-			.values("w.dehai", "123456", "1306006", 1L, "成都")
-			.build();
-		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-	}
+        // init smat_user
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+        Insert insert = insertInto("smart_user").columns("name", "password", "phone_no", "version", "addr_info")
+                .values("w.dehai", "123456", "1306006", 1L, "成都").build();
+        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+    }
 
-	@Test
-	void testTrim() {
-		User user = userMapper.testTrim(null, "123456");
-		assertEquals("w.dehai", user.getName());
-	}
+    @Test
+    void testTrim() {
+        User user = userMapper.testTrim(null, "123456");
+        assertEquals("w.dehai", user.getName());
+    }
 
-	@Test
-	void testWhere() {
-		User user = userMapper.testWhere(null, "123456");
-		assertEquals("w.dehai", user.getName());
-	}
+    @Test
+    void testWhere() {
+        User user = userMapper.testWhere(null, "123456");
+        assertEquals("w.dehai", user.getName());
+    }
 
 }

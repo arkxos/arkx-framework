@@ -10,74 +10,74 @@ import java.util.List;
  */
 public class Person extends Entity {
 
-	public static final String BornTime = "BornTime";
+    public static final String BornTime = "BornTime";
 
-	private String name;
+    private String name;
 
-	private String sex;
+    private String sex;
 
-	private Date bornTime;
+    private Date bornTime;
 
-	private int age;
+    private int age;
 
-	private List<Person> childs;
+    private List<Person> childs;
 
-	public Person(String name, int age, Date bornTime) {
-		this.name = name;
-		this.age = age;
-		this.bornTime = bornTime;
-	}
+    public Person(String name, int age, Date bornTime) {
+        this.name = name;
+        this.age = age;
+        this.bornTime = bornTime;
+    }
 
-	public Person() {
-	}
+    public Person() {
+    }
 
-	public Person(int age) {
-		this.age = age;
-	}
+    public Person(int age) {
+        this.age = age;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getSex() {
-		return sex;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	public Date getBornTime() {
-		return bornTime;
-	}
+    public Date getBornTime() {
+        return bornTime;
+    }
 
-	public void setBornTime(Date bornTime) {
-		this.bornTime = bornTime;
-	}
+    public void setBornTime(Date bornTime) {
+        this.bornTime = bornTime;
+    }
 
-	public List<Person> getChilds() {
-		return childs;
-	}
+    public List<Person> getChilds() {
+        return childs;
+    }
 
-	public void setChilds(List<Person> childs) {
-		this.childs = childs;
-	}
+    public void setChilds(List<Person> childs) {
+        this.childs = childs;
+    }
 
-	@Override
-	public String toString() {
-		return "name: " + name + ", birthday:" + bornTime + ", sex: " + sex + ", age:" + age;
-	}
+    @Override
+    public String toString() {
+        return "name: " + name + ", birthday:" + bornTime + ", sex: " + sex + ", age:" + age;
+    }
 
 }

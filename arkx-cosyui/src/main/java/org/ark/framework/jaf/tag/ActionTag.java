@@ -17,38 +17,37 @@ import jakarta.servlet.jsp.tagext.BodyTagSupport;
  */
 public class ActionTag extends BodyTagSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String method;
+    private String method;
 
-	public String getMethod() {
-		return this.method;
-	}
+    public String getMethod() {
+        return this.method;
+    }
 
-	public void setMethod(String method) {
-		this.method = method;
-	}
+    public void setMethod(String method) {
+        this.method = method;
+    }
 
-	public int doStartTag() throws JspException {
-		try {
-			HttpServletRequest request = (HttpServletRequest) this.pageContext.getRequest();
-			HttpServletResponse response = (HttpServletResponse) this.pageContext.getResponse();
-			if (ObjectUtil.notEmpty(this.method))
-				ActionFilter.invoke(request, response, this.method);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+    public int doStartTag() throws JspException {
+        try {
+            HttpServletRequest request = (HttpServletRequest) this.pageContext.getRequest();
+            HttpServletResponse response = (HttpServletResponse) this.pageContext.getResponse();
+            if (ObjectUtil.notEmpty(this.method))
+                ActionFilter.invoke(request, response, this.method);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return 2;
-	}
+        return 2;
+    }
 
-	public int doEndTag() throws JspException {
-		HttpServletRequest request = (HttpServletRequest) this.pageContext.getRequest();
-		if (ObjectUtil.equal("true", request.getAttribute("ZACTION_SKIPPAGE"))) {
-			return 5;
-		}
-		return 6;
-	}
+    public int doEndTag() throws JspException {
+        HttpServletRequest request = (HttpServletRequest) this.pageContext.getRequest();
+        if (ObjectUtil.equal("true", request.getAttribute("ZACTION_SKIPPAGE"))) {
+            return 5;
+        }
+        return 6;
+    }
 
 }

@@ -15,74 +15,74 @@ import lombok.Data;
 @Data
 public class CriteriaQueryWrapper<T> {
 
-	public static <T> CriteriaQueryWrapper<T> query() {
-		return new CriteriaQueryWrapper<>();
-	}
+    public static <T> CriteriaQueryWrapper<T> query() {
+        return new CriteriaQueryWrapper<>();
+    }
 
-	private List<CriteriaQueryInfo> criteriaQueryInfos = new ArrayList<>();
+    private List<CriteriaQueryInfo> criteriaQueryInfos = new ArrayList<>();
 
-	public CriteriaQueryWrapper<T> in(SFunction<T> function, Object... objects) {
-		CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
-		String attributeName = BeanUtils.convertToFieldName(function);
-		criteriaQueryInfo.setType(Query.Type.IN);
-		criteriaQueryInfo.setAttributeName(attributeName);
+    public CriteriaQueryWrapper<T> in(SFunction<T> function, Object... objects) {
+        CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
+        String attributeName = BeanUtils.convertToFieldName(function);
+        criteriaQueryInfo.setType(Query.Type.IN);
+        criteriaQueryInfo.setAttributeName(attributeName);
 
-		criteriaQueryInfo.setVal(objects);
-		criteriaQueryInfos.add(criteriaQueryInfo);
+        criteriaQueryInfo.setVal(objects);
+        criteriaQueryInfos.add(criteriaQueryInfo);
 
-		return this;
-	}
+        return this;
+    }
 
-	public CriteriaQueryWrapper<T> eq(boolean notEmpty, SFunction<T> function, Object value) {
-		if (!notEmpty) {
-			return this;
-		}
-		return eq(function, value);
-	}
+    public CriteriaQueryWrapper<T> eq(boolean notEmpty, SFunction<T> function, Object value) {
+        if (!notEmpty) {
+            return this;
+        }
+        return eq(function, value);
+    }
 
-	public CriteriaQueryWrapper<T> eq(SFunction<T> function, Object value) {
-		CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
-		String attributeName = BeanUtils.convertToFieldName(function);
-		criteriaQueryInfo.setType(Query.Type.EQUAL);
-		criteriaQueryInfo.setAttributeName(attributeName);
-		criteriaQueryInfo.setFieldType(String.class);
-		criteriaQueryInfo.setVal(value);
-		criteriaQueryInfos.add(criteriaQueryInfo);
+    public CriteriaQueryWrapper<T> eq(SFunction<T> function, Object value) {
+        CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
+        String attributeName = BeanUtils.convertToFieldName(function);
+        criteriaQueryInfo.setType(Query.Type.EQUAL);
+        criteriaQueryInfo.setAttributeName(attributeName);
+        criteriaQueryInfo.setFieldType(String.class);
+        criteriaQueryInfo.setVal(value);
+        criteriaQueryInfos.add(criteriaQueryInfo);
 
-		return this;
-	}
+        return this;
+    }
 
-	public CriteriaQueryWrapper<T> likeRight(boolean notEmpty, SFunction<T> function, String value) {
-		if (!notEmpty) {
-			return this;
-		}
-		CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
-		String attributeName = BeanUtils.convertToFieldName(function);
-		criteriaQueryInfo.setType(Query.Type.RIGHT_LIKE);
-		criteriaQueryInfo.setAttributeName(attributeName);
-		criteriaQueryInfo.setFieldType(String.class);
-		criteriaQueryInfo.setVal(value);
-		criteriaQueryInfos.add(criteriaQueryInfo);
+    public CriteriaQueryWrapper<T> likeRight(boolean notEmpty, SFunction<T> function, String value) {
+        if (!notEmpty) {
+            return this;
+        }
+        CriteriaQueryInfo criteriaQueryInfo = new CriteriaQueryInfo();
+        String attributeName = BeanUtils.convertToFieldName(function);
+        criteriaQueryInfo.setType(Query.Type.RIGHT_LIKE);
+        criteriaQueryInfo.setAttributeName(attributeName);
+        criteriaQueryInfo.setFieldType(String.class);
+        criteriaQueryInfo.setVal(value);
+        criteriaQueryInfos.add(criteriaQueryInfo);
 
-		return this;
-	}
+        return this;
+    }
 
-	@Data
-	public static class CriteriaQueryInfo {
+    @Data
+    public static class CriteriaQueryInfo {
 
-		private Query.Type type;
+        private Query.Type type;
 
-		private String attributeName;
+        private String attributeName;
 
-		private Class<?> fieldType;
+        private Class<?> fieldType;
 
-		private Object val;
+        private Object val;
 
-	}
+    }
 
-	// public static void main(String[] args) {
-	// CriteriaQueryWrapper criteriaQueryWrapper = new CriteriaQueryWrapper();
-	//// criteriaQueryWrapper.in(BaseAccount::getAccountType, "");
-	// }
+    // public static void main(String[] args) {
+    // CriteriaQueryWrapper criteriaQueryWrapper = new CriteriaQueryWrapper();
+    //// criteriaQueryWrapper.in(BaseAccount::getAccountType, "");
+    // }
 
 }

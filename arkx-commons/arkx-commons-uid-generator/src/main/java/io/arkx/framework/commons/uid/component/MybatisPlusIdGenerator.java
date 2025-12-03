@@ -17,13 +17,13 @@ import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 @Component
 public class MybatisPlusIdGenerator implements IdentifierGenerator {
 
-	@Lazy
-	@Autowired
-	private UidGenerator uidGenerator;
+    @Lazy
+    @Autowired
+    private UidGenerator uidGenerator;
 
-	@Override
-	public Number nextId(Object entity) {
-		return uidGenerator.getUID();
-	}
+    @Override
+    public Number nextId(Object entity) {
+        return uidGenerator.getUID();
+    }
 
 }

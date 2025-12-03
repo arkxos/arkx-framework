@@ -34,44 +34,44 @@ import lombok.Data;
 @Table(name = "ark_uid_worker_node")
 public class WorkerNodeEntity implements Serializable {
 
-	/**
-	 * Entity unique id (table unique)
-	 */
-	@Id
-	@Column(name = "id", unique = true, columnDefinition = "bigint NOT NULL AUTO_INCREMENT COMMENT 'auto increment id'")
-	private Long id;
+    /**
+     * Entity unique id (table unique)
+     */
+    @Id
+    @Column(name = "id", unique = true, columnDefinition = "bigint NOT NULL AUTO_INCREMENT COMMENT 'auto increment id'")
+    private Long id;
 
-	/**
-	 * Type of CONTAINER: HostName, ACTUAL : IP.
-	 */
-	@Column(name = "host_name", columnDefinition = "VARCHAR(64) NOT NULL COMMENT 'host name'")
-	private String hostName;
+    /**
+     * Type of CONTAINER: HostName, ACTUAL : IP.
+     */
+    @Column(name = "host_name", columnDefinition = "VARCHAR(64) NOT NULL COMMENT 'host name'")
+    private String hostName;
 
-	/**
-	 * Type of CONTAINER: Port, ACTUAL : Timestamp + Random(0-10000)
-	 */
-	@Column(name = "port", columnDefinition = "VARCHAR(64) NOT NULL COMMENT 'port'")
-	private String port;
+    /**
+     * Type of CONTAINER: Port, ACTUAL : Timestamp + Random(0-10000)
+     */
+    @Column(name = "port", columnDefinition = "VARCHAR(64) NOT NULL COMMENT 'port'")
+    private String port;
 
-	@Column(name = "type", columnDefinition = "TINYINT(2) NOT NULL COMMENT 'node type: ACTUAL or CONTAINER'")
-	private int type;
+    @Column(name = "type", columnDefinition = "TINYINT(2) NOT NULL COMMENT 'node type: ACTUAL or CONTAINER'")
+    private int type;
 
-	/**
-	 * Worker launch date, default now
-	 */
-	@Column(name = "launch_date", columnDefinition = "DATETIME NOT NULL COMMENT 'launch date'")
-	private Date launchDate = new Date();
+    /**
+     * Worker launch date, default now
+     */
+    @Column(name = "launch_date", columnDefinition = "DATETIME NOT NULL COMMENT 'launch date'")
+    private Date launchDate = new Date();
 
-	/**
-	 * Created time
-	 */
-	@Column(name = "created", columnDefinition = "DATETIME NOT NULL COMMENT 'created time'")
-	private Date created;
+    /**
+     * Created time
+     */
+    @Column(name = "created", columnDefinition = "DATETIME NOT NULL COMMENT 'created time'")
+    private Date created;
 
-	/**
-	 * Last modified
-	 */
-	@Column(name = "modified", columnDefinition = "DATETIME NOT NULL COMMENT 'modified time'")
-	private Date modified;
+    /**
+     * Last modified
+     */
+    @Column(name = "modified", columnDefinition = "DATETIME NOT NULL COMMENT 'modified time'")
+    private Date modified;
 
 }

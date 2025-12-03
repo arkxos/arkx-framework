@@ -13,10 +13,10 @@ import io.arkx.framework.commons.util.MD5Util;
  */
 public class MD5UtilTest {
 
-	@Test
-	public void testMd5() {
-		String msg = "darkness";
-		assertTrue(MD5Util.isSame(msg, MD5Util.getCryptogram(msg)));
-	}
+    @Test
+    public void testMd5() {
+        String msg = "darkness";
+        assertTrue(MD5Util.isSame(msg, MD5Util.getCryptogram(msg)));
+    }
 
 }

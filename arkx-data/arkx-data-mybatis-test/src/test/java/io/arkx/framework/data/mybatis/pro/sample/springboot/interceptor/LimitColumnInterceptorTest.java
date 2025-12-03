@@ -33,73 +33,69 @@ import jakarta.annotation.Resource;
 @SpringBootTest
 class LimitColumnInterceptorTest {
 
-	@Resource
-	private UserMapper userMapper;
+    @Resource
+    private UserMapper userMapper;
 
-	@Resource
-	private DictMapper dictMapper;
+    @Resource
+    private DictMapper dictMapper;
 
-	@Resource
-	private DataSource dataSource;
+    @Resource
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
+    @BeforeEach
+    void init() {
 
-		// init smat_user
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-		Insert insert = insertInto("smart_user")
-			.columns("name", "password", "phone_no", "version", "addr_info", "status")
-			.values("w.dehai", "123456", "1306006", 1L, "成都", 1)
-			.values("Jaedong", "123", "1306006", 1L, "北京", 1)
-			.values("w.dehai", "123", "1306006", 2L, "美国", 1)
-			.build();
-		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+        // init smat_user
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+        Insert insert = insertInto("smart_user")
+                .columns("name", "password", "phone_no", "version", "addr_info", "status")
+                .values("w.dehai", "123456", "1306006", 1L, "成都", 1).values("Jaedong", "123", "1306006", 1L, "北京", 1)
+                .values("w.dehai", "123", "1306006", 2L, "美国", 1).build();
+        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
 
-		// init smat_dict
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_dict")).launch();
-		Insert insert2 = insertInto("smart_dict").columns("value", "cn_name", "status")
-			.values(1, "有效", 1)
-			.values(0, "无效", 1)
-			.build();
-		new DbSetup(new DataSourceDestination(dataSource), insert2).launch();
-	}
+        // init smat_dict
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_dict")).launch();
+        Insert insert2 = insertInto("smart_dict").columns("value", "cn_name", "status").values(1, "有效", 1)
+                .values(0, "无效", 1).build();
+        new DbSetup(new DataSourceDestination(dataSource), insert2).launch();
+    }
 
-	@Test
-	void findByPasswordTest() {
-		// 这里对同一个方法测试2次，测试缓存功能
-		User u0 = userMapper.findByPassword("123456");
-		User u1 = userMapper.findByPassword("123456", "id", "name", "phoneNo");
-		User u2 = userMapper.findByPassword("123456", "id", "name", "password");
-		List<User> u3 = userMapper.findByIdIn(newArrayList(1L));
-		// TODO
-	}
+    @Test
+    void findByPasswordTest() {
+        // 这里对同一个方法测试2次，测试缓存功能
+        User u0 = userMapper.findByPassword("123456");
+        User u1 = userMapper.findByPassword("123456", "id", "name", "phoneNo");
+        User u2 = userMapper.findByPassword("123456", "id", "name", "password");
+        List<User> u3 = userMapper.findByIdIn(newArrayList(1L));
+        // TODO
+    }
 
-	@Test
-	void findByIdLTETest() {
-		List<User> users = userMapper.findByIdLTE(2L, "id", "name", "password", "version", "phoneNo", "addr");
-		assertEquals(2, users.size());
-	}
+    @Test
+    void findByIdLTETest() {
+        List<User> users = userMapper.findByIdLTE(2L, "id", "name", "password", "version", "phoneNo", "addr");
+        assertEquals(2, users.size());
+    }
 
-	/**
-	 * 限制列插件测试多个selectById是否会冲突，因为都存在于BaseMapper之中，
-	 */
-	@Test
-	void selectByIdTest() {
-		Dict dict = dictMapper.selectById(1L, "id", "value", "cnName", "status");
-		assertEquals("有效", dict.getCnName());
-		User user = userMapper.selectById(1L, "id", "name");
-		assertEquals("w.dehai", user.getName());
-		List<User> all = userMapper.selectAll("id");
-		assertEquals(3, all.size());
-		List<User> users = userMapper.selectByIds(newArrayList(1L, 2L), "id", "phoneNo");
-		assertEquals(2, users.size());
-	}
+    /**
+     * 限制列插件测试多个selectById是否会冲突，因为都存在于BaseMapper之中，
+     */
+    @Test
+    void selectByIdTest() {
+        Dict dict = dictMapper.selectById(1L, "id", "value", "cnName", "status");
+        assertEquals("有效", dict.getCnName());
+        User user = userMapper.selectById(1L, "id", "name");
+        assertEquals("w.dehai", user.getName());
+        List<User> all = userMapper.selectAll("id");
+        assertEquals(3, all.size());
+        List<User> users = userMapper.selectByIds(newArrayList(1L, 2L), "id", "phoneNo");
+        assertEquals(2, users.size());
+    }
 
-	@Test
-	void cacheTest() {
-		FindByIdLTDto byIdLT = userMapper.findByIdLT(2L);
-		System.err.println(byIdLT);
-		Assertions.assertTrue(FIELDS_ALIAS_CACHE.containsKey(FindByIdLTDto.class));
-	}
+    @Test
+    void cacheTest() {
+        FindByIdLTDto byIdLT = userMapper.findByIdLT(2L);
+        System.err.println(byIdLT);
+        Assertions.assertTrue(FIELDS_ALIAS_CACHE.containsKey(FindByIdLTDto.class));
+    }
 
 }

@@ -64,8 +64,8 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 /**
  * <p>
  * Represents a dynamic value, which consists of a prefix and an optional set of
- * ValueSuffix elements. A prefix is something like an identifier, and a suffix is
- * something like a "property of" or "indexed element of" operator.
+ * ValueSuffix elements. A prefix is something like an identifier, and a suffix
+ * is something like a "property of" or "indexed element of" operator.
  *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
@@ -74,66 +74,66 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 public class ComplexValue extends Expression {
 
-	Expression mPrefix;
+    Expression mPrefix;
 
-	public Expression getPrefix() {
-		return mPrefix;
-	}
+    public Expression getPrefix() {
+        return mPrefix;
+    }
 
-	public void setPrefix(Expression pPrefix) {
-		mPrefix = pPrefix;
-	}
+    public void setPrefix(Expression pPrefix) {
+        mPrefix = pPrefix;
+    }
 
-	List<ValueSuffix> mSuffixes;
+    List<ValueSuffix> mSuffixes;
 
-	public List<ValueSuffix> getSuffixes() {
-		return mSuffixes;
-	}
+    public List<ValueSuffix> getSuffixes() {
+        return mSuffixes;
+    }
 
-	public void setSuffixes(List<ValueSuffix> pSuffixes) {
-		mSuffixes = pSuffixes;
-	}
+    public void setSuffixes(List<ValueSuffix> pSuffixes) {
+        mSuffixes = pSuffixes;
+    }
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public ComplexValue(Expression pPrefix, List<ValueSuffix> pSuffixes) {
-		mPrefix = pPrefix;
-		mSuffixes = pSuffixes;
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public ComplexValue(Expression pPrefix, List<ValueSuffix> pSuffixes) {
+        mPrefix = pPrefix;
+        mSuffixes = pSuffixes;
+    }
 
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append(mPrefix.getExpressionString());
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append(mPrefix.getExpressionString());
 
-		for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
-			ValueSuffix suffix = mSuffixes.get(i);
-			buf.append(suffix.getExpressionString());
-		}
+        for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
+            ValueSuffix suffix = mSuffixes.get(i);
+            buf.append(suffix.getExpressionString());
+        }
 
-		return buf.toString();
-	}
+        return buf.toString();
+    }
 
-	/**
-	 * Evaluates by evaluating the prefix, then applying the suffixes
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-			throws ExpressionException {
-		Object ret = mPrefix.evaluate(pResolver, functions, pLogger);
+    /**
+     * Evaluates by evaluating the prefix, then applying the suffixes
+     **/
+    @Override
+    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        Object ret = mPrefix.evaluate(pResolver, functions, pLogger);
 
-		// Apply the suffixes
-		for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
-			ValueSuffix suffix = mSuffixes.get(i);
-			ret = suffix.evaluate(ret, pResolver, functions, pLogger);
-		}
+        // Apply the suffixes
+        for (int i = 0; mSuffixes != null && i < mSuffixes.size(); i++) {
+            ValueSuffix suffix = mSuffixes.get(i);
+            ret = suffix.evaluate(ret, pResolver, functions, pLogger);
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 
 }

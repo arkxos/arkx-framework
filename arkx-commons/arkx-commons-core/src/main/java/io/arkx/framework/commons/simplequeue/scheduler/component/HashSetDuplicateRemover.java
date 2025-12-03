@@ -12,25 +12,25 @@ import io.arkx.framework.commons.simplequeue.Task;
  */
 public class HashSetDuplicateRemover implements DuplicateRemover {
 
-	private Set<String> urls = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+    private Set<String> urls = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
 
-	@Override
-	public boolean isDuplicate(ElementWarpper request, Task task) {
-		return !urls.add(getUrl(request));
-	}
+    @Override
+    public boolean isDuplicate(ElementWarpper request, Task task) {
+        return !urls.add(getUrl(request));
+    }
 
-	protected String getUrl(ElementWarpper request) {
-		return request.get();
-	}
+    protected String getUrl(ElementWarpper request) {
+        return request.get();
+    }
 
-	@Override
-	public void resetDuplicateCheck(Task task) {
-		urls.clear();
-	}
+    @Override
+    public void resetDuplicateCheck(Task task) {
+        urls.clear();
+    }
 
-	@Override
-	public int getTotalRequestsCount(Task task) {
-		return urls.size();
-	}
+    @Override
+    public int getTotalRequestsCount(Task task) {
+        return urls.size();
+    }
 
 }

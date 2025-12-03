@@ -6,9 +6,9 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.utils.TimeStampUt
 
 public class LocalDateTimeConverter implements IValueConverter<LocalDateTime, Long> {
 
-	@Override
-	public Long convert(final LocalDateTime dateTime) {
-		return TimeStampUtils.convertToPostgresTimeStamp(dateTime);
-	}
+    @Override
+    public Long convert(final LocalDateTime dateTime) {
+        return TimeStampUtils.convertToPostgresTimeStamp(dateTime);
+    }
 
 }

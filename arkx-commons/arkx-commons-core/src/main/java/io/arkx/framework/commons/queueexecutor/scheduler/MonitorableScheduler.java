@@ -10,8 +10,8 @@ package io.arkx.framework.commons.queueexecutor.scheduler;
  */
 public interface MonitorableScheduler<T> extends Scheduler<T> {
 
-	int getLeftElementsCount();
+    int getLeftElementsCount();
 
-	int getTotalElementsCount();
+    int getTotalElementsCount();
 
 }

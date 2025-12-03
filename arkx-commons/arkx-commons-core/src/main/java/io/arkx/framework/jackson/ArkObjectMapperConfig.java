@@ -9,6 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public interface ArkObjectMapperConfig {
 
-	void configure(ObjectMapper objectMapper);
+    void configure(ObjectMapper objectMapper);
 
 }

@@ -10,6 +10,6 @@ import io.arkx.framework.data.db.dbtype.IDBType;
  */
 public abstract class TableUpdateInfo {
 
-	public abstract String[] toSQLArray(IDBType paramString);
+    public abstract String[] toSQLArray(IDBType paramString);
 
 }

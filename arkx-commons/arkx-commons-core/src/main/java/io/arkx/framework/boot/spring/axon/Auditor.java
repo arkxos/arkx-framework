@@ -9,24 +9,24 @@ import java.time.LocalDateTime;
  */
 public interface Auditor {
 
-	String getOperatorId();
+    String getOperatorId();
 
-	void setOperatorId(String operatorId);
+    void setOperatorId(String operatorId);
 
-	String getOperatorRealName();
+    String getOperatorRealName();
 
-	void setOperatorRealName(String operatorRealName);
+    void setOperatorRealName(String operatorRealName);
 
-	String getOperatorBranchInnerCode();
+    String getOperatorBranchInnerCode();
 
-	void setOperatorBranchInnerCode(String operatorBranchInnerCode);
+    void setOperatorBranchInnerCode(String operatorBranchInnerCode);
 
-	String getOperatorBranchName();
+    String getOperatorBranchName();
 
-	void setOperatorBranchName(String operatorBranchName);
+    void setOperatorBranchName(String operatorBranchName);
 
-	LocalDateTime getOccurredOn();
+    LocalDateTime getOccurredOn();
 
-	void setOccurredOn(LocalDateTime occurredOn);
+    void setOccurredOn(LocalDateTime occurredOn);
 
 }

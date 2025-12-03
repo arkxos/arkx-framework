@@ -24,24 +24,24 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class AliasTest {
 
-	@Autowired
-	private DictMapper dictMapper;
+    @Autowired
+    private DictMapper dictMapper;
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
-		// init smat_dict
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_dict")).launch();
-		Insert insert2 = insertInto("smart_dict").columns("value", "cn_name").values(1, "有效").values(0, "无效").build();
-		new DbSetup(new DataSourceDestination(dataSource), insert2).launch();
-	}
+    @BeforeEach
+    void init() {
+        // init smat_dict
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_dict")).launch();
+        Insert insert2 = insertInto("smart_dict").columns("value", "cn_name").values(1, "有效").values(0, "无效").build();
+        new DbSetup(new DataSourceDestination(dataSource), insert2).launch();
+    }
 
-	@Test
-	void aliasTest() {
-		Dict result = dictMapper.alias();
-		assertEquals("有效", result.getCnName());
-	}
+    @Test
+    void aliasTest() {
+        Dict result = dictMapper.alias();
+        assertEquals("有效", result.getCnName());
+    }
 
 }

@@ -11,22 +11,22 @@ import lombok.Setter;
 @Getter
 public class SourceProperties {
 
-	private ProductTypeEnum productType;
+    private ProductTypeEnum productType;
 
-	private String driverClass;
+    private String driverClass;
 
-	private String jdbcUrl;
+    private String jdbcUrl;
 
-	private String username;
+    private String username;
 
-	private String password;
+    private String password;
 
-	private String schemaName;
+    private String schemaName;
 
-	private String tableName;
+    private String tableName;
 
-	private List<String> columnNames;
+    private List<String> columnNames;
 
-	private List<String> distributedKeys;
+    private List<String> distributedKeys;
 
 }

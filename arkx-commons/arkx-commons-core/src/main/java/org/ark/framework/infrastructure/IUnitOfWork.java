@@ -12,12 +12,12 @@ import io.arkx.framework.data.jdbc.Entity;
  */
 public interface IUnitOfWork {
 
-	<T extends Entity> void registerAdded(Entity entity, IUnitOfWorkRepository<T> repository);
+    <T extends Entity> void registerAdded(Entity entity, IUnitOfWorkRepository<T> repository);
 
-	<T extends Entity> void registerChanged(Entity entity, IUnitOfWorkRepository<T> repository);
+    <T extends Entity> void registerChanged(Entity entity, IUnitOfWorkRepository<T> repository);
 
-	<T extends Entity> void registerRemoved(Entity entity, IUnitOfWorkRepository<T> repository);
+    <T extends Entity> void registerRemoved(Entity entity, IUnitOfWorkRepository<T> repository);
 
-	void commit();
+    void commit();
 
 }

@@ -8,6 +8,6 @@ package org.ark.framework.infrastructure.repositories;
  */
 public class OrmConstant {
 
-	public static final String GlobalCharset = "UTF-8";
+    public static final String GlobalCharset = "UTF-8";
 
 }

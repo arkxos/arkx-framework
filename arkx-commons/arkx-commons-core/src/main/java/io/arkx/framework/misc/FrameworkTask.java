@@ -14,41 +14,41 @@ import io.arkx.framework.schedule.SystemTask;
  */
 public class FrameworkTask extends SystemTask {
 
-	public static final String ID = "io.arkx.framework.FrameworkTask";
+    public static final String ID = "io.arkx.framework.FrameworkTask";
 
-	@Override
-	public void execute() {
-		// 清除缓存
-		if (!Config.isDebugMode()) {
-			return;
-		}
-		File dir = new File(Config.getContextRealPath() + "WEB-INF/cache/");
-		File[] fs = dir.listFiles();
-		for (File f : fs) {
-			if (f.isFile()) {
-				FileUtil.delete(f);
-			}
-		}
-	}
+    @Override
+    public void execute() {
+        // 清除缓存
+        if (!Config.isDebugMode()) {
+            return;
+        }
+        File dir = new File(Config.getContextRealPath() + "WEB-INF/cache/");
+        File[] fs = dir.listFiles();
+        for (File f : fs) {
+            if (f.isFile()) {
+                FileUtil.delete(f);
+            }
+        }
+    }
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "@{Platform.FrameworkTask}";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "@{Platform.FrameworkTask}";
+    }
 
-	@Override
-	public String getDefaultCronExpression() {
-		return "30 10,16 * * *";
-	}
+    @Override
+    public String getDefaultCronExpression() {
+        return "30 10,16 * * *";
+    }
 
-	@Override
-	public boolean enable4Front() {
-		return true;
-	}
+    @Override
+    public boolean enable4Front() {
+        return true;
+    }
 
 }

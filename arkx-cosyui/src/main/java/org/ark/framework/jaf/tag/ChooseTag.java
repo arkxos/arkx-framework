@@ -20,63 +20,61 @@ import jakarta.servlet.jsp.tagext.BodyTagSupport;
  */
 public class ChooseTag extends BodyTagSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String variable;
+    private String variable;
 
-	private Object value;
+    private Object value;
 
-	private boolean matched;
+    private boolean matched;
 
-	public void setPageContext(PageContext pc) {
-		super.setPageContext(pc);
-		this.variable = null;
-		this.matched = false;
-	}
+    public void setPageContext(PageContext pc) {
+        super.setPageContext(pc);
+        this.variable = null;
+        this.matched = false;
+    }
 
-	public int doStartTag() throws JspException {
-		ExpressionParser ep = new ExpressionParser(new StringReader(this.variable));
-		PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
-		ep.setContext(context);
-		try {
-			this.value = ep.execute();
-		}
-		catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return 2;
-	}
+    public int doStartTag() throws JspException {
+        ExpressionParser ep = new ExpressionParser(new StringReader(this.variable));
+        PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
+        ep.setContext(context);
+        try {
+            this.value = ep.execute();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 2;
+    }
 
-	public int doAfterBody() throws JspException {
-		BodyContent body = getBodyContent();
-		String content = body.getString().trim();
-		try {
-			getPreviousOut().write(content);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		return 6;
-	}
+    public int doAfterBody() throws JspException {
+        BodyContent body = getBodyContent();
+        String content = body.getString().trim();
+        try {
+            getPreviousOut().write(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 6;
+    }
 
-	public String getVariable() {
-		return this.variable;
-	}
+    public String getVariable() {
+        return this.variable;
+    }
 
-	public void setVariable(String variable) {
-		this.variable = variable;
-	}
+    public void setVariable(String variable) {
+        this.variable = variable;
+    }
 
-	public Object getValue() {
-		return this.value;
-	}
+    public Object getValue() {
+        return this.value;
+    }
 
-	public boolean isMatched() {
-		return this.matched;
-	}
+    public boolean isMatched() {
+        return this.matched;
+    }
 
-	public void setMatched(boolean matched) {
-		this.matched = matched;
-	}
+    public void setMatched(boolean matched) {
+        this.matched = matched;
+    }
 
 }

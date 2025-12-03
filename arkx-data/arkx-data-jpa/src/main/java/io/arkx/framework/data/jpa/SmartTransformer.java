@@ -12,27 +12,27 @@ import org.springframework.core.convert.support.DefaultConversionService;
  */
 public class SmartTransformer implements ResultTransformer {
 
-	// extends BasicTransformerAdapter {
+    // extends BasicTransformerAdapter {
 
-	private static DefaultConversionService conversionService = new DefaultConversionService();
+    private static DefaultConversionService conversionService = new DefaultConversionService();
 
-	private final Class clazz;
+    private final Class clazz;
 
-	SmartTransformer(Class clazz) {
-		this.clazz = clazz;
-	}
+    SmartTransformer(Class clazz) {
+        this.clazz = clazz;
+    }
 
-	@Override
-	public Object transformTuple(Object[] tuple, String[] aliases) {
-		if (tuple != null && tuple.length > 0) {
-			return conversionService.convert(tuple[0], clazz);
-		}
-		return null;
-	}
+    @Override
+    public Object transformTuple(Object[] tuple, String[] aliases) {
+        if (tuple != null && tuple.length > 0) {
+            return conversionService.convert(tuple[0], clazz);
+        }
+        return null;
+    }
 
-	// @Override
-	// public List transformList(List list) {
-	// return super.transformList(list);
-	// }
+    // @Override
+    // public List transformList(List list) {
+    // return super.transformList(list);
+    // }
 
 }

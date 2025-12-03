@@ -12,14 +12,14 @@ import io.arkx.framework.extend.IExtendAction;
  */
 public abstract class AfterAllPluginStartedAction implements IExtendAction {
 
-	public static final String ExtendPointID = "io.arkx.framework.AfterAllPluginStarted";
+    public static final String ExtendPointID = "io.arkx.framework.AfterAllPluginStarted";
 
-	@Override
-	public Object execute(Object[] args) throws ExtendException {
-		execute();
-		return null;
-	}
+    @Override
+    public Object execute(Object[] args) throws ExtendException {
+        execute();
+        return null;
+    }
 
-	public abstract void execute();
+    public abstract void execute();
 
 }

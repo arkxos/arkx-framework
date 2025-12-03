@@ -8,14 +8,14 @@ package org.ark.framework.jaf.zhtml;
  */
 public class ZhtmlRuntimeException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ZhtmlRuntimeException(String message) {
-		super(message);
-	}
+    public ZhtmlRuntimeException(String message) {
+        super(message);
+    }
 
-	public ZhtmlRuntimeException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public ZhtmlRuntimeException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

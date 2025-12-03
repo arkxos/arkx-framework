@@ -8,20 +8,20 @@ import io.arkx.framework.Config;
  */
 public class CodeSourceClass implements IApplicationConfigItem {
 
-	public static final String ID = "CodeSource";
+    public static final String ID = "CodeSource";
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "CodeSource's subclass which provider code data";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "CodeSource's subclass which provider code data";
+    }
 
-	public static String getValue() {
-		return Config.getValue("App." + ID);
-	}
+    public static String getValue() {
+        return Config.getValue("App." + ID);
+    }
 
 }

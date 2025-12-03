@@ -13,13 +13,13 @@ import io.arkx.framework.data.db.core.basic.task.TaskResult;
 
 public abstract class RobotWriter<R extends TaskResult> extends AbstractRobot<R> {
 
-	public abstract void startWrite();
+    public abstract void startWrite();
 
-	@Override
-	public void startWork() {
-		startWrite();
-	}
+    @Override
+    public void startWork() {
+        startWrite();
+    }
 
-	public abstract void waitForFinish();
+    public abstract void waitForFinish();
 
 }

@@ -13,16 +13,16 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.FIELD })
+@Target({java.lang.annotation.ElementType.FIELD})
 public @interface Unique {
 
-	/**
-	 * 字段描述
-	 *
-	 * @author Darkness
-	 * @date 2013-3-13 上午11:38:39
-	 * @version V1.0
-	 */
-	public String value();
+    /**
+     * 字段描述
+     *
+     * @author Darkness
+     * @date 2013-3-13 上午11:38:39
+     * @version V1.0
+     */
+    public String value();
 
 }

@@ -7,37 +7,36 @@ package io.arkx.framework.commons.download;
  */
 public class RecoveryWorkerInfo {
 
-	private int startPosition;
+    private int startPosition;
 
-	private int endPosition;
+    private int endPosition;
 
-	private int currentPosition;
+    private int currentPosition;
 
-	public RecoveryWorkerInfo(int start, int current, int end) {
-		if (end > start && current > start) {
-			startPosition = start;
-			endPosition = end;
-			currentPosition = current;
-		}
-		else {
-			throw new RuntimeException("position logical error");
-		}
-	}
+    public RecoveryWorkerInfo(int start, int current, int end) {
+        if (end > start && current > start) {
+            startPosition = start;
+            endPosition = end;
+            currentPosition = current;
+        } else {
+            throw new RuntimeException("position logical error");
+        }
+    }
 
-	public int getStartPosition() {
-		return startPosition;
-	}
+    public int getStartPosition() {
+        return startPosition;
+    }
 
-	public int getEndPosition() {
-		return endPosition;
-	}
+    public int getEndPosition() {
+        return endPosition;
+    }
 
-	public int getCurrentPosition() {
-		return currentPosition;
-	}
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
 
-	public boolean isFinished() {
-		return currentPosition >= endPosition;
-	}
+    public boolean isFinished() {
+        return currentPosition >= endPosition;
+    }
 
 }

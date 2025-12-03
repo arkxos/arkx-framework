@@ -14,55 +14,55 @@ import org.jsoup.nodes.Document;
  */
 public class Page {
 
-	private Map<String, Object> fieldDatas = new HashMap<String, Object>();
+    private Map<String, Object> fieldDatas = new HashMap<String, Object>();
 
-	private List<Request> targetRequests = new ArrayList<>();
+    private List<Request> targetRequests = new ArrayList<>();
 
-	Request request;
+    Request request;
 
-	public Page() {
-	}
+    public Page() {
+    }
 
-	public Page(Document html) {
-		this.setHtml(html);
-	}
+    public Page(Document html) {
+        this.setHtml(html);
+    }
 
-	public Page(Request request) {
-		this.request = request;
-	}
+    public Page(Request request) {
+        this.request = request;
+    }
 
-	public Request getRequest() {
-		return this.request;
-	}
+    public Request getRequest() {
+        return this.request;
+    }
 
-	public void setHtml(Document html) {
-		this.html = html;
-	}
+    public void setHtml(Document html) {
+        this.html = html;
+    }
 
-	private Document html;
+    private Document html;
 
-	public Document html() {
-		return html;
-	}
+    public Document html() {
+        return html;
+    }
 
-	public void putField(String fieldName, Object fieldValue) {
-		fieldDatas.put(fieldName, fieldValue);
-	}
+    public void putField(String fieldName, Object fieldValue) {
+        fieldDatas.put(fieldName, fieldValue);
+    }
 
-	public Object getField(String fieldName) {
-		return fieldDatas.get(fieldName);
-	}
+    public Object getField(String fieldName) {
+        return fieldDatas.get(fieldName);
+    }
 
-	public void addTargetRequests(List<Request> links) {
-		targetRequests.addAll(links);
-	}
+    public void addTargetRequests(List<Request> links) {
+        targetRequests.addAll(links);
+    }
 
-	public List<Request> getTargetRequests() {
-		return this.targetRequests;
-	}
+    public List<Request> getTargetRequests() {
+        return this.targetRequests;
+    }
 
-	public void addTargetRequest(Request request) {
-		this.targetRequests.add(request);
-	}
+    public void addTargetRequest(Request request) {
+        this.targetRequests.add(request);
+    }
 
 }

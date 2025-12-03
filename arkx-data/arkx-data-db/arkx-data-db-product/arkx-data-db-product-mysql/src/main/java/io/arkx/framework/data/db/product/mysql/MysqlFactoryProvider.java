@@ -24,28 +24,28 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.MYSQL)
 public class MysqlFactoryProvider extends AbstractFactoryProvider {
 
-	public MysqlFactoryProvider(DataSource dataSource) {
-		super(dataSource);
-	}
+    public MysqlFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-	@Override
-	public ProductFeatures getProductFeatures() {
-		return new MysqlFeatures();
-	}
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new MysqlFeatures();
+    }
 
-	@Override
-	public MetadataProvider createMetadataQueryProvider() {
-		return new MysqlMetadataQueryProvider(this);
-	}
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new MysqlMetadataQueryProvider(this);
+    }
 
-	@Override
-	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-		return new AutoCastTableDataWriteProvider(this);
-	}
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-	@Override
-	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-		return new AutoCastTableDataSynchronizeProvider(this);
-	}
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

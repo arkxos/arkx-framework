@@ -14,66 +14,65 @@ import io.arkx.framework.i18n.LangUtil;
  */
 public class ParamTag extends ArkTag {
 
-	private String var;
+    private String var;
 
-	private String Default;
+    private String Default;
 
-	@Override
-	public String getTagName() {
-		return "param";
-	}
+    @Override
+    public String getTagName() {
+        return "param";
+    }
 
-	@Override
-	public int doStartTag() throws TemplateRuntimeException {
-		var = context.eval(var);
-		if (var != null) {
-			String v = String.valueOf(var);
-			v = LangUtil.get(v);
-			pageContext.getOut().write(v);
-		}
-		else if (Default != null) {
-			pageContext.getOut().write(Default);
-		}
-		return SKIP_BODY;
-	}
+    @Override
+    public int doStartTag() throws TemplateRuntimeException {
+        var = context.eval(var);
+        if (var != null) {
+            String v = String.valueOf(var);
+            v = LangUtil.get(v);
+            pageContext.getOut().write(v);
+        } else if (Default != null) {
+            pageContext.getOut().write(Default);
+        }
+        return SKIP_BODY;
+    }
 
-	public String getVar() {
-		return var;
-	}
+    public String getVar() {
+        return var;
+    }
 
-	public void setVar(String var) {
-		this.var = var;
-	}
+    public void setVar(String var) {
+        this.var = var;
+    }
 
-	public String getDefault() {
-		return Default;
-	}
+    public String getDefault() {
+        return Default;
+    }
 
-	public void setDefault(String default1) {
-		Default = default1;
-	}
+    public void setDefault(String default1) {
+        Default = default1;
+    }
 
-	@Override
-	public List<TagAttr> getTagAttrs() {
-		List<TagAttr> list = new ArrayList<>();
-		list.add(new TagAttr("var"));
-		list.add(new TagAttr("default"));
-		return list;
-	}
+    @Override
+    public List<TagAttr> getTagAttrs() {
+        List<TagAttr> list = new ArrayList<>();
+        list.add(new TagAttr("var"));
+        list.add(new TagAttr("default"));
+        return list;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "@{Framework.Tag.ParamTagName}";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "@{Framework.Tag.ParamTagName}";
+    }
 
-	@Override
-	public String getDescription() {
-		return "";
-	}
+    @Override
+    public String getDescription() {
+        return "";
+    }
 
-	@Override
-	public String getPluginID() {
-		return FrameworkPlugin.ID;
-	}
+    @Override
+    public String getPluginID() {
+        return FrameworkPlugin.ID;
+    }
 
 }

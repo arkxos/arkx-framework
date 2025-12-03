@@ -10,6 +10,6 @@ import io.arkx.framework.commons.collection.DataRow;
  */
 public interface IEntityFactory<T> {
 
-	T BuildEntity(DataRow dataRow);
+    T BuildEntity(DataRow dataRow);
 
 }

@@ -61,8 +61,8 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 /**
  * <p>
- * Represents an operator that obtains the value of another value's property. This is a
- * specialization of ArraySuffix - a.b is equivalent to a["b"]
+ * Represents an operator that obtains the value of another value's property.
+ * This is a specialization of ArraySuffix - a.b is equivalent to a["b"]
  *
  * @author Nathan Abramson - Art Technology Group
  * @author Shawn Bayern
@@ -71,60 +71,60 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 public class PropertySuffix extends ArraySuffix {
 
-	// -------------------------------------
-	// Properties
-	// -------------------------------------
-	// property name
+    // -------------------------------------
+    // Properties
+    // -------------------------------------
+    // property name
 
-	String mName;
+    String mName;
 
-	public String getName() {
-		return mName;
-	}
+    public String getName() {
+        return mName;
+    }
 
-	public void setName(String pName) {
-		mName = pName;
-	}
+    public void setName(String pName) {
+        mName = pName;
+    }
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public PropertySuffix(String pName) {
-		super(null);
-		mName = pName;
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public PropertySuffix(String pName) {
+        super(null);
+        mName = pName;
+    }
 
-	// -------------------------------------
-	/**
-	 * Gets the value of the index
-	 **/
-	@Override
-	Object evaluateIndex(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-			throws ExpressionException {
-		return mName;
-	}
+    // -------------------------------------
+    /**
+     * Gets the value of the index
+     **/
+    @Override
+    Object evaluateIndex(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
+        return mName;
+    }
 
-	// -------------------------------------
-	/**
-	 * Returns the operator symbol
-	 **/
-	@Override
-	String getOperatorSymbol() {
-		return ".";
-	}
+    // -------------------------------------
+    /**
+     * Returns the operator symbol
+     **/
+    @Override
+    String getOperatorSymbol() {
+        return ".";
+    }
 
-	// -------------------------------------
-	// ValueSuffix methods
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		return "." + StringLiteral.toIdentifierToken(mName);
-	}
+    // -------------------------------------
+    // ValueSuffix methods
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        return "." + StringLiteral.toIdentifierToken(mName);
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

@@ -10,20 +10,20 @@ import io.arkx.framework.commons.util.ObjectUtil;
  */
 public class RWSpliting implements IApplicationConfigItem {
 
-	public static final String ID = "RWSpliting";
+    public static final String ID = "RWSpliting";
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "Read/Write Spliting Mode";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "Read/Write Spliting Mode";
+    }
 
-	public static boolean getValue() {
-		return ObjectUtil.isTrue(Config.getValue("App." + ID));
-	}
+    public static boolean getValue() {
+        return ObjectUtil.isTrue(Config.getValue("App." + ID));
+    }
 
 }

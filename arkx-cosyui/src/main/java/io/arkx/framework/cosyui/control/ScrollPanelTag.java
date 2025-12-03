@@ -18,116 +18,115 @@ import io.arkx.framework.cosyui.util.TagUtil;
  */
 public class ScrollPanelTag extends ArkTag {
 
-	private String id;
+    private String id;
 
-	private String targetId;
+    private String targetId;
 
-	private String theme;
+    private String theme;
 
-	private String overflow;// 支持三种值为auto|y|x
+    private String overflow;// 支持三种值为auto|y|x
 
-	private boolean adaptive;
+    private boolean adaptive;
 
-	public static final Pattern PId = Pattern.compile("^\\s*<div[^<>]+id\\=[\'\"]([\\w-]+)[\'\"]",
-			Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    public static final Pattern PId = Pattern.compile("^\\s*<div[^<>]+id\\=[\'\"]([\\w-]+)[\'\"]",
+            Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
-	@Override
-	public String getTagName() {
-		return "scrollpanel";
-	}
+    @Override
+    public String getTagName() {
+        return "scrollpanel";
+    }
 
-	@Override
-	public int doStartTag() throws TemplateRuntimeException {
-		return EVAL_BODY_BUFFERED;
-	}
+    @Override
+    public int doStartTag() throws TemplateRuntimeException {
+        return EVAL_BODY_BUFFERED;
+    }
 
-	@Override
-	public int doAfterBody() throws TemplateRuntimeException {
-		String content = getBody();
-		Matcher matcher = PId.matcher(content);
-		targetId = null;
-		if (matcher.find() && matcher.group(1) != null) {
-			targetId = matcher.group(1);
-			if (ObjectUtil.empty(id)) {
-				id = targetId + "_scrollpanel";
-			}
-		}
-		else {
-			if (ObjectUtil.empty(id)) {
-				targetId = TagUtil.getTagID(pageContext, "ScrollPanel");
-				id = targetId + "_scrollpanel";
-			}
-			content = content.replaceFirst("^\\s*<div\\b", "<div id=\"" + targetId + "\" ");
-		}
+    @Override
+    public int doAfterBody() throws TemplateRuntimeException {
+        String content = getBody();
+        Matcher matcher = PId.matcher(content);
+        targetId = null;
+        if (matcher.find() && matcher.group(1) != null) {
+            targetId = matcher.group(1);
+            if (ObjectUtil.empty(id)) {
+                id = targetId + "_scrollpanel";
+            }
+        } else {
+            if (ObjectUtil.empty(id)) {
+                targetId = TagUtil.getTagID(pageContext, "ScrollPanel");
+                id = targetId + "_scrollpanel";
+            }
+            content = content.replaceFirst("^\\s*<div\\b", "<div id=\"" + targetId + "\" ");
+        }
 
-		pageContext.getOut().write(content);
+        pageContext.getOut().write(content);
 
-		pageContext.getOut().write("<script>");
-		pageContext.getOut().write("Ark.Page.onLoad(function(){");
-		pageContext.getOut().write("if(Ark.ScrollPanel)");
-		pageContext.getOut().write(" new Ark.ScrollPanel({");
-		if (ObjectUtil.notEmpty(overflow)) {
-			pageContext.getOut().write("  overflow:'" + overflow + "',");
-		}
-		pageContext.getOut().write("  target:'" + targetId + "'");
-		pageContext.getOut().write(" });");
-		pageContext.getOut().write("});");
-		pageContext.getOut().write("</script>");
-		return EVAL_PAGE;
-	}
+        pageContext.getOut().write("<script>");
+        pageContext.getOut().write("Ark.Page.onLoad(function(){");
+        pageContext.getOut().write("if(Ark.ScrollPanel)");
+        pageContext.getOut().write(" new Ark.ScrollPanel({");
+        if (ObjectUtil.notEmpty(overflow)) {
+            pageContext.getOut().write("  overflow:'" + overflow + "',");
+        }
+        pageContext.getOut().write("  target:'" + targetId + "'");
+        pageContext.getOut().write(" });");
+        pageContext.getOut().write("});");
+        pageContext.getOut().write("</script>");
+        return EVAL_PAGE;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getTheme() {
-		return theme;
-	}
+    public String getTheme() {
+        return theme;
+    }
 
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 
-	public String getOverflow() {
-		return overflow;
-	}
+    public String getOverflow() {
+        return overflow;
+    }
 
-	public void setOverflow(String overflow) {
-		this.overflow = overflow;
-	}
+    public void setOverflow(String overflow) {
+        this.overflow = overflow;
+    }
 
-	public boolean isAdaptive() {
-		return adaptive;
-	}
+    public boolean isAdaptive() {
+        return adaptive;
+    }
 
-	public void setAdaptive(boolean adaptive) {
-		this.adaptive = adaptive;
-	}
+    public void setAdaptive(boolean adaptive) {
+        this.adaptive = adaptive;
+    }
 
-	@Override
-	public List<TagAttr> getTagAttrs() {
-		List<TagAttr> list = new ArrayList<TagAttr>();
-		list.add(new TagAttr("id", true));
-		list.add(new TagAttr("adaptive", TagAttr.BOOL_OPTIONS));
-		list.add(new TagAttr("overflow"));
-		list.add(new TagAttr("targetID"));
-		list.add(new TagAttr("theme"));
-		return list;
-	}
+    @Override
+    public List<TagAttr> getTagAttrs() {
+        List<TagAttr> list = new ArrayList<TagAttr>();
+        list.add(new TagAttr("id", true));
+        list.add(new TagAttr("adaptive", TagAttr.BOOL_OPTIONS));
+        list.add(new TagAttr("overflow"));
+        list.add(new TagAttr("targetID"));
+        list.add(new TagAttr("theme"));
+        return list;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "@{Framework.UIControl.ScrollPanelTagName}";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "@{Framework.UIControl.ScrollPanelTagName}";
+    }
 
-	@Override
-	public String getDescription() {
-		return "";
-	}
+    @Override
+    public String getDescription() {
+        return "";
+    }
 
-	@Override
-	public String getPluginID() {
-		return FrameworkPlugin.ID;
-	}
+    @Override
+    public String getPluginID() {
+        return FrameworkPlugin.ID;
+    }
 
 }

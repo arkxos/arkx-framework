@@ -8,20 +8,20 @@ import io.arkx.framework.Config;
  */
 public class DefaultLanguage implements IApplicationConfigItem {
 
-	public static final String ID = "DefaultLanguage";
+    public static final String ID = "DefaultLanguage";
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "Backend default language";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "Backend default language";
+    }
 
-	public static String getValue() {
-		return Config.getValue("App." + ID);
-	}
+    public static String getValue() {
+        return Config.getValue("App." + ID);
+    }
 
 }

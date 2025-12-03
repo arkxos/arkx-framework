@@ -16,16 +16,16 @@ import io.arkx.framework.data.db.core.provider.query.TableDataQueryProvider;
 
 public class OceanbaseTableDataQueryProvider extends DefaultTableDataQueryProvider implements TableDataQueryProvider {
 
-	private final ProductTypeEnum dialect;
+    private final ProductTypeEnum dialect;
 
-	public OceanbaseTableDataQueryProvider(ProductFactoryProvider factoryProvider, Boolean isMySqlMode) {
-		super(factoryProvider);
-		this.dialect = isMySqlMode ? ProductTypeEnum.MYSQL : ProductTypeEnum.ORACLE;
-	}
+    public OceanbaseTableDataQueryProvider(ProductFactoryProvider factoryProvider, Boolean isMySqlMode) {
+        super(factoryProvider);
+        this.dialect = isMySqlMode ? ProductTypeEnum.MYSQL : ProductTypeEnum.ORACLE;
+    }
 
-	@Override
-	protected String quoteName(String name) {
-		return this.dialect.quoteName(name);
-	}
+    @Override
+    protected String quoteName(String name) {
+        return this.dialect.quoteName(name);
+    }
 
 }

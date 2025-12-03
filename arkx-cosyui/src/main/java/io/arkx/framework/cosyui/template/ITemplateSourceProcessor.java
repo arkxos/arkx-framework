@@ -9,6 +9,6 @@ import io.arkx.framework.extend.IExtendItem;
  */
 public interface ITemplateSourceProcessor extends IExtendItem {
 
-	public void process(TemplateParser parser);
+    public void process(TemplateParser parser);
 
 }

@@ -9,8 +9,8 @@ package io.arkx.framework.avatarmq.spring;
  */
 public class AvatarMQServerStartup {
 
-	public static void main(String[] args) {
-		new AvatarMQContainer().start();
-	}
+    public static void main(String[] args) {
+        new AvatarMQContainer().start();
+    }
 
 }

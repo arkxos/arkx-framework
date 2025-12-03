@@ -6,9 +6,9 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.utils.TimeStampUt
 
 public class LocalDateConverter implements IValueConverter<LocalDate, Integer> {
 
-	@Override
-	public Integer convert(final LocalDate date) {
-		return TimeStampUtils.toPgDays(date);
-	}
+    @Override
+    public Integer convert(final LocalDate date) {
+        return TimeStampUtils.toPgDays(date);
+    }
 
 }

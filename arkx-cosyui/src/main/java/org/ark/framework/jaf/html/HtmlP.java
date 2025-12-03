@@ -8,9 +8,9 @@ package org.ark.framework.jaf.html;
  */
 public class HtmlP extends HtmlElement {
 
-	public HtmlP() {
-		this.ElementType = "P";
-		this.TagName = "p";
-	}
+    public HtmlP() {
+        this.ElementType = "P";
+        this.TagName = "p";
+    }
 
 }

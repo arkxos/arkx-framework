@@ -27,31 +27,30 @@ import jakarta.annotation.Resource;
 @SpringBootTest
 class UserMapperWithoutLockerTest {
 
-	@Resource
-	private UserMapper userMapper;
+    @Resource
+    private UserMapper userMapper;
 
-	@Resource
-	private DataSource dataSource;
+    @Resource
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-		Insert initUser = insertInto("smart_user").columns("id", "name", "password", "version")
-			.values(100L, "w.dehai", "123456", 100L)
-			.build();
-		new DbSetup(new DataSourceDestination(dataSource), initUser).launch();
-	}
+    @BeforeEach
+    void init() {
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+        Insert initUser = insertInto("smart_user").columns("id", "name", "password", "version")
+                .values(100L, "w.dehai", "123456", 100L).build();
+        new DbSetup(new DataSourceDestination(dataSource), initUser).launch();
+    }
 
-	/**
-	 * 不启用插件
-	 */
-	@Test
-	void updateUserWithLockerTest() {
-		User user = userMapper.selectById(100L);
-		ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
-		long result = userMapper.updateUserWithLocker(user);
-		assertEquals(1, result);
-		assertFalse(getMessage(appender, 0).contains(LOCKER));
-	}
+    /**
+     * 不启用插件
+     */
+    @Test
+    void updateUserWithLockerTest() {
+        User user = userMapper.selectById(100L);
+        ListAppender<ILoggingEvent> appender = create(SqlPrinter.class);
+        long result = userMapper.updateUserWithLocker(user);
+        assertEquals(1, result);
+        assertFalse(getMessage(appender, 0).contains(LOCKER));
+    }
 
 }

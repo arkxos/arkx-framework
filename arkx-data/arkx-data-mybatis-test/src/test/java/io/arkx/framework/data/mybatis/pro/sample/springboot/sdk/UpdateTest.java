@@ -25,44 +25,44 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class UpdateTest {
 
-	@Autowired
-	private UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-		Insert insert = insertInto("smart_user").columns("name", "status").values("w.dehai", 1).build();
-		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-	}
+    @BeforeEach
+    void init() {
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+        Insert insert = insertInto("smart_user").columns("name", "status").values("w.dehai", 1).build();
+        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+    }
 
-	@Test
-	void updateByIdTest() {
-		User user = userMapper.selectById(1L);
-		user.setName("Jaedong");
-		user.setVersion(1L);
-		user.setPassword(null);
-		userMapper.updateById(user);
+    @Test
+    void updateByIdTest() {
+        User user = userMapper.selectById(1L);
+        user.setName("Jaedong");
+        user.setVersion(1L);
+        user.setPassword(null);
+        userMapper.updateById(user);
 
-		User result = userMapper.selectById(1L);
-		assertEquals("Jaedong", result.getName());
-		assertNull(result.getPassword());
-	}
+        User result = userMapper.selectById(1L);
+        assertEquals("Jaedong", result.getName());
+        assertNull(result.getPassword());
+    }
 
-	@Test
-	void updateByIdExcludeNull() {
-		User user = userMapper.selectById(1L);
-		user.setName("Jaedong");
-		user.setVersion(1L);
-		user.setPassword(null);
-		int cols = userMapper.updateByIdExcludeNull(user);
-		assertEquals(1, cols);
+    @Test
+    void updateByIdExcludeNull() {
+        User user = userMapper.selectById(1L);
+        user.setName("Jaedong");
+        user.setVersion(1L);
+        user.setPassword(null);
+        int cols = userMapper.updateByIdExcludeNull(user);
+        assertEquals(1, cols);
 
-		User result = userMapper.selectById(1L);
-		assertEquals("Jaedong", result.getName());
-		assertEquals("123456", result.getPassword());
-	}
+        User result = userMapper.selectById(1L);
+        assertEquals("Jaedong", result.getName());
+        assertEquals("123456", result.getPassword());
+    }
 
 }

@@ -10,14 +10,14 @@ import io.arkx.framework.data.fasttable.FastColumn;
  */
 public interface IFastTable {
 
-	String getTableName();
+    String getTableName();
 
-	int getRowCount();
+    int getRowCount();
 
-	int getColumnCount();
+    int getColumnCount();
 
-	FastColumn[] getLightningColumns();
+    FastColumn[] getLightningColumns();
 
-	FastColumn getFastColumn(String columnName);
+    FastColumn getFastColumn(String columnName);
 
 }

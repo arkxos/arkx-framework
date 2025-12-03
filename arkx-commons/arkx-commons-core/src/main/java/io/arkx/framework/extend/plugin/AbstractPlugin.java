@@ -9,27 +9,27 @@ package io.arkx.framework.extend.plugin;
  */
 public abstract class AbstractPlugin implements IPlugin {
 
-	private PluginConfig config;
+    private PluginConfig config;
 
-	@Override
-	public void install() throws PluginException {
-	}
+    @Override
+    public void install() throws PluginException {
+    }
 
-	@Override
-	public void uninstall() throws PluginException {
-	}
+    @Override
+    public void uninstall() throws PluginException {
+    }
 
-	@Override
-	public PluginConfig getConfig() {
-		return config;
-	}
+    @Override
+    public PluginConfig getConfig() {
+        return config;
+    }
 
-	public void setConfig(PluginConfig config) {
-		this.config = config;
-	}
+    public void setConfig(PluginConfig config) {
+        this.config = config;
+    }
 
-	@Override
-	public void destory() {
-	}
+    @Override
+    public void destory() {
+    }
 
 }

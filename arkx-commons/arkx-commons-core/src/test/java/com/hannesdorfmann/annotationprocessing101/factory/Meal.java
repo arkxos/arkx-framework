@@ -21,6 +21,6 @@ package com.hannesdorfmann.annotationprocessing101.factory;
  */
 public interface Meal {
 
-	public float getPrice();
+    public float getPrice();
 
 }

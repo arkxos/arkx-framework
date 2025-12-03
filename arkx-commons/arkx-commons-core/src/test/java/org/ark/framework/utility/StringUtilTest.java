@@ -14,21 +14,21 @@ import io.arkx.framework.commons.util.StringUtil;
  */
 public class StringUtilTest {
 
-	@Test
-	public void leftPad() {
+    @Test
+    public void leftPad() {
 
-		String str = "1";
-		String result = StringUtil.leftPad(str, '0', 4);
+        String str = "1";
+        String result = StringUtil.leftPad(str, '0', 4);
 
-		assertEquals("0001", result);
-	}
+        assertEquals("0001", result);
+    }
 
-	@Test
-	public void splitToMapx() {
-		Mapx<String, String> params = StringUtil.splitToMapx("name=darkness&sex=man", "&", "=");
-		assertEquals(2, params.size());
-		assertEquals(params.get("name"), "darkness");
-		assertEquals(params.get("sex"), "man");
-	}
+    @Test
+    public void splitToMapx() {
+        Mapx<String, String> params = StringUtil.splitToMapx("name=darkness&sex=man", "&", "=");
+        assertEquals(2, params.size());
+        assertEquals(params.get("name"), "darkness");
+        assertEquals(params.get("sex"), "man");
+    }
 
 }

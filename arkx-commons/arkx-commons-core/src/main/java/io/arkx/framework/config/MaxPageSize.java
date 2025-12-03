@@ -9,33 +9,32 @@ import io.arkx.framework.commons.util.NumberUtil;
  */
 public class MaxPageSize implements IApplicationConfigItem {
 
-	public static final String ID = "MaxPageSize";
+    public static final String ID = "MaxPageSize";
 
-	public static final int DEFAULT = 1_0000;
+    public static final int DEFAULT = 1_0000;
 
-	private static int max = -1;
+    private static int max = -1;
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "Maxiumn page size";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "Maxiumn page size";
+    }
 
-	public static int getValue() {
-		if (max < 0) {
-			String str = Config.getValue("App." + ID);
-			if (NumberUtil.isInt(str)) {
-				max = Integer.parseInt(str);
-			}
-			else {
-				max = DEFAULT;
-			}
-		}
-		return max;
-	}
+    public static int getValue() {
+        if (max < 0) {
+            String str = Config.getValue("App." + ID);
+            if (NumberUtil.isInt(str)) {
+                max = Integer.parseInt(str);
+            } else {
+                max = DEFAULT;
+            }
+        }
+        return max;
+    }
 
 }

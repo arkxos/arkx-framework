@@ -14,25 +14,25 @@ import io.arkx.framework.avatarmq.core.MessageSystemConfig;
  */
 public class AckPushMessageController implements Callable<Void> {
 
-	private volatile boolean stoped = false;
+    private volatile boolean stoped = false;
 
-	public Void call() {
-		AckMessageCache ref = AckMessageCache.getAckMessageCache();
-		int timeout = MessageSystemConfig.AckMessageControllerTimeOutValue;
-		while (!stoped) {
-			if (ref.hold(timeout)) {
-				ref.commit();
-			}
-		}
-		return null;
-	}
+    public Void call() {
+        AckMessageCache ref = AckMessageCache.getAckMessageCache();
+        int timeout = MessageSystemConfig.AckMessageControllerTimeOutValue;
+        while (!stoped) {
+            if (ref.hold(timeout)) {
+                ref.commit();
+            }
+        }
+        return null;
+    }
 
-	public void stop() {
-		stoped = true;
-	}
+    public void stop() {
+        stoped = true;
+    }
 
-	public boolean isStoped() {
-		return stoped;
-	}
+    public boolean isStoped() {
+        return stoped;
+    }
 
 }

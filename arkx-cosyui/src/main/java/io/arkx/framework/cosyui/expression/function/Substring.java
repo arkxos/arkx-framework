@@ -10,39 +10,38 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  */
 public class Substring extends AbstractFunction {
 
-	@Override
-	public Object execute(IVariableResolver resolver, Object... args) {
-		String input = (String) args[0];
-		Integer start = (Integer) args[1];
-		Integer end = null;
-		if (args.length > 2) {
-			end = (Integer) args[2];
-		}
-		if (input == null) {
-			input = "";
-		}
-		input = StringUtil.htmlDecode(input); // 先解码再截取字符串
-		if (end != null) {
-			return input.substring(start, end);
-		}
-		else {
-			return input.substring(start);
-		}
-	}
+    @Override
+    public Object execute(IVariableResolver resolver, Object... args) {
+        String input = (String) args[0];
+        Integer start = (Integer) args[1];
+        Integer end = null;
+        if (args.length > 2) {
+            end = (Integer) args[2];
+        }
+        if (input == null) {
+            input = "";
+        }
+        input = StringUtil.htmlDecode(input); // 先解码再截取字符串
+        if (end != null) {
+            return input.substring(start, end);
+        } else {
+            return input.substring(start);
+        }
+    }
 
-	@Override
-	public String getFunctionPrefix() {
-		return "";
-	}
+    @Override
+    public String getFunctionPrefix() {
+        return "";
+    }
 
-	@Override
-	public String getFunctionName() {
-		return "substring";
-	}
+    @Override
+    public String getFunctionName() {
+        return "substring";
+    }
 
-	@Override
-	public Class<?>[] getArgumentTypes() {
-		return AbstractFunction.Arg_String_Int_Int;
-	}
+    @Override
+    public Class<?>[] getArgumentTypes() {
+        return AbstractFunction.Arg_String_Int_Int;
+    }
 
 }

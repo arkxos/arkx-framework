@@ -8,10 +8,10 @@ import io.arkx.framework.core.FrameworkException;
  */
 public class RegexMatchFailedException extends FrameworkException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public RegexMatchFailedException(String message) {
-		super(message);
-	}
+    public RegexMatchFailedException(String message) {
+        super(message);
+    }
 
 }

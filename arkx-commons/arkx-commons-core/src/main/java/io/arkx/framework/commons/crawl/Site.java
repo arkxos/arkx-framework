@@ -10,25 +10,25 @@ import java.util.List;
  */
 public class Site {
 
-	private String domain;
+    private String domain;
 
-	private List<String> startUrls;
+    private List<String> startUrls;
 
-	public Site(String domain) {
-		this.domain = domain;
-		this.startUrls = new ArrayList<>();
-	}
+    public Site(String domain) {
+        this.domain = domain;
+        this.startUrls = new ArrayList<>();
+    }
 
-	public String domain() {
-		return domain;
-	}
+    public String domain() {
+        return domain;
+    }
 
-	public void addStartUrl(String startUrl) {
-		this.startUrls.add(startUrl);
-	}
+    public void addStartUrl(String startUrl) {
+        this.startUrls.add(startUrl);
+    }
 
-	public List<String> startUrls() {
-		return this.startUrls;
-	}
+    public List<String> startUrls() {
+        return this.startUrls;
+    }
 
 }

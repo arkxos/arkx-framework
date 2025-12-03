@@ -6,10 +6,10 @@ package io.arkx.framework.data.db.exception;
  */
 public class RollbackException extends DatabaseException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public RollbackException(Exception e) {
-		super(e);
-	}
+    public RollbackException(Exception e) {
+        super(e);
+    }
 
 }

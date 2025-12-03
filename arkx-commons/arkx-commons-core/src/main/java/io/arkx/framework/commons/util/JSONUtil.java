@@ -15,38 +15,37 @@ import io.arkx.framework.json.JSONObject;
  */
 public class JSONUtil {
 
-	public static Mapx<String, Object> toMap(String json) {
-		Object obj = JSON.parse(json);
-		if (!(obj instanceof JSONObject)) {
-			throw new RuntimeException("不是JSON对象:" + json);
-		}
-		JSONObject jo = (JSONObject) obj;
-		return toMap(jo);
-	}
+    public static Mapx<String, Object> toMap(String json) {
+        Object obj = JSON.parse(json);
+        if (!(obj instanceof JSONObject)) {
+            throw new RuntimeException("不是JSON对象:" + json);
+        }
+        JSONObject jo = (JSONObject) obj;
+        return toMap(jo);
+    }
 
-	private static Mapx<String, Object> toMap(JSONObject jo) {
-		Mapx<String, Object> map = new Mapx();
-		for (Object k : jo.keySet()) {
-			Object v = jo.get(k);
-			String key = String.valueOf(k);
-			if ((v instanceof JSONArray)) {
-				v = ((JSONArray) v).toArray();
-			}
-			else if ((v instanceof JSONObject)) {
-				v = toMap((JSONObject) v);
-			}
-			map.put(key, v);
-		}
-		return map;
-	}
+    private static Mapx<String, Object> toMap(JSONObject jo) {
+        Mapx<String, Object> map = new Mapx();
+        for (Object k : jo.keySet()) {
+            Object v = jo.get(k);
+            String key = String.valueOf(k);
+            if ((v instanceof JSONArray)) {
+                v = ((JSONArray) v).toArray();
+            } else if ((v instanceof JSONObject)) {
+                v = toMap((JSONObject) v);
+            }
+            map.put(key, v);
+        }
+        return map;
+    }
 
-	public static String toJSON(Map<?, ?> map) {
-		return JSON.toJSONString(map);
-	}
+    public static String toJSON(Map<?, ?> map) {
+        return JSON.toJSONString(map);
+    }
 
-	public static <T> T toPOJO(String json, Class<T> clazz) throws Exception {
-		Object obj = JSON.parseBean(json, clazz);
-		return (T) obj;
-	}
+    public static <T> T toPOJO(String json, Class<T> clazz) throws Exception {
+        Object obj = JSON.parseBean(json, clazz);
+        return (T) obj;
+    }
 
 }

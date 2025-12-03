@@ -11,14 +11,14 @@ import io.arkx.framework.extend.IExtendItem;
  */
 public abstract class AbstractTaskManager implements IExtendItem {
 
-	public abstract Mapx<String, String> getUsableTasks();
+    public abstract Mapx<String, String> getUsableTasks();
 
-	public abstract Mapx<String, String> getConfigEnableTasks();
+    public abstract Mapx<String, String> getConfigEnableTasks();
 
-	public abstract String getTaskCronExpression(String paramString);
+    public abstract String getTaskCronExpression(String paramString);
 
-	public abstract void execute(String paramString);
+    public abstract void execute(String paramString);
 
-	public abstract boolean isRunning(String paramString);
+    public abstract boolean isRunning(String paramString);
 
 }

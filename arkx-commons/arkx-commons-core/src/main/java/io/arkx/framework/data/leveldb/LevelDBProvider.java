@@ -25,116 +25,111 @@ import com.sun.star.uno.RuntimeException;
  */
 public class LevelDBProvider {
 
-	private static LevelDBProvider instance;
+    private static LevelDBProvider instance;
 
-	private Map<String, DB> databases;
+    private Map<String, DB> databases;
 
-	public static synchronized LevelDBProvider instance() {
-		if (instance == null) {
-			instance = new LevelDBProvider();
-		}
+    public static synchronized LevelDBProvider instance() {
+        if (instance == null) {
+            instance = new LevelDBProvider();
+        }
 
-		return instance;
-	}
+        return instance;
+    }
 
-	public void close(String aDirectoryPath) {
-		synchronized (this.databases) {
-			DB db = this.databases.get(aDirectoryPath);
+    public void close(String aDirectoryPath) {
+        synchronized (this.databases) {
+            DB db = this.databases.get(aDirectoryPath);
 
-			if (db != null) {
-				this.databases.remove(aDirectoryPath);
+            if (db != null) {
+                this.databases.remove(aDirectoryPath);
 
-				try {
-					db.close();
-				}
-				catch (IOException e) {
-					throw new IllegalStateException("Cannot completely close LevelDB database: " + aDirectoryPath
-							+ " because: " + e.getMessage(), e);
-				}
-			}
-		}
-	}
+                try {
+                    db.close();
+                } catch (IOException e) {
+                    throw new IllegalStateException("Cannot completely close LevelDB database: " + aDirectoryPath
+                            + " because: " + e.getMessage(), e);
+                }
+            }
+        }
+    }
 
-	public void closeAll() {
-		List<String> directoryPaths = new ArrayList<String>(this.databases.keySet());
+    public void closeAll() {
+        List<String> directoryPaths = new ArrayList<String>(this.databases.keySet());
 
-		for (String directoryPath : directoryPaths) {
-			this.close(directoryPath);
-		}
-	}
+        for (String directoryPath : directoryPaths) {
+            this.close(directoryPath);
+        }
+    }
 
-	public DB databaseFrom(String aDirectoryPath) {
-		DB db = null;
+    public DB databaseFrom(String aDirectoryPath) {
+        DB db = null;
 
-		synchronized (this.databases) {
-			db = this.databases.get(aDirectoryPath);
+        synchronized (this.databases) {
+            db = this.databases.get(aDirectoryPath);
 
-			if (db == null) {
-				db = this.openDatabase(aDirectoryPath);
+            if (db == null) {
+                db = this.openDatabase(aDirectoryPath);
 
-				this.databases.put(aDirectoryPath, db);
-			}
-		}
+                this.databases.put(aDirectoryPath, db);
+            }
+        }
 
-		return db;
-	}
+        return db;
+    }
 
-	/**
-	 * 净化数据库
-	 *
-	 * @author Darkness
-	 * @date 2014-5-8 下午6:39:05
-	 * @version V1.0
-	 */
-	public void purge(DB aDatabase) {
+    /**
+     * 净化数据库
+     *
+     * @author Darkness
+     * @date 2014-5-8 下午6:39:05
+     * @version V1.0
+     */
+    public void purge(DB aDatabase) {
 
-		DBIterator iterator = aDatabase.iterator();
+        DBIterator iterator = aDatabase.iterator();
 
-		try {
-			iterator.seekToFirst();
+        try {
+            iterator.seekToFirst();
 
-			while (iterator.hasNext()) {
-				Entry<byte[], byte[]> entry = iterator.next();
+            while (iterator.hasNext()) {
+                Entry<byte[], byte[]> entry = iterator.next();
 
-				aDatabase.delete(entry.getKey());
-			}
-		}
-		catch (Throwable t) {
-			throw new RuntimeException("Cannot purge LevelDB database: because: " + t.getMessage(), t);
-		}
-		finally {
-			try {
-				iterator.close();
-			}
-			catch (Throwable t) {
-				// ignore
-			}
-		}
-	}
+                aDatabase.delete(entry.getKey());
+            }
+        } catch (Throwable t) {
+            throw new RuntimeException("Cannot purge LevelDB database: because: " + t.getMessage(), t);
+        } finally {
+            try {
+                iterator.close();
+            } catch (Throwable t) {
+                // ignore
+            }
+        }
+    }
 
-	private LevelDBProvider() {
-		super();
+    private LevelDBProvider() {
+        super();
 
-		this.databases = new HashMap<String, DB>();
-	}
+        this.databases = new HashMap<String, DB>();
+    }
 
-	private DB openDatabase(String aDirectoryPath) {
+    private DB openDatabase(String aDirectoryPath) {
 
-		try {
-			DBFactory factory = new Iq80DBFactory();
+        try {
+            DBFactory factory = new Iq80DBFactory();
 
-			Options options = new Options();
+            Options options = new Options();
 
-			options.createIfMissing(true);
+            options.createIfMissing(true);
 
-			DB db = factory.open(new File(aDirectoryPath), options);
+            DB db = factory.open(new File(aDirectoryPath), options);
 
-			return db;
-		}
-		catch (Throwable t) {
-			throw new IllegalStateException(
-					"Cannot open LevelDB database: " + aDirectoryPath + " because: " + t.getMessage(), t);
-		}
-	}
+            return db;
+        } catch (Throwable t) {
+            throw new IllegalStateException(
+                    "Cannot open LevelDB database: " + aDirectoryPath + " because: " + t.getMessage(), t);
+        }
+    }
 
 }

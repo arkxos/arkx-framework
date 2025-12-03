@@ -15,19 +15,19 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 public class XssStringJsonSerializer extends JsonSerializer<String> {
 
-	@Override
-	public Class<String> handledType() {
-		return String.class;
-	}
+    @Override
+    public Class<String> handledType() {
+        return String.class;
+    }
 
-	@Override
-	public void serialize(String value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-			throws IOException {
-		if (value != null) {
-			String encodedValue = StringEscapeUtils.escapeHtml4(value);
-			encodedValue = StringUtil.stripXss(encodedValue).trim();
-			jsonGenerator.writeString(encodedValue);
-		}
-	}
+    @Override
+    public void serialize(String value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+            throws IOException {
+        if (value != null) {
+            String encodedValue = StringEscapeUtils.escapeHtml4(value);
+            encodedValue = StringUtil.stripXss(encodedValue).trim();
+            jsonGenerator.writeString(encodedValue);
+        }
+    }
 
 }

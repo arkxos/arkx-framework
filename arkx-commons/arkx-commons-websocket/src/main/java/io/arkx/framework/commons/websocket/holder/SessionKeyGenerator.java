@@ -13,11 +13,13 @@ import org.springframework.web.socket.WebSocketSession;
  */
 public interface SessionKeyGenerator {
 
-	/**
-	 * 获取当前 WebSocket 会话的唯一标识。
-	 * @param webSocketSession 当前的 WebSocket 会话对象。
-	 * @return 返回会话的唯一标识对象。
-	 */
-	Object sessionKey(WebSocketSession webSocketSession);
+    /**
+     * 获取当前 WebSocket 会话的唯一标识。
+     *
+     * @param webSocketSession
+     *            当前的 WebSocket 会话对象。
+     * @return 返回会话的唯一标识对象。
+     */
+    Object sessionKey(WebSocketSession webSocketSession);
 
 }

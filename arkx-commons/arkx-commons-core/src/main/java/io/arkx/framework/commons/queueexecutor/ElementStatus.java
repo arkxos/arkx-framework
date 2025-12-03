@@ -7,11 +7,11 @@ package io.arkx.framework.commons.queueexecutor;
  */
 public enum ElementStatus {
 
-	New, // 新建
-	Waiting, // 等待
-	Running, // 运行中
-	Stop, // 停止
-	Finished, // 完成
-	Error// 出错
+    New, // 新建
+    Waiting, // 等待
+    Running, // 运行中
+    Stop, // 停止
+    Finished, // 完成
+    Error// 出错
 
 }

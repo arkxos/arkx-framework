@@ -11,38 +11,37 @@ import io.arkx.framework.commons.util.ObjectUtil;
  */
 public class IntCastor extends AbstractInnerCastor {
 
-	private static IntCastor singleton = new IntCastor();
+    private static IntCastor singleton = new IntCastor();
 
-	public static IntCastor getInstance() {
-		return singleton;
-	}
+    public static IntCastor getInstance() {
+        return singleton;
+    }
 
-	@Override
-	public boolean canCast(Class<?> type) {
-		return (Integer.class == type) || (Integer.TYPE == type);
-	}
+    @Override
+    public boolean canCast(Class<?> type) {
+        return (Integer.class == type) || (Integer.TYPE == type);
+    }
 
-	@Override
-	public Object cast(Object obj, Class<?> type) {
-		if (obj == null) {
-			return 0;
-		}
+    @Override
+    public Object cast(Object obj, Class<?> type) {
+        if (obj == null) {
+            return 0;
+        }
 
-		if (obj instanceof Number)
-			return ((Number) obj).intValue();
+        if (obj instanceof Number)
+            return ((Number) obj).intValue();
 
-		try {
-			String str = obj.toString();
-			if (ObjectUtil.empty(str)) {
-				return 0;
-			}
-			return Integer.parseInt(obj.toString());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            String str = obj.toString();
+            if (ObjectUtil.empty(str)) {
+                return 0;
+            }
+            return Integer.parseInt(obj.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
 }

@@ -12,15 +12,15 @@ import java.io.RandomAccessFile;
 @Deprecated
 public class BufferedRandomAccessFile extends RandomAccessFile {
 
-	private String fileName;
+    private String fileName;
 
-	public BufferedRandomAccessFile(String fileName, String mode) throws IOException {
-		super(fileName, mode);
-		this.fileName = fileName;
-	}
+    public BufferedRandomAccessFile(String fileName, String mode) throws IOException {
+        super(fileName, mode);
+        this.fileName = fileName;
+    }
 
-	public void delete() {
-		FileUtil.delete(this.fileName);
-	}
+    public void delete() {
+        FileUtil.delete(this.fileName);
+    }
 
 }

@@ -22,22 +22,21 @@ import cn.hutool.core.text.CharSequenceUtil;
  */
 public class LocalDateDeserializer extends JsonDeserializer<LocalDate> {
 
-	@Override
-	public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-		String name = PropertyAliasCache.getFieldAliasMap(p);
-		Class<?> propertyType = BeanUtils.findPropertyType(name, p.getCurrentValue().getClass());
-		if (LocalDate.class.isAssignableFrom(propertyType)) {
-			String dateStr = p.getValueAsString();
-			if (CharSequenceUtil.isNotBlank(dateStr)) {
-				try {
-					return LocalDateTimeUtil.parseDate(dateStr, DatePattern.NORM_DATE_FORMATTER);
-				}
-				catch (Exception e) {
-					throw new IllegalArgumentException("日期格式错误, 当前日期为: " + dateStr + ", 需要yyyy-MM-dd格式");
-				}
-			}
-		}
-		return null;
-	}
+    @Override
+    public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        String name = PropertyAliasCache.getFieldAliasMap(p);
+        Class<?> propertyType = BeanUtils.findPropertyType(name, p.getCurrentValue().getClass());
+        if (LocalDate.class.isAssignableFrom(propertyType)) {
+            String dateStr = p.getValueAsString();
+            if (CharSequenceUtil.isNotBlank(dateStr)) {
+                try {
+                    return LocalDateTimeUtil.parseDate(dateStr, DatePattern.NORM_DATE_FORMATTER);
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("日期格式错误, 当前日期为: " + dateStr + ", 需要yyyy-MM-dd格式");
+                }
+            }
+        }
+        return null;
+    }
 
 }

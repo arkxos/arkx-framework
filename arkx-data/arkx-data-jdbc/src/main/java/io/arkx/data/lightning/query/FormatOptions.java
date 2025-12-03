@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FormatOptions {
 
-	private boolean pretty = true;
+    private boolean pretty = true;
 
-	private boolean includeComments;
+    private boolean includeComments;
 
-	private String comment;
+    private String comment;
 
 }

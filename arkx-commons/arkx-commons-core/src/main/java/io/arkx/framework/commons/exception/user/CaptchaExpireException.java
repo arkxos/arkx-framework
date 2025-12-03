@@ -7,10 +7,10 @@ package io.arkx.framework.commons.exception.user;
  */
 public class CaptchaExpireException extends UserException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CaptchaExpireException() {
-		super("user.jcaptcha.expire", null);
-	}
+    public CaptchaExpireException() {
+        super("user.jcaptcha.expire", null);
+    }
 
 }

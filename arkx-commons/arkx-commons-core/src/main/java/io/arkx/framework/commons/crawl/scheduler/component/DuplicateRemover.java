@@ -12,26 +12,29 @@ import io.arkx.framework.commons.crawl.Request;
  */
 public interface DuplicateRemover {
 
-	/**
-	 *
-	 * Check whether the request is duplicate.
-	 * @param request
-	 * @param task
-	 * @return
-	 */
-	boolean isDuplicate(Request request);
+    /**
+     *
+     * Check whether the request is duplicate.
+     *
+     * @param request
+     * @param task
+     * @return
+     */
+    boolean isDuplicate(Request request);
 
-	/**
-	 * Reset duplicate check.
-	 * @param task
-	 */
-	void resetDuplicateCheck();
+    /**
+     * Reset duplicate check.
+     *
+     * @param task
+     */
+    void resetDuplicateCheck();
 
-	/**
-	 * Get TotalRequestsCount for monitor.
-	 * @param task
-	 * @return
-	 */
-	int getTotalRequestsCount();
+    /**
+     * Get TotalRequestsCount for monitor.
+     *
+     * @param task
+     * @return
+     */
+    int getTotalRequestsCount();
 
 }

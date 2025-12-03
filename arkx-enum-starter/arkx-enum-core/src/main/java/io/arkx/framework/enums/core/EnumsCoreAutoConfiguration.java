@@ -21,23 +21,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfiguration
 public class EnumsCoreAutoConfiguration {
 
-	@Bean
-	@ConditionalOnBean(ObjectMapper.class)
-	public JsonEnumConverter jsonEnumConverter(MappingJackson2HttpMessageConverter httpMessageConverter,
-			ObjectMapper objectMapper) {
-		return new JsonEnumConverter(httpMessageConverter, objectMapper);
-	}
+    @Bean
+    @ConditionalOnBean(ObjectMapper.class)
+    public JsonEnumConverter jsonEnumConverter(MappingJackson2HttpMessageConverter httpMessageConverter,
+            ObjectMapper objectMapper) {
+        return new JsonEnumConverter(httpMessageConverter, objectMapper);
+    }
 
-	@Bean
-	@ConditionalOnMissingBean(MappingJackson2HttpMessageConverter.class)
-	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-		return new MappingJackson2HttpMessageConverter();
-	}
+    @Bean
+    @ConditionalOnMissingBean(MappingJackson2HttpMessageConverter.class)
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+        return new MappingJackson2HttpMessageConverter();
+    }
 
-	@Bean
-	@ConditionalOnClass(WebMvcConfigurer.class)
-	public MvcConfiguration mvcConfiguration() {
-		return new MvcConfiguration();
-	}
+    @Bean
+    @ConditionalOnClass(WebMvcConfigurer.class)
+    public MvcConfiguration mvcConfiguration() {
+        return new MvcConfiguration();
+    }
 
 }

@@ -19,30 +19,30 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class NettyMessageHandler extends SimpleChannelInboundHandler<NettyMessage> {
 
-	private Logger logger = LoggerFactory.getLogger(NettyMessageHandler.class);
+    private Logger logger = LoggerFactory.getLogger(NettyMessageHandler.class);
 
-	private NettyClient client;
+    private NettyClient client;
 
-	public NettyMessageHandler(NettyClient client) {
-		this.client = client;
-	}
+    public NettyMessageHandler(NettyClient client) {
+        this.client = client;
+    }
 
-	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		super.channelActive(ctx);
-	}
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
+    }
 
-	/**
-	 * Calls {@link ChannelHandlerContext#fireChannelRead(Object)} to forward to the next
-	 * {@link ChannelHandler} in the {@link ChannelPipeline}.
-	 *
-	 * Sub-classes may override this method to change behavior.
-	 */
-	@Override
-	public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
-		client.getMessageProcessor().onMessage(message);
-		client.onMessage(message);
-		ctx.fireChannelRead(message);
-	}
+    /**
+     * Calls {@link ChannelHandlerContext#fireChannelRead(Object)} to forward to the
+     * next {@link ChannelHandler} in the {@link ChannelPipeline}.
+     *
+     * Sub-classes may override this method to change behavior.
+     */
+    @Override
+    public void channelRead0(ChannelHandlerContext ctx, NettyMessage message) throws Exception {
+        client.getMessageProcessor().onMessage(message);
+        client.onMessage(message);
+        ctx.fireChannelRead(message);
+    }
 
 }

@@ -13,10 +13,11 @@ import io.arkx.framework.commons.simplequeue.QueueExecutor;
  */
 public interface CollectorPipeline<T> extends Pipeline {
 
-	/**
-	 * Get all results collected.
-	 * @return collected results
-	 */
-	public List<T> getCollected();
+    /**
+     * Get all results collected.
+     *
+     * @return collected results
+     */
+    public List<T> getCollected();
 
 }

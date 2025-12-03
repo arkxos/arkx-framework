@@ -16,31 +16,31 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class BrokerProducerMessageStrategy implements BrokerStrategy {
 
-	private ProducerMessageListener hookProducer;
+    private ProducerMessageListener hookProducer;
 
-	private ChannelHandlerContext channelHandler;
+    private ChannelHandlerContext channelHandler;
 
-	public BrokerProducerMessageStrategy() {
-	}
+    public BrokerProducerMessageStrategy() {
+    }
 
-	@Override
-	public void messageDispatch(RequestMessage request, ResponseMessage response) {
-		Message message = (Message) request.getMsgParams();
-		hookProducer.hookProducerMessage(message, request.getMsgId(), channelHandler.channel());
-	}
+    @Override
+    public void messageDispatch(RequestMessage request, ResponseMessage response) {
+        Message message = (Message) request.getMsgParams();
+        hookProducer.hookProducerMessage(message, request.getMsgId(), channelHandler.channel());
+    }
 
-	@Override
-	public void setHookProducer(ProducerMessageListener hookProducer) {
-		this.hookProducer = hookProducer;
-	}
+    @Override
+    public void setHookProducer(ProducerMessageListener hookProducer) {
+        this.hookProducer = hookProducer;
+    }
 
-	@Override
-	public void setChannelHandler(ChannelHandlerContext channelHandler) {
-		this.channelHandler = channelHandler;
-	}
+    @Override
+    public void setChannelHandler(ChannelHandlerContext channelHandler) {
+        this.channelHandler = channelHandler;
+    }
 
-	@Override
-	public void setHookConsumer(ConsumerMessageListener hookConsumer) {
-	}
+    @Override
+    public void setHookConsumer(ConsumerMessageListener hookConsumer) {
+    }
 
 }

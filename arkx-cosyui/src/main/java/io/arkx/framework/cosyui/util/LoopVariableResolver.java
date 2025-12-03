@@ -18,56 +18,54 @@ import io.arkx.framework.i18n.LangUtil;
  */
 public class LoopVariableResolver implements IVariableResolver {
 
-	protected DataRow dr;
+    protected DataRow dr;
 
-	protected IVariableResolver vr;
+    protected IVariableResolver vr;
 
-	protected Map<?, ?> map;
+    protected Map<?, ?> map;
 
-	public LoopVariableResolver() {
-		if (WebCurrent.getExecuteContext() != null) {
-			vr = WebCurrent.getExecuteContext();
-		}
-	}
+    public LoopVariableResolver() {
+        if (WebCurrent.getExecuteContext() != null) {
+            vr = WebCurrent.getExecuteContext();
+        }
+    }
 
-	public void setDataRow(DataRow dr) {
-		this.dr = dr;
-	}
+    public void setDataRow(DataRow dr) {
+        this.dr = dr;
+    }
 
-	public void setVariableResolver(IVariableResolver vr) {
-		this.vr = vr;
-	}
+    public void setVariableResolver(IVariableResolver vr) {
+        this.vr = vr;
+    }
 
-	public void setMap(Map<?, ?> map) {
-		if (map instanceof CaseIgnoreMapx) {
-			this.map = map;
-		}
-		else {
-			this.map = new CaseIgnoreMapx<Object, Object>(map);
-		}
-	}
+    public void setMap(Map<?, ?> map) {
+        if (map instanceof CaseIgnoreMapx) {
+            this.map = map;
+        } else {
+            this.map = new CaseIgnoreMapx<Object, Object>(map);
+        }
+    }
 
-	@Override
-	public Object resolveVariable(String holder) {
-		Object v = null;
-		if (map != null) {
-			v = map.get(holder);
-		}
-		if (v == null && dr != null) {
-			v = dr.get(holder);
-		}
-		if (v == null && vr != null) {
-			try {
-				v = vr.resolveVariable(holder);
-			}
-			catch (ExpressionException e) {
-				e.printStackTrace();
-			}
-		}
-		if (v != null && v instanceof String) {
-			v = LangUtil.get((String) v);
-		}
-		return v;
-	}
+    @Override
+    public Object resolveVariable(String holder) {
+        Object v = null;
+        if (map != null) {
+            v = map.get(holder);
+        }
+        if (v == null && dr != null) {
+            v = dr.get(holder);
+        }
+        if (v == null && vr != null) {
+            try {
+                v = vr.resolveVariable(holder);
+            } catch (ExpressionException e) {
+                e.printStackTrace();
+            }
+        }
+        if (v != null && v instanceof String) {
+            v = LangUtil.get((String) v);
+        }
+        return v;
+    }
 
 }

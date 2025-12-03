@@ -11,12 +11,12 @@ import io.arkx.framework.extend.IExtendItem;
  */
 public interface IJSONConvertor extends IExtendItem {
 
-	String getTypeID();
+    String getTypeID();
 
-	boolean match(Object paramObject);
+    boolean match(Object paramObject);
 
-	JSONObject toJSON(Object paramObject);
+    JSONObject toJSON(Object paramObject);
 
-	Object fromJSON(JSONObject paramJSONObject);
+    Object fromJSON(JSONObject paramJSONObject);
 
 }

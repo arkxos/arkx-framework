@@ -9,14 +9,14 @@ package io.arkx.framework.extend;
  */
 public interface IExtendAction {
 
-	/**
-	 * 扩展逻辑
-	 */
-	Object execute(Object[] args) throws ExtendException;
+    /**
+     * 扩展逻辑
+     */
+    Object execute(Object[] args) throws ExtendException;
 
-	/**
-	 * 是否可用
-	 */
-	boolean isUsable();
+    /**
+     * 是否可用
+     */
+    boolean isUsable();
 
 }

@@ -20,74 +20,73 @@ import io.arkx.framework.security.PrivCheck;
  */
 public class InitTag extends ArkTag {
 
-	private String method;
+    private String method;
 
-	private String rest;
+    private String rest;
 
-	public String getMethod() {
-		return method;
-	}
+    public String getMethod() {
+        return method;
+    }
 
-	public void setMethod(String method) {
-		this.method = method;
-	}
+    public void setMethod(String method) {
+        this.method = method;
+    }
 
-	@Override
-	public String getTagName() {
-		return "init";
-	}
+    @Override
+    public String getTagName() {
+        return "init";
+    }
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public int doStartTag() throws TemplateRuntimeException {
-		if (ObjectUtil.notEmpty(method)) {
-			IMethodLocator m = MethodLocatorUtil.find(method);
-			PrivCheck.check(m);
-			m.execute();
-		}
-		else if (StringUtil.isNotEmpty(rest)) {
-			JsonResult jsonResult = RestUtil.post(rest);
-			if (!jsonResult.isSuccess()) {
-				throw new TemplateRuntimeException(jsonResult.getMessage());
-			}
-			Object data = jsonResult.getData();
-			if (data instanceof Map) {
-				WebCurrent.getResponse().putAll((Map) data);
-			}
-			WebCurrent.getResponse().putAll(jsonResult.getExtraData());
-		}
-		return EVAL_BODY_INCLUDE;
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public int doStartTag() throws TemplateRuntimeException {
+        if (ObjectUtil.notEmpty(method)) {
+            IMethodLocator m = MethodLocatorUtil.find(method);
+            PrivCheck.check(m);
+            m.execute();
+        } else if (StringUtil.isNotEmpty(rest)) {
+            JsonResult jsonResult = RestUtil.post(rest);
+            if (!jsonResult.isSuccess()) {
+                throw new TemplateRuntimeException(jsonResult.getMessage());
+            }
+            Object data = jsonResult.getData();
+            if (data instanceof Map) {
+                WebCurrent.getResponse().putAll((Map) data);
+            }
+            WebCurrent.getResponse().putAll(jsonResult.getExtraData());
+        }
+        return EVAL_BODY_INCLUDE;
+    }
 
-	@Override
-	public List<TagAttr> getTagAttrs() {
-		List<TagAttr> list = new ArrayList<>();
-		list.add(new TagAttr("method", false));
-		list.add(new TagAttr("rest", false));
-		return list;
-	}
+    @Override
+    public List<TagAttr> getTagAttrs() {
+        List<TagAttr> list = new ArrayList<>();
+        list.add(new TagAttr("method", false));
+        list.add(new TagAttr("rest", false));
+        return list;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "@{Framework.Tag.InitTagName}";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "@{Framework.Tag.InitTagName}";
+    }
 
-	@Override
-	public String getDescription() {
-		return "";
-	}
+    @Override
+    public String getDescription() {
+        return "";
+    }
 
-	@Override
-	public String getPluginID() {
-		return FrameworkPlugin.ID;
-	}
+    @Override
+    public String getPluginID() {
+        return FrameworkPlugin.ID;
+    }
 
-	public String getRest() {
-		return rest;
-	}
+    public String getRest() {
+        return rest;
+    }
 
-	public void setRest(String rest) {
-		this.rest = rest;
-	}
+    public void setRest(String rest) {
+        this.rest = rest;
+    }
 
 }

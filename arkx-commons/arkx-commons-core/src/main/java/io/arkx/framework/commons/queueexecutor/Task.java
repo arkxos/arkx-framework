@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface Task<T> {
 
-	String getId();
+    String getId();
 
-	List<T> preparedTodoList(String taskId);
+    List<T> preparedTodoList(String taskId);
 
-	boolean executeTodo(String taskId, T todo);
+    boolean executeTodo(String taskId, T todo);
 
 }

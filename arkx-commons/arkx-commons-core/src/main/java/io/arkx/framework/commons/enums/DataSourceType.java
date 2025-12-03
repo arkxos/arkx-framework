@@ -7,14 +7,14 @@ package io.arkx.framework.commons.enums;
  */
 public enum DataSourceType {
 
-	/**
-	 * 主库
-	 */
-	MASTER,
+    /**
+     * 主库
+     */
+    MASTER,
 
-	/**
-	 * 从库
-	 */
-	SLAVE
+    /**
+     * 从库
+     */
+    SLAVE
 
 }

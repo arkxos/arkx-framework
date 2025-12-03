@@ -16,30 +16,30 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  */
 public class JsonEnumConverter implements ApplicationListener<ContextRefreshedEvent> {
 
-	private MappingJackson2HttpMessageConverter httpMessageConverter;
+    private MappingJackson2HttpMessageConverter httpMessageConverter;
 
-	private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
-	public JsonEnumConverter(MappingJackson2HttpMessageConverter httpMessageConverter, ObjectMapper objectMapper) {
-		this.httpMessageConverter = httpMessageConverter;
-		this.objectMapper = objectMapper;
-	}
+    public JsonEnumConverter(MappingJackson2HttpMessageConverter httpMessageConverter, ObjectMapper objectMapper) {
+        this.httpMessageConverter = httpMessageConverter;
+        this.objectMapper = objectMapper;
+    }
 
-	@Override
-	public void onApplicationEvent(ContextRefreshedEvent event) {
-		SimpleModule simpleModule = new SimpleModule();
-		simpleModule.addDeserializer(Enum.class, new JsonEnumDeserializer());
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addDeserializer(Enum.class, new JsonEnumDeserializer());
 
-		if (objectMapper != null) {
-			objectMapper.registerModule(simpleModule);
-		}
+        if (objectMapper != null) {
+            objectMapper.registerModule(simpleModule);
+        }
 
-		if (httpMessageConverter != null) {
-			objectMapper = httpMessageConverter.getObjectMapper();
-		}
+        if (httpMessageConverter != null) {
+            objectMapper = httpMessageConverter.getObjectMapper();
+        }
 
-		objectMapper.registerModule(simpleModule);
-		httpMessageConverter.setObjectMapper(objectMapper);
-	}
+        objectMapper.registerModule(simpleModule);
+        httpMessageConverter.setObjectMapper(objectMapper);
+    }
 
 }

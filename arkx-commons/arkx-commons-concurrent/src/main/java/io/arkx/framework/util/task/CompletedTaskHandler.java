@@ -2,6 +2,6 @@ package io.arkx.framework.util.task;
 
 public interface CompletedTaskHandler {
 
-	void handle(final Task task);
+    void handle(final Task task);
 
 }

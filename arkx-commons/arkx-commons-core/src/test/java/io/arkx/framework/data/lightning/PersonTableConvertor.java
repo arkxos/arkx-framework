@@ -14,18 +14,18 @@ import io.arkx.framework.commons.collection.TwoTuple;
  */
 public class PersonTableConvertor implements ILightningTableConvertor<PersonTable> {
 
-	@Override
-	public void onRecordReaded(List<LightningColumn> columns, PersonTable dt, RecordUnit rowBuffer) throws IOException {
-	}
+    @Override
+    public void onRecordReaded(List<LightningColumn> columns, PersonTable dt, RecordUnit rowBuffer) throws IOException {
+    }
 
-	@Override
-	public TwoTuple<PkList, List<ByteBuffer>> buildRowByteBuffers(LightningColumn[] columns, PersonTable dt) {
-		return null;
-	}
+    @Override
+    public TwoTuple<PkList, List<ByteBuffer>> buildRowByteBuffers(LightningColumn[] columns, PersonTable dt) {
+        return null;
+    }
 
-	@Override
-	public PersonTable createTable(Class<PersonTable> clazz, String tableName, LightningColumn[] columns) {
-		return null;
-	}
+    @Override
+    public PersonTable createTable(Class<PersonTable> clazz, String tableName, LightningColumn[] columns) {
+        return null;
+    }
 
 }

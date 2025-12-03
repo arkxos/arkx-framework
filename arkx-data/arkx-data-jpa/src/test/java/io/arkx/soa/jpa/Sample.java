@@ -17,19 +17,19 @@ import jakarta.persistence.Table;
 @Table(name = "t_sample")
 public class Sample extends LongIdEntity {
 
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
-	// private long id;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    // private long id;
 
-	@Column
-	private String content;
+    @Column
+    private String content;
 
-	public String getContent() {
-		return content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
 }

@@ -15,25 +15,25 @@ import org.junit.jupiter.api.Test;
  */
 public class ParamManagerTest {
 
-	@Test
-	public void extractParam() {
-		String content = "index.html?name=${name}&password=${password}";
-		List<String> params = ParamManager.extractParam(content);
-		assertEquals(2, params.size());
-		assertEquals("name", params.get(0));
-		assertEquals("password", params.get(1));
-	}
+    @Test
+    public void extractParam() {
+        String content = "index.html?name=${name}&password=${password}";
+        List<String> params = ParamManager.extractParam(content);
+        assertEquals(2, params.size());
+        assertEquals("name", params.get(0));
+        assertEquals("password", params.get(1));
+    }
 
-	@Test
-	public void replaceParam() {
-		String content = "index.html?name=${name}&password=${password}";
+    @Test
+    public void replaceParam() {
+        String content = "index.html?name=${name}&password=${password}";
 
-		Map<String, String> paramValues = new HashMap<String, String>();
-		paramValues.put("name", "darkness");
-		paramValues.put("password", "123");
+        Map<String, String> paramValues = new HashMap<String, String>();
+        paramValues.put("name", "darkness");
+        paramValues.put("password", "123");
 
-		String newContent = ParamManager.replaceParam(content, paramValues);
-		assertEquals("index.html?name=darkness&password=123", newContent);
-	}
+        String newContent = ParamManager.replaceParam(content, paramValues);
+        assertEquals("index.html?name=darkness&password=123", newContent);
+    }
 
 }

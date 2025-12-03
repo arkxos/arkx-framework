@@ -16,24 +16,24 @@ package io.arkx.framework.data.db.common.type;
  */
 public enum ProductTableEnum {
 
-	/**
-	 * 物理表
-	 */
-	TABLE(0),
+    /**
+     * 物理表
+     */
+    TABLE(0),
 
-	/**
-	 * 视图表
-	 */
-	VIEW(1);
+    /**
+     * 视图表
+     */
+    VIEW(1);
 
-	private int index;
+    private int index;
 
-	ProductTableEnum(int idx) {
-		this.index = idx;
-	}
+    ProductTableEnum(int idx) {
+        this.index = idx;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public int getIndex() {
+        return index;
+    }
 
 }

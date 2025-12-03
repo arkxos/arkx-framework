@@ -13,44 +13,44 @@ import io.arkx.framework.json.JSONObject;
  */
 public class DropColumnCommand implements IDBCommand {
 
-	/**
-	 * 要删除的字段
-	 */
-	public String Column;
+    /**
+     * 要删除的字段
+     */
+    public String Column;
 
-	/**
-	 * 所在数据表
-	 */
-	public String Table;
+    /**
+     * 所在数据表
+     */
+    public String Table;
 
-	public static final String Prefix = "DropColumn:";
+    public static final String Prefix = "DropColumn:";
 
-	@Override
-	public String getPrefix() {
-		return Prefix;
-	}
+    @Override
+    public String getPrefix() {
+        return Prefix;
+    }
 
-	@Override
-	public void parse(String ddl) {
-		ddl = ddl.substring(Prefix.length());
-		JSONObject map = (JSONObject) JSON.parse(ddl);
-		Table = map.getString("Table");
-		Column = map.getString("Column");
-	}
+    @Override
+    public void parse(String ddl) {
+        ddl = ddl.substring(Prefix.length());
+        JSONObject map = (JSONObject) JSON.parse(ddl);
+        Table = map.getString("Table");
+        Column = map.getString("Column");
+    }
 
-	@Override
-	public String toJSON() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("Table", Table);
-		map.put("Column", Column);
-		return Prefix + JSON.toJSONString(map);
-	}
+    @Override
+    public String toJSON() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("Table", Table);
+        map.put("Column", Column);
+        return Prefix + JSON.toJSONString(map);
+    }
 
-	@Override
-	public String[] getDefaultSQLArray(String dbType) {
-		IDBType db = DBTypeService.getInstance().get(dbType);
-		String sql = "alter table " + Table + " drop column " + db.maskColumnName(Column);
-		return new String[] { sql };
-	}
+    @Override
+    public String[] getDefaultSQLArray(String dbType) {
+        IDBType db = DBTypeService.getInstance().get(dbType);
+        String sql = "alter table " + Table + " drop column " + db.maskColumnName(Column);
+        return new String[]{sql};
+    }
 
 }

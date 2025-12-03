@@ -14,57 +14,50 @@ import io.arkx.framework.data.jdbc.*;
  */
 public class HandleTreeEntity extends EntitySaveExtendAction {
 
-	@Override
-	protected void save(Entity entity) {
-		if (TreeEntity.class.isAssignableFrom(entity.getClass())) {
+    @Override
+    protected void save(Entity entity) {
+        if (TreeEntity.class.isAssignableFrom(entity.getClass())) {
 
-			TreeEntity treeEntity = (TreeEntity) entity;
+            TreeEntity treeEntity = (TreeEntity) entity;
 
-			if (StringUtil.isEmpty(treeEntity.getParentInnerCode()) || "0".equals(treeEntity.getParentInnerCode())) {
-				treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", 4));
-				treeEntity.setParentInnerCode(treeEntity.getInnerCode());
+            if (StringUtil.isEmpty(treeEntity.getParentInnerCode()) || "0".equals(treeEntity.getParentInnerCode())) {
+                treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode", 4));
+                treeEntity.setParentInnerCode(treeEntity.getInnerCode());
 
-				int sortOrder = getSession()
-					.createQuery("SELECT SORT_ORDER FROM " + EntityAnnotationManager.getTableName(treeEntity.getClass())
-							+ " ORDER BY SORT_ORDER")
-					.executeInt();
-				treeEntity.setSortOrder(sortOrder + 1L);
-			}
-			else {
-				Criteria criteria = getSession().createCriteria(entity.getClass());
-				criteria.add(Restrictions.eq(TreeEntity.InnerCode, treeEntity.getParentInnerCode()));
-				TreeEntity parentEntity = criteria.findEntity();
+                int sortOrder = getSession()
+                        .createQuery("SELECT SORT_ORDER FROM "
+                                + EntityAnnotationManager.getTableName(treeEntity.getClass()) + " ORDER BY SORT_ORDER")
+                        .executeInt();
+                treeEntity.setSortOrder(sortOrder + 1L);
+            } else {
+                Criteria criteria = getSession().createCriteria(entity.getClass());
+                criteria.add(Restrictions.eq(TreeEntity.InnerCode, treeEntity.getParentInnerCode()));
+                TreeEntity parentEntity = criteria.findEntity();
 
-				if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
-					treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode",
-							parentEntity.getInnerCode(), 4));
-				}
-				treeEntity.setParentInnerCode(parentEntity.getInnerCode());
-				treeEntity.setTreeLevel(parentEntity.getTreeLevel() + 1L);
+                if (StringUtil.isEmpty(treeEntity.getInnerCode())) {
+                    treeEntity.setInnerCode(NoUtil.getMaxNo(treeEntity.getClass().getSimpleName() + "InnerCode",
+                            parentEntity.getInnerCode(), 4));
+                }
+                treeEntity.setParentInnerCode(parentEntity.getInnerCode());
+                treeEntity.setTreeLevel(parentEntity.getTreeLevel() + 1L);
 
-				long orderflag = getSession()
-					.createQuery(
-							"SELECT max(SORT_ORDER) FROM " + EntityAnnotationManager.getTableName(treeEntity.getClass())
-									+ " WHERE INNER_CODE LIKE ? ORDER BY SORT_ORDER",
-							parentEntity.getInnerCode() + "%")
-					.executeLong();
+                long orderflag = getSession().createQuery(
+                        "SELECT max(SORT_ORDER) FROM " + EntityAnnotationManager.getTableName(treeEntity.getClass())
+                                + " WHERE INNER_CODE LIKE ? ORDER BY SORT_ORDER",
+                        parentEntity.getInnerCode() + "%").executeLong();
 
-				treeEntity.setSortOrder(orderflag + 1L);
+                treeEntity.setSortOrder(orderflag + 1L);
 
-				getSession()
-					.createQuery("update " + EntityAnnotationManager.getTableName(entity.getClass())
-							+ " set Is_Leaf='N' where Inner_Code=?", parentEntity.getInnerCode())
-					.executeNoQuery();
-				getSession()
-					.createQuery("update " + EntityAnnotationManager.getTableName(entity.getClass())
-							+ " set sort_order=sort_order+1 where sort_order>?", orderflag)
-					.executeNoQuery();
-			}
-		}
-	}
+                getSession().createQuery("update " + EntityAnnotationManager.getTableName(entity.getClass())
+                        + " set Is_Leaf='N' where Inner_Code=?", parentEntity.getInnerCode()).executeNoQuery();
+                getSession().createQuery("update " + EntityAnnotationManager.getTableName(entity.getClass())
+                        + " set sort_order=sort_order+1 where sort_order>?", orderflag).executeNoQuery();
+            }
+        }
+    }
 
-	private Session getSession() {
-		return SessionFactory.currentSession();
-	}
+    private Session getSession() {
+        return SessionFactory.currentSession();
+    }
 
 }

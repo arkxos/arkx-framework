@@ -8,95 +8,95 @@ import io.arkx.framework.commons.collection.Mapx;
  */
 public class TagAttr {
 
-	String Name;
+    String Name;
 
-	boolean isMandatory = false;
+    boolean isMandatory = false;
 
-	String Usage;
+    String Usage;
 
-	int DataType = DataTypes.STRING.code();
+    int DataType = DataTypes.STRING.code();
 
-	Mapx<String, String> Options = new Mapx<>();
+    Mapx<String, String> Options = new Mapx<>();
 
-	/**
-	 * 属性名称
-	 */
-	public String getName() {
-		return Name;
-	}
+    /**
+     * 属性名称
+     */
+    public String getName() {
+        return Name;
+    }
 
-	/**
-	 * 是否必填
-	 */
-	public boolean isMandatory() {
-		return isMandatory;
-	}
+    /**
+     * 是否必填
+     */
+    public boolean isMandatory() {
+        return isMandatory;
+    }
 
-	/**
-	 * 属性用法
-	 */
-	public String getUsage() {
-		return Usage;
-	}
+    /**
+     * 属性用法
+     */
+    public String getUsage() {
+        return Usage;
+    }
 
-	/**
-	 * 数据类型，见DataTypes
-	 */
-	public int getDataType() {
-		return DataType;
-	}
+    /**
+     * 数据类型，见DataTypes
+     */
+    public int getDataType() {
+        return DataType;
+    }
 
-	public TagAttr(String name) {
-		Name = name;
-	}
+    public TagAttr(String name) {
+        Name = name;
+    }
 
-	public TagAttr(String name, boolean mandatory) {
-		Name = name;
-		isMandatory = mandatory;
-	}
+    public TagAttr(String name, boolean mandatory) {
+        Name = name;
+        isMandatory = mandatory;
+    }
 
-	public TagAttr(String name, int dataType) {
-		Name = name;
-		DataType = dataType;
-	}
+    public TagAttr(String name, int dataType) {
+        Name = name;
+        DataType = dataType;
+    }
 
-	public TagAttr(String name, boolean mandatory, int dataType, String usage) {
-		Name = name;
-		isMandatory = mandatory;
-		DataType = dataType;
-		Usage = usage;
-	}
+    public TagAttr(String name, boolean mandatory, int dataType, String usage) {
+        Name = name;
+        isMandatory = mandatory;
+        DataType = dataType;
+        Usage = usage;
+    }
 
-	public TagAttr(String name, int dataType, String usage) {
-		Name = name;
-		DataType = dataType;
-		Usage = usage;
-	}
+    public TagAttr(String name, int dataType, String usage) {
+        Name = name;
+        DataType = dataType;
+        Usage = usage;
+    }
 
-	public TagAttr(String name, Mapx<String, String> options, String usage) {
-		Name = name;
-		Options = options;
-		Usage = usage;
-	}
+    public TagAttr(String name, Mapx<String, String> options, String usage) {
+        Name = name;
+        Options = options;
+        Usage = usage;
+    }
 
-	public TagAttr(String name, Mapx<String, String> options) {
-		Name = name;
-		Options = options;
-	}
+    public TagAttr(String name, Mapx<String, String> options) {
+        Name = name;
+        Options = options;
+    }
 
-	public Mapx<String, String> getOptions() {
-		return Options;
-	}
+    public Mapx<String, String> getOptions() {
+        return Options;
+    }
 
-	public void setOptions(Mapx<String, String> options) {
-		Options = options;
-	}
+    public void setOptions(Mapx<String, String> options) {
+        Options = options;
+    }
 
-	public static Mapx<String, String> BOOL_OPTIONS = new Mapx<>();
+    public static Mapx<String, String> BOOL_OPTIONS = new Mapx<>();
 
-	static {
-		BOOL_OPTIONS.put("true", "true");
-		BOOL_OPTIONS.put("false", "false");
-	}
+    static {
+        BOOL_OPTIONS.put("true", "true");
+        BOOL_OPTIONS.put("false", "false");
+    }
 
 }

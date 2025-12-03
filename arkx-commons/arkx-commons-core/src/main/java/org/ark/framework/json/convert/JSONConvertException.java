@@ -7,18 +7,18 @@ package org.ark.framework.json.convert;
  */
 public class JSONConvertException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public JSONConvertException(String message) {
-		super(message);
-	}
+    public JSONConvertException(String message) {
+        super(message);
+    }
 
-	public JSONConvertException(Throwable t) {
-		super(t);
-	}
+    public JSONConvertException(Throwable t) {
+        super(t);
+    }
 
-	public JSONConvertException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public JSONConvertException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

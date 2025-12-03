@@ -34,11 +34,11 @@ import lombok.Setter;
 @Setter
 public class SidecarProperties {
 
-	/**
-	 * interval of health check.
-	 */
-	private long healthCheckInterval = 30_000L;
+    /**
+     * interval of health check.
+     */
+    private long healthCheckInterval = 30_000L;
 
-	private List<SidecarConfig> proxyList = new ArrayList<>();
+    private List<SidecarConfig> proxyList = new ArrayList<>();
 
 }

@@ -15,18 +15,18 @@ import org.slf4j.MDC;
 
 public abstract class AbstractLogging {
 
-	private final MdcKeyValue mdc;
+    private final MdcKeyValue mdc;
 
-	public AbstractLogging(MdcKeyValue mdc) {
-		this.mdc = Objects.requireNonNull(mdc, "mdc is null");
-	}
+    public AbstractLogging(MdcKeyValue mdc) {
+        this.mdc = Objects.requireNonNull(mdc, "mdc is null");
+    }
 
-	protected void setupMdc() {
-		MDC.put(mdc.getMdcKey(), mdc.getMdcValue());
-	}
+    protected void setupMdc() {
+        MDC.put(mdc.getMdcKey(), mdc.getMdcValue());
+    }
 
-	protected void cleanMdc() {
-		MDC.remove(mdc.getMdcKey());
-	}
+    protected void cleanMdc() {
+        MDC.remove(mdc.getMdcKey());
+    }
 
 }

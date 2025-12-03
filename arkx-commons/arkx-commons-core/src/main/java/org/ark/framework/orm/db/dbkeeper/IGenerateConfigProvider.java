@@ -8,18 +8,18 @@ package org.ark.framework.orm.db.dbkeeper;
  */
 public interface IGenerateConfigProvider {
 
-	String getHost();
+    String getHost();
 
-	String getDatabase();
+    String getDatabase();
 
-	String getUserName();
+    String getUserName();
 
-	String getPassword();
+    String getPassword();
 
-	String getTableNames();
+    String getTableNames();
 
-	String getPackageName();
+    String getPackageName();
 
-	String getDir();
+    String getDir();
 
 }

@@ -8,12 +8,12 @@ package io.arkx.framework.data.lightning;
  */
 public interface ILightningTable {
 
-	String getTableName();
+    String getTableName();
 
-	LightningColumn[] getLightningColumns();
+    LightningColumn[] getLightningColumns();
 
-	int getRowCount();
+    int getRowCount();
 
-	int getColumnCount();
+    int getColumnCount();
 
 }

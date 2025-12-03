@@ -14,16 +14,16 @@ import org.springframework.data.domain.Page;
  */
 public interface ConverterEx<S, D, ID> extends Converter<S, D> {
 
-	List<D> convert(List<S> source);
+    List<D> convert(List<S> source);
 
-	Map<ID, D> convert(Map<ID, S> source);
+    Map<ID, D> convert(Map<ID, S> source);
 
-	Page<D> convert(Page<S> source);
+    Page<D> convert(Page<S> source);
 
-	D get(ID id);
+    D get(ID id);
 
-	Map<ID, D> mget(Collection<ID> ids);
+    Map<ID, D> mget(Collection<ID> ids);
 
-	List<ID> getIds(List<S> source);
+    List<ID> getIds(List<S> source);
 
 }

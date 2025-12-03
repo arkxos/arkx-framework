@@ -14,47 +14,47 @@ import jakarta.servlet.http.HttpServlet;
  */
 public class ZhtmlCommonServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ServletContext context;
+    private ServletContext context;
 
-	private JspCommonServletConfig config;
+    private JspCommonServletConfig config;
 
-	public ZhtmlCommonServlet(ServletContext context) {
-		this.context = context;
-	}
+    public ZhtmlCommonServlet(ServletContext context) {
+        this.context = context;
+    }
 
-	public ServletConfig getServletConfig() {
-		if (this.config == null) {
-			this.config = new JspCommonServletConfig(this.context);
-		}
-		return this.config;
-	}
+    public ServletConfig getServletConfig() {
+        if (this.config == null) {
+            this.config = new JspCommonServletConfig(this.context);
+        }
+        return this.config;
+    }
 
-	public static class JspCommonServletConfig implements ServletConfig {
+    public static class JspCommonServletConfig implements ServletConfig {
 
-		private ServletContext context;
+        private ServletContext context;
 
-		public JspCommonServletConfig(ServletContext context) {
-			this.context = context;
-		}
+        public JspCommonServletConfig(ServletContext context) {
+            this.context = context;
+        }
 
-		public String getServletName() {
-			return "JspCommon";
-		}
+        public String getServletName() {
+            return "JspCommon";
+        }
 
-		public ServletContext getServletContext() {
-			return this.context;
-		}
+        public ServletContext getServletContext() {
+            return this.context;
+        }
 
-		public String getInitParameter(String name) {
-			return null;
-		}
+        public String getInitParameter(String name) {
+            return null;
+        }
 
-		public Enumeration<String> getInitParameterNames() {
-			return null;
-		}
+        public Enumeration<String> getInitParameterNames() {
+            return null;
+        }
 
-	}
+    }
 
 }

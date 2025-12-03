@@ -14,18 +14,19 @@ import io.arkx.framework.commons.websocket.distribute.MessageDistributor;
  * @author hccake
  */
 @ConditionalOnProperty(prefix = WebSocketProperties.PREFIX, name = "message-distributor",
-		havingValue = MessageDistributorTypeConstants.LOCAL)
+        havingValue = MessageDistributorTypeConstants.LOCAL)
 @Configuration(proxyBeanMethods = false)
 public class LocalMessageDistributorConfiguration {
 
-	/**
-	 * 配置本地消息分发器，使用本地内存实现，不支持集群环境。
-	 * @return 返回一个 {@link LocalMessageDistributor} 实例，用于处理本地消息分发。
-	 */
-	@Bean
-	@ConditionalOnMissingBean(MessageDistributor.class)
-	public LocalMessageDistributor messageDistributor() {
-		return new LocalMessageDistributor();
-	}
+    /**
+     * 配置本地消息分发器，使用本地内存实现，不支持集群环境。
+     *
+     * @return 返回一个 {@link LocalMessageDistributor} 实例，用于处理本地消息分发。
+     */
+    @Bean
+    @ConditionalOnMissingBean(MessageDistributor.class)
+    public LocalMessageDistributor messageDistributor() {
+        return new LocalMessageDistributor();
+    }
 
 }

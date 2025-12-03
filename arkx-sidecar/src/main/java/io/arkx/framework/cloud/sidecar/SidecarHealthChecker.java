@@ -44,120 +44,117 @@ import reactor.core.scheduler.Schedulers;
  */
 public class SidecarHealthChecker {
 
-	private static final Logger log = LoggerFactory.getLogger(SidecarHealthChecker.class);
+    private static final Logger log = LoggerFactory.getLogger(SidecarHealthChecker.class);
 
-	private final Map<String, SidecarInstanceInfo> sidecarInstanceCacheMap = new ConcurrentHashMap<>();
+    private final Map<String, SidecarInstanceInfo> sidecarInstanceCacheMap = new ConcurrentHashMap<>();
 
-	private final SidecarDiscoveryClient sidecarDiscoveryClient;
+    private final SidecarDiscoveryClient sidecarDiscoveryClient;
 
-	private final HealthIndicator healthIndicator;
+    private final HealthIndicator healthIndicator;
 
-	private final SidecarProperties sidecarProperties;
+    private final SidecarProperties sidecarProperties;
 
-	private final ConfigurableEnvironment environment;
+    private final ConfigurableEnvironment environment;
 
-	@Autowired
-	private ObjectProvider<CustomHealthCheckHandler> customHealthCheckHandlerObjectProvider;
+    @Autowired
+    private ObjectProvider<CustomHealthCheckHandler> customHealthCheckHandlerObjectProvider;
 
-	public SidecarHealthChecker(SidecarDiscoveryClient sidecarDiscoveryClient, HealthIndicator healthIndicator,
-			SidecarProperties sidecarProperties, ConfigurableEnvironment environment) {
-		this.sidecarDiscoveryClient = sidecarDiscoveryClient;
-		this.healthIndicator = healthIndicator;
-		this.sidecarProperties = sidecarProperties;
-		this.environment = environment;
-	}
+    public SidecarHealthChecker(SidecarDiscoveryClient sidecarDiscoveryClient, HealthIndicator healthIndicator,
+            SidecarProperties sidecarProperties, ConfigurableEnvironment environment) {
+        this.sidecarDiscoveryClient = sidecarDiscoveryClient;
+        this.healthIndicator = healthIndicator;
+        this.sidecarProperties = sidecarProperties;
+        this.environment = environment;
+    }
 
-	public void check() {
-		Schedulers.single().schedulePeriodically(() -> {
-			Multimap<String, SidecarConfig> serviceConfigMap = ArrayListMultimap.create();
-			for (SidecarConfig sidecarConfig : sidecarProperties.getProxyList()) {
+    public void check() {
+        Schedulers.single().schedulePeriodically(() -> {
+            Multimap<String, SidecarConfig> serviceConfigMap = ArrayListMultimap.create();
+            for (SidecarConfig sidecarConfig : sidecarProperties.getProxyList()) {
 
-				// String applicationName =
-				// environment.getProperty("spring.application.name");
-				String applicationName = sidecarConfig.getName();
-				String ip = sidecarConfig.getIp();
-				Integer port = sidecarConfig.getPort();
+                // String applicationName =
+                // environment.getProperty("spring.application.name");
+                String applicationName = sidecarConfig.getName();
+                String ip = sidecarConfig.getIp();
+                Integer port = sidecarConfig.getPort();
 
-				Status status = healthIndicator.health().getStatus();
+                Status status = healthIndicator.health().getStatus();
 
-				SidecarInstanceInfo sidecarInstanceInfo = instanceCache(applicationName, ip, port, status);
-				if (status.equals(Status.UP)) {
-					serviceConfigMap.put(applicationName, sidecarConfig);
-					// 存在同名服务
-					if (serviceConfigMap.containsKey(applicationName)) {
-						List<Instance> serviceInstance = new ArrayList<>();
-						for (SidecarConfig config : serviceConfigMap.get(applicationName)) {
-							Instance instance = new Instance();
-							instance.setIp(config.getIp());
-							instance.setPort(config.getPort());
-							instance.setWeight(1.0);
-							instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
+                SidecarInstanceInfo sidecarInstanceInfo = instanceCache(applicationName, ip, port, status);
+                if (status.equals(Status.UP)) {
+                    serviceConfigMap.put(applicationName, sidecarConfig);
+                    // 存在同名服务
+                    if (serviceConfigMap.containsKey(applicationName)) {
+                        List<Instance> serviceInstance = new ArrayList<>();
+                        for (SidecarConfig config : serviceConfigMap.get(applicationName)) {
+                            Instance instance = new Instance();
+                            instance.setIp(config.getIp());
+                            instance.setPort(config.getPort());
+                            instance.setWeight(1.0);
+                            instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
 
-							serviceInstance.add(instance);
-						}
+                            serviceInstance.add(instance);
+                        }
 
-						if (needRegister(applicationName, ip + ":" + port, sidecarInstanceInfo)) {
-							this.sidecarDiscoveryClient.batchRegisterInstance(applicationName, "DEFAULT_GROUP",
-									serviceInstance);
-							log.info(
-									"Polyglot service changed and Health check success. register the new instance. applicationName = {}, ip = {}, port = {}, status = {}",
-									applicationName, ip, port, status);
-						}
-					}
-					else {
-						if (needRegister(applicationName, ip + ":" + port, sidecarInstanceInfo)) {
-							this.sidecarDiscoveryClient.registerInstance(applicationName, ip, port);
-							log.info(
-									"Polyglot service changed and Health check success. register the new instance. applicationName = {}, ip = {}, port = {}, status = {}",
-									applicationName, ip, port, status);
-						}
-					}
-				}
-				else {
-					log.warn(
-							"Health check failed. unregister this instance. applicationName = {}, ip = {}, port = {}, status = {}",
-							applicationName, ip, port, status);
-					this.sidecarDiscoveryClient.deregisterInstance(applicationName, ip, port);
+                        if (needRegister(applicationName, ip + ":" + port, sidecarInstanceInfo)) {
+                            this.sidecarDiscoveryClient.batchRegisterInstance(applicationName, "DEFAULT_GROUP",
+                                    serviceInstance);
+                            log.info(
+                                    "Polyglot service changed and Health check success. register the new instance. applicationName = {}, ip = {}, port = {}, status = {}",
+                                    applicationName, ip, port, status);
+                        }
+                    } else {
+                        if (needRegister(applicationName, ip + ":" + port, sidecarInstanceInfo)) {
+                            this.sidecarDiscoveryClient.registerInstance(applicationName, ip, port);
+                            log.info(
+                                    "Polyglot service changed and Health check success. register the new instance. applicationName = {}, ip = {}, port = {}, status = {}",
+                                    applicationName, ip, port, status);
+                        }
+                    }
+                } else {
+                    log.warn(
+                            "Health check failed. unregister this instance. applicationName = {}, ip = {}, port = {}, status = {}",
+                            applicationName, ip, port, status);
+                    this.sidecarDiscoveryClient.deregisterInstance(applicationName, ip, port);
 
-					sidecarInstanceCacheMap.put(applicationName, buildCache(ip, port, status));
-				}
+                    sidecarInstanceCacheMap.put(applicationName, buildCache(ip, port, status));
+                }
 
-				try {
-					customHealthCheckHandlerObjectProvider
-						.ifAvailable(customHealthCheckHandler -> customHealthCheckHandler.handler(applicationName,
-								sidecarInstanceInfo));
-				}
-				catch (Exception e) {
-					// ignore
-				}
-			}
+                try {
+                    customHealthCheckHandlerObjectProvider
+                            .ifAvailable(customHealthCheckHandler -> customHealthCheckHandler.handler(applicationName,
+                                    sidecarInstanceInfo));
+                } catch (Exception e) {
+                    // ignore
+                }
+            }
 
-		}, 0, sidecarProperties.getHealthCheckInterval(), TimeUnit.MILLISECONDS);
-	}
+        }, 0, sidecarProperties.getHealthCheckInterval(), TimeUnit.MILLISECONDS);
+    }
 
-	private SidecarInstanceInfo instanceCache(String applicationName, String ip, Integer port, Status status) {
-		SidecarInstanceInfo sidecarInstanceInfo = buildCache(ip, port, status);
-		sidecarInstanceCacheMap.putIfAbsent(applicationName, sidecarInstanceInfo);
-		return sidecarInstanceInfo;
-	}
+    private SidecarInstanceInfo instanceCache(String applicationName, String ip, Integer port, Status status) {
+        SidecarInstanceInfo sidecarInstanceInfo = buildCache(ip, port, status);
+        sidecarInstanceCacheMap.putIfAbsent(applicationName, sidecarInstanceInfo);
+        return sidecarInstanceInfo;
+    }
 
-	private boolean needRegister(String applicationName, String ipPort, SidecarInstanceInfo sidecarInstanceInfo) {
-		String serviceId = applicationName + "_" + ipPort;
-		SidecarInstanceInfo cacheRecord = sidecarInstanceCacheMap.get(serviceId);
-		if (!Objects.equals(sidecarInstanceInfo, cacheRecord)) {
-			// modify the cache info
-			sidecarInstanceCacheMap.put(serviceId, sidecarInstanceInfo);
-			return true;
-		}
-		return false;
-	}
+    private boolean needRegister(String applicationName, String ipPort, SidecarInstanceInfo sidecarInstanceInfo) {
+        String serviceId = applicationName + "_" + ipPort;
+        SidecarInstanceInfo cacheRecord = sidecarInstanceCacheMap.get(serviceId);
+        if (!Objects.equals(sidecarInstanceInfo, cacheRecord)) {
+            // modify the cache info
+            sidecarInstanceCacheMap.put(serviceId, sidecarInstanceInfo);
+            return true;
+        }
+        return false;
+    }
 
-	private SidecarInstanceInfo buildCache(String ip, Integer port, Status status) {
-		SidecarInstanceInfo cache = new SidecarInstanceInfo();
-		cache.setIp(ip);
-		cache.setPort(port);
-		cache.setStatus(status);
-		return cache;
-	}
+    private SidecarInstanceInfo buildCache(String ip, Integer port, Status status) {
+        SidecarInstanceInfo cache = new SidecarInstanceInfo();
+        cache.setIp(ip);
+        cache.setPort(port);
+        cache.setStatus(status);
+        return cache;
+    }
 
 }

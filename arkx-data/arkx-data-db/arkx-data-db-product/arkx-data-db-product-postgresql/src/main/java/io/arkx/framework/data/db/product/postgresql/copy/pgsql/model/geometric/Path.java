@@ -4,30 +4,30 @@ import java.util.List;
 
 public class Path {
 
-	private final boolean isClosed;
+    private final boolean isClosed;
 
-	private final List<Point> points;
+    private final List<Point> points;
 
-	public Path(boolean closed, List<Point> points) {
+    public Path(boolean closed, List<Point> points) {
 
-		if (points == null) {
-			throw new IllegalArgumentException("points");
-		}
+        if (points == null) {
+            throw new IllegalArgumentException("points");
+        }
 
-		this.isClosed = closed;
-		this.points = points;
-	}
+        this.isClosed = closed;
+        this.points = points;
+    }
 
-	public boolean isClosed() {
-		return isClosed;
-	}
+    public boolean isClosed() {
+        return isClosed;
+    }
 
-	public List<Point> getPoints() {
-		return points;
-	}
+    public List<Point> getPoints() {
+        return points;
+    }
 
-	public int size() {
-		return points.size();
-	}
+    public int size() {
+        return points.size();
+    }
 
 }

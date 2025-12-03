@@ -69,141 +69,143 @@ import io.arkx.framework.core.exception.BeanSetPropertyException;
  */
 public class BeanProperty {
 
-	Method readMethod;
+    Method readMethod;
 
-	Method writeMethod;
+    Method writeMethod;
 
-	String name;
+    String name;
 
-	Field field;
+    Field field;
 
-	/**
-	 * 构造器
-	 * @param field public字段
-	 */
-	public BeanProperty(Field field) {
-		this.field = field;
-		field.setAccessible(true);
-		name = field.getName();
-		afterNameSet();
-	}
+    /**
+     * 构造器
+     *
+     * @param field
+     *            public字段
+     */
+    public BeanProperty(Field field) {
+        this.field = field;
+        field.setAccessible(true);
+        name = field.getName();
+        afterNameSet();
+    }
 
-	/**
-	 * 构造器
-	 * @param readMethod 属性的读方法
-	 * @param writeMethod 属性的写方法
-	 */
-	public BeanProperty(Method readMethod, Method writeMethod) {
-		this.readMethod = readMethod;
-		this.writeMethod = writeMethod;
-		if (readMethod != null) {
-			name = readMethod.getName();
-			if (name.startsWith("get")) {
-				name = name.substring(3);
-			}
-			if (name.startsWith("is")) {
-				name = name.substring(2);
-			}
-		}
-		if (writeMethod != null) {
-			name = writeMethod.getName();
-			if (name.startsWith("set")) {
-				name = name.substring(3);
-			}
-		}
-		afterNameSet();
-	}
+    /**
+     * 构造器
+     *
+     * @param readMethod
+     *            属性的读方法
+     * @param writeMethod
+     *            属性的写方法
+     */
+    public BeanProperty(Method readMethod, Method writeMethod) {
+        this.readMethod = readMethod;
+        this.writeMethod = writeMethod;
+        if (readMethod != null) {
+            name = readMethod.getName();
+            if (name.startsWith("get")) {
+                name = name.substring(3);
+            }
+            if (name.startsWith("is")) {
+                name = name.substring(2);
+            }
+        }
+        if (writeMethod != null) {
+            name = writeMethod.getName();
+            if (name.startsWith("set")) {
+                name = name.substring(3);
+            }
+        }
+        afterNameSet();
+    }
 
-	/**
-	 * @param bean Bean实例
-	 * @return 指定的Bean实例中当前属性的值
-	 */
-	public Object read(Object bean) {
-		try {
-			if (field != null) {
-				return field.get(bean);
-			}
-			else if (readMethod != null) {
-				return readMethod.invoke(bean);
-			}
-		}
-		catch (Exception e) {
-			throw new BeanGetPropertyException(e);
-		}
-		throw new BeanException("Bean " + bean.getClass().getName() + " 's property [" + name + "] can't be read!");
-	}
+    /**
+     * @param bean
+     *            Bean实例
+     * @return 指定的Bean实例中当前属性的值
+     */
+    public Object read(Object bean) {
+        try {
+            if (field != null) {
+                return field.get(bean);
+            } else if (readMethod != null) {
+                return readMethod.invoke(bean);
+            }
+        } catch (Exception e) {
+            throw new BeanGetPropertyException(e);
+        }
+        throw new BeanException("Bean " + bean.getClass().getName() + " 's property [" + name + "] can't be read!");
+    }
 
-	/**
-	 * 将值设置到指定Bean实例的当前属性上
-	 * @param bean Bean实例
-	 * @param value 属性值
-	 */
-	public void write(Object bean, Object value) {
-		try {
-			if (field != null) {
-				value = CastorService.toType(value, field.getType());
-				field.set(bean, value);
-			}
-			else if (writeMethod != null) {
-				value = CastorService.toType(value, writeMethod.getParameterTypes()[0]);
-				writeMethod.invoke(bean, new Object[] { value });
-			}
-			else {
-				throw new BeanException(
-						"Bean " + bean.getClass().getName() + " 's property [" + name + "] can't be be write!");
-			}
-		}
-		catch (Exception e) {
-			throw new BeanSetPropertyException(e);
-		}
-	}
+    /**
+     * 将值设置到指定Bean实例的当前属性上
+     *
+     * @param bean
+     *            Bean实例
+     * @param value
+     *            属性值
+     */
+    public void write(Object bean, Object value) {
+        try {
+            if (field != null) {
+                value = CastorService.toType(value, field.getType());
+                field.set(bean, value);
+            } else if (writeMethod != null) {
+                value = CastorService.toType(value, writeMethod.getParameterTypes()[0]);
+                writeMethod.invoke(bean, new Object[]{value});
+            } else {
+                throw new BeanException(
+                        "Bean " + bean.getClass().getName() + " 's property [" + name + "] can't be be write!");
+            }
+        } catch (Exception e) {
+            throw new BeanSetPropertyException(e);
+        }
+    }
 
-	/**
-	 * @return 属性值的类型
-	 */
-	public Class<?> getPropertyType() {
-		if (field != null) {
-			return field.getType();
-		}
-		else if (writeMethod != null) {
-			return writeMethod.getParameterTypes()[0];
-		}
-		else if (readMethod != null) {
-			return readMethod.getReturnType();
-		}
-		throw new BeanException("Bean's property [" + name + "] not initalized!");
-	}
+    /**
+     * @return 属性值的类型
+     */
+    public Class<?> getPropertyType() {
+        if (field != null) {
+            return field.getType();
+        } else if (writeMethod != null) {
+            return writeMethod.getParameterTypes()[0];
+        } else if (readMethod != null) {
+            return readMethod.getReturnType();
+        }
+        throw new BeanException("Bean's property [" + name + "] not initalized!");
+    }
 
-	/**
-	 * 属性名设置之后执行本方法
-	 */
-	private void afterNameSet() {
-		if (Character.isUpperCase(name.charAt(0)) && !Character.isLowerCase(name.charAt(1))) {
-			return;// 如果前两个字母都大小写，则返回
-		}
-		// 将首字母小写
-		name = name.substring(0, 1).toLowerCase() + name.substring(1);
-	}
+    /**
+     * 属性名设置之后执行本方法
+     */
+    private void afterNameSet() {
+        if (Character.isUpperCase(name.charAt(0)) && !Character.isLowerCase(name.charAt(1))) {
+            return;// 如果前两个字母都大小写，则返回
+        }
+        // 将首字母小写
+        name = name.substring(0, 1).toLowerCase() + name.substring(1);
+    }
 
-	/**
-	 * @return 属性名
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return 属性名
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @return 是否可读
-	 */
-	public boolean canRead() {
-		return field != null || readMethod != null;
-	}
+    /**
+     * @return 是否可读
+     */
+    public boolean canRead() {
+        return field != null || readMethod != null;
+    }
 
-	/**
-	 * @return 是否可写
-	 */
-	public boolean canWrite() {
-		return field != null || writeMethod != null;
-	}
+    /**
+     * @return 是否可写
+     */
+    public boolean canWrite() {
+        return field != null || writeMethod != null;
+    }
 
 }

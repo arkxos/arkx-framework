@@ -8,14 +8,14 @@ package io.arkx.framework.commons.enums;
  */
 public enum BusinessStatus {
 
-	/**
-	 * 成功
-	 */
-	SUCCESS,
+    /**
+     * 成功
+     */
+    SUCCESS,
 
-	/**
-	 * 失败
-	 */
-	FAIL,
+    /**
+     * 失败
+     */
+    FAIL,
 
 }

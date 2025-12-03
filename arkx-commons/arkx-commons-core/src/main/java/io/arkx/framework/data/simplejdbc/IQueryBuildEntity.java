@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface IQueryBuildEntity<T> {
 
-	List<T> buildEntity(ResultSet resultSet, int columnCount);
+    List<T> buildEntity(ResultSet resultSet, int columnCount);
 
 }

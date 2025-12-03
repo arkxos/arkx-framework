@@ -73,101 +73,100 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 public class FunctionInvocation extends Expression {
 
-	// -------------------------------------
-	// Properties
-	// -------------------------------------
-	// property index
+    // -------------------------------------
+    // Properties
+    // -------------------------------------
+    // property index
 
-	private String functionName;
+    private String functionName;
 
-	private List<Expression> argumentList;
+    private List<Expression> argumentList;
 
-	public String getFunctionName() {
-		return functionName;
-	}
+    public String getFunctionName() {
+        return functionName;
+    }
 
-	public void setFunctionName(String f) {
-		functionName = f;
-	}
+    public void setFunctionName(String f) {
+        functionName = f;
+    }
 
-	public List<Expression> getArgumentList() {
-		return argumentList;
-	}
+    public List<Expression> getArgumentList() {
+        return argumentList;
+    }
 
-	public void setArgumentList(List<Expression> l) {
-		argumentList = l;
-	}
+    public void setArgumentList(List<Expression> l) {
+        argumentList = l;
+    }
 
-	public FunctionInvocation(String functionName, List<Expression> argumentList) {
-		this.functionName = functionName;
-		this.argumentList = argumentList;
-	}
+    public FunctionInvocation(String functionName, List<Expression> argumentList) {
+        this.functionName = functionName;
+        this.argumentList = argumentList;
+    }
 
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	@Override
-	public String getExpressionString() {
-		StringBuffer b = new StringBuffer();
-		b.append(functionName);
-		b.append("(");
-		Iterator<Expression> i = argumentList.iterator();
-		while (i.hasNext()) {
-			b.append(i.next().getExpressionString());
-			if (i.hasNext()) {
-				b.append(", ");
-			}
-		}
-		b.append(")");
-		return b.toString();
-	}
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    @Override
+    public String getExpressionString() {
+        StringBuffer b = new StringBuffer();
+        b.append(functionName);
+        b.append("(");
+        Iterator<Expression> i = argumentList.iterator();
+        while (i.hasNext()) {
+            b.append(i.next().getExpressionString());
+            if (i.hasNext()) {
+                b.append(", ");
+            }
+        }
+        b.append(")");
+        return b.toString();
+    }
 
-	// -------------------------------------
-	/**
-	 * Evaluates by looking up the name in the VariableResolver
-	 **/
-	@Override
-	public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-			throws ExpressionException {
+    // -------------------------------------
+    /**
+     * Evaluates by looking up the name in the VariableResolver
+     **/
+    @Override
+    public Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException {
 
-		// if the Map is null, then the function is invalid
-		if (functions == null) {
-			pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
-		}
+        // if the Map is null, then the function is invalid
+        if (functions == null) {
+            pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
+        }
 
-		// normalize function name
-		String prefix = null;
-		String localName = null;
-		int index = functionName.indexOf(':');
-		if (index == -1) {
-			prefix = "";
-			localName = functionName;
-		}
-		else {
-			prefix = functionName.substring(0, index);
-			localName = functionName.substring(index + 1);
-		}
+        // normalize function name
+        String prefix = null;
+        String localName = null;
+        int index = functionName.indexOf(':');
+        if (index == -1) {
+            prefix = "";
+            localName = functionName;
+        } else {
+            prefix = functionName.substring(0, index);
+            localName = functionName.substring(index + 1);
+        }
 
-		// ensure that the function's name is mapped
-		IFunction target = functions.resolveFunction(prefix, localName);
-		if (target == null) {
-			pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
-		}
+        // ensure that the function's name is mapped
+        IFunction target = functions.resolveFunction(prefix, localName);
+        if (target == null) {
+            pLogger.logError(Constants.UNKNOWN_FUNCTION, functionName);
+        }
 
-		Class<?>[] types = target.getArgumentTypes();
-		Object[] arguments = new Object[argumentList.size()];
-		for (int i = 0; i < types.length && i < arguments.length; i++) {
-			arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
-			arguments[i] = Coercions.coerce(arguments[i], types[i], pLogger);
-		}
-		if (types.length < arguments.length) {// 动态参数的情况
-			for (int i = types.length; i < arguments.length; i++) {
-				arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
-			}
-		}
+        Class<?>[] types = target.getArgumentTypes();
+        Object[] arguments = new Object[argumentList.size()];
+        for (int i = 0; i < types.length && i < arguments.length; i++) {
+            arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
+            arguments[i] = Coercions.coerce(arguments[i], types[i], pLogger);
+        }
+        if (types.length < arguments.length) {// 动态参数的情况
+            for (int i = types.length; i < arguments.length; i++) {
+                arguments[i] = argumentList.get(i).evaluate(pResolver, functions, pLogger);
+            }
+        }
 
-		// finally, invoke the target method, which we know to be static
-		return target.execute(pResolver, arguments);
-	}
+        // finally, invoke the target method, which we know to be static
+        return target.execute(pResolver, arguments);
+    }
 
 }

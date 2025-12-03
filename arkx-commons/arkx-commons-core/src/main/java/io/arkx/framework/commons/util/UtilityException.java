@@ -6,10 +6,10 @@ package io.arkx.framework.commons.util;
  */
 public class UtilityException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public UtilityException(String message) {
-		super(message);
-	}
+    public UtilityException(String message) {
+        super(message);
+    }
 
 }

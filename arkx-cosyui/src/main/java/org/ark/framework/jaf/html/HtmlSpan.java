@@ -8,9 +8,9 @@ package org.ark.framework.jaf.html;
  */
 public class HtmlSpan extends HtmlElement {
 
-	public HtmlSpan() {
-		this.ElementType = "SPAN";
-		this.TagName = "span";
-	}
+    public HtmlSpan() {
+        this.ElementType = "SPAN";
+        this.TagName = "span";
+    }
 
 }

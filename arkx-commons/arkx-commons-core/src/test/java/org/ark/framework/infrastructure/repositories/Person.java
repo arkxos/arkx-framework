@@ -14,49 +14,49 @@ import io.arkx.framework.data.jdbc.BaseEntity;
 @Entity(name = "test__person")
 public class Person extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Ingore
-	public static final String Birthday = "birthday";
+    @Ingore
+    public static final String Birthday = "birthday";
 
-	private String name;
+    private String name;
 
-	private String sex;
+    private String sex;
 
-	private int age;
+    private int age;
 
-	private Date birthday;
+    private Date birthday;
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    public Date getBirthday() {
+        return birthday;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getSex() {
-		return sex;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
 }

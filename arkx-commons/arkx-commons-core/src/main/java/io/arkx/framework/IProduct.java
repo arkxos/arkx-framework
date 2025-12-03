@@ -8,12 +8,12 @@ package io.arkx.framework;
  */
 public interface IProduct {
 
-	String getAppCode();
+    String getAppCode();
 
-	String getAppName();
+    String getAppName();
 
-	float getMainVersion();
+    float getMainVersion();
 
-	float getMinorVersion();
+    float getMinorVersion();
 
 }

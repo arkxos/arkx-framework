@@ -9,15 +9,15 @@ import java.util.TimerTask;
  */
 public class StoreMonitor extends TimerTask {
 
-	DownloadMission mission;
+    DownloadMission mission;
 
-	public StoreMonitor(DownloadMission mission) {
-		this.mission = mission;
-	}
+    public StoreMonitor(DownloadMission mission) {
+        this.mission = mission;
+    }
 
-	@Override
-	public void run() {
-		mission.storeProgress();
-	}
+    @Override
+    public void run() {
+        mission.storeProgress();
+    }
 
 }

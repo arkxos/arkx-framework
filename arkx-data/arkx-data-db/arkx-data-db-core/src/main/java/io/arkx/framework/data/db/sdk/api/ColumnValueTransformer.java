@@ -8,6 +8,6 @@ package io.arkx.framework.data.db.sdk.api;
  */
 public interface ColumnValueTransformer {
 
-	void transform(String columnName, Object[] originalResult, int i);
+    void transform(String columnName, Object[] originalResult, int i);
 
 }

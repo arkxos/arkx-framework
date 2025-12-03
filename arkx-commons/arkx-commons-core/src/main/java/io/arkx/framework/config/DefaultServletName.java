@@ -8,20 +8,20 @@ import io.arkx.framework.Config;
  */
 public class DefaultServletName implements IApplicationConfigItem {
 
-	public static final String ID = "DefaultServletName";
+    public static final String ID = "DefaultServletName";
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "Default servlet's name in current container";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "Default servlet's name in current container";
+    }
 
-	public static String getValue() {
-		return Config.getValue("App." + ID);
-	}
+    public static String getValue() {
+        return Config.getValue("App." + ID);
+    }
 
 }

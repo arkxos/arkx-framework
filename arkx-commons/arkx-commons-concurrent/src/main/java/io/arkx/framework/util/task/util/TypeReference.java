@@ -4,17 +4,17 @@ import java.lang.reflect.Type;
 
 public abstract class TypeReference<T> implements Type {
 
-	private final Type type = TypeUtil.getTypeArgument(this.getClass());
+    private final Type type = TypeUtil.getTypeArgument(this.getClass());
 
-	public TypeReference() {
-	}
+    public TypeReference() {
+    }
 
-	public Type getType() {
-		return this.type;
-	}
+    public Type getType() {
+        return this.type;
+    }
 
-	public String toString() {
-		return this.type.toString();
-	}
+    public String toString() {
+        return this.type.toString();
+    }
 
 }

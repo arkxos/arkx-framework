@@ -72,86 +72,86 @@ import io.arkx.framework.thirdparty.el.Logger;
 
 public class GreaterThanOperator extends RelationalOperator {
 
-	// -------------------------------------
-	// Singleton
-	// -------------------------------------
+    // -------------------------------------
+    // Singleton
+    // -------------------------------------
 
-	public static final GreaterThanOperator SINGLETON = new GreaterThanOperator();
+    public static final GreaterThanOperator SINGLETON = new GreaterThanOperator();
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public GreaterThanOperator() {
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public GreaterThanOperator() {
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	@Override
-	public String getOperatorSymbol() {
-		return ">";
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the symbol representing the operator
+     **/
+    @Override
+    public String getOperatorSymbol() {
+        return ">";
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given value
-	 **/
-	@Override
-	public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
-		return Operators.gt(pLeft, pRight);
-	}
+    // -------------------------------------
+    /**
+     * Applies the operator to the given value
+     **/
+    @Override
+    public Object apply(Object pLeft, Object pRight, Logger pLogger) throws ExpressionException {
+        return Operators.gt(pLeft, pRight);
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given double values
-	 **/
-	@Override
-	public boolean apply(double pLeft, double pRight) {
-		return pLeft > pRight;
-	}
+    // -------------------------------------
+    /**
+     * Applies the operator to the given double values
+     **/
+    @Override
+    public boolean apply(double pLeft, double pRight) {
+        return pLeft > pRight;
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given long values
-	 **/
-	@Override
-	public boolean apply(long pLeft, long pRight) {
-		return pLeft > pRight;
-	}
+    // -------------------------------------
+    /**
+     * Applies the operator to the given long values
+     **/
+    @Override
+    public boolean apply(long pLeft, long pRight) {
+        return pLeft > pRight;
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given String values
-	 **/
-	@Override
-	public boolean apply(String pLeft, String pRight) {
-		return pLeft.compareTo(pRight) > 0;
-	}
+    // -------------------------------------
+    /**
+     * Applies the operator to the given String values
+     **/
+    @Override
+    public boolean apply(String pLeft, String pRight) {
+        return pLeft.compareTo(pRight) > 0;
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
-	/**
-	 * Applies the operator to the given BigDecimal values, returning a BigDecimal
-	 **/
-	@Override
-	public boolean apply(BigDecimal pLeft, BigDecimal pRight) {
-		return isGreater(pLeft.compareTo(pRight));
-	}
+    /**
+     * Applies the operator to the given BigDecimal values, returning a BigDecimal
+     **/
+    @Override
+    public boolean apply(BigDecimal pLeft, BigDecimal pRight) {
+        return isGreater(pLeft.compareTo(pRight));
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
-	/**
-	 * Applies the operator to the given BigDecimal values, returning a BigDecimal
-	 **/
-	@Override
-	public boolean apply(BigInteger pLeft, BigInteger pRight) {
-		return isGreater(pLeft.compareTo(pRight));
-	}
+    /**
+     * Applies the operator to the given BigDecimal values, returning a BigDecimal
+     **/
+    @Override
+    public boolean apply(BigInteger pLeft, BigInteger pRight) {
+        return isGreater(pLeft.compareTo(pRight));
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

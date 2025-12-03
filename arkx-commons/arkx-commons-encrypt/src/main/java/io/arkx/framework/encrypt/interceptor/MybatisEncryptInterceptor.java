@@ -31,101 +31,109 @@ import lombok.extern.slf4j.Slf4j;
  * @version 4.6.0
  */
 @Slf4j
-@Intercepts({ @Signature(type = ParameterHandler.class, method = "setParameters", args = { PreparedStatement.class }) })
+@Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
 @AllArgsConstructor
 public class MybatisEncryptInterceptor implements Interceptor {
 
-	private final EncryptorManager encryptorManager;
+    private final EncryptorManager encryptorManager;
 
-	private final EncryptorProperties defaultProperties;
+    private final EncryptorProperties defaultProperties;
 
-	@Override
-	public Object intercept(Invocation invocation) throws Throwable {
-		return invocation;
-	}
+    @Override
+    public Object intercept(Invocation invocation) throws Throwable {
+        return invocation;
+    }
 
-	@Override
-	public Object plugin(Object target) {
-		if (target instanceof ParameterHandler) {
-			ParameterHandler parameterHandler = (ParameterHandler) target;
-			// 进行加密操作
-			Object parameterObject = parameterHandler.getParameterObject();
-			if (ObjectUtil.isNotNull(parameterObject) && !(parameterObject instanceof String)) {
-				this.encryptHandler(parameterObject);
-			}
-		}
-		return target;
-	}
+    @Override
+    public Object plugin(Object target) {
+        if (target instanceof ParameterHandler) {
+            ParameterHandler parameterHandler = (ParameterHandler) target;
+            // 进行加密操作
+            Object parameterObject = parameterHandler.getParameterObject();
+            if (ObjectUtil.isNotNull(parameterObject) && !(parameterObject instanceof String)) {
+                this.encryptHandler(parameterObject);
+            }
+        }
+        return target;
+    }
 
-	/**
-	 * 加密对象
-	 * @param sourceObject 待加密对象
-	 */
-	private void encryptHandler(Object sourceObject) {
-		if (ObjectUtil.isNull(sourceObject)) {
-			return;
-		}
-		if (sourceObject instanceof Map<?, ?>) {
-			Map<?, ?> map = (Map<?, ?>) sourceObject;
-			new HashSet<>(map.values()).forEach(this::encryptHandler);
-			return;
-		}
-		if (sourceObject instanceof List<?>) {
-			List<?> list = (List<?>) sourceObject;
-			if (CollUtil.isEmpty(list)) {
-				return;
-			}
-			// 判断第一个元素是否含有注解。如果没有直接返回，提高效率
-			Object firstItem = list.get(0);
-			if (ObjectUtil.isNull(firstItem)
-					|| CollUtil.isEmpty(encryptorManager.getFieldCache(firstItem.getClass()))) {
-				return;
-			}
-			list.forEach(this::encryptHandler);
-			return;
-		}
-		// 不在缓存中的类,就是没有加密注解的类(当然也有可能是typeAliasesPackage写错)
-		Set<Field> fields = encryptorManager.getFieldCache(sourceObject.getClass());
-		if (ObjectUtil.isNull(fields)) {
-			return;
-		}
-		try {
-			for (Field field : fields) {
-				field.set(sourceObject, this.encryptField(Convert.toStr(field.get(sourceObject)), field));
-			}
-		}
-		catch (Exception e) {
-			log.error("处理加密字段时出错", e);
-		}
-	}
+    /**
+     * 加密对象
+     *
+     * @param sourceObject
+     *            待加密对象
+     */
+    private void encryptHandler(Object sourceObject) {
+        if (ObjectUtil.isNull(sourceObject)) {
+            return;
+        }
+        if (sourceObject instanceof Map<?, ?>) {
+            Map<?, ?> map = (Map<?, ?>) sourceObject;
+            new HashSet<>(map.values()).forEach(this::encryptHandler);
+            return;
+        }
+        if (sourceObject instanceof List<?>) {
+            List<?> list = (List<?>) sourceObject;
+            if (CollUtil.isEmpty(list)) {
+                return;
+            }
+            // 判断第一个元素是否含有注解。如果没有直接返回，提高效率
+            Object firstItem = list.get(0);
+            if (ObjectUtil.isNull(firstItem)
+                    || CollUtil.isEmpty(encryptorManager.getFieldCache(firstItem.getClass()))) {
+                return;
+            }
+            list.forEach(this::encryptHandler);
+            return;
+        }
+        // 不在缓存中的类,就是没有加密注解的类(当然也有可能是typeAliasesPackage写错)
+        Set<Field> fields = encryptorManager.getFieldCache(sourceObject.getClass());
+        if (ObjectUtil.isNull(fields)) {
+            return;
+        }
+        try {
+            for (Field field : fields) {
+                field.set(sourceObject, this.encryptField(Convert.toStr(field.get(sourceObject)), field));
+            }
+        } catch (Exception e) {
+            log.error("处理加密字段时出错", e);
+        }
+    }
 
-	/**
-	 * 字段值进行加密。通过字段的批注注册新的加密算法
-	 * @param value 待加密的值
-	 * @param field 待加密字段
-	 * @return 加密后结果
-	 */
-	private String encryptField(String value, Field field) {
-		if (ObjectUtil.isNull(value)) {
-			return null;
-		}
-		EncryptField encryptField = field.getAnnotation(EncryptField.class);
-		EncryptContext encryptContext = new EncryptContext();
-		encryptContext.setAlgorithm(encryptField.algorithm() == AlgorithmType.DEFAULT ? defaultProperties.getAlgorithm()
-				: encryptField.algorithm());
-		encryptContext.setEncode(
-				encryptField.encode() == EncodeType.DEFAULT ? defaultProperties.getEncode() : encryptField.encode());
-		encryptContext.setPassword(StringUtils.isBlank(encryptField.password()) ? defaultProperties.getPassword()
-				: encryptField.password());
-		encryptContext.setPrivateKey(StringUtils.isBlank(encryptField.privateKey()) ? defaultProperties.getPrivateKey()
-				: encryptField.privateKey());
-		encryptContext.setPublicKey(StringUtils.isBlank(encryptField.publicKey()) ? defaultProperties.getPublicKey()
-				: encryptField.publicKey());
-		return this.encryptorManager.encrypt(value, encryptContext);
-	}
+    /**
+     * 字段值进行加密。通过字段的批注注册新的加密算法
+     *
+     * @param value
+     *            待加密的值
+     * @param field
+     *            待加密字段
+     * @return 加密后结果
+     */
+    private String encryptField(String value, Field field) {
+        if (ObjectUtil.isNull(value)) {
+            return null;
+        }
+        EncryptField encryptField = field.getAnnotation(EncryptField.class);
+        EncryptContext encryptContext = new EncryptContext();
+        encryptContext.setAlgorithm(encryptField.algorithm() == AlgorithmType.DEFAULT
+                ? defaultProperties.getAlgorithm()
+                : encryptField.algorithm());
+        encryptContext.setEncode(
+                encryptField.encode() == EncodeType.DEFAULT ? defaultProperties.getEncode() : encryptField.encode());
+        encryptContext.setPassword(StringUtils.isBlank(encryptField.password())
+                ? defaultProperties.getPassword()
+                : encryptField.password());
+        encryptContext.setPrivateKey(StringUtils.isBlank(encryptField.privateKey())
+                ? defaultProperties.getPrivateKey()
+                : encryptField.privateKey());
+        encryptContext.setPublicKey(StringUtils.isBlank(encryptField.publicKey())
+                ? defaultProperties.getPublicKey()
+                : encryptField.publicKey());
+        return this.encryptorManager.encrypt(value, encryptContext);
+    }
 
-	@Override
-	public void setProperties(Properties properties) {
-	}
+    @Override
+    public void setProperties(Properties properties) {
+    }
 
 }

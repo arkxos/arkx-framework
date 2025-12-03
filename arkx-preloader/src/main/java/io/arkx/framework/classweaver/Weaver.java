@@ -7,9 +7,9 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.CLASS)
-@Target({ java.lang.annotation.ElementType.TYPE })
+@Target({java.lang.annotation.ElementType.TYPE})
 public @interface Weaver {
 
-	Class<?> value();
+    Class<?> value();
 
 }

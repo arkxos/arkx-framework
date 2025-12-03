@@ -4,6 +4,6 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.constants.DataTyp
 
 public interface IValueHandlerProvider {
 
-	<TTargetType> IValueHandler<TTargetType> resolve(DataType targetType);
+    <TTargetType> IValueHandler<TTargetType> resolve(DataType targetType);
 
 }

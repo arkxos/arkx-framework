@@ -19,69 +19,69 @@ package io.arkx.framework.datasource.dynamic.support;
 /**
  * @author lengleng
  * @date 2019-04-01
- * <p>
- * 数据源相关常量
+ *       <p>
+ *       数据源相关常量
  */
 public interface DataSourceConstants {
 
-	/**
-	 * 数据源名称
-	 */
-	String NAME = "name";
+    /**
+     * 数据源名称
+     */
+    String NAME = "name";
 
-	/**
-	 * 默认数据源（master）
-	 */
-	String DS_MASTER = "master";
+    /**
+     * 默认数据源（master）
+     */
+    String DS_MASTER = "master";
 
-	/**
-	 * jdbcurl
-	 */
-	String DS_JDBC_URL = "url";
+    /**
+     * jdbcurl
+     */
+    String DS_JDBC_URL = "url";
 
-	/**
-	 * 配置类型
-	 */
-	String DS_CONFIG_TYPE = "conf_type";
+    /**
+     * 配置类型
+     */
+    String DS_CONFIG_TYPE = "conf_type";
 
-	/**
-	 * 用户名
-	 */
-	String DS_USER_NAME = "username";
+    /**
+     * 用户名
+     */
+    String DS_USER_NAME = "username";
 
-	/**
-	 * 密码
-	 */
-	String DS_USER_PWD = "password";
+    /**
+     * 密码
+     */
+    String DS_USER_PWD = "password";
 
-	/**
-	 * 驱动包名称
-	 */
-	String DS_DRIVER_CLASS_NAME = "driver_class_name";
+    /**
+     * 驱动包名称
+     */
+    String DS_DRIVER_CLASS_NAME = "driver_class_name";
 
-	/**
-	 * 数据库类型
-	 */
-	String DS_TYPE = "ds_type";
+    /**
+     * 数据库类型
+     */
+    String DS_TYPE = "ds_type";
 
-	/**
-	 * 数据库名称
-	 */
-	String DS_NAME = "ds_name";
+    /**
+     * 数据库名称
+     */
+    String DS_NAME = "ds_name";
 
-	/**
-	 * 主机类型
-	 */
-	String DS_HOST = "host";
+    /**
+     * 主机类型
+     */
+    String DS_HOST = "host";
 
-	/**
-	 * 端口
-	 */
-	String DS_PORT = "port";
+    /**
+     * 端口
+     */
+    String DS_PORT = "port";
 
-	/**
-	 * 实例名称
-	 */
-	String DS_INSTANCE = "instance";
+    /**
+     * 实例名称
+     */
+    String DS_INSTANCE = "instance";
 
 }

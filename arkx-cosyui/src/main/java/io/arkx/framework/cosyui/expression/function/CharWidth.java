@@ -11,43 +11,43 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
  */
 public class CharWidth extends AbstractFunction {
 
-	@Override
-	public Object execute(IVariableResolver resolver, Object... args) {
-		String input = (String) args[0];
-		Integer charWidth = 0;
-		if (args.length > 1) {
-			charWidth = (Integer) args[1];
-		}
-		String suffix = "";
-		if (args.length > 2) {
-			suffix = (String) args[2];
-		}
-		String r = StringUtil.quickHtmlDecode(input);
-		boolean decoded = r.length() != input.length();
-		if (StringUtil.lengthEx(r) > charWidth) {
-			r = StringUtil.subStringEx(r, charWidth);
-			if (decoded) {
-				r = StringUtil.quickHtmlEncode(r);
-			}
-			return r + suffix;
-		}
-		return input;
+    @Override
+    public Object execute(IVariableResolver resolver, Object... args) {
+        String input = (String) args[0];
+        Integer charWidth = 0;
+        if (args.length > 1) {
+            charWidth = (Integer) args[1];
+        }
+        String suffix = "";
+        if (args.length > 2) {
+            suffix = (String) args[2];
+        }
+        String r = StringUtil.quickHtmlDecode(input);
+        boolean decoded = r.length() != input.length();
+        if (StringUtil.lengthEx(r) > charWidth) {
+            r = StringUtil.subStringEx(r, charWidth);
+            if (decoded) {
+                r = StringUtil.quickHtmlEncode(r);
+            }
+            return r + suffix;
+        }
+        return input;
 
-	}
+    }
 
-	@Override
-	public String getFunctionPrefix() {
-		return "";
-	}
+    @Override
+    public String getFunctionPrefix() {
+        return "";
+    }
 
-	@Override
-	public String getFunctionName() {
-		return "charWidth";
-	}
+    @Override
+    public String getFunctionName() {
+        return "charWidth";
+    }
 
-	@Override
-	public Class<?>[] getArgumentTypes() {
-		return new Class<?>[] { String.class, Integer.class, String.class };
-	}
+    @Override
+    public Class<?>[] getArgumentTypes() {
+        return new Class<?>[]{String.class, Integer.class, String.class};
+    }
 
 }

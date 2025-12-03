@@ -8,10 +8,10 @@ import io.arkx.framework.core.FrameworkException;
  */
 public class BeanException extends FrameworkException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public BeanException(String message) {
-		super(message);
-	}
+    public BeanException(String message) {
+        super(message);
+    }
 
 }

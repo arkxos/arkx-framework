@@ -17,33 +17,32 @@ import jakarta.servlet.jsp.JspWriter;
  */
 public class ZhtmlIncludeResponseWrapper extends HttpServletResponseWrapper {
 
-	private PrintWriter printWriter;
+    private PrintWriter printWriter;
 
-	private JspWriter jspWriter;
+    private JspWriter jspWriter;
 
-	private ServletResponse response;
+    private ServletResponse response;
 
-	public ZhtmlIncludeResponseWrapper(ServletResponse response, JspWriter jspWriter) {
-		super((HttpServletResponse) response);
-		this.printWriter = new PrintWriter(jspWriter);
-		this.response = response;
-		this.jspWriter = jspWriter;
-	}
+    public ZhtmlIncludeResponseWrapper(ServletResponse response, JspWriter jspWriter) {
+        super((HttpServletResponse) response);
+        this.printWriter = new PrintWriter(jspWriter);
+        this.response = response;
+        this.jspWriter = jspWriter;
+    }
 
-	public PrintWriter getWriter() throws IOException {
-		return this.printWriter;
-	}
+    public PrintWriter getWriter() throws IOException {
+        return this.printWriter;
+    }
 
-	public ServletOutputStream getOutputStream() throws IOException {
-		return this.response.getOutputStream();
-	}
+    public ServletOutputStream getOutputStream() throws IOException {
+        return this.response.getOutputStream();
+    }
 
-	public void resetBuffer() {
-		try {
-			this.jspWriter.clearBuffer();
-		}
-		catch (IOException localIOException) {
-		}
-	}
+    public void resetBuffer() {
+        try {
+            this.jspWriter.clearBuffer();
+        } catch (IOException localIOException) {
+        }
+    }
 
 }

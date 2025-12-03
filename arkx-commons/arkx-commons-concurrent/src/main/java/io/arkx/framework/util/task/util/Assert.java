@@ -2,14 +2,14 @@ package io.arkx.framework.util.task.util;
 
 public final class Assert {
 
-	private Assert() {
+    private Assert() {
 
-	}
+    }
 
-	public static void notNull(Object obj) {
-		if (obj == null) {
-			throw new IllegalArgumentException("parameter not null.");
-		}
-	}
+    public static void notNull(Object obj) {
+        if (obj == null) {
+            throw new IllegalArgumentException("parameter not null.");
+        }
+    }
 
 }

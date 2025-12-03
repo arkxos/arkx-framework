@@ -13,16 +13,16 @@ import io.netty.channel.ChannelFutureListener;
  */
 public class LauncherListener implements ChannelFutureListener {
 
-	private CallBackInvoker<Object> invoke = null;
+    private CallBackInvoker<Object> invoke = null;
 
-	public LauncherListener(CallBackInvoker<Object> invoke) {
-		this.invoke = invoke;
-	}
+    public LauncherListener(CallBackInvoker<Object> invoke) {
+        this.invoke = invoke;
+    }
 
-	public void operationComplete(ChannelFuture future) throws Exception {
-		if (!future.isSuccess()) {
-			invoke.setReason(future.cause());
-		}
-	}
+    public void operationComplete(ChannelFuture future) throws Exception {
+        if (!future.isSuccess()) {
+            invoke.setReason(future.cause());
+        }
+    }
 
 }

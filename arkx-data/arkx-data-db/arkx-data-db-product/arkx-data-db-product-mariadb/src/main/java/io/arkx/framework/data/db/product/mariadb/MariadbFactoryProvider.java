@@ -26,28 +26,28 @@ import io.arkx.framework.data.db.product.mysql.MysqlMetadataQueryProvider;
 @Product(ProductTypeEnum.MARIADB)
 public class MariadbFactoryProvider extends AbstractFactoryProvider {
 
-	public MariadbFactoryProvider(DataSource dataSource) {
-		super(dataSource);
-	}
+    public MariadbFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-	@Override
-	public ProductFeatures getProductFeatures() {
-		return new MysqlFeatures();
-	}
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new MysqlFeatures();
+    }
 
-	@Override
-	public MetadataProvider createMetadataQueryProvider() {
-		return new MysqlMetadataQueryProvider(this);
-	}
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new MysqlMetadataQueryProvider(this);
+    }
 
-	@Override
-	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-		return new AutoCastTableDataWriteProvider(this);
-	}
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-	@Override
-	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-		return new AutoCastTableDataSynchronizeProvider(this);
-	}
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

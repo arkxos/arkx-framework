@@ -14,21 +14,21 @@ import io.arkx.framework.commons.util.ObjectUtil;
  */
 public class UploadAction {
 
-	protected ArrayList<FileItem> items;
+    protected ArrayList<FileItem> items;
 
-	public FileItem getFirstFile() {
-		if (ObjectUtil.empty(this.items)) {
-			return null;
-		}
-		return this.items.get(0);
-	}
+    public FileItem getFirstFile() {
+        if (ObjectUtil.empty(this.items)) {
+            return null;
+        }
+        return this.items.get(0);
+    }
 
-	public ArrayList<FileItem> getAllFiles() {
-		return this.items;
-	}
+    public ArrayList<FileItem> getAllFiles() {
+        return this.items;
+    }
 
-	public void setFiles(ArrayList<FileItem> files) {
-		this.items = files;
-	}
+    public void setFiles(ArrayList<FileItem> files) {
+        this.items = files;
+    }
 
 }

@@ -9,8 +9,8 @@ import io.arkx.framework.extend.AbstractExtendService;
  */
 public class JSONConvertorService extends AbstractExtendService<IJSONConvertor> {
 
-	public static JSONConvertorService getInstance() {
-		return (JSONConvertorService) AbstractExtendService.findInstance(JSONConvertorService.class);
-	}
+    public static JSONConvertorService getInstance() {
+        return (JSONConvertorService) AbstractExtendService.findInstance(JSONConvertorService.class);
+    }
 
 }

@@ -16,61 +16,64 @@ import io.arkx.framework.commons.simplequeue.pipeline.Pipeline;
  */
 public class ResultItems {
 
-	private Map<String, Object> fields = new LinkedHashMap<String, Object>();
+    private Map<String, Object> fields = new LinkedHashMap<String, Object>();
 
-	private ElementWarpper request;
+    private ElementWarpper request;
 
-	private boolean skip;
+    private boolean skip;
 
-	public <T> T get(String key) {
-		Object o = fields.get(key);
-		if (o == null) {
-			return null;
-		}
-		return (T) fields.get(key);
-	}
+    public <T> T get(String key) {
+        Object o = fields.get(key);
+        if (o == null) {
+            return null;
+        }
+        return (T) fields.get(key);
+    }
 
-	public Map<String, Object> getAll() {
-		return fields;
-	}
+    public Map<String, Object> getAll() {
+        return fields;
+    }
 
-	public <T> ResultItems put(String key, T value) {
-		fields.put(key, value);
-		return this;
-	}
+    public <T> ResultItems put(String key, T value) {
+        fields.put(key, value);
+        return this;
+    }
 
-	public ElementWarpper getRequest() {
-		return request;
-	}
+    public ElementWarpper getRequest() {
+        return request;
+    }
 
-	public ResultItems setRequest(ElementWarpper request) {
-		this.request = request;
-		return this;
-	}
+    public ResultItems setRequest(ElementWarpper request) {
+        this.request = request;
+        return this;
+    }
 
-	/**
-	 * Whether to skip the result.<br>
-	 * Result which is skipped will not be processed by Pipeline.
-	 * @return whether to skip the result
-	 */
-	public boolean isSkip() {
-		return skip;
-	}
+    /**
+     * Whether to skip the result.<br>
+     * Result which is skipped will not be processed by Pipeline.
+     *
+     * @return whether to skip the result
+     */
+    public boolean isSkip() {
+        return skip;
+    }
 
-	/**
-	 * Set whether to skip the result.<br>
-	 * Result which is skipped will not be processed by Pipeline.
-	 * @param skip whether to skip the result
-	 * @return this
-	 */
-	public ResultItems setSkip(boolean skip) {
-		this.skip = skip;
-		return this;
-	}
+    /**
+     * Set whether to skip the result.<br>
+     * Result which is skipped will not be processed by Pipeline.
+     *
+     * @param skip
+     *            whether to skip the result
+     * @return this
+     */
+    public ResultItems setSkip(boolean skip) {
+        this.skip = skip;
+        return this;
+    }
 
-	@Override
-	public String toString() {
-		return "ResultItems{" + "fields=" + fields + ", request=" + request + ", skip=" + skip + '}';
-	}
+    @Override
+    public String toString() {
+        return "ResultItems{" + "fields=" + fields + ", request=" + request + ", skip=" + skip + '}';
+    }
 
 }

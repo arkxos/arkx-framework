@@ -12,19 +12,19 @@ import io.arkx.framework.extend.plugin.PluginManager;
  */
 public class XTest {
 
-	@Before("")
-	public void before() {
+    @Before("")
+    public void before() {
 
-		Config.setPluginContext(true);
-		Config.withTestMode();
+        Config.setPluginContext(true);
+        Config.withTestMode();
 
-		PluginManager.initTestPlugin();
-		ExtendPluginProvider.getInstance().start();
+        PluginManager.initTestPlugin();
+        ExtendPluginProvider.getInstance().start();
 
-		init();
-	}
+        init();
+    }
 
-	public void init() {
-	}
+    public void init() {
+    }
 
 }

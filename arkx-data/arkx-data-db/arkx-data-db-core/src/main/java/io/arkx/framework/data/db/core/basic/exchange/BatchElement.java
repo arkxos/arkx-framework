@@ -27,24 +27,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BatchElement {
 
-	/**
-	 * 表名映射字符串，形如 A --> B 的形式
-	 */
-	private String tableNameMapString;
+    /**
+     * 表名映射字符串，形如 A --> B 的形式
+     */
+    private String tableNameMapString;
 
-	/**
-	 * 数据写入回调函数
-	 */
-	private ThreeArgsFunction<List<String>, List<Object[]>, org.slf4j.Logger, Long> handler;
+    /**
+     * 数据写入回调函数
+     */
+    private ThreeArgsFunction<List<String>, List<Object[]>, org.slf4j.Logger, Long> handler;
 
-	/**
-	 * 写入回调函数的第1个参数
-	 */
-	private List<String> arg1;
+    /**
+     * 写入回调函数的第1个参数
+     */
+    private List<String> arg1;
 
-	/**
-	 * 写入回调函数的第2个参数
-	 */
-	private List<Object[]> arg2;
+    /**
+     * 写入回调函数的第2个参数
+     */
+    private List<Object[]> arg2;
 
 }

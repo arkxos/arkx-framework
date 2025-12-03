@@ -10,8 +10,8 @@ package io.arkx.framework.data.common.entity;
  */
 public interface Identifier<ID> {
 
-	ID getId();
+    ID getId();
 
-	void setId(ID id);
+    void setId(ID id);
 
 }

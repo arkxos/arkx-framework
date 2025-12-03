@@ -19,22 +19,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDto {
 
-	private Long id;
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	private BigDecimal price;
+    private BigDecimal price;
 
-	private String category;
+    private String category;
 
-	private boolean active;
+    private boolean active;
 
-	// 转换实体到 DTO
-	public static ProductDto fromEntity(Product product) {
-		return new ProductDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(),
-				product.getCategory(), product.isActive());
-	}
+    // 转换实体到 DTO
+    public static ProductDto fromEntity(Product product) {
+        return new ProductDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(),
+                product.getCategory(), product.isActive());
+    }
 
 }

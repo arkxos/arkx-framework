@@ -12,47 +12,47 @@ import io.arkx.framework.data.jdbc.Entity;
 @io.arkx.framework.annotation.Entity(name = "pt_comp__maxno")
 public class MaxNo extends Entity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String noType;
+    private String noType;
 
-	private String noSubType;
+    private String noSubType;
 
-	@Column(name = "NoMaxValue")
-	private Long maxValue;
+    @Column(name = "NoMaxValue")
+    private Long maxValue;
 
-	private Long length;
+    private Long length;
 
-	public String getNoType() {
-		return noType;
-	}
+    public String getNoType() {
+        return noType;
+    }
 
-	public void setNoType(String noType) {
-		this.noType = noType;
-	}
+    public void setNoType(String noType) {
+        this.noType = noType;
+    }
 
-	public String getNoSubType() {
-		return noSubType;
-	}
+    public String getNoSubType() {
+        return noSubType;
+    }
 
-	public void setNoSubType(String noSubType) {
-		this.noSubType = noSubType;
-	}
+    public void setNoSubType(String noSubType) {
+        this.noSubType = noSubType;
+    }
 
-	public Long getMaxValue() {
-		return maxValue;
-	}
+    public Long getMaxValue() {
+        return maxValue;
+    }
 
-	public void setMaxValue(Long maxValue) {
-		this.maxValue = maxValue;
-	}
+    public void setMaxValue(Long maxValue) {
+        this.maxValue = maxValue;
+    }
 
-	public Long getLength() {
-		return length;
-	}
+    public Long getLength() {
+        return length;
+    }
 
-	public void setLength(Long length) {
-		this.length = length;
-	}
+    public void setLength(Long length) {
+        this.length = length;
+    }
 
 }

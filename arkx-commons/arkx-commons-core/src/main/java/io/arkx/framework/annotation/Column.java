@@ -13,13 +13,13 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.FIELD })
+@Target({java.lang.annotation.ElementType.FIELD})
 public @interface Column {
 
-	String name();
+    String name();
 
-	boolean updatable() default true;
+    boolean updatable() default true;
 
-	int length() default 255;
+    int length() default 255;
 
 }

@@ -21,39 +21,38 @@ import jakarta.annotation.Nullable;
 
 public class TaskEventHub {
 
-	private String identifier;
+    private String identifier;
 
-	private ExecutorService executor;
+    private ExecutorService executor;
 
-	private List<EventSubscriber> eventSubscribers;
+    private List<EventSubscriber> eventSubscribers;
 
-	private ExceptionHandler exceptionHandler;
+    private ExceptionHandler exceptionHandler;
 
-	public TaskEventHub(String identifier, int poolSize, ExceptionHandler handler) {
-		this.identifier = Objects.requireNonNull(identifier, "identifier must not be null");
-		this.executor = new ThreadPoolExecutor(poolSize, poolSize, 0L, TimeUnit.MILLISECONDS,
-				new LinkedBlockingQueue<>(),
-				new BasicThreadFactory.Builder().namingPattern(this.identifier + "-%d").build());
-		this.eventSubscribers = new CopyOnWriteArrayList<>();
-		this.exceptionHandler = handler;
-	}
+    public TaskEventHub(String identifier, int poolSize, ExceptionHandler handler) {
+        this.identifier = Objects.requireNonNull(identifier, "identifier must not be null");
+        this.executor = new ThreadPoolExecutor(poolSize, poolSize, 0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(),
+                new BasicThreadFactory.Builder().namingPattern(this.identifier + "-%d").build());
+        this.eventSubscribers = new CopyOnWriteArrayList<>();
+        this.exceptionHandler = handler;
+    }
 
-	public void registerSubscriber(EventSubscriber subscriber) {
-		this.eventSubscribers.add(subscriber);
-	}
+    public void registerSubscriber(EventSubscriber subscriber) {
+        this.eventSubscribers.add(subscriber);
+    }
 
-	public void notifyEvent(@Nullable Object... args) {
-		ListenedEvent event = new ListenedEvent(this, identifier, args);
-		for (EventSubscriber subscriber : Lists.newArrayList(eventSubscribers)) {
-			this.executor.submit(() -> {
-				try {
-					subscriber.handleEvent(event);
-				}
-				catch (Throwable e) {
-					exceptionHandler.handleException(event, e);
-				}
-			});
-		}
-	}
+    public void notifyEvent(@Nullable Object... args) {
+        ListenedEvent event = new ListenedEvent(this, identifier, args);
+        for (EventSubscriber subscriber : Lists.newArrayList(eventSubscribers)) {
+            this.executor.submit(() -> {
+                try {
+                    subscriber.handleEvent(event);
+                } catch (Throwable e) {
+                    exceptionHandler.handleException(event, e);
+                }
+            });
+        }
+    }
 
 }

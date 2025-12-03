@@ -7,6 +7,6 @@ package io.arkx.framework.data.jpa;
  */
 public interface QueryTemplate {
 
-	String getQueryString();
+    String getQueryString();
 
 }

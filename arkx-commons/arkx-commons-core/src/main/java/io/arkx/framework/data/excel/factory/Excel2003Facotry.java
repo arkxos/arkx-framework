@@ -11,24 +11,24 @@ import io.arkx.framework.data.excel.writer.Excel2003Writer;
 
 public class Excel2003Facotry implements IExcelFactory {
 
-	@Override
-	public ExcelReader createExcelReader() {
-		return new Excel2003Reader();
-	}
+    @Override
+    public ExcelReader createExcelReader() {
+        return new Excel2003Reader();
+    }
 
-	@Override
-	public ExcelReader createExcelReader(File file) {
-		return new Excel2003Reader(file);
-	}
+    @Override
+    public ExcelReader createExcelReader(File file) {
+        return new Excel2003Reader(file);
+    }
 
-	@Override
-	public ExcelReader createExcelReader(InputStream is) {
-		return new Excel2003Reader(is);
-	}
+    @Override
+    public ExcelReader createExcelReader(InputStream is) {
+        return new Excel2003Reader(is);
+    }
 
-	@Override
-	public ExcelWriter createExcelWriter() {
-		return new Excel2003Writer();
-	}
+    @Override
+    public ExcelWriter createExcelWriter() {
+        return new Excel2003Writer();
+    }
 
 }

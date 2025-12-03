@@ -17,25 +17,25 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class BrokerUnsubscribeStrategy implements BrokerStrategy {
 
-	public BrokerUnsubscribeStrategy() {
+    public BrokerUnsubscribeStrategy() {
 
-	}
+    }
 
-	public void messageDispatch(RequestMessage request, ResponseMessage response) {
-		UnSubscribeMessage msgUnSubscribe = (UnSubscribeMessage) request.getMsgParams();
-		ConsumerContext.unLoad(msgUnSubscribe.getConsumerId());
-	}
+    public void messageDispatch(RequestMessage request, ResponseMessage response) {
+        UnSubscribeMessage msgUnSubscribe = (UnSubscribeMessage) request.getMsgParams();
+        ConsumerContext.unLoad(msgUnSubscribe.getConsumerId());
+    }
 
-	public void setHookProducer(ProducerMessageListener hookProducer) {
+    public void setHookProducer(ProducerMessageListener hookProducer) {
 
-	}
+    }
 
-	public void setHookConsumer(ConsumerMessageListener hookConsumer) {
+    public void setHookConsumer(ConsumerMessageListener hookConsumer) {
 
-	}
+    }
 
-	public void setChannelHandler(ChannelHandlerContext channelHandler) {
+    public void setChannelHandler(ChannelHandlerContext channelHandler) {
 
-	}
+    }
 
 }

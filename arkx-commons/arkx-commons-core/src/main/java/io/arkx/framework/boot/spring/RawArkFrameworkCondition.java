@@ -7,12 +7,12 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 
 public class RawArkFrameworkCondition implements Condition {
 
-	@Value("${ark.isRawArkFramework}")
-	private boolean isRawArkFramework;
+    @Value("${ark.isRawArkFramework}")
+    private boolean isRawArkFramework;
 
-	@Override
-	public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-		return isRawArkFramework;
-	}
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        return isRawArkFramework;
+    }
 
 }

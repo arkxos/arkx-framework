@@ -29,37 +29,40 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSocketAutoConfiguration {
 
-	private final WebSocketProperties webSocketProperties;
+    private final WebSocketProperties webSocketProperties;
 
-	private final List<JsonMessageHandler> jsonMessageHandlerList;
+    private final List<JsonMessageHandler> jsonMessageHandlerList;
 
-	/**
-	 * 配置 WebSocket 连接处理器。
-	 * @param handshakeInterceptor 握手拦截器列表，用于在 WebSocket 握手阶段执行自定义逻辑。
-	 * @param webSocketHandler WebSocket 处理器，负责处理 WebSocket 连接和消息。
-	 * @return 返回一个 {@link WebSocketConfigurer} 实例，用于注册 WebSocket 处理器和拦截器。
-	 */
-	@Bean
-	@ConditionalOnMissingBean
-	public WebSocketConfigurer webSocketConfigurer(List<HandshakeInterceptor> handshakeInterceptor,
-			WebSocketHandler webSocketHandler) {
-		return registry -> registry.addHandler(webSocketHandler, webSocketProperties.getPath())
-			.setAllowedOrigins(webSocketProperties.getAllowOrigins())
-			.addInterceptors(handshakeInterceptor.toArray(new HandshakeInterceptor[0]));
-	}
+    /**
+     * 配置 WebSocket 连接处理器。
+     *
+     * @param handshakeInterceptor
+     *            握手拦截器列表，用于在 WebSocket 握手阶段执行自定义逻辑。
+     * @param webSocketHandler
+     *            WebSocket 处理器，负责处理 WebSocket 连接和消息。
+     * @return 返回一个 {@link WebSocketConfigurer} 实例，用于注册 WebSocket 处理器和拦截器。
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public WebSocketConfigurer webSocketConfigurer(List<HandshakeInterceptor> handshakeInterceptor,
+            WebSocketHandler webSocketHandler) {
+        return registry -> registry.addHandler(webSocketHandler, webSocketProperties.getPath())
+                .setAllowedOrigins(webSocketProperties.getAllowOrigins())
+                .addInterceptors(handshakeInterceptor.toArray(new HandshakeInterceptor[0]));
+    }
 
-	/**
-	 * 初始化 JSON 消息处理器持有者。
-	 * <p>
-	 * 在应用启动时，将所有实现了 {@link JsonMessageHandler} 接口的处理器注册到 {@link JsonMessageHandlerHolder}
-	 * 中， 以便后续根据消息类型快速查找和调用。
-	 * </p>
-	 */
-	@PostConstruct
-	public void initJsonMessageHandlerHolder() {
-		for (JsonMessageHandler jsonMessageHandler : jsonMessageHandlerList) {
-			JsonMessageHandlerHolder.addHandler(jsonMessageHandler);
-		}
-	}
+    /**
+     * 初始化 JSON 消息处理器持有者。
+     * <p>
+     * 在应用启动时，将所有实现了 {@link JsonMessageHandler} 接口的处理器注册到
+     * {@link JsonMessageHandlerHolder} 中， 以便后续根据消息类型快速查找和调用。
+     * </p>
+     */
+    @PostConstruct
+    public void initJsonMessageHandlerHolder() {
+        for (JsonMessageHandler jsonMessageHandler : jsonMessageHandlerList) {
+            JsonMessageHandlerHolder.addHandler(jsonMessageHandler);
+        }
+    }
 
 }

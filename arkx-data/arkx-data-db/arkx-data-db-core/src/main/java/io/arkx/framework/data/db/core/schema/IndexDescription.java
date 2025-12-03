@@ -20,16 +20,16 @@ import lombok.Setter;
 @Getter
 public class IndexDescription {
 
-	private TableIndexEnum indexType;
+    private TableIndexEnum indexType;
 
-	private String indexName;
+    private String indexName;
 
-	private List<IndexFieldMeta> indexFields;
+    private List<IndexFieldMeta> indexFields;
 
-	public IndexDescription(TableIndexEnum indexType, String indexName, List<IndexFieldMeta> indexFields) {
-		this.indexType = indexType;
-		this.indexName = indexName;
-		this.indexFields = indexFields;
-	}
+    public IndexDescription(TableIndexEnum indexType, String indexName, List<IndexFieldMeta> indexFields) {
+        this.indexType = indexType;
+        this.indexName = indexName;
+        this.indexFields = indexFields;
+    }
 
 }

@@ -26,59 +26,57 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MongodbTableDataWriteProvider extends DefaultTableDataWriteProvider {
 
-	public MongodbTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public MongodbTableDataWriteProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	public void prepareWrite(String schemaName, String tableName, List<String> fieldNames) {
-		this.columnType = Collections.emptyMap();
-		this.schemaName = schemaName;
-		this.tableName = tableName;
+    @Override
+    public void prepareWrite(String schemaName, String tableName, List<String> fieldNames) {
+        this.columnType = Collections.emptyMap();
+        this.schemaName = schemaName;
+        this.tableName = tableName;
 
-		try (Connection connection = getDataSource().getConnection()) {
-			try (Statement stmt = connection.createStatement()) {
-				stmt.executeUpdate("%s.getCollection('%s').drop();".formatted(schemaName, tableName));
-			}
-		}
-		catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        try (Connection connection = getDataSource().getConnection()) {
+            try (Statement stmt = connection.createStatement()) {
+                stmt.executeUpdate("%s.getCollection('%s').drop();".formatted(schemaName, tableName));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public long write(List<String> fieldNames, List<Object[]> recordValues) {
-		if (CollectionUtils.isEmpty(fieldNames) || CollectionUtils.isEmpty(recordValues)) {
-			return 0L;
-		}
-		for (List<Object[]> partRecordValues : Lists.partition(recordValues, 500)) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("%s.getCollection('%s').insertMany".formatted(schemaName, tableName));
-			sb.append("( ").append(asString(fieldNames, partRecordValues)).append(" )");
-			String sql = sb.toString();
-			try (Connection connection = getDataSource().getConnection()) {
-				try (Statement stmt = connection.createStatement()) {
-					stmt.executeUpdate(sql);
-				}
-			}
-			catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		return recordValues.size();
-	}
+    @Override
+    public long write(List<String> fieldNames, List<Object[]> recordValues) {
+        if (CollectionUtils.isEmpty(fieldNames) || CollectionUtils.isEmpty(recordValues)) {
+            return 0L;
+        }
+        for (List<Object[]> partRecordValues : Lists.partition(recordValues, 500)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("%s.getCollection('%s').insertMany".formatted(schemaName, tableName));
+            sb.append("( ").append(asString(fieldNames, partRecordValues)).append(" )");
+            String sql = sb.toString();
+            try (Connection connection = getDataSource().getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    stmt.executeUpdate(sql);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return recordValues.size();
+    }
 
-	private String asString(List<String> fieldNames, List<Object[]> recordValues) {
-		int fieldCount = Math.min(fieldNames.size(), recordValues.getFirst().length);
-		List<Map<String, Object>> rows = new ArrayList<>(recordValues.size());
-		for (Object[] row : recordValues) {
-			Map<String, Object> columns = new LinkedHashMap<>(fieldCount);
-			for (int i = 0; i < fieldCount; ++i) {
-				columns.put(fieldNames.get(i), row[i]);
-			}
-			rows.add(columns);
-		}
-		return MongodbJacksonUtils.toJsonStr(rows);
-	}
+    private String asString(List<String> fieldNames, List<Object[]> recordValues) {
+        int fieldCount = Math.min(fieldNames.size(), recordValues.getFirst().length);
+        List<Map<String, Object>> rows = new ArrayList<>(recordValues.size());
+        for (Object[] row : recordValues) {
+            Map<String, Object> columns = new LinkedHashMap<>(fieldCount);
+            for (int i = 0; i < fieldCount; ++i) {
+                columns.put(fieldNames.get(i), row[i]);
+            }
+            rows.add(columns);
+        }
+        return MongodbJacksonUtils.toJsonStr(rows);
+    }
 
 }

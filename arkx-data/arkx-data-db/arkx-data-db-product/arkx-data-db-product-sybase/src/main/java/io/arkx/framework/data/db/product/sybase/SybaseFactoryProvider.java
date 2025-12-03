@@ -27,33 +27,33 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.SYBASE)
 public class SybaseFactoryProvider extends AbstractFactoryProvider {
 
-	public SybaseFactoryProvider(DataSource dataSource) {
-		super(dataSource);
-	}
+    public SybaseFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-	@Override
-	public ProductFeatures getProductFeatures() {
-		return new DefaultProductFeatures();
-	}
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-	@Override
-	public MetadataProvider createMetadataQueryProvider() {
-		return new SybaseMetadataQueryProvider(this);
-	}
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new SybaseMetadataQueryProvider(this);
+    }
 
-	@Override
-	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-		return new AutoCastTableDataWriteProvider(this);
-	}
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-	@Override
-	public TableManageProvider createTableManageProvider() {
-		return new DefaultTableManageProvider(this);
-	}
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new DefaultTableManageProvider(this);
+    }
 
-	@Override
-	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-		return new AutoCastTableDataSynchronizeProvider(this);
-	}
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

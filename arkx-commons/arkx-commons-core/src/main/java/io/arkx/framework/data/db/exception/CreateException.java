@@ -6,18 +6,18 @@ package io.arkx.framework.data.db.exception;
  */
 public class CreateException extends DDLException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CreateException(Exception e) {
-		super(e);
-	}
+    public CreateException(Exception e) {
+        super(e);
+    }
 
-	public CreateException(String message) {
-		super(message);
-	}
+    public CreateException(String message) {
+        super(message);
+    }
 
-	public CreateException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public CreateException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

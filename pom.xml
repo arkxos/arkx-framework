@@ -175,6 +175,11 @@
                             <eclipse>
                                 <file>${maven.multiModuleProjectDirectory}/.eclipse-java-google-style.xml</file>
                             </eclipse>
+                            <!-- 添加额外的格式化规则来确保一致性 -->
+                            <indent>
+                                <spaces>true</spaces>
+                                <spacesPerTab>4</spacesPerTab>
+                            </indent>
                             <!-- 移除未使用的导入 -->
                             <removeUnusedImports />
                             <!-- 导入排序 -->

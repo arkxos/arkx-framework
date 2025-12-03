@@ -10,6 +10,6 @@ import io.arkx.framework.commons.queueexecutor.MultiThreadedQueueExecutor;
  */
 public interface ElementProcessor<T> {
 
-	void process(Element<T> element, MultiThreadedQueueExecutor<T> executor);
+    void process(Element<T> element, MultiThreadedQueueExecutor<T> executor);
 
 }

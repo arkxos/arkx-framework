@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 @Table("smart_user")
 public class User {
 
-	@Id
-	private Integer id;
+    @Id
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private String password;
+    private String password;
 
-	private Long version;
+    private Long version;
 
-	public void setVersion(Long version) {
-		this.version = version;
-	}
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 
 }

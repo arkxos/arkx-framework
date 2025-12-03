@@ -11,24 +11,24 @@ import io.arkx.framework.data.excel.writer.Excel2007Writer;
 
 public class Excel2007Factory implements IExcelFactory {
 
-	@Override
-	public ExcelReader createExcelReader(File file) {
-		return new Excel2007Reader(file);
-	}
+    @Override
+    public ExcelReader createExcelReader(File file) {
+        return new Excel2007Reader(file);
+    }
 
-	@Override
-	public ExcelReader createExcelReader() {
-		return new Excel2007Reader();
-	}
+    @Override
+    public ExcelReader createExcelReader() {
+        return new Excel2007Reader();
+    }
 
-	@Override
-	public ExcelReader createExcelReader(InputStream is) {
-		return new Excel2007Reader(is);
-	}
+    @Override
+    public ExcelReader createExcelReader(InputStream is) {
+        return new Excel2007Reader(is);
+    }
 
-	@Override
-	public ExcelWriter createExcelWriter() {
-		return new Excel2007Writer();
-	}
+    @Override
+    public ExcelWriter createExcelWriter() {
+        return new Excel2007Writer();
+    }
 
 }

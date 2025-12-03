@@ -70,42 +70,42 @@ import io.arkx.framework.thirdparty.el.PrimitiveObjects;
 
 public class NotOperator extends UnaryOperator {
 
-	// -------------------------------------
-	// Singleton
-	// -------------------------------------
+    // -------------------------------------
+    // Singleton
+    // -------------------------------------
 
-	public static final NotOperator SINGLETON = new NotOperator();
+    public static final NotOperator SINGLETON = new NotOperator();
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public NotOperator() {
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public NotOperator() {
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	@Override
-	public String getOperatorSymbol() {
-		return "not";
-	}
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the symbol representing the operator
+     **/
+    @Override
+    public String getOperatorSymbol() {
+        return "not";
+    }
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given value
-	 **/
-	@Override
-	public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
-		// Coerce the value to a boolean
-		boolean val = Coercions.coerceToBoolean(pValue, pLogger).booleanValue();
+    // -------------------------------------
+    /**
+     * Applies the operator to the given value
+     **/
+    @Override
+    public Object apply(Object pValue, Logger pLogger) throws ExpressionException {
+        // Coerce the value to a boolean
+        boolean val = Coercions.coerceToBoolean(pValue, pLogger).booleanValue();
 
-		return PrimitiveObjects.getBoolean(!val);
-	}
+        return PrimitiveObjects.getBoolean(!val);
+    }
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

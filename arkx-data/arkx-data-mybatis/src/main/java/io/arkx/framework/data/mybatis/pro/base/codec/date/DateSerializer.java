@@ -16,13 +16,13 @@ import cn.hutool.core.date.DateUtil;
  */
 public class DateSerializer extends JsonSerializer<Date> {
 
-	public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-	@Override
-	public void serialize(Date value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-		if (value != null) {
-			gen.writeString(DateUtil.format(value, FORMAT));
-		}
-	}
+    @Override
+    public void serialize(Date value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        if (value != null) {
+            gen.writeString(DateUtil.format(value, FORMAT));
+        }
+    }
 
 }

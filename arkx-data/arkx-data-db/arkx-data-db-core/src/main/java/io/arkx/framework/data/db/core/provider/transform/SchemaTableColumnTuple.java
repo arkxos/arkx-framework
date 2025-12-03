@@ -21,10 +21,10 @@ import lombok.*;
 @AllArgsConstructor
 public class SchemaTableColumnTuple {
 
-	private String schema;
+    private String schema;
 
-	private String table;
+    private String table;
 
-	private String column;
+    private String column;
 
 }

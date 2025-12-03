@@ -8,10 +8,10 @@ package org.ark.framework.jaf.zhtml;
  */
 public class NotPrecompileException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public NotPrecompileException(String message) {
-		super(message);
-	}
+    public NotPrecompileException(String message) {
+        super(message);
+    }
 
 }

@@ -10,8 +10,8 @@ import io.arkx.framework.extend.AbstractExtendService;
  */
 public class CronTaskManagerService extends AbstractExtendService<AbstractTaskManager> {
 
-	public static CronTaskManagerService getInstance() {
-		return (CronTaskManagerService) findInstance(CronTaskManagerService.class);
-	}
+    public static CronTaskManagerService getInstance() {
+        return (CronTaskManagerService) findInstance(CronTaskManagerService.class);
+    }
 
 }

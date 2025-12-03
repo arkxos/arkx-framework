@@ -12,31 +12,30 @@ import io.arkx.framework.commons.util.lang.ClassUtil;
  */
 public class AbstractXmlToBean {
 
-	boolean ingoreRoot;
+    boolean ingoreRoot;
 
-	public AbstractXmlToBean() {
-		this(false);
-	}
+    public AbstractXmlToBean() {
+        this(false);
+    }
 
-	public AbstractXmlToBean(boolean ingoreRoot) {
-		this.ingoreRoot = ingoreRoot;
-	}
+    public AbstractXmlToBean(boolean ingoreRoot) {
+        this.ingoreRoot = ingoreRoot;
+    }
 
-	protected Object buildBean(String beanName, Mapx<String, Object> properties) {
-		String beanAlias = beanName;
-		String beanClassName = XmlToBean.beanAliasMap.get(beanAlias);
-		Object bean = null;
-		try {
-			Class<?> beanClass = Class.forName(beanClassName);
+    protected Object buildBean(String beanName, Mapx<String, Object> properties) {
+        String beanAlias = beanName;
+        String beanClassName = XmlToBean.beanAliasMap.get(beanAlias);
+        Object bean = null;
+        try {
+            Class<?> beanClass = Class.forName(beanClassName);
 
-			bean = ClassUtil.mapToObject(beanClass, new CaseIgnoreMapx<String, Object>(properties));
-		}
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new ServiceException("类 " + beanClassName + " 不存在...");
-		}
+            bean = ClassUtil.mapToObject(beanClass, new CaseIgnoreMapx<String, Object>(properties));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new ServiceException("类 " + beanClassName + " 不存在...");
+        }
 
-		return bean;
-	}
+        return bean;
+    }
 
 }

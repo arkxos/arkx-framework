@@ -10,39 +10,39 @@ import lombok.Setter;
 
 public class DataDumpCenter {
 
-	@Setter
-	private static Supplier<List<ColumnMappingEntity>> columnMappingDAO_getAllColumnMapping;
+    @Setter
+    private static Supplier<List<ColumnMappingEntity>> columnMappingDAO_getAllColumnMapping;
 
-	@Setter
-	private static Supplier<List<ColumnPlusEntity>> columnPlusDAO_getAllColumnPlus;
+    @Setter
+    private static Supplier<List<ColumnPlusEntity>> columnPlusDAO_getAllColumnPlus;
 
-	@Setter
-	private static Supplier<List<RawDictInfoEntity>> rawDictInfoDao_getAll;
+    @Setter
+    private static Supplier<List<RawDictInfoEntity>> rawDictInfoDao_getAll;
 
-	@Setter
-	private static Supplier<List<DictMappingInfoEntity>> dictMappingInfoDao;
+    @Setter
+    private static Supplier<List<DictMappingInfoEntity>> dictMappingInfoDao;
 
-	@Setter
-	private static Function<Integer, NewDictInfoEntity> newDictInfoDao_getDictById;
+    @Setter
+    private static Function<Integer, NewDictInfoEntity> newDictInfoDao_getDictById;
 
-	public static Supplier<List<RawDictInfoEntity>> rawDictInfoDao_getAll() {
-		return rawDictInfoDao_getAll;
-	}
+    public static Supplier<List<RawDictInfoEntity>> rawDictInfoDao_getAll() {
+        return rawDictInfoDao_getAll;
+    }
 
-	public static Supplier<List<DictMappingInfoEntity>> dictMappingInfoDao() {
-		return dictMappingInfoDao;
-	}
+    public static Supplier<List<DictMappingInfoEntity>> dictMappingInfoDao() {
+        return dictMappingInfoDao;
+    }
 
-	public static Function<Integer, NewDictInfoEntity> newDictInfoDao_getDictById() {
-		return newDictInfoDao_getDictById;
-	}
+    public static Function<Integer, NewDictInfoEntity> newDictInfoDao_getDictById() {
+        return newDictInfoDao_getDictById;
+    }
 
-	public static Supplier<List<ColumnMappingEntity>> columnMappingDAO_getAllColumnMapping() {
-		return columnMappingDAO_getAllColumnMapping;
-	}
+    public static Supplier<List<ColumnMappingEntity>> columnMappingDAO_getAllColumnMapping() {
+        return columnMappingDAO_getAllColumnMapping;
+    }
 
-	public static Supplier<List<ColumnPlusEntity>> columnPlusDAO_getAllColumnPlus() {
-		return columnPlusDAO_getAllColumnPlus;
-	}
+    public static Supplier<List<ColumnPlusEntity>> columnPlusDAO_getAllColumnPlus() {
+        return columnPlusDAO_getAllColumnPlus;
+    }
 
 }

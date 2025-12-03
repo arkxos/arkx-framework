@@ -8,10 +8,10 @@ import io.arkx.framework.core.FrameworkException;
  */
 public class CastorNotFoundException extends FrameworkException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CastorNotFoundException(String message) {
-		super(message);
-	}
+    public CastorNotFoundException(String message) {
+        super(message);
+    }
 
 }

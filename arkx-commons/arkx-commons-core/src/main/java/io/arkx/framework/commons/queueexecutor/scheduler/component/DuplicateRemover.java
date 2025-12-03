@@ -12,24 +12,26 @@ import io.arkx.framework.commons.queueexecutor.Element;
  */
 public interface DuplicateRemover<T> {
 
-	/**
-	 *
-	 * Check whether the request is duplicate.
-	 * @param element
-	 * @return
-	 */
-	boolean isDuplicate(Element<T> element);
+    /**
+     *
+     * Check whether the request is duplicate.
+     *
+     * @param element
+     * @return
+     */
+    boolean isDuplicate(Element<T> element);
 
-	/**
-	 * Reset duplicate check.
-	 *
-	 */
-	void resetDuplicateCheck();
+    /**
+     * Reset duplicate check.
+     *
+     */
+    void resetDuplicateCheck();
 
-	/**
-	 * Get TotalRequestsCount for monitor.
-	 * @return
-	 */
-	int getTotalElementsCount();
+    /**
+     * Get TotalRequestsCount for monitor.
+     *
+     * @return
+     */
+    int getTotalElementsCount();
 
 }

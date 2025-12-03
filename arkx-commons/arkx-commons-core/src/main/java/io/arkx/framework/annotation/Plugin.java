@@ -12,9 +12,9 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.TYPE })
+@Target({java.lang.annotation.ElementType.TYPE})
 public @interface Plugin {
 
-	String value() default "";
+    String value() default "";
 
 }

@@ -19,42 +19,40 @@ import io.netty.handler.codec.ByteToMessageDecoder;
  */
 public class MessageObjectDecoder extends ByteToMessageDecoder {
 
-	final public static int MESSAGE_LENGTH = MessageCodecUtil.MESSAGE_LENGTH;
+    final public static int MESSAGE_LENGTH = MessageCodecUtil.MESSAGE_LENGTH;
 
-	private MessageCodecUtil util = null;
+    private MessageCodecUtil util = null;
 
-	public MessageObjectDecoder(final MessageCodecUtil util) {
-		this.util = util;
-	}
+    public MessageObjectDecoder(final MessageCodecUtil util) {
+        this.util = util;
+    }
 
-	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-		if (in.readableBytes() < MessageObjectDecoder.MESSAGE_LENGTH) {
-			return;
-		}
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+        if (in.readableBytes() < MessageObjectDecoder.MESSAGE_LENGTH) {
+            return;
+        }
 
-		in.markReaderIndex();
-		int messageLength = in.readInt();
+        in.markReaderIndex();
+        int messageLength = in.readInt();
 
-		if (messageLength < 0) {
-			ctx.close();
-		}
+        if (messageLength < 0) {
+            ctx.close();
+        }
 
-		if (in.readableBytes() < messageLength) {
-			in.resetReaderIndex();
-			return;
-		}
-		else {
-			byte[] messageBody = new byte[messageLength];
-			in.readBytes(messageBody);
+        if (in.readableBytes() < messageLength) {
+            in.resetReaderIndex();
+            return;
+        } else {
+            byte[] messageBody = new byte[messageLength];
+            in.readBytes(messageBody);
 
-			try {
-				Object obj = util.decode(messageBody);
-				out.add(obj);
-			}
-			catch (IOException ex) {
-				Logger.getLogger(MessageObjectDecoder.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-	}
+            try {
+                Object obj = util.decode(messageBody);
+                out.add(obj);
+            } catch (IOException ex) {
+                Logger.getLogger(MessageObjectDecoder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
 }

@@ -12,6 +12,6 @@ import io.arkx.framework.avatarmq.msg.SubscribeMessage;
  */
 public interface ConsumerMessageListener {
 
-	void hookConsumerMessage(SubscribeMessage msg, RemoteChannelData channel);
+    void hookConsumerMessage(SubscribeMessage msg, RemoteChannelData channel);
 
 }

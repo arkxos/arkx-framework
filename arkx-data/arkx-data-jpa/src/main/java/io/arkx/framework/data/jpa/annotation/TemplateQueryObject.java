@@ -10,11 +10,11 @@ import org.springframework.data.annotation.QueryAnnotation;
  * @version V1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @QueryAnnotation
 @Documented
 public @interface TemplateQueryObject {
 
-	String value() default "";
+    String value() default "";
 
 }

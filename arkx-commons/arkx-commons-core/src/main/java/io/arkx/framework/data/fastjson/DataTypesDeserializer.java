@@ -10,17 +10,17 @@ import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 
 public class DataTypesDeserializer implements ObjectDeserializer {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
-		JSONLexer lexer = parser.getLexer();
-		int value = lexer.intValue();
-		return (T) DataTypes.valueOf(value);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
+        JSONLexer lexer = parser.getLexer();
+        int value = lexer.intValue();
+        return (T) DataTypes.valueOf(value);
+    }
 
-	@Override
-	public int getFastMatchToken() {
-		return 0;
-	}
+    @Override
+    public int getFastMatchToken() {
+        return 0;
+    }
 
 }

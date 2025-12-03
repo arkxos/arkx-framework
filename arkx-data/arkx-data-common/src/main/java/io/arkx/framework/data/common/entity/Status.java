@@ -12,24 +12,24 @@ import lombok.Getter;
 @Getter
 public enum Status {
 
-	DELETED(0, "已删除"), ACTIVE(1, "激活"), INACTIVE(2, "停用"), LOCKED(3, "锁定"), PENDING(4, "待处理");
+    DELETED(0, "已删除"), ACTIVE(1, "激活"), INACTIVE(2, "停用"), LOCKED(3, "锁定"), PENDING(4, "待处理");
 
-	private final int code;
+    private final int code;
 
-	private final String label;
+    private final String label;
 
-	Status(int code, String label) {
-		this.code = code;
-		this.label = label;
-	}
+    Status(int code, String label) {
+        this.code = code;
+        this.label = label;
+    }
 
-	public static Status fromCode(int code) {
-		for (Status type : Status.values()) {
-			if (type.getCode() == code) {
-				return type;
-			}
-		}
-		return null;
-	}
+    public static Status fromCode(int code) {
+        for (Status type : Status.values()) {
+            if (type.getCode() == code) {
+                return type;
+            }
+        }
+        return null;
+    }
 
 }

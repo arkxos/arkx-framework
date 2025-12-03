@@ -7,15 +7,15 @@ package io.arkx.framework.data.fasttable;
  */
 public interface ISearcher<T, K extends Comparable<? super K>, R> {
 
-	K buildSearchValue(T entity);
+    K buildSearchValue(T entity);
 
-	K getSearchValue();
+    K getSearchValue();
 
-	R search(T foundRecord, long foundRecordIndex, long low, long high, FastTable recordFile,
-			RecordFunction<T> converter, int recordLength);
+    R search(T foundRecord, long foundRecordIndex, long low, long high, FastTable recordFile,
+            RecordFunction<T> converter, int recordLength);
 
-	default R defaultResult() {
-		return null;
-	}
+    default R defaultResult() {
+        return null;
+    }
 
 }

@@ -11,10 +11,11 @@ import io.arkx.framework.enums.scanner.model.CodeTable;
  */
 public interface EnumScanHandler {
 
-	/**
-	 * 获取所有的枚举接口
-	 * @return 获取所有枚举码表
-	 */
-	List<CodeTable> codeTables();
+    /**
+     * 获取所有的枚举接口
+     *
+     * @return 获取所有枚举码表
+     */
+    List<CodeTable> codeTables();
 
 }

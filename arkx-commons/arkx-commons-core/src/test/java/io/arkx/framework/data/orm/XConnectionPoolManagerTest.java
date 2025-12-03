@@ -17,26 +17,25 @@ import io.arkx.framework.data.db.connection.ConnectionPoolManager;
  */
 public class XConnectionPoolManagerTest extends XTest {
 
-	@Test
-	public void getConnection() {
+    @Test
+    public void getConnection() {
 
-		Connection oldConn = null;
+        Connection oldConn = null;
 
-		for (int i = 0; i < 1000; i++) {
-			Connection conn = ConnectionPoolManager.getConnection();
+        for (int i = 0; i < 1000; i++) {
+            Connection conn = ConnectionPoolManager.getConnection();
 
-			if (i != 0) {
-				assertEquals(oldConn, conn);
-			}
-			oldConn = conn;
+            if (i != 0) {
+                assertEquals(oldConn, conn);
+            }
+            oldConn = conn;
 
-			try {
-				conn.close();
-			}
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

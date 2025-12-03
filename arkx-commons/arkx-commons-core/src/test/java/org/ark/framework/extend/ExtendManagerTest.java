@@ -11,9 +11,9 @@ import io.arkx.framework.extend.plugin.PluginManager;
  */
 public class ExtendManagerTest {
 
-	@Before("")
-	public void before() {
-		PluginManager.initTestPlugin();
-	}
+    @Before("")
+    public void before() {
+        PluginManager.initTestPlugin();
+    }
 
 }

@@ -9,53 +9,51 @@ import org.springframework.util.StringUtils;
 
 public class CustomTimestampEditor extends PropertyEditorSupport {
 
-	private final SimpleDateFormat dateFormat;
+    private final SimpleDateFormat dateFormat;
 
-	private final boolean allowEmpty;
+    private final boolean allowEmpty;
 
-	private final int exactDateLength;
+    private final int exactDateLength;
 
-	public CustomTimestampEditor(SimpleDateFormat dateFormat, boolean allowEmpty) {
+    public CustomTimestampEditor(SimpleDateFormat dateFormat, boolean allowEmpty) {
 
-		this.dateFormat = dateFormat;
+        this.dateFormat = dateFormat;
 
-		this.allowEmpty = allowEmpty;
+        this.allowEmpty = allowEmpty;
 
-		this.exactDateLength = -1;
-	}
+        this.exactDateLength = -1;
+    }
 
-	public CustomTimestampEditor(SimpleDateFormat dateFormat, boolean allowEmpty, int exactDateLength) {
-		this.dateFormat = dateFormat;
+    public CustomTimestampEditor(SimpleDateFormat dateFormat, boolean allowEmpty, int exactDateLength) {
+        this.dateFormat = dateFormat;
 
-		this.allowEmpty = allowEmpty;
+        this.allowEmpty = allowEmpty;
 
-		this.exactDateLength = exactDateLength;
-	}
+        this.exactDateLength = exactDateLength;
+    }
 
-	@Override
-	public void setAsText(String text) throws IllegalArgumentException {
-		if ((this.allowEmpty) && (!(StringUtils.hasText(text)))) {
-			setValue(null);
-		}
-		else {
-			if ((text != null) && (this.exactDateLength >= 0) && (text.length() != this.exactDateLength)) {
-				throw new IllegalArgumentException(
-						"Could not parse date: it is not exactly" + this.exactDateLength + "characters long");
-			}
+    @Override
+    public void setAsText(String text) throws IllegalArgumentException {
+        if ((this.allowEmpty) && (!(StringUtils.hasText(text)))) {
+            setValue(null);
+        } else {
+            if ((text != null) && (this.exactDateLength >= 0) && (text.length() != this.exactDateLength)) {
+                throw new IllegalArgumentException(
+                        "Could not parse date: it is not exactly" + this.exactDateLength + "characters long");
+            }
 
-			try {
-				setValue(new Timestamp(this.dateFormat.parse(text).getTime()));
-			}
-			catch (ParseException ex) {
-				throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
-			}
-		}
-	}
+            try {
+                setValue(new Timestamp(this.dateFormat.parse(text).getTime()));
+            } catch (ParseException ex) {
+                throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
+            }
+        }
+    }
 
-	@Override
-	public String getAsText() {
-		Timestamp value = (Timestamp) getValue();
-		return ((value != null) ? this.dateFormat.format(value) : "");
-	}
+    @Override
+    public String getAsText() {
+        Timestamp value = (Timestamp) getValue();
+        return ((value != null) ? this.dateFormat.format(value) : "");
+    }
 
 }

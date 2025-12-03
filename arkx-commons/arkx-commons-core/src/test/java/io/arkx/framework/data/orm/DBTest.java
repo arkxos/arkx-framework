@@ -7,10 +7,10 @@ package io.arkx.framework.data.orm;
  */
 public class DBTest {
 
-	// @Test
-	public void testImportDB() {
-		// DBImport dbImport = new DBImport();
-		// dbImport.importDB("C:\\Users\\Administrator\\Downloads\\DB_20120324202406.dat");
-	}
+    // @Test
+    public void testImportDB() {
+        // DBImport dbImport = new DBImport();
+        // dbImport.importDB("C:\\Users\\Administrator\\Downloads\\DB_20120324202406.dat");
+    }
 
 }

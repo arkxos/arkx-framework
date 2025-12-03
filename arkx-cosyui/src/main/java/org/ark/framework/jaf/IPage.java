@@ -13,16 +13,16 @@ import io.arkx.framework.cosyui.web.ResponseData;
 
 public interface IPage {
 
-	void setRequest(RequestData dc);
+    void setRequest(RequestData dc);
 
-	RequestData getRequest();
+    RequestData getRequest();
 
-	CookieData getCookie();
+    CookieData getCookie();
 
-	void setCookie(CookieData cookie);
+    void setCookie(CookieData cookie);
 
-	ResponseData getResponse();
+    ResponseData getResponse();
 
-	void setResponse(ResponseData response);
+    void setResponse(ResponseData response);
 
 }

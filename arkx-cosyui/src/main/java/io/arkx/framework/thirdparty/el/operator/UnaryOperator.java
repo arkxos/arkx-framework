@@ -68,27 +68,27 @@ import io.arkx.framework.thirdparty.el.Logger;
 
 public abstract class UnaryOperator {
 
-	// -------------------------------------
-	/**
-	 * Constructor
-	 **/
-	public UnaryOperator() {
-	}
+    // -------------------------------------
+    /**
+     * Constructor
+     **/
+    public UnaryOperator() {
+    }
 
-	// -------------------------------------
-	// Expression methods
-	// -------------------------------------
-	/**
-	 * Returns the symbol representing the operator
-	 **/
-	public abstract String getOperatorSymbol();
+    // -------------------------------------
+    // Expression methods
+    // -------------------------------------
+    /**
+     * Returns the symbol representing the operator
+     **/
+    public abstract String getOperatorSymbol();
 
-	// -------------------------------------
-	/**
-	 * Applies the operator to the given value
-	 **/
-	public abstract Object apply(Object pValue, Logger pLogger) throws ExpressionException;
+    // -------------------------------------
+    /**
+     * Applies the operator to the given value
+     **/
+    public abstract Object apply(Object pValue, Logger pLogger) throws ExpressionException;
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

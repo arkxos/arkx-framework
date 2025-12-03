@@ -8,6 +8,6 @@ import io.arkx.framework.cosyui.template.exception.TemplateRuntimeException;
  */
 public interface ITemplateCommand {
 
-	int execute(AbstractExecuteContext context) throws TemplateRuntimeException;
+    int execute(AbstractExecuteContext context) throws TemplateRuntimeException;
 
 }

@@ -13,10 +13,10 @@ import io.arkx.framework.commons.util.StringUtil;
  */
 public class StringUtilTest {
 
-	@Test
-	public void clearForXML() {
-		String json = StringUtil.clearForXML("{\"UserName\":\"admin\"}");
-		assertEquals("{\"UserName\":\"admin\"}", json);
-	}
+    @Test
+    public void clearForXML() {
+        String json = StringUtil.clearForXML("{\"UserName\":\"admin\"}");
+        assertEquals("{\"UserName\":\"admin\"}", json);
+    }
 
 }

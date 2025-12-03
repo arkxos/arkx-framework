@@ -12,16 +12,16 @@ import java.time.format.DateTimeFormatter;
  */
 public class AxonUtil {
 
-	private static DateTimeFormatter Date_Time_Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static DateTimeFormatter Date_Time_Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-	public static LocalDateTime instant2LocalDateTime(Instant instant) {
-		LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of(ZoneId.SHORT_IDS.get("CTT")));
-		return localDateTime;
-	}
+    public static LocalDateTime instant2LocalDateTime(Instant instant) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of(ZoneId.SHORT_IDS.get("CTT")));
+        return localDateTime;
+    }
 
-	public static String formatInstant(Instant instant) {
-		LocalDateTime date = LocalDateTime.ofInstant(instant, ZoneId.of(ZoneId.SHORT_IDS.get("CTT")));
-		return date.format(Date_Time_Formatter);
-	}
+    public static String formatInstant(Instant instant) {
+        LocalDateTime date = LocalDateTime.ofInstant(instant, ZoneId.of(ZoneId.SHORT_IDS.get("CTT")));
+        return date.format(Date_Time_Formatter);
+    }
 
 }

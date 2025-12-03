@@ -34,178 +34,170 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class ActionHandler implements IURLHandler {
 
-	public static final String ID = "io.arkx.framework.core.ActionHandler";
+    public static final String ID = "io.arkx.framework.core.ActionHandler";
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "ZAction URL Processor";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "ZAction URL Processor";
+    }
 
-	@Override
-	public boolean match(String url) {
-		int i = url.indexOf('?');
-		if (i > 0) {
-			url = url.substring(0, i);
-		}
-		if (url.endsWith(".zaction")) {
-			return true;
-		}
-		if (url.endsWith("/")) {
-			return false;
-		}
-		i = url.lastIndexOf('/');
-		if (i > 0) {
-			url = url.substring(i + 1);
-		}
-		if (url.indexOf('.') < 0) {// 无后缀也匹配
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean match(String url) {
+        int i = url.indexOf('?');
+        if (i > 0) {
+            url = url.substring(0, i);
+        }
+        if (url.endsWith(".zaction")) {
+            return true;
+        }
+        if (url.endsWith("/")) {
+            return false;
+        }
+        i = url.lastIndexOf('/');
+        if (i > 0) {
+            url = url.substring(i + 1);
+        }
+        if (url.indexOf('.') < 0) {// 无后缀也匹配
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public boolean handle(String url, HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		Session session = null;
-		try {
-			session = SessionFactory.openSessionInThread();
-			session.beginTransaction();
+    @Override
+    public boolean handle(String url, HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        Session session = null;
+        try {
+            session = SessionFactory.openSessionInThread();
+            session.beginTransaction();
 
-			if (url.endsWith(".zaction")) {
-				url = url.substring(0, url.length() - 8);
-			}
-			if (url.endsWith("/")) {
-				url = url.substring(0, url.length() - 1);
-			}
-			try {
-				IMethodLocator method = MethodLocatorUtil.find(url.substring(1));
-				if (method == null) {
-					return false;
-				}
-				boolean success = invoke(request, response, method);
+            if (url.endsWith(".zaction")) {
+                url = url.substring(0, url.length() - 8);
+            }
+            if (url.endsWith("/")) {
+                url = url.substring(0, url.length() - 1);
+            }
+            try {
+                IMethodLocator method = MethodLocatorUtil.find(url.substring(1));
+                if (method == null) {
+                    return false;
+                }
+                boolean success = invoke(request, response, method);
 
-				session.commit();
+                session.commit();
 
-				return success;
-			}
-			catch (Exception e) {
-				e.printStackTrace();
+                return success;
+            } catch (Exception e) {
+                e.printStackTrace();
 
-				session.rollback();
+                session.rollback();
 
-				return false;
-			}
-		}
-		finally {
+                return false;
+            }
+        } finally {
 
-			SessionFactory.clearCurrentSession();
-			// BlockingTransaction.clearTransactionBinding();// 检测是否有未被关闭的阻塞型事务连接
-		}
-	}
+            SessionFactory.clearCurrentSession();
+            // BlockingTransaction.clearTransactionBinding();// 检测是否有未被关闭的阻塞型事务连接
+        }
+    }
 
-	public static boolean invoke(HttpServletRequest request, HttpServletResponse response, IMethodLocator method)
-			throws ServletException, IOException {
-		PrivCheck.check(method);
-		// 参数检查
-		if (!VerifyCheck.check(method)) {
-			String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
-			LogUtil.warn(message);
-			WebCurrent.getResponse().setFailedMessage(message);
-			response.getWriter().write(WebCurrent.getResponse().toXML());
-			return true;
-		}
+    public static boolean invoke(HttpServletRequest request, HttpServletResponse response, IMethodLocator method)
+            throws ServletException, IOException {
+        PrivCheck.check(method);
+        // 参数检查
+        if (!VerifyCheck.check(method)) {
+            String message = "Verify check failed:method=" + method + ",data=" + WebCurrent.getRequest();
+            LogUtil.warn(message);
+            WebCurrent.getResponse().setFailedMessage(message);
+            response.getWriter().write(WebCurrent.getResponse().toXML());
+            return true;
+        }
 
-		ZAction action;
+        ZAction action;
 
-		if (ServletFileUpload.isMultipartContent(request)) {
-			UploadAction ua = new UploadAction();
-			ua.setItems(prepareUploadAction(request));
-			ua.setCookies(WebCurrent.getCookies());
-			ua.setRequest(request);
-			ua.setResponse(response);
-			action = ua;
-		}
-		else {
-			action = new ZAction();
-			action.setCookies(WebCurrent.getCookies());
-			action.setRequest(request);
-			action.setResponse(response);
-		}
-		try {
-			if (Config.getServletMajorVersion() == 2 && Config.getServletMinorVersion() == 3) {
-				response.setContentType("text/html;charset=" + Config.getGlobalCharset());
-			}
-			else {
-				response.setContentType("text/html");
-				response.setCharacterEncoding(Config.getGlobalCharset());
-			}
-			method.execute(new Object[] { action });
-			if (!action.isBinaryMode()) {// 没有重定向，则输出内容
-				try {
-					response.getWriter().print(action.getContent());
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				} // 不需要输出异常
-			}
-		}
-		finally {
-			if (action.isBinaryMode()) {
-				response.getOutputStream().close();
-			}
-		}
-		return true;
-	}
+        if (ServletFileUpload.isMultipartContent(request)) {
+            UploadAction ua = new UploadAction();
+            ua.setItems(prepareUploadAction(request));
+            ua.setCookies(WebCurrent.getCookies());
+            ua.setRequest(request);
+            ua.setResponse(response);
+            action = ua;
+        } else {
+            action = new ZAction();
+            action.setCookies(WebCurrent.getCookies());
+            action.setRequest(request);
+            action.setResponse(response);
+        }
+        try {
+            if (Config.getServletMajorVersion() == 2 && Config.getServletMinorVersion() == 3) {
+                response.setContentType("text/html;charset=" + Config.getGlobalCharset());
+            } else {
+                response.setContentType("text/html");
+                response.setCharacterEncoding(Config.getGlobalCharset());
+            }
+            method.execute(new Object[]{action});
+            if (!action.isBinaryMode()) {// 没有重定向，则输出内容
+                try {
+                    response.getWriter().print(action.getContent());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } // 不需要输出异常
+            }
+        } finally {
+            if (action.isBinaryMode()) {
+                response.getOutputStream().close();
+            }
+        }
+        return true;
+    }
 
-	private static ArrayList prepareUploadAction(HttpServletRequest request) {
-		DiskFileItemFactory fileFactory = DiskFileItemFactory.builder().get();
-		JakartaServletFileUpload upload = new JakartaServletFileUpload(fileFactory);
-		// upload.setHeaderEncoding(Config.getGlobalCharset());
-		upload.setSizeMax(UploadMaxSize.getValue());
-		try {
-			List items = upload.parseRequest(request);
-			HashMap fields = new HashMap();
-			ArrayList files = new ArrayList();
-			for (Iterator iter = items.iterator(); iter.hasNext();) {
-				FileItem item = (FileItem) iter.next();
-				if (item.isFormField()) {
-					fields.put(item.getFieldName(), item.getString(Charset.forName(Config.getGlobalCharset())));
-				}
-				else {
-					String OldFileName = item.getName();
-					long size = item.getSize();
-					if (OldFileName != null && !OldFileName.equals("") || size != 0L) {
-						LogUtil.info((new StringBuilder("-----UploadFileName:-----")).append(OldFileName).toString());
-						files.add(item);
-					}
-				}
-			}
+    private static ArrayList prepareUploadAction(HttpServletRequest request) {
+        DiskFileItemFactory fileFactory = DiskFileItemFactory.builder().get();
+        JakartaServletFileUpload upload = new JakartaServletFileUpload(fileFactory);
+        // upload.setHeaderEncoding(Config.getGlobalCharset());
+        upload.setSizeMax(UploadMaxSize.getValue());
+        try {
+            List items = upload.parseRequest(request);
+            HashMap fields = new HashMap();
+            ArrayList files = new ArrayList();
+            for (Iterator iter = items.iterator(); iter.hasNext();) {
+                FileItem item = (FileItem) iter.next();
+                if (item.isFormField()) {
+                    fields.put(item.getFieldName(), item.getString(Charset.forName(Config.getGlobalCharset())));
+                } else {
+                    String OldFileName = item.getName();
+                    long size = item.getSize();
+                    if (OldFileName != null && !OldFileName.equals("") || size != 0L) {
+                        LogUtil.info((new StringBuilder("-----UploadFileName:-----")).append(OldFileName).toString());
+                        files.add(item);
+                    }
+                }
+            }
 
-			WebCurrent.getRequest().putAll(fields);
-			return files;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+            WebCurrent.getRequest().putAll(fields);
+            return files;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	@Override
-	public void init() {
-	}
+    @Override
+    public void init() {
+    }
 
-	@Override
-	public void destroy() {
-	}
+    @Override
+    public void destroy() {
+    }
 
-	@Override
-	public int getOrder() {
-		return 9999;
-	}
+    @Override
+    public int getOrder() {
+        return 9999;
+    }
 
 }

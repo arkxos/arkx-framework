@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class HibernateConfig implements HibernatePropertiesCustomizer {
 
-	@Override
-	public void customize(Map<String, Object> hibernateProperties) {
-		hibernateProperties.put("hibernate.use_sql_comments", true);
-		hibernateProperties.put("hibernate.integrator_provider",
-				(IntegratorProvider) () -> Collections.singletonList(CommentIntegrator.INSTANCE));
-	}
+    @Override
+    public void customize(Map<String, Object> hibernateProperties) {
+        hibernateProperties.put("hibernate.use_sql_comments", true);
+        hibernateProperties.put("hibernate.integrator_provider",
+                (IntegratorProvider) () -> Collections.singletonList(CommentIntegrator.INSTANCE));
+    }
 
 }

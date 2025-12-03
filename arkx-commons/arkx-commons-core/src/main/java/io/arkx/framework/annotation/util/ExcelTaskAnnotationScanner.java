@@ -16,70 +16,69 @@ import io.arkx.framework.core.scanner.IBuiltResourceVisitor;
  */
 public class ExcelTaskAnnotationScanner implements IBuiltResourceVisitor {
 
-	private static Lock lock = new ReentrantLock();
+    private static Lock lock = new ReentrantLock();
 
-	private static final String VALUE = "value";
+    private static final String VALUE = "value";
 
-	public static String find(Class<? extends Annotation> annotationClass, String taskType) {
-		try {
-			ExcelTaskAnnotationScanner annotationScanner = new ExcelTaskAnnotationScanner(annotationClass.getName(),
-					taskType);
-			BuiltResourceScanner scanner = new BuiltResourceScanner(annotationScanner, null);
-			scanner.scan(0, annotationClass);
+    public static String find(Class<? extends Annotation> annotationClass, String taskType) {
+        try {
+            ExcelTaskAnnotationScanner annotationScanner = new ExcelTaskAnnotationScanner(annotationClass.getName(),
+                    taskType);
+            BuiltResourceScanner scanner = new BuiltResourceScanner(annotationScanner, null);
+            scanner.scan(0, annotationClass);
 
-			return annotationScanner.getClassName();
-		}
-		finally {
-		}
-	}
+            return annotationScanner.getClassName();
+        } finally {
+        }
+    }
 
-	private String ALIAS;
+    private String ALIAS;
 
-	private String taskType;
+    private String taskType;
 
-	private String className;
+    private String className;
 
-	public ExcelTaskAnnotationScanner(String annotationClassName, String taskType) {
-		ALIAS = annotationClassName.replace('.', '/');
-		this.taskType = taskType;
-	}
+    public ExcelTaskAnnotationScanner(String annotationClassName, String taskType) {
+        ALIAS = annotationClassName.replace('.', '/');
+        this.taskType = taskType;
+    }
 
-	@Override
-	public String getExtendItemID() {
-		return "io.arkx.framework.annotation.ExcelTaskAnnotationScanner";
-	}
+    @Override
+    public String getExtendItemID() {
+        return "io.arkx.framework.annotation.ExcelTaskAnnotationScanner";
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "AnnotationScanner";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "AnnotationScanner";
+    }
 
-	public String getClassName() {
-		return className;
-	}
+    public String getClassName() {
+        return className;
+    }
 
-	@Override
-	public boolean match(BuiltResource br) {
-		String fullName = br.getFullName();
-		return fullName.endsWith(".class");
-	}
+    @Override
+    public boolean match(BuiltResource br) {
+        String fullName = br.getFullName();
+        return fullName.endsWith(".class");
+    }
 
-	@Override
-	public void visitClass(BuiltResource br, ClassNode classNode) {
-		if (AsmUtil.isAnnotationPresent(classNode, ALIAS)) {
-			String taskType = (String) AsmUtil.getAnnotationValue(classNode, ALIAS, VALUE);
-			if (this.taskType.equals(taskType)) {
-				this.className = classNode.name.replace("/", ".");
-			}
-		}
-	}
+    @Override
+    public void visitClass(BuiltResource br, ClassNode classNode) {
+        if (AsmUtil.isAnnotationPresent(classNode, ALIAS)) {
+            String taskType = (String) AsmUtil.getAnnotationValue(classNode, ALIAS, VALUE);
+            if (this.taskType.equals(taskType)) {
+                this.className = classNode.name.replace("/", ".");
+            }
+        }
+    }
 
-	@Override
-	public void visitResource(BuiltResource br) {
-	}
+    @Override
+    public void visitResource(BuiltResource br) {
+    }
 
-	@Override
-	public void visitInnerClass(BuiltResource br, ClassNode cn, ClassNode icn) {
-	}
+    @Override
+    public void visitInnerClass(BuiltResource br, ClassNode cn, ClassNode icn) {
+    }
 
 }

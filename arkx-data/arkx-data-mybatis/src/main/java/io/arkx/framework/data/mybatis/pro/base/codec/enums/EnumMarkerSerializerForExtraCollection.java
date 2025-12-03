@@ -31,28 +31,26 @@ import cn.hutool.core.text.CharSequenceUtil;
 @SuppressWarnings("rawtypes")
 public class EnumMarkerSerializerForExtraCollection extends JsonSerializer<Collection> {
 
-	@Override
-	public void serialize(Collection value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-		if (value instanceof EnumMarker) {
-			EnumMarker v = (EnumMarker) value;
-			gen.writeObject(v.getValue());
-			String currentName = gen.getOutputContext().getCurrentName();
-			if (CharSequenceUtil.isBlank(currentName)) {
-				currentName = gen.getOutputContext().getParent().getCurrentName();
-			}
-			gen.writeObjectField(currentName + "Desc", v.getDesc());
-		}
-		else if (value instanceof Collection) {
-			if (CollUtil.isNotEmpty(value)) {
-				value.stream().findAny().filter(e -> e instanceof EnumMarker).ifPresent(e -> {
-					throw new IllegalArgumentException("返回值不允许是枚举类型EnumMarker的集合类型, 因为无法推断Desc字段");
-				});
-			}
-			gen.writeObject(value);
-		}
-		else {
-			gen.writeObject(value);
-		}
-	}
+    @Override
+    public void serialize(Collection value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        if (value instanceof EnumMarker) {
+            EnumMarker v = (EnumMarker) value;
+            gen.writeObject(v.getValue());
+            String currentName = gen.getOutputContext().getCurrentName();
+            if (CharSequenceUtil.isBlank(currentName)) {
+                currentName = gen.getOutputContext().getParent().getCurrentName();
+            }
+            gen.writeObjectField(currentName + "Desc", v.getDesc());
+        } else if (value instanceof Collection) {
+            if (CollUtil.isNotEmpty(value)) {
+                value.stream().findAny().filter(e -> e instanceof EnumMarker).ifPresent(e -> {
+                    throw new IllegalArgumentException("返回值不允许是枚举类型EnumMarker的集合类型, 因为无法推断Desc字段");
+                });
+            }
+            gen.writeObject(value);
+        } else {
+            gen.writeObject(value);
+        }
+    }
 
 }

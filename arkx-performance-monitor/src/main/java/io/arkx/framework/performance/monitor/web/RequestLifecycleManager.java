@@ -18,21 +18,21 @@ import jakarta.servlet.http.HttpServletRequest;
 @Component
 public class RequestLifecycleManager {
 
-	private final TraceContext traceContext;
+    private final TraceContext traceContext;
 
-	@Autowired
-	public RequestLifecycleManager(TraceContext traceContext) {
-		this.traceContext = traceContext;
-	}
+    @Autowired
+    public RequestLifecycleManager(TraceContext traceContext) {
+        this.traceContext = traceContext;
+    }
 
-	public void startRequest(HttpServletRequest request) {
-		String requestId = UUID.randomUUID().toString();
-		request.setAttribute("REQUEST_ID", requestId);
-		traceContext.startRequest(requestId);
-	}
+    public void startRequest(HttpServletRequest request) {
+        String requestId = UUID.randomUUID().toString();
+        request.setAttribute("REQUEST_ID", requestId);
+        traceContext.startRequest(requestId);
+    }
 
-	public void endRequest(HttpServletRequest request) {
-		traceContext.endRequest();
-	}
+    public void endRequest(HttpServletRequest request) {
+        traceContext.endRequest();
+    }
 
 }

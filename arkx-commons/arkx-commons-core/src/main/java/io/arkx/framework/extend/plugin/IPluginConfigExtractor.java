@@ -9,6 +9,6 @@ package io.arkx.framework.extend.plugin;
  */
 public interface IPluginConfigExtractor {
 
-	Object extract(PluginConfig pluginConfig);
+    Object extract(PluginConfig pluginConfig);
 
 }

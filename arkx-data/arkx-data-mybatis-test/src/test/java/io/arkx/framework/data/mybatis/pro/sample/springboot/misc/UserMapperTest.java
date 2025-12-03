@@ -29,29 +29,29 @@ import com.ninja_squad.dbsetup.operation.Insert;
 @SpringBootTest
 class UserMapperTest {
 
-	@Autowired
-	private UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
-		Insert insert = insertInto("smart_user").columns("name").values("w.dehai").values("Jaedong").build();
-		new DbSetup(new DataSourceDestination(dataSource), insert).launch();
-	}
+    @BeforeEach
+    void init() {
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_user")).launch();
+        Insert insert = insertInto("smart_user").columns("name").values("w.dehai").values("Jaedong").build();
+        new DbSetup(new DataSourceDestination(dataSource), insert).launch();
+    }
 
-	@Test
-	void dynamicSqlSourceTest() {
-		List<User> users = userMapper.dynamicSqlSourceTest(newArrayList(1L, 2L));
-		assertEquals(2, users.size());
-	}
+    @Test
+    void dynamicSqlSourceTest() {
+        List<User> users = userMapper.dynamicSqlSourceTest(newArrayList(1L, 2L));
+        assertEquals(2, users.size());
+    }
 
-	@Test
-	void rawSqlSourceTest() {
-		User user = userMapper.rawSqlSourceTest(1L);
-		assertEquals("w.dehai", user.getName());
-	}
+    @Test
+    void rawSqlSourceTest() {
+        User user = userMapper.rawSqlSourceTest(1L);
+        assertEquals("w.dehai", user.getName());
+    }
 
 }

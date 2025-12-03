@@ -15,32 +15,31 @@ import io.arkx.framework.commons.util.ZipUtil;
  */
 public class SchemaJarLoader implements ISchemaLoader {
 
-	@Override
-	public List<String> load(String path) {
+    @Override
+    public List<String> load(String path) {
 
-		List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
 
-		if (new File(path).exists()) {
-			File[] fs = new File(path).listFiles();
-			for (File f : fs) {
-				if (f.getName().indexOf("-plugin-") < 0)
-					continue;
-				if (!f.getName().endsWith(".jar")) {
-					continue;
-				}
-				try {
-					Mapx<String, Long> files = ZipUtil.getFileListInZip(f.getAbsolutePath());
-					for (String fileName : files.keyArray())
-						if ((fileName.startsWith("org/ark/schema")) && (fileName.endsWith("Schema.class")))
-							result.add(fileName);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+        if (new File(path).exists()) {
+            File[] fs = new File(path).listFiles();
+            for (File f : fs) {
+                if (f.getName().indexOf("-plugin-") < 0)
+                    continue;
+                if (!f.getName().endsWith(".jar")) {
+                    continue;
+                }
+                try {
+                    Mapx<String, Long> files = ZipUtil.getFileListInZip(f.getAbsolutePath());
+                    for (String fileName : files.keyArray())
+                        if ((fileName.startsWith("org/ark/schema")) && (fileName.endsWith("Schema.class")))
+                            result.add(fileName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

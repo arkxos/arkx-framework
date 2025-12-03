@@ -15,46 +15,44 @@ import io.arkx.framework.avatarmq.msg.Message;
  */
 public class MessageDispatchTask implements Serializable {
 
-	private String clusters;
+    private String clusters;
 
-	private String topic;
+    private String topic;
 
-	private Message message;
+    private Message message;
 
-	public String getClusters() {
-		return clusters;
-	}
+    public String getClusters() {
+        return clusters;
+    }
 
-	public void setClusters(String clusters) {
-		this.clusters = clusters;
-	}
+    public void setClusters(String clusters) {
+        this.clusters = clusters;
+    }
 
-	public String getTopic() {
-		return topic;
-	}
+    public String getTopic() {
+        return topic;
+    }
 
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
-	public Message getMessage() {
-		return message;
-	}
+    public Message getMessage() {
+        return message;
+    }
 
-	public void setMessage(Message message) {
-		this.message = message;
-	}
+    public void setMessage(Message message) {
+        this.message = message;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj != null && MessageDispatchTask.class.isAssignableFrom(obj.getClass())) {
-			MessageDispatchTask task = (MessageDispatchTask) obj;
-			result = new EqualsBuilder().append(clusters, task.getClusters())
-				.append(topic, task.getTopic())
-				.append(message, task.getMessage())
-				.isEquals();
-		}
-		return result;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj != null && MessageDispatchTask.class.isAssignableFrom(obj.getClass())) {
+            MessageDispatchTask task = (MessageDispatchTask) obj;
+            result = new EqualsBuilder().append(clusters, task.getClusters()).append(topic, task.getTopic())
+                    .append(message, task.getMessage()).isEquals();
+        }
+        return result;
+    }
 
 }

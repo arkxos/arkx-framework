@@ -9,11 +9,11 @@ import java.nio.ByteBuffer;
  */
 public class ByteBufferUtil {
 
-	public static String readString(ByteBuffer buffer, int length) {
-		byte[] columnNameBytes = new byte[length];
-		buffer.get(columnNameBytes);
+    public static String readString(ByteBuffer buffer, int length) {
+        byte[] columnNameBytes = new byte[length];
+        buffer.get(columnNameBytes);
 
-		return new String(columnNameBytes);
-	}
+        return new String(columnNameBytes);
+    }
 
 }

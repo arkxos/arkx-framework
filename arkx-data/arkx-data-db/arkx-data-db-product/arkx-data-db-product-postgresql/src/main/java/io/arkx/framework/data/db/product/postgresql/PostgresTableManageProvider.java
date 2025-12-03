@@ -17,20 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PostgresTableManageProvider extends DefaultTableManageProvider {
 
-	public PostgresTableManageProvider(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public PostgresTableManageProvider(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	public void truncateTableData(String schemaName, String tableName) {
-		String sql = "TRUNCATE TABLE \"%s\".\"%s\" RESTART IDENTITY ".formatted(schemaName, tableName);
-		this.executeSql(sql);
-	}
+    @Override
+    public void truncateTableData(String schemaName, String tableName) {
+        String sql = "TRUNCATE TABLE \"%s\".\"%s\" RESTART IDENTITY ".formatted(schemaName, tableName);
+        this.executeSql(sql);
+    }
 
-	@Override
-	public void dropTable(String schemaName, String tableName) {
-		String sql = "DROP TABLE \"%s\".\"%s\" CASCADE ".formatted(schemaName, tableName);
-		this.executeSql(sql);
-	}
+    @Override
+    public void dropTable(String schemaName, String tableName) {
+        String sql = "DROP TABLE \"%s\".\"%s\" CASCADE ".formatted(schemaName, tableName);
+        this.executeSql(sql);
+    }
 
 }

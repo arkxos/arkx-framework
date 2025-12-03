@@ -9,10 +9,10 @@ package io.arkx.framework.avatarmq.spring;
  */
 public interface Container {
 
-	void start();
+    void start();
 
-	void stop();
+    void stop();
 
-	Context<?> getContext();
+    Context<?> getContext();
 
 }

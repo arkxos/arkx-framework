@@ -24,119 +24,117 @@ import io.netty.channel.ChannelFutureListener;
  */
 public class MessageProcessor {
 
-	private MessageConnectFactory factory;
+    private MessageConnectFactory factory;
 
-	private MessageConnectPool pool;
+    private MessageConnectPool pool;
 
-	public MessageProcessor(String serverAddress) {
-		MessageConnectPool.setServerAddress(serverAddress);
-		pool = MessageConnectPool.getMessageConnectPoolInstance();
-		this.factory = pool.borrow();
-	}
+    public MessageProcessor(String serverAddress) {
+        MessageConnectPool.setServerAddress(serverAddress);
+        pool = MessageConnectPool.getMessageConnectPoolInstance();
+        this.factory = pool.borrow();
+    }
 
-	public void closeMessageConnectFactory() {
-		pool.restore();
-	}
+    public void closeMessageConnectFactory() {
+        pool.restore();
+    }
 
-	public MessageConnectFactory getMessageConnectFactory() {
-		return factory;
-	}
+    public MessageConnectFactory getMessageConnectFactory() {
+        return factory;
+    }
 
-	public void sendAsynMessage(RequestMessage request, final NotifyCallback listener) {
-		Channel channel = factory.getMessageChannel();
-		if (channel == null) {
-			return;
-		}
+    public void sendAsynMessage(RequestMessage request, final NotifyCallback listener) {
+        Channel channel = factory.getMessageChannel();
+        if (channel == null) {
+            return;
+        }
 
-		Map<String, CallBackInvoker<Object>> callBackMap = factory.getCallBackMap();
+        Map<String, CallBackInvoker<Object>> callBackMap = factory.getCallBackMap();
 
-		CallBackInvoker<Object> invoker = new CallBackInvoker<Object>();
-		callBackMap.put(request.getMsgId(), invoker);
+        CallBackInvoker<Object> invoker = new CallBackInvoker<Object>();
+        callBackMap.put(request.getMsgId(), invoker);
 
-		invoker.setRequestId(request.getMsgId());
+        invoker.setRequestId(request.getMsgId());
 
-		invoker.join(new CallBackListener<Object>() {
-			public void onCallBack(Object t) {
-				ResponseMessage response = (ResponseMessage) t;
-				listener.onEvent((ProducerAckMessage) response.getMsgParams());
+        invoker.join(new CallBackListener<Object>() {
+            public void onCallBack(Object t) {
+                ResponseMessage response = (ResponseMessage) t;
+                listener.onEvent((ProducerAckMessage) response.getMsgParams());
 
-			}
-		});
+            }
+        });
 
-		ChannelFuture channelFuture = channel.writeAndFlush(request);
-		channelFuture.addListener(new ChannelFutureListener() {
-			public void operationComplete(ChannelFuture future) throws Exception {
-				if (!future.isSuccess()) {
-					invoker.setReason(future.cause());
-				}
-			}
-		});
+        ChannelFuture channelFuture = channel.writeAndFlush(request);
+        channelFuture.addListener(new ChannelFutureListener() {
+            public void operationComplete(ChannelFuture future) throws Exception {
+                if (!future.isSuccess()) {
+                    invoker.setReason(future.cause());
+                }
+            }
+        });
 
-	}
+    }
 
-	public Object sendAsynMessage(RequestMessage request) {
-		Channel channel = factory.getMessageChannel();
+    public Object sendAsynMessage(RequestMessage request) {
+        Channel channel = factory.getMessageChannel();
 
-		if (channel == null) {
-			return null;
-		}
+        if (channel == null) {
+            return null;
+        }
 
-		Map<String, CallBackInvoker<Object>> callBackMap = factory.getCallBackMap();
+        Map<String, CallBackInvoker<Object>> callBackMap = factory.getCallBackMap();
 
-		CallBackInvoker<Object> invoker = new CallBackInvoker<>();
-		callBackMap.put(request.getMsgId(), invoker);
-		invoker.setRequestId(request.getMsgId());
+        CallBackInvoker<Object> invoker = new CallBackInvoker<>();
+        callBackMap.put(request.getMsgId(), invoker);
+        invoker.setRequestId(request.getMsgId());
 
-		ChannelFuture channelFuture = channel.writeAndFlush(request);
-		channelFuture.addListener(new ChannelFutureListener() {
-			@Override
-			public void operationComplete(ChannelFuture future) throws Exception {
-				if (!future.isSuccess()) {
-					invoker.setReason(future.cause());
-				}
-			}
-		});
+        ChannelFuture channelFuture = channel.writeAndFlush(request);
+        channelFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) throws Exception {
+                if (!future.isSuccess()) {
+                    invoker.setReason(future.cause());
+                }
+            }
+        });
 
-		try {
-			Object result = invoker.getMessageResult(factory.getTimeOut(), TimeUnit.MILLISECONDS);
-			callBackMap.remove(request.getMsgId());
-			return result;
-		}
-		catch (RuntimeException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+        try {
+            Object result = invoker.getMessageResult(factory.getTimeOut(), TimeUnit.MILLISECONDS);
+            callBackMap.remove(request.getMsgId());
+            return result;
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	public void sendSyncMessage(RequestMessage request) {
-		Channel channel = factory.getMessageChannel();
+    public void sendSyncMessage(RequestMessage request) {
+        Channel channel = factory.getMessageChannel();
 
-		if (channel == null) {
-			return;
-		}
+        if (channel == null) {
+            return;
+        }
 
-		Map<String, CallBackInvoker<Object>> callBackMap = factory.getCallBackMap();
+        Map<String, CallBackInvoker<Object>> callBackMap = factory.getCallBackMap();
 
-		CallBackInvoker<Object> invoker = new CallBackInvoker<>();
-		callBackMap.put(request.getMsgId(), invoker);
+        CallBackInvoker<Object> invoker = new CallBackInvoker<>();
+        callBackMap.put(request.getMsgId(), invoker);
 
-		invoker.setRequestId(request.getMsgId());
+        invoker.setRequestId(request.getMsgId());
 
-		ChannelFuture channelFuture;
-		try {
-			channelFuture = channel.writeAndFlush(request).sync();
-			channelFuture.addListener(new ChannelFutureListener() {
-				@Override
-				public void operationComplete(ChannelFuture future) throws Exception {
-					if (!future.isSuccess()) {
-						invoker.setReason(future.cause());
-					}
-				}
-			});
-		}
-		catch (InterruptedException ex) {
-			Logger.getLogger(MessageProcessor.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+        ChannelFuture channelFuture;
+        try {
+            channelFuture = channel.writeAndFlush(request).sync();
+            channelFuture.addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    if (!future.isSuccess()) {
+                        invoker.setReason(future.cause());
+                    }
+                }
+            });
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MessageProcessor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

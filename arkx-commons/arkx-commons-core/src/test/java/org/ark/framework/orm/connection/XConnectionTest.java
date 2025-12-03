@@ -15,12 +15,12 @@ import io.arkx.framework.data.db.dbtype.IDBType;
  */
 public class XConnectionTest {
 
-	@Test
-	public void checkDefaultConfigDatabaseType() {
+    @Test
+    public void checkDefaultConfigDatabaseType() {
 
-		IDBType database = DBTypeService.getInstance().get(ConnectionPoolManager.getDBConnConfig().getDatabaseType());
+        IDBType database = DBTypeService.getInstance().get(ConnectionPoolManager.getDBConnConfig().getDatabaseType());
 
-		assertNotNull(database);
-	}
+        assertNotNull(database);
+    }
 
 }

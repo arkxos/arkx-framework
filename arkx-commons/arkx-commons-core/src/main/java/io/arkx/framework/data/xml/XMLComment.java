@@ -8,38 +8,38 @@ import io.arkx.framework.commons.lang.FastStringBuilder;
  */
 public class XMLComment extends XMLNode {
 
-	String comment;
+    String comment;
 
-	public XMLComment(String comment) {
-		this.comment = comment;
-	}
+    public XMLComment(String comment) {
+        this.comment = comment;
+    }
 
-	@Override
-	public void toString(String prefix, FastStringBuilder sb) {
-		sb.append(prefix).append("<!--").append(comment).append("-->");
-	}
+    @Override
+    public void toString(String prefix, FastStringBuilder sb) {
+        sb.append(prefix).append("<!--").append(comment).append("-->");
+    }
 
-	@Override
-	public String getText() {
-		return "";
-	}
+    @Override
+    public String getText() {
+        return "";
+    }
 
-	@Override
-	public int getType() {
-		return XMLNode.COMMENT;
-	}
+    @Override
+    public int getType() {
+        return XMLNode.COMMENT;
+    }
 
-	@Override
-	void repack() {
-		comment = new String(comment.toCharArray());
-	}
+    @Override
+    void repack() {
+        comment = new String(comment.toCharArray());
+    }
 
-	public String getComment() {
-		return comment;
-	}
+    public String getComment() {
+        return comment;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
 }

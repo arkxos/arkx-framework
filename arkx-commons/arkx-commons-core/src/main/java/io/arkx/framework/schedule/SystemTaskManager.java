@@ -12,68 +12,67 @@ import io.arkx.framework.core.FrameworkException;
  */
 public class SystemTaskManager extends AbstractTaskManager {
 
-	public static final String ID = "SYSTEM";
+    public static final String ID = "SYSTEM";
 
-	@Override
-	public void execute(final String id) {
-		SystemTask gt = SystemTaskService.getInstance().get(id);
-		if (gt != null) {
-			gt.execute();
-		}
-		else {
-			throw new FrameworkException("Task not found:" + id);
-		}
-	}
+    @Override
+    public void execute(final String id) {
+        SystemTask gt = SystemTaskService.getInstance().get(id);
+        if (gt != null) {
+            gt.execute();
+        } else {
+            throw new FrameworkException("Task not found:" + id);
+        }
+    }
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "@{Framework.SystemTask}";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "@{Framework.SystemTask}";
+    }
 
-	public SystemTask getTask(String id) {
-		return SystemTaskService.getInstance().get(id);
-	}
+    public SystemTask getTask(String id) {
+        return SystemTaskService.getInstance().get(id);
+    }
 
-	public List<SystemTask> getAllTask() {
-		return SystemTaskService.getInstance().getAll();
-	}
+    public List<SystemTask> getAllTask() {
+        return SystemTaskService.getInstance().getAll();
+    }
 
-	@Override
-	public Mapx<String, String> getUsableTasks() {
-		Mapx<String, String> map = new Mapx<String, String>();
-		for (SystemTask gt : SystemTaskService.getInstance().getAll()) {
-			if (Config.isFrontDeploy() && !gt.enable4Front()) {
-				continue;
-			}
-			if (!gt.isDisabled()) {
-				map.put(gt.getExtendItemID(), gt.getExtendItemName());
-			}
-		}
-		return map;
-	}
+    @Override
+    public Mapx<String, String> getUsableTasks() {
+        Mapx<String, String> map = new Mapx<String, String>();
+        for (SystemTask gt : SystemTaskService.getInstance().getAll()) {
+            if (Config.isFrontDeploy() && !gt.enable4Front()) {
+                continue;
+            }
+            if (!gt.isDisabled()) {
+                map.put(gt.getExtendItemID(), gt.getExtendItemName());
+            }
+        }
+        return map;
+    }
 
-	@Override
-	public String getTaskCronExpression(String id) {
-		SystemTask gt = SystemTaskService.getInstance().get(id);
-		if (gt == null) {
-			return null;
-		}
-		return gt.getCronExpression();
-	}
+    @Override
+    public String getTaskCronExpression(String id) {
+        SystemTask gt = SystemTaskService.getInstance().get(id);
+        if (gt == null) {
+            return null;
+        }
+        return gt.getCronExpression();
+    }
 
-	@Override
-	public Mapx<String, String> getConfigEnableTasks() {
-		return null;
-	}
+    @Override
+    public Mapx<String, String> getConfigEnableTasks() {
+        return null;
+    }
 
-	@Override
-	public boolean enable4Front() {
-		return true;
-	}
+    @Override
+    public boolean enable4Front() {
+        return true;
+    }
 
 }

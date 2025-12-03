@@ -14,21 +14,21 @@ import io.arkx.framework.avatarmq.msg.SubscribeMessage;
  */
 public class ConsumerMessageHook implements ConsumerMessageListener {
 
-	public ConsumerMessageHook() {
+    public ConsumerMessageHook() {
 
-	}
+    }
 
-	public void hookConsumerMessage(SubscribeMessage request, RemoteChannelData channel) {
+    public void hookConsumerMessage(SubscribeMessage request, RemoteChannelData channel) {
 
-		System.out.println("receive subcript info groupid:" + request.getClusterId() + " topic:" + request.getTopic()
-				+ " clientId:" + channel.getClientId());
+        System.out.println("receive subcript info groupid:" + request.getClusterId() + " topic:" + request.getTopic()
+                + " clientId:" + channel.getClientId());
 
-		SubscriptionData subscript = new SubscriptionData();
+        SubscriptionData subscript = new SubscriptionData();
 
-		subscript.setTopic(request.getTopic());
-		channel.setSubcript(subscript);
+        subscript.setTopic(request.getTopic());
+        channel.setSubcript(subscript);
 
-		ConsumerContext.addClusters(request.getClusterId(), channel);
-	}
+        ConsumerContext.addClusters(request.getClusterId(), channel);
+    }
 
 }

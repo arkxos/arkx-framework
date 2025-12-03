@@ -15,16 +15,16 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public abstract class AfterMainFilterAction implements IExtendAction {
 
-	public static final String ExtendPointID = "org.ark.framework.AfterMainFilter";
+    public static final String ExtendPointID = "org.ark.framework.AfterMainFilter";
 
-	public Object execute(Object[] args) throws ExtendException {
-		HttpServletRequest request = (HttpServletRequest) args[0];
-		HttpServletResponse response = (HttpServletResponse) args[1];
-		FilterChain chain = (FilterChain) args[2];
-		return execute(request, response, chain);
-	}
+    public Object execute(Object[] args) throws ExtendException {
+        HttpServletRequest request = (HttpServletRequest) args[0];
+        HttpServletResponse response = (HttpServletResponse) args[1];
+        FilterChain chain = (FilterChain) args[2];
+        return execute(request, response, chain);
+    }
 
-	public abstract boolean execute(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws ExtendException;
+    public abstract boolean execute(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws ExtendException;
 
 }

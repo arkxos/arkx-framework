@@ -6,10 +6,10 @@ package io.arkx.framework.cosyui.template.exception;
  */
 public class TemplateNotFoundException extends TemplateException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public TemplateNotFoundException(String message) {
-		super(message);
-	}
+    public TemplateNotFoundException(String message) {
+        super(message);
+    }
 
 }

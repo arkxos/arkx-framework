@@ -20,186 +20,175 @@ import jakarta.validation.constraints.NotBlank;
 @Deprecated
 public class SysMenu extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 菜单ID */
-	private Long menuId;
+    /** 菜单ID */
+    private Long menuId;
 
-	/** 菜单名称 */
-	private String menuName;
+    /** 菜单名称 */
+    private String menuName;
 
-	/** 父菜单名称 */
-	private String parentName;
+    /** 父菜单名称 */
+    private String parentName;
 
-	/** 父菜单ID */
-	private Long parentId;
+    /** 父菜单ID */
+    private Long parentId;
 
-	/** 显示顺序 */
-	private String orderNum;
+    /** 显示顺序 */
+    private String orderNum;
 
-	/** 路由地址 */
-	private String path;
+    /** 路由地址 */
+    private String path;
 
-	/** 组件路径 */
-	private String component;
+    /** 组件路径 */
+    private String component;
 
-	/** 是否为外链（0是 1否） */
-	private String isFrame;
+    /** 是否为外链（0是 1否） */
+    private String isFrame;
 
-	/** 类型（M目录 C菜单 F按钮） */
-	private String menuType;
+    /** 类型（M目录 C菜单 F按钮） */
+    private String menuType;
 
-	/** 显示状态（0显示 1隐藏） */
-	private String visible;
+    /** 显示状态（0显示 1隐藏） */
+    private String visible;
 
-	/** 菜单状态（0显示 1隐藏） */
-	private String status;
+    /** 菜单状态（0显示 1隐藏） */
+    private String status;
 
-	/** 权限字符串 */
-	private String perms;
+    /** 权限字符串 */
+    private String perms;
 
-	/**  */
-	private String icon;
+    /**  */
+    private String icon;
 
-	/** 子菜单 */
-	private List<SysMenu> children = new ArrayList<SysMenu>();
+    /** 子菜单 */
+    private List<SysMenu> children = new ArrayList<SysMenu>();
 
-	public Long getMenuId() {
-		return menuId;
-	}
+    public Long getMenuId() {
+        return menuId;
+    }
 
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
-	}
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
 
-	public String getMenuName() {
-		return menuName;
-	}
+    public String getMenuName() {
+        return menuName;
+    }
 
-	public void setMenuName(String menuName) {
-		this.menuName = menuName;
-	}
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
 
-	public String getParentName() {
-		return parentName;
-	}
+    public String getParentName() {
+        return parentName;
+    }
 
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
-	}
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 
-	public Long getParentId() {
-		return parentId;
-	}
+    public Long getParentId() {
+        return parentId;
+    }
 
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
-	@NotBlank(message = "显示顺序不能为空")
-	public String getOrderNum() {
-		return orderNum;
-	}
+    @NotBlank(message = "显示顺序不能为空")
+    public String getOrderNum() {
+        return orderNum;
+    }
 
-	public void setOrderNum(String orderNum) {
-		this.orderNum = orderNum;
-	}
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getComponent() {
-		return component;
-	}
+    public String getComponent() {
+        return component;
+    }
 
-	public void setComponent(String component) {
-		this.component = component;
-	}
+    public void setComponent(String component) {
+        this.component = component;
+    }
 
-	public String getIsFrame() {
-		return isFrame;
-	}
+    public String getIsFrame() {
+        return isFrame;
+    }
 
-	public void setIsFrame(String isFrame) {
-		this.isFrame = isFrame;
-	}
+    public void setIsFrame(String isFrame) {
+        this.isFrame = isFrame;
+    }
 
-	public String getMenuType() {
-		return menuType;
-	}
+    public String getMenuType() {
+        return menuType;
+    }
 
-	public void setMenuType(String menuType) {
-		this.menuType = menuType;
-	}
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
+    }
 
-	public String getVisible() {
-		return visible;
-	}
+    public String getVisible() {
+        return visible;
+    }
 
-	public void setVisible(String visible) {
-		this.visible = visible;
-	}
+    public void setVisible(String visible) {
+        this.visible = visible;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getPerms() {
-		if (StringUtils.isEmpty(perms)) {
-			return StringUtils.EMPTY;
-		}
-		return perms;
-	}
+    public String getPerms() {
+        if (StringUtils.isEmpty(perms)) {
+            return StringUtils.EMPTY;
+        }
+        return perms;
+    }
 
-	public void setPerms(String perms) {
-		this.perms = perms;
-	}
+    public void setPerms(String perms) {
+        this.perms = perms;
+    }
 
-	public String getIcon() {
-		return icon;
-	}
+    public String getIcon() {
+        return icon;
+    }
 
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-	public List<SysMenu> getChildren() {
-		return children;
-	}
+    public List<SysMenu> getChildren() {
+        return children;
+    }
 
-	public void setChildren(List<SysMenu> children) {
-		this.children = children;
-	}
+    public void setChildren(List<SysMenu> children) {
+        this.children = children;
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("menuId", getMenuId())
-			.append("menuName", getMenuName())
-			.append("parentId", getParentId())
-			.append("orderNum", getOrderNum())
-			.append("path", getPath())
-			.append("component", getComponent())
-			.append("isFrame", getIsFrame())
-			.append("menuType", getMenuType())
-			.append("visible", getVisible())
-			.append("status ", getStatus())
-			.append("perms", getPerms())
-			.append("icon", getIcon())
-			.append("createBy", getCreateBy())
-			.append("createTime", getCreateTime())
-			.append("updateBy", getUpdateBy())
-			.append("updateTime", getUpdateTime())
-			.append("remark", getRemark())
-			.toString();
-	}
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("menuId", getMenuId())
+                .append("menuName", getMenuName()).append("parentId", getParentId()).append("orderNum", getOrderNum())
+                .append("path", getPath()).append("component", getComponent()).append("isFrame", getIsFrame())
+                .append("menuType", getMenuType()).append("visible", getVisible()).append("status ", getStatus())
+                .append("perms", getPerms()).append("icon", getIcon()).append("createBy", getCreateBy())
+                .append("createTime", getCreateTime()).append("updateBy", getUpdateBy())
+                .append("updateTime", getUpdateTime()).append("remark", getRemark()).toString();
+    }
 
 }

@@ -11,22 +11,25 @@ import io.arkx.framework.media.mp3.output.Audio;
  */
 public class Play {
 
-	/**
-	 * 播放器程序的入口。
-	 * @param args 命令行参数，是一个本地MP3文件名。
-	 * @throws IOException 发生I/O错误时。
-	 */
-	public static void main(String[] args) throws IOException {
-		if (args.length == 0) {
-			System.out.println("Please specify a valid filename.");
-			return;
-		}
-		MiniPlayer player = new MiniPlayer(new Audio());
+    /**
+     * 播放器程序的入口。
+     *
+     * @param args
+     *            命令行参数，是一个本地MP3文件名。
+     * @throws IOException
+     *             发生I/O错误时。
+     */
+    public static void main(String[] args) throws IOException {
+        if (args.length == 0) {
+            System.out.println("Please specify a valid filename.");
+            return;
+        }
+        MiniPlayer player = new MiniPlayer(new Audio());
 
-		String msg = player.open(args[0]);
-		System.out.println(msg);
+        String msg = player.open(args[0]);
+        System.out.println(msg);
 
-		player.run();
-	}
+        player.run();
+    }
 
 }

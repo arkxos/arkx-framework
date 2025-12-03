@@ -11,42 +11,42 @@ import java.io.Serializable;
  */
 public class ConsumerAckMessage extends BaseMessage implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public static ConsumerAckMessage createSuccessAckMessage() {
-		ConsumerAckMessage result = new ConsumerAckMessage();
-		result.setStatus(ConsumerAckMessage.SUCCESS);
-		return result;
-	}
+    public static ConsumerAckMessage createSuccessAckMessage() {
+        ConsumerAckMessage result = new ConsumerAckMessage();
+        result.setStatus(ConsumerAckMessage.SUCCESS);
+        return result;
+    }
 
-	private String ack;
+    private String ack;
 
-	private int status;
+    private int status;
 
-	private String msgId;
+    private String msgId;
 
-	public String getAck() {
-		return ack;
-	}
+    public String getAck() {
+        return ack;
+    }
 
-	public void setAck(String ack) {
-		this.ack = ack;
-	}
+    public void setAck(String ack) {
+        this.ack = ack;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public String getMsgId() {
-		return msgId;
-	}
+    public String getMsgId() {
+        return msgId;
+    }
 
-	public void setMsgId(String msgId) {
-		this.msgId = msgId;
-	}
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
+    }
 
 }

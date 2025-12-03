@@ -10,15 +10,15 @@ import io.arkx.framework.commons.collection.Mapx;
  */
 public class SQLMapping {
 
-	protected static Mapx<String, String> mapping = null;
+    protected static Mapx<String, String> mapping = null;
 
-	public static String get(String name) {
-		AliasLoader.load();
-		return mapping.getString(name);
-	}
+    public static String get(String name) {
+        AliasLoader.load();
+        return mapping.getString(name);
+    }
 
-	protected static void put(String key, String str) {
-		mapping.put(key, str);
-	}
+    protected static void put(String key, String str) {
+        mapping.put(key, str);
+    }
 
 }

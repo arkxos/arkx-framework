@@ -8,9 +8,9 @@ package org.ark.framework.jaf.html;
  */
 public class HtmlDiv extends HtmlElement {
 
-	public HtmlDiv() {
-		this.ElementType = "DIV";
-		this.TagName = "div";
-	}
+    public HtmlDiv() {
+        this.ElementType = "DIV";
+        this.TagName = "div";
+    }
 
 }

@@ -22,27 +22,27 @@ import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
  * @version 4.6.0
  */
 @AutoConfiguration(after = MybatisPlusAutoConfiguration.class)
-@EnableConfigurationProperties({ EncryptorProperties.class, MybatisPlusProperties.class })
+@EnableConfigurationProperties({EncryptorProperties.class, MybatisPlusProperties.class})
 @ConditionalOnClass(MybatisPlusAutoConfiguration.class)
 @ConditionalOnProperty(value = "mybatis-encryptor.enable", havingValue = "true")
 public class EncryptorAutoConfiguration {
 
-	@Autowired
-	private EncryptorProperties properties;
+    @Autowired
+    private EncryptorProperties properties;
 
-	@Bean
-	public EncryptorManager encryptorManager(MybatisPlusProperties mybatisPlusProperties) {
-		return new EncryptorManager(mybatisPlusProperties.getTypeAliasesPackage());
-	}
+    @Bean
+    public EncryptorManager encryptorManager(MybatisPlusProperties mybatisPlusProperties) {
+        return new EncryptorManager(mybatisPlusProperties.getTypeAliasesPackage());
+    }
 
-	@Bean
-	public MybatisEncryptInterceptor mybatisEncryptInterceptor(EncryptorManager encryptorManager) {
-		return new MybatisEncryptInterceptor(encryptorManager, properties);
-	}
+    @Bean
+    public MybatisEncryptInterceptor mybatisEncryptInterceptor(EncryptorManager encryptorManager) {
+        return new MybatisEncryptInterceptor(encryptorManager, properties);
+    }
 
-	@Bean
-	public MybatisDecryptInterceptor mybatisDecryptInterceptor(EncryptorManager encryptorManager) {
-		return new MybatisDecryptInterceptor(encryptorManager, properties);
-	}
+    @Bean
+    public MybatisDecryptInterceptor mybatisDecryptInterceptor(EncryptorManager encryptorManager) {
+        return new MybatisDecryptInterceptor(encryptorManager, properties);
+    }
 
 }

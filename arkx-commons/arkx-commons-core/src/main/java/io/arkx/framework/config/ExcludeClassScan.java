@@ -8,20 +8,20 @@ import io.arkx.framework.Config;
  */
 public class ExcludeClassScan implements IApplicationConfigItem {
 
-	public static final String ID = "ExcludeClassScan";
+    public static final String ID = "ExcludeClassScan";
 
-	@Override
-	public String getExtendItemID() {
-		return ID;
-	}
+    @Override
+    public String getExtendItemID() {
+        return ID;
+    }
 
-	@Override
-	public String getExtendItemName() {
-		return "Class or package exclude in annotation scanning";
-	}
+    @Override
+    public String getExtendItemName() {
+        return "Class or package exclude in annotation scanning";
+    }
 
-	public static String getValue() {
-		return Config.getValue("App." + ID);
-	}
+    public static String getValue() {
+        return Config.getValue("App." + ID);
+    }
 
 }

@@ -15,30 +15,31 @@ import io.arkx.framework.data.jpa.sqltoy.SqlToyJpaRepositoryFactoryBean;
 import jakarta.persistence.EntityManager;
 
 /**
- * 基础Repostory简单实现 factory bean 请参考 spring-data-jpa-reference [1.4.2. Adding custom
- * behaviour to all repositories]
+ * 基础Repostory简单实现 factory bean 请参考 spring-data-jpa-reference [1.4.2. Adding
+ * custom behaviour to all repositories]
  *
  * @author Darkness
  * @date 2019-07-19 14:16:51
  * @version V1.0
  */
 public class BaseRepositoryFactoryBean<R extends JpaRepository<T, I>, T extends BaseEntity, I extends Serializable>
-		extends SqlToyJpaRepositoryFactoryBean<R, T, I> {
+        extends
+            SqlToyJpaRepositoryFactoryBean<R, T, I> {
 
-	public BaseRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
-		super(repositoryInterface);
-	}
+    public BaseRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
+        super(repositoryInterface);
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
-		SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
-		return new BaseRepositoryFactory(sqlToyLazyDao, em);
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
+        SqlToyLazyDao sqlToyLazyDao = ContextHolder.getBean(SqlToyLazyDao.class);
+        return new BaseRepositoryFactory(sqlToyLazyDao, em);
+    }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		ContextHolder.appContext = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ContextHolder.appContext = applicationContext;
+    }
 
 }

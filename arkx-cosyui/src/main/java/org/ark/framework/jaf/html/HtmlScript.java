@@ -8,9 +8,9 @@ package org.ark.framework.jaf.html;
  */
 public class HtmlScript extends HtmlElement {
 
-	public HtmlScript() {
-		this.ElementType = "SCRIPT";
-		this.TagName = "script";
-	}
+    public HtmlScript() {
+        this.ElementType = "SCRIPT";
+        this.TagName = "script";
+    }
 
 }

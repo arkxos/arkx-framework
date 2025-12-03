@@ -7,6 +7,6 @@ package io.arkx.framework.commons.crawl;
  */
 public interface Pipeline {
 
-	void handle(Page page);
+    void handle(Page page);
 
 }

@@ -7,13 +7,13 @@ package io.arkx.framework.data.mybatis.pro.core.annotations;
  */
 public enum Type {
 
-	/**
-	 * 自增
-	 */
-	IDENTITY,
-	/**
-	 * 自定义
-	 */
-	AUTO
+    /**
+     * 自增
+     */
+    IDENTITY,
+    /**
+     * 自定义
+     */
+    AUTO
 
 }

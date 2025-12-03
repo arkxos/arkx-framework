@@ -11,10 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class LogicalDeleteInterceptorTest {
 
-	@Test
-	void backupTest() {
-		// 测试事务
-		//
-	}
+    @Test
+    void backupTest() {
+        // 测试事务
+        //
+    }
 
 }

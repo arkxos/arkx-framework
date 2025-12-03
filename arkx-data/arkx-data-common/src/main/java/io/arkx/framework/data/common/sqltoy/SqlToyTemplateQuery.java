@@ -39,246 +39,240 @@ import io.arkx.framework.data.common.entity.Status;
  */
 public class SqlToyTemplateQuery implements RepositoryQuery {
 
-	private SqlToyLazyDao sqlToyLazyDao;
+    private SqlToyLazyDao sqlToyLazyDao;
 
-	private Method method;
+    private Method method;
 
-	private QueryMethod queryMethod;
+    private QueryMethod queryMethod;
 
-	public SqlToyTemplateQuery(SqlToyLazyDao sqlToyLazyDao, Method method, QueryMethod queryMethod) {
-		this.sqlToyLazyDao = sqlToyLazyDao;
-		this.method = method;
-		this.queryMethod = queryMethod;
-	}
+    public SqlToyTemplateQuery(SqlToyLazyDao sqlToyLazyDao, Method method, QueryMethod queryMethod) {
+        this.sqlToyLazyDao = sqlToyLazyDao;
+        this.method = method;
+        this.queryMethod = queryMethod;
+    }
 
-	@Override
-	public Object execute(Object[] values) {
-		System.out.println(Arrays.toString(values));
+    @Override
+    public Object execute(Object[] values) {
+        System.out.println(Arrays.toString(values));
 
-		String namedQueryName = getNamedQueryName();
-		Parameters<?, ?> parameters = getQueryMethod().getParameters();
-		Map<String, Object> paramsMap = getParams(values);// new HashMap<String,
-															// Object>();
+        String namedQueryName = getNamedQueryName();
+        Parameters<?, ?> parameters = getQueryMethod().getParameters();
+        Map<String, Object> paramsMap = getParams(values);// new HashMap<String,
+                                                          // Object>();
 
-		Class<?> objectType = getQueryMethod().getReturnedObjectType();
-		Class<?> genericType;
-		if (objectType.isAssignableFrom(Map.class)) {
-			genericType = objectType;
-		}
-		else {
-			TypeInformation<?> ctif = TypeInformation.of(objectType);
-			TypeInformation<?> actualType = ctif.getActualType();
-			genericType = actualType.getType();
-		}
+        Class<?> objectType = getQueryMethod().getReturnedObjectType();
+        Class<?> genericType;
+        if (objectType.isAssignableFrom(Map.class)) {
+            genericType = objectType;
+        } else {
+            TypeInformation<?> ctif = TypeInformation.of(objectType);
+            TypeInformation<?> actualType = ctif.getActualType();
+            genericType = actualType.getType();
+        }
 
-		// int paramIndex = 0;
-		// for (JpaParameter jpaParameter : parameters) {
-		// Class<?> paramType = jpaParameter.getType();
-		// Object value = values[paramIndex++];
-		// if (paramType == Pageable.class) {
-		// continue;
-		// }
-		// Optional<String> paramOptional = jpaParameter.getName();
-		// if (paramOptional.isPresent()) {
-		// String paramName = jpaParameter.getName().get();
-		// paramsMap.put(paramName, value);
-		// }
-		// }
-		if (parameters.hasPageableParameter()) {
-			Pageable pageable = (Pageable) (values[parameters.getPageableIndex()]);
-			if (pageable != null) {
-				// query.setFirstResult((int) pageable.getOffset());
-				// query.setMaxResults(pageable.getPageSize());
-				org.sagacity.sqltoy.model.Page<?> result = queryPagedData(namedQueryName, pageable, paramsMap,
-						genericType);
-				Page<?> pageResult = new PageImpl<>(result.getRows(), pageable, result.getRecordCount());
-				return pageResult;
-			}
-		}
+        // int paramIndex = 0;
+        // for (JpaParameter jpaParameter : parameters) {
+        // Class<?> paramType = jpaParameter.getType();
+        // Object value = values[paramIndex++];
+        // if (paramType == Pageable.class) {
+        // continue;
+        // }
+        // Optional<String> paramOptional = jpaParameter.getName();
+        // if (paramOptional.isPresent()) {
+        // String paramName = jpaParameter.getName().get();
+        // paramsMap.put(paramName, value);
+        // }
+        // }
+        if (parameters.hasPageableParameter()) {
+            Pageable pageable = (Pageable) (values[parameters.getPageableIndex()]);
+            if (pageable != null) {
+                // query.setFirstResult((int) pageable.getOffset());
+                // query.setMaxResults(pageable.getPageSize());
+                org.sagacity.sqltoy.model.Page<?> result = queryPagedData(namedQueryName, pageable, paramsMap,
+                        genericType);
+                Page<?> pageResult = new PageImpl<>(result.getRows(), pageable, result.getRecordCount());
+                return pageResult;
+            }
+        }
 
-		List<?> result = queryData(namedQueryName, paramsMap, genericType);
-		if (this.isReturnTypeOptional()) {
-			if (result.isEmpty()) {
-				return Optional.empty();
-			}
-			if (result.size() > 1) {
-				throw new RuntimeException("query result greate than 1 row");
-			}
-			Object singleData = result.get(0);
-			return Optional.ofNullable(singleData);
-		}
-		else if (!List.class.isAssignableFrom(this.method.getReturnType())) {
-			return result.get(0);
-		}
+        List<?> result = queryData(namedQueryName, paramsMap, genericType);
+        if (this.isReturnTypeOptional()) {
+            if (result.isEmpty()) {
+                return Optional.empty();
+            }
+            if (result.size() > 1) {
+                throw new RuntimeException("query result greate than 1 row");
+            }
+            Object singleData = result.get(0);
+            return Optional.ofNullable(singleData);
+        } else if (!List.class.isAssignableFrom(this.method.getReturnType())) {
+            return result.get(0);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private Map<String, Object> getParams(Object[] values) {
-		Parameters<?, ?> parameters = getQueryMethod().getParameters();
-		// gen model
-		Map<String, Object> params = new HashMap<>();
-		for (int i = 0; i < parameters.getNumberOfParameters(); i++) {
-			Object value = values[i];
-			Parameter parameter = parameters.getParameter(i);
-			if (value != null && canBindParameter(parameter)) {
-				if (!isValidValue(value)) {
-					continue;
-				}
-				Class<?> clz = value.getClass();
-				if (clz.isPrimitive() || String.class.isAssignableFrom(clz) || Number.class.isAssignableFrom(clz)
-						|| clz.isArray() || Collection.class.isAssignableFrom(clz) || clz.isEnum()
-						|| Date.class.isAssignableFrom(clz) || java.sql.Date.class.isAssignableFrom(clz)) {
-					params.put(parameter.getName().orElse(null), value);
-				}
-				else {
-					params = toParams(value);
-				}
-			}
-		}
-		return params;
-	}
+    private Map<String, Object> getParams(Object[] values) {
+        Parameters<?, ?> parameters = getQueryMethod().getParameters();
+        // gen model
+        Map<String, Object> params = new HashMap<>();
+        for (int i = 0; i < parameters.getNumberOfParameters(); i++) {
+            Object value = values[i];
+            Parameter parameter = parameters.getParameter(i);
+            if (value != null && canBindParameter(parameter)) {
+                if (!isValidValue(value)) {
+                    continue;
+                }
+                Class<?> clz = value.getClass();
+                if (clz.isPrimitive() || String.class.isAssignableFrom(clz) || Number.class.isAssignableFrom(clz)
+                        || clz.isArray() || Collection.class.isAssignableFrom(clz) || clz.isEnum()
+                        || Date.class.isAssignableFrom(clz) || java.sql.Date.class.isAssignableFrom(clz)) {
+                    params.put(parameter.getName().orElse(null), value);
+                } else {
+                    params = toParams(value);
+                }
+            }
+        }
+        return params;
+    }
 
-	@SuppressWarnings("unchecked")
-	public static Map<String, Object> toParams(Object beanOrMap) {
-		Map<String, Object> params;
-		if (beanOrMap instanceof Map) {
-			params = (Map<String, Object>) beanOrMap;
-		}
-		else {
-			params = toMap(beanOrMap);
-		}
-		if (!CollectionUtils.isEmpty(params)) {
-			Iterator<String> keys = params.keySet().iterator();
-			while (keys.hasNext()) {
-				String key = keys.next();
-				if (!isValidValue(params.get(key))) {
-					keys.remove();
-				}
-			}
-		}
-		return params;
-	}
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> toParams(Object beanOrMap) {
+        Map<String, Object> params;
+        if (beanOrMap instanceof Map) {
+            params = (Map<String, Object>) beanOrMap;
+        } else {
+            params = toMap(beanOrMap);
+        }
+        if (!CollectionUtils.isEmpty(params)) {
+            Iterator<String> keys = params.keySet().iterator();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (!isValidValue(params.get(key))) {
+                    keys.remove();
+                }
+            }
+        }
+        return params;
+    }
 
-	public static Map<String, Object> toMap(Object bean) {
-		if (bean == null) {
-			return Collections.emptyMap();
-		}
-		try {
-			Map<String, Object> description = new HashMap<String, Object>();
-			if (bean instanceof DynaBean) {
-				DynaProperty[] descriptors = ((DynaBean) bean).getDynaClass().getDynaProperties();
-				for (DynaProperty descriptor : descriptors) {
-					String name = descriptor.getName();
-					description.put(name, BeanUtils.getProperty(bean, name));
-				}
-			}
-			else {
-				PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(bean);
-				for (PropertyDescriptor descriptor : descriptors) {
-					String name = descriptor.getName();
-					if (PropertyUtils.getReadMethod(descriptor) != null) {
-						description.put(name, PropertyUtils.getNestedProperty(bean, name));
-					}
-				}
-			}
-			return description;
-		}
-		catch (Exception e) {
-			return Collections.emptyMap();
-		}
-	}
+    public static Map<String, Object> toMap(Object bean) {
+        if (bean == null) {
+            return Collections.emptyMap();
+        }
+        try {
+            Map<String, Object> description = new HashMap<String, Object>();
+            if (bean instanceof DynaBean) {
+                DynaProperty[] descriptors = ((DynaBean) bean).getDynaClass().getDynaProperties();
+                for (DynaProperty descriptor : descriptors) {
+                    String name = descriptor.getName();
+                    description.put(name, BeanUtils.getProperty(bean, name));
+                }
+            } else {
+                PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(bean);
+                for (PropertyDescriptor descriptor : descriptors) {
+                    String name = descriptor.getName();
+                    if (PropertyUtils.getReadMethod(descriptor) != null) {
+                        description.put(name, PropertyUtils.getNestedProperty(bean, name));
+                    }
+                }
+            }
+            return description;
+        } catch (Exception e) {
+            return Collections.emptyMap();
+        }
+    }
 
-	public static boolean isValidValue(Object object) {
-		if (object == null) {
-			return false;
-		}
-		/*
-		 * if (object instanceof Number && ((Number) object).longValue() == 0) { return
-		 * false; }
-		 */
-		return !(object instanceof Collection && CollectionUtils.isEmpty((Collection<?>) object));
-	}
+    public static boolean isValidValue(Object object) {
+        if (object == null) {
+            return false;
+        }
+        /*
+         * if (object instanceof Number && ((Number) object).longValue() == 0) { return
+         * false; }
+         */
+        return !(object instanceof Collection && CollectionUtils.isEmpty((Collection<?>) object));
+    }
 
-	private boolean canBindParameter(Parameter parameter) {
-		return parameter.isBindable();
-	}
+    private boolean canBindParameter(Parameter parameter) {
+        return parameter.isBindable();
+    }
 
-	private void bindTypeHandler() {
-		if (sqlToyLazyDao.getSqlToyContext().getTypeHandler() != null) {
-			return;
-		}
-		sqlToyLazyDao.getSqlToyContext().setTypeHandler(new TypeHandler() {
+    private void bindTypeHandler() {
+        if (sqlToyLazyDao.getSqlToyContext().getTypeHandler() != null) {
+            return;
+        }
+        sqlToyLazyDao.getSqlToyContext().setTypeHandler(new TypeHandler() {
 
-			@Override
-			public boolean setValue(Integer integer, PreparedStatement preparedStatement, int i, int i1, Object o)
-					throws SQLException {
-				return false;
-			}
+            @Override
+            public boolean setValue(Integer integer, PreparedStatement preparedStatement, int i, int i1, Object o)
+                    throws SQLException {
+                return false;
+            }
 
-			@Override
-			public Object toJavaType(String javaTypeName, Class genericType, Object jdbcValue) throws Exception {
-				if (jdbcValue == null) {
-					return null;
-				}
-				if (Status.class.getName().equals(javaTypeName)) {
-					return Status.fromCode((int) jdbcValue);
-				}
-				return jdbcValue;
-			}
-		});
-	}
+            @Override
+            public Object toJavaType(String javaTypeName, Class genericType, Object jdbcValue) throws Exception {
+                if (jdbcValue == null) {
+                    return null;
+                }
+                if (Status.class.getName().equals(javaTypeName)) {
+                    return Status.fromCode((int) jdbcValue);
+                }
+                return jdbcValue;
+            }
+        });
+    }
 
-	private <T> List<T> queryData(String namedQueryName, Map<String, Object> paramsMap, Class<T> clazz) {
-		bindTypeHandler();
-		List<T> result = sqlToyLazyDao.findBySql(namedQueryName, paramsMap, clazz);
-		return result;
-	}
+    private <T> List<T> queryData(String namedQueryName, Map<String, Object> paramsMap, Class<T> clazz) {
+        bindTypeHandler();
+        List<T> result = sqlToyLazyDao.findBySql(namedQueryName, paramsMap, clazz);
+        return result;
+    }
 
-	private <T> org.sagacity.sqltoy.model.Page<T> queryPagedData(String namedQueryName, Pageable pageable,
-			Map<String, Object> paramsMap, Class<T> clazz) {
-		bindTypeHandler();
-		org.sagacity.sqltoy.model.Page<T> pageModel = new org.sagacity.sqltoy.model.Page<>();
-		pageModel.setPageNo(pageable.getPageNumber() + 1);
-		pageModel.setPageSize(pageable.getPageSize());
+    private <T> org.sagacity.sqltoy.model.Page<T> queryPagedData(String namedQueryName, Pageable pageable,
+            Map<String, Object> paramsMap, Class<T> clazz) {
+        bindTypeHandler();
+        org.sagacity.sqltoy.model.Page<T> pageModel = new org.sagacity.sqltoy.model.Page<>();
+        pageModel.setPageNo(pageable.getPageNumber() + 1);
+        pageModel.setPageSize(pageable.getPageSize());
 
-		org.sagacity.sqltoy.model.Page<T> result = sqlToyLazyDao.findPageBySql(pageModel, namedQueryName, paramsMap,
-				clazz);
-		// System.out.println(JSON.toJSONString(result));
-		return result;
-	}
+        org.sagacity.sqltoy.model.Page<T> result = sqlToyLazyDao.findPageBySql(pageModel, namedQueryName, paramsMap,
+                clazz);
+        // System.out.println(JSON.toJSONString(result));
+        return result;
+    }
 
-	@Override
-	public QueryMethod getQueryMethod() {
-		return queryMethod;
-	}
+    @Override
+    public QueryMethod getQueryMethod() {
+        return queryMethod;
+    }
 
-	public boolean isReturnTypeOptional() {
-		return this.method.getReturnType() == Optional.class;
-	}
+    public boolean isReturnTypeOptional() {
+        return this.method.getReturnType() == Optional.class;
+    }
 
-	public String getNamedQueryName() {
-		String annotatedName = getAnnotationValue("value", String.class);
-		return StringUtils.hasText(annotatedName) ? annotatedName : getClassMethodName();
-	}
+    public String getNamedQueryName() {
+        String annotatedName = getAnnotationValue("value", String.class);
+        return StringUtils.hasText(annotatedName) ? annotatedName : getClassMethodName();
+    }
 
-	private <T> T getAnnotationValue(String attribute, Class<T> type) {
-		return getMergedOrDefaultAnnotationValue(attribute, SqlToyQuery.class, type);
-	}
+    private <T> T getAnnotationValue(String attribute, Class<T> type) {
+        return getMergedOrDefaultAnnotationValue(attribute, SqlToyQuery.class, type);
+    }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private <T> T getMergedOrDefaultAnnotationValue(String attribute, Class annotationType, Class<T> targetType) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private <T> T getMergedOrDefaultAnnotationValue(String attribute, Class annotationType, Class<T> targetType) {
 
-		Annotation annotation = AnnotatedElementUtils.findMergedAnnotation(method, annotationType);
-		if (annotation == null) {
-			return targetType.cast(AnnotationUtils.getDefaultValue(annotationType, attribute));
-		}
+        Annotation annotation = AnnotatedElementUtils.findMergedAnnotation(method, annotationType);
+        if (annotation == null) {
+            return targetType.cast(AnnotationUtils.getDefaultValue(annotationType, attribute));
+        }
 
-		return targetType.cast(AnnotationUtils.getValue(annotation, attribute));
-	}
+        return targetType.cast(AnnotationUtils.getValue(annotation, attribute));
+    }
 
-	private String getClassMethodName() {
-		return method.getDeclaringClass().getSimpleName() + "_" + method.getName();
-	}
+    private String getClassMethodName() {
+        return method.getDeclaringClass().getSimpleName() + "_" + method.getName();
+    }
 
 }

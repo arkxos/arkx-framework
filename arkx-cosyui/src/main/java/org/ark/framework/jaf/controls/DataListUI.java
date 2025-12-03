@@ -20,58 +20,57 @@ import io.arkx.framework.cosyui.web.UIFacade;
  */
 public class DataListUI extends UIFacade {
 
-	@Verify(ignoreAll = true)
-	@Priv(login = false)
-	public void doWork() {
-		try {
-			DataListAction dla = new DataListAction();
+    @Verify(ignoreAll = true)
+    @Priv(login = false)
+    public void doWork() {
+        try {
+            DataListAction dla = new DataListAction();
 
-			dla.setTagBody(StringUtil.htmlDecode($V("_ARK_TAGBODY")));
-			dla.setPage("true".equalsIgnoreCase($V("_ARK_PAGE")));
-			String method = $V("_ARK_METHOD");
-			dla.setMethod(method);
-			dla.setID($V("_ARK_ID"));
-			dla.setSortEnd($V("_ARK_SORTEND"));
-			dla.setDragHandle($V("_ARK_DRAGHANDLE"));
-			dla.setParams(this.Request);
-			dla.setPageSize(Integer.parseInt($V("_ARK_SIZE")));
-			if (dla.getPageSize() > 10000) {
-				dla.setPageSize(10000);
-			}
-			if (dla.isPage()) {
-				dla.setPageIndex(0);
-				if ((this.Request.get("_ARK_PAGEINDEX") != null) && (!this.Request.get("_ARK_PAGEINDEX").equals(""))) {
-					dla.setPageIndex(Integer.parseInt(this.Request.get("_ARK_PAGEINDEX").toString()));
-				}
-				if (dla.getPageIndex() < 0) {
-					dla.setPageIndex(0);
-				}
-				if ((this.Request.get("_ARK_PAGETOTAL") != null) && (!this.Request.get("_ARK_PAGETOTAL").equals(""))) {
-					dla.setTotal(Integer.parseInt(this.Request.get("_ARK_PAGETOTAL").toString()));
-					if (dla.getPageIndex() > Math.ceil(dla.getTotal() * 1.0D / dla.getPageSize())) {
-						dla.setPageIndex(
-								Double.valueOf(Math.floor(dla.getTotal() * 1.0D / dla.getPageSize())).intValue());
-					}
-				}
-			}
+            dla.setTagBody(StringUtil.htmlDecode($V("_ARK_TAGBODY")));
+            dla.setPage("true".equalsIgnoreCase($V("_ARK_PAGE")));
+            String method = $V("_ARK_METHOD");
+            dla.setMethod(method);
+            dla.setID($V("_ARK_ID"));
+            dla.setSortEnd($V("_ARK_SORTEND"));
+            dla.setDragHandle($V("_ARK_DRAGHANDLE"));
+            dla.setParams(this.Request);
+            dla.setPageSize(Integer.parseInt($V("_ARK_SIZE")));
+            if (dla.getPageSize() > 10000) {
+                dla.setPageSize(10000);
+            }
+            if (dla.isPage()) {
+                dla.setPageIndex(0);
+                if ((this.Request.get("_ARK_PAGEINDEX") != null) && (!this.Request.get("_ARK_PAGEINDEX").equals(""))) {
+                    dla.setPageIndex(Integer.parseInt(this.Request.get("_ARK_PAGEINDEX").toString()));
+                }
+                if (dla.getPageIndex() < 0) {
+                    dla.setPageIndex(0);
+                }
+                if ((this.Request.get("_ARK_PAGETOTAL") != null) && (!this.Request.get("_ARK_PAGETOTAL").equals(""))) {
+                    dla.setTotal(Integer.parseInt(this.Request.get("_ARK_PAGETOTAL").toString()));
+                    if (dla.getPageIndex() > Math.ceil(dla.getTotal() * 1.0D / dla.getPageSize())) {
+                        dla.setPageIndex(
+                                Double.valueOf(Math.floor(dla.getTotal() * 1.0D / dla.getPageSize())).intValue());
+                    }
+                }
+            }
 
-			Method m = Current.findMethod(method, new Class[] { DataListAction.class });
-			if (!PrivCheck.check(m, this.Request, this.Response)) {
-				return;
-			}
+            Method m = Current.findMethod(method, new Class[]{DataListAction.class});
+            if (!PrivCheck.check(m, this.Request, this.Response)) {
+                return;
+            }
 
-			if (!VerifyCheck.check(m)) {
-				String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
-				LogUtil.warn(message);
-				Current.getResponse().setFailedMessage(message);
-				return;
-			}
-			Current.invokeMethod(m, new Object[] { dla });
-			$S("HTML", dla.getHtml());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+            if (!VerifyCheck.check(m)) {
+                String message = "Verify check failed:method=" + method + ",data=" + Current.getRequest();
+                LogUtil.warn(message);
+                Current.getResponse().setFailedMessage(message);
+                return;
+            }
+            Current.invokeMethod(m, new Object[]{dla});
+            $S("HTML", dla.getHtml());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

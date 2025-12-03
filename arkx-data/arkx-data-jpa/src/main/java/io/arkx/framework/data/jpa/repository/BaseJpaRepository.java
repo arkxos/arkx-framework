@@ -13,6 +13,9 @@ import io.arkx.framework.data.common.repository.ExtBaseRepository;
  * @since 1.0
  */
 public interface BaseJpaRepository<T, ID extends Serializable>
-		extends JpaRepository<T, ID>, JpaSpecificationExecutor<T>, ExtBaseRepository<T, ID> {
+        extends
+            JpaRepository<T, ID>,
+            JpaSpecificationExecutor<T>,
+            ExtBaseRepository<T, ID> {
 
 }

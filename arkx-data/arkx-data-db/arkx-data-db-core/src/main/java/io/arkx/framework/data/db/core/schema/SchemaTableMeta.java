@@ -18,14 +18,14 @@ import lombok.Setter;
 @Getter
 public class SchemaTableMeta extends TableDescription {
 
-	private List<String> primaryKeys;
+    private List<String> primaryKeys;
 
-	private String createSql;
+    private String createSql;
 
-	private List<ColumnDescription> columns;
+    private List<ColumnDescription> columns;
 
-	private List<IndexDescription> indexes;
+    private List<IndexDescription> indexes;
 
-	private List<MetaColumn> metaColumns;
+    private List<MetaColumn> metaColumns;
 
 }

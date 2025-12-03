@@ -11,36 +11,36 @@ import io.arkx.framework.json.JSONObject;
  */
 public class SQLCommand implements IDBCommand {
 
-	// NO_UCD
-	/**
-	 * 指令对应的SQL
-	 */
-	public String SQL;
+    // NO_UCD
+    /**
+     * 指令对应的SQL
+     */
+    public String SQL;
 
-	public static final String Prefix = "SQL:";
+    public static final String Prefix = "SQL:";
 
-	@Override
-	public String getPrefix() {
-		return Prefix;
-	}
+    @Override
+    public String getPrefix() {
+        return Prefix;
+    }
 
-	@Override
-	public String[] getDefaultSQLArray(String dbType) {
-		return new String[] { SQL };
-	}
+    @Override
+    public String[] getDefaultSQLArray(String dbType) {
+        return new String[]{SQL};
+    }
 
-	@Override
-	public void parse(String ddl) {
-		ddl = ddl.substring(Prefix.length());
-		JSONObject map = (JSONObject) JSON.parse(ddl);
-		SQL = map.getString("SQL");
-	}
+    @Override
+    public void parse(String ddl) {
+        ddl = ddl.substring(Prefix.length());
+        JSONObject map = (JSONObject) JSON.parse(ddl);
+        SQL = map.getString("SQL");
+    }
 
-	@Override
-	public String toJSON() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("SQL", SQL);
-		return Prefix + JSON.toJSONString(map);
-	}
+    @Override
+    public String toJSON() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("SQL", SQL);
+        return Prefix + JSON.toJSONString(map);
+    }
 
 }

@@ -13,22 +13,22 @@ import java.sql.SQLException;
  */
 public interface IPagedHandler {
 
-	/**
-	 * 支持的数据库类型
-	 *
-	 * @author Darkness
-	 * @date 2013-4-15 下午04:33:21
-	 * @version V1.0
-	 */
-	String getSupportDatabaseType();
+    /**
+     * 支持的数据库类型
+     *
+     * @author Darkness
+     * @date 2013-4-15 下午04:33:21
+     * @version V1.0
+     */
+    String getSupportDatabaseType();
 
-	/**
-	 * 创建分页查询statement
-	 *
-	 * @author Darkness
-	 * @date 2013-4-15 下午04:43:55
-	 * @version V1.0
-	 */
-	PreparedStatement createPagedStatement(Connection conn, String sql, int start, int limit) throws SQLException;
+    /**
+     * 创建分页查询statement
+     *
+     * @author Darkness
+     * @date 2013-4-15 下午04:43:55
+     * @version V1.0
+     */
+    PreparedStatement createPagedStatement(Connection conn, String sql, int start, int limit) throws SQLException;
 
 }

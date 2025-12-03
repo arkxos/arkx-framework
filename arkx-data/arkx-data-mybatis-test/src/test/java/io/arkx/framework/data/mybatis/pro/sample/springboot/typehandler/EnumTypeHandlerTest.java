@@ -22,34 +22,34 @@ import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 @SpringBootTest
 class EnumTypeHandlerTest {
 
-	@Autowired
-	private EnumTypeHandlerMapper enumTypeHandlerMapper;
+    @Autowired
+    private EnumTypeHandlerMapper enumTypeHandlerMapper;
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@BeforeEach
-	void init() {
-		new DbSetup(new DataSourceDestination(dataSource), truncate("smart_typehandler")).launch();
-	}
+    @BeforeEach
+    void init() {
+        new DbSetup(new DataSourceDestination(dataSource), truncate("smart_typehandler")).launch();
+    }
 
-	@Test
-	void insertTest() {
-		EnumTypeHandler enumTypeHandler = new EnumTypeHandler();
-		enumTypeHandler.setGender(MALE);
-		enumTypeHandler.setStatus(1);
-		int result = enumTypeHandlerMapper.insert(enumTypeHandler);
-		assertEquals(1, result);
-	}
+    @Test
+    void insertTest() {
+        EnumTypeHandler enumTypeHandler = new EnumTypeHandler();
+        enumTypeHandler.setGender(MALE);
+        enumTypeHandler.setStatus(1);
+        int result = enumTypeHandlerMapper.insert(enumTypeHandler);
+        assertEquals(1, result);
+    }
 
-	@Test
-	void selectTest() {
-		EnumTypeHandler enumTypeHandler = new EnumTypeHandler();
-		enumTypeHandler.setGender(MALE);
-		enumTypeHandler.setStatus(1);
-		enumTypeHandlerMapper.insert(enumTypeHandler);
-		List<EnumTypeHandler> all = enumTypeHandlerMapper.selectAll();
-		assertEquals(1, all.size());
-	}
+    @Test
+    void selectTest() {
+        EnumTypeHandler enumTypeHandler = new EnumTypeHandler();
+        enumTypeHandler.setGender(MALE);
+        enumTypeHandler.setStatus(1);
+        enumTypeHandlerMapper.insert(enumTypeHandler);
+        List<EnumTypeHandler> all = enumTypeHandlerMapper.selectAll();
+        assertEquals(1, all.size());
+    }
 
 }

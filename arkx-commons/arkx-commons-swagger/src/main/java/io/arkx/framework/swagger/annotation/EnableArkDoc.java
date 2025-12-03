@@ -32,7 +32,7 @@ import io.arkx.framework.swagger.support.SwaggerProperties;
  * @author lengleng
  * @date 2022-03-26
  */
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
@@ -41,16 +41,18 @@ import io.arkx.framework.swagger.support.SwaggerProperties;
 @PropertySource(value = "classpath:openapi-config.yaml", factory = YamlPropertySourceFactory.class)
 public @interface EnableArkDoc {
 
-	/**
-	 * 网关路由前缀
-	 * @return String
-	 */
-	String value();
+    /**
+     * 网关路由前缀
+     *
+     * @return String
+     */
+    String value();
 
-	/**
-	 * 是否是微服务架构
-	 * @return true
-	 */
-	boolean isMicro() default true;
+    /**
+     * 是否是微服务架构
+     *
+     * @return true
+     */
+    boolean isMicro() default true;
 
 }

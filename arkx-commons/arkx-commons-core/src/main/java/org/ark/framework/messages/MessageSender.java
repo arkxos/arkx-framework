@@ -14,54 +14,54 @@ import io.arkx.framework.data.jdbc.Transaction;
  */
 public class MessageSender {
 
-	private Mapx<String, Object> map = new Mapx<String, Object>();
+    private Mapx<String, Object> map = new Mapx<String, Object>();
 
-	private ArrayList<Mapx<String, Object>> list = new ArrayList<Mapx<String, Object>>();
+    private ArrayList<Mapx<String, Object>> list = new ArrayList<Mapx<String, Object>>();
 
-	private Transaction tran;
+    private Transaction tran;
 
-	private static long id = System.currentTimeMillis();
+    private static long id = System.currentTimeMillis();
 
-	private String messageName;
+    private String messageName;
 
-	private Message message;
+    private Message message;
 
-	public void addContentVar(String varName, Object value) {
-		this.map.put(varName, value);
-	}
+    public void addContentVar(String varName, Object value) {
+        this.map.put(varName, value);
+    }
 
-	public void setTransaction(Transaction tran) {
-		this.tran = tran;
-	}
+    public void setTransaction(Transaction tran) {
+        this.tran = tran;
+    }
 
-	public void send() {
-		Message msg = new Message();
-		msg.setContent(this.map);
-		msg.setTransaction(this.tran);
-		msg.setName(getMessageName());
-		msg.setID(getMessageName() + id++);
-		this.message = msg;
-		MessageBus.send(this);
-	}
+    public void send() {
+        Message msg = new Message();
+        msg.setContent(this.map);
+        msg.setTransaction(this.tran);
+        msg.setName(getMessageName());
+        msg.setID(getMessageName() + id++);
+        this.message = msg;
+        MessageBus.send(this);
+    }
 
-	public Message getMessage() {
-		return this.message;
-	}
+    public Message getMessage() {
+        return this.message;
+    }
 
-	public void receiveFeedback(Mapx<String, Object> fmap) {
-		this.list.add(fmap);
-	}
+    public void receiveFeedback(Mapx<String, Object> fmap) {
+        this.list.add(fmap);
+    }
 
-	public List<Mapx<String, Object>> getFeedback() {
-		return this.list;
-	}
+    public List<Mapx<String, Object>> getFeedback() {
+        return this.list;
+    }
 
-	public String getMessageName() {
-		return this.messageName;
-	}
+    public String getMessageName() {
+        return this.messageName;
+    }
 
-	public void setMessageName(String messageName) {
-		this.messageName = messageName;
-	}
+    public void setMessageName(String messageName) {
+        this.messageName = messageName;
+    }
 
 }

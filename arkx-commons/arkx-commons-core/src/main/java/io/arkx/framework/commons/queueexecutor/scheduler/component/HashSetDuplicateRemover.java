@@ -14,21 +14,21 @@ import io.arkx.framework.commons.queueexecutor.Element;
  */
 public class HashSetDuplicateRemover<T> implements DuplicateRemover<T> {
 
-	private Set<String> elementIds = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+    private Set<String> elementIds = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
 
-	@Override
-	public boolean isDuplicate(Element<T> element) {
-		return !elementIds.add(element.getId());
-	}
+    @Override
+    public boolean isDuplicate(Element<T> element) {
+        return !elementIds.add(element.getId());
+    }
 
-	@Override
-	public void resetDuplicateCheck() {
-		elementIds.clear();
-	}
+    @Override
+    public void resetDuplicateCheck() {
+        elementIds.clear();
+    }
 
-	@Override
-	public int getTotalElementsCount() {
-		return elementIds.size();
-	}
+    @Override
+    public int getTotalElementsCount() {
+        return elementIds.size();
+    }
 
 }

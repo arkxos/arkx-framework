@@ -15,41 +15,41 @@ import com.alibaba.fastjson.JSON;
 
 public class Consumer extends NettyClient {
 
-	private Logger logger = LoggerFactory.getLogger(Consumer.class);
+    private Logger logger = LoggerFactory.getLogger(Consumer.class);
 
-	private String topic;
+    private String topic;
 
-	MessageHandler handler;
+    MessageHandler handler;
 
-	public Consumer(String serverAddress, String topic, MessageHandler handler) {
-		super(serverAddress);
-		this.topic = topic;
-		this.handler = handler;
-	}
+    public Consumer(String serverAddress, String topic, MessageHandler handler) {
+        super(serverAddress);
+        this.topic = topic;
+        this.handler = handler;
+    }
 
-	@Override
-	public void start() throws Exception {
-		super.start();
+    @Override
+    public void start() throws Exception {
+        super.start();
 
-		NettyMessage message = new RequestMessage(UuidUtil.base58Uuid());
-		message.setBusinessType(MqBusinessType.RegisterConsumer.value());
+        NettyMessage message = new RequestMessage(UuidUtil.base58Uuid());
+        message.setBusinessType(MqBusinessType.RegisterConsumer.value());
 
-		Map<String, String> data = new HashMap<>();
-		data.put("topic", topic);
-		message.setBody(JSON.toJSONString(data).getBytes());
+        Map<String, String> data = new HashMap<>();
+        data.put("topic", topic);
+        message.setBody(JSON.toJSONString(data).getBytes());
 
-		NettyMessage responseMessage = sendMessage(message);
-		if (responseMessage != null) {
-			logger.info("register Consumer on topic[" + topic + "] success");
-		}
-	}
+        NettyMessage responseMessage = sendMessage(message);
+        if (responseMessage != null) {
+            logger.info("register Consumer on topic[" + topic + "] success");
+        }
+    }
 
-	@Override
-	public void onMessage(NettyMessage message) {
-		super.onMessage(message);
-		if (message.getBusinessType() == MqBusinessType.TopicMessage.value()) {
-			handler.handle(message);
-		}
-	}
+    @Override
+    public void onMessage(NettyMessage message) {
+        super.onMessage(message);
+        if (message.getBusinessType() == MqBusinessType.TopicMessage.value()) {
+            handler.handle(message);
+        }
+    }
 
 }

@@ -11,11 +11,11 @@ import io.arkx.framework.Config;
  */
 public class JavaTestPluginProvider implements IPluginProvider {
 
-	@Override
-	public String[] getPluginFolders() {
-		return new String[] { Config.getClassesPath().replace("test-classes", "classes") + "/plugins/" };
-		// return new String[] { Config.getClassesPath().replace("test-classes",
-		// "classes") };
-	}
+    @Override
+    public String[] getPluginFolders() {
+        return new String[]{Config.getClassesPath().replace("test-classes", "classes") + "/plugins/"};
+        // return new String[] { Config.getClassesPath().replace("test-classes",
+        // "classes") };
+    }
 
 }

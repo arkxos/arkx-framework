@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
  */
 public class PasswordUtilTest {
 
-	@Test
-	public void generateAndVerify() {
-		String password = PasswordUtil.generate("Ark123");
-		System.out.println(" dd " + password);
-		assertTrue(PasswordUtil.verify("Ark123", password));
-	}
+    @Test
+    public void generateAndVerify() {
+        String password = PasswordUtil.generate("Ark123");
+        System.out.println(" dd " + password);
+        assertTrue(PasswordUtil.verify("Ark123", password));
+    }
 
 }

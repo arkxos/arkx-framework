@@ -15,9 +15,9 @@ import lombok.Data;
 @Data
 public class Id implements Serializable {
 
-	@NotNull
-	@Min(value = Long.MIN_VALUE)
-	@Max(value = Long.MAX_VALUE)
-	private Long id;
+    @NotNull
+    @Min(value = Long.MIN_VALUE)
+    @Max(value = Long.MAX_VALUE)
+    private Long id;
 
 }

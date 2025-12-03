@@ -19,59 +19,57 @@ import jakarta.servlet.jsp.tagext.Tag;
  */
 public class ElseTag extends BodyTagSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String out;
+    private String out;
 
-	public void setPageContext(PageContext pc) {
-		super.setPageContext(pc);
-		this.out = null;
-	}
+    public void setPageContext(PageContext pc) {
+        super.setPageContext(pc);
+        this.out = null;
+    }
 
-	public int doStartTag() throws JspException {
-		Tag tag = (Tag) this.pageContext.getAttribute("_IF_TAG_FALSE");
-		Tag parent = (Tag) this.pageContext.getAttribute("_IF_PARENT_TAG_FALSE");
-		if ((tag == null) || (parent != getParent())) {
-			return 0;
-		}
-		this.pageContext.removeAttribute("_IF_TAG_FALSE");
-		if (((IfTag) tag).isPass()) {
-			return 0;
-		}
-		if (this.out != null) {
-			try {
-				PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
-				if (this.out.startsWith("${")) {
-					PlaceHolder holder = new PlaceHolder(this.out);
-					this.out = String.valueOf(context.eval(holder));
-				}
-				this.pageContext.getOut().print(this.out);
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return 2;
-	}
+    public int doStartTag() throws JspException {
+        Tag tag = (Tag) this.pageContext.getAttribute("_IF_TAG_FALSE");
+        Tag parent = (Tag) this.pageContext.getAttribute("_IF_PARENT_TAG_FALSE");
+        if ((tag == null) || (parent != getParent())) {
+            return 0;
+        }
+        this.pageContext.removeAttribute("_IF_TAG_FALSE");
+        if (((IfTag) tag).isPass()) {
+            return 0;
+        }
+        if (this.out != null) {
+            try {
+                PlaceHolderContext context = PlaceHolderContext.getInstance(this, this.pageContext);
+                if (this.out.startsWith("${")) {
+                    PlaceHolder holder = new PlaceHolder(this.out);
+                    this.out = String.valueOf(context.eval(holder));
+                }
+                this.pageContext.getOut().print(this.out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return 2;
+    }
 
-	public int doAfterBody() throws JspException {
-		BodyContent body = getBodyContent();
-		String content = body.getString().trim();
-		try {
-			getPreviousOut().write(content);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		return 6;
-	}
+    public int doAfterBody() throws JspException {
+        BodyContent body = getBodyContent();
+        String content = body.getString().trim();
+        try {
+            getPreviousOut().write(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 6;
+    }
 
-	public String getOut() {
-		return this.out;
-	}
+    public String getOut() {
+        return this.out;
+    }
 
-	public void setOut(String out) {
-		this.out = out;
-	}
+    public void setOut(String out) {
+        this.out = out;
+    }
 
 }

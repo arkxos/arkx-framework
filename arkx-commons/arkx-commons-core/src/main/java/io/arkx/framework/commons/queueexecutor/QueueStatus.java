@@ -7,6 +7,6 @@ package io.arkx.framework.commons.queueexecutor;
  */
 public enum QueueStatus {
 
-	New, Inited, Finished
+    New, Inited, Finished
 
 }

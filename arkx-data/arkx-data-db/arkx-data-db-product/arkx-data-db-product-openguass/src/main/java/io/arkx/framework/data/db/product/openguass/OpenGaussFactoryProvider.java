@@ -26,33 +26,33 @@ import io.arkx.framework.data.db.core.provider.write.TableDataWriteProvider;
 @Product(ProductTypeEnum.OPENGAUSS)
 public class OpenGaussFactoryProvider extends AbstractFactoryProvider {
 
-	public OpenGaussFactoryProvider(DataSource dataSource) {
-		super(dataSource);
-	}
+    public OpenGaussFactoryProvider(DataSource dataSource) {
+        super(dataSource);
+    }
 
-	@Override
-	public ProductFeatures getProductFeatures() {
-		return new DefaultProductFeatures();
-	}
+    @Override
+    public ProductFeatures getProductFeatures() {
+        return new DefaultProductFeatures();
+    }
 
-	@Override
-	public MetadataProvider createMetadataQueryProvider() {
-		return new OpenGaussMetadataQueryProvider(this);
-	}
+    @Override
+    public MetadataProvider createMetadataQueryProvider() {
+        return new OpenGaussMetadataQueryProvider(this);
+    }
 
-	@Override
-	public TableManageProvider createTableManageProvider() {
-		return new OpenGaussTableManageProvider(this);
-	}
+    @Override
+    public TableManageProvider createTableManageProvider() {
+        return new OpenGaussTableManageProvider(this);
+    }
 
-	@Override
-	public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
-		return new AutoCastTableDataWriteProvider(this);
-	}
+    @Override
+    public TableDataWriteProvider createTableDataWriteProvider(boolean useInsert) {
+        return new AutoCastTableDataWriteProvider(this);
+    }
 
-	@Override
-	public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
-		return new AutoCastTableDataSynchronizeProvider(this);
-	}
+    @Override
+    public TableDataSynchronizeProvider createTableDataSynchronizeProvider() {
+        return new AutoCastTableDataSynchronizeProvider(this);
+    }
 
 }

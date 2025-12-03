@@ -17,15 +17,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JsonTest {
 
-	@Test
-	public void map2Json() throws JsonProcessingException {
-		Map<String, Object> data = new HashMap<>();
-		data.put("content", new ArrayList<>());
-		data.put("size", 10);
-		System.out.println(JSON.toJSONString(data));
+    @Test
+    public void map2Json() throws JsonProcessingException {
+        Map<String, Object> data = new HashMap<>();
+        data.put("content", new ArrayList<>());
+        data.put("size", 10);
+        System.out.println(JSON.toJSONString(data));
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		System.out.println(objectMapper.writeValueAsString(data));
-	}
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(objectMapper.writeValueAsString(data));
+    }
 
 }

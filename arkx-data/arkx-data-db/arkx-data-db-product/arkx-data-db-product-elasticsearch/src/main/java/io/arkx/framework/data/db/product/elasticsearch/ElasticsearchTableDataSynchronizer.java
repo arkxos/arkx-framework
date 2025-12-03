@@ -16,28 +16,28 @@ import io.arkx.framework.data.db.core.provider.sync.DefaultTableDataSynchronizeP
 
 public class ElasticsearchTableDataSynchronizer extends DefaultTableDataSynchronizeProvider {
 
-	public ElasticsearchTableDataSynchronizer(ProductFactoryProvider factoryProvider) {
-		super(factoryProvider);
-	}
+    public ElasticsearchTableDataSynchronizer(ProductFactoryProvider factoryProvider) {
+        super(factoryProvider);
+    }
 
-	@Override
-	public void prepare(String schemaName, String tableName, List<String> fieldNames, List<String> pks,
-			String dbSyncMode, String slaveDbCode) {
-	}
+    @Override
+    public void prepare(String schemaName, String tableName, List<String> fieldNames, List<String> pks,
+            String dbSyncMode, String slaveDbCode) {
+    }
 
-	@Override
-	public long executeInsert(List<Object[]> records) {
-		return 0;
-	}
+    @Override
+    public long executeInsert(List<Object[]> records) {
+        return 0;
+    }
 
-	@Override
-	public long executeUpdate(List<Object[]> records) {
-		return 0;
-	}
+    @Override
+    public long executeUpdate(List<Object[]> records) {
+        return 0;
+    }
 
-	@Override
-	public long executeDelete(List<Object[]> records) {
-		return 0;
-	}
+    @Override
+    public long executeDelete(List<Object[]> records) {
+        return 0;
+    }
 
 }

@@ -21,75 +21,75 @@ import io.arkx.framework.data.mybatis.pro.core.util.ClassUtil;
  */
 class ClassUtilTest {
 
-	@Test
-	void getName2TypeTest() {
-		Map<String, String> name2Type = ClassUtil.getMethodName2ReturnType(DemoMapper.class);
-		assertEquals(5, name2Type.size());
-	}
+    @Test
+    void getName2TypeTest() {
+        Map<String, String> name2Type = ClassUtil.getMethodName2ReturnType(DemoMapper.class);
+        assertEquals(5, name2Type.size());
+    }
 
-	@Test
-	void getReturnTypeTest() throws NoSuchMethodException, SecurityException {
+    @Test
+    void getReturnTypeTest() throws NoSuchMethodException, SecurityException {
 
-		// 返回值为entity
-		Method method1 = DemoMapper.class.getDeclaredMethod("findByNameAndPassword", String.class, String.class);
-		// 返回值为List
-		Method method2 = DemoMapper.class.getDeclaredMethod("findByName", String.class);
+        // 返回值为entity
+        Method method1 = DemoMapper.class.getDeclaredMethod("findByNameAndPassword", String.class, String.class);
+        // 返回值为List
+        Method method2 = DemoMapper.class.getDeclaredMethod("findByName", String.class);
 
-		String type1 = ClassUtil.getReturnType(method1);
-		String type2 = ClassUtil.getReturnType(method2);
+        String type1 = ClassUtil.getReturnType(method1);
+        String type2 = ClassUtil.getReturnType(method2);
 
-		assertEquals("core.io.arkx.framework.data.mybatis.Demo", type1);
-		assertEquals("core.io.arkx.framework.data.mybatis.Demo", type2);
-	}
+        assertEquals("core.io.arkx.framework.data.mybatis.Demo", type1);
+        assertEquals("core.io.arkx.framework.data.mybatis.Demo", type2);
+    }
 
-	@Test
-	void getSpecialMethodsTest() {
-		List<String> names = ClassUtil.getSpecialMethods(DemoMapper.class);
-		String result = names.stream().sorted().collect(Collectors.joining(",", "[", "]"));
-		assertEquals("[findById,findByName,findByNameAndPassword]", result);
-	}
+    @Test
+    void getSpecialMethodsTest() {
+        List<String> names = ClassUtil.getSpecialMethods(DemoMapper.class);
+        String result = names.stream().sorted().collect(Collectors.joining(",", "[", "]"));
+        assertEquals("[findById,findByName,findByNameAndPassword]", result);
+    }
 
-	@Test
-	void getAllFieldsTest() {
-		Set<Field> allFields = ClassUtil.getAllFields(User.class);
-		assertEquals(1, allFields.size());
-	}
+    @Test
+    void getAllFieldsTest() {
+        Set<Field> allFields = ClassUtil.getAllFields(User.class);
+        assertEquals(1, allFields.size());
+    }
 
-	@Test
-	void getInnerMethodNamesTest() {
-		Set<String> methodNames = ClassUtil.getBaseMethodNames();
-		Assertions.assertNotNull(methodNames);
-	}
+    @Test
+    void getInnerMethodNamesTest() {
+        Set<String> methodNames = ClassUtil.getBaseMethodNames();
+        Assertions.assertNotNull(methodNames);
+    }
 
 }
 
 class M {
 
-	@Transient
-	private String name;
+    @Transient
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }
 
 class User extends M implements Serializable {
 
-	private static final long serialVersionUID = -1383742108573524072L;
+    private static final long serialVersionUID = -1383742108573524072L;
 
-	private Long id;
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	void setId(Long id) {
-		this.id = id;
-	}
+    void setId(Long id) {
+        this.id = id;
+    }
 
 }

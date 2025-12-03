@@ -12,21 +12,21 @@ import io.arkx.framework.thirdparty.commons.fileupload.FileItem;
  */
 public class UploadAction extends ZAction {
 
-	ArrayList<FileItem> items;
+    ArrayList<FileItem> items;
 
-	public FileItem getFirstFile() {
-		if (ObjectUtil.empty(items)) {
-			return null;
-		}
-		return items.get(0);
-	}
+    public FileItem getFirstFile() {
+        if (ObjectUtil.empty(items)) {
+            return null;
+        }
+        return items.get(0);
+    }
 
-	public ArrayList<FileItem> getAllFiles() {
-		return items;
-	}
+    public ArrayList<FileItem> getAllFiles() {
+        return items;
+    }
 
-	public void setItems(ArrayList<FileItem> items) {
-		this.items = items;
-	}
+    public void setItems(ArrayList<FileItem> items) {
+        this.items = items;
+    }
 
 }

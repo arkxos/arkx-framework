@@ -70,23 +70,23 @@ import io.arkx.framework.cosyui.expression.IVariableResolver;
 
 public abstract class Expression {
 
-	// -------------------------------------
-	// Member variables
-	// -------------------------------------
+    // -------------------------------------
+    // Member variables
+    // -------------------------------------
 
-	// -------------------------------------
-	/**
-	 * Returns the expression in the expression language syntax
-	 **/
-	public abstract String getExpressionString();
+    // -------------------------------------
+    /**
+     * Returns the expression in the expression language syntax
+     **/
+    public abstract String getExpressionString();
 
-	// -------------------------------------
-	/**
-	 * Evaluates the expression in the given context
-	 **/
-	public abstract Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
-			throws ExpressionException;
+    // -------------------------------------
+    /**
+     * Evaluates the expression in the given context
+     **/
+    public abstract Object evaluate(IVariableResolver pResolver, IFunctionMapper functions, Logger pLogger)
+            throws ExpressionException;
 
-	// -------------------------------------
+    // -------------------------------------
 
 }

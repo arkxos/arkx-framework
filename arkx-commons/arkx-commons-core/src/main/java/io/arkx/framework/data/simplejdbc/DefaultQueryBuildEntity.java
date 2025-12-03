@@ -12,27 +12,26 @@ import java.util.List;
  */
 public class DefaultQueryBuildEntity implements IQueryBuildEntity<Object[]> {
 
-	@Override
-	public List<Object[]> buildEntity(ResultSet resultSet, int columnCount) {
-		List<Object[]> datas = new ArrayList<Object[]>();
+    @Override
+    public List<Object[]> buildEntity(ResultSet resultSet, int columnCount) {
+        List<Object[]> datas = new ArrayList<Object[]>();
 
-		try {
-			while (resultSet.next()) {
+        try {
+            while (resultSet.next()) {
 
-				Object[] row = new Object[columnCount];
+                Object[] row = new Object[columnCount];
 
-				for (int i = 0; i < columnCount; i++) {
-					row[i] = resultSet.getObject(i + 1);
-				}
+                for (int i = 0; i < columnCount; i++) {
+                    row[i] = resultSet.getObject(i + 1);
+                }
 
-				datas.add(row);
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+                datas.add(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		return datas;
-	}
+        return datas;
+    }
 
 }

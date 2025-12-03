@@ -21,21 +21,21 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-@AutoConfigureAfter({ RedisAutoConfiguration.class })
-@ConditionalOnBean({ RedisConnectionFactory.class })
+@AutoConfigureAfter({RedisAutoConfiguration.class})
+@ConditionalOnBean({RedisConnectionFactory.class})
 @ConditionalOnProperty(value = "arkx.uid.assigner-mode", havingValue = Mode.REDIS)
 public class UidRedisAssignerConfigure {
 
-	/**
-	 * 基于Redis生成节点ID
-	 */
-	@Bean
-	@ConditionalOnBean({ RedisTemplate.class })
-	@ConditionalOnMissingBean(RedisWorkerIdAssigner.class)
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public WorkerIdAssigner redisWorkerIdAssigner(RedisTemplate redisTemplate) {
-		log.info("WorkerIdAssigner turn on redis");
-		return new RedisWorkerIdAssigner(redisTemplate);
-	}
+    /**
+     * 基于Redis生成节点ID
+     */
+    @Bean
+    @ConditionalOnBean({RedisTemplate.class})
+    @ConditionalOnMissingBean(RedisWorkerIdAssigner.class)
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public WorkerIdAssigner redisWorkerIdAssigner(RedisTemplate redisTemplate) {
+        log.info("WorkerIdAssigner turn on redis");
+        return new RedisWorkerIdAssigner(redisTemplate);
+    }
 
 }

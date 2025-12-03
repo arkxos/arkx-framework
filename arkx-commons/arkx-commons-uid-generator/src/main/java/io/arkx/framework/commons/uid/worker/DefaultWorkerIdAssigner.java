@@ -9,9 +9,9 @@ import org.apache.commons.lang3.RandomUtils;
  */
 public class DefaultWorkerIdAssigner implements WorkerIdAssigner {
 
-	@Override
-	public long assignWorkerId() {
-		return RandomUtils.nextInt(0, 1000);
-	}
+    @Override
+    public long assignWorkerId() {
+        return RandomUtils.nextInt(0, 1000);
+    }
 
 }

@@ -14,8 +14,8 @@ import com.github.dreamroute.sqlprinter.starter.anno.EnableSQLPrinter;
 @MapperScan("com.github.dreamroute.locker.sample.mapper")
 public class Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
 }

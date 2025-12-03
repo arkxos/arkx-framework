@@ -8,16 +8,16 @@ package io.arkx.framework.message.tcp;
  */
 public enum NettyBusinessType {
 
-	LOGIN(0), HEARTBEAT(1);
+    LOGIN(0), HEARTBEAT(1);
 
-	private int value;
+    private int value;
 
-	private NettyBusinessType(int value) {
-		this.value = value;
-	}
+    private NettyBusinessType(int value) {
+        this.value = value;
+    }
 
-	public int value() {
-		return this.value;
-	}
+    public int value() {
+        return this.value;
+    }
 
 }

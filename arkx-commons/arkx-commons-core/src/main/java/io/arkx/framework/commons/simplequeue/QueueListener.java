@@ -8,8 +8,8 @@ package io.arkx.framework.commons.simplequeue;
  */
 public interface QueueListener {
 
-	public void onSuccess(ElementWarpper request);
+    public void onSuccess(ElementWarpper request);
 
-	public void onError(ElementWarpper request);
+    public void onError(ElementWarpper request);
 
 }

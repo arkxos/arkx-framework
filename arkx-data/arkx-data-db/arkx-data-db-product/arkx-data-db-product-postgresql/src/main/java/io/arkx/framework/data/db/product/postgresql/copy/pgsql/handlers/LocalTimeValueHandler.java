@@ -9,25 +9,25 @@ import io.arkx.framework.data.db.product.postgresql.copy.pgsql.converter.LocalTi
 
 public class LocalTimeValueHandler extends BaseValueHandler<LocalTime> {
 
-	private IValueConverter<LocalTime, Long> timeConverter;
+    private IValueConverter<LocalTime, Long> timeConverter;
 
-	public LocalTimeValueHandler() {
-		this(new LocalTimeConverter());
-	}
+    public LocalTimeValueHandler() {
+        this(new LocalTimeConverter());
+    }
 
-	public LocalTimeValueHandler(IValueConverter<LocalTime, Long> timeConverter) {
-		this.timeConverter = timeConverter;
-	}
+    public LocalTimeValueHandler(IValueConverter<LocalTime, Long> timeConverter) {
+        this.timeConverter = timeConverter;
+    }
 
-	@Override
-	protected void internalHandle(DataOutputStream buffer, final LocalTime value) throws IOException {
-		buffer.writeInt(8);
-		buffer.writeLong(timeConverter.convert(value));
-	}
+    @Override
+    protected void internalHandle(DataOutputStream buffer, final LocalTime value) throws IOException {
+        buffer.writeInt(8);
+        buffer.writeLong(timeConverter.convert(value));
+    }
 
-	@Override
-	public int getLength(LocalTime value) {
-		return 8;
-	}
+    @Override
+    public int getLength(LocalTime value) {
+        return 8;
+    }
 
 }

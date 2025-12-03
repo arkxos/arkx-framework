@@ -11,9 +11,9 @@ import io.arkx.framework.Config;
  */
 public class JavaPluginProvider implements IPluginProvider {
 
-	@Override
-	public String[] getPluginFolders() {
-		return new String[] { Config.getClassesPath() + "/classes/plugins/" };
-	}
+    @Override
+    public String[] getPluginFolders() {
+        return new String[]{Config.getClassesPath() + "/classes/plugins/"};
+    }
 
 }

@@ -15,12 +15,12 @@ import io.arkx.framework.data.db.dbtype.IDBType;
  */
 public class DatabaseServiceTest {
 
-	@Test
-	public void isTableExist() {
-		IDBType database = DBTypeService.getInstance().get(ConnectionPoolManager.getDBConnConfig().getDatabaseType());
+    @Test
+    public void isTableExist() {
+        IDBType database = DBTypeService.getInstance().get(ConnectionPoolManager.getDBConnConfig().getDatabaseType());
 
-		boolean isTableExist = database.isTableExist("rapid_ark", "pt_comp__maxno");
-		assertTrue(isTableExist);
-	}
+        boolean isTableExist = database.isTableExist("rapid_ark", "pt_comp__maxno");
+        assertTrue(isTableExist);
+    }
 
 }

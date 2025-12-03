@@ -11,19 +11,19 @@ import io.arkx.framework.extend.IExtendAction;
  */
 public abstract class EntitySaveExtendAction implements IExtendAction {
 
-	public static String ExtendPointID = "org.ark.framework.EntitySave";
+    public static String ExtendPointID = "org.ark.framework.EntitySave";
 
-	@Override
-	public Object execute(Object[] params) throws ExtendException {
-		save((Entity) params[0]);
-		return null;
-	}
+    @Override
+    public Object execute(Object[] params) throws ExtendException {
+        save((Entity) params[0]);
+        return null;
+    }
 
-	protected abstract void save(Entity entity);
+    protected abstract void save(Entity entity);
 
-	@Override
-	public boolean isUsable() {
-		return true;
-	}
+    @Override
+    public boolean isUsable() {
+        return true;
+    }
 
 }

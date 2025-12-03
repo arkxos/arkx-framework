@@ -9,10 +9,10 @@ package io.arkx.framework.avatarmq.core;
  */
 public interface AvatarMQAction {
 
-	void start();
+    void start();
 
-	void init();
+    void init();
 
-	void shutdown();
+    void shutdown();
 
 }

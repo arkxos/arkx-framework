@@ -7,24 +7,24 @@ package io.arkx.framework.cosyui.control;
  */
 public class PagedInfo {
 
-	int pageSize;
+    int pageSize;
 
-	int pageIndex;
+    int pageIndex;
 
-	public int getPageSize() {
-		return pageSize;
-	}
+    public int getPageSize() {
+        return pageSize;
+    }
 
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
-	public int getPageIndex() {
-		return pageIndex;
-	}
+    public int getPageIndex() {
+        return pageIndex;
+    }
 
-	public void setPageIndex(int pageIndex) {
-		this.pageIndex = pageIndex;
-	}
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
 
 }

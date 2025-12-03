@@ -14,10 +14,10 @@ import io.arkx.framework.commons.collection.TwoTuple;
  */
 public interface ILightningTableConvertor<T extends ILightningTable> {
 
-	T createTable(Class<T> clazz, String tableName, LightningColumn[] columns);
+    T createTable(Class<T> clazz, String tableName, LightningColumn[] columns);
 
-	void onRecordReaded(List<LightningColumn> columns, T dt, RecordUnit rowBuffer) throws IOException;
+    void onRecordReaded(List<LightningColumn> columns, T dt, RecordUnit rowBuffer) throws IOException;
 
-	TwoTuple<PkList, List<ByteBuffer>> buildRowByteBuffers(LightningColumn[] columns, T dt);
+    TwoTuple<PkList, List<ByteBuffer>> buildRowByteBuffers(LightningColumn[] columns, T dt);
 
 }

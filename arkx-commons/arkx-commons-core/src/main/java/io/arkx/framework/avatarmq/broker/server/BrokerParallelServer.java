@@ -20,31 +20,31 @@ import com.google.common.util.concurrent.MoreExecutors;
  */
 public class BrokerParallelServer implements RemotingServer {
 
-	protected int parallel = NettyClustersConfig.getWorkerThreads();
+    protected int parallel = NettyClustersConfig.getWorkerThreads();
 
-	protected ListeningExecutorService executor = MoreExecutors
-		.listeningDecorator(Executors.newFixedThreadPool(parallel));
+    protected ListeningExecutorService executor = MoreExecutors
+            .listeningDecorator(Executors.newFixedThreadPool(parallel));
 
-	protected ExecutorCompletionService<Void> executorService;
+    protected ExecutorCompletionService<Void> executorService;
 
-	public BrokerParallelServer() {
+    public BrokerParallelServer() {
 
-	}
+    }
 
-	public void init() {
-		executorService = new ExecutorCompletionService<Void>(executor);
-	}
+    public void init() {
+        executorService = new ExecutorCompletionService<Void>(executor);
+    }
 
-	public void start() {
-		for (int i = 0; i < parallel; i++) {
-			executorService.submit(new SendMessageController());
-			executorService.submit(new AckPullMessageController());
-			executorService.submit(new AckPushMessageController());
-		}
-	}
+    public void start() {
+        for (int i = 0; i < parallel; i++) {
+            executorService.submit(new SendMessageController());
+            executorService.submit(new AckPullMessageController());
+            executorService.submit(new AckPushMessageController());
+        }
+    }
 
-	public void shutdown() {
-		executor.shutdown();
-	}
+    public void shutdown() {
+        executor.shutdown();
+    }
 
 }

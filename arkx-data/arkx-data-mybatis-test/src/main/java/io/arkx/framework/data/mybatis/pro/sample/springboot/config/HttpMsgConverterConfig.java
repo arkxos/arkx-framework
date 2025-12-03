@@ -29,39 +29,39 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 @Configuration
 public class HttpMsgConverterConfig implements WebMvcConfigurer {
 
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 
-		// 注册自定义module
-		SimpleModule simpleModule = new SimpleModule();
+        // 注册自定义module
+        SimpleModule simpleModule = new SimpleModule();
 
-		// 枚举序列化、反序列化
-		simpleModule.addSerializer(Enum.class, new EnumMarkerSerializerForExtra());
-		simpleModule.addDeserializer(Enum.class, new EnumMarkerDeserializer());
-		simpleModule.addSerializer(Collection.class, new EnumMarkerSerializerForExtraCollection());
-		simpleModule.addDeserializer(Collection.class, new EnumMarkerDeserializerForCollection());
+        // 枚举序列化、反序列化
+        simpleModule.addSerializer(Enum.class, new EnumMarkerSerializerForExtra());
+        simpleModule.addDeserializer(Enum.class, new EnumMarkerDeserializer());
+        simpleModule.addSerializer(Collection.class, new EnumMarkerSerializerForExtraCollection());
+        simpleModule.addDeserializer(Collection.class, new EnumMarkerDeserializerForCollection());
 
-		// 日期序列化、反序列化
-		simpleModule.addSerializer(Date.class, new DateSerializer());
-		simpleModule.addDeserializer(Date.class, new DateDeserializer());
+        // 日期序列化、反序列化
+        simpleModule.addSerializer(Date.class, new DateSerializer());
+        simpleModule.addDeserializer(Date.class, new DateDeserializer());
 
-		simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer());
-		simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer());
+        simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer());
+        simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer());
 
-		simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
-		simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
+        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
+        simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
 
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.registerModule(simpleModule);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.registerModule(simpleModule);
 
-		// 自定义Converter
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		converter.setObjectMapper(mapper);
+        // 自定义Converter
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setObjectMapper(mapper);
 
-		// 移除默认并且将自定义Converter添加到列表的第一个
-		converters.removeIf(MappingJackson2HttpMessageConverter.class::isInstance);
-		converters.add(0, converter);
-	}
+        // 移除默认并且将自定义Converter添加到列表的第一个
+        converters.removeIf(MappingJackson2HttpMessageConverter.class::isInstance);
+        converters.add(0, converter);
+    }
 
 }

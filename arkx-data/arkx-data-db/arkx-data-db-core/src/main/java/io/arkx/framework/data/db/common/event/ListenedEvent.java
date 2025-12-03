@@ -18,34 +18,34 @@ import lombok.Getter;
 @Getter
 public class ListenedEvent extends java.util.EventObject {
 
-	private String identifier;
+    private String identifier;
 
-	private Object[] args;
+    private Object[] args;
 
-	public ListenedEvent(Object source, String identifier, Object... args) {
-		super(source);
-		this.identifier = identifier;
-		this.args = args;
-	}
+    public ListenedEvent(Object source, String identifier, Object... args) {
+        super(source);
+        this.identifier = identifier;
+        this.args = args;
+    }
 
-	public void checkArgs(Class<?>... classes) throws IllegalArgumentException {
-		Preconditions.checkArgument(this.args.length == classes.length,
-				"The args count of event '%s' should be %s(actual %s)", this.identifier, classes.length,
-				this.args.length);
-		int i = 0;
-		for (Class<?> c : classes) {
-			Object arg = this.args[i++];
-			if (arg == null) {
-				continue;
-			}
-			Preconditions.checkArgument(c.isAssignableFrom(arg.getClass()), "The arg '%s'(%s) can't match %s", arg,
-					arg.getClass(), c);
-		}
-	}
+    public void checkArgs(Class<?>... classes) throws IllegalArgumentException {
+        Preconditions.checkArgument(this.args.length == classes.length,
+                "The args count of event '%s' should be %s(actual %s)", this.identifier, classes.length,
+                this.args.length);
+        int i = 0;
+        for (Class<?> c : classes) {
+            Object arg = this.args[i++];
+            if (arg == null) {
+                continue;
+            }
+            Preconditions.checkArgument(c.isAssignableFrom(arg.getClass()), "The arg '%s'(%s) can't match %s", arg,
+                    arg.getClass(), c);
+        }
+    }
 
-	@Override
-	public String toString() {
-		return "Event{identifier='%s', args=%s}".formatted(this.identifier, Arrays.asList(this.args));
-	}
+    @Override
+    public String toString() {
+        return "Event{identifier='%s', args=%s}".formatted(this.identifier, Arrays.asList(this.args));
+    }
 
 }

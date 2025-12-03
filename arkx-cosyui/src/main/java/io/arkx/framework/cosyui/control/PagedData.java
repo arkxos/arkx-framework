@@ -12,37 +12,37 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class PagedData {
 
-	int total;
+    int total;
 
-	String data;
+    String data;
 
-	public PagedData() {
-	}
+    public PagedData() {
+    }
 
-	public PagedData(int total, DataTable dataTable) {
-		this.total = total;
-		this.data = JSON.toJSONString(dataTable);
-	}
+    public PagedData(int total, DataTable dataTable) {
+        this.total = total;
+        this.data = JSON.toJSONString(dataTable);
+    }
 
-	public int getTotal() {
-		return total;
-	}
+    public int getTotal() {
+        return total;
+    }
 
-	public void setTotal(int total) {
-		this.total = total;
-	}
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
-	@JSONField(serialize = false)
-	public DataTable getDataTable() {
-		return JSON.parseBean(this.data, DataTable.class);
-	}
+    @JSONField(serialize = false)
+    public DataTable getDataTable() {
+        return JSON.parseBean(this.data, DataTable.class);
+    }
 
-	public String getData() {
-		return data;
-	}
+    public String getData() {
+        return data;
+    }
 
-	public void setData(String data) {
-		this.data = data;
-	}
+    public void setData(String data) {
+        this.data = data;
+    }
 
 }

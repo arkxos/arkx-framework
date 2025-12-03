@@ -9,11 +9,11 @@ package io.arkx.framework.avatarmq.core;
  */
 public abstract class HookMessageEvent<T> {
 
-	public void disconnect(T message) {
-	}
+    public void disconnect(T message) {
+    }
 
-	public T callBackMessage(T message) {
-		return message;
-	}
+    public T callBackMessage(T message) {
+        return message;
+    }
 
 }

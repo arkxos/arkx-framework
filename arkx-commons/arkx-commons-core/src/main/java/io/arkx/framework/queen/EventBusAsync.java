@@ -32,159 +32,158 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Async event bus that will run each event/handler call in separate thread. By default
- * using CachedThreadPool to run handlers.
+ * Async event bus that will run each event/handler call in separate thread. By
+ * default using CachedThreadPool to run handlers.
  */
 public class EventBusAsync<E extends Event> implements EventBus<E> {
 
-	private static final Logger logger = LoggerFactory.getLogger(EventBusAsync.class);
+    private static final Logger logger = LoggerFactory.getLogger(EventBusAsync.class);
 
-	private Thread eventQueueThread;
+    private Thread eventQueueThread;
 
-	private final Queue<E> eventsQueue = new ConcurrentLinkedQueue<>();
+    private final Queue<E> eventsQueue = new ConcurrentLinkedQueue<>();
 
-	// private final ReferenceQueue gcQueue = new ReferenceQueue<>();
+    // private final ReferenceQueue gcQueue = new ReferenceQueue<>();
 
-	private final Set<MesssageHandler<E>> handlers = Collections
-		.newSetFromMap(new ConcurrentHashMap<MesssageHandler<E>, Boolean>());
+    private final Set<MesssageHandler<E>> handlers = Collections
+            .newSetFromMap(new ConcurrentHashMap<MesssageHandler<E>, Boolean>());
 
-	private final ExecutorService handlersExecutor;
+    private final ExecutorService handlersExecutor;
 
-	private boolean isCloseOnFinish;
+    private boolean isCloseOnFinish;
 
-	private FinishHandler finishHandler;
+    private FinishHandler finishHandler;
 
-	/**
-	 * Create new EventBus instance with default presets.
-	 */
-	public EventBusAsync() {
-		this(Executors.newFixedThreadPool(4));
-	}
+    /**
+     * Create new EventBus instance with default presets.
+     */
+    public EventBusAsync() {
+        this(Executors.newFixedThreadPool(4));
+    }
 
-	/**
-	 * Create instance with customer ExecutorService for event handlers.
-	 * @param handlersExecutor Will be used to run event handler processing for each event
-	 */
-	public EventBusAsync(ExecutorService handlersExecutor) {
-		this.handlersExecutor = handlersExecutor;
-	}
+    /**
+     * Create instance with customer ExecutorService for event handlers.
+     *
+     * @param handlersExecutor
+     *            Will be used to run event handler processing for each event
+     */
+    public EventBusAsync(ExecutorService handlersExecutor) {
+        this.handlersExecutor = handlersExecutor;
+    }
 
-	public void start() {
-		eventQueueThread = new Thread(this::eventsQueue, "EventQueue handlers thread");
-		eventQueueThread.setDaemon(false);
-		eventQueueThread.start();
-	}
+    public void start() {
+        eventQueueThread = new Thread(this::eventsQueue, "EventQueue handlers thread");
+        eventQueueThread.setDaemon(false);
+        eventQueueThread.start();
+    }
 
-	@Override
-	public void subscribe(MesssageHandler<E> subscriber) {
-		handlers.add(subscriber);// new WeakHandler(subscriber, gcQueue));
-	}
+    @Override
+    public void subscribe(MesssageHandler<E> subscriber) {
+        handlers.add(subscriber);// new WeakHandler(subscriber, gcQueue));
+    }
 
-	@Override
-	public void unsubscribe(MesssageHandler<E> subscriber) {
-		handlers.remove(subscriber);// new WeakHandler(subscriber, gcQueue));
-	}
+    @Override
+    public void unsubscribe(MesssageHandler<E> subscriber) {
+        handlers.remove(subscriber);// new WeakHandler(subscriber, gcQueue));
+    }
 
-	@Override
-	public void publish(E event) {
-		if (event == null) {
-			return;
-		}
-		event.lock();
-		eventsQueue.add(event);
-	}
+    @Override
+    public void publish(E event) {
+        if (event == null) {
+            return;
+        }
+        event.lock();
+        eventsQueue.add(event);
+    }
 
-	@Override
-	public boolean hasPendingEvents() {
-		return !eventsQueue.isEmpty();
-	}
+    @Override
+    public boolean hasPendingEvents() {
+        return !eventsQueue.isEmpty();
+    }
 
-	private void eventsQueue() {
-		while (needRun()) {
-			// System.out.println("need run");
+    private void eventsQueue() {
+        while (needRun()) {
+            // System.out.println("need run");
 
-			// WeakHandler wh;
-			// while ((wh = (WeakHandler)gcQueue.poll()) != null) {
-			// handlers.remove(wh);
-			// }
+            // WeakHandler wh;
+            // while ((wh = (WeakHandler)gcQueue.poll()) != null) {
+            // handlers.remove(wh);
+            // }
 
-			E event = eventsQueue.poll();
-			if (event != null) {
-				notifySubscribers(event);
-			}
-		}
+            E event = eventsQueue.poll();
+            if (event != null) {
+                notifySubscribers(event);
+            }
+        }
 
-		System.out.println("close");
+        System.out.println("close");
 
-		close();
-		eventQueueThread.interrupt();
-	}
+        close();
+        eventQueueThread.interrupt();
+    }
 
-	private void notifySubscribers(E event) {
-		for (MesssageHandler<E> eh : handlers) {
-			// EventHandler eh = wh.get();
-			if (eh == null) {
-				continue;
-			}
-			// System.out.println(event);
-			try {
-				if (eh.getType() == null) {
-					if (eh.canHandle(event.getType())) {
-						// System.out.println("can");
-						handlersExecutor.submit(() -> {
-							runHandler(eh, event);
-						});
-					}
-				}
-				else if (eh.getType().equals(event.getType())) {
-					handlersExecutor.submit(() -> {
-						runHandler(eh, event);
-					});
-				}
-			}
-			catch (Throwable th) {
-				logger.error("Handler notify fail on event " + event.getType() + ". " + th.getMessage(), th);
-			}
-		}
-	}
+    private void notifySubscribers(E event) {
+        for (MesssageHandler<E> eh : handlers) {
+            // EventHandler eh = wh.get();
+            if (eh == null) {
+                continue;
+            }
+            // System.out.println(event);
+            try {
+                if (eh.getType() == null) {
+                    if (eh.canHandle(event.getType())) {
+                        // System.out.println("can");
+                        handlersExecutor.submit(() -> {
+                            runHandler(eh, event);
+                        });
+                    }
+                } else if (eh.getType().equals(event.getType())) {
+                    handlersExecutor.submit(() -> {
+                        runHandler(eh, event);
+                    });
+                }
+            } catch (Throwable th) {
+                logger.error("Handler notify fail on event " + event.getType() + ". " + th.getMessage(), th);
+            }
+        }
+    }
 
-	private void runHandler(MesssageHandler eh, E event) {
-		try {
-			eh.handle(event);
-		}
-		catch (Throwable th) {
-			logger.error("Handler fail on event " + event.getType() + ". " + th.getMessage(), th);
-		}
-	}
+    private void runHandler(MesssageHandler eh, E event) {
+        try {
+            eh.handle(event);
+        } catch (Throwable th) {
+            logger.error("Handler fail on event " + event.getType() + ". " + th.getMessage(), th);
+        }
+    }
 
-	@Override
-	public EventBus<E> closeOnFinish(FinishHandler handler) {
-		this.isCloseOnFinish = true;
-		this.finishHandler = handler;
-		return this;
-	}
+    @Override
+    public EventBus<E> closeOnFinish(FinishHandler handler) {
+        this.isCloseOnFinish = true;
+        this.finishHandler = handler;
+        return this;
+    }
 
-	private boolean needRun() {
-		if (!isCloseOnFinish) {
-			return true;
-		}
+    private boolean needRun() {
+        if (!isCloseOnFinish) {
+            return true;
+        }
 
-		if (hasPendingEvents()) {
-			return true;
-		}
+        if (hasPendingEvents()) {
+            return true;
+        }
 
-		if (((ThreadPoolExecutor) handlersExecutor).getActiveCount() > 0) {
-			return true;
-		}
+        if (((ThreadPoolExecutor) handlersExecutor).getActiveCount() > 0) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private void close() {
-		if (finishHandler != null) {
-			finishHandler.onFinish();
-		}
-		handlersExecutor.shutdown();
-	}
+    private void close() {
+        if (finishHandler != null) {
+            finishHandler.onFinish();
+        }
+        handlersExecutor.shutdown();
+    }
 
 }

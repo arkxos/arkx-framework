@@ -16,87 +16,80 @@ import com.google.gson.*;
  */
 public class AbstractSerializer {
 
-	private static Map<Class<?>, Object> typeAdapters = new HashMap<Class<?>, Object>();
+    private static Map<Class<?>, Object> typeAdapters = new HashMap<Class<?>, Object>();
 
-	public static void registerTypeAdapter(Class<?> classType, Object serializer) {
-		typeAdapters.put(classType, serializer);
-	}
+    public static void registerTypeAdapter(Class<?> classType, Object serializer) {
+        typeAdapters.put(classType, serializer);
+    }
 
-	private Gson gson;
+    private Gson gson;
 
-	protected AbstractSerializer(boolean isCompact) {
-		this(false, isCompact);
-	}
+    protected AbstractSerializer(boolean isCompact) {
+        this(false, isCompact);
+    }
 
-	protected AbstractSerializer(boolean isPretty, boolean isCompact) {
-		super();
+    protected AbstractSerializer(boolean isPretty, boolean isCompact) {
+        super();
 
-		if (isPretty && isCompact) {
-			this.buildForPrettyCompact();
-		}
-		else if (isCompact) {
-			this.buildForCompact();
-		}
-		else {
-			this.build();
-		}
-	}
+        if (isPretty && isCompact) {
+            this.buildForPrettyCompact();
+        } else if (isCompact) {
+            this.buildForCompact();
+        } else {
+            this.build();
+        }
+    }
 
-	protected Gson gson() {
-		return this.gson;
-	}
+    protected Gson gson() {
+        return this.gson;
+    }
 
-	private void build() {
-		GsonBuilder builder = new GsonBuilder();
-		for (Class<?> type : typeAdapters.keySet()) {
-			builder.registerTypeAdapter(type, typeAdapters.get(type));
-		}
+    private void build() {
+        GsonBuilder builder = new GsonBuilder();
+        for (Class<?> type : typeAdapters.keySet()) {
+            builder.registerTypeAdapter(type, typeAdapters.get(type));
+        }
 
-		this.gson = builder.registerTypeAdapter(Date.class, new DateSerializer())
-			.registerTypeAdapter(Date.class, new DateDeserializer())
-			.serializeNulls()
-			.create();
-	}
+        this.gson = builder.registerTypeAdapter(Date.class, new DateSerializer())
+                .registerTypeAdapter(Date.class, new DateDeserializer()).serializeNulls().create();
+    }
 
-	private void buildForCompact() {
-		GsonBuilder builder = new GsonBuilder();
-		for (Class<?> type : typeAdapters.keySet()) {
-			builder.registerTypeAdapter(type, typeAdapters.get(type));
-		}
+    private void buildForCompact() {
+        GsonBuilder builder = new GsonBuilder();
+        for (Class<?> type : typeAdapters.keySet()) {
+            builder.registerTypeAdapter(type, typeAdapters.get(type));
+        }
 
-		this.gson = builder.registerTypeAdapter(Date.class, new DateSerializer())
-			.registerTypeAdapter(Date.class, new DateDeserializer())
-			.create();
-	}
+        this.gson = builder.registerTypeAdapter(Date.class, new DateSerializer())
+                .registerTypeAdapter(Date.class, new DateDeserializer()).create();
+    }
 
-	private void buildForPrettyCompact() {
-		GsonBuilder builder = new GsonBuilder();
-		for (Class<?> type : typeAdapters.keySet()) {
-			builder.registerTypeAdapter(type, typeAdapters.get(type));
-		}
+    private void buildForPrettyCompact() {
+        GsonBuilder builder = new GsonBuilder();
+        for (Class<?> type : typeAdapters.keySet()) {
+            builder.registerTypeAdapter(type, typeAdapters.get(type));
+        }
 
-		this.gson = builder.registerTypeAdapter(Date.class, new DateSerializer())
-			.registerTypeAdapter(Date.class, new DateDeserializer())
-			.setPrettyPrinting()
-			.create();
-	}
+        this.gson = builder.registerTypeAdapter(Date.class, new DateSerializer())
+                .registerTypeAdapter(Date.class, new DateDeserializer()).setPrettyPrinting().create();
+    }
 
-	private class DateSerializer implements JsonSerializer<Date> {
+    private class DateSerializer implements JsonSerializer<Date> {
 
-		public JsonElement serialize(Date source, Type typeOfSource, JsonSerializationContext context) {
-			return new JsonPrimitive(Long.toString(source.getTime()));
-		}
+        public JsonElement serialize(Date source, Type typeOfSource, JsonSerializationContext context) {
+            return new JsonPrimitive(Long.toString(source.getTime()));
+        }
 
-	}
+    }
 
-	private class DateDeserializer implements JsonDeserializer<Date> {
+    private class DateDeserializer implements JsonDeserializer<Date> {
 
-		public Date deserialize(JsonElement json, Type typeOfTarget, JsonDeserializationContext context)
-				throws JsonParseException {
-			long time = Long.parseLong(json.getAsJsonPrimitive().getAsString());
-			return new Date(time);
-		}
+        public Date deserialize(JsonElement json, Type typeOfTarget, JsonDeserializationContext context)
+                throws JsonParseException {
+            long time = Long.parseLong(json.getAsJsonPrimitive().getAsString());
+            return new Date(time);
+        }
 
-	}
+    }
 
 }

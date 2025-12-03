@@ -26,34 +26,34 @@ import io.arkx.framework.commons.uid.utils.ValuedEnum;
  */
 public enum WorkerNodeType implements ValuedEnum<Integer> {
 
-	/**
-	 * 容器
-	 */
-	CONTAINER(1),
-	/**
-	 * 物理机
-	 */
-	ACTUAL(2),
-	/**
-	 * 虚拟
-	 */
-	FAKE(3);
+    /**
+     * 容器
+     */
+    CONTAINER(1),
+    /**
+     * 物理机
+     */
+    ACTUAL(2),
+    /**
+     * 虚拟
+     */
+    FAKE(3);
 
-	/**
-	 * Lock type
-	 */
-	private final Integer type;
+    /**
+     * Lock type
+     */
+    private final Integer type;
 
-	/**
-	 * Constructor with field of type
-	 */
-	WorkerNodeType(Integer type) {
-		this.type = type;
-	}
+    /**
+     * Constructor with field of type
+     */
+    WorkerNodeType(Integer type) {
+        this.type = type;
+    }
 
-	@Override
-	public Integer value() {
-		return type;
-	}
+    @Override
+    public Integer value() {
+        return type;
+    }
 
 }

@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.METHOD })
+@Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.METHOD})
 public @interface Path {
 
-	public abstract String value();
+    public abstract String value();
 
 }

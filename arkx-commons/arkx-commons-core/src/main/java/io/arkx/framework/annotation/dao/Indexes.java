@@ -7,12 +7,12 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface Indexes {
 
-	/**
-	 * @return 索引信息，格式为idx1=id,name;idx2=innercode;idx3=orderflag
-	 */
-	String value() default "";
+    /**
+     * @return 索引信息，格式为idx1=id,name;idx2=innercode;idx3=orderflag
+     */
+    String value() default "";
 
 }

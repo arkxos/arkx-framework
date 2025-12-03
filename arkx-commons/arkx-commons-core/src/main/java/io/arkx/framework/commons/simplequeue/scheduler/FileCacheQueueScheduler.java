@@ -23,187 +23,182 @@ import io.arkx.framework.commons.simplequeue.scheduler.component.DuplicateRemove
  */
 public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler, Closeable {
 
-	private String filePath = System.getProperty("java.io.tmpdir");
+    private String filePath = System.getProperty("java.io.tmpdir");
 
-	private String fileUrlAllName = ".urls.txt";
+    private String fileUrlAllName = ".urls.txt";
 
-	private Task task;
+    private Task task;
 
-	private String fileCursor = ".cursor.txt";
+    private String fileCursor = ".cursor.txt";
 
-	private PrintWriter fileUrlWriter;
+    private PrintWriter fileUrlWriter;
 
-	private PrintWriter fileCursorWriter;
+    private PrintWriter fileCursorWriter;
 
-	private AtomicInteger cursor = new AtomicInteger();
+    private AtomicInteger cursor = new AtomicInteger();
 
-	private AtomicBoolean inited = new AtomicBoolean(false);
+    private AtomicBoolean inited = new AtomicBoolean(false);
 
-	private BlockingQueue<ElementWarpper> queue;
+    private BlockingQueue<ElementWarpper> queue;
 
-	private Set<String> urls;
+    private Set<String> urls;
 
-	private ScheduledExecutorService flushThreadPool;
+    private ScheduledExecutorService flushThreadPool;
 
-	public FileCacheQueueScheduler(String filePath) {
-		if (!filePath.endsWith("/") && !filePath.endsWith("\\")) {
-			filePath += "/";
-		}
-		this.filePath = filePath;
-		initDuplicateRemover();
-	}
+    public FileCacheQueueScheduler(String filePath) {
+        if (!filePath.endsWith("/") && !filePath.endsWith("\\")) {
+            filePath += "/";
+        }
+        this.filePath = filePath;
+        initDuplicateRemover();
+    }
 
-	private void flush() {
-		fileUrlWriter.flush();
-		fileCursorWriter.flush();
-	}
+    private void flush() {
+        fileUrlWriter.flush();
+        fileCursorWriter.flush();
+    }
 
-	private void init(Task task) {
-		this.task = task;
-		File file = new File(filePath);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-		readFile();
-		initWriter();
-		initFlushThread();
-		inited.set(true);
-		logger.info("init cache scheduler success");
-	}
+    private void init(Task task) {
+        this.task = task;
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        readFile();
+        initWriter();
+        initFlushThread();
+        inited.set(true);
+        logger.info("init cache scheduler success");
+    }
 
-	private void initDuplicateRemover() {
-		setDuplicateRemover(new DuplicateRemover() {
-			@Override
-			public boolean isDuplicate(ElementWarpper request, Task task) {
-				if (!inited.get()) {
-					init(task);
-				}
-				return !urls.add(request.get());
-			}
+    private void initDuplicateRemover() {
+        setDuplicateRemover(new DuplicateRemover() {
+            @Override
+            public boolean isDuplicate(ElementWarpper request, Task task) {
+                if (!inited.get()) {
+                    init(task);
+                }
+                return !urls.add(request.get());
+            }
 
-			@Override
-			public void resetDuplicateCheck(Task task) {
-				urls.clear();
-			}
+            @Override
+            public void resetDuplicateCheck(Task task) {
+                urls.clear();
+            }
 
-			@Override
-			public int getTotalRequestsCount(Task task) {
-				return urls.size();
-			}
-		});
-	}
+            @Override
+            public int getTotalRequestsCount(Task task) {
+                return urls.size();
+            }
+        });
+    }
 
-	private void initFlushThread() {
-		flushThreadPool = Executors.newScheduledThreadPool(1);
-		flushThreadPool.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				flush();
-			}
-		}, 10, 10, TimeUnit.SECONDS);
-	}
+    private void initFlushThread() {
+        flushThreadPool = Executors.newScheduledThreadPool(1);
+        flushThreadPool.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                flush();
+            }
+        }, 10, 10, TimeUnit.SECONDS);
+    }
 
-	private void initWriter() {
-		try {
-			fileUrlWriter = new PrintWriter(new FileWriter(getFileName(fileUrlAllName), true));
-			fileCursorWriter = new PrintWriter(new FileWriter(getFileName(fileCursor), false));
-		}
-		catch (IOException e) {
-			throw new RuntimeException("init cache scheduler error", e);
-		}
-	}
+    private void initWriter() {
+        try {
+            fileUrlWriter = new PrintWriter(new FileWriter(getFileName(fileUrlAllName), true));
+            fileCursorWriter = new PrintWriter(new FileWriter(getFileName(fileCursor), false));
+        } catch (IOException e) {
+            throw new RuntimeException("init cache scheduler error", e);
+        }
+    }
 
-	private void readFile() {
-		try {
-			queue = new LinkedBlockingQueue<ElementWarpper>();
-			urls = new LinkedHashSet<String>();
-			readCursorFile();
-			readUrlFile();
-			// initDuplicateRemover();
-		}
-		catch (FileNotFoundException e) {
-			// init
-			logger.info("init cache file " + getFileName(fileUrlAllName));
-		}
-		catch (IOException e) {
-			logger.error("init file error", e);
-		}
-	}
+    private void readFile() {
+        try {
+            queue = new LinkedBlockingQueue<ElementWarpper>();
+            urls = new LinkedHashSet<String>();
+            readCursorFile();
+            readUrlFile();
+            // initDuplicateRemover();
+        } catch (FileNotFoundException e) {
+            // init
+            logger.info("init cache file " + getFileName(fileUrlAllName));
+        } catch (IOException e) {
+            logger.error("init file error", e);
+        }
+    }
 
-	private void readUrlFile() throws IOException {
-		String line;
-		BufferedReader fileUrlReader = null;
-		try {
-			fileUrlReader = new BufferedReader(new FileReader(getFileName(fileUrlAllName)));
-			int lineReaded = 0;
-			while ((line = fileUrlReader.readLine()) != null) {
-				urls.add(line.trim());
-				lineReaded++;
-				if (lineReaded > cursor.get()) {
-					queue.add(new ElementWarpper(line));
-				}
-			}
-		}
-		finally {
-			if (fileUrlReader != null) {
-				IOUtils.closeQuietly(fileUrlReader);
-			}
-		}
-	}
+    private void readUrlFile() throws IOException {
+        String line;
+        BufferedReader fileUrlReader = null;
+        try {
+            fileUrlReader = new BufferedReader(new FileReader(getFileName(fileUrlAllName)));
+            int lineReaded = 0;
+            while ((line = fileUrlReader.readLine()) != null) {
+                urls.add(line.trim());
+                lineReaded++;
+                if (lineReaded > cursor.get()) {
+                    queue.add(new ElementWarpper(line));
+                }
+            }
+        } finally {
+            if (fileUrlReader != null) {
+                IOUtils.closeQuietly(fileUrlReader);
+            }
+        }
+    }
 
-	private void readCursorFile() throws IOException {
-		BufferedReader fileCursorReader = null;
-		try {
-			fileCursorReader = new BufferedReader(new FileReader(getFileName(fileCursor)));
-			String line;
-			// read the last number
-			while ((line = fileCursorReader.readLine()) != null) {
-				cursor = new AtomicInteger(NumberUtils.toInt(line));
-			}
-		}
-		finally {
-			if (fileCursorReader != null) {
-				IOUtils.closeQuietly(fileCursorReader);
-			}
-		}
-	}
+    private void readCursorFile() throws IOException {
+        BufferedReader fileCursorReader = null;
+        try {
+            fileCursorReader = new BufferedReader(new FileReader(getFileName(fileCursor)));
+            String line;
+            // read the last number
+            while ((line = fileCursorReader.readLine()) != null) {
+                cursor = new AtomicInteger(NumberUtils.toInt(line));
+            }
+        } finally {
+            if (fileCursorReader != null) {
+                IOUtils.closeQuietly(fileCursorReader);
+            }
+        }
+    }
 
-	public void close() throws IOException {
-		flushThreadPool.shutdown();
-		fileUrlWriter.close();
-		fileCursorWriter.close();
-	}
+    public void close() throws IOException {
+        flushThreadPool.shutdown();
+        fileUrlWriter.close();
+        fileCursorWriter.close();
+    }
 
-	private String getFileName(String filename) {
-		return filePath + task.getUUID() + filename;
-	}
+    private String getFileName(String filename) {
+        return filePath + task.getUUID() + filename;
+    }
 
-	@Override
-	protected void pushWhenNoDuplicate(ElementWarpper request, Task task) {
-		if (!inited.get()) {
-			init(task);
-		}
-		queue.add(request);
-		fileUrlWriter.println(request.get());
-	}
+    @Override
+    protected void pushWhenNoDuplicate(ElementWarpper request, Task task) {
+        if (!inited.get()) {
+            init(task);
+        }
+        queue.add(request);
+        fileUrlWriter.println(request.get());
+    }
 
-	@Override
-	public synchronized ElementWarpper poll(Task task) {
-		if (!inited.get()) {
-			init(task);
-		}
-		fileCursorWriter.println(cursor.incrementAndGet());
-		return queue.poll();
-	}
+    @Override
+    public synchronized ElementWarpper poll(Task task) {
+        if (!inited.get()) {
+            init(task);
+        }
+        fileCursorWriter.println(cursor.incrementAndGet());
+        return queue.poll();
+    }
 
-	@Override
-	public int getLeftElementsCount(Task task) {
-		return queue.size();
-	}
+    @Override
+    public int getLeftElementsCount(Task task) {
+        return queue.size();
+    }
 
-	@Override
-	public int getTotalElementsCount(Task task) {
-		return getDuplicateRemover().getTotalRequestsCount(task);
-	}
+    @Override
+    public int getTotalElementsCount(Task task) {
+        return getDuplicateRemover().getTotalRequestsCount(task);
+    }
 
 }

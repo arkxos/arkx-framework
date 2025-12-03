@@ -7,6 +7,6 @@ package io.arkx.framework.data.common.entity;
  */
 public enum IdType {
 
-	LONG, STRING
+    LONG, STRING
 
 }

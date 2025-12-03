@@ -13,10 +13,10 @@ import org.springframework.core.task.AsyncTaskExecutor;
 
 public interface Robot {
 
-	void init(AsyncTaskExecutor threadExecutor);
+    void init(AsyncTaskExecutor threadExecutor);
 
-	void startWork();
+    void startWork();
 
-	void interrupt();
+    void interrupt();
 
 }

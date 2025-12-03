@@ -18,33 +18,33 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class BrokerSubscribeStrategy implements BrokerStrategy {
 
-	private ConsumerMessageListener hookConsumer;
+    private ConsumerMessageListener hookConsumer;
 
-	private ChannelHandlerContext channelHandler;
+    private ChannelHandlerContext channelHandler;
 
-	public BrokerSubscribeStrategy() {
+    public BrokerSubscribeStrategy() {
 
-	}
+    }
 
-	public void messageDispatch(RequestMessage request, ResponseMessage response) {
-		SubscribeMessage subcript = (SubscribeMessage) request.getMsgParams();
-		String clientKey = subcript.getConsumerId();
-		RemoteChannelData channel = new RemoteChannelData(channelHandler.channel(), clientKey);
-		hookConsumer.hookConsumerMessage(subcript, channel);
-		response.setMsgType(MessageType.AvatarMQConsumerAck);
-		channelHandler.writeAndFlush(response);
-	}
+    public void messageDispatch(RequestMessage request, ResponseMessage response) {
+        SubscribeMessage subcript = (SubscribeMessage) request.getMsgParams();
+        String clientKey = subcript.getConsumerId();
+        RemoteChannelData channel = new RemoteChannelData(channelHandler.channel(), clientKey);
+        hookConsumer.hookConsumerMessage(subcript, channel);
+        response.setMsgType(MessageType.AvatarMQConsumerAck);
+        channelHandler.writeAndFlush(response);
+    }
 
-	public void setHookConsumer(ConsumerMessageListener hookConsumer) {
-		this.hookConsumer = hookConsumer;
-	}
+    public void setHookConsumer(ConsumerMessageListener hookConsumer) {
+        this.hookConsumer = hookConsumer;
+    }
 
-	public void setChannelHandler(ChannelHandlerContext channelHandler) {
-		this.channelHandler = channelHandler;
-	}
+    public void setChannelHandler(ChannelHandlerContext channelHandler) {
+        this.channelHandler = channelHandler;
+    }
 
-	public void setHookProducer(ProducerMessageListener hookProducer) {
+    public void setHookProducer(ProducerMessageListener hookProducer) {
 
-	}
+    }
 
 }

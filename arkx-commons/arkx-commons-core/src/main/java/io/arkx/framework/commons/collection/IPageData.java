@@ -8,8 +8,8 @@ package io.arkx.framework.commons.collection;
  */
 public interface IPageData extends IPageInfo {
 
-	void setData(Object data);
+    void setData(Object data);
 
-	Object getData();
+    Object getData();
 
 }

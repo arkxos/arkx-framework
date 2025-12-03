@@ -14,16 +14,16 @@ import io.arkx.framework.commons.collection.Mapx;
  */
 public class MapxTest {
 
-	@Test
-	public void put() {
-		Mapx<String, String> mapx = new Mapx<>();
+    @Test
+    public void put() {
+        Mapx<String, String> mapx = new Mapx<>();
 
-		mapx.put("a", "a");
-		assertEquals(mapx.get("a"), "a");
+        mapx.put("a", "a");
+        assertEquals(mapx.get("a"), "a");
 
-		mapx = new CacheMapx<>();
-		mapx.put("a", "a");
-		assertEquals(mapx.get("a"), "a");
-	}
+        mapx = new CacheMapx<>();
+        mapx.put("a", "a");
+        assertEquals(mapx.get("a"), "a");
+    }
 
 }
