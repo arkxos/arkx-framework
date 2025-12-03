@@ -1,0 +1,216 @@
+name: Release Management
+
+on:
+  create:
+    branches: [ release/* ]
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 0.1.0)'
+        required: true
+        default: '0.1.0'
+      deploy_to_central:
+        description: 'Deploy to Maven Central'
+        required: true
+        default: true
+        type: boolean
+
+env:
+  MAVEN_OPTS: -Xmx1024m
+
+jobs:
+  detect-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is_release: ${{ steps.version.outputs.is_release }}
+      base_version: ${{ steps.version.outputs.base_version }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Get version from tag, branch, or input
+      id: version
+      run: |
+        if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
+          # 标签推送 - 正式版
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "is_release=true" >> $GITHUB_OUTPUT
+          echo "base_version=$VERSION" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.ref }}" == refs/heads/release/* ]]; then
+          # release 分支创建 - 发布版本
+          BRANCH_NAME=${GITHUB_REF#refs/heads/release/}
+          echo "version=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "is_release=true" >> $GITHUB_OUTPUT
+          echo "base_version=$BRANCH_NAME" >> $GITHUB_OUTPUT
+        else
+          # 手动触发 - 使用输入版本
+          VERSION="${{ github.event.inputs.version }}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "is_release=true" >> $GITHUB_OUTPUT
+          echo "base_version=$VERSION" >> $GITHUB_OUTPUT
+        fi
+
+  deploy-release:
+    needs: detect-version
+    if: github.event.inputs.deploy_to_central == 'true' || (github.event_name == 'push' && (github.ref == 'refs/tags/*' || startsWith(github.ref, 'refs/heads/release/')))
+    runs-on: ubuntu-latest
+    environment: maven
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set up JDK 25
+      uses: actions/setup-java@v4
+      with:
+        java-version: '25'
+        distribution: 'temurin'
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Configure Maven settings for Sonatype Central
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml << EOF
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>central</id>
+              <username>${{ secrets.SONATYPE_CENTRAL_USERNAME }}</username>
+              <password>${{ secrets.SONATYPE_CENTRAL_PASSWORD }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+        
+    - name: Configure Git user
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+    - name: Prepare release version
+      run: |
+        RELEASE_VERSION="${{ needs.detect-version.outputs.version }}"
+        echo "Preparing release version: $RELEASE_VERSION"
+        mvn versions:set -DnewVersion="$RELEASE_VERSION" -DgenerateBackupPoms=false
+        
+    - name: Build and package artifacts
+      run: |
+        mvn clean package -B -DskipTests
+        
+    - name: Import GPG key
+      uses: crazy-max/ghaction-import-gpg@v6
+      with:
+        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+        passphrase: ${{ secrets.GPG_PASSPHRASE }}
+        trust_level: 5
+        
+    - name: Deploy to Maven Central
+      timeout-minutes: 30
+      run: |
+        echo "🚀 Deploying RELEASE version: ${{ needs.detect-version.outputs.version }}"
+        mvn deploy \
+          -P central-release,release \
+          -DskipTests \
+          -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+          --no-transfer-progress \
+          -B
+
+  update-main-and-cleanup:
+    needs: [detect-version, deploy-release]
+    if: needs.detect-version.outputs.is_release == 'true' && (github.event.inputs.deploy_to_central == 'true' || startsWith(github.ref, 'refs/heads/release/'))
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Configure Git user
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+    - name: Create tag and update main
+      run: |
+        RELEASE_VERSION="${{ needs.detect-version.outputs.version }}"
+        
+        # 创建tag（如果不存在）
+        if ! git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then
+          echo "Creating tag v$RELEASE_VERSION"
+          git tag -a "v$RELEASE_VERSION" -m "Release $RELEASE_VERSION"
+          git push origin "v$RELEASE_VERSION"
+        fi
+        
+        # 获取下一个版本号
+        if [[ "$RELEASE_VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+          MAJOR=${BASH_REMATCH[1]}
+          MINOR=${BASH_REMATCH[2]}
+          PATCH=${BASH_REMATCH[3]}
+          NEXT_PATCH=$((PATCH + 1))
+          NEXT_VERSION="$MAJOR.$MINOR.$NEXT_PATCH-SNAPSHOT"
+        else
+          NEXT_VERSION="${RELEASE_VERSION%.*}.$((${RELEASE_VERSION##*.} + 1))-SNAPSHOT"
+        fi
+        
+        echo "Next development version: $NEXT_VERSION"
+        
+        # 合并到main分支
+        git checkout main
+        git pull origin main
+        
+        # 如果是release分支，合并release分支
+        if [[ "${{ github.ref }}" == refs/heads/release/* ]]; then
+          git merge release/$RELEASE_VERSION -m "Merge release $RELEASE_VERSION to main"
+          # 删除release分支
+          RELEASE_BRANCH=${GITHUB_REF#refs/heads/}
+          echo "Deleting release branch: $RELEASE_BRANCH"
+          git push origin --delete "$RELEASE_BRANCH"
+        fi
+        
+        # 更新main分支版本
+        mvn versions:set -DnewVersion="$NEXT_VERSION" -DgenerateBackupPoms=false
+        git commit -am "chore: update main version to $NEXT_VERSION after release $RELEASE_VERSION"
+        git push origin main
+
+  create-github-release:
+    needs: [detect-version, deploy-release]
+    if: needs.detect-version.outputs.is_release == 'true' && (github.event.inputs.deploy_to_central == 'true' || github.ref == 'refs/tags/*')
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ needs.detect-version.outputs.version }}
+        release_name: Release ${{ needs.detect-version.outputs.version }}
+        body: |
+          ### Release ${{ needs.detect-version.outputs.version }}
+          
+          ### Maven Central
+          - https://search.maven.org/artifact/io.arkx.framework/arkx-framework
+        draft: false
+        prerelease: false

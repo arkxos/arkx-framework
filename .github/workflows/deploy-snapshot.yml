@@ -1,0 +1,50 @@
+name: Deploy SNAPSHOT Versions
+
+on:
+  push:
+    branches: [ dev, integration/*, pre-release/* ]
+
+jobs:
+  deploy-snapshot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: '3.9.0'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and deploy SNAPSHOT
+        run: |
+          mvn clean deploy -DskipTests
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+
+      - name: Summary
+        run: |
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "## 🚀 SNAPSHOT Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** $BRANCH_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "**Action:** SNAPSHOT deployed to Maven Central" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Success" >> $GITHUB_STEP_SUMMARY
