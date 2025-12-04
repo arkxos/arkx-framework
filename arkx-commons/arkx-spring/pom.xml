@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.arkx.framework</groupId>
     <artifactId>arkx-commons</artifactId>
-    <version>${revision}</version>
+    <version>0.1.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>arkx-spring</artifactId>

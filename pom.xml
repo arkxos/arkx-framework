@@ -23,7 +23,7 @@
     <artifactId>arkx-framework</artifactId>
 
     <name>arkx-framework</name>
-    <version>${revision}</version>
+    <version>0.1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>https://www.arkx.io</url>
     
