@@ -17,6 +17,11 @@ on:
         default: true
         type: boolean
 
+# Required permissions for GitHub Actions
+permissions:
+  contents: write
+  pull-requests: write
+
 env:
   MAVEN_OPTS: -Xmx1024m
 
@@ -65,7 +70,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
         
     - name: Set up JDK 25
       uses: actions/setup-java@v4
@@ -157,7 +162,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
         
     - name: Configure Git user
       run: |
@@ -168,11 +173,28 @@ jobs:
       run: |
         RELEASE_VERSION="${{ needs.detect-version.outputs.version }}"
         
+        # 检查权限
+        echo "Checking Git permissions..."
+        git remote -v
+        
         # 创建tag（如果不存在）
         if ! git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then
           echo "Creating tag v$RELEASE_VERSION"
           git tag -a "v$RELEASE_VERSION" -m "Release $RELEASE_VERSION"
-          git push origin "v$RELEASE_VERSION"
+          
+          # 尝试推送标签，如果失败则提供手动操作指导
+          if ! git push origin "v$RELEASE_VERSION"; then
+            echo "⚠️ Failed to push tag automatically"
+            echo "🔑 This might be due to insufficient permissions"
+            echo "📝 To complete the release manually:"
+            echo "   1. git tag -a v$RELEASE_VERSION -m 'Release $RELEASE_VERSION'"
+            echo "   2. git push origin v$RELEASE_VERSION"
+            echo "   3. Ensure you have a PAT_TOKEN with 'repo' scope configured"
+            echo "   4. Or push the tag manually from your local repository"
+            exit 1
+          fi
+        else
+          echo "Tag v$RELEASE_VERSION already exists"
         fi
         
         # 获取下一个版本号
